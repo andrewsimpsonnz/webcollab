@@ -192,10 +192,16 @@ if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 )
 else
   $selection = "user";
 
-if(isset($_POST['userid']) && is_numeric($_POST['userid']) )
+if(isset($_POST['userid']) && is_numeric($_POST['userid']) ){
   $userid = intval($_POST['userid']);
-else
-  $userid = $UID;
+}
+else{
+  
+  if($GUEST == 0 )
+    $userid = $UID;
+  else
+    $userid = 0;
+}
 
 if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) )
   $groupid = intval($_POST['groupid']);
