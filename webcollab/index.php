@@ -165,7 +165,7 @@ $content .= "<p>".$lang["please_login"].":</p>\n".
            "</div>";
 
 //set box options
-new_box($lang["login"], $content, "boxdata2", "singlebox" );
+new_box($lang["login"], $content, "boxdata", "singlebox" );
 
 create_bottom();
 
