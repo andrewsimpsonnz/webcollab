@@ -1,5 +1,14 @@
 WebCollab CVS
+*** 31 August 2003
+  Andrew Simpson
+
+- improve css stylesheets and re-work code to suit
+
+- add HTML document section
+
+WebCollab CVS
 *** 23 August 2003
+  Andrew Simpson
 
 - change HTML <center> to <div> to be more compliant
 
@@ -15,16 +24,19 @@ WebCollab CVS
 
 WebCollab CVS
 *** 17 August 2003
+  Andrew Simpson
 
 - add admin email function
 
 WebCollab 1.42
 ***
+  Andrew Simpson
 
 - release
 
 WebCollab CVS
 *** 15 August 2003
+  Andrew Simpson
 
 - bugfix/feature request #783959 (Ability to disable ip checking during sessions)
 
@@ -32,6 +44,7 @@ WebCollab CVS
 
 WebCollab CVS
 *** 8 August 2003
+  Andrew Simpson
 
 - bugfix #783922 (Syntax error in private forum post listings)
 
@@ -39,6 +52,7 @@ WebCollab CVS
 
 WebCollab 1.41
 *** 1 August 2003
+  Andrew Simpson
 
 - release
 
