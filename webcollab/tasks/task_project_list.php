@@ -231,7 +231,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       break;
     }
   //end list
-  $content .= "</TD>\n</TR>\n</TABLE>\n<BR><BR>";
+  $content .= "</TD>\n</TR>\n</TABLE>\n<BR>";
 }
 $content .= "<BR>\n";
 
