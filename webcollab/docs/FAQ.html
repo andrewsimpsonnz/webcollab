@@ -52,25 +52,29 @@ screen."</dt>
 <dd>Check that PHP has your database extensions compiled in.  From the command
 line type 'php -m':<br>
 <br>
-# php -m<br>
-Running PHP 4.2.2<br>
-Zend Engine v1.2.0, Copyright (c) 1998-2002 Zend Technologies<br>
-<br>
-[PHP Modules]<br>
-mysql<br>
-pgsql<br>
-<br>
-[Zend Modules]<br>
-<br>
-#<br>
+<pre class="screen">
+# php -m
+Running PHP 4.2.2
+Zend Engine v1.2.0, Copyright (c) 1998-2002 Zend Technologies
+
+[PHP Modules]
+mysql
+pgsql
+
+[Zend Modules]
+
+#
+</pre>
 <br>
 Look for mysql and/or pgsql as required in the modules listing that follows.<br>
 <br>
 Most likely cause is that the default file for php.ini has the mysql or pgsql
 module line commented out.  Look for lines in php.ini like this:<br>
 <br>
-;extension=mysql.so<br>
-;extension=pgsql.so<br>
+<pre class="screen">
+;extension=mysql.so
+;extension=pgsql.so
+</pre>
 <br>
 Remove the semi-colon ';' from the module you want, and restart Apache. <br>
 <br>
@@ -176,7 +180,7 @@ You need to set your login name and password in the /config/config.php file.<br 
 <br />
 WebCollab complies to RFC 2195 (CRAM-MD5), RFC 2554 (SMTP AUTH) and RFC 2595 (auth plain).</dd>
 <dt>3. Can WebCollab handle non US-ASCII characters (i.e. Languages other than US English)?</dt>
-<dd>For languages with more than "us-ASCII" characters (e.g.: French, German, Spanish etc), WebCollab
+<dd>For languages with more than "US-ASCII" characters (e.g.: French, German, Spanish etc), WebCollab
  attempts to send emails in 8 bit format.  This is accepted by almost all mail servers.  Sendmail, for instance, has had 8 bit support since 1993.<br>
 <br>
 If the upstream SMTP server does not advertise support for 8 bit mail, WebCollab reverts to 'quoted-printable' encoding.  This follows the requirements of RFC 1652 (8BITMIME), RFC 1869 (Extended EHLO), RFC 2045 (quoted-printable), and RFC 2047 (8 bit extensions).</dd>   
@@ -264,21 +268,21 @@ databases.<br>
 <br>
 MySQL:<br>
 <br>
-<em>dump_mysql.sh</em><br>
+<pre class="screen">
+dump_mysql.sh
+</pre>
 &nbsp;&nbsp;&nbsp;Usage: dump_mysql.sh &nbsp;&lt;database user&gt;&nbsp;&lt;database
 name&gt;&nbsp;&lt;database password&gt;<br>
 <br>
 PostgreSQL:<br>
 <br>
-<em>dump_postgresql.sh</em><br>
+<pre class="screen">
+dump_postgresql.sh
+</pre>
 &nbsp;&nbsp;&nbsp;Usage: dump_postgresql.sh &nbsp;&lt;database name&gt;<br>
 <br>
 Both dump into a plain text file.  They can be automated with a cron job and emailed to a back
 up machine at regular intervals. </dd>
-<dt>2. Can the database also be backed up via the website?</dt>
-<dd>WebCollab does have a facility for doing this, though the software may not work on all platforms yet.  Point your web browser at /tools.php, enter an admin login and password and then select 'backup'.  The backup will emailed to the Site Admin set up in Admin Config.<br />
-<br />
-Modifications & code patches to the backup code for different operating systems would be appreciated.</dd>
 </dl>
 <a name="translation"></a>
 <h3>TRANSLATIONS</h3>
