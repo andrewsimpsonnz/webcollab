@@ -54,7 +54,7 @@ $content =
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= "<tr><td>".$row["name"]."</td><td>".$row["description"]." </td>".
               "<td><font class=\"textlink\"><a href=\"taskgroups.php?x=$x&amp;action=submit_del&taskgroupid=".$row["id"]."\" onClick=\"return confirm( '".$lang["confirm_del_javascript"]."')\">[".$lang["del"]."]</a></font>&nbsp;".
-              "<td><font class=\"textlink\"><a href=\"taskgroups.php?x=$x&amp;action=edit&amp;taskgroupid=".$row["id"]."\">[".$lang["edit"]."]</a></font></td></tr>";
+              "<font class=\"textlink\"><a href=\"taskgroups.php?x=$x&amp;action=edit&amp;taskgroupid=".$row["id"]."\">[".$lang["edit"]."]</a></font></td></tr>";
 
 }
 

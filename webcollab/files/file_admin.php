@@ -65,10 +65,10 @@ if(db_numrows($q) == 0 ) {
   return;
 }
 
+$content .= "<table border=\"0\">\n";
+
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
-
-  $content .= "<table border=\"0\">\n";
 
   //file part
   $content .= "<tr><td>".$lang["task"].":</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["task_id"]."\">".$row["task_name"]."</a></td></tr>\n".
@@ -80,10 +80,14 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
   //show description
   if( $row["description"] != "" )
-    $content .= "<tr><td colspan=\"2\"><small><i>".$row["description"]."</i></small></td></tr>\n";
+    $content .= "<tr><td>".$lang["description"].":</td><td><small><i>".$row["description"]."</i></small></td></tr>\n";
 
-  $content .= "</table><br />\n";
+  //blank line to end
+  $content .= "<tr><td>&nbsp;</td></tr>\n";    
+    
 }
+
+$content .= "</table>\n";
 
 new_box( $lang["manage_files"], $content );
 
