@@ -48,7 +48,7 @@
 // file uploads
 
   //upload to what directory ?
-  $FILE_BASE = "/home/files";
+  $FILE_BASE = "/files/filebase";
 
   //max file size in bytes ( 2 mb default)
   $FILE_MAXSIZE = 2000000;
@@ -56,7 +56,7 @@
 /*Note:
   1. Make sure the filebase directory exists, and is writeable by the webserver, or you
      won't be able to upload any files.
-  2. The filebase directory must be outside your webserver root directory to maintain file
+  2. The filebase directory should be outside your webserver root directory to maintain file
      security.  This is important to prevent users navigating to the file directory with
      their web browsers, and viewing all the files.
 

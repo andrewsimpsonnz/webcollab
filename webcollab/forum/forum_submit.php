@@ -203,12 +203,12 @@ if( valid_string($_REQUEST["action"]) ) {
 
     //default error case
     default:
-      error("Forum submit", "No request specified");
+      error("Forum submit", "Invalid request specified");
       break;
   }
 }
 else
-  error("Forum submission engine", "You did not specify an action, request not handled" );
+  error("Forum submit", "No request given" );
 
 
 //go back to where this request came from
