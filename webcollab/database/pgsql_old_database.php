@@ -68,8 +68,6 @@ function db_query($query, $dieonerror=1 ) {
 
     //make sure dates will be handled properly by internal date routines
     $q = db_query("SET DATESTYLE TO 'European, ISO' ");
-    if($TZ != NULL )
-      $q = db_query("SET TIME ZONE ".$TZ);
   }
 
   //check for a database connection
