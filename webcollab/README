@@ -3,16 +3,24 @@
 
 Based on Core-lan-org (Core Advanced Project Manager) Version 1.11.
 
-We started using CoreAPM in November 2001 for project managing our workload.  Along the way, we
-made changes and improvements to the source code - most of which were fed back into the main CoreAPM
-development tree.
+We started using CoreAPM in November 2001 for project managing our telcommunications
+cellsite deployment. Along the way, we made changes and improvements to the source code - most of
+which were fed back into the main CoreAPM development tree.
 
 After version 1.11 was released, several changes were made to the development model that didn't suit
 our needs.  Because of this we maintained our own development version, based on version 1.11, but
 keeping pace with developments in the main source tree.
 
 Over time our version has slowly moved away from the main tree, and is now uniquely different from
-the current CoreAPM software.
+the current CoreAPM software. This source tree has now matured into software that is significantly
+different than it's CoreAPM roots, and in our opinion (!), a very useful piece of software.  
+
+The amount of rework is evident from the package sizes - WebCollab is almost twice the size
+of CoreAPM ver 1.11 (And it's not all software bloat!).
+
+We are still using WebCollab for a cellsite rollout; it's also being used for numerous other 
+projects internally.  The time has now come to release back to the community, and let a wider range
+of users experience WebCollab.
 
 Notable additions:
 
@@ -24,7 +32,7 @@ Notable additions:
 
 - Database transactions (Postgresql only) used for more stability
 
-- Database connections can be on remote machines (MySQL, limited on PostgreSQL)
+- Databases can be on remote machines to webserver (MySQL, limited on PostgreSQL)
 
 - Added language files for ease of translation
 
@@ -34,7 +42,7 @@ Notable additions:
 
 - The 'new' and 'updated' graphics now automatically expire after period given in config file
 
-- Major usablity improvements
+- Major usability improvements
 
 - File upload can now write to a directory away from the webserver root (enhanced security)
 
@@ -47,7 +55,7 @@ Notable additions:
 - Extensive debugging
 
 
-Principal differences to CoreAPM 2.02:
+Critical differences to current CoreAPM (2.02):
 
 - Does not handle time accounting
 
