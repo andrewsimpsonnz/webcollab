@@ -181,9 +181,9 @@ a:visited {
 }
 
 a:hover {
-  color : #003399;
+  color : #cc0000;
   background : transparent;
-  text-decoration : underline;
+  text-decoration : none;
 }
 
 
