@@ -45,17 +45,23 @@ $usergroupid = intval($_GET["usergroupid"]);
 $q = db_query("SELECT * FROM ".PRE."usergroups WHERE id=$usergroupid" );
 $row = db_fetch_array( $q, 0 );
 
-$content =
-           "<form method=\"post\" action=\"usergroups.php\">\n".
-             "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-             "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
-             "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\" /></fieldset>\n".
-             "<table class=\"celldata\">\n".
-               "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"text\" name=\"name\" value=\"".html_escape($row["name"])."\" size=\"30\" /></td></tr>\n".
-               "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"text\" name=\"description\" value=\"".html_escape($row["description"])."\" size=\"30\" /></td></tr>\n".
-               "<tr><td>&nbsp;</td></tr>\n".
-               "<tr><td><label for=\"private\">".$lang["private_usergroup"].":</label></td><td><input type=\"checkbox\" name=\"private_group\" id=\"private\" /></td></tr>\n".
-               "<tr><td>&nbsp;</td></tr>\n";
+//set private usergroup checkbox
+if($row["private"] )
+  $private = "checked=\"checked\"";
+else
+  $private = "";
+
+$content = "<form method=\"post\" action=\"usergroups.php\">\n".
+           "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+           "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
+           "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\" /></fieldset>\n".
+           "<table class=\"celldata\">\n".
+           "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"text\" name=\"name\" value=\"".html_escape($row["name"])."\" size=\"30\" /></td></tr>\n".
+           "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"text\" name=\"description\" value=\"".html_escape($row["description"])."\" size=\"30\" /></td></tr>\n".
+           "<tr><td>&nbsp;</td></tr>\n".
+           "<tr><td><label for=\"private\">".$lang["private_usergroup"].":</label></td><td><input type=\"checkbox\" name=\"private_group\" id=\"private\" $private /></td></tr>\n".
+           "<tr><td>&nbsp;</td></tr>\n";
+
 //add users
 $user_q = db_query("SELECT fullname, id FROM ".PRE."users WHERE deleted='f' ORDER BY fullname" );
 $member_q = db_query("SELECT ".PRE."users.id AS id
@@ -76,11 +82,11 @@ for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++ ) {
   $content .= ">".$user_row["fullname"]."</option>\n";
 }
 
-$content .=    "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
+$content .=  "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
              "</table>\n".
              "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;".
              "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
-           "</form>\n";
+             "</form>\n";
 
 new_box( $lang["edit_usergroup"], $content );
 
