@@ -190,7 +190,6 @@ ignore_user_abort(TRUE);
       if(strlen($mail_list) > 0 ){
         include_once(BASE."includes/email.php" );
         include_once(BASE."lang/lang_email.php" );
-        include_once(BASE."includes/time.php" );
 
         //get & add the mailing list
         if($EMAIL_MAILINGLIST != "" )
@@ -202,7 +201,7 @@ ignore_user_abort(TRUE);
         if(get_magic_quotes_gpc() )
           $message = stripslashes($message );
  
-        email($mail_list, sprintf($title_file_post, $task_row["name"] ), sprintf($email_file_post, email_date(time()), $uid_name, $_FILES["userfile"]["name"], $message ) );
+        email($mail_list, sprintf($title_file_post, $task_row["name"] ), sprintf($email_file_post, $uid_name, $_FILES["userfile"]["name"], $message ) );
       }
 
       break;

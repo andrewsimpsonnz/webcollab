@@ -183,8 +183,7 @@ if(isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
            $status = "";
            break;
        }
-       $message = sprintf($email, $MANAGER_NAME, email_date(time() ) ).
-                   sprintf($delete_list, $name_project, $name_task, $status, $row["text"] );
+       $message = $email . sprintf($delete_list, $name_project, $name_task, $status, $row["text"] );
        email($row["email"], $title, $message );
     }
   }

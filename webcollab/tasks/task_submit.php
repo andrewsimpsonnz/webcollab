@@ -240,8 +240,8 @@ ignore_user_abort(TRUE);
 
         //send email
         //$uid_name and $uid_email are from security.php
-        $message = sprintf($email, $MANAGER_NAME, email_date(time() ) ).
-                    sprintf($email_list, $name_project, $name_task, status($row["status"], $row["deadline"]), $uid_name, $uid_email, $row["text"], $BASE_URL );
+        $message = $email .
+                    sprintf($email_list, $name_project, $name_task, status($row["status"], $row["deadline"]), $uid_name, $uid_email, $row["text"] );
         email( $email_address_old_owner, $title, $message );
         }
       }
@@ -405,16 +405,16 @@ ignore_user_abort(TRUE);
       //email owner ?
       if(isset($_POST["mailowner"]) && ($_POST["mailowner"]=="on") && ($owner != 0) ) {
         $email_address_owner = db_result( db_query("SELECT email FROM users WHERE id=".$owner, 0), 0, 0 );
-        $message = sprintf($email1, $MANAGER_NAME, email_date(time() ) ).
-                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text, $BASE_URL );
+        $message = $email1 .
+                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text );
         email($email_address_owner, $title1, $message );
       }
 
       //do we need to send an email to the user group to announce this message
       if(isset($_POST["maillist"]) && $_POST["maillist"] == "on" ) {
 
-        $message = sprintf($email2, $MANAGER_NAME,  email_date(time() ) ).
-                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text, $BASE_URL );
+        $message = $email2 .
+                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text );
 
         $usergroup = "";
         $s = "";
@@ -606,16 +606,16 @@ ignore_user_abort(TRUE);
 
         $email_address_owner = db_result(db_query("SELECT email FROM users WHERE id=$owner", 0), 0, 0 );
 
-        $message = sprintf($email1, $MANAGER_NAME, email_date(time() ) ).
-                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text, $BASE_URL );
+        $message = $email1 .
+                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text );
         email($email_address_owner, $title1, $message );
       }
 
       //email the user group ?
       if(isset($_POST["maillist"]) && ($_POST["maillist"]=="on") ) {
 
-        $message = sprintf($email2, $MANAGER_NAME, $name_owner, email_date(time() ) ).
-                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text, $BASE_URL );
+        $message = sprintf($email2, $name_owner ).
+                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text );
 
         $usergroup = "";
         $s = "";

@@ -97,8 +97,7 @@ switch($_GET["action"] ){
 
     //mail the user that he/she had been deleted
     include_once(BASE."lang/lang_email.php" );
-    $message = sprintf($email_delete_user, $MANAGER_NAME, email_date(time() ), $EMAIL_ADMIN );
-    email($email, $title_delete_user, $message );
+    email($email, $title_delete_user, $email_delete_user );
 
     break;
 
