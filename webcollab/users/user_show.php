@@ -162,7 +162,7 @@ if( $tasks_owned + $projects_owned > 0 ) {
   }
 
   //Get the number of tasks
-  $q = db_query("SELECT id, name, parent, status, ".$epoch."finished_time) AS finished_time, usergroupid, globalaccess, projectid FROM ".PRE."tasks WHERE owner=$userid" );
+  $q = db_query("SELECT id, name, parent, status, ".$epoch."finished_time) AS finished_time, usergroupid, globalaccess, projectid FROM ".PRE."tasks WHERE owner=$userid AND archive='f'" );
 
   //show them
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {

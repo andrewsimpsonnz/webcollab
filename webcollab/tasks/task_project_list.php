@@ -200,6 +200,7 @@ $q = db_query("SELECT id,
                       completed
                       FROM ".PRE."tasks
                       WHERE parent=0
+                      AND archive='f'
                       ORDER BY name" );
 
 //check if there are projects
@@ -306,7 +307,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       $content .= sprintf($lang['percent_sprt'], $row['completed'])."<br />\n";
       $content .= "<i>".$lang['project_no_deadline']."</i><br />\n";
       //show subtasks that are not complete
-      $content .= listTasks($row['id'] );
+      if(! $condensed )
+        $content .= listTasks($row['id'] );
       break;
 
     case "active":

@@ -126,7 +126,7 @@ switch($TYPE) {
 
 //reparenting
 $content .= "<tr><td>".$lang['parent_task'].":</td><td><select name=\"parentid\">\n";
-$parentq = db_query("SELECT id, name, usergroupid, globalaccess FROM ".PRE."tasks WHERE id<>$taskid ORDER BY name");
+$parentq = db_query("SELECT id, name, usergroupid, globalaccess FROM ".PRE."tasks WHERE id<>$taskid AND archive='f' ORDER BY name");
 $content .= "<option value=\"0\"";
 
 if($TASKID_ROW['parent'] == 0 )

@@ -247,7 +247,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
   if(in_array($num, (array)$task_dates ) ) {
   
   //rows exist for this date - get them!
-  $q = db_query("SELECT id, name, parent, status, usergroupid, globalaccess, projectid FROM ".PRE."tasks WHERE deadline='$year-$month-$num' $tail" );
+  $q = db_query("SELECT id, name, parent, status, usergroupid, globalaccess, projectid FROM ".PRE."tasks WHERE deadline='$year-$month-$num' AND archive='f' $tail" );
 
     for( $j=0 ; $row = @db_fetch_array($q, $j ) ; $j++) {
 

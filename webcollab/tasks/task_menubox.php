@@ -50,7 +50,7 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ) {
                 "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang["delete_$TYPE"]."</a><br />\n".
                 "<br /><small><b>".$lang['global'].":</b></small><br />\n";
     
-    if($TYPE == "project" ){
+    if(($TYPE == "project" ) && ($TASKID_ROW['archive'] == 'f' ) ){
       $archive = "<a href=\"archive.php?x=$x&amp;action=submit_archive&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf("This will archive the project %s.  Continue? -translate", javascript_escape($TASKID_ROW['name'] ) )."')\">"."Archive project-translate"."</a><br />\n";
     }
   }
