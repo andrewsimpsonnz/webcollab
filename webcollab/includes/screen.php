@@ -111,13 +111,22 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
                "<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".
                "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".$web_charset."\" />\n";
 
-  if($page_type == 2 )
-    $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/print.css\" type=\"text/css\" />\n";
-  else
-    $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\" />\n";
-  
-  if($page_type == 3 )
-    $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/calendar.css\" type=\"text/css\" />\n";  
+  switch($page_type) {
+    case 2: //print
+      $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/print.css\" type=\"text/css\" />\n";
+      break;
+    
+    case 3: //calendar
+      $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\" />\n";
+      $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/calendar.css\" type=\"text/css\" />\n";
+      break;
+       
+    case 0: //main window + menu sidebar
+    case 1: //single main window (no menu sidebar)
+    default:            
+      $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\" />\n";
+      break;         
+  }
   
   //javascript to position cursor in the first box
   if($cursor || $check || $date) {
@@ -246,16 +255,25 @@ function create_bottom() {
   //end the main table row
   echo "</td></tr>\n</table>";
 
-  if($bottom_text ){
-    if($bottom_text == 1 )
+  switch($bottom_text) {
+    case 0: //no bottom text
+      $align = "";
+      break;
+      
+    case 1:
       $align = "style=\"text-align: left\"";
-    else
+      break;
+      
+    case 2:
+    default:
       $align = "style=\"text-align: center\"";
-   
-    //shows the logo
-    echo "<div class=\"bottomtext\" $align>Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;2002-2004</div>\n";
-  }
-   
+      break;
+ }
+ 
+ //shows the logo
+ if($bottom_text) {
+   echo "<div class=\"bottomtext\" $align>Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;2002-2004</div>\n";
+ }     
   //end xml parsing
   echo "</body>\n</html>\n";
   return;
