@@ -10,6 +10,7 @@
 <h1>WebCollab Setup</h1>
 <h3>SETUP INDEX</h3>
 <p><a href="#setup">WebCollab Setup Program</a><br>
+<a href="#upgrade">Upgrading to Newer WebCollab Version </a><br>
 <a href="#mysql">Manual Setup for MySQL</a><br>
 <a href="#postgresql">Manual Setup for PostgreSQL</a><br></p>
 <a name="setup"></a>
@@ -20,7 +21,7 @@ databases can be created.</p>
 <h4>1. First Time Setup</h4>
 <ol>
 <li>Navigate to your main WebCollab directory.</li>
-<li>For UNIX: Make [webcollab_directory]/config/config.php writable by everyone.
+<li>For UNIX: Make [webcollab_directory]/config/config.php file writable by everyone.
 <pre class="screen">
 #chmod 666 config.php
 </pre>
@@ -35,22 +36,6 @@ databases can be created.</p>
 </li>
 <li>Login at http://your_site/webcollab_directory/index.php (The default username/password is admin / admin123).</li>
 </ol>
-<h4>2. Upgrading from Earlier WebCollab Versions</h4>
-Versions 1.40 and 1.60 had database structure changes, and need to have the database structure updated before the later version will work.<br /><br />
-Version 1.60 contains an automated upgrade script (update.php) to simplify the database updating.
-<ol>
-<li>Install the new files.</li>
-<li>Point your browser at http://your_site/webcollab_directory/update.php (Replace
-'your_site'and 'webcollab_directory' with the relevant values for the new files on your site).</li>
-<li>Login as requested...</li>
-<li>Choose upgrade database.  Database upgrade is done automatically (If database upgrades are in fact not required, no harm will be done).</li>
-<li>For UNIX: Make [webcollab_directory]/config/config.php writable by everyone.</li>
-<li>Run the setup program, but when prompted, choose to use the existing database without creating a new database.</li> 
-<li>The setup program should auto-detect most parameters from your existing setup.  Fill in the missing values.</li>
-<li>All done!</li>
-<li>For UNIX: Make config.php protected again.</li>
-</ol>
-The database changes are backward compatible and do not affect stored data.  However, as with all upgrades, backing up your data is a sensible precaution.
 <h4>3. Altering Setup</h4>
 <ol>
 <li>For UNIX: Make [webcollab_directory]/config/config.php writable by everyone.</li>
@@ -60,6 +45,26 @@ The database changes are backward compatible and do not affect stored data.  How
 <li>Follow the on-screen instructions to setup WebCollab.</li>
 <li>For UNIX: Make config.php protected again.</li>
 </ol>
+<a name="upgrade"></a>
+<h3>UPGRADING WEBCOLLAB TO A NEWER VERSION</h3>
+<ol>
+<li>Install the new files in a new directory (You can install over the existing directory, but this method is safer).</li>
+<li>For UNIX: Make sure [webcollab_directory]/config/config.php file is writable by everyone.</li>
+<li>Point your web browser at http://your_site/webcollab_directory/setup.php (Replace
+'your_site'and 'webcollab_directory' with the relevant values for your site.</li>
+<li>At the first screen prompt, choose to use an <b>existing database</b> - instead of creating a new database.</li>
+<li>Enter your current database details at the screen prompt that follows.</li>
+<li>Let the setup program continue to the conclusion, but do not attempt to login.</li>
+<li>Point your browser at http://your_site/webcollab_directory/update.php (Replace
+'your_site'and 'webcollab_directory' with the relevant values for the new files on your site).</li>
+<li>Login as requested...</li>
+<li>Database upgrade is done automatically (If database upgrades are in fact not required, no harm will be done).</li>
+<li>All done!</li>
+<li>You can now delete your old WebCollab directory, and rename the new WebCollab directory to match the old.  Note that you <b>must</b> change the $BASE_URL parameter in /config/config.php to match the correct directory.</li>
+<li>For UNIX: Make config.php protected again.</li>
+</ol>
+<p>The database upgrades (if required) are backwardly compatible and do not affect stored data.  However, as with all upgrades, backing up your data is a sensible precaution.<br />
+Database upgrades are required on pre-1.40 and pre-1.60 databases.</p>
 <a name="mysql"></a><h3>MANUAL SETUP FOR MYSQL</h3>
 <h4>1. Database Setup and Customisation:</h4>
 <p><b>Note</b>: If you are using Linux, you can automate database creation and populating

@@ -37,7 +37,9 @@ For security, reinstate afterwards with:
 </pre>
 </dd>
 <dt>2. How to upgrade from an earlier version of WebCollab?</dt>
-<dd>Refer to the INSTALLATION file.  Briefly, all versions are upgradable by adding the new files.  Versions pre-1.40 and pre-1.60 need to have the database upgraded with the by pointing your we browser at /update.php.</dd>
+<dd>Refer to the INSTALLATION file.  Briefly, all versions are upgradable by adding the new files.  Versions pre-1.40 and pre-1.60 need to have the database upgraded with the by pointing your web browser at /update.php.</dd>
+<dt>3. All the documentation mentions the Apache web server. Can we use Microsoft IIS instead?</dt>
+<dd>WebCollab is not tested nor supported on Microsoft IIS.  That said, we have had successful reports of WebCollab running on Microsoft IIS (Windows Server 2003 and Windows Server 2000).  PHP and MySQL is still required.</dd>
 </dl>
 <a name="startup"></a>
 <h3>START UP PROBLEMS</h3>
@@ -180,9 +182,14 @@ You need to set your login name and password in the /config/config.php file.<br 
 WebCollab complies to RFC 2195 (CRAM-MD5), RFC 2554 (SMTP AUTH) and RFC 2595 (auth plain).</dd>
 <dt>3. Can WebCollab handle non US-ASCII characters (i.e. Languages other than US English)?</dt>
 <dd>For languages with more than "US-ASCII" characters (e.g.: French, German, Spanish etc), WebCollab
- attempts to send emails in 8 bit format.  This is accepted by almost all mail servers.  Sendmail, for instance, has had 8 bit support since 1993.<br>
-<br>
+ attempts to send emails in 8 bit format.  This is accepted by almost all mail servers.  Sendmail, for instance, has had 8 bit support since 1993.<br />
+<br />
 If the upstream SMTP server does not advertise support for 8 bit mail, WebCollab reverts to 'quoted-printable' encoding.  This follows the requirements of RFC 1652 (8BITMIME), RFC 1869 (Extended EHLO), RFC 2045 (quoted-printable), and RFC 2047 (8 bit extensions).</dd>   
+<dt>4. What is the mailing list (mentioned in Admin Email), and how does it work?</dt>
+<dd>The mailing list is set up in Admin Config, which can only be accessed by an admin.<br />
+<br />
+Every email sent by WebCollab (except user details) is also sent to the mailing list.  Users on the mailing list will then get a lot of mail, but they will be fully abreast of the site workings.   
+</dd>
 </dl>
 <a name="security"></a>
 <h3>SECURITY</h3>
