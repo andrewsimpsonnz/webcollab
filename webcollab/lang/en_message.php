@@ -65,6 +65,7 @@ $lang = array(
  "add" => "Add",
  "update" => "Update",
  "submit_changes" => "Submit changes",
+ "continue" => "Continue",
  "reset" => "Reset",
  "manage" => "Manage",
  "edit" => "Edit",
@@ -90,7 +91,7 @@ $lang = array(
  
 //admin config
  "admin_config" => "Admin config",
- "email_settings" => "Email header settings", 
+ "email_settings" => "Email header settings",
  "admin_email" => "Admin email",
  "email_reply" => "Email 'reply to'",
  "email_from" => "Email 'from'",
@@ -130,6 +131,7 @@ $lang = array(
  //files
  "manage_files" => "Manage files",
  "no_files" => "There are no uploaded files to manage",
+ "no_file_uploads" => "The server configuration for this site does not allow file uploads to be made",
  "file" => "File:",
  "uploader" => "Uploader:",
  "files_assoc_sprt" => "Files associated with this %s",
@@ -178,7 +180,7 @@ $lang = array(
  "access_denied" => "Access denied",
  "private_usergroup" => "Sorry, this area is in a private usergroup and you do not have access rights.",
  "invalid_date" => "Invalid date",
- "invalid_date_sprt" => "The date of %s is not a valid calendar date (Check the number of days in month).  Please go back and re-enter a valid date.",
+ "invalid_date_sprt" => "The date of %s is not a valid calendar date (Check the number of days in month).<br />Please go back and re-enter a valid date.",
 
 
  //taskgroups
@@ -227,6 +229,9 @@ $lang = array(
  "no_users" => "No users are known to the system",
  "users" => "Users",
  "existing_users" => "Existing users",
+ "email_users" => "Email users",
+ "select_usergroup" => "Usergroup selected from below:",
+ "message_sent_maillist" => "For all selections the message is also sent to the mailing list.",
  "who_online" => "Who is online?",
  "edit_details" => "Edit user details",
  "show_details" => "Show user details",
@@ -274,7 +279,7 @@ $lang = array(
  "none" => "None",
  "no_group" => "No group",
  "all_groups" => "All groups",
- "all_users" => "All users can view this task?",
+ "all_users_view" => "All users can view this task?",
  "group_edit" => "Anyone in the usergroup can edit?",
  "project_description" => "Project description",
  "task_description" => "Task description",
@@ -344,6 +349,8 @@ $lang = array(
 
 
 //bits 'n' pieces
-  "calendar" => "Calendar" );
+  "calendar" => "Calendar",
+  "all_users" => "All users"
+   );
 
 ?>

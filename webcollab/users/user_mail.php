@@ -44,9 +44,9 @@ $content .=
         "<form method=\"POST\" action=\"users/user_mail_send.php\">\n".
           "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
           "<table border=\"0\">\n".
-          "<tr><td><input type=\"radio\" value=\"all\" name=\"group\" id=\"all\" checked /><label for=\"all\" />All users</label></td></tr>\n".
-          "<tr><td><input type=\"radio\" value=\"maillist\" name=\"group\" id=\"maillist\" /><label for=\"maillist\" />Mailing list only</label></td></tr>\n".
-          "<tr><td><input type=\"radio\" value=\"group\" name=\"group\" id=\"group\" /><label for=\"group\" />Usergroup selected from below</label></td></tr>\n";
+          "<tr><td><input type=\"radio\" value=\"all\" name=\"group\" id=\"all\" checked /><label for=\"all\" />".$lang["all_users"]."</label></td></tr>\n".
+          "<tr><td><input type=\"radio\" value=\"maillist\" name=\"group\" id=\"maillist\" /><label for=\"maillist\" />".$lang["mailing_list"]."</label></td></tr>\n".
+          "<tr><td><input type=\"radio\" value=\"group\" name=\"group\" id=\"group\" /><label for=\"group\" />".$lang["select_usergroup"]."</label></td></tr>\n";
 
 //add user-groups
 $q = db_query("SELECT name, id FROM usergroups ORDER BY name" );
@@ -59,11 +59,11 @@ $content .= "</select><small><i>".$lang["select_instruct"]."</i></small></td></t
             "<table border=\"0\">\n".
             "<tr><td>Subject:</td> <td><input type=\"text\" name=\"subject\" size=\"30\" /></td></tr>\n".
             "<tr><td>Message:</td><td><textarea name=\"message\" rows=\"10\" cols=\"60\" /></textarea></td></tr>\n".
-            "<tr><td></td><td>For all selections the message is also sent to the mailing list.</td></tr>\n".
+            "<tr><td></td><td>".$lang["message_sent_maillist"]."</td></tr>\n".
             "</table><br />\n".
             "<input type=\"submit\" value=\"Send\" />\n".
             "<input type=\"reset\" value=\"".$lang["reset"]."\" />\n".
             "</form>\n";
 
-new_box("Email - translate me!", $content );
+new_box($lang["admin_email"], $content );
 ?>

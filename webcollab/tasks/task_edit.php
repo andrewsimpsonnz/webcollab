@@ -279,7 +279,7 @@ $group = "";
 if($row["groupaccess"] == 't' )
   $group = "CHECKED";
 
-$content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users"]."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" $global /></td></tr>\n".
+$content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users_view"]."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" $global /></td></tr>\n".
             "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" $group /></td></tr>\n".
 
             "<tr> <td>".$lang["task_description"]."</td> <td><TEXTAREA name=\"text\" rows=\"5\" cols=\"60\">".$row["text"]."</TEXTAREA></td> </tr>\n".

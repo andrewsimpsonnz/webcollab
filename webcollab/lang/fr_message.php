@@ -66,6 +66,8 @@ $lang = array(
  "update" => "MaJ",
  "submit_changes" => "Modifier",
 //**
+ "continue" => "Continue",
+//**
  "reset" => "Reset",
  "manage" => "Gérer",
  "edit" => "Editer",
@@ -131,6 +133,8 @@ $lang = array(
  //files
  "manage_files" => "Gestion des fichiers",
  "no_files" => "Aucun fichiers téléchargés à gérer",
+//**
+ "no_file_uploads" => "The server configuration for this site does not allow file uploads to be made",
  "file" => "Fichier:",
  "uploader" => "Télécharger:",
  "files_assoc_sprt" => "Fichiers associés avec %s",
@@ -229,6 +233,12 @@ $lang = array(
  "no_users" => "Aucun utilisateurs connus sur ce système",
  "users" => "Utilisateurs",
  "existing_users" => "Utilisateurs existants",
+//**
+ "email_users" => "Email users",
+//**
+ "select_usergroup" => "Usergroup selected from below:",
+//**
+ "message_sent_maillist" => "For all selections the message is also sent to the mailing list.",
  "who_online" => "Qui est connecté?",
  "edit_details" => "Editer les informations d'un utilisateurs",
  "show_details" => "Afficher les informations d'un utilisateurs",
@@ -276,7 +286,7 @@ $lang = array(
  "none" => "Vide",
  "no_group" => "Aucun groupe",
  "all_groups" => "tout les  groupes",
- "all_users" => "Tous les utilisateurs peuvent voir cette tache ?",
+ "all_users_view" => "Tous les utilisateurs peuvent voir cette tache ?",
  "group_edit" => "Tout utilisateur du groupe peut éditer ?",
  "project_description" => "Description du projet",
  "task_description" => "Description de la tache",
@@ -346,6 +356,9 @@ $lang = array(
 
 
 //bits 'n' pieces
-  "calendar" => "Calendrier" );
+  "calendar" => "Calendrier",
+//**
+  "all_users" => "All users"
+   );
 
 ?>

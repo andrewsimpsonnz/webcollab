@@ -48,7 +48,7 @@ if( ! isset($_POST["group"]) || ! valid_string($_POST["group"]) )
 
 //check we have a message!
 if( ! valid_string($_POST["message"] ) )
-  warning("No message", "There is no message to send.  Please go back and enter a message." );
+  warning($lang["admin_email"], $lang["no_message"] );
 
 //wordwrap and clean out nasty stuff
 $message = wordwrap(clean($_POST["message"], 100 ) );
@@ -76,7 +76,7 @@ else
       if(isset($_POST["usergroup"] ) )
         $max = sizeof($_POST["usergroup"] );
       else
-        warning("No addresses"," No usergroup addresses entered.  Please go back and select a usergroup." );
+        warning($lang["admin_email"], $lang["no_usergroup"] );
 
       (array)$usergroup = $_POST["usergroup"];
 
@@ -130,11 +130,10 @@ while(list(,$address) = @each($address_array ) ) {
 }
 
 //silly error check
-if(strlen($to ) == 0 )
-  warning("Admin email","No addresses were given." );
-
-//send it
-email($to, $subject, $message );
+if(strlen($to ) != 0 ) {
+  //send it
+  email($to, $subject, $message );
+}
 
 //all done: warp back to main screen (Aye, aye captain).
 header("Location: ".$BASE_URL."main.php?x=$x" );

@@ -136,7 +136,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
     $content .= "<option value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</option>\n";
 
   $content .= "</select></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users"]."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS." /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users_view"]."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS." /></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT." /></td></tr>\n".
 
               "<tr> <td>".$lang["task_description"]."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
@@ -206,7 +206,7 @@ else {
     $content .= "<option value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</option>\n";
 
   $content .= "</select></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users"]."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS." /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users_view"]."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS." /></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT." /></td></tr>\n".
 
               "<tr> <td>".$lang["project_description"]."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".

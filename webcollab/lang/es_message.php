@@ -66,6 +66,8 @@ $lang = array(
  "update" => "Actualizar",
  "submit_changes" => "Enviar cambios",
 //**
+ "continue" => "Continue",
+//**
  "reset" => "Reset",
  "manage" => "Administrar",
  "edit" => "Editar",
@@ -132,6 +134,8 @@ $lang = array(
  //files
  "manage_files" => "Manipular archivos",
  "no_files" => "No hay archivos enviados para manipular.",
+//**
+ "no_file_uploads" => "The server configuration for this site does not allow file uploads to be made",
  "file" => "Archivo:",
  "uploader" => "Uploader:",
  "files_assoc_sprt" => "Archivos asociados con %s",
@@ -230,6 +234,12 @@ $lang = array(
  "no_users" => "No hay usuarios conocidos del sistema",
  "users" => "Usuarios",
  "existing_users" => "Usuarios existentes",
+//**
+ "email_users" => "Email users",
+//**
+ "select_usergroup" => "Usergroup selected from below:",
+//**
+ "message_sent_maillist" => "For all selections the message is also sent to the mailing list.",
  "who_online" => "Quien esta en-linea?",
  "edit_details" => "Editar detalles del usuario",
  "show_details" => "Mostrar detalles del usuario",
@@ -277,7 +287,7 @@ $lang = array(
  "none" => "None",
  "no_group" => "No group",
  "all_groups" => "All groups",
- "all_users" => "Todos los usuarios puedn ver esta tarea?",
+ "all_users_view" => "Todos los usuarios puedn ver esta tarea?",
  //**
  "group_edit" => "Anyone in the usergroup can edit?",
  "project_description" => "Descripcion del proyecto",
@@ -350,6 +360,9 @@ $lang = array(
 
 
 //bits 'n' pieces
-  "calendar" => "Calendario" );
+  "calendar" => "Calendario"
+//**
+  "all_users" => "All users"
+   );
 
 ?>

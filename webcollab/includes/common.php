@@ -125,12 +125,14 @@ function error($box_title, $content ) {
 //
 function warning($box_title, $message ) {
 
+  global $lang;
+
   include_once(BASE."includes/screen.php" );
 
-  create_top("Warning", 1 );
+  create_top($lang["error"], 1 );
 
   $content = "<div align=\"center\">$message<br /><br />\n".
-             "<form><input type=\"submit\" value=\"Go Back\" onclick=\"history.back()\"></form></div>\n";
+             "<form><input type=\"submit\" value=\"".$lang["continue"]."\" onclick=\"history.back()\"></form></div>\n";
 
   new_box($box_title, $content, "boxdata", "singlebox" );
 
