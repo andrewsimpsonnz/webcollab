@@ -39,10 +39,9 @@ include_once(BASE."includes/time.php" );
 
 function listTasks($projectid ) {
   global $x, $epoch, $now ,$admin, $gid, $lang, $task_state, $tz_offset;
-  global $task_array, $parent_array, $used_array;
+  global $task_array, $parent_array;
    
   $content = "";
-  //$used_array ="";
   $parent_array = "";
     
   $q = db_query("SELECT id,
@@ -54,7 +53,6 @@ function listTasks($projectid ) {
                         ".$epoch." deadline )
                        FROM ".PRE."tasks WHERE projectid=$projectid 
                        AND parent<>0
-                       AND status<>'done'
                        ORDER BY name" );
   
   if(db_numrows($q) < 1 )
@@ -64,34 +62,38 @@ function listTasks($projectid ) {
     
   for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
   
-    //check if user can view this task
-    if( ($admin != 1 ) && ($row[4] != "t" ) && ($row[5] != 0 ) ) {
-      if( ! in_array( $row[5], (array)$gid ) )
-        continue;
-    }
-
     //put values into array
     $task_array[$i]["id"] = $row[0];
     $task_array[$i]["name"] = $row[1];
     $task_array[$i]["parent"] = $row[2];
+    $task_array[$i]["status"] = $row[3];
+    $task_array[$i]["globalaccess"] = $row[4];
+    $task_array[$i]["usergroupid"] = $row[5];
     
     //add suffix information
     switch( $row[3] ) {
       case "cantcomplete":
-        $task_array[$i]["state"] = "<b><i>".$task_state["cantcomplete"]."</i></b>";
+        $suffix = "</a> &nbsp;<b><i>".$task_state["cantcomplete"]."</i></b><br />\n";
         break;
 
       case "notactive":
-        $task_array[$i]["state"] = "<i>".$task_state["task_planned"]."</i>";
+        $suffix = "</a> &nbsp;<i>".$task_state["task_planned"]."</i><br />\n";
         break;
 
+      case "done":
+        $suffix = "";
+      
       default:
         //check if late
         if( ($now + $tz_offset - $row[6] ) >= 86400 ) {
-          $task_array[$i]["state"] = "<span class=\"late\">".$lang["late_g"]."</span>";
+          $suffix = "</a> &nbsp;<span class=\"late\">".$lang["late_g"]."</span><br />\n";
         }
         break;
     }
+    
+    $task_array[$i]["task"] = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_array[$i]["id"]."\">".
+                              $task_array[$i]["name"].$suffix;
+                               
         
     //if this is a subtask, store the parent id 
     if($row[2] != $projectid ) {
@@ -102,6 +104,7 @@ function listTasks($projectid ) {
   if(sizeof($parent_array) > 10 )
     $parent_array = array_unique($parent_array);
   $max = sizeof($task_array);
+  $flag = 1;
   
   //iteration for main tasks
   for($i=0 ; $i < $max ; $i++ ){
@@ -110,7 +113,17 @@ function listTasks($projectid ) {
     if($task_array[$i]["parent"] != $projectid ){
       continue;
     }
-    $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_array[$i]["id"]."\">".$task_array[$i]["name"]."</a> &nbsp;".$task_array[$i]["state"]."<br />\n";
+      
+    //check for private usergroups, or completed tasks
+    if( ($admin == 1) || ($task_array[$i]["usergroupid"] == 0 ) ||
+        ($task_array[$i]["globalaccess"] == 't' ) ||
+        ($task_array[$i]["status"] != 'done' ) ||
+        (in_array($task_array[$i]["usergroupid"], (array)$gid ) ) ) {
+      
+      //show line
+      $content .= $task_array[$i]["task"];
+      $flag = 0; 
+    }
     
     //if this task has children (subtasks), iterate recursively to find them 
     if(in_array($task_array[$i]["id"], (array)$parent_array ) ){
@@ -118,7 +131,10 @@ function listTasks($projectid ) {
     }
     $content .= "</li>\n";
   }
-  $content .= "</ul>\n";  
+  $content .= "</ul>\n";
+  
+  if($flag )
+    $content = "";
   return $content;   
 }   
 
@@ -127,10 +143,11 @@ function listTasks($projectid ) {
 //
 function find_children($parent ) {
 
-  global $task_array, $parent_array, $used_array, $x;
+  global $task_array, $parent_array, $x, $admin;
 
   $content = "<ul>\n";
   $max = sizeof($task_array);
+  $flag = 1;
        
   for($i=0 ; $i < $max ; $i++ ) {
     
@@ -138,7 +155,17 @@ function find_children($parent ) {
     if($task_array[$i]["parent"] != $parent ){
       continue;
     }
-    $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_array[$i]["id"]."\">".$task_array[$i]["name"]."</a> &nbsp;".$task_array[$i]["state"]."<br />\n";
+    
+    //check for private usergroups, or completed tasks
+    if( ($admin == 1) || ($task_array[$i]["usergroupid"] == 0 ) ||
+        ($task_array[$i]["globalaccess"] == 't' ) ||
+        ($task_array[$i]["status"] != 'done' ) ||
+        (in_array($task_array[$i]["usergroupid"], (array)$gid ) ) ) {
+      
+      //show line
+      $content .= $task_array[$i]["task"];
+      $flag = 0;
+    }
     
     //if this task has children (subtasks), iterate recursively to find them
     if(in_array($task_array[$i]["id"], $parent_array ) ){
@@ -146,7 +173,10 @@ function find_children($parent ) {
     }
     $content .= "</li>\n";    
   }
-  $content .= "</ul>\n"; 
+  $content .= "</ul>\n";
+  
+  if($flag )
+    $content = ""; 
   return $content;
 }      
 
