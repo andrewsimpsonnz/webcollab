@@ -45,6 +45,9 @@ if( ! isset($_GET["userid"]) || ! is_numeric($_GET["userid"]) )
 
 $userid = $_GET["userid"];
 
+//if user aborts, let the script carry onto the end
+ignore_user_abort(TRUE);
+
 if(isset($_GET["action"] ) && $_GET["action"] == "permdel" ) {
 
   //kiss your ass goodbye :)

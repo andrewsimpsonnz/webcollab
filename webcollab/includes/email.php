@@ -75,6 +75,9 @@ function email($to, $subject, $message ) {
     return;
   }
 
+  //if user aborts, let the script carry onto the end
+  ignore_user_abort(TRUE);
+
   //send message using SMTP
   //open an SMTP connection at the mail host
   $host = $SMTP_HOST;

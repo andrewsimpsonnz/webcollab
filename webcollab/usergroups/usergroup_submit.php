@@ -40,6 +40,9 @@ if( $admin != 1 )
 if( ! isset($_REQUEST["action"] ) )
   error("Usergroups submit", "No action given" );
 
+//if user aborts, let the script carry onto the end
+ignore_user_abort(TRUE);
+
   switch($_REQUEST["action"] ) {
 
     //delete a usergroup

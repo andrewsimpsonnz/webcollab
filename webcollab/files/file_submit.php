@@ -38,6 +38,9 @@ include_once( BASE."config.php" );
 if( ! isset($_REQUEST["action"]) || strlen($_REQUEST["action"]) == 0 )
   error("File submit", "No action given" );
 
+//if user aborts, let the script carry onto the end
+ignore_user_abort(TRUE);
+
   switch($_REQUEST["action"] ) {
 
     //handle a file upload

@@ -42,6 +42,9 @@ $admin_state ="";
 if( ! isset($_REQUEST["action"]) )
   error("User submit", "No request given" );
 
+//if user aborts, let the script carry onto the end
+ignore_user_abort(TRUE);  
+
   switch($_REQUEST["action"] ) {
 
     //revive a user

@@ -39,6 +39,9 @@ if( $admin != 1 ) {
   return;
 }
 
+//if user aborts, let the script carry onto the end
+ignore_user_abort(TRUE);
+
 if($USE_EMAIL == "Y" ){
 
   //check and validate email addresses
