@@ -42,8 +42,7 @@ $content = "";
 $content .= "<A href=\"main.php?x=".$x."\">".$lang["home_page"]."</A><BR>\n".
             "<A href=\"tasks.php?x=".$x."&action=summary\">".$lang["summary_page"]."</A><BR>\n".
             "<A href=\"users.php?x=".$x."&action=todo\">".$lang["todo_list"]."</A><BR>\n".
-	    "<A href=\"calendar.php?x=".$x."\">".$lang["calendar"]."</A><BR>\n".
-            //"<A href=\"includes/update.php?x=".$x."\">Update</A><BR>\n".
+            "<A href=\"calendar.php?x=".$x."\">".$lang["calendar"]."</A><BR>\n".
             "<A href=\"includes/logout.php?x=".$x."\">".$lang["log_out"]."</A><BR>\n";
 
 //show
