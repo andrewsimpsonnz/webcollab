@@ -116,9 +116,9 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
 
 <head>
   <title><?php echo $title ?></title>
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="StyleSheet" href="<?php echo BASE; ?>css.css" type="text/css">
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="StyleSheet" href="<?php echo BASE; ?>css.css" type="text/css" />
   <?php echo $position; ?>
 </head>
 
