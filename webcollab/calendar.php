@@ -140,25 +140,41 @@ for ($num = 1; $num <= $numdays; $num++) {
           continue;
       }
 
-      switch( $row["parent"]) {
+      switch( $row["status"]) {
 
-        case "0":
-	  //project
-	  if( db_result( db_query( "SELECT COUNT(*) FROM tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent>0" ), 0, 0 ) == 0 )
-            $name = "<FONT color=\"green\"><U>".$row["name"]."</U>";
-	  else
-	    $name = "<FONT color=\"blue\">".$row["name"];
+        case "notactive":
+	case "cantcomplete":
+	  //don't show if not active
+	  continue;
 	  break;
 
         default:
-          //task
-          if( $row["status"] == "done" )
-            $name = "<FONT color=\"green\">".$row["name"];
-          else
-            $name = "<FONT color=\"red\">".$row["name"];
-	  break;
+	  //active task or project
+          switch( $row["parent"]) {
+
+          case "0":
+            //project
+	    //check if tasks are all complete
+	    if( db_result( db_query( "SELECT COUNT(*) FROM tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent>0" ), 0, 0 ) == 0 )
+              $name = "<FONT color=\"green\"><U>".$row["name"]."</U>";
+	    else
+	      $name = "<FONT color=\"blue\">".$row["name"];
+
+	    $content .= "<A href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$name."</FONT></A><BR>\n";
+	    break;
+
+          default:
+	    //task
+	    if( $row["status"] == "done" )
+              $name = "<FONT color=\"green\">".$row["name"];
+            else
+              $name = "<FONT color=\"red\">".$row["name"];
+
+	    $content .= "<A href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$name."</FONT></A><BR>\n";
+	    break;
+         }
+         break;
       }
-      $content .= "<A href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$name."</FONT></A><BR>\n";
       $pad++;
     }
   }
