@@ -34,15 +34,18 @@ $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y \a\t g:i a 
 $title_file_post        = $ABBR_MANAGER_NAME.": New file upload: %s";
 $email_file_post        = "Hello,\n\nThis is the ".$MANAGER_NAME." site informing you that a new file has been uploaded on ".$email_date." by %1\$s.\n\n".
                           "File:        %2\$s\n".
-			  "Description: %3\$s";
+			  "Description: %3\$s\n\n".
+                          "Please go to the website for more details.\n\n".$BASE_URL."\n";
 
 
 $title_forum_post        = $ABBR_MANAGER_NAME.": New forum post: %s";
-$email_forum_post        = "Hello,\n\nThis is the ".$MANAGER_NAME." site informing you that a new forum post has been made on ".$email_date." by %1\$s:\n\n%2\$s"; 
+$email_forum_post        = "Hello,\n\nThis is the ".$MANAGER_NAME." site informing you that a new forum post has been made on ".$email_date." by %1\$s:\n\n%2\$s\n\n".
+                           "Please go to the website for more details.\n\n".$BASE_URL."\n";
 $email_forum_reply       = "Hello,\n\nThis is the ".$MANAGER_NAME." site informing you that a new forum post has been made on ".$email_date." by %1\$s.\n\n".
                            "This post is in reply to an earlier post by %2\$s.\n\n".
                            "Original post:\n %3\$s\n\n".
-                           "New reply:\n%4\$s\n";
+                           "New reply:\n%4\$s\n\n".
+                           "Please go to the website for more details.\n\n".$BASE_URL."\n";
 
 
 $email_list =  "Project:  %1\$s\n".
