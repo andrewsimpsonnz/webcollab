@@ -25,380 +25,384 @@
 
   Maintainer: Stoyan Dimitrov <stoyan at adiumdesign dot com>
 
-*/
-
-/*
-General formatting:
-
-"xxxx"     == string in title case (eg: "Project")
-
-"xxxx_sprt" == formatted print string (eg: "Files associated with this %s" - where %s is inserted by the code)
-
-              Formatted strings with %1/$s, %2/$s, %3/$s etc. can have parameters interchanged - as in:
-
-                 "Message from %1\$s about %2\$s" _could also be_ "Message about %2\$s from %1\$s"
-
-              This can be useful for translating to different languages.
-
- "xxxx_g" == graphical string
-
- "xxxx_javascript == javascript string with single quotes escaped as in "Confirmer l\'effacement!"
-
+  
+  NOTE: This file is written in UTF-8 character set
+    
 */
 
 //required language encodings
-$web_charset                        = "windows-1251";
-$email_charset                      = "windows-1251";
+define('CHARACTER_SET', "UTF-8" );
 
 //dates
-$month_array                        = array (NULL, "Яну", "Фев", "Мар", "Апр", "Май", "Юни", "Юли", "Авг", "Сеп", "Окт", "Ное", "Дек" );
-$week_array                         = array('Нед', 'Пон', 'Вто', 'Стя', 'Чет', 'Пет', 'Съб' );
+$month_array                              = array (NULL, "Яну", "Фев", "Мар", "Апр", "Май", "Юни", "Юли", "Авг", "Сеп", "Окт", "Ное", "Дек" );
+$week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Чет', 'Пет', 'Съб' );
 
 //task states
-$task_state = array(
 //priorities
-    "dontdo"                        => "Недей",
-    "low"                           => "Нисък",
-    "normal"                        => "Нормален",
-    "high"                          => "Висок",
-    "yesterday"                     => "За вчера!",
+    $task_state['dontdo']                 = 'Недей';
+    $task_state['low']                    = 'Нисък';
+    $task_state['normal']                 = 'Нормален';
+    $task_state['high']                   = 'Висок';
+    $task_state['yesterday']              = 'За вчера!';
 //status
-    "new"                           => "Нов",
-    "planned"                       => "Планиран (неактивен)",
-    "active"                        => "Активен (в процес)",
-    "cantcomplete"                  => "В застой",
-    "completed"                     => "Завършено",
-    "done"                          => "Готов",
-    "task_planned"                  => " Планиран",
-    "task_active"                   => " Активен",
+    $task_state['new']                    = 'Нов';
+    $task_state['planned']                = 'Планиран (неактивен)';
+    $task_state['active']                 = 'Активен (в процес)';
+    $task_state['cantcomplete']           = 'В застой';
+    $task_state['completed']              = 'Завършено';
+    $task_state['done']                   = 'Готов';
+    $task_state['task_planned']           = ' Планиран';
+    $task_state['task_active']            = ' Активен';
 //project states
-    "planned_project"               => "Планиран проект (неактивен)",
-    "no_deadline_project"           => "Няма краен срок",
-    "active_project"                => "Активен проект"
-);
+    $task_state['planned_project']        = 'Планиран проект (неактивен)';
+    $task_state['no_deadline_project']    = 'Няма краен срок';
+    $task_state['active_project']         = 'Активен проект';
+
 
 //common items
-$lang = array(
-    "description"                   => "Описание",
-    "name"                          => "Име",
-    "add"                           => "Добави",
-    "update"                        => "Обнови",
-    "submit_changes"                => "Запази",
-    "continue"                      => "Продължи",
-    "reset"                         => "Изчисти",
-    "manage"                        => "Управление",
-    "edit"                          => "Промени",
-    "delete"                        => "Изтрий",
-    "del"                           => "Изтрий",
-    "confirm_del_javascript"        => "Потвърдете изтриване!",
-    "yes"                           => "Да",
-    "no"                            => "Не",
-    "action"                        => "Действие",
-    "task"                          => "Задача",
-    "tasks"                         => "Задачи",
-    "project"                       => "Проект",
-    "info"                          => "Информация",
-    "bytes"                         => " байта",
-    "select_instruct"               => " (С Ctrl се избират повече от една група)",
-    "member_groups"                 => "Потребителят е член на показаните групи (ако има)",
-    "login"                         => "Вход",
-    "error"                         => "Грешка",
-    "no_login"                      => "Достъпът отказан, грешно име или парола",
-    "please_login"                  => "Моля влезте",
+    $lang['description']                  = 'Описание';
+    $lang['name']                         = 'Име';
+    $lang['add']                          = 'Добави';
+    $lang['update']                       = 'Обнови';
+    $lang['submit_changes']               = 'Запази';
+    $lang['continue']                     = 'Продължи';
+    $lang['reset']                        = 'Изчисти';
+    $lang['manage']                       = 'Управление';
+    $lang['edit']                         = 'Промени';
+    $lang['delete']                       = 'Изтрий';
+    $lang['del']                          = 'Изтрий';
+    $lang['confirm_del_javascript']       = 'Потвърдете изтриване!';
+    $lang['yes']                          = 'Да';
+    $lang['no']                           = 'Не';
+    $lang['action']                       = 'Действие';
+    $lang['task']                         = 'Задача';
+    $lang['tasks']                        = 'Задачи';
+    $lang['project']                      = 'Проект';
+    $lang['info']                         = 'Информация';
+    $lang['bytes']                        = ' байта';
+    $lang['select_instruct']              = ' (С Ctrl се избират повече от една група)';
+    $lang['member_groups']                = 'Потребителят е член на показаните групи (ако има)';
+    $lang['login']                        = 'Вход';
+    $lang['error']                        = 'Грешка';
+    $lang['no_login']                     = 'Достъпът отказан, грешно име или парола';
+//**    
+    $lang['redirect_sprt']                = 'You will automatically return to Login after a %d second delay';
+//**
+    $lang['login_now']                    = 'Please click here to return to Login now';   
+    $lang['please_login']                 = 'Моля влезте';
+//**    
+    $lang['go']                           = 'Go!';
 //graphic items
-    "late_g"                        => "&nbsp;ЗАКЪСНЕНИЕ&nbsp;",
-    "new_g"                         => "&nbsp;НОВО&nbsp;",
-    "updated_g"                     => "&nbsp;ОБНОВЕНО&nbsp;",
+    $lang['late_g']                       = '&nbsp;ЗАКЪСНЕНИЕ&nbsp;';
+    $lang['new_g']                        = '&nbsp;НОВО&nbsp;';
+    $lang['updated_g']                    = '&nbsp;ОБНОВЕНО&nbsp;';
 //admin config
-    "admin_config"                  => "Админ настройки",
-    "email_settings"                => "е-Поща настройки на header",
-    "admin_email"                   => "Админ е-Поща",
-    "email_reply"                   => "е-Поща 'reply to'",
-    "email_from"                    => "е-Поща 'from'",
-    "mailing_list"                  => "Пощенски списък",
-    "default_checkbox"              => "Подразбиращи се настройки за Проект / Задачи",
-    "allow_globalaccess"            => "Позволи глобален достъп",
-    "allow_group_edit"              => "Позволи всеки в групата да променя",
-    "set_email_owner"               => "Винаги изпращай писмо на притежателя с промените",
-    "set_email_group"               => "Винаги изпращай писмо до групата с промените",
-    "configuration"                 => "Конфигуриране",
+    $lang['admin_config']                 = 'Админ настройки';
+    $lang['email_settings']               = 'е-Поща настройки на header';
+    $lang['admin_email']                  = 'Админ е-Поща';
+    $lang['email_reply']                  = 'е-Поща \'reply to\'';
+    $lang['email_from']                   = 'е-Поща \'from\'';
+    $lang['mailing_list']                 = 'Пощенски списък';
+    $lang['default_checkbox']             = 'Подразбиращи се настройки за Проект / Задачи';
+    $lang['allow_globalaccess']           = 'Позволи глобален достъп';
+    $lang['allow_group_edit']             = 'Позволи всеки в групата да променя';
+    $lang['set_email_owner']              = 'Винаги изпращай писмо на притежателя с промените';
+    $lang['set_email_group']              = 'Винаги изпращай писмо до групата с промените';
+//**    
+    $lang['project_listing_order']        = 'Project listing order';
+//**    
+    $lang['task_listing_order']           = 'Task listing order'; 
+    $lang['configuration']                = 'Configuration';
+    $lang['configuration']                = 'Конфигуриране';
+//archive
+//**
+    $lang['archived_projects']            = 'Archived Projects';    
 //contacts
-    "firstname"                     => "Име:",
-    "lastname"                      => "Фамилия:",
-    "company"                       => "Компания:",
-    "home_phone"                    => "Домашен телефон:",
-    "mobile"                        => "Мобилен телефон:",
-    "fax"                           => "Факс-номер:",
-    "bus_phone"                     => "Служебен телефон:",
-    "address"                       => "Адрес:",
-    "postal"                        => "Пощенски код:",
-    "city"                          => "Град:",
-    "email"                         => "Е-поща:",
-    "notes"                         => "Бележка:",
-    "add_contact"                   => "Добави контакт",
-    "del_contact"                   => "Изтрий контакт",
-    "contact_info"                  => "Контактна информация",
-    "contacts"                      => "Контакти",
-    "contact_add_info"              => "Ако бъде добавено име на компания тогава то ще бъде показвано вместо потребителското.",
-    "show_contact"                  => "Покажи контакт",
-    "edit_contact"                  => "Промяна контакт",
-    "contact_submit"                => "Добави контакт",
-    "contact_warn"                  => "Няма достатъчно данни за добавяне на контакт, моля върнете се и добавете поне 'Име' и 'Фамилия'",
+    $lang['firstname']                    = 'Име:';
+    $lang['lastname']                     = 'Фамилия:';
+    $lang['company']                      = 'Компания:';
+    $lang['home_phone']                   = 'Домашен телефон:';
+    $lang['mobile']                       = 'Мобилен телефон:';
+    $lang['fax']                          = 'Факс-номер:';
+    $lang['bus_phone']                    = 'Служебен телефон:';
+    $lang['address']                      = 'Адрес:';
+    $lang['postal']                       = 'Пощенски код:';
+    $lang['city']                         = 'Град:';
+    $lang['email']                        = 'Е-поща:';
+    $lang['notes']                        = 'Бележка:';
+    $lang['add_contact']                  = 'Добави контакт';
+    $lang['del_contact']                  = 'Изтрий контакт';
+    $lang['contact_info']                 = 'Контактна информация';
+    $lang['contacts']                     = 'Контакти';
+    $lang['contact_add_info']             = 'Ако бъде добавено име на компания тогава то ще бъде показвано вместо потребителското.';
+    $lang['show_contact']                 = 'Покажи контакт';
+    $lang['edit_contact']                 = 'Промяна контакт';
+    $lang['contact_submit']               = 'Добави контакт';
+    $lang['contact_warn']                 = 'Няма достатъчно данни за добавяне на контакт, моля върнете се и добавете поне \'Име\' и \'Фамилия\'';
 //files
-    "manage_files"                  => "Управление файлове",
-    "no_files"                      => "Няма качени файлове",
-    "no_file_uploads"               => "Конфигурацията на сървъра за тази страница не позволява качването на файлове",
-    "file"                          => "Файл:",
-    "uploader"                      => "Качване:",
-    "files_assoc_project"           => "Файлове към този проект",
-    "files_assoc_task"              => "Файлове към тази задача",
-    "file_admin"                    => "Управление",
-    "add_file"                      => "Добави файл",
-    "files"                         => "Файлове",
-    "file_choose"                   => "Файл за качване:",
-    "upload"                        => "Качване",
-//**
-    "file_email_owner"              => "Наистина ли да изпращам писмо при качване на файл до притежателя?",
-//**
-    "file_email_usergroup"          => "Писмо до групата при качване на файл",
-    "max_file_sprt"                 => "Файлът за качване трябва да е поне %s Кб.",
-    "file_submit"                   => "Качване",
-    "no_upload"                     => "Файлът  не бе качен. Моля, върнете се обратно и пробвайте отново.",
-    "file_too_big_sprt"             => "Максималната дължина на файла трябва да е %s байта. Вашият файл е твърде голям за качване.",
-    "del_file_javascript_sprt"      => "Сигурни ли сте в изтриването на \'%s\' ?",
+    $lang['manage_files']                 = 'Управление файлове';
+    $lang['no_files']                     = 'Няма качени файлове';
+    $lang['no_file_uploads']              = 'Конфигурацията на сървъра за тази страница не позволява качването на файлове';
+    $lang['file']                         = 'Файл:';
+    $lang['uploader']                     = 'Качване:';
+    $lang['files_assoc_project']          = 'Файлове към този проект';
+    $lang['files_assoc_task']             = 'Файлове към тази задача';
+    $lang['file_admin']                   = 'Управление';
+    $lang['add_file']                     = 'Добави файл';
+    $lang['files']                        = 'Файлове';
+    $lang['file_choose']                  = 'Файл за качване:';
+    $lang['upload']                       = 'Качване';
+    $lang['file_email_owner']             = 'Наистина ли да изпращам писмо при качване на файл до притежателя?';
+    $lang['file_email_usergroup']         = 'Писмо до групата при качване на файл';
+    $lang['max_file_sprt']                = 'Файлът за качване трябва да е поне %s Кб.';
+    $lang['file_submit']                  = 'Качване';
+    $lang['no_upload']                    = 'Файлът  не бе качен. Моля, върнете се обратно и пробвайте отново.';
+    $lang['file_too_big_sprt']            = 'Максималната дължина на файла трябва да е %s байта. Вашият файл е твърде голям за качване.';
+    $lang['del_file_javascript_sprt']     = 'Сигурни ли сте в изтриването на \'%s\' ?';
 //forum
-    "orig_message"                  => "Оригинално съобщение:",
-    "post"                          => "Изпрати",
-    "message"                       => "Съобщение:",
-    "post_reply_sprt"               => "Пусни отговор на съобщение от '%1\$s' относно '%2\$s'",
-    "post_message_sprt"             => "Съобщение по: '%s'",
-//**
-    "forum_email_owner"             => "Писмо със собщението до притежателя",
-//**
-    "forum_email_usergroup"         => "Писмо със собщението до потребителската група",
-    "reply"                         => "Отговори",
-    "new_post"                      => "Ново мнение",
-    "public_user_forum"             => "Публичен форум",
-    "private_forum_sprt"            => "Поверителен форум за '%s' група",
-    "forum_submit"                  => "[Forum submit]",
-    "no_message"                    => "Няма съобщение! Моля, върнете се обратно и пробвайте пак",
-    "add_reply"                     => "Добави отговор",
+    $lang['orig_message']                 = 'Оригинално съобщение:';
+    $lang['post']                         = 'Изпрати';
+    $lang['message']                      = 'Съобщение:';
+    $lang['post_reply_sprt']              = 'Пусни отговор на съобщение от \'%1$s\' относно \'%2$s\'';
+    $lang['post_message_sprt']            = 'Съобщение по: \'%s\'';
+    $lang['forum_email_owner']            = 'Писмо със собщението до притежателя';
+    $lang['forum_email_usergroup']        = 'Писмо със собщението до потребителската група';
+    $lang['reply']                        = 'Отговори';
+    $lang['new_post']                     = 'Ново мнение';
+    $lang['public_user_forum']            = 'Публичен форум';
+    $lang['private_forum_sprt']           = 'Поверителен форум за \'%s\' група';
+    $lang['forum_submit']                 = '[Forum submit]';
+    $lang['no_message']                   = 'Няма съобщение! Моля, върнете се обратно и пробвайте пак';
+    $lang['add_reply']                    = 'Добави отговор';
+//**  
+    $lang['last_post_sprt']               = 'Last post %s'; //Note to translators: context is 'Last post 2004-Dec-22'
+//**   
+    $lang['recent_posts']                 = 'Recent forum posts';      
 
 //includes
-    "report"                        => "Съобщение",
-    "warning"                       => "<h1>Грешка!</h1><p>Обработката на вашата заявка в момента е невъзможна. Моля опитайте отново.</p>",
-    "home_page"                     => "Начало",
-    "summary_page"                  => "Съдържание",
-    "todo_list"                     => "Какво остава",
-    "calendar"                      => "Календар",
-    "log_out"                       => "Изход",
-    "main_menu"                     => "Меню",
-    "user_homepage_sprt"            => "Дейностите на <b>%s</b>",
-//"load_time_sprt"                  => "Страницата отне %1\$.3f секунди за зареждане. От тях %2\$.3f секунди бяха ползвани за %3\$d транзакции с базата данни",
+    $lang['report']                       = 'Съобщение';
+    $lang['warning']                      = '<h1>Грешка!</h1><p>Обработката на вашата заявка в момента е невъзможна. Моля опитайте отново.</p>';
+    $lang['home_page']                    = 'Начало';
+    $lang['summary_page']                 = 'Съдържание';
+    $lang['todo_list']                    = 'Какво остава';
+    $lang['calendar']                     = 'Календар';
+    $lang['log_out']                      = 'Изход';
+    $lang['main_menu']                    = 'Меню';
 //**
-    "missing_field_javascript"      => "Моля въведете липсващата стойност!",
-//**
-    "invalid_date_javascript"       => "Моля изберете валидна календарна дата",
-//**
-    "finish_date_javascript"        => "Избраната дата е след датата на приключване на проекта!",
-    "security_manager"              => "Управление на сигурността",
-// "no_key_sprt"                    => "Няма валиден ключ на сесия. Моля <a href=\"%sindex.php\">влезте</a>",
-// "no_session"                     => "Няма такава сесия, моля <a href=\"%sindex.php\">влезте</a>",
-    "session_timeout_sprt"          => "Достъпът отказан, последното Ви действие е било преди %1\$d минути, а сесията Ви изтича за %2\$d минути, моля <a href=\"%3\$sindex.php\">влезте</a> отново",
-    "access_denied"                 => "Достъпът отказан",
-    "private_usergroup"             => "Грешка, тази част е на поверителна потребителска група, а Вие нямате права за достъп до нея.",
-    "invalid_date"                  => "Невалидна дата",
-    "invalid_date_sprt"             => "Датата \'%s\' е невалидна календарна дата (проверете броя на дните в месеца).<br />Моля върнете се и въведете правилна дата.",
+    $lang['archive']                    = 'Archive';   
+    $lang['user_homepage_sprt']           = 'Дейностите на <b>%s</b>';
+    $lang['missing_field_javascript']     = 'Моля въведете липсващата стойност!';
+    $lang['invalid_date_javascript']      = 'Моля изберете валидна календарна дата';
+    $lang['finish_date_javascript']       = 'Избраната дата е след датата на приключване на проекта!';
+    $lang['security_manager']             = 'Управление на сигурността';
+    $lang['session_timeout_sprt']         = 'Достъпът отказан, последното Ви действие е било преди %1$d минути, а сесията Ви изтича за %2$d минути, моля <a href="%3$sindex.php">влезте</a> отново';
+    $lang['access_denied']                = 'Достъпът отказан';
+    $lang['private_usergroup']            = 'Грешка, тази част е на поверителна потребителска група, а Вие нямате права за достъп до нея.';
+    $lang['invalid_date']                 = 'Невалидна дата';
+    $lang['invalid_date_sprt']            = 'Датата \'%s\' е невалидна календарна дата (проверете броя на дните в месеца).<br />Моля върнете се и въведете правилна дата.';
 //taskgroups
-    "taskgroup_name"                => "Име:",
-    "taskgroup_description"         => "Описание:",
-    "add_taskgroup"                 => "Добави задача",
-    "add_new_taskgroup"             => "Добавяне на група задачи",
-    "edit_taskgroup"                => "Промяна група задачи",
-    "taskgroup_manage"              => "Управление на група задачи",
-    "no_taskgroups"                 => "Няма дефинирани групи задачи",
-    "manage_taskgroups"             => "Управление на групи задачи",
-    "taskgroups"                    => "Групи задачи",
-    "taskgroup_dup_sprt"            => "Вече има група задачи с име '%s'. Моля върнете се и изберете друго име.",
-    "info_taskgroup_manage"         => "Информация",
+    $lang['taskgroup_name']               = 'Име:';
+    $lang['taskgroup_description']        = 'Описание:';
+    $lang['add_taskgroup']                = 'Добави задача';
+    $lang['add_new_taskgroup']            = 'Добавяне на група задачи';
+    $lang['edit_taskgroup']               = 'Промяна група задачи';
+    $lang['taskgroup_manage']             = 'Управление на група задачи';
+    $lang['no_taskgroups']                = 'Няма дефинирани групи задачи';
+    $lang['manage_taskgroups']            = 'Управление на групи задачи';
+    $lang['taskgroups']                   = 'Групи задачи';
+    $lang['taskgroup_dup_sprt']           = 'Вече има група задачи с име \'%s\'. Моля върнете се и изберете друго име.';
+    $lang['info_taskgroup_manage']        = 'Информация';
 //usergroups
-    "usergroup_name"                => "Име:",
-    "usergroup_description"         => "Описание:",
-    "members"                       => "Членове:",
-//**
-    "private_usergroup"             => "Поверителна група",
-    "add_usergroup"                 => "Добави",
-    "add_new_usergroup"             => "Добавяне на потребителска група",
-    "edit_usergroup"                => "Промяна",
-    "usergroup_manage"              => "Управление на потребителска група",
-    "no_usergroups"                 => "Няма дефинирани потребителски групи",
-    "manage_usergroups"             => "Управление на потребителски групи",
-    "usergroups"                    => "Потребителски групи",
-    "usergroup_dup_sprt"            => "Вече има потребителска група с име '%s'. Моля върнете се и изберете друго име.",
-    "info_usergroup_manage"         => "Информация",
+    $lang['usergroup_name']               = 'Име:';
+    $lang['usergroup_description']        = 'Описание:';
+    $lang['members']                      = 'Членове:';
+    $lang['private_usergroup']            = 'Поверителна група';
+    $lang['add_usergroup']                = 'Добави';
+    $lang['add_new_usergroup']            = 'Добавяне на потребителска група';
+    $lang['edit_usergroup']               = 'Промяна';
+    $lang['usergroup_manage']             = 'Управление на потребителска група';
+    $lang['no_usergroups']                = 'Няма дефинирани потребителски групи';
+    $lang['manage_usergroups']            = 'Управление на потребителски групи';
+    $lang['usergroups']                   = 'Потребителски групи';
+    $lang['usergroup_dup_sprt']           = 'Вече има потребителска група с име \'%s\'. Моля върнете се и изберете друго име.';
+    $lang['info_usergroup_manage']        = 'Информация';
 //users
-    "login_name"                    => "Потребител",
-    "full_name"                     => "Име",
-    "password"                      => "Парола",
-    "blank_for_current_password"    => "(Оставете празно, ако не искате да сменяте паролата)",
-    "email"                         => "е-Поща",
-    "admin"                         => "Админ",
-//**
-    "private_user"                  => "Поверителен",
-    "is_admin"                      => "Администратор",
-    "user_info"                     => "Инфо за потребителя",
-    "deleted_users"                 => "Изтрити потребители",
-    "no_deleted_users"              => "<i>Няма изтрити потребители</i>",
-    "revive"                        => "Възстанови",
-    "permdel"                       => "Пълно изтриване",
-    "permdel_javascript_sprt"       => "Предстои пълно изтриване на всички потребителски записи и свързаните с \'%s\' задачи. Сигурни ли сте, че го искате?",
-    "add_user"                      => "Добавяне на потребител",
-    "edit_user"                     => "Промяна данните на потребител",
-    "no_users"                      => "Няма регистрирани потребители в системата",
-    "users"                         => "Потребители",
-    "existing_users"                => "Действащи потребители",
-//**
-    "private_profile"               => "Този потребител има поверителен профил, който не може да бъде видян.",
-    "private_usergroup_profile"     => "(Този потребител е член на поверителна потребителска група и не може де бъде разгледан от Вас)",
-    "email_users"                   => "Писма",
-    "select_usergroup"              => "Избраните потребителски групи:",
-    "subject"                       => "Относно:",
-    "message_sent_maillist"         => "Във всички случаи и съобщението ще бъде копирано в пощенския списък.",
-    "who_online"                    => "Кой е тук?",
-    "edit_details"                  => "Промяна данни",
-    "show_details"                  => "Инфо за потребителя",
-    "user_deleted"                  => "Този потребител бе изтрит!",
-    "no_usergroup"                  => "Потребителят не е член на никоя потребителска група",
-    "not_usergroup"                 => "(Не е член на потребителска група)",
-    "no_password_change"            => "(Вашата парола не бе сменена)",
-    "last_time_here"                => "За последно сте били тук:",
-    "number_items_created"          => "Брой създадени items:",
-    "number_projects_owned"         => "Брой притежавани проекти:",
-    "number_tasks_owned"            => "Брой притежавани задачи:",
-    "number_tasks_completed"        => "Брой завършени задачи:",
-    "number_forum"                  => "Брой мнения във форума:",
-    "number_files"                  => "Брой качени файлове:",
-    "size_all_files"                => "Общ размер на притежаваните файлове:",
-    "owned_tasks"                   => "Притежавани задачи",
-    "invalid_email"                 => "Невалиден адрес на е-Поща",
-    "invalid_email_given_sprt"      => "е-Пощенският адрес '%s' е невалиден. Моля опитайте отново.",
-    "duplicate_user"                => "Копиране на потребител",
-    "duplicate_change_user_sprt"    => "Потребителят '%s' вече съществува. Моля върнете се и опитайте отново.",
-    "value_missing"                 => "Липсваща стойност",
-    "field_sprt"                    => "Липсва стойността за '%s'. Моля върнете се и я попълнете.",
-    "admin_priv"                    => "БЕЛЕЖКА: Вие придобихте администраторски права.",
-    "manage_users"                  => "Управление на потребители",
-    "users_online"                  => "Потребители са тук",
-    "online"                        => "Потребители online (от преди 60 минути)",
-    "not_online"                    => "Потребители offline",
-    "user_activity"                 => "Дейност на потребителя",
+    $lang['login_name']                   = 'Потребител';
+    $lang['full_name']                    = 'Име';
+    $lang['password']                     = 'Парола';
+    $lang['blank_for_current_password']   = '(Оставете празно, ако не искате да сменяте паролата)';
+    $lang['email']                        = 'е-Поща';
+    $lang['admin']                        = 'Админ';
+    $lang['private_user']                 = 'Поверителен';
+ //**
+    $lang['normal_user']                  = 'Normal user'; 
+    $lang['is_admin']                     = 'Администратор';
+ //**
+    $lang['is_guest']                   = 'Is a guest?';
+ //**
+    $lang['guest']                      = 'Guest user';
+    $lang['user_info']                    = 'Инфо за потребителя';
+    $lang['deleted_users']                = 'Изтрити потребители';
+    $lang['no_deleted_users']             = '<i>Няма изтрити потребители</i>';
+    $lang['revive']                       = 'Възстанови';
+    $lang['permdel']                      = 'Пълно изтриване';
+    $lang['permdel_javascript_sprt']      = 'Предстои пълно изтриване на всички потребителски записи и свързаните с \'%s\' задачи. Сигурни ли сте, че го искате?';
+    $lang['add_user']                     = 'Добавяне на потребител';
+    $lang['edit_user']                    = 'Промяна данните на потребител';
+    $lang['no_users']                     = 'Няма регистрирани потребители в системата';
+    $lang['users']                        = 'Потребители';
+    $lang['existing_users']               = 'Действащи потребители';
+    $lang['private_profile']              = 'Този потребител има поверителен профил, който не може да бъде видян.';
+    $lang['private_usergroup_profile']    = '(Този потребител е член на поверителна потребителска група и не може де бъде разгледан от Вас)';
+    $lang['email_users']                  = 'Писма';
+    $lang['select_usergroup']             = 'Избраните потребителски групи:';
+    $lang['subject']                      = 'Относно:';
+    $lang['message_sent_maillist']        = 'Във всички случаи и съобщението ще бъде копирано в пощенския списък.';
+    $lang['who_online']                   = 'Кой е тук?';
+    $lang['edit_details']                 = 'Промяна данни';
+    $lang['show_details']                 = 'Инфо за потребителя';
+    $lang['user_deleted']                 = 'Този потребител бе изтрит!';
+    $lang['no_usergroup']                 = 'Потребителят не е член на никоя потребителска група';
+    $lang['not_usergroup']                = '(Не е член на потребителска група)';
+    $lang['no_password_change']           = '(Вашата парола не бе сменена)';
+    $lang['last_time_here']               = 'За последно сте били тук:';
+    $lang['number_items_created']         = 'Брой създадени items:';
+    $lang['number_projects_owned']        = 'Брой притежавани проекти:';
+    $lang['number_tasks_owned']           = 'Брой притежавани задачи:';
+    $lang['number_tasks_completed']       = 'Брой завършени задачи:';
+    $lang['number_forum']                 = 'Брой мнения във форума:';
+    $lang['number_files']                 = 'Брой качени файлове:';
+    $lang['size_all_files']               = 'Общ размер на притежаваните файлове:';
+    $lang['owned_tasks']                  = 'Притежавани задачи';
+    $lang['invalid_email']                = 'Невалиден адрес на е-Поща';
+    $lang['invalid_email_given_sprt']     = 'е-Пощенският адрес \'%s\' е невалиден. Моля опитайте отново.';
+    $lang['duplicate_user']               = 'Копиране на потребител';
+    $lang['duplicate_change_user_sprt']   = 'Потребителят \'%s\' вече съществува. Моля върнете се и опитайте отново.';
+    $lang['value_missing']                = 'Липсваща стойност';
+    $lang['field_sprt']                   = 'Липсва стойността за \'%s\'. Моля върнете се и я попълнете.';
+    $lang['admin_priv']                   = 'БЕЛЕЖКА: Вие придобихте администраторски права.';
+    $lang['manage_users']                 = 'Управление на потребители';
+    $lang['users_online']                 = 'Потребители са тук';
+    $lang['online']                       = 'Потребители online (от преди 60 минути)';
+    $lang['not_online']                   = 'Потребители offline';
+    $lang['user_activity']                = 'Дейност на потребителя';
 //tasks
-    "add_new_task"                  => "Add a new task",
-    "priority"                      => "Приоритет",
-    "parent_task"                   => "Родител",
-    "creation_time"                 => "Време на създаване",
-    "by_sprt"                       => "%1\$s от %2\$s", //Note to translators: context is 'Creation time: <date> by <user>'
-    "project_name"                  => "Име на проекта",
-    "task_name"                     => "Име на задачата",
-    "deadline"                      => "Краен срок",
-    "taken_from_parent"             => "(Взет от родителя)",
-    "status"                        => "Статус",
-    "task_owner"                    => "Притежател( на задачата)",
-    "project_owner"                 => "Притежател( на проекта)",
-    "taskgroup"                     => "Група задачи",
-    "usergroup"                     => "Потребителска група",
-    "nobody"                        => "[никой]",
-    "none"                          => "[няма]",
-    "no_group"                      => "[няма]",
-    "all_groups"                    => "Всички групи",
-    "all_users"                     => "Всички потребители",
-    "all_users_view"                => "Видим за всички",
-    "group_edit"                    => "Всеки в групата може да променя",
-    "project_description"           => "Описание на проекта",
-    "task_description"              => "Описание на задачата",
-    "email_owner"                   => "Писмо до притежателя с промените",
-    "email_new_owner"               => "Писмо до (новия) притежател с промените",
-    "email_group"                   => "Писмо до потребителската група с промените",
-    "add_new_project"               => "Добавяне на проект",
-    "due_sprt"                      => "%d дена от днес",
-    "tomorrow"                      => "Утре",
-    "due_today"                     => "Днес",
-    "overdue_1"                     => "1 ден просрочен",
-    "overdue_sprt"                  => "%d дена просрочен",
-    "edit_task"                     => "Промяна задача",
-    "edit_project"                  => "Промяна проект",
-    "no_reparent"                   => "Няма (a top-level project)",
-    "del_javascript_project_sprt"   => "Предстои изтриване на проект \'%s\'. Сигурни ли сте?",
-    "del_javascript_task_sprt"      => "Предстои изтриване на задача \'%s\'. Сигурни ли сте?",
-    "add_task"                      => "Добави задача",
-    "add_subtask"                   => "Добави подзадача",
-    "add_project"                   => "Добави проект",
-    "clone_project"                 => "Копиране на проект",
-    "clone_task"                    => "Копиране на задача",
-    "no_edit"                       => "Вие не сте притежател на този item и следователно не можете да го променяте",
-    "uncategorised"                 => "<i>[без група]</i>",
-    "admin"                         => "Админ",
-    "global"                        => "Глобален",
-    "delete_project"                => "Изтриване проект",
-    "delete_task"                   => "Изтриване задача",
-    "project_options"               => "Проекти",
-    "task_options"                  => "Настройки на задача",
-    "task_navigation"               => "Задачи",
-    "no_projects"                   => "Няма проекти",
-    "show_all_projects"             => "Покажи всички проекти",
-    "show_active_projects"          => "Покажи само активните проекти",
-    "project_hold_sprt"             => "Проекта е \"В застой\" от %s",
-    "project_planned"               => "Планиран проект",
-    "percent_sprt"                  => "%d%% от задачата е изпълнена",
-    "project_no_deadline"           => "Няма крайни срокове за този проект",
-    "no_allowed_projects"           => "Няма проекти, които Ви е позволено да разглеждате",
-    "projects"                      => "Проекти",
-    "percent_project_sprt"          => "Този проект е %d%% завършен",
-    "owned_by"                      => "Притежавано от",
-    "created_on"                    => "Създадено на",
-    "completed_on"                  => "Завършено на",
-    "modified_on"                   => "Променено на",
-    "project_on_hold"               => "Проекта е в застой",
-    "project_accessible"            => "(Този проект е публично достъпен за всички потребители)",
-    "task_accessible"               => "(Тази задача е публично достъпна за всички потребители)",
-    "project_not_accessible"        => "(Този проект е достъпен само за членовете на потребителска група)",
-    "task_not_accessible"           => "(Тази задача е достъпна само за членовете на потребителска група)",
-    "project_not_in_usergroup"      => "<i>Този проект не е част от потребителска група и е достъпен за всички потребители.</i>",
-    "task_not_in_usergroup"         => "<i>Тази задача не е част от потребителска група и е достъпна за всички потребители.</i>",
-    "usergroup_can_edit_project"    => "Този проект също така може да бъде променян от членовете на потребителската група.",
-    "usergroup_can_edit_task"       => "Тази задача също така може да бъде променяна от членовете на потребителската група.",
-    "i_take_it"                     => "Аз го взимам :)",
-    "i_finished"                    => "Завърших го!",
-    "i_dont_want"                   => "Не го искам вече",
-    "take_over_project"             => "Превзимам проекта",
-    "take_over_task"                => "Превзимам задачата",
-    "task_info"                     => "Инфо за задача",
-    "project_details"               => "Детайли по проект",
-    "todo_list_for"                 => "ToDo лист на: ",
-    "due_in_sprt"                   => " (До след %d дена)",
-    "due_tomorrow"                  => " (До утре)",
-    "no_assigned"                   => "Няма незавършени задачи от този потребител.",
-    "todo_list"                     => "ToDo лист",
-    "summary_list"                  => "Съдържание",
-    "task_submit"                   => "Task submit",
-    "not_owner"                     => "Access denied, either you are not the owner, or you do not have enough rights",
-    "missing_values"                => "There are not enough field values provided, please go back and try again",
-    "future"                        => "Бъдеще (future)",
-    "flags"                         => "Флагове",
-    "owner"                         => "Притежател",
-    "group"                         => "Група",
-    "by_usergroup"                  => " (по потребителска група)",
-    "by_taskgroup"                  => " (по група задачи)",
-    "by_deadline"                   => " (по краен срок)",
-    "by_status"                     => " (по статус)",
-    "by_owner"                      => " (по притежател)",
-    "project_cloned"                => "Име на копирания проект:",
-    "task_cloned"                   => "Име на копираната задача:",
-    "note_clone"                    => "Забележка: Задачата ще бъде копирана като нов проект",
+    $lang['add_new_task']                 = 'Add a new task';
+    $lang['priority']                     = 'Приоритет';
+    $lang['parent_task']                  = 'Родител';
+    $lang['creation_time']                = 'Време на създаване';
+    $lang['by_sprt']                      = '%1$s от %2$s'; //Note to translators: context is 'Creation time: <date> by <user>'
+    $lang['project_name']                 = 'Име на проекта';
+    $lang['task_name']                    = 'Име на задачата';
+    $lang['deadline']                     = 'Краен срок';
+    $lang['taken_from_parent']            = '(Взет от родителя)';
+    $lang['status']                       = 'Статус';
+    $lang['task_owner']                   = 'Притежател( на задачата)';
+    $lang['project_owner']                = 'Притежател( на проекта)';
+    $lang['taskgroup']                    = 'Група задачи';
+    $lang['usergroup']                    = 'Потребителска група';
+    $lang['nobody']                       = '[никой]';
+    $lang['none']                         = '[няма]';
+    $lang['no_group']                     = '[няма]';
+    $lang['all_groups']                   = 'Всички групи';
+    $lang['all_users']                    = 'Всички потребители';
+    $lang['all_users_view']               = 'Видим за всички';
+    $lang['group_edit']                   = 'Всеки в групата може да променя';
+    $lang['project_description']          = 'Описание на проекта';
+    $lang['task_description']             = 'Описание на задачата';
+    $lang['email_owner']                  = 'Писмо до притежателя с промените';
+    $lang['email_new_owner']              = 'Писмо до (новия) притежател с промените';
+    $lang['email_group']                  = 'Писмо до потребителската група с промените';
+    $lang['add_new_project']              = 'Добавяне на проект';
+    $lang['due_sprt']                     = '%d дена от днес';
+    $lang['tomorrow']                     = 'Утре';
+    $lang['due_today']                    = 'Днес';
+    $lang['overdue_1']                    = '1 ден просрочен';
+    $lang['overdue_sprt']                 = '%d дена просрочен';
+    $lang['edit_task']                    = 'Промяна задача';
+    $lang['edit_project']                 = 'Промяна проект';
+    $lang['no_reparent']                  = 'Няма (a top-level project)';
+    $lang['del_javascript_project_sprt']  = 'Предстои изтриване на проект \'%s\'. Сигурни ли сте?';
+    $lang['del_javascript_task_sprt']     = 'Предстои изтриване на задача \'%s\'. Сигурни ли сте?';
+    $lang['add_task']                     = 'Добави задача';
+    $lang['add_subtask']                  = 'Добави подзадача';
+    $lang['add_project']                  = 'Добави проект';
+    $lang['clone_project']                = 'Копиране на проект';
+    $lang['clone_task']                   = 'Копиране на задача';
+//**
+    $lang['quick_jump']                   = 'Quick Jump';
+    $lang['no_edit']                      = 'Вие не сте притежател на този item и следователно не можете да го променяте';
+    $lang['uncategorised']                = '<i>[без група]</i>';
+    $lang['admin']                        = 'Админ';
+    $lang['global']                       = 'Глобален';
+    $lang['delete_project']               = 'Изтриване проект';
+    $lang['delete_task']                  = 'Изтриване задача';
+    $lang['project_options']              = 'Проекти';
+    $lang['task_options']                 = 'Настройки на задача';
+//**    
+    $lang['javascript_archive_project']   = 'This will archive project %s.  Are you sure?';
+//**    
+    $lang['archive_project']              = 'Archive project';
+    $lang['task_navigation']              = 'Задачи';
+    $lang['new_task']                     = 'New task';    
+    $lang['no_projects']                  = 'Няма проекти';
+    $lang['show_all_projects']            = 'Покажи всички проекти';
+    $lang['show_active_projects']         = 'Покажи само активните проекти';
+    $lang['project_hold_sprt']            = 'Проекта е "В застой" от %s';
+    $lang['project_planned']              = 'Планиран проект';
+    $lang['percent_sprt']                 = '%d%% от задачата е изпълнена';
+    $lang['project_no_deadline']          = 'Няма крайни срокове за този проект';
+    $lang['no_allowed_projects']          = 'Няма проекти, които Ви е позволено да разглеждате';
+    $lang['projects']                     = 'Проекти';
+    $lang['percent_project_sprt']         = 'Този проект е %d%% завършен';
+    $lang['owned_by']                     = 'Притежавано от';
+    $lang['created_on']                   = 'Създадено на';
+    $lang['completed_on']                 = 'Завършено на';
+    $lang['modified_on']                  = 'Променено на';
+    $lang['project_on_hold']              = 'Проекта е в застой';
+    $lang['project_accessible']           = '(Този проект е публично достъпен за всички потребители)';
+    $lang['task_accessible']              = '(Тази задача е публично достъпна за всички потребители)';
+    $lang['project_not_accessible']       = '(Този проект е достъпен само за членовете на потребителска група)';
+    $lang['task_not_accessible']          = '(Тази задача е достъпна само за членовете на потребителска група)';
+    $lang['project_not_in_usergroup']     = '<i>Този проект не е част от потребителска група и е достъпен за всички потребители.</i>';
+    $lang['task_not_in_usergroup']        = '<i>Тази задача не е част от потребителска група и е достъпна за всички потребители.</i>';
+    $lang['usergroup_can_edit_project']   = 'Този проект също така може да бъде променян от членовете на потребителската група.';
+    $lang['usergroup_can_edit_task']      = 'Тази задача също така може да бъде променяна от членовете на потребителската група.';
+    $lang['i_take_it']                    = 'Аз го взимам :)';
+    $lang['i_finished']                   = 'Завърших го!';
+    $lang['i_dont_want']                  = 'Не го искам вече';
+    $lang['take_over_project']            = 'Превзимам проекта';
+    $lang['take_over_task']               = 'Превзимам задачата';
+    $lang['task_info']                    = 'Инфо за задача';
+    $lang['project_details']              = 'Детайли по проект';
+    $lang['todo_list_for']                = 'ToDo лист на: ';
+    $lang['due_in_sprt']                  = ' (До след %d дена)';
+    $lang['due_tomorrow']                 = ' (До утре)';
+    $lang['no_assigned']                  = 'Няма незавършени задачи от този потребител.';
+    $lang['todo_list']                    = 'ToDo лист';
+    $lang['summary_list']                 = 'Съдържание';
+    $lang['task_submit']                  = 'Task submit';
+    $lang['not_owner']                    = 'Access denied, either you are not the owner, or you do not have enough rights';
+    $lang['missing_values']               = 'There are not enough field values provided, please go back and try again';
+    $lang['future']                       = 'Бъдеще (future)';
+    $lang['flags']                        = 'Флагове';
+    $lang['owner']                        = 'Притежател';
+    $lang['group']                        = 'Група';
+    $lang['by_usergroup']                 = ' (по потребителска група)';
+    $lang['by_taskgroup']                 = ' (по група задачи)';
+    $lang['by_deadline']                  = ' (по краен срок)';
+    $lang['by_status']                    = ' (по статус)';
+    $lang['by_owner']                     = ' (по притежател)';
+    $lang['project_cloned']               = 'Име на копирания проект:';
+    $lang['task_cloned']                  = 'Име на копираната задача:';
+    $lang['note_clone']                   = 'Забележка: Задачата ще бъде копирана като нов проект';
 //bits 'n' pieces
-    "calendar"                      => "Календар",
-    "normal_version"                => "Нормална версия",
-    "print_version"                 => "Версия за печат"
-   )
+    $lang['calendar']                     = 'Календар';
+    $lang['normal_version']               = 'Нормална версия';
+    $lang['print_version']                = 'Версия за печат';
+//**    
+    $lang['condensed_view']             = 'Condensed view';
+//**    
+    $lang['full_view']                  = 'Full view';
 
 ?>

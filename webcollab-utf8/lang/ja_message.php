@@ -29,10 +29,6 @@
 //required language encodings
 define('CHARACTER_SET', "UTF-8" );
 
-//this is the regex for input validation filter used in common.php 
-//$validation_regex = '/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s'; //ISO-8859-x 
-$validation_regex = '/([^\x00-\xff])/s'; // full path
-
 //dates
 $month_array = array (NULL, '1 月', '2 月', '3 月', '4 月', '5 月', '6 月', '7 月', '8 月', '9 月', '10 月', '11 月', '12月' );
 $week_array = array('日', '月', '火', '水', '木', '金', '土' );

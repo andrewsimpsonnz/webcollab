@@ -26,6 +26,9 @@
 
   Maintainer: Stoyan Dimitrov <stoyan at adiumdesign dot com>
 
+  
+  NOTE: This file is written in UTF-8 character set
+
 */
 
 
@@ -61,7 +64,7 @@ $user_info          =    "Моля изберете действие от мен
 $calendar_key       =  "<i>Към Меню</i></a>]</b><br />\n".
                           "<p><b>Легенда:</b><br /><br />\n".
                           "<span class=\"blue\">Проект (с незавършени задачи)</span><br />\n".
-                          "<span class=\"green\"><u>Проект </u>(напълно завършен)</span><br />\n".
+                          "<span class=\"green\"><span class=\"underline\">Проект </span>(напълно завършен)</span><br />\n".
                           "<span class=\"red\">Задача (незавършена)</span><br />\n".
                           "<span class=\"green\">Задача (завършена)</span><br /></p>\n";
 
