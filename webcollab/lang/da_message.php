@@ -39,8 +39,7 @@
 */
 
 //required language encodings
-$web_charset = "iso-8859-1";
-$email_charset = "iso-8859-1";
+define('CHARACTER_SET', "iso-8859-1" );
 
 //dates
 $month_array = array ( NULL, "Jan", "Feb", "Mar", "Apr", "Maj", "Juni", "Juli", "Aug", "Sep", "Okt", "Nov", "Dec" );
@@ -94,7 +93,8 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['error']                        = 'Fejl';
     $lang['no_login']                     = 'Adgang nægtet, ikke korrekt login eller password';
     $lang['please_login']                 = 'Vær venlig at logge in';
-
+    $lang['go']                           = 'Go!';
+    
 //graphic items
     $lang['late_g']                       = '&nbsp;FORSINKET&nbsp;';
     $lang['new_g']                        = '&nbsp;NY&nbsp;';
@@ -345,6 +345,8 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['clone_project']                = 'Clone project';
  //**
     $lang['clone_task']                   = 'Clone task';
+//**
+    $lang['quick_jump']                   = 'Quick Jump';
     $lang['no_edit']                      = 'Du ejer ikke dette emne og derfor kan du ikke redigere det';
     $lang['uncategorised']                = 'Ikke-kategoriseret';
     $lang['admin']                        = 'Admin';

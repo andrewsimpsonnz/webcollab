@@ -31,8 +31,8 @@
 */
 
 //required language encodings
-$web_charset                              = "windows-1251";
-$email_charset                            = "windows-1251";
+define('CHARACTER_SET', "windows-1251" );
+
 
 //dates
 $month_array                              = array (NULL, "Яну", "Фев", "Мар", "Апр", "Май", "Юни", "Юли", "Авг", "Сеп", "Окт", "Ное", "Дек" );
@@ -87,6 +87,8 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['error']                        = 'Грешка';
     $lang['no_login']                     = 'Достъпът отказан, грешно име или парола';
     $lang['please_login']                 = 'Моля влезте';
+//**    
+    $lang['go']                           = 'Go!';
 //graphic items
     $lang['late_g']                       = '&nbsp;ЗАКЪСНЕНИЕ&nbsp;';
     $lang['new_g']                        = '&nbsp;НОВО&nbsp;';
@@ -324,6 +326,8 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['add_project']                  = 'Добави проект';
     $lang['clone_project']                = 'Копиране на проект';
     $lang['clone_task']                   = 'Копиране на задача';
+//**
+    $lang['quick_jump']                   = 'Quick Jump';
     $lang['no_edit']                      = 'Вие не сте притежател на този item и следователно не можете да го променяте';
     $lang['uncategorised']                = '<i>[без група]</i>';
     $lang['admin']                        = 'Админ';

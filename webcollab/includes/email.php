@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2003-2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -195,7 +195,7 @@ function & clean($encoded ) {
 
 function & message($message, & $email_encode, & $message_charset, & $body ) {
 
-  global $email_charset, $bit8;
+  global $bit8;
 
   //clean up message
   $message =& clean($message );
@@ -208,13 +208,13 @@ function & message($message, & $email_encode, & $message_charset, & $body ) {
           //mail server has said it can do 8bit
           $email_encode = "8bit";
           $body = " BODY=8BITMIME";
-          $message_charset = $email_charset;
+          $message_charset = CHARACTER_SET;
           break;
         case false:
           //old mail server - can only do 7bit mail
           $email_encode = "quoted-printable";
           $body = "";
-          $message_charset = $email_charset;
+          $message_charset = CHARACTER_SET;
           break;
       }
       break;
@@ -269,8 +269,6 @@ return $message_lines;
 
 function &subject($subject ) {
 
-  global $email_charset;
-
   //get rid of any line breaks (\r\n, \n, \r) in subject line
   $subject = str_replace(array("\r\n", "\r", "\n"), " ", $subject );
   //reinstate any HTML in subject back to text
@@ -289,26 +287,26 @@ function &subject($subject ) {
       $line = preg_replace('/([\000-\010\011\013\014\016-\037\040\075\077\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $subject);
       $s = "Subject: ";
       //break into lines no longer than 76 characters including encoding data (RFC 2047)
-      $len = 76 - strlen($email_charset ) - 8;
+      $len = 76 - strlen(CHARACTER_SET ) - 8;
       while(strlen($line ) > $len ) {
         //don't split line around coded character (eg. '=20' == <space>)
         $pos = strrpos(substr($line, ($len - 3 ), 3 ), "=" ); 
         if($pos === false ) {
           //no coded characters in split zone - safe to split here
-          $subject_lines[] = $s."=?".$email_charset."?Q?".substr($line, 0, $len )."?=";
+          $subject_lines[] = $s."=?".CHARACTER_SET."?Q?".substr($line, 0, $len )."?=";
           $line = substr($line, $len );
         }
         else{
           //coded characters within split zone - adjust to avoid splitting encoded word
           $split = ($len - 3 ) + $pos;
-          $subject_lines[] = $s."=?".$email_charset."?Q?".substr($line, 0, $split)."?=";
+          $subject_lines[] = $s."=?".CHARACTER_SET."?Q?".substr($line, 0, $split)."?=";
           $line = substr($line, $split );
         }
       //start additional lines with <space> (RFC 2047)
       $s = " ";
       }
       //output any remaining line (will be less than $len characters long)
-      $subject_lines[] = $s."=?".$email_charset."?Q?".$line."?=";
+      $subject_lines[] = $s."=?".CHARACTER_SET."?Q?".$line."?=";
       break;
   }
 

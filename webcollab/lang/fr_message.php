@@ -30,8 +30,7 @@
 */
 
 //required language encodings
-$web_charset = "iso-8859-1";
-$email_charset = "iso-8859-1";
+define('CHARACTER_SET', "iso-8859-1" );
 
 //dates
 $month_array = array ( NULL, "Jan", "Fev", "Mar", "Avr", "Mai", "Jui", "Jul", "Aou", "Sep", "Oct", "Nov", "Dec" );
@@ -85,6 +84,8 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['error']                        = 'Erreur';
     $lang['no_login']                     = 'Acc&egrave;s refus&eacute;, utilisateur ou mot de passe incorrect';
     $lang['please_login']                 = 'Merci de vous connecter';
+//**    
+    $lang['go']                           = 'Go!';
 
  //graphic items
     $lang['late_g']                       = '&nbsp;LATE&nbsp;';
@@ -334,6 +335,8 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['add_project']                  = 'Ajout projet';
     $lang['clone_project']                = 'Projet clone';
     $lang['clone_task']                   = 't&acirc;che clone'; 
+//**
+    $lang['quick_jump']                   = 'Quick Jump';
     $lang['no_edit']                      = 'Vous n\'&ecirc;tes pas propri&eacute;taire de cet &eacute;l&eacute;ment et vous ne pouvez pas l\'&eacute;diter. Demandez &agrave; l\'administrateur, ou au propri&eacute;taire de ces t&acirc;ches de le faire pour vous.';
     $lang['uncategorised']                = 'Non class&eacute;';
     $lang['admin']                        = 'Admin';

@@ -28,8 +28,7 @@
 */
 
 //required language encodings
-$web_charset = "iso-8859-1";
-$email_charset = "iso-8859-1";
+define('CHARACTER_SET', "iso-8859-1" );
 
 //dates
 $month_array = array ( NULL, "Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic" );
@@ -85,6 +84,9 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['please_login']                 = 'Identificazione utente';
 //for collaltosabino.net
 //  $lang['please_login']                 = '<span class="navy"><b>collaltosabino.net</b><br><span class="darkred"><b>*** Sistema di gestione progetti ***<br><br><span class="navy">Identificazione utente</b></span>';
+//**    
+    $lang['go']                           = 'Go!';
+    
 
 //graphic items
     $lang['late_g']                       = '&nbsp;IN RITARDO&nbsp;';
@@ -338,6 +340,8 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['add_project']                  = 'Aggiungi progetto';
     $lang['clone_project']                = 'Clona progetto';
     $lang['clone_task']                   = 'Clona attivit&agrave;'; 
+//**
+    $lang['quick_jump']                   = 'Quick Jump';
     $lang['no_edit']                      = 'Non sei il proprietario di questo item e non puoi editarlo. Chiedi ad un admin o al proprietario dell\'item di effettuare l\'operazione.';
     $lang['uncategorised']                = 'Non categorizzata';
     $lang['admin']                        = 'Admin';

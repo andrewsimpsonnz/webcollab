@@ -30,8 +30,7 @@
 */
 
 //required language encodings
-$web_charset = "iso-8859-1";
-$email_charset = "iso-8859-1";
+define('CHARACTER_SET', "iso-8859-1" );
 
 //dates
 $month_array = array ( NULL, "Jan", "Feb", "M&auml;r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" );
@@ -85,7 +84,9 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['error']                       = 'Fehler';
     $lang['no_login']                    = 'Zugriff verweigert, Benutzername oder Passwort falsch';
     $lang['please_login']                = 'Bitte melden Sie sich an';
-
+//**    
+    $lang['go']                          = 'Go!';
+    
  //graphic items
     $lang['late_g']                      = '&nbsp;VERSP&Auml;TET&nbsp;';
     $lang['new_g']                       = '&nbsp;NEU&nbsp;';
@@ -333,7 +334,9 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['add_subtask']                 = 'Unteraufgabe hinzuf&uuml;gen';
     $lang['add_project']                 = 'Projekt hinzuf&uuml;gen';
     $lang['clone_project']               = 'Projekt klonen';
-    $lang['clone_task']                  = 'Aufgabe klonen'; 
+    $lang['clone_task']                  = 'Aufgabe klonen';
+//**    
+    $lang['quick_jump']                  = 'Quick Jump'; 
     $lang['no_edit']                     = 'Dieser Eintrag geh&ouml;rt ihnen nicht und deshalb d&uuml;rfen sie ihn nicht bearbeiten. Fragen sie einen Administrator oder den Eigent&uuml;mer, die &Auml;nderungen vorzunehmen.';
     $lang['uncategorised']               = 'Nicht eingeordnet';
     $lang['admin']                       = 'Admininstrator';

@@ -30,8 +30,7 @@
 //required language encodings
 //$web_charset = "ko_KR.eucKR";
 //$email_charset = "ko_KR.eucKR";
-$web_charset = "EUC-KR";
-$email_charset = "EUC-KR";
+define('CHARACTER_SET', "EUC-KR" );
 
 //dates
 $month_array = array (NULL, "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" );
@@ -85,7 +84,8 @@ $week_array = array('일', '월', '화', '수', '목', '금', '토' );
     $lang['error']                        = '오류';
     $lang['no_login']                     = '접근 금지. 로그인이나 비밀번호가 맞지 않습니다.';
     $lang['please_login']                 = '로그인하십시오';
-
+    $lang['go']                           = 'Go!';
+    
 //graphic items
     $lang['late_g']                       = '&nbsp;LATE&nbsp;';
     $lang['new_g']                        = '&nbsp;새로운&nbsp;';
@@ -335,6 +335,8 @@ $week_array = array('일', '월', '화', '수', '목', '금', '토' );
     $lang['add_project']                  = '프로젝트 추가';
     $lang['clone_project']                = '복제 프로젝트';
     $lang['clone_task']                   = '작업 복제';
+//**
+    $lang['quick_jump']                   = 'Quick Jump';
     $lang['no_edit']                      = '이 항목에 대한 소유 권한이 없기 때문에 편집할 수 없습니다';
     $lang['uncategorised']                = '분류되어있지 않음';
     $lang['admin']                        = '관리';

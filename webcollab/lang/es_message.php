@@ -30,8 +30,7 @@
 */
 
 //required language encodings
-$web_charset = "iso-8859-1";
-$email_charset = "iso-8859-1";
+define('CHARACTER_SET', "iso-8859-1" );
 
 //dates
 $month_array = array ( NULL, "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" );
@@ -85,6 +84,8 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['error']                        = 'Error';
     $lang['no_login']                     = 'Acceso denegado, login o pass incorrectos';
     $lang['please_login']                 = 'Bienvenido, por favor ingrese';
+//**    
+    $lang['go']                           = 'Go!';
 
  //graphic items
     $lang['late_g']                       = '&nbsp;LATE&nbsp;';
@@ -347,6 +348,8 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['clone_project']                = 'Clone project';
  //**
     $lang['clone_task']                   = 'Clone task'; 
+//**
+    $lang['quick_jump']                   = 'Quick Jump';
     $lang['no_edit']                      = 'No es propietario de este, no puede editarlo. Pida a un administrador, o al propietario de la tarea para que lo haga por Ud.';
     $lang['uncategorised']                = 'No categorizado';
     $lang['admin']                        = 'Admin';

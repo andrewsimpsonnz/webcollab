@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -67,7 +67,7 @@ include_once(BASE."lang/lang.php" );
 //
 function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
 
-  global $UID_NAME, $ADMIN, $lang, $web_charset, $top_done, $bottom_text;
+  global $UID_NAME, $ADMIN, $lang, $top_done, $bottom_text;
   
   //only build top once...
   //  (we don't use headers_sent() 'cause it seems to be buggy in PHP5)
@@ -90,7 +90,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
   header("Cache-Control: no-store, no-cache, must-revalidate");
   header("Cache-Control: post-check=0, pre-check=0", false);
   header("Pragma: no-cache");
-  header("Content-Type: text/html; charset=".$web_charset."");
+  header("Content-Type: text/html; charset=".CHARACTER_SET );
 
   $content = "<!DOCTYPE html PUBLIC\n".
              "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
@@ -98,7 +98,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
              "<html>\n\n".
              "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
              "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
-             "<!-- (c) 2002 - 2004 Andrew Simpson -->\n\n".
+             "<!-- (c) 2002-2005 Andrew Simpson -->\n\n".
              "<head>\n";
 
   //flush buffer
@@ -109,7 +109,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
 
   $content  =  "<title>".$title."</title>\n".
                "<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".
-               "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".$web_charset."\" />\n";
+               "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".CHARACTER_SET."\" />\n";
 
   switch($page_type) {
     case 2: //print
@@ -272,7 +272,7 @@ function create_bottom() {
  
  //shows the logo
  if($bottom_text) {
-   echo "<div class=\"bottomtext\" $align>Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;2002-2004</div>\n";
+   echo "<div class=\"bottomtext\" $align>Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;2002-2005</div>\n";
  }     
   //end xml parsing
   echo "</body>\n</html>\n";
