@@ -27,6 +27,10 @@
 
 */
 
+//secure variables
+$WEB_AUTH = "N";
+$content = "";
+
 include( "includes/screen.php" );
 include( "includes/common.php" );
 
@@ -42,37 +46,58 @@ function secure_error( $reason = "Unauthorised area" ) {
 
 }
 
-
 //valid login attempt ?
 if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["username"]) > 0 && strlen($_POST["password"]) > 0 )
-    || (isset($_SERVER["REMOTE_USER"]) && $WEB_AUTH == "Y" ) ) {
+    || (isset($_SERVER["REMOTE_USER"])  && (strlen($_SERVER["REMOTE_USER"]) > 0 ) && $WEB_AUTH == "Y" ) ) {
 
   $q = "";
   $login_q ="";
-  $auth = FALSE;
-
+  $username = "0";
+  $md5pass = "0";
+  $session_key = "";
+  
   include_once "database/database.php";
   include_once "includes/common.php";
 
-  if(isset($WEB_AUTH ) && isset($_SERVER["REMOTE_USER"]) ){
-    if($WEB_AUTH == "Y" )
-      $auth = TRUE;
+ //no ip (possible?)
+  if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
+    secure_error("Unable to determine ip address");
   }
-
-  if($auth){
-    $login_q = "SELECT id FROM users WHERE deleted='f' AND name='".$_SERVER["REMOTE_USER"]."'";
+ 
+  if($WEB_AUTH == "Y" ) {
+      //construct login query
+      $login_q = "SELECT id FROM users WHERE name='".safe_data($_SERVER["REMOTE_USER"] )."' AND deleted='f'";
   }
-  else{
-    //encrypt password
-    $md5pass = md5( $_POST["password"] );
-    $login_q = "SELECT id FROM users WHERE deleted='f' AND name='".safe_data($_POST["username"])."' AND password='$md5pass'";
-  }
-
+  else {
+     $username = safe_data($_POST["username"]);
+     //encrypt password
+    $md5pass = md5($_POST["password"] );
+        
+    //count the number of recent login attempts
+    $count_attempts = db_result(@db_query("SELECT COUNT(*) FROM login_attempt 
+                                                  WHERE name='".$username."' 
+                                                  AND last_attempt > (now()-INTERVAL ".$delim."10 MINUTE".$delim.") LIMIT 6" ), 0, 0 );
+    
+    //protect against password guessing attacks 
+    if($count_attempts > 4 ) {
+      secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+    }                                                                              
+    
+    //record this login attempt
+    db_query("INSERT INTO login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
+                                                                                     
+    //construct login query
+    $login_q = "SELECT id FROM users WHERE password='".$md5pass."' AND name='".$username."' AND deleted='f'";
+  } 
   //database query
-  $q = db_query($login_q );
-
+  if( ! $q = @db_query($login_q, 0 ) ) {
+    sleep (2);
+    secure_error($lang["no_login"]);
+  }   
+  
   //no such user-password combination
   if( @db_numrows($q) < 1 ) {
+      sleep (2);
       secure_error($lang["no_login"]);
   }
 
@@ -81,23 +106,20 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["us
     secure_error("Unknown user id");
   }
 
-  //no ip (possible?)
-  if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
-    secure_error("Unable to determine ip address");
-  }
 
   //user is okay log him/her in
 
   //create session key
-  // seed number is not required for PHP 4.2.0, and higher
+  // seed number is required for early versions of PHP
   if(version_compare(PHP_VERSION, "4.2.0" ) == -1 )
     mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );
-
+  //use Mersenne Twister algorithm (random number), then one-way hash to give session key  
   $session_key = md5(mt_rand() );
 
   //remove the old login information
   @db_query("DELETE FROM logins WHERE user_id=$user_id" );
-
+  @db_query("DELETE FROM login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
+   
   //log the user in
   db_query("INSERT INTO logins( user_id, session_key, ip, lastaccess ) VALUES ('$user_id', '$session_key', '$ip', now() )" );
 
@@ -149,18 +171,26 @@ $content .= "<p>".$lang["please_login"].":</p>\n".
            "</table></p>".
            "<p><input type=\"submit\" value=\"".$lang["login"]."\"></p>\n".
 
-           "<div align=\"center\">".
-           //"<br /><br />\n".
-           //
-           // Select one, or more images from selection below
-           //
-           //"<a href=\"http://www.php.net\"><img border=\"0\" src=\"images/php-logo.gif\" alt=\"PHP 4 code\" /></a>".
-           //"<a href=\"http://www.postgres.org\"><img border=\"0\" src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\" /></a>".
-           //"<a href=\"http://httpd.apache.org\"><img border=\"0\" src=\"images/apache_b.gif\" alt=\"Powered by Apache Webserver\" /></a>".
-           "<a href=\"http://www.mysql.com\"><img border=\"0\" src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\" /></a>\n".
-           "</div>".
-           "</form>".
-           "</div>";
+           "<div align=\"center\">";
+
+switch( $DATABASE_TYPE ) {
+  case "postgresql":
+    $content .= "<a href=\"http://www.postgres.org\"><img border=\"0\" src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\" /></a>";
+    break; 
+  
+  case "mysql":
+  case "mysql_innodb":
+    $content .= "<a href=\"http://www.mysql.com\"><img border=\"0\" src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\" /></a>\n";
+    break;
+    
+  default:           
+     $content .= "<a href=\"http://www.php.net\"><img border=\"0\" src=\"images/php-logo.gif\" alt=\"PHP 4 code\" /></a>";
+     break;
+}      
+           
+$content .= "</div>".
+            "</form>".
+            "</div>";
 
 //set box options
 new_box($lang["login"], $content, "boxdata", "singlebox" );
