@@ -61,7 +61,8 @@ if( isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
       //task under project
       $content .= "&nbsp; <A HREF=\"tasks.php?x=".$x."&action=show&taskid=".$row["projectid"]."\">".$project_name."</A><BR>\n";
       $content .= "<SMALL><B>".$lang["ttask"].":</B></SMALL><BR>\n";
-      $content .= "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\">".$row["name"]."<BR>\n";
+      $task_name = substr($row["name"], 0, 20 );
+      $content .= "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\">".$task_name."<BR>\n";
       break;
 
     default:
