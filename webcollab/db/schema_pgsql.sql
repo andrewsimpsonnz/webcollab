@@ -22,7 +22,7 @@ CREATE TABLE "tasks" (
 	"lastfileupload" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
         "completed" integer DEFAULT 0::int NOT NULL,
         "completion_time" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
-        "archive" boolean NOT NULL DEFAULT 'f',
+        "archive" smallint DEFAULT 0::int NOT NULL,
 	Constraint "tasks_pkey" Primary Key ("id")
 );
 CREATE INDEX tasks_owner_idx ON tasks USING btree ("owner");
@@ -42,8 +42,8 @@ CREATE TABLE "users" (
 	"password" character varying(200) NOT NULL,
 	"email" character varying(200) NOT NULL,
 	"admin" boolean NOT NULL DEFAULT 'f'::bool,
-	"private" integer DEFAULT 0::int NOT NULL,
-        "guest" boolean NOT NULL DEFAULT 'f'::bool,
+	"private" smallint DEFAULT 0::int NOT NULL,
+        "guest" smallint DEFAULT 0::int NOT NULL,
 	"deleted" boolean NOT NULL DEFAULT 'f'::bool,
 	Constraint "users_pkey" Primary Key ("id")
 );
@@ -55,7 +55,7 @@ CREATE TABLE "usergroups" (
 	"id" integer DEFAULT nextval('"usergroups_id_seq"'::text) NOT NULL,
 	"name" character varying(100) NOT NULL,
 	"description" character varying(255),
-	"private" integer DEFAULT 0::int NOT NULL,
+	"private" smallint DEFAULT 0::int NOT NULL,
 	Constraint "usergroups_pkey" Primary Key ("id")
 );
 CREATE INDEX usergroups_name_idx ON usergroups USING btree (name);

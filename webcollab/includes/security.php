@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -104,11 +104,7 @@ if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
 $UID = $row['user_id'];
 $UID_NAME = $row['fullname'];
 $UID_EMAIL = $row['email'];
-
-if($row['guest'] == 't' )
-  $GUEST = 1;
-else
-  $GUEST = 0;
+$GUEST = $row['guest'];
 
 if($row['admin'] == 't' )
   $ADMIN = 1;

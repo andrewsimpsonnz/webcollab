@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
   
   WebCollab
   ---------------------------------------
@@ -126,7 +126,7 @@ switch($TYPE) {
 
 //reparenting
 $content .= "<tr><td>".$lang['parent_task'].":</td><td><select name=\"parentid\">\n";
-$parentq = db_query("SELECT id, name, usergroupid, globalaccess FROM ".PRE."tasks WHERE id<>$taskid AND archive='f' ORDER BY name");
+$parentq = db_query("SELECT id, name, usergroupid, globalaccess FROM ".PRE."tasks WHERE id<>$taskid AND archive=0 ORDER BY name");
 $content .= "<option value=\"0\"";
 
 if($TASKID_ROW['parent'] == 0 )
@@ -255,7 +255,7 @@ switch($TASKID_ROW['parent'] ){
 }
 
 //task owner
-$user_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest='f' ORDER BY fullname" );
+$user_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest=0 ORDER BY fullname" );
 $content .= "<tr> <td>".$lang[$TYPE."_owner"].":</td> <td><select name=\"owner\">\n".
             "<option value=\"0\">".$lang['nobody']."</option>\n";
 

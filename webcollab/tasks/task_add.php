@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 -2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -127,7 +127,7 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
 
 
   //get all users in order to show a task owner
-  $users_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest='f' ORDER BY fullname");
+  $users_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest=0 ORDER BY fullname");
 
   //owner box
   $content .= "<tr><td>".$lang['task_owner'].":</td><td><select name=\"owner\">\n".
@@ -223,7 +223,7 @@ else {
               "</select></td></tr>";
 
   //get all users in order to show a task owner
-  $user_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest='f' ORDER BY fullname");
+  $user_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest=0 ORDER BY fullname");
 
   //owner
   $content .= "<tr><td>".$lang['project_owner'].":</td><td><select name=\"owner\">\n";

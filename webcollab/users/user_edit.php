@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
   
   WebCollab
   ---------------------------------------
@@ -23,7 +23,7 @@
   Function:
   ---------
 
-  Easy user manager
+  User edit
 
 */
 
@@ -93,7 +93,7 @@ if( $ADMIN == 1 ) {
   }
   
   //guest user
-  if($row['guest'] == 't' ) {                
+  if($row['guest'] == 1 ) {                
     $s1 = ""; $s2 = ""; $s3 = "checked=\"checked\"";
   }
                

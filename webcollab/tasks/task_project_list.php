@@ -2,11 +2,10 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Parts of this file originally written for Core APM by Dennis Fleurbaaij 2001/2002.
   
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -208,7 +207,7 @@ $q = db_query("SELECT id,
                       completed
                       FROM ".PRE."tasks
                       WHERE parent=0
-                      AND archive='f' "
+                      AND archive=0 "
                       .$project_order );
 
 //check if there are projects

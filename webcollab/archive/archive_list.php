@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -51,7 +51,7 @@ $q = db_query("SELECT id,
                       completed
                       FROM ".PRE."tasks
                       WHERE parent=0
-                      AND archive='t'
+                      AND archive=1
                       ORDER BY name" );
 
 //check if there are projects

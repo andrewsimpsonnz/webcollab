@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -237,7 +237,7 @@ $content .= "<form method=\"post\" action=\"tasks.php\">\n".
             "<option value=\"0\"$s2>".$lang['nobody']."</option>\n";
 
 //get all users for option box
-$q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest='f' ORDER BY fullname");
+$q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest=0 ORDER BY fullname");
 
 //user input box fields
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
@@ -287,7 +287,7 @@ $content .= "</select></label><br /><br /></td></tr>\n".
             "</form>\n";
 
 //query to get the all the projects
-$q = db_query("SELECT id, name, projectid, usergroupid, globalaccess FROM ".PRE."tasks WHERE parent=0 AND archive='f' ORDER BY name" );
+$q = db_query("SELECT id, name, projectid, usergroupid, globalaccess FROM ".PRE."tasks WHERE parent=0 AND archive=0 ORDER BY name" );
 
 // show all uncompleted tasks and projects belonging to this user or group
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {

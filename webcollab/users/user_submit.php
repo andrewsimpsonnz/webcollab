@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>  
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>  
   
   WebCollab
   ---------------------------------------
@@ -23,7 +23,7 @@
   Function:
   ---------
 
-  Easy user manager
+  Database actions for adding, deleting & editing users
 
 */
 
@@ -101,18 +101,18 @@ ignore_user_abort(TRUE);
       switch($_POST['user_type'] ) {
         case "normal":
           $admin_user = 'f';
-          $guest_user = 'f';
+          $guest_user = 0;
           break;
         
         case "admin":
           $admin_user = 't';
-          $guest_user = 'f';
+          $guest_user = 0;
           break;
         
         case "guest":
         default:
           $admin_user = 'f';
-          $guest_user = 't';        
+          $guest_user = 1;        
           break;
       }     
       //prohibit 2 people from choosing the same username
@@ -200,18 +200,18 @@ ignore_user_abort(TRUE);
         switch($_POST['user_type'] ) {
           case "normal":
             $admin_user = 'f';
-            $guest_user = 'f';
+            $guest_user = 0;
             break;
           
           case "admin":
             $admin_user = 't';
-            $guest_user = 'f';
+            $guest_user = 0;
             break;
           
           case "guest":
           default:
             $admin_user = 'f';
-            $guest_user = 't';        
+            $guest_user = 1;        
             break;
         }
         

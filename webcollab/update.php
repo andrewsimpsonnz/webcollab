@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
   
   WebCollab
   ---------------------------------------
@@ -228,24 +228,39 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     
   //update for version 1.60 -> 1.70
   if(! (db_query("SELECT guest FROM ".PRE."users", 0 ) ) ) {
-     //guest user
-     db_query("ALTER TABLE ".PRE."users ADD COLUMN guest VARCHAR(5)" );
-     db_query("ALTER TABLE ".PRE."users ALTER COLUMN guest SET DEFAULT 'f'" );
-     db_query("UPDATE ".PRE."users SET guest='f'" );
-
-     //archive
-     db_query("ALTER TABLE ".PRE."tasks ADD COLUMN archive VARCHAR(5)" );
-     db_query("ALTER TABLE ".PRE."tasks ALTER COLUMN archive SET DEFAULT 'f'" );
-     db_query("UPDATE ".PRE."tasks SET archive='f'" );
-     
-     //project sorting
-     db_query("ALTER TABLE ".PRE."config ADD COLUMN project_order VARCHAR(200)" );
-     db_query("UPDATE ".PRE."config SET project_order='ORDER BY name'" );
+    //set parameters for appropriate for database
+    switch (DATABASE_TYPE) {
+      case "mysql":
+      case "mysql_innodb":
+        $integer = "TINYINT";
+        break;
+                  
+      case "postgresql":
+        $integer = "SMALLINT";
+        break;
+      
+      default:
+        error("Database type not specified in config file." );
+        break;
+    }
+    
+    db_query("ALTER TABLE ".PRE."users ADD COLUMN guest $integer" );
+    db_query("ALTER TABLE ".PRE."users ALTER COLUMN guest SET DEFAULT 0" );
+    db_query("UPDATE ".PRE."users SET guest=0" );
+  
+    //archive
+    db_query("ALTER TABLE ".PRE."tasks ADD COLUMN archive $integer" );
+    db_query("ALTER TABLE ".PRE."tasks ALTER COLUMN archive SET DEFAULT 0" );
+    db_query("UPDATE ".PRE."tasks SET archive=0" );
+    
+    //project sorting
+    db_query("ALTER TABLE ".PRE."config ADD COLUMN project_order VARCHAR(200)" );
+    db_query("UPDATE ".PRE."config SET project_order='ORDER BY name'" );
           
-     db_query("ALTER TABLE ".PRE."config ADD COLUMN task_order VARCHAR(200)" );
-     db_query("UPDATE ".PRE."config SET task_order='ORDER BY name'" );
-     
-     $content .= "<p>Updating from version pre-1.70 database ... success!</p>\n";
+    db_query("ALTER TABLE ".PRE."config ADD COLUMN task_order VARCHAR(200)" );
+    db_query("UPDATE ".PRE."config SET task_order='ORDER BY name'" );
+  
+    $content .= "<p>Updating from version pre-1.70 database ... success!</p>\n";
   }
     
   if( ! $content )

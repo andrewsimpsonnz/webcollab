@@ -36,7 +36,7 @@ $archive = "";
 $menu_type = "project";
 
 if($GUEST == 1 )
-  warning($lang['access_denied'], $lang['not_owner'] );
+  warning($lang['access_denied'], $lang['not_owner'] );  
 
 //the task dependent part
 if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ) {
@@ -46,7 +46,7 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ) {
   include_once(BASE."includes/details.php" );
   
   //don't show options for archived projects
-  if($TASKID_ROW['archive'] != 't' ){
+  if($TASKID_ROW['archive'] == 0 ){
     
     $menu_type = $TYPE;
     
@@ -56,7 +56,7 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ) {
                   "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang["delete_$TYPE"]."</a><br />\n".
                   "<br /><small><b>".$lang['global'].":</b></small><br />\n";
       
-      if(($TYPE == "project" ) && ($TASKID_ROW['archive'] == 'f' ) ){
+      if(($TYPE == "project" ) && ($TASKID_ROW['archive'] == 0 ) ){
         $archive = "<a href=\"archive.php?x=$x&amp;action=submit_archive&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang['javascript_archive_project'], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang['archive_project']."</a><br />\n";
       }
     }

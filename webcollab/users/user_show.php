@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz>  
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>  
   
   WebCollab
   ---------------------------------------
@@ -23,7 +23,7 @@
   Function:
   ---------
 
-  Easy user manager
+  Show selected user details 
 
 */
 
@@ -78,7 +78,7 @@ if($row['private'] == 1 )
 else
   $content .= "<tr><td>".$lang['private_user'].":</td><td>".$lang['no']."</td></tr>\n";
 
-if($row['guest'] == "t" )
+if($row['guest'] == 1 )
   $content .= "<tr><td>".$lang['guest'].":</td><td>".$lang['yes']."</td></tr>\n";
 else
   $content .= "<tr><td>".$lang['guest'].":</td><td>".$lang['no']."</td></tr>\n";
@@ -162,7 +162,7 @@ if( $tasks_owned + $projects_owned > 0 ) {
   }
 
   //Get the number of tasks
-  $q = db_query("SELECT id, name, parent, status, ".$epoch."finished_time) AS finished_time, usergroupid, globalaccess, projectid FROM ".PRE."tasks WHERE owner=$userid AND archive='f'" );
+  $q = db_query("SELECT id, name, parent, status, ".$epoch."finished_time) AS finished_time, usergroupid, globalaccess, projectid FROM ".PRE."tasks WHERE owner=$userid AND archive=0" );
 
   //show them
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {

@@ -3,7 +3,7 @@
   
   $Id$
 
-  (c) 2002 -2004 Andrew Simpson 
+  (c) 2002 - 2005 Andrew Simpson 
   
   WebCollab
   ---------------------------------------
@@ -360,37 +360,37 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
 // tail end of SQL query
 switch($sortby ) {
   case "deadline":
-    $content .= project_summary(" WHERE archive='f' ORDER BY deadline,taskname", -1 );
+    $content .= project_summary(" WHERE archive=0 ORDER BY deadline,taskname", -1 );
     $suffix = $lang['by_deadline'];
     break;
 
   case "status":
-    $content .= project_summary(" WHERE archive='f' ORDER BY status,deadline,taskname", -1 );
+    $content .= project_summary(" WHERE archive=0 ORDER BY status,deadline,taskname", -1 );
     $suffix = $lang['by_status'];
     break;
 
   case "owner":
-    $content .= project_summary("LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."tasks.owner) WHERE archive='f'  ORDER BY username,deadline,taskname", -1, ", ".PRE."users.fullname AS username" );
+    $content .= project_summary("LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."tasks.owner) WHERE archive=0  ORDER BY username,deadline,taskname", -1, ", ".PRE."users.fullname AS username" );
     $suffix = $lang['by_owner'];
     break;
 
   case "usergroupid":
-    $content .= project_summary("LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."tasks.usergroupid) WHERE archive='f' ORDER BY usergroupname,deadline,taskname", -1, ", ".PRE."usergroups.name AS usergroupname" );
+    $content .= project_summary("LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."tasks.usergroupid) WHERE archive=0 ORDER BY usergroupname,deadline,taskname", -1, ", ".PRE."usergroups.name AS usergroupname" );
     $suffix = $lang['by_usergroup'];
     break;
 
   case "taskgroupid":
-    $content .= project_summary("LEFT JOIN ".PRE."taskgroups ON (".PRE."taskgroups.id=".PRE."tasks.taskgroupid) WHERE archive='f' ORDER BY taskgroupname,deadline,taskname", -1, ", ".PRE."taskgroups.name AS taskgroupname" );
+    $content .= project_summary("LEFT JOIN ".PRE."taskgroups ON (".PRE."taskgroups.id=".PRE."tasks.taskgroupid) WHERE archive=0 ORDER BY taskgroupname,deadline,taskname", -1, ", ".PRE."taskgroups.name AS taskgroupname" );
     $suffix = $lang['by_taskgroup'];
     break;
 
   case "taskname":
-    $content .= project_summary("WHERE archive='f' ORDER BY taskname,deadline", -1 );
+    $content .= project_summary("WHERE archive=0 ORDER BY taskname,deadline", -1 );
     $suffix = "";
     break;
 
   default:
-    $content .= project_summary("WHERE parent=0 AND archive='f' ORDER BY taskname", 0 );
+    $content .= project_summary("WHERE parent=0 AND archive=0 ORDER BY taskname", 0 );
     $suffix = "";
     break;
 }

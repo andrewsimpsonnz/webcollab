@@ -245,7 +245,7 @@ $content .= "</table>\n";
 $content .= "<div style=\"text-align : center\"><span class=\"textlink\">\n";
 
 //if archived we allow no adjustments
-if($TASKID_ROW['archive'] != 't' ) {
+if($TASKID_ROW['archive'] == 0 ) {
   //set add function and title for task or project
   switch($TYPE){
     case "project":

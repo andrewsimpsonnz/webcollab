@@ -2,13 +2,10 @@
 /*
   $Id$
     
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Parts of this file originally written for Core APM by Dennis Fleurbaaij, Andrew Simpson &
-  Marshall Rose 2001/2002.
-  
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -43,7 +40,7 @@ switch($_REQUEST['action'] ) {
 
   case "submit_archive":
     //do the archiving
-    db_query("UPDATE ".PRE."tasks SET archive='t' WHERE projectid=$projectid" );
+    db_query("UPDATE ".PRE."tasks SET archive=1 WHERE projectid=$projectid" );
         
     header("Location: ".BASE_URL."main.php?x=$x" );
     die;
@@ -51,7 +48,7 @@ switch($_REQUEST['action'] ) {
     
   case "submit_restore":
     //do the restore
-    db_query("UPDATE ".PRE."tasks SET archive='f' WHERE projectid=$projectid" );
+    db_query("UPDATE ".PRE."tasks SET archive=0 WHERE projectid=$projectid" );
         
     header("Location: ".BASE_URL."tasks.php?x=$x&action=show&taskid=$taskid" );
     die;

@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -89,7 +89,7 @@ if(db_numrows($q ) != 0 ) {
 }
 
 
-if($GUEST == 0 )
+if(($GUEST == 0 ) && ($TASKID_ROW['archive'] == 0) )
   $content .= "<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang['add_file']."</a>]</span>";
 
 new_box($lang["files_assoc_".$TYPE], $content, "boxdata2" );
