@@ -1,0 +1,195 @@
+<?php
+/*
+  $Id$
+
+  (c) 2003 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  
+  WebCollab
+  ---------------------------------------
+  This program is free software; you can redistribute it and/or modify it under the
+  terms of the GNU General Public License as published by the Free Software Foundation;
+  either version 2 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along with this
+  program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave,
+  Cambridge, MA 02139, USA.
+
+   Function:
+  ---------
+
+  Secure the setup login
+
+*/
+
+//set initial safe values
+$DATABASE_NAME = "--";
+$WEB_CONFIG = "N";
+
+//read config files
+require_once("config/config.php" );
+include_once("setup/screen_setup.php" );
+
+
+//
+// ERROR FUNCTION
+//
+
+function secure_error($message ) {
+
+  create_top_setup("Error" );
+  new_box_setup("Error", "<div align=\"center\">".$message."</div>", "boxdata", "singlebox" );
+  create_bottom_setup();
+  die;
+
+}
+
+//
+// LOGIN CHECK
+//
+
+//valid login attempt ?
+if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
+
+  include_once("database/database.php" );
+  include_once("includes/common.php" );
+  
+  $q = "";
+  $alert = "";
+  $username = safe_data($_POST["username"]);
+  //encrypt password
+  $md5pass = md5($_POST["password"] );
+
+  //no ip (possible?)
+  if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
+    secure_error("Unable to determine ip address");
+  }
+  
+  //count the number of recent login attempts
+  $count_attempts = db_result(@db_query("SELECT COUNT(*) FROM login_attempt 
+                                                WHERE name='".$username."' 
+                                                AND last_attempt > (now()-INTERVAL ".$delim."10 MINUTE".$delim.") LIMIT 6" ), 0, 0 );
+    
+  //protect against password guessing attacks 
+  if($count_attempts > 3 ) {
+    secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+  }                                                                              
+    
+  //record this login attempt
+  db_query("INSERT INTO login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
+                                                                                     
+  //do query and check database connection
+  if( ! $q = db_query("SELECT id FROM users
+                             WHERE deleted='f'
+                             AND admin='t'
+                             AND name='".$username."'
+                             AND password='".$md5pass."'", 0 ) ){
+    secure_error("Not a valid username, or password" );
+  }
+
+  //no such user-password combination
+  if( @db_numrows($q) < 1 ) {
+      sleep(2);
+      secure_error("Not a valid username, or password" );
+  }
+
+  //no user-id
+  if( ! ($user_id = @db_result($q, 0, 0) ) ) {
+    secure_error("Unknown user id");
+  }
+
+  //user is okay!
+
+  //remove the old login information
+  @db_query("DELETE FROM logins WHERE user_id=".$user_id );
+  @db_query("DELETE FROM login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
+   
+  
+  //update for version 1.32 -> 1.40
+  if(! (db_query("SELECT groupaccess FROM config", 0 ) ) ) {
+     db_query("ALTER TABLE tasks ADD COLUMN groupaccess VARCHAR(5)" );
+     db_query("ALTER TABLE tasks ALTER COLUMN groupaccess SET DEFAULT 'f'" );
+     db_query("ALTER TABLE config ADD COLUMN groupaccess VARCHAR(50)" );
+     $alert .= "<p>Updated from version pre-1.40 database</p>\n"; 
+  }
+  
+  //update for version 1.51 -> 1.60
+  if(! (db_query("SELECT * FROM login_attempt", 0 ) ) ) {
+    
+    switch ($DATABASE_TYPE) {
+      case "mysql":
+        db_query("CREATE TABLE login_attempt ( name VARCHAR(100) NOT NULL,
+                                               ip VARCHAR(100) NOT NULL,
+                                               last_attempt DATETIME NOT NULL)" );
+        break;
+      
+      case "mysql_innodb":
+        db_query("CREATE TABLE login_attempt ( name VARCHAR(100) NOT NULL,
+                                               ip VARCHAR(100) NOT NULL,
+                                               last_attempt DATETIME NOT NULL)
+                                               TYPE = innoDB" );
+        break;
+
+          
+      case "postgresql":
+        db_query("CREATE TABLE \"login_attempt\" ( \"name\" character varying(100) NOT NULL,
+                                               \"ip\" character varying(100) NOT NULL,
+                                               \"last_attempt\" timestamp with time zone NOT NULL DEFAULT current_timestamp(0))" );
+        break;
+      
+      default:
+        error("Database type not specified in config file." );
+        break;
+    }
+  $alert .= "<p>Updated from version pre-1.60 database</p>\n";
+  } 
+  create_top_setup("Info" );
+  $content = "<p>Update was successfully completed.</p>\n";
+
+  if( ! $alert )
+    $alert = "<p>No database updates were required</p>\n";
+  
+  $content .= $alert;  
+    
+  //set box options
+  new_box_setup("Update", $content, "boxdata", "singlebox" );
+  die;
+}
+
+//
+// MAIN PROGRAM
+//
+
+
+//check for initial install
+if($DATABASE_NAME == "" ) {
+  //this is an initial install
+  $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
+  header("Location: ".$path."setup_handler.php?action=setup1" );
+  secure_error("Auto page redirect could not detect server configuration.&nbsp;".
+                "You will need to do a manual configuration" );
+  die;
+}
+
+//login box screen code 
+create_top_setup("Login" );
+
+$content = "<p>Admin login is required for update:</p>\n".
+           "<form name=\"inputform\" method=\"POST\" action=\"update.php\">\n".
+             "<p><table border=\"0\">\n".
+               "<tr><td>Login: </td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
+               "<tr><td>Password: </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
+             "</table></p>\n".
+             "<div align=\"center\">\n".
+             "<p><input type=\"submit\" value=\"Login\" /></p>\n".
+             "</div></form>\n";
+
+//set box options
+new_box_setup("Login", $content, "boxdata", "singlebox" );
+
+create_bottom_setup();
+
+?>
