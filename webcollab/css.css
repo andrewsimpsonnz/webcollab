@@ -6,12 +6,19 @@ FONT {
 LI {
   font-family: "Helvetica", Verdana, Arial, Sans-serif; 
   font-size : 10pt;
+  list-style-type: circle;
 }
 
 TD {
   font-family: "Helvetica", Verdana, Arial, Sans-serif; 
   font-size : 10pt;
 }
+
+DL {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif; 
+  font-size : 10pt;
+}
+
 
 BODY {
   font-family : "Helvetica", Verdana, Arial, Sans-serif; 
