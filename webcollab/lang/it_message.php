@@ -105,7 +105,7 @@ $lang = array(
  "no_login" => "Accesso negato, login o password errati",
  "please_login" => "Identificazione utente",
 //for collaltosabino.net
-//"please_login" => "<font color=\"navy\"><b>collaltosabino.net</b><br><font color=\"darkred\"><b>*** Sistema di gestione progetti ***<br><br><font color=\"navy\">Identificazione utente</b></font>",
+//"please_login" => "<span class=\"navy\"><b>collaltosabino.net</b><br><span class=\"darkred\"><b>*** Sistema di gestione progetti ***<br><br><span class=\"navy\">Identificazione utente</b></span>",
 
 //graphic items
  "late_g" => "&nbsp;IN RITARDO&nbsp;",

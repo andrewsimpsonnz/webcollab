@@ -56,10 +56,10 @@ $user_info      =   "Seleziona un'azione dal menu di sinistra.<br /><br />".
                       "</ul>\n";
 
 $calendar_key    =  "<i>Torna al Menu Principale</i></a>]</b><br />\n".
-                      "<p><b><u>Key to Calendar</u></b><br /><br />\n".
-                      "<font color=\"blue\">Progetto (con attivit&agrave; non completate)</font><br />\n".
-                      "<font color=\"green\"><u>Progetto </u>(attivit&agrave; completate)</font><br />\n".
-                      "<font color=\"red\">Attivit&agrave; (Non completate)</font><br />\n".
-                      "<font color=\"green\">Attivit&agrave; (completate)</font><br />\n";
+                      "<p><b><span class=\"underline\">Key to Calendar</span></b><br /><br />\n".
+                      "<span class=\"blue\">Progetto (con attivit&agrave; non completate)</span><br />\n".
+                      "<span class=\"green\"><span class=\"underline\">Progetto </span>(attivit&agrave; completate)</span><br />\n".
+                      "<span class=\"red\">Attivit&agrave; (Non completate)</span><br />\n".
+                      "<span class=\"green\">Attivit&agrave; (completate)</span><br />\n";
 
 ?>
