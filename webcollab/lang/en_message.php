@@ -28,7 +28,7 @@
 */
 
 //required language encodings
-define('CHARACTER_SET', "iso-8859-1" );
+define('CHARACTER_SET', "ISO-8859-1" );
 
 //this is the regex for input validation filter used in common.php 
 $validation_regex = '/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s'; //ISO-8859-x 
@@ -86,7 +86,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['error']                      = 'Error';
     $lang['no_login']                   = 'Access denied; incorrect login or password';
 //**    
-    $lang['redirect_sprt']              = 'You will automatically return to Login after a %d second delay<br />';
+    $lang['redirect_sprt']              = 'You will automatically return to Login after a %d second delay';
 //**
     $lang['login_now']                  = 'Please click here to return to Login now';   
     $lang['please_login']               = 'Please log in';

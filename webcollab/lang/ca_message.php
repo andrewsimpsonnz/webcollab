@@ -30,10 +30,10 @@
 */
 
 //required language encodings
-define('CHARACTER_SET', "iso-8859-1" );
+define('CHARACTER_SET', "ISO-8859-1" );
 
 //this is the regex for input validation filter used in common.php 
-$validation_regex = '/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s';
+$validation_regex = '/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s'; //ISO-8859-x
 
 //dates
 $month_array = array ( NULL, "Gen", "Feb", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Dec" );
@@ -86,6 +86,10 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['login']                        = 'Login';
     $lang['error']                        = 'Error';
     $lang['no_login']                     = 'Acc&egrave;s denegat, identificador o contrasenya incorrectes';
+//**    
+    $lang['redirect_sprt']                = 'You will automatically return to Login after a %d second delay';
+//**
+    $lang['login_now']                    = 'Please click here to return to Login now';   
     $lang['please_login']                 = 'Benvingut, per favor identifiqui\'s';
 //**    
     $lang['go']                           = 'Go!';

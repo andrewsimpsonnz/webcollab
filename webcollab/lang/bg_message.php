@@ -34,7 +34,7 @@
 define('CHARACTER_SET', "windows-1251" );
 
 //this is the regex for input validation filter used in common.php 
-$validation_regex = '/([^\x01-x08\x0b\x0c\x0e\x0f\x21-\xff])/';
+$validation_regex = '/([^\x09\x0a\x0d\x20-\x97\x99-\xff])/'; //windows-1251 (http://www.microsoft.com/typography/unicode/1251.htm)
 
 //dates
 $month_array                              = array (NULL, "Яну", "Фев", "Мар", "Апр", "Май", "Юни", "Юли", "Авг", "Сеп", "Окт", "Ное", "Дек" );
@@ -88,6 +88,10 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['login']                        = 'Вход';
     $lang['error']                        = 'Грешка';
     $lang['no_login']                     = 'Достъпът отказан, грешно име или парола';
+//**    
+    $lang['redirect_sprt']                = 'You will automatically return to Login after a %d second delay';
+//**
+    $lang['login_now']                    = 'Please click here to return to Login now';   
     $lang['please_login']                 = 'Моля влезте';
 //**    
     $lang['go']                           = 'Go!';

@@ -86,6 +86,10 @@ $week_array = array('일', '월', '화', '수', '목', '금', '토' );
     $lang['login']                        = '로그인';
     $lang['error']                        = '오류';
     $lang['no_login']                     = '접근 금지. 로그인이나 비밀번호가 맞지 않습니다.';
+//**    
+    $lang['redirect_sprt']                = 'You will automatically return to Login after a %d second delay';
+//**
+    $lang['login_now']                    = 'Please click here to return to Login now';   
     $lang['please_login']                 = '로그인하십시오';
     $lang['go']                           = 'Go!';
     

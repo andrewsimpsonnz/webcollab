@@ -28,7 +28,7 @@
 */
 
 //required language encodings
-define('CHARACTER_SET', "iso-8859-1" );
+define('CHARACTER_SET', "ISO-8859-1" );
 
 //this is the regex for input validation filter used in common.php 
 $validation_regex = '/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s';
@@ -84,6 +84,10 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['login']                        = 'Login';
     $lang['error']                        = 'Errore';
     $lang['no_login']                     = 'Accesso negato, login o password errati';
+//**    
+    $lang['redirect_sprt']                = 'You will automatically return to Login after a %d second delay';
+//**
+    $lang['login_now']                    = 'Please click here to return to Login now';   
     $lang['please_login']                 = 'Identificazione utente';
 //for collaltosabino.net
 //  $lang['please_login']                 = '<span class="navy"><b>collaltosabino.net</b><br><span class="darkred"><b>*** Sistema di gestione progetti ***<br><br><span class="navy">Identificazione utente</b></span>';
