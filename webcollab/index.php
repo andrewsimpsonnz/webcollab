@@ -148,7 +148,7 @@ if(isset($_COOKIE["webcollab_session"] ) && strlen($_COOKIE["webcollab_session"]
     $SESSION_TIMEOUT = 1;
     
   //check if session is valid and within time limits
-  if(db_result(@db_query("SELECT COUNT(*) FROM logins
+  if(db_result(@db_query("SELECT COUNT(*) FROM ".PRE."logins
                                  WHERE session_key='".safe_data($_COOKIE["webcollab_session"])."'
                                  AND lastaccess > (now()-INTERVAL ".$delim.round($SESSION_TIMEOUT)." HOUR".$delim.")" ) ) == 1 ) {
     //relocate to main screen, and let security.php do further checking on session validity
