@@ -44,10 +44,11 @@ if( $admin != 1 ) {
 }
 
 //start form data
-$content .= "<TABLE border=\"0\">\n".
-            "<BR>\n".
-            "<FORM method=\"POST\" action=\"admin/admin_config_submit.php\">\n".
-	    "<INPUT type=\"hidden\" name=\"x\" value=\"".$x."\">\n";
+$content .= "<FORM method=\"POST\" action=\"admin/admin_config_submit.php\">\n".
+	    "<INPUT type=\"hidden\" name=\"x\" value=\"".$x."\">\n".
+	    "<BR>\n".
+	    "<TABLE border=\"0\">\n";
+            
 
 $content .= "<TR><TD nowrap colspan=\"2\"><B>".$lang["email_settings"]."</B></TD></TR>\n".
             "<TR><TD colspan=\"2\">&nbsp;</TD></TR>";

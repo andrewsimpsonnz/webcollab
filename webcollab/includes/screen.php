@@ -83,7 +83,7 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
 
   //javascript to position cursor in the first box
   if( $cursor != "") {
-    $position = "<script language=\"JavaScript\">\n".
+    $position = "<script language=\"JavaScript\" type=\"text/javascript\">\n".
                 "<!-- \n".
                 "function cursor() {document.inputform.".$cursor.".focus();}\n".
                 " // -->\n".
@@ -145,7 +145,7 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
     echo "<FONT color=\"#EEEEEE\"><B><SMALL>".sprintf( $lang["user_homepage_sprt"], $username )."</SMALL></B></FONT>\n";
 
   echo "</TD><TD bgcolor=\"#000000\" align=\"right\">\n";
-  echo "<FONT color=\"#FFFFFF\"><SMALL>(c) 2001-2002</SMALL>\n</FONT>\n</TD>\n</TR>";
+  echo "<FONT color=\"#FFFFFF\"><SMALL>(c) 2001-2003</SMALL>\n</FONT>\n</TD>\n</TR>";
 
   echo "</TABLE></TD></TR>\n";
 

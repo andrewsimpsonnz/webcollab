@@ -182,7 +182,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
     case "cantcomplete":
       $content .= "<DD><I>".$lang["project_hold"].nicedate( $row["finished_time"])."</I></DD>\n";
-      $content .= "<DD><img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\"> &nbsp; ".nicedate( $row["deadline"] )."<\DD>\n";
+      $content .= "<DD><img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\"> &nbsp; ".nicedate( $row["deadline"] )."</DD>\n";
       break;
 
     case "notactive":

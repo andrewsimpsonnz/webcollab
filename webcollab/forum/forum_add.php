@@ -60,7 +60,12 @@ if( ( $taskname = db_result( db_query("SELECT name FROM tasks WHERE id=".$taskid
 
 $content .= "<BR>\n";
 $content .= "<FORM name=\"inputform\" method=\"POST\" action=\"forum/forum_submit.php\">\n";
-$content .= "<TABLE border=\"0\">\n";
+//set some hidden values
+$content .= "<INPUT TYPE=\"hidden\" name=\"action\" value=\"add\">\n";
+$content .= "<INPUT TYPE=\"hidden\" name=\"taskid\" value=\"".$taskid."\">\n";
+$content .= "<INPUT TYPE=\"hidden\" NAME=\"x\" value=\"".$x."\">";
+$content .= "<INPUT TYPE=\"hidden\" NAME=\"usergroupid\" value=\"".$usergroupid."\">\n";
+
 
 //find out some of the parent's data
 if( is_numeric($parentid) && ($parentid != 0) ) {
@@ -73,6 +78,7 @@ if( is_numeric($parentid) && ($parentid != 0) ) {
 
   //show a box with the original post
   $content .= "<INPUT TYPE=\"hidden\" name=\"parentid\" value=\"".$parentid."\">\n";
+  $content .= "<TABLE border=\"0\">\n";
   $content .= "<TR> <TD>".$lang["orig_message"]."</TD> <TD bgcolor=\"#EEEEEE\">".nl2br( $parent_array["text"] )."</TD> </TR>\n";
 
 }
@@ -82,14 +88,9 @@ else {
 
   //This is a new thread so we don't have a valid parent
   $content .= "<INPUT TYPE=\"hidden\" name=\"parentid\" value=\"0\">\n";
+  $content .= "<TABLE border=\"0\">\n";
 
 }
-
-//set some hidden values
-$content .= "<INPUT TYPE=\"hidden\" name=\"action\" value=\"add\">\n";
-$content .= "<INPUT TYPE=\"hidden\" name=\"taskid\" value=\"".$taskid."\">\n";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"x\" value=\"".$x."\">";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"usergroupid\" value=\"".$usergroupid."\">";
 
 
 //build up the text-entry part

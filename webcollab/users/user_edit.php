@@ -70,10 +70,10 @@ if( ! ( $row = db_fetch_array($q , 0 ) ) )
 //show data
 $content = "<BR><FORM method=\"POST\" action=\"users/user_submit.php\">";
 $content .= "<TABLE>";
-$content .= "<TR><TD>".$lang["login_name"].":</TD><TD><INPUT type=\"text\" name=\"name\" size=\"30\" length=\"200\" value=\"".$row["name"]."\"></TD></TR>\n";
-$content .= "<TR><TD>".$lang["full_name"].":</TD><TD><INPUT type=\"text\" name=\"fullname\" size=\"30\" length=\"200\" value=\"".$row["fullname"]."\"></TD></TR>\n";
-$content .= "<TR><TD>".$lang["password"].":</TD><TD><INPUT type=\"password\" name=\"password\" size=\"30\" length=\"200\" value=\"\"><SMALL><I>(Leave blank for current password)</I></SMALL></TD></TR>\n";
-$content .= "<TR><TD>".$lang["email"].":</TD><TD><INPUT type=\"text\" name=\"email\" size=\"30\" length=\"200\" value=\"".$row["email"]."\"></TD></TR>\n";
+$content .= "<TR><TD>".$lang["login_name"].":</TD><TD><INPUT type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></TD></TR>\n";
+$content .= "<TR><TD>".$lang["full_name"].":</TD><TD><INPUT type=\"text\" name=\"fullname\" size=\"30\" value=\"".$row["fullname"]."\"></TD></TR>\n";
+$content .= "<TR><TD>".$lang["password"].":</TD><TD><INPUT type=\"password\" name=\"password\" size=\"30\" value=\"\"><SMALL><I>(Leave blank for current password)</I></SMALL></TD></TR>\n";
+$content .= "<TR><TD>".$lang["email"].":</TD><TD><INPUT type=\"text\" name=\"email\" size=\"30\" value=\"".$row["email"]."\"></TD></TR>\n";
 
 //dangerous action!
 if( $admin == 1 ) {

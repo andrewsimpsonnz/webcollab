@@ -41,10 +41,10 @@ if( $admin != 1 )
 
 $content = "<BR><FORM name=\"inputform\" method=\"POST\" action=\"users/user_submit.php\">";
 $content .= "<TABLE>";
-$content .= "<TR><TD>".$lang["login_name"].":</TD><TD><INPUT type=\"text\" name=\"name\" size=\"30\" length=\"200\"></TD></TR>\n";
-$content .= "<TR><TD>".$lang["full_name"].":</TD><TD><INPUT type=\"text\" name=\"fullname\" size=\"30\" length=\"200\"></TD></TR>\n";
-$content .= "<TR><TD>".$lang["password"].":</TD><TD><INPUT type=\"password\" name=\"password\" size=\"30\" length=\"200\"></TD></TR>\n";
-$content .= "<TR><TD>".$lang["email"].":</TD><TD><INPUT type=\"text\" name=\"email\" size=\"30\" length=\"200\"></TD></TR>\n";
+$content .= "<TR><TD>".$lang["login_name"].":</TD><TD><INPUT type=\"text\" name=\"name\" size=\"30\"></TD></TR>\n";
+$content .= "<TR><TD>".$lang["full_name"].":</TD><TD><INPUT type=\"text\" name=\"fullname\" size=\"30\"></TD></TR>\n";
+$content .= "<TR><TD>".$lang["password"].":</TD><TD><INPUT type=\"password\" name=\"password\" size=\"30\"></TD></TR>\n";
+$content .= "<TR><TD>".$lang["email"].":</TD><TD><INPUT type=\"text\" name=\"email\" size=\"30\"></TD></TR>\n";
 $content .= "<TR><TD>".$lang["is_admin"].":</TD><TD><INPUT type=\"checkbox\" name=\"admin_rights\"></TD></TR>\n";
 
 //add user-groups
