@@ -84,6 +84,15 @@ associated Tasks on any screen<BR>
 If no Usergroup is selected, this checkbox has no affect.<BR>
 <BR> 
 
+<A name=\"groupaccess\"><BR></A>
+<B>Anyone in the usergroup can edit?</B><BR>
+This checkbox allows all members of a Usergroup to edit the task / project.  When the box is
+checked, all members of the Usergroup can edit this item.  If the box is unchecked, only the owner
+can edit the task.<BR>
+<BR>
+If no Usergroup is selected, this checkbox has no affect.<BR>
+<BR> 
+
 <A name=\"summarypage\"><BR></A>
 <B>Summary page:</B><BR>
 The summary page contains six columns that concisely indicate what's going on with each task.
