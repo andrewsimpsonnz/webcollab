@@ -40,22 +40,22 @@ if($admin != 1 )
 
 
 //get the files from this task
-$q = db_query("SELECT files.oid AS oid,
-                        files.id AS id,
-                        files.filename AS filename,
-                        files.uploaded AS uploaded,
-                        files.size AS size,
-                        files.mime AS mime,
-                        files.description AS description,
-                        files.uploader AS uploader,
-                        tasks.owner AS owner,
-                        tasks.id AS task_id,
-                        tasks.name AS task_name,
-                        users.id AS userid,
-                        users.fullname AS username
+$q = db_query("SELECT ".PRE."files.oid AS oid,
+                        ".PRE."files.id AS id,
+                        ".PRE."files.filename AS filename,
+                        ".PRE."files.uploaded AS uploaded,
+                        ".PRE."files.size AS size,
+                        ".PRE."files.mime AS mime,
+                        ".PRE."files.description AS description,
+                        ".PRE."files.uploader AS uploader,
+                        ".PRE."tasks.owner AS owner,
+                        ".PRE."tasks.id AS task_id,
+                        ".PRE."tasks.name AS task_name,
+                        ".PRE."users.id AS userid,
+                        ".PRE."users.fullname AS username
                         FROM ".PRE."files
-                        LEFT JOIN tasks ON (files.taskid=tasks.id)
-                        LEFT JOIN users ON (users.id=files.uploader)
+                        LEFT JOIN ".PRE."tasks ON (".PRE."files.taskid=".PRE."tasks.id)
+                        LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."files.uploader)
                         ORDER BY task_name" );
 
 if(db_numrows($q) == 0 ) {

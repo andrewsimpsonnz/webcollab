@@ -45,15 +45,15 @@ $taskid = intval($_GET["taskid"]);
 //check usergroup security
 require_once(BASE."includes/usergroup_security.php");
 
-$q = db_query("SELECT tasks.id AS id,
-                      users.fullname AS fullname,
-                      taskgroups.name AS taskgroup_name,
-                      usergroups.name AS usergroup_name
+$q = db_query("SELECT ".PRE."tasks.id AS id,
+                      ".PRE."users.fullname AS fullname,
+                      ".PRE."taskgroups.name AS taskgroup_name,
+                      ".PRE."usergroups.name AS usergroup_name
                     FROM ".PRE."tasks
-                    LEFT JOIN users ON (users.id=tasks.owner)
-                    LEFT JOIN taskgroups ON (taskgroups.id=tasks.taskgroupid)
-                    LEFT JOIN usergroups ON (usergroups.id=tasks.usergroupid)
-                    WHERE tasks.id=$taskid" );
+                    LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."tasks.owner)
+                    LEFT JOIN ".PRE."taskgroups ON (".PRE."taskgroups.id=".PRE."tasks.taskgroupid)
+                    LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."tasks.usergroupid)
+                    WHERE ".PRE."tasks.id=$taskid" );
 
 
 //get the data

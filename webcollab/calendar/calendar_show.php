@@ -100,10 +100,11 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
 }
 
 //get list of common users in private usergroups that this user can view 
-$q = db_query("SELECT usergroupid, userid 
+$q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid,
+                      ".PRE."usergroups_users.userid AS userid
                       FROM ".PRE."usergroups_users 
-                      LEFT JOIN usergroups ON (usergroups.id=usergroups_users.usergroupid)
-                      WHERE usergroups.private=1");
+                      LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."usergroups_users.usergroupid)
+                      WHERE ".PRE."usergroups.private=1");
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
   if(in_array($row[0], (array)$gid ) && ! in_array($row[1], (array)$allowed ) ) {
@@ -203,7 +204,7 @@ $numdays = date("t", mktime(0, 0, 0, $month, 1, $year ) );
 
 //main calendar table
 $content .= "<table style=\"border-width: 1px; border-style: solid; border-collapse: collapse; width: 97%\" align=\"center\" cellspacing=\"0\" border=\"1\">\n<tr>\n";
-$content .= "<td colspan=\"7\" style=\"vertical-align: middle; text-align: center\"><b>".date("F", mktime(0, 0, 0, $month, 1, $year ) )."</b>\n</td>\n";
+$content .= "<td colspan=\"7\" style=\"vertical-align: middle; text-align: center\"><b>".$month_array[(int)$month]."</b>\n</td>\n";
 $content .= "</tr>\n";
 
 //weekdays
@@ -214,7 +215,6 @@ foreach($week_array as $value) {
 $content .= "</tr>\n";
 
 //show lead in to dates
-//$content .= "<tr valign=\"top\" align=\"center\">\n";
 $content .= "<tr style=\"vertical-align: top; text-align: center\">\n";
 for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); $i++ ) {
   $content .= "<td style=\"border-width: 1px; border-style: solid\">&nbsp;</td>\n";
@@ -236,9 +236,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
   $content .= ">$num<br />";
   $pad = 0;
 
-  //search for tasks on this date (Not every date will have data rows and COUNT(*) is much faster to find empty rows)
-  //if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE deadline='$year-$month-$num' $tail" ), 0, 0 ) > 0 ) {
-  
+  //check if this date has projects/tasks
   if(in_array($num, (array)$task_dates ) ) {
   
   //rows exist for this date - get them!

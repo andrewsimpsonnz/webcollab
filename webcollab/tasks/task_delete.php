@@ -64,17 +64,17 @@ if(! isset($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
 $taskid = intval($_REQUEST["taskid"]);
 
 //get task and owner information
-$q = db_query("SELECT tasks.parent AS parent,            
-                      tasks.name AS name,
-                      tasks.text AS text,
-                      tasks.owner AS owner,
-                      tasks.status AS status,
-                      tasks.projectid AS projectid,
-                      users.id AS id,
-                      users.email AS email
+$q = db_query("SELECT ".PRE."tasks.parent AS parent,            
+                      ".PRE."tasks.name AS name,
+                      ".PRE."tasks.text AS text,
+                      ".PRE."tasks.owner AS owner,
+                      ".PRE."tasks.status AS status,
+                      ".PRE."tasks.projectid AS projectid,
+                      ".PRE."users.id AS id,
+                      ".PRE."users.email AS email
                       FROM ".PRE."tasks
-                      LEFT JOIN users ON (users.id=tasks.owner)
-                      WHERE tasks.id=$taskid" );
+                      LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."tasks.owner)
+                      WHERE ".PRE."tasks.id=$taskid" );
 
 //get the data
 if( ! $row = db_fetch_array($q, 0) )

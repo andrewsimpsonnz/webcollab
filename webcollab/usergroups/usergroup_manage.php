@@ -65,12 +65,12 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
   //get users from that group
   $usersq = db_query("SELECT fullname,
-                            users.id AS id
+                            ".PRE."users.id AS id
                             FROM ".PRE."users
-                            LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
+                            LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.userid=".PRE."users.id)
                             WHERE usergroupid=".$row["id"]."
-                            AND deleted='f'
-                            ORDER BY fullname" );
+                            AND ".PRE."deleted='f'
+                            ORDER BY ".PRE."users.fullname" );
 
   for($j=0 ; $userrow = @db_fetch_array($usersq, $j ) ; $j++ ) {
     $content .= "<tr><td colspan=\"4\" align=\"left\"><small>(<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$userrow["id"]."\">".$userrow["fullname"]."</a>)</small></td></tr>";

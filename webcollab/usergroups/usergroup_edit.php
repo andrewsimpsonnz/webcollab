@@ -58,11 +58,11 @@ $content =
                "<tr><td>&nbsp;</td></tr>\n";
 //add users
 $user_q = db_query("SELECT fullname, id FROM ".PRE."users WHERE deleted='f' ORDER BY fullname" );
-$member_q = db_query("SELECT users.id AS id
+$member_q = db_query("SELECT ".PRE."users.id AS id
                              FROM ".PRE."users
-                             LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
+                             LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.userid=".PRE."users.id)
                              WHERE usergroupid=".$row["id"]."
-                             AND deleted='f'"  );
+                             AND ".PRE."users.deleted='f'"  );
 
 $content .=    "<tr><td>".$lang["members"]."</td><td><select name=\"member[]\" multiple=\"multiple\" size=\"4\">\n";
 

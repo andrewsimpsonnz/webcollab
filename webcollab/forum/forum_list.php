@@ -51,18 +51,18 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 
   $ul_flag = 0;
 
-  $q = db_query("SELECT forum.text AS text,
-                        forum.id AS id,
-                        forum.posted AS posted,
-                        forum.userid AS postowner,
-                        users.id AS userid,
-                        users.fullname AS fullname
+  $q = db_query("SELECT ".PRE."forum.text AS text,
+                        ".PRE."forum.id AS id,
+                        ".PRE."forum.posted AS posted,
+                        ".PRE."forum.userid AS postowner,
+                        ".PRE."users.id AS userid,
+                        ".PRE."users.fullname AS fullname
                         FROM ".PRE."forum
-                        LEFT JOIN users ON (users.id=forum.userid)
-                        WHERE forum.taskid=$taskid
-                        AND forum.parent=$parentid
-                        AND forum.usergroupid=$usergroupid
-                        ORDER BY forum.posted" );
+                        LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."forum.userid)
+                        WHERE ".PRE."forum.taskid=$taskid
+                        AND ".PRE."forum.parent=$parentid
+                        AND ".PRE."forum.usergroupid=$usergroupid
+                        ORDER BY ".PRE."forum.posted" );
 
   //check for any posts
   if(db_numrows($q ) < 1 ) {

@@ -62,16 +62,16 @@ else{
 }
 
 //seems okay at first, now go cross-checking with the known data from the database
-if( ! ($q = db_query("SELECT logins.user_id AS user_id,
-                             logins.lastaccess AS lastaccess,
-                             users.email AS email,
-                             users.admin AS admin,
-                             users.fullname AS fullname,
+if( ! ($q = db_query("SELECT ".PRE."logins.user_id AS user_id,
+                             ".PRE."logins.lastaccess AS lastaccess,
+                             ".PRE."users.email AS email,
+                             ".PRE."users.admin AS admin,
+                             ".PRE."users.fullname AS fullname,
                              $epoch now() ) AS now,
                              $epoch lastaccess) AS sec_lastaccess
                              FROM ".PRE."logins
-                             LEFT JOIN users ON (users.id=logins.user_id)
-                             WHERE session_key='$session_key'", 0 ) ) ) {
+                             LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."logins.user_id)
+                             WHERE ".PRE."logins.session_key='$session_key'", 0 ) ) ) {
   error("Security manager", "Database not able to verify session key");
 }
 

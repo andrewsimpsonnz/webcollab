@@ -156,12 +156,12 @@ ignore_user_abort(TRUE);
       $s = "";
 
       //get task data
-      $q = db_query("SELECT tasks.name AS name,
-                            tasks.usergroupid AS usergroupid,
-                            users.email AS email
+      $q = db_query("SELECT ".PRE."tasks.name AS name,
+                            ".PRE."tasks.usergroupid AS usergroupid,
+                            ".PRE."users.email AS email
                             FROM ".PRE."tasks
-                            LEFT JOIN users ON (tasks.owner=users.id)
-                            WHERE tasks.id=$taskid" );
+                            LEFT JOIN ".PRE."users ON (".PRE."tasks.owner=".PRE."users.id)
+                            WHERE ".PRE."tasks.id=$taskid" );
       $task_row = db_fetch_array($q, 0 );
 
       //set owner's email
@@ -172,11 +172,11 @@ ignore_user_abort(TRUE);
 
       //if usergroup set, add the user list
       if($task_row["usergroupid"] && $mail_group ){
-        $q = db_query("SELECT users.email
+        $q = db_query("SELECT ".PRE."users.email
                               FROM ".PRE."users
-                              LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
-                              WHERE usergroups_users.usergroupid=".$task_row["usergroupid"].
-                              " AND users.deleted='f'" );
+                              LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.".PRE."userid=users.id)
+                              WHERE ".PRE."usergroups_users.usergroupid=".$task_row["usergroupid"].
+                              " AND ".PRE."users.deleted='f'" );
 
         for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
           $mail_list .= $s.$row[0];
@@ -212,13 +212,13 @@ ignore_user_abort(TRUE);
       $fileid = intval($_GET["fileid"]);
 
       //get the files from this task
-      $q = db_query("SELECT files.uploader AS uploader,
-                                   files.oid AS oid,
-                                   files.filename AS filename,
-                                   tasks.owner AS owner
+      $q = db_query("SELECT ".PRE."files.uploader AS uploader,
+                                   ".PRE."files.oid AS oid,
+                                   ".PRE."files.filename AS filename,
+                                   ".PRE."tasks.owner AS owner
                                    FROM ".PRE."files
-                                   LEFT JOIN tasks ON (files.taskid=tasks.id)
-                                   WHERE files.id=$fileid" );
+                                   LEFT JOIN ".PRE."tasks ON (".PRE."files.taskid=".PRE."tasks.id)
+                                   WHERE ".PRE."files.id=$fileid" );
 
       if(db_numrows($q ) != 0 ) {
          //show it

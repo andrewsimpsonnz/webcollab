@@ -68,11 +68,11 @@ $content .=  "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
 if($parentid != 0 ) {
 
   //get the text from the parent and the username of the person that posted that text
-  $q = db_query("SELECT forum.text AS text,
-                         users.fullname AS username
+  $q = db_query("SELECT ".PRE."forum.text AS text,
+                         ".PRE."users.fullname AS username
                          FROM ".PRE."forum
-                         LEFT JOIN users ON (forum.userid=users.id)
-                         WHERE forum.id=$parentid" );
+                         LEFT JOIN ".PRE."users ON (".PRE."forum.userid=".PRE."users.id)
+                         WHERE ".PRE."forum.id=$parentid" );
 
   if( ! $row = db_fetch_array($q, 0 ) )
     error("Forum add", "Forum post has invalid parent" );

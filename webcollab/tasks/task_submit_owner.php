@@ -188,16 +188,16 @@ ignore_user_abort(TRUE);
       if($admin == 1 ) {
         db_begin();
         //get the current owner and task details
-        $q = db_query("SELECT users.id AS id,
-                              tasks.projectid AS projectid,
-                              tasks.parent AS parent,
-                              tasks.name AS name,
-                              tasks.text AS text,
-                              tasks.status AS status,
-                              tasks.deadline AS deadline
+        $q = db_query("SELECT ".PRE."users.id AS id,
+                              ".PRE."tasks.projectid AS projectid,
+                              ".PRE."tasks.parent AS parent,
+                              ".PRE."tasks.name AS name,
+                              ".PRE."tasks.text AS text,
+                              ".PRE."tasks.status AS status,
+                              ".PRE."tasks.deadline AS deadline
                               FROM ".PRE."tasks
-                              LEFT JOIN users ON (users.id=tasks.owner)
-                              WHERE tasks.id=$taskid" );
+                              LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."tasks.owner)
+                              WHERE ".PRE."tasks.id=$taskid" );
 
         $row = db_fetch_array($q, 0 );
         //do the action

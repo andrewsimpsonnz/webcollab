@@ -87,10 +87,11 @@ $usergroup[0] = 0;
 $allowed[0] = 0; 
 
 //get list of common users in private usergroups that this user can view 
-$q = db_query("SELECT usergroupid, userid 
+$q = db_query("SELECT ".PRE."usergroupid_users.usergroupid AS usergroupid,
+                      ".PRE." usergroupid_users.userid AS userid 
                       FROM ".PRE."usergroups_users 
-                      LEFT JOIN usergroups ON (usergroups.id=usergroups_users.usergroupid)
-                      WHERE usergroups.private=1");
+                      LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."usergroups_users.usergroupid)
+                      WHERE ".PRE."usergroups.private=1");
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
   if(in_array($row[0], (array)$gid ) && ! in_array($row[1], (array)$allowed ) ) {

@@ -54,24 +54,24 @@ if(substr($DATABASE_TYPE, 0, 5) == "mysql" )
   $no_group = "IF(taskgroups.name IS NULL, 1, 0), ";
 
 //query to get the children for this taskid
-$q = db_query("SELECT tasks.id AS id,
-                tasks.name AS taskname,
-                tasks.status AS status,
-                tasks.finished_time AS finished_time,
-                $epoch tasks.deadline) AS due,
-                $epoch tasks.edited) AS edited,
-                $epoch tasks.lastforumpost) AS lastpost,
-                $epoch tasks.lastfileupload) AS lastfileupload,
-                tasks.globalaccess AS globalaccess,
-                tasks.usergroupid AS usergroupid,
-                users.fullname AS username,
-                users.id AS userid,
-                taskgroups.name AS groupname,
-                taskgroups.description AS groupdescription
+$q = db_query("SELECT ".PRE."tasks.id AS id,
+                ".PRE."tasks.name AS taskname,
+                ".PRE."tasks.status AS status,
+                ".PRE."tasks.finished_time AS finished_time,
+                $epoch ".PRE."tasks.deadline) AS due,
+                $epoch ".PRE."tasks.edited) AS edited,
+                $epoch ".PRE."tasks.lastforumpost) AS lastpost,
+                $epoch ".PRE."tasks.lastfileupload) AS lastfileupload,
+                ".PRE."tasks.globalaccess AS globalaccess,
+                ".PRE."tasks.usergroupid AS usergroupid,
+                ".PRE."users.fullname AS username,
+                ".PRE."users.id AS userid,
+                ".PRE."taskgroups.name AS groupname,
+                ".PRE."taskgroups.description AS groupdescription
                 FROM ".PRE."tasks
-                LEFT JOIN users ON ( users.id=tasks.owner )
-                LEFT JOIN taskgroups ON (taskgroups.id=tasks.taskgroupid)
-                WHERE tasks.parent=$parent
+                LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."tasks.owner)
+                LEFT JOIN ".PRE."taskgroups ON (".PRE."taskgroups.id=".PRE."tasks.taskgroupid)
+                WHERE ".PRE."tasks.parent=$parent
                 ORDER by $no_group groupname, taskname" );
 
   //check for any tasks.  If no tasks end recursive function

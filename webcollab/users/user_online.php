@@ -34,10 +34,11 @@ $content = "";
 $allowed[0] = 0;
 
 //get list of common users in private usergroups that this user can view 
-$q = db_query("SELECT usergroupid, userid 
+$q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid, 
+                      ".PRE."usergroups_users.userid AS userid 
                       FROM ".PRE."usergroups_users 
-                      LEFT JOIN usergroups ON (usergroups.id=usergroups_users.usergroupid)
-                      WHERE usergroups.private=1");
+                      LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."usergroups_users.usergroupid)
+                      WHERE ".PRE."usergroups.private=1");
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
   if(in_array($row[0], (array)$gid ) && ! in_array($row[1], (array)$allowed ) ) {
@@ -47,15 +48,15 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
 
 $content .= "<table border=\"0\">\n";
 //users online in last hour
-$q = db_query("SELECT logins.lastaccess AS last,
-            users.id AS id,
-            users.fullname AS fullname,
-            users.private AS private
+$q = db_query("SELECT ".PRE."logins.lastaccess AS last,
+            ".PRE."users.id AS id,
+            ".PRE."users.fullname AS fullname,
+            ".PRE."users.private AS private
             FROM ".PRE."logins
-            LEFT JOIN users ON (users.id=logins.user_id)
-            WHERE logins.lastaccess > ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
-            AND users.deleted='f'
-            ORDER BY logins.lastaccess DESC" );
+            LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."logins.user_id)
+            WHERE ".PRE."logins.lastaccess > ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
+            AND ".PRE."users.deleted='f'
+            ORDER BY ".PRE."logins.lastaccess DESC" );
 
 $content .= "<tr><td nowrap=\"nowrap\" colspan=\"2\"><b>".$lang["online"]."</b></td></tr>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
@@ -71,15 +72,15 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
 
 $content .= "<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
 //users previously online 
-$q = db_query("SELECT logins.lastaccess AS last,
-            users.id AS id,
-            users.fullname AS fullname,
-            users.private AS private
+$q = db_query("SELECT ".PRE."logins.lastaccess AS last,
+            ".PRE."users.id AS id,
+            ".PRE."users.fullname AS fullname,
+            ".PRE."users.private AS private
             FROM ".PRE."logins
-            LEFT JOIN users ON (users.id=logins.user_id)
-            WHERE logins.lastaccess < ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
-            AND users.deleted='f'
-            ORDER BY logins.lastaccess DESC" );
+            LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."logins.user_id)
+            WHERE ".PRE."logins.lastaccess < ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
+            AND ".PRE."users.deleted='f'
+            ORDER BY ".PRE."logins.lastaccess DESC" );
 
 $content .= "<tr><td colspan=\"2\"><b>".$lang["not_online"]."</b></td></tr>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){

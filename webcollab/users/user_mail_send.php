@@ -96,11 +96,11 @@ if(get_magic_quotes_gpc() ) {
       for($i=0 ; $i < $max ; $i++ ){
         //check for security, then get users for each usergroup
         if(isset($usergroup[$i] ) && is_numeric($usergroup[$i] ) ){
-          $q = db_query("SELECT users.email
+          $q = db_query("SELECT ".PRE."users.email
                           FROM ".PRE."usergroups_users
-                          LEFT JOIN users ON (users.id=usergroups_users.userid)
-                          WHERE usergroups_users.usergroupid=".$usergroup[$i]."
-                          AND users.deleted='f'" );
+                          LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."usergroups_users.userid)
+                          WHERE ".PRE."usergroups_users.usergroupid=".$usergroup[$i]."
+                          AND ".PRE."users.deleted='f'" );
 
           //loop through result rows and add users to the list
           for($j = 0 ; $row = @db_fetch_num($q, $j ) ; $j++){

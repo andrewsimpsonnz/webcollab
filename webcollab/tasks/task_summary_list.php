@@ -49,22 +49,22 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
   global $sortby;
   global $epoch;
 
-  $q = db_query( "SELECT tasks.id AS id,
-                         tasks.parent AS parent,
-                         tasks.name AS taskname,
-                         tasks.deadline AS deadline,
-                         tasks.status AS status,
-                         tasks.owner AS owner,
-                         tasks.taskgroupid AS taskgroupid,
-                         tasks.usergroupid AS usergroupid,
-                         tasks.globalaccess AS globalaccess,
-                         tasks.projectid AS projectid,
-                         tasks.completed AS completed,
+  $q = db_query( "SELECT ".PRE."tasks.id AS id,
+                         ".PRE."tasks.parent AS parent,
+                         ".PRE."tasks.name AS taskname,
+                         ".PRE."tasks.deadline AS deadline,
+                         ".PRE."tasks.status AS status,
+                         ".PRE."tasks.owner AS owner,
+                         ".PRE."tasks.taskgroupid AS taskgroupid,
+                         ".PRE."tasks.usergroupid AS usergroupid,
+                         ".PRE."tasks.globalaccess AS globalaccess,
+                         ".PRE."tasks.projectid AS projectid,
+                         vtasks.completed AS completed,
                          $epoch now() ) AS now,
                          $epoch deadline) AS due,
-                         $epoch tasks.edited ) AS edited,
-                         $epoch tasks.lastforumpost ) AS lastpost,
-                         $epoch tasks.lastfileupload ) AS lastfileupload
+                         $epoch ".PRE."tasks.edited ) AS edited,
+                         $epoch ".PRE."tasks.lastforumpost ) AS lastpost,
+                         $epoch ".PRE."tasks.lastfileupload ) AS lastfileupload
                          $equiv
                          FROM ".PRE."tasks
                          $tail" );
@@ -367,17 +367,17 @@ switch($sortby ) {
     break;
 
   case "owner":
-    $content .= project_summary("LEFT JOIN users ON (users.id=tasks.owner) ORDER BY username,deadline,taskname", -1, ", users.fullname AS username" );
+    $content .= project_summary("LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."tasks.owner) ORDER BY username,deadline,taskname", -1, ", users.fullname AS username" );
     $suffix = $lang["by_owner"];
     break;
 
   case "usergroupid":
-    $content .= project_summary("LEFT JOIN usergroups ON (usergroups.id=tasks.usergroupid) ORDER BY usergroupname,deadline,taskname", -1, ", usergroups.name AS usergroupname" );
+    $content .= project_summary("LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."tasks.usergroupid) ORDER BY usergroupname,deadline,taskname", -1, ", usergroups.name AS usergroupname" );
     $suffix = $lang["by_usergroup"];
     break;
 
   case "taskgroupid":
-    $content .= project_summary("LEFT JOIN taskgroups ON (taskgroups.id=tasks.taskgroupid) ORDER BY taskgroupname,deadline,taskname", -1, ", taskgroups.name AS taskgroupname" );
+    $content .= project_summary("LEFT JOIN ".PRE."taskgroups ON (".PRE."taskgroups.id=".PRE."tasks.taskgroupid) ORDER BY taskgroupname,deadline,taskname", -1, ", taskgroups.name AS taskgroupname" );
     $suffix = $lang["by_taskgroup"];
     break;
 

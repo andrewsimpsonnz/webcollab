@@ -283,11 +283,11 @@ if(isset($_POST["maillist"]) && $_POST["maillist"] == "on" ) {
   }
 
   if($usergroupid != 0 ) {
-    $q = db_query("SELECT users.email
+    $q = db_query("SELECT ".PRE."users.email
                       FROM ".PRE."users
-                      LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
-                      WHERE usergroups_users.usergroupid=$usergroupid
-                      AND users.deleted='f'");
+                      LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.userid=".PRE."users.id)
+                      WHERE ".PRE."usergroups_users.usergroupid=$usergroupid
+                      AND ".PRE."users.deleted='f'");
 
     for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
       $usergroup .= $s.$row[0];

@@ -79,12 +79,12 @@ else
   $content .= "<tr><td>".$lang["private_user"].":</td><td>".$lang["no"]."</td></tr>\n";
 
 //create a list of all the groups the user is in
-$q = db_query("SELECT usergroups.id AS id,
-                      usergroups.name AS name,
-                      usergroups.private AS private
+$q = db_query("SELECT ".PRE."usergroups.id AS id,
+                      ".PRE."usergroups.name AS name,
+                      ".PRE."usergroups.private AS private
                       FROM ".PRE."usergroups
-                      LEFT JOIN usergroups_users ON (usergroups_users.usergroupid=usergroups.id)
-                      WHERE usergroups_users.userid=".$row["id"] );
+                      LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.usergroupid=".PRE."usergroups.id)
+                      WHERE ".PRE."usergroups_users.userid=".$row["id"] );
 
 if(db_numrows($q) < 1 ) {
   $content .= "<tr><td>".$lang["usergroups"].":</td><td>".$lang["no_usergroup"]."</td></tr>\n";

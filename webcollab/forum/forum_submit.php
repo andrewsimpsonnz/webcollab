@@ -173,12 +173,12 @@ ignore_user_abort(TRUE);
       $s = "";
 
       //get task data
-      $q = db_query("SELECT tasks.name AS name,
-                            tasks.usergroupid AS usergroupid,
-                            users.email AS email
+      $q = db_query("SELECT ".PRE."tasks.name AS name,
+                            ".PRE."tasks.usergroupid AS usergroupid,
+                            ".PRE."users.email AS email
                             FROM ".PRE."tasks
-                            LEFT JOIN users ON (tasks.owner=users.id)
-                            WHERE tasks.id=$taskid" );
+                            LEFT JOIN ".PRE."users ON (".PRE."tasks.owner=".PRE."users.id)
+                            WHERE ".PRE."tasks.id=$taskid" );
       $task_row = db_fetch_array($q, 0 );
 
       //set owner's email
@@ -189,11 +189,11 @@ ignore_user_abort(TRUE);
 
       //if usergroup set, add the user list
       if($task_row["usergroupid"] && $mail_group ){
-        $q = db_query("SELECT users.email
+        $q = db_query("SELECT ".PRE."users.email
                               FROM ".PRE."users
-                              LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
-                              WHERE usergroups_users.usergroupid=".$task_row["usergroupid"].
-                              " AND users.deleted='f'" );
+                              LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.userid=".PRE."users.id)
+                              WHERE ".PRE."usergroups_users.usergroupid=".$task_row["usergroupid"].
+                              " AND ".PRE."users.deleted='f'" );
 
         for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
           $mail_list .= $s.$row[0];
@@ -224,11 +224,11 @@ ignore_user_abort(TRUE);
 
           default:
             //this is a reply to an earlier post
-            $q = db_query("SELECT forum.text AS text,
-                           users.fullname AS username
+            $q = db_query("SELECT ".PRE."forum.text AS text,
+                           ".PRE."users.fullname AS username
                            FROM ".PRE."forum
-                           LEFT JOIN users ON (forum.userid=users.id)
-                           WHERE forum.id=$parentid" );
+                           LEFT JOIN ".PRE."users ON (".PRE."forum.userid=".PRE."users.id)
+                           WHERE ".PRE."forum.id=$parentid" );
 
             $row = db_fetch_array($q, 0 );
 
@@ -263,8 +263,8 @@ ignore_user_abort(TRUE);
         default:
           //check if user is owner of the task or the owner of the post
           if(
-          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum LEFT JOIN tasks ON (forum.taskid=tasks.id) WHERE tasks.owner=$uid AND forum.id=$postid" ), 0, 0 ) == 1 ) ||
-          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum WHERE forum.userid=$uid AND forum.id=$postid" ), 0, 0 ) == 1 ) ) {
+          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum LEFT JOIN ".PRE."tasks ON (".PRE."forum.taskid=".PRE."tasks.id) WHERE ".PRE."tasks.owner=$uid AND ".PRE."forum.id=$postid" ), 0, 0 ) == 1 ) ||
+          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum WHERE userid=$uid AND id=$postid" ), 0, 0 ) == 1 ) ) {
 
             db_begin();
             delete_messages( $postid );
