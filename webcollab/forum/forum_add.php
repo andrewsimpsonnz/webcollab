@@ -53,9 +53,8 @@ $taskid = $_REQUEST["taskid"];
 //check usergroup security
 require_once(BASE."includes/usergroup_security.php" );
 
-//find out the tasks' name and error is no name was found (implies database error)
-if( ($taskname = db_result(db_query("SELECT name FROM tasks WHERE id=$taskid" ), 0, 0) ) == "" )
-  error("Forum add", "Taskname is not set." );
+//find out the tasks' name
+$taskname = db_result(db_query("SELECT name FROM tasks WHERE id=$taskid" ), 0, 0);
 
 $content .= "<form name=\"inputform\" method=\"POST\" action=\"forum/forum_submit.php\">\n";
 //set some hidden values
@@ -66,22 +65,27 @@ $content .= "<input type=\"hidden\" name=\"action\" value=\"add\" />\n".
 
 
 //find out some of the parent's data
-if( is_numeric($parentid) && ($parentid != 0) ) {
+if(is_numeric($parentid) && ($parentid != 0) ) {
 
   //get the text from the parent and the username of the person that posted that text
-  $parent_array = db_fetch_array(db_query("SELECT forum.text AS text,
-                                            users.fullname AS username
-                                            FROM forum
-                                            LEFT JOIN users ON (forum.userid=users.id)
-                                            WHERE forum.id=$parentid" ), 0 );
+  $q = db_query("SELECT forum.text AS text,
+                         users.fullname AS username
+                         FROM forum
+                         LEFT JOIN users ON (forum.userid=users.id)
+                         WHERE forum.id=$parentid" );
+
+  $row = db_fetch_array($q, 0 );
+
+  if($row["username"] == NULL )
+    $row["username"] = "----";
 
   //show a box with the original post
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" />\n".
               "<table border=\"0\">\n".
-              "<tr><td>".$lang["orig_message"]."</td><td bgcolor=\"#EEEEEE\">".$parent_array["text"]."</td></tr>\n";
+              "<tr><td>".$lang["orig_message"]."</td><td bgcolor=\"#EEEEEE\">".$row["text"]."</td></tr>\n";
 }
 else {
-  $parent_array = "";
+  $row = "";
 
   //This is a new thread so we don't have a valid parent
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"0\" />\n".
@@ -97,8 +101,8 @@ $content .=   "<tr><td>".$lang["message"]."</td><td><textarea name=\"text\" rows
 
 //show a reply or a new-post box
 if($parentid > 0 )
-  new_box(sprintf($lang["post_reply_sprt"], $parent_array["username"], $taskname ), $content ); //reply to another users's post
+  new_box(sprintf($lang["post_reply_sprt"], $row["username"], $taskname ), $content ); //reply to another users's post
 else
-  new_box(sprintf($lang["post_message_sprt"], $taskname ), $content ); //new reply
+  new_box(sprintf($lang["post_message_sprt"], $taskname ), $content ); //new post
 
 ?>
