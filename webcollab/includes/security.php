@@ -34,6 +34,7 @@
 $q="";
 $ip="";
 $x="";
+$admin=0;
 
 //get our location
 if( ! @require( "path.php" ) )
@@ -63,9 +64,9 @@ if( ! ($q = db_query( "SELECT logins.user_id AS user_id, logins.ip AS ip, logins
                              users.email AS email, users.admin AS admin, users.fullname AS fullname,
                              ".$epoch."now() ) AS now,
                              ".$epoch."lastaccess) AS sec_lastaccess
-                             FROM logins 
-			     LEFT JOIN users ON (users.id=logins.user_id) 
-			     WHERE session_key='".$x."'", 0 ) ) ) {
+                             FROM logins
+                             LEFT JOIN users ON (users.id=logins.user_id)
+                             WHERE session_key='".$x."'", 0 ) ) ) {
   error("Security manager", "Database not able to verify session key");
 }
 
@@ -77,40 +78,35 @@ if( ! ( $row = db_fetch_array($q, 0) ) ) {
   error("Security manager", "Error while fetching users' data");
 }
 
-//check the last logintime (there is a 60 min limit)
-if( ($row["now"]-$row["sec_lastaccess"]) > 3600 ) {
-  db_query("DELETE FROM logins WHERE session_key='".$x."'" );
-  warning( $lang["security_manager"], sprintf( $lang["session_timeout_sprt"], round( ($row["now"] - $row["sec_lastaccess"])/60), $BASE_URL ) );
-}
-
-$uid = $row["user_id"];
-if( $uid == "" )
-  error("Security manager", "No valid user-id found");
-
-$username = $row["fullname"];
-$useremail = $row["email"];
-
-//session does exist, now cross-check with time and ip
+//session does exist, now cross-check with ip address
 if( $ip != $row["ip"] ) {
   db_query("DELETE FROM logins WHERE session_key='".$x."'" );
   warning( $lang["security_manager"], sprintf( $lang["ip_spoof_sprt"], $ip, $BASE_URL) );
 }
 
-//create timecheck here
+//if database table LEFT JOIN gives no rows will get NULL here
+if($row["user_id"] == NULL ){
+  error("Security manager", "No valid user-id found");
+}
 
+//check the last logintime (there is a 60 min limit)
+if( ($row["now"]-$row["sec_lastaccess"]) > 3600 ) {
+  db_query("UPDATE logins SET session_key='' WHERE user_id=".$row["user_id"] );
+  warning( $lang["security_manager"], sprintf( $lang["session_timeout_sprt"], round( ($row["now"] - $row["sec_lastaccess"])/60), $BASE_URL ) );
+}
 
 //all data seems okay !!
 
+$uid = $row["user_id"];
+$username = $row["fullname"];
+$useremail = $row["email"];
 
-//update the "I was here" time
-db_query("UPDATE logins SET lastaccess=current_timestamp(0) WHERE session_key='".$x."' AND user_id=".$uid );
-
-if( $row["admin"] != 't' ) {
-  $admin = 0;
-} else {
+if( $row["admin"] == 't' ) {
   $admin = 1;
 }
 
+//update the "I was here" time
+db_query("UPDATE logins SET lastaccess=current_timestamp(0) WHERE session_key='".$x."' AND user_id=".$uid );
 
 // this gives:
 //
@@ -120,6 +116,5 @@ if( $row["admin"] != 't' ) {
 // admin [0,1] = is the user an admin ?
 //
 // and of course, access !!
-
 
 ?>
