@@ -27,138 +27,138 @@
   Maintainer: Stoyan Dimitrov <stoyan at adiumdesign dot com>
 
   
-  NOTE: This file is written in ISO-8859-5 character set
+  NOTE: This file is written in Windows-1251 character set
   
 */
 
 // Get current date/time for emails in a preferred format eg: 01 Apr 2004 9:18 am NZDT
 
-$email_date                 = date("d" ) . ". " . $month_array[(date("n" ) )] . " " . date('Y Ò H:i T' );
+$email_date                 = date("d" ) . ". " . $month_array[(date("n" ) )] . " " . date('Y â H:i T' );
 
-$email_commom_header       =   "    ·ÔàĞÒÕÙâÕ,\n\n    ÂŞÒĞ ßØáÜŞ Õ Şâ áâàĞİØæĞâĞ İĞ " . MANAGER_NAME . ", ØİäŞàÜØàĞéŞ ²Ø ×Ğ âŞÒĞ, çÕ İĞ " . $email_date;
+$email_commom_header       =   "    Çäğàâåéòå,\n\n    Òîâà ïèñìî å îò ñòğàíèöàòà íà " . MANAGER_NAME . ", èíôîğìèğàùî Âè çà òîâà, ÷å íà " . $email_date;
 
-$title_file_post            = ABBR_MANAGER_NAME . ": ºĞçÒĞİÕ İĞ İŞÒ äĞÙÛ: %s";
-$email_file_post            = $email_commom_header . " Şâ %1\$s ÑÕ ÚĞçÕİ İŞÒ äĞÙÛ.\n\n".
-                                "ÄĞÙÛ:        %2\$s\n".
-                                "¾ßØáĞİØÕ:    %3\$s";
-
-
-$title_forum_post           = ABBR_MANAGER_NAME . ": ½ŞÒŞ áêŞÑéÕİØ Şâ äŞàãÜØâÕ: %s";
-$email_forum_post           = $email_commom_header . " Şâ %1\$s:\n%2\$s ÑÕ ßãáİĞâŞ İŞÒŞ áêŞÑéÕİØÕ ÒêÒ äŞàãÜØâÕ. ";
-$email_forum_reply          = $email_commom_header . " Şâ %1\$s ÑÕ ßãáİĞâŞ İŞÒŞ áêŞÑéÕİØÕ ÒêÒ äŞàãÜØâÕ. ";
-                                "ÂŞ Õ ŞâÓŞÒŞà İĞ ßàÕÔØèİŞâŞ áêŞÑéÕİØÕ İĞ %2\$s.\n\n".
-                                "¾àØÓØİĞÛİŞ áêŞÑéÕİØÕt:\n %3\$s\n\n".
-                                "¾âÓŞÒŞà:\n%4\$s\n";
+$title_file_post            = ABBR_MANAGER_NAME . ": Êà÷âàíå íà íîâ ôàéë: %s";
+$email_file_post            = $email_commom_header . " îò %1\$s áå êà÷åí íîâ ôàéë.\n\n".
+                                "Ôàéë:        %2\$s\n".
+                                "Îïèñàíèå:    %3\$s";
 
 
-$email_list                 = "¿àŞÕÚâ:  %1\$s\n".
-                                "·ĞÔĞçĞ:     %2\$s\n".
-                                "ÁêáâŞïİØÕ:   %3\$s\n".
-                                "¿àØâÕÖĞâÕÛ:    %4\$s ( %5\$s )\n".
-                                "ÂÕÚáâ:\n%6\$s\n\n".
-                                "¼ŞÛï ßŞáÕâÕâÕ web-áâàĞİØæĞâĞ ×Ğ ßŞÒÕçÕ ØİäŞàÜĞæØï.\n\n" . BASE_URL . "\n";
+$title_forum_post           = ABBR_MANAGER_NAME . ": Íîâî ñúîáùåíè îò ôîğóìèòå: %s";
+$email_forum_post           = $email_commom_header . " îò %1\$s:\n%2\$s áå ïóñíàòî íîâî ñúîáùåíèå âúâ ôîğóìèòå. ";
+$email_forum_reply          = $email_commom_header . " îò %1\$s áå ïóñíàòî íîâî ñúîáùåíèå âúâ ôîğóìèòå. ".
+                                "Òî å îòãîâîğ íà ïğåäèøíîòî ñúîáùåíèå íà %2\$s.\n\n".
+                                "Îğèãèíàëíî ñúîáùåíèåt:\n %3\$s\n\n".
+                                "Îòãîâîğ:\n%4\$s\n";
 
 
-$title_takeover_project     = ABBR_MANAGER_NAME . ": ²ĞèØïâ ßàŞÕÚâ ÑÕ ßàÕÒ×Õâ";
-$title_takeover_task        = ABBR_MANAGER_NAME . ": ²ĞèĞâĞ ×ĞÔĞçĞ ÑÕ ßàÕÒ×ÕâĞ";
-
-$email_takeover_task        = $email_commom_header . " ²ĞèØïâ ßàŞÕÚâ ÑÕ ßàÕÒ×Õâ.\n\n";
-$email_takeover_project     = $email_commom_header . " ²ĞèĞâĞ ×ĞÔĞçĞ ÑÕ ßàÕÒ×ÕâĞ.\n\n";
-
-
-$title_new_owner_project    = ABBR_MANAGER_NAME . ": ½ŞÒ ßàŞÕÚâ ×Ğ ²Ğá";
-$title_new_owner_task       = ABBR_MANAGER_NAME . ": ½ŞÒĞ ×ĞÔĞçĞ ×Ğ ²Ğá";
-
-$email_new_owner_project    = $email_commom_header . " ÑÕ áê×ÔĞÔÕİ İŞÒ ßàŞÕÚâ Ø ²ØÕ áâÕ İÕÓŞÒ áŞÑáâÒÕİØÚ.\n\nµâŞ ÔÕâĞÙÛØâÕ:\n\n";
-$email_new_owner_task       = $email_commom_header . " ÑÕ áê×ÔĞÔÕİĞ İŞÒĞ ×ĞÔĞçĞ Ø ²ØÕ áâÕ İÕØİ áŞÑáâÒÕİØÚ.\n\nµâŞ ÔÕâĞÙÛØâÕ:\n\n";
+$email_list                 = "Ïğîåêò:  %1\$s\n".
+                                "Çàäà÷à:     %2\$s\n".
+                                "Ñúñòîÿíèå:   %3\$s\n".
+                                "Ïğèòåæàòåë:    %4\$s ( %5\$s )\n".
+                                "Òåêñò:\n%6\$s\n\n".
+                                "Ìîëÿ ïîñåòåòå web-ñòğàíèöàòà çà ïîâå÷å èíôîğìàöèÿ.\n\n" . BASE_URL . "\n";
 
 
-$title_new_group_project    = ABBR_MANAGER_NAME . ": ½ŞÒ ßàŞÕÚâ: %s";
-$title_new_group_task       = ABBR_MANAGER_NAME . ": ½ŞÒĞ ×ĞÔĞçĞ: %s";
+$title_takeover_project     = ABBR_MANAGER_NAME . ": Âàøèÿò ïğîåêò áå ïğåâçåò";
+$title_takeover_task        = ABBR_MANAGER_NAME . ": Âàøàòà çàäà÷à áå ïğåâçåòà";
 
-$email_new_group_project    = $email_commom_header . " ÑÕ áê×ÔĞÔÕİ İŞÒ ßàŞÕÚâ.\n\nµâŞ ÔÕâĞÙÛØâÕ:\n\n";
-$email_new_group_task       = $email_commom_header . " ÑÕ áê×ÔĞÔÕİĞ İŞÒĞ ×ĞÔĞçĞ.\n\nµâŞ ÔÕâĞÙÛØâÕ:\n\n";
-
-
-$title_edit_owner_project   = ABBR_MANAGER_NAME . ": ¿àŞÜïİĞ İĞ ²Ğè ßàŞÕÚâ";
-$title_edit_owner_task      = ABBR_MANAGER_NAME . ": ¿àŞÜïİĞ İĞ ²ĞèĞ ×ĞÔĞçĞ";
-
-$email_edit_owner_project   = $email_commom_header . " ²Ğè ßàŞÕÚâ ÑÕ ßàŞÜÕİÕİ.\n\nµâŞ ÔÕâĞÙÛØâÕ:\n\n";
-$email_edit_owner_task      = $email_commom_header . " ²ĞèĞ ×ĞÔĞçĞ ÑÕ ßàŞÜÕİÕİĞ.\n\nµâŞ ÔÕâĞÙÛØâÕ:\n\n";
+$email_takeover_task        = $email_commom_header . " Âàøèÿò ïğîåêò áå ïğåâçåò.\n\n";
+$email_takeover_project     = $email_commom_header . " Âàøàòà çàäà÷à áå ïğåâçåòà.\n\n";
 
 
-$title_edit_group_project   = ABBR_MANAGER_NAME . ": ¾ÑİŞÒïÒĞİÕ İĞ ßàŞÕÚâ";
-$title_edit_group_task      = ABBR_MANAGER_NAME . ": ¾ÑİŞÒïÒĞİÕ İĞ ×ĞÔĞçĞ";
+$title_new_owner_project    = ABBR_MANAGER_NAME . ": Íîâ ïğîåêò çà Âàñ";
+$title_new_owner_task       = ABBR_MANAGER_NAME . ": Íîâà çàäà÷à çà Âàñ";
 
-$email_edit_group_project   = $email_commom_header . " ÑÕ ßàŞÜÕİÕİ ßàŞÕÚâ ßàŞİĞÔÛÕÖĞé İĞ %s.\n\nµâŞ ÔÕâĞÙÛØâÕ:\n\n";
-$email_edit_group_task      = $email_commom_header . " ÑÕ ßàŞÜÕİÕİĞ ×ĞÔĞçĞ ßàŞİĞÔÛÕÖĞéĞ İĞ %s.\n\nµâŞ ÔÕâĞÙÛØâÕ:\n\n";
+$email_new_owner_project    = $email_commom_header . " áå ñúçäàäåí íîâ ïğîåêò è Âèå ñòå íåãîâ ñîáñòâåíèê.\n\nÅòî äåòàéëèòå:\n\n";
+$email_new_owner_task       = $email_commom_header . " áå ñúçäàäåíà íîâà çàäà÷à è Âèå ñòå íåèí ñîáñòâåíèê.\n\nÅòî äåòàéëèòå:\n\n";
 
 
-$title_delete_project       = ABBR_MANAGER_NAME . ": ¸×âàØâ ßàŞÕÚâ";
-$title_delete_task          = ABBR_MANAGER_NAME . ": ¸×âàØâĞ ×ĞÔĞçĞ";
+$title_new_group_project    = ABBR_MANAGER_NAME . ": Íîâ ïğîåêò: %s";
+$title_new_group_task       = ABBR_MANAGER_NAME . ": Íîâà çàäà÷à: %s";
 
-$email_delete_project       = "    ·ÔàĞÒÕÙâÕ,\n\n".
-                                $email_commom_header . " ßàŞÕÚâ, ÚŞÙâŞ ßàØâÕÖĞÒĞåâÕ ÑÕ Ø×âàØâ.\n\n".
-                                "    ±ÛĞÓŞÔĞàØÜ ²Ø ×Ğ ãßàĞÒÛÕİØÕâŞ İĞ ßàŞÕÚâĞ.\n\n";
-$email_delete_task          = "    ·ÔàĞÒÕÙâÕ,\n\n".
-                                $email_commom_header . " ×ĞÔĞçĞ, ÚŞïâŞ ßàØâÕÖĞÒĞåâÕ ÑÕ Ø×âàØâĞ.\n\n".
-                                "    ±ÛĞÓŞÔĞàØÜ ²Ø ×Ğ ãßàĞÒÛÕİØÕâŞ İĞ ×ĞÔĞçĞâĞ.\n\n";
+$email_new_group_project    = $email_commom_header . " áå ñúçäàäåí íîâ ïğîåêò.\n\nÅòî äåòàéëèòå:\n\n";
+$email_new_group_task       = $email_commom_header . " áå ñúçäàäåíà íîâà çàäà÷à.\n\nÅòî äåòàéëèòå:\n\n";
 
-$delete_list                = "¿àŞÕÚâ:      %1\$s\n".
-                                "·ĞÔĞçĞ:    %2\$s\n".
-                                "ÁêáâŞïİØÕ: %3\$s\n\n".
-                                "ÂÕÚáâ:     \n%4\$s\n\n";
 
-$title_welcome              = "    ¿àØÒÕâ Şâ " . ABBR_MANAGER_NAME;
-$email_welcome              = "    ·ÔàĞÒÕÙâÕ,\n\n    ÂŞÒĞ ßØáÜŞ Õ Şâ áâàĞİØæĞâĞ İĞ " . MANAGER_NAME . ", ßàØÒÕâáâÒĞéĞ ²Ø á ÔŞÑàÕ ÔŞèÛØ İĞ " . $email_date . ".\n\n".
-                                "ÂêÙ ÚĞâŞ ²ØÕ áâÕ İŞÒØ âãÚ, Ğ× éÕ ²Ø ŞÑïáİï İïÚŞÛÚŞ İÕéĞ, âĞÚĞ çÕ ÔĞ ÜŞÖÕâÕ Ñêà×Ş ÔĞ ×ĞßŞçİÕâÕ àĞÑŞâĞ.\n\n".
-                                "½ĞÙ-İĞßàÕÔ, âŞÒĞ Õ ØİáâàãÜÕİâ İĞ àêÚŞÒŞÔÕİÕ İĞ ßàŞÕÚâØ, ÓÛĞÒİĞâĞ áâàĞİØæĞ éÕ ÒØ ßŞÚĞÖÕ ßàŞÕÚâØâÕ, ÚŞØâŞ Ò ÜŞÜÕİâĞ áĞ İĞÛØçİØ. ".
-                                "°ÚŞ ÚÛØÚİÕâÕ İĞ İïÚŞÕ Şâ ØÜÕİĞâĞ éÕ ÑêÔÕâÕ ßàÕßàĞâÕİØ Ò çĞáââĞ ×Ğ ×ĞÔĞçØâÕ. ÂŞÒĞ Õ ÜïáâŞâŞ, ÚêÔÕâŞ áÕ àĞÑŞâØ.\n\n".
-                                "²áÕÚØ ÕÛÕÜÕİâ, ÚŞÙâŞ ÒØÕ Ø×ßàĞéĞâÕ ØÛØ ×ĞÔĞçĞ ÚŞïâŞ àĞ×àĞÑŞâÒĞâÕ éÕ ÑêÔÕ ßŞÚĞ×ÒĞİĞ İĞ ÔàãÓØâÕ ßŞâàÕÑØâÕÛØ ÚĞâŞ \"½¾²¾\" ØÛØ \"¾±½¾²µ½¾\". ÁêéŞâŞ ÒĞÖØ Ø ×Ğ ×ĞÔĞçØâÕ İĞ ÔàãÓØâÕ ßŞâàÕÑØâÕÛØ Ø âĞÚĞ ²ØÕ éÕ ÜŞÖÕâÕ Ñêà×Ş ÔÕ áÕ ŞàØÕİâØàĞâÕ ÚêÔÕ áÕ àĞÑŞâØ ĞÚâØÒİŞ. ".
-                                "ÁêéŞ âĞÚĞ ²ØÕ ÜŞÖÕâÕ ÔĞ ×ĞÒ×ØÜĞâÕ ØÛØ ÔĞ ßŞÛãçĞÒĞâÕ áŞÑáâÒÕİŞáâ Òêàåã ×ĞÔĞçØ Ø éÕ ÜŞÖÕâÕ ÔĞ ÓØ àÕÔĞÚâØàĞâÕ, Ğ áêéŞ Ø ÜİÕİØïâĞ ÚêÜ âïå Ò ßàØİĞÔÛÕÖĞéØï äŞàãÜ. ".
-                                "´ŞÚĞâŞ àĞ×àĞÑŞâÒĞâÕ ÔĞÔÕİĞ ×ĞÔĞçĞ, ÜŞÛï, àÕÔĞÚâØàĞÙâÕ âÕÚáâĞ Ù Ø İÕÙİØï áâĞâãá, âĞÚĞ çÕ ÒáÕÚØ ÔĞ ÜŞÖÕ ÔĞ ßàŞáÛÕÔØ ßàŞæÕáĞ İĞ àĞÑŞâĞ.\n\n".
-                                "¼ŞÓĞ ÔĞ ²Ø ßŞÖÕÛĞï áĞÜŞ ãáßÕå Ø ßØèÕâÕ İĞ " . $EMAIL_ADMIN. " ĞÚŞ ØÜĞâÕ ×ĞâàãÔİÕİØï.\n\n--\nÃáßÕåØ!\n\n".
+$title_edit_owner_project   = ABBR_MANAGER_NAME . ": Ïğîìÿíà íà Âàø ïğîåêò";
+$title_edit_owner_task      = ABBR_MANAGER_NAME . ": Ïğîìÿíà íà Âàøà çàäà÷à";
+
+$email_edit_owner_project   = $email_commom_header . " Âàø ïğîåêò áå ïğîìåíåí.\n\nÅòî äåòàéëèòå:\n\n";
+$email_edit_owner_task      = $email_commom_header . " Âàøà çàäà÷à áå ïğîìåíåíà.\n\nÅòî äåòàéëèòå:\n\n";
+
+
+$title_edit_group_project   = ABBR_MANAGER_NAME . ": Îáíîâÿâàíå íà ïğîåêò";
+$title_edit_group_task      = ABBR_MANAGER_NAME . ": Îáíîâÿâàíå íà çàäà÷à";
+
+$email_edit_group_project   = $email_commom_header . " áå ïğîìåíåí ïğîåêò ïğîíàäëåæàù íà %s.\n\nÅòî äåòàéëèòå:\n\n";
+$email_edit_group_task      = $email_commom_header . " áå ïğîìåíåíà çàäà÷à ïğîíàäëåæàùà íà %s.\n\nÅòî äåòàéëèòå:\n\n";
+
+
+$title_delete_project       = ABBR_MANAGER_NAME . ": Èçòğèò ïğîåêò";
+$title_delete_task          = ABBR_MANAGER_NAME . ": Èçòğèòà çàäà÷à";
+
+$email_delete_project       = "    Çäğàâåéòå,\n\n".
+                                $email_commom_header . " ïğîåêò, êîéòî ïğèòåæàâàõòå áå èçòğèò.\n\n".
+                                "    Áëàãîäàğèì Âè çà óïğàâëåíèåòî íà ïğîåêòà.\n\n";
+$email_delete_task          = "    Çäğàâåéòå,\n\n".
+                                $email_commom_header . " çàäà÷à, êîÿòî ïğèòåæàâàõòå áå èçòğèòà.\n\n".
+                                "    Áëàãîäàğèì Âè çà óïğàâëåíèåòî íà çàäà÷àòà.\n\n";
+
+$delete_list                = "Ïğîåêò:      %1\$s\n".
+                                "Çàäà÷à:    %2\$s\n".
+                                "Ñúñòîÿíèå: %3\$s\n\n".
+                                "Òåêñò:     \n%4\$s\n\n";
+
+$title_welcome              = "    Ïğèâåò îò " . ABBR_MANAGER_NAME;
+$email_welcome              = "    Çäğàâåéòå,\n\n    Òîâà ïèñìî å îò ñòğàíèöàòà íà " . MANAGER_NAME . ", ïğèâåòñòâàùà Âè ñ äîáğå äîøëè íà " . $email_date . ".\n\n".
+                                "Òúé êàòî Âèå ñòå íîâè òóê, àç ùå Âè îáÿñíÿ íÿêîëêî íåùà, òàêà ÷å äà ìîæåòå áúğçî äà çàïî÷íåòå ğàáîòà.\n\n".
+                                "Íàé-íàïğåä, òîâà å èíñòğóìåíò íà ğúêîâîäåíå íà ïğîåêòè, ãëàâíàòà ñòğàíèöà ùå âè ïîêàæå ïğîåêòèòå, êîèòî â ìîìåíòà ñà íàëè÷íè. ".
+                                "Àêî êëèêíåòå íà íÿêîå îò èìåíàòà ùå áúäåòå ïğåïğàòåíè â ÷àñòòà çà çàäà÷èòå. Òîâà å ìÿñòîòî, êúäåòî ñå ğàáîòè.\n\n".
+                                "Âñåêè åëåìåíò, êîéòî âèå èçïğàùàòå èëè çàäà÷à êîÿòî ğàçğàáîòâàòå ùå áúäå ïîêàçâàíà íà äğóãèòå ïîòğåáèòåëè êàòî \"ÍÎÂÎ\" èëè \"ÎÁÍÎÂÅÍÎ\". Ñúùîòî âàæè è çà çàäà÷èòå íà äğóãèòå ïîòğåáèòåëè è òàêà Âèå ùå ìîæåòå áúğçî äå ñå îğèåíòèğàòå êúäå ñå ğàáîòè àêòèâíî. ".
+                                "Ñúùî òàêà Âèå ìîæåòå äà çàâçèìàòå èëè äà ïîëó÷àâàòå ñîáñòâåíîñò âúğõó çàäà÷è è ùå ìîæåòå äà ãè ğåäàêòèğàòå, à ñúùî è ìíåíèÿòà êúì òÿõ â ïğèíàäëåæàùèÿ ôîğóì. ".
+                                "Äîêàòî ğàçğàáîòâàòå äàäåíà çàäà÷à, ìîëÿ, ğåäàêòèğàéòå òåêñòà é è íåéíèÿ ñòàòóñ, òàêà ÷å âñåêè äà ìîæå äà ïğîñëåäè ïğîöåñà íà ğàáîòà.\n\n".
+                                "Ìîãà äà Âè ïîæåëàÿ ñàìî óñïåõ è ïèøåòå íà " . $EMAIL_ADMIN. " àêî èìàòå çàòğóäíåíèÿ.\n\n--\nÓñïåõè!\n\n".
                                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n".
-                                "²åŞÔ:                  %1\$s\n".
-                                "¿ĞàŞÛĞ:                %2\$s\n\n".
-                                "¿ŞâàÕÑØâÕÛáÚĞ ÓàãßĞ:   %3\$s".
-                                "¸ÜÕ:                   %4\$s\n".
-                                "ÁâàĞİØæĞ:              " . BASE_URL . "\n\n".
+                                "Âõîä:                  %1\$s\n".
+                                "Ïàğîëà:                %2\$s\n\n".
+                                "Ïîòğåáèòåëñêà ãğóïà:   %3\$s".
+                                "Èìå:                   %4\$s\n".
+                                "Ñòğàíèöà:              " . BASE_URL . "\n\n".
                                 "%5\$s";
 
-$title_user_change1         = ABBR_MANAGER_NAME . ": ¿àŞÜïİĞ İĞ ²ĞèØï ĞÚĞãİâ";
-$email_user_change1         = $email_commom_header . " Şâ °ÔÜØİØáâàĞâŞàĞ (%1\$s - %2\$s) ÑÕ ßàŞÜÕİÕİ ²ĞèØïâ ĞÚĞãİâ.\n\n".
-                                "²åŞÔ:                  %3\$s\n".
-                                "¿ĞàŞÛĞ:                %4\$s\n\n".
-                                "¿ŞâàÕÑØâÕÛáÚĞ ÓàãßĞ:   %5\$s".
-                                "¸ÜÕ:                   %6\$s\n\n".
+$title_user_change1         = ABBR_MANAGER_NAME . ": Ïğîìÿíà íà Âàøèÿ àêàóíò";
+$email_user_change1         = $email_commom_header . " îò Àäìèíèñòğàòîğà (%1\$s - %2\$s) áå ïğîìåíåí Âàøèÿò àêàóíò.\n\n".
+                                "Âõîä:                  %3\$s\n".
+                                "Ïàğîëà:                %4\$s\n\n".
+                                "Ïîòğåáèòåëñêà ãğóïà:   %5\$s".
+                                "Èìå:                   %6\$s\n\n".
                                 "%7\$s";
 
-$title_user_change2         = ABBR_MANAGER_NAME . ": ¿àŞÜïİĞ İĞ ²ĞèØï ĞÚĞãİâ";
-                              "    ·ÔàĞÒÕÙâÕ,\n\n    ÂŞÒĞ ßØáÜŞ Õ Şâ áâàĞİØæĞâĞ İĞ " . MANAGER_NAME . ", ßŞâÒêàÖÔĞÒĞéŞ çÕ ßàŞÜÕİØâÕ, ÚŞØâŞ áÕ İĞßàĞÒØÛØ İĞ " . $email_date . " ßŞ ĞÚĞãİâĞ áØ áĞ ãáßÕèİØ.\n\n";
-                                "²åŞÔ:      %1\$s\n".
-                                "¿ĞàŞÛĞ:    %2\$s\n\n".
-                                "¸ÜÕ:       %3\$s\n";
+$title_user_change2         = ABBR_MANAGER_NAME . ": Ïğîìÿíà íà Âàøèÿ àêàóíò";
+                              "    Çäğàâåéòå,\n\n    Òîâà ïèñìî å îò ñòğàíèöàòà íà " . MANAGER_NAME . ", ïîòâúğæäàâàùî ÷å ïğîìåíèòå, êîèòî ñå íàïğàâèëè íà " . $email_date . " ïî àêàóíòà ñè ñà óñïåøíè.\n\n";
+                                "Âõîä:      %1\$s\n".
+                                "Ïàğîëà:    %2\$s\n\n".
+                                "Èìå:       %3\$s\n";
 
-$title_user_change3         = ABBR_MANAGER_NAME . ": ¿àŞÜïİĞ İĞ ²ĞèØï ĞÚĞãİâ";
-$email_user_change3         = "    ·ÔàĞÒÕÙâÕ,\n\n    ÂŞÒĞ ßØáÜŞ Õ Şâ áâàĞİØæĞâĞ İĞ " . MANAGER_NAME . ", ßŞâÒêàÖÔĞÒĞéŞ çÕ ßàŞÜÕİØâÕ, ÚŞØâŞ áÕ İĞßàĞÒØÛØ İĞ " . $email_date . " ßŞ ĞÚĞãİâĞ áØ áĞ ãáßÕèİØ.\n\n";
-                                "²åŞÔ:      %1\$s\n".
-                                "ÂÕÚãéĞâĞ ²Ø ßĞàŞÛĞ İÕ Õ áÜÕİïİĞ.\n\n".
-                                "¸ÜÕ:       %2\$s\n";
-
-
-$title_revive               = ABBR_MANAGER_NAME . ": ²ê×áâĞİŞÒÕİ ĞÚĞãİâ";
-$email_revive               = $email_commom_header . " ²ĞèØïâ ĞÚĞãİâ ÑÕ Òê×áâĞİŞÒÕİ.\n\n".
-                                "²åŞÔ:  %1\$s\n".
-                                "¸ÜÕ:   %2\$s\n\n".
-                                "½Õ Ø×ßàĞéĞİÕ ßĞàŞÛĞâĞ ²Ø, ×ĞéŞâŞ Õ ÚŞÔØàĞİĞ. \n\n".
-                                "°ÚŞ áâÕ ×ĞÑàĞÒØÛØ ßĞàŞÛĞâĞ áØ ßØèÕâÕ İĞ " . $EMAIL_ADMIN . " ×Ğ İŞÒĞ ßĞàŞÛĞ.";
+$title_user_change3         = ABBR_MANAGER_NAME . ": Ïğîìÿíà íà Âàøèÿ àêàóíò";
+$email_user_change3         = "    Çäğàâåéòå,\n\n    Òîâà ïèñìî å îò ñòğàíèöàòà íà " . MANAGER_NAME . ", ïîòâúğæäàâàùî ÷å ïğîìåíèòå, êîèòî ñå íàïğàâèëè íà " . $email_date . " ïî àêàóíòà ñè ñà óñïåøíè.\n\n";
+                                "Âõîä:      %1\$s\n".
+                                "Òåêóùàòà Âè ïàğîëà íå å ñìåíÿíà.\n\n".
+                                "Èìå:       %2\$s\n";
 
 
+$title_revive               = ABBR_MANAGER_NAME . ": Âúçñòàíîâåí àêàóíò";
+$email_revive               = $email_commom_header . " Âàøèÿò àêàóíò áå âúçñòàíîâåí.\n\n".
+                                "Âõîä:  %1\$s\n".
+                                "Èìå:   %2\$s\n\n".
+                                "Íå èçïğàùàíå ïàğîëàòà Âè, çàùîòî å êîäèğàíà. \n\n".
+                                "Àêî ñòå çàáğàâèëè ïàğîëàòà ñè ïèøåòå íà " . $EMAIL_ADMIN . " çà íîâà ïàğîëà.";
 
-$title_delete_user          = ABBR_MANAGER_NAME . ": Áßàïİ ĞÚĞãİâ";
-$email_delete_user          = $email_commom_header . " ²ĞèØïâ ĞÚĞãİâ ÑÕ áßàïİ.\n\n".
-                                "ÁêÖĞÛïÒĞÜÕ, çÕ İØ İĞßãáÚĞâÕ Ø ØáÚĞÜÕ ÔĞ ²Ø ÑÛĞÓŞÔĞàØÜ ×Ğ áÒêàèÕİĞâĞ àĞÑŞâĞ!\n\n".
-                                "°ÚŞ ÜØáÛØâÕ, çÕ âŞÒĞ Õ ÓàÕèÚĞ, ÜŞÛï, ßØèÕâÕ İĞ " . $EMAIL_ADMIN . ".";
+
+
+$title_delete_user          = ABBR_MANAGER_NAME . ": Ñïğÿí àêàóíò";
+$email_delete_user          = $email_commom_header . " Âàøèÿò àêàóíò áå ñïğÿí.\n\n".
+                                "Ñúæàëÿâàìå, ÷å íè íàïóñêàòå è èñêàìå äà Âè áëàãîäàğèì çà ñâúğøåíàòà ğàáîòà!\n\n".
+                                "Àêî ìèñëèòå, ÷å òîâà å ãğåøêà, ìîëÿ, ïèøåòå íà " . $EMAIL_ADMIN . ".";
 
 ?>
