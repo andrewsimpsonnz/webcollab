@@ -81,7 +81,7 @@ ignore_user_abort(TRUE);
         error("Authorisation failed", "You have to be admin to do this" );
 
       //check input has been provided
-      $input_array = array("name", "fullname", "password", "email" );
+      $input_array = array("name", "fullname", "email" );
       foreach( $input_array as $var ) {
         if(empty($_POST[$var])) {
           warning( $lang['value_missing'], sprintf( $lang['field_sprt'], $var ) );
@@ -89,9 +89,14 @@ ignore_user_abort(TRUE);
         ${$var} = safe_data($_POST[$var]);
       }
 
+      if(empty($_POST['password']))
+        warning( $lang['value_missing'], sprintf( $lang['field_sprt'], 'password' ) );
+      
+      $password = md5($_POST['password']);
+      
       //do basic check on email address
       if(! ereg("^.+@.+\..+$", $email ) )
-        warning($lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST['email']) );
+        warning($lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $email ) );
 
       if( isset($_POST['private_user']) && ( $_POST['private_user'] == "on" ) )
         $private_user = 1;
@@ -123,7 +128,7 @@ ignore_user_abort(TRUE);
       db_begin();
       //insert into the users table
       $q = db_query("INSERT INTO ".PRE."users(name, fullname, password, email, private, admin, guest, deleted)
-                     VALUES('$name', '$fullname', '".md5($password)."', '$email', '$private_user', '$admin_user',  '$guest_user', 'f')" );
+                     VALUES('$name', '$fullname', '$password', '$email', '$private_user', '$admin_user',  '$guest_user', 'f')" );
 
       //if the user is assigned to any groups execute the following code to add him/her
       if( isset($_POST['usergroup']) ) {
@@ -175,11 +180,11 @@ ignore_user_abort(TRUE);
       if(empty($_POST['password']) )
         $password = "";
       else
-        $password = safe_data($_POST['password']);  
+        $password = md5($_POST['password']);  
       
       //check email address
       if(! ereg("^.+@.+\..+$", $email ) )
-        warning($lang['invalid_email'], sprintf($lang['invalid_email_given_sprt'], safe_data($_POST['email']) ) );
+        warning($lang['invalid_email'], sprintf($lang['invalid_email_given_sprt'], $email ) );
       
       if( $ADMIN == 1 ) {
 
@@ -226,7 +231,7 @@ ignore_user_abort(TRUE);
                                 SET name='$name',
                                 fullname='$fullname',
                                 email='$email',
-                                password='".md5($password)."',
+                                password='$password',
                                 private='$private_user',
                                 admin='$admin_user',
                                 guest='$guest_user'
@@ -292,7 +297,7 @@ ignore_user_abort(TRUE);
           db_query("UPDATE ".PRE."users
                             SET name='$name',
                             fullname='$fullname',
-                            password='".md5($password)."',
+                            password='$password',
                             email='$email'
                             WHERE id=$UID" );
 
