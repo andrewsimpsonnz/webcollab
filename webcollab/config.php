@@ -95,8 +95,16 @@
       //location of SMTP server (ip address or FQDN)
       $SMTP_HOST = "localhost";
 
+      //use smtp auth? ('Y' or 'N')
+      $SMTP_AUTH = "N";
+        //if using $SMTP_AUTH give username & password
+        $MAIL_USER = "";
+        $MAIL_PASSWORD = "";
 
 //MINOR CONFIG PARAMETERS
+
+  //session timeout in hours
+  $SESSION_TIMEOUT = 1;
 
   //number of days that new or updated tasks should be highlighted as 'New' or 'Updated'
   $NEW_TIME = 14;

@@ -223,6 +223,33 @@ function headers($to, $subject, $email_encode, $message_charset ) {
 return $headers;
 }
 
+ //
+ //function to do SMTP AUTH
+ //
+function smtp_auth($connection) {
+
+   global $MAIL_USER, $MAIL_PASSWORD;
+
+   fputs($connection, "AUTH LOGIN\r\n" );
+   $res = response();
+   if($res[1] != "334" )
+     debug("AUTH not accepted by SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
+
+   //send username
+   fputs($connection, base64_encode($MAIL_USER )."\r\n" );
+    $res = response();
+    if($res[1] != "334" )
+      debug("Username not accepted SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
+
+   //send password
+   fputs($connection, base64_encode($MAIL_PASSWORD )."\r\n" );
+   $res = response();
+   if($res[1] != "235" )
+     debug("Password not accepted SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
+
+   return;
+}
+
 //
 //function to get a response from a SMTP command to the server
 //
@@ -252,7 +279,7 @@ function response() {
 
 function email($to, $subject, $message ) {
 
-  global $EMAIL_FROM, $EMAIL_REPLY_TO, $USE_EMAIL, $SMTP_HOST, $bit8, $connection;
+  global $EMAIL_FROM, $EMAIL_REPLY_TO, $USE_EMAIL, $SMTP_HOST, $SMTP_AUTH, $bit8, $connection;
 
   $email_encode = "";
   $message_charset = "";
@@ -298,6 +325,10 @@ function email($to, $subject, $message ) {
   $bit8 = false;
   if( ! strpos($res[0], "8BITMIME" ) === false )
     $bit8 = true;
+
+   //do SMTP_AUTH if required
+   if($SMTP_AUTH == "Y" )
+     smtp_auth($connection);
 
   //arrange message - and set email encoding
   //(we *must* do this before 'MAIL FROM:'  to get the email encoding correct)

@@ -114,12 +114,19 @@ $content = "<?php\n".
 '  $USE_EMAIL = "'.$data["use_email"].'";'."\n\n".
 '    //location of SMTP server (ip address or FQDN)'."\n".
 '    $SMTP_HOST = "'.$data["smtp_host"].'";'."\n\n".
+'    //use smtp auth? ("Y" or "N")'."\n".
+'    $SMTP_AUTH = "N";'."\n".
+'      //if using $SMTP_AUTH give username & password'."\n".
+'      $MAIL_USER = "";'."\n".
+'      $MAIL_PASSWORD = "";'."\n\n".
 '//-- Splash image --'."\n\n".
 '  //custom image to replace the webcollab banner on login page (relative base directory is /images)'."\n".
 '    //(place your image into /images directory)'."\n".
 '  $SITE_IMG = "";'."\n\n".
 '//-- MINOR CONFIG PARAMETERS --'."\n\n".
 '//-- These items need to be edited directly from this file --'."\n\n".
+'  //session timeout in hours'."\n".
+'  $SESSION_TIMEOUT = 1;'."\n".
 '  //number of days that new or updated tasks should be highlighted as \'New\' or \'Updated\''."\n".
 '  $NEW_TIME = "14";'."\n".
 '  //show full debugging messages on the screen when errors occur (values are "N", or "Y")'."\n".
@@ -148,7 +155,7 @@ $content = "<div align=\"center\">\n".
             "<p>Setup is complete.</p>\n".
             "<p>The configuration information has been saved to 'config.php'. ".
             "This file can edited with a text editor to make further changes to configuration.</p>\n".
-            "<p>For best security on *nix operating systems, remember to remove the world writeable permissions from 'config.php'.</p>\n".  
+            "<p>For best security on *nix operating systems, remember to remove the world writeable permissions from 'config.php'.</p>\n".
             "<p>Please press the button to login...</p>\n";
 
 if($data["new_db"] == "Y" )
