@@ -48,7 +48,7 @@ if( ! isset($_REQUEST["action"]) )
       if( $admin == 1 ) {
         include("taskgroups/taskgroup_menubox.php" );
         include("usergroups/usergroup_menubox.php" );
-        include("admin/admin_config_menubox.php" );
+        //include("admin/admin_config_menubox.php" );
         include("files/file_menubox.php" );
       }
       goto_main();
@@ -120,19 +120,19 @@ if( ! isset($_REQUEST["action"]) )
    
    //insert new task
    case "submit_insert":
-      include("tasks/task_insert_submit.php" );
+      include("tasks/task_submit_insert.php" );
       break;   
    
    //update task   
    case "submit_update":
-      include("tasks/task_update_submit.php" );
+      include("tasks/task_submit_update.php" );
       break;   
    
    //misc. update items
    case "meown":
    case "deown":
    case "done":
-      include("tasks/task_owner_submit.php" );
+      include("tasks/task_submit_owner.php" );
       break;   
             
    //submit clone
