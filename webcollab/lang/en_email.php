@@ -43,7 +43,7 @@ $email_forum_post        = "Hello,\n\nThis is the ".$MANAGER_NAME." site informi
                            "Please go to the website for more details.\n\n".$BASE_URL."\n";
 $email_forum_reply       = "Hello,\n\nThis is the ".$MANAGER_NAME." site informing you that a new forum post has been made on ".$email_date." by %1\$s.\n\n".
                            "This post is in reply to an earlier post by %2\$s.\n\n".
-                           "Original post:\n %3\$s\n\n".
+                           "Original post:\n%3\$s\n\n".
                            "New reply:\n%4\$s\n\n".
                            "Please go to the website for more details.\n\n".$BASE_URL."\n";
 
