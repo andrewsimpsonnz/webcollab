@@ -30,7 +30,7 @@ databases can be created.</p>
 </ul>
 </li>
 <li>Point your web browser at http://your_site/webcollab_directory/setup.php (Replace
-'your_site'and 'webcollab_directory' with the relevant values for your site.</li>
+'your_site' and 'webcollab_directory' with the relevant values for your site.</li>
 <li>Follow the on-screen instructions to setup WebCollab.</li>
 <li>For UNIX and other *nix OS: 
 <ul>
@@ -40,9 +40,27 @@ databases can be created.</p>
 </pre></li>
 </ul>
 </li>
-<li>Login at http://your_site/webcollab_directory/index.php (The default username/password is admin / admin123).</li>
 </ol>
-<h4>3. Altering Setup</h4>
+<h4>2. Getting Online:</h4>
+<ul>
+<li>Point your browser to http://your_site/webcollab_path/index.php.  If all is well, you
+should see a login page.<br>
+Username: <b>admin</b><br>
+Password: <b>admin123</b></li>
+</ul>
+<h4>3. Change Admin Password and Email Address</h4>
+<ul>
+<li>Click on the 'Edit user details' button and change the admin password (and email address) as soon as possible.</li>
+</ul>
+<h4>4. Admin Config Setup</h4>
+<ol>
+<li>From the main screen, click on the 'Admin config' link in the menu boxes, left hand side of
+page.  Depending on your screen resolution, you may have to scroll down to see it.</li>
+<li>Enter the requisite email addresses for your site into the boxes.  Click on the descriptions for more help.</li>
+<li>The default check box settings in the lower part of the form can be left for now.</li>
+<li>Press the update button.</li>
+</ol>
+<h4>5. Altering Setup (if required)</h4>
 <ol>
 <li>For UNIX: Make [webcollab_directory]/config/config.php writable by everyone.</li>
 <li>Edit config.php, and change $WEB_CONFIG = "Y" (it should have defaulted to "N").</li>
@@ -51,6 +69,7 @@ databases can be created.</p>
 <li>Follow the on-screen instructions to setup WebCollab.</li>
 <li>For UNIX: Make config.php protected again.</li>
 </ol>
+<p>Note: The config.php can also be edited directly with a text editor.  The comments in the file explain most of the various configuration items.</p>
 <a name="upgrade"></a>
 <h3>UPGRADING WEBCOLLAB TO A NEWER VERSION</h3>
 <ol>
@@ -62,7 +81,7 @@ databases can be created.</p>
 <li>Enter your current database details at the screen prompt that follows.</li>
 <li>Let the setup program continue to the conclusion, but do not attempt to login.</li>
 <li>Point your browser at http://your_site/webcollab_directory/update.php (Replace
-'your_site'and 'webcollab_directory' with the relevant values for the new files on your site).</li>
+'your_site' and 'webcollab_directory' with the relevant values for the new files on your site).</li>
 <li>Login as requested...</li>
 <li>Database upgrade is done automatically (If database upgrades are in fact not required, no harm will be done).</li>
 <li>If you are storing uploaded files in the default upload directory of /files/filebase, you need to copy/move the existing uploaded files across to the same directory in the new WebCollab.</li>
@@ -71,11 +90,11 @@ databases can be created.</p>
 <li>Open config.php with your favourite text editor</li>
 <li>Find the line with <b>BASE_URL</b>.  It is near the top of the file.
 <pre class="screen">
-define('BASE_URL', "http//yourdomain.com/old_webcollab_directory/" );
+define('BASE_URL', "http//your_domain.com/old_webcollab_directory/" );
 </pre></li>
 <li>Change this line to match the new directory (Don't forget the trailing slash...)
 <pre class="screen">
-define('BASE_URL', "http//yourdomain.com/<i>new_webcollab_directory/</i>" );
+define('BASE_URL', "http//your_domain.com/<i>new_webcollab_directory/</i>" );
 </pre></li>
 <li>Now make sure that FILE_BASE is pointing to the right upload directory.  The entry needs to be a full path to the new upload directory:
 <pre class="screen">
@@ -87,7 +106,7 @@ define('FILE_BASE', "/var/www/html/webcollab/files/filebase" );
 <li>For UNIX: Make config.php protected again.</li>
 </ol>
 <p>The database upgrades (if required) are backwardly compatible and do not affect stored data.  However, as with all upgrades, backing up your data is a sensible precaution.<br />
-Database upgrades are required on pre-1.40 and pre-1.60 databases.</p>
+Database upgrades are required on pre-1.40, pre-1.60 and pre-1.70 databases.</p>
 <a name="mysql"></a><h3>MANUAL SETUP FOR MYSQL</h3>
 <h4>1. Database Setup and Customisation:</h4>
 <p><b>Note</b>: If you are using Linux, you can automate database creation and populating
@@ -138,7 +157,7 @@ prompted.
 <li>Open the file webcollab/config/config.php with your favourite text editor.</li>
 <li>Fill in the line <b>define('BASE_URL', "");</b> with the address of your site:
 <pre class="screen">
-define('BASE_URL', "http//yourdomain.com/webcollab-*.**/" );
+define('BASE_URL', "http//your_domain.com/webcollab-*.**/" );
 </pre></li>
 <li>Fill in the lines with <b>DATABASE_NAME</b>, <b>DATABASE_USER</b> and <b>DATABASE_PASSWORD</b>:
 <pre class="screen">
@@ -222,7 +241,7 @@ prompted.
 <li>Open the file webcollab/config.php with your favourite text editor.</li>
 <li>Fill in the line <b>define('BASE_URL', "");</b> with the address of your site:
 <pre class="screen">
-define('BASE_URL', "http//yourdomain.com/webcollab-*.**/" );
+define('BASE_URL', "http//your_domain.com/webcollab-*.**/" );
 </pre></li>
 <li>Fill in the lines with <b>DATABASE_NAME</b>, <b>DATABASE_USER</b>, <b>DATABASE_PASSWORD</b> and
 <b>DATABASE_TYPE</b>:
@@ -235,7 +254,26 @@ define('DATABASE_TYPE', "postgresql" );
 <li>Do not change the default value of <b>DATABASE_HOST</b> unless you have
 re-configured PostgreSQL to accept TCP/IP connections</li>
 <li>Save and close the file.</li>
-<li>Follow on from the MySQL instructions above</li>
+</ol>
+<h4>4. Getting Online:</h4>
+<ul>
+<li>Point your browser to http://yourdomain.com/webcollab-*.**/index.php.  If all is well, you
+should see a login page.<br>Username: <b>admin</b>
+<br>Password: <b>admin123</b></li>
+</ul>
+<h4>5. Change Admin Password and Email Address</h4>
+<ul>
+<li>Click on the 'Edit user details' button and change the admin password (and email address) as
+soon as possible.</li>
+</ul>
+<h4>6. Admin Config Setup</h4>
+<ol>
+<li>From the main screen, click on the 'Admin config' link in the menu boxes, left hand side of
+page.  Depending on your screen resolution, you may have to scroll down to see it.</li>
+<li>Enter the requisite email addresses for your site into the boxes.  Click on the descriptions for
+more help.</li>
+<li>The default check box settings in the lower part of the form can be left for now.</li>
+<li>Press the update button.</li>
 </ol>
 <a name="linux_postgres"></a>
 <h3>AUTOMATED POSTGRESQL INSTALLATION FOR LINUX</h3>
