@@ -52,7 +52,7 @@ function & clean($encoded ) {
   $text = strtr($encoded, $trans );
 
   //remove any dangerous tags that exist after decoding
-  $text = preg_replace("/(<\/?)(\w+)([^>]*>)/e", "'\\1'.strtoupper('\\2').'\\3'", $text );
+  $text = preg_replace("/(<\/?)(\w+)([^>]*>)/e", "'$1'.strtoupper('$2').'$3'", $text );
   $text = str_replace(array("<APPLET", "<OBJECT", "<SCRIPT", "<EMBED", "<FORM", "<?", "<%" ), "<**** ", $text );
 
 return $text;
