@@ -141,10 +141,11 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
                           "if(document.getElementById('day').value > daysMonth[(document.getElementById('month').value-1)] ){\n".
                           "alert('".$lang["invalid_date_javascript"]."');\n".
                           "return false;}\n". 
-                          "var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value )/1000;\n".
                           "var finishDate = document.getElementById('projectDate').value;\n".
+                          "if(finishDate > 0 ){\n".
+                          "var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value )/1000;\n".
                           "if(finishDate - inputDate < -7200 ){\n".
-                          "return confirm('".$lang["finish_date_javascript"]."');}\n".     
+                          "return confirm('".$lang["finish_date_javascript"]."');} }\n".     
                           "return;}\n";
       }
       $content .= " // -->\n".

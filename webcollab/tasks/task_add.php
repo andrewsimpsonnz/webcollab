@@ -211,6 +211,7 @@ else {
 
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"0\" />\n".
               "<input type=\"hidden\" name=\"projectid\" value=\"0\" />\n".
+              "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"-1\" />\n".      
               //taskgroup - we don't have this for projects
               "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n".
               "<table class=\"celldata\">\n".

@@ -92,12 +92,8 @@ if( ! user_access($taskid_row["owner"], $taskid_row["usergroupid"], $taskid_row[
 $q = db_query("SELECT name, ".$epoch."deadline) AS deadline FROM ".PRE."tasks WHERE id=".$taskid_row["projectid"] );
 $project_row = db_fetch_array($q, 0 );
 
-//add javascript for date checking
-if($taskid_row["parent"] != 0 ) 
-  $javascript = "onsubmit= \"return dateCheck()\" ";
-  
 //all okay show task info
-$content .= "<form method=\"post\" action=\"tasks.php\" $javascript>\n".
+$content .= "<form method=\"post\" action=\"tasks.php\" onsubmit= \"return dateCheck()\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"submit_update\" />\n ".
             "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid_row["id"]."\" />\n";
@@ -107,11 +103,12 @@ switch($taskid_row["parent"] ) {
   case 0:
     //project
     $type = "project";
-    //no taskgroups in projects
-    $content .= "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n ".
+    $content .= "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"-1\" />\n".            
+                //no taskgroups in projects
+                "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n ".
                 "<table class=\"celldata\">\n".
                 "<tr><td>".$lang["creation_time"]."</td><td>".nicedate($taskid_row["created"] )."</td></tr>\n".
-                "<tr><td>".$lang["project_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$taskid_row["name"]."\" /></td></tr>\n";
+                "<tr><td>".$lang["project_name"].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" value=\"".$taskid_row["name"]."\" /></td></tr>\n";
     break;
 
   default:
