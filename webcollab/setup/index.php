@@ -26,6 +26,11 @@
 
 */
 
+//set initial safe values
+$DATABASE_NAME = "--";
+$WEB_CONFIG = "N";
+
+//read config files
 require_once("../config.php" );
 include_once("./screen_setup.php" );
 
@@ -57,7 +62,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   include_once("../includes/common.php" );
 
   //encrypt password
-  $md5pass = md5( $_POST["password"] );
+  $md5pass = md5($_POST["password"] );
   $login_q = "SELECT id
               FROM users
               WHERE deleted='f'
@@ -123,7 +128,7 @@ if(version_compare(PHP_VERSION, "4.1.0" ) == -1 ) {
 }
 
 //check for initial install
-if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" ) {
+if($DATABASE_NAME == "" ) {
   //this is an initial install
   $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
   header("Location: ".$path."setup_setup1.php" );

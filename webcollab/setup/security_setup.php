@@ -29,10 +29,15 @@
 
 */
 
+//set initial safe values
+$WEB_CONFIG = "N";
+$DATABASE_NAME = "--";
+
 require_once("path.php" );
 
-require_once(BASE."config.php" );
-include_once(BASE."includes/database.php" );
+//read config files
+require("../config.php" );
+include_once("../includes/database.php" );
 include_once("./screen_setup.php" );
 
 //
@@ -55,12 +60,12 @@ $x = "";
 $admin = 0;
 
 //security checks
-if( ! isset($WEB_CONFIG ) || $WEB_CONFIG != "Y" ) {
+if($WEB_CONFIG != "Y" ) {
   error_setup("Current configuration file does not allow web-based setup" );
   die;
 }
 
-if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" ) {
+if($DATABASE_NAME == "" ) {
   //this is a first install
   $x = "";
 }
@@ -117,6 +122,6 @@ else {
 
   //check rights
   if($row["admin"] != 't' )
-    error_setup("You need to be an administrator to use this function." );
+    error_setup("You need to be an administrator to use this function" );
 }
 ?>
