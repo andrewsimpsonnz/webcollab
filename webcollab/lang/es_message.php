@@ -34,7 +34,6 @@
 //required language encodings
 $web_charset = "iso-8859-1";
 $email_charset = "iso-8859-1";
-$email_encode = "8bit";
 
 //dates
 $month_array = array ( "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" );
@@ -172,7 +171,7 @@ $lang = array(
 
  //includes
  "report" => "Reporte",
- "warning" => "<H1>Disculpe!</H1><P>No es posible procesar su requerimiento ahora. Por favor reint&eacute;ntelo m&aacute;s tarde..</P>",
+ "warning" => "<h1>Disculpe!</h1><p>No es posible procesar su requerimiento ahora. Por favor reint&eacute;ntelo m&aacute;s tarde..</p>",
  "home_page" => "Principal",
  "summary_page" => "Resumen",
  "todo_list" => "ToDo lista",
@@ -309,7 +308,8 @@ $lang = array(
  "edit_task" => "Editar la Tarea",
  "edit_project" => "Editar el Proyecto",
  "no_reparent" => "Ninguno (es un proyecto de nivel superior)",
- "del_javascript_sprt" => "Se eliminar&aacute; %s %s. Est&aacute; seguro?",
+ "del_javascript_project_sprt" => "Se eliminar&aacute; Tarea %s. Est&aacute; seguro?",
+ "del_javascript_task_sprt" => "Se eliminar&aacute; Proyecto %s. Est&aacute; seguro?",
  "add_task" => "Agregar Tarea",
  "add_subtask" => "Agregar sub-Tarea",
  "add_project" => "Agregar Proyecto",
@@ -317,21 +317,16 @@ $lang = array(
  "uncategorised" => "No categorizado",
  "admin" => "Admin",
  "global" => "Global",
- //"options" => " opciones",
- //**
  "delete_project" => "Borrar Proyecto",
- //**
  "delete_task" => "Borrar Tarea",
- //**
  "project_options" => "Project opciones",
- //**
  "task_options" => "Tarea opciones",
  "task_navigation" => "Navegar tareas",
  "no_projects" => "No hay proyecto para ver",
  "completed" => "Completado",
  "project_hold" => "Proyecto suspendido desde ",
  "project_planned" => "Proyecto planeado",
- "percent" => "% de tareas hechas",
+ "percent_sprt" => "%d%% de tareas hechas",
  "project_no_deadline" => "Fecha l&iacute;mite no establecida para este proyecto",
  "no_allowed_projects" => "No hay proyecto que le esten permitidos ver",
  "projects" => "Proyectos",
@@ -341,14 +336,19 @@ $lang = array(
  "completed_on" => "Completado el",
  "modified_on" => "Modificado el",
  "project_on_hold" => "Proyecto esta suspendido",
- "task_accessible_sprt" => "(Este %s es accesible por todos los usuarios)",
- "task_not_accessible_sprt" => "(Este %s es accesible por los miembro del usergroup)",
- "task_not_in_usergroup_sprt" => "Este %s no es parte de un usergroup y no accesible para todos los usuarios.",
- "usergroup_can_edit_sprt" => "Este %s puede ser tambi&eacute;n editado por miembro del usergroup.",
+ "project_accessible" => "(Este Proyecto es accesible por todos los usuarios)",
+ "task_accessible" => "(Este Tarea es accesible por todos los usuarios)",
+ "project_not_accessible" => "(Este Proyecto es accesible por los miembro del usergroup)",
+ "task_not_accessible" => "(Este Tarea es accesible por los miembro del usergroup)",
+ "project_not_in_usergroup" => "Este Proyecto no es parte de un usergroup y no accesible para todos los usuarios.",
+ "task_not_in_usergroup" => "Este Tarea no es parte de un usergroup y no accesible para todos los usuarios.",
+ "usergroup_can_edit_project" => "Este Proyecto puede ser tambi&eacute;n editado por miembro del usergroup.",
+ "usergroup_can_edit_task" => "Este Tarea puede ser tambi&eacute;n editado por miembro del usergroup.",
  "i_take_it" => "I'll take it :)",
  "i_finished" => "Lo finaliz&eacute;!",
  "i_dont_want" => "No lo quiero m&aacute;s",
- "take_over_sprt" => "Tomar control %s",
+ "take_over_project" => "Tomar control Proyecto",
+ "take_over_task" => "Tomar control Tarea",
  "task_info" => "Informaci&oacute;n de Tarea",
  "project_details" => "Detalles de Proyecto",
  "todo_list_for" => "lista 'por-hacer' para: ",
@@ -363,8 +363,6 @@ $lang = array(
  "future" => "Futuro",
  "flags" => "Banderas",
  "owner" => "Propietario",
- "usergroupid" => "usergroupid",
- "taskgroupid" => "taskgroupid",
  "group" => "Grupo",
  "by_usergroup" => " (por usergroup)",
  "by_taskgroup" => " (por taskgroup)",

@@ -37,7 +37,6 @@
 //required language encodings
 $web_charset = "iso-8859-1";
 $email_charset = "iso-8859-1";
-$email_encode = "8bit";
 
 //dates
 $month_array = array ( "Jan", "Feb", "M&auml;rz", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" );
@@ -83,10 +82,10 @@ $lang = array(
  "no" => "Nein",
  "action" => "Aktion",
  "task" => "Aufgabe",
- "task_lc" => "Aufgabe",
+ //"task_lc" => "Aufgabe",
  "tasks" => "Aufgaben",
  "project" => "Projekt",
- "project_lc" => "Projekt",
+ //"project_lc" => "Projekt",
  "info" => "Info",
  "bytes" => " bytes",
  "select_instruct" => "(Verwende Strg f&uuml;r Mehrfachauswahl oder um nichts auszuw&auml;hlen)",
@@ -132,7 +131,7 @@ $lang = array(
  "add_contact" => "Kontakt hinzuf&uuml;gen",
  "del_contact" => "Kontakt l&ouml;schen",
  //line below removed version 1.49+
- "del_javascript" => "Bitte best&auml;tigen sie das L&ouml;schen dieses Kontakts.",
+ //"del_javascript" => "Bitte best&auml;tigen sie das L&ouml;schen dieses Kontakts.",
  "contact_info" => "Kontaktinformationen",
  "contacts" => "Kontakte",
  "contact_add_info" => "Wenn eine Firma angegeben wurde, erscheint der Firmenname anstelle des Benutzernamens.",
@@ -147,7 +146,10 @@ $lang = array(
  "no_file_uploads" => "Die Einstellungen des Servers dieser Website erlauben keine Datei-Uploads",
  "file" => "Datei:",
  "uploader" => "Ersteller/in:",
- "files_assoc_sprt" => "Mit %s verkn&uuml;pfte Dateien",
+ //**
+ "files_assoc_project" => "Mit Projekt verkn&uuml;pfte Dateien",
+ //**
+ "files_assoc_task" => "Mit Aufgabe verkn&uuml;pfte Dateien",
  "file_admin" => "Dateiverwalter",
  "add_file" => "Datei hinzuf&uuml;gen",
  "files" => "Dateien",
@@ -176,7 +178,7 @@ $lang = array(
 
  //includes
  "report" => "Report",
- "warning" => "<H1>Entschuldigung!</H1><P>Der Vorgang kann im Moment nicht verarbeitet werden. Bitte versuchen Sie es sp&auml;ter noch einmal.</P>",
+ "warning" => "<h1>Entschuldigung!</h1><P>Der Vorgang kann im Moment nicht verarbeitet werden. Bitte versuchen Sie es sp&auml;ter noch einmal.</p>",
  "home_page" => "Startseite",
  "summary_page" => "&Uuml;bersicht",
  "todo_list" => "Aufgaben",
@@ -190,7 +192,7 @@ $lang = array(
  "no_session" => "Unbekannte Session-ID, bitte neu <A href=\"%sindex.php\">einloggen</A>.",
  "session_timeout_sprt" => "Zugriff verweigert, Ihre letzte Aktion war vor %d Minuten. 60 Minuten bleibt eine Session ohne Aktion g&uuml;ltig, bitte neu <A href=\"%sindex.php\">anmelden</A>.",
  //line below removed version 1.49+
- "ip_spoof_sprt" =>"Es wurde festgestellt, da&szlig; sie eine gef&auml;lschte IP-Adresse verwenden (%s). Diese Sitzung wurde vorsichtshalber gel&ouml;scht. Bitte loggen sie sich <A href=\"%sindex.php\">neu ein</A>",
+ //"ip_spoof_sprt" =>"Es wurde festgestellt, da&szlig; sie eine gef&auml;lschte IP-Adresse verwenden (%s). Diese Sitzung wurde vorsichtshalber gel&ouml;scht. Bitte loggen sie sich <A href=\"%sindex.php\">neu ein</A>",
  "access_denied" => "Zugriff verweigert",
  "private_usergroup" => "Dieser Bereich ist in einer privaten Benutzergruppe und sie haben keine Zugriffsrechte.",
  "invalid_date" => "Ung&uuml;ltiges Datum",
@@ -315,7 +317,10 @@ $lang = array(
  "edit_task" => "Aufgabe bearbeiten",
  "edit_project" => "Projekt bearbeiten",
  "no_reparent" => "Es gibt kein bergeordnetes Projekt",
- "del_javascript_sprt" => "Hiermit wird %s %s gel&ouml;scht. Sind sie sicher?",
+ //**
+ "del_javascript_project_sprt" => "Hiermit wird Projekt %s gel&ouml;scht. Sind sie sicher?",
+ //**
+ "del_javascript_task_sprt" => "Hiermit wird Aufgabe %s gel&ouml;scht. Sind sie sicher?",
  "add_task" => "Aufgabe hinzuf&uuml;gen",
  "add_subtask" => "Unteraufgabe hinzuf&uuml;gen",
  "add_project" => "Projekt hinzuf&uuml;gen",
@@ -337,7 +342,7 @@ $lang = array(
  "completed" => "Fertiggestellt",
  "project_hold" => "Projekt aufgeschoben seit ",
  "project_planned" => "Geplantes Projekt",
- "percent" => "% der Aufgaben sind erledigt",
+ "percent_sprt" => "%d%% der Aufgaben sind erledigt",
  "project_no_deadline" => "Kein Fertigstellungstermin gesetzt f&uuml;r dieses Projekt",
  "no_allowed_projects" => "Es gibt keine Projekte, die sie einsehen d&uuml;rfen",
  "projects" => "Projekte",
@@ -347,14 +352,24 @@ $lang = array(
  "completed_on" => "Fertiggestellt am",
  "modified_on" => "Ver&auml;ndert am",
  "project_on_hold" => "Projekt ist im Wartezustand",
- "task_accessible_sprt" => "(Dieses %s ist &ouml;ffentlich zug&auml;nglich f&uuml;r alle Benutzer)",
- "task_not_accessible_sprt" => "(Dieses %s ist nur f&uuml; Mitglieder der Benutzergruppe zug&auml;nglich)",
- "task_not_in_usergroup_sprt" => "%s keiner Benutzergruppe zugeordnet und f&uuml;r alle Benutzer zug&auml;nglich.",
- "usergroup_can_edit_sprt" => "Dieses %s kann auch durch Mitglieder der Benutzergruppe bearbeitet werden.",
+ //**
+ "project_accessible" => "(Dieses Projekt ist &ouml;ffentlich zug&auml;nglich f&uuml;r alle Benutzer)",
+ "task_accessible" => "(Dieses Aufgabe ist &ouml;ffentlich zug&auml;nglich f&uuml;r alle Benutzer)",
+ //**
+ "project_not_accessible" => "(Dieses Projekt ist nur f&uuml; Mitglieder der Benutzergruppe zug&auml;nglich)",
+ "task_not_accessible" => "(Dieses Aufgabe ist nur f&uuml; Mitglieder der Benutzergruppe zug&auml;nglich)",
+ //**
+ "peoject_not_in_usergroup" => "Projekt keiner Benutzergruppe zugeordnet und f&uuml;r alle Benutzer zug&auml;nglich.",
+ "task_not_in_usergroup" => "Aufgabe keiner Benutzergruppe zugeordnet und f&uuml;r alle Benutzer zug&auml;nglich.",
+ //**
+ "usergroup_can_edit_project" => "Dieses Projekt kann auch durch Mitglieder der Benutzergruppe bearbeitet werden.",
+ "usergroup_can_edit_task" => "Dieses Aufgabe kann auch durch Mitglieder der Benutzergruppe bearbeitet werden.",
  "i_take_it" => "Ich &uuml;bernehm' es :)",
  "i_finished" => "Ich habe fertig!",
  "i_dont_want" => "Ich habe die Schnauze voll",
- "take_over_sprt" => "%s &uuml;bernehmen",
+ //**
+ "take_over_project" => "Projekt &uuml;bernehmen",
+ "take_over_task" => "Aufgabe &uuml;bernehmen",
  "task_info" => "Informationen &uuml;ber Aufgabe",
  "project_details" => "Projektdetails",
  "todo_list_for" => "Aufgaben f&uuml;r: ",
@@ -369,8 +384,6 @@ $lang = array(
  "future" => "Zukunft",
  "flags" => "Optionen",
  "owner" => "Besitzer",
- "usergroupid" => "Benutzergruppen-ID",
- "taskgroupid" => "Aufgabengruppen-ID",
  "group" => "Gruppe",
  "by_usergroup" => " (durch Benutzergruppe)",
  "by_taskgroup" => " (durch Aufgabengruppe)",
