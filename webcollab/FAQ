@@ -1,0 +1,160 @@
+  START UP PROBLEMS
+  =================
+
+1. "Initial installation works, but logging in as admin has no effect (no error message either)."
+
+This problem has often occurred with PHP 4.0.6 and lower.  WebCollab will only run on PHP  4.1.0, or
+higher.  PHP 4.0.6 does not support $_POST[], $_GET[] or $_REQUEST[] global arrays.
+
+
+2. "Initial installation works, but logging in as admin gives a blank screen."
+
+Check that PHP has your database extensions compiled in.  From the command line type 'php -m':
+
+# php -m
+Running PHP 4.2.2
+Zend Engine v1.2.0, Copyright (c) 1998-2002 Zend Technologies
+
+[PHP Modules]
+mysql
+pgsql
+
+[Zend Modules]
+
+#
+
+Look for mysql and/or pgsql as required in the modules listing that follows.
+
+Most Linux distributions have separate packages (*.rpm, *.deb, etc) for the main PHP files and the
+MySQL/PostgreSQL PHP support.
+
+
+3. "Can login and get main screen, but sometimes pages are not found (404 error)."
+
+Check that the the parameter $BASE_URL is correctly stated in config.php.
+
+
+4. "Does Magic Quotes need to be set 'on' or 'off' in php.ini?"
+
+No, WebCollab reads the magic_quote setting in php.ini, and uses addslashes() on input data if magic
+quotes is 'off' in php.ini.
+
+
+
+   CHANGING LABEL PARAMETERS
+   =========================
+
+1. Can the 'Done', 'Active', 'On Hold' etc, labels be changed?
+
+Yes, all the parameters are defined in the language files in /webcollab/lang/  They can be easily
+changed to suit.
+
+Alternatively, a new customised language file can be set up and defined in
+/webcollab/lang/language.php
+
+
+2. Can the splash screen image be changed?
+
+Yes, add the new image to /webcollab/images/  and set the $SITE_IMG parameter in config.php
+
+
+3. Can background colours be changed?
+
+Yes, see the style sheet /webcollab/css.css and /webcollab/includes/screen.php.
+
+
+
+  UPLOADING FILES
+  ===============
+
+1. Error message about wrong configuration when uploading files with the file upload feature.
+
+For Linux and *nix: Make sure the /webcollab/files/filebase directory is writeable by the
+webserver.  This means the directory should be either owned by the webserver user (usually apache,
+www or www-data) or the directory must be world-writeable.
+
+
+2. File upload security.
+
+If you use the default /webcollab/files/filebase directory, it is possible for users to navigate to
+the directory with their browsers and view the files present.  WebCollab has the filebase directory
+protected by a index.html file and .htaccess file, but this is not foolproof.
+
+Ideally, for good security move the file upload directory to outside the webserver root directory.
+WebCollab can accommodate an upload directory in any location - not just areas that are directly
+accessed by Apache.
+
+
+
+  EMAIL SETUP
+  ===========
+
+1. What is the difference between "mail" and "SMTP" in config.php?
+
+The "mail" option uses the mail() function call in PHP.  In most cases this will work fine, and it
+requires minimal set up.
+
+On a Windows machine there is a configuration setting in php.ini configuration file that may need to
+be tweaked.  This is the SMTP setting (defaults to 'localhost'), which is the DNS name or IP
+address of the SMTP server PHP should use for mail sent with the mail() function.
+
+With the Linux, the mail() function will normally call sendmail on the local machine via local UNIX
+sockets.  The SMTP setting in php.ini will have no effect.
+
+If the mail() function cannot be made to work, WebCollab provides an alternative method of sending
+email.  This is the "SMTP" option in config.php.  With this option the program will contact the
+listed SMTP server by tcp/ip connection, and follow the standard SMTP protocol for connection and
+sending data.  The SMTP server can be remote or local.
+
+$SMTP_HOST = DNS name or IP address of the SMTP server
+
+
+
+  REMOTE DATABASES
+  ================
+
+1. Why can't remote databases be used with PostgreSQL?
+
+Since version 6.3 (03/02/1998) PostgreSQL uses unix domain sockets by default. TCP port will NOT be
+opened by default. The TCP option can be enabled with the '-i' flag to postmaster and it's meaning
+is: "listen on TCP/ IP sockets as well as Unix domain sockets".
+
+Usually the pg_hba.conf (PostgreSQL config file) also needs to be edited to allow tcp/ip
+connections.
+
+Changing $DATABASE_HOST in config.php from "localhost" to anything else (including 127.0.0.1)
+without reconfiguring PostgreSQL will *always* prevent WebCollab from connecting to the database.
+
+
+
+  DATABASE TYPES
+  ==============
+
+postgresql     => Postgresql abstraction layer
+
+mysql          => standard MySQL abstraction layer
+
+mysql_innodb   => MySQL abstraction layer with innodb transaction support
+
+
+
+  TRANSACTIONS
+  ============
+
+The PostgreSQL abstraction layer uses transactions to provide better security against power failure
+(or crash) during writing causing errors, or other similar database corruption.
+
+The mysql_innodb abstraction layer uses transactions.  For MySQL version 3.23.xx the database must
+be correctly configured to allow innodb databases to be used.  See the MySQL manual:
+http://www.mysql.com/doc/en/InnoDB_in_MySQL_3.23.html
+
+For MySQL version 4.0, and above, innodb database support is enabled by default.  For these versions
+(and configured 3.23.xx versions) it is recommended that the database be created with the
+mysql_innodb database creation script, and the mysql_innodb abstraction layer is used. Using
+transactions significantly reduces the risk of corrupted databases.
+
+
+
+
+
+
