@@ -80,9 +80,9 @@ function error($box_title, $content ) {
   create_top("ERROR", 1 );
 
   if($NO_ERROR != "Y" )
-    new_box( $box_title, "<div align=\"center\">".$content."</div>", "boxdata", "500" );
+    new_box( $box_title, "<div align=\"center\">".$content."</div>", "boxdata", "singlebox" );
     else
-    new_box($lang["report"], $lang["warning"], "boxdata", "500" );
+    new_box($lang["report"], $lang["warning"], "boxdata", "singlebox" );
 
 
   //get the post vars
@@ -129,7 +129,7 @@ function warning($box_title, $content ) {
 
   create_top("Warning", 1 );
 
-  new_box($box_title, "<div align=\"center\">".$content."</div>", "boxdata", "500" );
+  new_box($box_title, "<div align=\"center\">".$content."</div>", "boxdata", "singlebox" );
 
   create_bottom();
 
