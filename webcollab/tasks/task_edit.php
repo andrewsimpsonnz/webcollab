@@ -317,8 +317,8 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
              "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" $DEFAULT_GROUP /></label></td></tr>\n".
 
              "</table></p>\n".
-             "<input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;".
-             "<input type=\"reset\" value=\"".$lang["reset"]."\" />".
+             "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;".
+             "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
              "</form>\n";
 
 //delete options
