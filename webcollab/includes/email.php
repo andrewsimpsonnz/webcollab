@@ -45,7 +45,7 @@ include_once(BASE."includes/admin_config.php" );
 //function to reinstate html in text and remove any dangerous html scripting tags
 //
 
-function &clean($encoded ) {
+function & clean($encoded ) {
 
   //reinstate encoded html back to original text
   $trans = array_flip(get_html_translation_table(HTML_ENTITIES, ENT_NOQUOTES ) );
@@ -65,7 +65,7 @@ return $text;
 //function to prepare and encode message body for transmission
 //
 
-function &message($message, &$email_encode, &$message_charset, &$body ) {
+function & message($message, & $email_encode, & $message_charset, & $body ) {
 
   global $email_charset, $bit8;
 
@@ -99,7 +99,7 @@ function &message($message, &$email_encode, &$message_charset, &$body ) {
       break;
   }
 
-  //normalise end-of-lines in message body to \n - and change back to \r\n later
+  //normalise end-of-lines (\r\n, \r ) in message body to \n - and change back to \r\n later
   $message = str_replace("\r\n", "\n", $message );
   $message = str_replace("\r", "\n", $message );
   //make sure message ends in a new line \n
@@ -190,9 +190,9 @@ return $subject_lines;
 //function to assemble mail headers
 //
 
-function headers($to, $subject ) {
+function headers($to, $subject, $email_encode, $message_charset ) {
 
-  global $EMAIL_FROM, $EMAIL_REPLY_TO, $message_charset, $email_encode;
+  global $EMAIL_FROM, $EMAIL_REPLY_TO;
 
   //set the date - in RFC 822 format
   $headers = array("Date: ".date("r") );
@@ -207,7 +207,6 @@ function headers($to, $subject ) {
     $line = "\t".substr($line, $pos + 1 );
   }
   $headers[] = $line;
-
   //assemble remaining message headers (RFC 821 / RFC 2045)
   $headers[] = "From: $EMAIL_FROM";
   $headers[] = "Reply-To: $EMAIL_REPLY_TO";
@@ -222,7 +221,7 @@ function headers($to, $subject ) {
   $headers[] = "Mime-Version: 1.0";
   $headers[] = "Content-Type: text/plain; $message_charset";
   $headers[] = "Content-Transfer-Encoding: $email_encode";
-  $headers[] = " ";
+  $headers[] = "";
 
 return $headers;
 }
@@ -344,7 +343,7 @@ function email($to, $subject, $message ) {
     debug("Incorrect response to DATA command from SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
 
   //assemble the headers and message for transmission
-  $message_lines = array_merge(headers($to, $subject ), $message_lines );
+  $message_lines = array_merge(headers($to, $subject, $email_encode, $message_charset ), $message_lines );
   //send message to server (with correct end-of-line \r\n)
   while(list(,$line_out) = @each($message_lines ) ) {
     fputs($connection, "$line_out\r\n" );
