@@ -53,7 +53,7 @@ General formatting:
 
 //required language encodings
 $web_charset = "iso-8859-1";
-$email_charset = "us-ascii";
+$email_charset = "iso-8859-1";
 
 //dates
 $month_array = array ( "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" );
