@@ -212,9 +212,9 @@ $content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td
 $status = "<font color=\"green\"><b>OK !</b></font>";
 
 //check language file exists and is readable
-if( (! is_readable(BASE."/lang/".$data["locale"]."_message.php" ) )
-  || (! is_readable(BASE."/lang/".$data["locale"]."_long_message.php" ) )
-  || (! is_readable(BASE."/lang/".$data["locale"]."_email.php" ) ) ) {
+if( (! is_readable(BASE."lang/".$data["locale"]."_message.php" ) )
+  || (! is_readable(BASE."lang/".$data["locale"]."_long_message.php" ) )
+  || (! is_readable(BASE."lang/".$data["locale"]."_email.php" ) ) ) {
   $status = "<font color=\"red\"><b>Language file either does not exist, or file has been moved!</b></font>";
   $flag = $flag + 10;
 }
