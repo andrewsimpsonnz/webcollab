@@ -108,11 +108,11 @@ if( valid_string($_REQUEST["action"]) ) {
 			     WHERE logins.lastaccess > ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
 			     ORDER BY logins.lastaccess DESC" );
 
-      $content.="<TR><TD nowrap colspan=\"2\"><B>".$lang["online"]."</B></TD></TR>";
+      $content.="<TR><TD nowrap colspan=\"2\"><B>".$lang["online"]."</B></TD></TR>\n";
       for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++)
         $content .= "<TR><TD><A href=\"users.php?x=".$x."&action=show&userid=".$row["id"]."\">".$row["fullname"]."</A></TD><TD>".nicetime($row["last"])."</TD></TR>\n";
 
-      $content.="<TR><TD colspan=\"2\">&nbsp;</TD></TR>";
+      $content.="<TR><TD colspan=\"2\">&nbsp;</TD></TR>\n";
       $q = db_query("SELECT logins.lastaccess AS last,
 			     users.id AS id,
 			     users.fullname AS fullname
@@ -121,7 +121,7 @@ if( valid_string($_REQUEST["action"]) ) {
 			     WHERE logins.lastaccess < ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
 			     ORDER BY logins.lastaccess DESC" );
 
-      $content.="<TR><TD colspan=\"2\"><B>".$lang["not_online"]."</B></TD></TR>";
+      $content.="<TR><TD colspan=\"2\"><B>".$lang["not_online"]."</B></TD></TR>\n";
       for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++)
         $content .= "<TR><TD><A href=\"users.php?x=".$x."&action=show&userid=".$row["id"]."\">".$row["fullname"]."</A></TD><TD>".nicetime($row["last"])."</TD></TR>\n";
 
