@@ -46,10 +46,17 @@ if( ($ADMIN != 1) && ($group_row[0] != 0 ) && ($group_row[1] == 'f' ) ) {
     warning($lang['access_denied'], $lang['private_usergroup'] );
 }
 
-//check if project is marked private
-$project_q = db_query("SELECT usergroupid, globalaccess FROM ".PRE."tasks WHERE id=".$group_row[2] );
-$project_row = db_fetch_num($project_q, 0 );
+//if this is a task, then get project data  
+if($group_row[2] != $taskid ) {
+  $project_q = db_query("SELECT usergroupid, globalaccess FROM ".PRE."tasks WHERE id=".$group_row[2] );
+  $project_row = db_fetch_num($project_q, 0 );
+}
+else {
+  $project_row[0] = $group_row[0];
+  $project_row[1] = $group_row[1];
+}  
 
+//check if project is marked private 
 if( ($ADMIN != 1) && ($project_row[0] != 0 ) && ($project_row[1] == 'f' ) ) {
 
   //check if the user has a matching group
