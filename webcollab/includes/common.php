@@ -78,9 +78,9 @@ function clean_up($body ) {
   if(! get_magic_quotes_gpc() )
     $body = addslashes($body );
   
-  //allow only defined ISO-8859-1 characters - other weird stuff is replaced with "*"
-  $body = preg_replace('/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s', "*", $body );
-  
+  //allow only normal printing characters - any non-printing control characters are replaced with "*"
+  //$body = preg_replace('/([^\x09\x0a\x0d\x20-\xff])/s', "*", $body );
+  $body = preg_replace('/([\x00-\x08\x0b-\x0c\x0e-\x1f])/', "*", $body );
   //use HTML encoding for characters that could be used for css <script> or SQL injection attacks
   $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;' );
   
