@@ -1,21 +1,21 @@
 
 CREATE TABLE tasks (
-	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	parent INT NOT NULL,
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	parent INT UNSIGNED NOT NULL,
 	name VARCHAR(255) NOT NULL,
 	text TEXT,
 	created DATETIME NOT NULL,
 	edited DATETIME NOT NULL,
-	owner INT NOT NULL,
-	creator INT NOT NULL,
+	owner INT UNSIGNED NOT NULL,
+	creator INT UNSIGNED NOT NULL,
 	finished_time DATETIME NOT NULL,
-	projectid INT NOT NULL DEFAULT 0,
+	projectid INT UNSIGNED NOT NULL DEFAULT 0,
 	deadline DATETIME NOT NULL,
-	priority INT NOT NULL DEFAULT 2,
+	priority INT UNSIGNED NOT NULL DEFAULT 2,
 	status VARCHAR(20) NOT NULL DEFAULT 'created',
-	taskgroupid INT NOT NULL,
+	taskgroupid INT UNSIGNED NOT NULL,
 	lastforumpost DATETIME NOT NULL,
-	usergroupid INT NOT NULL,
+	usergroupid INT UNSIGNED NOT NULL,
 	globalaccess VARCHAR(5) NOT NULL DEFAULT 't',
 	lastfileupload DATETIME NOT NULL,
         INDEX (owner),
@@ -41,44 +41,44 @@ CREATE TABLE users (
 
 
 CREATE TABLE usergroups (
-	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(100) NOT NULL,
 	description VARCHAR(255),
         INDEX (name(10))
 );
 
 CREATE TABLE forum (
-	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	parent INT NOT NULL,
-	taskid INT NOT NULL,
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	parent INT UNSIGNED NOT NULL,
+	taskid INT UNSIGNED NOT NULL,
 	posted DATETIME NOT NULL,
 	text TEXT,
-	userid INT NOT NULL,
-	usergroupid INT NOT NULL,
+	userid INT UNSIGNED NOT NULL,
+	usergroupid INT UNSIGNED NOT NULL,
         INDEX (taskid),
         INDEX (posted)
 );
 
 
 CREATE TABLE logins (
-	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	user_id INT NOT NULL,
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INT UNSIGNED NOT NULL,
 	session_key VARCHAR(100) NOT NULL,
 	ip VARCHAR(100) NOT NULL,
 	lastaccess DATETIME NOT NULL,
-        INDEX (session_key, user_id )
+        INDEX (session_key(35), user_id )
 );
 
 
 CREATE TABLE seen (
-	taskid INT NOT NULL,
-	userid INT NOT NULL,
+	taskid INT UNSIGNED NOT NULL,
+	userid INT UNSIGNED NOT NULL,
 	time DATETIME NOT NULL,
 	INDEX (taskid, userid)
 );
 
 CREATE TABLE taskgroups (
-	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(100) NOT NULL,
 	description VARCHAR(255),
         INDEX (name(10))
@@ -86,7 +86,7 @@ CREATE TABLE taskgroups (
 
 
 CREATE TABLE contacts (
-	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	firstname VARCHAR(100) NOT NULL,
 	lastname VARCHAR(100) NOT NULL,
 	company VARCHAR(100),
@@ -99,9 +99,9 @@ CREATE TABLE contacts (
 	city VARCHAR(100),
 	notes VARCHAR(100),
 	email VARCHAR(100),
-	added_by INT NOT NULL,
+	added_by INT UNSIGNED NOT NULL,
 	date DATETIME NOT NULL,
-	user_id INT NOT NULL
+	user_id INT UNSIGNED NOT NULL
 );
 
 
@@ -112,22 +112,22 @@ CREATE TABLE contacts_tasks (
 
 
 CREATE TABLE files (
-	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        oid INT NOT NULL DEFAULT 0,
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        oid INT UNSIGNED NOT NULL DEFAULT 0,
 	filename VARCHAR(255),
 	size BIGINT NOT NULL DEFAULT 0,
 	description TEXT,
 	uploaded DATETIME NOT NULL,
-	uploader INT NOT NULL,
+	uploader INT UNSIGNED NOT NULL,
 	mime VARCHAR(50),
-	taskid INT NOT NULL,
+	taskid INT UNSIGNED NOT NULL,
 	INDEX (taskid)
 );
 
 
 CREATE TABLE usergroups_users (
-	usergroupid INT NOT NULL,
-	userid INT NOT NULL,
+	usergroupid INT UNSIGNED NOT NULL,
+	userid INT UNSIGNED NOT NULL,
 	INDEX (userid, usergroupid)
 );
 
