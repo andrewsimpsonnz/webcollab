@@ -66,7 +66,7 @@ $q = db_query("SELECT files.oid AS oid,
 
 if(db_numrows($q ) != 0 ) {
 
-  $content .= "<TABLE>";
+  $content .= "<TABLE border=\"0\">";
 
   //show them
   for( $i=0 ; $row = @db_fetch_array($q, $i) ; $i++) {

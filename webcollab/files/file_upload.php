@@ -48,7 +48,7 @@ $content = "<BR><FORM name=\"inputform\" method=\"POST\" enctype=\"multipart/for
 
 $content .= "<INPUT TYPE=\"hidden\" NAME=\"MAX_FILE_SIZE\" value=\"".$FILE_MAXSIZE."\">\n";
 
-$content .= "<TABLE>\n";
+$content .= "<TABLE border=\"0\">\n";
 $content .= "<TR><TD>".$lang["file_choose"]."</TD><TD><INPUT type=\"file\" name=\"userfile\"></TD></TR>\n";
 $content .= "<TR><TD>".$lang["description"].":</TD> <TD><TEXTAREA name=\"description\" rows=\"10\" cols=\"60\"></TEXTAREA></TD></TR>\n";
 $content .= "<TR><TD nowrap colspan=\"2\">".sprintf( $lang["max_file_sprt"], $FILE_MAXSIZE/1000 )."</TD></TR>\n";
