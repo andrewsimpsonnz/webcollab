@@ -34,15 +34,27 @@ include( "includes/screen.php" );
 include( "includes/common.php" );
 
 //error condition
-function secure_error( $reason = "Unauthorised area" ) {
+function secure_error( $reason = "Unauthorised area", $redirect = 0 ) {
 
   global $lang;
 
-  create_top($lang['login'], 1 );
-  new_box($lang['error'], "<div style=\"text-align : center\"><br />$reason<br /></div>", "boxdata", "singlebox"  );
+  if($redirect == 1) {
+    $redirect_time = 15;
+  }
+  else {
+    $redirect_time = 0;
+  }
+  create_top($lang['login'], 1, "", "", "", $redirect_time );
+  new_box($lang['error'], "<div style=\"text-align : center\"><br />$reason<br /></div>", "boxdata", "singlebox" );
+  
+  if($redirect_time != 0) {
+    new_box(sprintf($lang['redirect_sprt'], $redirect_time ),
+            "<div style=\"text-align : center\"><a href=\"".BASE_URL."index.php\">".$lang['login_now']."</a></div>",
+            "boxdata", "singlebox" );
+  }
+  
   create_bottom();
   die;
-
 }
 
 //valid login attempt ?
@@ -96,18 +108,18 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
   //database query
   if( ! $q = @db_query($login_q, 0 ) ) {
     sleep (2);
-    secure_error($lang['no_login']);
+    secure_error($lang['no_login'], 1 );
   }   
   
   //no such user-password combination
   if( @db_numrows($q) < 1 ) {
       sleep (2);
-      secure_error($lang['no_login']);
+      secure_error($lang['no_login'], 1 );
   }
 
   //no user-id
   if( ! ($user_id = @db_result($q, 0, 0) ) ) {
-    secure_error("Unknown user id");
+    secure_error("Unknown user id", 1 );
   }
 
 

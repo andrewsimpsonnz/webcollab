@@ -65,7 +65,7 @@ include_once(BASE."lang/lang.php" );
 //
 // Creates the initial window
 //
-function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
+function create_top($title="", $page_type=0, $cursor="", $check="", $date="", $redirect_time=0 ) {
 
   global $UID_NAME, $ADMIN, $lang, $top_done, $bottom_text;
   
@@ -91,7 +91,12 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
   header("Cache-Control: post-check=0, pre-check=0", false);
   header("Pragma: no-cache");
   header("Content-Type: text/html; charset=".CHARACTER_SET );
-
+  
+  //do a refresh if required
+  if($redirect_time != 0) {
+    header("Refresh: $redirect_time; url=".BASE_URL."index.php" );
+  }
+  
   $content = "<!DOCTYPE html PUBLIC\n".
              "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
              "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n".
@@ -110,6 +115,11 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
   $content  =  "<title>".$title."</title>\n".
                "<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".
                "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".CHARACTER_SET."\" />\n";
+  
+  //do a refresh if required
+  if($redirect_time != 0) {
+    $content .= "<meta http-equiv=\"Refresh\" content=\"$redirect_time;url=".BASE_URL."index.php\" />\n";
+  }
 
   switch($page_type) {
     case 2: //print
