@@ -75,6 +75,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
 
   //no such user-password combination
   if( @db_numrows($q) < 1 ) {
+      sleep(2);
       secure_error("Not a valid username, or password" );
   }
 
