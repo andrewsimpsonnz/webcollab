@@ -46,42 +46,31 @@ function create_top_setup($title="" ) {
   header("Cache-Control: post-check=0, pre-check=0", false);
   header("Pragma: no-cache");
 
-  ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
 
-<!-- (c) 2002 - 2003 Andrew Simpson -->
-
-
-<head>
-  <title><?php echo $title ?></title>
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="StyleSheet" href=../css.css type="text/css">
-</head>
-
-<body>
-
-<?php /* Main table init */ ?>
-<table cellspacing="0" cellpadding="0" border="0" width="100%" align="center">
-
-  <?php
+  echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n".
+       "<html>\n\n".
+       "<!-- (c) 2002 - 2003 Andrew Simpson -->\n\n".
+       "<head>\n".
+       "<title>$title</title>\n".
+       "<meta http-equiv=\"Pragma\" content=\"no-cache\">".
+       "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n".
+       "<link rel=\"StyleSheet\" href=../css.css type=\"text/css\">\n".
+       "</head>\n\n".
+       "<body>\n".
+       "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">\n";
 
   //create the main table
-  echo "\n<!-- start main table -->\n";
-  echo "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">\n";
+  echo "\n<!-- start main table -->\n".
+       "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">\n";
 
   //create the masthead part of the main window
-  echo "<tr>\n<td>";
-  echo "<div class=\"masthead\">";
-  echo "</div></td></tr>\n";
-
-  echo "<tr valign=\"top\"><td width=\"100%\" align=\"center\">";
+  echo "<tr>\n<td>".
+       "<div class=\"masthead\">".
+       "</div></td></tr>\n".
+       "<tr valign=\"top\"><td width=\"100%\" align=\"center\">";
 
   return;
 }
-
-
 
 //
 // Ends the page nicely
@@ -98,8 +87,6 @@ function create_bottom_setup() {
   echo "\n</body>\n</html>\n";
   return;
 }
-
-
 
 //
 //  Creates a new menu-window
