@@ -248,9 +248,6 @@ function email($to, $subject, $message ) {
     return;
   }
 
-  //if user aborts, let the script carry onto the end
-  ignore_user_abort(TRUE);
-
   //send message using SMTP
 
   //open an SMTP connection at the mail host
@@ -261,8 +258,8 @@ function email($to, $subject, $message ) {
 
   //sometimes the SMTP server takes a little longer to respond
   // Windows does not have support for this timeout function before PHP ver 4.3.0
-  if(substr(PHP_OS, 0, 3) != "WIN" )
-    socket_set_timeout($connection, 1, 0 );
+  if(function_exists('socket_set_timeout') )
+    socket_set_timeout($connection, 10, 0 );
   if(response($connection ) != "220" )
     debug("Incorrect handshaking response from SMTP server at $host <br /><br />Response from SMTP server was $res" );
 
@@ -396,7 +393,7 @@ function email($to, $subject, $message ) {
      warning("Email error debug", $error_msg );
    }
    else{
-     warning("Internal email fault", "Unable to successfully send your email.  Please contact your administrator" );
+     warning("Internal email fault", "Please contact your administrator.<br /><br />(Enable debugging in config.php for more detail)" );
    }
    return;
  }
