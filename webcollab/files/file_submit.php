@@ -145,11 +145,12 @@ if( isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) ) {
          //owners of the file and admins can delete files
          if( ($admin==1) || ($uid == $row["owner"] ) || ($uid == $row["uploader"] ) ) {
 
-           if( file_exists( $FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
-
-             unlink( $FILE_BASE."/".$row["oid"]."__".$row["filename"] );
-	     db_query( "DELETE FROM files WHERE oid=".$row["oid"] );
+       	   //delete file from disk
+	   if( file_exists( $FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
+             unlink( $FILE_BASE."/".$row["oid"]."__".$row["filename"] );	     
            }
+	   //delete record of file
+	   db_query( "DELETE FROM files WHERE oid=".$row["oid"] );
          }
        }
      }
