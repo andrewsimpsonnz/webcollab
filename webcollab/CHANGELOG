@@ -1,4 +1,12 @@
 WebCollab CVS
+*** 12 July 2003
+  Andrew Simpson
+
+- change to cookies for session management with encoded URL as a failsafe backup
+
+- separate task functions into task_common.php 
+
+WebCollab CVS
 *** 5 July 2003
   Andrew Simpson
 
