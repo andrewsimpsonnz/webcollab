@@ -106,7 +106,7 @@ $content = "<?php\n".
 "//-- Language --\n\n".
 "  // available locales are \"en\" (English), \"es\" (Spanish), \"fr\" (French), \"ca\" (Catalan)\n".
 "  //                       \"de\" (German), \"it\" (Italian), \"bg\" (Bulgarian), \"da\" (Danish)\n".
-"  //                       \"ko\" (Korean),\n".
+"  //                       \"ko\" (Korean), \"pt-br\" (Brazilian Portuguese)\n".
 "  define('LOCALE', \"".$data["locale"]."\" );\n\n".
 "//-- Timezone --\n\n".
 "  //timezone offset from GMT/UTC (hours)\n".
