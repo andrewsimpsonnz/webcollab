@@ -32,6 +32,7 @@ require_once("path.php" );
 require_once( BASE."includes/security.php" );
 
 include_once(BASE."tasks/task_common.php" );
+include_once(BASE."includes/details.php" );
 include_once(BASE."includes/time.php" );
 
 //is there an id ?
