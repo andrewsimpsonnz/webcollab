@@ -234,8 +234,11 @@ ignore_user_abort(TRUE);
 
             if($row["username"] == NULL )
               $row["username"] = "----";
+              
+            //remove any HTML linebreaks that nl2br() has put into the text...
+            $original_message =  str_replace("<br />", "", $row["text"] );
 
-            email($mail_list, sprintf($title_forum_post, $task_row["name"]), sprintf($email_forum_reply, $uid_name, $row["username"], $row["text"], $message ) );
+            email($mail_list, sprintf($title_forum_post, $task_row["name"]), sprintf($email_forum_reply, $uid_name, $row["username"], $original_message, $message ) );
             break;
         }
       }
