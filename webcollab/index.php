@@ -158,10 +158,10 @@ else {
 
 $content .= "<p>".$lang["please_login"].":</p>\n".
            "<form name=\"inputform\" method=\"post\" action=\"index.php\">\n".
-           "<table class=\"celldata\" >\n".
+           "<table border=\"0\" >\n".
            "<tr align=\"left\" ><td>".$lang["login"].": </td><td><input type=\"text\" name=\"username\" value=\"\" size=\"30\" /></td></tr>\n".
            "<tr align=\"left\" ><td>".$lang["password"].": </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
-           "</table>".
+           "</table>\n<br />\n".
            "<p><input type=\"submit\" value=\"".$lang["login"]."\" /></p>\n".
 
            "<div align=\"center\">";

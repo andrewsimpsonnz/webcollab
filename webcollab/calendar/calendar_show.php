@@ -74,19 +74,19 @@ else
 //set selection & associated defaults for the text boxes
 switch($selection ) {
   case "group":
-    $userid = 0; $s1 = ""; $s2 = " selected"; $s3 = " checked"; $s4 = "";
+    $userid = 0; $s1 = ""; $s2 = " selected=\"selected\""; $s3 = " checked=\"checked\""; $s4 = "";
     $tail = "AND usergroupid=$groupid";
     if($groupid == 0 )
-      $s4 = " selected";
+      $s4 = " selected=\"selected\"";
     break;
 
   case "user":
   default:
-    $groupid = 0; $s1 = " checked"; $s2 = ""; $s3 = ""; $s4 = " selected";
+    $groupid = 0; $s1 = " checked=\"checked\""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
     $tail = "AND owner=$userid";
     if($userid == 0 )
       $tail = "";
-      $s2 = " selected";
+      $s2 = " selected=\"selected\"";
     break;
 }
 
@@ -113,7 +113,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
 $content .= "<div align=\"center\">\n".
             "<form method=\"post\" action=\"calendar.php\">".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
-            "<table class=\"celldata\">\n".
+            "<table border=\"0\">\n".
             "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1 /><label for=\"users\">".$lang["users"]."</label></td><td>\n".
             "<label for=\"users\"><select name=\"userid\">\n".
             "<option value=\"0\"$s2>".$lang["all_users"]."</option>\n";
@@ -133,7 +133,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //highlight current selection
   if( $row[ "id" ] == $userid )
-    $content .= " selected";
+    $content .= " selected=\"selected\"";
 
   $content .= ">".$row["fullname"]."</option>\n";
 }
@@ -158,19 +158,19 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //highlight current selection
   if( $row[ "id" ] == $groupid )
-    $content .= " selected";
+    $content .= " selected=\"selected\"";
 
   $content .= ">".$row["name"]."</option>\n";
 }
 
-$content .= "</select></label></td></tr>\n</table>\n";
+$content .= "</select></label></td></tr>\n</table>\n<br />\n";
 
 //month (must be in decimal, 'cause that's what database uses!)
-$content .= "<table class=\"celldata\"><tr><td>\n<select name=\"month\">\n";
+$content .= "<table border=\"0\"><tr><td>\n<select name=\"month\">\n";
 for( $i=1; $i<13 ; $i++) {
   $content .= "<option value=\"$i\"";
 
-  if( $month == $i ) $content .= " selected";
+  if( $month == $i ) $content .= " selected=\"selected\"";
   $content .= ">".$month_array[($i)]."</option>\n";
   }
 $content .=  "</select></td>\n";
@@ -180,12 +180,12 @@ $content .= "<td><select name=\"year\">\n";
 for( $i=2001; $i<2011 ; $i++) {
   $content .= "<option value=\"$i\"";
 
-  if( $year == $i ) $content .= " selected";
+  if( $year == $i ) $content .= " selected=\"selected\"";
   $content .= ">".$i."</option>\n";
   }
 $content .=  "</select></td>\n".
              "<td><input type=\"submit\" value=\"".$lang["update"]."\" /></td></tr>\n".
-             "</table></form>\n";
+             "</table></form>\n<br /><br />\n";
 
 //number of days in month
 $numdays = date("t", mktime(0, 0, 0, $month, 1, $year ) );
