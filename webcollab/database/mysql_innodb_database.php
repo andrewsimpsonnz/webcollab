@@ -36,7 +36,7 @@ $last_insert = "id";
 $delim = "";
 $epoch = "UNIX_TIMESTAMP( ";
 $day_part = "DAYOFMONTH( ";
-
+$interval = "INTERVAL ";
 //
 // Provides a safe way to do a query
 //

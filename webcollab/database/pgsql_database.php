@@ -46,6 +46,7 @@ $last_insert = "oid";
 $delim = "'";
 $epoch = "extract(epoch FROM ";
 $day_part = "DATE_PART('day', ";
+$interval = "";
 
 //
 // Provides a safe way to do a query
