@@ -59,6 +59,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
                          tasks.usergroupid AS usergroupid,
                          tasks.globalaccess AS globalaccess,
                          tasks.projectid AS projectid,
+                         tasks.completed AS completed,
                          $epoch now() ) AS now,
                          $epoch deadline) AS due,
                          $epoch tasks.edited ) AS edited,
@@ -288,8 +289,8 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
 
     //show graphical taskbar
     if( ($row["parent"] == 0 ) && ($depth >= 0 ) ) {
-      if( ($percent_completed = round(percent_complete($row["id"] ) ) ) > 0 ) {
-        $result .= "<table width=\"200\"><tr><td height=\"2\"  width=\"".($percent_completed*2)."\" bgcolor=\"#008B45\" nowrap=\"nowrap\"></td><td width=\"".(200-($percent_completed*2))."\" bgcolor=\"#FFA500\" nowrap=\"nowrap\"></td></tr></table>\n";
+      if($row["completed"] > 0 ) {  
+        $result .= "<table width=\"200\"><tr><td height=\"2\"  width=\"".($row["completed"]*2)."\" bgcolor=\"#008B45\" nowrap=\"nowrap\"></td><td width=\"".(200-($row["completed"]*2))."\" bgcolor=\"#FFA500\" nowrap=\"nowrap\"></td></tr></table>\n";
       }
       else {
         $result .= "<table width=\"200\"><tr><td height=\"2\" width=\"200\" bgcolor=\"#FFA500\" nowrap=\"nowrap\"></td></tr></table>\n";

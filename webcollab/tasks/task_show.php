@@ -72,9 +72,8 @@ else
 
 //percentage_completed gauge if this is a project
 if( $taskid_row["parent"] == 0 ) {
-  $percent_completed = round(percent_complete( $taskid));
-  $content .= sprintf( $lang["percent_project_sprt"], $percent_completed )."\n";
-  $content .= show_percent( $percent_completed );
+  $content .= sprintf( $lang["percent_project_sprt"], $taskid_row["completed"] )."\n";
+  $content .= show_percent( $taskid_row["completed"] );
 }
 
 //start of header table
@@ -190,11 +189,10 @@ else{
       $content .= "<tr><td>".$lang["status"].": </td><td>".$lang["project_no_deadline"]."</td></tr>\n";
       break;
 
+    case "done":
     default:
-      if(round($percent_completed == 100 ) ) {
-        $completed_date = @db_result( db_query( "SELECT MAX(finished_time) FROM tasks WHERE projectid=".$taskid ), 0, 0 );
-        $content .= "<tr><td>".$lang["completed_on"].": </td><td>".nicedate($completed_date)."</td></tr>\n";
-      }
+      if($taskid_row["completed"] == 100 )  
+        $content .= "<tr><td>".$lang["completed_on"].": </td><td>".nicedate($taskid_row["completion_time"] )."</td></tr>\n";
       break;
   }
 }
