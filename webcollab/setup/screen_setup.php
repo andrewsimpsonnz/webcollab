@@ -29,7 +29,7 @@
 //
 // Creates the inital window, and sets some vars. This _HAS_ to be the first function because of the header() calls
 //
-function create_top_setup($title="", $no_menu=0 ) {
+function create_top_setup($title="" ) {
 
   global $topbuild;
 
@@ -40,10 +40,11 @@ function create_top_setup($title="", $no_menu=0 ) {
     $topbuild = 1;
 
   //we don't want any caching of these pages
-  header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-  header ("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-  header ("Cache-Control: no-cache, must-revalidate");
-  header ("Pragma: no-cache");
+  header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+  header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+  header("Cache-Control: no-store, no-cache, must-revalidate");
+  header("Cache-Control: post-check=0, pre-check=0", false);
+  header("Pragma: no-cache");
 
   ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -53,7 +54,7 @@ function create_top_setup($title="", $no_menu=0 ) {
 
 
 <head>
-  <title><?php echo $title ?></TITLE>
+  <title><?php echo $title ?></title>
   <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
   <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
   <link REL="StyleSheet" HREF=../css.css TYPE="text/css">
@@ -66,22 +67,18 @@ function create_top_setup($title="", $no_menu=0 ) {
 
   <?php
 
-  //create the info part of the main window
-  echo "<tr>\n<td bgcolor=\"#000000\" colspan=\"2\" align=\"center\" valign=\"top\">\n";
-  echo "<table border=\"0\" width=\"100%\"><tr><td align=\"left\" bgcolor=\"#000000\">\n";
+  //create the main table
+  echo "\n<!-- start main table -->\n";
+  echo "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">\n";
 
-  echo "</td><td bgcolor=\"#000000\" align=\"right\">\n";
-  echo "<font color=\"#FFFFFF\"><small>(c) 2003</small>\n</font>\n</td>\n</tr>";
+  //create the masthead part of the main window
+  echo "<tr>\n<td>";
+  echo "<div class=\"masthead\">";
+  echo "</div></td></tr>\n";
 
-  echo "</table></td></tr>\n";
+  echo "<tr valign=\"top\"><td width=\"100%\" align=\"center\">";
 
-
-  //if we choose to have only one space, we center it in stead of pushing it to the left
-  if( $no_menu == 0 )
-    echo "<tr valign=\"top\"><td width=\"175\" align=\"center\">";
-  else
-    echo "<tr valign=\"top\"><td width=\"100%\" align=\"center\">";
-
+  return;
 }
 
 
@@ -99,27 +96,29 @@ function create_bottom_setup() {
 
   //end xml parsing
   echo "\n</body>\n</html>\n";
-
+  return;
 }
+
+
 
 //
 //  Creates a new menu-window
 //
-function new_box_setup( $title, $content, $width="97%" ) {
-
+function new_box_setup($title, $content, $style="boxdata", $size="tablebox" ) {
 
   echo "\n<!-- start of ".$title."-box -->";
   echo "\n<br />";
 
   echo "
-  <table border=\"0\" cellpadding=\"10\" cellspacing=\"0\" width=\"".$width."\">
+  <table class=\"".$size."\">
     <tr>
-      <td bgcolor=\"#1E4B79\" align=\"left\"><FONT color=\"white\"><b>".$title."</b></font></td>
+      <td class=\"boxhead\">".$title."</td>
     </tr>
     <tr>
-      <td bgcolor=\"#FFFFFF\" align=\"left\">\n".$content."\n</td>
+      <td class=\"".$style."\">\n".$content."\n</td>
     </tr>
   </table>\n <!-- end -->\n";
+  return;
 }
 
 ?>

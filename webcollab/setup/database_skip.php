@@ -35,8 +35,8 @@ include("./screen_setup.php" );
 
 function error_setup($message ) {
 
-  create_top_setup("Setup", 1 );
-  new_box_setup("Setup error", "<br />".$message."<br /><br />", 400 );
+  create_top_setup("Setup" );
+  new_box_setup("Setup error", $message, "boxdata", "singlebox" );
   create_bottom_setup();
   die;
 
@@ -49,9 +49,9 @@ if($admin != 1 ) {
   error_setup("You are not authorised to do this" );
 }
 
-create_top_setup("Setup Screen", 1);
+create_top_setup("Setup Screen" );
 
-$content =  "<br />\n".
+$content =
             "<form method=\"POST\" action=\"setup1.php\">".
             "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
             "A database is already specified in the configuration file.  Do you wish to create a new database?<br /><br />\n".
@@ -60,9 +60,9 @@ $content =  "<br />\n".
             "<form method=\"POST\" action=\"setup2.php\">".
             "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
             "<div align=\"center\"><input type=\"submit\" value=\"No\"></div>\n".
-            "</form><br /><br />\n";
+            "</form><br />\n";
 
-new_box_setup( "Setup - Stage 1 of 3 : Skipping Database Configuration", $content, 400 );
+new_box_setup( "Setup - Stage 1 of 3 : Skipping Database Configuration", $content, "boxdata", "singlebox" );
 create_bottom_setup();
 
 ?>

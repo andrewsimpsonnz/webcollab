@@ -33,8 +33,8 @@ include_once("../config.php" );
 //error condition
 function secure_error($reason ) {
 
-  create_top_setup("Error", 1 );
-  new_box_setup("Error", "<center><br />".$reason."<br /></center>" );
+  create_top_setup("Error" );
+  new_box_setup("Error", $reason, "boxdata", "singlebox" );
   create_bottom_setup();
   die;
 
@@ -105,26 +105,19 @@ if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" ) {
 }
 
 
-create_top_setup("Login", 1 );
+create_top_setup("Login" );
 
-$content = "<div align=\"center\">";
-
-$content .= "<br />Admin login is required for setup:<br /><br />\n".
+$content = "Admin login is required for setup:<br /><br />\n".
            "<form name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
              "<table border=\"0\">\n".
                "<tr><td>Login: </td><td><INPUT type=\"text\" name=\"username\" size=\"30\"></td></tr>\n".
                "<tr><td>Password: </td><td><INPUT type=\"password\" name=\"password\" value=\"\" size=\"30\"></td></tr>\n".
              "</table>".
              "<input type=\"submit\" value=\"Login\"><br /><br />\n".
-             "<div align=\"center\">".
-             "<br /><br />\n".
-             "</div>".
-             "</form>".
-           "</div>".
-           "<br />";
+             "</form>";
 
 //set box options
-new_box_setup("Login", $content, "400" );
+new_box_setup("Login", $content, "boxdata", "singlebox" );
 
 create_bottom_setup();
 

@@ -35,8 +35,8 @@ include_once("./screen_setup.php" );
 
 function error_setup($reason ) {
 
-  create_top_setup("Setup", 1 );
-  new_box_setup("Setup error", "<div align=\"center\"><br />$reason<br /></div>" );
+  create_top_setup("Setup" );
+  new_box_setup("Setup error", $reason, "boxdata", "singlebox" );
   create_bottom_setup();
   die;
 
@@ -73,7 +73,7 @@ else {
   $db_host     = $_GET["db_host"];
 }
 
-create_top_setup("Setup Screen", 1);
+create_top_setup("Setup Screen" );
 
 $content  = "";
 
@@ -211,9 +211,9 @@ $content .= "<tr><td></td><td><br /></td></tr>".
             "<input type=\"hidden\" name=\"action\" value=\"insert\">\n".
             "<tr><td></td><td><input type=\"submit\" value=\"Submit\"></td></tr>\n".
             "</table><br /><br />\n".
-            "</form><br /><br />\n";
+            "</form>\n";
 
-new_box_setup( "Setup - Stage 2 of 3 : Configuration", $content );
+new_box_setup( "Setup - Stage 2 of 3 : Configuration", $content, "boxdata", "tablebox" );
 create_bottom_setup();
 
 ?>

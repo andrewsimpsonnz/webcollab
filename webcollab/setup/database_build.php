@@ -35,8 +35,8 @@ include("./screen_setup.php" );
 
 function error_setup($message ) {
 
-  create_top_setup("Setup", 1 );
-  new_box_setup("Setup error", "<br />".$message."<br /><br />", 400 );
+  create_top_setup("Setup" );
+  new_box_setup("Setup error", $message, "boxdata", "singlebox" );
   create_bottom_setup();
   die;
 

@@ -35,8 +35,8 @@ include_once("./screen_setup.php" );
 
 function error_setup( $reason ) {
 
-  create_top_setup("Setup", 1 );
-  new_box_setup("Setup error", "<div align=\"center\"><br />".$reason."<br /></div>" );
+  create_top_setup("Setup" );
+  new_box_setup("Setup error", "<div align=\"center\">".$reason."</div>" );
   create_bottom_setup();
   die;
 
@@ -175,7 +175,7 @@ if(! $handle = fopen("../config.php", "w" ) ) {
  }
 
 //show success message
-create_top_setup("Setup Screen", 1);
+create_top_setup("Setup Screen" );
 
 $content = "<div align=\"center\">\n".
 "<br /><br />\n".
@@ -192,7 +192,7 @@ $content .= "<p>Enjoy!</p>\n".
 "</div>\n".
 "<br /><br />\n";
 
-new_box_setup("Setup - Stage 3 of 3", $content, 400 );
+new_box_setup("Setup - Stage 3 of 3", $content, "boxdata", "tablebox" );
 
 create_bottom_setup();
 ?>

@@ -35,8 +35,8 @@ include("./screen_setup.php" );
 
 function error_setup($message ) {
 
-  create_top_setup("Setup", 1 );
-  new_box_setup("Setup error", "<br />".$message."<br /><br />", 400 );
+  create_top_setup("Setup" );
+  new_box_setup("Setup error", $message, "boxdata", "singlebox" );
   create_bottom_setup();
   die;
 
@@ -54,10 +54,9 @@ if(isset($DATABASE_NAME ) && $DATABASE_NAME != "" ) {
 else
   $x = "";
 
-create_top_setup("Setup Screen", 1);
+create_top_setup("Setup Screen" );
 
 $content =
-"<br />\n".
 "<p><b>Setup - Stage 1 of 3 : Database Setup</b></p>\n".
 "<form method=\"POST\" action=\"database_build.php\">\n".
   "<table border=\"0\">\n".
@@ -78,12 +77,10 @@ $content =
     "<tr><td colspan=\"2\">Do you want WebCollab to create the database now?  <input type=\"checkbox\" name=\"make_database\" CHECKED ></td></tr>\n".
     "</table><br />\n".
   "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
-  "<input type=\"submit\" value=\"Submit\"><br /><br />\n".
-"</form>\n".
-"</center>\n".
-"<br /><br />\n";
+  "<input type=\"submit\" value=\"Submit\">\n".
+"</form>\n";
 
-new_box_setup("Setup - Stage 1 of 3", $content );
+new_box_setup("Setup - Stage 1 of 3", $content, "boxdata", "tablebox" );
 
 create_bottom_setup();
 ?>
