@@ -129,7 +129,7 @@ if( valid_string($_REQUEST["action"]) ) {
 
         //check if the user has enough rights
         if( ($admin != 1 ) && (db_result( db_query("SELECT COUNT(*) FROM tasks WHERE id=".$taskid." AND owner=".$uid ), 0, 0 ) < 1) )
-          error( "Task submit", "Access denied, you do not have enough rights to do that" );
+          warning( $lang["task_submit"], $lang["not_owner"] );
 
         //note: self-securing query
         db_query( "UPDATE tasks SET owner=0 WHERE owner=".$uid." AND id=".$taskid );
@@ -387,7 +387,7 @@ if( valid_string($_REQUEST["action"]) ) {
 
 	//check if the user has enough rights
         if( ($admin != 1 ) && (db_result( db_query("SELECT COUNT(*) FROM tasks WHERE id=".$taskid." AND owner=".$uid ), 0, 0 ) < 1) )
-          error( "Task submit", "Access denied, you do not have enough rights to do that" );
+          warning($lang["task_submit"], $lang["not_owner"] );
 
 	//begin transaction
 	db_begin();
