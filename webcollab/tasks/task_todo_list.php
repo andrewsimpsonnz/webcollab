@@ -40,7 +40,7 @@ function listTasks($task_id, $tail ) {
   $q = db_query( "SELECT id, name, owner, deadline, usergroupid, globalaccess,
                         $epoch deadline) AS task_due,
                         $epoch now() ) AS now
-                        FROM tasks
+                        FROM ".PRE."tasks
                         WHERE projectid=$task_id
                         AND parent<>0
                         AND (status='created' OR status='active')
@@ -88,7 +88,7 @@ $allowed[0] = 0;
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query("SELECT usergroupid, userid 
-                      FROM usergroups_users 
+                      FROM ".PRE."usergroups_users 
                       LEFT JOIN usergroups ON (usergroups.id=usergroups_users.usergroupid)
                       WHERE usergroups.private=1");
 
@@ -115,7 +115,7 @@ else
   $groupid = 0;
 
 // check if there are projects
-if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent=0" ), 0, 0 ) < 1 ) {
+if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE parent=0" ), 0, 0 ) < 1 ) {
   $content = "<div align=\"center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add"]."</a></div>\n";
   new_box( $lang["no_projects"], $content );
   return;
@@ -149,7 +149,7 @@ $content .= "<form method=\"post\" action=\"tasks.php\">\n".
             "<option value=\"0\"$s2>".$lang["nobody"]."</option>\n";
 
 //get all users for option box
-$q = db_query("SELECT id, fullname, private FROM users WHERE deleted='f' ORDER BY fullname");
+$q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' ORDER BY fullname");
 
 //user input box fields
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
@@ -174,7 +174,7 @@ $content .= "</select></label></td></tr>\n".
             "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
 
 //get all groups for option box
-$q = db_query("SELECT id, name, private FROM usergroups ORDER BY name" );
+$q = db_query("SELECT id, name, private FROM ".PRE."usergroups ORDER BY name" );
 
 //usergroup input box fields
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
@@ -199,7 +199,7 @@ $content .= "</select></label><br /><br /></td></tr>\n".
             "</form>\n";
 
 //query to get the all the projects
-$q = db_query("SELECT id, name, usergroupid, globalaccess FROM tasks WHERE parent=0 ORDER BY name" );
+$q = db_query("SELECT id, name, usergroupid, globalaccess FROM ".PRE."tasks WHERE parent=0 ORDER BY name" );
 
 // show all uncompleted tasks and projects belonging to this user or group
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {

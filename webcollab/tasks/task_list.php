@@ -68,7 +68,7 @@ $q = db_query("SELECT tasks.id AS id,
                 users.id AS userid,
                 taskgroups.name AS groupname,
                 taskgroups.description AS groupdescription
-                FROM tasks
+                FROM ".PRE."tasks
                 LEFT JOIN users ON ( users.id=tasks.owner )
                 LEFT JOIN taskgroups ON (taskgroups.id=tasks.taskgroupid)
                 WHERE tasks.parent=$parent
@@ -135,14 +135,14 @@ $q = db_query("SELECT tasks.id AS id,
     $this_content .= "<li>";
 
     //have you seen this task yet ?
-    $seen_test = db_result(db_query("SELECT COUNT(*) FROM seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" ), 0, 0);
+    $seen_test = db_result(db_query("SELECT COUNT(*) FROM ".PRE."seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" ), 0, 0);
 
     //don't show alert content for changes more than $NEW_TIME (in seconds)
     if( ($now - max($row["edited"], $row["lastpost"], $row["lastfileupload"] ) ) > 86400*$NEW_TIME ) {
 
       //task is over limit in $NEW_TIME and still not looked at by you, mark it as seen, and move on...
       if( $seen_test < 1 )
-        db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, ".$row["id"].", now() ) " );
+        db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES ($uid, ".$row["id"].", now() ) " );
     }
     //task has changed since last seen - show the changes to you
     else {
@@ -155,7 +155,7 @@ $q = db_query("SELECT tasks.id AS id,
           break;
 
         default:
-          $seenq = db_query("SELECT $epoch time) FROM seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" );
+          $seenq = db_query("SELECT $epoch time) FROM ".PRE."seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" );
 
           //check if edited since last visit
           $seen = db_result($seenq, 0, 0 );
@@ -274,7 +274,7 @@ if( ! isset($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) || $_REQUE
 $parentid = intval($_REQUEST["taskid"]);
 
 //check for private usergroup projects
-$q = db_query("SELECT usergroupid, globalaccess, ".$epoch."now()) FROM tasks WHERE id=".$taskid_row["projectid"] );
+$q = db_query("SELECT usergroupid, globalaccess, ".$epoch."now()) FROM ".PRE."tasks WHERE id=".$taskid_row["projectid"] );
 
 $row = db_fetch_num($q, 0 );
 
@@ -288,7 +288,7 @@ if( ($admin != 1) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
 }
 
 //find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query
-$parent_query = db_query("SELECT DISTINCT parent FROM tasks WHERE projectid=".$taskid_row["projectid"] );
+$parent_query = db_query("SELECT DISTINCT parent FROM ".PRE."tasks WHERE projectid=".$taskid_row["projectid"] );
 $parent_array = NULL;
 for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; $i++ ) {
   $parent_array[$i] = $row["parent"];
@@ -296,7 +296,7 @@ for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; $i++ ) {
 
 //check to see if any tasks at this task level have the taskgroup descriptor set.
 //Use this later to toggle the taskgroup headings.
-if( db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent=$parentid AND taskgroupid<>0" ), 0, 0 ) > 0 )
+if( db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE parent=$parentid AND taskgroupid<>0" ), 0, 0 ) > 0 )
   $taskgroup_flag = 1;
 else
   $taskgroup_flag = 0;

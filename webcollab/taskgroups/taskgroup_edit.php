@@ -41,7 +41,7 @@ if( ! isset($_GET["taskgroupid"]) || ! is_numeric($_GET["taskgroupid"]) )
 $taskgroupid = intval($_GET["taskgroupid"]);
 
 //get taskgroup information
-$q = db_query("SELECT * FROM taskgroups WHERE id=$taskgroupid" );
+$q = db_query("SELECT * FROM ".PRE."taskgroups WHERE id=$taskgroupid" );
 $row = db_fetch_array( $q, 0 );
 
 $content =

@@ -57,7 +57,7 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
                         forum.userid AS postowner,
                         users.id AS userid,
                         users.fullname AS fullname
-                        FROM forum
+                        FROM ".PRE."forum
                         LEFT JOIN users ON (users.id=forum.userid)
                         WHERE forum.taskid=$taskid
                         AND forum.parent=$parentid
@@ -114,7 +114,7 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 //MAIN PROGRAM
 
 //get number of posts for this taskid
-$q = db_query("SELECT DISTINCT parent FROM forum WHERE taskid=$taskid" );
+$q = db_query("SELECT DISTINCT parent FROM ".PRE."forum WHERE taskid=$taskid" );
 
 //put parent id's in an array
 $parent_array = NULL;
@@ -161,7 +161,7 @@ if($taskid_row["usergroupid"] != 0 ) {
     //add an option to add posts
     $content .= "<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=".$taskid_row["usergroupid"]."&amp;\">".$lang["new_post"]."</a>]</font>";
     //get usergroup
-    $usergroup_name = db_result(db_query("SELECT name FROM usergroups WHERE id=".$taskid_row["usergroupid"] ), 0, 0 );
+    $usergroup_name = db_result(db_query("SELECT name FROM ".PRE."usergroups WHERE id=".$taskid_row["usergroupid"] ), 0, 0 );
     //show it
     new_box(sprintf($lang["private_forum_sprt"], $usergroup_name ), $content, "boxdata2" );
   }

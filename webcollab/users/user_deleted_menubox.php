@@ -36,13 +36,13 @@ if($admin != 1 )
 
 
 //check for deleted users
-if( ! db_result(db_query("SELECT COUNT(*) FROM users WHERE deleted='t'" ), 0, 0 ) ) {
+if( ! db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE deleted='t'" ), 0, 0 ) ) {
   new_box($lang["deleted_users"], "<small>".$lang["no_deleted_users"]."</small>", "boxmenu" );
   return;
 }
 
 //query
-$q = db_query("SELECT id, fullname FROM users WHERE deleted='t' ORDER BY fullname" );
+$q = db_query("SELECT id, fullname FROM ".PRE."users WHERE deleted='t' ORDER BY fullname" );
 
 $content = "<table border=\"0\">\n";
 
@@ -52,7 +52,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $content .= "<td align=\"right\" nowrap=\"nowrap\"><font class=\"textlink\">&nbsp;[<a href=\"users/user_submit.php?x=$x&amp;action=revive&amp;userid=".$row["id"]."\">".$lang["revive"]."</a>]";
 
   //if this user has NO tasks owned then we can delete him forever :)
-  if( ! db_result(db_query("SELECT COUNT(*) FROM tasks WHERE owner=".$row["id"] ), 0, 0 ) ) {
+  if( ! db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE owner=".$row["id"] ), 0, 0 ) ) {
     $content .= "&nbsp;[<a href=\"users.php?x=$x&amp;action=permdel&amp;userid=".$row["id"]."\" onclick=\"return confirm( '".sprintf($lang["permdel_javascript_sprt"], $row["fullname"] )."' )\">".$lang["permdel"]." </a>]";
   }
   $content.="</font></td></tr>\n";

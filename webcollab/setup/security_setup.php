@@ -85,7 +85,7 @@ else {
                              users.email AS email, users.admin AS admin, users.fullname AS fullname,
                              $epoch now() ) AS now,
                              $epoch lastaccess) AS sec_lastaccess
-                             FROM logins
+                             FROM ".PRE."logins
                              LEFT JOIN users ON (users.id=logins.user_id)
                              WHERE session_key='$x'", 0 ) ) ) {
     error_setup("Database not able to verify session key");
@@ -110,12 +110,12 @@ else {
   
   //check the last logintime (there is a 10 min limit)
   if( ($row["now"]-$row["sec_lastaccess"]) > 600 ) {
-    db_query("UPDATE logins SET session_key='' WHERE user_id=".$row["user_id"] );
+    db_query("UPDATE ".PRE."logins SET session_key='' WHERE user_id=".$row["user_id"] );
     error_setup("Security timeout of 10 minutes has occurred on this session." );
   }
 
   //update the "I was here" time
-  db_query("UPDATE logins SET lastaccess=now() WHERE session_key='".$x."' AND user_id=".$row["user_id"] );
+  db_query("UPDATE ".PRE."logins SET lastaccess=now() WHERE session_key='".$x."' AND user_id=".$row["user_id"] );
 
 }
   

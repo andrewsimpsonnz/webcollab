@@ -37,7 +37,7 @@ function percent_complete($taskid ) {
   $tasks_completed = 0;
   $total_tasks = 0;
   
-  $q = db_query("SELECT status FROM tasks WHERE projectid=".$taskid." AND parent<>0"  );
+  $q = db_query("SELECT status FROM ".PRE."tasks WHERE projectid=".$taskid." AND parent<>0"  );
   
   for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) { 
     

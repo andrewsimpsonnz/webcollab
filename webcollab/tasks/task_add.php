@@ -41,7 +41,7 @@ $allowed[0] = 0;
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query("SELECT usergroupid, userid 
-                      FROM usergroups_users 
+                      FROM ".PRE."usergroups_users 
                       LEFT JOIN usergroups ON (usergroups.id=usergroups_users.usergroupid)
                       WHERE usergroups.private=1");
 
@@ -77,12 +77,12 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   $parentid = intval($_GET["parentid"]);
 
 //get info about the parent of this task
-  $q = db_query("SELECT name, deadline, status, owner, parent, projectid FROM tasks WHERE id=$parentid" );
+  $q = db_query("SELECT name, deadline, status, owner, parent, projectid FROM ".PRE."tasks WHERE id=$parentid" );
   $task_row = @db_fetch_array($q, 0 );
 
   //add the project deadline for the javascript
   // Note: date(Z) converts to GMT/UTC  since javascript doesn't use localtime
-  $project_deadline = db_result(db_query("SELECT ".$epoch."deadline) FROM tasks WHERE id=".$task_row["projectid"] ) ) + (int)date("Z");
+  $project_deadline = db_result(db_query("SELECT ".$epoch."deadline) FROM ".PRE."tasks WHERE id=".$task_row["projectid"] ) ) + (int)date("Z");
   $content .=  "<input type=\"hidden\" name=\"projectDate\" value=\"$project_deadline\" />\n";            
                 
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" />\n".
@@ -93,7 +93,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   if( $task_row["projectid"] == $parentid)
     $project = $task_row["name"];
   else
-    $project = db_result(db_query("SELECT name FROM tasks WHERE id=".$task_row["projectid"] ), 0, 0 );
+    $project = db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$task_row["projectid"] ), 0, 0 );
 
   $content .= "<tr><td>".$lang["project"] .":</td> <td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_row["projectid"]."\">$project</a></td></tr>\n";
 
@@ -120,7 +120,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
 
 
   //get all users in order to show a task owner
-  $users_q = db_query("SELECT id, fullname, private FROM users WHERE deleted='f' ORDER BY fullname");
+  $users_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' ORDER BY fullname");
 
   //owner box
   $content .= "<tr><td>".$lang["task_owner"].":</td> <td><select name=\"owner\">\n".
@@ -144,7 +144,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   $content .= "</select></td></tr>\n";
 
   //get all taskgroups in order to show a task owner
-  $q = db_query("SELECT id, name FROM taskgroups ORDER BY name");
+  $q = db_query("SELECT id, name FROM ".PRE."taskgroups ORDER BY name");
 
   $content .= "<tr> <td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td> <td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang["no_group"]."</option>\n";
@@ -155,7 +155,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   $content .= "</select></td></tr>\n";
 
   //show all the groups
-  $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
+  $usergroup_q = db_query( "SELECT name, id FROM ".PRE."usergroups ORDER BY name" );
 
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td> <td><select name=\"usergroupid\">\n";
   $content .= "<option value=\"0\">".$lang["all_groups"]."</option>\n";
@@ -215,7 +215,7 @@ else {
               "</select></td></tr>";
 
   //get all users in order to show a task owner
-  $user_q = db_query("SELECT id, fullname, private FROM users WHERE deleted='f' ORDER BY fullname");
+  $user_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' ORDER BY fullname");
 
   //owner
   $content .= "<tr><td>".$lang["project_owner"].":</td><td><select name=\"owner\">\n";
@@ -237,7 +237,7 @@ else {
   $content .= "</select></td></tr>\n";
 
   //show all the groups
-  $group_q = db_query( "SELECT id, name, private FROM usergroups ORDER BY name" );
+  $group_q = db_query( "SELECT id, name, private FROM ".PRE."usergroups ORDER BY name" );
   $content .= "<tr> <td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td> <td><select name=\"usergroupid\">\n".
               "<option value=\"0\">".$lang["all_groups"]."</option>\n";
 

@@ -66,7 +66,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
                          $epoch tasks.lastforumpost ) AS lastpost,
                          $epoch tasks.lastfileupload ) AS lastfileupload
                          $equiv
-                         FROM tasks
+                         FROM ".PRE."tasks
                          $tail" );
 
   // if no result, then do nothing
@@ -93,7 +93,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
 
     $due = round( ($row["due"] - $row["now"])/86400 );
 
-    $seenq = db_query( "SELECT $epoch time) FROM seen WHERE taskid=".$row["id"]." AND userid=$uid LIMIT 1" );
+    $seenq = db_query( "SELECT $epoch time) FROM ".PRE."seen WHERE taskid=".$row["id"]." AND userid=$uid LIMIT 1" );
 
     if(db_numrows($seenq ) > 0 )
       $seen = db_result($seenq, 0, 0 );
@@ -159,7 +159,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
 
           default:
             $date = nicedate($row["deadline"] );
-            if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent<>0" ), 0, 0 ) == 0 ) {
+            if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent<>0" ), 0, 0 ) == 0 ) {
               $color = "#006400";
               $status = $task_state["done"];
             }
@@ -223,7 +223,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
       }
     }
     else {
-      $owner = db_result(db_query("SELECT fullname FROM users WHERE id=".$row["owner"] ), 0, 0  );
+      $owner = db_result(db_query("SELECT fullname FROM ".PRE."users WHERE id=".$row["owner"] ), 0, 0  );
       $owner = "<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row["owner"]."\">".$owner."</a>";
     }
 
@@ -251,7 +251,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
         $group = $row[$groupname];
       }
       else
-        $group = db_result(db_query("SELECT name FROM $grouptable WHERE id=".$row[$groupid] ), 0, 0 );
+        $group = db_result(db_query("SELECT name FROM ".PRE.$grouptable." WHERE id=".$row[$groupid] ), 0, 0 );
     }
 
     //Build up the page columns for display.  Starting with the flags
@@ -347,7 +347,7 @@ $content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=taskname
 $content .= "<b>".$lang["task"]."</b></a></small></td></tr>";
 
 //get list of private projects and put them in an array for later use
-$q = db_query("SELECT id, usergroupid FROM tasks WHERE parent=0 AND globalaccess='f'" );
+$q = db_query("SELECT id, usergroupid FROM ".PRE."tasks WHERE parent=0 AND globalaccess='f'" );
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
   $no_access_project[$i] = $row[0];

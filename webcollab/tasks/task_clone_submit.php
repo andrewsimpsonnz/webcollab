@@ -45,7 +45,7 @@ function add($taskid, $new_parent, $new_name ) {
 
   if($new_parent != 0 ) {
     //now cloning a child task
-    $q = db_query("SELECT id FROM tasks WHERE parent=$taskid" );
+    $q = db_query("SELECT id FROM ".PRE."tasks WHERE parent=$taskid" );
 
     //clone all the tasks at this level
     for( $i=0; $row = db_fetch_array($q, $i ); $i++ ) {
@@ -79,13 +79,13 @@ function copy_across($taskid, $new_parent, $name ) {
     global $uid, $last_insert;
 
     //get task details
-    $q = db_query("SELECT * FROM tasks WHERE id=$taskid" );
+    $q = db_query("SELECT * FROM ".PRE."tasks WHERE id=$taskid" );
     $row = db_fetch_array($q, 0 );
 
     //set values
     if($new_parent != 0 ) {
       //new task
-      $new_projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=$new_parent" ), 0, 0 );
+      $new_projectid = db_result(db_query("SELECT projectid FROM ".PRE."tasks WHERE id=$new_parent" ), 0, 0 );
       $new_name = $row["name"];
     }
     else{
@@ -95,7 +95,7 @@ function copy_across($taskid, $new_parent, $name ) {
     }
 
     //insert data
-    $q = db_query("INSERT INTO tasks(name,
+    $q = db_query("INSERT INTO ".PRE."tasks(name,
                     text,
                     created,
                     lastforumpost,
@@ -134,14 +134,14 @@ function copy_across($taskid, $new_parent, $name ) {
 
     // get taskid for the new task/project
     $last_oid = db_lastoid($q );
-    $new_taskid = db_result(db_query("SELECT id FROM tasks WHERE $last_insert = $last_oid" ), 0, 0 );
+    $new_taskid = db_result(db_query("SELECT id FROM ".PRE."tasks WHERE $last_insert = $last_oid" ), 0, 0 );
 
     //for a new project set the projectid variable reset correctly
     if($new_parent == 0 )
-      db_query("UPDATE tasks SET projectid=$new_taskid WHERE id=$new_taskid" );
+      db_query("UPDATE ".PRE."tasks SET projectid=$new_taskid WHERE id=$new_taskid" );
 
     //you have already seen this item, no need to announce it to you
-    db_query("INSERT INTO seen(userid, taskid, time) VALUES($uid, $new_taskid, now() )");
+    db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES($uid, $new_taskid, now() )");
 
   return $new_taskid;
 }
@@ -166,8 +166,8 @@ $name = safe_data($_POST["name"]);
 db_begin();
 
 //find all parent-tasks in this project and add them to an array for later use
-$projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=$taskid" ), 0, 0 );
-$q = db_query("SELECT DISTINCT parent FROM tasks WHERE projectid=$projectid" );
+$projectid = db_result(db_query("SELECT projectid FROM ".PRE."tasks WHERE id=$taskid" ), 0, 0 );
+$q = db_query("SELECT DISTINCT parent FROM ".PRE."tasks WHERE projectid=$projectid" );
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
   $parent_array[$i] = $row[0];
@@ -176,16 +176,16 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
 $new_taskid = add($taskid, 0, $name );
 
 //now get new projectid to set completion percentage
-$new_projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=".$new_taskid ), 0, 0 ); 
+$new_projectid = db_result(db_query("SELECT projectid FROM ".PRE."tasks WHERE id=".$new_taskid ), 0, 0 ); 
 
 //set completed percentage project record
 $percent_completed = round(percent_complete($new_projectid ) );
-db_query("UPDATE tasks SET completed=".$percent_completed." WHERE id=".$new_projectid );
+db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$new_projectid );
 
 //for completed project set the completion time
 if($percent_completed == 100 ){
-  $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid=$new_projectid" ), 0, 0 );
-  db_query("UPDATE tasks SET completion_time='".$completion_time."' WHERE id=".$new_projectid );
+  $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM ".PRE."tasks WHERE projectid=$new_projectid" ), 0, 0 );
+  db_query("UPDATE ".PRE."tasks SET completion_time='".$completion_time."' WHERE id=".$new_projectid );
 }
 
 //end transaction

@@ -101,7 +101,7 @@ ignore_user_abort(TRUE);
       //okay accept file
       db_begin();
       //alter task lastfileupload
-      db_query("UPDATE tasks SET lastfileupload=now() WHERE id=$taskid" );
+      db_query("UPDATE ".PRE."tasks SET lastfileupload=now() WHERE id=$taskid" );
 
       //addslashes to stored filename only if magic quotes is 'off'
       //(prevents database errors)
@@ -111,7 +111,7 @@ ignore_user_abort(TRUE);
         $db_filename = $_FILES["userfile"]["name"];
 
       //alter file database administration
-      $q = db_query( "INSERT INTO files (filename,
+      $q = db_query( "INSERT INTO ".PRE."files (filename,
                                             size,
                                             description,
                                             uploaded,
@@ -137,7 +137,7 @@ ignore_user_abort(TRUE);
         $filename = $_FILES["userfile"]["name"];
 
       if( ! move_uploaded_file( $_FILES["userfile"]["tmp_name"], $FILE_BASE."/".$last_oid."__".$filename ) ) {
-        db_query("DELETE FROM files WHERE ".$last_insert."=".$last_oid );
+        db_query("DELETE FROM ".PRE."files WHERE ".$last_insert."=".$last_oid );
         unlink($_FILES["userfile"]["tmp_name"] );
           db_rollback();
           error("File submit", "Internal error: The file cannot be moved to filebase directory, deleting upload" );
@@ -145,7 +145,7 @@ ignore_user_abort(TRUE);
 
       //work around for mysql (which doesn't have an OID column)
       if(substr($DATABASE_TYPE, 0, 5) == "mysql" )
-        db_query("UPDATE files SET oid=".$last_oid." WHERE id=".$last_oid );
+        db_query("UPDATE ".PRE."files SET oid=".$last_oid." WHERE id=".$last_oid );
 
       //disarm it
       chmod($FILE_BASE."/".$last_oid."__".$filename, 0644 );
@@ -159,7 +159,7 @@ ignore_user_abort(TRUE);
       $q = db_query("SELECT tasks.name AS name,
                             tasks.usergroupid AS usergroupid,
                             users.email AS email
-                            FROM tasks
+                            FROM ".PRE."tasks
                             LEFT JOIN users ON (tasks.owner=users.id)
                             WHERE tasks.id=$taskid" );
       $task_row = db_fetch_array($q, 0 );
@@ -173,7 +173,7 @@ ignore_user_abort(TRUE);
       //if usergroup set, add the user list
       if($task_row["usergroupid"] && $mail_group ){
         $q = db_query("SELECT users.email
-                              FROM users
+                              FROM ".PRE."users
                               LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
                               WHERE usergroups_users.usergroupid=".$task_row["usergroupid"].
                               " AND users.deleted='f'" );
@@ -216,7 +216,7 @@ ignore_user_abort(TRUE);
                                    files.oid AS oid,
                                    files.filename AS filename,
                                    tasks.owner AS owner
-                                   FROM files
+                                   FROM ".PRE."files
                                    LEFT JOIN tasks ON (files.taskid=tasks.id)
                                    WHERE files.id=$fileid" );
 
@@ -231,7 +231,7 @@ ignore_user_abort(TRUE);
             unlink($FILE_BASE."/".$row["oid"]."__".$row["filename"] );
           }
           //delete record of file
-          db_query("DELETE FROM files WHERE oid=".$row["oid"] );
+          db_query("DELETE FROM ".PRE."files WHERE oid=".$row["oid"] );
         }
       }
     break;

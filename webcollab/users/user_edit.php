@@ -43,16 +43,16 @@ if($admin == 1 ) {
   $userid = intval($_REQUEST["userid"]);
 
   //query for user
-  $q = db_query("SELECT * FROM users WHERE id=$userid" );
+  $q = db_query("SELECT * FROM ".PRE."users WHERE id=$userid" );
 
   //also query for the groups that this user is in
-  $usergroups_users_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$userid" );
+  $usergroups_users_q = db_query("SELECT usergroupid FROM ".PRE."usergroups_users WHERE userid=$userid" );
 
 }
 else {
 
   //user
-  $q = db_query("SELECT * FROM users WHERE id=$uid" );
+  $q = db_query("SELECT * FROM ".PRE."users WHERE id=$uid" );
 }
 
 //fetch data
@@ -93,7 +93,7 @@ if( $admin == 1 ) {
   $content .= "<tr><td>&nbsp;</td></tr>\n";
   
   //add user-groups
-  $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
+  $usergroup_q = db_query( "SELECT name, id FROM ".PRE."usergroups ORDER BY name" );
   $content .= "<tr><td></td><td colspan=\"2\"><small><i>".$lang["member_groups"]."</i></small></td></tr>\n".
               "<tr><td>".$lang["usergroups"].":</td>".
               "<td colspan=\"2\"><select name=\"usergroup[]\" multiple=\"multiple\" size=\"4\">\n";

@@ -68,7 +68,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   }
   
   //count the number of recent login attempts
-  $count_attempts = db_result(@db_query("SELECT COUNT(*) FROM login_attempt 
+  $count_attempts = db_result(@db_query("SELECT COUNT(*) FROM ".PRE."login_attempt 
                                                 WHERE name='".$username."' 
                                                 AND last_attempt > (now()-INTERVAL ".$delim."10 MINUTE".$delim.") LIMIT 6" ), 0, 0 );
     
@@ -78,10 +78,10 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   }                                                                              
     
   //record this login attempt
-  db_query("INSERT INTO login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
+  db_query("INSERT INTO ".PRE."login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
                                                                                      
   //do query and check database connection
-  if( ! $q = db_query("SELECT id FROM users
+  if( ! $q = db_query("SELECT id FROM ".PRE."users
                              WHERE deleted='f'
                              AND admin='t'
                              AND name='".$username."'
@@ -109,11 +109,11 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   $session_key = md5(mt_rand() );
 
   //remove the old login information
-  @db_query("DELETE FROM logins WHERE user_id=".$user_id );
-  @db_query("DELETE FROM login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
+  @db_query("DELETE FROM ".PRE."logins WHERE user_id=".$user_id );
+  @db_query("DELETE FROM ".PRE."login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
    
   //log the user in
-  db_query("INSERT INTO logins( user_id, session_key, ip, lastaccess )
+  db_query("INSERT INTO ".PRE."logins( user_id, session_key, ip, lastaccess )
                        VALUES('".$user_id."', '".$session_key."', '".$ip."', now() )" );
 
   //relocate the user to the next screen

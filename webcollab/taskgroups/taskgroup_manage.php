@@ -35,7 +35,7 @@ if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 //get the info
-$q = db_query("SELECT * FROM taskgroups ORDER BY name" );
+$q = db_query("SELECT * FROM ".PRE."taskgroups ORDER BY name" );
 
 //nothing here yet
 if(db_numrows($q) == 0 ) {

@@ -36,7 +36,7 @@ if( $admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 //get the info
-$q = db_query("SELECT * FROM usergroups ORDER BY name" );
+$q = db_query("SELECT * FROM ".PRE."usergroups ORDER BY name" );
 
 //nothing here yet
 if(db_numrows($q) == 0 ) {
@@ -66,7 +66,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   //get users from that group
   $usersq = db_query("SELECT fullname,
                             users.id AS id
-                            FROM users
+                            FROM ".PRE."users
                             LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
                             WHERE usergroupid=".$row["id"]."
                             AND deleted='f'

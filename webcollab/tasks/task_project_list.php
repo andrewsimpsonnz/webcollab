@@ -43,7 +43,7 @@ function listTasks($task_id ) {
   // show subtasks that are not complete
   $q = db_query("SELECT id, name, status, globalaccess, usergroupid,
                         ".$epoch." deadline )
-                        FROM tasks
+                        FROM ".PRE."tasks
                         WHERE projectid=".$task_id."
                         AND parent<>0
                         AND status<>'done'
@@ -108,7 +108,7 @@ $active_only = 0;
                         globalaccess,
                         completed,
                         completion_time
-                        FROM tasks
+                        FROM ".PRE."tasks
                         WHERE parent=0
                         ORDER BY name" );
 

@@ -39,7 +39,7 @@ function find_and_report_children($postid ) {
   global $arrayindex, $ids;
 
   //query for children
-  if( ! ($q = db_query("SELECT id FROM forum WHERE parent=$postid", 0) ) )
+  if( ! ($q = db_query("SELECT id FROM ".PRE."forum WHERE parent=$postid", 0) ) )
     return;
   if(db_numrows($q ) == 0 )
     return;
@@ -70,7 +70,7 @@ function delete_messages($postid ) {
 
   // perform the delete - delete from newest post first to oldest post last to prevent database referential errors
   for($i=0; $i < $arrayindex; $i++ ) {
-    db_query("DELETE FROM forum WHERE id=".$ids[($arrayindex - 1) - $i] );
+    db_query("DELETE FROM ".PRE."forum WHERE id=".$ids[($arrayindex - 1) - $i] );
   }
   return;
 }
@@ -136,7 +136,7 @@ ignore_user_abort(TRUE);
 
       //do data consistency check on parentid
       if($parentid != 0 ) {
-        if(db_result(db_query("SELECT COUNT(*) FROM forum WHERE id=$parentid" ), 0, 0 ) == 0 )
+        if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum WHERE id=$parentid" ), 0, 0 ) == 0 )
           error("Forum submit", "Data consistency error - child post has no parent" );
       }
 
@@ -148,7 +148,7 @@ ignore_user_abort(TRUE);
         case 0:
           //public post
           db_begin();
-          db_query ("INSERT INTO forum(parent, taskid, posted, text, userid, usergroupid)
+          db_query ("INSERT INTO ".PRE."forum(parent, taskid, posted, text, userid, usergroupid)
                                            VALUES ($parentid, $taskid, now(), '$text', $uid, 0)" );
           break;
 
@@ -159,13 +159,13 @@ ignore_user_abort(TRUE);
             error("Forum submit", "You do not have enough rights to post in that forum" );
 
           db_begin();
-          db_query ("INSERT INTO forum(parent, taskid, posted, text, userid, usergroupid)
+          db_query ("INSERT INTO ".PRE."forum(parent, taskid, posted, text, userid, usergroupid)
                                             VALUES ($parentid, $taskid, now(), '$text', $uid, $usergroupid)" );
           break;
 
       }
       //set time of last forum post to this task
-      db_query("UPDATE tasks SET lastforumpost=now() WHERE id=$taskid" );
+      db_query("UPDATE ".PRE."tasks SET lastforumpost=now() WHERE id=$taskid" );
       db_commit();
 
       //set up emails
@@ -176,7 +176,7 @@ ignore_user_abort(TRUE);
       $q = db_query("SELECT tasks.name AS name,
                             tasks.usergroupid AS usergroupid,
                             users.email AS email
-                            FROM tasks
+                            FROM ".PRE."tasks
                             LEFT JOIN users ON (tasks.owner=users.id)
                             WHERE tasks.id=$taskid" );
       $task_row = db_fetch_array($q, 0 );
@@ -190,7 +190,7 @@ ignore_user_abort(TRUE);
       //if usergroup set, add the user list
       if($task_row["usergroupid"] && $mail_group ){
         $q = db_query("SELECT users.email
-                              FROM users
+                              FROM ".PRE."users
                               LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
                               WHERE usergroups_users.usergroupid=".$task_row["usergroupid"].
                               " AND users.deleted='f'" );
@@ -226,7 +226,7 @@ ignore_user_abort(TRUE);
             //this is a reply to an earlier post
             $q = db_query("SELECT forum.text AS text,
                            users.fullname AS username
-                           FROM forum
+                           FROM ".PRE."forum
                            LEFT JOIN users ON (forum.userid=users.id)
                            WHERE forum.id=$parentid" );
 
@@ -263,8 +263,8 @@ ignore_user_abort(TRUE);
         default:
           //check if user is owner of the task or the owner of the post
           if(
-          (db_result(db_query("SELECT COUNT(*) FROM forum LEFT JOIN tasks ON (forum.taskid=tasks.id) WHERE tasks.owner=$uid AND forum.id=$postid" ), 0, 0 ) == 1 ) ||
-          (db_result(db_query("SELECT COUNT(*) FROM forum WHERE forum.userid=$uid AND forum.id=$postid" ), 0, 0 ) == 1 ) ) {
+          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum LEFT JOIN tasks ON (forum.taskid=tasks.id) WHERE tasks.owner=$uid AND forum.id=$postid" ), 0, 0 ) == 1 ) ||
+          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum WHERE forum.userid=$uid AND forum.id=$postid" ), 0, 0 ) == 1 ) ) {
 
             db_begin();
             delete_messages( $postid );

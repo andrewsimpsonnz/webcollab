@@ -136,6 +136,8 @@ $content = "<?php\n".
 '  $NO_ERROR = "N";'."\n".
 '  //Use external webserver authorisation to login (values are "N", or "Y")'."\n".
 '  $WEB_AUTH = "N";'."\n".
+'  //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match)'."\n".  
+'  define("PRE", "" );'."\n".
 '  //WebCollab version string'."\n".
 '  $WEBCOLLAB_VERSION = "pre-1.60 - CVS working copy";'."\n".
 "?>\n";

@@ -36,7 +36,7 @@ if( ! isset( $_POST["contactid"] ) || ! is_numeric( $_POST["contactid"] ) )
 $contactid = intval($_POST["contactid"]);
 
 //get contact information
-if( ! ($row = db_fetch_array( db_query( "SELECT * FROM contacts WHERE id=".$contactid ), 0 ) ) )
+if( ! ($row = db_fetch_array( db_query( "SELECT * FROM ".PRE."contacts WHERE id=".$contactid ), 0 ) ) )
   error("Database value error", "There is no information for the contact that you specified");
 
 $content =

@@ -54,7 +54,7 @@ $taskid = intval($_REQUEST["taskid"]);
 require_once(BASE."includes/usergroup_security.php" );
 
 //find out the tasks' name
-$taskname = db_result(db_query("SELECT name FROM tasks WHERE id=$taskid" ), 0, 0 );
+$taskname = db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=$taskid" ), 0, 0 );
 
 $content .= "<form name=\"inputform\" method=\"post\" action=\"forum.php\">\n";
 //set some hidden values
@@ -70,7 +70,7 @@ if($parentid != 0 ) {
   //get the text from the parent and the username of the person that posted that text
   $q = db_query("SELECT forum.text AS text,
                          users.fullname AS username
-                         FROM forum
+                         FROM ".PRE."forum
                          LEFT JOIN users ON (forum.userid=users.id)
                          WHERE forum.id=$parentid" );
 

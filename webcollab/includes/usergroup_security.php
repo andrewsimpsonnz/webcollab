@@ -31,7 +31,7 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 //get the tasks' security info
-if( ! ($group_q = db_query("SELECT usergroupid, globalaccess, projectid FROM tasks WHERE id=$taskid" ) ) )
+if( ! ($group_q = db_query("SELECT usergroupid, globalaccess, projectid FROM ".PRE."tasks WHERE id=$taskid" ) ) )
   error("Usergroup security", "There was an error in the data query." );
 
 //get the data
@@ -47,7 +47,7 @@ if( ($admin != 1) && ($group_row[0] != 0 ) && ($group_row[1] == 'f' ) ) {
 }
 
 //check if project is marked private
-$project_q = db_query("SELECT usergroupid, globalaccess FROM tasks WHERE id=".$group_row[2] );
+$project_q = db_query("SELECT usergroupid, globalaccess FROM ".PRE."tasks WHERE id=".$group_row[2] );
 $project_row = db_fetch_num($project_q, 0 );
 
 if( ($admin != 1) && ($project_row[0] != 0 ) && ($project_row[1] == 'f' ) ) {

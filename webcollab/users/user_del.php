@@ -54,28 +54,28 @@ switch($_GET["action"] ){
 
   case "permdel":
 
-    if(db_result(db_query("SELECT COUNT(*) FROM users WHERE id=$userid AND deleted='t'" ), 0, 0 ) == 1 ) {
+    if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE id=$userid AND deleted='t'" ), 0, 0 ) == 1 ) {
 
       //kiss your ass goodbye :)
       db_begin();
 
       //free up any tasks owned (should be none)
-      @db_query("UPDATE tasks SET owner=0 WHERE owner=$userid" );
+      @db_query("UPDATE ".PRE."tasks SET owner=0 WHERE owner=$userid" );
 
       //remove user from forum messages
-      db_query("UPDATE forum SET userid=0 WHERE userid=$userid" );
+      db_query("UPDATE ".PRE."forum SET userid=0 WHERE userid=$userid" );
 
       //delete user FROM login tables
-      db_query("DELETE FROM logins WHERE user_id=$userid" );
+      db_query("DELETE FROM ".PRE."logins WHERE user_id=$userid" );
 
       //delete from seen table
-      db_query("DELETE FROM seen WHERE userid=$userid" );
+      db_query("DELETE FROM ".PRE."seen WHERE userid=$userid" );
 
       //delete from usergroups_users
-      db_query("DELETE FROM usergroups_users WHERE userid=$userid" );
+      db_query("DELETE FROM ".PRE."usergroups_users WHERE userid=$userid" );
 
       //delete from users table
-      db_query("DELETE FROM users WHERE id=$userid" );
+      db_query("DELETE FROM ".PRE."users WHERE id=$userid" );
 
       db_commit();
     }
@@ -85,17 +85,17 @@ switch($_GET["action"] ){
   case "del":
      
      //if user exists we can delete them
-     if(db_result(db_query("SELECT COUNT(*) FROM users WHERE id=$userid" ), 0, 0 ) ) {
+     if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE id=$userid" ), 0, 0 ) ) {
        //mark user as deleted
        db_begin();
-       db_query("UPDATE users SET deleted='t' WHERE id=$userid" );
+       db_query("UPDATE ".PRE."users SET deleted='t' WHERE id=$userid" );
 
        //free all tasks that that user has done
-       @db_query("UPDATE tasks SET owner=0 WHERE owner=$userid" );
+       @db_query("UPDATE ".PRE."tasks SET owner=0 WHERE owner=$userid" );
        db_commit();
 
        //get the users' info
-       $q = db_query("SELECT email FROM users WHERE id=$userid" );
+       $q = db_query("SELECT email FROM ".PRE."users WHERE id=$userid" );
        $email = db_result($q, 0, 0 );
 
        //mail the user that he/she had been deleted

@@ -58,12 +58,12 @@ ignore_user_abort(TRUE);
 
       $userid = intval($_GET["userid"]);
 
-      if(db_result(db_query("SELECT COUNT(*) FROM users WHERE deleted='t' AND id=$userid" ), 0, 0 ) ) {
+      if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE deleted='t' AND id=$userid" ), 0, 0 ) ) {
         //undelete
-        db_query("UPDATE users SET deleted='f' WHERE id=$userid" );
+        db_query("UPDATE ".PRE."users SET deleted='f' WHERE id=$userid" );
 
         //get the users' info
-        $q = db_query("SELECT name, fullname, email FROM users where id=$userid" );
+        $q = db_query("SELECT name, fullname, email FROM ".PRE."users where id=$userid" );
         $row = db_fetch_array($q, 0 );
 
         //mail the user the happy news :)
@@ -109,13 +109,13 @@ ignore_user_abort(TRUE);
         $admin_rights = "f";
 
       //prohibit 2 people from choosing the same username
-      if(db_result(db_query("SELECT COUNT(*) FROM users WHERE name='$name'", 0 ), 0, 0 ) > 0 )
+      if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE name='$name'", 0 ), 0, 0 ) > 0 )
         warning($lang["duplicate_user"], sprintf($lang["duplicate_change_user_sprt"], $name ) );
 
       //begin transaction
       db_begin();
       //insert into the users table
-      $q = db_query("INSERT INTO users(name, fullname, password, email, private, admin, deleted)
+      $q = db_query("INSERT INTO ".PRE."users(name, fullname, password, email, private, admin, deleted)
                      VALUES('$name', '$fullname', '".md5($password)."','$email','$private_user','$admin_rights', 'f')" );
 
       //if the user is assigned to any groups execute the following code to add him/her
@@ -125,7 +125,7 @@ ignore_user_abort(TRUE);
         $last_oid = db_lastoid($q );
 
         //get the uid of the last user
-        $user_id = db_result(db_query("SELECT id FROM users WHERE $last_insert=$last_oid" ), 0, 0 );
+        $user_id = db_result(db_query("SELECT id FROM ".PRE."users WHERE $last_insert=$last_oid" ), 0, 0 );
 
         //insert all selected usergroups in the usergroups_users table
         (array)$usergroup = $_POST["usergroup"];
@@ -134,9 +134,9 @@ ignore_user_abort(TRUE);
 
           //check for security
           if(isset( $usergroup[$i] ) && is_numeric( $usergroup[$i] ) ) {
-            db_query("INSERT INTO usergroups_users(userid, usergroupid) VALUES($user_id, ".$usergroup[$i].")" );
+            db_query("INSERT INTO ".PRE."usergroups_users(userid, usergroupid) VALUES($user_id, ".$usergroup[$i].")" );
             //get the usergroup name for the email
-            $q = db_query("SELECT name FROM usergroups WHERE id=".$usergroup[$i] );
+            $q = db_query("SELECT name FROM ".PRE."usergroups WHERE id=".$usergroup[$i] );
             $usergroup_names .= db_result($q, 0, 0 )."\n";
           }
         }
@@ -197,7 +197,7 @@ ignore_user_abort(TRUE);
         $userid = intval($_POST["userid"]);
 
         //prohibit 2 people from choosing the same username
-        if(db_result(db_query("SELECT COUNT(*) FROM users WHERE name='$name' AND NOT id=$userid", 0 ), 0, 0 ) > 0 )
+        if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE name='$name' AND NOT id=$userid", 0 ), 0, 0 ) > 0 )
           warning($lang["duplicate_user"], sprintf($lang["duplicate_change_user_sprt"], $name ) );
 
         //begin transaction
@@ -206,7 +206,7 @@ ignore_user_abort(TRUE);
         if($password != "" ) {
 
           //update data and the password
-          $q = db_query("UPDATE users
+          $q = db_query("UPDATE ".PRE."users
                                 SET name='$name',
                                 fullname='$fullname',
                                 email='$email',
@@ -217,7 +217,7 @@ ignore_user_abort(TRUE);
         }
         else{
           //update data without password
-          $q = db_query("UPDATE users
+          $q = db_query("UPDATE ".PRE."users
                                 SET name='$name',
                                 fullname='$fullname',
                                 email='$email',
@@ -227,7 +227,7 @@ ignore_user_abort(TRUE);
         }
 
         //delete the user from all groups
-        db_query("DELETE FROM usergroups_users WHERE userid=$userid" );
+        db_query("DELETE FROM ".PRE."usergroups_users WHERE userid=$userid" );
 
         //if the user is assigned to any groups execute the following code to add him/her
         if(isset($_POST["usergroup"]) ) {
@@ -238,9 +238,9 @@ ignore_user_abort(TRUE);
 
             //check for security
             if(is_numeric( $usergroup[$i] ) ) {
-              db_query("INSERT INTO usergroups_users(userid, usergroupid) VALUES($userid, ".$usergroup[$i].")" );
+              db_query("INSERT INTO ".PRE."usergroups_users(userid, usergroupid) VALUES($userid, ".$usergroup[$i].")" );
               //get the usergroup name for the email
-              $q = db_query("SELECT name FROM usergroups WHERE id=".$usergroup[$i] );
+              $q = db_query("SELECT name FROM ".PRE."usergroups WHERE id=".$usergroup[$i] );
               $usergroup_names .= db_result( $q, 0, 0 )."\n";
             }
           }
@@ -265,13 +265,13 @@ ignore_user_abort(TRUE);
         //this is secure option where the user cannot change important values
 
         //prohibit 2 people from choosing the same username
-        if(db_result(db_query("SELECT COUNT(*) FROM users WHERE name='$name' AND NOT id=$uid", 0 ), 0, 0 ) > 0 )
+        if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE name='$name' AND NOT id=$uid", 0 ), 0, 0 ) > 0 )
           warning($lang["duplicate_user"], sprintf($lang["duplicate_change_user_sprt"], $name ) );
 
         //did the user change his/her password ?
         if($password != "" ) {
 
-          db_query("UPDATE users
+          db_query("UPDATE ".PRE."users
                             SET name='$name',
                             fullname='$fullname',
                             password='".md5($password)."',
@@ -284,7 +284,7 @@ ignore_user_abort(TRUE);
         }
         else {
 
-          db_query("UPDATE users
+          db_query("UPDATE ".PRE."users
                             SET name='$name',
                             fullname='$fullname',
                             email='$email'

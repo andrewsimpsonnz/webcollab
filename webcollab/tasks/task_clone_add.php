@@ -46,7 +46,7 @@ $content .= "<form name=\"inputform\" method=\"post\" action=\"tasks.php\">\n".
             "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\" />\n".
             "<table class=\"celldata\">\n";
 
-$q = db_query("SELECT name, parent FROM tasks WHERE id=$taskid" );
+$q = db_query("SELECT name, parent FROM ".PRE."tasks WHERE id=$taskid" );
 
 $row = db_fetch_array($q, 0 );
 

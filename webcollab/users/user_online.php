@@ -35,7 +35,7 @@ $allowed[0] = 0;
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query("SELECT usergroupid, userid 
-                      FROM usergroups_users 
+                      FROM ".PRE."usergroups_users 
                       LEFT JOIN usergroups ON (usergroups.id=usergroups_users.usergroupid)
                       WHERE usergroups.private=1");
 
@@ -51,7 +51,7 @@ $q = db_query("SELECT logins.lastaccess AS last,
             users.id AS id,
             users.fullname AS fullname,
             users.private AS private
-            FROM logins
+            FROM ".PRE."logins
             LEFT JOIN users ON (users.id=logins.user_id)
             WHERE logins.lastaccess > ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
             AND users.deleted='f'
@@ -75,7 +75,7 @@ $q = db_query("SELECT logins.lastaccess AS last,
             users.id AS id,
             users.fullname AS fullname,
             users.private AS private
-            FROM logins
+            FROM ".PRE."logins
             LEFT JOIN users ON (users.id=logins.user_id)
             WHERE logins.lastaccess < ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
             AND users.deleted='f'

@@ -86,7 +86,7 @@ else
   $usergroup = "";
 
 //update config database
-db_query("UPDATE config SET email_admin='".$email_admin."',
+db_query("UPDATE ".PRE."config SET email_admin='".$email_admin."',
                             reply_to='".$reply_to."',
                             email_from='".$from."',
                             globalaccess='".$access."',
@@ -128,7 +128,7 @@ db_query("TRUNCATE TABLE maillist");
 if( isset($email_list ) ) {
   $max = sizeof($email_list);
   for( $i=0 ; $i < $max ; $i++ ) {
-    db_query("INSERT INTO maillist (email) VALUES ('".$email_list[$i]."')" );
+    db_query("INSERT INTO ".PRE."maillist (email) VALUES ('".$email_list[$i]."')" );
   }
 }
 //all done!

@@ -42,7 +42,7 @@ if( ! isset($_GET["contactid"]) || ! is_numeric($_GET["contactid"]) )
 $contactid = intval($_GET["contactid"]);
 
 //get contact information
-if( ! ($row = db_fetch_array( db_query("SELECT * FROM contacts WHERE id=$contactid" ), 0 ) ) )
+if( ! ($row = db_fetch_array( db_query("SELECT * FROM ".PRE."contacts WHERE id=$contactid" ), 0 ) ) )
   error("Database value error", "There is no information for the user that you specified");
 
 

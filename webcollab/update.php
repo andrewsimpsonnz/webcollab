@@ -70,10 +70,10 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   }
 
   //limit login attempts if post-1.60 database is being used 
-  if(@db_query("SELECT * FROM login_attempt LIMIT 1", 0 ) ) {
+  if(@db_query("SELECT * FROM ".PRE."login_attempt LIMIT 1", 0 ) ) {
       
     //count the number of recent login attempts
-    if( ! $q = @db_query("SELECT COUNT(*) FROM login_attempt 
+    if( ! $q = @db_query("SELECT COUNT(*) FROM ".PRE."login_attempt 
                                WHERE name='".$username."' 
                                AND last_attempt > (now()-INTERVAL ".$delim."10 MINUTE".$delim.") LIMIT 4", 0 ) ) {
       secure_error("Unable to connect to database.  Please try again later." );
@@ -88,11 +88,11 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
     $flag_attempt = TRUE;                                                                              
   
     //record this login attempt
-    db_query("INSERT INTO login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
+    db_query("INSERT INTO ".PRE."login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
   }                                                                                   
   
   //do query and check database connection
-  if( ! $q = db_query("SELECT id FROM users
+  if( ! $q = db_query("SELECT id FROM ".PRE."users
                              WHERE deleted='f'
                              AND admin='t'
                              AND name='".$username."'
@@ -115,11 +115,11 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
 
   //remove the old login information for post 1.60 database
   if($flag_attempt )
-    @db_query("DELETE FROM login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
+    @db_query("DELETE FROM ".PRE."login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
 
     
   //update for version 1.32 -> 1.40
-  if(! (db_query("SELECT groupaccess FROM config", 0 ) ) ) {
+  if(! (db_query("SELECT groupaccess FROM ".PRE."config", 0 ) ) ) {
      db_query("ALTER TABLE tasks ADD COLUMN groupaccess VARCHAR(5)" );
      db_query("ALTER TABLE tasks ALTER COLUMN groupaccess SET DEFAULT 'f'" );
      db_query("ALTER TABLE config ADD COLUMN groupaccess VARCHAR(50)" );
@@ -127,7 +127,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   }
   
   //update for version 1.51 -> 1.60
-  if(! (db_query("SELECT * FROM login_attempt", 0 ) ) ) {
+  if(! (db_query("SELECT * FROM ".PRE."login_attempt", 0 ) ) ) {
     
     switch ($DATABASE_TYPE) {
       case "mysql":
@@ -157,19 +157,19 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   } 
     
   //update for version 1.51 -> 1.60
-  if(! (db_query("SELECT private FROM users", 0 ) ) ) {
+  if(! (db_query("SELECT private FROM ".PRE."users", 0 ) ) ) {
      db_query("ALTER TABLE users ADD COLUMN private INT" );
      db_query("ALTER TABLE users ALTER COLUMN private SET DEFAULT 0" );
   }
   
   //update for version 1.51 -> 1.60
-  if(! (db_query("SELECT private FROM usergroups", 0 ) ) ) {
+  if(! (db_query("SELECT private FROM ".PRE."usergroups", 0 ) ) ) {
      db_query("ALTER TABLE usergroups ADD COLUMN private INT" );
      db_query("ALTER TABLE usergroups ALTER COLUMN private SET DEFAULT 0" );
   }
 
   //update for version 1.59 -> 1.60
-  if(! (db_query("SELECT completed FROM tasks", 0 ) ) ) {
+  if(! (db_query("SELECT completed FROM ".PRE."tasks", 0 ) ) ) {
   
     //set parameters for appropriate for database
     switch ($DATABASE_TYPE) {
@@ -193,11 +193,11 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
     db_query("ALTER TABLE tasks ADD COLUMN completion_time $date_type" );
     
     //retrieve existing data
-    $q = db_query("SELECT id FROM tasks WHERE parent=0" );
+    $q = db_query("SELECT id FROM ".PRE."tasks WHERE parent=0" );
     
     for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       
-      $q_complete = db_query("SELECT status FROM tasks WHERE projectid=".$row["id"]." AND parent<>0"  );
+      $q_complete = db_query("SELECT status FROM ".PRE."tasks WHERE projectid=".$row["id"]." AND parent<>0"  );
   
       $total_tasks = 0;
       $tasks_completed = 0;
@@ -215,12 +215,12 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
       else
         $percent_completed = ($tasks_completed * 100 / $total_tasks );  
       
-      db_query("UPDATE tasks SET completed=".$percent_completed." WHERE id=".$row["id"] );
+      db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$row["id"] );
 
       //for completed project set the completion time
       if($percent_completed == 100 ){
-        $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid=".$row["id"] ), 0, 0 );
-        db_query("UPDATE tasks SET completion_time='".$completion_time."' WHERE id=".$row["id"] );
+        $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM ".PRE."tasks WHERE projectid=".$row["id"] ), 0, 0 );
+        db_query("UPDATE ".PRE."tasks SET completion_time='".$completion_time."' WHERE id=".$row["id"] );
       }
     }
     $content .= "<p>Updating from version pre-1.60 database ... success!</p>\n";

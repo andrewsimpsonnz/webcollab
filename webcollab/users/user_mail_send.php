@@ -73,7 +73,7 @@ if(get_magic_quotes_gpc() ) {
 
     case "all":
       //select all users
-      $q = db_query("SELECT email FROM users WHERE deleted='f'" );
+      $q = db_query("SELECT email FROM ".PRE."users WHERE deleted='f'" );
 
       for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
         $address_array[$i] = $row[0];
@@ -97,7 +97,7 @@ if(get_magic_quotes_gpc() ) {
         //check for security, then get users for each usergroup
         if(isset($usergroup[$i] ) && is_numeric($usergroup[$i] ) ){
           $q = db_query("SELECT users.email
-                          FROM usergroups_users
+                          FROM ".PRE."usergroups_users
                           LEFT JOIN users ON (users.id=usergroups_users.userid)
                           WHERE usergroups_users.usergroupid=".$usergroup[$i]."
                           AND users.deleted='f'" );
@@ -121,7 +121,7 @@ if(get_magic_quotes_gpc() ) {
 }
 
 //get the mailing list
-$q = db_query("SELECT DISTINCT email FROM maillist" );
+$q = db_query("SELECT DISTINCT email FROM ".PRE."maillist" );
 
 //merge the mailing list in too
 $size = sizeof($address_array);

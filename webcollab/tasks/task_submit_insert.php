@@ -130,15 +130,15 @@ else
 //carry out some data consistency checking
 if( $parentid != 0 ) {
 
-  if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE id=$parentid" ), 0, 0 ) < 1 )
+  if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE id=$parentid" ), 0, 0 ) < 1 )
     error("Database integrity check", "Input data does not match - no parent for task" );
 
-  if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE id=$projectid" ), 0, 0 ) < 1 )
+  if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE id=$projectid" ), 0, 0 ) < 1 )
     error("Database integrity check", "Input data does not match - no project for task" );
 }
 //start transaction
 db_begin();
-$q = db_query("INSERT INTO tasks(name,
+$q = db_query("INSERT INTO ".PRE."tasks(name,
               text,
               created,
               lastforumpost,
@@ -179,41 +179,41 @@ $q = db_query("INSERT INTO tasks(name,
 
 // get taskid for the new task/project
 $last_oid = db_lastoid($q );
-$taskid = db_result(db_query("SELECT id FROM tasks WHERE $last_insert = $last_oid" ), 0, 0 );
+$taskid = db_result(db_query("SELECT id FROM ".PRE."tasks WHERE $last_insert = $last_oid" ), 0, 0 );
 
 //for a new project set the projectid variable reset correctly
 if($parentid == 0 || $projectid == 0 )  {
-  db_query("UPDATE tasks SET projectid=$taskid WHERE id=$taskid" );
+  db_query("UPDATE ".PRE."tasks SET projectid=$taskid WHERE id=$taskid" );
   $projectid = $taskid;
 }
 
 //if inactive parent project, then set this task to inactive too
 $project_status = $status;
 if($parentid != 0 ) {
-  $project_status = db_result(db_query("SELECT status FROM tasks WHERE id=$projectid" ), 0, 0 );
+  $project_status = db_result(db_query("SELECT status FROM ".PRE."tasks WHERE id=$projectid" ), 0, 0 );
 
   if($project_status == "cantcomplete" || $project_status == "notactive" )
-    db_query("UPDATE tasks SET status='$project_status' WHERE id=$taskid" );
+    db_query("UPDATE ".PRE."tasks SET status='$project_status' WHERE id=$taskid" );
 }
 
 //you have already seen this item, no need to announce it to you
-db_query("INSERT INTO seen(userid, taskid, time) VALUES($uid, $taskid, now() )");
+db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES($uid, $taskid, now() )");
 
 //set completed percentage project record
 $percent_completed = round(percent_complete($projectid ) );
-db_query("UPDATE tasks SET completed=".$percent_completed." WHERE id=".$projectid );
+db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$projectid );
 
 //for completed project set the completion time
 if($percent_completed == 100 ){
-  $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid=$projectid" ), 0, 0 );
-  db_query("UPDATE tasks SET completion_time='".$completion_time."' WHERE id=".$projectid );
+  $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM ".PRE."tasks WHERE projectid=$projectid" ), 0, 0 );
+  db_query("UPDATE ".PRE."tasks SET completion_time='".$completion_time."' WHERE id=".$projectid );
 }
 
 //transaction complete
 db_commit();
 
 //get name of project for emails
-$name_project = db_result(db_query("SELECT name FROM tasks WHERE id=$projectid" ), 0, 0 );
+$name_project = db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=$projectid" ), 0, 0 );
 
 //set project/task type for emails
 switch($parentid){
@@ -245,7 +245,7 @@ switch($owner ) {
     break;
 
   default:
-    $q = db_query("SELECT fullname, email FROM users WHERE id=$owner" );
+    $q = db_query("SELECT fullname, email FROM ".PRE."users WHERE id=$owner" );
     $row = db_fetch_num($q, $i );
     $name_owner = $row[0];
     $email_owner = $row[1];
@@ -261,7 +261,7 @@ if(isset($_POST["mailowner"]) && ($_POST["mailowner"]=="on") && ($owner != 0) ) 
   
   include_once(BASE."includes/email.php" );
   
-  $email_address_owner = db_result( db_query("SELECT email FROM users WHERE id=".$owner, 0), 0, 0 );
+  $email_address_owner = db_result( db_query("SELECT email FROM ".PRE."users WHERE id=".$owner, 0), 0, 0 );
   $message = $email1 .
               sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text );
   email($email_address_owner, $title1, $message );
@@ -284,7 +284,7 @@ if(isset($_POST["maillist"]) && $_POST["maillist"] == "on" ) {
 
   if($usergroupid != 0 ) {
     $q = db_query("SELECT users.email
-                      FROM users
+                      FROM ".PRE."users
                       LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
                       WHERE usergroups_users.usergroupid=$usergroupid
                       AND users.deleted='f'");

@@ -52,7 +52,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
       //task under project
       
       //get project name (limited to 20 characters)
-      $project_name = substr(db_result(db_query("SELECT name FROM tasks WHERE id=".$taskid_row["projectid"] ), 0, 0 ), 0, 20);
+      $project_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$taskid_row["projectid"] ), 0, 0 ), 0, 20);
       
       $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$taskid_row["projectid"]."\">$project_name</a><br />\n".
                   "<small><b>".$lang["task"].":</b></small><br />\n".
@@ -63,9 +63,9 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
       //task with parent task
       
       //get project name
-      $project_name = substr(db_result(db_query("SELECT name FROM tasks WHERE id=".$taskid_row["projectid"] ), 0, 0 ), 0, 20);
+      $project_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$taskid_row["projectid"] ), 0, 0 ), 0, 20);
       //get parent name
-      $parent_name = substr(db_result(db_query("SELECT name FROM tasks WHERE id=".$taskid_row["parent"] ), 0, 0 ), 0, 20);
+      $parent_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$taskid_row["parent"] ), 0, 0 ), 0, 20);
       
       $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$taskid_row["projectid"]."\">$project_name</a><br />\n".
                   "<small><b>".$lang["parent_task"].":</b></small><br />\n".
@@ -84,11 +84,11 @@ elseif( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ){
   $parentid = $_GET["parentid"];
 
   //get task parent details
-  $q = db_query("SELECT name, parent, projectid FROM tasks WHERE id=".$parentid );
+  $q = db_query("SELECT name, parent, projectid FROM ".PRE."tasks WHERE id=".$parentid );
   $row = db_fetch_array( $q, 0);
 
   //get project name
-  $project_name = substr(db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 ), 0, 20);
+  $project_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$row["projectid"] ), 0, 0 ), 0, 20);
 
   $content .= "<small><b>".$lang["project"].":</b></small><br />\n".
               "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["projectid"]."\">$project_name</a><br />\n";

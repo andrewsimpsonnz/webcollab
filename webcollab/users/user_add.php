@@ -50,7 +50,7 @@ $content =
                "<tr><td>&nbsp;</td></tr>\n";
 
 //add user-groups
-$q = db_query("SELECT name, id FROM usergroups ORDER BY name" );
+$q = db_query("SELECT name, id FROM ".PRE."usergroups ORDER BY name" );
 
 $content .=    "<tr><td>".$lang["usergroup"].":</td><td><select name=\"usergroup[]\" multiple=\"multiple\" size=\"4\">\n";
 

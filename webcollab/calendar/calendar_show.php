@@ -92,7 +92,7 @@ switch($selection ) {
 }
 
 //get list of private projects and put them in an array for later use
-$q = db_query("SELECT id, usergroupid FROM tasks WHERE parent=0 AND globalaccess='f'" );
+$q = db_query("SELECT id, usergroupid FROM ".PRE."tasks WHERE parent=0 AND globalaccess='f'" );
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
   $no_access_project[$i] = $row[0];
@@ -101,7 +101,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query("SELECT usergroupid, userid 
-                      FROM usergroups_users 
+                      FROM ".PRE."usergroups_users 
                       LEFT JOIN usergroups ON (usergroups.id=usergroups_users.usergroupid)
                       WHERE usergroups.private=1");
 
@@ -112,7 +112,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
 }
 
 //get all the days with projects/tasks due in selected month and year
-$q = db_query("SELECT DISTINCT ".$day_part."deadline) FROM tasks 
+$q = db_query("SELECT DISTINCT ".$day_part."deadline) FROM ".PRE."tasks 
                       WHERE deadline >= '".$year."-".$month."-01' 
                       AND deadline <= ('".$year."-".$month."-01'+".$interval.$delim."1 MONTH".$delim.") ".
                       $tail );
@@ -130,7 +130,7 @@ $content .= "<div align=\"center\">\n".
             "<option value=\"0\"$s2>".$lang["all_users"]."</option>\n";
 
 //get all users for option box
-$q = db_query("SELECT id, fullname, private FROM users WHERE deleted='f' ORDER BY fullname");
+$q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' ORDER BY fullname");
 
 //user input box fields
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
@@ -155,7 +155,7 @@ $content .= "</select></label></td></tr>\n".
             "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
 
 //get all groups for option box
-$q = db_query("SELECT id, name, private FROM usergroups ORDER BY name" );
+$q = db_query("SELECT id, name, private FROM ".PRE."usergroups ORDER BY name" );
 
 //usergroup input box fields
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
@@ -237,12 +237,12 @@ for ($num = 1; $num <= $numdays; $num++ ) {
   $pad = 0;
 
   //search for tasks on this date (Not every date will have data rows and COUNT(*) is much faster to find empty rows)
-  //if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE deadline='$year-$month-$num' $tail" ), 0, 0 ) > 0 ) {
+  //if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE deadline='$year-$month-$num' $tail" ), 0, 0 ) > 0 ) {
   
   if(in_array($num, (array)$task_dates ) ) {
   
   //rows exist for this date - get them!
-  $q = db_query("SELECT id, name, parent, status, usergroupid, globalaccess, projectid FROM tasks WHERE deadline='$year-$month-$num' $tail" );
+  $q = db_query("SELECT id, name, parent, status, usergroupid, globalaccess, projectid FROM ".PRE."tasks WHERE deadline='$year-$month-$num' $tail" );
 
     for( $j=0 ; $row = @db_fetch_array($q, $j ) ; $j++) {
 
@@ -275,7 +275,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
              case "0":
                //project
                //check if tasks are all complete
-               if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent>0" ), 0, 0 ) == 0 )
+               if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent>0" ), 0, 0 ) == 0 )
                  $name = "<font color=\"green\"><u>".$row["name"]."</u>";
                else
                  $name = "<font color=\"blue\">".$row["name"];

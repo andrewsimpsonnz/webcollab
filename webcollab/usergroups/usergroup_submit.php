@@ -54,16 +54,16 @@ ignore_user_abort(TRUE);
         db_begin();
 
         //delete the private forum posts for this usergroup
-        db_query("DELETE FROM forum WHERE usergroupid=$usergroupid" );
+        db_query("DELETE FROM ".PRE."forum WHERE usergroupid=$usergroupid" );
 
         //delete the user entries out of usergroups_users
-        db_query("DELETE FROM usergroups_users WHERE usergroupid=$usergroupid" );
+        db_query("DELETE FROM ".PRE."usergroups_users WHERE usergroupid=$usergroupid" );
 
         //delete the group
-        db_query("DELETE FROM usergroups WHERE id=$usergroupid" );
+        db_query("DELETE FROM ".PRE."usergroups WHERE id=$usergroupid" );
 
         //update the tasks table by resetting the deleted usergroup id to zero
-        @db_query("UPDATE tasks SET usergroupid=0 WHERE usergroupid=$usergroupid" );
+        @db_query("UPDATE ".PRE."tasks SET usergroupid=0 WHERE usergroupid=$usergroupid" );
         
         db_commit();
       }
@@ -87,24 +87,24 @@ ignore_user_abort(TRUE);
           $private_group = 0;
 
         //check for duplicates
-        if(db_result(db_query("SELECT COUNT(*) FROM usergroups WHERE name='$name'"), 0, 0 ) > 0 )
+        if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."usergroups WHERE name='$name'"), 0, 0 ) > 0 )
           warning($lang["add_usergroup"], sprintf($lang["usergroup_dup_sprt"], $name ) );
 
           //begin transaction
           db_begin();
-          $q = db_query("INSERT INTO usergroups(name, description, private ) VALUES ('$name', '$description', '$private_group')" );
+          $q = db_query("INSERT INTO ".PRE."usergroups(name, description, private ) VALUES ('$name', '$description', '$private_group')" );
 
           if(isset($_POST["member"] ) ) {
 
             // get the usergroupid
             $last_oid = db_lastoid($q );
-            $usergroupid = db_result( db_query("SELECT id FROM usergroups WHERE $last_insert=$last_oid" ), 0, 0 );
+            $usergroupid = db_result( db_query("SELECT id FROM ".PRE."usergroups WHERE $last_insert=$last_oid" ), 0, 0 );
 
             (array)$member = $_POST["member"];
             $max = sizeof($member);
             for($i=0 ; $i < $max ; $i++ ) {
               if(isset($member[$i]) && is_numeric($member[$i] ) ) {
-                db_query("INSERT INTO usergroups_users(userid, usergroupid) VALUES(".intval($member[$i]).", $usergroupid)" );
+                db_query("INSERT INTO ".PRE."usergroups_users(userid, usergroupid) VALUES(".intval($member[$i]).", $usergroupid)" );
               }
           }
         }
@@ -137,10 +137,10 @@ ignore_user_abort(TRUE);
         db_begin();
 
         //do the update
-        db_query("UPDATE usergroups SET name='$name', description='$description', private='$private_group' WHERE id=$usergroupid" );
+        db_query("UPDATE ".PRE."usergroups SET name='$name', description='$description', private='$private_group' WHERE id=$usergroupid" );
 
         //clean out existing usergroups_users then update with the new
-        db_query("DELETE FROM usergroups_users WHERE usergroupid=$usergroupid" );
+        db_query("DELETE FROM ".PRE."usergroups_users WHERE usergroupid=$usergroupid" );
 
           if(isset($_POST["member"] ) ) {
 
@@ -148,7 +148,7 @@ ignore_user_abort(TRUE);
             $max = sizeof($member);
             for($i=0 ; $i < $max ; $i++ ) {
               if(isset($member[$i]) && is_numeric( $member[$i] ) ) {
-                db_query("INSERT INTO usergroups_users(userid, usergroupid) VALUES(".intval($member[$i]).", $usergroupid)" );
+                db_query("INSERT INTO ".PRE."usergroups_users(userid, usergroupid) VALUES(".intval($member[$i]).", $usergroupid)" );
               }
             }
           }

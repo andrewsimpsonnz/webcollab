@@ -44,7 +44,7 @@ if( ! isset( $_REQUEST["action"] ) )
     case "submit_add":
       if(isset($_POST["lastname"] )  && isset($_POST["lastname"] ) && strlen($_POST["lastname"] ) > 0 && strlen($_POST["firstname"] ) > 0 ){
 
-        db_query( "INSERT INTO contacts(firstname,
+        db_query( "INSERT INTO ".PRE."contacts(firstname,
                                         lastname,
                                         company,
                                         tel_home,
@@ -83,7 +83,7 @@ if( ! isset( $_REQUEST["action"] ) )
      //edit an existing entry
      if(isset($_POST["lastname"] ) && isset($_POST["lastname"] ) && strlen($_POST["lastname"] ) > 0 && strlen($_POST["firstname"] ) > 0  && is_numeric($contactid ) ) {
 
-        db_query("UPDATE contacts SET
+        db_query("UPDATE ".PRE."contacts SET
                     firstname='".safe_data($_POST["firstname"])."',
                     lastname='".safe_data($_POST["lastname"])."',
                     company='".safe_data($_POST["company"])."',
@@ -107,8 +107,8 @@ if( ! isset( $_REQUEST["action"] ) )
 
     case "submit_delete":
         //delete the contact (if it exists) 
-        if(db_result(db_query("SELECT COUNT(*) FROM contacts WHERE id=".$contactid ) , 0 , 0 ) )
-          db_query("DELETE FROM contacts WHERE id=".$contactid );
+        if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."contacts WHERE id=".$contactid ) , 0 , 0 ) )
+          db_query("DELETE FROM ".PRE."contacts WHERE id=".$contactid );
       break;
 
     //default error

@@ -42,7 +42,7 @@ if( ! (isset($_GET["usergroupid"] ) && is_numeric($_GET["usergroupid"] ) ) )
 $usergroupid = intval($_GET["usergroupid"]);
 
 //get taskgroup information
-$q = db_query("SELECT * FROM usergroups WHERE id=$usergroupid" );
+$q = db_query("SELECT * FROM ".PRE."usergroups WHERE id=$usergroupid" );
 $row = db_fetch_array( $q, 0 );
 
 $content =
@@ -57,9 +57,9 @@ $content =
                "<tr><td><label for=\"private\">".$lang["private_usergroup"].":</label></td><td><input type=\"checkbox\" name=\"private_group\" id=\"private\" /></td></tr>\n".
                "<tr><td>&nbsp;</td></tr>\n";
 //add users
-$user_q = db_query("SELECT fullname, id FROM users WHERE deleted='f' ORDER BY fullname" );
+$user_q = db_query("SELECT fullname, id FROM ".PRE."users WHERE deleted='f' ORDER BY fullname" );
 $member_q = db_query("SELECT users.id AS id
-                             FROM users
+                             FROM ".PRE."users
                              LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
                              WHERE usergroupid=".$row["id"]."
                              AND deleted='f'"  );

@@ -94,7 +94,7 @@ function user_access($taskid ) {
 
   global $uid, $gid;
 
-  $q = db_query("SELECT owner, usergroupid, groupaccess FROM tasks WHERE id=$taskid" );
+  $q = db_query("SELECT owner, usergroupid, groupaccess FROM ".PRE."tasks WHERE id=$taskid" );
   $row = db_fetch_num($q, 0 );
 
   //user is owner
@@ -123,13 +123,13 @@ function reparent_children($task_id ) {
    global $projectid;
 
   //find the children tasks - if any
-  $q = db_query("SELECT id FROM tasks WHERE parent=$task_id" );
+  $q = db_query("SELECT id FROM ".PRE."tasks WHERE parent=$task_id" );
 
   if(db_numrows($q ) == 0)
     return;
 
    for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
-     db_query("UPDATE tasks SET projectid=$projectid WHERE id=".$row[0] );
+     db_query("UPDATE ".PRE."tasks SET projectid=$projectid WHERE id=".$row[0] );
      //recursion to find anymore children
      reparent_children($row[0] );
    }
@@ -185,10 +185,10 @@ else
 db_begin();
 
 //get existing status
-$previous_status = db_result(db_query("SELECT status FROM tasks WHERE id=$taskid" ), 0, 0 );
+$previous_status = db_result(db_query("SELECT status FROM ".PRE."tasks WHERE id=$taskid" ), 0, 0 );
 
 //change the info
-db_query("UPDATE tasks
+db_query("UPDATE ".PRE."tasks
       SET name='$name',
       text='$text',
       edited=now(),
@@ -204,7 +204,7 @@ db_query("UPDATE tasks
       WHERE id=$taskid" );
 
 //get existing projectid and parent from the database
-$q = db_query("SELECT projectid, parent FROM tasks WHERE id=$taskid" );
+$q = db_query("SELECT projectid, parent FROM ".PRE."tasks WHERE id=$taskid" );
 $row = db_fetch_array($q, 0 );
 $projectid = $row["projectid"];
 
@@ -215,10 +215,10 @@ if($row["parent"] != $parentid ) {
   if($parentid == 0 )
     $projectid = $taskid;
   else
-    $projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=$parentid" ), 0, 0 );
+    $projectid = db_result(db_query("SELECT projectid FROM ".PRE."tasks WHERE id=$parentid" ), 0, 0 );
 
   //update this task, then recursively search for children tasks and reparent them too.
-  db_query("UPDATE tasks SET projectid=$projectid, parent=$parentid WHERE id=$taskid" );
+  db_query("UPDATE ".PRE."tasks SET projectid=$projectid, parent=$parentid WHERE id=$taskid" );
   reparent_children($taskid );
 }
 
@@ -228,33 +228,33 @@ if($parentid == 0 ) {
     case "cantcomplete":
     case "notactive":
       //inactive project, then set the uncompleted child tasks to inactive too
-      db_query("UPDATE tasks SET status='$status' WHERE projectid=$projectid AND (status='active' OR status='created')" );
+      db_query("UPDATE ".PRE."tasks SET status='$status' WHERE projectid=$projectid AND (status='active' OR status='created')" );
       break;
 
     case "new":
     case "active":
       //if reinstated project, set inactive child tasks to new
       if($previous_status == "cantcomplete" || $previous_status == "notactive" )
-        db_query("UPDATE tasks SET status='created' WHERE projectid=$projectid AND parent<>0 AND status='".$previous_status."'" );
+        db_query("UPDATE ".PRE."tasks SET status='created' WHERE projectid=$projectid AND parent<>0 AND status='".$previous_status."'" );
       break;
   }
 }
 
 //set completed percentage project record
 $percent_completed = round(percent_complete($projectid ) );
-db_query("UPDATE tasks SET completed=".$percent_completed." WHERE id=".$projectid );
+db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$projectid );
 
 //for completed project set the completion time
 if($percent_completed == 100 ){
-  $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid=$projectid" ), 0, 0 );
-  db_query("UPDATE tasks SET completion_time='".$completion_time."' WHERE id=".$projectid );
+  $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM ".PRE."tasks WHERE projectid=$projectid" ), 0, 0 );
+  db_query("UPDATE ".PRE."tasks SET completion_time='".$completion_time."' WHERE id=".$projectid );
 }
 
 //transaction complete
 db_commit();
 
 //get name of project and owner for emails
-$name_project = db_result(db_query("SELECT name FROM tasks WHERE id=$projectid" ), 0, 0 );
+$name_project = db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=$projectid" ), 0, 0 );
 
 switch($parentid ){
   case 0:
@@ -285,7 +285,7 @@ switch($owner ) {
     break;
 
   default:
-    $q = db_query("SELECT fullname, email FROM users WHERE id=$owner" );
+    $q = db_query("SELECT fullname, email FROM ".PRE."users WHERE id=$owner" );
     $row = db_fetch_num($q, $i );
     $name_owner = $row[0];
     $email_owner = $row[1];
@@ -301,7 +301,7 @@ if(isset($_POST["mailowner"]) && ($_POST["mailowner"]=="on") && ($owner != 0) ) 
 
   include_once(BASE."includes/email.php" );
 
-  $email_address_owner = db_result(db_query("SELECT email FROM users WHERE id=$owner", 0), 0, 0 );
+  $email_address_owner = db_result(db_query("SELECT email FROM ".PRE."users WHERE id=$owner", 0), 0, 0 );
 
   $message = $email1 .
               sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text );
@@ -325,7 +325,7 @@ if(isset($_POST["maillist"]) && ($_POST["maillist"]=="on") ) {
 
   if($usergroupid != 0 ) {
     $q = db_query("SELECT users.email
-                      FROM users
+                      FROM ".PRE."users
                       LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
                       WHERE usergroups_users.usergroupid=$usergroupid
                       AND users.deleted='f'");

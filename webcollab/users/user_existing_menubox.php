@@ -36,7 +36,7 @@ $allowed[0] = 0;
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query("SELECT usergroupid, userid 
-                      FROM usergroups_users 
+                      FROM ".PRE."usergroups_users 
                       LEFT JOIN usergroups ON (usergroups.id=usergroups_users.usergroupid)
                       WHERE usergroups.private=1");
 
@@ -47,7 +47,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
 }
 
 //query
-$q = db_query("SELECT * FROM users WHERE deleted='f' ORDER by fullname" );
+$q = db_query("SELECT * FROM ".PRE."users WHERE deleted='f' ORDER by fullname" );
 
 //check for enough users
 if(db_numrows($q) < 1 ) {

@@ -53,7 +53,7 @@ $q = db_query("SELECT files.oid AS oid,
                         tasks.name AS task_name,
                         users.id AS userid,
                         users.fullname AS username
-                        FROM files
+                        FROM ".PRE."files
                         LEFT JOIN tasks ON (files.taskid=tasks.id)
                         LEFT JOIN users ON (users.id=files.uploader)
                         ORDER BY task_name" );

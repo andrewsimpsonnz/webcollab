@@ -31,7 +31,7 @@ require_once(BASE."includes/security.php" );
 $EMAIL_MAILINGLIST = "";
 
 //get config data
-$q = db_query("SELECT * FROM config" );
+$q = db_query("SELECT * FROM ".PRE."config" );
 $row = @db_fetch_array($q, 0 );
 
 //set variables
@@ -45,7 +45,7 @@ $DEFAULT_OWNER      = $row["owner"];
 $DEFAULT_GROUP      = $row["usergroup"];
 
 //mailing list
-$q = db_query("SELECT DISTINCT email FROM maillist" );
+$q = db_query("SELECT DISTINCT email FROM ".PRE."maillist" );
 
 $s = "";
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {

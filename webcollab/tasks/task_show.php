@@ -49,7 +49,7 @@ $q = db_query("SELECT tasks.id AS id,
                       users.fullname AS fullname,
                       taskgroups.name AS taskgroup_name,
                       usergroups.name AS usergroup_name
-                    FROM tasks
+                    FROM ".PRE."tasks
                     LEFT JOIN users ON (users.id=tasks.owner)
                     LEFT JOIN taskgroups ON (taskgroups.id=tasks.taskgroupid)
                     LEFT JOIN usergroups ON (usergroups.id=tasks.usergroupid)
@@ -61,8 +61,8 @@ if( ! ($row = db_fetch_array($q, 0 ) ) )
   error("Task show", "The requested item has either been deleted, or is now invalid.");
 
 //mark this as seen in seen ;)
-@db_query("DELETE FROM seen WHERE userid=$uid AND taskid=$taskid", 0);
-db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, $taskid, now() ) " );
+@db_query("DELETE FROM ".PRE."seen WHERE userid=$uid AND taskid=$taskid", 0);
+db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES ($uid, $taskid, now() ) " );
 
 //text link for 'printer friendly' page
 if(isset($_GET["action"]) && $_GET["action"] == "show_print" )
@@ -99,7 +99,7 @@ if( $taskid_row["owner"] == 0 ) {
 }
 
 //get creator information (null if creator has been deleted!)
-$creator = @db_result(db_query("SELECT fullname FROM users WHERE id=".$taskid_row["creator"] ), 0, 0  );
+$creator = @db_result(db_query("SELECT fullname FROM ".PRE."users WHERE id=".$taskid_row["creator"] ), 0, 0  );
 $content .= "<tr><td>".$lang["created_on"].": </td><td>";
 if($creator == NULL )
   $content .= nicedate($taskid_row["created"]);

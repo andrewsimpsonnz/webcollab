@@ -69,7 +69,7 @@ if( ! ($q = db_query("SELECT logins.user_id AS user_id,
                              users.fullname AS fullname,
                              $epoch now() ) AS now,
                              $epoch lastaccess) AS sec_lastaccess
-                             FROM logins
+                             FROM ".PRE."logins
                              LEFT JOIN users ON (users.id=logins.user_id)
                              WHERE session_key='$session_key'", 0 ) ) ) {
   error("Security manager", "Database not able to verify session key");
@@ -95,7 +95,7 @@ if( ! isset($SESSION_TIMEOUT ) )
 
 //check the last login time (there is an inactivity time limit set by $SESSION_TIMEOUT)
 if( ($row["now"] - $row["sec_lastaccess"]) > $SESSION_TIMEOUT * 3600 ) {
-  db_query("UPDATE logins SET session_key='' WHERE user_id=".$row["user_id"] );
+  db_query("UPDATE ".PRE."logins SET session_key='' WHERE user_id=".$row["user_id"] );
   warning( $lang["security_manager"], sprintf($lang["session_timeout_sprt"],
             round(($row["now"] - $row["sec_lastaccess"] )/60), $SESSION_TIMEOUT*60, $BASE_URL ) );
 }
@@ -112,13 +112,13 @@ else
   $admin = 0;
 
 //get usergroups of user
-$q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
+$q = db_query("SELECT usergroupid FROM ".PRE."usergroups_users WHERE userid=".$uid );
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
   $gid[$i] = $row[0];
 }
 
 //update the "I was here" time
-db_query("UPDATE logins SET lastaccess=now() WHERE session_key='$session_key' AND user_id=$uid" );
+db_query("UPDATE ".PRE."logins SET lastaccess=now() WHERE session_key='$session_key' AND user_id=$uid" );
 
 // this gives:
 //

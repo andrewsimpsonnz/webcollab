@@ -36,7 +36,7 @@ if( ! isset($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
 $taskid = intval($_REQUEST["taskid"]);
 
 //get task details
-$q = @db_query("SELECT * FROM tasks WHERE id=$taskid" );
+$q = @db_query("SELECT * FROM ".PRE."tasks WHERE id=$taskid" );
 
 //get the data
 if( ! $taskid_row = @db_fetch_array($q, 0) )

@@ -41,7 +41,7 @@ function find_and_report_children($taskid ) {
   global $arrayindex, $ids;
 
   //query for children
-  if( ! ($q = db_query("SELECT id FROM tasks WHERE parent=$taskid", 0 ) ) ) return;
+  if( ! ($q = db_query("SELECT id FROM ".PRE."tasks WHERE parent=$taskid", 0 ) ) ) return;
   if(db_numrows($q) == 0 ) return;
 
   //loop all children and put them in an array
@@ -72,7 +72,7 @@ $q = db_query("SELECT tasks.parent AS parent,
                       tasks.projectid AS projectid,
                       users.id AS id,
                       users.email AS email
-                      FROM tasks
+                      FROM ".PRE."tasks
                       LEFT JOIN users ON (users.id=tasks.owner)
                       WHERE tasks.id=$taskid" );
 
@@ -112,13 +112,13 @@ find_and_report_children( $taskid );
 for($i=0 ; $i < $arrayindex ; $i++ ) {
 
   //delete all from seen table
-  db_query("DELETE FROM seen WHERE taskid=".$ids[$i] );
+  db_query("DELETE FROM ".PRE."seen WHERE taskid=".$ids[$i] );
 
   //delete forum posts
-  db_query("DELETE FROM forum WHERE taskid=".$ids[$i] );
+  db_query("DELETE FROM ".PRE."forum WHERE taskid=".$ids[$i] );
 
   //delete all files physically
-  $fq = db_query("SELECT oid, filename FROM files WHERE taskid=".$ids[$i] );
+  $fq = db_query("SELECT oid, filename FROM ".PRE."files WHERE taskid=".$ids[$i] );
   for($j=0 ; $frow = @db_fetch_array($fq, $j ) ; $j++) {
 
     if(file_exists($FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
@@ -127,10 +127,10 @@ for($i=0 ; $i < $arrayindex ; $i++ ) {
   }
 
   //delete all files attached to it in the database
-  db_query("DELETE FROM files WHERE taskid=".$ids[$i] );
+  db_query("DELETE FROM ".PRE."files WHERE taskid=".$ids[$i] );
 
   //delete item
-  db_query("DELETE FROM tasks WHERE id=".$ids[$i] );
+  db_query("DELETE FROM ".PRE."tasks WHERE id=".$ids[$i] );
 
 }
 
@@ -138,11 +138,11 @@ for($i=0 ; $i < $arrayindex ; $i++ ) {
 //if remaining tasks are completed, then mark the project as 'done'
 if($row["parent"] != 0 ){ 
   if(round(percent_complete($projectid ) ) == 100 ){
-    db_query("UPDATE tasks SET status='done', finished_time=now() WHERE id=".$row["projectid"] );
+    db_query("UPDATE ".PRE."tasks SET status='done', finished_time=now() WHERE id=".$row["projectid"] );
   }
   else{
-    if(db_result(db_query("SELECT status FROM tasks WHERE id=".$row["projectid"] ), 0, 0 ) == 'done' ) {
-    db_query("UPDATE tasks SET status='active', finished_time=now() WHERE id=".$row["projectid"] );
+    if(db_result(db_query("SELECT status FROM ".PRE."tasks WHERE id=".$row["projectid"] ), 0, 0 ) == 'done' ) {
+    db_query("UPDATE ".PRE."tasks SET status='active', finished_time=now() WHERE id=".$row["projectid"] );
     }
   }  
 }
@@ -151,12 +151,12 @@ if($row["parent"] != 0 ){
 if($row["parent"] != 0 ){    
   //set the new completed percentage project record
   $percent_completed = round(percent_complete($row["projectid"] ) );
-  db_query("UPDATE tasks SET completed=".$percent_completed." WHERE id=".$row["projectid"] );
+  db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$row["projectid"] );
   
   //for completed project set the completion time
   if($percent_completed == 100 ){
-    $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid=".$row["projectid"] ), 0, 0 );
-    db_query("UPDATE tasks SET completion_time='".$completion_time."' WHERE id=".$row["projectid"] );
+    $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM ".PRE."tasks WHERE projectid=".$row["projectid"] ), 0, 0 );
+    db_query("UPDATE ".PRE."tasks SET completion_time='".$completion_time."' WHERE id=".$row["projectid"] );
   }
 }
 
@@ -179,7 +179,7 @@ if(($row["owner"] != 0 ) && ($uid != $row["owner"]) ) {
       break;
       
     default:
-      $name_project = db_result(db_query("SELECT name FROM tasks WHERE tasks.id=".$row["projectid"] ), 0, 0 );
+      $name_project = db_result(db_query("SELECT name FROM ".PRE."tasks WHERE tasks.id=".$row["projectid"] ), 0, 0 );
       $name_task = $row["name"];
       $title = $title_delete_task;
       $email = $email_delete_task;

@@ -66,7 +66,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["us
  
   if($WEB_AUTH == "Y" ) {
       //construct login query
-      $login_q = "SELECT id FROM users WHERE name='".safe_data($_SERVER["REMOTE_USER"] )."' AND deleted='f'";
+      $login_q = "SELECT id FROM ".PRE."users WHERE name='".safe_data($_SERVER["REMOTE_USER"] )."' AND deleted='f'";
   }
   else {
     $username = safe_data($_POST["username"]);
@@ -74,7 +74,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["us
     $md5pass = md5($_POST["password"] );
 
     //count the number of recent login attempts
-    if( ! $q = @db_query("SELECT COUNT(*) FROM login_attempt 
+    if( ! $q = @db_query("SELECT COUNT(*) FROM ".PRE."login_attempt 
                                WHERE name='".$username."' 
                                AND last_attempt > (now()-INTERVAL ".$delim."10 MINUTE".$delim.") LIMIT 6", 0 ) ) {
     secure_error("Unable to connect to database.  Please try again later." );
@@ -88,10 +88,10 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["us
     }                                                                              
     
     //record this login attempt
-    db_query("INSERT INTO login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
+    db_query("INSERT INTO ".PRE."login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
                                                                                      
     //construct login query
-    $login_q = "SELECT id FROM users WHERE password='".$md5pass."' AND name='".$username."' AND deleted='f'";
+    $login_q = "SELECT id FROM ".PRE."users WHERE password='".$md5pass."' AND name='".$username."' AND deleted='f'";
   }
    
   //database query
@@ -122,11 +122,11 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["us
   $session_key = md5(mt_rand() );
 
   //remove the old login information
-  @db_query("DELETE FROM logins WHERE user_id=$user_id" );
-  @db_query("DELETE FROM login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
+  @db_query("DELETE FROM ".PRE."logins WHERE user_id=$user_id" );
+  @db_query("DELETE FROM ".PRE."login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
    
   //log the user in
-  db_query("INSERT INTO logins( user_id, session_key, ip, lastaccess ) VALUES ('$user_id', '$session_key', '$ip', now() )" );
+  db_query("INSERT INTO ".PRE."logins( user_id, session_key, ip, lastaccess ) VALUES ('$user_id', '$session_key', '$ip', now() )" );
 
   //try and set a session cookie (if the browser will let us)
   setcookie("webcollab_session", $session_key );

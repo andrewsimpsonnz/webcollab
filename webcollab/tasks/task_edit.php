@@ -41,7 +41,7 @@ $allowed[0] = 0;
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query("SELECT usergroupid, userid 
-                      FROM usergroups_users 
+                      FROM ".PRE."usergroups_users 
                       LEFT JOIN usergroups ON (usergroups.id=usergroups_users.usergroupid)
                       WHERE usergroups.private=1");
 
@@ -88,7 +88,7 @@ if( ! user_access($taskid_row["owner"], $taskid_row["usergroupid"], $taskid_row[
   
   
 //get project details - if any
-$q = db_query("SELECT name, ".$epoch."deadline) AS deadline FROM tasks WHERE id=".$taskid_row["projectid"] );
+$q = db_query("SELECT name, ".$epoch."deadline) AS deadline FROM ".PRE."tasks WHERE id=".$taskid_row["projectid"] );
 $project_row = db_fetch_array($q, 0 );
 
 //add javascript for date checking
@@ -126,7 +126,7 @@ switch($taskid_row["parent"] ) {
 
 //reparenting
 $content .= "<tr><td>".$lang["parent_task"].":</td><td><select name=\"parentid\">\n";
-$parentq = db_query("SELECT id, name, usergroupid, globalaccess FROM tasks WHERE id<>$taskid ORDER BY name");
+$parentq = db_query("SELECT id, name, usergroupid, globalaccess FROM ".PRE."tasks WHERE id<>$taskid ORDER BY name");
 $content .= "<option value=\"0\"";
 
 if($taskid_row["parent"] == 0 )
@@ -255,7 +255,7 @@ switch($taskid_row["parent"] ){
 }
 
 //task owner
-$user_q = db_query("SELECT id, fullname, private FROM users WHERE deleted='f' ORDER BY fullname" );
+$user_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' ORDER BY fullname" );
 $content .= "<tr> <td>".$lang[$type."_owner"].":</td> <td><select name=\"owner\">\n".
             "<option value=\"0\">".$lang["nobody"]."</option>\n";
 
@@ -282,7 +282,7 @@ $content .= "</select></td></tr>\n";
 if($taskid_row["parent"] != 0 ){
 
   //get all users in order to show a task owner
-  $taskgroup_q = db_query("SELECT id, name FROM taskgroups ORDER BY name" );
+  $taskgroup_q = db_query("SELECT id, name FROM ".PRE."taskgroups ORDER BY name" );
   $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td> <td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang["no_group"]."</option>\n";
 
@@ -300,7 +300,7 @@ if($taskid_row["parent"] != 0 ){
 }
 
 //show all user-groups
-$usergroup_q = db_query("SELECT id, name FROM usergroups ORDER BY name" );
+$usergroup_q = db_query("SELECT id, name FROM ".PRE."usergroups ORDER BY name" );
 $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td> <td><select name=\"usergroupid\">\n";
 $content .= "<option value=\"0\">".$lang["no_group"]."</option>\n";
 
