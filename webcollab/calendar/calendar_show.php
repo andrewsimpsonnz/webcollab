@@ -34,6 +34,7 @@ $content = "";
 $no_access_project[0] = 0;
 $no_access_group[0] = 0;
 $allowed[0] = 0;
+$task_dates[0] = 0;
  
 //set selection default
 if(isset($_POST["selection"]) && strlen($_POST["selection"]) > 0 )
@@ -106,8 +107,18 @@ $q = db_query("SELECT usergroupid, userid
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
   if(in_array($row[0], (array)$gid ) && ! in_array($row[1], (array)$allowed ) ) {
-   $allowed[] = $row[1];
+   $allowed[$i] = $row[1];
   }
+}
+
+//get all the days with projects/tasks due in selected month and year
+$q = db_query("SELECT DISTINCT ".$day_part."deadline) FROM tasks 
+                      WHERE deadline >= '".$year."-".$month."-01' 
+                      AND deadline <= ('".$year."-".$month."-01'+INTERVAL ".$delim."1 MONTH".$delim.")".
+                      $tail );
+                      
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ){
+  $task_dates[$i] = (int)$row[0];
 }
 
 $content .= "<div align=\"center\">\n".
@@ -226,8 +237,10 @@ for ($num = 1; $num <= $numdays; $num++ ) {
   $pad = 0;
 
   //search for tasks on this date (Not every date will have data rows and COUNT(*) is much faster to find empty rows)
-  if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE deadline='$year-$month-$num' $tail" ), 0, 0 ) > 0 ) {
-
+  //if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE deadline='$year-$month-$num' $tail" ), 0, 0 ) > 0 ) {
+  
+  if(in_array($num, (array)$task_dates ) ) {
+  
   //rows exist for this date - get them!
   $q = db_query("SELECT id, name, parent, status, usergroupid, globalaccess, projectid FROM tasks WHERE deadline='$year-$month-$num' $tail" );
 

@@ -44,7 +44,8 @@ include_once( BASE."includes/common.php");
 //set some base variables
 $last_insert = "oid";
 $delim = "'";
-$epoch = "extract( epoch from ";
+$epoch = "extract(epoch FROM ";
+$day_part = "DATE_PART('day', ";
 
 //
 // Provides a safe way to do a query

@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,6 +35,7 @@ $database_connection = "";
 $last_insert = "id";
 $delim = "";
 $epoch = "UNIX_TIMESTAMP( ";
+$day_part = "DAYOFMONTH( ";
 
 //
 // Provides a safe way to do a query
@@ -67,7 +68,7 @@ function db_query( $query, $dieonerror=1 ) {
   //do it
   if( ! ($result = @mysql_query($query, $database_connection ) ) ) {
     $db_error_message = mysql_error($database_connection );
-    if($dieonerror==1 ) error("Database query error", "The following query :<br /><br /><b> $query </b><br /><br />Had the following error:<br /><B>".mysql_error($database_connection)."</B>" );
+    if($dieonerror==1 ) error("Database query error", "The following query :<br /><br /><b> $query </b><br /><br />Had the following error:<br /><b>".mysql_error($database_connection)."</b>" );
   }
 
   //all was okay return resultset

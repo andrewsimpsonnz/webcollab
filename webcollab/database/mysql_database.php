@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,6 +35,7 @@ $database_connection = "";
 $last_insert = "id";
 $delim = "";
 $epoch = "UNIX_TIMESTAMP( ";
+$day_part = "DAYOFMONTH( ";
 
 //
 // Provides a safe way to do a query
