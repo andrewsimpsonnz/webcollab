@@ -39,7 +39,7 @@ include_once( BASE."includes/security.php" );
 include_once( BASE."includes/admin_config.php" );
 
 //
-//function to reinstate html and remove dangerous tags 
+//function to reinstate html and remove dangerous tags
 //
 
 function clean($encoded ) {
@@ -168,11 +168,11 @@ function email( $to, $subject, $message) {
 		mt_srand(time());
 		$uniq_id = md5(uniqid(mt_rand()));
 
-		$headers = "To: ".$email_to."\r\n".
+		$headers = "Date: ".date("r")."\r\n".
+			"To: ".$email_to."\r\n".
  			"From: ".$EMAIL_FROM."\r\n".
   			"Reply-To: ".$EMAIL_REPLY_TO."\r\n".
 			"Subject: ".$subject."\r\n".
-			"Date: ".date("r")."\r\n".
 			"Message-Id: <".$uniq_id."@".$_SERVER["SERVER_NAME"].">\r\n".
 			"X-Mailer: PHP/" . phpversion()."\r\n".
 			"X-Priority: 3\r\n".
