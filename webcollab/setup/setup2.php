@@ -43,7 +43,7 @@ function error_setup($reason ) {
 }
 
 //security check
-if( isset($DATABASE_NAME ) && $DATABASE_NAME != "" ) {
+if(isset($DATABASE_NAME ) && $DATABASE_NAME != "" ) {
   //this is not an initial install, log in before proceeding
   include_once('../includes/security.php' );
 
@@ -62,7 +62,6 @@ if( isset($DATABASE_NAME ) && $DATABASE_NAME != "" ) {
   if( ! is_writeable("../config.php" ) ){
     error_setup("Configuration file needs to be made writeable by the webserver to proceed");
   }
-
 }
 else {
   //first time install, get parameters

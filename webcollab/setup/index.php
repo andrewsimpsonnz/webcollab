@@ -22,259 +22,110 @@
    Function:
   ---------
 
-  Database creation
+  Secure the setup login
 
 */
 
-require("../config.php" );
-include("./screen_setup.php" );
+$CONFIG_STATE = "";
+include_once("screen_setup.php" );
+include_once("../config.php" );
 
-//
-//Error trap function
-//
+//error condition
+function secure_error($reason ) {
 
-function error_setup($message ) {
-
-  create_top_setup("Setup", 1 );
-  new_box_setup("Setup error", "<br />".$message."<br /><br />", 400 );
+  create_top_setup("Error", 1 );
+  new_box_setup("Error", "<center><br />".$reason."<br /></center>" );
   create_bottom_setup();
   die;
 
 }
 
-//
-//Database build
-//
 
-if(isset($_POST["database_name"]) ) {
+//valid login attempt ?
+if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
 
-  $input_array = array("database_name", "database_user", "database_password", "database_type" );
-  $message_array =array("'Your database name'", "'Database user'", "'Database password'", "'Database type'" );
-  $i = 0;
-  foreach( $input_array as $var) {
-    if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
-      error_setup("The field for ".$message_array[$i]." was not entered.<br /><br />".
-                   "Please go back and enter all the required data fields." );
-    }
-  $i++;
+  $q = "";
+  $login_q ="";
+
+  include_once("../includes/database.php" );
+  include_once("../includes/common.php" );
+
+  //encrypt password
+  $md5pass = md5( $_POST["password"] );
+  $login_q = "SELECT id FROM users WHERE deleted='f' AND name='".safe_data($_POST["username"])."' AND password='".$md5pass."'";
+
+
+  //no database connection
+  $q = db_query($login_q );
+
+  //no such user-password combination
+  if( @db_numrows($q) < 1 ) {
+      secure_error("Not a valid username, or password" );
   }
 
-  $database_name     = $_POST["database_name"];
-  $database_user     = $_POST["database_user"];
-  $database_password = $_POST["database_password"];
-  $database_type     = $_POST["database_type"];
-
-  if( isset($_POST["database_host"] ) ) {
-    $database_host = $_POST["database_host"];
-  }
-  else {
-    $database_host = "localhost";
+  //no user-id
+  if( ! ($user_id = @db_result($q, 0, 0) ) ) {
+    secure_error("Unknown user id");
   }
 
-  //skip making database
-  if(! isset($_POST["make_database"]) || ! $_POST["make_database"] == "on" ){
-    $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-    header("Location: ".$path."setup2.php?db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
-    die;
+  //no ip (possible?)
+  if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
+    secure_error("Unable to determine ip address");
   }
 
-  switch ($database_type) {
+  //user is okay log him/her in
 
-  case "mysql":
-  case "mysql_innodb":
-    //connect to database server
-    if( ! ( $database_connection = mysql_connect( $database_host, $database_user, $database_password ) ) ) {
-      error_setup( "Sorry but there seems to be a problem in connecting to the database server at $database_host<br />".
-                    "Check that your user and password is correct.  Also check that the database is running.<br /><br />".
-                    "User:     $database_user<br />Password: $database_password<br />" );
-    }
+  //create session key
+  mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );
+  $session_key = md5(mt_rand() );
 
-    //try and select the database
-    if( ! @mysql_select_db( $database_name, $database_connection ) ) {
+  //remove the old login information
+  @db_query("DELETE FROM logins WHERE user_id=".$user_id );
 
-      //no database exists yet - try and create it...
-      if( ! ($result = @mysql_query( "CREATE DATABASE ".$database_name, $database_connection ) ) )
-        error_setup("The database creation had the following error: <br />".mysql_error($database_connection) );
+  //log the user in
+  db_query("INSERT INTO logins( user_id, session_key, ip, lastaccess )
+                       VALUES('".$user_id."', '".$session_key."', '".$ip."', now() )" );
 
-      //select the newly created database
-      if( ! @mysql_select_db( $database_name, $database_connection ) )
-        error_setup("Not able to select database. Error message was: <br />".mysql_error($database_connection) );
-    }
+  //remove any old cookies (don't want session persistence here)
+  if(isset($_COOKIE["webcollab_session"] ) )
+    setcookie("webcollab_session", "0" );
 
-    if($database_type == "mysql") {
-      $db_schema = "../db/schema_mysql.sql";
-    }
-    else {
-      $db_schema = "../db/schema_mysql_innodb.sql";
-    }
-
-    //sanity check
-    if( ! is_readable($db_schema ) ) {
-      error_setup("Database schema is missing.  Check that the file $db_schema exists and is readable by the webserver." );
-    }
-
-    //open schema file
-    if( ! $handle = fopen($db_schema, "r" ) ) {
-      error_setup("Not able to read database schema file" );
-    }
-
-    //input the file
-    $schema = fread($handle, filesize($db_schema ) );
-    fclose($handle );
-
-    //roughly separate schema into individual table setups
-    $schema_array = explode(";", $schema );
-
-    //clean up the leading & trailing whitespaces, and remove any null strings
-    $max = sizeof($schema_array );
-    $j = 0;
-    for($i=0 ; $i < $max ; $i++) {
-      if(strlen($input = trim($schema_array[$i] ) ) > 0 ) {
-        $table_array[$j] = $input;
-        $j++;
-      }
-    }
-
-    //create each table
-    foreach($table_array as $table ){
-      if( ! ($result = @mysql_query($table, $database_connection ) ) ) {
-        error_setup("The database creation had the following error:<br /> ".mysql_error($database_connection) );
-      }
-    }
-    break;
-
-  case "postgresql":
-    if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=".$database_name." password=".$database_password ) ) ) {
-      //selected database doesn't exist - need to create it
-
-      //connect to database server with standard 'template1' database
-      if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=template1 password=".$database_password ) ) ) {
-        error_setup("Sorry but there seems to be a problem in connecting to the database server at $database_host<br />".
-                    "No existing database, and cannot connect to PostgreSQL to create a new database.<br /><br />".
-                    "User:     $database_user<br />Password: $database_password<br /><br />".
-                    "Check user and password, then try creating the database manually and running setup again." );
-      }
-
-      //create new database
-      if( ! ($result = @pg_exec($database_connection, "CREATE DATABASE ".$database_name ) ) ) {
-        error_setup("Connected to database, but the new database creation had the following error:<br />".pg_errormessage($database_connection) );
-      }
-
-      //close the standard template database
-      pg_close($database_connection );
-
-      //open the new database
-      if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=".$database_name." password=".$database_password ) ) ) {
-        error_setup("New database was created successfully, but cannot re-connect to the database server." );
-      }
-    }
-
-    //sanity check
-    if( ! is_readable("../db/schema_pgsql.sql" ) ) {
-      error_setup("Database schema is missing.  Check that the file /db/schema_pgsql.sql exists and is readable by the webserver." );
-    }
-
-    //open schema file
-    if( ! $handle = fopen("../db/schema_pgsql.sql", "r" ) ) {
-      error_setup("Not able to read database schema file" );
-    }
-
-    //input the file
-    $schema = fread($handle, filesize("../db/schema_pgsql.sql" ) );
-    fclose($handle );
-
-    //roughly separate schema into individual table setups
-    $schema_array = explode(";", $schema );
-
-    //clean up the leading & trailing whitespaces, and remove any null strings
-    $max = sizeof($schema_array );
-    $j = 0;
-    for($i=0 ; $i < $max ; $i++) {
-      if(strlen($input = trim($schema_array[$i] ) ) > 0 ) {
-        $table_array[$j] = $input;
-        $j++;
-      }
-    }
-
-    //create tables from schema
-    foreach($table_array as $table ){
-      if( ! ($result = @pg_exec($database_connection, $table ) ) ) {
-        error_setup("The database creation had the following error:<br /> ".pg_errormessage($database_connection) );
-      }
-    }
-    break;
-
-  default:
-    error_setup("Not a valid database type" );
-    break;
-  }
-
-  //check if config file can be written to
-  if( ! is_writable("../config.php" ) ) {
-    error_setup("Your database has been successfully setup.<br \><br \>\n".
-                 "The config file (config.php) exists, but the webserver does not have permissions to write to it.<br /><br />\n".
-                 "You can either:<ul>\n<li>Change the file permissions to allow the webserver to write to the file 'config.php'</li>\n".
-                 "<li>Continue with a manual configuration by editing the file directly.</li>\n" );
-  }
-
+  //relocate the user to the next screen
   $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-  header("Location: ".$path."setup2.php?db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
+  header("Location: ".$path."database_skip.php?x=".$session_key);
   die;
 }
 
-//
-//Main input screen
-//
-
-
-//check if already setup previously
-if( ( ! isset($DATABASE_NAME ) ) || $DATABASE_NAME != "" ) {
+//security check
+if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" ) {
+  //this is an initial install
   $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-  header("Location: ".$path."login.php" );
+  header("Location: ".$path."setup1.php" );
   die;
 }
 
-//check if config file can actually be written to..
-if( ! is_writable("../config.php" ) && ! isset($_POST["skip_warn"] ) ) {
-  error_setup("<form method=\"POST\" action=\"index.php\">\n".
-                "The config file (config.php) exists, but the webserver does not have permissions to write to it.<br /><br />\n".
-                "To enable setup to continue you need make this file world writeable by doing the following.<br /><br />\n".
-                "<ul>\n<li>From the command line, navigate to the WebCollab directory</li>\n".
-                "<li>Type 'chmod 666 config.php'</li>\n".
-                "<li>After finishing setup remember to secure the file again with 'chmod 644 config.php'</li>\n</ul>\n<br /><br />\n".
-                "Note: You can proceed and create the databases without changing config.php file permissions.<br /><br />\n".
-                "<input type=\"hidden\" name=\"skip_warn\" value=\"t\">\n".
-                "<center><input type=\"submit\" value=\"Continue?\"></center>\n".
-              "</form>\n" );
-}
 
-create_top_setup("Setup Screen", 1);
+create_top_setup("Login", 1 );
 
-$content = "<center>\n".
-"<br /><br />\n".
-"<img src=\"../images/webcollab.png\" alt=\"WebCollab logo\"></img><br /><br />\n".
-"<p><b>Setup - Stage 1 of 3 : Database Setup</b></p>\n".
-"<form method=\"POST\" action=\"index.php\">\n".
-  "<table border=\"0\">\n".
-    "<tr align=\"left\"><td>Your database name: </td><td><input type=\"text\" name=\"database_name\" size=\"30\"></td></tr>\n".
-    "<tr align=\"left\"><td>Database user: </td><td><input type=\"text\" name=\"database_user\" size=\"30\"></td></tr>\n".
-    "<tr align=\"left\"><td>Database password: </td><td><input type=\"text\" name=\"database_password\" size=\"30\"></td></tr>\n".
-    "<tr align=\"left\"><td>Database host: </td><td><input type=\"text\" name=\"database_host\" value=\"localhost\" size=\"15\"></td></tr>\n".
-    "<tr align=\"left\"><td>Database type:</td> <td>\n".
-    "<select name=\"database_type\">\n".
-      "<option value=\"mysql\" SELECTED >mysql</option>\n".
-      "<option value=\"postgresql\">postgresql</option>\n".
-      "<option value=\"mysql_innodb\">mysql with innodb</option>\n".
-    "</select></td></tr>\n".
-    "<tr><td></td><tr>\n".
-    "<tr><td colspan=\"2\">Do you want WebCollab to create the database now?  <input type=\"checkbox\" name=\"make_database\" CHECKED ></td></tr>\n".
-    "</table><br />\n".
-  "<input type=\"submit\" value=\"Submit\"><br /><br />\n".
-"</form>\n".
-"</center>\n".
-"<br /><br />\n";
+$content = "<center>";
 
-new_box_setup("Setup - Stage 1 of 3", $content, 400 );
+$content .= "<br />Admin login is required for setup:<br /><br />\n".
+           "<form name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
+             "<table border=\"0\">\n".
+               "<tr><td>Login: </td><td><INPUT type=\"text\" name=\"username\" size=\"30\"></td></tr>\n".
+               "<tr><td>Password: </td><td><INPUT type=\"password\" name=\"password\" value=\"\" size=\"30\"></td></tr>\n".
+             "</table>".
+             "<input type=\"submit\" value=\"Login\"><br /><br />\n".
+             "<div align=\"center\">".
+             "<br /><br />\n".
+             "</div>".
+             "</form>".
+           "</center>".
+           "<br />";
+
+//set box options
+new_box_setup("Login", $content, "400" );
 
 create_bottom_setup();
+
 ?>
