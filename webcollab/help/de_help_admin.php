@@ -32,8 +32,6 @@ require_once("path.php" );
 
 include_once(BASE."includes/screen.php" );
 
-$web_charset = "iso-8859-1";
-
 create_top("Help", 1 );
 
 $content = "

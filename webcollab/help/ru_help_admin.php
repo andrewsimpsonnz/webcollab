@@ -33,8 +33,6 @@ require_once("path.php" );
 
 include_once(BASE."includes/screen.php" );
 
-$web_charset = "koi8-r";
-
 create_top("Справка", 1 );
 
 $content = "

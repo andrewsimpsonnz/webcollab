@@ -34,8 +34,6 @@ require_once("path.php" );
 
 include_once(BASE."includes/screen.php" );
 
-$web_charset = "windows-1251";
-
 create_top("Help", 1 );
 
 $content = "
