@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -63,8 +63,7 @@ ignore_user_abort(TRUE);
       $taskid = intval($_POST['taskid']);
       $description = safe_data_long($_POST['description'] );
       //make email adresses and web links clickable
-      $description = preg_replace("(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))","<a href=\"mailto:\\0\">\\0</a>", $description );
-      $description = preg_replace("/((http|ftp)+(s)?:\/\/[^\s]+)/i", "\n<a href=\"$0\" target=\"new\">$0</a>\n", $description );
+      $description = html_links($description );
       $description = nl2br($description );
 
       $input_array = array("mail_owner", "mail_group" );

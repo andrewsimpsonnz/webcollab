@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -107,6 +107,17 @@ function javascript_escape($body ) {
   $trans = array('"'=>'&quot;', "'"=>"\\'" );
     
   return strtr($body, $trans );
+}
+
+//
+// make web addresses and email addresses clickable
+//
+function html_links($body) {
+
+  $body = preg_replace("/(([\w\-\.]+)@([\w\-\.]+)\.([\w]+))/", "<a href=\"mailto:$0\">$0</a>", $body );
+  $body = preg_replace("/((http|ftp)+(s)?:\/\/[^\s]+)/i", "<a href=\"$0\" onclick=\"window.open(\'$0\'); return false\">$0</a>", $body );
+
+  return $body;
 }
 
 //
