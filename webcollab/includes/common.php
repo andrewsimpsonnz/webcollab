@@ -51,23 +51,6 @@ return($body );
 }
 
 
-
-//
-// Checks if the string exists, has a value and no funny shit in it
-//
-function valid_string($string ) {
-
-  //check variable is set
-  if( ! isset($string) )
-    return FALSE;
-  //check for empty strings
-  if(strlen($string) == 0 )
-    return FALSE;
-
-  return TRUE;
-}
-
-
 //
 // Builds up an error screen
 //
@@ -82,7 +65,7 @@ function error($box_title, $content ) {
   if($NO_ERROR != "Y" )
     new_box( $box_title, "<div align=\"center\">".$content."</div>", "boxdata", "singlebox" );
     else
-    new_box($lang["report"], $lang["warning"], "boxdata", "singlebox" );
+    new_box($lang["report"], $lang["warning"], "boxdata2", "singlebox" );
 
 
   //get the post vars
@@ -131,8 +114,7 @@ function warning($box_title, $message ) {
 
   create_top($lang["error"], 1 );
 
-  $content = "<div align=\"center\">$message<br /><br />\n".
-             "<form><input type=\"submit\" value=\"".$lang["continue"]."\" onclick=\"history.back()\"></form></div>\n";
+  $content = "<div align=\"center\">$message\n";
 
   new_box($box_title, $content, "boxdata", "singlebox" );
 
