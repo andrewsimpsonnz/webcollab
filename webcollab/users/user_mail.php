@@ -2,10 +2,10 @@
 /*
   $Id$
 
+  (c) 2003 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-
-  This file created 2003 by Andrew Simpson
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -50,11 +50,11 @@ $content .=
 
 //add user-groups
 $q = db_query("SELECT name, id FROM usergroups ORDER BY name" );
-$content .=  "<tr><td>".$lang["usergroup"].":</td><td><select name=\"usergroup[]\" multiple size=\"4\">\n";
+$content .=  "<tr><td>".$lang["usergroup"].":</td><td><label for=\"group\" /><select name=\"usergroup[]\" multiple size=\"4\">\n";
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $content .= "<option value=\"".$row["id"]."\">".$row["name"]."</option>";
 }
-$content .= "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
+$content .= "</select></label><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
             "</table></p>\n".
             "<p><table border=\"0\">\n".
             "<tr><td>".$lang["subject"]."</td><td><input type=\"text\" name=\"subject\" size=\"60\" /></td></tr>\n".

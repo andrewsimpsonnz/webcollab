@@ -2,9 +2,10 @@
 /*
   $Id$
 
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-  Created 2002/2003 by Andrew Simpson
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -104,7 +105,7 @@ $content .= "<div align=\"center\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
             "<p><table border=\"0\">\n".
             "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1 /><label for=\"users\" />".$lang["users"]."</label></td><td>\n".
-            "<select name=\"userid\">\n".
+            "<label for=\"users\" /><select name=\"userid\">\n".
             "<option value=\"0\"$s2>".$lang["all_users"]."</option>\n";
 
 //get all users for option box
@@ -121,9 +122,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= ">".$row["fullname"]."</option>\n";
 }
 
-$content .= "</select></td></tr>\n".
+$content .= "</select></label></td></tr>\n".
             "<tr align=\"left\"><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3 /><label for=\"group\" />".$lang["usergroups"]."</label></td>\n".
-            "<td><select name=\"groupid\">\n".
+            "<td><label for=\"group\" /><select name=\"groupid\">\n".
             "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
 
 //get all groups for option box
@@ -140,7 +141,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= ">".$row["name"]."</option>\n";
 }
 
-$content .= "</select></td></tr>\n</table></p>\n";
+$content .= "</select></label></td></tr>\n</table></p>\n";
 
 //month (must be in decimal, 'cause that's what database uses!)
 $content .= "<p><table border=\"0\"><tr><td>\n<select name=\"month\">\n";
