@@ -1,4 +1,14 @@
 WebCollab Unicode
+*** 22 January 2005
+Andrew Simpson
+
+- merge to WebCollab 1.69
+
+- set client encoding on MySQL 4.1
+
+- set client encoding on PostgreSQL 
+ 
+WebCollab Unicode
 *** 9 January 2005
 Andrew Simpson
 
