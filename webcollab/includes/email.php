@@ -38,9 +38,30 @@ if( ! @require( "path.php" ) )
 include_once( BASE."includes/security.php" );
 include_once( BASE."includes/admin_config.php" );
 
+//
+//function to reinstate html and remove dangerous tags 
+//
+
+function clean($encoded ) {
+
+  //reinstate encoded html back to original text
+  $trans = array_flip(get_html_translation_table(HTML_ENTITIES, ENT_NOQUOTES ) );
+  $text = strtr($encoded, $trans );
+
+  //remove any dangerous tags that exist after decoding
+  $text = preg_replace("/(<\/?)(\w+)([^>]*>)/e", "'\\1'.strtoupper('\\2').'\\3'", $text);
+  $block_tag = array("APPLET", "OBJECT", "SCRIPT", "EMBED", "FORM", "?", "%" );
+  foreach ($block_tag as $value) {
+    $text = str_replace("<".$value, "<**** ", $text);
+  }
+
+return $text;
+}
+
+
 function email( $to, $subject, $message) {
 
-  global $EMAIL_FROM, $EMAIL_REPLY_TO, $USE_EMAIL, $MAIL_METHOD, $SMTP_HOST, $DOMAIN, $SMTP_AUTH, $MAIL_USER, $MAIL_PASSWORD;
+  global $EMAIL_FROM, $EMAIL_REPLY_TO, $USE_EMAIL, $MAIL_METHOD, $SMTP_HOST, $SMTP_AUTH, $MAIL_USER, $MAIL_PASSWORD;
 
   if( ! valid_string($to) ) {
     //no email address specified - end function
@@ -91,8 +112,7 @@ function email( $to, $subject, $message) {
           debug("Incorrect handshaking response from SMTP server at ".$host."<BR><BR>Response from SMTP server was ".$res );
 
         //send HELO to server
-        $domain = $DOMAIN;
-        fputs($connection, "HELO $domain\r\n" );
+        fputs($connection, "HELO ".$_SERVER["SERVER_NAME"]."\r\n" );
         $res = fgets($connection, 256 );
         if(substr($res,0,3) != "250" )
           debug("Incorrect HELO response from SMTP server at ".$host."<BR><BR>Response from SMTP server was ".$res );
@@ -153,7 +173,7 @@ function email( $to, $subject, $message) {
   			"Reply-To: ".$EMAIL_REPLY_TO."\r\n".
 			"Subject: ".$subject."\r\n".
 			"Date: ".date("r")."\r\n".
-			"Message-Id: <".$uniq_id."@".$domain.">\r\n".
+			"Message-Id: <".$uniq_id."@".$_SERVER["SERVER_NAME"].">\r\n".
 			"X-Mailer: PHP/" . phpversion()."\r\n".
 			"X-Priority: 3\r\n".
 			"X-Sender: ".$EMAIL_REPLY_TO."\r\n".
