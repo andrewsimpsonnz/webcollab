@@ -1,3 +1,13 @@
+WebCollab CVS
+*** 7 January 2004
+  Andrew Simpson
+
+- add clone function
+
+- add active/inactive selection to project_list
+
+- add automatic email to forum postings  
+
 WebCollab 1.51 - Hebe
 *** 3 January 2004
   Andrew Simpson
