@@ -32,7 +32,7 @@ $EMAIL_MAILINGLIST = "";
 
 //get config data
 $q = db_query("SELECT * FROM config" );
-$row = db_fetch_array($q, 0 );
+$row = @db_fetch_array($q, 0 );
 
 //set variables
 $EMAIL_ADMIN        = $row["email_admin"];
@@ -44,11 +44,11 @@ $DEFAULT_OWNER      = $row["owner"];
 $DEFAULT_GROUP      = $row["usergroup"];
 
 //mailing list
-$q = db_query("SELECT DISTINCT * FROM maillist" );
+$q = db_query("SELECT DISTINCT email FROM maillist" );
 
 $s ="";
-for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
-  $EMAIL_MAILINGLIST .= $s.$row["email"].", ";
+for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+  $EMAIL_MAILINGLIST .= $s.$row[0];
   $s = ", ";
 }
 
