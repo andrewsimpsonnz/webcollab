@@ -193,7 +193,11 @@ php_value post_max_size 20000000
 The default size limit is 2 Mb.</li>
 </ol>
 </dd>
-<dt>4. File upload security.</dt>
+<dt>4. Certain types of downloaded files are corrupted, or an error message occurs about 'Unrecognised file type'.  WebCollab may give an error message of 'Files action handler: No request given'</dt>
+<dd>This is caused by the uploaded file type not having an appropriate entry in the webservers Mime Type file (In Linux this file is normally /etc/mime.types).<br />
+The list of registered mime types is available at <a href="http://www.iana.org/assignments/media-types/" >IANA</a>.  If in doubt choose 'application/octet-stream', which is the mime type for generic binary data.<br />
+If you do not have access to the mime types file, a .htaccess file can be used with AddType (See Apache documentation for detail).</dd>
+<dt>5. File upload security.</dt>
 <dd>If you use the default /files/filebase directory, it is possible for users to navigate
 to the directory with their browsers and view the files present.  WebCollab has the /filebase
 directory protected by a index.html file and .htaccess file. Also, the filenames have a ID prefix added to them to prevent filename 'guessing' by attackers, but none of these measures are particularly foolproof.<br />
