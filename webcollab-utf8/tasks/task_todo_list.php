@@ -34,8 +34,8 @@ require_once( BASE."includes/security.php" );
 // List tasks
 //
 
-function listTasks($task_id, $tail, $projectid ) {
-  global $x, $ADMIN, $GID, $userid, $lang;
+function listTasks($projectid ) {
+  global $task_uncompleted, $task_projectid;
   global $task_array, $parent_array, $shown_array, $shown_count, $task_count;
    
   $parent_array = "";
@@ -43,58 +43,33 @@ function listTasks($task_id, $tail, $projectid ) {
   $shown_count  = 0;  //counter for $shown_array
   $parent_count = 0;  //counter for $parent_array
   $task_count   = 0;  //counter for $task_array
+
+  //search for uncompleted tasks by projectid
+  $task_key = array_keys((array)$task_projectid, $projectid );
   
-  // show all subtasks that are not complete
-  $q = db_query( "SELECT id, name, owner, deadline, parent, usergroupid, globalaccess,
-                        now() AS now
-                        FROM ".PRE."tasks
-                        WHERE projectid=$task_id
-                        AND parent<>0
-                        AND (status='created' OR status='active')
-                        $tail
-                        ORDER BY name" );
-  
-  if(db_numrows($q ) == 0 )
+  if(sizeof($task_key) < 1 )
     return;
+  
+  //cycle through relevant tasks
+  foreach((array)$task_key as $key ) {  
+       
+    $task_array[$task_count]['id']     = $task_uncompleted[($key)]['id'];
+    $task_array[$task_count]['parent'] = $task_uncompleted[($key)]['parent'];
+    $task_array[$task_count]['task']   = $task_uncompleted[($key)]['task'];
+           
+    //if this is a subtask, store the parent id 
+    if($task_array[$task_count]['parent'] != $projectid ) {
+      $parent_array[$parent_count] = $task_array[$task_count]['parent'];
+      ++$parent_count;
+    }
+    ++$task_count;
+        
+    //remove used key to shorten future searches
+    unset($task_projectid[$key] );    
+  }
 
   $content = "<ul>\n";  
-
-  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
-    
-    //check for private usergroups
-    if( (!$ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] != 't' ) ) {
-      if( ! in_array( $row['usergroupid'], (array)$GID, TRUE ) )
-        continue;
-    }
-
-    //put values into array
-    $task_array[$task_count]['id'] = $row['id'];
-    $task_array[$task_count]['parent'] = $row['parent'];
-         
-    $this_task = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
-
-    //add highlighting if deadline is due
-    $state = ceil( ($row['deadline'] - $row['now'] )/86400 );
-    if($state > 1) {
-      $this_task .= $row['name']."</a>".sprintf($lang['due_in_sprt'], $state );
-    }
-    else if($state > 0) {
-      $this_task .= $row['name']."</a>".$lang['due_tomorrow'];
-    }
-    else{
-      $this_task .= "<span class=\"red\">".$row['name']."</span></a>";
-    }
-    
-    $task_array[$task_count]['task'] = $this_task."\n";
-    
-    //if this is a subtask, store the parent id 
-    if($row['parent'] != $projectid ) {
-      $parent_array[$parent_count] = $row['parent'];
-      $parent_count++;
-    }
-  $task_count++;
-  }   
-    
+  
   //iteration for main tasks
   for($i=0 ; $i < $task_count ; $i++ ){
   
@@ -102,12 +77,13 @@ function listTasks($task_id, $tail, $projectid ) {
     if($task_array[$i]['parent'] != $projectid ){
       continue;
     }
+    
     $content .= $task_array[$i]['task'];
     $shown_array[$shown_count] = $task_array[$i]['id'];
     $shown_count++;
     
     //if this task has children (subtasks), iterate recursively to find them 
-    if(in_array($task_array[$i]['id'], (array)$parent_array, TRUE ) ){
+    if(in_array($task_array[$i]['id'], (array)$parent_array ) ){
       $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";
@@ -116,7 +92,7 @@ function listTasks($task_id, $tail, $projectid ) {
   //look for any orphaned tasks, and show them too
   if($task_count != $shown_count ) {
     for($i=0 ; $i < $task_count ; $i++ ) {
-      if( ! in_array($task_array[$i]['id'], (array)$shown_array, TRUE ) ) 
+      if( ! in_array($task_array[$i]['id'], (array)$shown_array ) ) 
         $content .= $task_array[$i]['task']."</li>\n";
     }
   }
@@ -137,7 +113,6 @@ function find_children($parent ) {
   global $task_array, $parent_array, $shown_array, $task_count, $shown_count;
 
   $content = "<ul>\n";
-  $max = sizeof($task_array);
        
   for($i=0 ; $i < $task_count ; $i++ ) {
     
@@ -150,7 +125,7 @@ function find_children($parent ) {
     $shown_count++;
     
     //if this task has children (subtasks), iterate recursively to find them
-    if(in_array($task_array[$i]['id'], $parent_array, TRUE ) ){
+    if(in_array($task_array[$i]['id'], $parent_array ) ){
       $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";    
@@ -177,7 +152,7 @@ $q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid,
                       WHERE ".PRE."usergroups.private=1");
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
-  if(in_array($row[0], (array)$GID, TRUE ) && ! in_array($row[1], (array)$allowed, TRUE ) ) {
+  if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
    $allowed[] = $row[1];
   }
 }
@@ -245,7 +220,7 @@ $q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       
   //user test for privacy
-  if($row['private'] && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed, TRUE ) ) ){
+  if($row['private'] && ($row['id'] !=  $UID ) && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
     continue;
   }
     
@@ -270,7 +245,7 @@ $q = db_query("SELECT id, name, private FROM ".PRE."usergroups ORDER BY name" );
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     
   //usergroup test for privacy
-  if( (! $ADMIN ) && ( ! in_array($row['id'], (array)$GID, TRUE ) ) ) {
+  if( (! $ADMIN ) && ($row['private'] ) && ( ! in_array($row['id'], (array)$GID ) ) ) {
     continue;
   }
     
@@ -288,8 +263,53 @@ $content .= "</select></label><br /><br /></td></tr>\n".
             "</table>\n".
             "</form>\n";
 
+
+// show all subtasks that are not complete
+$q = db_query( "SELECT id, name, owner, deadline, parent, usergroupid, globalaccess, projectid,
+                        $epoch deadline) AS task_due,
+                        $epoch now() ) AS now
+                        FROM ".PRE."tasks
+                        WHERE parent<>0
+                        AND (status='created' OR status='active')
+                        $tail
+                        ORDER BY name" );
+
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
+
+  //check for private usergroups
+  if( (! $ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] != 't' ) ) {
+    if( ! in_array( $row['usergroupid'], (array)$GID ) )
+      continue;
+  }
+  
+  //put values into array
+  $task_uncompleted[$i]['id'] = $row['id'];
+  $task_uncompleted[$i]['parent'] = $row['parent'];
+  
+  $this_task = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
+  
+  //add highlighting if deadline is due
+  $state = ceil( ($row['task_due'] - $row['now'] )/86400 );
+  
+  if($state > 1) {
+    $this_task .= $row['name']."</a>".sprintf($lang['due_in_sprt'], $state );
+  }
+  else if($state > 0) {
+    $this_task .= $row['name']."</a>".$lang['due_tomorrow'];
+  }
+  else{
+    $this_task .= "<span class=\"red\">".$row['name']."</span></a>";
+  }
+  
+  $task_uncompleted[$i]['task'] = $this_task."\n";
+  
+  //record projectid
+  $task_projectid[$i] = $row['projectid'];
+
+}
+
 //query to get the all the projects
-$q = db_query("SELECT id, name, projectid, usergroupid, globalaccess FROM ".PRE."tasks WHERE parent=0 AND archive=0 ORDER BY name" );
+$q = db_query("SELECT id, name, usergroupid, globalaccess FROM ".PRE."tasks WHERE parent=0 AND archive=0 ORDER BY name" );
 
 // show all uncompleted tasks and projects belonging to this user or group
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
@@ -297,11 +317,11 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
    //check for private usergroups
    if( ($ADMIN != 1) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
-     if( ! in_array( $row['usergroupid'], (array)$GID, TRUE ) )
+     if( ! in_array( $row['usergroupid'], (array)$GID ) )
        continue;
    }
 
-  $new_content = listTasks($row['id'], $tail, $row['projectid'] );
+  $new_content = listTasks($row['id'], $tail );
 
   //if no task, don't show project name either
   if($new_content != "" ) {

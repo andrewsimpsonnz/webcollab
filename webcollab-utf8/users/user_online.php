@@ -41,11 +41,10 @@ $q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid,
                       WHERE ".PRE."usergroups.private=1");
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
-  if(in_array($row[0], (array)$GID, TRUE ) && ! in_array($row[1], (array)$allowed, TRUE ) ) {
+  if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
    $allowed[] = $row[1];
   }
 }
-
 
 $content .= "<table>\n";
 //users online in last hour
@@ -63,7 +62,7 @@ $content .= "<tr><td style=\"white-space:nowrap\" colspan=\"2\"><b>".$lang['onli
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
   
   //user test for privacy
-  if($row['private'] && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed, TRUE ) ) ){
+  if($row['private'] && ($row['id'] != $UID ) && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
     continue;
   }
   
@@ -87,7 +86,7 @@ $content .= "<tr><td colspan=\"2\"><b>".$lang['not_online']."</b></td></tr>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
   
   //user test for privacy
-  if($row['private'] && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed, TRUE ) ) ){
+  if($row['private'] && ($row['id'] != $UID ) && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
     continue;
   }
   

@@ -123,7 +123,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
     $content .= $post_array[$i]['post'];
     
     //if this post has children (subposts), iterate recursively to find them 
-    if(in_array($post_array[$i]['id'], (array)$parent_array ), TRUE ){
+    if(in_array($post_array[$i]['id'], (array)$parent_array ) ){
       $content .= find_children($post_array[$i]['id'] );
     }
     $content .= "</li>\n";
@@ -149,7 +149,7 @@ function find_children($parent ) {
     $content .= $post_array[$i]['post'];
     
     //if this post has children (subposts), iterate recursively to find them
-    if(in_array($post_array[$i]['id'], $parent_array ), TRUE ){
+    if(in_array($post_array[$i]['id'], $parent_array ) ){
       $content .= find_children($post_array[$i]['id'] );
     }
     $content .= "</li>\n";    
@@ -194,7 +194,7 @@ if($TASKID_ROW['usergroupid'] != 0 ) {
 
   $content = "";
 
-  if(in_array($TASKID_ROW['usergroupid'], (array)$GID, TRUE ) || ($ADMIN ) ) {
+  if(in_array($TASKID_ROW['usergroupid'], (array)$GID ) || ($ADMIN ) ) {
 
     $content .= list_posts_from_task( $taskid, $TASKID_ROW['usergroupid'] );
     if($ul_flag == 1 )

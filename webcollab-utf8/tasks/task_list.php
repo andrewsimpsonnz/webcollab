@@ -91,7 +91,7 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
     //check for private usergroups
     if( (! $ADMIN) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
-      if( ! in_array( $row['usergroupid'], (array)$GID, TRUE ) )
+      if( ! in_array( $row['usergroupid'], (array)$GID ) )
          continue;
     }
 
@@ -249,7 +249,7 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
     $this_content .= "</small>";
 
     //recursive search if the subtask is listed in parent_array (it has children then)
-    if(in_array( $row['id'], $parent_array, TRUE ) ) {
+    if(in_array( $row['id'], $parent_array ) ) {
       $this_content .= list_tasks( $row['id']);
       $this_content .= "\n</ul></li>\n";
     }
@@ -284,7 +284,7 @@ $now = $row[2];
 if( (! $ADMIN ) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
 
   //check if the user has a matching group
-  if( ! in_array($project_row[0], (array)$GID, TRUE ) )
+  if( ! in_array($project_row[0], (array)$GID ) )
     return;
 }
 

@@ -42,8 +42,8 @@ function listTasks($projectid ) {
   global $task_array, $parent_array, $shown_array, $shown_count, $task_count;
    
   //initialise variables
-  $parent_array = "";
-  $shown_array  = "";
+  $parent_array = '';
+  $shown_array  = '';
   $shown_count  = 0;  //counter for $shown_array
   $parent_count = 0;  //counter for $parent_array
   $task_count   = 0;  //counter for $task_array
@@ -87,7 +87,7 @@ function listTasks($projectid ) {
     ++$shown_count; 
     
     //if this task has children (subtasks), iterate recursively to find them 
-    if(in_array($task_array[$i]['id'], (array)$parent_array, TRUE ) ) {
+    if(in_array($task_array[$i]['id'], (array)$parent_array ) ) {
       $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";
@@ -96,7 +96,7 @@ function listTasks($projectid ) {
   //look for any orphaned tasks, and show them too
   if($task_count != $shown_count ) {
     for($i=0 ; $i < $task_count ; ++$i ) {
-      if(! in_array($task_array[$i]['id'], (array)$shown_array, TRUE ) )
+      if(! in_array($task_array[$i]['id'], (array)$shown_array ) )
         $content .= $task_array[$i]['task']."</li>\n";
     }
   } 
@@ -125,7 +125,7 @@ function find_children($parent ) {
     ++$shown_count;
             
     //if this task has children (subtasks), iterate recursively to find them
-    if(in_array($task_array[$i]['id'], (array)$parent_array, TRUE ) ) {
+    if(in_array($task_array[$i]['id'], (array)$parent_array ) ) {
       $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";    
@@ -139,10 +139,10 @@ function find_children($parent ) {
 //
 
 //some inital values
-$content = "";
+$content = '';
 $flag = 0;
 $project_print = 0;
-$task_projectid = "";
+$task_projectid = '';
 
 if(isset($_GET['active'] ) )
   $active_only = $_GET['active'];
@@ -225,8 +225,8 @@ $q = db_query("SELECT id,
                       deadline,
                       status,
                       ".$epoch." deadline) AS due,
-                      ".$epoch." finished_time) AS finished_time,
-                      ".$epoch." completion_time) AS completion_time,
+                      finished_time,
+                      completion_time,
                       ".$epoch." now()) AS now,
                       completed
                       FROM ".PRE."tasks

@@ -47,7 +47,7 @@ $q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid,
                       WHERE ".PRE."usergroups.private=1");
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
-  if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed, TRUE ) ) {
+  if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
    $allowed[] = $row[1];
   }
 }
@@ -72,7 +72,7 @@ function user_access($owner, $usergroupid, $groupaccess ) {
     return FALSE;
 
   if( $groupaccess == "t" ) {
-    if(in_array((int)$usergroupid, (array)$GID, TRUE ) )
+    if(in_array($usergroupid, (array)$GID ) )
       return TRUE;
   }
   return FALSE;
@@ -136,7 +136,7 @@ for( $i=0; $parent_row = @db_fetch_array($parentq, $i ); $i++) {
   //check for private usergroups
   if( ($ADMIN != 1) && ($parent_row['usergroupid'] != 0 ) && ($parent_row['globalaccess'] == 'f' ) ) {
 
-  if( ! in_array($parent_row['usergroupid'], (array)$GID, TRUE ) )
+  if( ! in_array($parent_row['usergroupid'], (array)$GID ) )
     continue;
   }
 
@@ -262,7 +262,7 @@ $content .= "<tr> <td>".$lang[$TYPE."_owner"].":</td> <td><select name=\"owner\"
 for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++) {
       
   //user test for privacy
-  if($user_row['private'] && ( ! $ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed, TRUE ) ) ){
+  if($user_row['private'] && ($user_row['id'] != $UID ) && ( ! $ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
     continue;
   }
     
@@ -299,14 +299,14 @@ if($TASKID_ROW['parent'] != 0 ){
 }
 
 //show all user-groups
-$usergroup_q = db_query("SELECT id, name FROM ".PRE."usergroups ORDER BY name" );
+$usergroup_q = db_query("SELECT id, name, private FROM ".PRE."usergroups ORDER BY name" );
 $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help'); return false\">".$lang['usergroup']."</a>: </td> <td><select name=\"usergroupid\">\n";
 $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
 for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
-    
+     
   //usergroup test for privacy
-  if( (! $ADMIN ) && ( ! in_array($usergroup_row['id'], (array)$GID, TRUE ) ) ) {
+  if( (! $ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
     continue;
   }
 

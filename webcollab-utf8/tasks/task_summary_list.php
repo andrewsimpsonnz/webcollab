@@ -80,14 +80,14 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     //check usergroup permissions
     if( (! $ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' )) {
-      if( ! in_array( $row['usergroupid'], (array)$GID, TRUE ) )
+      if( ! in_array( $row['usergroupid'], (array)$GID ) )
         continue;
     }
 
     //don't show tasks in private usergroup projects
     if( (! $ADMIN ) && in_array($row['projectid'], (array)$no_access_project) ) {
       $key = array_search($row['projectid'], $no_access_project );
-      if( ! in_array($no_access_group[$key], (array)$GID, TRUE ) )
+      if( ! in_array($no_access_group[$key], (array)$GID ) )
         continue;
     }
 
