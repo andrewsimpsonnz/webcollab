@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2003 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2003-2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -39,7 +39,7 @@ require_once(BASE."includes/security.php" );
 
 include_once(BASE."includes/admin_config.php" );
 
-if($SMTP_AUTH == "Y" )
+if( $SMTP_AUTH == "Y" )
   include_once(BASE."includes/smtp_auth.php" );
 
 //
@@ -58,8 +58,7 @@ function email($to, $subject, $message ) {
     //email is turned off in config file
     return;
   }
-
-  if(@strlen($to) == 0 ) {
+  if(strlen($to) == 0  ) {
     //no email address specified - end function
     return;
   }
@@ -293,16 +292,17 @@ function &subject($subject ) {
       $len = 76 - strlen($email_charset ) - 8;
       while(strlen($line ) > $len ) {
         //don't split line around coded character (eg. '=20' == <space>)
-        if($pos = strrpos(substr($line, ($len - 3 ), 3 ), "=" ) ) {
-          //coded characters within split zone - adjust to avoid splitting encoded word
-          $split = ($len - 3 ) + $pos - 1;
-          $subject_lines[] = $s."=?".$email_charset."?Q?".substr($line, 0, $split)."?=";
-          $line = substr($line, $split );
-        }
-        else{
+        $pos = strrpos(substr($line, ($len - 3 ), 3 ), "=" ); 
+        if($pos === false ) {
           //no coded characters in split zone - safe to split here
           $subject_lines[] = $s."=?".$email_charset."?Q?".substr($line, 0, $len )."?=";
           $line = substr($line, $len );
+        }
+        else{
+          //coded characters within split zone - adjust to avoid splitting encoded word
+          $split = ($len - 3 ) + $pos;
+          $subject_lines[] = $s."=?".$email_charset."?Q?".substr($line, 0, $split)."?=";
+          $line = substr($line, $split );
         }
       //start additional lines with <space> (RFC 2047)
       $s = " ";
