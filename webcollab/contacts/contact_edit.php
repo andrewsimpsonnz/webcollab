@@ -64,7 +64,7 @@ $content .=
       "<input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" />\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-      "<input type=\"submit\" value=\"".$lang["add"]."\" />&nbsp;\n".
+      "<input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;\n".
       "<input type=\"reset\" value=\"".$lang["reset"]."\" />\n".
       "<br /><br />\n".
       "</form>";
@@ -76,7 +76,7 @@ $content .=
       "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" />\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-      "<input type=\"submit\" value=\"".$lang["del_contact"]."\" onClick=\"return confirm('".$lang["del_javascript"]."')\" />\n".
+      "<input type=\"submit\" value=\"".$lang["del_contact"]."\" onClick=\"return confirm('".$lang["confirm_del"]."')\" />\n".
       "</form>";
 
 new_box( $lang["contact_info"], $content );
