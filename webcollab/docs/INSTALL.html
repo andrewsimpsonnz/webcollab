@@ -20,7 +20,7 @@ databases can be created.</p>
 <h4>1. First Time Setup</h4>
 <ol>
 <li>Navigate to your main WebCollab directory.</li>
-<li>For UNIX: Make config.php writable by everyone.
+<li>For UNIX: Make [webcollab_directory]/config/config.php writable by everyone.
 <pre class="screen">
 #chmod 666 config.php
 </pre>
@@ -40,11 +40,11 @@ Versions 1.40 and 1.60 had database structure changes, and need to have the data
 Version 1.60 contains an automated upgrade script (update.php) to simplify the database updating.
 <ol>
 <li>Install the new files.</li>
-<li>Point your browser at http://your_site/webcollab_directory/tools/index.php (Replace
+<li>Point your browser at http://your_site/webcollab_directory/update.php (Replace
 'your_site'and 'webcollab_directory' with the relevant values for the new files on your site).</li>
 <li>Login as requested...</li>
 <li>Choose upgrade database.  Database upgrade is done automatically (If database upgrades are in fact not required, no harm will be done).</li>
-<li>For UNIX: Make config.php writable by everyone.</li>
+<li>For UNIX: Make [webcollab_directory]/config/config.php writable by everyone.</li>
 <li>Run the setup program, but when prompted, choose to use the existing database.</li> 
 <li>The setup program should auto-detect most parameters from your existing setup.  Fill in the missing values.</li>
 <li>All done!</li>
@@ -53,7 +53,7 @@ Version 1.60 contains an automated upgrade script (update.php) to simplify the d
 The database changes are backward compatible and do not affect stored data.  However, as with all upgrades, backing up your data is a sensible precaution.
 <h4>3. Altering Setup</h4>
 <ol>
-<li>For UNIX: Make config.php writable by everyone.</li>
+<li>For UNIX: Make [webcollab_directory]/config/config.php writable by everyone.</li>
 <li>Edit config.php and change $WEB_CONFIG = "Y" (it should have defaulted to "N").</li>
 <li>Point your web browser at http://your_site/webcollab_directory/setup/index.php</li>
 <li>Enter an admin login and password</li>
@@ -107,7 +107,7 @@ prompted.
 </ol>
 <h4>3. Configuration File Customization:</h4>
 <ol>
-<li>Open the file webcollab/config.php with your favourite text editor.</li>
+<li>Open the file webcollab/config/config.php with your favourite text editor.</li>
 <li>Fill in <b>$BASE_URL</b> with the address of your site:
 <pre class="screen">
 $BASE_URL = "http//yourdomain.com/webcollab-*.**/";
