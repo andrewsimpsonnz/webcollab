@@ -1,4 +1,12 @@
 WebCollab CVS
+*** 25 January 2004
+  Andrew Simpson
+
+- add printer friendly pages to task show, project list & task summary
+
+- add automatic email to file uploads
+
+WebCollab CVS
 *** 7 January 2004
   Andrew Simpson
 
@@ -6,7 +14,7 @@ WebCollab CVS
 
 - add active/inactive selection to project_list
 
-- add automatic email to forum postings  
+- add automatic email to forum postings
 
 WebCollab 1.51 - Hebe
 *** 3 January 2004
