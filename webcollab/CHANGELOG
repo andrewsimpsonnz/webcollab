@@ -2,6 +2,13 @@ WebCollab CVS
 *** 31 April 2004
   Andrew Simpson
 
+- reduce number of database calls in task listing (optimisation)
+
+
+WebCollab CVS
+*** 31 April 2004
+  Andrew Simpson
+
 - improve regex used to detect css attempts in email
 
 - Add 'name' to From header in email (SpamAssassin complains) 
