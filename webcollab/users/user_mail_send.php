@@ -120,10 +120,9 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
 //remove duplicate addresses, and put into a comma sorted list
 $to = "";
-$max = sizeof($address_array );
-for($i=0 ; $i<$max ; $i++ ) {
-  if( ! substr($to, $address_array[$i] ) ) {
-    $to .= $s.$address_array[$i];
+while(list(,$address) = @each($address_array ) ) {
+  if(strpos($to, $address ) === FALSE ) {
+    $to .= $s.$address;
     $s = ", ";
   }
 }
