@@ -31,33 +31,33 @@
 */
 
 
-$taskgroup_info = "<BR><UL><LI>Si esborra un taskgroup totes les seves tasques passaran a classifcar-se com a no categoritzades.</LI>\n".
-  "<LI>Pot canviar el nom de la categoria sense interferir amb les tasques.</LI>\n".
-  "<LI>Dos taskgroups no poden tenir el mateix nom.</LI></UL><BR>\n";
+$taskgroup_info = "<ul><li>Si esborra un taskgroup totes les seves tasques passaran a classifcar-se com a no categoritzades.</li>\n".
+  "<li>Pot canviar el nom de la categoria sense interferir amb les tasques.</li>\n".
+  "<li>Dos taskgroups no poden tenir el mateix nom.</li></ul>\n";
 
-$usergroup_info = "<BR><UL><LI>Si esborra un usergroup tots els enviaments privats relacionats seran eliminats tamb&eacute;.</LI>\n".
-  "<LI>Pot modificar el nom del usergroup sense interferir amb els usuaris en ell.</LI>\n".
-  "<LI>Dos usergroups no poden tenir el mateix nombre.</LI></UL><BR><BR>\n";
+$usergroup_info = "<ul><li>Si esborra un usergroup tots els enviaments privats relacionats seran eliminats tamb&eacute;.</li>\n".
+  "<li>Pot modificar el nom del usergroup sense interferir amb els usuaris en ell.</li>\n".
+  "<li>Dos usergroups no poden tenir el mateix nombre.</li></ul>\n";
 
-$user_info      = "<BR>Seleccioni l'acci&oacute; des del men&uacute; de l'esquerra.<BR><BR>".
-  "Algunes consideracions:<BR>".
-  "<UL>".
-  "<LI>Els usuaris s'eliminen en dues etapes, la segona &eacute;s permanent.</LI>\n".
-  "<LI>Un usuari eliminat perd totes les seves tasques per&ograve; no els seus missatges del f&ograve;rum.</LI>\n".
-  "<LI>Un usuari esborrat de forma permanent ho perd tot.</LI>\n".
-  "<LI>No es pot eliminar un usuari permanentment si aquest t&eacute; items al f&ograve;rum.</LI>\n".
-  "<LI>Un usuari esborrat mant&eacute; els registres de les seves tasques que ha revisat, i continuar&agrave; amb aquestes despr&eacute;s de ser reactivat.</LI>\n".
-  "<LI>TOTES les accions executades sobre un usuari seran informades a l'usuari per email.</LI>\n".
-  "<LI>Les claus estan encriptades a la base de dades. Nom&eacute;s pot establir un de nou.</LI>\n".
-  "<LI>Les claus s&oacute;n enviades per email a l'usuari nom&eacute;s una vegada quan l'usuari el registre, vagi amb cura quan envii aquests emails!</LI>\n".
-  "<LI>Els usuaris poden editar el seu compte sense coneixement de l'administrador, aix&ograve; estalviar&agrave; els seu temps d'administraci&oacute;</LI>\n".
-  "</UL><BR>\n";
+$user_info      = "Seleccioni l'acci&oacute; des del men&uacute; de l'esquerra.<br /><br />".
+  "Algunes consideracions:<br />".
+  "<ul>".
+  "<li>Els usuaris s'eliminen en dues etapes, la segona &eacute;s permanent.</li>\n".
+  "<li>Un usuari eliminat perd totes les seves tasques per&ograve; no els seus missatges del f&ograve;rum.</li>\n".
+  "<li>Un usuari esborrat de forma permanent ho perd tot.</li>\n".
+  "<li>No es pot eliminar un usuari permanentment si aquest t&eacute; items al f&ograve;rum.</li>\n".
+  "<li>Un usuari esborrat mant&eacute; els registres de les seves tasques que ha revisat, i continuar&agrave; amb aquestes despr&eacute;s de ser reactivat.</li>\n".
+  "<li>TOTES les accions executades sobre un usuari seran informades a l'usuari per email.</li>\n".
+  "<li>Les claus estan encriptades a la base de dades. Nom&eacute;s pot establir un de nou.</li>\n".
+  "<li>Les claus s&oacute;n enviades per email a l'usuari nom&eacute;s una vegada quan l'usuari el registre, vagi amb cura quan envii aquests emails!</li>\n".
+  "<li>Els usuaris poden editar el seu compte sense coneixement de l'administrador, aix&ograve; estalviar&agrave; els seu temps d'administraci&oacute;</li>\n".
+  "</ul>\n";
 
-$calendar_key    = "<I>Retornar al Men&uacute; Principal</I></A>]</B><BR>\n".
-        "<P><B><U>Claus (colors) per al Calendari</U></B><BR><BR>\n".
-        "<FONT color=\"blue\">Projecte (amb tasques incomplertes)</FONT><BR>\n".
-        "<FONT color=\"green\"><U>Projecte </U>(totes les tasques complertes)</FONT><BR>\n".
-        "<FONT color=\"red\">Tasca (no completada)</FONT><BR>\n".
-        "<FONT color=\"green\">Tasca (completada)</FONT><BR>\n";
+$calendar_key    = "<i>Retornar al Men&uacute; Principal</i></a>]</b><br />\n".
+        "<P><b><u>Claus (colors) per al Calendari</u></b><br /><br />\n".
+        "<font color=\"blue\">Projecte (amb tasques incomplertes)</font><br />\n".
+        "<font color=\"green\"><u>Projecte </u>(totes les tasques complertes)</font><br />\n".
+        "<font color=\"red\">Tasca (no completada)</font><br />\n".
+        "<font color=\"green\">Tasca (completada)</font><br />\n";
 
 ?>

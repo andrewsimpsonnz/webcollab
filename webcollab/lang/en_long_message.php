@@ -29,15 +29,15 @@
 */
 
 
-$taskgroup_info = "<br /><ul><li>If you delete a taskgroup all tasks belonging to it will be set to uncategorised.</li>\n".
+$taskgroup_info =   "<ul><li>If you delete a taskgroup all tasks belonging to it will be set to uncategorised.</li>\n".
                       "<li>You can change the name of a category without interfering with the tasks.</li>\n".
-                      "<li>Two taskgroups cannot have the same name.</li></ul><br />\n";
+                      "<li>Two taskgroups cannot have the same name.</li></ul>\n";
 
-$usergroup_info = "<br /><ul><li>If you delete a usergroup all the related private forum posts will be deleted too.</li>\n".
+$usergroup_info =   "<ul><li>If you delete a usergroup all the related private forum posts will be deleted too.</li>\n".
                       "<li>You can change the name of a usergroup without interfering with the users in it.</li>\n".
-                      "<li>Two usergroups cannot have the same name.</li></ul><br />\n";
+                      "<li>Two usergroups cannot have the same name.</li></ul>\n";
 
-$user_info      = "<br />Please select your action from the menu on the left.<br /><br />".
+$user_info      =    "Please select your action from the menu on the left.<br /><br />".
                       "Some quick hints:<br />".
                       "<ul>".
                       "<li>Users have two stages of deleting, the second one is permanent.</li>\n".
@@ -49,9 +49,9 @@ $user_info      = "<br />Please select your action from the menu on the left.<br
                       "<li>Passwords are encrypted in the database. You can only set a new one.</li>\n".
                       "<li>Passwords are mailed only once to the user when set, so be careful where you mail them!</li>\n".
                       "<li>Users can edit themselves without admins knowing - this will save you time (and spam)</li>\n".
-                      "</ul><br />\n";
+                      "</ul>\n";
 
-$calendar_key    = "<i>Return to Main Menu</i></a>]</b><br />\n".
+$calendar_key    =  "<i>Return to Main Menu</i></a>]</b><br />\n".
                       "<p><b><u>Key to Calendar</u></b><br /><br />\n".
                       "<font color=\"blue\">Project (with uncompleted tasks)</font><br />\n".
                       "<font color=\"green\"><u>Project </u>(all tasks completed)</font><br />\n".

@@ -31,33 +31,33 @@
 */
 
 
-$taskgroup_info = "<BR><UL><LI>Si elimina un taskgroup todas las tareas de su propiedad seran seteadas como uncategorised.</LI>\n".
-  "<LI>Puede cambiar el nombre de la categoria sin iinterferir con las tareas.</LI>\n".
-  "<LI>Dos taskgroups no pueden tener el mismo nombre.</LI></UL><BR>\n";
+$taskgroup_info = "<ul><li>Si elimina un taskgroup todas las tareas de su propiedad seran seteadas como uncategorised.</li>\n".
+  "<li>Puede cambiar el nombre de la categoria sin iinterferir con las tareas.</li>\n".
+  "<li>Dos taskgroups no pueden tener el mismo nombre.</li></ul>\n";
 
-$usergroup_info = "<BR><UL><LI>Si elimina un usergroup todos los envios privado de for relacionados seran eliminados tambien.</LI>\n".
-  "<LI>Puede modificar el nombre del usergroup sin interferir con los usuarios en el.</LI>\n".
-  "<LI>Dos usergroups no pueden tener el mismo nombre.</LI></UL><BR><BR>\n";
+$usergroup_info = "<ul><li>Si elimina un usergroup todos los envios privado de for relacionados seran eliminados tambien.</li>\n".
+  "<li>Puede modificar el nombre del usergroup sin interferir con los usuarios en el.</li>\n".
+  "<li>Dos usergroups no pueden tener el mismo nombre.</li></ul>\n";
 
-$user_info      = "<BR>Seleccion su accion desde el menu en la izquierda.<BR><BR>".
-  "Algunas cosideraciones:<BR>".
-  "<UL>".
-  "<LI>Los usuarios se eliminan en dos etapas, la segunda es permanente.</LI>\n".
-  "<LI>Un usuario eliminado pierde todas sus tareas pero no sus mensajes del foro.</LI>\n".
-  "<LI>Un usuario borrado de forma permanente pierde todo.</LI>\n".
-  "<LI>No puede eliminar un usuario de modo permanente si este tiene itemsm en el foro.</LI>\n".
-  "<LI>Un usuario borrado mantiene los registros de sus tareas que ha revisado, y continuara con estas despues de ser reactivado.</LI>\n".
-  "<LI>TODAS las acciones ejecutadas sobre un usuario seran informadas al usuario por email..</LI>\n".
-  "<LI>Los Paswords son encriptados en la bas de datos. Puede solo setear uno nuevo.</LI>\n".
-  "<LI>Los Passwords son enviados por email al usuario solo una vez cuando el usuario lo registra, sea cuidados cuando envia estos mails!</LI>\n".
-  "<LI>Los usuarios pueden editar su cuenta sin conocimiento del administrador,, esto salvara su tiempo de administracion</LI>\n".
-  "</UL><BR>\n";
+$user_info      = "Seleccion su accion desde el menu en la izquierda.<br /><br />".
+  "Algunas cosideraciones:<br />".
+  "<ul>".
+  "<li>Los usuarios se eliminan en dos etapas, la segunda es permanente.</li>\n".
+  "<li>Un usuario eliminado pierde todas sus tareas pero no sus mensajes del foro.</li>\n".
+  "<li>Un usuario borrado de forma permanente pierde todo.</li>\n".
+  "<li>No puede eliminar un usuario de modo permanente si este tiene itemsm en el foro.</li>\n".
+  "<li>Un usuario borrado mantiene los registros de sus tareas que ha revisado, y continuara con estas despues de ser reactivado.</li>\n".
+  "<li>TODAS las acciones ejecutadas sobre un usuario seran informadas al usuario por email..</li>\n".
+  "<li>Los Paswords son encriptados en la bas de datos. Puede solo setear uno nuevo.</li>\n".
+  "<li>Los Passwords son enviados por email al usuario solo una vez cuando el usuario lo registra, sea cuidados cuando envia estos mails!</li>\n".
+  "<li>Los usuarios pueden editar su cuenta sin conocimiento del administrador,, esto salvara su tiempo de administracion</li>\n".
+  "</ul>\n";
 
-$calendar_key    = "<I>Retornar al Menu Principal</I></A>]</B><BR>\n".
-	"<P><B><U>Claves (colores) para Calendario</U></B><BR><BR>\n".
-	"<FONT color=\"blue\">Proyecto (con tareas incompletas)</FONT><BR>\n".
-	"<FONT color=\"green\"><U>Proyecto </U>(todas las tareas completas)</FONT><BR>\n".
-	"<FONT color=\"red\">Tarea (no completada)</FONT><BR>\n".
-	"<FONT color=\"green\">Tarea (completada)</FONT><BR>\n";
+$calendar_key    = "<i>Retornar al Menu Principal</i></a>]</b><br />\n".
+	"<p><b><u>Claves (colores) para Calendario</u></b><br /><br />\n".
+	"<font color=\"blue\">Proyecto (con tareas incompletas)</font><br />\n".
+	"<font color=\"green\"><u>Proyecto </u>(todas las tareas completas)</font><br />\n".
+	"<font color=\"red\">Tarea (no completada)</font><br />\n".
+	"<font color=\"green\">Tarea (completada)</font><br />\n";
 
 ?>
