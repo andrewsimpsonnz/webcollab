@@ -29,6 +29,9 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
+if($GUEST == 1)
+  error("Contact edit", "Guest not authorised" );
+
 //we need a valid contactid
 if(empty( $_POST['contactid'] ) || ! is_numeric( $_POST['contactid'] ) )
   error("Contact engine", "Not a valid value for contactid");

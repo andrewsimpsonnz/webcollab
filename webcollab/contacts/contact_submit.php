@@ -31,6 +31,9 @@
 require_once("path.php" );
 require_once( BASE."includes/security.php" );
 
+if($GUEST == 1)
+  error("Contact submit", "Guest not authorised" );
+
 //edit, insert, delete ?
 if( ! isset( $_REQUEST['action'] ) )
   error("Contact submit", "No request given" );

@@ -35,6 +35,9 @@ require_once( BASE."includes/security.php" );
 $content = "";
 $q = "";
 
+if($GUEST == 1)
+  error("Contact add", "Guest not authorised" );
+
 $content .=
         "<form method=\"post\" action=\"contacts.php\">\n".
           "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".

@@ -60,13 +60,17 @@ $content .=
        "<tr><td><i>".$lang['city']."</i></td><td>".$row['city']."</td></tr>\n".
        "<tr><td><i>".$lang['email']."</i></td><td><a href=\"mailto:".$row['email']."\">".$row['email']."</a></td></tr>\n".
     "</table>\n".
-    "<p><i>".$lang['notes']."</i><br />".nl2br($row['notes'] )."</p>\n".
+    "<p><i>".$lang['notes']."</i><br />".nl2br($row['notes'] )."</p>\n";
+    
+if($GUEST == 0 ){    
+  $content .=    
     "<form method=\"post\" action=\"contacts.php\" >\n".
       "<fieldset><input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"".$row['id']."\" />\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
       "<input type=\"submit\" value=\"".$lang['edit_contact']."\" /></fieldset>\n".
    "</form>";
+  }
 
 new_box($lang['contact_info'], $content );
 
