@@ -32,6 +32,10 @@ include_once(BASE."config/config.php" );
 
 switch($LOCALE ) {
 
+  case "bg":
+    include(BASE."lang/bg_message.php" );
+    break;
+
   case "ca":
     include(BASE."lang/ca_message.php" );
     break;
