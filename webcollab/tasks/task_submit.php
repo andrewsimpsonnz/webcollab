@@ -276,6 +276,14 @@ if( valid_string($_REQUEST["action"]) ) {
           $projectid = $taskid;
         }
 
+	//if inactive parent project, then set this task to inactive too
+	if( $parentid != 0 ) {
+	$project_status = db_result(db_query( "SELECT status FROM tasks WHERE id=".$projectid ), 0, 0 );
+	  
+	  if( $project_status == "cantcomplete" || $project_status == "notactive" )
+	    db_query( "UPDATE tasks SET status='".$project_status."' WHERE id=".$taskid );
+	}
+
         //you have already seen this item, no need to announce it to you
         db_query("INSERT INTO seen(userid,taskid, time)
                    VALUES(".$uid.",".$taskid.",current_timestamp(0) )");
@@ -381,6 +389,12 @@ if( valid_string($_REQUEST["action"]) ) {
         if( ($admin != 1 ) && (db_result( db_query("SELECT COUNT(*) FROM tasks WHERE id=".$taskid." AND owner=".$uid ), 0, 0 ) < 1) )
           error( "Task submit", "Access denied, you do not have enough rights to do that" );
 
+	//begin transaction
+	db_begin();
+
+        //get existing status
+	$previous_status = db_result(db_query( "SELECT status FROM tasks WHERE id=".$taskid ), 0, 0 );
+
         //change the info
         db_query( "UPDATE tasks
 	           SET name='".safe_data($name)."',
@@ -400,6 +414,27 @@ if( valid_string($_REQUEST["action"]) ) {
         //get projectid and parent from the database
         $q = db_query("SELECT projectid, parent FROM tasks WHERE id=".$taskid );
 	$row = db_fetch_array($q, 0 );
+
+	//make adjustments for child tasks
+	if( $row["parent"] == 0 ) {
+	  switch( $status ) {
+	    case "cantcomplete":
+	    case "notactive":
+	      //inactive project, then set the uncompleted child tasks to inactive too
+	      db_query( "UPDATE tasks SET status='".$status."' WHERE projectid=".$row["projectid"]." AND (status='active' OR status='created')" );
+	      break;
+
+	    case "new":
+	    case "active":
+	      //if reinstated project, set inactive child tasks to new
+	      if($previous_status == "cantcomplete" || $previous_status == "notactive" )
+                db_query( "UPDATE tasks SET status='created' WHERE projectid=".$row["projectid"]." AND parent<>0 AND status='".$previous_status."'" );
+	      break;
+          }
+	}
+
+	//transaction complete
+	db_commit();
 
 	//get name of project for emails
         $name_project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
