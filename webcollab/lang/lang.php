@@ -48,6 +48,10 @@ switch($LOCALE ) {
     include(BASE."lang/fr_message.php" );
     break;
 
+  case "it":
+    include(BASE."lang/it_message.php" );
+    break;
+
   case "en":
   default:
     include(BASE."lang/en_message.php" );

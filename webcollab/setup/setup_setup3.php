@@ -177,23 +177,27 @@ if( ! isset($LOCALE) )
 
 switch($LOCALE) {
   case "ca":
-    $s1 = "SELECTED"; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = "";
+    $s1 = "SELECTED"; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = "";
     break;
 
   case "en":
-    $s1 = ""; $s2 = "SELECTED"; $s3 = ""; $s4 = ""; $s5 = "";
+    $s1 = ""; $s2 = "SELECTED"; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = "";
     break;
 
   case "fr":
-    $s1 = ""; $s2 = ""; $s3 = "SELECTED"; $s4 = ""; $s5 = "";
+    $s1 = ""; $s2 = ""; $s3 = "SELECTED"; $s4 = ""; $s5 = ""; $s6 = "";
     break;
 
   case "de":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = "SELECTED"; $s5 = "";
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = "SELECTED"; $s5 = ""; $s6 = "";
+    break;
+
+  case "it":
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = "SELECTED"; $s6 = "";
     break;
 
   case "es":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = "SELECTED";
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = "SELECTED";
     break;
 }
 
@@ -203,7 +207,8 @@ $content .= "<tr><td></td><td><br /></td></tr>\n".
             "<option value=\"en\" $s2 >English</option>\n".
             "<option value=\"fr\" $s3 >French</option>\n".
             "<option value=\"de\" $s4 >German</option>\n".
-            "<option value=\"es\" $s5 >Spanish</option>\n".
+            "<option value=\"it\" $s5 >Italian</option>\n".
+            "<option value=\"es\" $s6 >Spanish</option>\n".
             "</select></td></tr>\n";
 
 //email settings
