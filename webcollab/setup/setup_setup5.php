@@ -105,7 +105,7 @@ $content = "<?php\n".
 '//----------------------------------------------------------------------------------------------'."\n".
 '// Less important items below this line'."\n\n".
 '//-- Language --'."\n\n".
-'  // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan)'."\n".
+'  // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan), "de" (German)'."\n".
 '  $LOCALE = "'.$data["locale"].'";'."\n\n".
 '//-- Email --'."\n\n".
 '  //If an error occurs, who do you want the error to be mailed to ?'."\n".
