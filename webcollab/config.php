@@ -121,4 +121,7 @@
   //Use external webserver authorisation to login (values are "N", or "Y")
   $WEB_AUTH = "N";
 
+  //version info
+  $WEBCOLLAB_VERSION = "1.51 - Hebe";
+
 ?>
