@@ -285,7 +285,7 @@ if( valid_string($_REQUEST["action"]) ) {
 	}
 
         //you have already seen this item, no need to announce it to you
-        db_query("INSERT INTO seen(userid,taskid, time)
+        db_query("INSERT INTO seen(userid, taskid, time)
                    VALUES(".$uid.",".$taskid.",current_timestamp(0) )");
         //transaction complete
 	db_commit();
@@ -432,7 +432,11 @@ if( valid_string($_REQUEST["action"]) ) {
 	      break;
           }
 	}
-
+	
+        //you have already seen this item, no need to announce it to you
+        db_query("INSERT INTO seen(userid, taskid, time)
+                   VALUES(".$uid.",".$taskid.",current_timestamp(0) )");
+	
 	//transaction complete
 	db_commit();
 
