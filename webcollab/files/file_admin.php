@@ -73,9 +73,9 @@ for($i=0 ; $row = @db_fetch_array($file_q, $i ) ; $i++ ) {
 
   //file part
   $content .= "<tr><td>".$lang["ttask"].":</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["task_id"]."\">".$row["task_name"]."</a></td></tr>\n".
-              "<tr><td>".$lang["file"]."</td><td><a href=\"files/file_download.php?x=$x&amp;fileid=".$row["id"]."\" target=\"filewindow\">".$row["filename"]."</a> <small>(".$row["size"].$lang["bytes"].") </small>".
+              "<tr><td>".$lang["file"]."</td><td><a href=\"files/file_download.php?x=$x&amp;fileid=".$row["id"]."\" target=\"filewindow\">".$row["filename"]."</a>&nbsp;<small>(".$row["size"].$lang["bytes"].")&nbsp;</small>".
               //delete option
-              " [<a href=\"files/file_submit.php?x=$x&amp;action=del&amp;fileid=".$row["id"]."&amp;taskid=".$taskid."\" onClick=\"return confirm( '".sprintf( $lang["del_file_javascript_sprt"], $row["filename"])."' )\">".$lang["del"]."</a>]</td></tr>\n".
+              "<font class=\"textlink\">[<a href=\"files/file_submit.php?x=$x&amp;action=del&amp;fileid=".$row["id"]."&amp;taskid=".$taskid."\" onClick=\"return confirm( '".sprintf( $lang["del_file_javascript_sprt"], $row["filename"])."' )\">".$lang["del"]."</a>]</font></td></tr>\n".
               //user part
               "<tr><td>".$lang["uploader"]." </td><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["username"]."</a> (".nicetime( $row["uploaded"] ).")</td></tr>\n";
 

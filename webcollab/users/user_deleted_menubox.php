@@ -41,7 +41,7 @@ $q = db_query("SELECT id, fullname FROM users WHERE deleted='t' ORDER BY fullnam
 
 //check for enough users
 if(db_numrows($q) < 1 ) {
-  new_box($lang["deleted_users"], "<small><small>".$lang["no_deleted_users"]."</small></small>", "boxmenu" );
+  new_box($lang["deleted_users"], "<small>".$lang["no_deleted_users"]."</small>", "boxmenu" );
   return;
 }
 
@@ -49,8 +49,8 @@ $content = "<table border=\"0\">\n";
 
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
-  $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></small></small></td>\n";
-  $content .= "<td align=\"right\" nowrap><small><small> [<a href=\"users/user_submit.php?x=$x&amp;action=revive&amp;userid=".$row["id"]."\">".$lang["revive"]."</a>]";
+  $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></small></td>\n";
+  $content .= "<td align=\"right\" nowrap><font class=\"textlink\">&nbsp;[<a href=\"users/user_submit.php?x=$x&amp;action=revive&amp;userid=".$row["id"]."\">".$lang["revive"]."</a>]";
 
   //if this user has NO posts, NO tasks owned AND NO tasks created then we can delete him forever :)
 
@@ -62,11 +62,11 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
       //Get the number of forum posts
       if(db_result(db_query( "SELECT COUNT(*) FROM forum WHERE userid=".$row["id"] ), 0, 0 ) == 0 ) {
-        $content .= " [<a href=\"users/user_del.php?x=$x&amp;action=permdel&amp;userid=".$row["id"]."\" onClick=\"return confirm( '".sprintf($lang["permdel_javascript_sprt"], $row["fullname"] )."' )\">".$lang["permdel"]." </a>]";
+        $content .= "&nbsp;[<a href=\"users/user_del.php?x=$x&amp;action=permdel&amp;userid=".$row["id"]."\" onClick=\"return confirm( '".sprintf($lang["permdel_javascript_sprt"], $row["fullname"] )."' )\">".$lang["permdel"]." </a>]";
       }
     }
   //}
-  $content.="</small></small></td></tr>\n";
+  $content.="</font></td></tr>\n";
 }
 
 $content .= "</table>";

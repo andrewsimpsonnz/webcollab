@@ -50,7 +50,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></small></td>";
 
   if($admin == 1 ) {
-    $content .= "<td align=\"right\" nowrap><font class=\"texlink\"> [<a href=\"users/user_del.php?x=$x&amp;userid=".$row["id"]."\">".$lang["del"]."</a>]".
+    $content .= "<td align=\"right\" nowrap><font class=\"textlink\"> [<a href=\"users/user_del.php?x=$x&amp;userid=".$row["id"]."\">".$lang["del"]."</a>]".
                 "[<a href=\"users.php?x=$x&amp;userid=".$row["id"]."&amp;action=edit\">".$lang["edit"]."</a>]</font></td>";
   }
   $content .= "</tr>\n";
