@@ -97,15 +97,16 @@ if(db_numrows($q) < 1 ) {
 else{
   $content .= "<tr><td>".$lang['usergroups'].": </td><td>";
   $alert = "";
+  $usergroups = "";
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ){
     //test for private usergroups
     if( ($row['private']) && (! $ADMIN ) && ( ! in_array($row['id'], (array)$GID ) ) ) {
       $alert = "<br />".$lang['private_usergroup_profile'];
       continue;
     }
-    $content .= $row['name']."&nbsp;";
+    $usergroups .= ($usergroups != "") ? ",&nbsp;".$row['name'] : $row['name'];
   }
-  $content .= $alert;
+  $content .= $usergroups.$alert;
   $content .= "</td></tr>\n";
 }
 
