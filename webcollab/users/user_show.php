@@ -41,7 +41,7 @@ if( ! isset($_GET["userid"]) || ! is_numeric($_GET["userid"]) || $_GET["userid"]
 $userid = intval($_GET["userid"]);
 
 //select
-$q = db_query("SELECT * FROM users WHERE id=$userid" );
+$q = db_query("SELECT id, name, fullname, email, admin, private, deleted FROM users WHERE id=$userid" );
 
 //get info
 if( ! ($row = db_fetch_array($q, 0 ) ) )
@@ -105,33 +105,34 @@ else{
 }
 
 //get the last login time of a user
-$q = db_query("SELECT lastaccess FROM logins WHERE user_id=$userid" );
-$content .=   "<tr><td>".$lang["last_time_here"]."</td><td>".nicetime(@db_result( $q, 0, 0 ))."</td></tr>\n";
+$row = @db_result(db_query("SELECT lastaccess FROM logins WHERE user_id=$userid" ), 0, 0);
+$content .=   "<tr><td>".$lang["last_time_here"]."</td><td>".nicetime($row )."</td></tr>\n";
 
-//Get the number of tasks created
-$q = db_query("SELECT COUNT(*) FROM tasks WHERE creator=$userid" );
-$content .=   "<tr><td>".$lang["number_items_created"]."</td><td>".db_result( $q, 0, 0 )."</td></tr>\n";
+//Get the number of tasks/projects created
+$row = db_result(db_query("SELECT COUNT(*) FROM tasks WHERE creator=$userid" ), 0, 0 );
+$content .=   "<tr><td>".$lang["number_items_created"]."</td><td>".$row."</td></tr>\n";
 
 //Get the number of projects owned
-$q = db_query("SELECT COUNT(*) FROM tasks WHERE owner=$userid AND parent=0" );
-$content .=   "<tr><td>".$lang["number_projects_owned"]."</td><td>".($numberofprojectsowned = db_result( $q, 0, 0 ) )."</td></tr>\n";
+$projects_owned = db_result(db_query("SELECT COUNT(*) FROM tasks WHERE owner=$userid AND parent=0" ), 0, 0 );
+$content .=   "<tr><td>".$lang["number_projects_owned"]."</td><td>".$projects_owned."</td></tr>\n";
 
 //Get the number of tasks owned
-$q = db_query("SELECT COUNT(*) FROM tasks WHERE owner=$userid AND parent<>0" );
-$content .=   "<tr><td>".$lang["number_tasks_owned"]."</td><td>".($numberoftasksowned = db_result( $q, 0, 0 ) )."</td></tr>\n";
+$tasks_owned = db_result(db_query("SELECT COUNT(*) FROM tasks WHERE owner=$userid AND parent<>0" ), 0, 0 );
+$content .=   "<tr><td>".$lang["number_tasks_owned"]."</td><td>".$tasks_owned."</td></tr>\n";
 
 //Get the number of tasks completed that are owned
-$q = db_query("SELECT COUNT(*) FROM tasks WHERE owner=$userid AND status='done' AND parent<>0" );
-$content .=   "<tr><td>".$lang["number_tasks_completed"]."</td><td>".db_result( $q, 0, 0 )."</td></tr>\n";
+$row = db_result(db_query("SELECT COUNT(*) FROM tasks WHERE owner=$userid AND status='done' AND parent<>0" ), 0, 0 );
+$content .=   "<tr><td>".$lang["number_tasks_completed"]."</td><td>".$row."</td></tr>\n";
 
 //Get the number of forum posts
-$q = db_query("SELECT COUNT(*) FROM forum WHERE userid=$userid" );
-$content .=   "<tr><td>".$lang["number_forum"]."</td><td>".db_result( $q, 0, 0 )."</td></tr>\n";
+$row = db_result(db_query("SELECT COUNT(*) FROM forum WHERE userid=$userid" ), 0, 0 );
+$content .=   "<tr><td>".$lang["number_forum"]."</td><td>".$row."</td></tr>\n";
 
 //Get the number of files uploaded and the size
-$q = db_query("SELECT SUM(size), COUNT(size) FROM files WHERE uploader=$userid" );
-$content .=   "<tr><td>".$lang["number_files"]."</td><td>".db_result( $q, 0, 1 )."</td></tr>\n";
-$size = db_result( $q, 0, 0 );
+$q = db_query("SELECT COUNT(size), SUM(size) FROM files WHERE uploader=$userid" );
+$row = db_fetch_num($q, 0 );
+$content .=   "<tr><td>".$lang["number_files"]."</td><td>".$row[0]."</td></tr>\n";
+$size = $row[1];
 
 if($size == "") {
   $size = 0;
@@ -144,7 +145,7 @@ new_box($lang["user_info"], $content );
 
 //shows quick links to the tasks that the user owns
 
-if( $numberoftasksowned + $numberofprojectsowned > 0 ) {
+if( $tasks_owned + $projects_owned > 0 ) {
   $content = "<ul>";
 
   //get list of private projects and put them in an array for later use

@@ -40,7 +40,8 @@ $content = "";
 //
 function list_tasks($parent ) {
 
-  global $x, $uid, $gid, $admin, $parent_array, $epoch, $taskgroup_flag, $lang, $task_state, $NEW_TIME, $DATABASE_TYPE, $parentid, $ul_flag;
+  global $x, $uid, $gid, $admin, $parentid, $parent_array, $epoch, $lang;
+  global $taskgroup_flag, $task_state, $NEW_TIME, $DATABASE_TYPE, $ul_flag, $now;
 
   //init values
   $stored_groupname = NULL;
@@ -66,8 +67,7 @@ $q = db_query("SELECT tasks.id AS id,
                 users.fullname AS username,
                 users.id AS userid,
                 taskgroups.name AS groupname,
-                taskgroups.description AS groupdescription,
-                $epoch now()) AS now
+                taskgroups.description AS groupdescription
                 FROM tasks
                 LEFT JOIN users ON ( users.id=tasks.owner )
                 LEFT JOIN taskgroups ON (taskgroups.id=tasks.taskgroupid)
@@ -138,7 +138,7 @@ $q = db_query("SELECT tasks.id AS id,
     $seen_test = db_result(db_query("SELECT COUNT(*) FROM seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" ), 0, 0);
 
     //don't show alert content for changes more than $NEW_TIME (in seconds)
-    if( ($row["now"] - max($row["edited"], $row["lastpost"], $row["lastfileupload"] ) ) > 86400*$NEW_TIME ) {
+    if( ($now - max($row["edited"], $row["lastpost"], $row["lastfileupload"] ) ) > 86400*$NEW_TIME ) {
 
       //task is over limit in $NEW_TIME and still not looked at by you, mark it as seen, and move on...
       if( $seen_test < 1 )
@@ -219,7 +219,7 @@ $q = db_query("SELECT tasks.id AS id,
         break;
 
       default:
-        $state = ($row["due"]-$row["now"] )/86400 ;
+        $state = ($row["due"]-$now )/86400 ;
         if($state > 1 ) {
           $this_content .=  "(".sprintf( $lang["due_sprt"], ceil($state) ).")";
         }
@@ -274,8 +274,11 @@ if( ! isset($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) || $_REQUE
 $parentid = intval($_REQUEST["taskid"]);
 
 //check for private usergroup projects
-$q = db_query("SELECT usergroupid, globalaccess FROM tasks WHERE id=".$taskid_row["projectid"] );
+$q = db_query("SELECT usergroupid, globalaccess, ".$epoch."now()) FROM tasks WHERE id=".$taskid_row["projectid"] );
+
 $row = db_fetch_num($q, 0 );
+
+$now = $row[2];
 
 if( ($admin != 1) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
 
