@@ -1,4 +1,12 @@
 WebCollab CVS
+*** 12 April 2004
+  Andrew Simpson
+
+- add privacy function to users and usergroups
+
+- add tools directory with backup and update functions
+
+WebCollab CVS
 *** 9 April 2004
   Andrew Simpson
 
