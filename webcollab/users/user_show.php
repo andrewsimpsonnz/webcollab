@@ -29,14 +29,10 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
-include_once(BASE."includes/security.php" );
-include_once(BASE."includes/database.php" );
-include_once(BASE."includes/common.php" );
-include_once(BASE."includes/screen.php" );
+$content = "";
 
 //get some stupid errors
 if( ! isset($_GET["userid"]) || ! is_numeric($_GET["userid"]) || $_GET["userid"] == 0 )
@@ -48,13 +44,10 @@ $userid = $_GET["userid"];
 $q = db_query("SELECT * FROM users WHERE id=$userid" );
 
 //get info
-if( ! ($row = db_fetch_array( $q, 0 ) ) )
+if( ! ($row = db_fetch_array($q, 0 ) ) )
   error("Database error", "Error in fetching result" );
 
-
-$content = "";
-
-if( $row["deleted"] == 't' )
+if($row["deleted"] == 't' )
   $content .= "<br /><b><centrt><font color=\"red\">".$lang["user_deleted"]."</font></center></b><br />";
 
 $content .= "<br /><table border=\"0\">".
@@ -62,20 +55,23 @@ $content .= "<br /><table border=\"0\">".
               "<tr><td>".$lang["full_name"].":</td><td>".$row["fullname"]."</td></tr>\n".
               "<tr><td>".$lang["email"].":</td><td><A href=\"mailto:".$row["email"]."\">".$row["email"]."</A></td></tr>\n";
 
-if( $row["admin"] == "t" )
+if($row["admin"] == "t" )
   $content .= "<tr><td>".$lang["admin"].":</td><td>".$lang["yes"]."</td></tr>\n";
 else
   $content .= "<tr><td>".$lang["admin"].":</td><td>".$lang["no"]."</td></tr>\n";
 
 //create a list of all the groups the user is in
-$q = db_query("SELECT usergroups.name FROM usergroups LEFT JOIN usergroups_users ON (usergroups_users.usergroupid=usergroups.id)  WHERE usergroups_users.userid=".$row["id"] );
+$q = db_query("SELECT usergroups.name
+                      FROM usergroups
+                      LEFT JOIN usergroups_users ON (usergroups_users.usergroupid=usergroups.id)
+                      WHERE usergroups_users.userid=".$row["id"] );
 
 if(db_numrows($q) < 1 ) {
   $content .= "<tr><td>".$lang["usergroups"].":</td><td>".$lang["no_usergroup"]."</td></tr>\n";
 }
 else{
   $content .= "<tr><td>".$lang["usergroups"].": </td><td>";
-  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
+  for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ){
     $content .= $row["name"]." ";
   }
   $content .= "</td></tr>\n";
@@ -128,7 +124,7 @@ if( $numberoftasksowned + $numberofprojectsowned > 0 ) {
   $q = db_query("SELECT id, name, parent, status, finished_time FROM tasks WHERE owner=$userid" );
 
   //show them
-  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+  for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
     $status_content = "";
 

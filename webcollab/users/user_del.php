@@ -28,15 +28,11 @@
   Easy user manager
 
 */
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
 
-include_once(BASE."includes/security.php" );
-include_once(BASE."includes/admin_config.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
+
 include_once(BASE."includes/email.php" );
-include_once(BASE."config.php" );
-
 
 //admins only
 if($admin != 1 )
@@ -76,7 +72,7 @@ if(isset($_GET["action"] ) && $_GET["action"] == "permdel" ) {
         $q = db_query("SELECT email FROM users where id=$userid" );
         $email = db_result($q, 0, 0) ;
 
-	//delete from users table
+        //delete from users table
         db_query("DELETE FROM users WHERE id=$userid" );
 
         //mail the user that he/she had been deleted
@@ -101,7 +97,7 @@ else {
   $email = db_result($q, 0, 0 );
 
   //mail the user that he/she had been deleted
-  include_once( BASE."lang/".$LOCALE."_email.php" );
+  include_once(BASE."lang/".$LOCALE."_email.php" );
   $message = sprintf($email_delete_user, $MANAGER_NAME, date("F j, Y, H:i"), $EMAIL_ADMIN );
   email($email, $title_delete_user, $message );
 }

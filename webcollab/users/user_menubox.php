@@ -29,14 +29,8 @@
 
 */
 
-//secure values
-$content = "";
-
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once(BASE."includes/security.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
 //add an option to add users
 if($admin == 1 ) {

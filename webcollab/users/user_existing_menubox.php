@@ -29,13 +29,10 @@
 
 */
 
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
+
 $content = "";
-
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once(BASE."includes/security.php" );
 
 //query
 $q = db_query("SELECT * FROM users WHERE deleted='f' ORDER by fullname" );
@@ -46,10 +43,10 @@ if(db_numrows($q) < 1 ) {
   return;
 }
 
-$content = "<small><table border=\"0\">\n";
+$content = "<table border=\"0\"><small>\n";
 
 //show them
-for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&userid=".$row["id"]."\">".$row["fullname"]."</a></small></td>";
 
   if($admin == 1 ) {
@@ -59,7 +56,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= "</tr>\n";
 }
 
-$content .= "</table></small>";
+$content .= "</small></table>";
 
 //show it
 new_box($lang["existing_users"], $content );

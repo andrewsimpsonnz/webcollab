@@ -29,23 +29,18 @@
 
 */
 
-
-
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once(BASE."includes/security.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
 //first check if we are admin
-if( $admin != 1 )
+if($admin != 1 )
   return;
 
 //query
-$q = db_query( "SELECT id, fullname FROM users WHERE deleted='t' ORDER BY fullname" );
+$q = db_query("SELECT id, fullname FROM users WHERE deleted='t' ORDER BY fullname" );
 
 //check for enough users
-if( db_numrows($q) < 1 ) {
+if(db_numrows($q) < 1 ) {
   new_box($lang["deleted_users"], "<small><small>".$lang["no_deleted_users"]."</small></small>" );
   return;
 }
@@ -53,7 +48,7 @@ if( db_numrows($q) < 1 ) {
 $content = "<table border=\"0\">\n";
 
 //show them
-for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></small></small></td>\n";
   $content .= "<td align=\"right\" nowrap><small><small> [<a href=\"users/user_submit.php?x=$x&amp;action=revive&amp;userid=".$row["id"]."\">".$lang["revive"]."</a>]";
 
@@ -72,7 +67,6 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     }
   }
   $content.="</small></small></td></tr>\n";
-
 }
 
 $content .= "</table>";

@@ -29,11 +29,8 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once(BASE."includes/security.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
 //secure vars
 $userid = "";
@@ -53,13 +50,11 @@ if($admin == 1 ) {
   //also query for the groups that this user is in
   $usergroups_users_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$userid" );
 
-
 }
 else {
 
   //user
-  $q = db_query( "SELECT * FROM users WHERE id=$uid" );
-
+  $q = db_query("SELECT * FROM users WHERE id=$uid" );
 }
 
 //fetch data
@@ -98,9 +93,9 @@ if( $admin == 1 ) {
 
     //loop all groups the user is in and tag the ones he is in
     @db_data_seek( $usergroups_users_q ); //reset mysql internal pointer each cycle
-    for( $j=0 ; $usergroups_users_row = @db_fetch_array($usergroups_users_q, $j ) ; $j++) {
+    for($j=0 ; $usergroups_users_row = @db_fetch_array($usergroups_users_q, $j ) ; $j++) {
 
-      if( $usergroups_users_row["usergroupid"] == $usergroup_row["id"] ) {
+      if($usergroups_users_row["usergroupid"] == $usergroup_row["id"] ) {
         $content .= " SELECTED >";
     $found=1;
     break;
@@ -108,7 +103,7 @@ if( $admin == 1 ) {
     }
 
     //if not found then end the option tag normally
-    if( $found == 0 )
+    if($found == 0 )
       $content .= " >";
 
     $content .= $usergroup_row["name"]."</option>";

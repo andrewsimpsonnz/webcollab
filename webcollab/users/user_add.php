@@ -28,11 +28,9 @@
   Easy user manager
 
 */
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
 
-include_once(BASE."includes/security.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
 //admins only
 if($admin != 1 )
@@ -50,7 +48,7 @@ $content = "<center>".
                "<tr><td>".$lang["is_admin"].":</td><td><input type=\"checkbox\" name=\"admin_rights\"></td></tr>\n";
 
 //add user-groups
-$usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
+$usergroup_q = db_query("SELECT name, id FROM usergroups ORDER BY name" );
 $content .=    "<tr><td>".$lang["usergroup"].":</td><td><SELECT name=\"usergroup[]\" MULTIPLE size=\"4\">\n";
 for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
   $content .=  "<option value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</option>";
