@@ -55,6 +55,7 @@ $task_state = array(
  "task_active" => " Active",
  //project states
  "planned_project" => "Planned project (not active)",
+ "no_deadline_project" => "No deadline set",
  "active_project" => "Active project" );
 
 //common items
@@ -302,6 +303,7 @@ $lang = array(
  "project_hold" => "Project On Hold from ",
  "project_planned" => "Planned Project",
  "percent" => "% of the tasks are done",
+ "project_no_deadline" => "No deadline set for this project",
  "no_allowed_projects" => "There are no projects that you are allowed to view",
  "projects" => "Projects",
  "percent_project_sprt" => "This project is %d%% completed",
