@@ -160,11 +160,8 @@ return;
 //
 function db_begin() {
 
-  global $database_connection;
-
-  //not implemented yet
-  //mysql_query( "SET AUTOCOMMIT=0" )
-
+  //not implemented with ISAM tables
+  
 return;
 }
 
@@ -173,12 +170,8 @@ return;
 //
 function db_rollback() {
 
-  global $database_connection;
-
-  //not implemented yet
-  //mysql_query( "ROLLBACK" );
-  //mysql_query( "SET AUTOCOMMIT=1" );
-
+  //not implemented with ISAM tables
+  
 return;
 }
 
@@ -187,12 +180,8 @@ return;
 //
 function db_commit() {
 
-  global $database_connection;
-
-  //not implemented yet
-  //mysql_query( "COMMIT" );
-  //mysql_query( "SET AUTOCOMMIT=1" );
-
+  //not implemented with ISAM tables
+  
 return;
 }
 
