@@ -35,7 +35,7 @@ include_once(BASE."includes/details.php" );
 
 $content = "";
 
-if( ! isset($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
+if(empty($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
   error("File list", "The taskid input is not valid" ); 
 
 $taskid = intval($_REQUEST["taskid"]);
@@ -47,7 +47,7 @@ require_once( BASE."includes/usergroup_security.php" );
 $q = db_query("SELECT ".PRE."files.oid AS oid,
                         ".PRE."files.id AS id,
                         ".PRE."files.filename AS filename,
-                        ".PRE."files.uploaded AS uploaded,
+                        ".$epoch.PRE."files.uploaded) AS uploaded,
                         ".PRE."files.size AS size,
                         ".PRE."files.mime AS mime,
                         ".PRE."files.description AS description,
@@ -76,7 +76,7 @@ if(db_numrows($q ) != 0 ) {
       $content .= "</td></tr>\n";
 
     //user part
-    $content .= "<tr><td>".$lang["uploader"]." <a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["username"]."</a> (".nicetime( $row["uploaded"] ).")</td></tr>\n";
+    $content .= "<tr><td>".$lang["uploader"]." <a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["username"]."</a> (".nicetime( $row["uploaded"], 1 ).")</td></tr>\n";
 
     //show description
     if( $row["description"] != "" )

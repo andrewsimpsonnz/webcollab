@@ -33,7 +33,7 @@ require_once(BASE."includes/security.php" );
 if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
-if( ! isset($_GET["taskid"]) && ! is_numeric($_GET["taskid"]) )
+if(empty($_GET["taskid"]) && ! is_numeric($_GET["taskid"]) )
   error("Task clone", "Taskid not set" );
 
 $taskid = intval($_GET["taskid"]);

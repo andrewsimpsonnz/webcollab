@@ -30,7 +30,7 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 //we need a valid contactid
-if( ! isset( $_POST["contactid"] ) || ! is_numeric( $_POST["contactid"] ) )
+if(empty( $_POST["contactid"] ) || ! is_numeric( $_POST["contactid"] ) )
   error("Contact engine", "Not a valid value for contactid");
 
 $contactid = intval($_POST["contactid"]);

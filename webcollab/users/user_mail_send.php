@@ -43,11 +43,11 @@ if( $admin != 1 ) {
 $address_array = "";
 
 // send to users or groups?
-if( ! isset($_POST["group"]) )
+if(empty($_POST["group"]) )
   error("Email action handler", "No request given" );
 
 //check we have a message!
-if( ! isset($_POST["message"] ) || strlen($_POST["message"] ) == 0 )
+if(empty($_POST["message"] ) )
   warning($lang["admin_email"], $lang["no_message"] );
 
 //normalise embedded line breaks to '\n' and then wordwrap
@@ -82,7 +82,7 @@ if(get_magic_quotes_gpc() ) {
 
     case "group":
       //check if any usergroups have been sent
-      if(isset($_POST["usergroup"] ) )
+      if(! empty($_POST["usergroup"] ) )
         $max = sizeof($_POST["usergroup"] );
       else
         warning($lang["admin_email"], $lang["no_usergroups"] );

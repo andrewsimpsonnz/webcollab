@@ -29,7 +29,7 @@
 require_once("path.php" );
 require_once( BASE."includes/security.php" );
 
-if( ! isset($_GET["fileid"]) || ! is_numeric($_GET["fileid"]) )
+if(empty($_GET["fileid"]) || ! is_numeric($_GET["fileid"]) )
   return;
 
 $fileid = intval($_GET["fileid"]);

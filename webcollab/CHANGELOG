@@ -1,4 +1,9 @@
 WebCollab CVS
+*** 20 August 2004
+
+- refactoring of input validation for speed/efficiency
+
+WebCollab CVS
 *** 8 August 2004
 
 - allow for user-selected timezones for pgsql/mysql handling

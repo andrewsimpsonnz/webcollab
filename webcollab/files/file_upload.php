@@ -37,7 +37,7 @@ include_once(BASE."includes/admin_config.php" );
 if( ! (bool)ini_get("file_uploads" ) )
   warning($lang["error"], $lang["no_file_uploads"] );
 
-if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
+if(empty($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
   error("File upload", "Not a valid taskid");
 
 $taskid = $_GET["taskid"];

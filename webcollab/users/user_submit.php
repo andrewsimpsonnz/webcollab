@@ -38,7 +38,7 @@ $usergroup_names = "";
 $admin_state ="";
 
 //update or insert ?
-if( ! isset($_REQUEST["action"]) )
+if(empty($_REQUEST["action"]) )
   error("User submit", "No request given" );
 
 //if user aborts, let the script carry onto the end
@@ -53,7 +53,7 @@ ignore_user_abort(TRUE);
       if($admin != 1 )
         error("Authorisation failed", "You have to be admin to do this" );
 
-      if( ! isset($_GET["userid"]) && ! is_numeric($_GET["userid"]) )
+      if(empty($_GET["userid"]) && ! is_numeric($_GET["userid"]) )
         error("User submit", "No userid was specified." );
 
       $userid = intval($_GET["userid"]);
@@ -83,20 +83,15 @@ ignore_user_abort(TRUE);
       //check input has been provided
       $input_array = array("name", "fullname", "password", "email" );
       foreach( $input_array as $var ) {
-        if( ! isset($_POST[$var]) || strlen($_POST[$var]) == 0 ) {
+        if(empty($_POST[$var])) {
           warning( $lang["value_missing"], sprintf( $lang["field_sprt"], $var ) );
         }
+        ${$var} = safe_data($_POST[$var]);
       }
 
       //do basic check on email address
-      if(ereg("^.+@.+\..+$", $_POST["email"] ) )
-        $email = safe_data($_POST["email"]);
-      else
+      if(! ereg("^.+@.+\..+$", $email ) )
         warning($lang["invalid_email"], sprintf( $lang["invalid_email_given_sprt"], $_POST["email"]) );
-
-      $name     = safe_data($_POST["name"]);
-      $fullname = safe_data($_POST["fullname"]);
-      $password = safe_data($_POST["password"]);
 
       if( isset($_POST["private_user"]) && ( $_POST["private_user"] == "on" ) )
         $private_user = 1;
@@ -162,20 +157,15 @@ ignore_user_abort(TRUE);
       //check input has been provided
       $input_array = array("name", "fullname", "email" );
       foreach($input_array as $var ) {
-        if( ! isset($_POST[$var]) || strlen($_POST[$var]) == 0 ) {
+        if(empty($_POST[$var]) ) {
           warning($lang["value_missing"], sprintf($lang["field_sprt"], $var ) );
         }
+        ${$var} = safe_data($_POST[$var]);
       }
 
       //check email address
-      if(ereg("^.+@.+\..+$", $_POST["email"] ) )
-        $email = safe_data($_POST["email"]);
-      else
+      if(! ereg("^.+@.+\..+$", $email ) )
         warning($lang["invalid_email"], sprintf($lang["invalid_email_given_sprt"], safe_data($_POST["email"]) ) );
-
-      $name     = safe_data($_POST["name"]);
-      $fullname = safe_data($_POST["fullname"]);
-      $password = safe_data($_POST["password"]);
 
       if( isset($_POST["private_user"]) && ( $_POST["private_user"] == "on" ) )
         $private_user = 1;
@@ -191,7 +181,7 @@ ignore_user_abort(TRUE);
       if( $admin == 1 ) {
 
         //check for a userid
-        if( ! isset($_POST["userid"]) || ! is_numeric($_POST["userid"]) )
+        if(empty($_POST["userid"]) || ! is_numeric($_POST["userid"]) )
           error("User submit", "No userid specified");
 
         $userid = intval($_POST["userid"]);

@@ -36,7 +36,7 @@ if( $admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 //secure
-if( ! (isset($_GET["usergroupid"] ) && is_numeric($_GET["usergroupid"] ) ) )
+if(empty($_GET["usergroupid"] ) || ! is_numeric($_GET["usergroupid"] ) )
   error("Usergroup edit", "Not a valid value for usergroupid." );
 
 $usergroupid = intval($_GET["usergroupid"]);

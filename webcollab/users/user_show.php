@@ -35,7 +35,7 @@ $no_access_project[0] = 0;
 $no_access_group[0] = 0;
 
 //get some stupid errors
-if( ! isset($_GET["userid"]) || ! is_numeric($_GET["userid"]) || $_GET["userid"] == 0 )
+if(empty($_GET["userid"]) || ! is_numeric($_GET["userid"]) )
   error("User show", "No userid was given" );
 
 $userid = intval($_GET["userid"]);

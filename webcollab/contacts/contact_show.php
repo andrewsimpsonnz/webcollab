@@ -36,7 +36,7 @@ $content = "";
 $row = "";
 
 //we need a valid contactid
-if( ! isset($_GET["contactid"]) || ! is_numeric($_GET["contactid"]) )
+if(empty($_GET["contactid"]) || ! is_numeric($_GET["contactid"]) )
   error("Contact submission", "Not a valid value for contactid");
 
 $contactid = intval($_GET["contactid"]);

@@ -33,7 +33,7 @@ require_once( BASE."includes/security.php" );
 $content  = "";
 
 //existing task or project
-if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
+if(! empty($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
   $taskid = intval($_GET["taskid"]);
 
@@ -80,7 +80,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 }
 
 //new task
-elseif( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ){
+elseif(! empty($_GET["parentid"]) && is_numeric($_GET["parentid"]) ){
   $parentid = $_GET["parentid"];
 
   //get task parent details

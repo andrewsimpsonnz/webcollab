@@ -35,7 +35,7 @@ $clone = "";
 $menu_type = "project";
 
 //the task dependent part
-if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
+if(! empty($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
   $taskid = intval($_GET["taskid"]);
   

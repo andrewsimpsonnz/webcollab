@@ -42,48 +42,36 @@ if( $admin != 1 ) {
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
+
+$input_array = array("email_admin", "reply_to", "from" );
+
 if($USE_EMAIL == "Y" ){
 
   //check and validate email addresses
-  $input_array = array("email_admin", "reply_to", "from", "error" );
-    foreach( $input_array as $var) {
-      if(isset($_POST[$var]) && strlen($_POST[$var]) > 0 ) {
-        if( ! ereg("^.+@.+\..+$", $_POST[$var] ) )
-          warning( $lang["invalid email"], sprintf( $lang["invalid_email_given_sprt"], $_POST[$var] ) );
-      }
+  foreach($input_array as $var) {
+    if(! empty($_POST[$var]) ) {
+      if( ! ereg("^.+@.+\..+$", $_POST[$var] ) )
+        warning( $lang["invalid email"], sprintf( $lang["invalid_email_given_sprt"], $_POST[$var] ) );
+      ${$var} = safe_data($_POST[$var] );
+    }
+    else
+      ${$var} = NULL;
   }
-
-  $email_admin = safe_data($_POST["email_admin"] );
-  $reply_to    = safe_data($_POST["reply_to"] );
-  $from        = safe_data($_POST["from"] );
-
 }
-else{
-  $email_admin = "";
-  $reply_to    = "";
-  $from        = "";
+else{ //no email
+  foreach($input_array as $var) {
+    ${$var} = NULL;
+  }
 }
 
 //check and validate checkboxes
-if(isset($_POST["access"]) && $_POST["access"] == "on" )
-  $access = "checked=\"checked\"";
-else
-  $access = "";
-
-if(isset($_POST["group_edit"]) && $_POST["group_edit"] == "on" )
-  $group_edit = "checked=\"checked\"";
-else
-  $group_edit = "";
-
-if(isset($_POST["owner"]) && $_POST["owner"] == "on" )
-  $owner = "checked=\"checked\"";
-else
-  $owner = "";
-
-if(isset($_POST["usergroup"]) && $_POST["usergroup"] == "on" )
-  $usergroup = "checked=\"checked\"";
-else
-  $usergroup = "";
+$input_array = array("access", "group_edit", "owner", "usergroup" );
+foreach($input_array as $var ) {
+  if(isset($_POST[$var]) && $_POST[$var] == "on" )
+    ${$var} = "checked=\"checked\"";
+  else
+    ${$var} = "";
+}
 
 //update config database
 db_query("UPDATE ".PRE."config SET email_admin='".$email_admin."',

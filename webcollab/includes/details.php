@@ -30,7 +30,7 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
-if( ! isset($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
+if(empty($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
   error("Task details", "The taskid input is not valid" ); 
 
 $taskid = intval($_REQUEST["taskid"]);

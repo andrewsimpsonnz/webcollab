@@ -268,7 +268,7 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
 //
 
 //is the parentid set in tasks.php ?
-if( ! isset($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) || $_REQUEST["taskid"] == 0 )
+if(empty($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
   error( "Task list", "Not a valid value for taskid");
 
 $parentid = intval($_REQUEST["taskid"]);

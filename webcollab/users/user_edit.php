@@ -37,7 +37,7 @@ $userid = "";
 if($admin == 1 ) {
 
   //is there a uid ?
-  if( ! isset($_REQUEST["userid"]) || ! is_numeric($_REQUEST["userid"]) )
+  if(empty($_REQUEST["userid"]) || ! is_numeric($_REQUEST["userid"]) )
     error("User edit", "No userid was specified" );
 
   $userid = intval($_REQUEST["userid"]);

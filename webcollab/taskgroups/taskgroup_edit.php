@@ -35,8 +35,8 @@ if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 //secure
-if( ! isset($_GET["taskgroupid"]) || ! is_numeric($_GET["taskgroupid"]) )
-  error("Value error", "There is no taskgroupid specified." );
+if(empty($_GET["taskgroupid"]) || ! is_numeric($_GET["taskgroupid"]) )
+  error("Taskgroup edit", "There is no taskgroupid specified." );
 
 $taskgroupid = intval($_GET["taskgroupid"]);
 

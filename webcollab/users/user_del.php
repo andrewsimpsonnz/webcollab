@@ -39,12 +39,12 @@ if($admin != 1 )
 
 
 //get some stupid errors
-if( ! isset($_GET["userid"]) || ! is_numeric($_GET["userid"]) )
+if(empty($_GET["userid"]) || ! is_numeric($_GET["userid"]) )
   error("User delete", "No userid specified" );
 
 $userid = intval($_GET["userid"]);
 
-if( ! isset($_GET["action"] ) )
+if(empty($_GET["action"] ) )
   error("User delete", "No action specified" );
 
 //if user aborts, let the script carry onto the end

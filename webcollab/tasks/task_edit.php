@@ -78,7 +78,7 @@ function user_access($owner, $usergroupid, $groupaccess ) {
 //set variable
 $content = "";
 
-if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
+if(empty($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
   error("Task edit", "The taskid input is not valid" ); 
 
 $taskid = intval($_GET["taskid"]);

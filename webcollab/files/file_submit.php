@@ -32,7 +32,7 @@ require_once("path.php" );
 require_once( BASE."includes/security.php" );
 
 //update or insert ?
-if( ! isset($_REQUEST["action"]) || strlen($_REQUEST["action"]) == 0 )
+if(empty($_REQUEST["action"]))
   error("File submit", "No action given" );
 
 //if user aborts, let the script carry onto the end
@@ -49,7 +49,7 @@ ignore_user_abort(TRUE);
         warning($lang["file_submit"], $lang["no_upload"] );
       }
 
-      if( ! isset($_POST["taskid"]) || ! is_numeric($_POST["taskid"]) ) {
+      if(empty($_POST["taskid"]) || ! is_numeric($_POST["taskid"]) ) {
         //delete any upload before invoking the error function
         if(is_uploaded_file( $_FILES["userfile"]["tmp_name"] ) )
           unlink( $_FILES["userfile"]["tmp_name"] );
@@ -63,16 +63,14 @@ ignore_user_abort(TRUE);
       $description = preg_replace("/((http|ftp)+(s)?:\/\/[^\s]+)/i", "\n<a href=\"$0\" target=\"new\">$0</a>\n", $description );
       $description = nl2br($description );
 
-      if(isset($_POST["mail_owner"] ) &&  ($_POST["mail_owner"] == "on" ) )
-        $mail_owner = true;
-      else
-        $mail_owner = "";
-
-      if(isset($_POST["mail_group"] ) && ($_POST["mail_group"] == "on" ) )
-        $mail_group = true;
-      else
-        $mail_group = "";
-
+      $input_array = array("mail_owner", "mail_group" );
+      foreach($input_array as $var ) {
+        if(isset($_POST[$var] ) &&  ($_POST[$var] == "on" ) )
+          ${$var} = true;
+        else
+          ${$var} = false;
+      }
+            
       //check usergroup security
       require_once(BASE."includes/usergroup_security.php" );
 
@@ -206,7 +204,7 @@ ignore_user_abort(TRUE);
 
     case "submit_del":
 
-      if( ! isset($_GET["fileid"] ) || ! is_numeric($_GET["fileid"] ) )
+      if(empty($_GET["fileid"] ) || ! is_numeric($_GET["fileid"] ) )
         error("File submit", "Not a valid fileid" );
 
       $fileid = intval($_GET["fileid"]);
