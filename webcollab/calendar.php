@@ -191,7 +191,7 @@ for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); $i++
 for ($num = 1; $num <= $numdays; $num++ ) {
   if ($i >= 7 ) {
     $content .= "</tr>\n".
-                "<tr style=\"vertical-align: top; text-align: center\">\n";
+                "<tr style=\"vertical-align: top; text-align: center\" valign=\"top\">\n";
     $i=0;
   }
   $content .= "<td style=\"border-width: 1px; border-style: solid\" ";
@@ -223,7 +223,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
         case "cantcomplete":
         case "nolimit":
           //don't show if not active
-          continue;
+          continue 2;
         break;
 
         default:
