@@ -54,8 +54,8 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $task_state['cantcomplete']         = 'Em espera';
     $task_state['completed']            = 'Finalizada';
     $task_state['done']                 = 'Pronta';
-    $task_state['task_planned']         = ' Planejada';
-    $task_state['task_active']          = ' Ativa';
+    $task_state['task_planned']         = 'Planejada';
+    $task_state['task_active']          = 'Ativa';
  //project states
     $task_state['planned_project']      = 'Projeto planejado (n&atilde;o ativo)';
     $task_state['no_deadline_project']  = 'Sem prazo definido';
@@ -73,7 +73,7 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $lang['edit']                       = 'Editar';
     $lang['delete']                     = 'Excluir';
     $lang['del']                        = 'Excluir';
-    $lang['confirm_del_javascript']     = ' Confirma exclus&atilde;o!';
+    $lang['confirm_del_javascript']     = 'Confirma exclus&atilde;o!';
     $lang['yes']                        = 'Sim';
     $lang['no']                         = 'N&atilde;o';
     $lang['action']                     = 'A&ccedil;&atilde;o';
@@ -81,7 +81,7 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $lang['tasks']                      = 'Tarefas';
     $lang['project']                    = 'Projeto';
     $lang['info']                       = 'Informa&ccedil;&atilde;o';
-    $lang['bytes']                      = ' bytes';
+    $lang['bytes']                      = 'bytes';
     $lang['select_instruct']            = '(Pressione Ctrl para selecionar ou
 deselecionar mais de um)';
     $lang['member_groups']              = 'O usu&aacute;rio &eacute; membro dos grupos real&ccedil;ados abaixo (caso hajam)';
@@ -101,7 +101,7 @@ deselecionar mais de um)';
     $lang['updated_g']                  = '&nbsp;ATUALIZADO&nbsp;';
 
 //admin config
-    $lang['admin_config']               = 'Configura&ccedil;&otilde;es administrativasg';
+    $lang['admin_config']               = 'Configura&ccedil;&otilde;es administrativas';
     $lang['email_settings']             = 'Configura&ccedil;&otilde;es do cabe&ccedil;alho de e-mail';
     $lang['admin_email']                = 'E-mail administrativo';
     $lang['email_reply']                = 'E-mail \'Responder\'';
@@ -308,7 +308,7 @@ deselecionar mais de um)';
     $lang['project_name']               = 'Nome do Projeto';
     $lang['task_name']                  = 'Nome da tarefa';
     $lang['deadline']                   = 'Prazo';
-    $lang['taken_from_parent']          = '(Obtida da tarefa relacionada)';
+    $lang['taken_from_parent']          = ' (Obtida da tarefa relacionada)';
     $lang['status']                     = 'Status';
     $lang['task_owner']                 = 'Respons&aacute;vel pela Tarefa';
     $lang['project_owner']              = 'Respons&aacute;vel pelo Projeto';
