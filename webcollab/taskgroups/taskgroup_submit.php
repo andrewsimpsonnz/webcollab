@@ -37,7 +37,7 @@ if( $admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 
-if(! valid_string($_REQUEST["action"]) )
+if(! isset($_REQUEST["action"]) )
   error("Taskgroups submit", "No action given" );
 
   switch($_REQUEST["action"] ) {
@@ -45,7 +45,7 @@ if(! valid_string($_REQUEST["action"]) )
     //delete a taskgroup
     case "del":
 
-      if(isset($_GET["taskgroupid"] ) && is_numeric($_GET["taskgroupid"] ) ) {
+      if(isset($_POST["taskgroupid"] ) && is_numeric($_POST["taskgroupid"]) ) {
 
         $taskgroupid = $_GET["taskgroupid"];
         db_begin();
@@ -62,7 +62,7 @@ if(! valid_string($_REQUEST["action"]) )
     //insert a new taskgroup
     case "insert":
 
-      if(isset($_POST["name"] ) && valid_string($_POST["name"] ) ) {
+      if(isset($_POST["name"] ) && strlen($_POST["name"] ) > 0 ) {
 
         $name        = safe_data($_POST["name"]);
         $description = safe_data($_POST["description"]);
@@ -83,7 +83,7 @@ if(! valid_string($_REQUEST["action"]) )
       if( ! isset($_POST["taskgroupid"] ) || ! is_numeric($_POST["taskgroupid"] ) )
         error("Taskgroup submit", "Not a valid value for taskgroupid" );
 
-      if(isset($_POST["name"] ) && valid_string($_POST["name"] ) ) {
+      if(isset($_POST["name"] ) && strlen($_POST["name"] ) > 0 ) {
 
         $name        = safe_data($_POST["name"] );
         $description = safe_data($_POST["description"] );
