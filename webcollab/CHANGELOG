@@ -1,9 +1,13 @@
 WebCollab CVS
-*** 5 October 2004
+*** 7 October 2004
   Andrew Simpson 
 
 - internationalise creation date in task_add.php
 
+- bugfix: (Bug No. #1040945) more addslashes() to task_clone_submit (brianlynch)
+
+- bugfix: properly escape apostrophe & double quotes in text strings for javascript
+ 
 WebCollab CVS
 *** 18 September 2004
   Andrew Simpson 
