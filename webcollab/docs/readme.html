@@ -17,15 +17,26 @@
 </ul>
 <br>
 <h3>BACKGROUND</h3>
-<p>WebCollab was originally based on Core-lan-org software (CoreAPM) written by Dennis Fleurbaaij.
+<p>WebCollab was originally based on the ideas in the Core-lan-org software that was written by Dennis Fleurbaaij.
 </p>
-<p>I started using CoreAPM in November 2001 for project managing a telcommunications cellsite deployment at my place of employment - a civil engineering consultancy. Along the way, I made changes and improvements to the CoreAPM source code; I become a contributor, then a listed developer to the CoreAPM code.</p>
-<p>Over time my version slowly moved away from the main tree because we had need different needs and aims.  In time it became uniquely different from the CoreAPM software.
-<p>We are still using WebCollab for the same cellsite rollout; it's also being used for numerous
-other projects internally.  By March 2003, the time had come to release back to the community, and
-let a wider range of users experience WebCollab.</p>
-<p>In August 2003, development of CoreAPM officially ceased and the original developer recommended that users convert to WebCollab.</p>
-<p>WebCollab has been developed on Red Hat Linux and Debian Woody and run in a production environment with initially, PostgreSQL, and later MySQL databases.  Although we do not develop in Windows, we have enough reports of stable installations to recommend this as a working platform.</p>
+<p>I started using an early release of Core-lan-org in November 2001 for project managing a telcommunications cellsite deployment at
+my place of employment - a civil engineering consultancy. Along the way, I made changes and improvements to the Core-lan-org source
+code; I become a contributor, then a listed developer to the Core-lan-org project.</p>
+<p>Over time the public version of Core-lan-org slowly moved away from our internal working version because we had need different needs
+and aims. In time our version became quite different than the Core-lan-org software.</p>
+<p>The original code was specifically written for a PostgreSQL database.  The code now has a database abstraction layer and runs
+either MySQL or PostgreSQL.  A calendar section and setup programs have been added.  Documentation for the program has been written. 
+The system logic has been formalised consistently through the program, and practically all the code has been re-written and extended. 
+Language abstraction has been added, enabling the translation of Webcollab into numerous languages.</p>
+<p>Work has been done to enable WebCollab to work with Unicode (UTF-8) and other multibyte encoding systems.  This is offered as an
+optional alternative, since MySQL prior to version 4.1 and PHP prior to version 4.3.0 have poor multibyte support.</p>  
+<p>By March 2003, the time had come to release back to the community to encourage further development, and so it was that WebCollab was
+released on Sourceforge.</p>
+<p>Meanwhile further development of Core-lan-org had come to a standstill.  Dennis Fleurbaaij announced the abandonment of Core-lan-org
+in August 2003. In a note on the website he recommended that users convert to WebCollab.</p>
+<p>WebCollab has been developed on Red Hat Linux, Fedora and Debian (stable/testing)  and run in a production environment with
+initially, PostgreSQL, and later MySQL databases.  Although we do not develop in Windows, we have enough reports of stable
+installations to recommend this as a working platform.</p>
 <p>I hope that you enjoy using WebCollab; it's been fun bringing it to you.</p>
 <p>Andrew Simpson<br>
 <i>andrew.simpson@paradise.net.nz</i></p>
@@ -37,12 +48,12 @@ let a wider range of users experience WebCollab.</p>
 <p>Webcollab is released under the GNU GPL license.  See the file <a href="../LICENSE">LICENSE</a> 
 for details</p><br>
 <h3>THANKS</h3>
-<p>Thanks goes to Dennis Fleurbaaij for letting me loose on the CoreAPM code, while I picked up some rudimentary PHP coding skills.</p>
-<p>Numerous people have made suggestions, and comments to improve WebCollab.  I have tried to thank these people in the RELEASE file of each release.</p>
+<p>Numerous people have made suggestions, and comments to improve WebCollab.  I have tried to thank these people in the RELEASE file of
+each release.</p>
 <p>Special thanks goes to the translators who have supported me with translations.</p>
 <h3>CONTRIBUTIONS, FEEDBACK & COMMENTS</h3>
 <p>Contributions and comments are always welcomed.  Most of the developed features in recent versions have been the result of user comments and ideas.</p>
-<p>Feedback from users or groups using WebCollab is especially welcomed.  It's always a buzz to hear that WebCollab is helping someone, somewhere... 
+<p>Feedback from users or groups using WebCollab is especially welcomed.
 <br>
 </body>
 </html>
