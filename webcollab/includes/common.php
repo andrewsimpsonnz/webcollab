@@ -77,11 +77,11 @@ function show_percent( $percent = 0 ) {
     case 100:
       return "<TABLE width=\"".$width."\"><TR><TD height=\"".$height."\" width=\"".$width."\" bgcolor=\"#008B45\" nowrap></TD></TR></TABLE>\n";
       break;
-   
+
     case 0:
       return "<TABLE width=\"".$width."\"><TR><TD height=\"".$height."\" width=\"".$width."\" bgcolor=\"#FFA500\" nowrap></TD></TR></TABLE>\n";
       break;
-  
+
     default:
       $out .= "<TABLE width=\"".$width."\"><TR><TD height=\"".$height."\" width=\"".($percent * ($width/100))."\" bgcolor=\"#008B45\" nowrap>";
       $out .= "</TD><TD width=\"".($width-($percent*($width/100)))."\" bgcolor=\"#FFA500\" nowrap></TD></TR></TABLE>\n";
@@ -98,12 +98,12 @@ function show_percent( $percent = 0 ) {
 //
 function safe_data( $body ) {
 
-  //$body = strip_tags( $body, '<a><b><i><u>' );
-  $body = htmlspecialchars( $body );
-
   //protect against database query attack
   if(! get_magic_quotes_gpc() )
-    $body = addslashes($body);
+    $body = addslashes($body );
+
+  //$body = strip_tags( $body, '<a><b><i><u>' );
+  $body = htmlspecialchars($body, ENT_NOQUOTES );
 
 return( $body );
 }
