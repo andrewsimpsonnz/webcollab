@@ -118,8 +118,8 @@ switch($selection ) {
     $userid = 0; $s1 = ""; $s2 = " SELECTED"; $s3 = " CHECKED"; $s4 = "";
     $tail = "AND usergroupid=$groupid";
     if($groupid == 0 ) {
-      $s4 = " CHECKED";
-      $tail = "";
+      $s4 = " SELECTED";
+      //$tail = "";
     }
     break;
 
@@ -129,7 +129,7 @@ switch($selection ) {
     $tail = "AND owner=$userid";
     if($userid == 0 ) {
       $s2 = " SELECTED";
-      $tail = "";
+      //$tail = "";
     }
     break;
 }
