@@ -43,7 +43,7 @@ if($admin != 1 )
 $q = db_query("SELECT ".PRE."files.oid AS oid,
                         ".PRE."files.id AS id,
                         ".PRE."files.filename AS filename,
-                        ".PRE."files.uploaded AS uploaded,
+                        ".$epoch.PRE."files.uploaded) AS uploaded,
                         ".PRE."files.size AS size,
                         ".PRE."files.mime AS mime,
                         ".PRE."files.description AS description,
@@ -76,7 +76,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
               //delete option
               "<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;action=submit_del&amp;fileid=".$row["id"]."&amp;taskid=".$taskid."\" onclick=\"return confirm( '".sprintf( $lang["del_file_javascript_sprt"], $row["filename"])."' )\">".$lang["del"]."</a>]</span></td></tr>\n".
               //user part
-              "<tr><td>".$lang["uploader"]." </td><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["username"]."</a> (".nicetime( $row["uploaded"] ).")</td></tr>\n";
+              "<tr><td>".$lang["uploader"]." </td><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["username"]."</a> (".nicetime( $row["uploaded"], 1 ).")</td></tr>\n";
 
   //show description
   if( $row["description"] != "" )

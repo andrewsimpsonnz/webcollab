@@ -49,7 +49,7 @@ function date_to_datetime($day, $month, $year ) {
 //
 function nicedate($timestamp ) {
   global $month_array;
-  if($timestamp == "" ) {
+  if(empty($timestamp) ) {
     $nicedate = "";
     return $nicedate;
   }
@@ -66,11 +66,11 @@ function nicetime($timestamp, $addtime=0 ) {
   global $month_array, $TZ;
 
   //server timezone offset is subtracted because date() automatically adds it on!!        
-  $epoch = $timestamp - date("Z") + ($TZ * 3600);
+  $local = $timestamp - date("Z") + ($TZ * 3600);
   
   //format is 2004-Aug-02  
   if(! $addtime)
-    return date("Y-", $epoch).$month_array[(date("n", $epoch))].date("-d", $epoch);
+    return date("Y-", $local).$month_array[(date("n", $local))].date("-d", $local);
   
   if($TZ >= 0 )
     $offset = sprintf("+%02d00", $TZ );
@@ -78,7 +78,7 @@ function nicetime($timestamp, $addtime=0 ) {
     $offset = sprintf("%03d00", $TZ );
   
   //format is 2004-Aug-02 18:06 +1200 
-  return date("Y-", $epoch).$month_array[(date("n", $epoch))].date("-d H:i ", $epoch).$offset;
+  return date("Y-", $local).$month_array[(date("n", $local))].date("-d H:i ", $local).$offset;
 
 }
   
@@ -105,10 +105,10 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
 
   //filter for no date set
   if($day == -1 || $month == -1 || $year == -1 ) {
-    $epoch = time() - date("Z") + ($TZ * 3600);
-    $day   = date("d", $epoch );
-    $month = date("m", $epoch );
-    $year  = date("Y", $epoch );
+    $local = time() - date("Z") + ($TZ * 3600);
+    $day   = date("d", $local );
+    $month = date("m", $local );
+    $year  = date("Y", $local );
   }
 
   //day

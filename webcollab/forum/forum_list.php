@@ -47,13 +47,13 @@ require_once(BASE."includes/usergroup_security.php" );
 //
 function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 
-  global $parent_array, $ul_flag, $admin, $x, $uid, $lang, $taskid_row;
+  global $parent_array, $ul_flag, $admin, $x, $uid, $lang, $taskid_row, $epoch;
 
   $ul_flag = 0;
 
   $q = db_query("SELECT ".PRE."forum.text AS text,
                         ".PRE."forum.id AS id,
-                        ".PRE."forum.posted AS posted,
+                        ".$epoch.PRE."forum.posted) AS posted,
                         ".PRE."forum.userid AS postowner,
                         ".PRE."users.id AS userid,
                         ".PRE."users.fullname AS fullname
@@ -80,7 +80,7 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
     else
       $this_content .= "<li><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["fullname"]."</a>";
 
-    $this_content .= "&nbsp;(".nicetime( $row["posted"] ).")</small>".
+    $this_content .= "&nbsp;(".nicetime( $row["posted"], 1 ).")</small>".
                      "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=".$row["id"]."&amp;taskid=$taskid";
 
     //if this is a post to a private forum then announce it to the poster-engine

@@ -75,19 +75,6 @@ function delete_messages($postid ) {
   return;
 }
 
-//
-//validate input data as either numeric > 0 or zero
-//
-function check($var ) {
-
-  //validate as numeric
-    if(is_numeric($var) )
-      return intval($var);
-  //catch all for weird inputs
-  $var = 0;
-return $var;
-}
-
 if( ! isset($_REQUEST["action"]) )
   error("Forum submit", "No request given" );
 
@@ -99,30 +86,21 @@ ignore_user_abort(TRUE);
     case "submit_add":
 
       //if all values are filled in correctly we can submit the forum-item
-      if( ! isset($_POST["text"] ) || strlen($_POST["text"] ) == 0 )
+      if(empty($_POST["text"] ) )
         warning($lang["forum_submit"], $lang["no_message"] );
-
-      //check input has been provided
-      $input_array = array("parentid", "taskid" );
-      foreach($input_array as $var ) {
-        if( ! isset($_POST[$var] ) || strlen($_POST[$var] ) == 0 ) {
+             
+      $input_array = array("parentid", "taskid", "usergroupid");
+      foreach($input_array as $var ) {   
+        if(! isset($_POST[$var]) || ! is_numeric($_POST[$var]) )
           error("Forum submit", "Variable $var is not set" );
-        }
+        ${$var} = intval($_POST[$var]);
       }
-
+      
       $text = safe_data_long($_POST["text"] );
       //make email adresses and web links clickable
       $text = preg_replace("/(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))/", "<a href=\"mailto:\\0\">\\0</a>", $text );
       $text = preg_replace("/((http|ftp)+(s)?:\/\/[^\s]+)/i", "\n<a href=\"$0\" target=\"new\">$0</a>\n", $text );
       $text = nl2br($text );
-
-
-      $parentid = check($_POST["parentid"]);
-      $usergroupid = check($_POST["usergroupid"]);
-      $taskid = check($_POST["taskid"]);
-
-      if($taskid == 0 )
-        error("Forum submit", "Taskid not valid");
 
       if(isset($_POST["mail_owner"] ) && ($_POST["mail_owner"] == "on" ) )
         $mail_owner = true;
@@ -246,13 +224,9 @@ ignore_user_abort(TRUE);
 
     //owner of the thread can delete, admin can delete
     case "submit_del":
-      if(isset($_GET["postid"] ) ) {
-        $postid = check($_GET["postid"] );
-        if($postid == 0 )
-          error("Forum submit", "Postid not valid" );
-      }
-      else
-        error("Forum submit", "You did not specify a postid, request not handled" );
+      if(empty($_GET["postid"]) || ! is_numeric($_GET["postid"]) )
+        error("Forum submit", "Postid not valid" );
+      $postid = intval($_GET["postid"] );
 
       switch($admin ) {
         case 1:
