@@ -23,11 +23,11 @@
 
  - Choose a convenient database name
 
- - Make sure you know your database username and password
+ - Make sure you know your database_username and password
 
  - Create new database in PostgreSQL with your chosen database name
 
-        # createdb -W -U 'username' 'database name'
+        # createdb -W -U 'databse_user' 'database_name'
 
            (Enter password when prompted)
 
@@ -36,7 +36,7 @@
         =# \q
 
 
-  ( NOTE: 'database user', 'database name' and 'password' are your particular database values
+  ( NOTE: 'database_user', 'database_name' and 'password' are your particular database values
     without the ' and ')
 
 
@@ -45,7 +45,7 @@
 
  - Read schema
 
-        # psql -U 'username' -e 'database name' < schema-pgsql.sql
+        # psql -U 'database_user' -e 'database_name' < schema-pgsql.sql
 
 
  - Go to Section 2. below
@@ -58,7 +58,7 @@
 
  - Run "db_create_pgsql.sh"
 
-        # ./db_create_pgsql.sh 'database user' 'database name'
+        # ./db_create_pgsql.sh 'database_user' 'database_name'
 
 
  2. *Configuration*
@@ -87,20 +87,20 @@
 
  - Choose a convenient database name
 
- - Make sure you know your database username and password
+ - Make sure you know your database_username and password
 
  - Create new database in MySQL
 
-        # mysql -u 'database username' -p
+        # mysql -u 'database_user' -p
 
            (Enter password when prompted)
 
-        mysql> CREATE DATABASE 'database name';
+        mysql> CREATE DATABASE 'database_name';
 
         mysql> \q
 
 
-  ( NOTE: 'database user', 'database name' and 'password' are your particular database values
+  ( NOTE: 'database_user', 'database_name' and 'password' are your particular database values
     without the ' and ')
 
 
@@ -109,7 +109,7 @@
 
  - Read schema
 
-        # mysql 'database name' -u 'database user' -p < ./schema_mysql.sql
+        # mysql 'database_name' -u 'database_user' -p < ./schema_mysql.sql
 
 
  - Go to Section 2. below
@@ -120,13 +120,13 @@
 
  - Choose a convenient database name
 
- - Make sure you know your database username and password
+ - Make sure you know your database_username and password
 
  - Change to ./db directory
 
  - Run './db_create_mysql.sh'
 
-        # ./db_create_mysql.sh 'database username' 'database name' 'password'
+        # ./db_create_mysql.sh 'database_user' 'database_name' 'password'
 
 
  2. *Configuration*
