@@ -54,7 +54,7 @@ if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
 if( isset($_REQUEST["x"]) && ( strlen($_REQUEST["x"]) == 32 ) ) {
   $x = $_REQUEST["x"];
   } else {
-  error("Security manager", "No valid session key" );
+  error($lang["security_manager"], sprintf($lang["no_key"], $BASE_URL) );
 }
 
 
@@ -69,7 +69,7 @@ if( ! ($q = db_query( "SELECT user_id, ip, email, admin, fullname,
 }
 
 if( db_numrows($q) != 1 ) {
-  error("Security manager", "No such session, please <A href=\"".$BASE_URL."index.php\">log-in</A>" );
+  error( $lang["security_manager"], sprintf( $lang["no_session"], $BASE_URL ) );
 }
 
 if( ! ( $row = db_fetch_array($q, 0) ) ) {
