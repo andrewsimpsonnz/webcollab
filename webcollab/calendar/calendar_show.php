@@ -54,21 +54,25 @@ if(isset($_POST["groupid"]) && is_numeric($_POST["groupid"]) )
 else
   $groupid = 0;
 
+//set dates to match local time 
+//Note: The date() function always _adds_ a time offset(!), so we subtract date("Z") (time offset)  
+$epoch = time() - date("Z") + ($TZ * 3600);  
+    
 //set month
 if(isset($_POST["month"]) && is_numeric($_POST["month"]) )
   $month = $_POST["month"];
 else
-  $month = date("n",time());
+  $month = date("n", $epoch);
 
 //set year
 if(isset($_POST["year"]) && is_numeric($_POST["year"]) )
   $year = $_POST["year"];
 else
-  $year = date("Y",time());
+  $year = date("Y", $epoch);
 
 //set day, if applicable
-if( $month == date("n",time()) && $year == date("Y",time()) )
-  $today = date("j", time());
+if( $month == date("n", $epoch) && $year == date("Y", $epoch) )
+  $today = date("j", $epoch);
 else
   $today = 0;
 
