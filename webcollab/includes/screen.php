@@ -177,7 +177,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
         $content .=  sprintf( $lang["user_homepage_sprt"], $uid_name );
       $content .=  "</div></td></tr>\n";
       //create menu sidebar
-      $content .=  "<tr valign=\"top\"><td style=\"width: 175px; margin-left:auto; margin-right:auto; text-align: center\">\n";
+      $content .=  "<tr valign=\"top\"><td style=\"width: 175px\" align=\"center\">\n";
       break;
 
     case 1: //single main window (no menu sidebar)
@@ -188,12 +188,12 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
         $content .=  sprintf( $lang["user_homepage_sprt"], $uid_name );
       $content .= "</div></td></tr>\n";
       //create single window over entire screen
-      $content .= "<tr valign=\"top\" ><td style=\"width: 100%; margin-left:auto; margin-right:auto; text-align: center\">\n";
+      $content .= "<tr valign=\"top\" ><td style=\"width: 100%\" align=\"center\">\n";
       break;
 
     case 2: //printable screen
       //create single window over paper width
-      $content .= "<tr valign=\"top\"><td style=\"width: 576pt; margin-left:auto; margin-right:auto; text-align: center\">\n";
+      $content .= "<tr valign=\"top\"><td style=\"width: 576pt\" align=\"center\">\n";
   }
 
   //flush buffer
@@ -225,7 +225,7 @@ function new_box($title, $box_content, $style="boxdata", $size="tablebox" ) {
 // End the left frame and go the the right one
 //
 function goto_main() {
-  echo "</td><td style=\"margin-left:auto; margin-right:auto; text-align: center\">";
+  echo "</td><td align=\"center\">";
   return;
 }
 
