@@ -261,7 +261,7 @@ else {
 
 $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
             "<tr><td></td><td colspan=\"2\">$status<br /><br /></td></tr>\n".
-            "<tr><td></td><td><input type=\"submit\" value=\"Continue\" /></td></tr>\n".
+            "<tr><td></td><td><input type=\"submit\" value=\"Write Data to Config File\" /></td></tr>\n".
             "</table></p>\n".
             "</form>\n";
 
