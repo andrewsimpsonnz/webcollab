@@ -30,18 +30,18 @@
 
 $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y  g:i a' );
 
-$title_file_post        = $ABBR_MANAGER_NAME.": New file upload: %s";
-$email_file_post        = "Hello,\n\nThis is the ".$MANAGER_NAME." site informing you that a new file has been uploaded on ".$email_date." by %1\$s.\n\n".
+$title_file_post        = $ABBR_MANAGER_NAME.": Nuovo file inviato: %s";
+$email_file_post        = "Salve,\n\nIl sito ".$MANAGER_NAME." ti informa che un nuovo file &egrave; stato inviato il ".$email_date." da %1\$s.\n\n".
                           "File:        %2\$s\n".
-			  "Description: %3\$s";
+			  "Descrizione: %3\$s";
 
 
-$title_forum_post        = $ABBR_MANAGER_NAME.": New forum post: %s";
-$email_forum_post        = "Hello,\n\nThis is the ".$MANAGER_NAME." site informing you that a new forum post has been made on ".$email_date." by %1\$s:\n\n%2\$s"; 
-$email_forum_reply       = "Hello,\n\nThis is the ".$MANAGER_NAME." site informing you that a new forum post has been made on ".$email_date." by %1\$s.\n\n".
-                           "This post is in reply to an earlier post by %2\$s.\n\n".
-                           "Original post:\n %3\$s\n\n".
-                           "New reply:\n%4\$s\n";
+$title_forum_post        = $ABBR_MANAGER_NAME.": Nuovo messaggio nel forum: %s";
+$email_forum_post        = "Salve,\n\nIl sito ".$MANAGER_NAME." ti informa che un nuovo messaggio nel forum &egrave; stato creato il ".$email_date." da %1\$s:\n\n%2\$s"; 
+$email_forum_reply       = "Salve,\n\nIl sito ".$MANAGER_NAME." ti informa che un nuovo messaggio nel forum &egrave; stato creato il ".$email_date." da %1\$s.\n\n".
+                           "Questo messaggio &egrave; una risposta ad un precedente messaggio di %2\$s.\n\n".
+                           "Messaggio originale:\n %3\$s\n\n".
+                           "Nuova risposta:\n%4\$s\n";
 
 $email_list =  "Progetto:     %s\n".
                "Attivit&agrave;:     %s\n".
@@ -93,7 +93,7 @@ $email_delete_project    = "Salve,\n\n".
                            "Il sito ".$MANAGER_NAME." ti informa che un progetto di cui sei proprietario &egrave; stato cancellato il ".$email_date."\n\n".
                            "Grazie per averlo gestito sin qui.\n\n";
 $email_delete_task       = "Salve,\n\n".
-                           "Il sito ".$MANAGER_NAME." ti informa che un'attivit&agrave; di cui sei proprietario &egrave; stato cancellato il ".$email_date."\n\n".
+                           "Il sito ".$MANAGER_NAME." ti informa che un'attivit&agrave; di cui sei proprietario &egrave; stata cancellata il ".$email_date."\n\n".
                            "Grazie per averla gestita sin qui.\n\n";
 
 $delete_list = "Progetto:  %s\n".

@@ -57,7 +57,7 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
 //task states
 $task_state = array(
  //priorities
- "dontdo" => "Don't do",
+ "dontdo" => "Tralasciare",
  "low" => "Bassa",
  "normal" => "Normale",
  "high" => "Alta",
@@ -164,9 +164,9 @@ $lang = array(
  "file_choose" => "File da inviare:",
  "upload" => "Invio",
  //**
- "file_email_owner" => "Email notification of new file to the owner?",
+ "file_email_owner" => "Inviare una Email per notificare un nuovo file al proprietario?",
  //**
- "file_email_usergroup" => "Email notification of new file to the usergroup?",
+ "file_email_usergroup" => "Inviare una Email per notificare un nuovo file allo usergroup?",
  "max_file_sprt" => "Il file da inviare deve essere pi&ugrave; piccolo di %s kb.",
  "file_submit" => "Invia file",
  "no_upload" => "Nessun file &egrave; stato inviato.  Torna indietro e riprova.",
@@ -204,11 +204,11 @@ $lang = array(
  "user_homepage_sprt" => "%s's homepage",
  //"load_time_sprt" => "Tempo di caricamento della pagina: %.3f secondi.  Di cui %.3f secondi sono stati usati per %d transazioni con il database",
 //**
- "missing_field_javascript" => "Please enter a value for the missing field",
+ "missing_field_javascript" => "Prego, inserisci un valore nel campo omesso",
  //**
- "invalid_date_javascript" => "Please choose a valid calendar date",
+ "invalid_date_javascript" => "Prego, scegli una data valida",
  //**
- "finish_date_javascript" => "The entered date occurs after the project finish date!",
+ "finish_date_javascript" => "La data inserita &egrave; successiva alla data di fine progetto!",
  "security_manager" => "Gestore della sicurezza",
  //"no_key_sprt" => "Session key non valida. Prego effettuare <a href=\"%sindex.php\">login</a>",
  //"no_session" => "Sessione non trovata, prego effettuare <a href=\"%sindex.php\">log-in</a>",
@@ -270,9 +270,9 @@ $lang = array(
  "users" => "Utenti",
  "existing_users" => "Utenti esistenti",
  //**
- "private_profile" => "This user has a private profile that cannot be viewed by you.",
- "private_usergroup_profile" => "(This user is a member of private usergroups that cannot be viewed by you)",
- "email_users" => "Email users",
+ "private_profile" => "Questo utente ha un profilo privato e non pu&ograve; essere visualizzato da te.",
+ "private_usergroup_profile" => "(Questo utente &egrave; membro di uno usergroup privato e non pu&ograve; essere visualizzato da te)",
+ "email_users" => "Utenti Email",
  "select_usergroup" => "Seleziona usergroup:",
  "subject" => "Oggetto:",
  "message_sent_maillist" => "In ogni caso il messaggio &egrave; anche copiato alla mailing list.",
@@ -348,9 +348,9 @@ $lang = array(
  "add_subtask" => "Aggiungi subattivit&agrave;",
  "add_project" => "Aggiungi progetto",
  //**
- "clone_project" => "Clone project",
+ "clone_project" => "Clona progetto",
  //**
- "clone_task" => "Clone task", 
+ "clone_task" => "Clona attivit&agrave;", 
  "no_edit" => "Non sei il proprietario di questo item e non puoi editarlo. Chiedi ad un admin o al proprietario dell'item di effettuare l'operazione.",
  "uncategorised" => "Non categorizzata",
  "admin" => "Admin",
@@ -362,8 +362,8 @@ $lang = array(
  "task_navigation" => "Navigazione nelle attivit&agrave;",
  "no_projects" => "Non ci sono progetti da vedere",
  //**
- "show_all_projects" => "Show all projects",
- "show_active_projects" => "Show only active projects",
+ "show_all_projects" => "Visualizza tutti i progetti",
+ "show_active_projects" => "Visualizza solo i progetti attivi",
  "project_hold_sprt" => "Progetto congelato da %s",
  "project_planned" => "Progetto previsto",
  "percent_sprt" => "%d%% delle attivit&agrave; completate",
@@ -402,22 +402,22 @@ $lang = array(
  "missing_values" => "Non sono state fornite tutte le informazioni richieste, torna indietro e riprova",
  "future" => "Futuro",
  "flags" => "Flags",
- "owner" => "Assegnatario",
+ "owner" => "Proprietario",
  "group" => "Gruppo",
  "by_usergroup" => " (per usergroup)",
  "by_taskgroup" => " (per taskgroup)",
  "by_deadline" => " (per scadenza)",
  "by_status" => " (per stato)",
- "by_owner" => " (per assegnatario)",
+ "by_owner" => " (per proprietario)",
  //**
- "project_cloned" => "Project to be cloned :",
- "task_cloned" => "Task to be cloned :",
- "note_clone" => "Note: The task will be cloned as a new project",
+ "project_cloned" => "Progetto da clonare:",
+ "task_cloned" => "Attivit&agrave; da clonare:",
+ "note_clone" => "Nota: L'attivit&agrave; sar&agrave; clonata come un nuovo progetto",
 
 //bits 'n' pieces
   "calendar" => "Calendario",
-  "normal_version" => "Normal version",
-  "print_version" => "Print version"
+  "normal_version" => "Versione normale",
+  "print_version" => "Versione stampabile"
    );
 
 ?>
