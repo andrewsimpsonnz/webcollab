@@ -31,7 +31,7 @@
 
 require_once("path.php" );
 
-include_once(BASE."config.php" );
+require_once(BASE."config.php" );
 include_once(BASE."includes/database.php" );
 include_once("./screen_setup.php" );
 
@@ -74,6 +74,11 @@ else {
     error_setup("No session key." );
   }
 
+  //check for ip address
+  if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
+    error_setup("Server not able to detect your IP address." );
+  }
+
   //seems okay at first, now go cross-checking with the known data from the database
   if( ! ($q = db_query("SELECT logins.user_id AS user_id, logins.ip AS ip, logins.lastaccess AS lastaccess,
                              users.email AS email, users.admin AS admin, users.fullname AS fullname,
@@ -93,15 +98,21 @@ else {
     error_setup("Error while fetching users' data");
   }
 
+  //session does exist, now cross-check with ip address
+  if($ip != $row["ip"] ) {
+    db_query("DELETE FROM logins WHERE session_key='$x'" );
+    error_setup("Your IP address $ip has changed since your last action.  Session deleted as a precaution."  );
+  }
+
   //if database table LEFT JOIN gives no rows will get NULL here
   if($row["user_id"] == NULL ){
     error_setup("No valid user-id found");
   }
 
-  //check the last logintime (there is a 60 min limit)
-  if( ($row["now"]-$row["sec_lastaccess"]) > 3600 ) {
+  //check the last logintime (there is a 10 min limit)
+  if( ($row["now"]-$row["sec_lastaccess"]) > 600 ) {
     db_query("UPDATE logins SET session_key='' WHERE user_id=".$row["user_id"] );
-    error_setup("Security timeout has occurred." );
+    error_setup("Security timeout of 10 minutes has occurred on this session." );
   }
 
   //check rights
