@@ -86,7 +86,7 @@ function copy_across($taskid, $new_parent, $name ) {
     if($new_parent != 0 ) {
       //new task
       $new_projectid = db_result(db_query("SELECT projectid FROM ".PRE."tasks WHERE id=$new_parent" ), 0, 0 );
-      $new_name = $row["name"];
+      $new_name = addslashes($row["name"] );
     }
     else{
       //new project (adjust projectid later)
