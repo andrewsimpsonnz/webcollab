@@ -1,4 +1,10 @@
 WebCollab CVS
+*** 27 June 2004
+  Andrew Simpson
+
+- add optional prefix to database table names (Feature Request 975181)
+
+WebCollab CVS
 *** 18 June 2004
   Andrew Simpson
 
