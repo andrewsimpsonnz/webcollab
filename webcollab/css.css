@@ -50,7 +50,7 @@ TABLE.tablebox {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
   margin-left : auto;
-  margin-right : auto;  
+  margin-right : auto;
   width : 97%;
   text-align : left;
   border-width: 0;
@@ -138,6 +138,35 @@ TD.boxdata2 {
   text-align : center;
   color : #1e4b79;
 }
+
+/* Class for late graphic */
+.late {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 9px;
+  font-weight : bold;
+  background : #FF0000;
+  color : #FFFFFF;
+}
+
+/* Class for new graphic */
+.new {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 9px;
+  font-weight : bold;
+  font-style : italic;
+  background : #00FF7F;
+  color : #000000;
+}
+
+/* Class for updated graphic */
+.updated {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 9px;
+  font-weight : bold;
+  background : #00FF7F;
+  color : #000000;
+}
+
 
 a:link {
   color : #003399;

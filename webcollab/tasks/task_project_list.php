@@ -83,7 +83,8 @@ function listTasks($task_id ) {
      default:
       //check if late
       if( ($task_row["now"] - $task_row["task_due"] ) >= 86400 ) {
-        $status = "&nbsp;<img border=\"0\" src=\"images/late.gif\" height=\"9\" width=\"23\" alt=\"late\" />";
+        //$status = "&nbsp;<img border=\"0\" src=\"images/late.gif\" height=\"9\" width=\"23\" alt=\"late\" />";
+        $status = "<font class=\"late\">".$lang["late_g"]."</font>";
       }
       break;
     }

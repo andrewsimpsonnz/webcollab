@@ -140,7 +140,8 @@ $q = db_query("SELECT tasks.id AS id,
       switch(db_numrows($seenq ) ) {
         case "0":
           //new and never visited by this user
-          $alert_content .= "<img border=\"0\" src=\"images/new.gif\" height=\"12\" width=\"31\" alt =\"new\" />";
+          //$alert_content .= "<img border=\"0\" src=\"images/new.gif\" height=\"12\" width=\"31\" alt =\"new\" />";
+          $alert_content .= "<font class=\"new\">".$lang["new_g"]."</font>&nbsp;";
           break;
 
         default:
@@ -148,7 +149,8 @@ $q = db_query("SELECT tasks.id AS id,
           $seen = db_result($seenq, 0, 0 );
           if( ($seen - $row["edited"] ) < 0 ) {
             //edited
-            $alert_content .= "<img border=\"0\" src=\"images/updated.gif\" height=\"12\" width=\"60\" alt=\"updated\" /> &nbsp;";
+            //$alert_content .= "<img border=\"0\" src=\"images/updated.gif\" height=\"12\" width=\"60\" alt=\"updated\" /> &nbsp;";
+            $alert_content .= "<font class=\"updated\">".$lang["updated_g"]."</font>&nbsp;";
           }
 
           //are there forum changes ?
