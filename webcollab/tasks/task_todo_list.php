@@ -123,7 +123,7 @@ $content .= "<form method=\"POST\" action=\"users.php\">\n".
             "<input type=\"hidden\" name=\"action\" value=\"todo\">\n ".
             "<table border=\"0\">\n".
             "<tr><td>".$lang["todo_list_for"]."</td></tr>".
-            "<td><input type=\"radio\" value=\"user\" name=\"selection\"$s1>".$lang["users"]."</td><td>\n".
+            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\"$s1>".$lang["users"]."</td><td>\n".
             "<select name=\"userid\">\n".
             "<option value=\"0\"$s2>".$lang["nobody"]."</option>\n";
 
