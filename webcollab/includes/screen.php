@@ -151,9 +151,9 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
 
   //if we have only one space, we center it as 100% instead of pushing it to the left
   if($no_menu == 0 )
-    echo "<tr valign=\"top\"><td width=\"175\" align=\"center\">";
+    echo "<tr valign=\"top\"><td style=\"width: 175px\" align=\"center\">";
   else
-    echo "<tr valign=\"top\"><td width=\"100%\" align=\"center\">";
+    echo "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">";
   return;
 }
 
