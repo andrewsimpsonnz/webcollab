@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2003 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -67,7 +67,7 @@ function email($to, $subject, $message ) {
   $host = SMTP_HOST;
   $connection = @fsockopen($host, 25, $errno, $errstr, 10 );
   if (!$connection )
-    debug("Unable to open SMTP connection to ".$host."<br /><br />Error ".$errno." ".$errstr );
+    debug("Unable to open TCP/IP connection to ".$host."<br /><br />Reported socket error: ".$errno." ".$errstr );
 
   //sometimes the SMTP server takes a little longer to respond
   // Windows does not have support for this timeout function before PHP ver 4.3.0
@@ -183,6 +183,10 @@ function & clean($encoded ) {
   
   //reinstate decimal encoded html that html_entity_decode() can't handle...
   $text = preg_replace('/&#\d{2,5};/e', "utf8_entity_decode('$0')", $text );
+  
+  //characters previously escaped/encoded to avoid SQL injection/CSS attacks are reinstated. 
+  $trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=' );  
+  $text = strtr($text, $trans );
   
   //remove any dangerous tags that exist after decoding
   $text = preg_replace("/(<\/?\s*)(APPLET|SCRIPT|EMBED|FORM|\?|%)(\w*|\s*)([^>]*>)/i", "\\1****\\3\\4", $text );
