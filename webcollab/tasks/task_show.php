@@ -90,8 +90,11 @@ if( $row["owner"] == 0 ) {
 }
 
 //get creator information
+$content .= "<tr><td>".$lang["created_on"].": </td><td>".nicedate($row["created"]);
 $creator = db_result(db_query("SELECT fullname FROM users WHERE id=".$row["creator"] ), 0, 0  );
-$content .= "<tr><td>".$lang["created_on"].": </td><td>".nicedate($row["created"])." by <a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["creator"]."\">".$creator."</a></td></tr>\n";
+if($creator != NULL )
+  $content .= " by <a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["creator"]."\">".$creator."</a>";
+$content .= "</td></tr>\n";
 
 //get deadline
 $content .= "<tr><td>".$lang["deadline"].": </td><td>".nicedate($row["deadline"])."</td></tr>\n";

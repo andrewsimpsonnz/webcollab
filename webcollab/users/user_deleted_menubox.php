@@ -55,7 +55,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   //if this user has NO posts, NO tasks owned AND NO tasks created then we can delete him forever :)
 
   //Get the number of tasks created
-  if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE creator=".$row["id"] ), 0, 0 ) == 0 ) {
+  //if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE creator=".$row["id"] ), 0, 0 ) == 0 ) {
 
     //Get the number of tasks owned
     if(db_result(db_query( "SELECT COUNT(*) FROM tasks WHERE owner=".$row["id"] ), 0, 0 ) == 0 ) {
@@ -65,7 +65,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
         $content .= " [<a href=\"users/user_del.php?x=$x&amp;action=permdel&amp;userid=".$row["id"]."\" onClick=\"return confirm( '".sprintf($lang["permdel_javascript_sprt"], $row["fullname"] )."' )\">".$lang["permdel"]." </a>]";
       }
     }
-  }
+  //}
   $content.="</small></small></td></tr>\n";
 }
 

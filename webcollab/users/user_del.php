@@ -51,7 +51,7 @@ if(isset($_GET["action"] ) && $_GET["action"] == "permdel" ) {
   db_begin();
 
   //Get the number of tasks created
-  if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE creator=$userid" ), 0, 0 ) == 0 ) {
+  //if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE creator=$userid" ), 0, 0 ) == 0 ) {
 
     //Get the number of tasks owned
     if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE owner=$userid" ), 0, 0 ) == 0 ) {
@@ -80,7 +80,7 @@ if(isset($_GET["action"] ) && $_GET["action"] == "permdel" ) {
         //email( $email, $ABBR_MANAGER_NAME.": Account PERMANENTLY deleted.", $message );
       }
     }
-  }
+  //}
 db_commit();
 }
 else {
