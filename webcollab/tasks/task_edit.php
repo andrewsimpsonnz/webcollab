@@ -57,7 +57,7 @@ function user_access($taskid ) {
     return FALSE;
 
   if( $row[2] == "t" ) {
-    if(in_array($row["usergroupid"], (array)$gid ) )
+    if(in_array($row[1], (array)$gid ) )
       return TRUE;
   }
   return FALSE;
