@@ -179,7 +179,7 @@ $content .= "</select></label></td></tr>\n<tr><td>&nbsp;</td></tr></table></div>
 
 //month (must be in decimal, 'cause that's what database uses!)
 $content .= "<div style=\"text-align: center\">\n".
-            "<table style=\"margin-left: auto; margin-right: auto\">\n"
+            "<table style=\"margin-left: auto; margin-right: auto\">\n".
             "<tr><td>\n<select name=\"month\">\n";
 for( $i=1; $i<13 ; $i++) {
   $content .= "<option value=\"$i\"";
