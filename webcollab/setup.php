@@ -54,6 +54,9 @@ function secure_error($message ) {
 //valid login attempt ?
 if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
 
+  include_once("database/database.php" );
+  include_once("includes/common.php" );
+
   $q = "";
   $username = safe_data($_POST["username"]);
   //encrypt password
@@ -64,9 +67,6 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
     secure_error("Unable to determine ip address");
   }
   
-  include_once("database/database.php" );
-  include_once("includes/common.php" );
-
   //count the number of recent login attempts
   $count_attempts = db_result(@db_query("SELECT COUNT(*) FROM login_attempt 
                                                 WHERE name='".$username."' 
@@ -84,7 +84,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   if( ! $q = db_query("SELECT id FROM users
                              WHERE deleted='f'
                              AND admin='t'
-                             AND name='"$username."'
+                             AND name='".$username."'
                              AND password='".$md5pass."'", 0 ) ){
     secure_error("Not a valid username, or password" );
   }

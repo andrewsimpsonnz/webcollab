@@ -69,7 +69,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   }
 
   //limit login attempts if post-1.60 database is being used 
-  if(db_query("SELECT * FROM login_attempt LIMIT 1", 0 ) ) {
+  if(@db_query("SELECT * FROM login_attempt LIMIT 1", 0 ) ) {
       
     //count the number of recent login attempts
     if( ! $q = @db_query("SELECT COUNT(*) FROM login_attempt 
@@ -85,11 +85,11 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
       secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
     }
     $flag_attempt = TRUE;                                                                              
-  }
-    
-  //record this login attempt
-  db_query("INSERT INTO login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
-                                                                                     
+  
+    //record this login attempt
+    db_query("INSERT INTO login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
+  }                                                                                   
+  
   //do query and check database connection
   if( ! $q = db_query("SELECT id FROM users
                              WHERE deleted='f'
