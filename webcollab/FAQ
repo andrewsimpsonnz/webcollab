@@ -90,7 +90,7 @@ For Linux and *nix: Make sure the /webcollab/files/filebase directory is writeab
 webserver.  This means the directory should be either owned by the webserver user (usually apache,
 www or www-data) or the directory must be world-writeable.
 
-Use 'chmod 777 filebase' from the files directory, and preferably move the directory outside the
+Use 'chmod 666 filebase' from the files directory, and preferably move the directory outside the
 webserver root - see item 3 below. 
 
 
