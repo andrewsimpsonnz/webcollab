@@ -1,4 +1,16 @@
 WebCollab CVS
+*** 14 July 2004
+  Andrew Simpson
+
+- bugfix: setup.php not fully compatible with upgrades
+
+WebCollab 1.60 - Neptune
+*** 13 July 2004
+  Andrew Simpson
+
+- release  
+
+WebCollab CVS
 *** 12 July 2004
   Andrew Simpson
 
