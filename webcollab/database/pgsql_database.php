@@ -69,10 +69,13 @@ function db_query($query, $dieonerror=1 ) {
     //make sure dates will be handled properly by internal date routines
     $q = db_query("SET DATESTYLE TO 'European, ISO' ");
     
-    //SQL_ASCII has no encoding, other server encodings need to be corrected by the PostgreSQL client
-    if(pg_client_encoding() != 'SQL_ASCII' ){    
+    //get server encoding
+    $server_encoding = pg_fetch_result(db_query('SHOW SERVER_ENCODING'), 0, 0 );
+    
+    //SQL_ASCII is not encoded, other server encodings need to be corrected by the PostgreSQL client
+    if($server_encoding != 'SQL_ASCII' ){    
       if(pg_set_client_encoding($database_connection, pg_encoding() ) == -1 ){ 
-        error("Database client encoding", "Cannot set PostgreSQL client to ".CHARACTER_SET." encoding.  Current server encoding is  ".pg_client_encoding() );
+        error("Database client encoding", "Cannot set PostgreSQL client encoding to ".CHARACTER_SET. "as required. The current server backend encoding is ".$server_encoding );
       } 
     }
   }
