@@ -110,7 +110,7 @@ function email($to, $subject, $message ) {
   //envelope to
   $address_list = explode(",", $to );
   foreach($address_list as $email_to ) {
-    fputs($connection, "RCPT TO: <".trim($email_to ).">\r\n" );
+    fputs($connection, "RCPT TO: <".trim(clean($email_to ) ).">\r\n" );
     $res = response();
     switch($res[1] ) {
       case "250":
