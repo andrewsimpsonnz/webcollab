@@ -15,6 +15,7 @@
 <a href="#tuning">Performance Tuning</a><br />
 <a href="#files">Uploading Files</a><br />
 <a href="#email">Email</a><br />
+<a href="#international">Internationalisation</a><br />
 <a href="#security">Security</a><br />
 <a href="#remote">Remote Databases</a><br />
 <a href="#database">Database Types</a><br />
@@ -258,8 +259,19 @@ Practical measures to enhance security include:<br />
 <li>Make sure that Apache configuration allows .htaccess files to set &lt;Limit&gt; in WebCollab directory. WebCollab uses .htaccess files extensively to protect subdirectories.</li>
 <li>Make sure the file <i>/config/config.php</i> is not world writable and not owned by the web server user.</li>
 <li>Use an SSL layer for access with WebCollab.</li>
-<li>Delete unecessary files.  For instance the /setup directory and update.php.</li>
+<li>Delete unnecessary files.  For instance the /setup directory and update.php.</li>
 </ul>
+</dd>
+</dl>
+<a name="international"></a>
+<h3>INTERNATIONALISATION</h3>
+<dl>
+<dt>1. What character encoding does WebCollab use?  Or, what characters can be used with WebCollab?</dt>
+<dd>The character encoding is set by the language file in use.  For instance, English, French & German all use ISO-8859-1 encoding (this is also known as Latin 1 encoding).   WebCollab is fully internationalised and language files should be able to be set up with most international character encodings.  Multi-byte character encodings schemes will probably need the (optional) multi-byte strings library installed in PHP, and the related mb_function overloading to be enabled in php.ini.<br />
+<br />
+Note: For some character encodings the input filter regex in /includes/common.php may need adjusting.  The filter is set to pass all bytes within the range of printable ISO-8859-x characters.  To date, this has fortuitously also matched every other character set tried.<br />
+<br />  
+For better internationalisation capability, the Unicode version of WebCollab should be used.  This natively supports over 650 languages.  The database and PHP requirements, are however, much more stringent.   
 </dd>
 </dl>
 <a name="remote"></a>
