@@ -1,4 +1,26 @@
 WebCollab CVS
+*** 24 July 2004
+  Andrew Simpson
+
+- upgrade to XHTML Strict DTD 
+
+- bugfix: PRE missing in index.php and task_summary_list.php (PJ)
+
+- bugfix: strip HTML line breaks in emails from forum_submit.php (DanielC)
+
+- bugfix: forum does not show with globalaccess turned off, and no usergroup selected (DanielC)
+
+- bugfix: PostgreSQL database SQL script has syntax error (Bug No.#995720)
+
+- bugfix: added more download headers to file_download.php for IE 6 (Steve Brettschneider)
+
+WebCollab 1.60a - Neptune
+*** 14 July 2004
+  Andrew Simpson
+
+- release  
+
+WebCollab CVS
 *** 14 July 2004
   Andrew Simpson
 
