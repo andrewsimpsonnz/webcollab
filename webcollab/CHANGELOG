@@ -11,6 +11,8 @@ WebCollab CVS
 
 - allow full character range in 'reply-to' and 'from' email addresses 
 
+- change from in_array() to array_search() in task_project_list.php (benchmarking shows speed improved)
+
 WebCollab CVS
 *** 25 January 2005
 
