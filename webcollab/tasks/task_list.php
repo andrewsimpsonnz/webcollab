@@ -118,17 +118,18 @@ function list_tasks( $parent ) {
     //don't show alert content for changes more than $NEW_TIME (in seconds)
     if( ($row["now"] - max($row["edited"], $row["lastpost"], $row["lastfileupload"])) > 86400*$NEW_TIME ) {
 
-      //task is over $NEW_TIME and still not looked at by you, mark it as seen, and move on...
+      //task is over limit in $NEW_TIME and still not looked at by you, mark it as seen, and move on...
       if( ( db_numrows( $seenq ) ) < 1 )
         db_query("INSERT INTO seen(userid, taskid, time) VALUES (".$uid.", ".$row["id"].", current_timestamp(0) ) " );
     }
-    //task was changed in last 3 weeks - show the changes to you
+    //task was changed - show the changes to you
     else {
 
       switch( db_numrows( $seenq ) ) {
         case "0":
           //new and never visited by this user
           $alert_content .= "<img border=\"0\" src=\"images/new.gif\" height=\"12\" width=\"31\">";
+	  break;
 
         default:
           //check if edited since last visit
@@ -147,6 +148,7 @@ function list_tasks( $parent ) {
           if( $seen - $row["lastfileupload"] < 0 ) {
             $alert_content .= "<img border=\"0\" src=\"images/file.gif\" height=\"11\" width=\"11\">";
           }
+	  break;
        }
     }
 
