@@ -67,19 +67,19 @@ function listTasks($task_id ) {
     switch( $row[2] ) {
 
       case "cantcomplete":
-       $content .= "<b><i>".$task_state["cantcomplete"]."</i></b>";
-       break;
+        $content .= "<b><i>".$task_state["cantcomplete"]."</i></b>";
+        break;
 
-     case "notactive":
-       $content .= "<i>".$task_state["task_planned"]."</i>";
-       break;
+      case "notactive":
+        $content .= "<i>".$task_state["task_planned"]."</i>";
+        break;
 
-     default:
-      //check if late
-      if( ($now + $tz_offset - $row[5] ) >= 86400 ) {
-        $content .= "<span class=\"late\">".$lang["late_g"]."</span>";
-      }
-      break;
+      default:
+        //check if late
+        if( ($now + $tz_offset - $row[5] ) >= 86400 ) {
+          $content .= "<span class=\"late\">".$lang["late_g"]."</span>";
+        }
+        break;
     }
     $content .= "</li>\n";
   }
@@ -98,20 +98,20 @@ $active_only = 0;
 $tz_offset = ($TZ * 3600) - date("Z");
 
 // query to get the projects
-  $q = db_query("SELECT id,
-                        name,
-                        deadline,
-                        status,
-                        ".$epoch." deadline) AS due,
-                        ".$epoch." finished_time) AS finished_time,
-                        ".$epoch." completion_time) AS completion_time,
-                        ".$epoch." now()) AS now,
-                        usergroupid,
-                        globalaccess,
-                        completed
-                        FROM ".PRE."tasks
-                        WHERE parent=0
-                        ORDER BY name" );
+$q = db_query("SELECT id,
+                      name,
+                      deadline,
+                      status,
+                      ".$epoch." deadline) AS due,
+                      ".$epoch." finished_time) AS finished_time,
+                      ".$epoch." completion_time) AS completion_time,
+                      ".$epoch." now()) AS now,
+                      usergroupid,
+                      globalaccess,
+                      completed
+                      FROM ".PRE."tasks
+                      WHERE parent=0
+                      ORDER BY name" );
 
 //check if there are projects
 if(db_numrows($q) < 1 ) {
@@ -167,7 +167,6 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     case "nolimit":
     case "done":
     default:
-      //if($percent_complete == 100 )
       if($row["completed"] == 100 )  
         $project_status = "done";
         

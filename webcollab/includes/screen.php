@@ -68,7 +68,7 @@ include_once(BASE."lang/lang.php" );
 function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
 
   global $uid_name, $admin, $MANAGER_NAME, $WEBCOLLAB_VERSION, $lang, $web_charset, $top_done, $bottom_text;
-
+  
   //only build top once...
   //  (we don't use headers_sent() 'cause it seems to be buggy in PHP5)
   if(isset($top_done) && $top_done == 1 ){
@@ -163,7 +163,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
 
   //flush buffer
   echo $content;
-  
+    
   //create the main table
   $content  =  "<!-- start main table -->\n".
                      "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n";
