@@ -42,6 +42,7 @@ $ip = "";
 $x = "";
 $admin = 0;
 $cookie_flag = 0;
+$gid[0] = 0;
 
 
 //check for some values that HAVE to be present to be allowed (ip, session_key)
@@ -102,6 +103,12 @@ if($row["admin"] == 't' )
 else
   $admin = 0;
 
+//get usergroups of user
+$q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
+  $gid[$i] = $row[0];
+}
+
 //update the "I was here" time
 db_query("UPDATE logins SET lastaccess=now() WHERE session_key='$x' AND user_id=$uid" );
 
@@ -116,6 +123,7 @@ if($cookie_flag == 1 ) {
 // useremail = user's email address
 // uid = user's id
 // admin [0,1] = is the user an admin ?
+// gid[] = array of user's groups
 //
 // and of course, access !!
 
