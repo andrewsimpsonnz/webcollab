@@ -154,10 +154,10 @@ create_top_setup("Login" );
 
 $content = "<p>Admin login is required for setup:</p>\n".
            "<form name=\"inputform\" method=\"POST\" action=\"setup.php\">\n".
-             "<p><table border=\"0\">\n".
+             "<table border=\"0\">\n".
                "<tr><td>Login: </td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
                "<tr><td>Password: </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
-             "</table></p>\n".
+             "</table>\n".
              "<div align=\"center\">\n".
              "<p><input type=\"submit\" value=\"Login\" /></p>\n".
              "</div></form>\n";
