@@ -111,8 +111,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 }
 
 $content .= "</select></td></tr>\n".
-            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\"$s3>".$lang["usergroups"]."</td><td>\n".
-            "<select name=\"groupid\">\n".
+            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\"$s3>".$lang["usergroups"]."</td>\n".
+            "<td><select name=\"groupid\">\n".
             "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
 
 //get all groups for option box
@@ -129,10 +129,10 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= ">".$row["name"]."</option>\n";
 }
 
-$content .= "</select></td></tr>\n";
+$content .= "</select></td></tr>\n</table><br /><br />\n";
 
 //month (must be in decimal, 'cause that's what database uses!)
-$content .= "<tr><td><select name=\"month\">\n";
+$content .= "<table border=\"0\"><tr><td>\n<select name=\"month\">\n";
 for( $i=1; $i<13 ; $i++) {
   $content .= "<option value=\"$i\"";
 
@@ -150,8 +150,8 @@ for( $i=2001; $i<2011 ; $i++) {
   if( $year == $i ) $content .= " SELECTED";
   $content .= ">".$i."</option>\n";
   }
-$content .=  "</select></td></tr>\n".
-             "<tr><td><input type=\"submit\" value=\"".$lang["update"]."\"></td></tr>\n".
+$content .=  "</select></td>\n".
+             "<td><input type=\"submit\" value=\"".$lang["update"]."\"></td></tr>\n".
              "</table></form><br />\n";
 
 //get usergroups of user, and put them in a simple array for later use
@@ -197,10 +197,12 @@ for ($num = 1; $num <= $numdays; $num++ ) {
   $content .= ">$num<br />";
   $pad = 0;
 
-  //search for tasks on this date
+  //search for tasks on this date (Not every date will have data rows and COUNT(*) is much faster to find empty rows)
+  if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE deadline='$year-$month-$num' $tail" ), 0, 0 ) > 0 ) {
+
+  //rows exist for this date - get them!
   $q = db_query("SELECT id, name, parent, status, usergroupid, globalaccess FROM tasks WHERE deadline='$year-$month-$num' $tail" );
 
-  if( db_numrows($q) > 0 ) {
     for( $j=0 ; $row = @db_fetch_array($q, $j ) ; $j++) {
 
       //check for private usergroups
@@ -229,7 +231,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
                else
                  $name = "<font color=\"blue\">".$row["name"];
                $content .= "<img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\">".
-                           "<a href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$name."</font></a><br />\n";
+                           "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">$name</font></a><br />\n";
              break;
 
              default:
@@ -240,7 +242,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
                 $name = "<font color=\"red\">".$row["name"];
 
               $content .= "<img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\">".
-                          "<a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["id"]."\">".$name."</font></a><br />\n";
+                          "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">$name</font></a><br />\n";
             break;
           }
         break;
