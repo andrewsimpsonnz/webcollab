@@ -105,8 +105,17 @@ function email( $to, $subject, $message) {
         //envelope to
         fputs($connection, "RCPT TO: $email_to\r\n" );
         $res=fgets($connection, 256 );
-        if( (substr($res,0,3) != "250" )  && (substr($res,0,3) != "251" ) )
-          debug("Incorrect response to RCPT TO command from SMTP server at ".$host."<BR><BR>Response from SMTP server was ".$res );
+
+        switch(substr($res,0,3) ) {
+          case "250":
+          case "251":
+            //acceptable responses
+            break;
+
+          default:
+            debug("Incorrect response to RCPT TO command from SMTP server at ".$host."<BR><BR>Response from SMTP server was ".$res );
+            break;
+        }
 
         //message
         fputs($connection, "DATA\r\n" );
@@ -114,10 +123,15 @@ function email( $to, $subject, $message) {
         if(substr($res,0,3) != "354")
           debug("Incorrect response to DATA command from SMTP server at ".$host."<BR><BR>Response from SMTP server was ".$res );
 
-        $headers = "To: ".$email_to."\r\n".
+		//generate unique message id
+		$uniq_id = md5(uniqid(time()));
+
+		$headers = "To: ".$email_to."\r\n".
  			"From: ".$EMAIL_FROM."\r\n".
   			"Reply-To: ".$EMAIL_REPLY_TO."\r\n".
 			"Subject: ".$subject."\r\n".
+			"Date: ".date("r")."\r\n".
+			"Message-Id: <".$uniq_id."@".$domain.">\r\n".
 			"X-Mailer: PHP/" . phpversion()."\r\n".
 			"X-Priority: 3\r\n".
 			"X-Sender: ".$EMAIL_REPLY_TO."\r\n".
