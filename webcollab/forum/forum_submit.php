@@ -141,9 +141,9 @@ if( ! valid_string($_REQUEST["action"]) )
                 VALUES ($parentid, $taskid, now(), '$text', $uid, $usergroupid)" );
       }
       else {
-      //public post
-      db_begin();
-      db_query ("INSERT INTO forum(parent, taskid, posted, text, userid, usergroupid)
+        //public post
+        db_begin();
+        db_query ("INSERT INTO forum(parent, taskid, posted, text, userid, usergroupid)
                   VALUES ($parentid, $taskid, now(), '$text', $uid, 0)" );
       }
       //set when the last forum post to this task was done to the database

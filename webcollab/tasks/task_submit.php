@@ -527,9 +527,9 @@ if( ! valid_string($_REQUEST["action"]) )
             $name_owner = db_result(db_query("SELECT fullname FROM users WHERE id=$owner" ), 0, 0 );
           }
           else
-            $name_owner = "Nobody";
+            $name_owner = "nobody";
 
-          $message = sprintf( $email_edit_group, $MANAGER_NAME,$type, $name_owner, date("F j, Y, H:i"), $name_project, $name_task,
+          $message = sprintf( $email_edit_group, $MANAGER_NAME, $type, $name_owner, date("F j, Y, H:i"), $name_project, $name_task,
                  status($status, $deadline), clean($text), $BASE_URL );
           email( $EMAIL_MAILINGLIST, sprintf($title_edit_group, ucfirst($type ) ), $message );
 
