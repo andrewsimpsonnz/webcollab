@@ -50,7 +50,7 @@ switch($_REQUEST['action'] ) {
     //do the restore
     db_query("UPDATE ".PRE."tasks SET archive=0 WHERE projectid=$projectid" );
         
-    header("Location: ".BASE_URL."tasks.php?x=$x&action=show&taskid=$taskid" );
+    header("Location: ".BASE_URL."archive.php?x=$x&action=list" );
     die;
     break;
 
