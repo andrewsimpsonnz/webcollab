@@ -69,9 +69,6 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
 
   global $uid_name, $admin, $MANAGER_NAME, $WEBCOLLAB_VERSION, $lang, $web_charset, $top_done, $bottom_text;
 
-  //set initial value
-  $bottom_text = 1;
-  
   //only build top once...
   //  (we don't use headers_sent() 'cause it seems to be buggy in PHP5)
   if(isset($top_done) && $top_done == 1 ){
@@ -168,29 +165,31 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
   
   //create the main table
   $content  =  "<!-- start main table -->\n".
-                     "<table class=\"container\">\n";
+                     "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n";
 
   switch ($page_type ) {
 
     case 0: //main window + menu sidebar
       //create the masthead part of the main window
-      $content .=  "<tr valign=\"top\" style=\"height: 20px\"><td colspan=\"2\" class=\"masthead\">";
+      $content .=  "<tr valign=\"top\"><td colspan=\"2\" class=\"masthead\">";
       //show username if applicable
       if($uid_name != "" )
         $content .=  sprintf( $lang["user_homepage_sprt"], $uid_name );
       $content .=  "</td></tr>\n";
       //create menu sidebar
       $content .=  "<tr valign=\"top\"><td style=\"width: 175px;\" align=\"center\">\n";
+      $bottom_text = 1;
       break;
 
     case 1: //single main window (no menu sidebar)
     case 3: //calendar  
-      $content .=  "<tr valign=\"top\" style=\"height: 20px\"><td class=\"masthead\">";
+      $content .=  "<tr valign=\"top\"><td class=\"masthead\">";
       if($uid_name != "" )
         $content .=  sprintf( $lang["user_homepage_sprt"], $uid_name );
       $content .= "</td></tr>\n";
       //create single window over entire screen
-      $content .= "<tr valign=\"top\" ><td style=\"width: 100%\" align=\"center\">\n";
+      $content .= "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";
+      $bottom_text = 2;
       break;
 
     case 2: //printable screen
@@ -244,16 +243,20 @@ function create_bottom() {
   echo "<br />\n";
 
   //end the main table row
-  echo "</td></tr>\n";
+  echo "</td></tr>\n</table>";
 
   if($bottom_text ){
+    if($bottom_text == 1 )
+      $align = "style=\"text-align: left\"";
+    else
+      $align = "style=\"text-align: center\"";
+   
     //shows the logo
-    echo "<tr><td colspan=\"2\" align=\"center\" class=\"bottomtext\">\n".
-         "Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;2002-2004\n".
-         "</td></tr>\n";
-  } 
+    echo "<div class=\"bottomtext\" $align>Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;2002-2004</div>\n";
+  }
+   
   //end xml parsing
-  echo "</table>\n</body>\n</html>\n";
+  echo "</body>\n</html>\n";
   return;
 }
 
