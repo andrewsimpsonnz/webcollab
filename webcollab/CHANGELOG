@@ -1,4 +1,14 @@
 WebCollab CVS
+*** 6 March 2005
+
+- refactor task_project_list.php to have minimal database calls (significant efficiency improvement) 
+
+- added Japanese translation (Credit: Tadashi Jokagi - elf2000)
+
+- added calendar appearance improvements patch (Credit: Manolis Stamatogiannakis - mstamat)
+
+
+WebCollab CVS
 *** 28 February 2005
 
 - added Hungarian translation (Credit: Széll Tamás)
@@ -36,8 +46,6 @@ WebCollab CVS
 - allow setup to accept databases with no passwords (not recommended practice!)
 
 - allow full character range in 'reply-to' and 'from' email addresses 
-
-- change from in_array() to array_search() in task_project_list.php (benchmarking shows speed improved)
 
 WebCollab CVS
 *** 25 January 2005
