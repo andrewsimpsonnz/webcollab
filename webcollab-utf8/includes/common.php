@@ -80,20 +80,25 @@ return $body;
 
 function clean_up($body ) {
 
-  //remove HTML entities for UTF8 added by web browser
-  $convmap = array(0x0, 0x2ffff, 0, 0xffff);
-  $body = preg_replace('/(&#\d{2,4};)/e', "mb_decode_numericentity('$1', $convmap, 'UTF-8')", $body );
+  //allow only normal byte range of UTF-8 characters
+  preg_match_all('/([\x09\x0a\x0d\x20-\x7e]|'.
+                   '[\xc0-\xdf][\x80-\xbf]|'.
+                   '[\xe0-\xef][\x80-\xbf]{2}|'.
+                   '[\xf0-\xf7][\x80-\xbf]{3}|'.
+                   '[\xf8-\xfb][\x80-\xbf]{4}|'.
+                   '[\xfc-\xfd][\x80-\xbf]{5})+/S', $body, $ar );
   
-  //allow only normal range of UTF-8 characters
-  preg_match_all('/([\x09\x0a\x0d\x20-\x7e]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xf4][\x80-\xbf]{3})+/S', $body, $ar );
-  $body = join("*", $ar[0] );
+  $body = join("?", $ar[0] );
   
-  //reject overly long UTF8 forms
-  $body = preg_replace('/([\xe0][\x80-\x9f][\x80-\xbf]|[\xf0][\x80-\xbf]{3})/', "*", $body );
+  //reject overly long UTF8 forms (lines 1-6) and illegal UTF16 surrogates (lines 6 & 7)  
+  $body = preg_replace('/([\xc0-\xc1][\x80-\xbf]|'.
+                         '[\xe0][\x80-\x9f][\x80-\xbf]|'.
+                         '[\xf0][\x80-\x8f][\x80-\xbf]{2}|'.
+                         '[\xf8][\x80-\x87][\x80-\xbf]{3}|'.
+                         '[\xfc][\x80-\x83][\x80-\xbf]{4}|'.
+                         '[\xed][\xa0-\xbf][\x80-\xbf]|'.
+                         '[\xef][\xbf][\xbe-\xbf])/S', "?", $body );
   
-  //reject illegal UTF16 surrogates
-  $body = preg_replace('/([\xed][\xa0-\xbf][\x80-\xbf]|[\xef][\xbf][\xbe-\xbf])/', "*", $body );
-
   //protect against database query attack
   if(! get_magic_quotes_gpc() )
     $body = addslashes($body );
