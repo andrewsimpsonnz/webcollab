@@ -49,7 +49,7 @@ $q = db_query("SELECT * FROM tasks WHERE tasks.id=$taskid" );
 
 //get the data
 if( ! ($row = db_fetch_array($q, 0 ) ) )
-  error("Task show", "There was an error in fetching the tasks' data.");
+  error("Task show", "The requested item has either been deleted, or is now invalid.");
 
 //mark this as seen in seen ;)
 @db_query("DELETE FROM seen WHERE userid=$uid AND taskid=$taskid", 0);

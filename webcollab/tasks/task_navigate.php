@@ -42,7 +42,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
   //get the data
   if( ! $row = db_fetch_array($q, 0) )
-    error("Task navigate", "There was an error in fetching the task data");
+    error("Task navigate", "The requested item has either been deleted, or is now invalid.");
 
   //get project name (limited to 20 characters)
   $project_name = substr(db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 ), 0, 20);
