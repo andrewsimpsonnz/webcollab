@@ -1,4 +1,22 @@
 WebCollab CVS
+*** 9 April 2004
+  Andrew Simpson
+
+- add inval() check to numeric inputs
+
+- bugfix: During setup the session doesn't auto-extend with each action
+
+- add login timeouts to enhance dictionary attack protection
+
+- add update.php for database updates
+
+- login image auto-changes with pgsql and mysql databases
+
+- setup checking screen has return to input screen
+
+- more detailed error messages on mysql setup    
+
+WebCollab CVS
 *** 27 March 2004
   Andrew Simpson
 
@@ -20,7 +38,7 @@ WebCollab CVS
 
 - bugfix:  German translation spelling error  
 
-- upgrade security model
+- upgrade security model with model-view-controller approach
 
 WebCollab CVS
 *** 28 February 2004
