@@ -1,18 +1,31 @@
-BODY {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif; 
-  font-size : 10pt;
-  margin : 0;
-  background : #6085AC;
-  color : #000000;
-}
-
 FONT {
   font-family: "Helvetica", Verdana, Arial, Sans-serif; 
   font-size : 10pt;
 }
 
 LI {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif; 
+  font-size : 10pt;
   list-style-type: circle;
+}
+
+TD {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif; 
+  font-size : 10pt;
+}
+
+DL {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif; 
+  font-size : 10pt;
+}
+
+
+BODY {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif; 
+  font-size : 10pt;
+  margin : 0;
+  background : #6085AC;
+  color : #000000;
 }
 
 
