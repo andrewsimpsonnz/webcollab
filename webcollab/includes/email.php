@@ -66,7 +66,7 @@ function email($to, $subject, $message ) {
 
   //open an SMTP connection at the mail host
   $host = $SMTP_HOST;
-  $connection = fsockopen($host, 25, &$errno, &$errstr, 10 );
+  $connection = @fsockopen($host, 25, &$errno, &$errstr, 10 );
   if (!$connection )
     debug("Unable to open SMTP connection to ".$host."<br /><br />Error ".$errno." ".$errstr );
 
@@ -169,7 +169,7 @@ clean		Reinstate encoded html back to original text.
 message		Prepare message body, and if necessary, 'quoted-printable' encode for SMTP transmission.
 subject		Check subject line and 'quoted printable' encode if required for SMTP transmission.
 headers		Assemble message headers to RFC 822.
-response	Get response to client command from the connected SMTP server.
+response		Get response to client command from the connected SMTP server.
 debug		Debug!
 */
 
