@@ -35,42 +35,29 @@ if( ! isset($_GET["fileid"]) || ! is_numeric($_GET["fileid"]) )
 
 $fileid = $_GET["fileid"];
 
-//check usergroups associated with this file
-if( ! ($q = db_query("SELECT tasks.usergroupid AS usergroupid,
-                             tasks.globalaccess AS globalaccess
-                             FROM files
-                             LEFT JOIN tasks ON (files.taskid=tasks.id)
-                             WHERE files.id=$fileid" ) ) )
-  error("Download file", "There was an error in the data query.");
-
-//get the data
-if( ! ($row = db_fetch_array($q, 0 ) ) )
-  error("Download file", "There was an error in fetching the file permission data");
-
-//admins can go free the rest is checked
-if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
-  //check if the user has a matching usergroup
-  if( ! in_array($row["usergroupid"], (array)$gid ) )
-    warning($lang["access_denied"], $lang["private_usergroup"] );
-}
-
 //get the files info
-$file_q = db_query("SELECT oid, filename, size, mime FROM files WHERE id=$fileid" );
-$file_row = db_fetch_array( $file_q, 0);
+if( ! ($q = db_query("SELECT oid, filename, size, mime, taskid FROM files WHERE id=$fileid" ) ) )
+  error("Download file", "There was an error in the data query");
+
+$row = db_fetch_array( $q, 0);
+
+//check usergroup security
+$taskid = $row["taskid"];
+require_once(BASE."includes/usergroup_security.php" );
 
 //check the file exists
-if( ! ( file_exists( $FILE_BASE."/".$file_row["oid"]."__".($file_row["filename"] ) ) ) )
-  error("Download file", "The file ".$file_row["filename"]." is missing from the server" );
+if( ! ( file_exists( $FILE_BASE."/".$row["oid"]."__".($row["filename"] ) ) ) )
+  error("Download file", "The file ".$row["filename"]." is missing from the server" );
 
 //open the file
-$fp = fopen( $FILE_BASE."/".$file_row["oid"]."__".($file_row["filename"]), "rb" );
+$fp = fopen( $FILE_BASE."/".$row["oid"]."__".($row["filename"]), "rb" );
 if($fp == 0 )
-  error("Download file", "File handle for ".$file_row["filename"]." cannot be opened" );
+  error("Download file", "File handle for ".$row["filename"]." cannot be opened" );
 
 //send the headers describing the file type
-header("Content-Type: ".$file_row["mime"]);
-header("Content-Disposition: inline; filename=".$file_row["filename"]);
-header("Content_Length: ".$file_row["size"] );
+header("Content-Type: ".$row["mime"]);
+header("Content-Disposition: inline; filename=".$row["filename"]);
+header("Content_Length: ".$row["size"] );
 
 //send it
 fpassthru($fp);
