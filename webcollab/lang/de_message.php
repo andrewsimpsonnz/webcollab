@@ -136,7 +136,7 @@ $lang = array(
  "show_contact" => "Zeige Kontakte",
  "edit_contact" => "Bearbeite Kontakte",
  "contact_submit" => "Kontakt absenden",
- "contact_warn" => "Es wurden nicht gen&uuml;gend Daten eingegeben, um den Kontakt hinzuzuf&uuml;gen. Bitte gehen Sie zur&uumlck und geben Sie mindestens den Vor- und Nachnamen an.",
+ "contact_warn" => "Es wurden nicht gen&uuml;gend Daten eingegeben, um den Kontakt hinzuzuf&uuml;gen. Bitte gehen Sie zur&uuml;ck und geben Sie mindestens den Vor- und Nachnamen an.",
 
  //files
  "manage_files" => "Dateiverwaltung",
