@@ -88,7 +88,9 @@ if(db_numrows($q ) != 0 ) {
   $content .= "</table>";
 }
 
-$content .= "<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang['add_file']."</a>]</span>";
+
+if($GUEST == 0 )
+  $content .= "<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang['add_file']."</a>]</span>";
 
 new_box($lang["files_assoc_".$TYPE], $content, "boxdata2" );
 

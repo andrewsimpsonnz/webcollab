@@ -57,10 +57,13 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
 //
 function user_access($owner, $usergroupid, $groupaccess ) {
 
-  global $UID, $GID, $ADMIN, $TASKID_ROW;
+  global $UID, $GID, $ADMIN, $GUEST, $TASKID_ROW;
 
-  if($ADMIN == 1)
+  if($ADMIN == 1)  
     return TRUE;
+    
+  if($GUEST == 1)
+    return FALSE;   
 
   if($owner == $UID )
     return TRUE;
@@ -252,7 +255,7 @@ switch($TASKID_ROW['parent'] ){
 }
 
 //task owner
-$user_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' ORDER BY fullname" );
+$user_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest='f' ORDER BY fullname" );
 $content .= "<tr> <td>".$lang[$TYPE."_owner"].":</td> <td><select name=\"owner\">\n".
             "<option value=\"0\">".$lang['nobody']."</option>\n";
 

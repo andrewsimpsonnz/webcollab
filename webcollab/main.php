@@ -35,7 +35,8 @@ include_once("includes/screen.php" );
 create_top();
 
   include("includes/mainmenu.php" );
-  include("tasks/task_menubox.php" );
+  if($GUEST == 0 )
+    include("tasks/task_menubox.php" );
   include("users/user_menubox.php" );
 
   if( $ADMIN == 1 ) {

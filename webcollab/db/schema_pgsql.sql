@@ -42,6 +42,7 @@ CREATE TABLE "users" (
 	"email" character varying(200) NOT NULL,
 	"admin" boolean NOT NULL DEFAULT 'f'::bool,
 	"private" integer DEFAULT 0::int NOT NULL,
+        "guest" boolean NOT NULL DEFAULT 'f'::bool,
 	"deleted" boolean NOT NULL DEFAULT 'f'::bool,
 	Constraint "users_pkey" Primary Key ("id")
 );

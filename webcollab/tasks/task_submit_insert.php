@@ -37,6 +37,9 @@ include_once(BASE."lang/lang_email.php" );
 include_once(BASE."tasks/task_common.php" );
 include_once(BASE."tasks/task_submit.php" );
 
+//deny guest users
+if($GUEST == 1)
+ warning($lang['access_denied'], $lang['not_owner'] );  
 
 //check task name is present
 if(empty($_POST['name']) )

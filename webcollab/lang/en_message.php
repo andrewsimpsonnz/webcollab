@@ -255,7 +255,13 @@ $lang = array(
  "admin" => "Admin",
   //**
  "private_user" => "Private user",
+ //**
+ "normal_user" => "Normal user", 
  "is_admin" => "Is an admin?",
+ //**
+ "is_guest" => "Is a guest?",
+ //**
+ "guest" => "Guest user",
  "user_info" => "User information",
  "deleted_users" => "Deleted users",
  "no_deleted_users" => "There are no deleted users.",

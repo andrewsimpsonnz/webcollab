@@ -39,6 +39,10 @@ $content = "";
 $javascript = "";
 $allowed[0] = 0; 
 
+if($GUEST == 1)
+ warning($lang['access_denied'], $lang['not_owner'] );  
+
+
 //get list of common users in private usergroups that this user can view 
 $q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid,
                       ".PRE."usergroups_users.userid AS userid 
@@ -123,7 +127,7 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
 
 
   //get all users in order to show a task owner
-  $users_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' ORDER BY fullname");
+  $users_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest='f' ORDER BY fullname");
 
   //owner box
   $content .= "<tr><td>".$lang['task_owner'].":</td><td><select name=\"owner\">\n".
@@ -219,7 +223,7 @@ else {
               "</select></td></tr>";
 
   //get all users in order to show a task owner
-  $user_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' ORDER BY fullname");
+  $user_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest='f' ORDER BY fullname");
 
   //owner
   $content .= "<tr><td>".$lang['project_owner'].":</td><td><select name=\"owner\">\n";

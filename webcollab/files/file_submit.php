@@ -35,6 +35,10 @@ require_once( BASE."includes/security.php" );
 if(empty($_REQUEST['action']))
   error("File submit", "No action given" );
 
+//deny guest users
+if($GUEST == 1)
+ warning($lang['access_denied'], $lang['not_owner'] );  
+  
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 

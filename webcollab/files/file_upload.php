@@ -42,6 +42,10 @@ if(empty($_GET['taskid']) || ! is_numeric($_GET['taskid']) )
 
 $taskid = $_GET['taskid'];
 
+//deny guest users
+if($GUEST == 1)
+ warning($lang['access_denied'], $lang['not_owner'] );  
+
 //check usergroup security
 require_once(BASE."includes/usergroup_security.php" );
 

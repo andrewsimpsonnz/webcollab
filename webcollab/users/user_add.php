@@ -46,9 +46,12 @@ $content =
                "<tr><td>".$lang['email'].":</td><td><input type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".
                "<tr><td>&nbsp;</td></tr>\n".
                "<tr><td><label for=\"private\">".$lang['private_user'].":</label></td><td><input type=\"checkbox\" name=\"private_user\" id=\"private\" /></td></tr>\n".
-               "<tr><td><label for=\"admin\">".$lang['is_admin'].":</label></td><td><input type=\"checkbox\" name=\"admin_rights\" id=\"admin\" /></td></tr>\n".
+               "<tr><td>&nbsp;</td></tr>\n".
+               "<tr><td><label for=\"normal\">".$lang['normal_user'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"normal\" id=\"normal\" checked=\"checked\" /></td></tr>\n".
+               "<tr><td><label for=\"admin\">".$lang['is_admin'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"admin\" id=\"admin\" /></td></tr>\n".
+               "<tr><td><label for=\"guest\">".$lang['is_guest'].":</label></td><td><input type=\"radio\" name=\user_type\" value=\"guest\" id=\"guest\" /></td></tr>\n".
                "<tr><td>&nbsp;</td></tr>\n";
-
+               
 //add user-groups
 $q = db_query("SELECT name, id FROM ".PRE."usergroups ORDER BY name" );
 

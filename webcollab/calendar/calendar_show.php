@@ -135,7 +135,7 @@ $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<option value=\"0\"$s2>".$lang['all_users']."</option>\n";
 
 //get all users for option box
-$q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' ORDER BY fullname");
+$q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest='f' ORDER BY fullname");
 
 //user input box fields
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {

@@ -1,4 +1,12 @@
 WebCollab CVS
+*** 1 November 2004
+  Andrew Simpson 
+
+- add guest view (Feature Request #1056387 and others)
+
+- bugfix: (Bug #1054735) Convert numeric HTML entities to text for email messages
+
+WebCollab CVS
 *** 24 October 2004
   Andrew Simpson 
 

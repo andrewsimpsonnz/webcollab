@@ -38,7 +38,7 @@ $content = "";
 if($ADMIN == 1 )
   $content .= "<a href=\"files.php?x=$x&amp;action=admin\">".$lang['file_admin']."</a><br />\n";
 
-if($taskid != -1 )
+if($taskid != -1 && $GUEST == 0 )
   $content .= "<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang['add_file']."</a><br />\n";
 
 //show it

@@ -120,9 +120,9 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     
   //update for version 1.32 -> 1.40
   if(! (db_query("SELECT groupaccess FROM ".PRE."config", 0 ) ) ) {
-     db_query("ALTER TABLE tasks ADD COLUMN groupaccess VARCHAR(5)" );
-     db_query("ALTER TABLE tasks ALTER COLUMN groupaccess SET DEFAULT 'f'" );
-     db_query("ALTER TABLE config ADD COLUMN groupaccess VARCHAR(50)" );
+     db_query("ALTER TABLE ".PRE."tasks ADD COLUMN groupaccess VARCHAR(5)" );
+     db_query("ALTER TABLE ".PRE."tasks ALTER COLUMN groupaccess SET DEFAULT 'f'" );
+     db_query("ALTER TABLE ".PRE."config ADD COLUMN groupaccess VARCHAR(50)" );
      $content .= "<p>Updating from version pre-1.40 database ... success!</p>\n"; 
   }
   
@@ -131,13 +131,13 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     
     switch (DATABASE_TYPE) {
       case "mysql":
-        db_query("CREATE TABLE login_attempt ( name VARCHAR(100) NOT NULL,
+        db_query("CREATE TABLE ".PRE."login_attempt ( name VARCHAR(100) NOT NULL,
                                                ip VARCHAR(100) NOT NULL,
                                                last_attempt DATETIME NOT NULL)" );
         break;
       
       case "mysql_innodb":
-        db_query("CREATE TABLE login_attempt ( name VARCHAR(100) NOT NULL,
+        db_query("CREATE TABLE ".PRE."login_attempt ( name VARCHAR(100) NOT NULL,
                                                ip VARCHAR(100) NOT NULL,
                                                last_attempt DATETIME NOT NULL)
                                                TYPE = innoDB" );
@@ -145,7 +145,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
           
       case "postgresql":
-        db_query("CREATE TABLE \"login_attempt\" ( \"name\" character varying(100) NOT NULL,
+        db_query("CREATE TABLE \"".PRE."login_attempt\" ( \"name\" character varying(100) NOT NULL,
                                                \"ip\" character varying(100) NOT NULL,
                                                \"last_attempt\" timestamp with time zone NOT NULL DEFAULT current_timestamp(0))" );
         break;
@@ -158,14 +158,14 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     
   //update for version 1.51 -> 1.60
   if(! (db_query("SELECT private FROM ".PRE."users", 0 ) ) ) {
-     db_query("ALTER TABLE users ADD COLUMN private INT" );
-     db_query("ALTER TABLE users ALTER COLUMN private SET DEFAULT 0" );
+     db_query("ALTER TABLE ".PRE."users ADD COLUMN private INT" );
+     db_query("ALTER TABLE ".PRE."users ALTER COLUMN private SET DEFAULT 0" );
   }
   
   //update for version 1.51 -> 1.60
   if(! (db_query("SELECT private FROM ".PRE."usergroups", 0 ) ) ) {
-     db_query("ALTER TABLE usergroups ADD COLUMN private INT" );
-     db_query("ALTER TABLE usergroups ALTER COLUMN private SET DEFAULT 0" );
+     db_query("ALTER TABLE ".PRE."usergroups ADD COLUMN private INT" );
+     db_query("ALTER TABLE ".PRE."usergroups ALTER COLUMN private SET DEFAULT 0" );
   }
 
   //update for version 1.59 -> 1.60
@@ -188,9 +188,9 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     }
     
     //add columns to database
-    db_query("ALTER TABLE tasks ADD COLUMN completed INT" );
-    db_query("ALTER TABLE tasks ALTER COLUMN completed SET DEFAULT 0" );
-    db_query("ALTER TABLE tasks ADD COLUMN completion_time $date_type" );
+    db_query("ALTER TABLE ".PRE."tasks ADD COLUMN completed INT" );
+    db_query("ALTER TABLE ".PRE."tasks ALTER COLUMN completed SET DEFAULT 0" );
+    db_query("ALTER TABLE ".PRE."tasks ADD COLUMN completion_time $date_type" );
     
     //retrieve existing data
     $q = db_query("SELECT id FROM ".PRE."tasks WHERE parent=0" );
@@ -224,6 +224,15 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
       }
     }
     $content .= "<p>Updating from version pre-1.60 database ... success!</p>\n";
+  }
+    
+  //update for version 1.60 -> 1.70
+  if(! (db_query("SELECT guest FROM ".PRE."users", 0 ) ) ) {
+     db_query("ALTER TABLE ".PRE."users ADD COLUMN guest VARCHAR(5)" );
+     db_query("ALTER TABLE ".PRE."users ALTER COLUMN guest SET DEFAULT 'f'" );
+     db_query("UPDATE ".PRE."users SET guest='f'" );
+     
+     $content .= "<p>Updating from version pre-1.70 database ... success!</p>\n";
   }
     
   if( ! $content )

@@ -246,12 +246,14 @@ $content .= "<div style=\"text-align : center\"><span class=\"textlink\">\n";
 switch($TYPE){
   case "project":
     $title = $lang['project_details'];
-    $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a>]&nbsp;\n";
+    if($GUEST == 0 )
+      $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a>]&nbsp;\n";
     break;
 
   case "task":
     $title = $lang['task_info'];
-    $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_subtask']."</a>]&nbsp;\n";
+    if($GUEST == 0 )
+      $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_subtask']."</a>]&nbsp;\n";
     break;
 }
 
@@ -262,7 +264,8 @@ switch( $TASKID_ROW['owner'] ){
       $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
     }
     //I'll take it!
-    $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang['i_take_it']."</a>]&nbsp;\n";
+    if($GUEST == 0 )
+      $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang['i_take_it']."</a>]&nbsp;\n";
     break;
 
   case ($UID):

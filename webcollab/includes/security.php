@@ -41,6 +41,7 @@ $x = 0;
 $ADMIN = 0;
 $session_key = 0;
 $GID[0] = 0;
+$GUEST = 1;
 
 //check for some values that HAVE to be present to be allowed (ip, session_key)
 if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
@@ -66,6 +67,7 @@ if( ! ($q = db_query("SELECT ".PRE."logins.user_id AS user_id,
                              ".PRE."users.email AS email,
                              ".PRE."users.admin AS admin,
                              ".PRE."users.fullname AS fullname,
+                             ".PRE."users.guest AS guest,
                              $epoch now() ) AS now,
                              $epoch ".PRE."logins.lastaccess) AS sec_lastaccess
                              FROM ".PRE."logins
@@ -103,6 +105,11 @@ $UID = $row['user_id'];
 $UID_NAME = $row['fullname'];
 $UID_EMAIL = $row['email'];
 
+if($row['guest'] == 't' )
+  $GUEST = 1;
+else
+  $GUEST = 0;
+
 if($row['admin'] == 't' )
   $ADMIN = 1;
 else
@@ -123,6 +130,7 @@ db_query("UPDATE ".PRE."logins SET lastaccess=now() WHERE session_key='$session_
 // uid_email = user's email address
 // uid = user's id
 // admin [0,1] = is the user an admin ?
+// guest [0,1] = is the user a guest?
 // gid[] = array of user's groups
 //
 // and of course, access !!

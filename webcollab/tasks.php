@@ -44,7 +44,8 @@ if( ! isset($_REQUEST['action']) )
       create_top($lang['task_info']);
       include("includes/mainmenu.php" );
       include("tasks/task_navigate.php" );
-      include("tasks/task_menubox.php" );
+      if($GUEST == 0 )
+        include("tasks/task_menubox.php" );
       if( $ADMIN == 1 ) {
         include("taskgroups/taskgroup_menubox.php" );
         include("usergroups/usergroup_menubox.php" );

@@ -35,7 +35,7 @@ include_once(BASE."lang/lang_email.php" );
 include_once(BASE."includes/time.php" );
 
 $usergroup_names = "";
-$ADMIN_state ="";
+$admin_state ="";
 
 //update or insert ?
 if(empty($_REQUEST['action']) )
@@ -98,11 +98,23 @@ ignore_user_abort(TRUE);
       else
         $private_user = 0;
       
-      if( isset($_POST['admin_rights']) && ( $_POST['admin_rights'] == "on" ) )
-        $ADMIN_rights = "t";
-      else
-        $ADMIN_rights = "f";
-
+      switch($_POST['user_type'] ) {
+        case "normal":
+          $admin_user = 'f';
+          $guest_user = 'f';
+          break;
+        
+        case "admin":
+          $admin_user = 't';
+          $guest_user = 'f';
+          break;
+        
+        case "guest":
+        default:
+          $admin_user = 'f';
+          $guest_user = 't';        
+          break;
+      }     
       //prohibit 2 people from choosing the same username
       if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE name='$name'", 0 ), 0, 0 ) > 0 )
         warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
@@ -110,8 +122,8 @@ ignore_user_abort(TRUE);
       //begin transaction
       db_begin();
       //insert into the users table
-      $q = db_query("INSERT INTO ".PRE."users(name, fullname, password, email, private, admin, deleted)
-                     VALUES('$name', '$fullname', '".md5($password)."','$email','$private_user','$ADMIN_rights', 'f')" );
+      $q = db_query("INSERT INTO ".PRE."users(name, fullname, password, email, private, admin, guest, deleted)
+                     VALUES('$name', '$fullname', '".md5($password)."', '$email', '$private_user', '$admin_user',  '$guest_user', 'f')" );
 
       //if the user is assigned to any groups execute the following code to add him/her
       if( isset($_POST['usergroup']) ) {
@@ -142,10 +154,10 @@ ignore_user_abort(TRUE);
       //email the user all data
       if($usergroup_names == "" )
         $usergroup_names = $lang['not_usergroup']."\n";
-      if($ADMIN_rights == "t" )
-        $ADMIN_state = $lang['admin_priv']."\n";
+      if($admin_user == "t" )
+        $admin_state = $lang['admin_priv']."\n";
       $message = sprintf($email_welcome, $name, $password,$usergroup_names,
-                  $fullname, $ADMIN_state );
+                  $fullname, $admin_state );
       email($email, $title_welcome, $message );
 
       break;
@@ -166,18 +178,7 @@ ignore_user_abort(TRUE);
       //check email address
       if(! ereg("^.+@.+\..+$", $email ) )
         warning($lang['invalid_email'], sprintf($lang['invalid_email_given_sprt'], safe_data($_POST['email']) ) );
-
-      if( isset($_POST['private_user']) && ( $_POST['private_user'] == "on" ) )
-        $private_user = 1;
-      else
-        $private_user = 0;
       
-      if(isset($_POST['admin_rights']) && ( $_POST['admin_rights'] == "on" ) )
-        $ADMIN_rights = "t";
-      else
-        $ADMIN_rights = "f";
-
-      //an admin can edit all
       if( $ADMIN == 1 ) {
 
         //check for a userid
@@ -186,6 +187,29 @@ ignore_user_abort(TRUE);
 
         $userid = intval($_POST['userid']);
 
+        if( isset($_POST['private_user']) && ( $_POST['private_user'] == "on" ) )
+          $private_user = 1;
+        else
+          $private_user = 0;
+        
+        switch($_POST['user_type'] ) {
+          case "normal":
+            $admin_user = 'f';
+            $guest_user = 'f';
+            break;
+          
+          case "admin":
+            $admin_user = 't';
+            $guest_user = 'f';
+            break;
+          
+          case "guest":
+          default:
+            $admin_user = 'f';
+            $guest_user = 't';        
+            break;
+        }
+        
         //prohibit 2 people from choosing the same username
         if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE name='$name' AND NOT id=$userid", 0 ), 0, 0 ) > 0 )
           warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
@@ -202,7 +226,8 @@ ignore_user_abort(TRUE);
                                 email='$email',
                                 password='".md5($password)."',
                                 private='$private_user',
-                                admin='$ADMIN_rights'
+                                admin='$admin_user',
+                                guest='$guest_user'
                                 WHERE id=$userid" );
         }
         else{
@@ -212,7 +237,8 @@ ignore_user_abort(TRUE);
                                 fullname='$fullname',
                                 email='$email',
                                 private='$private_user',
-                                admin='$ADMIN_rights'
+                                admin='$admin_user',
+                                guest='$guest_user'
                                 WHERE id=$userid" );
         }
 
@@ -242,12 +268,12 @@ ignore_user_abort(TRUE);
           $usergroup_names = $lang['not_usergroup']."\n";
         if($password == "" )
           $password = $lang['no_password_change'];
-        if($ADMIN_rights == "t" )
-          $ADMIN_state = $lang['admin_priv']."\n";
+        if($admin_user == "t" )
+          $admin_state = $lang['admin_priv']."\n";
         //email the changes to the user
         //$UID_EMAIL and $UID_NAME are in security.php
         $message = sprintf($email_user_change1, $UID_NAME, $UID_EMAIL, $name,
-                $password, $usergroup_names, $fullname, $ADMIN_state );
+                $password, $usergroup_names, $fullname, $admin_state );
         email($email, $title_user_change1, $message );
 
       }

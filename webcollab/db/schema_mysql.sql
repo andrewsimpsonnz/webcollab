@@ -38,6 +38,7 @@ CREATE TABLE users (
 	email VARCHAR(200) NOT NULL,
 	admin VARCHAR(5) NOT NULL DEFAULT 'f',
 	private TINYINT NOT NULL DEFAULT 0,
+        guest VARCHAR(5) NOT NULL DEFAULT 'f',
 	deleted VARCHAR(5) NOT NULL DEFAULT 'f',
         INDEX (fullname(10))
 );

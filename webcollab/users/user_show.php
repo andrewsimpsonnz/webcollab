@@ -41,7 +41,7 @@ if(empty($_GET['userid']) || ! is_numeric($_GET['userid']) )
 $userid = intval($_GET['userid']);
 
 //select
-$q = db_query("SELECT id, name, fullname, email, admin, private, deleted FROM ".PRE."users WHERE id=$userid" );
+$q = db_query("SELECT id, name, fullname, email, admin, private, guest, deleted FROM ".PRE."users WHERE id=$userid" );
 
 //get info
 if( ! ($row = db_fetch_array($q, 0 ) ) )
@@ -77,6 +77,11 @@ if($row['private'] == 1 )
   $content .= "<tr><td>".$lang['private_user'].":</td><td>".$lang['yes']."</td></tr>\n";
 else
   $content .= "<tr><td>".$lang['private_user'].":</td><td>".$lang['no']."</td></tr>\n";
+
+if($row['guest'] == "t" )
+  $content .= "<tr><td>".$lang['guest'].":</td><td>".$lang['yes']."</td></tr>\n";
+else
+  $content .= "<tr><td>".$lang['guest'].":</td><td>".$lang['no']."</td></tr>\n";
 
 //create a list of all the groups the user is in
 $q = db_query("SELECT ".PRE."usergroups.id AS id,
@@ -141,8 +146,8 @@ $content .=   "<tr><td>".$lang['size_all_files']."</td><td>".$size.$lang['bytes'
             "</table>";
 
 new_box($lang['user_info'], $content );
-
-
+  
+  
 //shows quick links to the tasks that the user owns
 
 if( $tasks_owned + $projects_owned > 0 ) {
@@ -205,10 +210,7 @@ if( $tasks_owned + $projects_owned > 0 ) {
     //show the task
     $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a> ".$status_content."</li>\n";
   }
-
   $content .= "</ul>";
   new_box($lang['owned_tasks'], $content );
-
-}
-
+}  
 ?>

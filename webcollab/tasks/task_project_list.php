@@ -44,6 +44,7 @@ function listTasks($projectid ) {
   $parent_array = "";
   $j = 0;
   $k = 0;
+  $l = 0;
     
   $q = db_query("SELECT id,
                         name,
@@ -71,8 +72,8 @@ function listTasks($projectid ) {
     }
   
     //put values into array
-    $task_array[$i]['id'] = $row[0];
-    $task_array[$i]['parent'] = $row[2];
+    $task_array[$l]['id'] = $row[0];
+    $task_array[$l]['parent'] = $row[2];
     
     //add suffix information
     switch( $row[3] ) {
@@ -92,7 +93,7 @@ function listTasks($projectid ) {
         break;
     }
     
-    $task_array[$i]['task'] = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_array[$i]['id']."\">".
+    $task_array[$l]['task'] = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_array[$l]['id']."\">".
                               $row[1].$suffix;
                                
         
@@ -101,6 +102,7 @@ function listTasks($projectid ) {
       $parent_array[$k] = $row[2];
       $k++;
     }
+  $l++;  
   }
   
   if(sizeof($parent_array) > 10 )

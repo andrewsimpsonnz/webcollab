@@ -71,7 +71,11 @@ return $message;
 //
 function user_access($taskid ) {
 
-  global $UID, $GID;
+  global $UID, $GID, $GUEST;
+  
+  //guest has no access rights
+  if($GUEST == 0 )
+    return FALSE;
 
   $q = db_query("SELECT owner, usergroupid, groupaccess FROM ".PRE."tasks WHERE id=$taskid" );
   $row = db_fetch_num($q, 0 );
