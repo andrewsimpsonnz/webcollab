@@ -64,8 +64,8 @@ if( ! ($row = db_fetch_array($q, 0 ) ) )
   error("Task show", "The requested item has either been deleted, or is now invalid.");
 
 //mark this as seen in seen ;)
-@db_query("DELETE FROM ".PRE."seen WHERE userid=$UID AND taskid=$taskid", 0);
-db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES ($UID, $taskid, now() ) " );
+@db_query("DELETE FROM ".PRE."seen WHERE userid=".UID." AND taskid=$taskid", 0);
+db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES (".UID.", $taskid, now() ) " );
 
 
 //text link for 'printer friendly' page
@@ -256,29 +256,29 @@ $content .= "<div style=\"text-align : center\"><span class=\"textlink\">\n";
 if($TASKID_ROW['archive'] == 0 ) {
   //set add function and title for task or project
   switch($TYPE){
-    case "project":
-      if($GUEST == 0 )
+    case 'project':
+      if(! GUEST )
         $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a>]&nbsp;\n";
       break;
   
-    case "task":
-      if($GUEST == 0 ) 
+    case 'task':
+      if(! GUEST ) 
         $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_subtask']."</a>]&nbsp;\n";
       break;
   }
   
   switch( $TASKID_ROW['owner'] ){
-    case "0":
-      if($ADMIN == 1 ){
+    case 0:
+      if(ADMIN ){
         //admin edit
         $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
       }
       //I'll take it!
-      if($GUEST == 0 )
+      if(! GUEST )
         $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang['i_take_it']."</a>]&nbsp;\n";
       break;
   
-    case ($UID):
+    case (UID):
       $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
       //if not finished and not a project; then [I finished it!] button
       if( ($TASKID_ROW['status'] != "done" ) && ($TASKID_ROW['parent'] != 0 ) ) {
@@ -289,7 +289,7 @@ if($TASKID_ROW['archive'] == 0 ) {
       break;
   
     default:
-      if($ADMIN == 1 ){
+      if(ADMIN ){
         //edit
         $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
         //take over

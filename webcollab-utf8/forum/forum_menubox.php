@@ -33,10 +33,10 @@ include_once(BASE."includes/time.php" );
 $list = "";
      
 //set the usergroup permissions on queries (Admin can see all)
-if($ADMIN == 1 )
+if(ADMIN == 1 )
   $tail = " ";  
 else
-  $tail = " AND (".PRE."tasks.globalaccess='f' AND ".PRE."tasks.usergroupid IN (SELECT usergroupid FROM ".PRE."usergroups_users WHERE userid=".$UID.")
+  $tail = " AND (".PRE."tasks.globalaccess='f' AND ".PRE."tasks.usergroupid IN (SELECT usergroupid FROM ".PRE."usergroups_users WHERE userid=".UID.")
            OR ".PRE."tasks.globalaccess='t'   
            OR ".PRE."tasks.usergroupid=0) ";                      
              

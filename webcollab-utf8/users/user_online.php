@@ -30,7 +30,7 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
-$content = "";
+$content    = '';
 $allowed[0] = 0;
 
 //get list of common users in private usergroups that this user can view 
@@ -62,7 +62,7 @@ $content .= "<tr><td style=\"white-space:nowrap\" colspan=\"2\"><b>".$lang['onli
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
   
   //user test for privacy
-  if($row['private'] && ($row['id'] != $UID ) && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
+  if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
     continue;
   }
   
@@ -86,7 +86,7 @@ $content .= "<tr><td colspan=\"2\"><b>".$lang['not_online']."</b></td></tr>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
   
   //user test for privacy
-  if($row['private'] && ($row['id'] != $UID ) && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
+  if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
     continue;
   }
   

@@ -44,7 +44,7 @@ $no_access_group[0] = 0;
 
 
 function project_summary( $tail, $depth=0, $equiv="" ) {
-  global $x, $UID, $GID, $ADMIN, $lang, $task_state;
+  global $x, $GID, $lang, $task_state;
   global $no_access_project, $no_access_group;
   global $sortby;
   global $epoch;
@@ -79,13 +79,13 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
 
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     //check usergroup permissions
-    if( (! $ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' )) {
+    if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' )) {
       if( ! in_array( $row['usergroupid'], (array)$GID ) )
         continue;
     }
 
     //don't show tasks in private usergroup projects
-    if( (! $ADMIN ) && in_array($row['projectid'], (array)$no_access_project) ) {
+    if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project) ) {
       $key = array_search($row['projectid'], $no_access_project );
       if( ! in_array($no_access_group[$key], (array)$GID ) )
         continue;
@@ -93,7 +93,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
 
     $due = round( ($row['due'] - $row['now'])/86400 );
 
-    $seenq = db_query( "SELECT $epoch time) FROM ".PRE."seen WHERE taskid=".$row['id']." AND userid=$UID LIMIT 1" );
+    $seenq = db_query( "SELECT $epoch time) FROM ".PRE."seen WHERE taskid=".$row['id']." AND userid=".UID." LIMIT 1" );
 
     if(db_numrows($seenq ) > 0 )
       $seen = db_result($seenq, 0, 0 );

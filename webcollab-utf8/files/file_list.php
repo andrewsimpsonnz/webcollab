@@ -69,7 +69,7 @@ if(db_numrows($q ) != 0 ) {
     $content .= "<tr><td><a href=\"files.php?x=$x&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=$x&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a> <small>(".$row['size'].$lang['bytes'].") </small>";
 
     //owners of the file and admins have a "delete" option
-    if( ($ADMIN == 1) || ($UID == $TASKID_ROW['owner'] ) || ($UID == $row['uploader'] ) ) {
+    if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['uploader'] ) ) {
       $content .= "&nbsp;<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;action=submit_del&amp;fileid=".$row['id']."&amp;taskid=$taskid\" onclick=\"return confirm('".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename'] ) )."' )\">".$lang['del']."</a>]</span></td></tr>\n";
     } else
       $content .= "</td></tr>\n";
@@ -88,7 +88,7 @@ if(db_numrows($q ) != 0 ) {
 }
 
 
-if(($GUEST == 0 ) && ($TASKID_ROW['archive'] == 0) )
+if((! GUEST ) && ($TASKID_ROW['archive'] == 0) )
   $content .= "<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang['add_file']."</a>]</span>";
 
 new_box($lang["files_assoc_".$TYPE], $content, "boxdata2" );

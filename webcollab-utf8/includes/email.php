@@ -102,7 +102,7 @@ function email($to, $subject, $message ) {
   $message_lines =& message($message, $email_encode, $message_charset, $body );
 
   //envelope from
-  fputs($connection, "MAIL FROM: <".EMAIL_FROM.">".$body."\r\n" );
+  fputs($connection, "MAIL FROM: <".clean(EMAIL_FROM).">".$body."\r\n" );
   $res = response();
   if($res[1] != "250" )
     debug("Incorrect response to MAIL FROM command from SMTP server at ".$host." <br /><br />Response from SMTP server was ".$res[0] );
@@ -190,7 +190,7 @@ function & clean($encoded ) {
   
   //remove any dangerous tags that exist after decoding
   $text = preg_replace("/(<\/?\s*)(APPLET|SCRIPT|EMBED|FORM|\?|%)(\w*|\s*)([^>]*>)/i", "\\1****\\3\\4", $text );
-
+  
   return $text;
 }
 
@@ -270,8 +270,6 @@ return $message_lines;
 
 function &subject($subject ) {
 
-  global $email_charset;
-
   //get rid of any line breaks (\r\n, \n, \r) in subject line
   $subject = str_replace(array("\r\n", "\r", "\n"), " ", $subject );
   //reinstate any HTML in subject back to text
@@ -312,8 +310,11 @@ return $subject_lines;
 function headers($to, $subject, $email_encode, $message_charset ) {
 
   //set the date - in RFC 822 format
-  $headers = array("Date: ".date("r") );
-
+  $headers  = array("Date: ".date("r") );
+  //clean return addresses
+  $from     = clean(EMAIL_FROM);
+  $reply_to = clean(EMAIL_REPLY_TO);
+  
   //now the prepare the 'to' header
   $line = "To: ".$to;
   //lines longer than 998 characters are broken up to separate lines (RFC 821)
@@ -325,16 +326,16 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   }
   $headers[] = $line;
   //assemble remaining message headers (RFC 821 / RFC 2045)
-  $headers[] = "From: WebCollab <".EMAIL_FROM.">";
-  $headers[] = "Reply-To: ".EMAIL_REPLY_TO;
+  $headers[] = "From: WebCollab <".$from.">";
+  $headers[] = "Reply-To: ".$reply_to;
 
   $headers = array_merge($headers, subject($subject ) );
 
   $headers[] = "Message-Id: <".uniqid("")."@".$_SERVER['SERVER_NAME'].">";
   $headers[] = "X-Mailer: WebCollab (PHP/".phpversion().")";
   $headers[] = "X-Priority: 3";
-  $headers[] = "X-Sender: ".EMAIL_REPLY_TO;
-  $headers[] = "Return-Path: <".EMAIL_REPLY_TO.">";
+  $headers[] = "X-Sender: ".$reply_to;
+  $headers[] = "Return-Path: <".$reply_to.">";
   $headers[] = "Mime-Version: 1.0";
   $headers[] = "Content-Type: text/plain; charset=".$message_charset;
   $headers[] = "Content-Transfer-Encoding: ".$email_encode;

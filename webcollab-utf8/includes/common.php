@@ -184,7 +184,7 @@ function html_links($body, $database_escape=0 ) {
 //
 function error($box_title, $content ) {
 
-  global $UID_NAME, $UID_EMAIL, $db_error_message;
+  global $db_error_message;
   
   include_once(BASE."includes/screen.php" );
   
@@ -206,7 +206,7 @@ function error($box_title, $content ) {
   //email to the error-catcher
   $message = "Hello,\n This is the ".MANAGER_NAME." site and I have an error :/  \n".
             "\n\n".
-            "User that created the error: $UID_NAME ( $UID_EMAIL )\n".
+            "User that created the error: ".UID_NAME." (".UID_EMAIL.")\n".
             "The erroneous component: $box_title\n".
             "The error message: $content\n".
             "Database message: $db_error_message\n".

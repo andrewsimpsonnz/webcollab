@@ -57,15 +57,15 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
 //
 function user_access($owner, $usergroupid, $groupaccess ) {
 
-  global $UID, $GID, $ADMIN, $GUEST, $TASKID_ROW;
+  global $GID, $TASKID_ROW;
 
-  if($ADMIN == 1)  
+  if(ADMIN )  
     return TRUE;
     
-  if($GUEST == 1)
+  if(GUEST )
     return FALSE;   
 
-  if($owner == $UID )
+  if($owner == UID )
     return TRUE;
 
   if($usergroupid == 0 )
@@ -134,7 +134,7 @@ $content .= ">".$lang['no_reparent']."</option>\n";
 
 for( $i=0; $parent_row = @db_fetch_array($parentq, $i ); $i++) {
   //check for private usergroups
-  if( ($ADMIN != 1) && ($parent_row['usergroupid'] != 0 ) && ($parent_row['globalaccess'] == 'f' ) ) {
+  if( (! ADMIN ) && ($parent_row['usergroupid'] != 0 ) && ($parent_row['globalaccess'] == 'f' ) ) {
 
   if( ! in_array($parent_row['usergroupid'], (array)$GID ) )
     continue;
@@ -262,7 +262,7 @@ $content .= "<tr> <td>".$lang[$TYPE."_owner"].":</td> <td><select name=\"owner\"
 for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++) {
       
   //user test for privacy
-  if($user_row['private'] && ($user_row['id'] != $UID ) && ( ! $ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
+  if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
     continue;
   }
     
@@ -306,7 +306,7 @@ $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
      
   //usergroup test for privacy
-  if( (! $ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
+  if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
     continue;
   }
 

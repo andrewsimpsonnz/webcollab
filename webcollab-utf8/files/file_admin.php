@@ -35,7 +35,7 @@ include_once(BASE."includes/time.php" );
 
 $content = "";
 
-if($ADMIN != 1 )
+if(! ADMIN )
   error("Access denied", "This feature is only for admins" );
 
 

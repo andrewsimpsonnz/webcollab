@@ -54,8 +54,8 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ) {
       //get project name (limited to 20 characters)
       $project_name = mb_strimwidth(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$TASKID_ROW["projectid"] ), 0, 0 ), 0, 20);
       
-      $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$TASKID_ROW["projectid"]."\">$project_name</a><br />\n".
-                  "<small><b>".$lang["task"].":</b></small><br />\n".
+      $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">$project_name</a><br />\n".
+                  "<small><b>".$lang['task'].":</b></small><br />\n".
                   "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".mb_strimwidth($TASKID_ROW["name"], 0, 20 )."<br />\n";
       break;
 
@@ -99,7 +99,7 @@ elseif(! empty($_GET['parentid']) && is_numeric($_GET['parentid']) ){
     case "0":
       //new task under project
       $content .= "<small><b>".$lang['task'].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>New task</i><br />\n";
+                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>".$lang['new_task']."</i><br />\n";
       break;
 
     default:

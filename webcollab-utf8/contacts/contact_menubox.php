@@ -33,8 +33,8 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
-$content = "";
-$company = "";
+$content = '';
+$company = '';
 
 //get all contacts
 $q = db_query("SELECT id, firstname, lastname, company FROM ".PRE."contacts ORDER BY company, lastname" );
@@ -48,18 +48,18 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
      }
      $show = $row['lastname'].", ".mb_strtoupper(mb_substr( $row['firstname'], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row["id"]."\">$show</a><br />";
-     $company =  $row["company"];
+     $company =  $row['company'];
    }
    else{
      $show = $row['lastname'].", ".mb_strtoupper(mb_substr( $row['firstname'], 0, 1 ) ).".";
-     $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row["id"]."\">$show</a><br />";
+     $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row['id']."\">$show</a><br />";
    }
 }
 
 $content .= "<br />\n";
 
 //the add button
-if($GUEST != 1 )
+if(! GUEST )
   $content .= "<span class=\"textlink\">[<a href=\"contacts.php?x=$x&amp;action=add\">".$lang['add_contact']."</a>]</span>\n";
 
 //show the box
