@@ -51,8 +51,8 @@ function list_tasks($parent ) {
 if( $DATABASE_TYPE == "mysql")
   $no_group = "IF(taskgroups.name IS NULL, 1, 0), ";
 
-  //query to get the children for this taskid
-$query = "SELECT tasks.id AS id,
+//query to get the children for this taskid
+$q = db_query("SELECT tasks.id AS id,
                 tasks.name AS taskname,
                 tasks.status AS status,
                 tasks.finished_time AS finished_time,
@@ -69,17 +69,14 @@ $query = "SELECT tasks.id AS id,
                 LEFT JOIN users ON ( users.id=tasks.owner )
                 LEFT JOIN taskgroups ON (taskgroups.id=tasks.taskgroupid)
                 WHERE tasks.parent=$parent
-                ORDER by $no_group groupname, taskname";
-
-  //query
-  $q = db_query($query );
+                ORDER by $no_group groupname, taskname" );
 
   //check for any tasks.  If no tasks end recursive function
   if(db_numrows($q) < 1 )
     return;
 
   //determine if the first line will be a task listing or a taskgroup name
-  //if it's a taskgroup name we don't need to set the leading <UL>
+  //if it's a taskgroup name we don't need to set the leading <ul>
   if( ($taskgroup_flag == 1 ) && ($parent == $parentid ) )
     $this_content .= "";
   else
@@ -87,25 +84,25 @@ $query = "SELECT tasks.id AS id,
 
   //show all tasks
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
-  
+
     //check if there are taskgroups set, and if this is the first layer of tasks
     if( ($taskgroup_flag == 1 ) && ($parent == $parentid ) ) {
-     
+
       //set taskgroup name, or 'Uncategorised' if none
       if( $row["groupname"] == NULL )
         $groupname = $lang["uncategorised"];
-      else  
+      else
         $groupname = $row["groupname"];
-      
+
       //check if taskgroup has changed from last iteration
       if($stored_groupname != $groupname ) {
 
-        //don't need </UL> for first line of output (no <UL> is set)
+        //don't need </ul> before first taskgroup heading (no <ul> is set)
         if($stored_groupname != NULL )
           $this_content .= "</ul>\n";
 
         //show taskgroup name
-        $this_content .= "<p> &nbsp;<b>".$groupname."</b>";
+        $this_content .= "<p><b>".$groupname."</b>";
 
         //add taskgroup description
         if($row["groupdescription"] != NULL )
@@ -113,14 +110,15 @@ $query = "SELECT tasks.id AS id,
 
         $this_content .= "</p>\n";
         $this_content .= "<ul>\n";
+
         //store current groupname
         $stored_groupname = $groupname;
       }
     }
 
     $alert_content = "";
-    $this_content .= "<li>";
     $status_content = "";
+    $this_content .= "<li>";
 
     //have you seen this task yet ?
     $seenq = db_query("SELECT  $epoch time) FROM seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" );
@@ -132,7 +130,7 @@ $query = "SELECT tasks.id AS id,
       if( (db_numrows( $seenq ) ) < 1 )
         db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, ".$row["id"].", now() ) " );
     }
-    //task was changed - show the changes to you
+    //task has changed since last seen - show the changes to you
     else {
 
       switch(db_numrows($seenq ) ) {
@@ -183,18 +181,12 @@ $query = "SELECT tasks.id AS id,
 
 
     //merge all info about a task
-    if($alert_content != "" ) {
-      $this_content .= $alert_content."<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">".$row["taskname"]."</a></font> $status_content";
-    }
-    else{
-      $this_content .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">".$row["taskname"]."</a> $status_content";
-    }
-
-    $this_content.= "<small>";
+    $this_content .= $alert_content."<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">".$row["taskname"]."</a>&nbsp;$status_content";
+    $this_content .= "<small>";
 
     //add username if task is taken
     if($row["userid"] != 0 ) {
-      $this_content .= " [<a href=\"users.php?x=$x&amp;action=show&userid=".$row["userid"]."\">".$row["username"]."</a>] ";
+      $this_content .= "&nbsp;[<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["username"]."</a>]&nbsp;";
     }
     else {
       $this_content .= "&nbsp;";
@@ -236,16 +228,20 @@ $query = "SELECT tasks.id AS id,
     }
 
     //finish the line
-    $this_content .= "</small></li>\n";
+    $this_content .= "</small>\n";
 
     //recursive search if the subtask is listed in parent_array (it has children then)
     if(in_array( $row["id"], $parent_array, FALSE) ) {
       $this_content .= list_tasks( $row["id"]);
+      $this_content .= "</ul></li>";
+    }
+    else{
+      $this_content .= "</li>";
     }
   }
 
   //finish all the UL's
-  $this_content .= "</ul>";
+  //$this_content .= "</ul>";
 
   return $this_content;
 }
@@ -276,7 +272,8 @@ $task_content  = list_tasks($parentid );
 
 //show it
 if($task_content != "" ){
-  $content = $task_content;
+  //finish off the closing </ul>
+  $content = $task_content."</ul>";
   new_box( $lang["tasks"], $content );
 }
 
