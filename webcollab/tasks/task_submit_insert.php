@@ -2,7 +2,7 @@
 /*
   $Id$
     
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -155,7 +155,8 @@ $q = db_query("INSERT INTO tasks(name,
               usergroupid,
               globalaccess,
               groupaccess,
-              status )
+              status,
+              completion_time )
               values('$name',
               '$text',
               now(),
@@ -173,7 +174,8 @@ $q = db_query("INSERT INTO tasks(name,
               $usergroupid,
               '$globalaccess',
               '$groupaccess',
-              '$status')" );
+              '$status',
+              now() )" );
 
 // get taskid for the new task/project
 $last_oid = db_lastoid($q );
@@ -197,16 +199,16 @@ if($parentid != 0 ) {
 //you have already seen this item, no need to announce it to you
 db_query("INSERT INTO seen(userid, taskid, time) VALUES($uid, $taskid, now() )");
 
-//if all tasks are completed, then mark the project as 'done'
-if(round(percent_complete($projectid ) ) == 100 ){
-  db_query("UPDATE tasks SET status='done', finished_time=now() WHERE id=".$projectid );
+//set completed percentage project record
+$percent_completed = round(percent_complete($projectid ) );
+db_query("UPDATE tasks SET completed=".$percent_completed." WHERE id=".$projectid );
+
+//for completed project set the completion time
+if($percent_completed == 100 ){
+  $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid=$projectid" ), 0, 0 );
+  db_query("UPDATE tasks SET completion_time='".$completion_time."' WHERE id=".$projectid );
 }
-else{
-  if($project_status == 'done' ) {
-  db_query("UPDATE tasks SET status='active', finished_time=now() WHERE id=".$projectid );
-  }
-}  
-  
+
 //transaction complete
 db_commit();
 

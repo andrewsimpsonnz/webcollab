@@ -2,7 +2,7 @@
 /*
   $Id$
     
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -140,21 +140,22 @@ ignore_user_abort(TRUE);
       db_query("UPDATE tasks SET status='done', finished_time=now(), edited=now() WHERE id=$taskid" );
         
       //if all tasks are completed, then mark the project as 'done'
-      $q = db_query("SELECT status, projectid FROM tasks WHERE id=".$taskid );
-      $row = db_fetch_array($q, 0 );
+      $projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=".$taskid ), 0, 0 );
       
-      if(round(percent_complete($row["projectid"] ) ) ){
-        db_query("UPDATE tasks SET status='done', finished_time=now() WHERE id=".$row["projectid"] );
+      //set completed percentage project record
+      $percent_completed = round(percent_complete($projectid ) );
+      db_query("UPDATE tasks SET completed=".$percent_completed." WHERE id=".$projectid );
+      
+      //for completed project set the completion time
+      if($percent_completed == 100 ){
+        $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid=$projectid" ), 0, 0 );
+        db_query("UPDATE tasks SET completion_time='".$completion_time."' WHERE id=".$projectid );
       }
-      else{
-        if($row["status"] == 'done' ) {
-        db_query("UPDATE tasks SET status='active', finished_time=now() WHERE id=".$row["projectid"] );
-        }
-      }  
+  
       break;
 
 
-    //drop ownership (if admins want to switch ownershit they will have to do it via the edit box instead of the deown button)
+    //drop ownership 
     case "deown":
 
       if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"] ) )

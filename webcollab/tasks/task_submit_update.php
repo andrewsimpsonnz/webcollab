@@ -2,7 +2,7 @@
 /*
   $Id$
     
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -240,15 +240,15 @@ if($parentid == 0 ) {
   }
 }
 
-//if all tasks are completed, then mark the project as 'done'
-if(round(percent_complete($projectid ) ) ){
-  db_query("UPDATE tasks SET status='done', finished_time=now() WHERE id=".$projectid );
+//set completed percentage project record
+$percent_completed = round(percent_complete($projectid ) );
+db_query("UPDATE tasks SET completed=".$percent_completed." WHERE id=".$projectid );
+
+//for completed project set the completion time
+if($percent_completed == 100 ){
+  $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid=$projectid" ), 0, 0 );
+  db_query("UPDATE tasks SET completion_time='".$completion_time."' WHERE id=".$projectid );
 }
-else{
-  if(db_result(db_query("SELECT status FROM tasks WHERE id=".$projectid ), 0, 0 ) == 'done' ) {
-  db_query("UPDATE tasks SET status='active', finished_time=now() WHERE id=".$projectid );
-  }
-}  
 
 //transaction complete
 db_commit();

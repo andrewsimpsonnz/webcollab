@@ -77,7 +77,6 @@ function listTasks($task_id ) {
      default:
       //check if late
       if( ($now - $row[5] ) >= 86400 ) {
-        //$status = "&nbsp;<img border=\"0\" src=\"images/late.gif\" height=\"9\" width=\"23\" alt=\"late\" />";
         $content .= "<font class=\"late\">".$lang["late_g"]."</font>";
       }
       break;
@@ -106,7 +105,9 @@ $active_only = 0;
                         ".$epoch." deadline ) AS due,
                         ".$epoch." now() ) AS now,
                         usergroupid,
-                        globalaccess
+                        globalaccess,
+                        completed,
+                        completion_time
                         FROM tasks
                         WHERE parent=0
                         ORDER BY name" );
@@ -148,9 +149,6 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       continue;
   }
 
-  //get percentage complete
-  //$percent_complete = round(percent_complete($row["id"] ) );
-  
   //set project status
   $project_status = $row["status"];
   
@@ -162,22 +160,14 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     //for 'active_only' skip this project
       if($active_only )
         continue(2);
-      $percent_complete = round(percent_complete($row["id"] ) );
       break;
 
-    case "done":
-      if($active_only )
-        continue (2);
-      $percent_complete = 100;
-      break;
-        
     case "active":
     case "nolimit":
+    case "done":
     default:
-      //calculate percent complete
-      $percent_complete = round(percent_complete($row["id"] ) );
-      
-      if($percent_complete == 100 )
+      //if($percent_complete == 100 )
+      if($row["completed"] == 100 )  
         $project_status = "done";
         
       //for 'active_only' skip completed project
@@ -196,14 +186,13 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\"><b>".$row["name"]."</b></a>\n";
 
   // Show a nice %-of-tasks-completed bar
-  $content .= show_percent($percent_complete )."\n";
+  $content .= show_percent($row["completed"] )."\n";
 
   //give some details of status
   switch($project_status ) {
 
     case "done":
-      $finished = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid =".$row["id"] ), 0, 0 );
-      $content .= $task_state["completed"]." (".nicedate( $finished ).")\n";
+      $content .= $task_state["completed"]." (".nicedate( $row["completion_time"] ).")\n";
       break;
 
     case "cantcomplete":
@@ -216,7 +205,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       break;
 
     case "nolimit":
-      $content .= sprintf($lang["percent_sprt"], $percent_complete)."<br />\n";
+      $content .= sprintf($lang["percent_sprt"], $row["completed"])."<br />\n";
       $content .= "<i>".$lang["project_no_deadline"]."</i><br />\n";
       //show subtasks that are not complete
       $content .= listTasks($row["id"] );
@@ -224,7 +213,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
     case "active":
     default:
-      $content .= sprintf($lang["percent_sprt"], $percent_complete )."<br />\n";
+      $content .= sprintf($lang["percent_sprt"], $row["completed"] )."<br />\n";
       $content .= "<img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row["deadline"] )." ";
       $state = ($row["due"]-$row["now"] )/86400 ;
       if($state > 1 ) {
