@@ -67,12 +67,17 @@ function db_query($query, $dieonerror=1 ) {
 
     //make sure dates will be handled properly by internal date routines
     $q = db_query("SET DATESTYLE TO 'European, ISO' ");
+    
+    //set client encoding to required character set     
+    $pg_encoding = pg_encoding();
+    
+    if($pg_encoding){
+      if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ) 
+        error("Database client encoding", "Cannot set PostgreSQL client to ".CHARACTER_SET." character encoding" ); 
+    }
+
   }
-
-  //check for a database connection
-  if( ! $database_connection )
-    error("Database query error", "Connection to database has been unexpectedly lost" );
-
+  
   //do it
   if( ! ($result = @pg_exec($database_connection, $query ) ) ) {
 
@@ -177,5 +182,29 @@ function db_commit() {
 
 return;
 }
+
+//
+//set client encoding for specific single byte character sets that vary from IS08859
+//
+function pg_encoding() {
+
+  switch(strtoupper(CHARACTER_SET ) ) {
+
+    case 'KOI8-R':
+      $pg_encoding = 'KOI8';
+      break;
+       
+    case 'WINDOWS-1251':
+      $pg_encoding = 'WIN';
+      break;
+
+    default:
+    case 'ISO8859-1': 
+      $pg_encoding = 'LATIN1';
+      break;
+  }      
+return $pg_encoding;
+}
+
 
 ?>
