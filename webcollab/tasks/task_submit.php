@@ -57,11 +57,11 @@ return $var;
 //
 function status($status, $deadline ) {
 
-  global $task_state;
+  global $task_state, $lang;
 
   switch($status) {
     case "created":
-      $message = $task_state["new"]."\nDeadline: ".nicedate($deadline);
+      $message = $task_state["new"]."\n".$lang["deadline"].": ".nicedate($deadline);
       break;
 
     case "notactive":
@@ -69,7 +69,7 @@ function status($status, $deadline ) {
       break;
 
     case "active":
-      $message = $task_state["active"]."\nDeadline: ".nicedate($deadline);
+      $message = $task_state["active"]."\n".$lang["deadline"].": ".nicedate($deadline);
       break;
 
     case "cantcomplete":
@@ -262,7 +262,8 @@ ignore_user_abort(TRUE);
       }
 
       $name        = safe_data($_POST["name"]);
-      $text        = safe_data($_POST["text"]);
+      //text can be multi lines
+      $text        = safe_data($_POST["text"], 1 );
       $status      = safe_data($_POST["status"]);
 
       $parentid    = check($_POST["parentid"]);
@@ -456,7 +457,7 @@ ignore_user_abort(TRUE);
       }
 
       $name        = safe_data($_POST["name"]);
-      $text        = safe_data($_POST["text"]);
+      $text        = safe_data($_POST["text"], 1 );
       $status      = safe_data($_POST["status"]);
 
       $taskid      = check($_POST["taskid"]);
