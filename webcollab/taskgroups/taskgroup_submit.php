@@ -52,7 +52,7 @@ ignore_user_abort(TRUE);
       $taskgroupid = intval($_GET["taskgroupid"]);
 
       //if taskgroup exists we can delete it :)
-      if(db_result(db_query("SELECT COUNT(*) FROM taskgroups WHERE taskgroupid='$taskgroupid'" ) ) ) {
+      if(db_result(db_query("SELECT COUNT(*) FROM taskgroups WHERE id='$taskgroupid'" ) ) ) {
         db_begin();
         //move the tasks to a non-working task-group
         @db_query("UPDATE tasks SET taskgroupid=0 WHERE taskgroupid='$taskgroupid'" );
