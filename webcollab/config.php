@@ -70,7 +70,7 @@
 
 // language files
   
-  // available locales are 'en' (English).
+  // available locales are 'en' (English), 'es' (Spanish).
 
   $LOCALE = "en";
 
@@ -89,7 +89,12 @@
       //location of SMTP server (ip address or FQDN)
       $SMTP_HOST = "localhost";
       //domain name to be used in SMTP HELO greeting
-      $DOMAIN = "localhost.localdomain";  
+      $DOMAIN = "localhost.localdomain";
+      //use smtp auth? ('Y' or 'N')
+      $SMTP_AUTH = "N";
+        //if using $SMTP_AUTH give username & password
+        $MAIL_USER = "";
+        $MAIL_PASSWORD = "";
 
 /*Note:
    Use $MAIL_METHOD = "mail", which uses local sockets and is faster.  If "mail" does not work (it is not reliable
