@@ -45,9 +45,8 @@ if( ! isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) )
 
       if( ! isset($_POST["taskid"]) || ! is_numeric($_POST["taskid"]) ) {
         //delete any upload before invoking the error function
-        if( is_uploaded_file( $_FILES["userfile"]["tmp_name"] ) ){
+        if( is_uploaded_file( $_FILES["userfile"]["tmp_name"] ) )
           unlink( $_FILES["userfile"]["tmp_name"] );
-        }
         error("File submit", "Not a valid taskid");
       }
 
@@ -58,98 +57,97 @@ if( ! isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) )
       require_once( BASE."includes/usergroup_security.php" );
 
       //check if there was an upload
-      if( is_uploaded_file( $_FILES["userfile"]["tmp_name"] ) ) {
+      if( ! is_uploaded_file( $_FILES["userfile"]["tmp_name"] ) ) {
+        //no file upload occurred
+        warning($lang["file_submit"], $lang["no_upload"] );
+      }
 
-        //check the destination directory is writeable by the webserver
-        if( ! is_writable( $FILE_BASE."/" ) ) {
-          unlink($_FILES["userfile"]["tmp_name"] );
-          error("Configuration error", "The upload directory does not have write permissions set properly.  File upload has not been accepted.");
-        }
+      //check the destination directory is writeable by the webserver
+      if( ! is_writable( $FILE_BASE."/" ) ) {
+        unlink($_FILES["userfile"]["tmp_name"] );
+        error("Configuration error", "The upload directory does not have write permissions set properly.  File upload has not been accepted.");
+      }
 
-        //check for ridiculous uploads
-        if($_FILES["userfile"]["size"] > $FILE_MAXSIZE ) {
-          warning( $lang["file_submit"], sprintf( $lang["file_too_big_sprt"], $FILE_MAXSIZE ) );
-          unlink( $_FILES["userfile"]["tmp_name"] );
-        }
+      //check for ridiculous uploads
+      if($_FILES["userfile"]["size"] > $FILE_MAXSIZE ) {
+        unlink( $_FILES["userfile"]["tmp_name"] );
+        warning( $lang["file_submit"], sprintf( $lang["file_too_big_sprt"], $FILE_MAXSIZE ) );
+      }
 
-        //check for dangerous file uploads
-        if( strstr( $_FILES["userfile"]["name"], ".php" ) ||
+      //check for dangerous file uploads
+      if( strstr( $_FILES["userfile"]["name"], ".php" ) ||
           strstr( $_FILES["userfile"]["name"], ".php3" ) ||
           strstr( $_FILES["userfile"]["name"], ".php4" ) ||
           strstr( $_FILES["userfile"]["name"], ".js" ) ||
           strstr( $_FILES["userfile"]["name"], ".asp" ) ) {
             unlink( $_FILES["userfile"]["tmp_name"] );
             error("File submit", "The file types .php, .php3, .php4, .js and .asp are not acceptable for security reasons. You must either rename or compress the file.");
-        }
+      }
 
-        //okay accept file
-        db_begin();
-        //alter task lastfileupload
-        db_query("UPDATE tasks SET lastfileupload=current_timestamp(0) WHERE id=$taskid" );
+      //okay accept file
+      db_begin();
+      //alter task lastfileupload
+      db_query("UPDATE tasks SET lastfileupload=current_timestamp(0) WHERE id=$taskid" );
 
-        //addslashes to stored filename only if magic quotes is 'off'
-        //(prevents database errors)
-        if(! get_magic_quotes_gpc() )
-          $db_filename = addslashes($_FILES["userfile"]["name"] );
-        else
-          $db_filename = $_FILES["userfile"]["name"];
+      //addslashes to stored filename only if magic quotes is 'off'
+      //(prevents database errors)
+      if(! get_magic_quotes_gpc() )
+        $db_filename = addslashes($_FILES["userfile"]["name"] );
+      else
+        $db_filename = $_FILES["userfile"]["name"];
 
-        //alter file database administration
-        $upload_q = db_query( "INSERT INTO files (filename,
-                                                    size,
-                                                    description,
-                                                    uploaded,
-                                                    uploader,
-                                                    taskid,
-                                                    mime )
-                                            VALUES ('$db_filename',
-                                                    ".$_FILES["userfile"]["size"].",
-                                                    '$description',
-                                                    current_timestamp(0),
-                                                    $uid,
-                                                    $taskid,
-                                                    '".$_FILES["userfile"]["type"]."' ) ");
+      //alter file database administration
+      $q = db_query( "INSERT INTO files (filename,
+                                            size,
+                                            description,
+                                            uploaded,
+                                            uploader,
+                                            taskid,
+                                            mime )
+                                    VALUES ('$db_filename',
+                                            ".$_FILES["userfile"]["size"].",
+                                            '$description',
+                                            current_timestamp(0),
+                                            $uid,
+                                            $taskid,
+                                            '".$_FILES["userfile"]["type"]."' ) ");
 
-        //copy it
-        $last_oid = db_lastoid( $upload_q);
+      //copy it
+      $last_oid = db_lastoid($q );
 
-        //stripslashes from filename if magic quotes is 'on'
-        //(prevents slash being read as a directory in Windows!!) 
-        if(get_magic_quotes_gpc() )
-          $filename = stripslashes($_FILES["userfile"]["name"] );
-        else
-          $filename = $_FILES["userfile"]["name"];
+      //stripslashes from filename if magic quotes is 'on'
+      //(prevents slash being read as a directory in Windows!!)
+      if(get_magic_quotes_gpc() )
+        $filename = stripslashes($_FILES["userfile"]["name"] );
+      else
+        $filename = $_FILES["userfile"]["name"];
 
-        if( !move_uploaded_file( $_FILES["userfile"]["tmp_name"], $FILE_BASE."/".$last_oid."__".$filename ) ) {
-          db_query( "DELETE FROM files WHERE ".$last_insert."=".$last_oid );
-          unlink( $_FILES["userfile"]["tmp_name"] );
+      if( !move_uploaded_file( $_FILES["userfile"]["tmp_name"], $FILE_BASE."/".$last_oid."__".$filename ) ) {
+        db_query("DELETE FROM files WHERE ".$last_insert."=".$last_oid );
+        unlink( $_FILES["userfile"]["tmp_name"] );
           db_rollback();
           error( "File submit", "Internal error: The file cannot be moved to filebase directory, deleting upload" );
-        }
-
-        //work around for mysql (which doesn't have an OID column)
-        if(substr($DATABASE_TYPE, 0, 5) == "mysql" )
-          db_query( "UPDATE files SET oid=".$last_oid." WHERE id=".$last_oid );
-
-        //disarm it
-        chmod($FILE_BASE."/".$last_oid."__".$filename, 0644 );
-        db_commit();
-
       }
-      else{
-        //no file upload occurred
-        warning($lang["file_submit"], $lang["no_upload"] );
-      }
-      break;
 
-   case "del":
+      //work around for mysql (which doesn't have an OID column)
+      if(substr($DATABASE_TYPE, 0, 5) == "mysql" )
+        db_query( "UPDATE files SET oid=".$last_oid." WHERE id=".$last_oid );
 
-      if(isset($_GET["fileid"] ) && is_numeric($_GET["fileid"] ) ) {
+      //disarm it
+      chmod($FILE_BASE."/".$last_oid."__".$filename, 0644 );
+      db_commit();
 
-        $fileid = $_GET["fileid"];
+    break;
 
-        //get the files from this task
-        $file_q = db_query("SELECT files.uploader AS uploader,
+    case "del":
+
+      if( ! isset($_GET["fileid"] ) || ! is_numeric($_GET["fileid"] ) )
+        error("File submit", "Not a valid fileid" );
+
+      $fileid = $_GET["fileid"];
+
+      //get the files from this task
+      $q = db_query("SELECT files.uploader AS uploader,
                                    files.oid AS oid,
                                    files.filename AS filename,
                                    tasks.owner AS owner
@@ -157,26 +155,23 @@ if( ! isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) )
                                    LEFT JOIN tasks ON (files.taskid=tasks.id)
                                    WHERE files.id=$fileid" );
 
-        //show them
-        for($i=0 ; $row = @db_fetch_array($file_q, $i) ; $i++) {
+      //show it
+      $row = @db_fetch_array($q, 0 );
+      //owners of the file and admins can delete files
+      if( ($admin==1) || ($uid == $row["owner"] ) || ($uid == $row["uploader"] ) ) {
 
-          //owners of the file and admins can delete files
-          if( ($admin==1) || ($uid == $row["owner"] ) || ($uid == $row["uploader"] ) ) {
-
-            //delete file from disk
-            if(file_exists($FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
-              unlink($FILE_BASE."/".$row["oid"]."__".$row["filename"] );
-            }
-            //delete record of file
-            db_query("DELETE FROM files WHERE oid=".$row["oid"] );
-          }
+        //delete file from disk
+        if(file_exists($FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
+          unlink($FILE_BASE."/".$row["oid"]."__".$row["filename"] );
         }
+        //delete record of file
+        db_query("DELETE FROM files WHERE oid=".$row["oid"] );
       }
-   break;
+    break;
 
-   default:
+    default:
       error("File submit", "Invalid request given");
-   break;
+    break;
   }
 
 if(isset($_GET["taskid"]) && $_GET["taskid"] == -1 ) //can only occur from files.php --> file_admin.php --> delete

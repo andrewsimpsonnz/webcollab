@@ -96,62 +96,59 @@ if( ! valid_string($_REQUEST["action"]) )
     case "add":
 
       //if all values are filled in correctly we can submit the forum-item
-      if(valid_string($_POST["text"] ) ) {
+      if( ! valid_string($_POST["text"] ) )
+        warning($lang["forum_submit"], $lang["no_message"] );
 
-        //check input has been provided
-        $input_array = array("parentid", "taskid" );
-        foreach($input_array as $var ) {
-          if(! valid_string($_POST[$var] ) ) {
-            error("Forum submit", "Variable ".$var." is not set" );
-          }
+      //check input has been provided
+      $input_array = array("parentid", "taskid" );
+      foreach($input_array as $var ) {
+        if(! valid_string($_POST[$var] ) ) {
+          error("Forum submit", "Variable ".$var." is not set" );
         }
+      }
 
-        $text = $_POST["text"];
-        //make email adresses clickable
-        //$text = preg_replace("(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))","<a href=\"mailto:\\0\">\\0</a>",$text);
-        $text = safe_data( $text );
+      $text = $_POST["text"];
+      //make email adresses clickable
+      //$text = preg_replace("(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))","<a href=\"mailto:\\0\">\\0</a>",$text);
+      $text = safe_data( $text );
 
-        $parentid    = check($_POST["parentid"]);
-        $usergroupid = check($_POST["usergroupid"]);
-        $taskid      = check($_POST["taskid"]);
+      $parentid    = check($_POST["parentid"]);
+      $usergroupid = check($_POST["usergroupid"]);
+      $taskid      = check($_POST["taskid"]);
 
-        if($taskid == 0 )
-          error( "Forum submit", "Taskid not valid");
+      if($taskid == 0 )
+        error( "Forum submit", "Taskid not valid");
 
-        //do data consistency check on parentid
-        if($parentid != 0 ) {
-          if(db_result(db_query( "SELECT COUNT(*) FROM forum WHERE id=$parentid" ), 0, 0 ) == 0 )
-            error("Forum submit", "Data consistency error - child post has no parent" );
-        }
+      //do data consistency check on parentid
+      if($parentid != 0 ) {
+        if(db_result(db_query( "SELECT COUNT(*) FROM forum WHERE id=$parentid" ), 0, 0 ) == 0 )
+          error("Forum submit", "Data consistency error - child post has no parent" );
+      }
 
-        //check usergroup security
-        require_once(BASE."includes/usergroup_security.php" );
-        //okay now check if we need to post in the public or the private forums of the task
-        if($usergroupid != 0 ) {
+      //check usergroup security
+      require_once(BASE."includes/usergroup_security.php" );
 
-          //check if the user does belong to that group
-          if( ($admin!=1) && (db_result(db_query("SELECT COUNT(*) FROM usergroups_users WHERE userid=$uid AND usergroupid=$usergroupid" ), 0, 0 ) < 1) )
-            error("Forum submit", "You do not have enough rights to post in that forum" );
+      //okay now check if we need to post in the public or the private forums of the task
+      if($usergroupid != 0 ) {
 
-          //private post
-          db_begin();
-          db_query ("INSERT INTO forum(parent, taskid, posted, text, userid, usergroupid)
-                VALUES ($parentid, $taskid, current_timestamp(0), '$text', $uid, $usergroupid)" );
-        }
-        else {
-        //public post
+        //check if the user does belong to that group
+        if( ($admin!=1) && (db_result(db_query("SELECT COUNT(*) FROM usergroups_users WHERE userid=$uid AND usergroupid=$usergroupid" ), 0, 0 ) < 1) )
+          error("Forum submit", "You do not have enough rights to post in that forum" );
+
+        //private post
         db_begin();
         db_query ("INSERT INTO forum(parent, taskid, posted, text, userid, usergroupid)
-                  VALUES ($parentid, $taskid, current_timestamp(0), '$text', $uid, 0)" );
-
-        }
-
-        //set when the last forum post to this task was done to the database
-        db_query("UPDATE tasks SET lastforumpost=current_timestamp(0) WHERE id=$taskid" );
-        db_commit();
+                VALUES ($parentid, $taskid, current_timestamp(0), '$text', $uid, $usergroupid)" );
       }
-      else
-        warning($lang["forum_submit"], $lang["no_message"] );
+      else {
+      //public post
+      db_begin();
+      db_query ("INSERT INTO forum(parent, taskid, posted, text, userid, usergroupid)
+                  VALUES ($parentid, $taskid, current_timestamp(0), '$text', $uid, 0)" );
+      }
+      //set when the last forum post to this task was done to the database
+      db_query("UPDATE tasks SET lastforumpost=current_timestamp(0) WHERE id=$taskid" );
+      db_commit();
 
       break;
 
@@ -162,18 +159,24 @@ if( ! valid_string($_REQUEST["action"]) )
         $postid = check($_GET["postid"] );
         if($postid == 0 )
           error("Forum submit", "Postid not valid" );
+      }
+      else
+        error("Forum submit", "You did not specify a postid, request not handled" );
 
-        //admin can delete all
-        if($admin == 1 ) {
+      switch($admin ) {
+        case 1:
+          //admin can delete all
           db_begin();
           delete_messages($postid );
           db_commit();
-        }
-        else {
+          break;
+
+        case 0:
+        default:
           //check if user is owner of the task or the owner of the post
           if(
-          (db_result( db_query("SELECT COUNT(*) FROM forum LEFT JOIN tasks ON (forum.taskid=tasks.id) WHERE tasks.owner=$uid AND forum.id=$postid" ), 0, 0 ) == 1 ) ||
-          (db_result( db_query("SELECT COUNT(*) FROM forum WHERE forum.userid=$uid AND forum.id=$postid" ), 0, 0 ) == 1 ) ) {
+          (db_result(db_query("SELECT COUNT(*) FROM forum LEFT JOIN tasks ON (forum.taskid=tasks.id) WHERE tasks.owner=$uid AND forum.id=$postid" ), 0, 0 ) == 1 ) ||
+          (db_result(db_query("SELECT COUNT(*) FROM forum WHERE forum.userid=$uid AND forum.id=$postid" ), 0, 0 ) == 1 ) ) {
 
             db_begin();
             delete_messages( $postid );
@@ -181,11 +184,8 @@ if( ! valid_string($_REQUEST["action"]) )
           }
           else
             error("Forum submit", "You are not authorised to delete that post." );
-        }
+          break;
       }
-      else
-        error("Forum submit", "You did not specify a postid, request not handled" );
-
       break;
 
     //default error case
