@@ -38,12 +38,11 @@ include_once(BASE."includes/time.php" );
 //
 
 function listTasks($task_id ) {
-   global $x, $epoch, $admin, $gid, $lang, $task_state;
+   global $x, $epoch, $now ,$admin, $gid, $lang, $task_state;
 
   // show subtasks that are not complete
-  $q = db_query("SELECT id, name, deadline, status, globalaccess, usergroupid,
-                        ".$epoch." deadline ) AS task_due,
-                        ".$epoch." now() ) AS now
+  $q = db_query("SELECT id, name, status, globalaccess, usergroupid,
+                        ".$epoch." deadline ) AS task_due
                         FROM tasks
                         WHERE projectid=".$task_id."
                         AND parent<>0
@@ -77,7 +76,7 @@ function listTasks($task_id ) {
 
      default:
       //check if late
-      if( ($row["now"] - $row["task_due"] ) >= 86400 ) {
+      if( ($now - $row["task_due"] ) >= 86400 ) {
         //$status = "&nbsp;<img border=\"0\" src=\"images/late.gif\" height=\"9\" width=\"23\" alt=\"late\" />";
         $content .= "<font class=\"late\">".$lang["late_g"]."</font>";
       }
@@ -193,7 +192,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   switch($project_status ) {
 
     case "done":
-      $finished = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid =".$row["id"]." AND parent>0" ), 0, 0 );
+      $finished = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid =".$row["id"] ), 0, 0 );
       $content .= $task_state["completed"]." (".nicedate( $finished ).")\n";
       break;
 
@@ -239,7 +238,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
             break;
         }
       }
-
+      
+      $now = $row["now"];
+      
       //show subtasks that are not complete
       $content .= listTasks($row["id"] );
       break;

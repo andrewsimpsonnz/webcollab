@@ -35,31 +35,32 @@ require_once(BASE."includes/security.php" );
 function percent_complete($taskid ) {
 
   if($taskid == "" )
-    return;
+    return 0;
 
-  $tasks_completed = db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent<>0 AND projectid=$taskid AND status='done'" ), 0, 0 );
-  $total_tasks = db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent<>0 AND projectid=$taskid" ), 0, 0 );
-
-  switch($tasks_completed ) {
-    case 0:
-      return 0;
-      break;
-
-    case($total_tasks ):
-      return 100;
-      break;
-
-    default:
-      return($tasks_completed / $total_tasks ) * 100;
-      break;
+  $tasks_completed = 0;
+  $total_tasks = 0;
+  
+  $q = db_query("SELECT status FROM tasks WHERE projectid=".$taskid );
+  
+  for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) { 
+  
+    $total_tasks++;
+      
+    if($row[0] == 'done')
+      $tasks_completed++;
   }
+  
+  //project will always show on the list
+  if($total_tasks == 1 )
+    return 0;
+    
+  return($tasks_completed / ($total_tasks - 1 ) ) * 100;  
 }
 
 //
 // Show percent
 //
 function show_percent($percent = 0 ) {
-  $out = "";
   $width = 400;
   $height = 4;
   switch($percent) {
@@ -72,7 +73,7 @@ function show_percent($percent = 0 ) {
       break;
 
     default:
-      $out .= "<table width=\"$width\"><tr><td height=\"$height\" width=\"".($percent * ($width/100))."\" bgcolor=\"#008B45\" nowrap>";
+      $out  = "<table width=\"$width\"><tr><td height=\"$height\" width=\"".($percent * ($width/100))."\" bgcolor=\"#008B45\" nowrap>";
       $out .= "</td><td width=\"".($width-($percent*($width/100)))."\" bgcolor=\"#FFA500\" nowrap></td></tr></table>\n";
       return $out;
       break;
