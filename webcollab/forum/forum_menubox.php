@@ -30,30 +30,25 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 include_once(BASE."includes/time.php" );
-            
-//initialise variables
-$j = 0;
-$k = 0;
-$list = "";
-unset($shown_array);
-$shown_array[] = 0;
 
-$q = db_query("SELECT ".PRE."forum.posted AS posted,
-                      ".PRE."tasks.id AS id,                               
+//initialise variables            
+$list = "";
+unset($lastpost);
+$j = 0;
+                  
+$q = db_query("SELECT ".PRE."forum.taskid AS taskid, 
+                      MAX(".PRE."forum.posted) AS recentpost,
                       ".PRE."tasks.name AS taskname,
                       ".PRE."tasks.globalaccess AS globalaccess,
                       ".PRE."tasks.usergroupid AS usergroupid
-                  FROM ".PRE."forum
-                  LEFT JOIN ".PRE."tasks ON (".PRE."forum.taskid=".PRE."tasks.id)
-                  WHERE posted > ( now()-INTERVAL ".$delim.(NEW_TIME * 24 )." HOUR".$delim.")
-                  ORDER BY posted DESC" );
+                    FROM ".PRE."forum 
+                    LEFT JOIN ".PRE."tasks ON (".PRE."tasks.id=".PRE."forum.taskid)
+                    WHERE posted > ( now()-INTERVAL ".$delim.(NEW_TIME * 24 )." HOUR".$delim.")
+                    GROUP BY taskid 
+                    ORDER BY recentpost DESC" );
 
 //iterate for posts                            
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
-
-  //check if already shown
-  if(in_array($row['id'], (array)$shown_array ) )
-    continue;
 
   //check if user can view this task
   if( ($ADMIN != 1 ) && ($row['globalaccess'] != "t" ) && ($row['usergroupid'] != 0 ) ) {
@@ -61,28 +56,24 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
         continue;
   }
   
-  //add to shown array
-  $shown_array[$k] = $row['id'];
-  $k++; 
-    
-  //show only 10 posts
-  if($j > 10)
-    break;
-  
   //date of latest post
   if(! isset($lastpost) )
-    $lastpost = $row['posted'];
+    $lastpost = $row['recentpost'];
   
   //show it
-  $list .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">".$row['taskname']."</a><br />\n";
-  $j++; 
+  $list .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['taskid']."\">".$row['taskname']."</a><br />\n";
+  $j++;
+  
+  //show max of 10 posts
+  if($j > 10 )
+    break;
 }
-
-unset($shown_array);
 
 if($list != "") {
   $content = "<small>".$list."<br />\nLast post ".nicedate($lastpost)."</small>\n";
   new_box("Recent forum posts", $content, "boxmenu" ); 
 }
+
+mysql_free_result($q);
 
 ?>
