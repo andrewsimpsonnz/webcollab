@@ -63,7 +63,7 @@ if( ! ($row = db_fetch_array($q , 0 ) ) )
 
 
 //show data
-$content =  "<br /><form method=\"POST\" action=\"users/user_submit.php\">".
+$content =  "<form method=\"POST\" action=\"users/user_submit.php\">".
             "<table border=\"0\">".
               "<tr><td>".$lang["login_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></td></tr>\n".
               "<tr><td>".$lang["full_name"].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" value=\"".$row["fullname"]."\"></td></tr>\n".
@@ -119,8 +119,7 @@ $content .= "</table><br /><br />".
             "<input type=\"hidden\" name=\"userid\" value=\"$userid\">".
             "<input type=\"submit\" value=\"".$lang["submit_changes"]."\">".
             "<input type=\"reset\" value=\"".$lang["reset"]."\">".
-            "</form>".
-            "<br /><br />";
+            "</form>";
 
 new_box($lang["edit_user"], $content );
 

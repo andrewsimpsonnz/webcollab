@@ -89,12 +89,12 @@ $query = db_query("SELECT id, name FROM tasks WHERE parent=0 ORDER BY name" );
 
 // check if there are projects
 if(db_numrows($query ) < 1 ) {
-  $content = "<br /><div align=\"center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add"]."</a></div><br /><br />\n";
+  $content = "<div align=\"center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add"]."</a></div>\n";
   new_box( $lang["no_projects"], $content );
   return;
 }
 
-$content .= "<br /><table border=\"0\">\n".
+$content .= "<table border=\"0\">\n".
             "<form method=\"POST\" action=\"users.php\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\">\n ".
@@ -135,9 +135,7 @@ for( $iter=0 ; $task_row = @db_fetch_array( $query, $iter ) ; $iter++) {
 }
 
 if( $flag != 1 )
-  $content .= "<br />".$lang["no_assigned"]."<br />\n";
-
-$content .= "<br />\n";
+  $content .= $lang["no_assigned"]."\n";
 
 new_box( $lang["todo_list"], $content );
 

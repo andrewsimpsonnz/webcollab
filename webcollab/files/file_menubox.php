@@ -45,6 +45,6 @@ if($taskid != -1 )
   $content .= "<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang["add_file"]."</a><br />\n";
 
 //show it
-new_box( $lang["files"], $content );
+new_box( $lang["files"], $content, "boxmenu" );
 
 ?>

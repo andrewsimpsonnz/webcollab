@@ -66,6 +66,6 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 //the task-independent part
 $content .= "<a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a><br />\n";
 
-new_box( $title.$lang["options"], $content );
+new_box( $title.$lang["options"], $content, "boxmenu" );
 
 ?>

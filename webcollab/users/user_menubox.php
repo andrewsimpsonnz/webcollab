@@ -47,6 +47,6 @@ $content .= "<a href=\"users.php?x=$x&amp;action=showonline\">".$lang["who_onlin
             "<a href=\"users.php?x=$x&amp;action=show&amp;userid=$uid\">".$lang["show_details"]."</a><br />\n";
 
 //show it
-new_box($lang["users"], $content );
+new_box($lang["users"], $content, "boxmenu" );
 
 ?>

@@ -62,6 +62,6 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 $content .= "<br />\n[<a href=\"contacts.php?x=$x&amp;action=add\">".$lang["add_contact"]."</a>]";
 
 //show the box
-new_box($lang["contacts"], $content );
+new_box($lang["contacts"], $content, "boxmenu" );
 
 ?>

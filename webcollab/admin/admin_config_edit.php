@@ -44,7 +44,6 @@ if( $admin != 1 ) {
 $content .=
         "<form method=\"POST\" action=\"admin/admin_config_submit.php\">\n".
           "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
-          "<br />\n".
           "<table border=\"0\">\n";
 
 //get config data
@@ -88,8 +87,7 @@ $content .= "<tr><td>".$lang["allow_globalaccess"]."</td><td><INPUT type=\"check
 $content .=
           "<input type=\"submit\" value=\"".$lang["update"]."\"> ".
           "<input type=\"reset\" value=\"".$lang["reset"]."\">".
-        "</form>\n".
-        "<br /><br />\n";
+        "</form>\n";
 
 new_box( $lang["configuration"], $content );
 

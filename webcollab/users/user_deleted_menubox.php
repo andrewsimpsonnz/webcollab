@@ -41,7 +41,7 @@ $q = db_query("SELECT id, fullname FROM users WHERE deleted='t' ORDER BY fullnam
 
 //check for enough users
 if(db_numrows($q) < 1 ) {
-  new_box($lang["deleted_users"], "<small><small>".$lang["no_deleted_users"]."</small></small>" );
+  new_box($lang["deleted_users"], "<small><small>".$lang["no_deleted_users"]."</small></small>", "boxmenu" );
   return;
 }
 
@@ -72,6 +72,6 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 $content .= "</table>";
 
 //show it
-new_box($lang["deleted_users"], $content );
+new_box($lang["deleted_users"], $content, "boxmenu" );
 
 ?>

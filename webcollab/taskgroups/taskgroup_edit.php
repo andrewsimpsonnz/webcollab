@@ -46,7 +46,7 @@ $taskgroupid = $_GET["taskgroupid"];
 $q = db_query("SELECT * FROM taskgroups WHERE id=$taskgroupid" );
 $row = db_fetch_array( $q, 0 );
 
-$content =  "<br />\n".
+$content =
             "<form method=\"POST\" action=\"taskgroups/taskgroup_submit.php\">\n".
               "<table border=\"0\">\n".
                 "<tr><td>".$lang["taskgroup_name"]."</td> <td><input type=\"input\" name=\"name\" value=\"".$row["name"]." \"size=\"30\"></td></tr>\n".
@@ -57,8 +57,7 @@ $content =  "<br />\n".
               "<input type=\"hidden\" name=\"action\" value=\"edit\"> ".
               "<input type=\"submit\" value=\"".$lang["submit_changes"]."\"> ".
               "<input type=\"reset\" value=\"".$lang["reset"]."\">".
-            "</form>\n".
-            "<br /><br />\n";
+            "</form>\n";
 
 new_box($lang["edit_taskgroup"], $content );
 

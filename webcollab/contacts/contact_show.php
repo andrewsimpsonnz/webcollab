@@ -48,7 +48,6 @@ if( ! ($row = db_fetch_array( db_query("SELECT * FROM contacts WHERE id=$contact
 
 
 $content .=
-    "<br />\n".
     "<table border=\"0\">\n".
        "<tr><td><i>".$lang["firstname"]."</i> </td><td>".$row["firstname"]."</td></tr>\n".
        "<tr><td><i>".$lang["lastname"]."</i> </td><td>".$row["lastname"]."</td></tr>\n".
@@ -68,7 +67,6 @@ $content .=
       "<input type=\"hidden\" name=\"contactid\" value=\"".$row["id"]."\">\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
       "<input type=\"submit\" name=\"Add\" value=\"".$lang["edit_contact"]."\">\n".
-      "<br /><br />\n".
    "</form>";
 
 new_box($lang["contact_info"], $content );

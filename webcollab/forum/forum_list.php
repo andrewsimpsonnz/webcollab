@@ -79,18 +79,18 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
   //show all forum posts on this level
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
-    $this_content .= "<li><small><a href=\"users.php?x=$x&amp;action=show&userid=".$row["userid"]."\">".$row["fullname"]."</a> (".nicetime( $row["posted"] ).")".
-                     " [<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=".$row["id"]."&amp;taskid=$taskid";
+    $this_content .= "<li><small><a href=\"users.php?x=$x&amp;action=show&userid=".$row["userid"]."\">".$row["fullname"]."</a> (".nicetime( $row["posted"] ).")</small>".
+                     "&nbsp;<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=".$row["id"]."&amp;taskid=$taskid";
 
     //if this is a post to a private forum then announce it to the poster-engine
     if($usergroupid != 0 )
       $this_content .= "&amp;usergroupid=$usergroupid";
 
-    $this_content .= "\">".$lang["reply"]."</a>]</small>\n";
+    $this_content .= "\">".$lang["reply"]."</a>]</font>\n";
 
     //owners of the thread, owners of the post and admins have a "delete" option
     if( ($admin==1) || ($uid == $row["taskowner"] ) || ($uid == $row["postowner"] ) ) {
-      $this_content .= " <small>[<a href=\"forum/forum_submit.php?x=$x&amp;action=del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm( '".$lang["confirm_del"]."' )\">".$lang["del"]."</a>]</small>\n";
+      $this_content .= " <font class=\"textlink\">[<a href=\"forum/forum_submit.php?x=$x&amp;action=del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm( '".$lang["confirm_del"]."' )\">".$lang["del"]."</a>]</font>\n";
     }
 
     $this_content .= "<br />".nl2br($row["text"] )."\n";
@@ -106,23 +106,25 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
+//MAIN PROGRAM
+
 //
 //public forums
 //
-$content = "<br />\n";
+$content = "";
 
 //all the posts that have parentid 0 (the taskid is included in the query itself so this will _not_ show all results)
 $content .= list_posts_from_task( 0, $taskid, 0 );
 $content .= "<br />\n";
 //add an option to add posts
-$content .= "<small>[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang["new_post"]."</a>]</small>";
+$content .= "<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang["new_post"]."</a>]</font>";
 //show it
-new_box($lang["public_user_forum"], $content );
+new_box($lang["public_user_forum"], $content, "boxdata2" );
 
 //
 //private forums
 //
-$content = "<br />\n";
+$content = "";
 
 //show all posts that are private to that task's user-group if you are withing the group (so AND user AND task have to belong to the same group)
 $task_usergroup = db_result(db_query("SELECT usergroupid FROM tasks WHERE id=$taskid" ), 0, 0 );
@@ -130,7 +132,7 @@ $task_usergroup = db_result(db_query("SELECT usergroupid FROM tasks WHERE id=$ta
 //dont show private forums if the task has not yet been assigned to a usergroup
 if( $task_usergroup != 0 ) {
 
-  $found=0;
+  $found = 0;
 
   //check if the user has a matching group
   $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$uid" );
@@ -154,9 +156,9 @@ if( $task_usergroup != 0 ) {
     $content .= "<br />\n";
     //add an option to add posts
     $usergroup_name = db_result( db_query("SELECT name FROM usergroups WHERE id=$task_usergroup" ), 0, 0 );
-    $content .= "<small>[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=$task_usergroup&amp;\">".$lang["new_post"]."</a>]</small>";
+    $content .= "<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=$task_usergroup&amp;\">".$lang["new_post"]."</a>]</font>";
     //show it
-    new_box(sprintf($lang["private_forum_sprt"], $usergroup_name ), $content );
+    new_box(sprintf($lang["private_forum_sprt"], $usergroup_name ), $content, "boxdata2" );
   }
 }
 

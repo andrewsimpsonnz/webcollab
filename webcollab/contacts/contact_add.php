@@ -37,7 +37,6 @@ $content = "";
 $q = "";
 
 $content .=
-        "<br />\n".
         "<form name=\"inputform\" method=\"POST\" action=\"contacts/contact_submit.php\">\n".
         "<table border=\"0\">\n".
             "<tr><td><i>".$lang["firstname"]."</i> </td><td><input type=\"text\" name=\"firstname\" size=\"30\"></td></tr>\n".
@@ -56,7 +55,7 @@ $content .=
           "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
           "<input type=\"hidden\" name=\"action\" value=\"insert\">\n".
           "<input type=\"submit\" value=\"".$lang["add_contact"]."\">\n".
-          "</form><br /><br />\n";
+          "</form>\n";
 
 new_box( $lang["contact_info"], $content );
 

@@ -82,7 +82,7 @@ if( ($row = db_fetch_array($q, 0 ) ) < 0 )
   error("Database error", "Unable to retrieve the needed information.");
 
 //all okay show task info
-$content = "<br />\n";
+$content = "";
 
 $content .= "<form method=\"POST\" action=\"tasks/task_submit.php\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ".
@@ -308,9 +308,7 @@ $content .= "<form method=\"POST\" action=\"tasks.php\">\n".
             "<input type=\"hidden\" name=\"action\" value=\"delete\">\n".
             "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\">\n".
             "<input type=\"submit\" value=\"".$lang["delete"]." ".$title."\" onClick=\"return confirm('".sprintf($lang["del_javascript_sprt"], $title, $row["name"] )."')\">\n".
-            "</form>\n".
-
-            "<br /><br />\n";
+            "</form>\n";
 
 new_box( $full_title, $content );
 

@@ -62,8 +62,6 @@ $q = db_query("SELECT files.oid AS oid,
                         WHERE files.taskid=$taskid
                         ORDER BY uploaded" );
 
-$content .= "<br />";
-
 if(db_numrows($q ) != 0 ) {
 
   $content .= "<table border=\"0\">\n";
@@ -76,7 +74,7 @@ if(db_numrows($q ) != 0 ) {
 
     //owners of the file and admins have a "delete" option
     if( ($admin == 1) || ($uid == $row["owner"] ) || ($uid == $row["uploader"] ) ) {
-      $content .= " [<a href=\"files/file_submit.php?x=$x&amp;action=del&amp;fileid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm('".sprintf( $lang["del_file_javascript_sprt"], $row["filename"] )."' )\">".$lang["del"]."</a>]</tr></td>\n";
+      $content .= "&nbsp;<font class=\"textlink\">[<a href=\"files/file_submit.php?x=$x&amp;action=del&amp;fileid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm('".sprintf( $lang["del_file_javascript_sprt"], $row["filename"] )."' )\">".$lang["del"]."</a>]</font></tr></td>\n";
     } else
       $content .= "</tr></td>\n";
 
@@ -93,12 +91,12 @@ if(db_numrows($q ) != 0 ) {
   $content .= "</table>";
 }
 
-$content .= "<small>[<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang["add_file"]."</a>]</small>";
+$content .= "<font class=\"textlink\">[<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang["add_file"]."</a>]</font>";
 
 $type = $lang["project"];
 if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent=0 AND id=$taskid" ) ) == 0 )
   $type = $lang["task"];
 
-new_box( sprintf($lang["files_assoc_sprt"], $type ), $content );
+new_box( sprintf($lang["files_assoc_sprt"], $type ), $content, "boxdata2" );
 
 ?>

@@ -34,7 +34,7 @@ require_once(BASE."includes/security.php" );
 
 $content = "";
 
-$content .= "<br />\n<table border=\"0\">\n";
+$content .= "<table border=\"0\">\n";
 $q = db_query("SELECT logins.lastaccess AS last,
             users.id AS id,
             users.fullname AS fullname
@@ -54,14 +54,14 @@ $q = db_query("SELECT logins.lastaccess AS last,
             FROM logins
             LEFT JOIN users ON (users.id=logins.user_id)
             WHERE logins.lastaccess < ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
-            AND user.deleted='f'
+            AND users.deleted='f'
             ORDER BY logins.lastaccess DESC" );
 
 $content .= "<tr><td colspan=\"2\"><b>".$lang["not_online"]."</b></td></tr>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
     $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></td><td>".nicetime($row["last"])."</td></tr>\n";
 }
-$content .= "</table>\n<br />";
+$content .= "</table>\n";
 
 new_box($lang["user_activity"], $content );
 

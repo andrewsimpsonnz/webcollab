@@ -42,7 +42,7 @@ $contactid = $_POST["contactid"];
 if( ! ($row = db_fetch_array( db_query( "SELECT * FROM contacts WHERE id=".$contactid ), 0 ) ) )
   error("Database value error", "There is no information for the contact that you specified");
 
-$content = "<br />\n".
+$content =
     "<form method=\"POST\" action=\"contacts/contact_submit.php\">\n".
     "<table border=\"0\">\n".
         "<tr><td><i>".$lang["firstname"]."</i> </td><td><input type=\"input\" name=\"firstname\" value=\"".$row["firstname"]."\"size=\"30\"</td></tr>\n".
@@ -77,7 +77,6 @@ $content .=
       "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\">\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
       "<input type=\"submit\" value=\"".$lang["del_contact"]."\" onClick=\"return confirm('".$lang["del_javascript"]."')\">\n".
-      "<br /><br />\n".
       "</form>";
 
 new_box( $lang["contact_info"], $content );

@@ -36,7 +36,7 @@ require_once(BASE."includes/security.php" );
 if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
-$content =  "<br />\n".
+$content =
             "<form name=\"inputform\" method=\"POST\" action=\"taskgroups/taskgroup_submit.php\">\n".
               "<table border=\"0\">\n".
                 "<tr><td>".$lang["taskgroup_name"]."</td><td><input type=\"input\" name=\"name\" size=\"30\"></td></tr>\n".
@@ -46,8 +46,7 @@ $content =  "<br />\n".
               "<input type=\"hidden\" name=\"action\" value=\"insert\"> ".
               "<input type=\"submit\" value=\"".$lang["add_taskgroup"]."\">".
               "<input type=\"reset\"  value=\"".$lang["reset"]."\">".
-            "</form>\n".
-            "<br /><br />\n";
+            "</form>\n";
 
 new_box( $lang["add_new_taskgroup"], $content );
 

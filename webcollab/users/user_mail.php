@@ -43,7 +43,6 @@ if( $admin != 1 ) {
 $content .=
         "<form method=\"POST\" action=\"users/user_mail_send.php\">\n".
           "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
-          "<br />\n".
           "<table border=\"0\">\n".
           "<tr><td><input type=\"radio\" value=\"all\" name=\"group\" checked>All users</td></tr>\n".
           "<tr><td><input type=\"radio\" value=\"maillist\" name=\"group\">Mailing list only</td></tr>\n".
@@ -60,11 +59,11 @@ $content .= "</select><small><i>".$lang["select_instruct"]."</i></small></td></t
             "<table border=\"0\">\n".
             "<tr><td>Subject:</td> <td><input type=\"text\" name=\"subject\" size=\"30\"></td></tr>\n".
             "<tr><td>Message:</td><td><textarea name=\"message\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
-            "<tr><td></td><td>For all selections the messages are sent to the mailing list.</td></tr>\n".
+            "<tr><td></td><td>For all selections the message is sent to the mailing list.</td></tr>\n".
             "</table><br />\n".
             "<input type=\"submit\" value=\"Send\">\n".
             "<input type=\"reset\" value=\"".$lang["reset"]."\">\n".
-            "</form><br /><br />\n";
+            "</form>\n";
 
 new_box("Email - translate me!", $content );
 ?>

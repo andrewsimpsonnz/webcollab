@@ -43,7 +43,7 @@ if(db_numrows($q) < 1 ) {
   return;
 }
 
-$content = "<table border=\"0\"><small>\n";
+$content = "<table border=\"0\" align=\"left\"><small>\n";
 
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
@@ -59,6 +59,6 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 $content .= "</small></table>";
 
 //show it
-new_box($lang["existing_users"], $content );
+new_box($lang["existing_users"], $content, "boxmenu" );
 
 ?>

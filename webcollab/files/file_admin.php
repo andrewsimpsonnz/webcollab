@@ -60,7 +60,7 @@ $file_q = db_query("SELECT files.oid AS oid,
                         ORDER BY task_name" );
 
 if(db_numrows($file_q) == 0 ) {
- $content = "<br />".$lang["no_files"]."<br /><br />\n";
+ $content = $lang["no_files"]."\n";
 
  new_box($lang["manage_files"], $content );
   return;
@@ -69,7 +69,7 @@ if(db_numrows($file_q) == 0 ) {
 //show them
 for($i=0 ; $row = @db_fetch_array($file_q, $i ) ; $i++ ) {
 
-  $content .= "<br /><table border=\"0\">\n";
+  $content .= "<table border=\"0\">\n";
 
   //file part
   $content .= "<tr><td>".$lang["ttask"].":</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["task_id"]."\">".$row["task_name"]."</a></td></tr>\n".
@@ -85,8 +85,6 @@ for($i=0 ; $row = @db_fetch_array($file_q, $i ) ; $i++ ) {
 
   $content .= "</table>";
 }
-
- $content .= "<br />";
 
 new_box( $lang["manage_files"], $content );
 

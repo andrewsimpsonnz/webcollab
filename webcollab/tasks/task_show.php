@@ -56,7 +56,7 @@ if( ! ($row = db_fetch_array($q, 0 ) ) )
 db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, $taskid, now() ) " );
 
 //start of header table
-$content = "<br /><table width=\"98%\"><tr><td>\n";
+$content = "<table width=\"98%\"><tr><td>\n";
 
 //percentage_completed gauge if this is a project
 if( $row["parent"] == 0 ) {
@@ -242,7 +242,7 @@ else {
 $content .= "</table>\n";
 
 //this part shows all the options the users has
-$content .= "<br /><div align=\"center\"><small>\n";
+$content .= "<br /><div align=\"center\"><font class=\"textlink\">\n";
 
 //set add function for task or project
 switch( $row["parent"] ){
@@ -307,9 +307,9 @@ switch( $row["owner"] ){
     break;
 }
 
-$content .= "</small></div><br />\n";
+$content .= "</font></div>\n";
 
-new_box( $title, $content );
+new_box( $title, $content, "boxdata2" );
 
 ?>
 

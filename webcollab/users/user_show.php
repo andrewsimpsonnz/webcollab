@@ -48,9 +48,9 @@ if( ! ($row = db_fetch_array($q, 0 ) ) )
   error("Database error", "Error in fetching result" );
 
 if($row["deleted"] == 't' )
-  $content .= "<br /><b><div align=\"center\"><font color=\"red\">".$lang["user_deleted"]."</font></div></b><br />";
+  $content .= "<b><div align=\"center\"><font color=\"red\">".$lang["user_deleted"]."</font></div></b><br />";
 
-$content .= "<br /><table border=\"0\">".
+$content .= "<table border=\"0\">".
               "<tr><td>".$lang["login"].":</td><td>".$row["name"]."</td></tr>\n".
               "<tr><td>".$lang["full_name"].":</td><td>".$row["fullname"]."</td></tr>\n".
               "<tr><td>".$lang["email"].":</td><td><A href=\"mailto:".$row["email"]."\">".$row["email"]."</A></td></tr>\n";
@@ -118,7 +118,7 @@ new_box($lang["user_info"], $content );
 //shows quick links to the tasks that the user owns
 
 if( $numberoftasksowned + $numberofprojectsowned > 0 ) {
-  $content = "<br /><ul>";
+  $content = "<ul>";
 
   //Get the number of tasks
   $q = db_query("SELECT id, name, parent, status, finished_time FROM tasks WHERE owner=$userid" );

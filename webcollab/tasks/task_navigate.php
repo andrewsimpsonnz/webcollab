@@ -76,7 +76,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
   }
 
-  new_box("Task navigation", $content );
+  new_box("Task navigation", $content, "boxmenu" );
 }
 
 //new task
@@ -111,7 +111,7 @@ elseif( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ){
 
   }
 
-  new_box( $lang["task_navigation"], $content );
+  new_box( $lang["task_navigation"], $content, "boxmenu" );
 }
 
 ?>

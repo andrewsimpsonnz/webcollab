@@ -57,7 +57,6 @@ require_once(BASE."includes/usergroup_security.php" );
 if( ($taskname = db_result(db_query("SELECT name FROM tasks WHERE id=$taskid" ), 0, 0) ) == "" )
   error("Forum add", "Taskname is not set." );
 
-$content .= "<br />\n";
 $content .= "<form name=\"inputform\" method=\"POST\" action=\"forum/forum_submit.php\">\n";
 //set some hidden values
 $content .= "<input type=\"hidden\" name=\"action\" value=\"add\">\n".
@@ -94,8 +93,7 @@ $content .=   "<tr><td>".$lang["message"]."</td><td><textarea name=\"text\" rows
               "</table>\n".
               "<input type=\"submit\" value=\"".$lang["post"]."\"> ".
               "<input type=\"reset\" value=\"".$lang["reset"]."\">".
-              "</form>\n".
-              "<br /><br />\n";
+              "</form>\n";
 
 //show a reply or a new-post box
 if($parentid > 0 )

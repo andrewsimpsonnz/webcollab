@@ -35,6 +35,9 @@ require_once(BASE."includes/security.php" );
 include_once(BASE."includes/admin_config.php" );
 include_once(BASE."includes/time.php" );
 
+//secure vars
+$content = "";
+
 //shows a priority-select box
 $priority_select_box = "<tr><td>".$lang["priority"].":</td> <td>\n".
                        "<SELECT name=\"priority\">\n".
@@ -46,7 +49,6 @@ $priority_select_box = "<tr><td>".$lang["priority"].":</td> <td>\n".
                        "</SELECT>\n</td></tr>\n";
 
 
-$content = "<br />\n";
 $content .= "<form name=\"inputform\" method=\"POST\" action=\"tasks/task_submit.php\">\n";
 $content .= "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ";
 $content .= "<input type=\"hidden\" name=\"action\" value=\"insert\">\n ";
@@ -147,8 +149,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
               "</table><br /><br />\n".
               "<input type=\"submit\" value=\"Add task\"> ".
               "<input type=\"reset\" value=\"".$lang["reset"]."\">".
-              "</form>\n".
-              "<br /><br />\n";
+              "</form>\n";
 
   new_box( $lang["add_task"], $content );
 
@@ -219,8 +220,7 @@ else {
               "</table><br /><br />\n".
               "<input type=\"submit\" value=\"".$lang["add_project"]."\">\n ".
               "<input type=\"reset\" value=\"".$lang["reset"]."\">\n".
-              "</form>\n".
-              "<br /><br />\n";
+              "</form>\n";
 
   new_box( $lang["add_new_project"], $content );
 

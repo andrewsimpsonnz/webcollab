@@ -276,7 +276,7 @@ $task_content  = list_tasks($parentid );
 
 //show it
 if($task_content != "" ){
-  $content = "<br />$task_content<br />";
+  $content = $task_content;
   new_box( $lang["tasks"], $content );
 }
 

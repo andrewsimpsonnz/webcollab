@@ -37,7 +37,7 @@ if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 
-$content = "<br />".
+$content =
            "<form name=\"inputform\" method=\"POST\" action=\"users/user_submit.php\">".
              "<table border=\"0\">".
                "<tr><td>".$lang["login_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\"></td></tr>\n".
@@ -58,8 +58,7 @@ $content .=    "</select><small><i>".$lang["select_instruct"]."</i></small></td>
             "<input type=\"hidden\" name=\"x\" value=\"$x\">".
             "<input type=\"submit\" value=\"".$lang["add"]."\">".
             "<input type=\"reset\" value=\"".$lang["reset"]."\">".
-          "</form>".
-          "<br /><br />";
+          "</form>";
 
 
 new_box($lang["user_info"], $content );

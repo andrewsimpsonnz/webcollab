@@ -38,6 +38,6 @@ if($admin != 1 )
 $content = "<a href=\"usergroups.php?x=$x&amp;action=add\">".$lang["add"]."</a><br />\n".
            "<a href=\"usergroups.php?x=$x&amp;action=manage\">".$lang["manage"]."</a><br />\n";
 
-new_box( $lang["usergroups"], $content );
+new_box( $lang["usergroups"], $content, "boxmenu" );
 
 ?>
