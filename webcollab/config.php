@@ -88,9 +88,8 @@
     //These two variables are only required if "SMTP" is chosen above
       //location of SMTP server (ip address or FQDN)
       $SMTP_HOST = "localhost";
-      //domain name to be used in SMTP HELO greeting
-      $DOMAIN = "localhost.localdomain";
-      //use smtp auth? ('Y' or 'N')
+
+	  //use smtp auth? ('Y' or 'N')
       $SMTP_AUTH = "N";
         //if using $SMTP_AUTH give username & password
         $MAIL_USER = "";
@@ -99,8 +98,8 @@
 /*Note:
    Use $MAIL_METHOD = "mail", which uses local sockets and is faster.  If "mail" does not work (it is not reliable
    on all operating systems), change to "SMTP", which uses an SMTP connection over tcp/ip.
-*/  
-    
+*/
+
 // minor config parameters
 
   //number of days that new or updated tasks should be highlighted as 'New' or 'Updated'
