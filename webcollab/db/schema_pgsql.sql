@@ -172,8 +172,8 @@ CREATE TABLE "login_attempt" (
 	"last_attempt" timestamp with time zone NOT NULL DEFAULT current_timestamp(0)
 );
 
-INSERT INTO users ( id, name, fullname, password, email, admin, deleted )
-VALUES( 1, 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );
+INSERT INTO users ( name, fullname, password, email, admin, deleted )
+VALUES( 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );
 
 INSERT INTO config ( globalaccess, groupaccess )
 VALUES( 'checked', '' );
