@@ -59,6 +59,12 @@ if(isset($_POST["subject"] ) )
 else
   $subject = "";
 
+//get rid of magic_quotes - it is not required here
+if(get_magic_quotes_gpc() ) {
+  $message = stripslashes($message );
+  $subject = stripslashes($subject );
+}
+
   //what do you want to send today =]
   switch($_POST["group"] ) {
 
@@ -66,8 +72,8 @@ else
       //select all users
       $q = db_query("SELECT email FROM users WHERE deleted='f'" );
 
-      for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
-        $address_array[$i] = $row["email"];
+      for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
+        $address_array[$i] = $row[0];
       }
       break;
 
@@ -87,15 +93,15 @@ else
       for($i=0 ; $i < $max ; $i++ ){
         //check for security, then get users for each usergroup
         if(isset($usergroup[$i] ) && is_numeric($usergroup[$i] ) ){
-          $q = db_query("SELECT users.email AS email
+          $q = db_query("SELECT users.email
                           FROM usergroups_users
                           LEFT JOIN users ON (users.id=usergroups_users.userid)
                           WHERE usergroups_users.usergroupid=".$usergroup[$i]."
                           AND users.deleted='f'" );
 
           //loop through result rows and add users to the list
-          for($j = 0 ; $row = @db_fetch_array($q, $j ) ; $j++){
-            $address_array[$k] = $row["email"];
+          for($j = 0 ; $row = @db_fetch_num($q, $j ) ; $j++){
+            $address_array[$k] = $row[0];
             $k++;
           }
         }
@@ -112,15 +118,15 @@ else
 }
 
 //get the mailing list
-$q = db_query("SELECT DISTINCT * FROM maillist" );
+$q = db_query("SELECT DISTINCT email FROM maillist" );
 
 //merge the mailing list in too
 $size = sizeof($address_array);
-for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
-  $address_array[($size + $i)] = $row["email"];
+for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+  $address_array[($size + $i)] = $row[0];
 }
 
-//remove duplicate addresses, and put into a comma sorted list
+//remove duplicate addresses, and put into a comma separated list
 $to = "";
 $s = "";
 while(list(,$address) = @each($address_array ) ) {
