@@ -39,6 +39,10 @@ switch( $LOCALE ) {
     include( BASE."lang/en_message.php" );
     break;
 
+  case "es":
+    include( BASE."lang/es_message.php" );
+    break;
+
   default:
     die( "No language locale specified in configuration file" );
     break;
