@@ -23,6 +23,8 @@
   ---------
 
   Creates a singular interface for database access.
+  
+  This file is for PostgreSQL with PHP versions greater than (and including) 4.2.0
 
 */
 
@@ -33,16 +35,21 @@ if( ! @require( "path.php" ) )
 include_once( BASE."config.php" );
 include_once( BASE."includes/common.php");
 
-//if( ! ( $database_connection = @pg_pconnect("host=".$DATABASE_HOST." user=".$DATABASE_USER." dbname=".$DATABASE_NAME." password=".$DATABASE_PASSWORD) ) ) {
+//set initial value
+$host = "";
+//now adjust if necessary
+if($DATABASE_HOST != "localhost" ){
+  $host = "host=".$DATABASE_HOST;
+}
 
-/* Uncomment the line above to allow database connections via tcp/ip (includes remote databases and localhost)
-   Standard Postgresql setup does NOT support tcp/ip connections.
+/* NOTE!   
+   Standard Postgresql (Version 6.3 and later) setup does NOT support tcp/ip connections.
+   To support tcp/ip connections you need to:
     - Edit PostgreSQL config file pg_hba.conf to allow tcp/ip from appropriate hosts
     - Start postmaster with -i option to allow tcp/ip connections
 */
 
-//** Line below is for local connections via Unix domain sockets to localhost database.  This is the standard Postgresql configuration.
-if( ! ( $database_connection = @pg_pconnect("user=".$DATABASE_USER." dbname=".$DATABASE_NAME." password=".$DATABASE_PASSWORD) ) ) {
+if( ! ( $database_connection = @pg_pconnect($host."user=".$DATABASE_USER." dbname=".$DATABASE_NAME." password=".$DATABASE_PASSWORD) ) ) {
 
   error( "No database connection",  "Sorry but there seems to be a problem in connecting to the database");
 }
@@ -80,7 +87,7 @@ function db_query( $query, $dieonerror=1 ) {
     error("Database Query error", "There was no connection to a database" );
 
   //do it
-  if( ! ($result = @pg_exec( $database_connection, $query ) ) ) {
+  if( ! ($result = @pg_query( $database_connection, $query ) ) ) {
 
     if($dieonerror==1) error("Database Query error", "The following query :<BR><BR><B>".$query."</B><BR><BR>Had the following error:<BR><B>".pg_errormessage($database_connection)."</B>" );
   }
@@ -99,7 +106,7 @@ function db_query( $query, $dieonerror=1 ) {
 //
 function db_numrows( $q ) {
 
-  $result = pg_numrows( $q );
+  $result = pg_num_rows( $q );
 
 return( $result );
 }
@@ -109,7 +116,7 @@ return( $result );
 //
 function db_result( $q, $row=0, $field=0 ) {
 
-  $result = pg_result( $q, $row, $field );
+  $result = pg_fetch_result( $q, $row, $field );
 
 return ($result);
 }
@@ -139,7 +146,7 @@ return($result_row);
 //
 function db_lastoid( $q ) {
 
-  $lastoid = pg_getlastoid( $q );
+  $lastoid = pg_last_oid( $q );
 
 return($lastoid);
 }
@@ -160,7 +167,7 @@ function db_begin() {
 
   global $database_connection;
 
-  pg_exec( $database_connection, "BEGIN WORK" );
+  pg_query( $database_connection, "BEGIN WORK" );
 
 return;
 }
@@ -172,7 +179,7 @@ function db_rollback() {
 
   global $database_connection;
 
-  pg_exec( $database_connection, "ROLLBACK WORK" );
+  pg_query( $database_connection, "ROLLBACK WORK" );
 
 return;
 }
