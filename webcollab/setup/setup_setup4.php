@@ -213,8 +213,34 @@ $content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></
 
 $status = "<font color=\"green\"><b>OK !</b></font>";
 
-if($data["use_email"] == "Y" && $data["smtp_host"] == NULL ) {
-  $status = "<font color=\"blue\"><b>SMTP Host must be specified!</b></font>";
+if($data["use_email"] == "Y" && $data["smtp_host"] != "" ) {
+
+  if(function_exists('checkdnsrr') ){
+    //only works for UNIX and other *nix OS
+    if( ! checkdnsrr($data["smtp_host"], "MX" ) ) {
+      $status = "<font color=\"blue\"><b>Cannot locate MX record for ".$data["smtp_host"]."</b></font>";
+      $flag = $flag + 1;
+    }
+  }
+  else {
+    //work around for Windows - which doesn't support checkdnsrr()
+    $found = false;
+    //prevent silly errors in eregi if nslookup fails
+    $output = "";
+    @exec("nslookup -type=MX ".$data["smtp_host"], $output );
+    while(list(, $line ) = each($output ) ) {
+      if(eregi("^$host", $line ) ) {
+        $found = true;
+        break;
+      }
+    }
+    if($found == false )
+      $status = "<font color=\"blue\"><b>Cannot locate MX record for ".$data["smtp_host"]."</b></font>";
+  }
+}
+
+if($data["use_email"] == "Y" && $data["smtp_host"] == "" ) {
+  $status = "<font color=\"red\"><b>SMTP Host must be specified!</b></font>";
   $flag = $flag + 1;
 }
 
