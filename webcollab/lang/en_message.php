@@ -341,6 +341,10 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['delete_task']                = 'Delete task';
     $lang['project_options']            = 'Project options';
     $lang['task_options']               = 'Task options';
+//**    
+    $lang['javascript_archive_project'] = 'This will archive project %s.  Are you sure?';
+//**    
+    $lang['archive_project']            = 'Archive project';
     $lang['task_navigation']            = 'Task navigation';
 //**
     $lang['new_task']                   = 'New task';    
