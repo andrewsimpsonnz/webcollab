@@ -41,7 +41,7 @@ include_once( BASE."includes/common.php" );
 //
 
 function listTasks( $task_id ) {
-   global $x, $userid, $epoch;
+   global $x, $userid, $epoch, $lang;
   // show all subtasks that are not complete
   $q_tasks = db_query( "SELECT id, name, owner, deadline,
 	                ".$epoch."deadline) as task_due,
@@ -62,15 +62,15 @@ function listTasks( $task_id ) {
      $content .= "<LI> <A HREF=\"tasks.php?x=".$x."&action=show&taskid=".$task_row[ "id" ]."\">";
 
      //add highlighting if deadline is due
-     $state = round( ( $task_row["task_due"]-$task_row["now"] )/86400 );
+     $state = ceil( ( $task_row["task_due"]-$task_row["now"] )/86400 );
      if($state > 1) {
-       $content .= $task_row[ "name" ]." (Due in ".$state." days.)";
+       $content .= $task_row[ "name" ]."</A>".sprintf($lang["due_in_sprt"], $state );
        } else if($state > 0) {
-       $content .= $task_row[ "name" ]." (Due tomorrow.)";
+       $content .= $task_row[ "name" ]."</A>".$lang["due_tomorrow"];
        } else {
-       $content .= "<FONT color=\"red\">".$task_row[ "name" ]."</FONT>";
+       $content .= "<FONT color=\"red\">".$task_row[ "name" ]."</A></FONT>";
        }
-     $content .= "</A></LI>\n";
+     $content .= "</LI>\n";
    }
 return $content;
 }
