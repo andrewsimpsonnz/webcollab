@@ -1,4 +1,9 @@
 WebCollab CVS
+*** 14 August 2003 
+
+- bugfix/feature request #783959 (Ability to disable ip checking during sessions)
+
+WebCollab CVS
 *** 8 August 2003
 
 - bugfix #783922 (Syntax error in private forum post listings)
