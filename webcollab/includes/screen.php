@@ -63,16 +63,19 @@ include_once(BASE."config/config.php" );
 include_once(BASE."lang/lang.php" );
 
 //
-// Creates the inital window
+// Creates the initial window
 //
 function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
 
-  global $uid_name, $admin, $MANAGER_NAME, $WEBCOLLAB_VERSION, $lang, $web_charset;
+  global $uid_name, $admin, $MANAGER_NAME, $WEBCOLLAB_VERSION, $lang, $web_charset, $top_done;
 
   //only build top once...
-  if(headers_sent() )
+  //  (we don't use headers_sent() 'cause it seems to be buggy in PHP5)
+  if(isset($top_done) && $top_done == 1 ){
     return;
-
+  }
+  $top_done = 1;
+     
   //remove /* and */ in section below to use compressed HTML output:
   //Note: PHP manual recommends use of zlib.output_compression in php.ini instead of ob_gzhandler in here
   /*
