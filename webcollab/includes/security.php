@@ -92,6 +92,7 @@ $useremail = $row["email"];
 
 //session does exist, now cross-check with time and ip
 if( $ip != $row["ip"] ) {
+  db_query("DELETE FROM logins WHERE session_key='".$x."'" );
   warning( $lang["security_manager"], sprintf( $lang["ip_spoof_sprt"], $ip, $BASE_URL) );
 }
 
