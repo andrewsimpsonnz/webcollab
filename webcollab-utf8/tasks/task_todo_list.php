@@ -107,7 +107,7 @@ function listTasks($task_id, $tail, $projectid ) {
     $shown_count++;
     
     //if this task has children (subtasks), iterate recursively to find them 
-    if(in_array($task_array[$i]['id'], (array)$parent_array ), TRUE ){
+    if(in_array($task_array[$i]['id'], (array)$parent_array, TRUE ) ){
       $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";
