@@ -29,14 +29,23 @@ Most Linux distributions have separate packages (*.rpm, *.deb, etc) for the main
 MySQL/PostgreSQL PHP support.
 
 
-3. "Does WebCollab use cookies?"
+3. "Can login and get main screen, but sometimes pages are not found (404 error)."
 
-Yes, and no. Cookies are preferred for session management, but aren't reliable with all browsers.
+Check that the the parameter $BASE_URL is correctly stated in config.php.
+
+
+4. "Does WebCollab use cookies?"
+
+Yes, if possible. Cookies are preferred for session management, but aren't reliable with all
+browsers.
 
 Webcollab attempts to set a session cookie at the login.  Additionally it uses encoded URI's at this
 stage, also for session management.  If the session cookie is found to be successful (ie the user's
 browser accepts the cookie), the encoded URI's are dropped. Otherwise session management with
 encoded URI is continued. 
+
+The session cookie lasts only as long as the current session.  It should be automatically destroyed
+when the browser is closed, or the user logs out.
 
 
 4. "Does Magic Quotes need to be set 'on' or 'off' in php.ini?"
@@ -90,7 +99,7 @@ For Linux and *nix: Make sure the /webcollab/files/filebase directory is writeab
 webserver.  This means the directory should be either owned by the webserver user (usually apache,
 www or www-data) or the directory must be world-writeable.
 
-Use 'chmod 666 filebase' from the files directory, and preferably move the directory outside the
+Use 'chmod 777 filebase' from the files directory, and preferably move the directory outside the
 webserver root - see item 3 below. 
 
 
