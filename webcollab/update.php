@@ -21,7 +21,7 @@
    Function:
   ---------
 
-  Secure the setup login
+  Updating older databases to the current schema 
 
 */
 
