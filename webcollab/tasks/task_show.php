@@ -229,7 +229,7 @@ if( $row["usergroupid"] != 0 ) {
 
     case 'f':
     default:
-      $content .= "<b>".$lang[$type."_not_accessible_"]."</b></td></tr>\n";
+      $content .= "<b>".$lang[$type."_not_accessible"]."</b></td></tr>\n";
       break;
   }
 
