@@ -42,6 +42,7 @@ $EMAIL_ADMIN        = $row["email_admin"];
 $EMAIL_REPLY_TO     = $row["reply_to"];
 $EMAIL_FROM         = $row["email_from"];
 $DEFAULT_ACCESS     = $row["globalaccess"];
+$DEFAULT_EDIT       = $row["groupaccess"];
 $DEFAULT_OWNER      = $row["owner"];
 $DEFAULT_GROUP      = $row["usergroup"];
 

@@ -215,16 +215,20 @@ if( $row["usergroupid"] != 0 ) {
   $usergroup = db_result( db_query("SELECT name FROM usergroups WHERE id=".$row["usergroupid"] ), 0, 0  );
   $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </TD><TD>".$usergroup." ";
 
-  switch( $row["globalaccess"] ){
+  switch($row["globalaccess"] ){
     case 't':
       $content .= sprintf($lang["task_accessible_sprt"], $type )."</TD></TR>\n";
       break;
 
     case 'f':
     default:
-      $content .= "<B>".sprintf($lang["task_not_accessible_sprt"], $type )."</B>.</TD></TR>\n";
+      $content .= "<B>".sprintf($lang["task_not_accessible_sprt"], $type )."</B></TD></TR>\n";
       break;
   }
+
+  if($row["groupaccess"] == 't' )
+      $content .= "<TR><TD>&nbsp;</TD><TD><I>".sprintf($lang["usergroup_can_edit_sprt"], $type )."</I></TD></TR>\n";
+
 }
 else {
   $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </TD><TD>".sprintf($lang["task_not_in_usergroup_sprt"], $type )."</TD></TR>\n";
@@ -245,9 +249,27 @@ switch( $row["parent"] ){
     $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=add&parentid=".$taskid."\">".$lang["add_subtask"]."</A>] \n";
     break;
 }
-  
-switch( $row["owner"] ){
 
+//see if user is in usergroup and can edit
+switch( $row["groupaccess"] ) {
+  case "t";
+    $group = FALSE;
+    $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
+    for( $i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
+    if($row["usergroupid"] == $usergroup_row[0] ){
+      $group = TRUE;
+      break;
+      }
+    }
+    break;
+
+  case "f":
+  default:
+    $group = FALSE;
+    break;
+  }
+
+switch( $row["owner"] ){
   case "0":
     if( $admin == 1 ){
       //admin edit
@@ -268,12 +290,15 @@ switch( $row["owner"] ){
     break;
 
   default:
-    if( $admin == 1 ){
+    if($admin == 1 ){
       //edit
       $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=edit&taskid=".$taskid."\">".$lang["edit"]."</A>] \n";
       //take over
       $content .= "[<A href=\"".$BASE_URL."tasks/task_submit.php?x=".$x."&action=meown&taskid=".$taskid."\">".sprintf($lang["take_over_sprt"], $type)."</A>] \n";
     }
+    if($group )
+      //if user is in the usergroup & groupaccess is set
+      $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=edit&taskid=".$taskid."\">".$lang["edit"]."</A>] \n";
     break;
 }
 

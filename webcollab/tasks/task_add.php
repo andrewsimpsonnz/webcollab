@@ -70,7 +70,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
 
   $content .= "<INPUT TYPE=\"hidden\" name=\"parentid\" value=\"".$parentid."\">\n";
   $content .= "<INPUT TYPE=\"hidden\" name=\"projectid\" value=\"".$task_row["projectid"]."\">\n";
-  
+
   //show project name
   if( $task_row["projectid"] == $parentid)
     $project = $task_row["name"];
@@ -141,6 +141,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
 
   $content .= "</SELECT></TD></TR>\n";
   $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</A> </TD><TD><INPUT type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS."></TD></TR>\n";
+  $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#groupaccess\" target=\"helpwindow\">".$lang["group_edit"]."</A> </TD><TD><INPUT type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT."></TD></TR>\n";
 
   $content .= "<TR> <TD>".$lang["task_description"]."</TD> <TD><TEXTAREA name=\"text\" rows=\"10\" cols=\"60\"></TEXTAREA></TD> </TR>\n";
 
@@ -212,6 +213,7 @@ else {
 
   $content .= "</SELECT></TD></TR>\n";
   $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</A> </TD><TD><INPUT type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS."></TD></TR>\n";
+  $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#groupaccess\" target=\"helpwindow\">".$lang["group_edit"]."</A> </TD><TD><INPUT type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT."></TD></TR>\n";
 
   $content .= "<TR> <TD>".$lang["project_description"]."</TD> <TD><TEXTAREA name=\"text\" rows=\"10\" cols=\"60\"></TEXTAREA></TD> </TR>\n";
 

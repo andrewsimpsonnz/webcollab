@@ -37,14 +37,43 @@ include_once( BASE."includes/security.php" );
 include_once( BASE."includes/admin_config.php" );
 include_once( BASE."includes/time.php" );
 
+//
+//check user access
+//
+function user_access($taskid ) {
+
+  global $uid, $admin;
+
+  if($admin == 1)
+    return TRUE;
+
+  $q = db_query("SELECT owner, usergroupid, groupaccess FROM tasks WHERE id=".$taskid);
+  $row = db_fetch_num($q, 0 );
+
+  if($row[0] == $uid )
+    return TRUE;
+
+  if($row[1] == 0 )
+    return FALSE;
+
+  if( $row[2] == "t" ) {
+    $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
+    for( $i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
+    if($row[1] == $usergroup_row[0] )
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
 //check for valid integer
 if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) || $_GET["taskid"] == 0 )
   error("Task edit", "Not a valid value for taskid.");
 
-$taskid = $_GET["taskid"]; 
+$taskid = $_GET["taskid"];
 
 // can this user edit this task ?
-if( ! ( ($admin == 1) || ( db_result( db_query("SELECT COUNT(*) FROM tasks WHERE id=".$taskid." AND owner=".$uid ), 0, 0 ) == 1 ) ) )
+if( ! user_access($taskid ) )
   warning( $lang["access_denied"], $lang["no_edit"] );
 
 //get all the needed info from the task
@@ -242,7 +271,12 @@ $global = "";
 if( $row["globalaccess"] == 't' )
   $global = "CHECKED";
 
+$group = "";
+if( $row["groupaccess"] == 't' )
+  $group = "CHECKED";
+
 $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</A></TD><TD><INPUT type=\"checkbox\" name=\"globalaccess\" ".$global."></TD></TR>\n";
+$content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#groupaccess\" target=\"helpwindow\">".$lang["group_edit"]."</A> </TD><TD><INPUT type=\"checkbox\" name=\"groupaccess\" ".$group."></TD></TR>\n";
 
 $content .= "<TR> <TD>".$lang["task_description"]."</TD> <TD><TEXTAREA name=\"text\" rows=\"5\" cols=\"60\">".$row["text"]."</TEXTAREA></TD> </TR>\n";
 

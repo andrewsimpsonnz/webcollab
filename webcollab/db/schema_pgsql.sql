@@ -10,7 +10,7 @@ CREATE TABLE "tasks" (
 	"owner" integer NOT NULL,
 	"creator" integer NOT NULL,
 	"finished_time" timestamp with time zone NOT NULL,
-        "projectid" integer NOT NULL,
+	"projectid" integer NOT NULL,
 	"deadline" timestamp with time zone NOT NULL,
 	"priority" integer DEFAULT 2::int NOT NULL,
 	"status" character varying(20) NOT NULL DEFAULT 'created',
@@ -18,6 +18,7 @@ CREATE TABLE "tasks" (
 	"lastforumpost" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
 	"usergroupid" integer NOT NULL,
 	"globalaccess" boolean NOT NULL DEFAULT 't',
+	"groupaccess" boolean NOT NULL DEFAULT 'f',
 	"lastfileupload" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
 	Constraint "tasks_pkey" Primary Key ("id")
 );
@@ -158,6 +159,7 @@ CREATE TABLE "config" (
 	"reply_to" character varying(200),
 	"email_from" character varying(200),
 	"globalaccess" character varying(200),
+	"groupaccess" character varying(200),
 	"owner" character varying(200),
 	"usergroup" character varying(200)
 );
@@ -168,5 +170,5 @@ COPY "users" FROM stdin;
 SELECT setval ('"users_id_seq"', 1, true);
 
 COPY "config" FROM stdin;
-\N	\N	\N	checked	\N	\N
+\N	\N	\N	checked	\N	\N	\N
 \.

@@ -11,17 +11,18 @@ CREATE TABLE tasks (
 	finished_time DATETIME NOT NULL,
 	projectid INT UNSIGNED NOT NULL DEFAULT 0,
 	deadline DATETIME NOT NULL,
-	priority INT UNSIGNED NOT NULL DEFAULT 2,
+	priority TINYINT NOT NULL DEFAULT 2,
 	status VARCHAR(20) NOT NULL DEFAULT 'created',
 	taskgroupid INT UNSIGNED NOT NULL,
 	lastforumpost DATETIME NOT NULL,
 	usergroupid INT UNSIGNED NOT NULL,
 	globalaccess VARCHAR(5) NOT NULL DEFAULT 't',
+	groupaccess VARCHAR(5) NOT NULL DEFAULT 'f',
 	lastfileupload DATETIME NOT NULL,
         INDEX (owner),
         INDEX (parent),
         INDEX (name(10)),
-	INDEX (projectid),
+        INDEX (projectid),
         INDEX (taskgroupid),
         INDEX (deadline),
         INDEX (status)
@@ -140,6 +141,7 @@ CREATE TABLE config (
 	reply_to VARCHAR(200),
 	email_from VARCHAR(200),
 	globalaccess VARCHAR(50),
+	groupaccess VARCHAR(50),
 	owner VARCHAR(200),
 	usergroup VARCHAR(200)
 );
@@ -147,5 +149,5 @@ CREATE TABLE config (
 INSERT INTO users ( id, name, fullname, password, email, admin, deleted )
 VALUES( 1, 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );
 
-INSERT INTO config ( globalaccess )
-VALUES( 'checked' );
+INSERT INTO config ( globalaccess, groupaccess )
+VALUES( 'checked', '' );
