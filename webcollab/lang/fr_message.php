@@ -164,7 +164,7 @@ $lang = array(
 
  //includes
  "report" => "Rapport",
- "warning" => "<H1>Désolé!</H1><P>Nous sommes incapable de procéder à votre requete actuellement. Merci de réessayez plus tard.</P>",
+ "warning" => "<h1>Désolé!</h1><p>Nous sommes incapable de procéder à votre requete actuellement. Merci de réessayez plus tard.</p>",
  "home_page" => "Page Principale",
  "summary_page" => "Sommaire",
  "todo_list" => "Liste à-faire",
@@ -319,7 +319,7 @@ $lang = array(
  "options" => " options",
  "task_navigation" => "Navigation taches",
  "no_projects" => "Pas de projet à afficher",
- "ccompleted" => "Fini",
+ "completed" => "Fini",
  "project_hold" => "Projet sous controle de ",
  "project_planned" => "Projet Planifié",
  "percent" => "% des taches effectuées",

@@ -32,6 +32,17 @@
 
 */
 
+/*
+General formatting:
+
+"xxxx"     == string in title case (eg: "Project")
+
+"xxxx_lc"  == (lower case) String used in sentence case (eg: "project" as in "Edit project").
+
+"xxxx_sprt == formatted print string (eg: "Files associated with this %s" - where %s is inserted by the code)
+
+*/
+
 //dates
 $month_array = array ( "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" );
 $week_array = array('Sun','Mon','Tue','Wed','Thu','Fri','Sat');
@@ -76,8 +87,10 @@ $lang = array(
  "no" => "No",
  "action" => "Action",
  "task" => "Task",
+ "task_lc" => "task",
  "tasks" => "Tasks",
  "project" => "Project",
+ "project_lc" => "project",
  "info" => "Info",
  "bytes" => " bytes",
  "select_instruct" => "(Use ctrl to select more, or to select none)",

@@ -67,7 +67,6 @@ $lang = array(
  "add" => "Hinzuf&uuml;gen",
  "update" => "Aktualisieren",
  "submit_changes" => "&Auml;nderungen best&auml;tigen",
- //**
  "continue" => "Continue",
  "reset" => "Zur&uuml;cksetzen",
  "manage" => "Verwalten",
@@ -79,12 +78,10 @@ $lang = array(
  "no" => "Nein",
  "action" => "Aktion",
  "task" => "Aufgabe",
- //line below removed from version 1.49+
- "ttask" => "Aufgabe",
+ "task_lc" => "Aufgabe",
  "tasks" => "Aufgaben",
  "project" => "Projekt",
- //line below removed from version 1.49+
- "pproject" => "Projekt",
+ "project_lc" => "Projekt",
  "info" => "Info",
  "bytes" => " bytes",
  "select_instruct" => "(Verwende Strg f&uuml;r Mehrfachauswahl oder um nichts auszuw&auml;hlen)",
@@ -93,10 +90,10 @@ $lang = array(
  "error" => "Fehler",
  "no_login" => "Zugriff verweigert, Benutzername oder Passwort ist falsch",
  "please_login" => "Bitte melden Sie sich an",
- 
+
 //admin config
  "admin_config" => "Administrator Konfiguration",
- "email_settings" => "Email-Header Einstellungen", 
+ "email_settings" => "Email-Header Einstellungen",
  "admin_email" => "Administrator-Email",
  "email_reply" => "Email 'weiter an'",
  "email_from" => "Email 'von'",
@@ -137,7 +134,6 @@ $lang = array(
  //files
  "manage_files" => "Dateiverwaltung",
  "no_files" => "Es gibt keine hochgeladenen Dateien.",
-//**
  "no_file_uploads" => "Die Einstellungen des Servers dieser Website erlauben keine Datei-Uploads",
  "file" => "Datei:",
  "uploader" => "Ersteller/in:",
@@ -222,7 +218,6 @@ $lang = array(
  "login_name" => "Loginname",
  "full_name" => "Vollst&auml;ndiger Name",
  "password" => "Passwort",
-//**
  "blank_for_current_password" => "(Freilassen, um bestehendes Passwort zu bernehmen)",
  "email" => "E-Mail",
  "admin" => "Administrator",
@@ -237,11 +232,8 @@ $lang = array(
  "edit_user" => "Nutzer bearbeiten",
  "no_users" => "Dem System sind keine Nutzer bekannt",
  "users" => "Nutzer",
-//**
  "existing_users" => "Vorhandene Nutzer",
-//**
  "email_users" => "Email an Nutzer",
-//**
  "select_usergroup" => "Folgende Nutzergruppe:",
 //**
  "subject" => "Betreff:",
@@ -295,7 +287,6 @@ $lang = array(
  "none" => "Keine",
  "no_group" => "Keine Gruppe",
  "all_groups" => "Alle Gruppen",
- //**
  //for version 1.49+ uncomment the line below, and comment out the next line
  "all_users" => "Alle Nutzer",
  //"all_users" => "K&ouml;nnen alle Nutzer diese Aufgabe einsehen?",
@@ -315,7 +306,6 @@ $lang = array(
  "overdue_sprt" => "%d Tage &uuml;berf&auml;llig",
  "edit_task" => "Aufgabe bearbeiten",
  "edit_project" => "Projekt bearbeiten",
- //**
  "no_reparent" => "Es gibt kein bergeordnetes Projekt",
  "del_javascript_sprt" => "Hiermit wird %s %s gel&ouml;scht. Sind sie sicher?",
  "add_task" => "Aufgabe hinzuf&uuml;gen",
@@ -328,7 +318,7 @@ $lang = array(
  "options" => " Eigenschaften",
  "task_navigation" => "Aufgaben-Navigation",
  "no_projects" => "Es gibt keine Projekte in dieser Ansicht",
- "ccompleted" => "Fertiggestellt",
+ "completed" => "Fertiggestellt",
  "project_hold" => "Projekt aufgeschoben seit ",
  "project_planned" => "Geplantes Projekt",
  "percent" => "% der Aufgaben sind erledigt",
