@@ -35,21 +35,6 @@ include_once(BASE."config.php" );
 include_once(BASE."lang/lang.php" );
 
 //
-//Get the directory name for use with cookies
-//
-
-function directory() {
-
-  //__FILE__ gives the current file, not the parent file for includes
-  $directory_path = realpath(dirname(__FILE__ ).'/..' );
-  //strip of document root to give relative directory name
-  $DIRECTORY = str_replace(realpath($_SERVER["DOCUMENT_ROOT"]), '', $directory_path );
-
-return $DIRECTORY;
-}
-
-
-//
 // Ensures that all the data is code free so that a malcious user cannot
 // ruin the entire site.
 //
