@@ -50,7 +50,7 @@
   //upload to what directory ?
   $FILE_BASE = "/var/www/html/webcollab/files/filebase";
 
-  //max file size in bytes ( 2 mb default)
+  //max uploaded file size in bytes (2 Mb is the default)
   $FILE_MAXSIZE = 2000000;
 
   /*Note:
@@ -60,6 +60,8 @@
        security.  This is important to prevent users navigating to the file directory with
        their web browsers, and viewing all the files.  (The default location given is NOT outside
        the webserver root, but it makes first-time setup easier).
+    3. The $FILE_BASE is the full path to the operating system root, not the webserver root directory.
+    4. PHP and Apache settings will overide the maximum file size set here.  
 
   */
 //----------------------------------------------------------------------------------------------
@@ -102,9 +104,6 @@
   */
 
 //MINOR CONFIG PARAMETERS
-
-  //allow sessions to persist in browser (up to 1 hour) after moving away from page (values are "N", or "Y")
-  $PERSIST = "Y";
 
   //number of days that new or updated tasks should be highlighted as 'New' or 'Updated'
   $NEW_TIME = 14;
