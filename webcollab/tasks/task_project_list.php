@@ -39,6 +39,7 @@ include_once(BASE."includes/time.php" );
 
 function listTasks($projectid ) {
   global $x, $epoch, $now ,$ADMIN, $GID, $lang, $task_state, $tz_offset;
+  global $task_order;
   global $task_array, $parent_array, $shown_array, $j;
    
   $parent_array = "";
@@ -52,11 +53,11 @@ function listTasks($projectid ) {
                         status, 
                         globalaccess, 
                         usergroupid, 
-                        ".$epoch." deadline )
+                        ".$epoch." deadline ) AS due
                        FROM ".PRE."tasks WHERE projectid=$projectid
                        AND status<>'done'
-                       AND parent<>0
-                       ORDER BY name" );
+                       AND parent<>0 "
+                       .$task_order );
   
   if(db_numrows($q) < 1 )
     return;
@@ -187,6 +188,12 @@ $condensed = 0;
 $project_print = 0;
 $tz_offset = (TZ * 3600) - date("Z");
 
+//get config order for sorting
+$q = db_query("SELECT project_order, task_order FROM ".PRE."config" );
+$row = db_fetch_num($q, 0 );
+$project_order = $row[0];
+$task_order    = $row[1];
+
 // query to get the projects
 $q = db_query("SELECT id,
                       name,
@@ -201,8 +208,8 @@ $q = db_query("SELECT id,
                       completed
                       FROM ".PRE."tasks
                       WHERE parent=0
-                      AND archive='f'
-                      ORDER BY name" );
+                      AND archive='f' "
+                      .$project_order );
 
 //check if there are projects
 if(db_numrows($q) < 1 ) {

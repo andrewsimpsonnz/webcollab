@@ -80,10 +80,57 @@ $content .= "<tr><td colspan=\"2\"><b>".$lang['default_checkbox']."</b><br /><br
 $content .= "<tr><td><label for=\"access\">".$lang['allow_globalaccess']."</label></td><td><input type=\"checkbox\" name=\"access\" id=\"access\" ".$row['globalaccess']." /></td></tr>\n".
             "<tr><td><label for=\"group_edit\">".$lang['allow_group_edit']."</label></td><td><input type=\"checkbox\" name=\"group_edit\" id=\"group_edit\" ".$row['groupaccess']." /></td></tr>\n".
             "<tr><td><label for=\"owner\">".$lang['set_email_owner']."</label></td><td><input type=\"checkbox\" name=\"owner\" id=\"owner\" ".$row['owner']." /></td></tr>\n".
-            "<tr><td><label for=\"usergroup\">".$lang['set_email_group']."</label></td><td><input type=\"checkbox\" name=\"usergroup\" id=\"usergroup\" ".$row['usergroup']." /></td></tr>\n".
-          "</table>\n";
+            "<tr><td><label for=\"usergroup\">".$lang['set_email_group']."</label></td><td><input type=\"checkbox\" name=\"usergroup\" id=\"usergroup\" ".$row['usergroup']." /></td></tr>\n";
 
+//set default selection for project listing
+switch($row['project_order']){
+  case "ORDER BY due, name DESC":
+    $s1 = ""; $s2 = " selected=\"selected\""; $s3 = "";
+    break;
+      
+  case "ORDER BY priority, name":
+    $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\"";
+    break;
+  
+  case "ORDER BY name":
+  default:
+    $s1 = " selected=\"selected\""; $s2 = ""; $s3 = "";
+    break;
+}            
 
+//project listing order                                         
+$content .= "<tr><td>"."Project listing order - translate".":</td><td>\n".
+            "<select name=\"project_order\">\n".
+            "<option value=\"name\"$s1>"."Project name - translate"."</option>\n".
+            "<option value=\"deadline\"$s2>"."Deadline - translate"."</option>\n".
+            "<option value=\"priority\"$s3>"."Priority - translate"."</option>\n".
+            "</select></td></tr>\n";
+          
+//set default selection for task listing
+switch($row['task_order']){
+  case "ORDER BY due, name DESC":
+    $s1 = ""; $s2 = " selected=\"selected\""; $s3 = "";
+    break;
+      
+  case "ORDER BY priority, name":
+    $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\"";
+    break;
+  
+  case "ORDER BY name":
+  default:
+    $s1 = " selected=\"selected\""; $s2 = ""; $s3 = "";
+    break;
+}            
+
+//task listing order                                         
+$content .= "<tr><td>"."Task listing order - translate".":</td><td>\n".
+            "<select name=\"task_order\">\n".
+            "<option value=\"name\"$s1>"."Task name - translate"."</option>\n".
+            "<option value=\"deadline\"$s2>"."Deadline - translate"."</option>\n".
+            "<option value=\"priority\"$s3>"."Priority - translate"."</option>\n".
+            "</select></td></tr>\n".
+            "</table>\n";
+          
 $content .=
           "<p><input type=\"submit\" value=\"".$lang['update']."\" />&nbsp;".
           "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>\n".

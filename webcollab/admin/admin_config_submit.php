@@ -73,6 +73,46 @@ foreach($input_array as $var ) {
     ${$var} = "";
 }
 
+if(isset($_POST['project_order'] ) )
+  $project_order = $_POST['project_order'];
+else
+  $project_order = "";
+
+switch($project_order) {  
+  case "deadline":
+    $project_list = "ORDER BY due, name DESC";
+    break;
+    
+  case "priority":
+    $project_list = "ORDER BY priority, name";
+    break;
+  
+  default:  
+  case "name":
+    $project_list = "ORDER BY name";
+    break;
+}
+    
+if(isset($_POST['task_order'] ) )
+  $task_order = $_POST['task_order'];
+else 
+  $task_order = "";
+  
+switch($task_order) {  
+  case "deadline":
+    $task_list = "ORDER BY due, name DESC";
+    break;
+    
+  case "priority":
+    $task_list = "ORDER BY priority, name";
+    break;
+  
+  default:  
+  case "name":
+    $task_list = "ORDER BY name";
+    break;
+}
+
 //update config database
 db_query("UPDATE ".PRE."config SET email_admin='".$email_admin."',
                             reply_to='".$reply_to."',
@@ -80,7 +120,9 @@ db_query("UPDATE ".PRE."config SET email_admin='".$email_admin."',
                             globalaccess='".$access."',
                             groupaccess='".$group_edit."',
                             owner='".$owner."',
-                            usergroup='".$usergroup."'");
+                            usergroup='".$usergroup."',
+                            project_order='".$project_list."',
+                            task_order='".$task_list."'" );
 
 //if no email end here
 if(USE_EMAIL != "Y" )
