@@ -26,13 +26,13 @@
 
   ** Parts of this code inspired by phpmailer (Chris Ryan) and from contributed notes in PHP Manual under fsockopen.
 
-  Refer to RFC 821, RFC 822 for basic SMTP.
+  Refer to RFC 821 (RFC 2821), RFC 822 for basic SMTP.
+  Refer to RFC 1652 for 8BITMIME
   Refer to RFC 1869 for extended hello (EHLO)
   Refer to RFC 2045 for mime types
   Refer to RFC 2047 for handling 8bit headers
   Refer to RFC 2076 for a useful summary of common headers
   Refer to RFC 2554 for SMTP AUTH
-
 
 */
 
@@ -111,27 +111,30 @@ function email($to, $subject, $message ) {
   if(substr($res, 0, 3 ) != "220" )
     debug("Incorrect handshaking response from SMTP server at $host <br /><br />Response from SMTP server was $res" );
 
-  //do extended HELO (EHLO) and then see if we support 8bit mime (RFC 1869)
-  $bit = false;
+  //do extended hello (EHLO)
+  $str = "";
   fputs($connection, "EHLO ".$_SERVER["SERVER_NAME"]."\r\n" );
-  for($i=0 ; $res = fgets($connection, 256 ) ; $i++ ) {
-    if(substr($res, 0, 3 ) != "250" ) {
-      //server can't do EHLO (it must be ancient!); try sending HELO (hello) to server (RFC 821)
-      // a server this old won't be able to do 8BITMIME either :-(
-      fputs($connection, "HELO ".$_SERVER["SERVER_NAME"]."\r\n" );
-      $res = fgets($connection, 256 );
-      if(substr($res, 0, 3 ) != "250" )
-        debug("Incorrect HELO response from SMTP server at $host <br /><br />Response from SMTP server was $res" );
+  while($res = fgets($connection, 256 ) ) {
+    $str .= $res;
+    //space in 4th character indicates end of data stream (other lines have '-')
+    if(substr($res, 3, 1) == " " )
       break;
-    }
-    //look for 8BITMIME capability in output
-    if( ! strpos($res, "8BITMIME" ) === false ) {
-      $bit = true;
-    }
   }
-  //we want 8bit but server doesn't support it - use quoted-printable
-  if($email_encode == "8bit" && $bit == false )
-    $email_encode = "quoted-printable";
+  //if EHLO not working, try the older HELO...
+  if(substr($str, 0, 3 ) != "250" ){
+    fputs($connection, "HELO ".$_SERVER["SERVER_NAME"]."\r\n" );
+    if(substr($res, 0, 3 ) != "250" )
+      debug("Incorrect HELO response from SMTP server at $host <br /><br />Response from SMTP server was $res" );
+  }
+
+  //see if we have 8bit mime capability
+  $body ="";
+  if($email_encode == "8bit" ) {
+    if(strpos($str, "8BITMIME" ) === false )
+      $email_encode = "printed-quotable";
+    else
+      $body = " BODY=8BITMIME"; //(RFC 1652)
+  }
 
   //do SMTP AUTH if required
   if($SMTP_AUTH == "Y" ) {
@@ -154,7 +157,7 @@ function email($to, $subject, $message ) {
   }
 
   //evelope from
-  fputs($connection, "MAIL FROM: <$EMAIL_FROM>\r\n" );
+  fputs($connection, "MAIL FROM: <$EMAIL_FROM>$body\r\n" );
   $res = fgets($connection, 256 );
   if(substr($res, 0, 3 ) != "250" )
     debug("Incorrect response to MAIL FROM command from SMTP server at $host <br /><br />Response from SMTP server was $res" );
@@ -194,8 +197,9 @@ function email($to, $subject, $message ) {
 
   //now the prepare the 'to' header
 
-  //RFC 821 requires that headers longer than 998 characters are broken up to separate lines
-  //(end long line with \r\n, and begin new line with \t)
+  //headers longer than 998 characters are broken up to separate lines (RFC 821)
+  // this will only affect 'To:' and 'Subject:' as other lines are very short
+  // (end long line with \r\n, and begin new line with \t)
   $line = "To: ".$to;
   $lines_out = "";
   //check if we need to break up into several smaller lines
@@ -211,27 +215,46 @@ function email($to, $subject, $message ) {
     fputs($connection, "$line_out\r\n" );
   }
 
-  switch(strtolower($email_charset ) ) {
-    case "us-ascii":
+  //decode any HTML in subject
+  $subject = trans($subject );
+  //encode subject with 'printed-quotable' if high ASCII characters are present
+  switch(preg_match('/([\177-\377])/', $subject ) ) {
+    case false:
     //no encoding required
-    // provide terminating line ending
-    $subject = $subject."\r\n";
+    // provide terminating line ending and limit line length
+    $subject = substr($subject, 0, 985 )."\r\n";
       break;
 
-    case "iso-8859-1":
-    default:
-      //max 76 characters per encoded line (RFC 2047)
-      $subject = chunk_split($subject, (67 - strlen($email_charset) ), "\n" );
-      $lines_out = explode("\n", $subject );
-      $subject = "";
-      while(list(,$line_out) = @each($lines_out ) ) {
-        //for continuation of previous line, start with a space (RFC 2047)
-        if(strlen($subject ) != 0 )
-          $subject .= " ";
-        //encode each line with 'quoted-printable' (RFC 2045 / RFC 2047)
-        // replace high ascii, control, =, ?, <tab> and <space> characters (RFC 2045)
-        $subject .= "=?".$email_charset."?Q?".preg_replace('/([\000-\010\011\013\014\016-\037\040\075\077\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $line_out)."?=\r\n";
+    case true:
+      //encode line with 'quoted-printable' (RFC 2045 / RFC 2047)
+      // replace high ascii, control, =, ?, <tab> and <space> characters (RFC 2045)
+      $line = preg_replace('/([\000-\010\011\013\014\016-\037\040\075\077\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $subject);
+      $line_out = "";
+      $s = "";
+      //break into lines no longer than 76 characters including encoding data (RFC 2047)
+      $len = 76 - strlen($email_charset ) - 8;
+      while(strlen($line ) > 0 ) {
+        //less than $len characters ==> output line
+        if(strlen($line ) < $len ) {
+          $line_out .= $s."=?".$email_charset."?Q?".$line."?=\r\n";
+          break;
+        }
+        //don't split line around coded character (eg. '=20' == <space>)
+        if($pos = strrpos(substr($line, ($len - 3 ), 3 ), "=" ) ) {
+          //coded characters within split zone - adjust to avoid splitting encoded word
+          $split = ($len - 3 ) + $pos - 1;
+          $line_out .= $s."=?".$email_charset."?Q?".substr($line, 0, $split)."?=\r\n";
+          $line = substr($line, $split );
+        }
+        else{
+          //no coded characters in split zone - safe to split here
+          $line_out .= $s."=?".$email_charset."?Q?".substr($line, 0, $len )."?=\r\n";
+          $line = substr($line, $len );
+        }
+      //start additional lines with <space> (RFC 2047)
+      $s = " ";
       }
+      $subject = $line_out;
       break;
 }
 
@@ -243,10 +266,9 @@ function email($to, $subject, $message ) {
   $uniq_id = md5(mt_rand() );
 
   //assemble remaining message headers (RFC 821 / RFC 2045)
-  //(subject line is truncated to 998 characters)
   $headers = array("From: ".$EMAIL_FROM."\r\n",
                     "Reply-To: ".$EMAIL_REPLY_TO."\r\n",
-                    "Subject: ".substr($subject, 0, 985 ),
+                    "Subject: ".$subject,
                     "Message-Id: <".$uniq_id."@".$_SERVER["SERVER_NAME"].">\r\n",
                     "X-Mailer: PHP/" . phpversion()."\r\n",
                     "X-Priority: 3\r\n",
@@ -268,14 +290,7 @@ function email($to, $subject, $message ) {
   $message = $message."\n";
 
   //encode message body
-  switch($email_encode ){
-    case "base64":
-    case "binary":
-      $message = base64_encode($message );
-      //break into chunks of 76 characters per line (RFC 2045)
-      $message = chunk_split($message, 76, "\n" );
-      break;
-
+  switch(strtolower($email_encode ) ){
     case "7bit":
     case "8bit":
       //break up any lines longer than 998 bytes (RFC 821)
@@ -283,6 +298,7 @@ function email($to, $subject, $message ) {
       break;
 
     case "quoted-printable":
+    default:
       //replace high ascii, control and = characters (RFC 2045)
       $message = preg_replace('/([\000-\010\013\014\016-\037\075\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $message);
       //replace spaces and tabs when it's the last character on a line (RFC 2045)
@@ -292,14 +308,10 @@ function email($to, $subject, $message ) {
       $message = wordwrap($message, 74, " =\n", 1 );
       break;
 
-    default:
-      debug("Illegal email encoding requested:<br /><br />$email_decode is not valid.  Check the language file");
-      break;
   }
 
-
-  //lines consisting of single "." get padded by appending a <space> (RFC 821)
-  $message = str_replace("\n.\n", "\n. \n", $message );
+  //lines starting with "." get an additional "." added. (RFC 2821)
+  $message = str_replace("\n.", "\n..", $message );
   //explode into separate lines
   $lines_out = explode("\n", $message );
 
