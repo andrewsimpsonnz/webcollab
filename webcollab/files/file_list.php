@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -71,7 +71,7 @@ if(db_numrows($q ) != 0 ) {
 
     //owners of the file and admins have a "delete" option
     if( ($admin == 1) || ($uid == $taskid_row["owner"] ) || ($uid == $row["uploader"] ) ) {
-      $content .= "&nbsp;<font class=\"textlink\">[<a href=\"files.php?x=$x&amp;action=submit_del&amp;fileid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm('".sprintf( $lang["del_file_javascript_sprt"], $row["filename"] )."' )\">".$lang["del"]."</a>]</font></td></tr>\n";
+      $content .= "&nbsp;<font class=\"textlink\">[<a href=\"files.php?x=$x&amp;action=submit_del&amp;fileid=".$row["id"]."&amp;taskid=$taskid\" onclick=\"return confirm('".sprintf( $lang["del_file_javascript_sprt"], $row["filename"] )."' )\">".$lang["del"]."</a>]</font></td></tr>\n";
     } else
       $content .= "</td></tr>\n";
 

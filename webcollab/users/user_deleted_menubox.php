@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -53,7 +53,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
   //if this user has NO tasks owned then we can delete him forever :)
   if( ! db_result(db_query("SELECT COUNT(*) FROM tasks WHERE owner=".$row["id"] ), 0, 0 ) ) {
-    $content .= "&nbsp;[<a href=\"users.php?x=$x&amp;action=permdel&amp;userid=".$row["id"]."\" onClick=\"return confirm( '".sprintf($lang["permdel_javascript_sprt"], $row["fullname"] )."' )\">".$lang["permdel"]." </a>]";
+    $content .= "&nbsp;[<a href=\"users.php?x=$x&amp;action=permdel&amp;userid=".$row["id"]."\" onclick=\"return confirm( '".sprintf($lang["permdel_javascript_sprt"], $row["fullname"] )."' )\">".$lang["permdel"]." </a>]";
   }
   $content.="</font></td></tr>\n";
 }

@@ -44,7 +44,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
   if(($admin == 1 ) || ($taskid_row["owner"] == $uid ) ) {
     $content .= "<small><b>".$lang["admin"].":</b></small><br />\n".
                 "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_$type"]."</a><br />\n".
-                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onClick=\"return confirm( '".sprintf($lang["del_javascript_".$type."_sprt"], $taskid_row["name"] )."')\">".$lang["delete_$type"]."</a><br />\n".
+                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang["del_javascript_".$type."_sprt"], $taskid_row["name"] )."')\">".$lang["delete_$type"]."</a><br />\n".
                 "<br /><small><b>".$lang["global"].":</b></small><br />\n";
   }
   $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=$taskid\">".$lang["add_task"]."</a><br />\n";

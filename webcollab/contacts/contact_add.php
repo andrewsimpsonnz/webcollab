@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz> 
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -36,10 +36,10 @@ $content = "";
 $q = "";
 
 $content .=
-        "<form name=\"inputform\" method=\"POST\" action=\"contacts.php\">\n".
+        "<form name=\"inputform\" method=\"post\" action=\"contacts.php\">\n".
           "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
           "<input type=\"hidden\" name=\"action\" value=\"submit_add\" />\n".
-          "<p><table border=\"0\">\n".
+          "<table class=\"celldata\">\n".
             "<tr><td><i>".$lang["firstname"]."</i></td><td><input type=\"text\" name=\"firstname\" size=\"30\" /></td></tr>\n".
             "<tr><td><i>".$lang["lastname"]."</i></td><td><input type=\"text\" name=\"lastname\" size=\"30\" /></td></tr>\n".
             "<tr><td><i>".$lang["company"]."</i></td><td><input type=\"text\" name=\"company\" size=\"30\" /></td></tr>\n".
@@ -51,7 +51,7 @@ $content .=
             "<tr><td><i>".$lang["postal"]."</i></td><td><input type=\"text\" name=\"postal\" size=\"30\" /></td></tr>\n".
             "<tr><td><i>".$lang["city"]."</i></td><td><input type=\"text\" name=\"city\" size=\"30\" /></td></tr>\n".
             "<tr><td><i>".$lang["email"]."</i></td><td><input type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".
-          "</table></p>\n".
+          "</table>\n".
           "<p><i>".$lang["notes"]."</i><br /><textarea name=\"notes\" rows=\"6\" cols=\"50\"></textarea></p>\n".
           "<p><input type=\"submit\" value=\"".$lang["add_contact"]."\" /></p>\n".
           "</form>\n";

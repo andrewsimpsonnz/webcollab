@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -129,7 +129,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   for($i=1 ; $i<32 ; $i++ ) {
     $content .= "<option value=\"$i\"";
 
-    if($day == $i ) $content .= " SELECTED";
+    if($day == $i ) $content .= " selected";
 
     $content .= ">$i</option>\n";
   }
@@ -138,9 +138,9 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   //month (must be in decimal, 'cause that's what postgres uses!)
   $content .= "<select name=\"month\">\n";
   for( $i=1; $i<13 ; $i++) {
-    $content .= "<OPTION value=\"$i\"";
+    $content .= "<option value=\"$i\"";
 
-    if($month == $i ) $content .= " SELECTED";
+    if($month == $i ) $content .= " selected";
 
     $content .= ">".$month_array[($i)]."</option>\n";
   }
@@ -151,7 +151,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   for($i=2001; $i<2011 ; $i++ ) {
     $content .= "<option value=\"$i\"";
 
-    if($year == $i ) $content .= " SELECTED";
+    if($year == $i ) $content .= " selected";
 
     $content .= ">".$i."</option>\n";
   }

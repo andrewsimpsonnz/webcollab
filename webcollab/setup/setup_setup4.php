@@ -68,7 +68,7 @@ create_top_setup("Setup Screen" );
 
 $content .= "<table border=\"0\">\n".
             "<tr><td>\n".
-            "<form method=\"POST\" action=\"setup_handler.php\">";
+            "<form method=\"post\" action=\"setup_handler.php\">";
             
 
 //output essential values for POST
@@ -285,7 +285,7 @@ $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
 
 //form for 'try again' button
 $content .= "<tr><td></td><td>\n".
-            "<form method=\"POST\" action=\"setup_handler.php\">\n".            
+            "<form method=\"post\" action=\"setup_handler.php\">\n".            
             "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />";

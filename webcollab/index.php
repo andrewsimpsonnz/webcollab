@@ -140,21 +140,9 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["us
 
 //allow for continuation of session if a valid cookie is already set
 if(isset($_COOKIE["webcollab_session"] ) && strlen($_COOKIE["webcollab_session"] ) == 32 ) {
-
-  include_once "includes/common.php";
-  include_once "database/database.php";
-
-  if( ! isset($SESSION_TIMEOUT ) )
-    $SESSION_TIMEOUT = 1;
-
-  //check if session is valid and within time limits
-  if(db_result(@db_query("SELECT COUNT(*) FROM logins
-                                 WHERE session_key='".safe_data($_COOKIE["webcollab_session"])."'
-                                 AND lastaccess > (now()-INTERVAL ".$delim.round($SESSION_TIMEOUT)." HOUR".$delim.")" ) ) == 1 ) {
-    //relocate to main screen, and let security.php do further checking on session validity
-    header("Location: ".$BASE_URL."main.php?x=0");
-    die;
-  }
+  //relocate to main screen, and let security.php do further checking on session validity
+  header("Location: ".$BASE_URL."main.php?x=0");
+  die;
 }
 
 create_top($lang["login"], 1, "username" );
@@ -169,11 +157,11 @@ else {
 }
 
 $content .= "<p>".$lang["please_login"].":</p>\n".
-           "<form name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
-           "<p><table border=\"0\">\n".
+           "<form name=\"inputform\" method=\"post\" action=\"index.php\">\n".
+           "<table class=\"celldata\" >\n".
            "<tr align=\"left\" ><td>".$lang["login"].": </td><td><input type=\"text\" name=\"username\" value=\"\" size=\"30\" /></td></tr>\n".
            "<tr align=\"left\" ><td>".$lang["password"].": </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
-           "</table></p>".
+           "</table>".
            "<p><input type=\"submit\" value=\"".$lang["login"]."\"></p>\n".
 
            "<div align=\"center\">";

@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -46,11 +46,11 @@ $q = db_query("SELECT * FROM usergroups WHERE id=$usergroupid" );
 $row = db_fetch_array( $q, 0 );
 
 $content =
-           "<form method=\"POST\" action=\"usergroups.php\">\n".
+           "<form method=\"post\" action=\"usergroups.php\">\n".
              "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
              "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
              "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\" />\n".
-             "<p><table border=\"0\">\n".
+             "<table class=\"celldata\">\n".
                "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"input\" name=\"name\" value=\"".$row["name"]."\" size=\"30\" /></td></tr>\n".
                "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" value=\"".$row["description"]."\" size=\"30\" /></td></tr>\n".
                "<tr><td>&nbsp;</td></tr>\n".
@@ -72,12 +72,12 @@ for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++ ) {
   @db_data_seek($member_q ); //reset mysql internal pointer each cycle
   for($j=0 ; $member_row = @db_fetch_array($member_q, $j ) ; $j++ )
     if ($member_row["id"] == $user_row["id"] )
-      $content .= " SELECTED";
+      $content .= " selected";
   $content .= ">".$user_row["fullname"]."</option>\n";
 }
 
 $content .=    "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
-             "</table></p>\n".
+             "</table>\n".
              "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;".
              "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
            "</form>\n";

@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz> 
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -40,11 +40,11 @@ if( ! ($row = db_fetch_array( db_query( "SELECT * FROM contacts WHERE id=".$cont
   error("Database value error", "There is no information for the contact that you specified");
 
 $content =
-    "<form method=\"POST\" action=\"contacts.php\">\n".
+    "<form method=\"post\" action=\"contacts.php\">\n".
       "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" />\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-      "<p><table border=\"0\">\n".
+      "<table class=\"celldata\">\n".
         "<tr><td><i>".$lang["firstname"]."</i></td><td><input type=\"text\" name=\"firstname\" value=\"".$row["firstname"]."\"size=\"30\" /></td></tr>\n".
         "<tr><td><i>".$lang["lastname"]."</i></td><td><input type=\"text\" name=\"lastname\" value=\"".$row["lastname"]."\" size=\"30\" /></td></tr>\n".
         "<tr><td><i>".$lang["company"]."</i></td><td><input type=\"text\" name=\"company\" value=\"".$row["company"]."\" size=\"30\" /></td></tr>\n".
@@ -56,7 +56,7 @@ $content =
         "<tr><td><i>".$lang["postal"]."</i></td><td><input type=\"text\" name=\"postal\" value=\"".$row["postal"]."\" size=\"30\" /></td></tr>\n".
         "<tr><td><i>".$lang["city"]."</i></td><td><input type=\"text\" name=\"city\" value=\"".$row["city"]."\" size=\"30\" /></td></tr>\n".
         "<tr><td><i>".$lang["email"]."</i></td><td><input type=\"text\" name=\"email\" value=\"".$row["email"]."\" size=\"30\" /></td></tr>\n".
-    "</table></p>\n".
+    "</table>\n".
     "<p><i>".$lang["notes"]."</i><br /><textarea  name=\"notes\" rows=\"6\" cols=\"50\">".$row["notes"]."</textarea></p>\n";
 
 //edit options
@@ -67,11 +67,11 @@ $content .=
 
 //delete options
 $content .=
-      "<form method=\"POST\" action=\"contacts.php\">\n".
+      "<form method=\"post\" action=\"contacts.php\">\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
       "<input type=\"hidden\" name=\"action\" value=\"submit_delete\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" />\n".
-      "<p><input type=\"submit\" value=\"".$lang["del_contact"]."\" onClick=\"return confirm('".$lang["confirm_del_javascript"]."')\" />\n".
+      "<p><input type=\"submit\" value=\"".$lang["del_contact"]."\" onclick=\"return confirm('".$lang["confirm_del_javascript"]."')\" />\n".
       "</p></form>";
 
 new_box( $lang["contact_info"], $content );

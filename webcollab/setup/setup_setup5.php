@@ -163,7 +163,7 @@ $content = "<div align=\"center\">\n".
 if($data["new_db"] == "Y" )
   $content .= "<p>You have a new database. Your default login and password are 'admin' and 'admin123'</p>\n";
 
-$content .=  "<p><form name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
+$content .=  "<p><form name=\"inputform\" method=\"post\" action=\"index.php\">\n".
              "<input type=\"submit\" value=\"Finish\" />\n".
              "</form></p>\n".
              "</div>\n";

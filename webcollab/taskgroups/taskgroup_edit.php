@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
   
   WebCollab
   ---------------------------------------
@@ -45,14 +45,14 @@ $q = db_query("SELECT * FROM taskgroups WHERE id=$taskgroupid" );
 $row = db_fetch_array( $q, 0 );
 
 $content =
-            "<form method=\"POST\" action=\"taskgroups.php\">\n".
+            "<form method=\"post\" action=\"taskgroups.php\">\n".
               "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
               "<input type=\"hidden\" name=\"taskgroupid\" value=\"$taskgroupid\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
-              "<p><table border=\"0\">\n".
+              "<table class=\"celldata\">\n".
                 "<tr><td>".$lang["taskgroup_name"]."</td> <td><input type=\"input\" name=\"name\" value=\"".$row["name"]." \"size=\"30\" /></td></tr>\n".
                 "<tr><td>".$lang["taskgroup_description"]."</td><td><input type=\"input\" name=\"description\" value=\"".$row["description"]." \"size=\"30\" /></td></tr>\n".
-              "</table></p>\n".
+              "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;\n".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
             "</form>\n";

@@ -97,7 +97,7 @@ create_top_setup("Setup Screen" );
 
 $content  = "";
 
-$content .= "<form method=\"POST\" action=\"setup_handler.php\">".
+$content .= "<form method=\"post\" action=\"setup_handler.php\">".
             "<input type=\"hidden\" name=\"action\" value=\"setup4\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"$new_db\" />\n".
@@ -135,16 +135,16 @@ $content .= "<tr><td></td><td><br /><b><u>Database Settings</u></b></td></tr>\n"
 switch($db_type){
 
   case "postgresql":
-    $s1 = ""; $s2 = " SELECTED"; $s3 = "";
+    $s1 = ""; $s2 = " selected"; $s3 = "";
     break;
 
   case "mysql_innodb":
-    $s1 = ""; $s2 = ""; $s3 = " SELECTED";
+    $s1 = ""; $s2 = ""; $s3 = " selected";
     break;
 
   case "mysql":
   default:
-    $s1 = " SELECTED"; $s2 = ""; $s3 = "";
+    $s1 = " selected"; $s2 = ""; $s3 = "";
     break;
 }
 
@@ -178,31 +178,31 @@ if( ! isset($LOCALE) )
 
 switch($LOCALE) {
   case "bg":
-    $s1 = "SELECTED"; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "";
+    $s1 = "selected"; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "";
     break;
 
   case "ca":
-    $s1 = ""; $s2 = "SELECTED"; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "";
+    $s1 = ""; $s2 = "selected"; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "";
     break;
 
   case "en":
-    $s1 = ""; $s2 = ""; $s3 = "SELECTED"; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "";
+    $s1 = ""; $s2 = ""; $s3 = "selected"; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "";
     break;
 
   case "fr":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = "SELECTED"; $s5 = ""; $s6 = ""; $s7 = "";
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = "selected"; $s5 = ""; $s6 = ""; $s7 = "";
     break;
 
   case "de":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = "SELECTED"; $s6 = ""; $s7 = "";
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = "selected"; $s6 = ""; $s7 = "";
     break;
 
   case "it":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = "SELECTED"; $s7 = "";
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = "selected"; $s7 = "";
     break;
   
   case "es":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "SELECTED";
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "selected";
     break;
 
 
@@ -220,7 +220,7 @@ $content .= "<tr><td></td><td><br /></td></tr>\n".
             "</select></td></tr>\n";
 
 //email settings
-$setting = "CHECKED";
+$setting = "checked";
 if(isset($USE_EMAIL) && $USE_EMAIL == "N" )
   $setting = "";
 

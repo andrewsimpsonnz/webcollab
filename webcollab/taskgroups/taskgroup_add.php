@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,13 +35,13 @@ if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 $content =
-            "<form name=\"inputform\" method=\"POST\" action=\"taskgroups.php\">\n".
+            "<form name=\"inputform\" method=\"post\" action=\"taskgroups.php\">\n".
               "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n".
-              "<p><table border=\"0\">\n".
+              "<table class=\"celldata\">\n".
                 "<tr><td>".$lang["taskgroup_name"]."</td><td><input type=\"input\" name=\"name\" size=\"30\" /></td></tr>\n".
                 "<tr><td>".$lang["taskgroup_description"]."</td><td><input type=\"input\"name=\"description\"size=\"30\" /></td></tr>\n".
-              "</table></p>\n".
+              "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang["add_taskgroup"]."\" onclick=\"return fieldCheck()\" />&nbsp;\n".
               "<input type=\"reset\"  value=\"".$lang["reset"]."\" /></p>\n".
             "</form>\n";

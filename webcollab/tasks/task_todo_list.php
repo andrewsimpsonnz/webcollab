@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -124,28 +124,28 @@ if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent=0" ), 0, 0 ) < 1 
 //set selection & associated defaults for the text boxes
 switch($selection ) {
   case "group":
-    $userid = 0; $s1 = ""; $s2 = " SELECTED"; $s3 = " CHECKED"; $s4 = "";
+    $userid = 0; $s1 = ""; $s2 = " selected"; $s3 = " checked"; $s4 = "";
     $tail = "AND usergroupid=$groupid";
     if($groupid == 0 )
-      $s4 = " SELECTED";
+      $s4 = " selected";
     break;
 
   case "user":
   default:
-    $groupid = 0; $s1 = " CHECKED"; $s2 = ""; $s3 = ""; $s4 = " SELECTED";
+    $groupid = 0; $s1 = " checked"; $s2 = ""; $s3 = ""; $s4 = " selected";
     $tail = "AND owner=$userid";
     if($userid == 0 )
-      $s2 = " SELECTED";
+      $s2 = " selected";
     break;
 }
 
-$content .= "<form method=\"POST\" action=\"tasks.php\">\n".
+$content .= "<form method=\"post\" action=\"tasks.php\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\">\n ".
-            "<p><table border=\"0\">\n".
+            "<table class=\"celldata\">\n".
             "<tr><td>".$lang["todo_list_for"]."</td></tr>".
             "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"user\"$s1><label for=\"user\">".$lang["users"]."</label></td><td>\n".
-            "<label for=\"user\" /><select name=\"userid\">\n".
+            "<label for=\"user\"><select name=\"userid\">\n".
             "<option value=\"0\"$s2>".$lang["nobody"]."</option>\n";
 
 //get all users for option box
@@ -163,14 +163,14 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //highlight current selection
   if( $row[ "id" ] == $userid )
-    $content .= " SELECTED";
+    $content .= " selected";
 
   $content .= ">".$row["fullname"]."</option>\n";
 }
 
 $content .= "</select></label></td></tr>\n".
             "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3><label for=\"group\">".$lang["usergroups"]."</label></td><td>\n".
-            "<label for=\"group\" /><select name=\"groupid\">\n".
+            "<label for=\"group\"><select name=\"groupid\">\n".
             "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
 
 //get all groups for option box
@@ -188,14 +188,14 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //highlight current selection
   if( $row[ "id" ] == $groupid )
-    $content .= " SELECTED";
+    $content .= " selected";
 
   $content .= ">".$row["name"]."</option>\n";
 }
 
 $content .= "</select></label><br /><br /></td></tr>\n".
             "<tr><td><input type=\"submit\" value=\"".$lang["update"]."\"></td></tr>\n".
-            "</table></p>\n".
+            "</table>\n".
             "</form>\n";
 
 //query to get the all the projects

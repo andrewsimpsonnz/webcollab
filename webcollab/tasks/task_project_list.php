@@ -134,7 +134,7 @@ if(isset($_GET["action"]) && $_GET["action"] == "project_print" )
   $content  .= "\n[<a href=\"main.php?x=".$x."&amp;active=".$active_only."\">".$lang["normal_version"]."</a>]";
 else
   $content  .= "</font></td>\n<td align=\"right\"><font class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;active=".$active_only."&amp;action=project_print\">".$lang["print_version"]."</a>]";
-$content .= "<font></td></tr>\n</table>\n";
+$content .= "</font></td></tr>\n</table>\n";
 
 //setup main table
 $content .= "<table border=\"0\" cellpadding=\"20\">\n";

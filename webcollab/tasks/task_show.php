@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>  
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>  
   
   WebCollab
   ---------------------------------------
@@ -35,6 +35,7 @@ include_once(BASE."tasks/task_common.php" );
 include_once(BASE."includes/details.php" );
 include_once(BASE."includes/time.php" );
 
+
 //is there an id ?
 if( ! isset( $_GET["taskid"]) || ! is_numeric($_GET["taskid"]) || $_GET["taskid"] == 0 )
   error("Task show", "Not a valid value for taskid" );
@@ -64,12 +65,10 @@ if( ! ($row = db_fetch_array($q, 0 ) ) )
 db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, $taskid, now() ) " );
 
 //text link for 'printer friendly' page
-$content = "<font class=\"textlink\">";
 if(isset($_GET["action"]) && $_GET["action"] == "show_print" )
-  $content  .= "<p>[<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$lang["normal_version"]."</a>]</p>";
+  $content  = "<p><font class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$lang["normal_version"]."</a>]</font></p>";
 else
-  $content  .= "<div align=\"right\">[<a href=\"tasks.php?x=$x&amp;action=show_print&amp;taskid=$taskid\">".$lang["print_version"]."</a>]</div>";
-$content .= "</font>\n";
+  $content  = "<div align=\"right\"><font class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;action=show_print&amp;taskid=$taskid\">".$lang["print_version"]."</a>]</font></div>\n";
 
 //percentage_completed gauge if this is a project
 if( $taskid_row["parent"] == 0 ) {
@@ -91,7 +90,7 @@ $content .= nl2br($taskid_row["text"] );
 $content .= "</td></tr></table>\n";
 
 //start of info table
-$content .= "<p><table border=\"0\">\n";
+$content .= "<table class=\"celldata\">\n";
 
 //get owner information
 if( $taskid_row["owner"] == 0 ) {
@@ -205,7 +204,7 @@ if($taskid_row["parent"] != 0 ) {
 
   switch($taskid_row["taskgroupid"] ){
     case "0":
-      $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td><td>".$lang["none"]."<br />\n";
+      $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td><td>".$lang["none"]."</td></tr>\n";
       break;
 
     default:
@@ -250,7 +249,7 @@ else {
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td><td>".$lang[$type."_not_in_usergroup"]."</td></tr>\n";
 }
 
-$content .= "</table></p>\n";
+$content .= "</table>\n";
 
 //this part shows all the options the users has
 $content .= "<p><div align=\"center\"><font class=\"textlink\">\n";

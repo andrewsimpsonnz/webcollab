@@ -45,7 +45,7 @@ if( ! is_writable("config/config.php" ) ) {
 }
 
 //input form
-$content .=    "<form method=\"POST\" action=\"setup_handler.php\">\n".
+$content .=    "<form method=\"post\" action=\"setup_handler.php\">\n".
                 "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
                 "<input type=\"hidden\" name=\"action\" value=\"setup2\" />\n".
                 "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n";
@@ -59,7 +59,7 @@ else{
 
 $content .=   "<div align=\"center\"><input type=\"submit\" value=\"Yes\" /></div>\n".
                "</form>\n".
-               "<form method=\"POST\" action=\"setup_handler.php\">\n".
+               "<form method=\"post\" action=\"setup_handler.php\">\n".
                "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
                "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
                "<input type=\"hidden\" name=\"new_db\" value=\"N\" />\n".

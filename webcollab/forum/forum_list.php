@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -91,7 +91,7 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 
     //owners of the thread, owners of the post and admins have a "delete" option
     if( ($admin==1) || ($uid == $taskid_row["owner"] ) || ($uid == $row["postowner"] ) ) {
-      $this_content .= " <font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=submit_del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm( '".$lang["confirm_del_javascript"]."' )\">".$lang["del"]."</a>]</font>";
+      $this_content .= " <font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=submit_del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onclick=\"return confirm( '".$lang["confirm_del_javascript"]."' )\">".$lang["del"]."</a>]</font>";
     }
 
     $this_content .= "<br />\n".$row["text"]."\n";

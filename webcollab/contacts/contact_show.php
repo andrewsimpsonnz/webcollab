@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz> 
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -61,7 +61,7 @@ $content .=
        "<tr><td><i>".$lang["email"]."</i></td><td><a href=\"mailto:".$row["email"]."\">".$row["email"]."</a></td></tr>\n".
     "</table><br />\n".
     "<p><i>".$lang["notes"]."</i><br />".nl2br($row["notes"] )."</p>\n".
-    "<form method=\"POST\" action=\"contacts.php\" />\n".
+    "<form method=\"post\" action=\"contacts.php\" />\n".
       "<input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"".$row["id"]."\" />\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".

@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2003 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
   
   WebCollab
   ---------------------------------------
@@ -188,11 +188,11 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
 create_top_setup("Login" );
 
 $content = "<p>Admin login is required for database update:</p>\n".
-           "<form name=\"inputform\" method=\"POST\" action=\"update.php\">\n".
-             "<p><table border=\"0\">\n".
+           "<form name=\"inputform\" method=\"post\" action=\"update.php\">\n".
+             "<table class=\"celldata\">\n".
                "<tr><td>Login: </td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
                "<tr><td>Password: </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
-             "</table></p>\n".
+             "</table>\n".
              "<div align=\"center\">\n".
              "<p><input type=\"submit\" value=\"Login\" /></p>\n".
              "</div></form>\n";

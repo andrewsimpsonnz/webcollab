@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -36,10 +36,10 @@ if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 $content =
-            "<form name=\"inputform\" method=\"POST\" action=\"usergroups.php\">\n".
+            "<form name=\"inputform\" method=\"post\" action=\"usergroups.php\">\n".
               "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
               "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />".
-              "<p><table border=\"0\">\n".
+              "<table class=\"celldata\">\n".
                 "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"input\" name=\"name\" size=\"30\" /></td></tr>\n".
                 "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" size=\"30\" /></td></tr>\n".
                 "<tr><td>&nbsp;</td></tr>\n".
@@ -55,7 +55,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 }
 
 $content .=     "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
-              "</table></p>\n".
+              "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang["add_usergroup"]."\" onclick=\"return fieldCheck()\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
             "</form>\n";

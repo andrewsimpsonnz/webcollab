@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
   
   WebCollab
   ---------------------------------------
@@ -56,7 +56,7 @@ require_once(BASE."includes/usergroup_security.php" );
 //find out the tasks' name
 $taskname = db_result(db_query("SELECT name FROM tasks WHERE id=$taskid" ), 0, 0 );
 
-$content .= "<form name=\"inputform\" method=\"POST\" action=\"forum.php\">\n";
+$content .= "<form name=\"inputform\" method=\"post\" action=\"forum.php\">\n";
 //set some hidden values
 $content .=  "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
              "<input type=\"hidden\" name=\"action\" value=\"submit_add\" />\n".
@@ -95,10 +95,10 @@ else {
 //build up the text-entry part
 $content .=   "<tr><td>".$lang["message"]."</td><td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
               "</table><br />\n".
-              "<p><table border=\"0\">\n".
+              "<table class=\"celldata\">\n".
               "<tr><td><label for=\"owner\">".$lang["forum_email_owner"]."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" $DEFAULT_OWNER /></td></tr>\n".
               "<tr><td><label for=\"usergroup\">".$lang["forum_email_usergroup"]."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" $DEFAULT_GROUP /></td></tr>\n".
-              "</table></p>\n".
+              "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang["post"]."\" onclick=\"return fieldCheck()\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
               "</form>\n";

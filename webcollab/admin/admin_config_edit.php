@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz> 
+  (c) 2003 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
   
   WebCollab
   ---------------------------------------
@@ -42,10 +42,10 @@ if( $admin != 1 ) {
 
 //start form data
 $content .=
-        "<form method=\"POST\" action=\"admin.php\">\n".
+        "<form method=\"post\" action=\"admin.php\">\n".
           "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
           "<input type=\"hidden\" name=\"action\" value=\"submit\">\n".
-                    "<p><table border=\"0\">\n";
+                    "<table class=\"celldata\" >\n";
 
 //get config data
 $q = db_query("SELECT * FROM config" );
@@ -71,8 +71,8 @@ if($USE_EMAIL == "Y" ){
   }
 
   $content .= "<tr><td><a href=\"help/help_language.php?item=list&amp;type=admin\" target=\"helpwindow\">".$lang["mailing_list"]."</a>: </td><td><textarea name=\"email\" rows=\"5\" cols=\"30\">".$maillist."</textarea></td></tr>\n".
-               "</table></p>\n".
-               "<p><table border=\"0\">\n";
+               "</table>\n".
+               "<table class=\"celldata\" >\n";
 }
 
 $content .= "<tr><td nowrap colspan=\"2\"><b>".$lang["default_checkbox"]."</b></td></tr>\n".
@@ -84,7 +84,7 @@ $content .= "<tr><td><label for=\"access\">".$lang["allow_globalaccess"]."</labe
             "<tr><td><label for=\"owner\">".$lang["set_email_owner"]."</label></td><td><input type=\"checkbox\" name=\"owner\" id=\"owner\" ".$row["owner"]."></td></tr>\n".
             "<tr><td><label for=\"usergroup\">".$lang["set_email_group"]."</label></td><td><input type=\"checkbox\" name=\"usergroup\" id=\"usergroup\" ".$row["usergroup"]."></td></tr>\n".
             "<tr><td>&nbsp;</td></tr>\n".
-          "</table></p>\n";
+          "</table>\n";
 
 
 $content .=

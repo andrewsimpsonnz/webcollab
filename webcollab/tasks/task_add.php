@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -56,7 +56,7 @@ $priority_select_box = "<tr><td>".$lang["priority"].":</td> <td>\n".
                        "<select name=\"priority\">\n".
                        "<option value=\"0\">".$task_state["dontdo"]."</option>\n".
                        "<option value=\"1\">".$task_state["low"]."</option>\n".
-                       "<option value=\"2\" SELECTED>".$task_state["normal"]."</option>\n".
+                       "<option value=\"2\" selected>".$task_state["normal"]."</option>\n".
                        "<option value=\"3\">".$task_state["high"]."</option>\n".
                        "<option value=\"4\">".$task_state["yesterday"]."</option>\n".
                        "</select>\n</td></tr>\n";
@@ -65,7 +65,7 @@ $priority_select_box = "<tr><td>".$lang["priority"].":</td> <td>\n".
 if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) )
   $javascript = "onsubmit=\"return dateCheck()\" ";
 
-$content .= "<form name=\"inputform\" method=\"POST\" action=\"tasks.php\" $javascript>\n";
+$content .= "<form name=\"inputform\" method=\"post\" action=\"tasks.php\" $javascript>\n";
 $content .= "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ";
 $content .= "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n ";
 
@@ -87,7 +87,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
                 
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" />\n".
               "<input type=\"hidden\" name=\"projectid\" value=\"".$task_row["projectid"]."\" />\n".
-              "<p><table border=\"0\">\n";
+              "<table class=\"celldata\">\n";
   
   //show project name
   if( $task_row["projectid"] == $parentid)
@@ -111,7 +111,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   //status
   $content .= "<tr><td>".$lang["status"].":</td> <td>\n".
               "<select name=\"status\">\n".
-              "<option value=\"created\" SELECTED >".$task_state["new"]."</option>\n".
+              "<option value=\"created\" selected >".$task_state["new"]."</option>\n".
               "<option value=\"notactive\" >".$task_state["planned"]."</option>\n".
               "<option value=\"active\" >".$task_state["active"]."</option>\n".
               "<option value=\"cantcomplete\" >".$task_state["cantcomplete"]."</option>\n".
@@ -136,7 +136,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
 
     //default owner is present user
     if( $user_row[ "id" ] == $uid )
-      $content .= " SELECTED";
+      $content .= " selected";
 
     $content .= ">".$user_row["fullname"]."</option>\n";
   }
@@ -179,7 +179,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
               "<tr><td><label for=\"mailowner\">".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER." /></label></td></tr>\n".
               "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></label></td></tr>\n".
 
-              "</table></p>\n".
+              "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang["add_task"]."\" onclick=\"return fieldCheck()\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
               "</form>\n";
@@ -195,7 +195,7 @@ else {
               "<input type=\"hidden\" name=\"projectid\" value=\"0\" />\n".
               //taskgroup - we don't have this for projects
               "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" />\n".
-              "<p><table border=\"0\">\n".
+              "<table class=\"celldata\">\n".
               "<tr><td>".$lang["creation_time"].":</td><td>".date("F j, Y, H:i")."</td></tr>\n".
               "<tr><td>".$lang["project_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
 
@@ -210,7 +210,7 @@ else {
               "<select name=\"status\">\n".
               "<option value=\"notactive\" >".$task_state["planned_project"]."</option>\n".
               "<option value=\"nolimit\" >".$task_state["no_deadline_project"]."</option>\n".
-              "<option value=\"active\" SELECTED >".$task_state["active_project"]."</option>\n".
+              "<option value=\"active\" selected >".$task_state["active_project"]."</option>\n".
               "<option value=\"cantcomplete\" >".$task_state["cantcomplete"]."</option>\n".
               "</select></td></tr>";
 
@@ -230,7 +230,7 @@ else {
 
       //owner is user
       if( $user_row["id"] == $uid ) {
-        $content .= " SELECTED";
+        $content .= " selected";
       }
     $content .= ">".$user_row["fullname"]."</option>\n";
   }
@@ -260,7 +260,7 @@ else {
               "<tr><td><label for=\"mailowner\">".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER." /></label></td></tr>\n".
               "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></label></td></tr>\n".
 
-              "</table></p>\n".
+              "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang["add_project"]."\"  onclick=\"return fieldCheck()\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
               "</form>\n";

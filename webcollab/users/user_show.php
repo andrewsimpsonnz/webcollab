@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz>  
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz>  
   
   WebCollab
   ---------------------------------------
@@ -66,7 +66,7 @@ if($row["deleted"] == 't' )
 $content .= "<table border=\"0\">".
               "<tr><td>".$lang["login"].":</td><td>".$row["name"]."</td></tr>\n".
               "<tr><td>".$lang["full_name"].":</td><td>".$row["fullname"]."</td></tr>\n".
-              "<tr><td>".$lang["email"].":</td><td><A href=\"mailto:".$row["email"]."\">".$row["email"]."</A></td></tr>\n";
+              "<tr><td>".$lang["email"].":</td><td><a href=\"mailto:".$row["email"]."\">".$row["email"]."</a></td></tr>\n";
 
 if($row["admin"] == "t" )
   $content .= "<tr><td>".$lang["admin"].":</td><td>".$lang["yes"]."</td></tr>\n";

@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
   
   WebCollab
   ---------------------------------------
@@ -61,11 +61,11 @@ if( ! ($row = db_fetch_array($q , 0 ) ) )
 
 
 //show data
-$content =  "<form method=\"POST\" action=\"users.php\">\n".
+$content =  "<form method=\"post\" action=\"users.php\">\n".
               "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
               "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
               "<input type=\"hidden\" name=\"userid\" value=\"$userid\" />\n".
-              "<p><table border=\"0\">".
+              "<table class=\"celldata\">".
               "<tr><td>".$lang["login_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\" /></td></tr>\n".
               "<tr><td>".$lang["full_name"].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" value=\"".$row["fullname"]."\" /></td></tr>\n".
               "<tr><td>".$lang["password"].":</td><td><input type=\"password\" name=\"password\" size=\"30\" value=\"\" /></td><td><small><i>".$lang["blank_for_current_password"]."</i></small></td></tr>\n".
@@ -79,13 +79,13 @@ if( $admin == 1 ) {
   
   //private user
   if( $row["private"] == 1 )
-    $content .= "<tr><td><label for=\"private\">".$lang["private_user"].":</label></td><td><input type=\"checkbox\" name=\"private_user\" CHECKED id=\"private\" /></td></tr>\n";
+    $content .= "<tr><td><label for=\"private\">".$lang["private_user"].":</label></td><td><input type=\"checkbox\" name=\"private_user\" checked id=\"private\" /></td></tr>\n";
   else  
     $content .= "<tr><td><label for=\"private\">".$lang["private_user"].":</label></td><td><input type=\"checkbox\" name=\"private_user\" id=\"private\" /></td></tr>\n";
 
   //is admin?
   if( $row["admin"] == 't' )
-    $content .= "<tr><td><label for=\"admin\">".$lang["is_admin"].":</label></td><td><input type=\"checkbox\" name=\"admin_rights\" CHECKED id=\"admin\" /></td></tr>\n";
+    $content .= "<tr><td><label for=\"admin\">".$lang["is_admin"].":</label></td><td><input type=\"checkbox\" name=\"admin_rights\" checked id=\"admin\" /></td></tr>\n";
   else
     $content .= "<tr><td><label for=\"admin\">".$lang["is_admin"].":</label></td><td><input type=\"checkbox\" name=\"admin_rights\" id=\"admin\" /></td></tr>\n";
 
@@ -108,7 +108,7 @@ if( $admin == 1 ) {
     for($j=0 ; $usergroups_users_row = @db_fetch_array($usergroups_users_q, $j ) ; $j++) {
 
       if($usergroups_users_row["usergroupid"] == $usergroup_row["id"] ) {
-        $content .= " SELECTED >";
+        $content .= " selected>";
     $found=1;
     break;
       }
@@ -123,7 +123,7 @@ if( $admin == 1 ) {
   $content .= "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n";
 }
 
-$content .= "</table></p>\n".
+$content .= "</table>\n".
             "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;".
             "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
             "</form>\n";

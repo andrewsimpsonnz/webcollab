@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2003 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2003 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -231,7 +231,7 @@ include_once(BASE."setup/screen_setup.php" );
 
 create_top_setup("Database Setup" );
 
-$content =  "<form method=\"POST\" action=\"setup_handler.php\">\n".
+$content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
             "<input type=\"hidden\" name=\"db_host\" value=\"$database_host\" />\n".

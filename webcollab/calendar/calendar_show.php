@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -74,19 +74,19 @@ else
 //set selection & associated defaults for the text boxes
 switch($selection ) {
   case "group":
-    $userid = 0; $s1 = ""; $s2 = " SELECTED"; $s3 = " CHECKED"; $s4 = "";
+    $userid = 0; $s1 = ""; $s2 = " selected"; $s3 = " checked"; $s4 = "";
     $tail = "AND usergroupid=$groupid";
     if($groupid == 0 )
-      $s4 = " SELECTED";
+      $s4 = " selected";
     break;
 
   case "user":
   default:
-    $groupid = 0; $s1 = " CHECKED"; $s2 = ""; $s3 = ""; $s4 = " SELECTED";
+    $groupid = 0; $s1 = " checked"; $s2 = ""; $s3 = ""; $s4 = " selected";
     $tail = "AND owner=$userid";
     if($userid == 0 )
       $tail = "";
-      $s2 = " SELECTED";
+      $s2 = " selected";
     break;
 }
 
@@ -111,11 +111,11 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
 }
 
 $content .= "<div align=\"center\">\n".
-            "<form method=\"POST\" action=\"calendar.php\">".
+            "<form method=\"post\" action=\"calendar.php\">".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
-            "<p><table border=\"0\">\n".
-            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1 /><label for=\"users\" />".$lang["users"]."</label></td><td>\n".
-            "<label for=\"users\" /><select name=\"userid\">\n".
+            "<table class=\"celldata\">\n".
+            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1 /><label for=\"users\">".$lang["users"]."</label></td><td>\n".
+            "<label for=\"users\"><select name=\"userid\">\n".
             "<option value=\"0\"$s2>".$lang["all_users"]."</option>\n";
 
 //get all users for option box
@@ -133,14 +133,14 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //highlight current selection
   if( $row[ "id" ] == $userid )
-    $content .= " SELECTED";
+    $content .= " selected";
 
   $content .= ">".$row["fullname"]."</option>\n";
 }
 
 $content .= "</select></label></td></tr>\n".
-            "<tr align=\"left\"><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3 /><label for=\"group\" />".$lang["usergroups"]."</label></td>\n".
-            "<td><label for=\"group\" /><select name=\"groupid\">\n".
+            "<tr align=\"left\"><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3 /><label for=\"group\">".$lang["usergroups"]."</label></td>\n".
+            "<td><label for=\"group\"><select name=\"groupid\">\n".
             "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
 
 //get all groups for option box
@@ -158,19 +158,19 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //highlight current selection
   if( $row[ "id" ] == $groupid )
-    $content .= " SELECTED";
+    $content .= " selected";
 
   $content .= ">".$row["name"]."</option>\n";
 }
 
-$content .= "</select></label></td></tr>\n</table></p>\n";
+$content .= "</select></label></td></tr>\n</table>\n";
 
 //month (must be in decimal, 'cause that's what database uses!)
-$content .= "<p><table border=\"0\"><tr><td>\n<select name=\"month\">\n";
+$content .= "<table class=\"celldata\"><tr><td>\n<select name=\"month\">\n";
 for( $i=1; $i<13 ; $i++) {
   $content .= "<option value=\"$i\"";
 
-  if( $month == $i ) $content .= " SELECTED";
+  if( $month == $i ) $content .= " selected";
   $content .= ">".$month_array[($i)]."</option>\n";
   }
 $content .=  "</select></td>\n";
@@ -180,12 +180,12 @@ $content .= "<td><select name=\"year\">\n";
 for( $i=2001; $i<2011 ; $i++) {
   $content .= "<option value=\"$i\"";
 
-  if( $year == $i ) $content .= " SELECTED";
+  if( $year == $i ) $content .= " selected";
   $content .= ">".$i."</option>\n";
   }
 $content .=  "</select></td>\n".
              "<td><input type=\"submit\" value=\"".$lang["update"]."\" /></td></tr>\n".
-             "</table></form></p>\n";
+             "</table></form>\n";
 
 //number of days in month
 $numdays = date("t", mktime(0, 0, 0, $month, 1, $year ) );
