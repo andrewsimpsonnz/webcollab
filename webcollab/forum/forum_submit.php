@@ -123,6 +123,14 @@ ignore_user_abort(TRUE);
       $usergroupid = check($_POST["usergroupid"]);
       $taskid      = check($_POST["taskid"]);
 
+      $mail_owner = "";
+      $mail_group = "";
+
+      if($_POST["mail_owner"] == "on")
+        $mail_owner = true;
+      if($_POST["mail_group"] == "on")
+        $mail_group = true;
+
       if($taskid == 0 )
         error("Forum submit", "Taskid not valid");
 
@@ -161,9 +169,8 @@ ignore_user_abort(TRUE);
       db_commit();
 
       //set up emails
-      $mail_group = "";
+      $mail_list = "";
       $s = "";
-      $mail_flag = false;
 
       //get task data
       $q = db_query("SELECT tasks.name AS name,
@@ -175,14 +182,13 @@ ignore_user_abort(TRUE);
       $task_row = db_fetch_array($q, 0 );
 
       //set owner's email
-      if($task_row["email"] ) {
-        $mail_group .= $task_row["email"];
+      if($task_row["email"] && $mail_owner ) {
+        $mail_list .= $task_row["email"];
         $s = ", ";
-        $mail_flag = true;
       }
 
       //if usergroup set, add the user list
-      if($task_row["usergroupid"] ){
+      if($task_row["usergroupid"] && $mail_group ){
         $q = db_query("SELECT users.email
                               FROM users
                               LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
@@ -190,26 +196,23 @@ ignore_user_abort(TRUE);
                               " AND users.deleted='f'" );
 
         for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
-          $mail_group .= $s.$row[0];
+          $mail_list .= $s.$row[0];
           $s = ", ";
-          $mail_flag = true;
         }
       }
 
-      //get & add the mailing list
-      if($EMAIL_MAILINGLIST != "" ) {
-        $mail_group .= $s.$EMAIL_MAILINGLIST;
-        $mail_flag = true;
-      }
-
       //do we need to email?
-      if($mail_flag ){
+      if(strlen($mail_list) > 0 ){
         include_once(BASE."includes/email.php" );
+
+        //get & add the mailing list
+        if($EMAIL_MAILINGLIST != "" )
+          $mail_list .= $s.$EMAIL_MAILINGLIST;
 
         switch($parentid ) {
           case 0:
             //this is a new post
-            email($mail_group, $ABBR_MANAGER_NAME." New forum post: ".$task_row["name"], "New forum post by $uid_name:\n".$_POST["text"] );
+            email($mail_list, $ABBR_MANAGER_NAME." New forum post: ".$task_row["name"], "New forum post by $uid_name:\n".$_POST["text"] );
             break;
 
           default:
@@ -225,7 +228,7 @@ ignore_user_abort(TRUE);
             if($row["username"] == NULL )
               $row["username"] = "----";
 
-            email($mail_group, $ABBR_MANAGER_NAME." Forum post reply: ".$task_row["name"], "Original post by ".$row["username"]." said:\n".$row["text"]."\n\nNew reply by $uid_name is:\n".$_POST["text"] );
+            email($mail_list, $ABBR_MANAGER_NAME." Forum post reply: ".$task_row["name"], "Original post by ".$row["username"]." said:\n".$row["text"]."\n\nNew reply by $uid_name is:\n".$_POST["text"] );
             break;
         }
       }
