@@ -1,4 +1,18 @@
 WebCollab CVS
+*** 29 May 2004
+  Andrew Simpson
+
+- allow HTML Unicode entities to pass through character validation
+
+- small improvements to character validations  
+
+WebCollab 1.59 (Development)
+*** 15 May 2004
+  Andrew Simpson
+
+- release 
+
+WebCollab CVS
 *** 15 May 2004
   Andrew Simpson
 
