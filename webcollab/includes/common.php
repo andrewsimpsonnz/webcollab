@@ -82,7 +82,7 @@ return $body;
 //
 function error($box_title, $content ) {
 
-  global $uid_name, $uid_email, $MANAGER_NAME, $EMAIL_ERROR, $EMAIL_FROM, $EMAIL_REPLY_TO, $DEBUG, $NO_ERROR, $db_error_message;
+  global $uid_name, $uid_email, $MANAGER_NAME, $EMAIL_ERROR, $EMAIL_FROM, $EMAIL_REPLY_TO, $DEBUG, $NO_ERROR, $WEBCOLLAB_VERSION, $db_error_message;
 
   include_once(BASE."includes/screen.php" );
 
@@ -113,6 +113,7 @@ function error($box_title, $content ) {
             "Browser: ".$_SERVER["HTTP_USER_AGENT"]."\n".
             "Time: ".date("F j, Y, H:i")."\n".
             "IP: ".$_SERVER["REMOTE_ADDR"]."\n".
+            "WebCollab version: $WEBCOLLAB_VERSION\n".
             "POST vars: $post\n\n";
 
   mail($EMAIL_ERROR,
