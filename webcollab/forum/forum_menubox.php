@@ -59,7 +59,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     $lastpost = $row['recentpost'];
   
   //show it
-  $list .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['taskid']."\">".$row['taskname']."</a><br />\n";
+  $list .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['taskid']."\">".substr($row['taskname'], 0, 25 )."</a><br />\n";
   $j++;
   
   //show max of 10 posts
