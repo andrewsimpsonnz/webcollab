@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
   
   WebCollab
   ---------------------------------------
@@ -114,7 +114,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   //create session key
   // seed number is not required for PHP 4.2.0, and higher
   if(version_compare(PHP_VERSION, "4.2.0" ) == -1 )
-  mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );
+    mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );  
   $session_key = md5(mt_rand() );
 
   //remove the old login information
@@ -126,12 +126,9 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   //log the user in
   db_query("INSERT INTO ".PRE."logins( user_id, session_key, ip, lastaccess )
                        VALUES('".$user_id."', '".$session_key."', '".$ip."', now() )" );
-
-  //relocate the user to the next screen
-  $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-  header("Location: ".$path."setup_handler.php?x=".$session_key."&action=setup1" );
-  secure_error("Auto page redirect could not detect server configuration.&nbsp;".
-                "You will need to do a manual configuration" );
+  
+  //go to the next stage
+  include_once("setup/setup_setup1.php" );
   die;
 }
 
@@ -151,7 +148,7 @@ if(strcmp('4.3.0', PHP_VERSION ) > 0 )
   secure_error("WebCollab with UTF8 support needs PHP version 4.3.0, or higher.  This version is ".PHP_VERSION );
 
 //check that UTF-8 character encoding can be used
-if(! mb_internal_encoding("UTF-8") )
+if(! function_exists('mb_internal_encoding') )
   error("Unable to set UTF-8 encoding in PHP.<br \>\n".  
          "The PHP installed on this server does not appear to have the multi-byte string (mb_string) library enabled.<br />\n".
         "This library is essential for using UTF8 with WebCollab" );  
@@ -160,10 +157,7 @@ if(! mb_internal_encoding("UTF-8") )
 //check for initial install
 if(DATABASE_NAME == "" ) {
   //this is an initial install
-  $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-  header("Location: ".$path."setup_handler.php?action=setup1" );
-  secure_error("Auto page redirect could not detect server configuration.&nbsp;".
-                "You will need to do a manual configuration" );
+  include("setup/setup_setup1.php" );
   die;
 }
 
