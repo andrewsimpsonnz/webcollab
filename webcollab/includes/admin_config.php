@@ -46,7 +46,7 @@ $DEFAULT_GROUP      = $row["usergroup"];
 //mailing list
 $q = db_query("SELECT DISTINCT email FROM maillist" );
 
-$s ="";
+$s = "";
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
   $EMAIL_MAILINGLIST .= $s.$row[0];
   $s = ", ";
