@@ -80,7 +80,7 @@ return $text;
 
 function message($message ) {
 
-  global $email_encode, $email_charset, $bit8, $body;
+  global $email_encode, $email_charset, $message_charset, $bit8, $body;
 
   //check if message contains high bit ascii characters and set
   //           encoding to match mailer capabilities
@@ -92,11 +92,13 @@ function message($message ) {
           //mail server has said it can do 8bit
           $email_encode = "8bit";
           $body = " BODY=8BITMIME";
+          $message_charset = $email_charset;
           break;
         case false:
           //old mail server - can only do 7bit mail
           $email_encode = "quoted-printable";
           $body = "";
+          $message_charset = $email_charset;
           break;
       }
       break;
@@ -104,7 +106,7 @@ function message($message ) {
     case false:
       //no special characters ==> use 7bit
       $email_encode = "7bit";
-      $email_charset = "us-ascii";
+      $message_charset = "us-ascii";
       $body = "";
       break;
   }
@@ -169,12 +171,7 @@ function subject($subject ) {
       $s = "";
       //break into lines no longer than 76 characters including encoding data (RFC 2047)
       $len = 76 - strlen($email_charset ) - 8;
-      while(strlen($line ) > 0 ) {
-        //less than $len characters ==> output line
-        if(strlen($line ) < $len ) {
-          $line_out .= $s."=?".$email_charset."?Q?".$line."?=\r\n";
-          break;
-        }
+      while(strlen($line ) > $len ) {
         //don't split line around coded character (eg. '=20' == <space>)
         if($pos = strrpos(substr($line, ($len - 3 ), 3 ), "=" ) ) {
           //coded characters within split zone - adjust to avoid splitting encoded word
@@ -190,6 +187,8 @@ function subject($subject ) {
       //start additional lines with <space> (RFC 2047)
       $s = " ";
       }
+      //output any remaining line (will be less than $len characters long)
+      $line_out .= $s."=?".$email_charset."?Q?".$line."?=\r\n";
       $subject = $line_out;
       break;
   }
@@ -249,7 +248,7 @@ function response($connection) {
 function email($to, $subject, $message ) {
 
   global $EMAIL_FROM, $EMAIL_REPLY_TO, $USE_EMAIL, $SMTP_HOST, $SMTP_AUTH,
-         $email_charset, $email_encode, $body, $res, $bit8;
+         $email_charset, $email_encode, $message_charset, $body, $res, $bit8;
 
   if($USE_EMAIL == "N" ) {
     //email is turned off in config file
@@ -343,6 +342,7 @@ function email($to, $subject, $message ) {
 
   //headers longer than 998 characters are broken up to separate lines (RFC 821)
   // (end long line with \r\n, and begin new line with \t)
+
   $line = "To: ".$to;
   $lines_out = "";
   //check if we need to break up into several smaller lines
@@ -363,13 +363,13 @@ function email($to, $subject, $message ) {
   $headers = array("From: ".$EMAIL_FROM."\r\n",
                     "Reply-To: ".$EMAIL_REPLY_TO."\r\n",
                     "Subject: ".$subject,
-                    "Message-Id: <".uniqid("", true )."@".$_SERVER["SERVER_NAME"].">\r\n",
+                    "Message-Id: <".uniqid("")."@".$_SERVER["SERVER_NAME"].">\r\n",
                     "X-Mailer: WebCollab (PHP/" . phpversion().")\r\n",
                     "X-Priority: 3\r\n",
                     "X-Sender: ".$EMAIL_REPLY_TO."\r\n",
                     "Return-Path: <".$EMAIL_REPLY_TO.">\r\n",
                     "Mime-Version: 1.0\r\n",
-                    "Content-Type: text/plain; $email_charset\r\n",
+                    "Content-Type: text/plain; $message_charset\r\n",
                     "Content-Transfer-Encoding: $email_encode\r\n \r\n" );
 
   //send headers to server
@@ -394,7 +394,7 @@ function email($to, $subject, $message ) {
   if(response($connection) != "221" )
     debug("Incorrect response to QUIT request from SMTP server at $host <br /><br />Response from SMTP server was $res" );
 
-  fclose ($connection );
+  fclose($connection );
 
   return;
 }
