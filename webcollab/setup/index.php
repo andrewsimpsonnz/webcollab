@@ -27,10 +27,13 @@
 */
 
 require_once("../config.php" );
-include_once("screen_setup.php" );
+include_once("./screen_setup.php" );
 
 
-//error condition
+//
+// ERROR FUNCTION
+//
+
 function secure_error($reason ) {
 
   create_top_setup("Error" );
@@ -40,18 +43,27 @@ function secure_error($reason ) {
 
 }
 
+//
+// LOGIN CHECK
+//
 
 //valid login attempt ?
 if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
 
   $q = "";
-  $login_q ="";
+  $login_q = "";
 
   include_once("../includes/database.php" );
+  include_once("../includes/common.php" );
 
   //encrypt password
   $md5pass = md5( $_POST["password"] );
-  $login_q = "SELECT id FROM users WHERE deleted='f' AND name='".safe_data($_POST["username"])."' AND password='".$md5pass."'";
+  $login_q = "SELECT id
+              FROM users
+              WHERE deleted='f'
+              AND admin='t'
+              AND name='".safe_data($_POST["username"])."'
+              AND password='".$md5pass."'";
 
 
   //no database connection
@@ -89,24 +101,34 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
 
   //relocate the user to the next screen
   $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-  header("Location: ".$path."database_skip.php?x=".$session_key);
+  header("Location: ".$path."setup_setup1.php?x=".$session_key);
   die;
 }
+
+//
+// MAIN PROGRAM
+//
 
 //security checks
 if( ! isset($WEB_CONFIG ) || $WEB_CONFIG != "Y" ) {
-  secure_error("Current configuration file does not allow web-based setup" );
+  secure_error("Current configuration file does not allow web-based setup." );
   die;
 }
 
+//version check
+if(version_compare(PHP_VERSION, "4.1.0" ) == -1 ) {
+  secure_error("WebCollab needs PHP version 4.1.0, or higher.  This version is ".PHP_VERSION );
+}
+
+//check for initial install
 if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" ) {
   //this is an initial install
   $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-  header("Location: ".$path."database_skip.php" );
+  header("Location: ".$path."setup_setup1.php" );
   die;
 }
 
-
+//login box screen code 
 create_top_setup("Login" );
 
 $content = "Admin login is required for setup:<br /><br />\n".
