@@ -29,57 +29,49 @@
 
 */
 
-$title_takeover     = $ABBR_MANAGER_NAME.": Eins von Ihren Projekten bzw. Aufgaben ist &uuml;bergeben worden.";
-$email_takeover     = "Hallo,\n\nIhre %s-Seite informiert Sie, dass %s durch den Administrator an %s &uuml;bergen wurde.\n\n".
-			"Projekt:  %s\n".
-			"Aufgabe:  %s\n".
-			"Besitzer: %s ( %s )\n".
-			"Text:\n%s\n\n".
-			"Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n%s\n";
-
-$title_new_owner    = $ABBR_MANAGER_NAME.": Neue %s f&uuml; Sie";
-$email_new_owner    = "Hallo,\n\nIhre %s-Seite informiert Sie, dass ein(e) %s die Sie verwalten auf %s ge&auml;ndert wurde.\n\nHier im Detail:\n\n".
-			"Projekt:  %s\n".
-			"Aufgabe:  %s\n".
-			"Status:   %s\n\n".
-			"Text:\n%s\n\n".
-			"Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n%s\n";
-
-$title_new_group    = $ABBR_MANAGER_NAME.": Neue Gruppe %s: ";
-$email_new_group    = "Hallo,\n\nIhre %s-Seite informiert sie, dass eine neue Gruppe %s erstellt worden ist am %s\n\nDetails:\n\n".
-			"Projekt:  %s\n".
-			"Aufgabe:  %s\n".
-			"Owner:    %s\n".
-			"Status:   %s\n\n".
-			"Text:\n%s\n\n".
-			"Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n%s\n";
-
-$title_edit_owner   = $ABBR_MANAGER_NAME.": Ihr Projekt %s wurde bearbeitet";
-$email_edit_owner   ="Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Projekt %s am %s bearbeitet wurde.\n\nDetails:\n\n".
-			"Projekt:  %s\n".
-			"Aufgabe:  %s\n".
-			"Status:   %s\n\n".
-			"Text: \n%s\n\n".
-			"Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n%s\n";
+$email_list = "Projekt:  %s\n".
+               "Aufgabe:  %s\n".
+               "Besitzer: %s ( %s )\n".
+               "Text:\n%s\n\n".
+               "Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n%s\n";
 
 
-$title_edit_group   = $ABBR_MANAGER_NAME.": %s aktualisiert";
-$email_edit_group   = "Hallo,\n\nIhre %s-Seite informiert sie, dass ein(e) %s, die %s geh&ouml;rt am %s bearbeitet wurde.\n\nDetails:\n\n".
-			"Projekt:  %s\n".
-			"Aufgabe:  %s\n".
-			"Status:   %s\n\n".
-			"Text: \n%s\n\n".
-			"Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n%s\n";
+$title_takeover_project   = $ABBR_MANAGER_NAME.": Eins von Ihren Projekten bzw. Aufgaben ist &uuml;bergeben worden.";
+$title_takeover_task      = $ABBR_MANAGER_NAME.": Eins von Ihren Projekten bzw. Aufgaben ist &uuml;bergeben worden.";
+$email_takeover_project   = "Hallo,\n\nIhre %s-Seite informiert Sie, dass Projekt durch den Administrator an %s &uuml;bergen wurde.\n\n";
+$email_takeover_task      = "Hallo,\n\nIhre %s-Seite informiert Sie, dass Aufagabe durch den Administrator an %s &uuml;bergen wurde.\n\n";
 
+$title_new_owner_project  = $ABBR_MANAGER_NAME.": Neue Projekt f&uuml; Sie";
+$title_new_owner_task     = $ABBR_MANAGER_NAME.": Neue Aufagabe f&uuml; Sie";
+$email_new_owner_project  = "Hallo,\n\nIhre %s-Seite informiert Sie, dass ein(e) Projekt die Sie verwalten auf %s ge&auml;ndert wurde.\n\nHier im Detail:\n\n";
+$email_new_owner_task     = "Hallo,\n\nIhre %s-Seite informiert Sie, dass ein(e) Aufagabe die Sie verwalten auf %s ge&auml;ndert wurde.\n\nHier im Detail:\n\n";
 
-$title_delete_task  = $ABBR_MANAGER_NAME.": %s gel&ouml;scht";
-$email_delete_task  = "Hallo,\n\n".
-			"Ihre %s-Seite informiert sie, dass ein(e) %s, das/die ihnen geh&ouml;rte, gel&ouml;scht worden ist am %s\n\n".
-			"Projekt:  %s\n".
-			"Aufgabe:  %s\n".
-			"Status:   %s\n\n".
-			"Text: \n%s\n\n".
-			"Danke f&uuml;r die Verwaltung der Aufgabe, solange es sie gab.";
+$title_new_group_project  = $ABBR_MANAGER_NAME.": Neue Gruppe Projekt: ";
+$title_new_group_task     = $ABBR_MANAGER_NAME.": Neue Gruppe Aufagabe: ";
+$email_new_group_project  = "Hallo,\n\nIhre %s-Seite informiert sie, dass eine neue Gruppe Projekt erstellt worden ist am %s\n\nDetails:\n\n";
+$email_new_group_task     = "Hallo,\n\nIhre %s-Seite informiert sie, dass eine neue Gruppe Aufagabe erstellt worden ist am %s\n\nDetails:\n\n";
+
+$title_edit_owner_project = $ABBR_MANAGER_NAME.": Ihr Projekt wurde bearbeitet";
+$title_edit_owner_task    = $ABBR_MANAGER_NAME.": Ihr Aufagabe wurde bearbeitet";
+$email_edit_owner_project ="Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Projekt Projekt am %s bearbeitet wurde.\n\nDetails:\n\n"; //is this right?
+$email_edit_owner_task    ="Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Projeckt Aufagabe am %s bearbeitet wurde.\n\nDetails:\n\n"; //same
+
+$title_edit_group_project = $ABBR_MANAGER_NAME.": Projekt aktualisiert";
+$title_edit_group_task    = $ABBR_MANAGER_NAME.": Aufagabe aktualisiert";
+$email_edit_group_project = "Hallo,\n\nIhre %s-Seite informiert sie, dass ein(e) Projekt, die %s geh&ouml;rt am %s bearbeitet wurde.\n\nDetails:\n\n";
+$email_edit_group_task    = "Hallo,\n\nIhre %s-Seite informiert sie, dass ein(e) Aufagabe, die %s geh&ouml;rt am %s bearbeitet wurde.\n\nDetails:\n\n";
+
+$title_delete_project     = $ABBR_MANAGER_NAME.": Projekt gel&ouml;scht";
+$title_delete_task        = $ABBR_MANAGER_NAME.": Aufagabe gel&ouml;scht";
+$email_delete_project     = "Hallo,\n\nIhre %s-Seite informiert sie, dass ein(e) Projekt, das/die ihnen geh&ouml;rte, gel&ouml;scht worden ist am %s\n\n".
+                              "Danke f&uuml;r die Verwaltung der Projekt, solange es sie gab.\n\n";
+$email_delete_task        = "Hallo,\n\nIhre %s-Seite informiert sie, dass ein(e) Aufagabe, das/die ihnen geh&ouml;rte, gel&ouml;scht worden ist am %s\n\n".
+                              "Danke f&uuml;r die Verwaltung der Aufgabe, solange es sie gab.\n\n";
+
+$delete_list =  "Projekt:  %s\n".
+                "Aufgabe:  %s\n".
+                "Status:   %s\n\n".
+                "Text: \n%s\n";
 
 
 $title_welcome      = "Willkommen bei ".$ABBR_MANAGER_NAME;

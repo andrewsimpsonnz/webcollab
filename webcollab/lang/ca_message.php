@@ -277,7 +277,7 @@ $lang = array(
  "parent_task" => "Tasca mare",
  "creation_time" => "Creada a la data",
  "project_name" => "Nomb del projecte",
- "by" => " per ", //Note to translators: context is 'Creation time: <date> by <user>'
+ "by_sprt" => "%1\$s per %2\$s", //Note to translators: context is 'Creation time: <date> by <user>'
  "task_name" => "Nom de la tasca",
  "deadline" => "Data l&iacute;mit",
  "taken_from_parent" => "(Presa des de la mare)",
@@ -345,16 +345,16 @@ $lang = array(
  "project_on_hold" => "Projecte est&agrave; susp&egrave;",
  //**
  "project_accessible" => "(Aquest projecte &eacute;s accessible per tots els usuaris)",
- "task_accessible_sprt" => "(Aquest tasca &eacute;s accessible per tots els usuaris)",
+ "task_accessible" => "(Aquest tasca &eacute;s accessible per tots els usuaris)",
  //**
- "project_not_accessible_sprt" => "(Aquest projecte &eacute;s accessible pels membres del usergroup)",
- "task_not_accessible_sprt" => "(Aquest tasca &eacute;s accessible pels membres del usergroup)",
+ "project_not_accessible" => "(Aquest projecte &eacute;s accessible pels membres del usergroup)",
+ "task_not_accessible" => "(Aquest tasca &eacute;s accessible pels membres del usergroup)",
  //**
- "project_not_in_usergroup_sprt" => "Aquesta projecte no es part d'un usergroup y no &eacute;s accessible per tots els usuaris.",
- "task_not_in_usergroup_sprt" => "Aquesta tasca no es part d'un usergroup y no &eacute;s accessible per tots els usuaris.",
+ "project_not_in_usergroup" => "Aquesta projecte no es part d'un usergroup y no &eacute;s accessible per tots els usuaris.",
+ "task_not_in_usergroup" => "Aquesta tasca no es part d'un usergroup y no &eacute;s accessible per tots els usuaris.",
   //**
  "usergroup_can_edit_project" => "Aquest projecte tamb&eacute; pot ser editat pels membres del usergroup.",
- "usergroup_can_edit_tasca" => "Aquest tasca tamb&eacute; pot ser editat pels membres del usergroup.",
+ "usergroup_can_edit_task" => "Aquest tasca tamb&eacute; pot ser editat pels membres del usergroup.",
  "i_take_it" => "L'agafo jo :)",
  "i_finished" => "L'he acabat!",
  "i_dont_want" => "No el vui m&eacute;s",

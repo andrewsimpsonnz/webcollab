@@ -43,14 +43,14 @@ $email_takeover_task      = "Hola,\n\nAquest &eacute;e %s lloc informant-li que 
 
 $title_new_owner_project  = $ABBR_MANAGER_NAME.": Nou projecte per a vost&eacute;";
 $title_new_owner_task     = $ABBR_MANAGER_NAME.": Nou tasca per a vost&eacute;";
-$email_new_owner          = "Hola,\n\nAquest es el %s lloc informant-li que un projecte seu (ara al seu c&agrave;rreg) va ser canviat el %s.\n\nAqu&iacute; els detalls:\n\n";
-$email_new_owner          = "Hola,\n\nAquest es el %s lloc informant-li que un tasca seu (ara al seu c&agrave;rreg) va ser canviat el %s.\n\nAqu&iacute; els detalls:\n\n";
+$email_new_owner_project  = "Hola,\n\nAquest es el %s lloc informant-li que un projecte seu (ara al seu c&agrave;rreg) va ser canviat el %s.\n\nAqu&iacute; els detalls:\n\n";
+$email_new_owner_task     = "Hola,\n\nAquest es el %s lloc informant-li que un tasca seu (ara al seu c&agrave;rreg) va ser canviat el %s.\n\nAqu&iacute; els detalls:\n\n";
 
 
 $title_new_group_project  = $ABBR_MANAGER_NAME.": Nou projecte: %s";
 $title_new_group_task     = $ABBR_MANAGER_NAME.": Nou tasca: %s";
-$email_new_group_project  = "Hola,\n\nAquest &eacute;s el %s lloc informant-li que un nou projecte ha estat creat el %s\n\nAqu&iacute; els detalls:";
-$email_new_group_task     = "Hola,\n\nAquest &eacute;s el %s lloc informant-li que un nou tasca ha estat creat el %s\n\nAqu&iacute; els detalls:";
+$email_new_group_project  = "Hola,\n\nAquest &eacute;s el %s lloc informant-li que un nou projecte ha estat creat el %s\n\nAqu&iacute; els detalls:\n\n";
+$email_new_group_task     = "Hola,\n\nAquest &eacute;s el %s lloc informant-li que un nou tasca ha estat creat el %s\n\nAqu&iacute; els detalls:\n\n";
 
 $title_edit_owner_project = $ABBR_MANAGER_NAME.": La seva projecte actualitzada";
 $title_edit_owner_task    = $ABBR_MANAGER_NAME.": La seva tasca actualitzada";
@@ -64,8 +64,15 @@ $email_edit_group_task    = "Hola,\n\nAquest &eacute;s el %s lloc informant-li q
 
 $title_delete_project     = $ABBR_MANAGER_NAME.": Projecte eliminada";
 $title_delete_task        = $ABBR_MANAGER_NAME.": Tasca eliminada";
-$email_delete_project     = "Hola,\n\nAquest &eacute;s el %s lloc informant-li que un projecte al seu c&agrave;rreg ha estat eliminat el %s\n\n";
-$email_delete_task        = "Hola,\n\nAquest &eacute;s el %s lloc informant-li que un tasca al seu c&agrave;rreg ha estat eliminat el %s\n\n";
+$email_delete_project     = "Hola,\n\nAquest &eacute;s el %s lloc informant-li que un projecte al seu c&agrave;rreg ha estat eliminat el %s\n\n".
+                              "Gr&agrave;cies per dirigir la projecte al seu moment.";
+$email_delete_task        = "Hola,\n\nAquest &eacute;s el %s lloc informant-li que un tasca al seu c&agrave;rreg ha estat eliminat el %s\n\n".
+                              "Gr&agrave;cies per dirigir la tasca al seu moment.";
+
+$delete_list = "Projecte: %s\n".
+                "Tasca:    %s\n".
+                "Estat:   %s\n\n".
+                "Text:\n%s\n\n";
 
 $title_welcome      = "Benvinguda a ".$ABBR_MANAGER_NAME;
 $email_welcome      = "Hola,\n\nAquest &eacute;s el lloc %s donant-li la benvinguda ;) el  %s.\n\n".

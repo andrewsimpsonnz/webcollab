@@ -283,7 +283,7 @@ $lang = array(
  "priority" => "Priorit&auml;t",
  "parent_task" => "&Uuml;bergeordnete Aufgabe",
  "creation_time" => "Erstellungszeitpunkt",
- "by" => " durch ", //Note to translators: context is 'Creation time: <date> by <user>'
+ "by_sprt" => "%1\$s durch %2\$s", //Note to translators: context is 'Creation time: <date> by <user>'
  "project_name" => "Projektname",
  "task_name" => "Aufgabenname",
  "deadline" => "Fertigstellungszeitpunkt",
@@ -359,7 +359,7 @@ $lang = array(
  "project_not_accessible" => "(Dieses Projekt ist nur f&uuml; Mitglieder der Benutzergruppe zug&auml;nglich)",
  "task_not_accessible" => "(Dieses Aufgabe ist nur f&uuml; Mitglieder der Benutzergruppe zug&auml;nglich)",
  //**
- "peoject_not_in_usergroup" => "Projekt keiner Benutzergruppe zugeordnet und f&uuml;r alle Benutzer zug&auml;nglich.",
+ "project_not_in_usergroup" => "Projekt keiner Benutzergruppe zugeordnet und f&uuml;r alle Benutzer zug&auml;nglich.",
  "task_not_in_usergroup" => "Aufgabe keiner Benutzergruppe zugeordnet und f&uuml;r alle Benutzer zug&auml;nglich.",
  //**
  "usergroup_can_edit_project" => "Dieses Projekt kann auch durch Mitglieder der Benutzergruppe bearbeitet werden.",

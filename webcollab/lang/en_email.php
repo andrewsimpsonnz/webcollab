@@ -30,14 +30,14 @@
 
 $email_list =  "Project:  %s\n".
                 "Task:     %s\n".
-                "Status:   %s\n".//add to takeover
+                "Status:   %s\n".
                 "Owner:    %s ( %s )\n".
                 "Text:\n%s\n\n".
                 "Please go to the website for more details.\n\n%s\n";
 
 
-$title_takeover_project  = $ABBR_MANAGER_NAME.": Your item taken over";
-$title_takeover_task     = $ABBR_MANAGER_NAME.": Your item taken over";
+$title_takeover_project  = $ABBR_MANAGER_NAME.": Your project taken over";
+$title_takeover_task     = $ABBR_MANAGER_NAME.": Your task taken over";
 
 $email_takeover_task     = "Hello,\n\nThis is the %1\$s site informing you that a task you own has been taken over by an admin on %2\$s.\n\n";
 $email_takeover_project  = "Hello,\n\nThis is the %1\$s site informing you that a project you own has been taken over by an admin on %2\$s.\n\n";
@@ -81,6 +81,10 @@ $email_delete_task       = "Hello,\n\n".
                            "This is the %1\$s site informing you that a task you did own was deleted on %2\$s\n\n".
                            "Thanks for managing the task while it lasted.\n\n";
 
+$delete_list =  "Project:  %s\n".
+                "Task:  %s\n".
+                "Status:   %s\n\n".
+                "Text: \n%s\n\n";
 
 $title_welcome      = "Welcome to the ".$ABBR_MANAGER_NAME;
 $email_welcome      = "Hello,\n\nThis is the %1\$s site welcoming you to me ;) on %2\$s.\n\n".
