@@ -1,7 +1,9 @@
 WebCollab CVS
-*** 14 August 2003 
+*** 15 August 2003
 
 - bugfix/feature request #783959 (Ability to disable ip checking during sessions)
+
+- bugfix #785085 (Cookies don't work properly)
 
 WebCollab CVS
 *** 8 August 2003
