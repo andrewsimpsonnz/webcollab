@@ -63,7 +63,7 @@ function nicedate($timestamp ) {
 // Strip the UTC offset from a date *and time* variable and make it look nice
 //
 function nicetime($timestamp ) {
-  global $month_array, $DATABASE_TYPE;
+  global $month_array, $DATABASE_TYPE, $TZ;
 
   if($timestamp == "" ) {
     $nicetime = "";
@@ -72,18 +72,31 @@ function nicetime($timestamp ) {
   $date_array = explode("-", substr($timestamp, 0, 10 ) );
   $time_array = explode(":", substr($timestamp, 11, 5 ) );
   
-  if($DATABASE_TYPE == "postgresql"){ 
-  
-    //postgres' has timezone information in the data output
-    $timezone = substr($timestamp, -3 );
-        
-    //format is 2004-Aug-02 18:06 +1200 
-    return sprintf("%d-%s-%02d %02d:%02d %s00", $date_array[0], $month_array[(int)($date_array[1])], $date_array[2], $time_array[0], $time_array[1], $timezone );
-  }
+  switch($DATABASE_TYPE) {
     
-  //MySQL with manually set timezone
-  //format is 2004-Aug-02 18:06 +1200  
-  return sprintf("%d-%s-%02d %02d:%02d %s", $date_array[0], $month_array[(int)($date_array[1])], $date_array[2], $time_array[0], $time_array[1], date("O") );
+    case "postgresql": 
+      //postgres' has correct timezone information in the data output
+      $timezone = substr($timestamp, -3 );
+          
+      //format is 2004-Aug-02 18:06 +1200 
+      return sprintf("%d-%s-%02d %02d:%02d %s00", $date_array[0], $month_array[(int)($date_array[1])], $date_array[2], $time_array[0], $time_array[1], $timezone );
+      break;
+      
+    case "mysql":
+    case "mysql_innodb":
+    default:
+      //MySQL with manually set timezone      
+      if($TZ >= 0 )
+        $offset = sprintf("+%02d00", $TZ );
+      else
+        $offset = sprintf("%02d00", $TZ );
+      
+      //server timezone offset is subtracted from mktime because date() automatically adds it on!!        
+      $epoch = mktime($time_array[0], $time_array[1], 0, $date_array[1], $date_array[2], $date_array[0], 0 ) - date("Z") + ($TZ * 3600);
+      //format is 2004-Aug-02 18:06 +1200  
+      return date("Y", $epoch)."-".$month_array[(date("n", $epoch))]."-".date("d H:i ", $epoch).$offset;
+      break;
+    }
 }
   
 //
@@ -109,14 +122,10 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
 
   //filter for no date set
   if($day == -1 || $month == -1 || $year == -1 ) {
-   if($DATABASE_TYPE == "postgresql" && $TZ != NULL )
-     $epoch = date("U") - date("Z") + ($TZ * 3600);
-   else
-     $epoch = date("U");
-   
-    $day = date("d", $epoch );
+    $epoch = time() - date("Z") + ($TZ * 3600);
+    $day   = date("d", $epoch );
     $month = date("m", $epoch );
-    $year = date("Y", $epoch );
+    $year  = date("Y", $epoch );
   }
 
   //day
