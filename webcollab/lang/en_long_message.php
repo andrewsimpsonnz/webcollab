@@ -34,16 +34,19 @@ $taskgroup_info =   "<ul><li>If you delete a taskgroup all tasks belonging to it
                       "<li>Two taskgroups cannot have the same name.</li></ul>\n";
 
 $usergroup_info =   "<ul><li>If you delete a usergroup all the related private forum posts will be deleted too.</li>\n".
+                      "<li>Private usergroups can only be seen by the members of that private usergroup.</li>\n".
                       "<li>You can change the name of a usergroup without interfering with the users in it.</li>\n".
                       "<li>Two usergroups cannot have the same name.</li></ul>\n";
 
 $user_info      =    "Please select your action from the menu on the left.<br /><br />".
                       "Some quick hints:<br />".
                       "<ul>".
+                      //**
+                      "<li>Private users can only be seen by members of the same usergroup.</li>\n".
                       "<li>Users have two stages of deleting, the second one is permanent.</li>\n".
                       "<li>A deleted user loses all his tasks but not his forum messages.</li>\n".
                       "<li>A permanently deleted user loses all.</li>\n".
-                      "<li>You cannot permanently delete a user that still has forum items.</li>\n".
+                      //"<li>You cannot permanently delete a user that still has forum items.</li>\n".
                       "<li>A deleted user keeps the record of tasks that they have seen, and will continue with that list upon revival.</li>\n".
                       "<li>ALL actions performed on a user will be emailed to the user.</li>\n".
                       "<li>Passwords are encrypted in the database. You can only set a new one.</li>\n".

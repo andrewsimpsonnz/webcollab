@@ -234,6 +234,8 @@ $lang = array(
  "usergroup_name" => "Usergroup name:",
  "usergroup_description" => "Usergroup simple description:",
  "members" => "Members:",
+ //**
+ "private_usergroup" => "Private usergroup",
  "add_usergroup" => "Add usergroup",
  "add_new_usergroup" => "Add a new usergroup",
  "edit_usergroup" => "Edit usergroup",
@@ -251,6 +253,8 @@ $lang = array(
  "blank_for_current_password" => "(Leave blank for current password)",
  "email" => "E-mail",
  "admin" => "Admin",
+  //**
+ "private_user" => "Private user",
  "is_admin" => "Is an admin?",
  "user_info" => "User information",
  "deleted_users" => "Deleted users",
@@ -263,6 +267,9 @@ $lang = array(
  "no_users" => "No users are known to the system",
  "users" => "Users",
  "existing_users" => "Existing users",
+ //**
+ "private_profile" => "This user has a private profile that cannot be viewed by you.",
+ "private_usergroup_profile" => "(This user is a member of private usergroups that cannot be viewed by you)",
  "email_users" => "Email users",
  "select_usergroup" => "Usergroup selected from below:",
  "subject" => "Subject:",
