@@ -78,7 +78,8 @@
 //LANGUAGE FILES
 
   // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan),
-  //                       "de" (German), "it" (Italian), "bg" (Bulgarian), "da" (Danish)
+  //                       "de" (German), "it" (Italian), "bg" (Bulgarian), "da" (Danish),
+  //                       "ko" (Korean)
   define('LOCALE', "en" );
   
   
@@ -131,6 +132,6 @@
   define('PRE', "" );
 
   //version info
-  define('WEBCOLLAB_VERSION', "1.62" );
+  define('WEBCOLLAB_VERSION', "1.70" );
 
 ?>

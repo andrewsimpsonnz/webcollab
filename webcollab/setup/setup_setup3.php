@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2003 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -188,12 +188,12 @@ else
   $LOCALE = LOCALE;
 
 //initialise array with null values
-for( $i=0 ; $i < 8 ; $i++ ) {
+for( $i=0 ; $i < 9 ; $i++ ) {
   $s[$i] = "";
 }
 
 //select current value
-$option_array = array("bg", "ca", "da", "en", "fr", "de", "it", "es" );
+$option_array = array('bg', 'ca', 'da', 'en', 'fr', 'de', 'it', 'ko', 'es' );
 $selected = array_search($LOCALE, $option_array );  
 $s[$selected] = " selected=\"selected\"";  
   
@@ -206,7 +206,8 @@ $content .= "<tr><td></td><td><br /></td></tr>\n".
             "<option value=\"fr\" $s[4]>French</option>\n".
             "<option value=\"de\" $s[5]>German</option>\n".
             "<option value=\"it\" $s[6]>Italian</option>\n".
-            "<option value=\"es\" $s[7]>Spanish</option>\n".
+            "<option value=\"ko\" $s[7]>Korean</option>\n".
+            "<option value=\"es\" $s[8]>Spanish</option>\n".
             "</select></td></tr>\n";
              
 //timezone setting

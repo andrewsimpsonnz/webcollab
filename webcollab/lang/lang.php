@@ -59,6 +59,10 @@ switch(LOCALE ) {
   case "it":
     include(BASE."lang/it_message.php" );
     break;
+  
+  case "ko":
+    include(BASE."lang/ko_message.php" );
+    break;
 
   case "en":
   default:
