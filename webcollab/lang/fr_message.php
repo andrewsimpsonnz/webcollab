@@ -4,11 +4,6 @@
 
   WebCollab
   ---------------------------------------
-  Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
-  with much help from the people noted in the README
-
-  Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
-  by Andrew Simpson <andrew.simpson@paradise.net.nz>
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -26,7 +21,7 @@
   Function:
   ---------
 
-  Language files for 'fr' (French/Français)
+  Language files for 'fr' (French/FranÃ§ais)
 
   Translation: Olivier Chaussavoine
 
@@ -39,7 +34,7 @@ $web_charset = "iso-8859-1";
 $email_charset = "iso-8859-1";
 
 //dates
-$month_array = array ( "Jan", "Fev", "Mar", "Avr", "Mai", "Jui", "Jul", "Aou", "Sep", "Oct", "Nov", "Dec" );
+$month_array = array ( NULL, "Jan", "Fev", "Mar", "Avr", "Mai", "Jui", "Jul", "Aou", "Sep", "Oct", "Nov", "Dec" );
 $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
 
 //task states
@@ -140,11 +135,9 @@ $lang = array(
  //files
  "manage_files" => "Gestion des fichiers",
  "no_files" => "Aucun fichiers t&eacute;l&eacute;charg&eacute;s &agrave; g&eacute;rer",
-//**
  "no_file_uploads" => "La configuration du serveur de ce site n'autorise pas les t&eacute;l&eacute;chargements.",
  "file" => "Fichier:",
  "uploader" => "T&eacute;l&eacute;charger:",
- //**
  "files_assoc_project" => "Fichiers associ&eacute;s au projet",
  "files_assoc_task" => "Fichiers associ&eacute;s &agrave; la t&acirc;che",
  "file_admin" => "Admin Fichier",
@@ -152,6 +145,10 @@ $lang = array(
  "files" => "Fichiers",
  "file_choose" => "Fichier &agrave; t&eacute;l&eacute;charger:",
  "upload" => "T&eacute;l&eacute;chargement",
+  //**
+ "file_email_owner" => "Email notification of new file to the owner?",
+ //**
+ "file_email_usergroup" => "Email notification of new file to the usergroup?",
  "max_file_sprt" => "un fichier &agrave; t&eacute;l&eacute;charger doit faire moins de %1\$s kilo-octets.",
  "file_submit" => "Fichier T&eacute;l&eacute;charger ",
  "no_upload" => "Aucun fichier n'a &eacute;t&eacute; t&eacute;l&eacute;charg&eacute;. Merci de revenir en arri&egrave;re et de renouveller.",
@@ -165,6 +162,10 @@ $lang = array(
  "message" => "Message:",
  "post_reply_sprt" => "R&eacute;pondre &agrave; une contribution de '%s' &agrave; propos de '%s'",
  "post_message_sprt" => "R&eacute;pondre &agrave; la contribution &agrave;: '%s'",
+  //**
+ "forum_email_owner" => "Email forum message to the owner?",
+ //**
+ "forum_email_usergroup" => "Email forum message to the usergroup?",
  "reply" => "R&eacute;pondre",
  "new_post" => "Nouvelle contribution",
  "public_user_forum" => "Forum public",
@@ -183,10 +184,16 @@ $lang = array(
  "log_out" => "D&eacute;connection",
  "main_menu" => "Menu Principal",
  "user_homepage_sprt" => "%1\$s : page principale",
- "load_time_sprt" => "Cette page a &eacute;t&eacute; charg&eacute;e en %1\$.3f secondes.  Sur ce temps, %2\$.3f secondes ont &eacute;t&eacute; utilis&eacute; pour ex&eacute;cuter %3\$d transactions dans la base de donn&eacute;es",
- "security_manager" => "Gestion Securit&eacute;",
- "no_key_sprt" => "Pas de session valide. Merci de vous connecter <a href=\"%sindex.php\">Profil</a>",
- "no_session" => "Pas de session, merci de vous <a href=\"%sindex.php\">connecter</a>",
+ //"load_time_sprt" => "Cette page a &eacute;t&eacute; charg&eacute;e en %1\$.3f secondes.  Sur ce temps, %2\$.3f secondes ont &eacute;t&eacute; utilis&eacute; pour ex&eacute;cuter %3\$d transactions dans la base de donn&eacute;es",
+ //**
+ "missing_field_javascript" => "Please enter a value for the missing field",
+ //**
+ "invalid_date_javascript" => "Please choose a valid calendar date",
+ //**
+ "finish_date_javascript" => "The entered date occurs after the project finish date!",
+"security_manager" => "Gestion Securit&eacute;",
+ //"no_key_sprt" => "Pas de session valide. Merci de vous connecter <a href=\"%sindex.php\">Profil</a>",
+ //"no_session" => "Pas de session, merci de vous <a href=\"%sindex.php\">connecter</a>",
  "session_timeout_sprt" => "Acc&eacute;s refus&eacute;, la derni&egrave;re action a &eacute;t&eacute; faite il y &agrave; %1\$d minutes et la session s'est ferm&eacute;e apr&egrave;s %2\$d minutes, merci de vous  <a href=\"%sindex.php\">re-connecter</a>",
  "access_denied" => "Acc&egrave;s refus&eacute;",
  "private_usergroup" => "D&eacute;sol&eacute;, cette zone est priv&eacute;e et elle est r&eacute;serv&eacute;e &agrave; un groupe d'utilisateurs. Vous n'y avez pas acc&egrave;s.",

@@ -51,7 +51,7 @@ $web_charset = "iso-8859-1";
 $email_charset = "iso-8859-1";
 
 //dates
-$month_array = array ( "Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic" );
+$month_array = array ( NULL, "Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic" );
 $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
 
 //task states
@@ -163,6 +163,10 @@ $lang = array(
  "files" => "Files",
  "file_choose" => "File da inviare:",
  "upload" => "Invio",
+ //**
+ "file_email_owner" => "Email notification of new file to the owner?",
+ //**
+ "file_email_usergroup" => "Email notification of new file to the usergroup?",
  "max_file_sprt" => "Il file da inviare deve essere pi&ugrave; piccolo di %s kb.",
  "file_submit" => "Invia file",
  "no_upload" => "Nessun file &egrave; stato inviato.  Torna indietro e riprova.",
@@ -176,6 +180,10 @@ $lang = array(
  "message" => "Messaggio:",
  "post_reply_sprt" => "Invia una risposta al messaggio di '%s' circa '%s'",
  "post_message_sprt" => "Invia un messagio a: '%s'",
+ //**
+ "forum_email_owner" => "Email forum message to the owner?",
+ //**
+ "forum_email_usergroup" => "Email forum message to the usergroup?",
  "reply" => "Rispondi",
  "new_post" => "Nuovo invio",
  "public_user_forum" => "Forum pubblico",
@@ -194,10 +202,16 @@ $lang = array(
  "log_out" => "Log out",
  "main_menu" => "Menu principale",
  "user_homepage_sprt" => "%s's homepage",
- "load_time_sprt" => "Tempo di caricamento della pagina: %.3f secondi.  Di cui %.3f secondi sono stati usati per %d transazioni con il database",
+ //"load_time_sprt" => "Tempo di caricamento della pagina: %.3f secondi.  Di cui %.3f secondi sono stati usati per %d transazioni con il database",
+//**
+ "missing_field_javascript" => "Please enter a value for the missing field",
+ //**
+ "invalid_date_javascript" => "Please choose a valid calendar date",
+ //**
+ "finish_date_javascript" => "The entered date occurs after the project finish date!",
  "security_manager" => "Gestore della sicurezza",
- "no_key_sprt" => "Session key non valida. Prego effettuare <a href=\"%sindex.php\">login</a>",
- "no_session" => "Sessione non trovata, prego effettuare <a href=\"%sindex.php\">log-in</a>",
+ //"no_key_sprt" => "Session key non valida. Prego effettuare <a href=\"%sindex.php\">login</a>",
+ //"no_session" => "Sessione non trovata, prego effettuare <a href=\"%sindex.php\">log-in</a>",
  "session_timeout_sprt" => "Accesso negato, l'ultima azione risale a %d minuti fa e il timeout &egrave; di %d minuti, prego effettuare <a href=\"%sindex.php\">re-login</a>",
  "access_denied" => "Accesso negato",
  "private_usergroup" => "Spiacente, questa area si trova in un gruppo privato e tu non hai il permesso di accedervi.",

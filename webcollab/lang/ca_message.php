@@ -34,7 +34,7 @@ $web_charset = "iso-8859-1";
 $email_charset = "iso-8859-1";
 
 //dates
-$month_array = array ( "Gen", "Feb", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Dec" );
+$month_array = array ( NULL, "Gen", "Feb", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Dec" );
 $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
 
 //task states
@@ -144,6 +144,10 @@ $lang = array(
  "files" => "Arxius",
  "file_choose" => "Arxiu a pujar:",
  "upload" => "Upload",
+ //**
+ "file_email_owner" => "Email notification of new file to the owner?",
+ //**
+ "file_email_usergroup" => "Email notification of new file to the usergroup?",
  "max_file_sprt" => "L'arxiu a enviar ha de ser m&eacute;s petit que %s kb.",
  "file_submit" => "Envia arxiu",
  "no_upload" => "No s'ha pujat l'arxiu. Torni enrera i intenti-ho de nou.",
@@ -157,6 +161,10 @@ $lang = array(
  "message" => "Mensaje:",
  "post_reply_sprt" => "Enviar una resposta a la nota de  '%s' sobre '%s'",
  "post_message_sprt" => "Enviar una nota a: '%s'",
+ //**
+ "forum_email_owner" => "Email forum message to the owner?",
+ //**
+ "forum_email_usergroup" => "Email forum message to the usergroup?",
  "reply" => "Respondre",
  "new_post" => "Nota nova",
  "public_user_forum" => "F&ograve;rum public",
@@ -175,12 +183,18 @@ $lang = array(
  "log_out" => "Sortir",
  "main_menu" => "Men&uacute; principal",
  "user_homepage_sprt" => "Usuari: %s",
- "load_time_sprt" => "Aquesta p&agrave;gina ha estat %.3f segons per a carregar-se. D'aquests, %.3f segons han estat emprats en %d transaccions de la base de dades",
+ //"load_time_sprt" => "Aquesta p&agrave;gina ha estat %.3f segons per a carregar-se. D'aquests, %.3f segons han estat emprats en %d transaccions de la base de dades",
+ //**
+ "missing_field_javascript" => "Please enter a value for the missing field",
+ //**
+ "invalid_date_javascript" => "Please choose a valid calendar date",
+ //**
+ "finish_date_javascript" => "The entered date occurs after the project finish date!",
  "security_manager" => "Manegament de Seguretat",
- "no_key_sprt" => "Clau de sessi&oacute; NO v&agrave;lida. Si us plau <A href=\"%sindex.php\">identifiqui's</A>",
- "no_session" => "Sessi&oacute; inexistent, si us plau <A href=\"%sindex.php\">Identifiqui's</A>",
+ //"no_key_sprt" => "Clau de sessi&oacute; NO v&agrave;lida. Si us plau <A href=\"%sindex.php\">identifiqui's</A>",
+ //"no_session" => "Sessi&oacute; inexistent, si us plau <A href=\"%sindex.php\">Identifiqui's</A>",
  "session_timeout_sprt" => "Acc&egrave;s denegat, la &uacute;ltima acci&oacute; va ser fa %d i el temps d'expiraci&oacute; &eacute;s de %d minuts, si us plau <a href=\"%sindex.php\">Identifiqui's</a>",
- "ip_spoof_sprt" =>"IP Spoofejada detectada des de la seva ip (%s) aquesta sessi&oacute; ha estat esborrada per precauci&oacute;, si us plau <a href=\"%sindex.php\">torni a entrar</a>",
+ //"ip_spoof_sprt" =>"IP Spoofejada detectada des de la seva ip (%s) aquesta sessi&oacute; ha estat esborrada per precauci&oacute;, si us plau <a href=\"%sindex.php\">torni a entrar</a>",
  "access_denied" => "Acc&eacute;s denegat",
  "private_usergroup" => "Dispensi, aquesta &agrave;rea &eacute;s privada d'un grup i vost&egrave; no t&eacute; drets d'acc&eacute;s.",
  "invalid_date" => "Data no v&agrave;lida",

@@ -34,7 +34,7 @@ $web_charset = "iso-8859-1";
 $email_charset = "iso-8859-1";
 
 //dates
-$month_array = array ( "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" );
+$month_array = array ( NULL, "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" );
 $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
 
 //task states
@@ -144,6 +144,10 @@ $lang = array(
  "files" => "Archivos",
  "file_choose" => "Archivo to upload:",
  "upload" => "Upload",
+  //**
+ "file_email_owner" => "Email notification of new file to the owner?",
+ //**
+ "file_email_usergroup" => "Email notification of new file to the usergroup?",
  "max_file_sprt" => "El archivo a enviar debe ser menor a  %s kb.",
  "file_submit" => "File submit",
  "no_upload" => "No se envio archivo. Vuelva para atras y reintente.",
@@ -157,6 +161,10 @@ $lang = array(
  "message" => "Mensaje:",
  "post_reply_sprt" => "Enviar una respuesta a la nota de  '%s' acerca de '%s'",
  "post_message_sprt" => "Enviar una nota a: '%s'",
+ //**
+ "forum_email_owner" => "Email forum message to the owner?",
+ //**
+ "forum_email_usergroup" => "Email forum message to the usergroup?",
  "reply" => "Responder",
  "new_post" => "Nota nueva",
  "public_user_forum" => "Foro p&uacute;blico",
@@ -175,10 +183,16 @@ $lang = array(
  "log_out" => "Salir",
  "main_menu" => "Menu principal",
  "user_homepage_sprt" => "Usuario: %s",
- "load_time_sprt" => "Esta p&aacute;gina tomo %.3f segundos para cargarse.  De estos %.3f segundos fueron usados en %d transacciones con la base de datos",
+// "load_time_sprt" => "Esta p&aacute;gina tomo %.3f segundos para cargarse.  De estos %.3f segundos fueron usados en %d transacciones con la base de datos",
+ //**
+ "missing_field_javascript" => "Please enter a value for the missing field",
+ //**
+ "invalid_date_javascript" => "Please choose a valid calendar date",
+ //**
+ "finish_date_javascript" => "The entered date occurs after the project finish date!",
  "security_manager" => "Manejo de Seguridad",
- "no_key_sprt" => "Clave de sesi&oacute;n NO v&aacute;lida. Por favor <a href=\"%sindex.php\">Ingrese</a>",
- "no_session" => "Sesi&oacute;n inexistente, por favor <a href=\"%sindex.php\">Ingrese</A>",
+// "no_key_sprt" => "Clave de sesi&oacute;n NO v&aacute;lida. Por favor <a href=\"%sindex.php\">Ingrese</a>",
+// "no_session" => "Sesi&oacute;n inexistente, por favor <a href=\"%sindex.php\">Ingrese</A>",
  "session_timeout_sprt" => "Acceo denegado, &uacute;ltima acci&oacute;n fue %d minutos atr&aacute;s y el tiempo de expiraci&oacute;n es de %d minutos, por favor <a href=\"%sindex.php\">Ingrese</a>",
  "access_denied" => "Acceso denegado",
  "private_usergroup" => "Disculpe, esta area es privada de un grupo y ud no tiene derecho de acceso.",

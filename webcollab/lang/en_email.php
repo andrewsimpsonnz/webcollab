@@ -29,7 +29,7 @@
 */
 
 // Get current date/time for emails in a preferred format eg: 01 Apr 2004 9:18 am NZDT  
-$email_date = date("d" )" ".$month_array[(date("n" ) )]." ".date('Y \a\t g:i a T' );
+$email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y \a\t g:i a T' );
 
 $title_file_post        = $ABBR_MANAGER_NAME.": New file upload: %s";
 $email_file_post        = "Hello,\n\nThis is the ".$MANAGER_NAME." site informing you that a new file has been uploaded on ".$email_date." by %1\$s.\n\n".
@@ -50,7 +50,7 @@ $email_list =  "Project:  %1\$s\n".
                "Status:   %3\$s\n".
                "Owner:    %4\$s ( %5\$s )\n".
                "Text:\n%6\$s\n\n".
-               "Please go to the website for more details.\n\n".$BASE_URL".\n";
+               "Please go to the website for more details.\n\n".$BASE_URL."\n";
 
 
 $title_takeover_project  = $ABBR_MANAGER_NAME.": Your project taken over";

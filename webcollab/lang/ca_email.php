@@ -31,7 +31,7 @@
 */
 
 // Get current date/time for emails in a preferred format
-$email_date = date("d" )" ".$month_array[(date("n" ) )]." ".date('Y g:i a ' );
+$email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y g:i a ' );
 
 $title_file_post        = $ABBR_MANAGER_NAME.": New file upload: %s";
 $email_file_post        = "Hello,\n\nThis is the ".$MANAGER_NAME." site informing you that a new file has been uploaded on ".$email_date." by %1\$s.\n\n".
@@ -51,7 +51,7 @@ $email_list = "Projecte: %1\$s\n".
               "Estat:    %3\$s\n".
               "A c&agrave;rreg:  %4\$s ( %5\$s )\n".
               "Text:\n%6\$s\n\n".
-              "Dirigir-se al lloc web per a mes detalls.\n\n".BASE_URL."\n";
+              "Dirigir-se al lloc web per a mes detalls.\n\n".$BASE_URL."\n";
 
 $title_takeover_project   = $ABBR_MANAGER_NAME.": El seu item ha estat reassignat";
 $title_takeover_task      = $ABBR_MANAGER_NAME.": El seu item ha estat reassignat";
@@ -76,8 +76,8 @@ $email_edit_owner_task    ="Hola,\n\nAquest &eacute;s el ".$MANAGER_NAME." lloc 
 
 $title_edit_group_project = $ABBR_MANAGER_NAME.": Projecte actualitzada";
 $title_edit_group_task    = $ABBR_MANAGER_NAME.": Tasca actualitzada";
-$email_edit_group_project = "Hola,\n\nAquest &eacute;s el %1s lloc informant-li que un projecte a c&agrave;rreg de %s ha canviat el ".$email_date.".\n\nAqu&iacute; els detalls:\n\n";
-$email_edit_group_task    = "Hola,\n\nAquest &eacute;s el %1s lloc informant-li que un tasca a c&agrave;rreg de %s ha canviat el ".$email_date.".\n\nAqu&iacute; els detalls:\n\n";
+$email_edit_group_project = "Hola,\n\nAquest &eacute;s el ".$MANAGER_NAME." lloc informant-li que un projecte a c&agrave;rreg de %s ha canviat el ".$email_date.".\n\nAqu&iacute; els detalls:\n\n";
+$email_edit_group_task    = "Hola,\n\nAquest &eacute;s el ".$MANAGER_NAME." lloc informant-li que un tasca a c&agrave;rreg de %s ha canviat el ".$email_date.".\n\nAqu&iacute; els detalls:\n\n";
 
 $title_delete_project     = $ABBR_MANAGER_NAME.": Projecte eliminada";
 $title_delete_task        = $ABBR_MANAGER_NAME.": Tasca eliminada";

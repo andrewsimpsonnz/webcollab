@@ -34,7 +34,7 @@ $web_charset = "iso-8859-1";
 $email_charset = "iso-8859-1";
 
 //dates
-$month_array = array ( "Jan", "Feb", "M&auml;r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" );
+$month_array = array ( NULL, "Jan", "Feb", "M&auml;r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" );
 $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
 
 //task states
@@ -123,8 +123,6 @@ $lang = array(
  "notes" => "Notizen:",
  "add_contact" => "Kontakt hinzuf&uuml;gen",
  "del_contact" => "Kontakt l&ouml;schen",
- //line below removed version 1.49+
- //"del_javascript" => "Bitte best&auml;tigen sie das L&ouml;schen dieses Kontakts.",
  "contact_info" => "Kontaktinformationen",
  "contacts" => "Kontakte",
  "contact_add_info" => "Wenn eine Firma angegeben wurde, erscheint der Firmenname anstelle des Benutzernamens.",
@@ -146,7 +144,11 @@ $lang = array(
  "files" => "Dateien",
  "file_choose" => "Datei zum Hochladen:",
  "upload" => "Hochladen",
- "max_file_sprt" => "Die hochzuladende Datei muss kleiner als %s kB sein.",
+//**
+ "file_email_owner" => "Email notification of new file to the owner?",
+ //**
+ "file_email_usergroup" => "Email notification of new file to the usergroup?",
+  "max_file_sprt" => "Die hochzuladende Datei muss kleiner als %s kB sein.",
  "file_submit" => "Datei absenden",
  "no_upload" => "Es wurde keine Datei hochgeladen.  Bitte gehen Sie zur&uuml;ck und versuchen Sie es noch einmal.",
  "file_too_big_sprt" => "Die maximale Dateigr&ouml;&szlig;e ist %s Bytes. Ihr Upload war zu gro&szlig; und wurde gel&ouml;scht.",
@@ -159,7 +161,11 @@ $lang = array(
  "message" => "Nachricht:",
  "post_reply_sprt" => "Sende eine Antwort auf die Nachricht von '%s' ber '%s'",
  "post_message_sprt" => "Sende eine Nachricht an: '%s'",
- "reply" => "Antwort",
+  //**
+ "forum_email_owner" => "Email forum message to the owner?",
+ //**
+ "forum_email_usergroup" => "Email forum message to the usergroup?",
+"reply" => "Antwort",
  "new_post" => "Neue Nachricht",
  "public_user_forum" => "Offenes Benutzerforum",
  "private_forum_sprt" => "Privates Forum f&uuml;r Gruppe '%s' ",
@@ -177,10 +183,16 @@ $lang = array(
  "log_out" => "Abmelden",
  "main_menu" => "Hauptmenu",
  "user_homepage_sprt" => "Startseite von %s",
- "load_time_sprt" => "Diese Seite ben&ouml;tigte %.3f Sekunden zum Laden.  Davon wurden %.3f Sekunden f&uuml;r %d Datenbanktransaktionen verwendet.",
+ //"load_time_sprt" => "Diese Seite ben&ouml;tigte %.3f Sekunden zum Laden.  Davon wurden %.3f Sekunden f&uuml;r %d Datenbanktransaktionen verwendet.",
+ //**
+ "missing_field_javascript" => "Please enter a value for the missing field",
+ //**
+ "invalid_date_javascript" => "Please choose a valid calendar date",
+ //**
+ "finish_date_javascript" => "The entered date occurs after the project finish date!",
  "security_manager" => "Sicherheitsverwaltung",
- "no_key_sprt" => "Keine g&uuml;ltige Session-ID. Bitte gehen Sie zum <a href=\"%sindex.php\">Login</a>",
- "no_session" => "Unbekannte Session-ID, bitte neu <a href=\"%sindex.php\">einloggen</a>.",
+ //"no_key_sprt" => "Keine g&uuml;ltige Session-ID. Bitte gehen Sie zum <a href=\"%sindex.php\">Login</a>",
+ //"no_session" => "Unbekannte Session-ID, bitte neu <a href=\"%sindex.php\">einloggen</a>.",
  "session_timeout_sprt" => "Zugriff verweigert, Ihre letzte Aktion war vor %d Minuten. %d Minuten bleibt eine Session ohne Aktion g&uuml;ltig, bitte neu <a href=\"%sindex.php\">anmelden</a>.",
  "access_denied" => "Zugriff verweigert",
  "private_usergroup" => "Dieser Bereich ist in einer privaten Benutzergruppe und sie haben keine Zugriffsrechte.",

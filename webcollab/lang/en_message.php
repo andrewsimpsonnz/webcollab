@@ -51,8 +51,8 @@ $web_charset = "iso-8859-1";
 $email_charset = "iso-8859-1";
 
 //dates
-$month_array = array ( "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" );
-$week_array = array('Sun','Mon','Tue','Wed','Thu','Fri','Sat');
+$month_array = array (NULL, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" );
+$week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
 
 //task states
 $task_state = array(
@@ -163,6 +163,7 @@ $lang = array(
  "upload" => "Upload",
  //**
  "file_email_owner" => "Email notification of new file to the owner?",
+ //**
  "file_email_usergroup" => "Email notification of new file to the usergroup?",
  "max_file_sprt" => "File to upload must be less than %s kb.",
  "file_submit" => "File submit",
@@ -179,6 +180,7 @@ $lang = array(
  "post_message_sprt" => "Post message to: '%s'",
  //**
  "forum_email_owner" => "Email forum message to the owner?",
+ //**
  "forum_email_usergroup" => "Email forum message to the usergroup?",
  "reply" => "Reply",
  "new_post" => "New post",
@@ -198,14 +200,16 @@ $lang = array(
  "log_out" => "Log out",
  "main_menu" => "Main menu",
  "user_homepage_sprt" => "%s's homepage",
- "load_time_sprt" => "This page took %1\$.3f seconds to load.  Of that %2\$.3f seconds were used for %3\$d transactions with the database",
+ //"load_time_sprt" => "This page took %1\$.3f seconds to load.  Of that %2\$.3f seconds were used for %3\$d transactions with the database",
  //**
  "missing_field_javascript" => "Please enter a value for the missing field",
+ //**
  "invalid_date_javascript" => "Please choose a valid calendar date",
+ //**
  "finish_date_javascript" => "The entered date occurs after the project finish date!",
  "security_manager" => "Security manager",
- "no_key_sprt" => "No valid session key. Please <a href=\"%sindex.php\">login</a>",
- "no_session" => "No such session, please <a href=\"%sindex.php\">log-in</a>",
+// "no_key_sprt" => "No valid session key. Please <a href=\"%sindex.php\">login</a>",
+// "no_session" => "No such session, please <a href=\"%sindex.php\">log-in</a>",
  "session_timeout_sprt" => "Access denied, last action was %1\$d minutes ago and the timeout is %2\$d minutes, please <a href=\"%3\$sindex.php\">re-login</a>",
  "access_denied" => "Access denied",
  "private_usergroup" => "Sorry, this area is in a private usergroup and you do not have access rights.",
