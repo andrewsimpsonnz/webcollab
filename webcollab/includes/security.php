@@ -31,32 +31,31 @@
 
 require_once("path.php" );
 
-include_once(BASE."config.php" );
-include_once(BASE."lang/lang.php" );
-include_once(BASE."includes/database.php" );
-include_once(BASE."includes/common.php" );
+require_once(BASE."config.php" );
+require_once(BASE."lang/lang.php" );
+require_once(BASE."includes/database.php" );
+require_once(BASE."includes/common.php" );
 
 //clean up some variables
 $q = "";
 $ip = "";
-$x = "";
+$x = 0;
 $admin = 0;
-$cookie_flag = 0;
+$session_key = 0;
 $gid[0] = 0;
-
 
 //check for some values that HAVE to be present to be allowed (ip, session_key)
 if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
   error("Security manager", "No ip address found" );
 }
 
-//$x can be from either a GET, POST or COOKIE - check for cookie first
+//$session_key can be from either a GET, POST or COOKIE - check for cookie first
 if(isset($_COOKIE["webcollab_session"] ) && (strlen($_COOKIE["webcollab_session"] ) == 32 ) ){
-  $x = $_COOKIE["webcollab_session"];
-  $cookie_flag = 1;
+  $session_key = safe_data($_COOKIE["webcollab_session"] );
 }
 elseif(isset($_REQUEST["x"]) && (strlen($_REQUEST["x"] ) == 32 ) ){
-  $x = safe_data($_REQUEST["x"]);
+  $session_key = safe_data($_REQUEST["x"]);
+  $x = $session_key;
 }
 else{
   //return to login screen
@@ -72,7 +71,7 @@ if( ! ($q = db_query("SELECT logins.user_id AS user_id, logins.ip AS ip, logins.
                              $epoch lastaccess) AS sec_lastaccess
                              FROM logins
                              LEFT JOIN users ON (users.id=logins.user_id)
-                             WHERE session_key='$x'", 0 ) ) ) {
+                             WHERE session_key='$session_key'", 0 ) ) ) {
   error("Security manager", "Database not able to verify session key");
 }
 
@@ -91,6 +90,9 @@ if( ! ( $row = db_fetch_array($q, 0) ) ) {
 if($row["user_id"] == NULL ){
   error("Security manager", "No valid user-id found");
 }
+
+if( ! isset($SESSION_TIMEOUT ) )
+  $SESSION_TIMEOUT = 1;
 
 //check the last login time (there is an inactivity time limit set by $SESSION_TIMEOUT)
 if( ($row["now"] - $row["sec_lastaccess"]) > $SESSION_TIMEOUT * 3600 ) {
@@ -117,12 +119,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
 }
 
 //update the "I was here" time
-db_query("UPDATE logins SET lastaccess=now() WHERE session_key='$x' AND user_id=$uid" );
-
-//if cookies are being used we don't need encoded URL
-if($cookie_flag == 1 ) {
-  $x = 0;
-}
+db_query("UPDATE logins SET lastaccess=now() WHERE session_key='$session_key' AND user_id=$uid" );
 
 // this gives:
 //
