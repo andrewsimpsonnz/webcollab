@@ -30,9 +30,13 @@
 */
 
 require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once(BASE."includes/security.php" );
 
-include_once( BASE."config.php" );
+include_once(BASE."config.php" );
+
+//check if file uploads are allowed in php.ini file
+if( ! (bool)ini_get("file_uploads" ) )
+  warning("File uploads not allowed",  "The server configuration for this site does not allow file uploads to be made" );
 
 if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
   error("File upload", "Not a valid taskid");
@@ -40,10 +44,10 @@ if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
 $taskid = $_GET["taskid"];
 
 //check usergroup security
-require_once( BASE."includes/usergroup_security.php" );
+require_once(BASE."includes/usergroup_security.php" );
 
 $content =  "<center><br />".
-            "<form name=\"inputform\" method=\"POST\" enctype=\"multipart/form-data\"  action=\"".$BASE_URL."files/file_submit.php\">\n".
+            "<form name=\"inputform\" method=\"POST\" enctype=\"multipart/form-data\"  action=\"files/file_submit.php\">\n".
               "<input type=\"hidden\" name=\"action\" value=\"upload\">\n".
               "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
               "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\">\n".
