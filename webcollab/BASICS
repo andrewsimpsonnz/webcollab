@@ -42,9 +42,11 @@ Projects can be classed as:
 
 - 'Planned' - Not yet started, and no fixed end date.  Good for bookmarking future work.
 
-- 'Active' - Project underway, and has an end date deadline 
+- 'Active' - Project underway, and has an end date deadline.
 
-- 'On Hold' - Can't be finished.  No fixed end date. 
+- 'On Hold' - Can't be finished.  No fixed end date.
+
+- 'No deadline' - No set deadline for project yet.
 
 WebCollab does not have precedents for project start dates.  This means that a project cannot be set
 to automatically start when another project is completed.  While this is an integral part of
@@ -55,19 +57,19 @@ Tasks
 =====
 
 "Take it to the limit, take it to the limit one more time."
-  -- Eagles: One of these Nights (1975) 
+  -- Eagles: One of these Nights (1975)
 
 
 Tasks are the individual assignments within the project.  Tasks are assigned to a user, and have a
-completion date.  They can be classed as: 
+completion date.  They can be classed as:
 
-- 'Planned'
+- 'Planned' - Not yet started, and no fixed end date.  Good for bookmarking future work.
 
 - 'New' - Set up, but maybe not assigned to anyone yet.  Has an end date deadline.
 
-- 'Active'
+- 'Active'- Task underway, and has an end date deadline.
 
-- 'On Hold'
+- 'On Hold' - Can't be finished.  No fixed end date.
 
 - 'Completed' - The user has completed the task.
 
@@ -78,7 +80,10 @@ If a task is not completed by the deadline date, the 'late' graphic will be disp
 
 Clicking on the task or the project, will take you to the task listing, where the details are shown. 
 Owners of the task can edit the task, mark it as finished, reassign it someone else, or even delete
-the task.  Administrators have universal rights and can edit or delete any tasks,  
+the task.  Administrators have universal rights and can edit or delete any tasks.
+
+When the 'Usergroup can edit' checkbox is selected AND a Usergroup is chosen, anyone in the selected
+usergroup can edit the task or project.
 
 Also, on the task listing page is the user forums and file upload areas.  These are specific to each
 task or project.  Again the task owner has editing rights, while the administrator can do anything. 
@@ -113,6 +118,9 @@ rather than just an individual user.
 Usergroups can also be used to control access.  Access can be limited to just the Usergroup; in
 which case other users won't see the restricted project/task, or be able to access them.  The
 access restriction can be applied at project or task level.
+
+When the 'Usergroup can edit' checkbox is selected AND a Usergroup is chosen for an item, anyone in
+the selected usergroup can edit that particular task or project.
 
 Where applicable, Usergroups also get their own private forum boards with each task and project.  
 
