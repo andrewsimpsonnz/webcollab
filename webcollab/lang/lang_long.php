@@ -56,6 +56,10 @@ switch(LOCALE ) {
     include(BASE."lang/fr_long_message.php" );
     break;
 
+  case "hu":
+    include(BASE."lang/hu_long_message.php" );
+    break;
+
   case "it":
     include(BASE."lang/it_long_message.php" );
     break;
@@ -76,3 +80,4 @@ switch(LOCALE ) {
 }
 
 ?>
+
