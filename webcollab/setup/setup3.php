@@ -45,7 +45,7 @@ function error_setup( $reason ) {
 //security check
 if( (isset($DATABASE_NAME ) ) && $DATABASE_NAME != "" ) {
   include_once('../includes/security.php' );
-
+  
   if($admin != 1 ) {
     error_setup("You are not authorised to do this");
   }
@@ -123,6 +123,7 @@ $content = "<?php\n".
 '//----------------------------------------------------------------------------------------------'."\n".
 '// Less important items below this line'."\n\n".
 '//-- Language --'."\n\n".
+'  // available locales are "en" (English), "es" (Spanish), "fr" (French)'."\n".
 '  $LOCALE = "'.$data["locale"].'";'."\n\n".
 '//-- Email --'."\n\n".
 '  //If an error occurs, who do you want the error to be mailed to ?'."\n".
