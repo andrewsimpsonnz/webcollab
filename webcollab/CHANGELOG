@@ -8,6 +8,12 @@ WebCollab CVS
 
 - feature request #798612 (allow for reparenting)
 
+- bugfix: PostgreSQL transaction wasn't committed in user_submit.php unless usergroup was set
+
+- minor button changes for consistency across program
+
+- minor language updating
+
 WebCollab CVS
 *** 21 September 2003
   Andrew Simpson
