@@ -109,19 +109,20 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 //
 //public forums
 //
-$content = "";
+$content = "<br />\n";
 
 //all the posts that have parentid 0 (the taskid is included in the query itself so this will _not_ show all results)
-$content = list_posts_from_task( 0, $taskid, 0 );
+$content .= list_posts_from_task( 0, $taskid, 0 );
+$content .= "<br />\n";
 //add an option to add posts
-$content .= "\n<small>\n<br />\n[<a href=\"".$BASE_URL."forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang["new_post"]."</a>]</small>";
+$content .= "<small>[<a href=\"".$BASE_URL."forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang["new_post"]."</a>]</small>";
 //show it
 new_box($lang["public_user_forum"], $content );
 
 //
 //private forums
 //
-$content = "";
+$content = "<br />\n";
 
 //show all posts that are private to that task's user-group if you are withing the group (so AND user AND task have to belong to the same group)
 $task_usergroup = db_result(db_query("SELECT usergroupid FROM tasks WHERE id=$taskid" ), 0, 0 );
@@ -150,9 +151,10 @@ if( $task_usergroup != 0 ) {
   if($found == 1 ) {
 
     $content = list_posts_from_task(0, $taskid, $task_usergroup);
+    $content = "<br />\n";
     //add an option to add posts
     $usergroup_name = db_result( db_query("SELECT name FROM usergroups WHERE id=$task_usergroup" ), 0, 0 );
-    $content .= "\n<small>\n<br />\n[<a href=\"".$BASE_URL."forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=$task_usergroup&amp;\">".$lang["new_post"]."</a>]</small>";
+    $content .= "<small>[<a href=\"".$BASE_URL."forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=$task_usergroup&amp;\">".$lang["new_post"]."</a>]</small>";
     //show it
     new_box(sprintf($lang["private_forum_sprt"], $usergroup_name ), $content );
   }
