@@ -178,33 +178,36 @@ if( ! isset($LOCALE) )
 
 switch($LOCALE) {
   case "bg":
-    $s1 = "selected"; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "";
+    $s1 = "selected"; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
     break;
 
   case "ca":
-    $s1 = ""; $s2 = "selected"; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "";
+    $s1 = ""; $s2 = "selected"; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
+    break;
+
+  case "da":
+    $s1 = ""; $s2 = ""; $s3 = "selected"; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
     break;
 
   case "en":
-    $s1 = ""; $s2 = ""; $s3 = "selected"; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "";
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = "selected"; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
     break;
 
   case "fr":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = "selected"; $s5 = ""; $s6 = ""; $s7 = "";
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = "selected"; $s6 = ""; $s7 = ""; $s8 = "";
     break;
 
   case "de":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = "selected"; $s6 = ""; $s7 = "";
-    break;
-
-  case "it":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = "selected"; $s7 = "";
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = "selected"; $s7 = ""; $s8 = "";
     break;
   
-  case "es":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "selected";
+  case "it":
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "selected"; $s8 = "";
     break;
 
+  case "es":
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "selected";
+    break;
 
 }
 
@@ -212,11 +215,12 @@ $content .= "<tr><td></td><td><br /></td></tr>\n".
             "<tr><th>Language:</th><td><select name=\"locale\">\n".
             "<option value=\"bg\" $s1 >Bulgarian</option>\n".
             "<option value=\"ca\" $s2 >Catalan</option>\n".
-            "<option value=\"en\" $s3 >English</option>\n".
-            "<option value=\"fr\" $s4 >French</option>\n".
-            "<option value=\"de\" $s5 >German</option>\n".
-            "<option value=\"it\" $s6 >Italian</option>\n".
-            "<option value=\"es\" $s7 >Spanish</option>\n".
+            "<option value=\"da\" $s3 >Danish</option>\n".
+            "<option value=\"en\" $s4 >English</option>\n".
+            "<option value=\"fr\" $s5 >French</option>\n".
+            "<option value=\"de\" $s6 >German</option>\n".
+            "<option value=\"it\" $s7 >Italian</option>\n".
+            "<option value=\"es\" $s8 >Spanish</option>\n".
             "</select></td></tr>\n";
 
 //email settings
