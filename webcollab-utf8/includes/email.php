@@ -179,10 +179,10 @@ debug		Debug!
 function & clean($encoded ) {
 
   //reinstate encoded html back to original text
-  $text = @html_entity_decode($encoded, ENT_NOQUOTES, "UTF-8" );
+  $text = @html_entity_decode($encoded, ENT_NOQUOTES, CHARACTER_SET );
   
   //reinstate decimal encoded html that html_entity_decode() can't handle...
-  $text = preg_replace('/&#\d{2,5};/ue', "utf8_entity_decode('$0')", $text );
+  $text = preg_replace('/&#\d{2,5};/e', "utf8_entity_decode('$0')", $text );
   
   //remove any dangerous tags that exist after decoding
   $text = preg_replace("/(<\/?\s*)(APPLET|SCRIPT|EMBED|FORM|\?|%)(\w*|\s*)([^>]*>)/i", "\\1****\\3\\4", $text );
@@ -200,7 +200,7 @@ function & message($message, & $email_encode, & $message_charset, & $body ) {
 
   //clean up message
   $message =& clean($message );
-  //check if message contains multi-byte UTF-8 characters and set encoding to match mailer capabilities
+  //check if message contains multi-byte characters and set encoding to match mailer capabilities
   switch(preg_match('/([\177-\377])/', $message ) ) {
     case true:
       //we have special characters
@@ -209,13 +209,13 @@ function & message($message, & $email_encode, & $message_charset, & $body ) {
           //mail server has said it can do 8bit
           $email_encode = "8bit";
           $body = " BODY=8BITMIME";
-          $message_charset = "UTF-8";
+          $message_charset = CHARACTER_SET;
           break;
         case false:
           //old mail server - can only do 7bit mail
           $email_encode = "base64";
           $body = "";
-          $message_charset = "UTF-8";
+          $message_charset = CHARACTER_SET;
           break;
       }
       break;
@@ -273,7 +273,7 @@ function &subject($subject ) {
   //reinstate any HTML in subject back to text
   $subject =& clean($subject );
 
-  //encode subject with 'printed-quotable' if multi-byte UTF-8 characters are present
+  //encode subject with 'printed-quotable' if multi-byte characters are present
   switch(preg_match('/([\177-\377])/', $subject ) ) {
     case false:
       //no encoding required
@@ -289,12 +289,12 @@ function &subject($subject ) {
       //  76 - 10[=?UTF-8?B?] - 2[?=] = 64 encoded characters per line 
       //  any additional new lines start with <space>   
       while(strlen($line) > 64 ) {
-        $subject_lines[] = $s."=?UTF-8?B?".substr($line, 0, 64 )."?="; 
+        $subject_lines[] = $s."=?".CHARACTER_SET."?B?".substr($line, 0, 64 )."?="; 
         $line = substr($line, 64 );
         $s = " ";
       }
       //output any remaining line (will be less than 64 characters long)
-      $subject_lines[] = $s."=?UTF-8?B?".$line."?=";
+      $subject_lines[] = $s."=?".CHARACTER_SET."?B?".$line."?=";
       break;
   }
 

@@ -32,9 +32,9 @@ require_once("path.php" );
 include_once(BASE."config/config.php" );
 include_once(BASE."lang/lang.php" );
 
-//set UTF-8 character encoding to be used
-if(! mb_internal_encoding("UTF-8") )
-  error("Internal encoding", "Unable to set UTF-8 encoding in PHP" );
+//set character set encoding to be used
+if(! mb_internal_encoding(CHARACTER_SET ) )
+  error("Internal encoding", "Unable to set ".CHARACTER_SET." encoding in PHP" );
 
 //
 // Input validation (single line input)
@@ -73,7 +73,8 @@ function safe_data_long($body ) {
   $body = str_replace("\r\n", "\n", $body );
   $body = str_replace("\r", "\n", $body );
   //break up long non-wrap words
-  $body = preg_replace("/[^\s\n\t]{100}/u", "$0\n", $body );
+  //$body = preg_replace("/[^\s\n\t]{100}/u", "$0\n", $body );
+  $body = mb_ereg_replace("/[^[:space:]]{100}/", "\\0\n", $body );
 
 return $body;
 }
@@ -81,19 +82,29 @@ return $body;
 function clean_up($body ) {
   
   //decode decimal HTML entities added by web browser
-  $body = preg_replace('/&#\d{2,5};/ue', "utf8_entity_decode('$0')", $body );
+  $body = preg_replace('/&#\d{2,5};/e', "utf8_entity_decode('$0')", $body );
   //decode hex HTML entities added by web browser
-  $body = preg_replace('/&#x([a-fA-F0-7]{2,8});/ue', "utf8_entity_decode('&#'.hexdec('$1').';')", $body );
+  $body = preg_replace('/&#x([a-fA-F0-7]{2,8});/e', "utf8_entity_decode('&#'.hexdec('$1').';')", $body );
 
-  //allow only normal UTF-8 characters up to U+10000, which is the limit of 3 byte characters
-  // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )   
-  preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                       // ASCII characters
-                 '|[\xc2-\xdf][\x80-\xbf]'.                         // 2-byte UTF-8 (except overly longs)
-                 '|\xe0[\xa0-\xbf][\x80-\xbf]'.                     // 3 byte (except overly longs)
-                 '|[\xe1-\xec\xee\xef][\x80-\xbf]{2}'.              // 3 byte (except overly longs)
-                 '|\xed[\x80-\x9f][\x80-\xbf])+/', $body, $ar );    // 3 byte (except UTF-16 surrogates)
-
-  $body = join("?", $ar[0] );
+  switch(CHARACTER_SET ) {
+    case "UTF-8":
+      //allow only normal UTF-8 characters up to U+10000, which is the limit of 3 byte characters
+      // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )   
+      preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                       // ASCII characters
+                    '|[\xc2-\xdf][\x80-\xbf]'.                         // 2-byte UTF-8 (except overly longs)
+                    '|\xe0[\xa0-\xbf][\x80-\xbf]'.                     // 3 byte (except overly longs)
+                    '|[\xe1-\xec\xee\xef][\x80-\xbf]{2}'.              // 3 byte (except overly longs)
+                    '|\xed[\x80-\x9f][\x80-\xbf])+/', $body, $ar );    // 3 byte (except UTF-16 surrogates)
+    
+      $body = join("?", $ar[0] );
+      break;
+      
+    default:
+      //allow only normal printing characters - any non-printing control characters are replaced with "*"
+      $body = preg_replace('/([^\x09\x0a\x0d\x20-\xff])/s', "*", $body );
+      //$body = preg_replace('/([\x00-\x08\x0b-\x0c\x0e-\x1f])/', "*", $body );
+      break;
+  }    
  
   //protect against database query attack
   if(! get_magic_quotes_gpc() )
@@ -103,7 +114,6 @@ function clean_up($body ) {
   $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;' );
   
   return strtr($body, $trans ); 
-  
 }
 
 //
@@ -135,6 +145,17 @@ function javascript_escape($body ) {
   $trans = array('"'=>'&quot;', "'"=>"\\'" );
     
   return strtr($body, $trans );
+}
+
+//
+// make web addresses and email addresses clickable
+//
+function html_links($body) {
+
+  $body = preg_replace("/(([\w\-\.]+)@([\w\-\.]+)\.([\w]+))/", "<a href=\"mailto:$0\">$0</a>", $body );
+  $body = preg_replace("/((http|ftp)+(s)?:\/\/[^\s]+)/i", "<a href=\"$0\" onclick=\"window.open('$0'); return false\">$0</a>", $body );
+
+  return $body;
 }
 
 //

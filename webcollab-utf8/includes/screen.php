@@ -90,7 +90,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
   header("Cache-Control: no-store, no-cache, must-revalidate");
   header("Cache-Control: post-check=0, pre-check=0", false);
   header("Pragma: no-cache");
-  header("Content-Type: text/html; charset=utf-8");
+  header("Content-Type: text/html; charset=".CHARACTER_SET );
 
   $content = "<!DOCTYPE html PUBLIC\n".
              "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
@@ -109,7 +109,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
 
   $content  =  "<title>".$title."</title>\n".
                "<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".
-               "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n";
+               "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".CHARACTER_SET."\" />\n";
 
   if($page_type == 2 )
     $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/print.css\" type=\"text/css\" />\n";
