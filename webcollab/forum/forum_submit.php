@@ -110,10 +110,14 @@ ignore_user_abort(TRUE);
         }
       }
 
-      $text = $_POST["text"];
+      $text = safe_data($_POST["text"], 1 );
       //make email adresses clickable
-      //$text = preg_replace("(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))","<a href=\"mailto:\\0\">\\0</a>",$text);
-      $text = safe_data( $text );
+      $text = preg_replace("(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))","<a href=\"mailto:\\0\">\\0</a>", $text );
+      //normalise any embedded line breaks (\r\n, \r, \n) to \n line breaks
+      $text = str_replace("\r\n", "\n", $text );
+      $text = str_replace("\r", "\n", $text );
+      //break up long lines and add HTML line breaks
+      $text = nl2br(wordwrap($text, 60, "\n", 1 ) );
 
       $parentid    = check($_POST["parentid"]);
       $usergroupid = check($_POST["usergroupid"]);
@@ -135,7 +139,7 @@ ignore_user_abort(TRUE);
       if($usergroupid != 0 ) {
 
         //check if the user does belong to that group
-        if( ($admin!=1) && (db_result(db_query("SELECT COUNT(*) FROM usergroups_users WHERE userid=$uid AND usergroupid=$usergroupid" ), 0, 0 ) < 1) )
+        if( ($admin!=1) && ( ! in_array( $usergroupid, (array)$gid ) ) )
           error("Forum submit", "You do not have enough rights to post in that forum" );
 
         //private post

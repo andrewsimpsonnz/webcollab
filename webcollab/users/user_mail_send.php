@@ -50,7 +50,9 @@ if( ! isset($_POST["group"]) )
 if( ! isset($_POST["message"] ) || strlen($_POST["message"] ) == 0 )
   warning($lang["admin_email"], $lang["no_message"] );
 
-//wordwrap
+//normalise embedded line breaks to '\n' and then wordwrap
+$message = str_replace("\r\n", "\n", $message );
+$message = str_replace("\r", "\n", $message );
 $message = wordwrap($_POST["message"], 100 );
 
 //subject

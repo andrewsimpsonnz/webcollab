@@ -71,7 +71,7 @@ if( ! isset( $_REQUEST["action"] ) )
                                     '".safe_data($_POST["postal"])."',
                                     '".safe_data($_POST["city"])."',
                                     '".safe_data($_POST["email"])."',
-                                    '".safe_data($_POST["notes"])."',
+                                    '".safe_data($_POST["notes"], 1 )."',
                                     $uid,
                                     $uid,
                                     now() )" );
@@ -96,7 +96,7 @@ if( ! isset( $_REQUEST["action"] ) )
                     postal='".safe_data($_POST["postal"])."',
                     city='".safe_data($_POST["city"])."',
                     email='".safe_data($_POST["email"])."',
-                    notes='".safe_data($_POST["notes"])."',
+                    notes='".safe_data($_POST["notes"], 1 )."',
                     added_by=$uid,
                     date=now()
                     WHERE id = '$contactid'");

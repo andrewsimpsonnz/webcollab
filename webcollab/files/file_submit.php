@@ -54,7 +54,12 @@ ignore_user_abort(TRUE);
       }
 
       $taskid = $_POST["taskid"];
-      $description = safe_data($_POST["description"]);
+      $description = safe_data($_POST["description"], 1 );
+      //normalise line breaks to \n
+      $description = str_replace("\r\n", "\n", $description );
+      $description = str_replace("\r", "\n", $description );
+      //break up long lines and add HTML line breaks
+      $description = nl2br(wordwrap($description, 100, "\n", 1 ) );
 
       //check usergroup security
       require_once( BASE."includes/usergroup_security.php" );

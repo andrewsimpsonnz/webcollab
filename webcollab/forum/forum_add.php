@@ -78,7 +78,7 @@ if( is_numeric($parentid) && ($parentid != 0) ) {
   //show a box with the original post
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" />\n".
               "<table border=\"0\">\n".
-              "<tr><td>".$lang["orig_message"]."</td><td bgcolor=\"#EEEEEE\">".nl2br( $parent_array["text"] )."</td></tr>\n";
+              "<tr><td>".$lang["orig_message"]."</td><td bgcolor=\"#EEEEEE\">".$parent_array["text"]."</td></tr>\n";
 }
 else {
   $parent_array = "";

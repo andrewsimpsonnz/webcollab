@@ -75,7 +75,11 @@ $text = $row["text"];
 //$text = preg_replace("/(^|\s)(www\.[^\s\)<'\"]+)/", "$1<a href=\"http://$2\" onclick=\"window.open(this.href,'_blank');return false;\">$2</a>", $text);
 $text = preg_replace("(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))","<a href=\"mailto:\\0\">\\0</a>", $text );
 
-$content .= nl2br($text);
+//normalise embedded line breaks (\r\n, \r) to \n line breaks
+$text = str_replace("\r\n", "\n", $text );
+$text = str_replace("\r", "\n", $text );
+
+$content .= nl2br(wordwrap($text, 100, "\n", 1 ) );
 $content .= "</td></tr></table></p>\n";
 
 //start of info table
