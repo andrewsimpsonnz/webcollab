@@ -112,7 +112,7 @@ function new_box_setup( $title, $content, $width="97%" ) {
   echo "\n<br />";
 
   echo "
-  <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"".$width."\">
+  <table border=\"0\" cellpadding=\"10\" cellspacing=\"0\" width=\"".$width."\">
     <tr>
       <td bgcolor=\"#1E4B79\" align=\"left\"><FONT color=\"white\"><b>".$title."</b></font></td>
     </tr>
