@@ -47,7 +47,7 @@ function percent_complete($taskid ) {
   $total_tasks = db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent>0 AND projectid=$taskid" ), 0, 0 );
 
   switch($tasks_completed ) {
-    case 0: 
+    case 0:
       return 0;
       break;
 
@@ -55,10 +55,10 @@ function percent_complete($taskid ) {
       return 100;
       break;
 
-    default: 
+    default:
       return($tasks_completed / $total_tasks ) * 100;
       break;
-  }    
+  }
 }
 
 
@@ -130,6 +130,8 @@ function error($box_title, $content ) {
 
   global $username, $useremail, $MANAGER_NAME, $EMAIL_ERROR, $EMAIL_FROM, $EMAIL_REPLY_TO, $DEBUG, $NO_ERROR, $db_error_message;
 
+  include_once(BASE."includes/screen.php" );
+
   create_top("ERROR", 1 );
 
   if($NO_ERROR != "Y" )
@@ -177,6 +179,8 @@ function error($box_title, $content ) {
 // Builds up a warning screen
 //
 function warning($box_title, $content ) {
+
+  include_once(BASE."includes/screen.php" );
 
   create_top("Warning", 1 );
 
