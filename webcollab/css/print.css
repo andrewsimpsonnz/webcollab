@@ -1,0 +1,137 @@
+BODY {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12pt;
+  margin : 0;
+  background : #ffffff;
+  color : #000000;
+}
+
+FONT {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12pt;
+}
+
+/* Font for text based hyperlinks in [brackets] */
+FONT.textlink {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 10pt;
+  font-weight : bold;
+}
+
+LI {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12pt;
+  list-style-type: disc;
+}
+
+LI LI {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12pt;
+  list-style-type: circle;
+}
+
+/* Standard table box */
+TABLE.tablebox {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12pt;
+  margin-left : auto;
+  margin-right : auto;
+  width : 97%;
+  text-align : left;
+  border-width: 0;
+  padding : 0;
+}
+
+TD {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12pt;
+}
+
+/* Box masthead styling */
+TD.boxhead {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 16pt;
+  font-weight : bold;
+  text-align : left;
+  border-width : 0;
+  border-collapse : collapse;
+  padding : 3pt;
+  background : #ffffff;
+  color : #000000;
+}
+
+/* Box content styling for info boxes */
+TD.boxdata {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12pt;
+  text-align : left;
+  border-width : 0;
+  border-collapse : collapse;
+  padding-top : 10pt;
+  padding-left : 5pt;
+  padding-right : 5pt;
+  padding-bottom : 20pt;
+  background : #ffffff;
+  color : #000000;
+}
+
+
+/* Class for text at page bottom */
+.loadtime {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 9pt;
+  padding-left: 10pt;
+  color : #000000;
+}
+
+/* Class for late graphic */
+.late {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 9pt;
+  font-weight : bold;
+  background : #ffffff;
+  color : #000000;
+}
+
+/* Class for new graphic */
+.new {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 9pt;
+  font-weight : bold;
+  font-style : italic;
+  background : #ffffff;
+  color : #000000;
+}
+
+/* Class for updated graphic */
+.updated {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 9pt;
+  font-weight : bold;
+  background : #ffffff;
+  color : #000000;
+}
+
+
+a:link {
+  color : #003399;
+  background : transparent;
+  text-decoration : none;
+}
+
+a:visited {
+  color : #660066;
+  background : transparent;
+  text-decoration : none;
+}
+
+a:hover {
+  color : #003399;
+  background : transparent;
+  text-decoration : underline;
+}
+
+
+
+
+
