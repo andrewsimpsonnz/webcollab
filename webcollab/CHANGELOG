@@ -2,11 +2,9 @@ WebCollab CVS
 *** 27 December 2003
   Andrew Simpson
 
-- improve SMTP AUTH: add plain auth & CRAM-MD5
+- don't show tasks from projects in private usergroups in calendar, to-do and user show
 
-WebCollab CVS
-*** 19 December 2003
-  Andrew Simpson
+- improve SMTP AUTH: add plain auth & CRAM-MD5
 
 - bugfix: array error for usergroup emails in task_submit.php
 
