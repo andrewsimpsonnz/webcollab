@@ -37,55 +37,118 @@ include_once(BASE."includes/time.php" );
 // List tasks
 //
 
-function listTasks($task_id ) {
-   global $x, $epoch, $now ,$admin, $gid, $lang, $task_state, $tz_offset;
-
-  // show subtasks that are not complete
-  $q = db_query("SELECT id, name, status, globalaccess, usergroupid,
+function listTasks($projectid ) {
+  global $x, $epoch, $now ,$admin, $gid, $lang, $task_state, $tz_offset;
+  global $task_array, $parent_array, $used_array;
+   
+  $content = "";
+  //$used_array ="";
+  $parent_array = "";
+    
+  $q = db_query("SELECT id,
+                        name,
+                        parent, 
+                        status, 
+                        globalaccess, 
+                        usergroupid, 
                         ".$epoch." deadline )
-                        FROM ".PRE."tasks
-                        WHERE projectid=".$task_id."
-                        AND parent<>0
-                        AND status<>'done'
-                        ORDER BY deadline DESC" );
-
-  if(db_numrows($q ) == 0 )
+                       FROM ".PRE."tasks WHERE projectid=$projectid 
+                       AND parent<>0
+                       AND status<>'done'
+                       ORDER BY name" );
+  
+  if(db_numrows($q) < 1 )
     return;
-
-   $content = "<ul>\n";
-
-   for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
-
+  
+  $content = "<ul>\n";  
+    
+  for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
+  
     //check if user can view this task
-    if( ($admin != 1 ) && ($row[3] != "t" ) && ($row[4] != 0 ) ) {
-      if( ! in_array( $row[4], (array)$gid ) )
+    if( ($admin != 1 ) && ($row[4] != "t" ) && ($row[5] != 0 ) ) {
+      if( ! in_array( $row[5], (array)$gid ) )
         continue;
     }
 
-    $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[0]."\">".$row[1]."</a> &nbsp;";
-
-    switch( $row[2] ) {
-
+    //put values into array
+    $task_array[$i]["id"] = $row[0];
+    $task_array[$i]["name"] = $row[1];
+    $task_array[$i]["parent"] = $row[2];
+    
+    //add suffix information
+    switch( $row[3] ) {
       case "cantcomplete":
-        $content .= "<b><i>".$task_state["cantcomplete"]."</i></b>";
+        $task_array[$i]["state"] = "<b><i>".$task_state["cantcomplete"]."</i></b>";
         break;
 
       case "notactive":
-        $content .= "<i>".$task_state["task_planned"]."</i>";
+        $task_array[$i]["state"] = "<i>".$task_state["task_planned"]."</i>";
         break;
 
       default:
         //check if late
-        if( ($now + $tz_offset - $row[5] ) >= 86400 ) {
-          $content .= "<span class=\"late\">".$lang["late_g"]."</span>";
+        if( ($now + $tz_offset - $row[6] ) >= 86400 ) {
+          $task_array[$i]["state"] = "<span class=\"late\">".$lang["late_g"]."</span>";
         }
         break;
     }
+        
+    //if this is a subtask, store the parent id 
+    if($row[2] != $projectid ) {
+      $parent_array[] = $row[2];
+    }
+  }
+  
+  if(sizeof($parent_array) > 10 )
+    $parent_array = array_unique($parent_array);
+  $max = sizeof($task_array);
+  
+  //iteration for main tasks
+  for($i=0 ; $i < $max ; $i++ ){
+  
+    //ignore subtasks in this iteration
+    if($task_array[$i]["parent"] != $projectid ){
+      continue;
+    }
+    $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_array[$i]["id"]."\">".$task_array[$i]["name"]."</a> &nbsp;".$task_array[$i]["state"]."<br />\n";
+    
+    //if this task has children (subtasks), iterate recursively to find them 
+    if(in_array($task_array[$i]["id"], (array)$parent_array ) ){
+      $content .= find_children($task_array[$i]["id"] );
+    }
     $content .= "</li>\n";
   }
-  $content .= "</ul>\n";
+  $content .= "</ul>\n";  
+  return $content;   
+}   
+
+//
+// List subtasks (recursive function)
+//
+function find_children($parent ) {
+
+  global $task_array, $parent_array, $used_array, $x;
+
+  $content = "<ul>\n";
+  $max = sizeof($task_array);
+       
+  for($i=0 ; $i < $max ; $i++ ) {
+    
+    //ignore tasks not directly under this parent
+    if($task_array[$i]["parent"] != $parent ){
+      continue;
+    }
+    $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_array[$i]["id"]."\">".$task_array[$i]["name"]."</a> &nbsp;".$task_array[$i]["state"]."<br />\n";
+    
+    //if this task has children (subtasks), iterate recursively to find them
+    if(in_array($task_array[$i]["id"], $parent_array ) ){
+      $content .= find_children($task_array[$i]["id"] );
+    }
+    $content .= "</li>\n";    
+  }
+  $content .= "</ul>\n"; 
   return $content;
-}
+}      
 
 //
 //START OF MAIN PROGRAM
