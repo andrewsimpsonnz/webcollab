@@ -60,6 +60,25 @@ function reparent_children($task_id ) {
 return;
 }
 
+//
+// Adjust and set completion status 
+//
+
+function adjust_completion($projectid ) {
+
+  //set completed percentage project record
+  $percent_completed = percent_complete($projectid );
+  db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$projectid );
+  
+  //for completed project set the completion time
+  if($percent_completed == 100 ){
+    $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM ".PRE."tasks WHERE projectid=$projectid" ), 0, 0 );
+    db_query("UPDATE ".PRE."tasks SET completion_time='".$completion_time."' WHERE id=".$projectid );
+  }
+  return;
+}
+
+//MAIN PROGRAM
 if(empty($_POST['name']) )
   warning($lang['task_submit'], $lang['missing_values'] );
 
@@ -134,7 +153,9 @@ $projectid = $row['projectid'];
 //if the user has chosen to reparent, then do it now
 //(we do this after the main update, then if anything breaks, the database is not corrupted)
 if($row['parent'] != $parentid ) {
-  //set new projectid
+  //first we store the old details
+  $old_projectid = $projectid;  
+  //now we set the new projectid
   if($parentid == 0 )
     $projectid = $taskid;
   else
@@ -149,6 +170,9 @@ if($row['parent'] != $parentid ) {
     db_query("UPDATE ".PRE."tasks SET projectid=$projectid, parent=$parentid WHERE id=$taskid" );
     reparent_children($taskid );
   }
+  
+  //adjust completion status in former project
+  adjust_completion($old_projectid );
 }
 
 //make adjustments for child tasks
@@ -169,15 +193,8 @@ if($parentid == 0 ) {
   }
 }
 
-//set completed percentage project record
-$percent_completed = percent_complete($projectid );
-db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$projectid );
-
-//for completed project set the completion time
-if($percent_completed == 100 ){
-  $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM ".PRE."tasks WHERE projectid=$projectid" ), 0, 0 );
-  db_query("UPDATE ".PRE."tasks SET completion_time='".$completion_time."' WHERE id=".$projectid );
-}
+//adjust completion status in project
+adjust_completion($projectid );
 
 //transaction complete
 db_commit();
