@@ -154,17 +154,17 @@ if(! $handle = @fopen("config/config.php", "w" ) ) {
 create_top_setup("Setup Screen" );
 
 $content = "<div align=\"center\">\n".
-            "<p>Setup is complete.</p>\n".
+            "<p>Setup is complete!</p>\n".
             "<p>The configuration information has been saved to 'config.php'. ".
             "This file can edited with a text editor to make further changes to configuration.</p>\n".
             "<p>For best security on *nix operating systems, remember to remove the world writeable permissions from 'config.php'.</p>\n".
-            "<p>Please press the button to login...</p>\n";
+            "<p>Please press the button to finish configuration, and login to WebCollab...</p>\n";
 
 if($data["new_db"] == "Y" )
   $content .= "<p>You have a new database. Your default login and password are 'admin' and 'admin123'</p>\n";
 
 $content .=  "<p><form name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
-             "<input type=\"submit\" value=\"Login\" />\n".
+             "<input type=\"submit\" value=\"Finish\" />\n".
              "</form></p>\n".
              "</div>\n";
 

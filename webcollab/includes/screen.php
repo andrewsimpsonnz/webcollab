@@ -229,7 +229,7 @@ function create_bottom() {
   echo "</td></tr>\n</table>\n";
 
   //shows the logo
-  echo "<div class=\"bottomtext\">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" target=\"newwindow\">WebCollab</a>&nbsp;&copy; 2002-2004</div>\n<br>\n";
+  echo "<div class=\"bottomtext\">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" target=\"newwindow\">WebCollab</a>&nbsp;&copy;2002-2004</div>\n<br>\n";
   //end xml parsing
   echo "</body>\n</html>\n";
   return;

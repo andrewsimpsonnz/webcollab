@@ -101,7 +101,7 @@ $content .= "<form method=\"POST\" action=\"setup_handler.php\">".
             "<input type=\"hidden\" name=\"action\" value=\"setup4\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"$new_db\" />\n".
-            "<p><table border=\"0\">";
+            "<table border=\"0\">";
 
 if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" ){
   $file_path = realpath(dirname(__FILE__ ).'/..' ).'/';
@@ -235,7 +235,7 @@ $content .= "<tr><td><br /><br /></td><td><i>Items below are required if email i
 
 $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
              "<tr><td></td><td><input type=\"submit\" value=\"Submit\" /></td></tr>\n".
-             "</table></p>\n".
+             "</table>\n".
              "</form>\n";
 
 new_box_setup( "Setup - Stage 3 of 5 : Configuration", $content, "boxdata", "tablebox" );
