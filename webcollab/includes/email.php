@@ -28,6 +28,7 @@
 
   Refer to RFC 821, RFC 822 and RFC 2045 for SMTP.
   Refer to RFC 2554 for SMTP AUTH
+  Refer to RFC 2076 for a summary of common headers
 
 */
 
@@ -89,6 +90,10 @@ function email($to, $subject, $message ) {
 
   //if user aborts, let the script carry onto the end
   ignore_user_abort(TRUE);
+
+  //fix up any html on the subject line
+  //  (message body is cleaned up at source with either trans() or clean() )
+  $subject = trans($subject );
 
   //send message using SMTP
   //open an SMTP connection at the mail host
@@ -180,7 +185,7 @@ function email($to, $subject, $message ) {
   $lines_out = "";
   //check if we need to break up into several smaller lines
   while(strlen($line ) > 998 ) {
-    $pos = strrpos(substr($line, 0, 998 ), " " );
+    $pos = strrpos(substr($line, 0, 998 ), "," );
     $lines_out[] = substr($line, 0, $pos );
     $line = "\t".substr($line, $pos + 1 );
   }
@@ -197,56 +202,70 @@ function email($to, $subject, $message ) {
 
   $uniq_id = md5(mt_rand() );
 
-  //we can reasonably assume that these headers will always be less than 998 characters per line
-  //(subject line is truncated just to be sure)
+  //assemble remaining message headers (RFC 821 / RFC 2045)
+  //(subject line is truncated to 998 characters)
   $headers = array("From: ".$EMAIL_FROM."\r\n",
-                        "Reply-To: ".$EMAIL_REPLY_TO."\r\n",
-                        "Subject: ".substr($subject, 0, 985 )."\r\n",
-                        "Message-Id: <".$uniq_id."@".$_SERVER["SERVER_NAME"].">\r\n",
-                        "X-Mailer: PHP/" . phpversion()."\r\n",
-                        "X-Priority: 3\r\n",
-                        "X-Sender: ".$EMAIL_REPLY_TO."\r\n",
-                        "Return-Path: <".$EMAIL_REPLY_TO.">\r\n",
-                        "Mime-Version: 1.0\r\n",
-                        "Content-Type: text/plain; $email_charset\r\n",
-                        "Content-Transfer-Encoding: $email_encode\r\n \r\n");
+                    "Reply-To: ".$EMAIL_REPLY_TO."\r\n",
+                    "Subject: ".substr($subject, 0, 985 )."\r\n",
+                    "Message-Id: <".$uniq_id."@".$_SERVER["SERVER_NAME"].">\r\n",
+                    "X-Mailer: PHP/" . phpversion()."\r\n",
+                    "X-Priority: 3\r\n",
+                    "X-Sender: ".$EMAIL_REPLY_TO."\r\n",
+                    "Return-Path: <".$EMAIL_REPLY_TO.">\r\n",
+                    "Mime-Version: 1.0\r\n",
+                    "Content-Type: text/plain; $email_charset\r\n",
+                    "Content-Transfer-Encoding: $email_encode\r\n \r\n" );
 
-  //send headers line by line
-  for( $i=0; $i < 11; $i++ ) {
-    fputs($connection, $headers[$i] );
+  //send headers to server
+  while(list(,$line_out) = @each($headers ) ) {
+  fputs($connection, $line_out );
   }
 
-  // according to rfc 821 we should not send more than 998 characters on a single line
-  // thanks to phpmailer for this code...
-
-  //normalise the line breaks so we know the explode works
+  //normalise end-of-lines in message body to \n - and change back to \r\n later
   $message = str_replace("\r\n", "\n", $message );
   $message = str_replace("\r", "\n", $message );
-  $all_lines = explode("\n", $message );
 
-  while(list(,$line ) = @each($all_lines ) ) {
-    $lines_out = "";
-    //check if we need to break this line up into several smaller lines
-    while(strlen($line) > 998 ) {
-      $pos = strrpos(substr($line, 0, 998 ), " " );
-      $lines_out[] = substr($line, 0, $pos );
-      $line = substr($line, $pos + 1 );
-    }
-    $lines_out[] = $line;
+  //encode message body
+  switch($email_encode ){
+    case "base64":
+    case "binary":
+      $message = base64_encode($message );
+      //break into chunks of 76 characters per line (RFC 2045)
+      $message = chunk_split($message, 76, "\n" );
+      break;
 
-    //now send the lines to the server
-    while(list(,$line_out) = @each($lines_out ) ) {
-      if(strlen($line_out) > 0 ){
-        // for lines starting with . add another .
-        if(substr($line_out, 0, 1 ) == "." ) {
-          $line_out = "." . $line_out;
-        }
-      }
-      fputs($connection, "$line_out\r\n" );
-    }
+    case "7bit":
+    case "8bit":
+      //break up any lines longer than 998 bytes (RFC 821)
+      $message = wordwrap($message, 998, "\n" );
+      break;
+
+    case "quoted-printable":
+      if(substr($message, -2 ) != "\n" )
+          $message .= "\n";
+
+      //replace high ascii, control and = characters (RFC 2045)
+      $message = preg_replace('/([\000-\010\013\014\016-\037\075\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $message);
+      //replace spaces and tabs when it's the last character on a line (RFC 2045)
+      $message = preg_replace("/([\011\040])\n/e", "'='.sprintf('%02X', ord('\\1')).'\n'", $message);
+      //break up any lines longer than 76 characters with soft line breaks " =\r\n" (RFC 2045)
+      //(end of line \n gets changed to \r\n after explode)
+      $message = wordwrap($message, 74, " =\n" );
+      break;
+
+    default:
+      debug("Illegal email encoding requested:<br /><br />$email_decode is not valid.  Check the language file");
+      break;
   }
 
-  // ok all the message data has been sent - finish with a period on it's own line
+  $lines_out = explode("\n", $message );
+
+  //send message to server (with correct end-of-line \r\n)
+  while(list(,$line_out) = @each($lines_out ) ) {
+    fputs($connection, "$line_out\r\n" );
+  }
+
+  //ok all the message data has been sent - finish with a period on it's own line
   fputs($connection, "\r\n.\r\n" );
   $res = fgets($connection, 256 );
   if(substr($res, 0, 3 ) != "250" )
