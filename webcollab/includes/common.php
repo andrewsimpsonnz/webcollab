@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -73,9 +73,6 @@ return $body;
 }
 
 function clean_up($body ) {
-
-  //normalise any UTF-8 that's floated in...
-  $body = utf8_decode($body );
 
   //protect against database query attack
   if(! get_magic_quotes_gpc() )
