@@ -194,7 +194,7 @@ function new_box($title, $content, $style="boxdata", $size="tablebox" ) {
   echo "\n<br />";
 
   echo "
-  <table class=\"".$size."\">
+  <table class=\"".$size."\" cellspacing=\"0\">
     <tr>
       <td class=\"boxhead\">".$title."</td>
     </tr>
