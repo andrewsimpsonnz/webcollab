@@ -4,9 +4,15 @@ WebCollab CVS
 
 - minor changes to SMTP email
 
+- minor changes to security.php
+
+- minor changes to tasks_submit.php 
+
 - added database creation script for MySQL innodb
 
 - bugfix: MySQL innodb does not unlock tables after use
+
+- bugfix: files_submit does not recognise MySQL innodb
 
 - add FAQ
 
