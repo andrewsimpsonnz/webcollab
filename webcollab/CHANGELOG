@@ -1,4 +1,16 @@
 WebCollab CVS
+*** 27 June 2003
+  Andrew Simpson
+
+- added French translation (Pierre Jean)
+
+- make formatting of HTML pages more consistent throughout the code
+
+- make 'reset' button language specific
+
+- fix up a few language bugs
+
+WebCollab CVS
 *** 26 June 2003
   Andrew Simpson
 
