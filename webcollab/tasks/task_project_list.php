@@ -43,10 +43,10 @@ function listTasks($task_id ) {
 
   // show subtasks that are not complete
   $q = db_query("SELECT id, name, deadline, status, globalaccess, usergroupid,
-                        $epoch deadline ) AS task_due,
-                        $epoch now() ) AS now
+                        ".$epoch." deadline ) AS task_due,
+                        ".$epoch." now() ) AS now
                         FROM tasks
-                        WHERE projectid=$task_id
+                        WHERE projectid=".$task_id."
                         AND parent<>0
                         AND status<>'done'
                         ORDER BY deadline DESC" );
@@ -105,8 +105,8 @@ $active_only = 0;
                         finished_time,
                         deadline,
                         status,
-                        $epoch deadline ) AS due,
-                        $epoch now() ) AS now,
+                        ".$epoch." deadline ) AS due,
+                        ".$epoch." now() ) AS now,
                         usergroupid,
                         globalaccess
                         FROM tasks
@@ -127,15 +127,15 @@ if(isset($_GET["active"] ) )
 $content .= "<table border=\"0\" width=\"98%\"><tr><td>\n".
             "<font class=\"textlink\">";
 if($active_only )
-  $content .= "[<a href=\"main.php?x=$x&amp;active=0\">".$lang["show_all_projects"]."</a>]";
+  $content .= "[<a href=\"main.php?x=".$x."&amp;active=0\">".$lang["show_all_projects"]."</a>]";
 else
-  $content .= "[<a href=\"main.php?x=$x&amp;active=1\">".$lang["show_active_projects"]."</a>]";
+  $content .= "[<a href=\"main.php?x=".$x."&amp;active=1\">".$lang["show_active_projects"]."</a>]";
 
 //text link for 'printer friendly' page
 if(isset($_GET["action"]) && $_GET["action"] == "project_print" )
-  $content  .= "\n[<a href=\"main.php?x=$x&amp;active=$active_only\">".$lang["normal_version"]."</a>]";
+  $content  .= "\n[<a href=\"main.php?x=".$x."&amp;active=".$active_only."\">".$lang["normal_version"]."</a>]";
 else
-  $content  .= "</font></td>\n<td align=\"right\"><font class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;active=$active_only&amp;action=project_print\">".$lang["print_version"]."</a>]";
+  $content  .= "</font></td>\n<td align=\"right\"><font class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;active=".$active_only."&amp;action=project_print\">".$lang["print_version"]."</a>]";
 $content .= "<font></td></tr>\n</table>\n";
 
 //setup main table
