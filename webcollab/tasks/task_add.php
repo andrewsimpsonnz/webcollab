@@ -1,15 +1,14 @@
 <?php
 /*
   $Id$
+  
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
-  with much help from the people noted in the README
-
-  Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
-  by Andrew Simpson <andrew.simpson@paradise.net.nz>
-
+  
+  Based on CoreAPM by Dennis Fleurbaaij 2001/2002
+  
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -49,7 +48,7 @@ $priority_select_box = "<tr><td>".$lang["priority"].":</td> <td>\n".
                        "</select>\n</td></tr>\n";
 
 
-$content .= "<form name=\"inputform\" method=\"POST\" action=\"tasks/task_submit.php\">\n";
+$content .= "<form name=\"inputform\" method=\"POST\" action=\"tasks/task_submit.php\" onsubmit=\"return fieldCheck()\" >\n";
 $content .= "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ";
 $content .= "<input type=\"hidden\" name=\"action\" value=\"insert\" />\n ";
 
@@ -64,9 +63,15 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   $q = db_query("SELECT name, deadline, status, owner, parent, projectid FROM tasks WHERE id=$parentid" );
   $task_row = @db_fetch_array($q, 0 );
 
+  //add the project deadline for the javascript
+  // Note: date(Z) converts to GMT/UTC  since javascript doesn't use localtime
+  $project_deadline = db_result(db_query("SELECT ".$epoch."deadline) FROM tasks WHERE id=".$task_row["projectid"] ) ) + (int)date("Z");
+  $content .=  "<input type=\"hidden\" name=\"projectDate\" value=\"$project_deadline\" />\n";            
+                
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" />\n".
               "<input type=\"hidden\" name=\"projectid\" value=\"".$task_row["projectid"]."\" />\n".
               "<p><table border=\"0\">\n";
+  
   //show project name
   if( $task_row["projectid"] == $parentid)
     $project = $task_row["name"];
@@ -146,7 +151,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
               "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></label></td></tr>\n".
 
               "</table></p>\n".
-              "<p><input type=\"submit\" value=\"".$lang["add_task"]."\" />&nbsp;".
+              "<p><input type=\"submit\" value=\"".$lang["add_task"]."\" onclick=\"return dateCheck()\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
               "</form>\n";
 
@@ -160,8 +165,7 @@ else {
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"0\" />\n".
               "<input type=\"hidden\" name=\"projectid\" value=\"0\" />\n".
               //taskgroup - we don't have this for projects
-              "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" />\n".
-
+              "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" />\n";
               "<p><table border=\"0\">\n".
               "<tr><td>".$lang["creation_time"].":</td><td>".date("F j, Y, H:i")."</td></tr>\n".
               "<tr><td>".$lang["project_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".

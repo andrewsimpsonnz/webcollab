@@ -2,13 +2,12 @@
 /*
   $Id$
 
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  
   WebCollab
   ---------------------------------------
-  Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
-  with much help from the people noted in the README
-
-  Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
-  by Andrew Simpson <andrew.simpson@paradise.net.nz>
+  Based on original file written for CoreAPM by Dennis Fleurbaaij, Andrew Simpson &
+  Marshall Rose 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -86,8 +85,13 @@ $content = "";
 $content .= "<form method=\"POST\" action=\"tasks/task_submit.php\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"update\" />\n ".
-            "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\" />".
-            "<p><table border=\"0\">\n".
+            "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\" />";
+            
+//add project deadline for javascript
+$project_deadline = db_result(db_query("SELECT ".$epoch."deadline) FROM tasks WHERE id=".$row["projectid"] ) ) + (int)date("Z");
+$content .=  "<input type=\"hidden\" name=\"projectDate\" value=\"$project_deadline\" />\n";            
+              
+$content .=  "<p><table border=\"0\">\n".
             "<tr><td>".$lang["creation_time"]."</td><td>".nicedate($row["created"] )."</td></tr>\n";
 
 //select either project or task for text
@@ -315,7 +319,7 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
              "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" $DEFAULT_GROUP /></label></td></tr>\n".
 
              "</table></p>\n".
-             "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;".
+             "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" onclick=\"return dateCheck()\" />&nbsp;".
              "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
              "</form>\n";
 
