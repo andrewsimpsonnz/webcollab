@@ -35,6 +35,10 @@ require_once(BASE."includes/security.php" );
 include_once(BASE."tasks/task_common.php" );
 include_once(BASE."includes/time.php" );
 
+//initialise variables
+$no_access_project[0] = 0;
+$no_access_group[0] = 0;
+
 //
 // MAIN FUNCTION
 //
@@ -42,6 +46,7 @@ include_once(BASE."includes/time.php" );
 
 function project_summary( $tail, $depth=0, $equiv="" ) {
   global $x, $uid, $gid, $admin, $lang, $task_state;
+  global $no_access_project, $no_access_group;
   global $sortby;
   global $epoch;
 
@@ -56,6 +61,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
                          tasks.taskgroupid AS taskgroupid,
                          tasks.usergroupid AS usergroupid,
                          tasks.globalaccess AS globalaccess,
+                         tasks.projectid AS projectid,
                          $epoch now() ) AS now,
                          $epoch deadline) AS due,
                          $epoch tasks.edited ) AS edited,
@@ -73,12 +79,19 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
   //reset variables
   $result = "";
 
-  //check user permissions
+
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+    //check usergroup permissions
     if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' )) {
-      if( ! in_array( $row["usergroupid"], (array)$gid ) ) {
+      if( ! in_array( $row["usergroupid"], (array)$gid ) )
         continue;
-      }
+    }
+
+    //don't show tasks in private usergroup projects
+    if( ($admin != 1 ) && in_array($row["projectid"], (array)$no_access_project) ) {
+      $key = array_search($row["projectid"], $no_access_project );
+      if( ! in_array($no_access_group[$key], (array)$gid ) )
+        continue;
     }
 
     $due = round( ($row["due"] - $row["now"])/86400 );
@@ -330,6 +343,14 @@ $content .= "\">";
 $content .= "<b>".$lang["group"]."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=taskname\">";
 $content .= "<b>".$lang["task"]."</b></a></small></td></tr>";
+
+//get list of private projects and put them in an array for later use
+$q = db_query("SELECT id, usergroupid FROM tasks WHERE parent=0 AND globalaccess='f'" );
+
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
+  $no_access_project[$i] = $row[0];
+  $no_access_group[$i] = $row[1];
+}
 
 // tail end of SQL query
 switch($sortby ) {

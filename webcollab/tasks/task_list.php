@@ -265,8 +265,20 @@ $q = db_query("SELECT tasks.id AS id,
 if( ! isset($parentid) || ! is_numeric($parentid) || $parentid == 0 )
   error( "Task list", "Not a valid value for taskid");
 
-//find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query
 $projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=$parentid" ), 0, 0 );
+
+//check for private usergroup projects
+$q = db_query("SELECT usergroupid, globalaccess FROM tasks WHERE id=$projectid" );
+$row = db_fetch_num($q, 0 );
+
+if( ($admin != 1) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
+
+  //check if the user has a matching group
+  if( ! in_array($project_row[0], (array)$gid ) )
+    return;
+}
+
+//find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query
 $parent_query = db_query("SELECT DISTINCT parent FROM tasks WHERE projectid=$projectid" );
 $parent_array = NULL;
 for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; $i++ ) {
