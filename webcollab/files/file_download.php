@@ -30,17 +30,14 @@ require_once( BASE."includes/security.php" );
 
 include_once( BASE."config.php" );
 
-//set variable
-$found = 0;
-
 if( ! isset($_GET["fileid"]) || ! is_numeric($_GET["fileid"]) )
   return;
 
 $fileid = $_GET["fileid"];
 
 //check usergroups associated with this file
-if( ! ($q = db_query("SELECT tasks.usergroupid,
-                             tasks.globalaccess
+if( ! ($q = db_query("SELECT tasks.usergroupid AS usergroupid,
+                             tasks.globalaccess AS globalaccess
                              FROM files
                              LEFT JOIN tasks ON (files.taskid=tasks.id)
                              WHERE files.id=$fileid" ) ) )
@@ -52,19 +49,8 @@ if( ! ($row = db_fetch_array($q, 0 ) ) )
 
 //admins can go free the rest is checked
 if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
-  //check if the user has a matching group
-  $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$uid" );
-  for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
-
-    //found it
-    if($row["usergroupid"] == $usergroup_row["usergroupid"] ) {
-      $found=1;
-      break;
-    }
-  }
-
-  //deny access if not in the group
-  if($found != 1 )
+  //check if the user has a matching usergroup
+  if( ! in_array($row["usergroupid"], (array)$gid ) )
     warning($lang["access_denied"], $lang["private_usergroup"] );
 }
 

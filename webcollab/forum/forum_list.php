@@ -92,7 +92,7 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
       $this_content .= " <font class=\"textlink\">[<a href=\"forum/forum_submit.php?x=$x&amp;action=del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm( '".$lang["confirm_del_javascript"]."' )\">".$lang["del"]."</a>]</font>";
     }
 
-    $this_content .= "<br />\n".nl2br($row["text"] )."\n";
+    $this_content .= "<br />\n".$row["text"]."\n";
 
     //recursive search
     if(in_array($row["id"], $parent_array, FALSE ) ) {
@@ -120,57 +120,48 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $parent_array[$i] = $row["parent"];
 }
 
+//get usergroup and check for globalaccess
+$q = db_query("SELECT usergroupid, globalaccess FROM tasks WHERE id=$taskid" );
+$row = db_fetch_array($q, 0 );
+
 //
 //public forums
 //
-$content = "";
 
-//all the posts that have parentid 0 (the taskid is included in the query itself so this will _not_ show all results)
-$content .= list_posts_from_task( 0, $taskid, 0 );
-if($ul_flag == 1 )
-  $content .= "</ul>\n<br />\n";
-//add an option to add posts
-$content .= "<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang["new_post"]."</a>]</font>";
-//show it
-new_box($lang["public_user_forum"], $content, "boxdata2" );
+//don't show public forum if task is set to private
+if($row["globalaccess"] == 't' ){
+
+  $content = "";
+
+  //all the posts that have parentid 0 (the taskid is included in the query itself so this will _not_ show all results)
+  $content .= list_posts_from_task( 0, $taskid, 0 );
+  if($ul_flag == 1 )
+    $content .= "</ul>\n<br />\n";
+  //add an option to add posts
+  $content .= "<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang["new_post"]."</a>]</font>";
+  //show it
+  new_box($lang["public_user_forum"], $content, "boxdata2" );
+}
 
 //
 //private forums
 //
-$content = "";
 
-//show all posts that are private to that task's user-group if you are withing the group (so AND user AND task have to belong to the same group)
-$task_usergroup = db_result(db_query("SELECT usergroupid FROM tasks WHERE id=$taskid" ), 0, 0 );
+//show all posts that are private to that task's user-group if you are within the group (so AND user AND task have to belong to the same group)
 
 //dont show private forums if the task has not yet been assigned to a usergroup
-if( $task_usergroup != 0 ) {
+if($row["usergroupid"] != 0 ) {
 
-  $found = 0;
+  $content = "";
 
-  //check if the user has a matching group
-  $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$uid" );
-  for($i=0; $usergroup_row = @db_fetch_num($usergroup_q, $i ); $i++ ) {
+  if(in_array($row["usergroupid"], (array)$gid ) || $admin == 1 ) {
 
-    //found it
-    if($task_usergroup == $usergroup_row[0] ) {
-      $found=1;
-      break;
-    }
-  }
-
-  //if the user is an admin, access is granted
-  if($admin == 1 )
-    $found = 1;
-
-  //give access if there was a match
-  if($found == 1 ) {
-
-    $content .= list_posts_from_task(0, $taskid, $task_usergroup);
+    $content .= list_posts_from_task(0, $taskid, $row["usergroupid"] );
     if($ul_flag == 1 )
       $content .= "</ul>\n<br />\n";
     //add an option to add posts
-    $usergroup_name = db_result( db_query("SELECT name FROM usergroups WHERE id=$task_usergroup" ), 0, 0 );
-    $content .= "<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=$task_usergroup&amp;\">".$lang["new_post"]."</a>]</font>";
+    $usergroup_name = db_result( db_query("SELECT name FROM usergroups WHERE id=".$row["usergroupid"] ), 0, 0 );
+    $content .= "<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=".$row["usergroupid"]."&amp;\">".$lang["new_post"]."</a>]</font>";
     //show it
     new_box(sprintf($lang["private_forum_sprt"], $usergroup_name ), $content, "boxdata2" );
   }
