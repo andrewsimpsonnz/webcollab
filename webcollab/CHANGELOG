@@ -2,6 +2,14 @@ WebCollab CVS
 *** 13 September 2003
   Andrew Simpson
 
+- remove 'valid_string' function
+
+- bugfix: centering bug in css fixed
+
+WebCollab CVS
+*** 13 September 2003
+  Andrew Simpson
+
 - add <label> tags
 
 - don't seed random number generators unnecessarily
