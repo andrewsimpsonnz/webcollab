@@ -40,6 +40,9 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
   $taskid = intval($_GET["taskid"]);
   
   include_once(BASE."includes/details.php" );
+  
+  if($taskid_row["parent"] != 0 )
+    $type = "task";
 
   if(($admin == 1 ) || ($taskid_row["owner"] == $uid ) ) {
     $content .= "<small><b>".$lang["admin"].":</b></small><br />\n".
