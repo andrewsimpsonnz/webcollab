@@ -32,9 +32,9 @@ $DATABASE_NAME = "--";
 require_once("path.php" );
 
 //read config files
-require("../config.php" );
-include_once("../database/database.php" );
-include_once("./screen_setup.php" );
+require(BASE."config/config.php" );
+include_once(BASE."database/database.php" );
+include_once(BASE."setup/screen_setup.php" );
 
 //
 //Error trap function

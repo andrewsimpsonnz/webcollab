@@ -25,6 +25,8 @@
 
 */
 
+require_once("path.php" );
+
 //
 // Creates the inital window, and sets some vars. This _HAS_ to be the first function because of the header() calls
 //
@@ -53,7 +55,7 @@ function create_top_setup($title="" ) {
        "<title>$title</title>\n".
        "<meta http-equiv=\"Pragma\" content=\"no-cache\">".
        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n".
-       "<link rel=\"StyleSheet\" href=../css/default.css type=\"text/css\">\n".
+       "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\">\n".
        "</head>\n\n".
        "<body>\n".
        "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">\n";

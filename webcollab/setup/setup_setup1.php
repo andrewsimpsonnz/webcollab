@@ -25,16 +25,18 @@
 
 */
 
-require_once("../config.php" );
-require_once("./security_setup.php" );
-include_once("./screen_setup.php" );
+require_once("path.php" );
+
+require_once(BASE."config/config.php" );
+require_once(BASE."setup/security_setup.php" );
+include_once(BASE."setup/screen_setup.php" );
 
 $content = "";
 
 create_top_setup("Setup Screen" );
 
 //warn if config file cannot be written
-if( ! is_writable("../config.php" ) ) {
+if( ! is_writable("config/config.php" ) ) {
   $content .=  "<p><b>The webserver does not have permissions to write to the config file (config.php).</p>".
                 "<p>You can make a new database, but setup will not be able proceed and write to the config file.</p>\n".
                 "<p>To allow setup to alter the config file you can either:<ul>\n".
@@ -43,8 +45,9 @@ if( ! is_writable("../config.php" ) ) {
 }
 
 //input form
-$content .=    "<form method=\"POST\" action=\"setup_setup2.php\">\n".
+$content .=    "<form method=\"POST\" action=\"setup_handler.php\">\n".
                 "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+                "<input type=\"hidden\" name=\"action\" value=\"setup2\" />\n".
                 "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n";
 
 if(isset($DATABASE_NAME) && $DATABASE_NAME != "" ) {
@@ -56,8 +59,9 @@ else{
 
 $content .=   "<div align=\"center\"><input type=\"submit\" value=\"Yes\" /></div>\n".
                "</form>\n".
-               "<form method=\"POST\" action=\"setup_setup3.php\">\n".
+               "<form method=\"POST\" action=\"setup_handler.php\">\n".
                "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+               "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
                "<input type=\"hidden\" name=\"new_db\" value=\"N\" />\n".
                "<br /><div align=\"center\"><input type=\"submit\" value=\"No\" /></div>\n".
                "</form>\n";

@@ -25,9 +25,11 @@
 
 */
 
-require_once("../config.php" );
-require_once("./security_setup.php" );
-include_once("./screen_setup.php" );
+require_once("path.php" );
+
+require_once(BASE."config/config.php" );
+require_once(BASE."setup/security_setup.php" );
+include_once(BASE."setup/screen_setup.php" );
 
 
 create_top_setup("Setup Screen" );
@@ -35,7 +37,9 @@ create_top_setup("Setup Screen" );
 $content ="<p><b>Setup - Stage 2 of 5 : Database Setup</b></p>\n";
 
 $content .=
-"<form method=\"POST\" action=\"setup_db_build.php\">\n".
+"<form method=\"POST\" action=\"setup_handler.php\">\n".
+  "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+  "<input type=\"hidden\" name=\"action\" value=\"build\" />\n".
   "<p>Please enter database details.  The database user given here must be able to create databases.<br />\n".
   "(If desired, you can change the database user to a less privileged user in the next screen entry).</p>\n".
   "<p><table border=\"0\">\n".
@@ -53,7 +57,6 @@ $content .=
       "<option value=\"mysql_innodb\">mysql with innodb</option>\n".
     "</select></td></tr>\n".
     "</table></p>\n".
-  "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
   "<input type=\"submit\" value=\"Submit\" />\n".
 "</form>\n";
 

@@ -25,9 +25,11 @@
 
 */
 
-require_once("../config.php" );
-require_once("./security_setup.php" );
-include_once("./screen_setup.php" );
+require_once("path.php" );
+
+require_once(BASE."config/config.php" );
+require_once(BASE."setup/security_setup.php" );
+include_once(BASE."setup/screen_setup.php" );
 
 //essential values - must be present
 $array_essential = array("db_name", "db_user", "db_password", "db_type", "db_host", "base_url", "locale" );
@@ -64,7 +66,7 @@ $flag = 0;
 
 create_top_setup("Setup Screen" );
 
-$content .= "<form method=\"POST\" action=\"setup_setup5.php\">";
+$content .= "<form method=\"POST\" action=\"setup_handler.php\">";
 
 //output essential values for POST
 foreach($array_essential as $var ) {
@@ -77,6 +79,7 @@ $content .= "<input type=\"hidden\" name=\"$var\" value=\"".$data[$var]."\" />\n
 }
 
 $content .= "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+             "<input type=\"hidden\" name=\"action\" value=\"setup5\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />\n".
             "<p><table border=\"0\">";
 
@@ -209,9 +212,9 @@ $content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td
 $status = "<font color=\"green\"><b>OK !</b></font>";
 
 //check language file exists and is readable
-if( (! is_readable("../lang/".$data["locale"]."_message.php" ) )
-  || (! is_readable("../lang/".$data["locale"]."_long_message.php" ) )
-  || (! is_readable("../lang/".$data["locale"]."_email.php" ) ) ) {
+if( (! is_readable(BASE."/lang/".$data["locale"]."_message.php" ) )
+  || (! is_readable(BASE."/lang/".$data["locale"]."_long_message.php" ) )
+  || (! is_readable(BASE."/lang/".$data["locale"]."_email.php" ) ) ) {
   $status = "<font color=\"red\"><b>Language file either does not exist, or file has been moved!</b></font>";
   $flag = $flag + 10;
 }

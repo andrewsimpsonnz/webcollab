@@ -25,9 +25,11 @@
 
 */
 
-require_once("../config.php" );
-require_once("./security_setup.php" );
-include_once("./screen_setup.php" );
+require_once("path.php" );
+
+require_once(BASE."config/config.php" );
+require_once(BASE."setup/security_setup.php" );
+include_once(BASE."setup/screen_setup.php" );
 
 //
 //Database build
@@ -86,10 +88,10 @@ include_once("./screen_setup.php" );
     }
 
     if($database_type == "mysql") {
-      $db_schema = "../db/schema_mysql.sql";
+      $db_schema = "db/schema_mysql.sql";
     }
     else {
-      $db_schema = "../db/schema_mysql_innodb.sql";
+      $db_schema = "db/schema_mysql_innodb.sql";
     }
 
     //sanity check
@@ -174,17 +176,17 @@ include_once("./screen_setup.php" );
     }
 
     //sanity check
-    if( ! is_readable("../db/schema_pgsql.sql" ) ) {
+    if( ! is_readable("db/schema_pgsql.sql" ) ) {
       error_setup("Database schema is missing.  Check that the file /db/schema_pgsql.sql exists and is readable by the webserver." );
     }
 
     //open schema file
-    if( ! $handle = fopen("../db/schema_pgsql.sql", "r" ) ) {
+    if( ! $handle = fopen("db/schema_pgsql.sql", "r" ) ) {
       error_setup("Not able to read database schema file" );
     }
 
     //input the file
-    $schema = fread($handle, filesize("../db/schema_pgsql.sql" ) );
+    $schema = fread($handle, filesize("db/schema_pgsql.sql" ) );
     fclose($handle );
 
     //roughly separate schema into individual table setups
@@ -214,7 +216,7 @@ include_once("./screen_setup.php" );
   }
 
   //check if config file can be written to
-  if( ! is_writable("../config.php" ) ) {
+  if( ! is_writable("config/config.php" ) ) {
     error_setup( "Your database has been successfully setup.<br \><br \>\n".
                  "The config file (config.php) exists, but the webserver does not have permissions to write to it.<br /><br />\n".
                  "You can either:<ul>\n<li>Change the file permissions to allow the webserver to write to the file 'config.php'</li>\n".
@@ -223,8 +225,9 @@ include_once("./screen_setup.php" );
 
 create_top_setup("Database Setup" );
 
-$content =  "<form method=\"POST\" action=\"setup_setup3.php\">\n".
+$content =  "<form method=\"POST\" action=\"setup_handler.php\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+            "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
             "<input type=\"hidden\" name=\"db_host\" value=\"$database_host\" />\n".
             "<input type=\"hidden\" name=\"db_user\" value=\"$database_user\" />\n".
             "<input type=\"hidden\" name=\"db_pass\" value=\"$database_password\" />\n".

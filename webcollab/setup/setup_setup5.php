@@ -24,10 +24,11 @@
   Write setup to config
 
 */
+require_once("path.php" );
 
-require_once("../config.php" );
-require_once("./security_setup.php" );
-include_once("./screen_setup.php" );
+require_once(BASE."config/config.php" );
+require_once(BASE."setup/security_setup.php" );
+include_once(BASE."setup/screen_setup.php" );
 
 //essential values - must be present
 $array = array("db_name", "db_user", "db_password", "db_type", "db_host", "base_url", "locale" );
@@ -135,11 +136,11 @@ $content = "<?php\n".
 '  //Use external webserver authorisation to login (values are "N", or "Y")'."\n".
 '  $WEB_AUTH = "N";'."\n".
 '  //WebCollab version string'."\n".
-'  $WEBCOLLAB_VERSION = "1.51 - Hebe";'."\n".
+'  $WEBCOLLAB_VERSION = "pre-1.60 - CVS working copy";'."\n".
 "?>\n";
 
 //open file for writing
-if(! $handle = @fopen("../config.php", "w" ) ) {
+if(! $handle = @fopen("config/config.php", "w" ) ) {
   error_setup("Cannot open config file for writing");
 }
 
@@ -162,7 +163,7 @@ $content = "<div align=\"center\">\n".
 if($data["new_db"] == "Y" )
   $content .= "<p>You have a new database. Your default login and password are 'admin' and 'admin123'</p>\n";
 
-$content .=  "<p><form name=\"inputform\" method=\"POST\" action=\"../index.php\">\n".
+$content .=  "<p><form name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
              "<input type=\"submit\" value=\"Login\" />\n".
              "</form></p>\n".
              "</div>\n";

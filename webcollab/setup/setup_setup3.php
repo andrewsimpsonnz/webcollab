@@ -25,12 +25,14 @@
 
 */
 
-require_once("../config.php" );
-require_once('./security_setup.php' );
-include_once("./screen_setup.php" );
+require_once("path.php" );
+
+require_once(BASE."config/config.php" );
+require_once(BASE."setup/security_setup.php" );
+include_once(BASE."setup/screen_setup.php" );
 
 //check config can be written
-if( ! is_writeable("../config.php" ) ){
+if( ! is_writeable(BASE."config/config.php" ) ){
   error_setup("Configuration file needs to be made writeable by the webserver to proceed.");
 }
 
@@ -95,8 +97,8 @@ create_top_setup("Setup Screen" );
 
 $content  = "";
 
-$content .= "<form method=\"POST\" action=\"setup_setup4.php\">".
-            "<input type=\"hidden\" name=\"action\" value=\"insert\" />\n".
+$content .= "<form method=\"POST\" action=\"setup_handler.php\">".
+            "<input type=\"hidden\" name=\"action\" value=\"setup4\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"$new_db\" />\n".
             "<p><table border=\"0\">";
@@ -157,7 +159,7 @@ $content .= "<tr><th>Database type:</th><td><select name=\"db_type\">\n".
 $content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td></tr>\n";
 
 if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" )
-  $FILE_BASE = realpath(dirname(__FILE__ ).'/..' )."/files/filebase";
+  $FILE_BASE = realpath(dirname(__FILE__ ) )."/files/filebase";
 
 if( ! isset($FILE_MAXSIZE) )
   $FILE_MAXSIZE = "2000000";
