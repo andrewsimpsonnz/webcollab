@@ -162,7 +162,7 @@ function db_begin() {
 
   global $database_connection;
 
-  mysql_query( "SET AUTOCOMMIT=0" )
+  mysql_query( "SET AUTOCOMMIT=0" );
 
 return;
 }
