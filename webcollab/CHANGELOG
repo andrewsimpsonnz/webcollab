@@ -1,4 +1,20 @@
 WebCollab CVS
+*** 27 April 2003
+  Andrew Simpson
+
+- bugfix #726902 (Adding contact with PostgreSQL)
+
+- bugfix #726866 (SMTP and mail dependencies)
+
+- add SMTP mail alternative to email.php
+
+WebCollab 1.31
+*** 19 April 2003
+  Andrew Simpson
+  
+- release
+
+WebCollab CVS
 *** 17 April 2003
   Andrew Simpson
 
@@ -9,6 +25,8 @@ WebCollab CVS
 - rewrite task_list to be HTML 4.01 compliant
 
 - rewrite taskgroup code in task_list to be more logical
+
+- minor improvements to database creation scripts
 
 - bugfix: Project summary showing projects 'on hold' or 'planned' as 'done' 
 
