@@ -99,9 +99,6 @@ $content = "";
 $flag = 0;
 $active_only = 0;
 
-if(isset($_GET["active"] ) )
-  $active_only = $_GET["active"];
-
 // query to get the projects
   $q = db_query("SELECT id,
                         name,
@@ -118,10 +115,14 @@ if(isset($_GET["active"] ) )
 
 //check if there are projects
 if(db_numrows($q) < 1 ) {
-  $content = "<div align=\"center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a></div>\n";
+  $content .= "<div align=\"center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a></div>\n";
   new_box($lang["no_projects"], $content );
   return;
 }
+
+if(isset($_GET["active"] ) )
+  $active_only = $_GET["active"];
+
 //text link for 'active' switch
 $content .= "<table border=\"0\" width=\"98%\"><tr><td>\n".
             "<font class=\"textlink\">";
@@ -143,31 +144,40 @@ $content .= "<table border=\"0\" cellpadding=\"20\">\n";
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
-  if($active_only ) {
-    //show only active projects
-    switch($row["status"] ) {
-
-      case "cantcomplete":
-      case "notactive":
-      case "done":
-        //skip this project
-        continue(2);
-        break;
-
-      case "active":
-      case "nolimit":
-      default:
-        //carry on & show details
-        break;
-    }
-  }
-
   //check the user has rights to view this project
   if( ($admin != 1 ) && ($row["globalaccess"] != "t" ) && ( $row["usergroupid"] != 0 ) ) {
     if( ! in_array( $row["usergroupid"], (array)$gid ) )
       continue;
   }
 
+  //get percentage complete
+  $percent_complete = round(percent_complete($row["id"] ) );
+  
+  //set project status
+  $project_status = $row["status"];
+  
+  //make adjustments
+  switch( $project_status ) {
+
+    case "cantcomplete":
+    case "notactive":
+    //for 'active_only' skip this project
+      if($active_only )
+        continue(2);
+      break;
+
+    case "active":
+    case "nolimit":
+    case "done":
+    default:
+      if($percent_complete == 100 )
+        $project_status = "done";
+      //for 'active_only' skip this project
+      if($active_only && $project_status == "done" )
+        continue(2); 
+      break;
+  }
+  
   //to indicate that there are viewable projects
   $flag = 1;
 
@@ -178,24 +188,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\"><b>".$row["name"]."</b></a>\n";
 
   // Show a nice %-of-tasks-completed bar
-  $percent_complete = round(percent_complete($row["id"] ) );
   $content .= show_percent($percent_complete )."\n";
-
-  //set project status
-  $project_status = $row["status"];
-  //make adjustments
-  switch( $row["status"] ) {
-
-    case "cantcomplete":
-    case "notactive":
-      //no adjustment required
-      break;
-
-    default:
-      if($percent_complete == 100 )
-        $project_status = "done";
-      break;
-  }
 
   //give some details of status
   switch($project_status ) {
@@ -259,7 +252,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 $content .= "</table>\n";
 
 if($flag != 1 )
-  $content = $lang["no_allowed_projects"];
+  $content .= "<p>".$lang["no_allowed_projects"]."</p>\n";
 
 new_box($lang["projects"], $content );
 
