@@ -33,7 +33,7 @@ $content = "";
 
 //add an option to add users
 if( $admin == 1 )
-  $content .= "<a href=\"admin.php?x=".$x."&amp;action=admin\">".$lang["admin_config"]."</a><br />\n";
+  $content .= "<a href=\"admin.php?x=$x&amp;action=admin\">".$lang["admin_config"]."</a><br />\n";
 
 //show it
 new_box( $lang["admin_config"], $content );

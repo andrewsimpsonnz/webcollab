@@ -39,18 +39,27 @@ if( $admin != 1 ) {
   return;
 }
 
-//check and validate email addresses
-$input_array = array("email_admin", "reply_to", "from", "error" );
-  foreach( $input_array as $var) {
-    if( isset($_POST[$var]) && valid_string($_POST[$var]) ) {
-      if( ! ereg("^.+@.+\..+$", $_POST[$var] ) )
-        warning( $lang["invalid email"], sprintf( $lang["invalid_email_given_sprt"], $_POST[$var] ) );
-    }
-}
+if($USE_EMAIL == "Y" ){
 
-$email_admin = safe_data($_POST["email_admin"]);
-$reply_to    = safe_data($_POST["reply_to"]);
-$from        = safe_data($_POST["from"]);
+  //check and validate email addresses
+  $input_array = array("email_admin", "reply_to", "from", "error" );
+    foreach( $input_array as $var) {
+      if( isset($_POST[$var]) && valid_string($_POST[$var]) ) {
+        if( ! ereg("^.+@.+\..+$", $_POST[$var] ) )
+          warning( $lang["invalid email"], sprintf( $lang["invalid_email_given_sprt"], $_POST[$var] ) );
+      }
+  }
+
+  $email_admin = safe_data($_POST["email_admin"]);
+  $reply_to    = safe_data($_POST["reply_to"]);
+  $from        = safe_data($_POST["from"]);
+
+}
+else{
+  $email_admin = "";
+  $reply_to    = "";
+  $from        = "";
+}
 
 //check and validate checkboxes
 if( isset($_POST["access"]) && $_POST["access"] == "on" )
@@ -81,6 +90,13 @@ db_query( "UPDATE config SET email_admin='".$email_admin."',
                             groupaccess='".$group_edit."',
                             owner='".$owner."',
                             usergroup='".$usergroup."'");
+
+
+
+
+//if no email end here
+if($USE_EMAIL != "Y" )
+  header("Location: ".$BASE_URL."main.php?x=$x" );
 
 /*
 Begin mailing list clean up
