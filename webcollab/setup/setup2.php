@@ -64,7 +64,7 @@ else {
   $x = "";
   $db_name     = $_GET["db_name"];
   $db_user     = $_GET["db_user"];
-  $db_password = $_GET["db_password"];
+  $db_password = $_GET["db_pass"];
   $db_type     = $_GET["db_type"];
   $db_host     = $_GET["db_host"];
 }
