@@ -1,4 +1,14 @@
 WebCollab CVS
+*** 13 January 2005
+  Andrew Simpson
+
+- added login redirect patch (Credit: Larry Steeger (russte) )
+
+- added usergroup display patch (Credit: Larry Steeger (russte) )
+
+- added automatic client encoding selection for Postgresql 
+
+WebCollab CVS
 *** 7 January 2005
   Andrew Simpson
 
@@ -18,7 +28,7 @@ WebCollab CVS
 
 - added regex validation of database names in setup
 
-- changed input validation to better accommodate characters sets other than ISO-8859-1
+- changed input validation to better accommodate characters sets other than ISO-8859-x
 
 - usuability improvements to archive, guest users in ToDo and Calendar
 
