@@ -37,78 +37,45 @@ include_once(BASE."includes/time.php" );
 //
 
 function listTasks($projectid ) {
-  global $x, $epoch, $now ,$ADMIN, $GID, $lang, $task_state, $tz_offset;
-  global $task_order;
+  
+  global $task_uncompleted, $task_projectid;
   global $task_array, $parent_array, $shown_array, $shown_count, $task_count;
    
+  //initialise variables
   $parent_array = "";
   $shown_array  = "";
   $shown_count  = 0;  //counter for $shown_array
   $parent_count = 0;  //counter for $parent_array
   $task_count   = 0;  //counter for $task_array
     
-  $q = db_query("SELECT id,
-                        name,
-                        parent, 
-                        status, 
-                        globalaccess, 
-                        usergroupid, 
-                        ".$epoch." deadline ) AS due
-                       FROM ".PRE."tasks WHERE projectid=$projectid
-                       AND status<>'done'
-                       AND parent<>0 "
-                       .$task_order );
+  //search for uncompleted tasks by projectid
+  $task_key = array_keys((array)$task_projectid, $projectid );
   
-  if(db_numrows($q) < 1 )
+  if(sizeof($task_key) < 1 )
     return;
   
-  $content = "<ul>\n";  
-    
-  for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
-    
-    //check if user can view this task
-    if( ($ADMIN != 1 ) && ($row[4] != "t" ) && ($row[5] != 0 ) ) {
-      $test = array_search( $row[5], (array)$GID );
-      if($test === FALSE || $test === NULL )   
-        continue;
-    }
-  
-    //put values into array
-    $task_array[$task_count]['id'] = $row[0];
-    $task_array[$task_count]['parent'] = $row[2];
-    
-    //add suffix information
-    switch( $row[3] ) {
-      case "cantcomplete":
-        $suffix = "</a> &nbsp;<b><i>".$task_state['cantcomplete']."</i></b><br />\n";
-        break;
-
-      case "notactive":
-        $suffix = "</a> &nbsp;<i>".$task_state['task_planned']."</i><br />\n";
-        break;
-
-      default:
-        $suffix = "";
-        //check if late
-        if( ($now + $tz_offset - $row[6] ) >= 86400 ) {
-          $suffix = "</a> &nbsp;<span class=\"late\">".$lang['late_g']."</span><br />\n";
-        }
-        break;
-    }
-    
-    $task_array[$task_count]['task'] = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_array[$task_count]['id']."\">".$row[1].$suffix;
-                               
-        
+  //cycle through relevant tasks
+  foreach((array)$task_key as $key ) {  
+       
+    $task_array[$task_count]['id']     = $task_uncompleted[($key)]['id'];
+    $task_array[$task_count]['parent'] = $task_uncompleted[($key)]['parent'];
+    $task_array[$task_count]['task']   = $task_uncompleted[($key)]['task'];
+           
     //if this is a subtask, store the parent id 
-    if($row[2] != $projectid ) {
-      $parent_array[$parent_count] = $row[2];
-      $parent_count++;
+    if($task_array[$task_count]['parent'] != $projectid ) {
+      $parent_array[$parent_count] = $task_array[$task_count]['parent'];
+      ++$parent_count;
     }
-  $task_count++;  
+    ++$task_count;
+        
+    //remove used key to shorten future searches
+    unset($task_projectid[$key] );    
   }
+      
+  $content = "<ul>\n";  
   
   //iteration for main tasks
-  for($i=0 ; $i < $task_count ; $i++ ){
+  for($i=0 ; $i < $task_count ; ++$i ){
   
     //ignore subtasks in this iteration
     if($task_array[$i]['parent'] != $projectid ){
@@ -120,8 +87,7 @@ function listTasks($projectid ) {
     $shown_count++; 
     
     //if this task has children (subtasks), iterate recursively to find them 
-    $test = array_search($task_array[$i]['id'], (array)$parent_array );
-    if(!($test === FALSE || $test === NULL ) ){
+    if(in_array($task_array[$i]['id'], (array)$parent_array, TRUE ) ) {
       $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";
@@ -130,16 +96,11 @@ function listTasks($projectid ) {
   //look for any orphaned tasks, and show them too
   if($task_count != $shown_count ) {
     for($i=0 ; $i < $task_count ; $i++ ) {
-      $test = array_search($task_array[$i]['id'], (array)$shown_array );
-      if($test === FALSE || $test === NULL ) 
+      if(! in_array($task_array[$i]['id'], (array)$shown_array, TRUE ) )
         $content .= $task_array[$i]['task']."</li>\n";
     }
   } 
   $content .= "</ul>\n";
-  
-  unset($task_array);
-  unset($shown_array);
-  unset($parent_array);
   
   return $content;   
 }   
@@ -153,7 +114,7 @@ function find_children($parent ) {
 
   $content = "<ul>\n";
          
-  for($i=0 ; $i < $task_count ; $i++ ) {
+  for($i=0 ; $i < $task_count ; ++$i ) {
     
     //ignore tasks not directly under this parent
     if($task_array[$i]['parent'] != $parent ){
@@ -161,11 +122,10 @@ function find_children($parent ) {
     }
     $content .= $task_array[$i]['task'];
     $shown_array[$shown_count] = $task_array[$i]['id'];
-    $shown_count++;
+    ++$shown_count;
             
     //if this task has children (subtasks), iterate recursively to find them
-    $test = array_search($task_array[$i]['id'], (array)$parent_array );
-    if(! ($test === FALSE || $test === NULL ) ){
+    if(in_array($task_array[$i]['id'], (array)$parent_array, TRUE ) ) {
       $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";    
@@ -181,16 +141,82 @@ function find_children($parent ) {
 //some inital values
 $content = "";
 $flag = 0;
-$active_only = 0;
-$condensed = 0;
 $project_print = 0;
+$task_projectid = "";
 $tz_offset = (TZ * 3600) - date("Z");
 
+if(isset($_GET['active'] ) )
+  $active_only = $_GET['active'];
+else
+  $active_only = 0;
+      
+if(isset($_GET['condensed'] ) )
+  $condensed = $_GET['condensed'];
+else
+  $condensed = 0;
+  
 //get config order for sorting
 $q = db_query("SELECT project_order, task_order FROM ".PRE."config" );
 $row = db_fetch_num($q, 0 );
 $project_order = $row[0];
 $task_order    = $row[1];
+
+//don't get tasks if we aren't going to view them
+if(! $condensed) {
+
+  //query to get uncompleted tasks
+  $q = db_query("SELECT id,
+                        name,
+                        parent,
+                        projectid,
+                        status, 
+                        globalaccess, 
+                        usergroupid, 
+                        ".$epoch." now() ) AS now,
+                        ".$epoch." deadline ) AS due
+                        FROM ".PRE."tasks 
+                        WHERE status<>'done'
+                        AND parent<>0 "
+                        .$task_order );
+  
+  for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+    
+    //check if user can view this task
+    if( (! $ADMIN ) && ($row[5] != 't' ) && ($row[6] != 0 ) ) {
+      if(! in_array( $row[6], (array)$GID, TRUE ) );
+        continue;
+    }
+  
+    //put values into array
+    $task_uncompleted[$i]['id']     = $row[0];
+    $task_uncompleted[$i]['parent'] = $row[2];
+    
+    //add suffix information
+    switch( $row[4] ) {
+      case 'cantcomplete':
+        $suffix = "</a> &nbsp;<b><i>".$task_state['cantcomplete']."</i></b><br />\n";
+        break;
+  
+      case 'notactive':
+        $suffix = "</a> &nbsp;<i>".$task_state['task_planned']."</i><br />\n";
+        break;
+  
+      default:
+        $suffix = '';
+        //check if late
+        if( ($row[7] + $tz_offset - $row[8] ) >= 86400 ) {
+          $suffix = "</a> &nbsp;<span class=\"late\">".$lang['late_g']."</span><br />\n";
+        }
+        break;
+    }
+ 
+  //task details
+  $task_uncompleted[$i]['task'] = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[0]."\">".$row[1].$suffix;
+
+  //record projectid
+  $task_projectid[$i] = $row[3];
+  }
+}
 
 // query to get the projects
 $q = db_query("SELECT id,
@@ -215,12 +241,6 @@ if(db_numrows($q) < 1 ) {
   new_box($lang['no_projects'], $content );
   return;
 }
-
-if(isset($_GET['active'] ) )
-  $active_only = $_GET['active'];
-    
-if(isset($_GET['condensed'] ) )
-  $condensed = $_GET['condensed'];
 
 //text link for 'active' switch
 $content .= "<table style=\"width : 98%\"><tr><td>\n".
@@ -346,9 +366,6 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
             break;
         }
       }
-      
-      //set 'now' time
-      $now = $row['now'];
       
       //show subtasks that are not complete
       if(! $condensed )
