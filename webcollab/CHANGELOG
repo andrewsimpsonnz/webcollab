@@ -1,4 +1,29 @@
 WebCollab CVS
+*** 23 August 2003
+
+- change HTML <center> to <div> to be more compliant
+
+- remove need for task creator to be removed before deleting a user
+
+- don't show when deleted users were last on-line
+
+- simplify code for mailing list in admin_config.php
+
+- remove php mail() calls (not totally reliable)
+
+- make SMTP mailer code more robust and compliant with RFC 821 and 822
+
+WebCollab CVS
+*** 17 August 2003
+
+- add admin email function
+
+WebCollab 1.42
+***
+
+- release
+
+WebCollab CVS
 *** 15 August 2003
 
 - bugfix/feature request #783959 (Ability to disable ip checking during sessions)
