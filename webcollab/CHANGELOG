@@ -1,4 +1,18 @@
 WebCollab CVS
+*** 27 March 2004
+  Andrew Simpson
+
+- optimise email language files
+
+- improve time messages in emails to be more localised
+
+- remove time logging from web pages (APD profiler showed this was adding 20% execution time)
+
+- improve screen.php using APD profiler results
+
+- break up task_submit.php into smaller (and faster executing) files
+
+WebCollab CVS
 *** 21 March 2004
   Andrew Simpson
 
