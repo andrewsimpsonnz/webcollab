@@ -70,7 +70,7 @@ function email($to, $subject, $message ) {
     return;
   }
 
-  if( ! valid_string($to) ) {
+  if( @strlen($to) == 0 ) {
     //no email address specified - end function
     return;
   }

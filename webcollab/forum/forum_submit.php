@@ -88,7 +88,7 @@ function check($var ) {
 return $var;
 }
 
-if( ! valid_string($_REQUEST["action"]) )
+if( ! isset($_REQUEST["action"]) )
   error("Forum submit", "No request given" );
 
   switch($_REQUEST["action"] ) {
@@ -96,13 +96,13 @@ if( ! valid_string($_REQUEST["action"]) )
     case "add":
 
       //if all values are filled in correctly we can submit the forum-item
-      if( ! valid_string($_POST["text"] ) )
+      if( ! isset($_POST["text"] ) || strlen($_POST["text"] ) == 0 )
         warning($lang["forum_submit"], $lang["no_message"] );
 
       //check input has been provided
       $input_array = array("parentid", "taskid" );
       foreach($input_array as $var ) {
-        if(! valid_string($_POST[$var] ) ) {
+        if( ! isset($_POST[$var] ) || strlen($_POST[$var] ) == 0 ) {
           error("Forum submit", "Variable ".$var." is not set" );
         }
       }

@@ -35,7 +35,7 @@ require_once( BASE."includes/security.php" );
 include_once( BASE."config.php" );
 
 //update or insert ?
-if( ! isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) )
+if( ! isset($_REQUEST["action"]) || strlen($_REQUEST["action"]) == 0 )
   error("File submit", "No action given" );
 
   switch($_REQUEST["action"] ) {
