@@ -127,9 +127,11 @@ function message($message ) {
   }
 
   //lines starting with "." get an additional "." added. (RFC 2821 - 4.5.2)
-  $message = str_replace("\n.", "\n..", $message );
+  $message = preg_replace("/^[\.]/", "..", $message );
+  //explode message body into separate lines
+  $message_lines = explode("\n", $message );
 
-return $message;
+return $message_lines;
 }
 
 
@@ -141,22 +143,23 @@ function subject($subject ) {
 
   global $email_charset;
 
+  //get rid of any line breaks (\r\n, \n, \r) in subject line
+  $subject = preg_replace("/(\015\012)|(\015)|(\012)/", " ", $subject );
   //reinstate any HTML in subject back to text
   $subject = clean($subject );
+
   //encode subject with 'printed-quotable' if high ASCII characters are present
   switch(preg_match('/([\177-\377])/', $subject ) ) {
     case false:
       //no encoding required
-      // provide terminating line ending and limit line length
-      $subject = substr($subject, 0, 985 )."\r\n";
+      $subject_lines = array("Subject: ".substr($subject, 0, 985 ) );
       break;
 
     case true:
       //encode line with 'quoted-printable' (RFC 2045 / RFC 2047)
       // replace high ascii, control, =, ?, <tab> and <space> characters (RFC 2045)
       $line = preg_replace('/([\000-\010\011\013\014\016-\037\040\075\077\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $subject);
-      $line_out = "";
-      $s = "";
+      $s = "Subject: ";
       //break into lines no longer than 76 characters including encoding data (RFC 2047)
       $len = 76 - strlen($email_charset ) - 8;
       while(strlen($line ) > $len ) {
@@ -164,49 +167,64 @@ function subject($subject ) {
         if($pos = strrpos(substr($line, ($len - 3 ), 3 ), "=" ) ) {
           //coded characters within split zone - adjust to avoid splitting encoded word
           $split = ($len - 3 ) + $pos - 1;
-          $line_out .= $s."=?".$email_charset."?Q?".substr($line, 0, $split)."?=\r\n";
+          $subject_lines[] = $s."=?".$email_charset."?Q?".substr($line, 0, $split)."?=";
           $line = substr($line, $split );
         }
         else{
           //no coded characters in split zone - safe to split here
-          $line_out .= $s."=?".$email_charset."?Q?".substr($line, 0, $len )."?=\r\n";
+          $subject_lines[] = $s."=?".$email_charset."?Q?".substr($line, 0, $len )."?=";
           $line = substr($line, $len );
         }
       //start additional lines with <space> (RFC 2047)
       $s = " ";
       }
       //output any remaining line (will be less than $len characters long)
-      $line_out .= $s."=?".$email_charset."?Q?".$line."?=\r\n";
-      $subject = $line_out;
+      $subject_lines[] = $s."=?".$email_charset."?Q?".$line."?=";
       break;
   }
 
-return $subject;
+return $subject_lines;
 }
 
 //
-//function to do SMTP AUTH
+//function to assemble mail headers
 //
 
-function smtp_auth($connection) {
+function headers($to, $subject ) {
 
-  global $MAIL_USER, $MAIL_PASSWORD;
+  global $EMAIL_FROM, $EMAIL_REPLY_TO, $message_charset, $email_encode;
 
-  fputs($connection, "AUTH LOGIN\r\n" );
-  if(response($connection) != "334" )
-      debug("AUTH not accepted by SMTP server at $host <br /><br />Response from SMTP server was $res" );
+  //set the date - in RFC 822 format
+  $headers = array("Date: ".date("r") );
 
-  //send username
-  fputs($connection, base64_encode($MAIL_USER )."\r\n" );
-  if(response($connection) != "334" )
-    debug("Username not accepted SMTP server at $host <br /><br />Response from SMTP server was $res" );
+  //now the prepare the 'to' header
+  $line = "To: ".$to;
+  //lines longer than 998 characters are broken up to separate lines (RFC 821)
+  // (end long line with \r\n, and begin new line with \t)
+  while(strlen($line ) > 998 ) {
+    $pos = strrpos(substr($line, 0, 998 ), " " );
+    $headers[] = substr($line, 0, $pos );
+    $line = "\t".substr($line, $pos + 1 );
+  }
+  $headers[] = $line;
 
-  //send password
-  fputs($connection, base64_encode($MAIL_PASSWORD )."\r\n" );
-  if(response($connection) != "235" )
-    debug("Password not accepted SMTP server at $host <br /><br />Response from SMTP server was $res" );
+  //assemble remaining message headers (RFC 821 / RFC 2045)
+  $headers[] = "From: $EMAIL_FROM";
+  $headers[] = "Reply-To: $EMAIL_REPLY_TO";
 
-  return;
+  $headers = array_merge($headers, subject($subject ) );
+
+  $headers[] = "Message-Id: <".uniqid("")."@".$_SERVER["SERVER_NAME"].">";
+  $headers[] = "X-Mailer: WebCollab (PHP/".phpversion().")";
+  $headers[] = "X-Priority: 3";
+  $headers[] = "X-Sender: $EMAIL_REPLY_TO";
+  $headers[] = "Return-Path: <$EMAIL_REPLY_TO>";
+  $headers[] = "Mime-Version: 1.0";
+  $headers[] = "Content-Type: text/plain; $message_charset";
+  $headers[] = "Content-Transfer-Encoding: $email_encode";
+  $headers[] = " ";
+
+return $headers;
 }
 
 //
@@ -220,7 +238,7 @@ function response($connection) {
   $res = "";
   while($str = fgets($connection, 256 ) ) {
     $res .= $str;
-    //if 4th character is <space> this is the last line (other lines have '-')
+    //<space> after three digit code indicates this is last line of data ("-" for more lines)
     if(substr($str, 3, 1) == " " )
       break;
   }
@@ -236,7 +254,7 @@ function response($connection) {
 function email($to, $subject, $message ) {
 
   global $EMAIL_FROM, $EMAIL_REPLY_TO, $USE_EMAIL, $SMTP_HOST, $SMTP_AUTH,
-         $email_charset, $email_encode, $message_charset, $body, $res, $bit8;
+         $email_charset, $email_encode, $message_charset, $body, $res, $bit8, $connection;
 
   if($USE_EMAIL == "N" ) {
     //email is turned off in config file
@@ -276,16 +294,9 @@ function email($to, $subject, $message ) {
   if( ! strpos($res, "8BITMIME" ) === false )
     $bit8 = true;
 
-
-  //do SMTP_AUTH if required
-  if($SMTP_AUTH == "Y" )
-    smtp_auth($connection);
-
   //arrange message - and set email encoding
   //(we *must* do this before 'MAIL FROM:'  to get the email encoding correct)
-  $message = message($message );
-  //arrange subject
-  $subject = subject($subject );
+  $message_lines = message($message );
 
   //envelope from
   fputs($connection, "MAIL FROM: <$EMAIL_FROM>$body\r\n" );
@@ -320,52 +331,10 @@ function email($to, $subject, $message ) {
   if(response($connection) != "354" )
     debug("Incorrect response to DATA command from SMTP server at $host <br /><br />Response from SMTP server was $res" );
 
-  //send the date - in RFC 822 format
-  fputs($connection, "Date: ".date("r")."\r\n" );
-
-  //now the prepare the 'to' header
-
-  //headers longer than 998 characters are broken up to separate lines (RFC 821)
-  // (end long line with \r\n, and begin new line with \t)
-
-  $line = "To: ".$to;
-  $lines_out = "";
-  //check if we need to break up into several smaller lines
-  while(strlen($line ) > 998 ) {
-    $pos = strrpos(substr($line, 0, 998 ), " " );
-    $lines_out[] = substr($line, 0, $pos );
-    $line = "\t".substr($line, $pos + 1 );
-  }
-  $lines_out[] = $line;
-
-  //now send the "to" lines to the server
-  while(list(,$line_out) = @each($lines_out ) ) {
-    fputs($connection, "$line_out\r\n" );
-  }
-
-  //assemble remaining message headers (RFC 821 / RFC 2045)
-
-  $headers = array("From: ".$EMAIL_FROM."\r\n",
-                    "Reply-To: ".$EMAIL_REPLY_TO."\r\n",
-                    "Subject: ".$subject,
-                    "Message-Id: <".uniqid("")."@".$_SERVER["SERVER_NAME"].">\r\n",
-                    "X-Mailer: WebCollab (PHP/" . phpversion().")\r\n",
-                    "X-Priority: 3\r\n",
-                    "X-Sender: ".$EMAIL_REPLY_TO."\r\n",
-                    "Return-Path: <".$EMAIL_REPLY_TO.">\r\n",
-                    "Mime-Version: 1.0\r\n",
-                    "Content-Type: text/plain; $message_charset\r\n",
-                    "Content-Transfer-Encoding: $email_encode\r\n \r\n" );
-
-  //send headers to server
-  while(list(,$line_out) = @each($headers ) ) {
-  fputs($connection, $line_out );
-  }
-
-  //explode message body into separate lines
-  $lines_out = explode("\n", $message );
+  //assemble the headers and message for transmission
+  $message_lines = array_merge(headers($to, $subject ), $message_lines );
   //send message to server (with correct end-of-line \r\n)
-  while(list(,$line_out) = @each($lines_out ) ) {
+  while(list(,$line_out) = @each($message_lines ) ) {
     fputs($connection, "$line_out\r\n" );
   }
 
@@ -384,16 +353,23 @@ function email($to, $subject, $message ) {
   return;
 }
 
- function debug($error_msg ){
+ function debug($error ){
 
-   global $DEBUG;
+   global $DEBUG, $connection;
 
    if($DEBUG == "Y" ) {
-      //we don't use error() because email may not work!
-     warning("Email error debug", $error_msg );
+     $time_out = "";
+     $meta = @socket_get_status($connection);
+     if($meta["timed_out"] )
+       $time_out = "<br /><br />Socket timeout has occurred";
+
+     //we don't use error() because email may not work!
+     warning("Email error debug", $error.$time_out );
    }
    else{
-     warning("Internal email fault", "Please contact your administrator.<br /><br />(Enable debugging in config.php for more detail)" );
+     warning("Internal email fault", "Not able to send your email.<br /><br />\n".
+             "Please contact your administrator for more information.<br /><br />\n".
+             "(Enable debugging in config.php for more detail)" );
    }
    return;
  }
