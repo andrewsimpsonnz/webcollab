@@ -1,5 +1,11 @@
 WebCollab CVS
-*** 31 August 2003
+*** 9 September 2003
+  Andrew Simpson
+
+- make tasks_list and forum_list XHTML compliant
+
+WebCollab CVS
+*** 6 September 2003
   Andrew Simpson
 
 - add user and usergroup options to to-do list and calendar.
