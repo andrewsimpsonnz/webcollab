@@ -31,9 +31,6 @@ require_once("path.php" );
 require_once( BASE."includes/security.php" );
 
 include_once(BASE."includes/admin_config.php" );
-include_once(BASE."includes/email.php" );
-include_once(BASE."includes/time.php" );
-
 
 //
 // Finds children recursively and puts them in an array
@@ -60,134 +57,136 @@ function find_and_report_children($taskid ) {
 //
 // advanced database-wide task-delete !!
 //
-if(isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
+if(! isset($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
+  error("Task details", "The taskid input is not valid" ); 
 
-  $taskid = intval($_REQUEST["taskid"]);
+$taskid = intval($_REQUEST["taskid"]);
 
-  //if user aborts, let the script carry onto the end
-  ignore_user_abort(TRUE);
+//get task and owner information
+$q = db_query("SELECT tasks.parent AS parent,            
+                      tasks.name AS name,
+                      tasks.text AS text,
+                      tasks.owner AS owner,
+                      tasks.status AS status,
+                      tasks.projectid AS projectid,
+                      users.id AS id,
+                      users.email AS email
+                      FROM tasks
+                      LEFT JOIN users ON (users.id=tasks.owner)
+                      WHERE tasks.id=$taskid" );
 
-  //can this user delete this task ?
-  if( ! ( ($admin == 1) || (db_result(db_query("SELECT COUNT(*) FROM tasks WHERE id=$taskid AND owner=$uid" ), 0, 0 ) == 1 ) ) )
-    error("Access denied", "You do not own this task and therefore you may not delete it. Ask an admin or the tasks' owner to do this for you.");
+//get the data
+if( ! $row = db_fetch_array($q, 0) )
+  error("Task delete", "The selected task does not exist.");
 
-  //does the task exist ?
-  if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE id=$taskid" ), 0, 0 ) == 0 )
-    error("Task delete", "Sorry but that task does not exist." );
+//can this user delete this task ?
+if( ($admin != 1) && ($uid != $row["owner"]) )
+  error("Access denied", "You do not own this task and therefore you may not delete it." );
 
-  //find our return-location
-  if( ($parentid = db_result(db_query("SELECT parent FROM tasks WHERE id=$taskid" ), 0, 0)) == 0 )
-    $returnvalue = $BASE_URL."main.php?x=$x";
-  else
-    $returnvalue = $BASE_URL."tasks.php?x=$x&action=show&taskid=$parentid";
+//if user aborts, let the script carry onto the end
+ignore_user_abort(TRUE);
 
-  //begin transaction
-  db_begin();
+//find our return-location
+if($row["parent"] == 0 )
+  $returnvalue = $BASE_URL."main.php?x=$x";
+else
+  $returnvalue = $BASE_URL."tasks.php?x=$x&action=show&taskid=".$row["parent"];
 
-  //get task and owner information
-  $q = db_query("SELECT tasks.parent AS parent,
-            tasks.projectid AS projectid,
-            tasks.name AS name,
-            tasks.text AS text,
-            tasks.status AS status,
-            users.id AS id,
-            users.email AS email
-            FROM tasks
-            LEFT JOIN users ON (users.id=tasks.owner)
-            WHERE tasks.id=$taskid" );
+//begin transaction
+db_begin();
 
-  //if there is no line, the task is not owned
-  if(db_numrows($q) > 0 ) {
-    $row = @db_fetch_array($q, 0 );
-  }
+//add the task itself
+$ids[0] = $taskid;
 
-  //add the task itself
-  $ids[0] = $taskid;
+//find all recursively linked children
+$arrayindex=1;
+find_and_report_children( $taskid );
 
-  //find all recursively linked children
-  $arrayindex=1;
-  find_and_report_children( $taskid );
+/* delete:
+- all forum posts linked to it
+- the entry in the seen table
+- the item itself
+- files
+*/
+for($i=0 ; $i < $arrayindex ; $i++ ) {
 
-  /* delete:
-  - all forum posts linked to it
-  - the entry in the seen table
-  - the item itself
-  - files
-  */
-  for($i=0 ; $i < $arrayindex ; $i++ ) {
+  //delete all from seen table
+  db_query("DELETE FROM seen WHERE taskid=".$ids[$i] );
 
-    //delete all from seen table
-    db_query("DELETE FROM seen WHERE taskid=".$ids[$i] );
+  //delete forum posts
+  db_query("DELETE FROM forum WHERE taskid=".$ids[$i] );
 
-    //delete forum posts
-    db_query("DELETE FROM forum WHERE taskid=".$ids[$i] );
+  //delete all files physically
+  $fq = db_query("SELECT oid, filename FROM files WHERE taskid=".$ids[$i] );
+  for($j=0 ; $frow = @db_fetch_array($fq, $j ) ; $j++) {
 
-    //delete all files physically
-    $fq = db_query("SELECT oid, filename FROM files WHERE taskid=".$ids[$i] );
-    for($j=0 ; $frow = @db_fetch_array($fq, $j ) ; $j++) {
-
-      if(file_exists($FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
-        unlink( $FILE_BASE."/".$row["oid"]."__".$row["filename"] );
-      }
-    }
-
-    //delete all files attached to it in the database
-    db_query("DELETE FROM files WHERE taskid=".$ids[$i] );
-
-    //delete item
-    db_query("DELETE FROM tasks WHERE id=".$ids[$i] );
-
-  }
-  //transaction complete
-  db_commit();
-
-  //inform the user that his task has been deleted by an admin
-  if(db_numrows($q) > 0 ) {
-    if($uid != $row["id"] ) {
-       include_once(BASE."lang/lang_email.php" );
-       if($row["parent"] == 0 ) {
-         $name_project = $row["name"];
-         $name_task = "";
-         $title = $title_delete_project;
-         $email = $email_delete_project;
-       }
-       else {
-         $name_project = db_result(db_query("SELECT name FROM tasks WHERE tasks.id=".$row["projectid"] ), 0, 0 );
-         $name_task = $row["name"];
-         $title = $title_delete_task;
-         $email = $email_delete_task;
-       }
-       switch($row["status"] ) {
-         case "created":
-           $status = $task_state["new"];
-           break;
-
-         case "notactive":
-           $status = $task_state["planned"];
-           break;
-
-         case "active":
-           $status = $task_state["active"];
-           break;
-
-         case "cantcomplete":
-           $status = $task_state["cantcomplete"];
-           break;
-
-         case "done":
-           $status = $task_state["done"];
-           break;
-
-         default:
-           $status = "";
-           break;
-       }
-       $message = $email . sprintf($delete_list, $name_project, $name_task, $status, $row["text"] );
-       email($row["email"], $title, $message );
+    if(file_exists($FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
+      unlink( $FILE_BASE."/".$row["oid"]."__".$row["filename"] );
     }
   }
+
+  //delete all files attached to it in the database
+  db_query("DELETE FROM files WHERE taskid=".$ids[$i] );
+
+  //delete item
+  db_query("DELETE FROM tasks WHERE id=".$ids[$i] );
+
+}
+//transaction complete
+db_commit();
+
+//inform the user that his task has been deleted by an admin
+if(($row["owner"] != 0 ) && ($uid != $row["owner"]) ) {
+  
+  include_once(BASE."includes/email.php" );
+  include_once(BASE."includes/time.php" );
+  include_once(BASE."lang/lang_email.php" );
+  
+  switch ($row["parent"]) {
+    case 0:
+      $name_project = $row["name"];
+      $name_task = "";
+      $title = $title_delete_project;
+      $email = $email_delete_project;
+      break;
+      
+    default:
+      $name_project = db_result(db_query("SELECT name FROM tasks WHERE tasks.id=".$row["projectid"] ), 0, 0 );
+      $name_task = $row["name"];
+      $title = $title_delete_task;
+      $email = $email_delete_task;
+      break;
+  }
+  
+  switch($row["status"] ) {
+    case "created":
+      $status = $task_state["new"];
+      break;
+
+    case "notactive":
+      $status = $task_state["planned"];
+      break;
+
+    case "active":
+      $status = $task_state["active"];
+      break;
+
+    case "cantcomplete":
+      $status = $task_state["cantcomplete"];
+      break;
+
+    case "done":
+      $status = $task_state["done"];
+      break;
+
+    default:
+      $status = "";
+      break;
+  }
+  $message = $email . sprintf($delete_list, $name_project, $name_task, $status, $row["text"] );
+  email($row["email"], $title, $message );
 }
 
-  header("Location: ".$returnvalue);
+header("Location: ".$returnvalue);
 
 ?>
