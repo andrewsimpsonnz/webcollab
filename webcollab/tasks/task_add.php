@@ -170,7 +170,7 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
   $content .= "</select></td></tr>\n";
 
   //show all the groups
-  $usergroup_q = db_query( "SELECT name, id FROM ".PRE."usergroups ORDER BY name" );
+  $usergroup_q = db_query( "SELECT id, name, private FROM ".PRE."usergroups ORDER BY name" );
 
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help'); return false\">".$lang['usergroup']."</a>: </td> <td><select name=\"usergroupid\">\n";
   $content .= "<option value=\"0\">".$lang['all_groups']."</option>\n";
@@ -178,7 +178,7 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
   for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
     
     //usergroup test for privacy
-    if( (! $ADMIN ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
+    if( (! $ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
       continue;
     }
     
@@ -277,7 +277,7 @@ else {
   for( $i=0 ; $group_row = @db_fetch_array($group_q, $i ) ; $i++) {
     
     //usergroup test for privacy
-    if( (! $ADMIN ) && ( ! in_array($group_row['id'], (array)$GID ) ) ) {
+    if( (! $ADMIN ) && ($group_row['private'] ) && ( ! in_array($group_row['id'], (array)$GID ) ) ) {
       continue;
     }
 

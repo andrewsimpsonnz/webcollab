@@ -246,7 +246,7 @@ $q = db_query("SELECT id, name, private FROM ".PRE."usergroups ORDER BY name" );
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     
   //usergroup test for privacy
-  if( (! $ADMIN ) && ( ! in_array($row['id'], (array)$GID ) ) ) {
+  if( (! $ADMIN ) && ($row['private'] ) && ( ! in_array($row['id'], (array)$GID ) ) ) {
     continue;
   }
     
