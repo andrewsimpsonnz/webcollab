@@ -86,6 +86,7 @@ function listTasks($projectid ) {
         break;
 
       default:
+        $suffix = "";
         //check if late
         if( ($now + $tz_offset - $row[6] ) >= 86400 ) {
           $suffix = "</a> &nbsp;<span class=\"late\">".$lang['late_g']."</span><br />\n";
