@@ -160,8 +160,8 @@ function create_top($title="", $page_type=0, $cursor="" ) {
       break;
 
     case 2: //printable screen
-    //create single window over entire screen
-    echo "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";
+    //create single window over paper width
+    echo "<tr valign=\"top\"><td style=\"width: 576pt\" align=\"center\">\n";
   }
 
   return;
