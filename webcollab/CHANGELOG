@@ -11,6 +11,8 @@ WebCollab CVS
 
 - bugfix: splitting of quoted-printable in subject line of emails was incorrect (joo_ru)
 
+- bugfix: javascript syntax error in task_edit.php (joo_ru)
+
 WebCollab 1.61 - Celmisia
 *** 1 August 2004
 
