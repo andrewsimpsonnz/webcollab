@@ -40,7 +40,7 @@ if( $admin != 1 )
 
 
 $content = "<BR><FORM name=\"inputform\" method=\"POST\" action=\"users/user_submit.php\">";
-$content .= "<TABLE>";
+$content .= "<TABLE border=\"0\">";
 $content .= "<TR><TD>".$lang["login_name"].":</TD><TD><INPUT type=\"text\" name=\"name\" size=\"30\"></TD></TR>\n";
 $content .= "<TR><TD>".$lang["full_name"].":</TD><TD><INPUT type=\"text\" name=\"fullname\" size=\"30\"></TD></TR>\n";
 $content .= "<TR><TD>".$lang["password"].":</TD><TD><INPUT type=\"password\" name=\"password\" size=\"30\"></TD></TR>\n";

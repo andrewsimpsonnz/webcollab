@@ -57,7 +57,7 @@ $content="";
 if( $row["deleted"] == 't' )
   $content .= "<BR><B><CENTER><FONT color=\"red\">".$lang["user_deleted"]."</FONT></CENTER></B><BR>";
 
-$content .= "<BR><TABLE>";
+$content .= "<BR><TABLE border=\"0\">";
 $content .= "<TR><TD>".$lang["login"].":</TD><TD>".$row["name"]."</TD></TR>\n";
 $content .=  "<TR><TD>".$lang["full_name"].":</TD><TD>".$row["fullname"]."</TD></TR>\n";
 $content .=  "<TR><TD>".$lang["email"].":</TD><TD><A href=\"mailto:".$row["email"]."\">".$row["email"]."</A></TD></TR>\n";
