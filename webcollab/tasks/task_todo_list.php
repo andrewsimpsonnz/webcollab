@@ -123,12 +123,10 @@ switch($selection ) {
 
   case "user":
   default:
-    $tail = "AND owner=$userid";
     $groupid = 0; $s1 = " CHECKED"; $s2 = ""; $s3 = ""; $s4 = " SELECTED";
-    if($userid == 0 ){
+    if($userid == 0 )
       $s2 = " SELECTED";
-      $tail = "";
-    }
+    $tail = "AND owner=$userid";
     break;
 }
 
