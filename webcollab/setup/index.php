@@ -72,15 +72,14 @@ if(isset($_POST["database_name"]) ) {
   }
 
   //skip making database
-  if(isset($_POST["make_database"]) && $_POST["make_database"] == "on" ){
-    continue;
-  }
-  else{
+  if(! isset($_POST["make_database"]) || ! $_POST["make_database"] == "on" ){
     header("location: setup2.php?db_host=".$database_host."&db_user=".$database_user."&db_pass=".$database_password."&db_name=".$database_name."&db_type=".$database_type );
   }
+
   switch ($database_type) {
 
   case "mysql":
+  case "mysql_innodb":
     //connect to database server
     if( ! ( $database_connection = mysql_connect( $database_host, $database_user, $database_password ) ) ) {
       error_setup( "Sorry but there seems to be a problem in connecting to the database server at ".$database_host."<br />".
@@ -100,18 +99,25 @@ if(isset($_POST["database_name"]) ) {
         error_setup("Not able to select database. Error message was: <br />".mysql_error($database_connection) );
     }
 
+    if($database_type == "mysql") {
+      $db_schema = "../db/schema_mysql.sql";
+    }
+    else {
+      $db_schema = "../db/schema_mysql_innodb.sql";
+    }
+
     //sanity check
-    if( ! is_readable("../db/schema_mysql.sql" ) ) {
+    if( ! is_readable($db_schema ) ) {
       error_setup("Database schema is missing.  Check that the file /db/schema_mysql.sql exists and is readable by the webserver." );
     }
 
     //open schema file
-    if( ! $handle = fopen("../db/schema_mysql.sql", "r" ) ) {
+    if( ! $handle = fopen($db_schema, "r" ) ) {
       error_setup("Not able to read database schema file" );
     }
 
     //input the file
-    $schema = fread($handle, filesize("../db/schema_mysql.sql") );
+    $schema = fread($handle, filesize($db_schema ) );
     fclose($handle );
 
     //separate schema into individual table setups
@@ -171,7 +177,8 @@ if(isset($_POST["database_name"]) ) {
     //create tables from schema
     foreach($table_array as $table ){
       if( ! ($result = @pg_exec($database_connection, $table ) ) ) {
-        error_setup("The database creation had the following error:<br /> ".pg_errormessage($database_connection) );
+        if(pg_errormessage($database_connection) != NULL )
+          error_setup("The database creation had the following error:<br /> ".pg_errormessage($database_connection) );
       }
     }
     break;
@@ -208,6 +215,7 @@ $content = "<center>\n".
     "<select name=\"database_type\">\n".
       "<option value=\"mysql\" SELECTED >mysql</option>\n".
       "<option value=\"postgresql\">postgresql</option>\n".
+      "<option value=\"mysql_innodb\">mysql with innodb</option>\n".
     "</select></td></tr>\n".
     "<tr><td></td><tr>\n".
     "<tr><td colspan=\"2\">Do you want WebCollab to create the database now?  <input type=\"checkbox\" name=\"make_database\" CHECKED ></td></tr>\n".
