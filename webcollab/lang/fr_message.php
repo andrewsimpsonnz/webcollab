@@ -32,6 +32,9 @@
 //required language encodings
 define('CHARACTER_SET', "iso-8859-1" );
 
+//this is the regex for input validation filter used in common.php 
+$validation_regex = '/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s';
+
 //dates
 $month_array = array ( NULL, "Jan", "Fev", "Mar", "Avr", "Mai", "Jui", "Jul", "Aou", "Sep", "Oct", "Nov", "Dec" );
 $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');

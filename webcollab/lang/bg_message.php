@@ -33,6 +33,8 @@
 //required language encodings
 define('CHARACTER_SET', "windows-1251" );
 
+//this is the regex for input validation filter used in common.php 
+$validation_regex = '/([^\x01-x08\x0b\x0c\x0e\x0f\x21-\xff])/';
 
 //dates
 $month_array                              = array (NULL, "Яну", "Фев", "Мар", "Апр", "Май", "Юни", "Юли", "Авг", "Сеп", "Окт", "Ное", "Дек" );

@@ -32,6 +32,9 @@
 //$email_charset = "ko_KR.eucKR";
 define('CHARACTER_SET', "EUC-KR" );
 
+//this is the regex for input validation filter used in common.php 
+$validation_regex = '/([^\x09\x0a\x0d\x20-\x7f\xa1-\xff])/s';
+
 //dates
 $month_array = array (NULL, "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" );
 $week_array = array('일', '월', '화', '수', '목', '금', '토' );

@@ -32,6 +32,9 @@
 //required language encodings
 define('CHARACTER_SET', "iso-8859-1" );
 
+//this is the regex for input validation filter used in common.php 
+$validation_regex = '/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s';
+
 //dates
 $month_array = array ( NULL, "Jan", "Feb", "M&auml;r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" );
 $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
@@ -345,6 +348,10 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['delete_task']                 = 'Aufgabe l&ouml;schen';
     $lang['project_options']             = 'Projekteigenschaften';
     $lang['task_options']                = 'Aufgabeneigenschaften';
+//**    
+    $lang['javascript_archive_project']  = 'This will archive project %s.  Are you sure?';
+//**    
+    $lang['archive_project']             = 'Archive project';
     $lang['task_navigation']             = 'Aufgaben-Navigation';
 //**
     $lang['new_task']                    = 'New task';    

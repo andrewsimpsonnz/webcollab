@@ -73,14 +73,14 @@ return $body;
 }
 
 function clean_up($body ) {
+   global $validation_regex;
 
   //protect against database query attack
   if(! get_magic_quotes_gpc() )
     $body = addslashes($body );
   
-  //allow only normal printing characters - any non-printing control characters are replaced with "*"
-  $body = preg_replace('/([^\x09\x0a\x0d\x20-\xff])/s', "*", $body );
-  //$body = preg_replace('/([\x00-\x08\x0b-\x0c\x0e-\x1f])/', "*", $body );
+  //allow only normal printing characters valid for the character set in use
+  $body = preg_replace($validation_regex, '?', $body );
   //use HTML encoding, or add escapes '\' for characters that could be used for css <script> or SQL injection attacks
   $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'\(', ')'=>'\)', '+'=>'\+', '-'=>'\-', '='=>'\=' );
   
