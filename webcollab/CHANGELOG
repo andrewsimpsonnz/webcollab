@@ -1,10 +1,20 @@
 WebCollab CVS
+*** 28 April 2004
+  Andrew Simpson
+
+- input validation much improved
+
+WebCollab CVS
+*** 24 April 2004
+  Andrew Simpson
+
+- documentation updated  
+  
+WebCollab CVS
 *** 12 April 2004
   Andrew Simpson
 
 - add privacy function to users and usergroups
-
-- add tools directory with backup and update functions
 
 WebCollab CVS
 *** 9 April 2004
