@@ -1,10 +1,12 @@
 WebCollab CVS
-*** 17 July 2003
+*** 19 July 2003
   Andrew Simpson
 
-- improve cookie scripting
+- improve cookie scripting and functions
 
-- change to faster and more secure algorithm for session key generation 
+- change to faster and more secure algorithm for session key generation
+
+- bugfix: Make header calls HTTP/1.1 compliant
 
 WebCollab CVS
 *** 12 July 2003
