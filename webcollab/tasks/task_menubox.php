@@ -45,7 +45,7 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) )
   
 // query to get the non-completed projects
 $q = db_query("SELECT id,
-                      name,
+                      SUBSTRING(name FROM 0 FOR 20) AS name,
                       globalaccess,
                       usergroupid
                       FROM ".PRE."tasks
@@ -81,8 +81,8 @@ if(db_numrows($q) > 0 ){
   }
 
 // wrap up the select and the submit
-$content .= "</select>\n".
-            "<a href=\"javascript:document.getElementById('ProjectQuickJump').submit();\"><small>".$lang['go']."</small></a></div>\n".
+$content .= "</select></div>\n".
+            "<a href=\"javascript:document.getElementById('ProjectQuickJump').submit();\"><small>".$lang['go']."</small></a>\n".
             "</form>\n";
 }
 
