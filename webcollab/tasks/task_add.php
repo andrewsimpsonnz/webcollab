@@ -136,7 +136,7 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
   for( $i=0 ; $user_row = @db_fetch_array($users_q, $i ) ; $i++) {
       
     //user test for privacy
-    if($user_row['private'] && ( ! $ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
+    if($user_row['private'] && ($user_row['id'] != $UID ) && ( ! $ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
       continue;
     }
     
@@ -255,7 +255,7 @@ else {
   for( $i=0 ; $user_row = @db_fetch_array($user_q, $i) ; $i++) {
     
     //user test for privacy
-    if($user_row['private'] && ( ! $ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
+    if($user_row['private'] && ($user_row['id'] != $UID ) && ( ! $ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
       continue;
     }
 

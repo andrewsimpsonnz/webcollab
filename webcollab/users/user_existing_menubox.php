@@ -62,7 +62,7 @@ $content = "<table style=\"text-align:left\">\n";
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
   //user test for privacy
-  if($row['private'] && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
+  if($row['private'] && ($row['id'] != $UID ) && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
     continue;
   }
 

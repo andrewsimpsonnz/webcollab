@@ -262,7 +262,7 @@ $content .= "<tr> <td>".$lang[$TYPE."_owner"].":</td> <td><select name=\"owner\"
 for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++) {
       
   //user test for privacy
-  if($user_row['private'] && ( ! $ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
+  if($user_row['private'] && ($user_row['id'] != $UID ) && ( ! $ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
     continue;
   }
     

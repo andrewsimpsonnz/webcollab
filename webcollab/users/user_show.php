@@ -33,6 +33,7 @@ require_once(BASE."includes/security.php" );
 $content = "";
 $no_access_project[0] = 0;
 $no_access_group[0] = 0;
+$user_gid = "";
 
 //get some stupid errors
 if(empty($_GET['userid']) || ! is_numeric($_GET['userid']) )
@@ -48,14 +49,14 @@ if( ! ($row = db_fetch_array($q, 0 ) ) )
   error("Database error", "Error in fetching result" );
   
 //test if user is private
-if($row['private'] && ( ! $ADMIN ) ) {
+if($row['private'] && ($row['id'] != $UID ) && ( ! $ADMIN ) ) {
   //get usergroups of user
   $q_group = db_query("SELECT usergroupid FROM ".PRE."usergroups_users WHERE userid=".$row['id'] );
   for( $i=0 ; $row_group = @db_fetch_num($q_group, $i ) ; $i++) {
     $user_gid[$i] = $row_group[0];
   }
   //check if users are in the same usergroup
-  if( ! array_intersect($user_gid, $GID ) ) {
+  if( ! array_intersect((array)$user_gid, (array)$GID ) ) {
     warning($lang['private_user'], $lang['private_profile'] );
   }
 }

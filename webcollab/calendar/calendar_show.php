@@ -180,7 +180,7 @@ $q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //user test for privacy
-  if($row['private'] && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
+  if($row['private'] && ($row['id'] != $UID ) && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ) {
     continue;
   }
 
@@ -205,7 +205,7 @@ $q = db_query("SELECT id, name, private FROM ".PRE."usergroups ORDER BY name" );
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //usergroup test for privacy
-  if( (! $ADMIN ) && ($row['private'] ) && ( ! in_array($row['id'], $GID ) ) ) {
+  if( (! $ADMIN ) && ($row['private'] ) && ( ! in_array($row['id'], (array)$GID ) ) ) {
   continue;
   }
 
