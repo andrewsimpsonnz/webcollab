@@ -29,60 +29,73 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
-function add($taskid, $projectid=0, $parent=0, $name="" ) {
+function add($taskid, $new_parent, $new_name ) {
 
   global $uid, $parent_array;
 
-  switch($parent ){
+  if($new_parent != 0 ) {
+    //now cloning a child task
+    $q = db_query("SELECT id FROM tasks WHERE parent=$taskid" );
 
-    case true:
-      //now cloning a child task
-      $q = db_query("SELECT id FROM tasks WHERE parent=$taskid" );
+    //clone all the tasks at this level
+    for( $i=0; $row = db_fetch_array($q, $i ); $i++ ) {
+      $new_taskid = copy_across($row["id"], $new_parent, NULL );
 
-      if(db_num_row($q ) < 1 )
-       return;
+      //skip to next if wasn't in usergroup
+      if($new_taskid == 0 )
+        continue;
 
-      //clone all the tasks at this level
-      for( $i=0; $row = db_fetch_array($q, $i ); $i++ ) {
-        $new_taskid = copy_across($row["id"], $projectid, $parent, NULL );
+      //recursive function if the subtask is listed in parent_array (it has children then)
+      if(in_array($row["id"], (array)$parent_array ) ) {
+        add($row["id"], $new_taskid, NULL );
       }
-      break;
-
-    case false:
-      //now cloning the topmost task
-      $new_taskid = copy_across($taskid, 0, 0, $name );
-      break;
+    }
   }
+  else{
+    //now cloning the topmost task (project)
+    $new_taskid = copy_across($taskid, 0, $new_name );
 
-  //recursive search if the subtask is listed in parent_array (it has children then)
-  if(in_array($taskid, (array)$parent_array ) ) {
-    $projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=$new_taskid" ), 0, 0 );
-    add($row["id"], $projectid, 1 );
+    //don't do if wasn't in usergroup
+    if($new_taskid != 0 ) {
+      //recursive function if the subtask is listed in parent_array (it has children then)
+      if(in_array($taskid, (array)$parent_array ) )
+        add($taskid, $new_taskid, NULL );
+    }
   }
 
   return;
 }
 
 
-function copy_across($taskid, $projectid, $parent, $name ) {
+function copy_across($taskid, $new_parent, $name ) {
 
     global $uid, $admin, $last_insert;
 
+    //get task details
     $q = db_query("SELECT * FROM tasks WHERE id=$taskid" );
     $row = db_fetch_array($q, 0 );
 
+    //check usergroup security
     if(($admin != 1) && ($row["usergroup"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
       if( ! in_array($usergroup, (array)$gid ) )
       return 0;
     }
 
-    $owner = $uid;
-
-    if( ! isset($name ) ) {
-      $name = $row["name"];
-      $owner = $row["owner"];
+    //set values
+    if($new_parent != 0 ) {
+      //new task
+      $new_projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=$new_parent" ), 0, 0 );
+      $new_name = $row["name"];
+      $new_owner = $row["owner"];
+    }
+    else{
+      //new project (adjust projectid later)
+      $new_projectid = 0;
+      $new_name = $name;
+      $new_owner = $uid;
     }
 
+    //insert data
     $q = db_query("INSERT INTO tasks(name,
                     text,
                     created,
@@ -101,19 +114,19 @@ function copy_across($taskid, $projectid, $parent, $name ) {
                     globalaccess,
                     groupaccess,
                     status )
-                    values('$name',
+                    values('$new_name',
                     '".$row["text"]."',
                     now(),
                     now(),
                     now(),
                     now(),
-                    '$owner',
+                    '$new_owner',
                     $uid,
                     '".$row["deadline"]."',
                     now(),
                     ".$row["priority"].",
-                    $parent,
-                    $projectid,
+                    $new_parent,
+                    $new_projectid,
                     ".$row["taskgroupid"].",
                     ".$row["usergroupid"].",
                     '".$row["globalaccess"]."',
@@ -125,11 +138,12 @@ function copy_across($taskid, $projectid, $parent, $name ) {
     $new_taskid = db_result(db_query("SELECT id FROM tasks WHERE $last_insert = $last_oid" ), 0, 0 );
 
     //for a new project set the projectid variable reset correctly
-    if($projectid == 0 )
+    if($new_parent == 0 )
       db_query("UPDATE tasks SET projectid=$new_taskid WHERE id=$new_taskid" );
 
     //you have already seen this item, no need to announce it to you
     db_query("INSERT INTO seen(userid, taskid, time) VALUES($uid, $new_taskid, now() )");
+
   return $new_taskid;
 }
 
@@ -160,7 +174,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
   $parent_array[$i] = $row[0];
 }
 
-add($taskid, 0, 0, $name );
+add($taskid, 0, $name );
 
 header("Location: ".$BASE_URL."main.php?x=$x" );
 die;
