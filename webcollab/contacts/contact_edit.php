@@ -75,7 +75,7 @@ $content .=
       "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" />\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-      "<p><input type=\"submit\" value=\"".$lang["del_contact"]."\" onClick=\"return confirm('".$lang["confirm_del"]."')\" />\n".
+      "<p><input type=\"submit\" value=\"".$lang["del_contact"]."\" onClick=\"return confirm('".$lang["confirm_del_javascript"]."')\" />\n".
       "</p></form>";
 
 new_box( $lang["contact_info"], $content );
