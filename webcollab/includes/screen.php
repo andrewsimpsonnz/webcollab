@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -90,6 +90,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
   header("Cache-Control: no-store, no-cache, must-revalidate");
   header("Cache-Control: post-check=0, pre-check=0", false);
   header("Pragma: no-cache");
+  header("Content-Type: text/html; charset=".$web_charset."");
 
   $content =  "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n".
                     "<html>\n\n".
