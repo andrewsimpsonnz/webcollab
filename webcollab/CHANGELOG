@@ -2,7 +2,9 @@ WebCollab CVS
 *** 21 February 2005
 
 - fix HTML syntax error in task_list (Bug #1144512)  (Credit: hs_dino)
- 
+
+- fix escapes on javascript (Bug #1147634)  (Credit: Joann Zimmerman)
+
 WebCollab 1.70
 *** 15 February 2005
 
