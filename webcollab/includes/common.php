@@ -36,19 +36,17 @@ include_once(BASE."lang/lang.php" );
 // Input validation (single line input)
 //
 function safe_data($body ) {
-
-global $web_charset;
-
-  //protect against database query attack
-  if(! get_magic_quotes_gpc() )
-    $body = addslashes($body );
-
-  //$body = htmlspecialchars($body, ENT_NOQUOTES );
-  $body = htmlentities($body, ENT_NOQUOTES, $web_charset );
-
+  
+  //return null for nothing input
+  if(! @strlen($body) )
+    return "";
+      
+  $body = clean_up($body);
+  
   //limit line length for single line entries
-  $body = substr($body, 0, 100 );
-
+  if(strlen($body ) > 100 ) 
+    $body = substr($body, 0, 100 );
+  
 return $body;
 }
 
@@ -58,21 +56,34 @@ return $body;
 //
 function safe_data_long($body ) {
 
-global $web_charset;
-
-  //protect against database query attack
-  if(! get_magic_quotes_gpc() )
-    $body = addslashes($body );
-
-  //remove HTML in input & encode high ASCII characters
-  $body = htmlentities($body, ENT_NOQUOTES, $web_charset );
-  //normalise line breaks
+  //return null for nothing input
+  if(! @strlen($body) )
+    return "";
+    
+  $body = clean_up($body);
+  
+  //normalise line breaks from Windows & Mac to UNIX style
   $body = str_replace("\r\n", "\n", $body );
   $body = str_replace("\r", "\n", $body );
   //break up long non-wrap words
   $body = preg_replace("/[^\s\n\t]{100}/", "$0\n", $body );
 
 return $body;
+}
+
+function clean_up($body ) {
+
+  //protect against database query attack
+  if(! get_magic_quotes_gpc() )
+    $body = addslashes($body );
+  
+  //allow only normal written characters - other weird stuff is replaced with "*"
+  $body = preg_replace('[^\009\010\013\032-\126\160-\255]', "*", $body );
+  
+  //use HTML encoding for characters that could be used for css <script> attacks or SQL injection
+  $body = str_replace(array('&', '<', '>', ';', '|','(', ')', '+', '-' ), array('&amp;', '&lt;', '&gt;', '&#059', '&#124', '&#040', '&#041', '&#043', '&#045'), $body );
+  
+  return $body;
 }
 
 //
