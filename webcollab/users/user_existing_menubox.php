@@ -31,6 +31,20 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 $content = "";
+$allowed[0] = 0;
+
+
+//get list of common users in private usergroups that this user can view 
+$q = db_query("SELECT usergroupid, userid 
+                      FROM usergroups_users 
+                      LEFT JOIN usergroups ON (usergroups.id=usergroups_users.usergroupid)
+                      WHERE usergroups.private=1");
+
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+  if(in_array($row[0], (array)$gid ) && ! in_array($row[1], (array)$allowed ) ) {
+   $allowed[] = $row[1];
+  }
+}
 
 //query
 $q = db_query("SELECT * FROM users WHERE deleted='f' ORDER by fullname" );
@@ -46,17 +60,9 @@ $content = "<table border=\"0\" align=\"left\">\n";
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
-  //test if user is private
-  if($row["private"] && ( ! $admin ) ) {
-    //get usergroups of user
-    $q_group = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$row["id"] );
-    for( $i=0 ; $row_group = @db_fetch_num($q_group, $i ) ; $i++) {
-      $user_gid[$i] = $row_group[0];
-    }
-    //check if users are in the same usergroup
-    if( ! array_intersect($user_gid, $gid ) ) {
-      continue;
-    }
+  //user test for privacy
+  if($row["private"] && ( ! $admin ) && ( ! in_array($row["id"], (array)$allowed ) ) ){
+    continue;
   }
 
   $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></small></td>";
