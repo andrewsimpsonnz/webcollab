@@ -84,11 +84,11 @@ $content .= "<tr><td><label for=\"access\">".$lang['allow_globalaccess']."</labe
 
 //set default selection for project listing
 switch($row['project_order']){
-  case "ORDER BY due, name DESC":
+  case "ORDER BY due DESC, name":
     $s1 = ""; $s2 = " selected=\"selected\""; $s3 = "";
     break;
       
-  case "ORDER BY priority, name":
+  case "ORDER BY priority DESC, name":
     $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\"";
     break;
   
@@ -108,11 +108,11 @@ $content .= "<tr><td>"."Project listing order - translate".":</td><td>\n".
           
 //set default selection for task listing
 switch($row['task_order']){
-  case "ORDER BY due, name DESC":
+  case "ORDER BY due DESC, name":
     $s1 = ""; $s2 = " selected=\"selected\""; $s3 = "";
     break;
       
-  case "ORDER BY priority, name":
+  case "ORDER BY priority DESC, name":
     $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\"";
     break;
   

@@ -80,11 +80,11 @@ else
 
 switch($project_order) {  
   case "deadline":
-    $project_list = "ORDER BY due, name DESC";
+    $project_list = "ORDER BY due DESC, name";
     break;
     
   case "priority":
-    $project_list = "ORDER BY priority, name";
+    $project_list = "ORDER BY priority DESC, name";
     break;
   
   default:  
@@ -100,11 +100,11 @@ else
   
 switch($task_order) {  
   case "deadline":
-    $task_list = "ORDER BY due, name DESC";
+    $task_list = "ORDER BY due DESC, name";
     break;
     
   case "priority":
-    $task_list = "ORDER BY priority, name";
+    $task_list = "ORDER BY priority DESC, name";
     break;
   
   default:  
