@@ -340,8 +340,8 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
              "<tr> <td>".$lang[$type."_description"]."</td> <td><textarea name=\"text\" rows=\"5\" cols=\"60\">".$taskid_row["text"]."</textarea></td> </tr>\n".
 
              //do we need to email ?
-             "<tr><td><label for=\"mailowner\">".$lang["email_new_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" $DEFAULT_OWNER /></label></td></tr>\n".
-             "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" $DEFAULT_GROUP /></label></td></tr>\n".
+             "<tr><td><label for=\"mailowner\">".$lang["email_new_owner"]."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" $DEFAULT_OWNER /></td></tr>\n".
+             "<tr><td><label for=\"maillist\">".$lang["email_group"]."</label></td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" $DEFAULT_GROUP /></td></tr>\n".
 
              "</table>\n".
              "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" onclick=\"return fieldCheck\" />&nbsp;".

@@ -146,7 +146,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   //get all taskgroups in order to show a task owner
   $q = db_query("SELECT id, name FROM taskgroups ORDER BY name");
 
-  $content .= "<tr> <td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td> <td><SELECT name=\"taskgroupid\">\n";
+  $content .= "<tr> <td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td> <td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang["no_group"]."</option>\n";
 
   for( $i=0 ; $taskgroup_row = @db_fetch_array($q, $i ) ; $i++)
@@ -157,7 +157,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   //show all the groups
   $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
 
-  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td> <td><SELECT name=\"usergroupid\">\n";
+  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td> <td><select name=\"usergroupid\">\n";
   $content .= "<option value=\"0\">".$lang["all_groups"]."</option>\n";
 
   for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
@@ -176,8 +176,8 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
               "<tr> <td>".$lang["task_description"]."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
 
               //do we need to email ?
-              "<tr><td><label for=\"mailowner\">".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER." /></label></td></tr>\n".
-              "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></label></td></tr>\n".
+              "<tr><td><label for=\"mailowner\">".$lang["email_owner"]."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER." /></td></tr>\n".
+              "<tr><td><label for=\"maillist\">".$lang["email_group"]."</label></td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></td></tr>\n".
 
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang["add_task"]."\" onclick=\"return fieldCheck()\" />&nbsp;".
@@ -257,8 +257,8 @@ else {
               "<tr> <td>".$lang["project_description"]."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
 
               //do we need to email ?
-              "<tr><td><label for=\"mailowner\">".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER." /></label></td></tr>\n".
-              "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></label></td></tr>\n".
+              "<tr><td><label for=\"mailowner\">".$lang["email_owner"]."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER." /></td></tr>\n".
+              "<tr><td><label for=\"maillist\">".$lang["email_group"]."</label></td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></td></tr>\n".
 
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang["add_project"]."\"  onclick=\"return fieldCheck()\" />&nbsp;".
