@@ -34,13 +34,28 @@ include_once("includes/screen.php" );
 
 if($admin != 1 )
   return;
-      
-create_top($lang["admin_config"] );
-include("includes/mainmenu.php" );
 
-goto_main();
-include("admin/admin_config_edit.php" );
+//
+// The action handler
+//
+if( ! valid_string($_REQUEST["action"] ) )
+  error("Admin action handler", "No request given" );
 
-create_bottom();
+switch ($_REQUEST["action"] ) {
+
+  case "admin":
+    create_top($lang["admin_config"] );
+    include("includes/mainmenu.php" );
+    goto_main();
+    include("admin/admin_config_edit.php" );
+    create_bottom();
+    break;
+
+  //error case
+  default:
+    error("Admin action handler", "Invalid request given") ;
+    break;
+
+}
 
 ?>
