@@ -75,15 +75,15 @@ $file_row = db_fetch_array( $file_q, 0);
 if( ! ( file_exists( $FILE_BASE."/".$file_row["oid"]."__".$file_row["filename"] ) ) )
   error( "Download file", "The file ".$file_row["filename"]." is missing from the server" );
 
-//send the headers describing the file type
-header("Content-Type: ".$file_row["mime"]);
-header("Content-Disposition: inline; filename=".$file_row["filename"]);
-header("Content_Length: ".$file_row["size"] );
-
 //open the file
 $fp = fopen( $FILE_BASE."/".$file_row["oid"]."__".addslashes($file_row["filename"]), "rb" );
 if( $fp == 0 )
   error( "Download file", "File handle for ".$file_row["filename"]." cannot be opened" );
+    
+//send the headers describing the file type
+header("Content-Type: ".$file_row["mime"]);
+header("Content-Disposition: inline; filename=".$file_row["filename"]);
+header("Content_Length: ".$file_row["size"] );
 
 //send it
 fpassthru($fp);
