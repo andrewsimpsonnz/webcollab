@@ -391,11 +391,13 @@ if( ! valid_string($_REQUEST["action"]) )
         warning($lang["task_submit"], $lang["missing_values"] );
 
       //don't use the default break-out sequence but go to or the parent's page of the project
-      if ($parentid != 0 )
-        header("location: ".BASE."tasks.php?x=$x&action=show&taskid=$parentid" );
-      else
-        header("location: ".BASE."main.php?x=$x" );
-      die;
+      if ($parentid != 0 ) {
+        header("Location: ".$BASE_URL."tasks.php?x=$x&action=show&taskid=$parentid" );
+      }
+      else {
+        header("Location: ".$BASE_URL."main.php?x=$x" );
+        die;
+      }
     break;
 
     //update a task
@@ -549,7 +551,6 @@ if( ! valid_string($_REQUEST["action"]) )
       break;
   }
 
-//this is quite crappy but it works ;)
-header("location: ".BASE."tasks.php?x=$x&action=show&taskid=$taskid" );
+header("Location: ".$BASE_URL."tasks.php?x=$x&action=show&taskid=$taskid" );
 
 ?>

@@ -117,5 +117,5 @@ if( isset($email_list ) ) {
 }
 //all done!
 
-header("location: ".BASE."main.php?x=".$x );
+header("Location: ".$BASE_URL."main.php?x=$x" );
 ?>

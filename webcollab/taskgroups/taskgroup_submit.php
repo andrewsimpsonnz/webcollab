@@ -101,6 +101,6 @@ if(! valid_string($_REQUEST["action"]) )
       break;
   }
 
-header("location: ".BASE."taskgroups.php?x=$x&action=manage");
+header("Location: ".$BASE_URL."taskgroups.php?x=$x&action=manage");
 
 ?>

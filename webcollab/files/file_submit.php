@@ -174,8 +174,12 @@ if( ! isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) )
     break;
   }
 
-if(isset($_GET["taskid"]) && $_GET["taskid"] == -1 ) //can only occur from files.php --> file_admin.php --> delete
-  header("location: ".BASE."files.php?x=$x&action=admin" );
-else
-  header("location: ".BASE."tasks.php?x=$x&action=show&taskid=".$_REQUEST["taskid"] );
+if(isset($_GET["taskid"]) && $_GET["taskid"] == -1 ) { //can only occur from files.php --> file_admin.php --> delete
+  header("Location: ".$BASE_URL."files.php?x=$x&action=admin" );
+  die;
+}
+else {
+  header("Location: ".$BASE_URL."tasks.php?x=$x&action=show&taskid=".$_REQUEST["taskid"] );
+}
+
 ?>

@@ -151,6 +151,6 @@ if( ! valid_string($_REQUEST["action"] ) )
       break;
   }
 
-header("location: ".BASE."usergroups.php?x=$x&action=manage");
+header("Location: ".$BASE_URL."usergroups.php?x=$x&action=manage");
 
 ?>

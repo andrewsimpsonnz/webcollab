@@ -75,9 +75,9 @@ if(isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
 
   //find our return-location
   if( ($parentid = db_result(db_query("SELECT parent FROM tasks WHERE id=$taskid" ), 0, 0)) == 0 )
-    $returnvalue = "main.php?x=$x";
+    $returnvalue = $BASE_URL."main.php?x=$x";
   else
-    $returnvalue = "tasks.php?x=$x&action=show&taskid=$parentid";
+    $returnvalue = $BASE_URL."tasks.php?x=$x&action=show&taskid=$parentid";
 
   //begin transaction
   db_begin();
@@ -182,6 +182,6 @@ if(isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
   }
 }
 
-  header("location: ".$returnvalue);
+  header("Location: ".$returnvalue);
 
 ?>

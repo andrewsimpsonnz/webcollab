@@ -23,9 +23,9 @@ Translation files are in /lang and /help.
 
 * Testing - look for html errors (tidy)
 
-- change require to  require_once throughout
-
 - try and introduce cellpadding
+
+- forum add (translate 'message' & add note about html stripping)
 
 - Update TODO
 

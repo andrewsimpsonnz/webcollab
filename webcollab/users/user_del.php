@@ -102,6 +102,6 @@ else {
   email($email, $title_delete_user, $message );
 }
 
-header("location: ".BASE."users.php?x=$x&action=manage");
+header("Location: ".$BASE_URL."users.php?x=$x&action=manage");
 
 ?>

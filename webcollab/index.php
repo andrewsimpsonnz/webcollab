@@ -54,6 +54,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && valid_string($_PO
   $auth = FALSE;
 
   include_once "includes/database.php";
+  include_once "includes/common.php";
 
   if(isset($WEB_AUTH ) && isset($_SERVER["REMOTE_USER"]) ){
     if($WEB_AUTH == "Y" )
@@ -66,17 +67,11 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && valid_string($_PO
   else{
     //encrypt password
     $md5pass = md5( $_POST["password"] );
-    //protect database against attack
-    if(! get_magic_quotes_gpc() ) {
-      $_POST["username"] = addslashes($_POST["username"]);
-    }
-    $login_q = "SELECT id FROM users WHERE deleted='f' AND name='".$_POST["username"]."' AND password='$md5pass'";
+    $login_q = "SELECT id FROM users WHERE deleted='f' AND name='".safe_data($_POST["username"])."' AND password='$md5pass'";
   }
 
-  //no database connection
-  if( ! ($q = db_query($login_q ) ) ) {
-    secure_error("No database connection, not able to login to verify username");
-  }
+  //database query
+  $q = db_query($login_q );
 
   //no such user-password combination
   if( @db_numrows($q) < 1 ) {
@@ -106,13 +101,30 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && valid_string($_PO
   db_query("INSERT INTO logins( user_id, session_key, ip, lastaccess ) VALUES ('$user_id', '$session_key', '$ip', now() )" );
 
   //try and set a session cookie (if the browser will let us)
-  setcookie("session_key", $session_key, time()+3600, directory(), domain(), 0  );
+  setcookie("webcollab_session", $session_key, time()+86400, directory(), $_SERVER["SERVER_NAME"], 0  );
   //(No need to record an error here if unsuccessful: code will revert to URI session keys)
 
   //relocate the user to the main screen
   //(we use both URI session key and cookies initially - in case cookies don't work)
-  header("location: main.php?x=$session_key");
+  header("Location: ".$BASE_URL."main.php?x=$session_key");
   die;
+}
+
+//allow for continuation of session if a valid cookie is already set
+if(isset($_COOKIE["webcollab_session"] ) && strlen($_COOKIE["webcollab_session"] ) == 32 ) {
+
+  include_once "includes/database.php";
+  include_once "includes/common.php";
+
+  //check if session is valid and within time limits
+  if(db_result(db_query("SELECT COUNT(*) FROM logins
+                                WHERE session_key='".safe_data($_COOKIE["webcollab_session"])."'
+                                AND lastaccess > (now()-INTERVAL ".$delim."1 HOUR".$delim.")" ) ) == 1 ) {
+
+    //relocate to main screen, and let security.php do further checking on session validity
+    header("Location: ".$BASE_URL."main.php?x=0");
+    die;
+  }
 }
 
 create_top($lang["login"], 1, "username" );

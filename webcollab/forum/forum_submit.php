@@ -195,6 +195,6 @@ if( ! valid_string($_REQUEST["action"]) )
   }
 
 //go back to where this request came from
-header("location: ../tasks.php?x=$x&action=show&taskid=".$_REQUEST["taskid"] );
+header("Location: ".$BASE_URL."tasks.php?x=$x&action=show&taskid=".$_REQUEST["taskid"] );
 
 ?>

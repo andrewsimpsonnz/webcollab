@@ -290,10 +290,13 @@ if( ! valid_string($_REQUEST["action"]) )
       break;
   }
 
-if ( $admin == 1 )
-        header("location: ../users.php?x=$x&action=manage" );
-      else
-        header( "location: ../users.php?x=$x&action=show&userid=".$uid );
-      die;
+if ( $admin == 1 ) {
+        header("Location: ".$BASE_URL."users.php?x=$x&action=manage" );
+        die;
+      }
+      else {
+        header( "location: ".$BASE_URL."users.php?x=$x&action=show&userid=$uid" );
+        die;
+      }
 
 ?>

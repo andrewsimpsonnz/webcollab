@@ -109,7 +109,7 @@ if( ! valid_string( $_REQUEST["action"] ) )
     case "delete":
       if(is_numeric($contactid ) ) {
         //delete the contact
-        db_query("DELETE FROM contacts WHERE id=".$contactid );
+        db_query("DELETE FROM contacts WHERE id=$contactid" );
       }
       else {
         error("Contact submit", "Invalid value specified for contactid" );
@@ -123,7 +123,6 @@ if( ! valid_string( $_REQUEST["action"] ) )
       break;
   }
 
-//this is quite crappy but it works ;)
-header("location: ".BASE."main.php?x=$x" );
+header("Location: ".$BASE_URL."main.php?x=$x" );
 
 ?>
