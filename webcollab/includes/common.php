@@ -34,9 +34,35 @@ require_once("path.php" );
 include_once(BASE."config.php" );
 include_once(BASE."lang/lang.php" );
 
-//define domain name for cookies
-$domain_array = explode('/', str_replace('http://', '', $BASE_URL ) );
-$DOMAIN = $domain_array[0];
+//
+//Get the domain name from $BASE_URL for use with cookies
+//
+
+function domain() {
+
+  global $BASE_URL;
+
+  $domain_array = explode('/', str_replace('http://', '', $BASE_URL ) );
+  $DOMAIN = ltrim($domain_array[0]);
+
+return $DOMAIN;
+}
+
+
+//
+//Get the directory name from $BASE_URL for use with cookies
+//
+
+function directory() {
+
+  global $BASE_URL;
+
+  $directory_path = realpath(dirname(__FILE__ ).'/..' );
+  $DIRECTORY = str_replace($_SERVER["DOCUMENT_ROOT"], '', $directory_path );
+
+return $DIRECTORY;
+}
+
 
 //
 // Ensures that all the data is code free so that a malcious user cannot

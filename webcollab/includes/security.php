@@ -47,7 +47,7 @@ if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
   error("Security manager", "No ip address found" );
 }
 
-// $x can be from either a GET, POST or COOKIE - check for cookie first
+//$x can be from either a GET, POST or COOKIE - check for cookie first
 if(isset($_COOKIE["session_key"] ) && (strlen($_COOKIE["session_key"] ) == 32 ) ){
   $x = $_COOKIE["session_key"];
 }
@@ -111,7 +111,7 @@ db_query("UPDATE logins SET lastaccess=now() WHERE session_key='$x' AND user_id=
 //check to see if cookies are being used
 if(isset($_COOKIE["session_key"] ) ) {
   //cookies in use; update the cookie
-  setcookie("session_key", $x, time()+3600, "/", $DOMAIN, 0  );
+  setcookie("session_key", $x, time()+3600, directory(), domain(), 0  );
   //and unset the URI encoded session key
   $x = 0;
 }
