@@ -116,9 +116,9 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
 
 <head>
   <title><?php echo $title ?></title>
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link rel="StyleSheet" href="<?php echo BASE; ?>css.css" type="text/css" />
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="StyleSheet" href="<?php echo BASE; ?>css.css" type="text/css">
   <?php echo $position; ?>
 </head>
 
@@ -170,13 +170,13 @@ function create_bottom() {
   echo "<br />";
 
   //end the main table
-  echo "</td></tr></table>";
+  echo "</td></tr></table>\n";
 
 
   //shows the time it took to load the page
   list($usec, $sec)=explode(" ", microtime() );
   $finishtime = ( (float)$usec + (float)$sec ) - $loadtime;
-  echo "<div class=\"loadtime\">\n".sprintf( $lang["load_time_sprt"], $finishtime, $database_query_time, $database_query_count )."</div><br />\n";
+  echo "<div class=\"loadtime\">".sprintf( $lang["load_time_sprt"], $finishtime, $database_query_time, $database_query_count )."</div><br />\n";
 
   //end xml parsing
   echo "\n</body>\n</html>\n";
