@@ -54,18 +54,18 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 
   global $admin, $x, $uid, $BASE_URL, $lang;
 
-  $query="SELECT forum.text as text,
-        forum.id as id,
-        forum.posted as posted,
-        forum.userid as postowner,
-        users.id as userid,
-        users.fullname as fullname,
-        tasks.owner as taskowner
-                FROM users, forum
-                LEFT JOIN tasks ON ( tasks.id = forum.taskid )
+  $query="SELECT forum.text AS text,
+        forum.id AS id,
+        forum.posted AS posted,
+        forum.userid AS postowner,
+        users.id AS userid,
+        users.fullname AS fullname,
+        tasks.owner AS taskowner
+        FROM forum
+	LEFT JOIN users ON ( users.id=forum.userid)
+        LEFT JOIN tasks ON ( tasks.id=forum.taskid )
         WHERE forum.taskid=".$taskid."
         AND forum.parent=".$parentid."
-        AND users.id=forum.userid
         AND forum.usergroupid=".$usergroupid."
         ORDER BY forum.posted";
 

@@ -49,20 +49,20 @@ function list_tasks( $parent ) {
   //query to get the children for this taskid
   $query="SELECT tasks.id AS id,
                  tasks.name AS taskname,
+		 tasks.status AS status,
+		 tasks.finished_time AS finished_time,
+		 ".$epoch."tasks.deadline) AS due,
+		 ".$epoch."tasks.edited) AS edited,
+		 ".$epoch."tasks.lastforumpost) AS lastpost,
+		 ".$epoch."tasks.lastfileupload) AS lastfileupload,
 		 users.fullname AS username,
 		 users.id AS userid,
 		 taskgroups.name AS groupname,
 		 taskgroups.description AS groupdescription,
-		 tasks.status AS status,
-		 tasks.finished_time AS finished_time,
-		 ".$epoch."tasks.deadline) AS due,
-                 ".$epoch."now()) AS now,
-		 ".$epoch."tasks.edited) AS edited,
-		 ".$epoch."tasks.lastforumpost) AS lastpost,
-		 ".$epoch."tasks.lastfileupload) AS lastfileupload
+                 ".$epoch."now()) AS now
 	  FROM tasks
 	  LEFT JOIN users ON ( users.id=tasks.owner )
-	  LEFT JOIN taskgroups ON (tasks.taskgroupid=taskgroups.id)
+	  LEFT JOIN taskgroups ON (taskgroups.id=tasks.taskgroupid)
 	  WHERE tasks.parent=".$parent."
 	  ORDER by groupname, taskname";
 
@@ -251,7 +251,8 @@ if( ! isset($taskid) || ! is_numeric($taskid) || $taskid == 0 )
 
 
 //find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query
-$parent_query = db_query( "SELECT parent, COUNT(parent) FROM tasks GROUP BY parent" );
+//$parent_query = db_query( "SELECT parent, COUNT(parent) FROM tasks GROUP BY parent" );
+$parent_query = db_query( "SELECT parent FROM tasks GROUP BY parent" );
 $parent_array = null;
 for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; $i++ ) {
   $parent_array[$i] = $row["parent"];
