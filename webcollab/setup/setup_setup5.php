@@ -152,7 +152,8 @@ create_top_setup("Setup Screen" );
 $content = "<div align=\"center\">\n".
             "<p>Setup is complete.</p>\n".
             "<p>The configuration information has been saved to 'config.php'. ".
-            "You can edit this file with a text editor to make further changes to configuration.</p>\n".
+            "This file can edited with a text editor to make further changes to configuration.</p>\n".
+            "<p>For best security on *nix operating systems, remember to remove the world writeable permissions from 'config.php'.</p>\n".  
             "<p>Please press the button to login...</p>\n";
 
 if($data["new_db"] == "Y" )

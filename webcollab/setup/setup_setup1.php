@@ -36,9 +36,9 @@ create_top_setup("Setup Screen" );
 
 //warn if config file cannot be written
 if( ! is_writable("../config.php" ) ) {
-  $content .=  "<p><b>The webserver does not have permissions to write to the config file (config.php).".
-                "You can make a new database, but you cannot write to the config file.<br /><br />\n".
-                "To alter the config file you can either:<ul>\n".
+  $content .=  "<p><b>The webserver does not have permissions to write to the config file (config.php).</p>".
+                "<p>You can make a new database, but setup will not be able proceed and write to the config file.</p>\n".
+                "<p>To allow setup to alter the config file you can either:<ul>\n".
                 "<li>Change the file permissions to allow the webserver to write to the file 'config.php'</li>\n".
                 "<li>Do a manual configuration by editing the file directly.</li>\n</ul></b></p>\n";
 }

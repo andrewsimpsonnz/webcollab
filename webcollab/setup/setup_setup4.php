@@ -93,7 +93,9 @@ switch ($url["scheme"] ){
     break;
 
   case "http":
-    if($fp = fsockopen ($url["host"], 80 ) ) {
+    if($fp = fsockopen ($url["host"], 80, $errno, $errstr, 10 ) ) {
+      //this function may not work in Windows (prefix with '@')
+      @socket_set_timeout($fp, 1 );
       //socket open - request HEAD
       fputs($fp,"HEAD ".$url["path"]." HTTP/1.0\n\n");
       $line = fgets($fp, 2048 );
