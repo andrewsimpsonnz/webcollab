@@ -38,7 +38,7 @@ function secure_error( $reason = "Unauthorised area" ) {
   global $lang;
 
   create_top($lang["login"], 1 );
-  new_box($lang["error"], "<div align=\"center\"><br />$reason<br /></div>" );
+  new_box($lang["error"], "<div align=\"center\"><br />$reason<br /></div>", "boxdata", "singlebox"  );
   create_bottom();
   die;
 
@@ -162,12 +162,10 @@ $content .= "<br />".$lang["please_login"].":<br /><br />\n".
            "<a href=\"http://www.mysql.com\"><img border=\"0\" src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\" /></a>\n".
            "</div>".
            "</form>".
-
-           "</div>".
-           "<br />";
+           "</div>";
 
 //set box options
-new_box($lang["login"], $content, "boxdata", "singlebox" );
+new_box($lang["login"], $content, "boxdata2", "singlebox" );
 
 create_bottom();
 
