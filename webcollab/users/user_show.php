@@ -45,8 +45,8 @@ $userid = intval($_GET['userid']);
 $q = db_query("SELECT id, name, fullname, email, admin, private, guest, deleted FROM ".PRE."users WHERE id=$userid" );
 
 //get info
-if( ! ($row = db_fetch_array($q, 0 ) ) )
-  error("Database error", "Error in fetching result" );
+if( ! ($row = @db_fetch_array($q, 0 ) ) )
+  error("User error", "User information is not available" );
   
 //test if user is private
 if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) ) {
