@@ -136,17 +136,17 @@ function list_tasks( $parent ) {
           $seen = db_result( $seenq, 0, 0 );
           if( ( $seen - $row["edited"] ) < 0 ) {
             //edited
-            $alert_content .= "<img border=\"0\" src=\"images/updated.gif\" height=\"12\" width=\"60\">";
+            $alert_content .= "<img border=\"0\" src=\"images/updated.gif\" height=\"12\" width=\"60\"> &nbsp;";
           }
 
           //are there forum changes ?
           if( $seen - $row["lastpost"] < 0 ) {
-            $alert_content .= "<img border=\"0\" src=\"images/message.gif\" height=\"10\" width=\"14\">";
+            $alert_content .= "<img border=\"0\" src=\"images/message.gif\" height=\"10\" width=\"14\"> &nbsp;";
           }
 
           //are there file upload changes ?
           if( $seen - $row["lastfileupload"] < 0 ) {
-            $alert_content .= "<img border=\"0\" src=\"images/file.gif\" height=\"11\" width=\"11\">";
+            $alert_content .= "<img border=\"0\" src=\"images/file.gif\" height=\"11\" width=\"11\"> &nbsp;";
           }
 	  break;
        }
@@ -174,7 +174,7 @@ function list_tasks( $parent ) {
 
     //merge all info about a task
     if( $alert_content!="" ) {
-      $this_content .= $alert_content."&nbsp;<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$row["taskname"]."</A></FONT> ".$status_content;
+      $this_content .= $alert_content."<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$row["taskname"]."</A></FONT> ".$status_content;
     }else{
       $this_content .= "<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$row["taskname"]."</A> ".$status_content;
     }
