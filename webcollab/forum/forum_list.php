@@ -31,7 +31,6 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
-include_once(BASE."config.php" );
 include_once(BASE."includes/time.php" );
 
 
@@ -49,25 +48,22 @@ require_once(BASE."includes/usergroup_security.php" );
 //
 function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 
-  global $admin, $x, $uid, $lang;
+  global $parent_array, $admin, $x, $uid, $lang;
 
-  $query="SELECT forum.text AS text,
-        forum.id AS id,
-        forum.posted AS posted,
-        forum.userid AS postowner,
-        users.id AS userid,
-        users.fullname AS fullname,
-        tasks.owner AS taskowner
-        FROM forum
-        LEFT JOIN users ON (users.id=forum.userid)
-        LEFT JOIN tasks ON (tasks.id=forum.taskid )
-        WHERE forum.taskid=$taskid
-        AND forum.parent=$parentid
-        AND forum.usergroupid=$usergroupid
-        ORDER BY forum.posted";
-
-  //query
-  $q = db_query($query );
+  $q = db_query("SELECT forum.text AS text,
+                forum.id AS id,
+                forum.posted AS posted,
+                forum.userid AS postowner,
+                users.id AS userid,
+                users.fullname AS fullname,
+                tasks.owner AS taskowner
+                FROM forum
+                LEFT JOIN users ON (users.id=forum.userid)
+                LEFT JOIN tasks ON (tasks.id=forum.taskid )
+                WHERE forum.taskid=$taskid
+                AND forum.parent=$parentid
+                AND forum.usergroupid=$usergroupid
+                ORDER BY forum.posted" );
 
   //check for any posts
   if(db_numrows($q ) < 1 ) {
@@ -90,16 +86,20 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 
     //owners of the thread, owners of the post and admins have a "delete" option
     if( ($admin==1) || ($uid == $row["taskowner"] ) || ($uid == $row["postowner"] ) ) {
-      $this_content .= " <font class=\"textlink\">[<a href=\"forum/forum_submit.php?x=$x&amp;action=del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm( '".$lang["confirm_del"]."' )\">".$lang["del"]."</a>]</font>\n";
+      $this_content .= " <font class=\"textlink\">[<a href=\"forum/forum_submit.php?x=$x&amp;action=del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm( '".$lang["confirm_del"]."' )\">".$lang["del"]."</a>]</font>";
     }
 
-    $this_content .= "<br />".nl2br($row["text"] )."\n";
+    $this_content .= "<br />\n".nl2br($row["text"] )."\n";
 
     //recursive search
-    $this_content .= list_posts_from_task($row["id"], $taskid, $usergroupid );
+    if(in_array($row["id"], $parent_array, FALSE) ) {
+      $this_content .= list_posts_from_task($row["id"], $taskid, $usergroupid );
+      $this_content .= "\n</ul>\n</li>";
+    }
+    else{
+      $this_content .= "</li>\n";
+    }
   }
-
-  $this_content .= "</ul>";
 
   return $this_content;
 }
@@ -108,6 +108,14 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 
 //MAIN PROGRAM
 
+//get number of posts for this taskid
+$q = db_query("SELECT DISTINCT parent FROM forum WHERE taskid=$taskid" );
+
+//put parent id's in an array
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
+  $parent_array[$i] = $row["parent"];
+}
+
 //
 //public forums
 //
@@ -115,7 +123,7 @@ $content = "";
 
 //all the posts that have parentid 0 (the taskid is included in the query itself so this will _not_ show all results)
 $content .= list_posts_from_task( 0, $taskid, 0 );
-$content .= "<br />\n";
+$content .= "</ul>\n<br />\n";
 //add an option to add posts
 $content .= "<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang["new_post"]."</a>]</font>";
 //show it
@@ -153,7 +161,7 @@ if( $task_usergroup != 0 ) {
   if($found == 1 ) {
 
     $content .= list_posts_from_task(0, $taskid, $task_usergroup);
-    $content .= "<br />\n";
+    $content .= "</ul>\n<br />\n";
     //add an option to add posts
     $usergroup_name = db_result( db_query("SELECT name FROM usergroups WHERE id=$task_usergroup" ), 0, 0 );
     $content .= "<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=$task_usergroup&amp;\">".$lang["new_post"]."</a>]</font>";
