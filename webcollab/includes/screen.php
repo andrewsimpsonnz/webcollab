@@ -116,9 +116,9 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
 
 <head>
   <title><?php echo $title ?></title>
-  <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
-  <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <link REL="StyleSheet" HREF=<?php echo BASE; ?>css.css TYPE="text/css">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="StyleSheet" href="<?php echo BASE; ?>css.css" type="text/css">
   <?php echo $position; ?>
 </head>
 
@@ -167,7 +167,7 @@ function create_bottom() {
   global $loadtime, $database_query_time, $database_query_count, $lang;
 
   //clean
-  echo "<br>";
+  echo "<br />";
 
   //end the main table
   echo "</td></tr></table>";
