@@ -135,10 +135,10 @@ create_top($lang["login"], 1, "username" );
 $content = "<div align=\"center\">";
 
 if( $SITE_IMG != "" ) {
-  $content .=  "<img src=\"images/".$SITE_IMG."\"><br />";
+  $content .=  "<img src=\"images/".$SITE_IMG."\" /><br />";
 }
 else {
-  $content .=  "<img src=\"images/webcollab.png\" alt=\"WebCollab logo\"><br />";
+  $content .=  "<img src=\"images/webcollab.png\" alt=\"WebCollab logo\" /><br />";
 }
 
 $content .= "<br />".$lang["please_login"].":<br /><br />\n".
@@ -154,10 +154,10 @@ $content .= "<br />".$lang["please_login"].":<br /><br />\n".
            //
            // Select one, or more images from selection below
            //
-           //"<a href=\"http://www.php.net\"><img border=\"0\" src=\"images/php-logo.gif\" alt=\"PHP 4 code\"></a>".
-           //"<a href=\"http://www.postgres.org\"><img border=\"0\" src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\"></a>".
-           //"<a href=\"http://httpd.apache.org\"><img border=\"0\" src=\"images/apache_b.gif\" alt=\"Powered by Apache Webserver\"></a>".
-           "<a href=\"http://www.mysql.com\"><img border=\"0\" src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\"></a>\n".
+           //"<a href=\"http://www.php.net\"><img border=\"0\" src=\"images/php-logo.gif\" alt=\"PHP 4 code\" /></a>".
+           //"<a href=\"http://www.postgres.org\"><img border=\"0\" src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\" /></a>".
+           //"<a href=\"http://httpd.apache.org\"><img border=\"0\" src=\"images/apache_b.gif\" alt=\"Powered by Apache Webserver\" /></a>".
+           "<a href=\"http://www.mysql.com\"><img border=\"0\" src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\" /></a>\n".
            "</div>".
            "</form>".
 
