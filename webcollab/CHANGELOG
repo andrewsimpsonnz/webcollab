@@ -1,15 +1,26 @@
 WebCollab CVS
-*** 10 September 2004
+*** 18 September 2004
+  Andrew Simpson 
 
-- bugfix - (Bug No. #1025240) add addslashes() to task_clone_submit (brianlynch)
+- bugfix: private usergroup not sticky when editing usergroup
+
+- bugfix: Fix null time/date giving output of Jan 1970 (zero in 'Unix epoch' time)   
+
+WebCollab CVS
+*** 10 September 2004
+  Andrew Simpson 
+
+- bugfix: (Bug No. #1025240) add addslashes() to task_clone_submit (brianlynch)
 
 WebCollab CVS
 *** 2 September 2004
+  Andrew Simpson 
 
 - Italian translation updated (Raffaele Franzese)
 
 WebCollab CVS
 *** 29 August 2004
+  Andrew Simpson 
 
 - bugfix: change single and double quotes in edit fields to HTML entities (holstead)
 
@@ -21,6 +32,7 @@ WebCollab CVS
 
 WebCollab CVS
 *** 8 August 2004
+  Andrew Simpson 
 
 - allow for user-selected timezones for pgsql/mysql handling
 
