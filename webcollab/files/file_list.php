@@ -48,7 +48,7 @@ $taskid = $_GET["taskid"];
 include_once( BASE."includes/usergroup_security.php" );
 
 //get the files from this task
-$file_q = db_query("SELECT files.oid AS oid,
+$q = db_query("SELECT files.oid AS oid,
                            files.id AS id,
 			   files.filename AS filename,
 			   files.uploaded AS uploaded,
@@ -64,33 +64,35 @@ $file_q = db_query("SELECT files.oid AS oid,
                       LEFT JOIN users ON (users.id=files.uploader)
                       WHERE files.taskid=".$taskid );
 
+if(db_numrows($q ) != 0 ) {
 
-$content .= "<TABLE>";
+  $content .= "<TABLE>";
 
-//show them
-for( $i=0 ; $row = @db_fetch_array($file_q, $i) ; $i++) {
+  //show them
+  for( $i=0 ; $row = @db_fetch_array($q, $i) ; $i++) {
 
-  //file part
-  $content .= "<TR><TD><A href=\"".$BASE_URL."files/file_download.php?x=".$x."&fileid=".$row["id"]."\" window=\"_new\">".$row["filename"]."</A> <SMALL>(".$row["size"].$lang["bytes"].") </SMALL>";
+    //file part
+    $content .= "<TR><TD><A href=\"".$BASE_URL."files/file_download.php?x=".$x."&fileid=".$row["id"]."\" window=\"_new\">".$row["filename"]."</A> <SMALL>(".$row["size"].$lang["bytes"].") </SMALL>";
 
-  //owners of the file and admins have a "delete" option
-  if( ($admin == 1) || ($uid == $row["owner"] ) || ($uid == $row["uploader"] ) ) {
-    $content .= " [<A href=\"".$BASE_URL."files/file_submit.php?x=".$x."&action=del&fileid=".$row["id"]."&taskid=".$taskid."\" onClick=\"return confirm( '".sprintf( $lang["del_file_javascript_sprt"], $row["filename"] )."' )\">".$lang["del"]."</A>]</TR></TD>\n";
-  } else
-    $content .= "</TR></TD>\n";
+    //owners of the file and admins have a "delete" option
+    if( ($admin == 1) || ($uid == $row["owner"] ) || ($uid == $row["uploader"] ) ) {
+      $content .= " [<A href=\"".$BASE_URL."files/file_submit.php?x=".$x."&action=del&fileid=".$row["id"]."&taskid=".$taskid."\" onClick=\"return confirm( '".sprintf( $lang["del_file_javascript_sprt"], $row["filename"] )."' )\">".$lang["del"]."</A>]</TR></TD>\n";
+    } else
+      $content .= "</TR></TD>\n";
 
-  //user part
-  $content .= "<TR><TD>".$lang["uploader"]." <A href=\"".$BASE_URL."users.php?x=".$x."&action=show&userid=".$row["userid"]."\">".$row["username"]."</A> (".nicetime( $row["uploaded"] ).")</TR></TD>\n";
+    //user part
+    $content .= "<TR><TD>".$lang["uploader"]." <A href=\"".$BASE_URL."users.php?x=".$x."&action=show&userid=".$row["userid"]."\">".$row["username"]."</A> (".nicetime( $row["uploaded"] ).")</TR></TD>\n";
 
-  //show description
-  if( $row["description"] != "" )
-    $content .= "<TR><TD><SMALL><I>".$row["description"]."</I></SMALL></TR></TD>\n";
+    //show description
+    if( $row["description"] != "" )
+      $content .= "<TR><TD><SMALL><I>".$row["description"]."</I></SMALL></TR></TD>\n";
 
-  //padding for next entry
-  $content .= "<TR><TD>&nbsp;</TR></TD>\n";
+    //padding for next entry
+    $content .= "<TR><TD>&nbsp;</TR></TD>\n";
+  }
+
+  $content .= "</TABLE>";
 }
-
-$content .= "</TABLE>";
 
 $content .= "<SMALL>\n<BR>\n[<A href=\"".$BASE_URL."files.php?x=".$x."&taskid=".$taskid."&action=upload\">".$lang["add_file"]."</A>]</SMALL>";
 
