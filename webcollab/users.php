@@ -110,12 +110,12 @@ if( ! isset($_REQUEST["action"]) )
       create_bottom();
       break;
 
-    //submit to submission engine
+    //submit email to submission engine
     case "submit_email":
       include("users/user_mail_send.php" );
       break;
                   
-    //submit to submission engine
+    //submit insert/update to submission engine
     case "submit_insert":
     case "submit_edit":
     case "revive":
