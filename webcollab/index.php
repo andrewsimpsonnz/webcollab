@@ -119,10 +119,8 @@ if(isset($_COOKIE["webcollab_session"] ) && strlen($_COOKIE["webcollab_session"]
   include_once "includes/common.php";
   include_once "includes/database.php";
 
-  //check if session is valid and within time limits
-  if(db_result(@db_query("SELECT COUNT(*) FROM logins
-                                WHERE session_key='".safe_data($_COOKIE["webcollab_session"])."'
-                                AND lastaccess > (now()-INTERVAL ".$delim."1 HOUR".$delim.")" ) ) == 1 ) {
+  //check if session is valid
+  if(db_result(@db_query("SELECT COUNT(*) FROM logins WHERE session_key='".safe_data($_COOKIE["webcollab_session"])."'" ) ) == 1 ) {
 
     //relocate to main screen, and let security.php do further checking on session validity
     header("Location: ".$BASE_URL."main.php?x=0");
