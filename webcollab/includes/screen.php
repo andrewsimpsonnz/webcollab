@@ -67,8 +67,11 @@ include_once(BASE."lang/lang.php" );
 //
 function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
 
-  global $uid_name, $admin, $MANAGER_NAME, $WEBCOLLAB_VERSION, $lang, $web_charset, $top_done;
+  global $uid_name, $admin, $MANAGER_NAME, $WEBCOLLAB_VERSION, $lang, $web_charset, $top_done, $bottom_text;
 
+  //set initial value
+  $bottom_text = 1;
+  
   //only build top once...
   //  (we don't use headers_sent() 'cause it seems to be buggy in PHP5)
   if(isset($top_done) && $top_done == 1 ){
@@ -115,8 +118,10 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
     $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/print.css\" type=\"text/css\" />\n";
   else
     $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\" />\n";
+  
   if($page_type == 3 )
     $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/calendar.css\" type=\"text/css\" />\n";  
+  
   //javascript to position cursor in the first box
   if($cursor || $date) {
     $content .=  "<script type=\"text/javascript\">\n".
@@ -163,30 +168,27 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
   
   //create the main table
   $content  =  "<!-- start main table -->\n".
-                     "<table cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" style=\"margin-left:auto; margin-right:auto;\">\n";
-
+                     "<table class=\"container\">\n";
 
   switch ($page_type ) {
 
     case 0: //main window + menu sidebar
       //create the masthead part of the main window
-      $content .=  "<tr><td colspan=\"2\">".
-                         "<div class=\"masthead\">";
+      $content .=  "<tr valign=\"top\" style=\"height: 20px\"><td colspan=\"2\" class=\"masthead\">";
       //show username if applicable
       if($uid_name != "" )
         $content .=  sprintf( $lang["user_homepage_sprt"], $uid_name );
-      $content .=  "</div></td></tr>\n";
+      $content .=  "</td></tr>\n";
       //create menu sidebar
-      $content .=  "<tr valign=\"top\"><td style=\"width: 175px\" align=\"center\">\n";
+      $content .=  "<tr valign=\"top\"><td style=\"width: 175px;\" align=\"center\">\n";
       break;
 
     case 1: //single main window (no menu sidebar)
     case 3: //calendar  
-      $content .=  "<tr><td>";
-      $content .=  "<div class=\"masthead\">";
+      $content .=  "<tr valign=\"top\" style=\"height: 20px\"><td class=\"masthead\">";
       if($uid_name != "" )
         $content .=  sprintf( $lang["user_homepage_sprt"], $uid_name );
-      $content .= "</div></td></tr>\n";
+      $content .= "</td></tr>\n";
       //create single window over entire screen
       $content .= "<tr valign=\"top\" ><td style=\"width: 100%\" align=\"center\">\n";
       break;
@@ -194,6 +196,8 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
     case 2: //printable screen
       //create single window over paper width
       $content .= "<tr valign=\"top\"><td style=\"width: 576pt\" align=\"center\">\n";
+      //don't want bottom text
+      $bottom_text = 0;
   }
 
   //flush buffer
@@ -234,16 +238,22 @@ function goto_main() {
 //
 function create_bottom() {
 
+  global $bottom_text;
+
   //clean
   echo "<br />\n";
 
-  //end the main table
-  echo "</td></tr>\n</table>\n";
+  //end the main table row
+  echo "</td></tr>\n";
 
-  //shows the logo
-  echo "<div class=\"bottomtext\">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;2002-2004</div>\n";
+  if($bottom_text ){
+    //shows the logo
+    echo "<tr><td colspan=\"2\" align=\"center\" class=\"bottomtext\">\n".
+         "Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;2002-2004\n".
+         "</td></tr>\n";
+  } 
   //end xml parsing
-  echo "</body>\n</html>\n";
+  echo "</table>\n</body>\n</html>\n";
   return;
 }
 
