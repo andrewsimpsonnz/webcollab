@@ -47,7 +47,13 @@ modulepackage as well.</dd>
 <dt>3. "Can login, but the main page is not found (404 error)."</dt>
 <dd>Check that the the parameter $BASE_URL is correctly stated in config.php.
  Did you remember to add the trailing slash "/" as the config file says?</dd>
-<dt>4. "Does WebCollab use cookies?"</dt>
+<dt>4. During normal usage error messages about IP spoofing occur, and the user is logged out.</dt>
+<dd>When a user logs in to a session, WebCollab stores their IP address in the database.  For the
+remainder of that session, WebCollab expects the user to be at that IP address.  If the IP address
+changes - as in a 'man in the middle' hack attack - WebCollab terminates the session for security.
+This system is not foolproof, in some cases round-robin proxy servers can cause problems with
+apparently changing IP addresses.  In this case change $NO_IP_CHECK in config.php to "Y".
+<dt>5. "Does WebCollab use cookies?"</dt>
 <dd>Yes, if possible. Cookies are preferred for session management, but aren't
 reliable with all browsers.<br>
 <br>
@@ -58,10 +64,10 @@ session management with encoded URI is continued.<br>
 <br>
 The session cookie lasts only as long as the current session.  It should be automatically destroyed
 when the browser is closed, or the user logs out.</dd>
-<dt>5. "Does Magic Quotes need to be set 'on' or 'off' in php.ini?"</dt>
+<dt>6. "Does Magic Quotes need to be set 'on' or 'off' in php.ini?"</dt>
 <dd>No, WebCollab reads the magic_quote setting in php.ini, and uses addslashes() on input data if
 magicquotes is 'off'in php.ini.</dd>
-<dt>6. "Does Register Globals need to be 'on' in php.ini?"</dt>
+<dt>7. "Does Register Globals need to be 'on' in php.ini?"</dt>
 <dd>The Register Globals setting does not affect WebCollab. For security reasons it has defaulted to
 'off' since PHP 4.2.0.</dd>
 </dl>
@@ -75,11 +81,15 @@ Alternatively, a new customised language file can be set up and defined in
 /webcollab/lang/language.php</dd>
 <dt>2. Can the splash screen image be changed?</dt>
 <dd>Yes, add the new image to /webcollab/images/ and set the $SITE_IMG parameter in config.php</dd>
-<dt>3. Can background colours be changed?</dt>
-<dd>Yes, see the style sheet /webcollab/css.css and /webcollab/includes/screen.php.</dd>
+<dt>3. Can background colours and text styles be changed?</dt>
+<dd>Yes, see the style sheet /webcollab/css.css.</dd>
 <dt>4. Can external webserver authorisation be used instead of the login screen.</dt>
 <dd>Yes, set the $WEB_AUTH parameter to "Y" in config.php.  Username is taken from the REMOTE_USER
 environment variable set by Apache.</dd>
+<dt>5. What web browsers is WebCollab compatible with?</dt>
+<dd>WebCollab is valid HTML 4.01 and uses CSS1 cascading style sheets.  Some Javascript is used, but
+this is not essential.  This means WebCollab is compatible with most contemporary web browsers. 
+WebCollab is also mostly valid XHTML 1.0.</dd>
 </dl>
 <h3>UPLOADING FILES</h3>
 <dl>
@@ -87,7 +97,7 @@ environment variable set by Apache.</dd>
 feature.</dt>
 <dd>For Linux and *nix: Make sure the /webcollab/files/filebase directory is writeable by the
 webserver. This means the directory should be either owned by the webserveruser (usually apache, www
-orwww-data) or the directory must be world-writeable.<br>
+or www-data) or the directory must be world-writeable.<br>
 <br>
 Use 'chmod 777 filebase' from the files directory, and preferably move the directory outside the
 webserver root - see item 3 below.</dd>

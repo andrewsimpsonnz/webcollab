@@ -39,18 +39,6 @@ if( $admin != 1 ) {
   return;
 }
 
-
-function tag_remove($message ) {
-
-  //remove any dangerous tags that exist
-  $message = preg_replace("/(<\/?)(\w+)([^>]*>)/e", "'\\1'.strtoupper('\\2').'\\3'", $message );
-  $block_tag = array("APPLET", "OBJECT", "SCRIPT", "EMBED", "FORM", "?", "%" );
-    foreach ($block_tag as $value ) {
-      $message = str_replace("<".$value, "<**** ", $message );
-    }
-  return $message;
-}
-
 //initialise variables
 $address_array = "";
 
@@ -62,11 +50,12 @@ if( ! isset($_POST["group"]) || ! valid_string($_POST["group"]) )
 if( ! valid_string($_POST["message"] ) )
   warning("No message", "There is no message to send.  Please go back and enter a message." );
 
-$message = wordwrap(tag_remove($_POST["message"], 100 ) );
+//wordwrap and clean out nasty stuff
+$message = wordwrap(clean($_POST["message"], 100 ) );
 
 //subject
 if(valid_string($_POST["subject"] ) )
-  $subject = tag_remove($_POST["subject"] );
+  $subject = clean($_POST["subject"] );
 else
   $subject = "";
 
@@ -115,9 +104,6 @@ else
 
     case "maillist":
       //mailing list is added in below for every case - we don't specifically add it in here
-      //check if mailing list has some addresses in it
-      if(db_result(db_query("SELECT COUNT(*) FROM maillist" ) ) == 0 );
-        warning("No addresses","Nothing to send. No addresses are entered in the mailing list." );
       break;
 
     default:
@@ -145,7 +131,7 @@ while(list(,$address) = @each($address_array ) ) {
 
 //silly error check
 if(strlen($to ) == 0 )
-  error("Admin email","No addresses to send." );
+  warning("Admin email","No addresses were given." );
 
 //send it
 email($to, $subject, $message );
