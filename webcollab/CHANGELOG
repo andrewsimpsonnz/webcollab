@@ -1,5 +1,13 @@
 WebCollab CVS
-***2 May 2003
+*** 11 May 2003
+  Andrew Simpson
+
+- add provision for editing from usergroup
+
+- remove quotemeta() from emails, add clean function to email.php
+
+WebCollab CVS
+*** 3 May 2003
   Andrew Simpson
 
 - make font colours more consistent and websafe
@@ -8,7 +16,13 @@ WebCollab CVS
 
 - update PostgreSQL function calls to properly support post-PHP 4.2.0 coding
 
-- simplify stylesheet 
+- simplify stylesheet
+
+WebCollab 1.32
+*** 3 May 2003
+  Andrew Simpson
+
+- bugfix release for #726902 & #726866
 
 WebCollab CVS
 *** 27 April 2003
