@@ -91,22 +91,36 @@ $content .= "<form method=\"POST\" action=\"tasks/task_submit.php\">\n".
             "<table border=\"0\">\n".
             "<tr><td>".$lang["creation_time"]."</td> <td>".nicedate($row["created"] )."</td></tr>\n";
 
-// find parent for task and show it.
-if($row["parent"] != 0 ) {
-
-  $project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
-  $content .= "<tr><td>".$lang["project"] .":</td><td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["projectid"]."\">$project</a></td></tr>\n";
-
-  if( $row["parent"] != $row["projectid"] ) {
-    $parent = db_result(db_query( "SELECT name FROM tasks WHERE id=".$row["parent"]), 0, 0);
-    $content .= "<tr><td>".$lang["parent_task"]."</td><td><a href=\"tasks.php?x=".$x."&action=show&taskid=".$row["parent"]."\">".$parent."</a></td></tr>\n";
-  }
-  $content .= "<tr><td>".$lang["task_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\" /></td></tr>\n";
-}
-else {
-  //project
+if($row["parent"] == 0 ) {
+  //project input box
   $content .= "<tr><td>".$lang["project_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\" /></td></tr>\n";
 }
+else{
+  //show project name
+  $project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
+  $content .= "<tr><td>".$lang["project"] .":</td><td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["projectid"]."\">$project</a></td></tr>\n";
+}
+
+//reparenting
+$content .= "<tr><td>".$lang["parent_task"].":</td><td><select name=\"parentid\">\n";
+$parentq = db_query("SELECT id, name FROM tasks WHERE id<>$taskid ORDER BY name");
+$content .= "<option value=\"0\"";
+
+if($row["parent"] == 0 )
+  $content .= " SELECTED";
+$content .= ">None (a top-level project)</option>\n";
+
+for( $i=0; $parent_row = @db_fetch_array($parentq, $i ); $i++) {
+  $content .= "<option value=\"".$parent_row["id"]."\"";
+  if($row["parent"] == $parent_row["id"] )
+    $content .= " SELECTED";
+  $content .= ">".$parent_row["name"]."</option>\n";
+  }
+$content .="</select></td></tr>\n";
+
+//show task (if applicable)
+if($row["parent"] != 0 )
+  $content .= "<tr><td>".$lang["task_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\" /></td></tr>\n";
 
 //deadline
 $content .= "<tr><td>".$lang["deadline"].":</td><td>".date_select_from_timestamp($row["deadline"])."</td></tr>\n";
