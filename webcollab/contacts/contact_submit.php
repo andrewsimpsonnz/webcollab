@@ -111,20 +111,20 @@ if( valid_string( $_REQUEST["action"] ) ) {
         //delete the contact
         db_query("DELETE FROM contacts WHERE id=".$contactid );
         } else {
-        error( "Contact submission handler", "Invalid value specified for contactid" );
+        error( "Contact submit", "Invalid value specified for contactid" );
       }
 
       break;
 
     //default error
     default:
-      error("Contacts submission handler", "I don't know what to do with your request. Please try again.");
+      error("Contact submit", "Invalid request");
       break;
   }
 
 }
 else
-  error("Contacts submission engine", "You did not specify an action, request not handled. Please try again." );
+  error("Contact submit", "No request given" );
 
 
 //this is quite crappy but it works ;)
