@@ -43,6 +43,6 @@ $content .= "<a href=\"main.php?x=$x\">".$lang["home_page"]."</a><br />\n".
             "<a href=\"includes/logout.php?x=$x\">".$lang["log_out"]."</a><br />\n";
 
 //show
-new_box( $lang["main_menu"], $content );
+new_box( $lang["main_menu"], $content, "boxmenu" );
 
 ?>
