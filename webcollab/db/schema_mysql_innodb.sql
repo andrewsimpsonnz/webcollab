@@ -19,6 +19,8 @@ CREATE TABLE tasks (
 	globalaccess VARCHAR(5) NOT NULL DEFAULT 't',
 	groupaccess VARCHAR(5) NOT NULL DEFAULT 'f',
 	lastfileupload DATETIME NOT NULL,
+        completed TINYINT NOT NULL DEFAULT 0,
+        completion_time DATETIME NOT NULL,
         INDEX (owner),
         INDEX (parent),
         INDEX (name(10)),

@@ -45,6 +45,33 @@ function secure_error($message ) {
 
 }
 
+
+//
+// PERCENT COMPLETE
+//
+
+function percent_complete($taskid ) {
+  
+  $q = db_query("SELECT status FROM tasks WHERE projectid=".$taskid." AND parent<>0"  );
+  
+  $total_tasks = 0;
+  $tasks_completed = 0;
+  
+  for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) { 
+    $total_tasks++;
+      
+    if($row[0] == 'done')
+      $tasks_completed++;
+    }
+  
+  //project with no tasks is complete
+  if($total_tasks == 0 )
+    return 100;
+  
+  return($tasks_completed * 100 / $total_tasks );  
+}
+
+
 //
 // LOGIN CHECK
 //
@@ -153,7 +180,6 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
         error("Database type not specified in config file." );
         break;
     }
-  $content .= "<p>Updating from version pre-1.60 database ... success!</p>\n";
   } 
     
   //update for version 1.51 -> 1.60
@@ -167,7 +193,49 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
      db_query("ALTER TABLE usergroups ADD COLUMN private INT" );
      db_query("ALTER TABLE usergroups ALTER COLUMN private SET DEFAULT 0" );
   }
+
+  //update for version 1.59 -> 1.60
+  if(! (db_query("SELECT completed FROM tasks", 0 ) ) ) {
   
+    //set parameters for appropriate for database
+    switch ($DATABASE_TYPE) {
+      case "mysql":
+      case "mysql_innodb":
+        $date_type = "DATETIME";
+        break;
+                  
+      case "postgresql":
+        $date_type = "timestamp with time zone";
+        break;
+      
+      default:
+        error("Database type not specified in config file." );
+        break;
+    }
+    
+    //add columns to database
+    db_query("ALTER TABLE tasks ADD COLUMN completed INT" );
+    db_query("ALTER TABLE tasks ALTER COLUMN completed SET DEFAULT 0" );
+    db_query("ALTER TABLE tasks ADD COLUMN completion_time $date_type" );
+    
+    //retrieve existing data
+    $q = db_query("SELECT id FROM tasks WHERE parent=0" );
+    
+    for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+      
+      //set completed percentage project record
+      $percent_completed = round(percent_complete($row["id"] ) );
+      db_query("UPDATE tasks SET completed=".$percent_completed." WHERE id=".$row["id"] );
+
+      //for completed project set the completion time
+      if($percent_completed == 100 ){
+        $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid=".$row["id"] ), 0, 0 );
+        db_query("UPDATE tasks SET completion_time=".$completion_time." WHERE id=".$row["id"] );
+      }
+    }
+    $content .= "<p>Updating from version pre-1.60 database ... success!</p>\n";
+  }
+    
   if( ! $content )
     $content .= "<p>No database updates were required.</p>\n";
   
@@ -189,7 +257,7 @@ create_top_setup("Login" );
 
 $content = "<p>Admin login is required for database update:</p>\n".
            "<form name=\"inputform\" method=\"post\" action=\"update.php\">\n".
-             "<table class=\"celldata\">\n".
+             "<table>\n".
                "<tr><td>Login: </td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
                "<tr><td>Password: </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
              "</table>\n".
