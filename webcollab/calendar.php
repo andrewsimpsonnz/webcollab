@@ -102,7 +102,7 @@ foreach($week_array as $value) {
 $content .= "</tr>\n";
 
 //show lead in to dates
-$content .= "<TR valign=\"top\" align=\"center\">\n";
+$content .= "<tr valign=\"top\" align=\"center\">\n";
 for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); $i++ ) {
   $content .= "<td>&nbsp;</td>\n";
 }
@@ -111,10 +111,10 @@ for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); $i++
 for ($num = 1; $num <= $numdays; $num++ ) {
   if ($i >= 7 ) {
     $content .= "</tr>\n".
-                "<Tr valign=\"top\" align=\"center\">\n";
+                "<tr valign=\"top\" align=\"center\">\n";
     $i=0;
   }
-  $content .= "<Td ";
+  $content .= "<td ";
 
   //highlight today
   if($num == $today)
@@ -154,7 +154,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
                  $name = "<font color=\"green\"><u>".$row["name"]."</u>";
                else
                  $name = "<font color=\"blue\">".$row["name"];
-               $content .= "<a href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$name."</font></a><br />\n";
+               $content .= "-> <a href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$name."</font></a><br />\n";
              break;
 
              default:
@@ -164,7 +164,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
               else
                 $name = "<font color=\"red\">".$row["name"];
 
-              $content .= "<a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["id"]."\">".$name."</font></a><br />\n";
+              $content .= "-> <a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["id"]."\">".$name."</font></a><br />\n";
             break;
           }
         break;
