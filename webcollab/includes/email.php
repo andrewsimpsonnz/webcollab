@@ -57,6 +57,10 @@ return $text;
 }
 
 
+//
+// Email sending function
+//
+
 function email($to, $subject, $message ) {
 
   global $EMAIL_FROM, $EMAIL_REPLY_TO, $USE_EMAIL, $SMTP_HOST, $SMTP_AUTH, $MAIL_USER, $MAIL_PASSWORD;
@@ -122,7 +126,7 @@ function email($to, $subject, $message ) {
   //envelope to
   $address_list = explode(",", $to );
   foreach($address_list as $email_to ) {
-    fputs($connection, "RCPT TO: <$email_to>\r\n" );
+    fputs($connection, "RCPT TO: <".trim($email_to ).">\r\n" );
     $res = fgets($connection, 256 );
 
     switch(substr($res, 0, 3 ) ) {
@@ -177,7 +181,7 @@ function email($to, $subject, $message ) {
   $uniq_id = md5(uniqid(mt_rand()));
 
   //we can reasonably assume that these headers will always be less than 998 characters per line
-  //(subject line is truncated to be sure)
+  //(subject line is truncated just to be sure)
   $headers = array("From: ".$EMAIL_FROM."\r\n",
                         "Reply-To: ".$EMAIL_REPLY_TO."\r\n",
                         "Subject: ".substr($subject, 0, 985 )."\r\n",
@@ -238,7 +242,6 @@ function email($to, $subject, $message ) {
     debug("Incorrect response to QUIT request from SMTP server at $host <br /><br />Response from SMTP server was $res" );
 
   fclose ($connection );
-
 
   return;
 }
