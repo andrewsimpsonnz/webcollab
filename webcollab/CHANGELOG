@@ -1,8 +1,16 @@
 WebCollab CVS
+*** 31 December 2004
+  Andrew Simpson
+
+- added Korean language (Credit: Park, Yu-Chan)
+
+WebCollab CVS
 *** 23 December 2004
   Andrew Simpson
   
-- bugfix: (Bug #1089722) SQL error in task_delete.php for prefixed database (hs_dino)
+- bugfix: (Bug #1089722) SQL error in task_delete.php for prefixed database (Credit: hs_dino)
+
+- make email addresses and web links clickable in project/task description
    
 WebCollab CVS
 *** 18 December 2004
@@ -10,13 +18,23 @@ WebCollab CVS
 
 - improve formatting to language files
 
-- bugfix: FreeBSD (and others?) not compatible with HTTP redirect in setup.php (fingerso) 
+- bugfix: FreeBSD (and others?) not compatible with HTTP redirect in setup.php (Credit: fingerso) 
+
+- typo: remove text reference to PostgreSQL when setting up MySQL in setup 
 
 WebCollab CVS
 *** 26 November 2004
   Andrew Simpson 
 
 - allow Admin Config to change listing order on Project list page
+
+- bugfix: remove database warning with PostgreSQL in project clone
+
+WebCollab 1.62a - Canopus
+*** 10 November 2004
+  Andrew Simpson 
+
+- release (backported bugfixes to 1.62 only)
 
 WebCollab CVS
 *** 7 November 2004
@@ -72,7 +90,7 @@ WebCollab CVS
 
 - internationalise creation date in task_add.php
 
-- bugfix: (Bug No. #1040945) more addslashes() to task_clone_submit (brianlynch)
+- bugfix: (Bug No. #1040945) more addslashes() to task_clone_submit (Credit: brianlynch)
 
 - bugfix: properly escape apostrophe & double quotes in text strings for javascript
  
@@ -88,19 +106,19 @@ WebCollab CVS
 *** 10 September 2004
   Andrew Simpson 
 
-- bugfix: (Bug No. #1025240) add addslashes() to task_clone_submit (brianlynch)
+- bugfix: (Bug No. #1025240) add addslashes() to task_clone_submit (Credit: brianlynch)
 
 WebCollab CVS
 *** 2 September 2004
   Andrew Simpson 
 
-- Italian translation updated (Raffaele Franzese)
+- Italian translation updated (Credit: Raffaele Franzese)
 
 WebCollab CVS
 *** 29 August 2004
   Andrew Simpson 
 
-- bugfix: change single and double quotes in edit fields to HTML entities (holstead)
+- bugfix: change single and double quotes in edit fields to HTML entities (Credit: holstead)
 
 WebCollab CVS
 *** 20 August 2004
@@ -118,11 +136,11 @@ WebCollab CVS
 
 - bugfix: GMT/UTC adjustment for 'task finish' after 'project finish' checking was incorrect
 
-- bugfix: database query in files_submit.php (joo_ru)
+- bugfix: database query in files_submit.php (Credit: joo_ru)
 
-- bugfix: splitting of quoted-printable in subject line of emails was incorrect (joo_ru)
+- bugfix: splitting of quoted-printable in subject line of emails was incorrect (Credit: joo_ru)
 
-- bugfix: javascript syntax error in task_edit.php (joo_ru)
+- bugfix: javascript syntax error in task_edit.php (Credit: joo_ru)
 
 WebCollab 1.61 - Celmisia
 *** 1 August 2004
@@ -136,15 +154,15 @@ WebCollab CVS
 
 - upgrade to XHTML Strict DTD 
 
-- bugfix: PRE missing in index.php and task_summary_list.php (PJ)
+- bugfix: PRE missing in index.php and task_summary_list.php (Credit: PJ)
 
-- bugfix: strip HTML line breaks in emails from forum_submit.php (DanielC)
+- bugfix: strip HTML line breaks in emails from forum_submit.php (Credit: DanielC)
 
-- bugfix: forum does not show with globalaccess turned off, and no usergroup selected (DanielC)
+- bugfix: forum does not show with globalaccess turned off, and no usergroup selected (Credit: DanielC)
 
 - bugfix: PostgreSQL database SQL script has syntax error (Bug No.#995720)
 
-- bugfix: added more download headers to file_download.php for IE 6 (Steve Brettschneider)
+- bugfix: added more download headers to file_download.php for IE 6 (Credit: Steve Brettschneider)
 
 WebCollab 1.60a - Neptune
 *** 14 July 2004
@@ -184,7 +202,7 @@ WebCollab CVS
 *** 3 July 2004
   Andrew Simpson
 
-- French language updated (Julien Dupont)
+- French language updated (Credit: Julien Dupont)
 
 - bugfix: calendar shows month heading in correct language locale
 
@@ -199,7 +217,7 @@ WebCollab CVS
 *** 18 June 2004
   Andrew Simpson
 
-- add Danish language (Jens Thomsen)
+- add Danish language (Credit: Jens Thomsen)
 
 - change to XHTML
 
@@ -227,7 +245,7 @@ WebCollab CVS
 *** 5 June 2004
   Andrew Simpson
 
-- add Bulgarian language (Stoyan Dimitrov)
+- add Bulgarian language (Credit: Stoyan Dimitrov)
 
 - set web character set with header() as well as <meta> in HTML  
 
@@ -422,7 +440,7 @@ WebCollab CVS
 *** 28 November 2003
   Andrew Simpson
 
-- add Italian translation (Raffaele Franzese)
+- add Italian translation (Credit: Raffaele Franzese)
 
 - bugfix: task list not sorted correctly with mysql-innodb in task_list.php
 
@@ -460,7 +478,7 @@ WebCollab CVS
 *** 12 November 2003
 (Andrew Simpson)
 
-- update German translation and add German help files (Michael Bunk)
+- update German translation and add German help files (Credit: Michael Bunk)
 
 - update some error messages
 
@@ -470,7 +488,7 @@ WebCollab CVS
 *** 8 November 2003
 (Andrew Simpson)
 
-- added new French translation (Olivier Chaussavoine)
+- added new French translation (Credit: Olivier Chaussavoine)
 
 - add IP checking to setup_security.php
 
@@ -547,7 +565,7 @@ WebCollab CVS
 *** 12 October 2003
 (Andrew Simpson)
 
-- German translation added (Michael Bunk)
+- German translation added (Credit: Michael Bunk)
 
 - added SSL check to setup
 
@@ -566,7 +584,7 @@ WebCollab CVS
 *** 4 October 2003
   Andrew Simpson
 
-- Catalan translation added (Dani Hernandez)
+- Catalan translation added (Credit: Dani Hernandez)
 
 - add ignore_user_abort to database writing files
 
@@ -726,7 +744,7 @@ WebCollab CVS
 *** 27 June 2003
   Andrew Simpson
 
-- added French translation (Pierre Jean)
+- added French translation (Credit: Pierre Jean)
 
 - make formatting of HTML pages more consistent throughout the code
 
@@ -806,13 +824,13 @@ WebCollab CVS
 
 - allow for projects with no deadline
 
-- allow for external authorisation by webserver (Andy Harrison)
+- allow for external authorisation by webserver (Credit: Andy Harrison)
 
 WebCollab CVS
 *** 11 May 2003
   Andrew Simpson
 
-- add Spanish language files (Daniel Lujan)
+- add Spanish language files (Credit: Daniel Lujan)
 
 - add provision for editing from usergroup
 
