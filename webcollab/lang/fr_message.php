@@ -119,7 +119,7 @@ $lang = array(
  "notes" => "Notes:",
  "add_contact" => "Ajouter contact",
  "del_contact" => "Effacer contact",
- "del_javascript" => "Cele va effacer un contact. Vous confirmez ?",
+ //"del_javascript" => "Cele va effacer un contact. Vous confirmez ?",
  "contact_info" => "Contact information",
  "contacts" => "Contacts",
  "contact_add_info" => "Si vous indiquez le nom d'une entreprise cette information va être affichée à la place du nom du contact.",
@@ -177,7 +177,7 @@ $lang = array(
  "no_key_sprt" => "Pas de session valide. Merci de vous connecter <A href=\"%sindex.php\">Profil</A>",
  "no_session" => "Pas de session, merci de vous <A href=\"%sindex.php\">connecter</A>",
  "session_timeout_sprt" => "Accés refusé, la dernière action a été faite il y à %d minutes et la session s'est fermée après 60 minutes, merci de vous  <A href=\"%sindex.php\">re-connecter</A>",
- "ip_spoof_sprt" =>"Usurpation d'adresse IP détectée depuis votre adresse IP (%s) cette session a été éffacée par précaution, merci de vous <A href=\"%sindex.php\">re-connecter</A>",
+ //"ip_spoof_sprt" =>"Usurpation d'adresse IP détectée depuis votre adresse IP (%s) cette session a été éffacée par précaution, merci de vous <A href=\"%sindex.php\">re-connecter</A>",
  "access_denied" => "Accès refusé",
  "private_usergroup" => "Désolé, cette zone est privée et elle est réservée à un groupe d'utilisateurst.Vvous n'y avez pas accès..",
  "invalid_date" => "Date invalide",
@@ -236,6 +236,8 @@ $lang = array(
 //**
  "select_usergroup" => "Usergroup selected from below:",
 //**
+ "subject" => "Subject:",
+//**
  "message_sent_maillist" => "For all selections the message is also sent to the mailing list.",
  "who_online" => "Qui est connecté?",
  "edit_details" => "Editer les informations d'un utilisateurs",
@@ -271,6 +273,8 @@ $lang = array(
  "priority" => "Priorité",
  "parent_task" => "Tache parente",
  "creation_time" => "Date de création",
+ //**
+ "by" => " by ", //Note to translators: context is 'Creation time: <date> by <user>'
  "project_name" => "Nom du projet",
  "task_name" => "Nom de la tache",
  "deadline" => "Date de fin",
@@ -284,6 +288,8 @@ $lang = array(
  "none" => "Vide",
  "no_group" => "Aucun groupe",
  "all_groups" => "tout les  groupes",
+ //**
+ "all_users" => "All users",
  "all_users_view" => "Tous les utilisateurs peuvent voir cette tache ?",
  "group_edit" => "Tout utilisateur du groupe peut éditer ?",
  "project_description" => "Description du projet",
@@ -300,6 +306,8 @@ $lang = array(
  "overdue_sprt" => "%d jours de retard",
  "edit_task" => "Editer la tache",
  "edit_project" => "Editer le projet",
+ //**
+ "no_reparent" => "None (a top-level project)",
  "del_javascript_sprt" => "Ceci va détruire %s %s. Etes vous sûr?",
  "add_task" => "Ajout tache",
  "add_subtask" => "Ajout sous tache",
@@ -354,9 +362,8 @@ $lang = array(
 
 
 //bits 'n' pieces
-  "calendar" => "Calendrier",
-//**
-  "all_users" => "All users"
+  "calendar" => "Calendrier"
+
    );
 
 ?>

@@ -35,7 +35,7 @@ $taskgroup_info = "<br /><ul><li>If you delete a taskgroup all tasks belonging t
 
 $usergroup_info = "<br /><ul><li>If you delete a usergroup all the related private forum posts will be deleted too.</li>\n".
                       "<li>You can change the name of a usergroup without interfering with the users in it.</li>\n".
-                      "<li>Two usergroups cannot have the same name.</li></ul><br /><br />\n";
+                      "<li>Two usergroups cannot have the same name.</li></ul><br />\n";
 
 $user_info      = "<br />Please select your action from the menu on the left.<br /><br />".
                       "Some quick hints:<br />".

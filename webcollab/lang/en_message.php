@@ -117,7 +117,7 @@ $lang = array(
  "notes" => "Notes:",
  "add_contact" => "Add contact",
  "del_contact" => "Delete contact",
- "del_javascript" => "This will delete this contact.  Are you sure?",
+ //"del_javascript" => "This will delete this contact.  Are you sure?",
  "contact_info" => "Contact information",
  "contacts" => "Contacts",
  "contact_add_info" => "If you add a company name then that will be displayed instead of the user's name.",
@@ -174,7 +174,7 @@ $lang = array(
  "no_key_sprt" => "No valid session key. Please <a href=\"%sindex.php\">login</a>",
  "no_session" => "No such session, please <a href=\"%sindex.php\">log-in</a>",
  "session_timeout_sprt" => "Access denied, last action was %d minutes ago and the timeout is 60 minutes, please <a href=\"%sindex.php\">re-login</a>",
- "ip_spoof_sprt" =>"Spoofed ip address detected from your ip (%s) this session has been deleted as a precaution, please <a href=\"%sindex.php\">re-login</a>",
+ //"ip_spoof_sprt" =>"Spoofed ip address detected from your ip (%s) this session has been deleted as a precaution, please <a href=\"%sindex.php\">re-login</a>",
  "access_denied" => "Access denied",
  "private_usergroup" => "Sorry, this area is in a private usergroup and you do not have access rights.",
  "invalid_date" => "Invalid date",
@@ -191,7 +191,7 @@ $lang = array(
  "no_taskgroups" => "No taskgroups are defined",
  "manage_taskgroups" => "Manage taskgroups",
  "taskgroups" => "Taskgroups",
- "taskgroup_dup_sprt" => "There is already a taskgroup '%s'.  Please choose a new name.",
+ "taskgroup_dup_sprt" => "There is already a taskgroup '%s'.  Please go back and choose a new name.",
  "info_taskgroup_manage" => "Info for taskgroup management",
 
  //usergroups
@@ -205,7 +205,7 @@ $lang = array(
  "no_usergroups" => "No usergroups are defined",
  "manage_usergroups" => "Manage usergroups",
  "usergroups" => "Usergroups",
- "usergroup_dup_sprt" => "There is already a usergroup '%s'.  Please choose a new name.",
+ "usergroup_dup_sprt" => "There is already a usergroup '%s'.  Please go back and choose a new name.",
  "info_usergroup_manage" => "Info for usergroup management",
 
  //users
@@ -229,6 +229,7 @@ $lang = array(
  "existing_users" => "Existing users",
  "email_users" => "Email users",
  "select_usergroup" => "Usergroup selected from below:",
+ "subject" => "Subject:",
  "message_sent_maillist" => "For all selections the message is also sent to the mailing list.",
  "who_online" => "Who is online?",
  "edit_details" => "Edit user details",
@@ -249,7 +250,7 @@ $lang = array(
  "invalid_email" => "Invalid email address",
  "invalid_email_given_sprt" => "The email address '%s' is invalid.  Please go back and try again.",
  "duplicate_user" => "Duplicate user",
- "duplicate_change_user_sprt" => "The user '%s' already exists.  Please change one name.",
+ "duplicate_change_user_sprt" => "The user '%s' already exists.  Please go back change one name.",
  "value_missing" => "Value missing",
  "field_sprt" => "The field for '%s' is missing. Please go back and fill it in.",
  "admin_priv" => "NOTE: You have been granted administrator privileges.",
@@ -262,8 +263,9 @@ $lang = array(
   //tasks
  "add_new_task" => "Add a new task",
  "priority" => "Priority",
- "parent_task" => "Parent task",
+ "parent_task" => "Parent",
  "creation_time" => "Creation time",
+ "by" => " by ", //Note to translators: context is 'Creation time: <date> by <user>'
  "project_name" => "Project name",
  "task_name" => "Task name",
  "deadline" => "Deadline",
@@ -277,6 +279,7 @@ $lang = array(
  "none" => "None",
  "no_group" => "No group",
  "all_groups" => "All groups",
+ "all_users" => "All users",
  "all_users_view" => "All users can view this task?",
  "group_edit" => "Anyone in the usergroup can edit?",
  "project_description" => "Project description",
@@ -293,11 +296,12 @@ $lang = array(
  "overdue_sprt" => "%d days overdue",
  "edit_task" => "Edit the task",
  "edit_project" => "Edit the project",
+ "no_reparent" => "None (a top-level project)",
  "del_javascript_sprt" => "This will delete %s %s. Are you sure?",
  "add_task" => "Add task",
  "add_subtask" => "Add subtask",
  "add_project" => "Add project",
- "no_edit" => "You do not own this item and therefore you may not edit it. Ask an admin, or the tasks' owner to do this for you.",
+ "no_edit" => "You do not own this item and therefore you may not edit it",
  "uncategorised" => "Uncategorised",
  "admin" => "Admin",
  "global" => "Global",
@@ -347,8 +351,7 @@ $lang = array(
 
 
 //bits 'n' pieces
-  "calendar" => "Calendar",
-  "all_users" => "All users"
+  "calendar" => "Calendar"
    );
 
 ?>

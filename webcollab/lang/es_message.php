@@ -120,7 +120,7 @@ $lang = array(
  "notes" => "Notas:",
  "add_contact" => "Agregar contacto",
  "del_contact" => "Eliminar contacto",
- "del_javascript" => "Se eliminara el contacto. Esta seguro?",
+ //"del_javascript" => "Se eliminara el contacto. Esta seguro?",
  "contact_info" => "Datos del Contacto",
  "contacts" => "Contactos",
  "contact_add_info" => "If agrega el nombre de una compania esta sera mostrada en lugar del nombre del usuario.",
@@ -178,7 +178,7 @@ $lang = array(
  "no_key_sprt" => "Calve de sesion NO valida. Por favor <A href=\"%sindex.php\">Ingrese</A>",
  "no_session" => "Sesion inexistente, por favor <A href=\"%sindex.php\">Ingrese</A>",
  "session_timeout_sprt" => "Acceo denegado, ultima ccion fue %d minutos atras y el tiempo de expiracion es de 60 minutos, por favor <A href=\"%sindex.php\">Ingrese</A>",
- "ip_spoof_sprt" =>"Spoofed ip address detected from your ip (%s) this session has been deleted as a precaution, please <A href=\"%sindex.php\">re-login</A>",
+ //"ip_spoof_sprt" =>"Spoofed ip address detected from your ip (%s) this session has been deleted as a precaution, please <A href=\"%sindex.php\">re-login</A>",
  "access_denied" => "Access denied",
  "private_usergroup" => "Disculpe, esta area es privada de un grupo y ud no tiene derecho de acceso.",
  "invalid_date" => "Fecha invalida",
@@ -237,6 +237,8 @@ $lang = array(
 //**
  "select_usergroup" => "Usergroup selected from below:",
 //**
+ "subject" => "Subject:",
+//**
  "message_sent_maillist" => "For all selections the message is also sent to the mailing list.",
  "who_online" => "Quien esta en-linea?",
  "edit_details" => "Editar detalles del usuario",
@@ -273,6 +275,8 @@ $lang = array(
  "parent_task" => "Tarea padre",
  "creation_time" => "Creado en fecha",
  "project_name" => "Nombre del proyecto",
+ //**
+ "by" => " by ", //Note to translators: context is 'Creation time: <date> by <user>'
  "task_name" => "Nombre de tarea",
  "deadline" => "Fecha tope",
  "taken_from_parent" => "(Tomado desde el padre)",
@@ -285,9 +289,11 @@ $lang = array(
  "none" => "None",
  "no_group" => "No group",
  "all_groups" => "All groups",
+ //**
+ "all_users" => "All users",
  "all_users_view" => "Todos los usuarios puedn ver esta tarea?",
  //**
- "group_edit" => "Anyone in the usergroup can edit?",
+  "group_edit" => "Anyone in the usergroup can edit?",
  "project_description" => "Descripcion del proyecto",
  "task_description" => "Descripcion de la tarea",
  "email_owner" => "Enviar un email al propietario con los cambios?",
@@ -302,6 +308,8 @@ $lang = array(
  "overdue_sprt" => "%d dias vencido",
  "edit_task" => "Editar la Tarea",
  "edit_project" => "Editar el Proyecto",
+//**
+ "no_reparent" => "None (a top-level project)",
  "del_javascript_sprt" => "Se eliminara %s %s. Esta seguro?",
  "add_task" => "Agregar Tarea",
  "add_subtask" => "Agregar sub-Tarea",
