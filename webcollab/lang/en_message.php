@@ -51,6 +51,8 @@ $task_state = array(
  "cantcomplete" => "On Hold",
  "completed" => "Completed",
  "done" => "Done",
+ "task_planned" => " Planned",
+ "task_active" => " Active",
  //project states
  "planned_project" => "Planned project (not active)",
  "active_project" => "Active project" );
@@ -293,7 +295,6 @@ $lang = array(
  "global" => "Global",
  "options" => " options",
  "task_navigation" => "Task navigation",
- "task_planned" => " Planned",
  "no_projects" => "There are no projects to view",
  "ccompleted" => "Completed",
  "project_hold" => "Project On Hold from ",
