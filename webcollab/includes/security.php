@@ -59,10 +59,10 @@ if( isset($_REQUEST["x"]) && ( strlen($_REQUEST["x"]) == 32 ) ) {
 
 
 //seems okay at first, now go cross-checking with the known data from the database
-if( ! ($q = db_query( "SELECT logins.user_id AS user_id, logins.ip AS ip, users.email AS email,
-			     users.admin AS admin, users.fullname AS fullname,
+if( ! ($q = db_query( "SELECT logins.user_id AS user_id, logins.ip AS ip, logins.lastaccess AS lastaccess,
+                             users.email AS email, users.admin AS admin, users.fullname AS fullname,
                              ".$epoch."now() ) AS now,
-                             ".$epoch."logins.lastaccess) AS sec_lastaccess
+                             ".$epoch."lastaccess) AS sec_lastaccess
                              FROM logins 
 			     LEFT JOIN users ON (users.id=logins.user_id) 
 			     WHERE session_key='".$x."'", 0 ) ) ) {
