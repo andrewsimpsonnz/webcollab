@@ -57,9 +57,8 @@ function create_top_setup($title="" ) {
        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n".
        "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\">\n".
        "</head>\n\n".
-       "<body>\n".
-       "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">\n";
-
+       "<body>\n";
+  
   //create the main table
   echo "\n<!-- start main table -->\n".
        "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">\n";
