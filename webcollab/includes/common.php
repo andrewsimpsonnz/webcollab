@@ -128,9 +128,10 @@ function error($box_title, $content ) {
             "WebCollab version: $WEBCOLLAB_VERSION\n".
             "POST vars: $post\n\n";
   
-  if($EMAIL_ERROR != NULL )
+  if($EMAIL_ERROR != NULL ){
     include_once(BASE."includes/email.php" );
     email($EMAIL_ERROR, "ERROR on $MANAGER_NAME", $message );
+  }
         
   if($DEBUG == "Y" )
     new_box("Error Debug", nl2br($message) );
