@@ -44,14 +44,12 @@ if( ! isset($_REQUEST["action"]) )
 
     //give the user-manager screen
     case "manage":
-      create_top("Manage users" );
+      create_top($lang["manage_users"] );
       include("includes/mainmenu.php" );
       include("users/user_menubox.php" );
       include("users/user_existing_menubox.php" );
-      if( $admin == 1 ) {
-        include("users/user_deleted_menubox.php" );
-        include("usergroups/usergroup_menubox.php" );
-      }
+      include("users/user_deleted_menubox.php" );
+      include("usergroups/usergroup_menubox.php" );
 
       goto_main();
       include_once("lang/lang_long.php" );
