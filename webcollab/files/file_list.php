@@ -93,9 +93,9 @@ if(db_numrows($q ) != 0 ) {
 
 $content .= "<font class=\"textlink\">[<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang["add_file"]."</a>]</font>";
 
-$type = strtolower($lang["project"] );
+$type = $lang["project_lc"];
 if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent=0 AND id=$taskid" ) ) == 0 )
-  $type = strtolower($lang["task"] );
+  $type = $lang["task_lc"];
 
 new_box( sprintf($lang["files_assoc_sprt"], $type ), $content, "boxdata2" );
 

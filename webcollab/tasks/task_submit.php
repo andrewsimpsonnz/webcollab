@@ -230,12 +230,12 @@ ignore_user_abort(TRUE);
 
             if($row["parent"] == 0 ) {
               //project
-              $type = strtolower($lang["project"] );
+              $type = $lang["project_lc"];
               $name_project = $row["name"];
               $name_task = "";
             }
             else{
-              $type = strtolower($lang["task"] );
+              $type = $lang["task_lc"];
               $name_project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
               $name_task = $row["name"];
             }
@@ -366,11 +366,11 @@ ignore_user_abort(TRUE);
         $name_project = db_result(db_query("SELECT name FROM tasks WHERE id=$projectid" ), 0, 0 );
 
         //set project/task type for emails
-        $type = strtolower($lang["task"] );
+        $type = $lang["task_lc"];
         $name_task = $name;
 
         if($parentid == 0 ){
-          $type = strtolower($lang["project"] );
+          $type = $lang["project_lc"];
           $name_task = "";
         }
 
@@ -543,10 +543,10 @@ ignore_user_abort(TRUE);
         $name_project = db_result(db_query("SELECT name FROM tasks WHERE id=$projectid" ), 0, 0 );
 
         //set project/task type for emails
-        $type = strtolower($lang["task"] );
+        $type = $lang["task_lc"];
         $name_task = $name;
         if($parentid == 0 ){
-          $type = strtolower($lang["project"] );
+          $type = $lang["project_lc"];
           $name_task = "";
         }
 

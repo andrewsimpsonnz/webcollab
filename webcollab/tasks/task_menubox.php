@@ -35,6 +35,7 @@ require_once( BASE."includes/security.php" );
 //secure variables
 $content  = "";
 $title = $lang["task"];
+$title_lc = $lang["task_lc"];
 $taskid = "";
 
 //the task dependent part
@@ -52,12 +53,14 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
     $q = db_query("SELECT name, parent FROM tasks WHERE id=$taskid" );
     $row = db_fetch_array($q, 0 );
-    if($row["parent"] == 0 )
+    if($row["parent"] == 0 ) {
       $title = $lang["project"];
+      $title_lc = $lang["project_lc"];
+    }
 
     $content .= "<small><b>".$lang["admin"].":</b></small><br />\n".
-                "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]." ".strtolower($title)."</a><br />\n".
-                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onClick=\"return confirm( '".sprintf($lang["del_javascript_sprt"], strtolower($title), $row["name"] )."')\">".$lang["delete"]." ".strtolower($title)."</a><br />\n".
+                "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]." ".$title_lc."</a><br />\n".
+                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onClick=\"return confirm( '".sprintf($lang["del_javascript_sprt"], $title_lc, $row["name"] )."')\">".$lang["delete"]." ".$title_lc."</a><br />\n".
                 "<br /><small><b>".$lang["global"].":</b></small><br />\n";
   }
   $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang["add_task"]."</a><br />\n";

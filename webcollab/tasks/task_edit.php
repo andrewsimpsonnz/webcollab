@@ -309,11 +309,11 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
 
 if($row["parent"] == 0 ) {
   $full_title = $lang["edit_project"];
-  $title = strtolower($lang["project"] );
+  $title = $lang["project_lc"];
 }
 else{
   $full_title = $lang["edit_task"];
-  $title = strtolower($lang["task"] );
+  $title = $lang["task_lc"];
 }
 
 //delete options

@@ -177,7 +177,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
     case "done":
       $finished = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid =".$row["id"]." AND parent>0" ), 0, 0 );
-      $content .= $lang["ccompleted"]." (".nicedate( $finished ).")\n";
+      $content .= $lang["completed"]." (".nicedate( $finished ).")\n";
       break;
 
     case "cantcomplete":

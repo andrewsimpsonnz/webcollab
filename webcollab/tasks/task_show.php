@@ -206,12 +206,12 @@ if($row["parent"] != 0 ) {
 switch($row["parent"] ){
   case "0":
     $title = $lang["project_details"];
-    $type = strtolower($lang["project"] );
+    $type = $lang["project_lc"];
     break;
 
  default:
     $title = $lang["task_info"];
-    $type = strtolower($lang["task"] );
+    $type = $lang["task_lc"];
     break;
 }
 

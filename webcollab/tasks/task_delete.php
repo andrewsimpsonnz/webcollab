@@ -147,11 +147,11 @@ if(isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
     if($uid != $row["id"] ) {
        if($row["parent"] == 0 ) {
          $name_task = $row["name"];
-         $type = strtolower($lang["project"] );
+         $type = $lang["project_lc"] );
        }
        else {
          $name_task = db_result(db_query("SELECT name FROM tasks WHERE tasks.id=".$row["projectid"] ), 0, 0 );
-         $type = strtolower($lang["task"] );
+         $type = $lang["task_lc"] );
        }
        switch($row["status"] ) {
          case "created":
