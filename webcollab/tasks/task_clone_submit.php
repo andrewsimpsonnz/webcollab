@@ -29,10 +29,15 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
+include_once(BASE."tasks/task_common.php" );
+
 //admins only
 if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
+//
+// Recursive function to create new project structure
+//
 
 function add($taskid, $new_parent, $new_name ) {
 
@@ -61,9 +66,13 @@ function add($taskid, $new_parent, $new_name ) {
       add($taskid, $new_taskid, NULL );
   }
 
-  return;
+  return $new_taskid;
 }
 
+
+//
+// function to copy across data to new project/task
+//
 
 function copy_across($taskid, $new_parent, $name ) {
 
@@ -153,6 +162,9 @@ if( ! isset($_POST["name"]) )
 
 $name = safe_data($_POST["name"]);
 
+//start transaction
+db_begin();
+
 //find all parent-tasks in this project and add them to an array for later use
 $projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=$taskid" ), 0, 0 );
 $q = db_query("SELECT DISTINCT parent FROM tasks WHERE projectid=$projectid" );
@@ -161,7 +173,23 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
   $parent_array[$i] = $row[0];
 }
 
-add($taskid, 0, $name );
+$new_taskid = add($taskid, 0, $name );
+
+//now get new projectid to set completion percentage
+$new_projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=".$new_taskid ), 0, 0 ); 
+
+//set completed percentage project record
+$percent_completed = round(percent_complete($new_projectid ) );
+db_query("UPDATE tasks SET completed=".$percent_completed." WHERE id=".$new_projectid );
+
+//for completed project set the completion time
+if($percent_completed == 100 ){
+  $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid=$new_projectid" ), 0, 0 );
+  db_query("UPDATE tasks SET completion_time='".$completion_time."' WHERE id=".$new_projectid );
+}
+
+//end transaction
+db_commit();
 
 header("Location: ".$BASE_URL."main.php?x=$x" );
 die;
