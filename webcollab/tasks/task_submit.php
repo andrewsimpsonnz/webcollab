@@ -245,8 +245,8 @@ ignore_user_abort(TRUE);
         //send email
         //$username and $useremail are from security.php
         $message = sprintf($email, $MANAGER_NAME, date("F j, Y, H:i") ).
-                    sprintf($email_list, $name_project, $name_task, status($row["status"], $row["deadline"]), $username, $useremail, clean($row["text"]), $BASE_URL );
-        email( $email_address_old_owner, $title, trans($message ) );
+                    sprintf($email_list, $name_project, $name_task, status($row["status"], $row["deadline"]), $username, $useremail, $row["text"], $BASE_URL );
+        email( $email_address_old_owner, $title, $message );
         }
       }
       break;
@@ -383,47 +383,54 @@ ignore_user_abort(TRUE);
           break;
       }
 
+      switch($owner ) {
+        case 0:
+          $name_owner = $lang["nobody"];
+          $email_owner = "";
+          break;
+
+        default:
+          $q = db_query("SELECT fullname, email FROM users WHERE id=$owner" );
+          $row = db_fetch_num($q, $i );
+          $name_owner = $row[0];
+          $email_owner = $row[1];
+          break;
+      }
+
       //email owner ?
       if(isset($_POST["mailowner"]) && ($_POST["mailowner"]=="on") && ($owner != 0) ) {
         $email_address_owner = db_result( db_query("SELECT email FROM users WHERE id=".$owner, 0), 0, 0 );
         $message = sprintf($email1, $MANAGER_NAME, date("F j, Y, H:i") ).
-                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $username, $useremail, clean($text), $BASE_URL );
-        email($email_address_owner, $title1, trans($message ) );
+                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text, $BASE_URL );
+        email($email_address_owner, $title1, $message );
       }
 
       //do we need to send an email to the user group to announce this message
       if(isset($_POST["maillist"]) && $_POST["maillist"] == "on" ) {
 
-        if($owner != 0 ) {
-          $q = db_query("SELECT fullname, email FROM users WHERE id=$owner" );
-          $row = db_fetch_num($q, $i );
-          $name_owner = $row[0];
-          $email_owner = $row[1];
-        }
-        else {
-          $name_owner = $lang["nobody"];
-          $email_owner = "";
-        }
-
         $message = sprintf($email2, $MANAGER_NAME, date("F j, Y, H:i") ).
-                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, clean($text), $BASE_URL );
-        email($EMAIL_MAILINGLIST, sprintf($title2, $name), trans($message ) );
+                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text, $BASE_URL );
+
+        $usergroup = "";
+        $s = "";
+        if($EMAIL_MAILINGLIST != "" ) {
+          $usergroup = $EMAIL_MAILINGLIST;
+          $s = ", ";
+        }
 
         if($usergroupid != 0 ) {
-          $usergroup = "";
-          $q = db_query("SELECT users.email AS email,
-                                       users.id AS id
-                                       FROM users
-                                       LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
-                                       WHERE usergroups_users.usergroupid=$usergroupid
-                                       AND users.deleted='f'");
-          $s = "";
-          for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+          $q = db_query("SELECT users.email
+                           FROM users
+                           LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
+                           WHERE usergroups_users.usergroupid=$usergroupid
+                           AND users.deleted='f'");
+
+          for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
             $usergroup .= $s.$row["email"];
             $s = ", ";
           }
-          email($usergroup, sprintf($title2, $name), trans($message ) );
         }
+      email($usergroup, sprintf($title2, $name), $message );
       }
 
       //don't use the default break-out sequence but go to or the parent's page of the project
@@ -566,51 +573,56 @@ ignore_user_abort(TRUE);
           $name_task = $name;
       }
 
+      switch($owner ) {
+        case 0:
+          $name_owner = $lang["nobody"];
+          $email_owner = "";
+          break;
+
+        default:
+          $q = db_query("SELECT fullname, email FROM users WHERE id=$owner" );
+          $row = db_fetch_num($q, $i );
+          $name_owner = $row[0];
+          $email_owner = $row[1];
+          break;
+       }
+
       //email owner ?
       if(isset($_POST["mailowner"]) && ($_POST["mailowner"]=="on") && ($owner != 0) ) {
 
         $email_address_owner = db_result(db_query("SELECT email FROM users WHERE id=$owner", 0), 0, 0 );
 
         $message = sprintf($email1, $MANAGER_NAME, date("F j, Y, H:i") ).
-                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $username, $useremail, clean($text), $BASE_URL );
-        email($email_address_owner, $title1, trans($message ) );
+                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text, $BASE_URL );
+        email($email_address_owner, $title1, $message );
       }
 
       //email the user group ?
       if(isset($_POST["maillist"]) && ($_POST["maillist"]=="on") ) {
 
-        if($owner != 0 ) {
-          $q = db_query("SELECT fullname, email FROM users WHERE id=$owner" );
-          $row = db_fetch_num($q, $i );
-          $name_owner = $row[0];
-          $email_owner = $row[1];
-        }
-        else {
-          $name_owner = $lang["nobody"];
-          $email_owner = "";
-        }
-
         $message = sprintf($email2, $MANAGER_NAME, $name_owner, date("F j, Y, H:i") ).
-                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, clean($text), $BASE_URL );
-        email($EMAIL_MAILINGLIST, $title2, trans($message ) );
+                    sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text, $BASE_URL );
+
+        $usergroup = "";
+        $s = "";
+        if($EMAIL_MAILINGLIST != "" ) {
+          $usergroup = $EMAIL_MAILINGLIST;
+          $s = ", ";
+        }
 
         if($usergroupid != 0 ) {
-          $usergroup = "";
-          $q = db_query("SELECT users.email AS email,
-                                   users.id AS id
-                                   FROM users
-                                   LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
-                                   WHERE usergroups_users.usergroupid=$usergroupid
-                                   AND users.deleted='f'");
+          $q = db_query("SELECT users.email
+                           FROM users
+                           LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
+                           WHERE usergroups_users.usergroupid=$usergroupid
+                           AND users.deleted='f'");
 
-          $s = "";
-
-          for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
-            $usergroup .= $s.$row["email"];
+          for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
+            $usergroup .= $s.$row[0];
             $s = ", ";
           }
-          email($usergroup, $title2, trans($message ) );
         }
+      email($usergroup, $title2, $message );
       }
     break;
 
