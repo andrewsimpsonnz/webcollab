@@ -48,7 +48,9 @@ require_once(BASE."includes/usergroup_security.php" );
 //
 function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 
-  global $parent_array, $admin, $x, $uid, $lang;
+  global $parent_array, $ul_flag, $admin, $x, $uid, $lang;
+
+  $ul_flag = 0;
 
   $q = db_query("SELECT forum.text AS text,
                 forum.id AS id,
@@ -71,6 +73,7 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
   }
 
   $this_content = "<ul>";
+  $ul_flag = 1;
 
   //show all forum posts on this level
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
@@ -92,7 +95,7 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
     $this_content .= "<br />\n".nl2br($row["text"] )."\n";
 
     //recursive search
-    if(in_array($row["id"], $parent_array, FALSE) ) {
+    if(in_array($row["id"], $parent_array, FALSE ) ) {
       $this_content .= list_posts_from_task($row["id"], $taskid, $usergroupid );
       $this_content .= "\n</ul>\n</li>";
     }
@@ -112,6 +115,7 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 $q = db_query("SELECT DISTINCT parent FROM forum WHERE taskid=$taskid" );
 
 //put parent id's in an array
+$parent_array = NULL;
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $parent_array[$i] = $row["parent"];
 }
@@ -123,7 +127,8 @@ $content = "";
 
 //all the posts that have parentid 0 (the taskid is included in the query itself so this will _not_ show all results)
 $content .= list_posts_from_task( 0, $taskid, 0 );
-$content .= "</ul>\n<br />\n";
+if($ul_flag == 1 )
+  $content .= "</ul>\n<br />\n";
 //add an option to add posts
 $content .= "<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang["new_post"]."</a>]</font>";
 //show it
@@ -161,7 +166,8 @@ if( $task_usergroup != 0 ) {
   if($found == 1 ) {
 
     $content .= list_posts_from_task(0, $taskid, $task_usergroup);
-    $content .= "</ul>\n<br />\n";
+    if($ul_flag == 1 )
+      $content .= "</ul>\n<br />\n";
     //add an option to add posts
     $usergroup_name = db_result( db_query("SELECT name FROM usergroups WHERE id=$task_usergroup" ), 0, 0 );
     $content .= "<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=$task_usergroup&amp;\">".$lang["new_post"]."</a>]</font>";
