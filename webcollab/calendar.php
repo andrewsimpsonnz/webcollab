@@ -93,11 +93,11 @@ switch($selection ) {
 
 $content .= "<div align=\"center\">\n".
             "<form method=\"POST\" action=\"calendar.php\">".
-            "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ".
+            "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
             "<table border=\"0\">\n".
-            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1><label for=\"users\">".$lang["users"]."</label></td><td>\n".
+            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1><label for=\"users\" />".$lang["users"]."</label></td><td>\n".
             "<select name=\"userid\">\n".
-            "<option value=\"0\"$s2>All users - translate me</option>\n";
+            "<option value=\"0\"$s2>".$lang["all_users"]."</option>\n";
 
 //get all users for option box
 $q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname");
@@ -114,7 +114,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 }
 
 $content .= "</select></td></tr>\n".
-            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3><label for=\"group\">".$lang["usergroups"]."</label></td>\n".
+            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3><label for=\"group\" />".$lang["usergroups"]."</label></td>\n".
             "<td><select name=\"groupid\">\n".
             "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
 
@@ -154,7 +154,7 @@ for( $i=2001; $i<2011 ; $i++) {
   $content .= ">".$i."</option>\n";
   }
 $content .=  "</select></td>\n".
-             "<td><input type=\"submit\" value=\"".$lang["update"]."\"></td></tr>\n".
+             "<td><input type=\"submit\" value=\"".$lang["update"]."\" /></td></tr>\n".
              "</table></form><br />\n";
 
 //get usergroups of user, and put them in a simple array for later use
