@@ -1,10 +1,14 @@
 WebCollab CVS
+*** 5 October 2004
+  Andrew Simpson 
+
+- internationalise creation date in task_add.php
+
+WebCollab CVS
 *** 18 September 2004
   Andrew Simpson 
 
-- bugfix: private usergroup not sticky when editing usergroup
-
-- bugfix: Fix null time/date giving output of Jan 1970 (zero in 'Unix epoch' time)   
+- bugfix: private usergroup checkbox not sticky when editing usergroup
 
 - bugfix: Usergroup cannot edit task even when access is granted
 
