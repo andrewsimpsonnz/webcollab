@@ -45,7 +45,7 @@ $taskid = $_GET["taskid"];
 
 // can this user edit this task ?
 if( ! ( ($admin == 1) || ( db_result( db_query("SELECT COUNT(*) FROM tasks WHERE id=".$taskid." AND owner=".$uid ), 0, 0 ) == 1 ) ) )
-  error("Access denied", "You do not own this task and therefore you may not edit it. Ask an admin, or the tasks' owner to do this for you.");
+  warning( $lang["access_denied"], $lang["no_edit"] );
 
 //get all the needed info from the task
 $q = db_query( "SELECT * FROM tasks WHERE id=".$taskid );
