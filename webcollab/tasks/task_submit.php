@@ -231,7 +231,7 @@ if( valid_string($_REQUEST["action"]) ) {
         //check input has been provided
         $input_array = array("parentid", "projectid", "owner", "priority", "status", "taskgroupid", "usergroupid");
         foreach( $input_array as $var) {
-          if(! isset($_POST[$var]) ) {
+          if(! valid_string($_POST[$var]) ) {
             error( "Task submit", "Variable ".$var." is not set" );
           }
         }
@@ -402,7 +402,7 @@ if( valid_string($_REQUEST["action"]) ) {
         //check input has been provided
         $input_array = array("taskid", "owner", "priority", "status", "taskgroupid", "usergroupid");
         foreach( $input_array as $var) {
-          if(! isset($_POST[$var]) ) {
+          if(! valid_string($_POST[$var]) ) {
             error( "Task submit", "Variable ".$var." is not set" );
           }
         }

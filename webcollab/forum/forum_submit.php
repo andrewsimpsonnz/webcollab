@@ -105,7 +105,7 @@ if( valid_string($_REQUEST["action"]) ) {
         //check input has been provided
         $input_array = array("parentid", "taskid");
         foreach( $input_array as $var) {
-          if(! isset($_POST[$var]) ) {
+          if(! valid_string($_POST[$var]) ) {
             error( "Forum submit", "Variable ".$var." is not set" );
           }
         }
