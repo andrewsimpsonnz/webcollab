@@ -109,6 +109,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['configuration']              = 'Configuration';
 
 //archive
+//**
     $lang['archived_projects']          = 'Archived Projects';    
 
 //contacts
@@ -147,9 +148,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['files']                      = 'Files';
     $lang['file_choose']                = 'File to upload:';
     $lang['upload']                     = 'Upload';
- //**
     $lang['file_email_owner']           = 'Email notification of new file to the owner?';
- //**
     $lang['file_email_usergroup']       = 'Email notification of new file to the usergroup?';
     $lang['max_file_sprt']              = 'File to upload must be less than %s kb.';
     $lang['file_submit']                = 'File submit';
@@ -164,9 +163,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['message']                    = 'Message:';
     $lang['post_reply_sprt']            = 'Post a reply to a message from \'%1$s\' about \'%2$s\'';
     $lang['post_message_sprt']          = 'Post message to: \'%s\'';
-//**
     $lang['forum_email_owner']          = 'Email forum message to the owner?';
-//**
     $lang['forum_email_usergroup']      = 'Email forum message to the usergroup?';
     $lang['reply']                      = 'Reply';
     $lang['new_post']                   = 'New post';
@@ -192,14 +189,11 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
 //**
     $lang['archive']                    = 'Archive';   
     $lang['user_homepage_sprt']         = '%s\'s homepage';
- //**
     $lang['missing_field_javascript']   = 'Please enter a value for the missing field';
- //**
     $lang['invalid_date_javascript']    = 'Please choose a valid calendar date';
- //**
     $lang['finish_date_javascript']     = 'The entered date occurs after the project finish date!';
     $lang['security_manager']           = 'Security manager';
-    $lang['session_timeout_sprt']       = 'Access denied; last action was %1$d minutes ago and the timeout is %2$d minutes; please <a href=\'%3$sindex.php\'>re-login</a>';
+    $lang['session_timeout_sprt']       = 'Access denied; last action was %1$d minutes ago and the timeout is %2$d minutes; please <a href="%3$sindex.php">re-login</a>';
     $lang['access_denied']              = 'Access denied';
     $lang['private_usergroup']          = 'Sorry; this area is in a private usergroup and you do not have access rights.';
     $lang['invalid_date']               = 'Invalid date';
@@ -222,8 +216,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
  //usergroups
     $lang['usergroup_name']             = 'Usergroup name:';
     $lang['usergroup_description']      = 'Usergroup simple description:';
-    $lang['members']       = 'Members:';
- //**
+    $lang['members']                    = 'Members:';
     $lang['private_usergroup']          = 'Private usergroup';
     $lang['add_usergroup']              = 'Add usergroup';
     $lang['add_new_usergroup']          = 'Add a new usergroup';
@@ -242,7 +235,6 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['blank_for_current_password'] = '(Leave blank for current password)';
     $lang['email']                      = 'E-mail';
     $lang['admin']                      = 'Admin';
-  //**
     $lang['private_user']               = 'Private user';
  //**
     $lang['normal_user']                = 'Normal user'; 
@@ -262,7 +254,6 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['no_users']                   = 'No users are known to the system';
     $lang['users']                      = 'Users';
     $lang['existing_users']             = 'Existing users';
- //**
     $lang['private_profile']            = 'This user has a private profile that cannot be viewed by you.';
     $lang['private_usergroup_profile']  = '(This user is a member of private usergroups that cannot be viewed by you)';
     $lang['email_users']                = 'Email users';
@@ -354,9 +345,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
 //**
     $lang['new_task']                   = 'New task';    
     $lang['no_projects']                = 'There are no projects to view';
- //**
     $lang['show_all_projects']          = 'Show all projects';
- //**
     $lang['show_active_projects']       = 'Show only active projects';
     $lang['project_hold_sprt']          = 'Project On Hold from %s';
     $lang['project_planned']            = 'Planned Project';
@@ -403,18 +392,17 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['by_deadline']                = ' (by deadline)';
     $lang['by_status']                  = ' (by status)';
     $lang['by_owner']                   = ' (by owner)';
- //**
     $lang['project_cloned']             = 'Project to be cloned :';
- //**
     $lang['task_cloned']                = 'Task to be cloned :';
- //**
     $lang['note_clone']                 = 'Note: The task will be cloned as a new project';
 
 //bits 'n' pieces
     $lang['calendar']                   = 'Calendar';
     $lang['normal_version']             = 'Normal version';
     $lang['print_version']              = 'Print version';
+//**    
     $lang['condensed_view']             = 'Condensed view';
+//**    
     $lang['full_view']                  = 'Full view';
 
 ?>

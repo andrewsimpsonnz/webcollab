@@ -27,25 +27,6 @@
 
 */
 
-/*
-General formatting:
-
-"xxxx"     == string in title case (eg: "Project")
-
-"xxxx_sprt" == formatted print string (eg: "Files associated with this %s" - where %s is inserted by the code)
-
-              Formatted strings with %1$s, %2$s, %3$s etc. can have parameters interchanged - as in:
-
-                 "Message from %1$s about %2$s" _could also be_ "Message about %2$s from %1$s"
-
-              This can be useful for translating to different languages.
-
-    $lang['xxxx_g" == graphical string
-
-    $lang['xxxx_javascript == javascript string with single quotes escaped as in "Confirmer l\'effacement!"
-
-*/
-
 //required language encodings
 $web_charset = "iso-8859-1";
 $email_charset = "iso-8859-1";
@@ -122,8 +103,15 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['allow_group_edit']             = 'Allow all in usergroup to edit?';
     $lang['set_email_owner']              = 'Always email owner with changes?';
     $lang['set_email_group']              = 'Always email usergroup with changes?';
+//**    
+    $lang['project_listing_order']        = 'Project listing order';
+//**    
+    $lang['task_listing_order']           = 'Task listing order'; 
     $lang['configuration']                = 'Configuration';
 
+//archive
+//**
+    $lang['archived_projects']            = 'Archived Projects';    
 
 //contacts
     $lang['firstname']                    = 'Nome:';
@@ -189,7 +177,11 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['forum_submit']                 = 'Invia Forum';
     $lang['no_message']                   = 'Nessun messaggio! Torna indietro e riprova';
     $lang['add_reply']                    = 'Aggiungi risposta';
-
+//**  
+    $lang['last_post_sprt']               = 'Last post %s'; //Note to translators: context is 'Last post 2004-Dec-22'
+//**   
+    $lang['recent_posts']                 = 'Recent forum posts';      
+    
  //includes
     $lang['report']                       = 'Report';
     $lang['warning']                      = '<h1>Spiacente!</h1><p>Non &egrave; possibile processare la tua richiesta adesso. Riprova pi&ugrave; tardi.</p>';
@@ -199,15 +191,14 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['calendar']                     = 'Calendario';
     $lang['log_out']                      = 'Log out';
     $lang['main_menu']                    = 'Menu principale';
-    $lang['user_homepage_sprt']           = '%s\'s homepage';
 //**
+    $lang['archive']                      = 'Archive';   
+    $lang['user_homepage_sprt']           = '%s\'s homepage';
     $lang['missing_field_javascript']     = 'Prego, inserisci un valore nel campo omesso';
- //**
     $lang['invalid_date_javascript']      = 'Prego, scegli una data valida';
- //**
     $lang['finish_date_javascript']       = 'La data inserita &egrave; successiva alla data di fine progetto!';
     $lang['security_manager']             = 'Gestore della sicurezza';
-    $lang['session_timeout_sprt']         = 'Accesso negato, l\'ultima azione risale a %d minuti fa e il timeout &egrave; di %d minuti, prego effettuare <a href=\\"%sindex.php\\">re-login</a>';
+    $lang['session_timeout_sprt']         = 'Accesso negato, l\'ultima azione risale a %d minuti fa e il timeout &egrave; di %d minuti, prego effettuare <a href="%sindex.php">re-login</a>';
     $lang['access_denied']                = 'Accesso negato';
     $lang['private_usergroup']            = 'Spiacente, questa area si trova in un gruppo privato e tu non hai il permesso di accedervi.';
     $lang['invalid_date']                 = 'Data non valida';
@@ -231,7 +222,6 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['usergroup_name']               = 'Nome dello Usergroup:';
     $lang['usergroup_description']        = 'Descrizione dello Usergroup:';
     $lang['members']                      = 'Membri:';
- //**
     $lang['private_usergroup']            = 'Private usergroup';
     $lang['add_usergroup']                = 'Aggiungi usergroup';
     $lang['add_new_usergroup']            = 'Aggiungi un nuovo usergroup';
@@ -250,9 +240,14 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['blank_for_current_password']   = '(Lascia in bianco per confermare la password corrente)';
     $lang['email']                        = 'E-mail';
     $lang['admin']                        = 'Admin';
-  //**
     $lang['private_user']                 = 'Private user';
+ //**
+    $lang['normal_user']                  = 'Normal user'; 
     $lang['is_admin']                     = 'E\' un admin?';
+ //**
+    $lang['is_guest']                     = 'Is a guest?';
+ //**
+    $lang['guest']                        = 'Guest user';
     $lang['user_info']                    = 'Informazioni Utente';
     $lang['deleted_users']                = 'Utenti cancellati';
     $lang['no_deleted_users']             = 'Non ci sono utenti cancellati.';
@@ -264,7 +259,6 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['no_users']                     = 'Nessun utente &egrave; conosciuto dal sistema';
     $lang['users']                        = 'Utenti';
     $lang['existing_users']               = 'Utenti esistenti';
- //**
     $lang['private_profile']              = 'Questo utente ha un profilo privato e non pu&ograve; essere visualizzato da te.';
     $lang['private_usergroup_profile']    = '(Questo utente &egrave; membro di uno usergroup privato e non pu&ograve; essere visualizzato da te)';
     $lang['email_users']                  = 'Utenti Email';
@@ -342,9 +336,7 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['add_task']                     = 'Aggiungi attivit&agrave;';
     $lang['add_subtask']                  = 'Aggiungi subattivit&agrave;';
     $lang['add_project']                  = 'Aggiungi progetto';
- //**
     $lang['clone_project']                = 'Clona progetto';
- //**
     $lang['clone_task']                   = 'Clona attivit&agrave;'; 
     $lang['no_edit']                      = 'Non sei il proprietario di questo item e non puoi editarlo. Chiedi ad un admin o al proprietario dell\'item di effettuare l\'operazione.';
     $lang['uncategorised']                = 'Non categorizzata';
@@ -355,8 +347,9 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['project_options']              = 'Opzioni del progetto';
     $lang['task_options']                 = 'Opzioni dell\'attivit&agrave;';
     $lang['task_navigation']              = 'Navigazione nelle attivit&agrave;';
+//**
+    $lang['new_task']                     = 'New task';    
     $lang['no_projects']                  = 'Non ci sono progetti da vedere';
- //**
     $lang['show_all_projects']            = 'Visualizza tutti i progetti';
     $lang['show_active_projects']         = 'Visualizza solo i progetti attivi';
     $lang['project_hold_sprt']            = 'Progetto congelato da %s';
@@ -404,7 +397,6 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['by_deadline']                  = ' (per scadenza)';
     $lang['by_status']                    = ' (per stato)';
     $lang['by_owner']                     = ' (per proprietario)';
- //**
     $lang['project_cloned']               = 'Progetto da clonare:';
     $lang['task_cloned']                  = 'Attivit&agrave; da clonare:';
     $lang['note_clone']                   = 'Nota: L\'attivit&agrave; sar&agrave; clonata come un nuovo progetto';
@@ -413,5 +405,9 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['calendar']                     = 'Calendario';
     $lang['normal_version']               = 'Versione normale';
     $lang['print_version']                = 'Versione stampabile';
+//**    
+    $lang['condensed_view']               = 'Condensed view';
+//**    
+    $lang['full_view']                    = 'Full view';
 
 ?>

@@ -103,7 +103,15 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['allow_group_edit']             = 'Позволи всеки в групата да променя';
     $lang['set_email_owner']              = 'Винаги изпращай писмо на притежателя с промените';
     $lang['set_email_group']              = 'Винаги изпращай писмо до групата с промените';
+//**    
+    $lang['project_listing_order']        = 'Project listing order';
+//**    
+    $lang['task_listing_order']           = 'Task listing order'; 
+    $lang['configuration']                = 'Configuration';
     $lang['configuration']                = 'Конфигуриране';
+//archive
+//**
+    $lang['archived_projects']            = 'Archived Projects';    
 //contacts
     $lang['firstname']                    = 'Име:';
     $lang['lastname']                     = 'Фамилия:';
@@ -161,6 +169,10 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['forum_submit']                 = '[Forum submit]';
     $lang['no_message']                   = 'Няма съобщение! Моля, върнете се обратно и пробвайте пак';
     $lang['add_reply']                    = 'Добави отговор';
+//**  
+    $lang['last_post_sprt']               = 'Last post %s'; //Note to translators: context is 'Last post 2004-Dec-22'
+//**   
+    $lang['recent_posts']                 = 'Recent forum posts';      
 
 //includes
     $lang['report']                       = 'Съобщение';
@@ -171,12 +183,14 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['calendar']                     = 'Календар';
     $lang['log_out']                      = 'Изход';
     $lang['main_menu']                    = 'Меню';
+//**
+    $lang['archive']                    = 'Archive';   
     $lang['user_homepage_sprt']           = 'Дейностите на <b>%s</b>';
     $lang['missing_field_javascript']     = 'Моля въведете липсващата стойност!';
     $lang['invalid_date_javascript']      = 'Моля изберете валидна календарна дата';
     $lang['finish_date_javascript']       = 'Избраната дата е след датата на приключване на проекта!';
     $lang['security_manager']             = 'Управление на сигурността';
-    $lang['session_timeout_sprt']         = 'Достъпът отказан, последното Ви действие е било преди %1$d минути, а сесията Ви изтича за %2$d минути, моля <a href=\"%3$sindex.php\">влезте</a> отново';
+    $lang['session_timeout_sprt']         = 'Достъпът отказан, последното Ви действие е било преди %1$d минути, а сесията Ви изтича за %2$d минути, моля <a href="%3$sindex.php">влезте</a> отново';
     $lang['access_denied']                = 'Достъпът отказан';
     $lang['private_usergroup']            = 'Грешка, тази част е на поверителна потребителска група, а Вие нямате права за достъп до нея.';
     $lang['invalid_date']                 = 'Невалидна дата';
@@ -214,9 +228,14 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['blank_for_current_password']   = '(Оставете празно, ако не искате да сменяте паролата)';
     $lang['email']                        = 'е-Поща';
     $lang['admin']                        = 'Админ';
-//**
     $lang['private_user']                 = 'Поверителен';
+ //**
+    $lang['normal_user']                  = 'Normal user'; 
     $lang['is_admin']                     = 'Администратор';
+ //**
+    $lang['is_guest']                   = 'Is a guest?';
+ //**
+    $lang['guest']                      = 'Guest user';
     $lang['user_info']                    = 'Инфо за потребителя';
     $lang['deleted_users']                = 'Изтрити потребители';
     $lang['no_deleted_users']             = '<i>Няма изтрити потребители</i>';
@@ -314,6 +333,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['project_options']              = 'Проекти';
     $lang['task_options']                 = 'Настройки на задача';
     $lang['task_navigation']              = 'Задачи';
+    $lang['new_task']                     = 'New task';    
     $lang['no_projects']                  = 'Няма проекти';
     $lang['show_all_projects']            = 'Покажи всички проекти';
     $lang['show_active_projects']         = 'Покажи само активните проекти';
@@ -369,5 +389,9 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['calendar']                     = 'Календар';
     $lang['normal_version']               = 'Нормална версия';
     $lang['print_version']                = 'Версия за печат';
+//**    
+    $lang['condensed_view']             = 'Condensed view';
+//**    
+    $lang['full_view']                  = 'Full view';
 
 ?>

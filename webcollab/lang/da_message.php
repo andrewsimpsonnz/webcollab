@@ -38,25 +38,6 @@
 
 */
 
-/*
-General formatting:
-
-"xxxx"     == string in title case (eg: "Project")
-
-"xxxx_sprt" == formatted print string (eg: "Files associated with this %s" - where %s is inserted by the code)
-
-              Formatted strings with %1$s, %2$s, %3$s etc. can have parameters interchanged - as in:
-
-                 "Message from %1$s about %2$s" _could also be_ "Message about %2$s from %1$s"
-
-              This can be useful for translating to different languages.
-
-    $lang['xxxx_g" == graphical string
-
-    $lang['xxxx_javascript == javascript string with single quotes escaped as in "Confirmer l\'effacement!"
-
-*/
-
 //required language encodings
 $web_charset = "iso-8859-1";
 $email_charset = "iso-8859-1";
@@ -131,8 +112,15 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['allow_group_edit']             = 'Tillad alle i brugergruppe at redigere?';
     $lang['set_email_owner']              = 'Email altid ejer ved ændringer?';
     $lang['set_email_group']              = 'Email altid brugergruppe ved ændringer?';
+//**    
+    $lang['project_listing_order']        = 'Project listing order';
+//**    
+    $lang['task_listing_order']           = 'Task listing order'; 
     $lang['configuration']                = 'Configuration';
 
+//archive
+//**
+    $lang['archived_projects']            = 'Archived Projects';    
 
 //contacts
     $lang['firstname']                    = 'Fornavn:';
@@ -193,6 +181,10 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['forum_submit']                 = 'Forum send';
     $lang['no_message']                   = 'Ingen meddelelse! Gå venligst tilbage og prøv igen';
     $lang['add_reply']                    = 'Tilføj svar';
+//**  
+    $lang['last_post_sprt']               = 'Last post %s'; //Note to translators: context is 'Last post 2004-Dec-22'
+//**   
+    $lang['recent_posts']                 = 'Recent forum posts';      
 
  //includes
     $lang['report']                       = 'Rapport';
@@ -203,17 +195,18 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['calendar']                     = 'Kalender';
     $lang['log_out']                      = 'Log out';
     $lang['main_menu']                    = 'Hovedmenu';
+//**
+    $lang['archive']                      = 'Archive';   
     $lang['user_homepage_sprt']           = '%s\'s hjemmeside';
     $lang['missing_field_javascript']     = 'Vær så venlig at tilføje en værdi til det manglende felt';
     $lang['invalid_date_javascript']      = 'Vær så venlig at vælge en gyldig kalenderdato';
     $lang['finish_date_javascript']       = 'Den indtastede dato er efter projektets slutdato!';
     $lang['security_manager']             = 'Sikkerhedsmanager';
-    $lang['session_timeout_sprt']         = 'Adgang nægtet, sidste handling var %1$d minutter siden og timeout er %2$d minuttter, vær så venlig <a href=\\"%3$sindex.php\\">re-login</a>';
+    $lang['session_timeout_sprt']         = 'Adgang nægtet, sidste handling var %1$d minutter siden og timeout er %2$d minuttter, vær så venlig <a href="%3$sindex.php">re-login</a>';
     $lang['access_denied']                = 'Adgang nægtet';
     $lang['private_usergroup']            = 'Beklager, Dette område er en privat brugergruppe, og du har ikke adgangsrettigheder.';
     $lang['invalid_date']                 = 'Ugyldig dato';
     $lang['invalid_date_sprt']            = 'Datoen %s er ikke en gyldig kalenderdato (Check antallet af dage i måneden).<br />Vær så venlig at gå tilbage og indtast en ny dato.';
-
 
  //taskgroups
     $lang['taskgroup_name']               = 'Opgavegruppenavn:';
@@ -250,8 +243,16 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['blank_for_current_password']   = '(Lad stå åbent for nuværende password)';
     $lang['email']                        = 'E-mail';
     $lang['admin']                        = 'Admin';
+  //**
+    $lang['private_user']                 = 'Private user';
+ //**
+    $lang['normal_user']                  = 'Normal user'; 
     $lang['private_user']                 = 'Privat bruger';
     $lang['is_admin']                     = 'Er en admin?';
+ //**
+    $lang['is_guest']                     = 'Is a guest?';
+ //**
+    $lang['guest']                        = 'Guest user';
     $lang['user_info']                    = 'Brugerinformation';
     $lang['deleted_users']                = 'Slettede brugere';
     $lang['no_deleted_users']             = 'Der er ingen slettede brugere.';
@@ -353,6 +354,8 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['project_options']              = 'Projekt muligheder';
     $lang['task_options']                 = 'Opgave muligheder';
     $lang['task_navigation']              = 'Opgave navigation';
+//**
+    $lang['new_task']                     = 'New task';    
     $lang['no_projects']                  = 'Der er ingen projekter at vise';
  //**
     $lang['show_all_projects']            = 'Show all projects';
@@ -416,6 +419,10 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['normal_version']               = 'Normal version';
     //**
     $lang['print_version']                = 'Print version';
+//**    
+    $lang['condensed_view']               = 'Condensed view';
+//**    
+    $lang['full_view']                    = 'Full view';
 
 
 ?>

@@ -103,8 +103,15 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['allow_group_edit']             = 'Autoriser l\'&eacute;dition pour tous les groupes d\'utilisateurs?';
     $lang['set_email_owner']              = 'Toujours informer le propri&eacute;taire par mail des modifications?';
     $lang['set_email_group']              = 'Toujours informer par email les groupes d\'utilisateurs des modifications?';
+//**    
+    $lang['project_listing_order']        = 'Project listing order';
+//**    
+    $lang['task_listing_order']           = 'Task listing order';     
     $lang['configuration']                = 'Configuration';
 
+//archive
+//**
+    $lang['archived_projects']            = 'Archived Projects';    
 
 //contacts
     $lang['firstname']                    = 'Pr&eacute;nom:';
@@ -142,9 +149,7 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['files']                        = 'Fichiers';
     $lang['file_choose']                  = 'Fichier &agrave; t&eacute;l&eacute;charger:';
     $lang['upload']                       = 'T&eacute;l&eacute;chargement';
-  //**
     $lang['file_email_owner']             = 'Avertir par mail le propri&eacute;taire du nouveau fichier ?';
- //**
     $lang['file_email_usergroup']         = 'Notifier par mail le groupe d\'utilisateur du nouveau fichier ?';
     $lang['max_file_sprt']                = 'un fichier &agrave; t&eacute;l&eacute;charger doit faire moins de %1$s kilo-octets.';
     $lang['file_submit']                  = 'Fichier T&eacute;l&eacute;charger ';
@@ -168,6 +173,10 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['forum_submit']                 = 'Soumettre au forum';
     $lang['no_message']                   = 'Pas de message! Merci de revenir en arri&egrave;re et d\'essayer &agrave; nouveau';
     $lang['add_reply']                    = 'Ajouter une r&eacute;ponse';
+//**  
+    $lang['last_post_sprt']               = 'Last post %s'; //Note to translators: context is 'Last post 2004-Dec-22'
+//**   
+    $lang['recent_posts']                 = 'Recent forum posts';      
 
  //includes
     $lang['report']                       = 'Rapport';
@@ -178,12 +187,14 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['calendar']                     = 'Calendrier';
     $lang['log_out']                      = 'D&eacute;connection';
     $lang['main_menu']                    = 'Menu Principal';
+//**
+    $lang['archive']                      = 'Archive';   
     $lang['user_homepage_sprt']           = '%1$s : page principale';
     $lang['missing_field_javascript']     = 'Compl&ecirc;tez, s\'il vous plait, le champ manquant ';
     $lang['invalid_date_javascript']      = 'Choisissez une date valide';
     $lang['finish_date_javascript']       = 'La date entr&eacute;e arrivera apr&egrave;s la date de fin du projet !';
     $lang['security_manager']             = 'Gestion Securit&eacute;';
-    $lang['session_timeout_sprt']         = 'Acc&eacute;s refus&eacute;, la derni&egrave;re action a &eacute;t&eacute; faite il y &agrave; %1$d minutes et la session s\'est ferm&eacute;e apr&egrave;s %2$d minutes, merci de vous  <a href=\\"%sindex.php\\">re-connecter</a>';
+    $lang['session_timeout_sprt']         = 'Acc&eacute;s refus&eacute;, la derni&egrave;re action a &eacute;t&eacute; faite il y &agrave; %1$d minutes et la session s\'est ferm&eacute;e apr&egrave;s %2$d minutes, merci de vous  <a href="%sindex.php">re-connecter</a>';
     $lang['access_denied']                = 'Acc&egrave;s refus&eacute;';
     $lang['private_usergroup']            = 'D&eacute;sol&eacute;, cette zone est priv&eacute;e et elle est r&eacute;serv&eacute;e &agrave; un groupe d\'utilisateurs. Vous n\'y avez pas acc&egrave;s.';
     $lang['invalid_date']                 = 'Date invalide';
@@ -226,7 +237,13 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['email']                        = 'E-mail';
     $lang['admin']                        = 'Admin';
     $lang['private_user']                 = 'Utilisateur priv&eacute;';
+ //**
+    $lang['normal_user']                  = 'Normal user'; 
     $lang['is_admin']                     = 'Est-il admin?';
+ //**
+    $lang['is_guest']                     = 'Is a guest?';
+ //**
+    $lang['guest']                        = 'Guest user';
     $lang['user_info']                    = 'Information utilisateur';
     $lang['deleted_users']                = 'Effacer les utilisateurs';
     $lang['no_deleted_users']             = 'Il n\'y aucun utilisateurs effac&eacute;s.';
@@ -326,6 +343,8 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['project_options']              = 'Options Projet';
     $lang['task_options']                 = 'Options t&acirc;che';
     $lang['task_navigation']              = 'Navigation t&acirc;ches';
+//**
+    $lang['new_task']                     = 'New task';    
     $lang['no_projects']                  = 'Pas de projet &agrave; afficher';
     $lang['show_all_projects']            = 'Montrer tous les projets';
     $lang['show_active_projects']         = 'Montrer seulement les projets actifs';
@@ -380,8 +399,12 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['note_clone']                   = 'Note : cette t&acirc;che sera clon&eacute;e comme un nouveau projet';
 
 //bits 'n' pieces
-   $lang['calendar']                      = 'Calendrier';
-   $lang['normal_version']                = 'Version normale';
-   $lang['print_version']                 = 'Version imprimable';
+    $lang['calendar']                     = 'Calendrier';
+    $lang['normal_version']               = 'Version normale';
+    $lang['print_version']                = 'Version imprimable';
+//**    
+    $lang['condensed_view']               = 'Condensed view';
+//**    
+    $lang['full_view']                    = 'Full view';
 
 ?>

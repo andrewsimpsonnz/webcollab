@@ -103,7 +103,15 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['allow_group_edit']             = 'Permetre a tothom del grup editar?';
     $lang['set_email_owner']              = 'Sempre correu al propietari amb els canvis?';
     $lang['set_email_group']              = 'Sempre correu al usergroup amb canvis?';
+//**    
+    $lang['project_listing_order']        = 'Project listing order';
+//**    
+    $lang['task_listing_order']           = 'Task listing order'; 
     $lang['configuration']                = 'Configuraci&oacute;';
+
+//archive
+//**
+    $lang['archived_projects']            = 'Archived Projects';    
     
 //contacts
     $lang['firstname']                    = 'Nom:';
@@ -168,6 +176,10 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['forum_submit']                 = 'F&ograve;rum acceptar';
     $lang['no_message']                   = 'No hi ha missatge! Torni enrera i reintenti.';
     $lang['add_reply']                    = 'Afegir resposta';
+//**  
+    $lang['last_post_sprt']              = 'Last post %s'; //Note to translators: context is 'Last post 2004-Dec-22'
+//**   
+    $lang['recent_posts']                = 'Recent forum posts';      
 
  //includes
     $lang['report']                       = 'Informe';
@@ -178,15 +190,16 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['calendar']                     = 'Calendari';
     $lang['log_out']                      = 'Sortir';
     $lang['main_menu']                    = 'Men&uacute; principal';
+    $lang['archive']                    = 'Archive';   
     $lang['user_homepage_sprt']           = 'Usuari: %s';
- //**
+//**    
     $lang['missing_field_javascript']     = 'Please enter a value for the missing field';
- //**
+//**    
     $lang['invalid_date_javascript']      = 'Please choose a valid calendar date';
- //**
+//**    
     $lang['finish_date_javascript']       = 'The entered date occurs after the project finish date!';
     $lang['security_manager']             = 'Manegament de Seguretat';
-    $lang['session_timeout_sprt']         = 'Acc&egrave;s denegat, la &uacute;ltima acci&oacute; va ser fa %d i el temps d\'expiraci&oacute; &eacute;s de %d minuts, si us plau <a href=\\"%sindex.php\\">Identifiqui\'s</a>';
+    $lang['session_timeout_sprt']         = 'Acc&egrave;s denegat, la &uacute;ltima acci&oacute; va ser fa %d i el temps d\'expiraci&oacute; &eacute;s de %d minuts, si us plau <a href="%sindex.php">Identifiqui\'s</a>';
     $lang['access_denied']                = 'Acc&eacute;s denegat';
     $lang['private_usergroup']            = 'Dispensi, aquesta &agrave;rea &eacute;s privada d\'un grup i vost&egrave; no t&eacute; drets d\'acc&eacute;s.';
     $lang['invalid_date']                 = 'Data no v&agrave;lida';
@@ -230,7 +243,13 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['admin']                        = 'Admin';
   //**
     $lang['private_user']                 = 'Private user';
+ //**
+    $lang['normal_user']                  = 'Normal user'; 
     $lang['is_admin']                     = '&Eacute;s admin?';
+ //**
+    $lang['is_guest']                     = 'Is a guest?';
+ //**
+    $lang['guest']                        = 'Guest user';
     $lang['user_info']                    = 'Informaci&oacute; d\'usuari';
     $lang['deleted_users']                = 'Usuaris eliminats';
     $lang['no_deleted_users']             = 'No existeixen usuaris eliminats.';
@@ -339,6 +358,8 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['task_options']                 = 'Tasca opcions';
  //**
     $lang['task_navigation']              = 'Navegar tasques';
+//**
+    $lang['new_task']                     = 'New task';    
     $lang['no_projects']                  = 'No hi ha projecte per veure';
  //**
     $lang['show_all_projects']            = 'Show all projects';
@@ -403,5 +424,9 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['calendar']                     = 'Calendari';
     $lang['normal_version']               = 'Normal version';
     $lang['print_version']                = 'Print version';
+//**    
+    $lang['condensed_view']               = 'Condensed view';
+//**    
+    $lang['full_view']                    = 'Full view';
 
 ?>

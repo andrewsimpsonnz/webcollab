@@ -103,8 +103,15 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['allow_group_edit']            = 'Ist es allen Benutzern der Gruppe erlaubt, die Daten zu bearbeiten?';
     $lang['set_email_owner']             = 'Den Besitzer immer per Email &uuml;ber Ver&auml;nderungen benachrichtigen?';
     $lang['set_email_group']             = 'Soll die Benutzergruppe immer bei Ver&auml;nderungen benachrichtigt werden?';
+//**    
+    $lang['project_listing_order']       = 'Project listing order';
+//**    
+    $lang['task_listing_order']          = 'Task listing order'; 
     $lang['configuration']               = 'Konfiguration';
 
+//archive
+//**
+    $lang['archived_projects']           = 'Archived Projects';    
 
  //contacts
     $lang['firstname']                   = 'Vorname:';
@@ -166,6 +173,10 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['forum_submit']                = 'Beitrag absenden';
     $lang['no_message']                  = 'Keine Nachricht angegeben! Bitte gehen Sie zur&uuml;ck und versuchen Sie es noch einmal';
     $lang['add_reply']                   = 'Antwort hinzuf&uuml;gen';
+//**  
+    $lang['last_post_sprt']             = 'Last post %s'; //Note to translators: context is 'Last post 2004-Dec-22'
+//**   
+    $lang['recent_posts']               = 'Recent forum posts';      
 
  //includes
     $lang['report']                      = 'Report';
@@ -176,15 +187,14 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['calendar']                    = 'Kalender';
     $lang['log_out']                     = 'Abmelden';
     $lang['main_menu']                   = 'Hauptmen&uuml;';
+//**
+    $lang['archive']                     = 'Archive';   
     $lang['user_homepage_sprt']          = 'Startseite von %s';
- //"load_time_sprt']          = 'Diese Seite ben&ouml;tigte %.3f Sekunden zum Laden.  Davon wurden %.3f Sekunden f&uuml;r %d Datenbanktransaktionen verwendet.';
     $lang['missing_field_javascript']    = 'Bitte geben sie einen Wert in das leere Feld ein';
     $lang['invalid_date_javascript']     = 'Bitte &auml;hlen sie ein g&uuml;ltiges Kalenderdatum';
     $lang['finish_date_javascript']      = 'Das angegebene Datum liegt nach dem Fertigstellungstermin des Projekts!';
     $lang['security_manager']            = 'Sicherheitsverwaltung';
- //"no_key_sprt']          = 'Keine g&uuml;ltige Session-ID. Bitte gehen Sie zum <a href=\"%sindex.php\">Login</a>';
- //"no_session']          = 'Unbekannte Session-ID, bitte neu <a href=\"%sindex.php\">einloggen</a>.';
-    $lang['session_timeout_sprt']        = 'Zugriff verweigert, Ihre letzte Aktion war vor %d Minuten. %d Minuten bleibt eine Session ohne Aktion g&uuml;ltig, bitte neu <a href=\"%sindex.php\">anmelden</a>.';
+    $lang['session_timeout_sprt']        = 'Zugriff verweigert, Ihre letzte Aktion war vor %d Minuten. %d Minuten bleibt eine Session ohne Aktion g&uuml;ltig, bitte neu <a href="%sindex.php">anmelden</a>.';
     $lang['access_denied']               = 'Zugriff verweigert';
     $lang['private_usergroup']           = 'Dieser Bereich ge&ouml;rt zu einer privaten Benutzergruppe und sie haben keine Zugriffsrechte.';
     $lang['invalid_date']                = 'Ung&uuml;ltiges Datum';
@@ -227,7 +237,13 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['email']                       = 'E-Mail';
     $lang['admin']                       = 'Administrator';
     $lang['private_user']                = 'Privater Nutzer';
+ //**
+    $lang['normal_user']                 = 'Normal user'; 
     $lang['is_admin']                    = 'Kann administrieren?';
+ //**
+    $lang['is_guest']                    = 'Is a guest?';
+ //**
+    $lang['guest']                       = 'Guest user';
     $lang['user_info']                   = 'Informationen &uuml;ber den Nutzer';
     $lang['deleted_users']               = 'Gel&ouml;schte Nutzer';
     $lang['no_deleted_users']            = 'Es gibt keine gel&ouml;schten Nutzer.';
@@ -327,6 +343,8 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['project_options']             = 'Projekteigenschaften';
     $lang['task_options']                = 'Aufgabeneigenschaften';
     $lang['task_navigation']             = 'Aufgaben-Navigation';
+//**
+    $lang['new_task']                    = 'New task';    
     $lang['no_projects']                 = 'Es gibt keine Projekte in dieser Ansicht';
     $lang['show_all_projects']           = 'Zeige alle Projekte';
     $lang['show_active_projects']        = 'Zeige nur aktive Projekte';
@@ -383,5 +401,10 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
  //bits 'n' pieces
     $lang['calendar']                    = 'Kalender';
     $lang['normal_version']              = 'Normalversion';
-    $lang['print_version']                = 'Druckversion';
+    $lang['print_version']               = 'Druckversion';
+//**    
+    $lang['condensed_view']              = 'Condensed view';
+//**    
+    $lang['full_view']                   = 'Full view';
+
 ?>
