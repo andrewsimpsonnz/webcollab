@@ -1,0 +1,70 @@
+<?php
+/*
+  $Id$
+
+  WebCollab
+  ---------------------------------------
+
+  This file created 2003 by Andrew Simpson
+
+  This program is free software; you can redistribute it and/or modify it under the
+  terms of the GNU General Public License as published by the Free Software Foundation;
+  either version 2 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along with this
+  program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave,
+  Cambridge, MA 02139, USA.
+
+
+  Function:
+  ---------
+
+  Compose emails for sending
+
+*/
+
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
+
+//set variables
+$content = "";
+
+//only for admins
+if( $admin != 1 ) {
+  error( "Not permitted", "This function is for admins only" );
+  return;
+}
+
+//start form data
+$content .=
+        "<form method=\"POST\" action=\"users/user_mail_send.php\">\n".
+          "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
+          "<br />\n".
+          "<table border=\"0\">\n".
+          "<tr><td><input type=\"radio\" value=\"all\" name=\"group\" checked>All users</td></tr>\n".
+          "<tr><td><input type=\"radio\" value=\"maillist\" name=\"group\">Mailing list only</td></tr>\n".
+          "<tr><td><input type=\"radio\" value=\"group\" name=\"group\">Usergroup selected from below</td></tr>\n";
+
+//add user-groups
+$usergroup_q = db_query("SELECT name, id FROM usergroups ORDER BY name" );
+$content .=  "<tr><td>".$lang["usergroup"].":</td><td><SELECT name=\"usergroup[]\" MULTIPLE size=\"4\">\n";
+for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
+  $content .= "<option value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</option>";
+}
+$content .= "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
+            "</table><br /><br />".
+            "<table border=\"0\">\n".
+            "<tr><td>Subject:</td> <td><input type=\"text\" name=\"subject\" size=\"30\"></td></tr>\n".
+            "<tr><td>Message:</td><td><textarea name=\"message\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
+            "<tr><td></td><td>For all selections the messages are sent to the mailing list.</td></tr>\n".
+            "</table><br />\n".
+            "<input type=\"submit\" value=\"Send\">\n".
+            "<input type=\"reset\" value=\"".$lang["reset"]."\">\n".
+            "</form><br /><br />\n";
+
+new_box("Email - translate me!", $content );
+?>
