@@ -56,11 +56,12 @@ $content =
                "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" value=\"".$row["description"]."\" size=\"30\" /></td></tr>\n";
 
 //add users
-$user_q = db_query("SELECT fullname, id FROM users ORDER BY fullname" );
+$user_q = db_query("SELECT fullname, id FROM users WHERE deleted='f' ORDER BY fullname" );
 $member_q = db_query("SELECT users.id AS id
                             FROM users
                             LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
-                            WHERE usergroupid=".$row["id"] );
+                            WHERE usergroupid=".$row["id"]."
+                            AND deleted='f'"  );
 
 $content .=    "<tr><td>".$lang["members"]."</td><td><select name=\"member[]\" multiple=\"multiple\" size=\"4\">\n";
 
