@@ -41,6 +41,12 @@ General formatting:
 
 "xxxx_sprt == formatted print string (eg: "Files associated with this %s" - where %s is inserted by the code)
 
+              Formatted strings with %1/$s, %2/$s, %3/$s etc. can have parameters interchanged - as in:
+
+                 "Message from %1\$s about %2\$s" _could also be_ "Message about %2\$s from %1\$s"
+
+              This can be useful for translating to different languages.
+
 */
 
 //dates
@@ -162,7 +168,7 @@ $lang = array(
  "orig_message" => "Original message:",
  "post" => "Post it!",
  "message" => "Message:",
- "post_reply_sprt" => "Post a reply to a message from '%s' about '%s'",
+ "post_reply_sprt" => "Post a reply to a message from '%1\$s' about '%2\$s'",
  "post_message_sprt" => "Post message to: '%s'",
  "reply" => "Reply",
  "new_post" => "New post",
@@ -182,11 +188,11 @@ $lang = array(
  "log_out" => "Log out",
  "main_menu" => "Main menu",
  "user_homepage_sprt" => "%s's homepage",
- "load_time_sprt" => "This page took %.3f seconds to load.  Of that %.3f seconds were used for %d transactions with the database",
+ "load_time_sprt" => "This page took %1\$.3f seconds to load.  Of that %2\$.3f seconds were used for %3\$d transactions with the database",
  "security_manager" => "Security manager",
  "no_key_sprt" => "No valid session key. Please <a href=\"%sindex.php\">login</a>",
  "no_session" => "No such session, please <a href=\"%sindex.php\">log-in</a>",
- "session_timeout_sprt" => "Access denied, last action was %d minutes ago and the timeout is 60 minutes, please <a href=\"%sindex.php\">re-login</a>",
+ "session_timeout_sprt" => "Access denied, last action was %1\$d minutes ago and the timeout is 60 minutes, please <a href=\"%2\$sindex.php\">re-login</a>",
  //"ip_spoof_sprt" =>"Spoofed ip address detected from your ip (%s) this session has been deleted as a precaution, please <a href=\"%sindex.php\">re-login</a>",
  "access_denied" => "Access denied",
  "private_usergroup" => "Sorry, this area is in a private usergroup and you do not have access rights.",
@@ -307,10 +313,10 @@ $lang = array(
  "due_today" => "Due today",
  "overdue_1" => "1 day overdue",
  "overdue_sprt" => "%d days overdue",
- "edit_task" => "Edit the task",
- "edit_project" => "Edit the project",
+ "edit_task" => "Edit task",
+ "edit_project" => "Edit project",
  "no_reparent" => "None (a top-level project)",
- "del_javascript_sprt" => "This will delete %s %s. Are you sure?",
+ "del_javascript_sprt" => "This will delete %1\$s %2\$s. Are you sure?",
  "add_task" => "Add task",
  "add_subtask" => "Add subtask",
  "add_project" => "Add project",
@@ -318,7 +324,16 @@ $lang = array(
  "uncategorised" => "Uncategorised",
  "admin" => "Admin",
  "global" => "Global",
- "options" => " options",
+ //"options" => " options",
+ //**
+ "delete_project" => "Delete project",
+ //**
+ "delete_task" => "Delete task",
+ //**
+ "project_options" => "Project options",
+ //**
+ "task_options" => "Task options",
+ //
  "task_navigation" => "Task navigation",
  "no_projects" => "There are no projects to view",
  "ccompleted" => "Completed",
