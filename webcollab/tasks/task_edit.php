@@ -57,7 +57,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
 //
 function user_access($owner, $usergroupid, $groupaccess ) {
 
-  global $uid, $gid, $admin;
+  global $uid, $gid, $admin, $taskid_row;
 
   if($admin == 1)
     return TRUE;
@@ -69,7 +69,7 @@ function user_access($owner, $usergroupid, $groupaccess ) {
     return FALSE;
 
   if( $groupaccess == "t" ) {
-    if(in_array($row[1], (array)$gid ) )
+    if(in_array($usergroupid, (array)$gid ) )
       return TRUE;
   }
   return FALSE;
