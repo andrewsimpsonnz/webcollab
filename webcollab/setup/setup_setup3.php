@@ -177,13 +177,13 @@ if( ! isset($LOCALE) || $LOCALE == NULL )
 
 //initialise array with null values
 for( $i=0 ; $i < 8 ; $i++ ) {
-  $s[] = "";
+  $s[$i] = "";
 }
 
 //select current value
 $option_array = array("bg", "ca", "da", "en", "fr", "de", "it", "es" );
 $selected = array_search($LOCALE, $option_array );  
-$s[$selected] = "selected=\"selected\"";  
+$s[$selected] = " selected=\"selected\"";  
   
 $content .= "<tr><td></td><td><br /></td></tr>\n".
             "<tr><th>Language:</th><td><select name=\"locale\">\n".
@@ -201,15 +201,15 @@ $content .= "<tr><td></td><td><br /></td></tr>\n".
 $content .= "<tr><td></td><td><br /><br /><b><u>Timezone Setting</u></b></td></tr>\n";
 
 if( ! isset($TZ) || $TZ == NULL )
-  $TZ = (int)date("O");
+  $TZ = (int)date("Z")/3600;
 
 //initialise array with null values  
-for( $i=1 ; $i < 26 ; $i++ ) {
-  $s[] = "";
+for( $i=1 ; $i < 27 ; $i++ ) {
+  $s[$i] = "";
 }
 
 //select current value
-$s[(13 + $TZ)] = "selected=\"selected\"";
+$s[(13 + $TZ)] = " selected=\"selected\"";
 
 $content .=  "<tr><td></td><td><br /></td></tr>\n".
              "<tr><th>Timezone:</th><td><select name=\"timezone\">\n".
@@ -238,6 +238,7 @@ $content .=  "<tr><td></td><td><br /></td></tr>\n".
              "<option value=\"10\"$s[23]>GMT +1000</option>\n".
              "<option value=\"11\"$s[24]>GMT +1100</option>\n".
              "<option value=\"12\"$s[25]>GMT +1200</option>\n".
+             "<option value=\"13\"$s[26]>GMT +1300</option>\n".
              "</select></td></tr>\n".
                         
 //email settings
