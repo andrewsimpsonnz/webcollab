@@ -58,19 +58,18 @@ function percent_complete($taskid ) {
 // Show percent
 //
 function show_percent($percent = 0 ) {
-  $width = 400;
   switch($percent) {
     case 100:
-      return "<table width=\"$width\"><tr><td style=\"width : $width\" class=\"greenbar\"></td></tr></table>\n";
+      return "<table width=\"400px\"><tr><td style=\"width : 400px\" class=\"greenbar\"></td></tr></table>\n";
       break;
 
     case 0:
-      return "<table width=\"$width\"><tr><td style=\"width : $width\" class=\"redbar\"></td></tr></table>\n";
+      return "<table width=\"400px\"><tr><td style=\"width : 400px\" class=\"redbar\"></td></tr></table>\n";
       break;
 
     default:
-      $out  = "<table width=\"$width\"><tr><td style=\"width :".($percent * ($width/100))."\" class=\"greenbar\">";
-      $out .= "</td><td style=\"width :".($width-($percent*($width/100)))."\" class=\"redbar\"></td></tr></table>\n";
+      $out  = "<table width=\"400px\"><tr><td style=\"width :".($percent * (400/100))."px\" class=\"greenbar\">";
+      $out .= "</td><td style=\"width :".(400-($percent*(400/100)))."px\" class=\"redbar\"></td></tr></table>\n";
       return $out;
       break;
   }
