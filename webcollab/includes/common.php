@@ -35,30 +35,15 @@ include_once(BASE."config.php" );
 include_once(BASE."lang/lang.php" );
 
 //
-//Get the domain name from $BASE_URL for use with cookies
-//
-
-function domain() {
-
-  global $BASE_URL;
-
-  $domain_array = explode('/', str_replace('http://', '', $BASE_URL ) );
-  $DOMAIN = ltrim($domain_array[0]);
-
-return $DOMAIN;
-}
-
-
-//
-//Get the directory name from $BASE_URL for use with cookies
+//Get the directory name for use with cookies
 //
 
 function directory() {
 
-  global $BASE_URL;
-
+  //__FILE__ gives the current file, not the parent file for includes
   $directory_path = realpath(dirname(__FILE__ ).'/..' );
-  $DIRECTORY = str_replace($_SERVER["DOCUMENT_ROOT"], '', $directory_path );
+  //strip of document root to give relative directory name
+  $DIRECTORY = str_replace(realpath($_SERVER["DOCUMENT_ROOT"]), '', $directory_path );
 
 return $DIRECTORY;
 }
