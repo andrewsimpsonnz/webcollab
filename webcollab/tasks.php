@@ -38,14 +38,8 @@ include_once("includes/screen.php" );
 if( ! isset($_REQUEST["action"]) )
   error("Task action handler", "No action given");
 
-
   //what do you want to task today =]
   switch($_REQUEST["action"] ) {
-
-    //create a box with the tasks from the current one
-    //case "list":
-    //  include("tasks/task_list.php" );
-    //  break;
 
     //show a task
     case "show":
@@ -61,7 +55,6 @@ if( ! isset($_REQUEST["action"]) )
       include("files/file_menubox.php" );
       goto_main();
       include("tasks/task_show.php" );
-      $parentid = $_GET["taskid"];
       include("tasks/task_list.php" );
       include("forum/forum_list.php" );
       include("files/file_list.php" );
