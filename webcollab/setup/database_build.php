@@ -44,9 +44,15 @@ function error_setup($message ) {
 
 //security check
 if(isset($DATABASE_NAME ) && $DATABASE_NAME != "" ) {
-  //this is not an initial install can't proceed
-  error_setup("This action is not permitted." );
+  //this is not an initial install, log in before proceeding
+  require_once('../includes/security.php' );
+
+  if($admin != 1 ) {
+    error_setup("You are not authorised to do this" );
+  }
 }
+else
+  $x = "";
 
 //
 //Database build
@@ -78,7 +84,7 @@ if(isset($DATABASE_NAME ) && $DATABASE_NAME != "" ) {
   //skip making database
   if(! isset($_POST["make_database"]) || ! $_POST["make_database"] == "on" ){
     $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-    header("Location: ".$path."setup2.php?db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
+    header("Location: ".$path."setup2.php?x=$x&db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
     die;
   }
 
@@ -222,7 +228,7 @@ if(isset($DATABASE_NAME ) && $DATABASE_NAME != "" ) {
   }
 
   $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-  header("Location: ".$path."setup2.php?db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
+  header("Location: ".$path."setup2.php?x=$x&db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
   die;
 
 ?>

@@ -36,7 +36,7 @@ include_once("./screen_setup.php" );
 function error_setup($reason ) {
 
   create_top_setup("Setup", 1 );
-  new_box_setup("Setup error", "<center><br />$reason<br /></center>" );
+  new_box_setup("Setup error", "<div align=\"center\"><br />$reason<br /></div>" );
   create_bottom_setup();
   die;
 
@@ -45,7 +45,7 @@ function error_setup($reason ) {
 //security check
 if(isset($DATABASE_NAME ) && $DATABASE_NAME != "" ) {
   //this is not an initial install, log in before proceeding
-  include_once('../includes/security.php' );
+  require_once('../includes/security.php' );
 
   if($admin != 1 ) {
     error_setup("You are not authorised to do this" );
@@ -165,6 +165,7 @@ $content .= "<tr><td></td><td><br /><br /><B><U>Email Settings</U></B></td></tr>
             "<tr><td></td><td><br /></td></tr>".
             "<tr><th>Use email?</th><td><input type=\"checkbox\" name=\"use_email\" $setting ></td></tr>\n";
 
+/*
 $s1 = "SELECTED"; $s2 = "";
 if(isset($MAIL_METHOD) ){
   if($MAIL_METHOD == "SMTP" ) {
@@ -176,6 +177,7 @@ $content .= "<tr><td><br /></td><td><select name=\"mail_method\">\n".
             "<option value=\"mail\" $s1 >Use standard PHP mail() function</option>\n".
             "<option value=\"SMTP\" $s2 >Use external SMTP Server</option>\n".
             "</select></td></tr>\n";
+*/
 
 if( ! isset($EMAIL_ERROR) )
   $EMAIL_ERROR = "";
@@ -186,8 +188,8 @@ $content .= "<tr><td></td><td><br /><br />If an error occurs on the site, who do
 if( ! isset($SMTP_HOST) )
   $SMTP_HOST = "";
 
-$content .= "<tr><td><br /><br /></td><td><i>Items below are only required if SMTP server is chosen</i></tr>".
-            "<tr><th><i>SMTP Host:</i></th><td><input type=\"text\" name=\"smtp_host\" value=\"$SMTP_HOST\" size=\"50\"></td></tr>\n";
+$content .= "<tr><td><br /><br /></td><td><i>Items below are required if email is enabled</i></tr>".
+            "<tr><th><i>SMTP Host:</i></th><td><input type=\"text\" name=\"smtp_host\" value=\"$SMTP_HOST\" size=\"50\">localhost</td></tr>\n";
 
 if(isset($SMTP_AUTH) && $SMTP_AUTH == "Y" ) {
   $setting = "CHECKED";

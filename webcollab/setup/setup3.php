@@ -36,7 +36,7 @@ include_once("./screen_setup.php" );
 function error_setup( $reason ) {
 
   create_top_setup("Setup", 1 );
-  new_box_setup("Setup error", "<center><br />".$reason."<br /></center>" );
+  new_box_setup("Setup error", "<div align=\"center\"><br />".$reason."<br /></div>" );
   create_bottom_setup();
   die;
 
@@ -44,8 +44,8 @@ function error_setup( $reason ) {
 
 //security check
 if( (isset($DATABASE_NAME ) ) && $DATABASE_NAME != "" ) {
-  include_once('../includes/security.php' );
-  
+  require_once('../includes/security.php' );
+
   if($admin != 1 ) {
     error_setup("You are not authorised to do this");
   }
@@ -63,7 +63,7 @@ foreach($array as $var ) {
 
 //non-essential values
 $array = array("manager_name", "abbr_manager_name", "file_base", "file_maxsize", "email_error", "use_email",
-                "mail_method", "smtp_host", "smtp_auth", "mail_user", "email_password", "site_img" );
+                "smtp_host", "smtp_auth", "mail_user", "email_password", "site_img" );
 
 foreach($array as $var ) {
   if(! isset($_POST[$var]) )
@@ -132,8 +132,10 @@ $content = "<?php\n".
 '  $USE_EMAIL = "'.$data["use_email"].'";'."\n\n".
 '  //mail transport agent. Values are "mail" (local sockets and/or sendmail) or "SMTP" (network mail server)'."\n".
 '  // default is "mail"'."\n".
+/*
 '  $MAIL_METHOD = "'.$data["mail_method"].'";'."\n\n".
 '  //-- These variables below are only required if "SMTP" is chosen above'."\n\n".
+*/
 '    //location of SMTP server (ip address or FQDN)'."\n".
 '    $SMTP_HOST = "'.$data["smtp_host"].'";'."\n\n".
 '    //use smtp auth? ("Y" or "N")'."\n".
@@ -175,7 +177,7 @@ if(! $handle = fopen("../config.php", "w" ) ) {
 //show success message
 create_top_setup("Setup Screen", 1);
 
-$content = "<center>\n".
+$content = "<div align=\"center\">\n".
 "<br /><br />\n".
 "<p>Setup is complete.</p>\n".
 "<p>Please press the button to login...</p>\n";
@@ -187,7 +189,7 @@ $content .= "<p>Enjoy!</p>\n".
 "<form name=\"inputform\" method=\"POST\" action=\"../index.php\">\n".
 "<input type=\"submit\" value=\"Login\"><br /><br />\n".
 "</form>\n".
-"</center>\n".
+"</div>\n".
 "<br /><br />\n";
 
 new_box_setup("Setup - Stage 3 of 3", $content, 400 );

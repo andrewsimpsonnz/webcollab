@@ -107,7 +107,7 @@ if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" ) {
 
 create_top_setup("Login", 1 );
 
-$content = "<center>";
+$content = "<div align=\"center\">";
 
 $content .= "<br />Admin login is required for setup:<br /><br />\n".
            "<form name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
@@ -120,7 +120,7 @@ $content .= "<br />Admin login is required for setup:<br /><br />\n".
              "<br /><br />\n".
              "</div>".
              "</form>".
-           "</center>".
+           "</div>".
            "<br />";
 
 //set box options

@@ -52,15 +52,14 @@ if($admin != 1 ) {
 create_top_setup("Setup Screen", 1);
 
 $content =  "<br />\n".
-            "<form method=\"POST\" action=\"setup2.php\">".
-            "<table border=\"0\">".
+            "<form method=\"POST\" action=\"setup1.php\">".
             "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
-            "A database is already specified in the configuration file.  The database creation step is therefore being skipped.<br /><br />\n".
-            "To create a new database:<br />\n".
-            'Manually change $DATABASE_NAME in config.php to:<br />'."\n".
-            '$DATABASE_NAME = "".<br /><br />'."\n".
-            "<input type=\"hidden\" name=\"action\" value=\"insert\">\n".
-            "<center><input type=\"submit\" value=\"Continue\"></center>\n".
+            "A database is already specified in the configuration file.  Do you wish to create a new database?<br /><br />\n".
+            "<div align=\"center\"><input type=\"submit\" value=\"Yes\"></div>\n".
+            "</form>\n".
+            "<form method=\"POST\" action=\"setup2.php\">".
+            "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
+            "<div align=\"center\"><input type=\"submit\" value=\"No\"></div>\n".
             "</form><br /><br />\n";
 
 new_box_setup( "Setup - Stage 1 of 3 : Skipping Database Configuration", $content, 400 );

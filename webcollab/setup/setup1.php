@@ -44,9 +44,15 @@ function error_setup($message ) {
 
 //security check
 if(isset($DATABASE_NAME ) && $DATABASE_NAME != "" ) {
-  //this is not an initial install can't proceed
-  error_setup("This action is not permitted." );
+  //this is not an initial install, log in before proceeding
+  require_once('../includes/security.php' );
+
+  if($admin != 1 ) {
+    error_setup("You are not authorised to do this" );
+  }
 }
+else
+  $x = "";
 
 create_top_setup("Setup Screen", 1);
 
@@ -55,20 +61,23 @@ $content =
 "<p><b>Setup - Stage 1 of 3 : Database Setup</b></p>\n".
 "<form method=\"POST\" action=\"database_build.php\">\n".
   "<table border=\"0\">\n".
-    "<tr><td></td><td><br />The details of your database</td></tr>".
-    "<tr align=\"left\"><td>Your database name: </td><td><input type=\"text\" name=\"database_name\" size=\"30\"></td></tr>\n".
-    "<tr align=\"left\"><td>Database user: </td><td><input type=\"text\" name=\"database_user\" size=\"30\"></td></tr>\n".
-    "<tr align=\"left\"><td>Database password: </td><td><input type=\"text\" name=\"database_password\" size=\"30\"></td></tr>\n".
-    "<tr align=\"left\"><td>Database host: </td><td><input type=\"text\" name=\"database_host\" value=\"localhost\" size=\"15\"></td></tr>\n".
-    "<tr align=\"left\"><td>Database type:</td> <td>\n".
+    "<tr><td></td><td><br />The details of your database</td></tr>\n".
+    "<tr align=\"left\"><td><b>Your database name: </b></td><td><input type=\"text\" name=\"database_name\" size=\"30\"></td></tr>\n".
+    "<tr><td></td><td><br /></td></tr>\n".
+    "<tr align=\"left\"><td><b>Database user: </b></td><td><input type=\"text\" name=\"database_user\" size=\"30\"></td></tr>\n".
+    "<tr align=\"left\"><td><b>Database password: </b></td><td><input type=\"text\" name=\"database_password\" size=\"30\"></td></tr>\n".
+    "<tr><td></td><td><br /></td></tr>\n".
+    "<tr align=\"left\"><td><b>Database host: </b></td><td><input type=\"text\" name=\"database_host\" value=\"localhost\" size=\"15\"></td></tr>\n".
+    "<tr align=\"left\"><td><b>Database type:</b></td> <td>\n".
     "<select name=\"database_type\">\n".
       "<option value=\"mysql\" SELECTED >mysql</option>\n".
       "<option value=\"postgresql\">postgresql</option>\n".
       "<option value=\"mysql_innodb\">mysql with innodb</option>\n".
     "</select></td></tr>\n".
-    "<tr><td></td><tr>\n".
+    "<tr><td><br /></td><tr>\n".
     "<tr><td colspan=\"2\">Do you want WebCollab to create the database now?  <input type=\"checkbox\" name=\"make_database\" CHECKED ></td></tr>\n".
     "</table><br />\n".
+  "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
   "<input type=\"submit\" value=\"Submit\"><br /><br />\n".
 "</form>\n".
 "</center>\n".
