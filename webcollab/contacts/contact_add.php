@@ -48,8 +48,8 @@ $content .= "<TABLE border=\"0\">".
 	    "<TR><TD><I>".$lang["company"]."</I> </TD><TD><INPUT type=\"text\" name=\"company\" size=\"30\"></TD></TR>\n".
 	    "<TR><TD><I>".$lang["home_phone"]."</I> </TD><TD><INPUT type=\"text\" name=\"tel_home\" size=\"30\"></TD></TR>\n".
 	    "<TR><TD><I>".$lang["mobile"]."</I> </TD><TD><INPUT type=\"text\" name=\"gsm\" size=\"30\"></TD></TR>\n".
-	    "<TR><TD><I>".$lang["fax"]."</I> </TD><TD><INPUT type=\"text\" name=\"fax\" size=\"30\"></TD></TR>\n".
 	    "<TR><TD><I>".$lang["bus_phone"]."</I> </TD><TD><INPUT type=\"text\" name=\"tel_business\" size=\"30\"></TD></TR>\n".
+	    "<TR><TD><I>".$lang["fax"]."</I> </TD><TD><INPUT type=\"text\" name=\"fax\" size=\"30\"></TD></TR>\n".	    
 	    "<TR><TD><I>".$lang["address"]."</I> </TD><TD><INPUT type=\"text\" name=\"address\" size=\"30\"></TD></TR>\n".
 	    "<TR><TD><I>".$lang["postal"]."</I> </TD><TD><INPUT type=\"text\" name=\"postal\" size=\"30\"></TD></TR>\n".
 	    "<TR><TD><I>".$lang["city"]."</I> </TD><TD><INPUT type=\"text\" name=\"city\" size=\"30\"></TD></TR>\n".
