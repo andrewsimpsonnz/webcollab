@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
   
   WebCollab
   ---------------------------------------
@@ -23,7 +23,7 @@
   Function
   --------
 
-  Logs person out
+  Log out
   
 */
 

@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
   
   WebCollab
   ---------------------------------------
@@ -24,7 +24,7 @@
   Function:
   ---------
 
-  This is the administrative interface to the taskgroups.
+  This is the administrative interface to the usergroups.
 
 */
 require_once("path.php" );

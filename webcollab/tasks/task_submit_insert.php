@@ -2,7 +2,7 @@
 /*
   $Id$
     
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -55,14 +55,14 @@ foreach($input_array as $var ) {
   ${$var} = intval($_POST[$var]);
 }
 
-//madatory text inputs
+//mandatory text inputs
 if(empty($_POST['status']) )
   error( "Task submit", "Variable status is not correctly set" );
 $status = safe_data($_POST['status']);
 
 //optional text input (can be multiple lines)
 $text = safe_data_long($_POST['text']);
-
+ 
 //get the submitted date
 $deadline = date_to_datetime($_POST['day'], $_POST['month'], $_POST['year'] );
 

@@ -2,12 +2,12 @@
 /*
   $Id$
   
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
   
-  Based on original  file written for Core APM by Dennis Fleurbaaij & Andrew Simpson 2001/2002
+  Based on original file written for Core APM by Dennis Fleurbaaij & Andrew Simpson 2001/2002
    
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;

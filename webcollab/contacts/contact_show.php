@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -60,7 +60,7 @@ $content .=
        "<tr><td><i>".$lang['city']."</i></td><td>".$row['city']."</td></tr>\n".
        "<tr><td><i>".$lang['email']."</i></td><td><a href=\"mailto:".$row['email']."\">".$row['email']."</a></td></tr>\n".
     "</table>\n".
-    "<p><i>".$lang['notes']."</i><br />".nl2br($row['notes'] )."</p>\n";
+    "<p><i>".$lang['notes']."</i><br />".nl2br(html_links($row['notes'] ) )."</p>\n";
     
 if($GUEST == 0 ){    
   $content .=    

@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -23,7 +23,7 @@
   Function:
   ---------
 
-  Compose emails for sending
+  Send composed emails to users, usergroups and mail list
 
 */
 
