@@ -133,19 +133,23 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
 
   //create the main table
   echo "\n<!-- start main table -->\n";
-  echo "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">";
+  echo "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">\n";
+
   //create the masthead part of the main window
-  echo "<tr>\n<td colspan=\"2\">\n";
+  if($no_menu == 0 )
+    echo "<tr>\n<td colspan=\"2\">";
+  else
+    echo "<tr>\n<td>";
   echo "<div class=\"masthead\">";
 
   //show username if applicable
   if($username != "" )
-    echo "<small>".sprintf( $lang["user_homepage_sprt"], $username )."</small>\n";
+    echo sprintf( $lang["user_homepage_sprt"], $username );
 
   echo "</div></td></tr>\n";
 
 
-  //if we choose to have only one space, we center it instead of pushing it to the left
+  //if we have only one space, we center it as 100% instead of pushing it to the left
   if($no_menu == 0 )
     echo "<tr valign=\"top\"><td width=\"175\" align=\"center\">";
   else
