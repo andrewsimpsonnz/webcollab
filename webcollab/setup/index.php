@@ -36,7 +36,7 @@ include("./screen_setup.php" );
 function error_setup($message ) {
 
   create_top_setup("Setup", 1 );
-  new_box_setup("Setup error", "<center><br />".$message."<br /><br /></center>" );
+  new_box_setup("Setup error", "<br />".$message."<br /><br />", 400 );
   create_bottom_setup();
   die;
 
@@ -207,14 +207,12 @@ if(isset($_POST["database_name"]) ) {
     break;
   }
 
-  //check if config file exists and can be written to
-  if(file_exists("../config.php" ) ) {
-    if( ! is_writable("../config.php" ) ) {
-      error_setup("Your database has been successfully setup.<br \><br \>\n".
-                 "The config file (config.php) exists, but the webserver does not have permissions to write to it.<br />\n".
+  //check if config file can be written to
+  if( ! is_writable("../config.php" ) ) {
+    error_setup("Your database has been successfully setup.<br \><br \>\n".
+                 "The config file (config.php) exists, but the webserver does not have permissions to write to it.<br /><br />\n".
                  "You can either:<ul>\n<li>Change the file permissions to allow the webserver to write to the file 'config.php'</li>\n".
                  "<li>Continue with a manual configuration by editing the file directly.</li>\n" );
-    }
   }
 
   header("location: setup2.php?db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
@@ -224,9 +222,24 @@ if(isset($_POST["database_name"]) ) {
 //Main input screen
 //
 
+
 //check if already setup previously
 if( ( ! isset($DATABASE_NAME ) ) || $DATABASE_NAME != "" )
   header("location: login.php" );
+
+//check if config file can actually be written to..
+if( ! is_writable("../config.php" ) && ! isset($_POST["skip_warn"] ) ) {
+  error_setup("<form method=\"POST\" action=\"index.php\">\n".
+                "The config file (config.php) exists, but the webserver does not have permissions to write to it.<br /><br />\n".
+                "To enable setup to continue you need make this file world writeable by doing the following.<br /><br />\n".
+                "<ul>\n<li>From the command line, navigate to the WebCollab directory</li>\n".
+                "<li>Type 'chmod 666 config.php'</li>\n".
+                "<li>After finishing setup remember to secure the file again with 'chmod 644 config.php'</li>\n</ul>\n<br /><br />\n".
+                "Note: You can proceed and create the databases without changing config.php file permissions.<br /><br />\n".
+                "<input type=\"hidden\" name=\"skip_warn\" value=\"t\">\n".
+                "<center><input type=\"submit\" value=\"Continue?\"></center>\n".
+              "</form>\n" );
+}
 
 create_top_setup("Setup Screen", 1);
 
