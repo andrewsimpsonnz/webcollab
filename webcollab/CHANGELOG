@@ -1,4 +1,17 @@
 WebCollab CVS
+*** 4 February 2005
+
+- update German language (Credit: Michael Bunk)
+
+- make warning messages more friendly in setup check (Bug #1115931)
+
+- add more timezones to setup
+
+- allow setup to accept databases with no passwords (not recommended practice!)
+
+- allow full character range in 'reply-to' and 'from' email addresses 
+
+WebCollab CVS
 *** 25 January 2005
 
 - remove OID column usuage in Postgresql (OID was depreciated after PostgreSQL 7.2, and will be partially removed after 8.0)
