@@ -376,7 +376,12 @@ if( ! valid_string($_REQUEST["action"]) )
 
           if( $usergroupid != 0 ) {
             $usergroup = "";
-            $usersq = db_query("SELECT email, users.id as id FROM users, usergroups_users WHERE usergroupid=$usergroupid AND usergroups_users.userid=users.id");
+            $usersq = db_query("SELECT users.email AS email,
+                                       users.id AS id
+                                       FROM users
+                                       LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
+                                       WHERE usergroups_users.usergroupid=$usergroupid
+                                       AND users.deleted='f'");
             $s = "";
             for( $j=0 ; $userrow = @db_fetch_array($usersq, $j ) ; $j++) {
               $usergroup .= $s.$userrow["email"];
@@ -530,7 +535,12 @@ if( ! valid_string($_REQUEST["action"]) )
 
           if( $usergroupid != 0 ) {
             $usergroup = "";
-            $usersq = db_query("SELECT email, users.id as id FROM users, usergroups_users WHERE usergroupid=$usergroupid AND usergroups_users.userid=users.id");
+            $usersq = db_query("SELECT users.email AS email,
+                                       users.id AS id
+                                       FROM users
+                                       LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
+                                       WHERE usergroups_users.usergroupid=$usergroupid
+                                       AND users.deleted='f'");
             $s = "";
 
             for( $j=0 ; $userrow = @db_fetch_array($usersq, $j ) ; $j++) {
