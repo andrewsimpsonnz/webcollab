@@ -74,7 +74,7 @@ function listTasks( $task_id ) {
     switch( $task_row["status"] ) {
 
       case "cantcomplete":
-       $status = "<B><I>".$lang["cantcomplete"]."</I></B>";
+       $status = "<B><I>".$task_state["cantcomplete"]."</I></B>";
        break;
 
      case "notactive":
@@ -88,7 +88,7 @@ function listTasks( $task_id ) {
       }
       break;
     }
-    $content .= "<A HREF=\"tasks.php?x=".$x."&action=show&taskid=".$task_row["id"]."\">".$task_row["name"]."</A>".$status;
+    $content .= "<A HREF=\"tasks.php?x=".$x."&action=show&taskid=".$task_row["id"]."\">".$task_row["name"]."</A> &nbsp;".$status;
     $content .= "</LI>\n";
   }
   $content .= "</UL>";
