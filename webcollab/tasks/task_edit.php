@@ -115,7 +115,7 @@ switch($taskid_row["parent"] ) {
     //task
     $type = "task";
     
-    //show project finish date for javascript (projectDate is converted to GMT/UTC because Javascript uses this)
+    //show project finish date for javascript (projectDate is GMT/UTC because Javascript uses this)
     //date GMT/UTC plus one day for tolerance
     $project_deadline = $project_row["deadline"] + 86400;
     
