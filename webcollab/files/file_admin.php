@@ -72,7 +72,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $content .= "<table border=\"0\">\n";
 
   //file part
-  $content .= "<tr><td>".$lang["ttask"].":</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["task_id"]."\">".$row["task_name"]."</a></td></tr>\n".
+  $content .= "<tr><td>".$lang["task"].":</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["task_id"]."\">".$row["task_name"]."</a></td></tr>\n".
               "<tr><td>".$lang["file"]."</td><td><a href=\"files/file_download.php?x=$x&amp;fileid=".$row["id"]."\" target=\"filewindow\">".$row["filename"]."</a>&nbsp;<small>(".$row["size"].$lang["bytes"].")&nbsp;</small>".
               //delete option
               "<font class=\"textlink\">[<a href=\"files/file_submit.php?x=$x&amp;action=del&amp;fileid=".$row["id"]."&amp;taskid=".$taskid."\" onClick=\"return confirm( '".sprintf( $lang["del_file_javascript_sprt"], $row["filename"])."' )\">".$lang["del"]."</a>]</font></td></tr>\n".

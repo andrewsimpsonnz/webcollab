@@ -36,7 +36,7 @@ include_once(BASE."config.php" );
 
 //check if file uploads are allowed in php.ini file
 if( ! (bool)ini_get("file_uploads" ) )
-  error("File uploads not allowed",  "The server configuration for this site does not allow file uploads to be made" );
+  warning($lang["error"], $lang["no_file_uploads"] );
 
 if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
   error("File upload", "Not a valid taskid");
