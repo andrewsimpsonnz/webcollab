@@ -28,101 +28,107 @@
 
 */
 
-$email_list = "Projet:  %s\n".
-              "Tache:     %s\n".
-              "Status:    %s\n".
-              "Propri&eacute;taire:    %s ( %s )\n".
-              "Texte:\n%s\n\n".
-              "Merci de consulter le site pour plus de d&eacute;tails.\n\n%s\n";
+$email_list = "Projet: %1\$s\n".
+              "T&acirc;che:  %2\$s\n".
+              "Statut: %3\$s\n".
+              "Propri&eacute;taire: %4\$s ( %5\$s )\n".
+              "Texte:\n%6\$s\n\n".
+              "Merci de consulter le site pour plus de d&eacute;tails.\n\n%7\$s\n";
 
 
-$title_takeover_project   = $ABBR_MANAGER_NAME.": Votre info a &eacute;t&eacute; assign&eacute;"; // You item taken over
-$title_takeover_task      = $ABBR_MANAGER_NAME.": Votre info a &eacute;t&eacute; assign&eacute;"; // You item taken over
-$email_takeover_project   = "Bonjour,\n\nC'est le site %s qui vous informe que projet a &eacute;t&eacute; assign&eacute; par l'administrateur sur %s.\n\n";
-$email_takeover_task      = "Bonjour,\n\nC'est le site %s qui vous informe que tache a &eacute;t&eacute; assign&eacute; par l'administrateur sur %s.\n\n";
+$title_takeover_project   = $ABBR_MANAGER_NAME.": Votre projet a &eacute;t&eacute; affect&eacute;"; // You item taken over
+$email_takeover_project   = "Bonjour,\n\nC'est le site %1\$s qui vous informe que le projet a &eacute;t&eacute; assign&eacute; le %2\$s par l'administrateur.\n\n";
 
-$title_new_owner_project  = $ABBR_MANAGER_NAME.": Actualit&eacute; projet pour vous";
-$title_new_owner_task     = $ABBR_MANAGER_NAME.": Actualit&eacute; tache pour vous";
-$email_new_owner_project   = "Bonjour,\n\nC'est le site projet qui vous informe que %s vous (actuellement) &eacute;t&eacute; assign&eacute; %s.\n\nPlus de d&eacute;tails:\n\n";
-$email_new_owner_task    = "Bonjour,\n\nC'est le site tache qui vous informe que %s vous (actuellement) &eacute;t&eacute; assign&eacute; %s.\n\nPlus de d&eacute;tails:\n\n";
+$title_takeover_task      = $ABBR_MANAGER_NAME.": Votre t&acirc;che a &eacute;t&eacute; affect&eacute;e"; // You item taken over
+$email_takeover_task      = "Bonjour,\n\nC'est le site %1\$s qui vous informe que t&acirc;che a &eacute;t&eacute; assign&eacute;e le %2\$s par l'administrateur.\n\n";
 
-$title_new_group_project  = $ABBR_MANAGER_NAME.": Actualit&eacute; projet: %s";
-$title_new_group_task     = $ABBR_MANAGER_NAME.": Actualit&eacute; tache: %s";
-$email_new_group_project  = "Bonjour,\n\nC'est le site %s qui vous informe que une actualit&eacute; projet a &eacute;t&eacute; cr&eacute;&eacute;e pour %s\n\nPlus de d&eacute;tails:\n\n";
-$email_new_group_task     = "Bonjour,\n\nC'est le site %s qui vous informe que une actualit&eacute; tache a &eacute;t&eacute; cr&eacute;&eacute;e pour %s\n\nPlus de d&eacute;tails:\n\n";
+$title_new_owner_project  = $ABBR_MANAGER_NAME.": Actualit&eacute; de vos projets";
+$email_new_owner_project   = "Bonjour,\n\nC'est le site %1\$s qui vous informe qu'un projet qui vous appartient a &eacute;t&eacute; modifi&eacute; le %2\$s.\n\nPlus de d&eacute;tails:\n\n";
 
-$title_edit_owner_project = $ABBR_MANAGER_NAME.": Mise a jour de projet ";
-$title_edit_owner_task    = $ABBR_MANAGER_NAME.": Mise a jour de tache ";
-$email_edit_owner_project ="Bonjour,\n\nC'est le site %s qui vous informe que projet a &eacute;t&eacute; chang&eacute; %s.\n\nPlus de d&eacute;tails:\n\n";
-$email_edit_owner_task    ="Bonjour,\n\nC'est le site %s qui vous informe que tache a &eacute;t&eacute; chang&eacute; %s.\n\nPlus de d&eacute;tails:\n\n";
+$title_new_owner_task     = $ABBR_MANAGER_NAME.": Actualit&eacute; de vos t&acirc;ches";
+$email_new_owner_task    = "Bonjour,\n\nC'est le site %1\$s qui vous informe que qu'une t&acirc;che qui vous appartient a &eacute;t&eacute; modifi&eacute;e le %2\$s.\n\nPlus de d&eacute;tails:\n\n";
 
-$title_edit_group_project = $ABBR_MANAGER_NAME.": Mise &agrave; jour de projet ";
+$title_new_group_project  = $ABBR_MANAGER_NAME.": Nouveau projet: %1\$s";
+$email_new_group_project  = "Bonjour,\n\nC'est le site %1\$s qui vous informe qu'un nouveau projet a &eacute;t&eacute; cr&eacute;&eacute; le %2\$s.\n\nPlus de d&eacute;tails:\n\n";
+
+$title_new_group_task     = $ABBR_MANAGER_NAME.": Nouvelle t&acirc;che: %1\$s";
+$email_new_group_task     = "Bonjour,\n\nC'est le site %1\$s qui vous informe qu'une nouvelle t&acirc;che a &eacute;t&eacute; cr&eacute;&eacute;e le %2\$s.\n\nPlus de d&eacute;tails:\n\n";
+
+$title_edit_owner_project = $ABBR_MANAGER_NAME.": Mise a jour de votre projet";
+$email_edit_owner_project ="Bonjour,\n\nC'est le site %1\$s qui vous informe que votre projet a &eacute;t&eacute; modifi&eacute; le %2\$s.\n\nPlus de d&eacute;tails:\n\n";
+
+$title_edit_owner_task    = $ABBR_MANAGER_NAME.": Mise a jour de votre t&acirc;che";
+$email_edit_owner_task    ="Bonjour,\n\nC'est le site %1\$s qui vous informe que t&acirc;che a &eacute;t&eacute; modifi&eacute;e le %2\$s.\n\nPlus de d&eacute;tails:\n\n";
+
+$title_edit_group_project = $ABBR_MANAGER_NAME.": Mise &agrave; jour d'un projet";
+$email_edit_group_project = "Bonjour,\n\nC'est le site %1\$s qui vous informe qu'un projet d&eacute;tenu par %2\$s a &eacute;t&eacute; modifi&eacute; le %3\$s.\n\nPlus de d&eacute;tails:\n\n";
+
 $title_edit_group_task    = $ABBR_MANAGER_NAME.": Mise &agrave; jour de tache ";
-$email_edit_group_project = "Bonjour,\n\nC'est le site %s qui vous informe que projet sur %s a &eacute;t&eacute; modifi&eacute; %s.\n\nPlus de d&eacute;tails:\n\n";
-$email_edit_group_task    = "Bonjour,\n\nC'est le site %s qui vous informe que tache sur %s a &eacute;t&eacute; modifi&eacute; %s.\n\nPlus de d&eacute;tails:\n\n";
+$email_edit_group_task    = "Bonjour,\n\nC'est le site %1\$s qui vous informe qu'une t&acirc;che d&eacute;tenue par %2\$s a &eacute;t&eacute; modifi&eacute;e le %3\$s.\n\nPlus de d&eacute;tails:\n\n";
 
-$title_delete_project     = $ABBR_MANAGER_NAME.": Projet deleted";
-$title_delete_task       = $ABBR_MANAGER_NAME.": Tache deleted";
-$email_delete_project     = "Bonjour,\n\nC'est le site %s qui vous informe que projet a &eacute;ffac&eacute; %s\n\n".
-                            "Merci d'avoir g&eacute;r&eacute; cette projet jusque l&agrave;.\n\n";
-$email_delete_task        = "Bonjour,\n\nC'est le site %s qui vous informe que tache a &eacute;ffac&eacute; %s\n\n";
+$title_delete_project     = $ABBR_MANAGER_NAME.": Projet supprim&eacute;";
+$email_delete_project     = "Bonjour,\n\nC'est le site %1\$s qui vous informe que projet a &eacute;t&eacute; effa&ccedil;&eacute; le %2\$s.\n\n".
+                            "Merci d'avoir g&eacute;r&eacute; ce projet jusque l&agrave;.\n\n";
+
+$title_delete_task       = $ABBR_MANAGER_NAME.": Tache supprim&eacute;e";
+$email_delete_task        = "Bonjour,\n\nC'est le site %1\$s qui vous informe que t&acirc;che a &eacute;t&eacute; effa&ccedil;&eacute;e le %2\$s.\n\n".
                             "Merci d'avoir g&eacute;r&eacute; cette tache jusque l&agrave;.\n\n";
 
-$delete_list = "Projet:  %s\n".
-                "Tache:     %s\n".
-                "Status:   %s\n\n".
-                "Texte: \n%s\n\n";
+$delete_list = "Projet: %1\$s\n".
+                "T&acirc;che:  %2\$s\n".
+                "Statut: %3\$s\n\n".
+                "Texte: \n%4\$s\n\n";
 
-$title_welcome      = "Bievenue ".$ABBR_MANAGER_NAME;
-$email_welcome      = "Bonjour,\n\nC'est le site %s qui vous acceuille sur %s.\n\n".
-			"En tant que d&eacute;butant, je vais vous expliquer quelques astuces pour vous permettre de de l'utiliser rapidement\n\n".
-			"En premier, ceci est un outil de gestion de projet, l'&eacute;cran principal va vous montrer  les projets que sont actuellement disponibles".
-			"Si vous cliquer sur un des noms de projet, vous allez vous retrouver dans sa liste des taches. Toutes les informations sont l&agrave;".
-			"Tous les actualit&eacute;s que vous renseign&eacute;es ou que vous &eacute;dit&eacute;es sont affich&eacute;es aux autres utilisateurs comme 'nouvelle' ou 'mise &agrave; jour'. Cela fonctionne dans les deux sens et".
-			"cela vous permet de v&eacute;rifier o&ugrave; l'activit&eacute; se situe.\n\n".
-			"Vous pouvez aussi devenir propri&eacute;taire ou transf&eacute;rer la propri&eacute;t&eacute; des taches et vous permettre de les &eacute;diter et toutes les contributions qui y sont rattach&eacute;es.".
-			"Pendant l'utilisation de l'outil, merci d'&eacute;diter la partie texte et le status des taches pour que tout le monde puisse connaitre la progression. ".
-			"\n\nJe ne peux que vous souhaiter bonne route et vous confier mon email %s en cas de probl&egrave;me.\n\n --Bonne chance!\n\n".
-			"Profil:      %s\n".
-			"Mot de passe:   %s\n\n".
-			"Groupe: %s".
-			"Nom:       %s\n".
-			"SiteWeb:    %s\n\n".
-			"%s";
+$title_welcome      = "Bienvenue ".$ABBR_MANAGER_NAME;
+$email_welcome      = "Bonjour,\n\nC'est le site %1\$s qui vous acceuille le %2\$s.\n\n".
+			"Si vous &ecirc;tes d&eacute;butant, voici quelques astuces qui vous permettront d'utiliser le site rapidement.\n\n".
+			"C'est un outil de gestion de projet, l'&eacute;cran principal vous montre les projets que sont actuellement g&eacute;r&eacute;s. ".
+			"Si vous cliquer sur un des noms de projet, vous voyez appara&icirc;tre sa liste des t&acirc;ches. Toutes les informations sont l&agrave;. ".
+			"Tous les actualisations que vous effectuez sont transmises aux autres utilisateurs concern&eacute;s. R&eacute;ciproquement, vous &ecirc;tes inform&eacute;s des modifications vous concernant. ".
+			"Cela vous permet de savoir constamment o&ugrave; l'activit&eacute; se situe.\n\n".
+			"Vous pouvez aussi devenir propri&eacute;taire d'une t&acirc;che, ce qui vous permet d'&eacute;diter cette t&acirc;che et toutes contributions qui y sont rattach&eacute;es. ".
+			"Pendant l'utilisation de l'outil, veuillez &eacute;diter la partie texte et le statut des t&acirc;ches pour que tout le monde puisse conna&icirc;tre leurs progressions. ".
+			"\n\nJe ne peux que vous souhaiter bonne route et vous confier mon email %3\$s en cas de probl&egrave;me.\n\n --Bonne chance!\n\n".
+			"Profil:       %4\$s\n".
+			"Mot de passe: %5\$s\n\n".
+			"Groupe:       %6\$s".
+			"Nom:          %7\$s\n".
+			"SiteWeb:      %8\$s\n\n".
+			"%9\$s";
 
 $title_user_change1 = $ABBR_MANAGER_NAME.": Edition de votre profil par l'administrateur";
-$email_user_change1 = "Bonjour,\n\nC'est le site  %s qui vous informe que votre profil a &eacute;t&eacute; modif&eacute; sur %s par %s ( %s ) \n\n".
-			"Login:      %s\n".
-			"Mot de passe:   %s\n\n".
-			"Groupe: %s".
-			"Nom:       %s\n\n".
-			"%s";
+$email_user_change1 = "Bonjour,\n\nC'est le site  %1\$s qui vous informe que votre profil a &eacute;t&eacute; modif&eacute; le %2\$s par %3\$s ( %4\$s ).\n\n".
+			"Login:        %5\$s\n".
+			"Mot de passe: %6\$s\n\n".
+			"Groupe:       %7\$s".
+			"Nom:          %8\$s\n\n".
+			"%9\$s";
 
 $title_user_change2 = $ABBR_MANAGER_NAME.": Edition de votre profil";
-$email_user_change2 = "Bonjour,\n\nC'est le site %s qui vous informe que vous avez correctement modifi&eacute; votre profil sur %s\n\n".
-			"Profil:    %s\n".
-			"Mot de passe: %s\n\n".
-			"Nom:     %s\n";
+$email_user_change2 = "Bonjour,\n\nC'est le site %1\$s qui vous informe que vous avez correctement modifi&eacute; votre profil le %2\$s.\n\n".
+			"Profil:       %3\$s\n".
+			"Mot de passe: %4\$s\n\n".
+			"Nom:          %5\$s\n";
 
 $title_user_change3 = $ABBR_MANAGER_NAME.":  Edition de votre profil";
-$email_user_change3 = "Bonjour,\n\nC'est le site %s qui vous informe que vous avez correctement modifi&eacute; votre profil sur %s\n\n".
-			"Profil:    %s\n".
+$email_user_change3 = "Bonjour,\n\nC'est le site %1\$s qui vous informe que vous avez correctement modifi&eacute; votre profil le %2\$s.\n\n".
+			"Profil: %3\$s\n".
 			"Votre mot de passe reste inchang&eacute;.\n\n".
-			"Nom:     %s\n";
+			"Nom:    %4\$s\n";
 
 
 $title_revive       = $ABBR_MANAGER_NAME.": Compte r&eacute;activ&eacute;";
-$email_revive       = "Bonjour,\n\nC'est le site %s qui vous informe que votre profil a &eacute;t&eacute; r&eacute;activ&eacute; sur %s.\n\n".
-			"Profil: %s\n".
-			"Nom de l'utilsiateur:  %s\n\n".
-			"Impossible de vous envoyer votre mot de passe car il est crypt&eacute;. \n\n".
-			"Si vous l'avez oubli&eacute; , envoyer un email &agrave; %s pour recevoir un nouveau mot de passe.";
+$email_revive       = "Bonjour,\n\nC'est le site %1\$s qui vous informe que votre profil a &eacute;t&eacute; r&eacute;activ&eacute; le %2\$s.\n\n".
+			"Profil: %3\$s\n".
+			"Nom de l'utilisateur: %4\$s\n\n".
+			"Par mesure de s&eacute;curit&eacute;, nous n'envoyons pas votre mot de passe. \n\n".
+			"Si vous l'avez oubli&eacute; , envoyez un email &agrave; %5\$s pour en recevoir un nouveau.";
 
 
 
 $title_delete_user  = $ABBR_MANAGER_NAME.": Profil d&eacute;sactiv&eacute;.";
-$email_delete_user  = "Bonjour,\n\nC'est le site %s qui vous informe que votre profil a &eacute;t&eacute; d&eacute;sactiv&eacute; sur %s\n\n".
-			"Nous somme d&eacute;sol&eacute; que vous nous quitiez et nous vous remercions pour votre participation !\n\n".
-			"Si votre profil a &eacute;t&eacute; d&eacute;sactiv&eacute; par erreur, merci d'envoyer un email &agrave; %s.";
+$email_delete_user  = "Bonjour,\n\nC'est le site %1\$s vous informe que votre profil a &eacute;t&eacute; d&eacute;sactiv&eacute; le %2\$s\n\n".
+			"Nous somme d&eacute;sol&eacute; que vous nous quittiez et vous remercions pour votre participation! \n\n".
+			"Si votre profil a &eacute;t&eacute; d&eacute;sactiv&eacute; par erreur, merci d'envoyer un email &agrave; %3\$s.";
 
 ?>
