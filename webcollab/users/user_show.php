@@ -33,86 +33,88 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
-include_once( BASE."includes/database.php" );
-include_once( BASE."includes/common.php" );
-include_once( BASE."includes/screen.php" );
+include_once(BASE."includes/security.php" );
+include_once(BASE."includes/database.php" );
+include_once(BASE."includes/common.php" );
+include_once(BASE."includes/screen.php" );
 
 //get some stupid errors
 if( ! isset($_GET["userid"]) || ! is_numeric($_GET["userid"]) || $_GET["userid"] == 0 )
-  error("User show", "No userid was given");
+  error("User show", "No userid was given" );
 
 $userid = $_GET["userid"];
 
 //select
-$q = db_query("SELECT * FROM users WHERE id=".$userid );
+$q = db_query("SELECT * FROM users WHERE id=$userid" );
 
 //get info
 if( ! ($row = db_fetch_array( $q, 0 ) ) )
-  error("Database error", "Error in fetching result");
+  error("Database error", "Error in fetching result" );
 
 
-$content="";
+$content = "";
 
 if( $row["deleted"] == 't' )
-  $content .= "<BR><B><CENTER><FONT color=\"red\">".$lang["user_deleted"]."</FONT></CENTER></B><BR>";
+  $content .= "<br /><b><centrt><font color=\"red\">".$lang["user_deleted"]."</font></center></b><br />";
 
-$content .= "<BR><TABLE border=\"0\">";
-$content .= "<TR><TD>".$lang["login"].":</TD><TD>".$row["name"]."</TD></TR>\n";
-$content .=  "<TR><TD>".$lang["full_name"].":</TD><TD>".$row["fullname"]."</TD></TR>\n";
-$content .=  "<TR><TD>".$lang["email"].":</TD><TD><A href=\"mailto:".$row["email"]."\">".$row["email"]."</A></TD></TR>\n";
+$content .= "<br /><table border=\"0\">".
+              "<tr><td>".$lang["login"].":</td><td>".$row["name"]."</td></tr>\n".
+              "<tr><td>".$lang["full_name"].":</td><td>".$row["fullname"]."</td></tr>\n".
+              "<tr><td>".$lang["email"].":</td><td><A href=\"mailto:".$row["email"]."\">".$row["email"]."</A></td></tr>\n";
 
-if( $row["admin"] == "t" ) $content .= "<TR><TD>".$lang["admin"].":</TD><TD>".$lang["yes"]."</TD></TR>\n";
-else $content .= "<TR><TD>".$lang["admin"].":</TD><TD>".$lang["no"]."</TD></TR>\n";
+if( $row["admin"] == "t" )
+  $content .= "<tr><td>".$lang["admin"].":</td><td>".$lang["yes"]."</td></tr>\n";
+else
+  $content .= "<tr><td>".$lang["admin"].":</td><td>".$lang["no"]."</td></tr>\n";
 
 //create a list of all the groups the user is in
-$q = db_query( "SELECT usergroups.name FROM usergroups LEFT JOIN usergroups_users ON  (usergroups_users.usergroupid=usergroups.id)  WHERE usergroups_users.userid=".$row["id"] );
+$q = db_query("SELECT usergroups.name FROM usergroups LEFT JOIN usergroups_users ON (usergroups_users.usergroupid=usergroups.id)  WHERE usergroups_users.userid=".$row["id"] );
 
-if( db_numrows($q) < 1 ) {
-  $content .= "<TR><TD>".$lang["usergroups"].": </TD><TD>".$lang["no_usergroup"]."</TD></TR>\n";
-} else {
-  $content .= "<TR><TD>".$lang["usergroups"].": </TD><TD>";
-  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++)
+if(db_numrows($q) < 1 ) {
+  $content .= "<tr><td>".$lang["usergroups"].":</td><td>".$lang["no_usergroup"]."</td></tr>\n";
+}
+else{
+  $content .= "<tr><td>".$lang["usergroups"].": </td><td>";
+  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
     $content .= $row["name"]." ";
-  $content .= "</TD></TR>\n";
+  }
+  $content .= "</td></tr>\n";
 }
 
 //get the last login time of a user
-$q = db_query( "SELECT lastaccess FROM logins WHERE user_id=".$userid );
-$content .= "<TR><TD>".$lang["last_time_here"]."</TD><TD>".nicetime(@db_result( $q, 0, 0 ))."</TD></TR>\n";
+$q = db_query("SELECT lastaccess FROM logins WHERE user_id=$userid" );
+$content .=   "<tr><td>".$lang["last_time_here"]."</td><td>".nicetime(@db_result( $q, 0, 0 ))."</td></tr>\n";
 
 //Get the number of tasks created
-$q = db_query( "SELECT COUNT(*) FROM tasks WHERE creator=".$userid );
-$content .= "<TR><TD>".$lang["number_items_created"]."</TD><TD>".db_result( $q, 0, 0 )."</TD></TR>\n";
+$q = db_query("SELECT COUNT(*) FROM tasks WHERE creator=$userid" );
+$content .=   "<tr><td>".$lang["number_items_created"]."</td><td>".db_result( $q, 0, 0 )."</td></tr>\n";
 
 //Get the number of projects owned
-$q = db_query( "SELECT COUNT(*) FROM tasks WHERE owner=".$userid." AND parent=0" );
-$content .= "<TR><TD>".$lang["number_projects_owned"]."</TD><TD>".( $numberofprojectsowned = db_result( $q, 0, 0 ) )."</TD></TR>\n";
+$q = db_query("SELECT COUNT(*) FROM tasks WHERE owner=$userid AND parent=0" );
+$content .=   "<tr><td>".$lang["number_projects_owned"]."</td><td>".($numberofprojectsowned = db_result( $q, 0, 0 ) )."</td></tr>\n";
 
 //Get the number of tasks owned
-$q = db_query( "SELECT COUNT(*) FROM tasks WHERE owner=".$userid." AND parent<>0" );
-$content .= "<TR><TD>".$lang["number_tasks_owned"]."</TD><TD>".( $numberoftasksowned = db_result( $q, 0, 0 ) )."</TD></TR>\n";
+$q = db_query("SELECT COUNT(*) FROM tasks WHERE owner=$userid AND parent<>0" );
+$content .=   "<tr><td>".$lang["number_tasks_owned"]."</td><td>".($numberoftasksowned = db_result( $q, 0, 0 ) )."</td></tr>\n";
 
 //Get the number of tasks completed that are owned
-$q = db_query( "SELECT COUNT(*) FROM tasks WHERE owner=".$userid." AND status='done' AND parent<>0" );
-$content .= "<TR><TD>".$lang["number_tasks_completed"]."</TD><TD>".db_result( $q, 0, 0 )."</TD></TR>\n";
+$q = db_query("SELECT COUNT(*) FROM tasks WHERE owner=$userid AND status='done' AND parent<>0" );
+$content .=   "<tr><td>".$lang["number_tasks_completed"]."</td><td>".db_result( $q, 0, 0 )."</td></tr>\n";
 
 //Get the number of forum posts
-$q = db_query( "SELECT COUNT(*) FROM forum WHERE userid=".$userid );
-$content .= "<TR><TD>".$lang["number_forum"]."</TD><TD>".db_result( $q, 0, 0 )."</TD></TR>\n";
+$q = db_query("SELECT COUNT(*) FROM forum WHERE userid=$userid" );
+$content .=   "<tr><td>".$lang["number_forum"]."</td><td>".db_result( $q, 0, 0 )."</td></tr>\n";
 
 //Get the number of files uploaded and the size
-$q = db_query( "SELECT SUM(size), COUNT(size) FROM files WHERE uploader=".$userid );
-$content .= "<TR><TD>".$lang["number_files"]."</TD><TD>".db_result( $q, 0, 1 )."</TD></TR>\n";
+$q = db_query("SELECT SUM(size), COUNT(size) FROM files WHERE uploader=$userid" );
+$content .=   "<tr><td>".$lang["number_files"]."</td><td>".db_result( $q, 0, 1 )."</td></tr>\n";
 $size = db_result( $q, 0, 0 );
-if( $size == "") {
+
+if($size == "") {
   $size = 0;
 }
-$content .= "<TR><TD>".$lang["size_all_files"]."</TD><TD>".$size.$lang["bytes"]."</TD></TR>\n";
-
-
-
-$content .= "</TABLE>";
+$content .=   "<tr><td>".$lang["size_all_files"]."</td><td>".$size.$lang["bytes"]."</td></tr>\n".
+            "</table>";
 
 new_box($lang["user_info"], $content );
 
@@ -120,10 +122,10 @@ new_box($lang["user_info"], $content );
 //shows quick links to the tasks that the user owns
 
 if( $numberoftasksowned + $numberofprojectsowned > 0 ) {
-  $content = "<UL>";
+  $content = "<ul>";
 
   //Get the number of tasks
-  $q = db_query( "SELECT id, name, parent, status, finished_time FROM tasks WHERE owner=".$userid );
+  $q = db_query("SELECT id, name, parent, status, finished_time FROM tasks WHERE owner=$userid" );
 
   //show them
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
@@ -133,19 +135,19 @@ if( $numberoftasksowned + $numberofprojectsowned > 0 ) {
     //status
     switch( $row["status"] ) {
       case "done":
-        $status_content="<FONT color=\"#006400\">(".$task_state["done"]." ".nicedate($row["finished_time"]).")</FONT>";
+        $status_content="<font color=\"#006400\">(".$task_state["done"]." ".nicedate($row["finished_time"]).")</font>";
 	break;
 
       case "active":
-        $status_content="<FONT color=\"#FFA500\">(".$task_state["active"].")</FONT>";
+        $status_content="<font color=\"#FFA500\">(".$task_state["active"].")</font>";
 	break;
 
       case "notactive":
-        $status_content="<FONT color=\"#006400\">(".$task_state["planned"].")</FONT>";
+        $status_content="<font color=\"#006400\">(".$task_state["planned"].")</font>";
 	break;
 
       case "cantcomplete":
-        $status_content="<FONT color=\"#0000FF\">(".$task_state["cantcomplete"]." ".nicedate($row["finished_time"]).")</FONT>";
+        $status_content="<font color=\"#0000FF\">(".$task_state["cantcomplete"]." ".nicedate($row["finished_time"]).")</font>";
 	break;
     }
 
@@ -154,10 +156,10 @@ if( $numberoftasksowned + $numberofprojectsowned > 0 ) {
       $status_content ="(".$lang["pproject"].")";
 
     //show the task
-    $content .= "<LI><A href=\"".BASE."tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$row["name"]."</A> ".$status_content."<BR>\n";
+    $content .= "<li><a href=\"".BASE."tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">".$row["name"]."</a> ".$status_content."</li>\n";
   }
 
-  $content .= "</UL>";
+  $content .= "</ul>";
   new_box($lang["owned_tasks"], $content );
 
 }

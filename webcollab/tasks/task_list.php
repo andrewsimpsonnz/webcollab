@@ -33,7 +33,7 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
+include_once(BASE."includes/security.php" );
 
 //init values
 $content = "";
@@ -86,7 +86,7 @@ if( $DATABASE_TYPE == "mysql")
   if( ($taskgroup_flag == 1 ) && ($parent == $parentid ) )
     $this_content .= "";
   else
-    $this_content .= "<UL>";
+    $this_content .= "<ul>";
 
   //show all tasks
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
@@ -105,40 +105,40 @@ if( $DATABASE_TYPE == "mysql")
 
         //don't need </UL> for first line of output (no <UL> is set)
         if($stored_groupname != NULL )
-          $this_content .= "</UL>\n";
+          $this_content .= "</ul>\n";
 
         //show taskgroup name
-	$this_content .= "<P> &nbsp;<B>".$groupname."</B>";
-        
-	//add taskgroup description 
+	$this_content .= "<p> &nbsp;<b>".$groupname."</b>";
+
+	//add taskgroup description
 	if($row["groupdescription"] != NULL )
-          $this_content .=  "&nbsp;<I>( ".$row["groupdescription"]." )</I>";    
-      
-        $this_content .= "</P>\n";
-        $this_content .= "<UL>\n";
+          $this_content .=  "&nbsp;<i>( ".$row["groupdescription"]." )</i>";
+
+        $this_content .= "</p>\n";
+        $this_content .= "<ul>\n";
 	//store current groupname
 	$stored_groupname = $groupname;
       }
     }
     
     $alert_content = "";
-    $this_content .= "<LI>";
+    $this_content .= "<li>";
     $status_content = "";
 
     //have you seen this task yet ?
-    $seenq = db_query( "SELECT ".$epoch."time) FROM seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" );
+    $seenq = db_query("SELECT ".$epoch."time) FROM seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" );
 
     //don't show alert content for changes more than $NEW_TIME (in seconds)
-    if( ($row["now"] - max($row["edited"], $row["lastpost"], $row["lastfileupload"])) > 86400*$NEW_TIME ) {
+    if( ($row["now"] - max($row["edited"], $row["lastpost"], $row["lastfileupload"] ) ) > 86400*$NEW_TIME ) {
 
       //task is over limit in $NEW_TIME and still not looked at by you, mark it as seen, and move on...
-      if( ( db_numrows( $seenq ) ) < 1 )
-        db_query("INSERT INTO seen(userid, taskid, time) VALUES (".$uid.", ".$row["id"].", current_timestamp(0) ) " );
+      if((db_numrows( $seenq ) ) < 1 )
+        db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, ".$row["id"].", current_timestamp(0) ) " );
     }
     //task was changed - show the changes to you
     else {
 
-      switch( db_numrows( $seenq ) ) {
+      switch(db_numrows($seenq ) ) {
         case "0":
           //new and never visited by this user
           $alert_content .= "<img border=\"0\" src=\"images/new.gif\" height=\"12\" width=\"31\">";
@@ -146,19 +146,19 @@ if( $DATABASE_TYPE == "mysql")
 
         default:
           //check if edited since last visit
-          $seen = db_result( $seenq, 0, 0 );
-          if( ( $seen - $row["edited"] ) < 0 ) {
+          $seen = db_result($seenq, 0, 0 );
+          if(($seen - $row["edited"] ) < 0 ) {
             //edited
             $alert_content .= "<img border=\"0\" src=\"images/updated.gif\" height=\"12\" width=\"60\"> &nbsp;";
           }
 
           //are there forum changes ?
-          if( $seen - $row["lastpost"] < 0 ) {
+          if($seen - $row["lastpost"] < 0 ) {
             $alert_content .= "<img border=\"0\" src=\"images/message.gif\" height=\"10\" width=\"14\"> &nbsp;";
           }
 
           //are there file upload changes ?
-          if( $seen - $row["lastfileupload"] < 0 ) {
+          if($seen - $row["lastfileupload"] < 0 ) {
             $alert_content .= "<img border=\"0\" src=\"images/file.gif\" height=\"11\" width=\"11\"> &nbsp;";
           }
 	  break;
@@ -166,44 +166,45 @@ if( $DATABASE_TYPE == "mysql")
     }
 
     //status
-    switch( $row["status"] ) {
+    switch($row["status"] ) {
       case "done":
-        $status_content="<FONT color=\"#006400\">(".$task_state["completed"]." ".nicedate($row["finished_time"]).")</FONT>";
+        $status_content="<font color=\"#006400\">(".$task_state["completed"]." ".nicedate($row["finished_time"]).")</font>";
 	break;
 
       case "active":
-        $status_content="<FONT color=\"#FFA500\">(".$task_state["active"].")</FONT>";
+        $status_content="<font color=\"#FFA500\">(".$task_state["active"].")</font>";
 	break;
 
       case "notactive":
-        $status_content="<FONT color=\"#BEBEBE\">(".$task_state["planned"].")</FONT>";
+        $status_content="<font color=\"#BEBEBE\">(".$task_state["planned"].")</font>";
 	break;
 
       case "cantcomplete":
-        $status_content="<FONT color=\"#0000FF\">(".$task_state["cantcomplete"]." ".nicedate($row["finished_time"]).")</FONT>";
+        $status_content="<font color=\"#0000FF\">(".$task_state["cantcomplete"]." ".nicedate($row["finished_time"]).")</font>";
 	break;
     }
 
 
     //merge all info about a task
-    if( $alert_content!="" ) {
-      $this_content .= $alert_content."<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$row["taskname"]."</A></FONT> ".$status_content;
-    }else{
-      $this_content .= "<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$row["taskname"]."</A> ".$status_content;
+    if($alert_content != "" ) {
+      $this_content .= $alert_content."<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">".$row["taskname"]."</a></font> $status_content";
+    }
+    else{
+      $this_content .= "<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">".$row["taskname"]."</a> $status_content";
     }
 
-    $this_content.= "<SMALL>";
+    $this_content.= "<small>";
 
     //add username if task is taken
-    if( $row["userid"] != 0 ) {
-      $this_content .= " [<A href=\"".$BASE_URL."users.php?x=".$x."&action=show&userid=".$row["userid"]."\">".$row["username"]."</A>] ";
+    if($row["userid"] != 0 ) {
+      $this_content .= " [<a href=\"".$BASE_URL."users.php?x=$x&amp;action=show&userid=".$row["userid"]."\">".$row["username"]."</a>] ";
     }
     else {
       $this_content .= "&nbsp;";
     }
 
     //add number of days to a task over here
-    switch( $row["status"] ) {
+    switch($row["status"] ) {
 
       case "done":
       case "notactive":
@@ -211,43 +212,43 @@ if( $DATABASE_TYPE == "mysql")
        break;
 
       default:
-        $state = ( $row["due"]-$row["now"] )/86400 ;
-        if( $state > 1 ) {
+        $state = ($row["due"]-$row["now"] )/86400 ;
+        if($state > 1 ) {
           $this_content .=  "(".sprintf( $lang["due_sprt"], ceil($state) ).")";
         }
-        else if( $state > 0 ) {
-	  $this_content .=  "(".$lang["tomorrow"].")";
+        else if($state > 0 ) {
+          $this_content .=  "(".$lang["tomorrow"].")";
         }
         else {
-	    switch( -ceil($state) ) {
+          switch( -ceil($state) ) {
 
-	      case "0":
-                $this_content .=  "<FONT color=\"#00640\">(<I>".$lang["due_today"]."</I>)</FONT>";
-	        break;
+            case "0":
+              $this_content .=  "<font color=\"#00640\">(<i>".$lang["due_today"]."</i>)</font>";
+              break;
 
-	      case "1":
-                $this_content .= "<FONT color=\"#FF0000\">(".$lang["overdue_1"].")</FONT>";
-	        break;
+            case "1":
+              $this_content .= "<font color=\"#FF0000\">(".$lang["overdue_1"].")</font>";
+              break;
 
-	      default:
-                $this_content .= "<FONT color=\"#FF0000\">(".sprintf( $lang["overdue_sprt"], -ceil($state) ).")</FONT>";
-	        break;
-              }
+            default:
+              $this_content .= "<font color=\"#FF0000\">(".sprintf($lang["overdue_sprt"], -ceil($state) ).")</font>";
+              break;
+          }
         }
         break;
     }
 
     //finish the line
-    $this_content .= "</SMALL></LI>\n";
+    $this_content .= "</small></li>\n";
 
     //recursive search if the subtask is listed in parent_array (it has children then)
-    if( in_array( $row["id"], $parent_array, FALSE) ) {
+    if(in_array( $row["id"], $parent_array, FALSE) ) {
       $this_content .= list_tasks( $row["id"]);
     }
   }
 
   //finish all the UL's
-  $this_content .= "</UL>";
+  $this_content .= "</ul>";
 
   return $this_content;
 }
@@ -262,7 +263,7 @@ if( ! isset($taskid) || ! is_numeric($taskid) || $taskid == 0 )
   error( "Task list", "Not a valid value for taskid");
 
 //find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query
-$parent_query = db_query( "SELECT parent FROM tasks GROUP BY parent" );
+$parent_query = db_query("SELECT parent FROM tasks GROUP BY parent" );
 $parent_array = NULL;
 for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; $i++ ) {
   $parent_array[$i] = $row["parent"];
@@ -270,13 +271,13 @@ for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; $i++ ) {
 
 //check to see if any tasks at this task level have the taskgroup descriptor set. 
 //Use this later to toggle the taskgroup headings.
-if( db_result(db_query( "SELECT COUNT(*) FROM tasks WHERE parent=".$parentid." AND taskgroupid<>0" ), 0, 0 ) > 0 )
+if( db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent=$parentid AND taskgroupid<>0" ), 0, 0 ) > 0 )
   $taskgroup_flag = 1;
 else
   $taskgroup_flag = 0;
   
 
-$content = list_tasks( $parentid );
+$content  = list_tasks($parentid );
 
 //show it
 if( $content != "" ) 

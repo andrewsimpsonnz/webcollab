@@ -39,20 +39,20 @@ include_once( BASE."includes/admin_config.php" );
 include_once( BASE."includes/time.php" );
 
 //shows a priority-select box
-$priority_select_box = "<TR><TD>Priority:</TD> <TD>\n".
+$priority_select_box = "<tr><td>Priority:</td> <td>\n".
                        "<SELECT name=\"priority\">\n".
-                       "<OPTION value=\"0\">".$task_state["dontdo"]."</OPTION>\n".
-                       "<OPTION value=\"1\">".$task_state["low"]."</OPTION>\n".
-                       "<OPTION value=\"2\" SELECTED>".$task_state["normal"]."</OPTION>\n".
-                       "<OPTION value=\"3\">".$task_state["high"]."</OPTION>\n".
-                       "<OPTION value=\"4\">".$task_state["yesterday"]."</OPTION>\n".
-                       "</SELECT>\n</TD></TR>\n";
+                       "<option value=\"0\">".$task_state["dontdo"]."</option>\n".
+                       "<option value=\"1\">".$task_state["low"]."</option>\n".
+                       "<option value=\"2\" SELECTED>".$task_state["normal"]."</option>\n".
+                       "<option value=\"3\">".$task_state["high"]."</option>\n".
+                       "<option value=\"4\">".$task_state["yesterday"]."</option>\n".
+                       "</SELECT>\n</td></tr>\n";
 
 
-$content = "<BR>\n";
-$content .= "<FORM name=\"inputform\" method=\"POST\" action=\"tasks/task_submit.php\">\n";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"x\" value=\"".$x."\">\n ";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"action\" value=\"insert\">\n ";
+$content = "<br />\n";
+$content .= "<form name=\"inputform\" method=\"POST\" action=\"tasks/task_submit.php\">\n";
+$content .= "<input type=\"hidden\" name=\"x\" value=\"".$x."\">\n ";
+$content .= "<input type=\"hidden\" name=\"action\" value=\"insert\">\n ";
 
 //this is split up in 2 parts for readabilities' sake
 
@@ -62,14 +62,14 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   $parentid = $_GET["parentid"];
 
 //get info about the parent of this task
-  $q = db_query("SELECT name, deadline, status, owner, parent, projectid FROM tasks WHERE id=".$parentid );
+  $q = db_query("SELECT name, deadline, status, owner, parent, projectid FROM tasks WHERE id=$parentid" );
   $task_row = @db_fetch_array($q, $i );
 
-  $content .= $lang["add_task"]."<BR><BR>\n";
-  $content .= "<TABLE border=\"0\">\n";
+  $content .= $lang["add_task"]."<br /><br />\n";
+  $content .= "<table border=\"0\">\n";
 
-  $content .= "<INPUT TYPE=\"hidden\" name=\"parentid\" value=\"".$parentid."\">\n";
-  $content .= "<INPUT TYPE=\"hidden\" name=\"projectid\" value=\"".$task_row["projectid"]."\">\n";
+  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\">\n".
+              "<input type=\"hidden\" name=\"projectid\" value=\"".$task_row["projectid"]."\">\n";
 
   //show project name
   if( $task_row["projectid"] == $parentid)
@@ -77,83 +77,83 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   else
     $project = db_result(db_query("SELECT name FROM tasks WHERE id=".$task_row["projectid"] ), 0, 0 );
   
-  $content .= "<TR> <TD>".$lang["pproject"].":</TD> <TD><A HREF=\"tasks.php?x=".$x."&action=show&taskid=".$task_row["projectid"]."\">".$project."</A></TD></TR>\n";
+  $content .= "<tr><td>".$lang["pproject"].":</td> <td><a href=\"tasks.php?x=".$x."&action=show&taskid=".$task_row["projectid"]."\">".$project."</a></td></tr>\n";
   
   //check if task has a parent task
   if( $task_row["parent"] != 0 ) {
-    $content .= "<TR> <TD>".$lang["parent_task"].":</TD> <TD><A HREF=\"tasks.php?x=".$x."&action=show&taskid=".$task_row["parent"]."\">".$task_row["name"]."</A></TD> </TR>\n";
+    $content .= "<tr><td>".$lang["parent_task"].":</td> <td><a href=\"tasks.php?x=".$x."&action=show&taskid=".$task_row["parent"]."\">".$task_row["name"]."</a></td> </tr>\n";
   }
-  $content .= "<TR> <TD>".$lang["creation_time"].":</TD> <TD>".date("F j, Y, H:i")."</TD> </TR>\n";
-  $content .= "<TR> <TD>".$lang["task_name"].":</TD> <TD><INPUT type=\"input\" name=\"name\" size=\"30\"></TD> </TR>\n";
-  $content .= "<TR> <TD>".$lang["deadline"].":</TD> <TD>".date_select_from_timestamp( $task_row["deadline"] )." <SMALL><I>".$lang["taken_from_parent"]."</I></SMALL></TD> </TR>\n";
+  $content .= "<tr><td>".$lang["creation_time"].":</td> <td>".date("F j, Y, H:i")."</td> </tr>\n".
+              "<tr><td>".$lang["task_name"].":</td> <td><input type=\"input\" name=\"name\" size=\"30\"></td> </tr>\n".
+              "<tr><td>".$lang["deadline"].":</td> <td>".date_select_from_timestamp( $task_row["deadline"] )." <small><i>".$lang["taken_from_parent"]."</i></small></td> </tr>\n";
 
   //priority
   $content .= $priority_select_box;
 
   //status
-  $content .= "<TR> <TD>".$lang["status"].":</TD> <TD>\n";
-  $content .= "<SELECT name=\"status\">\n";
-  $content .=  "<OPTION value=\"created\" SELECTED >".$task_state["new"]."</OPTION>\n";
-  $content .=  "<OPTION value=\"notactive\" >".$task_state["planned"]."</OPTION>\n";
-  $content .=  "<OPTION value=\"active\" >".$task_state["active"]."</OPTION>\n";
-  $content .=  "<OPTION value=\"cantcomplete\" >".$task_state["cantcomplete"]."</OPTION>\n";
-  $content .=  "<OPTION value=\"done\" >".$task_state["completed"]."</OPTION>\n";
-  $content .= "</SELECT></TD></TR>";
+  $content .= "<tr><td>".$lang["status"].":</td> <td>\n".
+              "<select name=\"status\">\n".
+              "<option value=\"created\" SELECTED >".$task_state["new"]."</option>\n".
+              "<option value=\"notactive\" >".$task_state["planned"]."</option>\n".
+              "<option value=\"active\" >".$task_state["active"]."</option>\n".
+              "<option value=\"cantcomplete\" >".$task_state["cantcomplete"]."</option>\n".
+              "<option value=\"done\" >".$task_state["completed"]."</option>\n".
+              "</select></td></tr>";
 
 
   //get all users in order to show a task owner
   $users_q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname");
 
   //owner box
-  $content .= "<TR> <TD>".$lang["task_owner"].":</TD> <TD><SELECT name=\"owner\">\n";
-  $content .= "<OPTION value=\"0\">".$lang["nobody"]."</OPTION>\n";
+  $content .= "<tr><td>".$lang["task_owner"].":</td> <td><SELECT name=\"owner\">\n".
+              "<option value=\"0\">".$lang["nobody"]."</option>\n";
   for( $i=0 ; $user_row = @db_fetch_array($users_q, $i ) ; $i++) {
-    $content .= "<OPTION value=\"".$user_row["id"]."\"";
+    $content .= "<option value=\"".$user_row["id"]."\"";
 
     //default owner is present user
     if( $user_row[ "id" ] == $uid )
       $content .= " SELECTED";
 
-    $content .= ">".$user_row["fullname"]."</OPTION>\n";
+    $content .= ">".$user_row["fullname"]."</option>\n";
   }
 
-  $content .= "</SELECT></TD></TR>\n";
+  $content .= "</SELECT></td></tr>\n";
 
   //get all taskgroups in order to show a task owner
   $q = db_query("SELECT id, name FROM taskgroups ORDER BY name");
 
-  $content .= "<TR> <TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#taskgroup\" target=\"helpwindow\">".$lang["taskgroup"]."</A>: </TD> <TD><SELECT name=\"taskgroupid\">\n";
-  $content .= "<OPTION value=\"0\">".$lang["no_group"]."</OPTION>\n";
+  $content .= "<tr> <td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#taskgroup\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td> <td><SELECT name=\"taskgroupid\">\n";
+  $content .= "<option value=\"0\">".$lang["no_group"]."</option>\n";
 
   for( $i=0 ; $taskgroup_row = @db_fetch_array($q, $i ) ; $i++)
-    $content .= "<OPTION value=\"".$taskgroup_row["id"]."\">".$taskgroup_row["name"]."</OPTION>\n";
+    $content .= "<option value=\"".$taskgroup_row["id"]."\">".$taskgroup_row["name"]."</option>\n";
 
-  $content .= "</SELECT></TD></TR>\n";
+  $content .= "</select></td></tr>\n";
 
   //show all the groups
   $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
 
-  $content .= "<TR> <TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </TD> <TD><SELECT name=\"usergroupid\">\n";
-  $content .= "<OPTION value=\"0\">".$lang["all_groups"]."</OPTION>\n";
+  $content .= "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td> <td><SELECT name=\"usergroupid\">\n";
+  $content .= "<option value=\"0\">".$lang["all_groups"]."</option>\n";
 
   for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++)
-    $content .= "<OPTION value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</OPTION>\n";
+    $content .= "<option value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</option>\n";
 
-  $content .= "</SELECT></TD></TR>\n";
-  $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</A> </TD><TD><INPUT type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS."></TD></TR>\n";
-  $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#groupaccess\" target=\"helpwindow\">".$lang["group_edit"]."</A> </TD><TD><INPUT type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT."></TD></TR>\n";
+  $content .= "</select></td></tr>\n".
+              "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS."></td></tr>\n".
+              "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#groupaccess\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT."></td></tr>\n".
 
-  $content .= "<TR> <TD>".$lang["task_description"]."</TD> <TD><TEXTAREA name=\"text\" rows=\"10\" cols=\"60\"></TEXTAREA></TD> </TR>\n";
+              "<tr> <td>".$lang["task_description"]."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
 
-  //do we need to email ?
-  $content .= "<TR><TD>".$lang["email_owner"]."</TD><TD><INPUT type=\"checkbox\" name=\"mailowner\" ".$DEFAULT_OWNER."></TD></TR>\n";
-  $content .= "<TR><TD>".$lang["email_group"]."</TD><TD><INPUT type=\"checkbox\" name=\"maillist\" ".$DEFAULT_GROUP."></TD></TR>\n";
+              //do we need to email ?
+              "<tr><td>".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" ".$DEFAULT_OWNER."></td></tr>\n".
+              "<tr><td>".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" ".$DEFAULT_GROUP."></td></tr>\n".
 
-  $content .= "</TABLE>\n";
-  $content .= "<INPUT TYPE=\"submit\" NAME=\"Add\" value=\"Add task\"> ";
-  $content .= "<INPUT TYPE=\"reset\">";
-  $content .= "</FORM>\n";
-  $content .= "<BR><BR>\n";
+              "</table>\n".
+              "<input type=\"submit\" name=\"Add\" value=\"Add task\"> ".
+              "<input type=\"reset\">".
+              "</form>\n".
+              "<br /><br />\n";
 
   new_box( $lang["add_task"], $content );
 
@@ -162,71 +162,71 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
 // ADD A NEW PROJECT
 else {
 
-  $content .= "Add a new project<BR><BR>\n";
-  $content .= "<TABLE border=\"0\">\n";
-  $content .= "<INPUT TYPE=\"hidden\" name=\"parentid\" value=\"0\">\n";
-  $content .= "<INPUT TYPE=\"hidden\" name=\"projectid\" value=\"0\">\n";
+  $content .= "Add a new project<br /><br />\n".
+              "<table border=\"0\">\n".
+              "<input type=\"hidden\" name=\"parentid\" value=\"0\">\n".
+              "<input type=\"hidden\" name=\"projectid\" value=\"0\">\n".
 
-  $content .= "<TR> <TD>".$lang["creation_time"].":</TD><TD>".date("F j, Y, H:i")."</TD> </TR>\n";
-  $content .= "<TR> <TD>".$lang["project_name"].":</TD> <TD><INPUT type=\"input\" name=\"name\" size=\"30\"></TD> </TR>\n";
+              "<tr> <td>".$lang["creation_time"].":</td><td>".date("F j, Y, H:i")."</td> </tr>\n".
+              "<tr> <td>".$lang["project_name"].":</td> <td><input type=\"input\" name=\"name\" size=\"30\"></td> </tr>\n".
 
-  //deadline
-  $content .= "<TR><TD>".$lang["deadline"].":</TD> <TD>".date_select()."</TD> </TR>\n";
+              //deadline
+              "<tr><td>".$lang["deadline"].":</td> <td>".date_select()."</td> </tr>\n";
 
   //priority
   $content .= $priority_select_box;
 
   //status
-  $content .= "<TR> <TD>Status:</TD> <TD>\n";
-  $content .= "<SELECT name=\"status\">\n";
-  $content .=  "<OPTION value=\"notactive\" >".$task_state["planned_project"]."</OPTION>\n";
-  $content .=  "<OPTION value=\"nolimit\" >".$task_state["no_deadline_project"]."</OPTION>\n";
-  $content .=  "<OPTION value=\"active\" SELECTED >".$task_state["active_project"]."</OPTION>\n";
-  $content .=  "<OPTION value=\"cantcomplete\" >".$task_state["cantcomplete"]."</OPTION>\n";
-  $content .= "</SELECT></TD></TR>";
+  $content .= "<tr> <td>Status:</td> <td>\n".
+              "<select name=\"status\">\n".
+              "<option value=\"notactive\" >".$task_state["planned_project"]."</option>\n".
+              "<option value=\"nolimit\" >".$task_state["no_deadline_project"]."</option>\n".
+              "<option value=\"active\" SELECTED >".$task_state["active_project"]."</option>\n".
+              "<option value=\"cantcomplete\" >".$task_state["cantcomplete"]."</option>\n".
+              "</select></td></tr>";
 
   //get all users in order to show a task owner
   $users_q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname");
 
   //owner
-  $content .= "<TR> <TD>".$lang["project_owner"].":</TD> <TD><SELECT name=\"owner\">\n";
+  $content .= "<tr> <td>".$lang["project_owner"].":</td> <td><select name=\"owner\">\n";
   for( $i=0 ; $row = @db_fetch_array($users_q, $i) ; $i++) {
-    $content .= "<OPTION value=\"".$row["id"]."\"";
+    $content .= "<option value=\"".$row["id"]."\"";
 
       //owner is user
       if( $row["id"] == $uid ) {
         $content .= " SELECTED";
       }
-    $content .= ">".$row["fullname"]."</OPTION>\n";
+    $content .= ">".$row["fullname"]."</option>\n";
   }
-  $content .= "</SELECT></TD></TR>\n";
+  $content .= "</SELECT></td></tr>\n";
 
   //taskgroup - we don't have this for projects
-  $content .= "<INPUT TYPE=\"hidden\" name=\"taskgroupid\" value=\"0\">\n";
+  $content .= "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\">\n";
 
   //show all the groups
-  $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
-  $content .= "<TR> <TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </TD> <TD><SELECT name=\"usergroupid\">\n";
-  $content .= "<OPTION value=\"0\">".$lang["all_groups"]."</OPTION>\n";
+  $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" ).
+  $content .= "<tr> <td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td> <td><select name=\"usergroupid\">\n".
+              "<option value=\"0\">".$lang["all_groups"]."</option>\n";
 
   for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++)
-    $content .= "<OPTION value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</OPTION>\n";
+    $content .= "<option value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</option>\n";
 
-  $content .= "</SELECT></TD></TR>\n";
-  $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</A> </TD><TD><INPUT type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS."></TD></TR>\n";
-  $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#groupaccess\" target=\"helpwindow\">".$lang["group_edit"]."</A> </TD><TD><INPUT type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT."></TD></TR>\n";
+  $content .= "</select></td></tr>\n".
+              "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS."></td></tr>\n".
+              "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#groupaccess\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT."></td></tr>\n".
 
-  $content .= "<TR> <TD>".$lang["project_description"]."</TD> <TD><TEXTAREA name=\"text\" rows=\"10\" cols=\"60\"></TEXTAREA></TD> </TR>\n";
+              "<tr> <td>".$lang["project_description"]."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
 
-  //do we need to email ?
-  $content .= "<TR><TD>".$lang["email_owner"]."</TD><TD><INPUT type=\"checkbox\" name=\"mailowner\" ".$DEFAULT_OWNER."></TD></TR>\n";
-  $content .= "<TR><TD>".$lang["email_group"]."</TD><TD><INPUT type=\"checkbox\" name=\"maillist\" ".$DEFAULT_GROUP."></TD></TR>\n";
+              //do we need to email ?
+              "<tr><td>".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" ".$DEFAULT_OWNER."></td></tr>\n".
+              "<tr><td>".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" ".$DEFAULT_GROUP."></td></tr>\n".
 
-  $content .= "</TABLE>\n";
-  $content .= "<INPUT TYPE=\"submit\" NAME=\"Add\" value=\"".$lang["add_project"]."\">\n ";
-  $content .= "<INPUT TYPE=\"reset\">\n";
-  $content .= "</FORM>\n";
-  $content .= "<BR><BR>\n";
+              "</table>\n".
+              "<input type=\"submit\" name=\"Add\" value=\"".$lang["add_project"]."\">\n ".
+              "<input type=\"reset\">\n".
+              "</form>\n".
+              "<br /><br />\n";
 
   new_box( $lang["add_new_project"], $content );
 

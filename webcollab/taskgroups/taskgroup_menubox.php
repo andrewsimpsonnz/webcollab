@@ -33,14 +33,14 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
+include_once(BASE."includes/security.php" );
 
 //only for admins
-if( $admin != 1 )
+if($admin != 1 )
   return;
 
-$content = "<A href=\"taskgroups.php?x=".$x."&action=add\">".$lang["add"]."</A><BR>\n";
-$content .= "<A href=\"taskgroups.php?x=".$x."&action=manage\">".$lang["manage"]."</A><BR>\n";
+$content = "<a href=\"taskgroups.php?x=$x&amp;action=add\">".$lang["add"]."</a><br />\n";
+           "<a href=\"taskgroups.php?x=$x&amp;action=manage\">".$lang["manage"]."</a><br />\n";
 
 new_box( $lang["taskgroups"], $content );
 

@@ -39,11 +39,15 @@ include_once( BASE."includes/security.php" );
 //secure vars
 $content = "";
 
-if( ! isset($_REQUEST["usergroupid"]) || ! is_numeric($_REQUEST["usergroupid"]) ) $usergroupid = 0;
-  else $usergroupid = $_REQUEST["usergroupid"];
+if( ! isset($_REQUEST["usergroupid"]) || ! is_numeric($_REQUEST["usergroupid"]) )
+  $usergroupid = 0;
+else
+  $usergroupid = $_REQUEST["usergroupid"];
 
-if( ! isset($_REQUEST["parentid"]) || ! is_numeric($_REQUEST["parentid"]) ) $parentid = 0;
-  else $parentid = $_REQUEST["parentid"];
+if( ! isset($_REQUEST["parentid"]) || ! is_numeric($_REQUEST["parentid"]) )
+  $parentid = 0;
+else
+  $parentid = $_REQUEST["parentid"];
 
 if( ! isset($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
   error( "Forum add", "Not a valid value for taskid");
@@ -53,18 +57,17 @@ $taskid = $_REQUEST["taskid"];
 //check usergroup security
 include_once( BASE."includes/usergroup_security.php");
 
-
 //find out the tasks' name and error is no name was found (implies database error)
 if( ( $taskname = db_result( db_query("SELECT name FROM tasks WHERE id=".$taskid ), 0, 0) ) == "" )
   error("Forum add", "Taskname is not set." );
 
-$content .= "<BR>\n";
-$content .= "<FORM name=\"inputform\" method=\"POST\" action=\"forum/forum_submit.php\">\n";
+$content .= "<br />\n";
+$content .= "<form name=\"inputform\" method=\"POST\" action=\"forum/forum_submit.php\">\n";
 //set some hidden values
-$content .= "<INPUT TYPE=\"hidden\" name=\"action\" value=\"add\">\n";
-$content .= "<INPUT TYPE=\"hidden\" name=\"taskid\" value=\"".$taskid."\">\n";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"x\" value=\"".$x."\">";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"usergroupid\" value=\"".$usergroupid."\">\n";
+$content .= "<input type=\"hidden\" name=\"action\" value=\"add\">\n".
+            "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\">\n".
+            "<input type=\"hidden\" NAME=\"x\" value=\"$x\">".
+            "<input type=\"hidden\" NAME=\"usergroupid\" value=\"$usergroupid\">\n";
 
 
 //find out some of the parent's data
@@ -73,38 +76,34 @@ if( is_numeric($parentid) && ($parentid != 0) ) {
   //get the text from the parent and the username of the person that posted that text
   $parent_array = db_fetch_array( db_query("SELECT forum.text as text, users.fullname as username
                                             FROM forum
-                                            LEFT JOIN users ON ( forum.userid=users.id )
-		                WHERE forum.id=".$parentid ), 0 );
+                                            LEFT JOIN users ON (forum.userid=users.id)
+                                            WHERE forum.id=$parentid" ), 0 );
 
   //show a box with the original post
-  $content .= "<INPUT TYPE=\"hidden\" name=\"parentid\" value=\"".$parentid."\">\n";
-  $content .= "<TABLE border=\"0\">\n";
-  $content .= "<TR> <TD>".$lang["orig_message"]."</TD> <TD bgcolor=\"#EEEEEE\">".nl2br( $parent_array["text"] )."</TD> </TR>\n";
-
+  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\">\n".
+              "<table border=\"0\">\n".
+                "<tr><td>".$lang["orig_message"]."</td><td bgcolor=\"#EEEEEE\">".nl2br( $parent_array["text"] )."</td></tr>\n";
 }
 else {
-
-  $parent_array="";
+  $parent_array = "";
 
   //This is a new thread so we don't have a valid parent
-  $content .= "<INPUT TYPE=\"hidden\" name=\"parentid\" value=\"0\">\n";
-  $content .= "<TABLE border=\"0\">\n";
-
+  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"0\">\n".
+              "<table border=\"0\">\n";
 }
 
-
 //build up the text-entry part
-$content .= "<TR> <TD>Message:</TD> <TD><TEXTAREA name=\"text\" rows=\"10\" cols=\"60\"></TEXTAREA></TD> </TR>\n";
-$content .= "</TABLE>\n";
-$content .= "<INPUT TYPE=\"submit\" NAME=\"Add\" value=\"".$lang["post"]."\"> ";
-$content .= "<INPUT TYPE=\"reset\">";
-$content .= "</FORM>\n";
-$content .= "<BR><BR>\n";
+$content .=     "<tr><td>Message:</td><td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
+              "</table>\n".
+              "<input type=\"submit\" name=\"Add\" value=\"".$lang["post"]."\"> ".
+              "<input type=\"reset\">".
+              "</form>\n".
+              "<br /><br />\n";
 
 //show a reply or a new-post box
 if( $parentid > 0 )
-  new_box( sprintf( $lang["post_reply_sprt"], $parent_array["username"], $taskname ), $content ); //reply to another users's post
+  new_box(sprintf( $lang["post_reply_sprt"], $parent_array["username"], $taskname ), $content ); //reply to another users's post
 else
-  new_box( sprintf( $lang["post_message_sprt"], $taskname ), $content ); //new reply
+  new_box(sprintf( $lang["post_message_sprt"], $taskname ), $content ); //new reply
 
 ?>

@@ -33,52 +33,52 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
-include_once( BASE."includes/screen.php" );
+include_once(BASE."includes/security.php" );
+include_once(BASE."includes/screen.php" );
 
 
 //
 // The action handler
 //
-if( valid_string($_REQUEST["action"]) ) {
+if(valid_string($_REQUEST["action"]) ) {
 
   //what do you want to task today =]
-  switch( $_REQUEST["action"] ) {
+  switch($_REQUEST["action"] ) {
 
     //create a box with the current files
     case "list":
-      include( "files/file_list.php" );
+      include("files/file_list.php" );
       break;
 
 
     //upload a file
     case "upload":
       create_top($lang["file_choose"], 0, "userfile" );
-      include( "includes/mainmenu.php");
+      include("includes/mainmenu.php" );
       goto_main();
-      include( "files/file_upload.php");
+      include("files/file_upload.php" );
       create_bottom();
       break;
 
     //admin files
     case "admin":
-      create_top($lang["file_admin"]);
+      create_top($lang["file_admin"] );
       $taskid=-1;
-      include( "includes/mainmenu.php");
-      include( "files/file_menubox.php");
+      include("includes/mainmenu.php" );
+      include("files/file_menubox.php" );
       goto_main();
-      include( "files/file_admin.php");
+      include("files/file_admin.php" );
       create_bottom();
       break;
 
 
     //Error case
     default:
-      error("File action handler", "Invalid request given");
+      error("File action handler", "Invalid request given" );
       break;
   }
 }
 else
-  error("File action handler", "No request given");
+  error("File action handler", "No request given" );
 
 ?>

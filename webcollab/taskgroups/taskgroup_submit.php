@@ -33,83 +33,75 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
-include_once( BASE."includes/database.php" );
-include_once( BASE."includes/common.php" );
+include_once(BASE."includes/security.php" );
+include_once(BASE."includes/database.php" );
+include_once(BASE."includes/common.php" );
 
 //admins only
 if( $admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 
-if( isset($_REQUEST["action"]) ) {
+if(isset($_REQUEST["action"]) ) {
 
-  switch( $_REQUEST["action"] ) {
+  switch($_REQUEST["action"] ) {
 
     //delete a taskgroup
     case "del":
 
-      if( isset( $_GET["taskgroupid"] ) && is_numeric( $_GET["taskgroupid"] ) ) {
+      if(isset($_GET["taskgroupid"] ) && is_numeric($_GET["taskgroupid"] ) ) {
 
         $taskgroupid = $_GET["taskgroupid"];
-
         db_begin();
-	//move the tasks to a non-working task-group
-        @db_query("UPDATE tasks SET taskgroupid=0 WHERE taskgroupid='".$taskgroupid."'");
-
+        //move the tasks to a non-working task-group
+        @db_query("UPDATE tasks SET taskgroupid=0 WHERE taskgroupid='$taskgroupid'" );
         //delete the group
-        db_query("DELETE FROM taskgroups WHERE id=".$taskgroupid );
-	db_commit();
+        db_query("DELETE FROM taskgroups WHERE id=$taskgroupid" );
+        db_commit();
       }
       else
         error("Taskgroup submit", "Not a valid value for taskgroupid" );
-
-      break;
-
+    break;
 
     //insert a new taskgroup
     case "insert":
 
-      if( isset($_POST["name"]) && valid_string($_POST["name"]) ) {
+      if(isset($_POST["name"] ) && valid_string($_POST["name"] ) ) {
 
         $name        = safe_data($_POST["name"]);
         $description = safe_data($_POST["description"]);
-
         //check for duplicates
-        if( db_result( db_query("SELECT COUNT(*) FROM taskgroups WHERE name='".$name."'"), 0, 0 ) > 0 )
-	  warning($lang["add_taskgroup"], sprintf( $lang["taskgroup_dup_sprt"], $name ) );
+        if(db_result(db_query("SELECT COUNT(*) FROM taskgroups WHERE name='$name'"), 0, 0 ) > 0 )
+          warning($lang["add_taskgroup"], sprintf($lang["taskgroup_dup_sprt"], $name ) );
 
-        db_query( "INSERT INTO taskgroups(  name, description)
-	           VALUES ('".$name."', '".$description."')");
+        db_query("INSERT INTO taskgroups(name, description) VALUES ('$name', '$description')" );
       }
       else
-        warning( $lang["value_missing"], sprintf( $lang["field_sprt"], $lang["taskgroup_name"] ) );
+        warning($lang["value_missing"], sprintf($lang["field_sprt"], $lang["taskgroup_name"] ) );
       break;
 
 
     //edit an existing taskgroup
     case "edit":
 
-      if( ! isset($_POST["taskgroupid"]) || ! is_numeric($_POST["taskgroupid"]) )
-        error( "Taskgroup submit", "Not a valid value for taskgroupid" );
+      if( ! isset($_POST["taskgroupid"] ) || ! is_numeric($_POST["taskgroupid"] ) )
+        error("Taskgroup submit", "Not a valid value for taskgroupid" );
 
-      if( isset($_POST["name"]) && valid_string($_POST["name"]) ) {
+      if(isset($_POST["name"] ) && valid_string($_POST["name"] ) ) {
 
-	$name        = safe_data($_POST["name"]);
-        $description = safe_data($_POST["description"]);
-        $taskgroupid = safe_data($_POST["taskgroupid"]);
+        $name        = safe_data($_POST["name"] );
+        $description = safe_data($_POST["description"] );
+        $taskgroupid = safe_data($_POST["taskgroupid"] );
 
-        db_query( "UPDATE taskgroups SET name='".$name."', description='".$description."' WHERE id=".$taskgroupid);
+        db_query("UPDATE taskgroups SET name='$name', description='$description' WHERE id=$taskgroupid" );
       }
       else
-        warning( $lang["value_missing"], sprintf( $lang["field_sprt"], $lang["taskgroup_name"] ) );
-      break;
-
-
+        warning($lang["value_missing"], sprintf($lang["field_sprt"], $lang["taskgroup_name"] ) );
+    break;
 
     //error case
     default:
-      error("Taskgroup submit", "Invalid request given");
+      error("Taskgroup submit", "Invalid request given" );
       break;
   }
 }

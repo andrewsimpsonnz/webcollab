@@ -29,17 +29,17 @@
 
 */
 
-include_once( "includes/security.php" );
-include_once( "includes/screen.php" );
+include_once("includes/security.php" );
+include_once("includes/screen.php" );
 
 
 //
 // The action handler
 //
-if( valid_string( $_REQUEST["action"] ) ) {
+if(valid_string($_REQUEST["action"] ) ) {
 
   //what do you want to contact today =]
-  switch( $_REQUEST["action"] ) {
+  switch($_REQUEST["action"] ) {
 
     //gives a window and some options to do to the poor 'old contact manager
     case "add":
@@ -48,7 +48,7 @@ if( valid_string( $_REQUEST["action"] ) ) {
       include( "contacts/contact_menubox.php" );
       goto_main();
       include( "contacts/contact_add.php" );
-      new_box( $lang["info"], "<BR>".$lang["contact_add_info"]."<BR><BR>" );
+      new_box( $lang["info"], "<br />".$lang["contact_add_info"]."<br /><br />" );
       create_bottom();
       break;
 
@@ -56,30 +56,30 @@ if( valid_string( $_REQUEST["action"] ) ) {
     //gives a window and some options to do to the poor 'old contact manager
     case "show":
       create_top($lang["show_contact"]);
-      include( "includes/mainmenu.php");
-      include( "contacts/contact_menubox.php" );
+      include("includes/mainmenu.php" );
+      include("contacts/contact_menubox.php" );
       goto_main();
       include( "contacts/contact_show.php" );
       create_bottom();
       break;
 
- case "edit":
+    case "edit":
       create_top($lang["edit_contact"]);
-      include( "includes/mainmenu.php");
-      include( "contacts/contact_menubox.php" );
+      include("includes/mainmenu.php" );
+      include("contacts/contact_menubox.php" );
       goto_main();
-      include( "contacts/contact_edit.php" );
+      include("contacts/contact_edit.php" );
       create_bottom();
       break;
 
 
     //Error case
     default:
-      error("Contacts action handler", "Invalid request given");
+      error("Contacts action handler", "Invalid request given") ;
       break;
   }
 }
 else
-  error("Contacts action handler", "No request given");
+  error("Contacts action handler", "No request given" );
 
 ?>

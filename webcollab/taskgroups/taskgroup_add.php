@@ -36,23 +36,21 @@ if( ! @require( "path.php" ) )
 include_once( BASE."includes/security.php" );
 
 //admins only
-if( $admin != 1 )
+if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
-$content = "<BR>\n";
-$content .= "<FORM name=\"inputform\" method=\"POST\" action=\"taskgroups/taskgroup_submit.php\">\n";
-$content .= "<TABLE border=\"0\">\n";
-$content .= "<TR> <TD>".$lang["taskgroup_name"]."</TD> <TD><INPUT type=\"input\" name=\"name\" size=\"30\"></TD> </TR>\n";
-$content .= "<TR> <TD>".$lang["taskgroup_description"]."</TD> <TD><INPUT type=\"input\" name=\"description\" size=\"30\"></TD> </TR>\n";
-$content .= "</TABLE>\n";
-
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"x\" value=\"".$x."\"> ";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"action\" value=\"insert\"> ";
-
-$content .= "<INPUT TYPE=\"submit\" NAME=\"Add\" value=\"".$lang["add_taskgroup"]."\"> ";
-$content .= "<INPUT TYPE=\"reset\">";
-$content .= "</FORM>\n";
-$content .= "<BR><BR>\n";
+$content =  "<br />\n".
+            "<form name=\"inputform\" method=\"POST\" action=\"taskgroups/taskgroup_submit.php\">\n".
+              "<table border=\"0\">\n".
+                "<tr><td>".$lang["taskgroup_name"]."</td><td><input type=\"input\" name=\"name\" size=\"30\"></td></tr>\n".
+                "<tr><td>".$lang["taskgroup_description"]."</td><td><input type=\"input\"name=\"description\"size=\"30\"></td></tr>\n".
+              "</table>\n".
+              "<input type=\"hidden\" name=\"x\" value=\"$x\"> ".
+              "<input type=\"hidden\" name=\"action\" value=\"insert\"> ".
+              "<input type=\"submit\" name=\"Add\" value=\"".$lang["add_taskgroup"]."\">".
+              "<input type=\"reset\">".
+            "</form>\n".
+            "<br /><br />\n";
 
 new_box( $lang["add_new_taskgroup"], $content );
 

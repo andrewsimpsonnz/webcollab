@@ -103,31 +103,31 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
     $topbuild = 1;
 
   //we don't want any caching of these pages
-  header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-  header ("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-  header ("Cache-Control: no-cache, must-revalidate");
-  header ("Pragma: no-cache");
+  header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+  header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+  header("Cache-Control: no-cache, must-revalidate");
+  header("Pragma: no-cache");
 
   ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML>
+<html>
 
 <!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->
 <!-- (c) 2002 - 2003 Andrew Simpson -->
 
 
-<HEAD>
-  <TITLE><?php echo $title ?></TITLE>
-  <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <LINK REL="StyleSheet" HREF=<?php echo BASE; ?>css.css TYPE="text/css">
+<head>
+  <title><?php echo $title ?></title>
+  <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+  <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+  <link REL="StyleSheet" HREF=<?php echo BASE; ?>css.css TYPE="text/css">
   <?php echo $position; ?>
-</HEAD>
+</head>
 
-<BODY<?php echo $script; ?>>
+<body<?php echo $script; ?>>
 
 <?php /* Main table init */ ?>
-<TABLE cellspacing="0" cellpadding="0" border="0" width="100%" align="center">
+<table cellspacing="0" cellpadding="0" border="0" width="100%" align="center">
 
   <?php
 
@@ -137,24 +137,24 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
   $loadtime = ( (float)$usec + (float)$sec );
 
   //create the info part of the main window
-  echo "<TR>\n<TD bgcolor=\"#000000\" colspan=\"2\" align=\"center\" valign=\"top\">\n";
-  echo "<TABLE border=\"0\" width=\"100%\"><TR><TD align=\"left\" bgcolor=\"#000000\">\n";
+  echo "<tr>\n<td bgcolor=\"#000000\" colspan=\"2\" align=\"center\" valign=\"top\">\n";
+  echo "<table border=\"0\" width=\"100%\"><tr><td align=\"left\" bgcolor=\"#000000\">\n";
 
   //show username if applicable
   if( $username != "" )
-    echo "<FONT color=\"#EEEEEE\"><B><SMALL>".sprintf( $lang["user_homepage_sprt"], $username )."</SMALL></B></FONT>\n";
+    echo "<font color=\"#EEEEEE\"><b><small>".sprintf( $lang["user_homepage_sprt"], $username )."</small></b></font>\n";
 
-  echo "</TD><TD bgcolor=\"#000000\" align=\"right\">\n";
-  echo "<FONT color=\"#FFFFFF\"><SMALL>(c) 2001-2003</SMALL>\n</FONT>\n</TD>\n</TR>";
+  echo "</td><td bgcolor=\"#000000\" align=\"right\">\n";
+  echo "<font color=\"#FFFFFF\"><SMALL>(c) 2001-2003</small>\n</font>\n</td>\n</tr>";
 
-  echo "</TABLE></TD></TR>\n";
+  echo "</table></td></tr>\n";
 
 
   //if we choose to have only one space, we center it in stead of pushing it to the left
   if( $no_menu == 0 )
-    echo "<TR valign=\"top\"><TD width=\"175\" align=\"center\">";
+    echo "<tr valign=\"top\"><td width=\"175\" align=\"center\">";
   else
-    echo "<TR valign=\"top\"><TD width=\"100%\" align=\"center\">";
+    echo "<tr valign=\"top\"><td width=\"100%\" align=\"center\">";
 
 }
 
@@ -168,19 +168,19 @@ function create_bottom() {
   global $loadtime, $database_query_time, $database_query_count, $lang;
 
   //clean
-  echo "<BR>";
+  echo "<br>";
 
   //end the main table
-  echo "</TD></TR></TABLE>";
+  echo "</td></tr></table>";
 
 
   //shows the time it took to load the page
   list($usec, $sec)=explode(" ", microtime());
   $finishtime = ( (float)$usec + (float)$sec ) - $loadtime;
-  echo "<DIV align=\"center\"><FONT color=\"#1E4B79\">\n<SMALL>".sprintf( $lang["load_time_sprt"], $finishtime, $database_query_time, $database_query_count )."</SMALL></FONT></DIV><BR>\n";
+  echo "<div align=\"center\"><font color=\"#1E4B79\">\n<small>".sprintf( $lang["load_time_sprt"], $finishtime, $database_query_time, $database_query_count )."</small></font></div><br />\n";
 
   //end xml parsing
-  echo "\n</BODY>\n</HTML>\n";
+  echo "\n</body>\n</html>\n";
 
 }
 
@@ -193,18 +193,18 @@ function new_box( $title, $content, $width="97%" ) {
 
 
   echo "\n<!-- start of ".$title."-box -->";
-  echo "\n<BR>";
+  echo "\n<br />";
 
   echo "
-  <TABLE border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"".$width."\">
-    <TR>
-      <TD bgcolor=\"#1E4B79\" align=\"left\"><FONT color=\"white\"><B>".$title."</B></FONT></TD>
-    </TR>
-    <TR>
-      <TD bgcolor=\"#FFFFFF\" align=\"left\">\n".$content."\n</TD>
-    </TR>
-  </TABLE>\n <!-- end -->\n";
-  
+  <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"".$width."\">
+    <tr>
+      <td bgcolor=\"#1E4B79\" align=\"left\"><FONT color=\"white\"><b>".$title."</b></font></td>
+    </tr>
+    <tr>
+      <td bgcolor=\"#FFFFFF\" align=\"left\">\n".$content."\n</td>
+    </tr>
+  </table>\n <!-- end -->\n";
+
 
 }
 
@@ -214,7 +214,7 @@ function new_box( $title, $content, $width="97%" ) {
 // End the left frame and go the the right one
 //
 function goto_main() {
-  echo "</TD><TD align=\"center\">";
+  echo "</td><td align=\"center\">";
 }
 
 

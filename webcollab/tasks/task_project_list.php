@@ -34,51 +34,51 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
-include_once( BASE."includes/time.php" );
-include_once( BASE."config.php" );
+include_once(BASE."includes/security.php" );
+include_once(BASE."includes/time.php" );
+include_once(BASE."config.php" );
 
 //
 // List tasks
 //
 
-function listTasks( $task_id ) {
+function listTasks($task_id ) {
    global $x, $epoch, $admin, $usergroup, $lang, $task_state;
 
   // show subtasks that are not complete
-  $q_tasks = db_query( "SELECT id, name, deadline, status, globalaccess, usergroupid,
-	                ".$epoch."deadline ) AS task_due,
-			".$epoch." now() ) AS now
+  $q_tasks = db_query("SELECT id, name, deadline, status, globalaccess, usergroupid,
+                        $epoch deadline ) AS task_due,
+                        $epoch now() ) AS now
                         FROM tasks
-                        WHERE projectid=".$task_id."
+                        WHERE projectid=$task_id
                         AND parent>0
                         AND status<>'done'
                         ORDER BY deadline DESC" );
 
-  if( !$q_tasks or db_numrows( $q_tasks ) == 0)
+  if(db_numrows($q_tasks ) == 0 )
     return;
 
-   $content = "<UL>\n";
+   $content = "<ul>\n";
 
-   for( $iter=0 ; $task_row = @db_fetch_array($q_tasks, $iter ) ; $iter++) {
+   for( $iter=0 ; $task_row = @db_fetch_array($q_tasks, $iter ) ; $iter++ ) {
 
     //check if user can view this task
-    if( ($admin != 1) && ( $task_row["globalaccess"] != "t" ) && ( $task_row["usergroupid"] != 0 ) ) {
+    if( ($admin != 1 ) && ($task_row["globalaccess"] != "t" ) && ($task_row["usergroupid"] != 0 ) ) {
       if( ! in_array( $task_row["usergroupid"], $usergroup ) )
         continue;
     }
 
-    $content .= "<LI>";
+    $content .= "<li>";
     $status = "";
 
     switch( $task_row["status"] ) {
 
       case "cantcomplete":
-       $status = "<B><I>".$task_state["cantcomplete"]."</I></B>";
+       $status = "<b><i>".$task_state["cantcomplete"]."</i></b>";
        break;
 
      case "notactive":
-       $status = "<I>".$task_state["task_planned"]."</I>";
+       $status = "<i>".$task_state["task_planned"]."</i>";
        break;
 
      default:
@@ -88,10 +88,10 @@ function listTasks( $task_id ) {
       }
       break;
     }
-    $content .= "<A HREF=\"tasks.php?x=".$x."&action=show&taskid=".$task_row["id"]."\">".$task_row["name"]."</A> &nbsp;".$status;
-    $content .= "</LI>\n";
+    $content .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_row["id"]."\">".$task_row["name"]."</a> &nbsp;".$status;
+    $content .= "</li>\n";
   }
-  $content .= "</UL>";
+  $content .= "</ul>";
   return $content;
 }
 
@@ -102,33 +102,33 @@ function listTasks( $task_id ) {
 //
 
 //some inital make-nice code
-$content = "<BR>\n";
+$content = "<br />\n";
 $flag = 0;
 $usergroup[0] = 0;
 
 // query to get the projects
 
-  $q = db_query( "SELECT id,
+  $q = db_query("SELECT id,
                         name,
-			finished_time,
-			deadline,
-			status,
-			".$epoch."deadline ) AS due,
-                        ".$epoch."now() ) AS now,
+                        finished_time,
+                        deadline,
+                        status,
+                        $epoch deadline ) AS due,
+                        $epoch now() ) AS now,
                         usergroupid,
                         globalaccess
-			FROM tasks
-		 WHERE parent=0
-                 ORDER BY name" );
+                        FROM tasks
+                        WHERE parent=0
+                        ORDER BY name" );
 
 //check if there are projects
-if( db_numrows($q) < 1 ) {
-  new_box($lang["no_projects"], "<CENTER><A href=\"tasks.php?x=".$x."&action=add\">".$lang["add_project"]."</A></CENTER>");
+if(db_numrows($q) < 1 ) {
+  new_box($lang["no_projects"], "<center><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a></center>");
   return;
 }
 
 //get usergroups of user, and put them in a simple array for later use
-$usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
+$usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$uid" );
 for( $i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
   $usergroup[$i] = $usergroup_row[0];
 }
@@ -137,7 +137,7 @@ for( $i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //check the user has rights to view this project
-  if( ($admin != 1) && ( $row["globalaccess"] != "t" ) && ( $row["usergroupid"] != 0 ) ) {
+  if( ($admin != 1 ) && ($row["globalaccess"] != "t" ) && ( $row["usergroupid"] != 0 ) ) {
     if( ! in_array( $row["usergroupid"], $usergroup ) )
       continue;
   }
@@ -146,15 +146,15 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $flag = 1;
 
   //start list
-  $content .= "<TABLE border=\"0\">";
-  $content .= "<TR>\n<TD width=\"20\">\n<!-- indent for project list -->\n</TD>\n<TD>\n";
+  $content .= "<table border=\"0\">";
+  $content .= "<tr>\n<td width=\"20\">\n<!-- indent for project list -->\n</td>\n<td>\n";
   
   //show name and a link
-  $content .= "<A href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\"><B>".$row["name"]."</B></A>\n";
+  $content .= "<a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["id"]."\"><b>".$row["name"]."</b></a>\n";
 
   // Show a nice %-of-tasks-completed bar
-  $percent_complete = round(percent_complete($row["id"]));
-  $content .= show_percent( $percent_complete )."\n";
+  $percent_complete = round(percent_complete($row["id"] ) );
+  $content .= show_percent($percent_complete )."\n";
 
   //set project status
   $project_status = $row["status"];
@@ -174,68 +174,66 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   }
 
   //give some details of status
-  switch( $project_status ) {
+  switch($project_status ) {
 
     case "done":
-      $finished = db_result( db_query( "SELECT MAX(finished_time) FROM tasks WHERE projectid =".$row["id"]." AND parent>0" ), 0, 0 );
+      $finished = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid =".$row["id"]." AND parent>0" ), 0, 0 );
       $content .= $lang["ccompleted"]." (".nicedate( $finished ).")\n";
       break;
 
     case "cantcomplete":
-      $content .= "<I>".$lang["project_hold"].nicedate( $row["finished_time"])."</I><BR>\n";
-      $content .= "<img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\"> &nbsp; ".nicedate( $row["deadline"] )."<BR>\n";
+      $content .= "<i>".$lang["project_hold"].nicedate( $row["finished_time"])."</i><br />\n";
+      $content .= "<img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\"> &nbsp; ".nicedate( $row["deadline"] )."<br />\n";
       break;
 
     case "notactive":
-      $content .= "<I>".$lang["project_planned"]."</I><BR>\n";
+      $content .= "<i>".$lang["project_planned"]."</i><br />\n";
       break;
 
     case "nolimit":
-      $content .= $percent_complete.$lang["percent"]."<BR>\n";
-      $content .= "<I>".$lang["project_no_deadline"]."</I><BR>\n";
+      $content .= $percent_complete.$lang["percent"]."<br />\n";
+      $content .= "<i>".$lang["project_no_deadline"]."</i><br />\n";
       //show subtasks that are not complete
-      $content .= listTasks( $row["id"] );
+      $content .= listTasks($row["id"] );
       break;
 
     case "active":
     default:
-      $content .= $percent_complete.$lang["percent"]."<BR>\n";
+      $content .= $percent_complete.$lang["percent"]."<br />\n";
       $content .= "<img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\"> &nbsp; ".nicedate( $row["deadline"] )." ";
-      $state = ( $row["due"]-$row["now"] )/86400 ;
-      if( $state > 1 ) {        
-	$content .=  "(".sprintf($lang["due_sprt"], ceil($state) ).")\n";
+      $state = ($row["due"]-$row["now"] )/86400 ;
+      if($state > 1 ) {
+        $content .=  "(".sprintf($lang["due_sprt"], ceil($state) ).")\n";
       }
       else if( $state > 0 ) {
-	$content .=  "(".$lang["tomorrow"].")\n";
+        $content .=  "(".$lang["tomorrow"].")\n";
       }
       else {
+        switch( -ceil($state) ) {
+          case "0":
+            $content .=  "<font color=\"#006400\">(".$lang["due_today"].")</font><br />\n";
+            break;
 
-	  switch( -ceil($state) ) {
+          case "1":
+            $content .= "<font color=\"#FF0000\">(".$lang["overdue_1"].")</font><br />\n";
+            break;
 
-	    case "0":
-              $content .=  "<FONT color=\"#006400\">(".$lang["due_today"].")</FONT><BR>\n";
-	      break;
-
-	    case "1":
-              $content .= "<FONT color=\"#FF0000\">(".$lang["overdue_1"].")</FONT><BR>\n";
-	      break;
-
-	    default:
-              $content .= "<FONT color=\"#FF0000\">(".sprintf($lang["overdue_sprt"], -ceil($state) ).")</FONT><BR>\n";
-	      break;
-            }
+          default:
+            $content .= "<font color=\"#FF0000\">(".sprintf($lang["overdue_sprt"], -ceil($state) ).")</font><br />\n";
+            break;
+        }
       }
 
       //show subtasks that are not complete
-      $content .= listTasks( $row["id"] );
+      $content .= listTasks($row["id"] );
       break;
     }
   //end list
-  $content .= "</TD>\n</TR>\n</TABLE>\n<BR>";
+  $content .= "</td>\n</tr>\n</table>\n<br />";
 }
-$content .= "<BR>\n";
+$content .= "<br />\n";
 
-if( $flag != 1 ) $content = $lang["no_allowed_projects"];
+if($flag != 1 ) $content = $lang["no_allowed_projects"];
 
 new_box($lang["projects"], $content );
 

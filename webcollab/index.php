@@ -1,7 +1,7 @@
 <?php
 /*
   $Id$
- 
+
   WebCollab
   ---------------------------------------
   Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
@@ -35,10 +35,10 @@ include( "includes/common.php" );
 //error condition
 function secure_error( $reason = "Unauthorised area" ) {
 
-  global $lang;  
+  global $lang;
 
   create_top($lang["login"], 1 );
-  new_box($lang["error"], "<CENTER><BR>".$reason."<BR></CENTER>" );
+  new_box($lang["error"], "<center><br />$reason<br /></center>" );
   create_bottom();
   die;
 
@@ -70,7 +70,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && valid_string($_PO
     if(! get_magic_quotes_gpc() ) {
       $_POST["username"] = addslashes($_POST["username"]);
     }
-    $login_q = "SELECT id FROM users WHERE deleted='f' AND name='".$_POST["username"]."' AND password='".$md5pass."'";
+    $login_q = "SELECT id FROM users WHERE deleted='f' AND name='".$_POST["username"]."' AND password='$md5pass'";
   }
 
   //no database connection
@@ -100,51 +100,50 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && valid_string($_PO
   $session_key = md5(rand(0,42352352) . "would you hack me with this string to randomise");
 
   //remove the old login information
-  @db_query("DELETE FROM logins WHERE user_id=".$user_id );
+  @db_query("DELETE FROM logins WHERE user_id=$user_id" );
 
   //log the user in
   db_query("INSERT INTO logins( user_id, session_key, ip, lastaccess )
-                       VALUES('".$user_id."', '".$session_key."', '".$ip."', current_timestamp(0) )" );
-
+                       VALUES('$user_id', '$session_key', '$ip', current_timestamp(0) )" );
 
   //relocate the user to the main screen
-  header("location: main.php?x=".$session_key);
-
+  header("location: main.php?x=$session_key");
   die;
 }
 
 create_top($lang["login"], 1, "username" );
 
-$content = "<CENTER>";
+$content = "<center>";
 
 if( $SITE_IMG != "" ) {
-  $content .=  "<IMG src=\"images/".$SITE_IMG."\"><BR>";
-  } else {
-  $content .=  "<IMG src=\"images/webcollab.png\" alt=\"WebCollab logo\"><BR>";
-  }
+  $content .=  "<img src=\"images/".$SITE_IMG."\"><br />";
+}
+else {
+  $content .=  "<img src=\"images/webcollab.png\" alt=\"WebCollab logo\"><br />";
+}
 
-$content .= "<BR>".$lang["please_login"].":<BR><BR>\n".
-           "<FORM name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
-           "<TABLE border=\"0\">\n".
-           "<TR><TD>".$lang["login"].": </TD><TD><INPUT type=\"text\" name=\"username\" value=\"".$username."\" size=\"30\"></TD></TR>\n".
-           "<TR><TD>".$lang["password"].": </TD><TD><INPUT type=\"password\" name=\"password\" value=\"\" size=\"30\"></TD></TR>\n".
-           "</TABLE>".
-           "<INPUT type=\"submit\" value=\"".$lang["login"]."\"><BR><BR>\n".
+$content .= "<br />".$lang["please_login"].":<br /><br />\n".
+           "<form name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
+           "<table border=\"0\">\n".
+           "<tr><td>".$lang["login"].": </td><td><input type=\"text\" name=\"username\" value=\"$username\" size=\"30\"></td></tr>\n".
+           "<tr><td>".$lang["password"].": </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\"></td></tr>\n".
+           "</table>".
+           "<input type=\"submit\" value=\"".$lang["login"]."\"><br /><br />\n".
 
-           "<DIV align=\"center\">".
-	   "<BR><BR>\n".
+           "<div align=\"center\">".
+           "<br /><br />\n".
            //
-           // Select one, or more images from selection below  
+           // Select one, or more images from selection below
            //
-           //"<A href=\"http://www.php.net\"><img border=\"0\" src=\"images/php-logo.gif\" alt=\"PHP 4 code\"></A>".
-	   //"<A href=\"http://www.postgres.org\"><img border=\"0\" src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\"></A>".
-           //"<A href=\"http://httpd.apache.org\"><img border=\"0\" src=\"images/apache_b.gif\" alt=\"Powered by Apache Webserver\"></A>".
-           "<A href=\"http://www.mysql.com\"><img border=\"0\" src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\"></A>\n".
-	   "</DIV>".
-           "</FORM>".
+           //"<a href=\"http://www.php.net\"><img border=\"0\" src=\"images/php-logo.gif\" alt=\"PHP 4 code\"></a>".
+           //"<a href=\"http://www.postgres.org\"><img border=\"0\" src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\"></a>".
+           //"<a href=\"http://httpd.apache.org\"><img border=\"0\" src=\"images/apache_b.gif\" alt=\"Powered by Apache Webserver\"></a>".
+           "<a href=\"http://www.mysql.com\"><img border=\"0\" src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\"></a>\n".
+           "</div>".
+           "</form>".
 
-           "</CENTER>".
-           "<BR>";
+           "</center>".
+           "<br />";
 
 //set box options
 new_box($lang["login"], $content, "400" );

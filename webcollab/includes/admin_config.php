@@ -29,13 +29,13 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
+include_once(BASE."includes/security.php" );
 
-$maillist ="";
+$maillist = "";
 
 //get config data
-$q = db_query( "SELECT * FROM config" );
-$row = db_fetch_array( $q, 0 );
+$q = db_query("SELECT * FROM config" );
+$row = db_fetch_array($q, 0 );
 
 //set variables
 $EMAIL_ADMIN        = $row["email_admin"];
@@ -47,13 +47,13 @@ $DEFAULT_OWNER      = $row["owner"];
 $DEFAULT_GROUP      = $row["usergroup"];
 
 //mailing list
-$q = db_query( "SELECT DISTINCT * FROM maillist" );
+$q = db_query("SELECT DISTINCT * FROM maillist" );
 
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $maillist .= $row["email"].", ";
 }
 //strip off last ", "
-$len = strlen($maillist);
-$EMAIL_MAILINGLIST = substr( $maillist, 0, ($len-2) );
+$len = strlen($maillist );
+$EMAIL_MAILINGLIST = substr($maillist, 0, ($len-2) );
 
 ?>

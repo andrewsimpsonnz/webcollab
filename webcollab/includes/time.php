@@ -32,20 +32,20 @@
 //
 // Create a pgsql/mysql datetime stamp
 //
-function date_to_datetime( $day, $month, $year ) {
+function date_to_datetime($day, $month, $year ) {
   global $lang, $month_array;
 
   //check for valid calendar date
-  if( ! checkdate( $month, $day, $year )) {
-    warning( $lang["invalid_date"], sprintf( $lang["invalid_date_sprt"], $year."-".$month_array[$month - 1 ]."-".$day ) );
+  if( ! checkdate( $month, $day, $year ) ) {
+    warning($lang["invalid_date"], sprintf( $lang["invalid_date_sprt"], $year."-".$month_array[$month - 1 ]."-".$day ) );
   }
 
   //pad single digits into double digits (that way nicedate() works too...)
-  if( $month < 10 ) {
+  if($month < 10 ) {
     $month = "0".$month;
   }
 
-  if( $day < 10 ) {
+  if($day < 10 ) {
     $day = "0".$day;
   }
 
@@ -57,12 +57,12 @@ function date_to_datetime( $day, $month, $year ) {
 //
 function nicedate( $timestamp ) {
   global $month_array;
-  if( $timestamp == "" ) {
+  if($timestamp == "" ) {
     $nicedate = "";
     return $nicedate;
   }
-  $date_array = substr( $timestamp, 0, 10 );
-  $date_array = explode( "-", $date_array );
+  $date_array = substr($timestamp, 0, 10 );
+  $date_array = explode("-", $date_array );
   $year = $date_array[0];
   //need to force $month to be an integer to make all it work
   $month = (int)$date_array[1];
@@ -75,16 +75,16 @@ function nicedate( $timestamp ) {
 //
 // Strip the UTC offset from a date *and time* variable and make it look nice
 //
-function nicetime( $timestamp ) {
+function nicetime($timestamp ) {
   global $month_array;
 
-  if( $timestamp == "" ) {
+  if($timestamp == "" ) {
     $nicetime = "";
     return $nicetime;
   }
-  $time = substr( $timestamp, 11, 5 );
-  $date_array = substr( $timestamp, 0, 10 );
-  $date_array = explode( "-", $date_array );
+  $time = substr($timestamp, 11, 5 );
+  $date_array = substr($timestamp, 0, 10 );
+  $date_array = explode("-", $date_array );
   $year = $date_array[0];
   //need to force $month to be an integer to make all it work
   $month = (int)$date_array[1];
@@ -97,22 +97,22 @@ function nicetime( $timestamp ) {
 //
 // Give back a row that holds the date which comes from a pg timestamp
 //
-function date_select_from_timestamp( $timestamp="" ) {
+function date_select_from_timestamp($timestamp="" ) {
 
-  if( $timestamp=="" ) {
-    $temp_array[0]=date( "Y-m-d" );
+  if($timestamp == "" ) {
+    $temp_array[0] = date( "Y-m-d" );
   }
   else {
 
     //deparse the line
-    $temp_array = explode( " ", $timestamp );
+    $temp_array = explode(" ", $timestamp );
   }
 
-  $date_array = explode( "-", $temp_array[0] );
+  $date_array = explode("-", $temp_array[0] );
 
 
   //show line
-  return date_select( $date_array[2], $date_array[1], $date_array[0] );
+  return date_select($date_array[2], $date_array[1], $date_array[0] );
 }
 
 
@@ -124,49 +124,47 @@ function date_select( $day=-1, $month=-1, $year=-1 ) {
   global $month_array;
 
   //this is quite stupid
-  if( $day   == -1 )   $day=date("d");
-  if( $month == -1 ) $month=date("m");
-  if( $year  == -1 )  $year=date("Y");
+  if( $day   == -1 )   $day = date("d");
+  if( $month == -1 ) $month = date("m");
+  if( $year  == -1 )  $year = date("Y");
 
 
   //day
-  $content = "<SELECT name=\"day\">\n";
-  for( $i=1; $i<32 ; $i++) {
-    $content .= "<OPTION value=\"".$i."\"";
+  $content = "<select name=\"day\">\n";
+  for($i=1 ; $i<32 ; $i++ ) {
+    $content .= "<option value=\"$i\"";
 
     if( $day == $i ) $content .= " SELECTED";
 
-    $content .= ">".$i."</OPTION>\n";
+    $content .= ">$i</option>\n";
   }
-  $content .=  "</SELECT>\n";
+  $content .=  "</select>\n";
 
 
   //month (must be in decimal, 'cause that's what postgres uses!)
-  $content .= "<SELECT name=\"month\">\n";
+  $content .= "<select name=\"month\">\n";
   for( $i=1; $i<13 ; $i++) {
-    $content .= "<OPTION value=\"".$i."\"";
+    $content .= "<OPTION value=\"$i\"";
 
     if( $month == $i ) $content .= " SELECTED";
 
     //use ($i-1) because array starts at zero
-    $content .= ">".$month_array[($i-1)]."</OPTION>\n";
+    $content .= ">".$month_array[($i-1)]."</option>\n";
   }
-  $content .=  "</SELECT>\n";
+  $content .=  "</select>\n";
 
   //year
-  $content .= "<SELECT name=\"year\">\n";
-  for( $i=2001; $i<2011 ; $i++) {
-    $content .= "<OPTION value=\"".$i."\"";
+  $content .= "<select name=\"year\">\n";
+  for($i=2001; $i<2011 ; $i++ ) {
+    $content .= "<option value=\"$i\"";
 
-    if( $year == $i ) $content .= " SELECTED";
+    if($year == $i ) $content .= " SELECTED";
 
-    $content .= ">".$i."</OPTION>\n";
+    $content .= ">".$i."</option>\n";
   }
-  $content .=  "</SELECT>\n";
+  $content .=  "</select>\n";
 
  return $content;
-
 }
-
 
 ?>

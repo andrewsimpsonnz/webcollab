@@ -40,10 +40,10 @@ $admin=0;
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."config.php" );
-include_once( BASE."lang/language.php" );
-include_once( BASE."includes/database.php" );
-include_once( BASE."includes/common.php" );
+include_once(BASE."config.php" );
+include_once(BASE."lang/language.php" );
+include_once(BASE."includes/database.php" );
+include_once(BASE."includes/common.php" );
 
 //check for some values that HAVE to be present to be allowed (ip, session_key (named x))
 if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
@@ -62,11 +62,11 @@ if( isset($_REQUEST["x"]) && ( strlen($_REQUEST["x"]) == 32 ) ) {
 //seems okay at first, now go cross-checking with the known data from the database
 if( ! ($q = db_query( "SELECT logins.user_id AS user_id, logins.ip AS ip, logins.lastaccess AS lastaccess,
                              users.email AS email, users.admin AS admin, users.fullname AS fullname,
-                             ".$epoch."now() ) AS now,
-                             ".$epoch."lastaccess) AS sec_lastaccess
+                             $epoch now() ) AS now,
+                             $epoch lastaccess) AS sec_lastaccess
                              FROM logins
                              LEFT JOIN users ON (users.id=logins.user_id)
-                             WHERE session_key='".$x."'", 0 ) ) ) {
+                             WHERE session_key='$x'", 0 ) ) ) {
   error("Security manager", "Database not able to verify session key");
 }
 
@@ -80,7 +80,7 @@ if( ! ( $row = db_fetch_array($q, 0) ) ) {
 
 //session does exist, now cross-check with ip address
 if( $ip != $row["ip"] ) {
-  db_query("DELETE FROM logins WHERE session_key='".$x."'" );
+  db_query("DELETE FROM logins WHERE session_key='$x'" );
   warning( $lang["security_manager"], sprintf( $lang["ip_spoof_sprt"], $ip, $BASE_URL) );
 }
 
@@ -106,7 +106,7 @@ if( $row["admin"] == 't' ) {
 }
 
 //update the "I was here" time
-db_query("UPDATE logins SET lastaccess=current_timestamp(0) WHERE session_key='".$x."' AND user_id=".$uid );
+db_query("UPDATE logins SET lastaccess=current_timestamp(0) WHERE session_key='$x' AND user_id=$uid" );
 
 // this gives:
 //

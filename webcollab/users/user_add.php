@@ -32,39 +32,40 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
+include_once(BASE."includes/security.php" );
 
 //admins only
-if( $admin != 1 )
+if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 
-$content = "<BR><FORM name=\"inputform\" method=\"POST\" action=\"users/user_submit.php\">";
-$content .= "<TABLE border=\"0\">";
-$content .= "<TR><TD>".$lang["login_name"].":</TD><TD><INPUT type=\"text\" name=\"name\" size=\"30\"></TD></TR>\n";
-$content .= "<TR><TD>".$lang["full_name"].":</TD><TD><INPUT type=\"text\" name=\"fullname\" size=\"30\"></TD></TR>\n";
-$content .= "<TR><TD>".$lang["password"].":</TD><TD><INPUT type=\"password\" name=\"password\" size=\"30\"></TD></TR>\n";
-$content .= "<TR><TD>".$lang["email"].":</TD><TD><INPUT type=\"text\" name=\"email\" size=\"30\"></TD></TR>\n";
-$content .= "<TR><TD>".$lang["is_admin"].":</TD><TD><INPUT type=\"checkbox\" name=\"admin_rights\"></TD></TR>\n";
+$content = "<center>".
+           "<br />".
+           "<FORM name=\"inputform\" method=\"POST\" action=\"users/user_submit.php\">".
+             "<table border=\"0\">".
+               "<tr><td>".$lang["login_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\"></td></tr>\n".
+               "<tr><td>".$lang["full_name"].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\"></td></tr>\n".
+               "<tr><td>".$lang["password"].":</td><td><input type=\"password\" name=\"password\" size=\"30\"></td></tr>\n".
+               "<tr><td>".$lang["email"].":</td><td><input type=\"text\" name=\"email\" size=\"30\"></td></tr>\n".
+               "<tr><td>".$lang["is_admin"].":</td><td><input type=\"checkbox\" name=\"admin_rights\"></td></tr>\n";
 
 //add user-groups
 $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
-$content .= "<TR> <TD>".$lang["usergroup"].":</TD> <TD><SELECT name=\"usergroup[]\" MULTIPLE size=\"4\">\n";
-for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++) {
-  $content .= "<OPTION value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</OPTION>";
+$content .=    "<tr><td>".$lang["usergroup"].":</td><td><SELECT name=\"usergroup[]\" MULTIPLE size=\"4\">\n";
+for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
+  $content .=  "<option value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</option>";
 }
-$content .= "</SELECT><SMALL><I>".$lang["select_instruct"]."</I></SMALL></TD></TR>\n";
+$content .=    "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
+            "</table>".
+            "<input type=\"submit\" name=\"Add\" value=\"".$lang["add"]."\">".
+            "<input type=\"reset\">".
+            "<input type=\"hidden\" name=\"action\" value=\"insert\">".
+            "<input type=\"hidden\" name=\"x\" value=\"$x\">".
+          "</form>".
+          "</center>";
 
 
-$content .= "</TABLE>";
-$content .= "<INPUT TYPE=\"submit\" NAME=\"Add\" value=\"".$lang["add"]."\">";
-$content .= "<INPUT TYPE=\"reset\">";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"action\" value=\"insert\">";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"x\" value=\"".$x."\">";
-$content .= "</FORM>";
-
-
-new_box($lang["user_info"], "<CENTER>".$content."</CENTER>" );
+new_box($lang["user_info"], $content );
 
 
 ?>

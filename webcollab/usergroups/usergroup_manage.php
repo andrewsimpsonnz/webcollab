@@ -43,47 +43,46 @@ if( $admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 //get the info
-$q = db_query("SELECT * FROM usergroups ORDER BY name");
+$q = db_query("SELECT * FROM usergroups ORDER BY name" );
 
 //nothing here yet
-if( db_numrows($q) == 0 ) {
-  new_box($lang["usergroup_manage"], $lang["no_usergroups"]."<BR><A href=\"".$BASE_URL."usergroups.php?x=".$x."&action=add\">[".$lang["add"]."]</A>");
+if(db_numrows($q) == 0 ) {
+  new_box($lang["usergroup_manage"], $lang["no_usergroups"]."<br /><a href=\"".$BASE_URL."usergroups.php?x=$x&amp;action=add\">[".$lang["add"]."]</a>");
   return;
 }
 
-$content = "<BR>\n";
-$content .= "<TABLE border=\"0\">\n";
-$content .= "<TR><TH>".$lang["name"]."</TH><TH>".$lang["description"]."</TH><TH>".$lang["action"]."</TH></TR>\n";
+$content =   "<br />\n".
+             "<table border=\"0\">\n".
+               "<tr><th>".$lang["name"]."</th><th>".$lang["description"]."</th><th>".$lang["action"]."</th></tr>\n";
 
 //show all usergroups
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
-  $content .= "<TR><TD>".$row["name"]." </TD><TD>".$row["description"]." </TD>".
-              "<TD><A href=\"".$BASE_URL."usergroups/usergroup_submit.php?x=".$x."&action=del&usergroupid=".$row["id"]."\" onClick=\"return confirm( '".$lang["confirm_del"]."')\">[Del]</A> ".
-	      "<A href=\"".$BASE_URL."usergroups.php?x=".$x."&action=edit&usergroupid=".$row["id"]."\">[Edit]</A></TD></TR>";
+for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
+  $content .= "<tr><td>".$row["name"]."</td><td>".$row["description"]." </td>".
+              "<td><a href=\"".$BASE_URL."usergroups/usergroup_submit.php?x=$x&amp;action=del&amp;usergroupid=".$row["id"]."\" onClick=\"return confirm( '".$lang["confirm_del"]."')\">[".$lang["del"]."]</a> ".
+                "<a href=\"".$BASE_URL."usergroups.php?x=".$x."&action=edit&usergroupid=".$row["id"]."\">[".$lang["edit"]."]</a></td></tr>";
 
   //get users from that group
   $usersq = db_query("SELECT fullname,
-                             users.id AS id
-		             FROM users,
-		             usergroups_users
-		             WHERE usergroupid=".$row["id"]."
-		             AND usergroups_users.userid=users.id
-		             ORDER BY fullname");
-  for( $j=0 ; $userrow = @db_fetch_array($usersq, $j ) ; $j++) {
-    $content .= "<TR><TD colspan=\"3\" align=\"left\"><SMALL>(<A href=\"".$BASE_URL."users.php?x=".$x."&action=show&userid=".$userrow["id"]."\">".$userrow["fullname"]."</A>)</SMALL></TD></TR>";
+                            users.id AS id
+                            FROM users,
+                            usergroups_users
+                            WHERE usergroupid=".$row["id"]."
+                            AND usergroups_users.userid=users.id
+                            ORDER BY fullname");
+
+  for($j=0 ; $userrow = @db_fetch_array($usersq, $j ) ; $j++ ) {
+    $content .= "<tr><td colspan=\"3\" align=\"left\"><SMALL>(<a href=\"".$BASE_URL."users.php?x=$x&amp;action=show&userid=".$userrow["id"]."\">".$userrow["fullname"]."</a>)</small></td></tr>";
   }
-  $content .= "<TR><TD colspan=\"3\" align=\"left\">&nbsp;</TD></TR>";
+  $content .=   "<tr><td colspan=\"3\" align=\"left\">&nbsp;</td></tr>";
 
 
 
 }
 
-$content .= "</TABLE><BR>\n";
-$content .= "[<A href=\"".$BASE_URL."usergroups.php?x=".$x."&action=add\">".$lang["add"]."</A>]";
-$content .= "<BR><BR>\n";
+$content .=   "</table><br />\n".
+              "[<a href=\"".$BASE_URL."usergroups.php?x=".$x."&amp;action=add\">".$lang["add"]."</a>]".
+              "<br /><br />\n";
 
-
-new_box( $lang["manage_usergroups"], $content );
-
+new_box($lang["manage_usergroups"], $content );
 
 ?>

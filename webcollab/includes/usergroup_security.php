@@ -29,25 +29,25 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
+include_once(BASE."includes/security.php" );
 
 //set default
 $USERGROUP_MEMBER = 0;
 
 //get the tasks' security info
-if( ! ($q = db_query("SELECT usergroupid, globalaccess FROM tasks WHERE id=".$taskid ) ) )
-  error( "Usergroup security", "There was an error in the data query.");
+if( ! ($q = db_query("SELECT usergroupid, globalaccess FROM tasks WHERE id=$taskid" ) ) )
+  error("Usergroup security", "There was an error in the data query." );
 
 //get the data
 if( ! ($row = db_fetch_num($q, 0 ) ) )
-  error( "Usergroup security", "There was an error in fetching the permission data.");
+  error("Usergroup security", "There was an error in fetching the permission data." );
 
 //admins can go free the rest is checked
-if( ($admin != 1) && ($row[0] != 0 ) && ($row[1]=='f' )) {
+if( ($admin != 1) && ($row[0] != 0 ) && ($row[1]=='f' ) ) {
 
   //check if the user has a matching group
-  $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
-  for( $i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
+  $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$uid" );
+  for($i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++ ) {
 
     //found it
     if( $row[0] == $usergroup_row[0] ) {

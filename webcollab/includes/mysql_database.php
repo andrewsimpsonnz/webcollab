@@ -30,8 +30,8 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."config.php" );
-include_once( BASE."includes/common.php");
+include_once(BASE."config.php" );
+include_once(BASE."includes/common.php" );
 
 //global variables don't seem to work within mysql functions
     $db_host = $DATABASE_HOST;
@@ -40,7 +40,7 @@ include_once( BASE."includes/common.php");
     $db_name = $DATABASE_NAME;
 
 
-if( ! ( $database_connection = mysql_pconnect( $db_host, $db_user, $db_pass ) ) ) {
+if( ! ($database_connection = mysql_pconnect( $db_host, $db_user, $db_pass ) ) ) {
   $db_error_message = mysql_error($database_connection);
   error( "No database connection",  "Sorry but there seems to be a problem in connecting to the database");
 }
@@ -62,12 +62,12 @@ function db_query( $query, $dieonerror=1 ) {
   $database_query_count++;
 
   //starttime
-  list($usec, $sec)=explode(" ", microtime());
-  $starttime = ( (float)$usec + (float)$sec );
+  list($usec, $sec) = explode(" ", microtime() );
+  $starttime = ((float)$usec + (float)$sec );
 
   //check for a database connection
   if( ! mysql_select_db( $db_name, $database_connection ) ) {
-    $db_error_message = mysql_error($database_connection);
+    $db_error_message = mysql_error($database_connection );
     error("Database error", "No connection to a database" );
   }
 
@@ -75,12 +75,12 @@ function db_query( $query, $dieonerror=1 ) {
   if( ! ($result = @mysql_query( $query, $database_connection ) ) ) {
 
     $db_error_message = mysql_error($database_connection);
-    if($dieonerror==1) error("Database query error", "The following query :<BR><BR><B>".$query."</B><BR><BR>Had the following error:<BR><B>".mysql_error($database_connection)."</B>" );
+    if($dieonerror==1 ) error("Database query error", "The following query :<br /><br /><b>".$query."</b><br /><br />Had the following error:<br /><B>".mysql_error($database_connection)."</B>" );
   }
 
   //add query time to global query time
-  list($usec, $sec)=explode(" ", microtime());
-  $database_query_time += ( (float)$usec + (float)$sec ) - $starttime;
+  list($usec, $sec ) = explode(" ", microtime() );
+  $database_query_time += ((float)$usec + (float)$sec ) - $starttime;
 
 
   //all was okay return resultset
@@ -90,67 +90,67 @@ function db_query( $query, $dieonerror=1 ) {
 //
 // number of rows in result
 //
-function db_numrows( $q ) {
+function db_numrows($q ) {
 
-  $result = mysql_num_rows( $q );
+  $result = mysql_num_rows($q );
 
-return( $result );
+return($result );
 }
 
 //
 // get single result set
 //
-function db_result( $q, $row=0, $field=0 ) {
+function db_result($q, $row=0, $field=0 ) {
 
-  $result = mysql_result( $q, $row, $field );
+  $result = mysql_result($q, $row, $field );
 
-return ($result);
+return ($result );
 }
 
 //
 // fetch array result set
 //
-function db_fetch_array( $q, $row=0 ) {
+function db_fetch_array($q, $row=0 ) {
 
   $result_row = mysql_fetch_array($q, MYSQL_ASSOC );
 
-return($result_row);
+return($result_row );
 }
 
 //
 // fetch enumerated array result set
 //
-function db_fetch_num( $q, $row=0 ) {
+function db_fetch_num($q, $row=0 ) {
 
   $result_row = mysql_fetch_row($q );
 
-return($result_row);
+return($result_row );
 }
 
 //
 // last oid
 //
-function db_lastoid( $q ) {
+function db_lastoid($q ) {
 
   global $database_connection, $db_error_message;
 
-  if( ! ( $lastoid = mysql_insert_id($database_connection) ) ) {
-    $db_error_message = mysql_error($database_connection);
-    error( "Database error", "Unable to get last insert id.<BR><BR>".$db_error_message );
+  if( ! ( $lastoid = mysql_insert_id($database_connection ) ) ) {
+    $db_error_message = mysql_error($database_connection );
+    error("Database error", "Unable to get last insert id.<br /><br />".$db_error_message );
   }
 
-return($lastoid);
+return($lastoid );
 }
 
 //
 // return data pointer to begining of data set
 //
-function db_data_seek( $q ) {
+function db_data_seek($q ) {
 
-  if( mysql_num_rows( $q ) == 0 )
+  if(mysql_num_rows($q ) == 0 )
     return;
 
-  mysql_data_seek( $q, 0 );
+  mysql_data_seek($q, 0 );
 
 return;
 }
@@ -161,7 +161,7 @@ return;
 function db_begin() {
 
   //not implemented with ISAM tables
-  
+
 return;
 }
 
@@ -171,7 +171,7 @@ return;
 function db_rollback() {
 
   //not implemented with ISAM tables
-  
+
 return;
 }
 
@@ -181,7 +181,7 @@ return;
 function db_commit() {
 
   //not implemented with ISAM tables
-  
+
 return;
 }
 

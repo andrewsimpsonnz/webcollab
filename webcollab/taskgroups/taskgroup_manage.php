@@ -33,12 +33,12 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
-include_once( BASE."includes/database.php" );
-include_once( BASE."includes/common.php" );
+include_once(BASE."includes/security.php" );
+include_once(BASE."includes/database.php" );
+include_once(BASE."includes/common.php" );
 
 //admins only
-if( $admin != 1 )
+if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 //get the info
@@ -46,25 +46,25 @@ $q = db_query("SELECT * FROM taskgroups ORDER BY name");
 
 //nothing here yet
 if( db_numrows($q) == 0 ) {
-  new_box($lang["taskgroup_manage"], $lang["no_taskgroups"]."<BR><A href=\"taskgroups.php?x=".$x."&action=add\">[".$lang["add"]."]</A>");
+  new_box($lang["taskgroup_manage"], $lang["no_taskgroups"]."<br /><a href=\"taskgroups.php?x=$x&amp;action=add\">[".$lang["add"]."]</a>");
   return;
 }
 
-$content = "<BR>\n";
-$content .= "<TABLE border=\"0\">\n";
-$content .= "<TR><TH>".$lang["name"]."</TH><TH>".$lang["description"]."</TH><TH>".$lang["action"]."</TH></TR>\n";
+$content =  "<br />\n".
+            "<table border=\"0\">\n".
+              "<tr><th>".$lang["name"]."</th><th>".$lang["description"]."</th><th>".$lang["action"]."</TH></tr>\n";
 
 //show all taskgroups
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
-  $content .= "<TR><TD>".$row["name"]." </TD><TD>".$row["description"]." </TD>".
-              "<TD><A href=\"taskgroups/taskgroup_submit.php?x=".$x."&action=del&taskgroupid=".$row["id"]."\" onClick=\"return confirm( '".$lang["confirm_del"]."')\">[".$lang["del"]."]</A> ".
-	      "<TD><A href=\"taskgroups.php?x=".$x."&action=edit&taskgroupid=".$row["id"]."\">[".$lang["edit"]."]</A></TD></TR>";
+  $content .= "<tr><td>".$row["name"]." </td><td>".$row["description"]." </td>".
+              "<td><a href=\"taskgroups/taskgroup_submit.php?x=$x&amp;action=del&taskgroupid=".$row["id"]."\" onClick=\"return confirm( '".$lang["confirm_del"]."')\">[".$lang["del"]."]</a> ".
+              "<td><A href=\"taskgroups.php?x=$x&amp;action=edit&amp;taskgroupid=".$row["id"]."\">[".$lang["edit"]."]</a></td></tr>";
 
 }
 
-$content .= "</TABLE><BR>\n";
-$content .= "[<A href=\"taskgroups.php?x=".$x."&action=add\">".$lang["add"]."</A>]";
-$content .= "<BR><BR>\n";
+$content .=   "</table><br />\n".
+              "[<a href=\"taskgroups.php?x=$x&amp;action=add\">".$lang["add"]."</a>]".
+            "<br /><br />\n";
 
 
 new_box( $lang["manage_taskgroups"], $content );

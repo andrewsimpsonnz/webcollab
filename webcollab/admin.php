@@ -33,17 +33,17 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
-include_once( BASE."includes/screen.php" );
+include_once(BASE."includes/security.php" );
+include_once(BASE."includes/screen.php" );
 
-if( $admin != 1 )
+if($admin != 1 )
   return;
       
 create_top($lang["admin_config"] );
-include( "includes/mainmenu.php");
+include("includes/mainmenu.php" );
 
 goto_main();
-include( "admin/admin_config_edit.php");
+include("admin/admin_config_edit.php" );
 
 create_bottom();
 

@@ -29,30 +29,30 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."config.php" );  
+include_once(BASE."config.php" );
 
-switch( $DATABASE_TYPE ) {
+switch($DATABASE_TYPE ) {
 
   case "mysql":
     include( BASE."includes/mysql_database.php" );
     break;
 
   case "postgresql":
-    switch( version_compare(PHP_VERSION, "4.2.0" ) ) {
+    switch(version_compare(PHP_VERSION, "4.2.0" ) ) {
       case 0:
       case 1:
-        include( BASE."includes/pgsql_database.php" );
+        include(BASE."includes/pgsql_database.php" );
         break;
 
       case -1:
       default:
-        include( BASE."includes/pgsql_old_database.php" );
+        include(BASE."includes/pgsql_old_database.php" );
         break;
     }
     break;
 
   case "mysql_innodb":
-    include( BASE."includes/mysql_innodb_database.php" );
+    include(BASE."includes/mysql_innodb_database.php" );
     break;
 
   default:

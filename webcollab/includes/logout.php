@@ -33,12 +33,12 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
+include_once(BASE."includes/security.php" );
 
 //log the user out by nulling their session key
 //record preserved to allow time of last login to be recorded
-db_query("UPDATE logins SET session_key='' WHERE user_id=".$uid );
+db_query("UPDATE logins SET session_key='' WHERE user_id=$uid" );
 
-header("Location: ".BASE."index.php");
+header("Location: ".BASE."index.php" );
 
 ?>

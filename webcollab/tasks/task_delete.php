@@ -33,28 +33,28 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
-include_once( BASE."includes/admin_config.php" );
-include_once( BASE."includes/email.php" );
-include_once( BASE."config.php" );
+include_once(BASE."includes/security.php" );
+include_once(BASE."includes/admin_config.php" );
+include_once(BASE."includes/email.php" );
+include_once(BASE."config.php" );
 
 
 //
 // Finds children recursively and puts them in an array
 //
-function find_and_report_children( $taskid ) {
+function find_and_report_children($taskid ) {
 
   global $arrayindex, $ids;
 
   //query for children
-  if( ! ($q = db_query("SELECT id FROM tasks WHERE parent=".$taskid, 0))) return;
-  if( db_numrows($q) == 0 ) return;
+  if( ! ($q = db_query("SELECT id FROM tasks WHERE parent=$taskid", 0 ) ) ) return;
+  if(db_numrows($q) == 0 ) return;
 
   //loop all children and put them in an array
-  for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
+  for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
     $ids[$arrayindex] = $row[0];
     $arrayindex++;
-    find_and_report_children( $row[0] );
+    find_and_report_children($row[0] );
   }
 
   return;
@@ -69,41 +69,41 @@ if( isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
    $taskid = $_REQUEST["taskid"];
 
   //can this user delete this task ?
-  if( ! ( ($admin == 1) || ( db_result( db_query("SELECT COUNT(*) FROM tasks WHERE id=".$taskid." AND owner=".$uid ), 0, 0 ) == 1 ) ) )
+  if( ! ( ($admin == 1) || (db_result(db_query("SELECT COUNT(*) FROM tasks WHERE id=$taskid AND owner=$uid" ), 0, 0 ) == 1 ) ) )
     error("Access denied", "You do not own this task and therefore you may not delete it. Ask an admin or the tasks' owner to do this for you.");
 
   //does the task exist ?
-  if( db_result( db_query("SELECT COUNT(*) FROM tasks WHERE id=".$taskid ), 0, 0 ) == 0 )
+  if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE id=$taskid" ), 0, 0 ) == 0 )
     error("Task delete", "Sorry but that task does not exist." );
 
   //find our return-location
-  if( ($parentid = db_result( db_query("SELECT parent FROM tasks WHERE id=".$taskid ), 0, 0)) == 0 )
-    $returnvalue="main.php?x=".$x;
+  if( ($parentid = db_result(db_query("SELECT parent FROM tasks WHERE id=$taskid" ), 0, 0)) == 0 )
+    $returnvalue = "main.php?x=".$x;
   else
-    $returnvalue="tasks.php?x=".$x."&action=show&taskid=".$parentid;
+    $returnvalue = "tasks.php?x=$x&action=show&taskid=".$parentid;
 
   //begin transaction
   db_begin();
 
   //get task and owner information
   $q = db_query("SELECT tasks.parent AS parent,
-			tasks.projectid AS projectid,
-			tasks.name AS name,
-			tasks.text AS text,
-			tasks.status AS status,
-  			users.id AS id,
-			users.email AS email
-			FROM tasks
-			LEFT JOIN users ON (users.id=tasks.owner)
-			WHERE tasks.id=".$taskid );
+            tasks.projectid AS projectid,
+            tasks.name AS name,
+            tasks.text AS text,
+            tasks.status AS status,
+            users.id AS id,
+            users.email AS email
+            FROM tasks
+            LEFT JOIN users ON (users.id=tasks.owner)
+            WHERE tasks.id=$taskid" );
 
   //if there is no line, the task is not owned
-  if( db_numrows($q) > 0 ) {
+  if(db_numrows($q) > 0 ) {
     $row = @db_fetch_array($q, 0 );
   }
 
   //add the task itself
-  $ids[0]=$taskid;
+  $ids[0] = $taskid;
 
   //find all recursively linked children
   $arrayindex=1;
@@ -115,42 +115,43 @@ if( isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
   - the item itself
   - files
   */
-  for( $i=0 ; $i < $arrayindex ; $i++ ) {
+  for($i=0 ; $i < $arrayindex ; $i++ ) {
 
     //delete all from seen table
-    db_query( "DELETE FROM seen WHERE taskid=".$ids[$i] );
+    db_query("DELETE FROM seen WHERE taskid=".$ids[$i] );
 
     //delete forum posts
-    db_query( "DELETE FROM forum WHERE taskid=".$ids[$i] );
+    db_query("DELETE FROM forum WHERE taskid=".$ids[$i] );
 
     //delete all files physically
-    $fq = db_query( "SELECT oid, filename FROM files WHERE taskid=".$ids[$i] );
-    for( $j=0 ; $frow = @db_fetch_array($fq, $j ) ; $j++) {
+    $fq = db_query("SELECT oid, filename FROM files WHERE taskid=".$ids[$i] );
+    for($j=0 ; $frow = @db_fetch_array($fq, $j ) ; $j++) {
 
-      if( file_exists( $FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
+      if(file_exists($FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
         unlink( $FILE_BASE."/".$row["oid"]."__".$row["filename"] );
       }
     }
 
     //delete all files attached to it in the database
-    db_query( "DELETE FROM files WHERE taskid=".$ids[$i] );
+    db_query("DELETE FROM files WHERE taskid=".$ids[$i] );
 
     //delete item
-    db_query( "DELETE FROM tasks WHERE id=".$ids[$i] );
+    db_query("DELETE FROM tasks WHERE id=".$ids[$i] );
 
   }
   //transaction complete
   db_commit();
 
   //inform the user that his task has been deleted by an admin
-  if( db_numrows($q) > 0 ) {
-    if( $uid != $row["id"] ) {
+  if(db_numrows($q) > 0 ) {
+    if($uid != $row["id"] ) {
        if($row["parent"] == 0 ) {
          $name_task = $row["name"];
-	 $type = $lang["project"];
-       } else {
-         $name_task = db_result( db_query("SELECT name FROM tasks WHERE tasks.id=".$row["projectid"] ), 0, 0 );
-	 $type = $lang["task"];
+         $type = $lang["project"];
+       }
+       else {
+         $name_task = db_result(db_query("SELECT name FROM tasks WHERE tasks.id=".$row["projectid"] ), 0, 0 );
+         $type = $lang["task"];
        }
        switch($row["status"] ) {
          case "created":
@@ -177,9 +178,9 @@ if( isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
            $status = "";
            break;
        }
-       include_once( BASE."lang/".$LOCALE."_email.php" );
+       include_once(BASE."lang/".$LOCALE."_email.php" );
        $message = sprintf( $email_delete_task, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_task, $row["name"],$status, clean($row["text"]) );
-       email( $row["email"], sprintf($title_delete_task, ucfirst($type) ), $message );
+       email($row["email"], sprintf($title_delete_task, ucfirst($type) ), $message );
     }
   }
 }

@@ -43,36 +43,36 @@ include_once( BASE."includes/security.php" );
 include_once( BASE."includes/database.php" );
 
 //the task dependent part
-if( isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
+if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
   $taskid = $_GET["taskid"];
 
   //find out if the user owns this task
-  if( @db_result( db_query("SELECT COUNT(*) FROM tasks WHERE id=".$taskid." AND owner=".$uid ), 0, 0 ) == 1 )
+  if(@db_result(db_query("SELECT COUNT(*) FROM tasks WHERE id=$taskid AND owner=$uid" ), 0, 0 ) == 1 )
     $owner=true;
   else
     $owner=false;
 
   if( ($admin==1) || $owner ) {
     
-    $q = db_query( "SELECT name, parent FROM tasks WHERE id=".$taskid );
+    $q = db_query("SELECT name, parent FROM tasks WHERE id=$taskid" );
     $row = db_fetch_array($q, 0 );
-    if( $row["parent"] == 0 )
+    if($row["parent"] == 0 )
       $title = $lang["pproject"];
 
-    $content .= "<SMALL><B>".$lang["admin"].":</B></SMALL><BR>\n";
-    $content .= "<A href=\"tasks.php?x=".$x."&action=delete&taskid=".$taskid."\"  onClick=\"return confirm( '".sprintf($lang["del_javascript_sprt"], strtolower($title), $row["name"] )."')\">".$lang["delete"]." ".strtolower($title)."</A><BR>\n";
-    $content .= "<A href=\"tasks.php?x=".$x."&action=edit&taskid=".$taskid."\">".$lang["edit"]." ".strtolower($title)."</A><BR>\n";
-    $content .= "<BR><SMALL><B>".$lang["global"].":</B></SMALL><BR>\n";
+    $content .= "<small><b>".$lang["admin"].":</b></small><br />\n".
+                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onClick=\"return confirm( '".sprintf($lang["del_javascript_sprt"], strtolower($title), $row["name"] )."')\">".$lang["delete"]." ".strtolower($title)."</a><br />\n".
+                "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]." ".strtolower($title)."</a><br />\n".
+                "<br /><small><b>".$lang["global"].":</b></small><br />\n";
   }
 
-  $content .= "<A href=\"tasks.php?x=".$x."&action=add&parentid=".$taskid."\">".$lang["add_task"]."</A><BR>\n";
+  $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang["add_task"]."</a><br />\n";
 
 }
 
 
 //the task-independent part
-$content .= "<A href=\"tasks.php?x=".$x."&action=add\">".$lang["add_project"]."</A><BR>\n";
+$content .= "<a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a><br />\n";
 
 new_box( $title.$lang["options"], $content );
 

@@ -62,47 +62,47 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
         users.fullname AS fullname,
         tasks.owner AS taskowner
         FROM forum
-	LEFT JOIN users ON ( users.id=forum.userid)
+        LEFT JOIN users ON ( users.id=forum.userid)
         LEFT JOIN tasks ON ( tasks.id=forum.taskid )
-        WHERE forum.taskid=".$taskid."
-        AND forum.parent=".$parentid."
-        AND forum.usergroupid=".$usergroupid."
+        WHERE forum.taskid=$taskid
+        AND forum.parent=$parentid
+        AND forum.usergroupid=$usergroupid
         ORDER BY forum.posted";
 
   //query
-  $q = db_query( $query );
+  $q = db_query($query );
 
   //check for any posts
-  if( db_numrows($q) < 1 ) {
+  if( db_numrows($q ) < 1 ) {
     return;
   }
 
-  $this_content = "<UL>";
+  $this_content = "<ul>";
 
   //show all forum posts on this level
-  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+  for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
-    $this_content .= "<LI><SMALL><A href=\"".$BASE_URL."users.php?x=".$x."&action=show&userid=".$row["userid"]."\">".$row["fullname"]."</A> (".nicetime( $row["posted"] ).")".
-                     " [<A href=\"".$BASE_URL."forum.php?x=".$x."&action=add&parentid=".$row["id"]."&taskid=".$taskid;
+    $this_content .= "<li><small><a href=\"".$BASE_URL."users.php?x=$x&amp;action=show&userid=".$row["userid"]."\">".$row["fullname"]."</a> (".nicetime( $row["posted"] ).")".
+                     " [<a href=\"".$BASE_URL."forum.php?x=$x&amp;action=add&amp;parentid=".$row["id"]."&amp;taskid=$taskid";
 
     //if this is a post to a private forum then announce it to the poster-engine
     if( $usergroupid != 0 )
       $this_content .= "&usergroupid=".$usergroupid;
 
-    $this_content .= "\">".$lang["reply"]."</A>]</SMALL>\n";
+    $this_content .= "\">".$lang["reply"]."</a>]</small>\n";
 
     //owners of the thread, owners of the post and admins have a "delete" option
     if( ($admin==1) || ($uid == $row["taskowner"] ) || ($uid == $row["postowner"] ) ) {
-      $this_content .= " <SMALL>[<A href=\"".$BASE_URL."forum/forum_submit.php?x=".$x."&action=del&postid=".$row["id"]."&taskid=".$taskid."\" onClick=\"return confirm( '".$lang["confirm_del"]."' )\">".$lang["del"]."</A>]</SMALL>\n";
+      $this_content .= " <small>[<a href=\"".$BASE_URL."forum/forum_submit.php?x=$x&amp;action=del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm( '".$lang["confirm_del"]."' )\">".$lang["del"]."</a>]</small>\n";
     }
 
-    $this_content .= "<BR>".nl2br( $row["text"] )."\n";
+    $this_content .= "<br />".nl2br( $row["text"] )."\n";
 
     //recursive search
     $this_content .= list_posts_from_task( $row["id"], $taskid, $usergroupid );
   }
 
-  $this_content .= "</UL>";
+  $this_content .= "</ul>";
 
   return $this_content;
 }
@@ -117,7 +117,7 @@ $content = "";
 //all the posts that have parentid 0 (the taskid is included in the query itself so this will _not_ show all results)
 $content = list_posts_from_task( 0, $taskid, 0 );
 //add an option to add posts
-$content .= "\n<SMALL>\n<BR>\n[<A href=\"".$BASE_URL."forum.php?x=".$x."&action=add&parentid=0&taskid=".$taskid."\">".$lang["new_post"]."</A>]</SMALL>";
+$content .= "\n<small>\n<br />\n[<a href=\"".$BASE_URL."forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang["new_post"]."</a>]</small>";
 //show it
 new_box($lang["public_user_forum"], $content );
 
@@ -127,7 +127,7 @@ new_box($lang["public_user_forum"], $content );
 $content = "";
 
 //show all posts that are private to that task's user-group if you are withing the group (so AND user AND task have to belong to the same group)
-$task_usergroup = db_result( db_query( "SELECT usergroupid FROM tasks WHERE id=".$taskid ), 0, 0 );
+$task_usergroup = db_result(db_query("SELECT usergroupid FROM tasks WHERE id=$taskid" ), 0, 0 );
 
 //dont show private forums if the task has not yet been assigned to a usergroup
 if( $task_usergroup != 0 ) {
@@ -135,31 +135,30 @@ if( $task_usergroup != 0 ) {
   $found=0;
 
   //check if the user has a matching group
-  $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
-  for( $i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
+  $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$uid" );
+  for($i=0; $usergroup_row = @db_fetch_num($usergroup_q, $i ); $i++ ) {
 
     //found it
-    if( $task_usergroup == $usergroup_row[0] ) {
+    if($task_usergroup == $usergroup_row[0] ) {
       $found=1;
       break;
     }
   }
 
   //if the user is an admin, access is granted
-  if( $admin == 1 )
+  if($admin == 1 )
     $found = 1;
 
   //give access if there was a match
-  if( $found == 1 ) {
+  if($found == 1 ) {
 
-    $content = list_posts_from_task( 0, $taskid, $task_usergroup);
+    $content = list_posts_from_task(0, $taskid, $task_usergroup);
     //add an option to add posts
-    $usergroup_name = db_result( db_query( "SELECT name FROM usergroups WHERE id=".$task_usergroup ), 0, 0 );
-    $content .= "\n<SMALL>\n<BR>\n[<A href=\"".$BASE_URL."forum.php?x=".$x."&action=add&parentid=0&taskid=".$taskid."&usergroupid=".$task_usergroup."\">".$lang["new_post"]."</A>]</SMALL>";
+    $usergroup_name = db_result( db_query("SELECT name FROM usergroups WHERE id=$task_usergroup" ), 0, 0 );
+    $content .= "\n<small>\n<br />\n[<a href=\"".$BASE_URL."forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=$task_usergroup&amp;\">".$lang["new_post"]."</a>]</small>";
     //show it
     new_box(sprintf($lang["private_forum_sprt"], $usergroup_name ), $content );
   }
 }
-
 
 ?>

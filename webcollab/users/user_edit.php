@@ -33,55 +33,55 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
+include_once(BASE."includes/security.php" );
 
 //secure vars
-$userid="";
+$userid = "";
 
 //is an admin everything can be queried otherwise only yourself can be queried
-if( $admin == 1 ) {
+if($admin == 1 ) {
 
   //is there a uid ?
   if( ! isset($_GET["userid"]) || ! is_numeric($_GET["userid"]) )
-    error("User edit", "No userid was specified");
+    error("User edit", "No userid was specified" );
 
   $userid = $_GET["userid"];
 
   //query for user
-  $q = db_query("SELECT * FROM users WHERE id=".$userid );
+  $q = db_query("SELECT * FROM users WHERE id=$userid" );
 
   //also query for the groups that this user is in
-  $usergroups_users_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$userid );
+  $usergroups_users_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$userid" );
 
 
 }
 else {
 
   //user
-  $q = db_query( "SELECT * FROM users WHERE id=".$uid );
+  $q = db_query( "SELECT * FROM users WHERE id=$uid" );
 
 }
 
 //fetch data
-if( ! ( $row = db_fetch_array($q , 0 ) ) )
-  error("Database result", "Error in retrieving user-data from database");
+if( ! ($row = db_fetch_array($q , 0 ) ) )
+  error("Database result", "Error in retrieving user-data from database" );
 
 
 //show data
-$content = "<BR><FORM method=\"POST\" action=\"users/user_submit.php\">";
-$content .= "<TABLE border=\"0\">";
-$content .= "<TR><TD>".$lang["login_name"].":</TD><TD><INPUT type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></TD></TR>\n";
-$content .= "<TR><TD>".$lang["full_name"].":</TD><TD><INPUT type=\"text\" name=\"fullname\" size=\"30\" value=\"".$row["fullname"]."\"></TD></TR>\n";
-$content .= "<TR><TD>".$lang["password"].":</TD><TD><INPUT type=\"password\" name=\"password\" size=\"30\" value=\"\"><SMALL><I>(Leave blank for current password)</I></SMALL></TD></TR>\n";
-$content .= "<TR><TD>".$lang["email"].":</TD><TD><INPUT type=\"text\" name=\"email\" size=\"30\" value=\"".$row["email"]."\"></TD></TR>\n";
+$content =  "<center><br /><form method=\"POST\" action=\"users/user_submit.php\">".
+            "<table border=\"0\">".
+              "<tr><td>".$lang["login_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></td></tr>\n".
+              "<tr><td>".$lang["full_name"].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" value=\"".$row["fullname"]."\"></td></tr>\n".
+              "<tr><td>".$lang["password"].":</td><td><input type=\"password\" name=\"password\" size=\"30\" value=\"\"><small><I>(Leave blank for current password)</I></small></td></tr>\n".
+              "<tr><td>".$lang["email"].":</td><td><input type=\"text\" name=\"email\" size=\"30\" value=\"".$row["email"]."\"></td></tr>\n";
 
 //dangerous action!
 if( $admin == 1 ) {
 
   if( $row["admin"] == 't' )
-    $content .= "<TR><TD>".$lang["is_admin"].":</TD><TD><INPUT type=\"checkbox\" name=\"admin_rights\" CHECKED></TD></TR>\n";
+    $content .= "<tr><td>".$lang["is_admin"].":</td><td><input type=\"checkbox\" name=\"admin_rights\" CHECKED></td></tr>\n";
   else
-    $content .= "<TR><TD>".$lang["is_admin"].":</TD><TD><INPUT type=\"checkbox\" name=\"admin_rights\"></TD></TR>\n";
+    $content .= "<tr><td>".$lang["is_admin"].":</td><td><input type=\"checkbox\" name=\"admin_rights\"></td></tr>\n";
 }
 
 //add user-groups (only admins can do this)
@@ -89,12 +89,12 @@ if( $admin == 1 ) {
 
   //add user-groups
   $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
-  $content .= "<TR><TD></TD><TD><SMALL><I>".$lang["member_groups"]."</I></SMALL></TD></TR>\n";
-  $content .= "<TR> <TD>".$lang["usergroups"].":</TD> <TD><SELECT name=\"usergroup[]\" MULTIPLE size=\"4\">\n";
-  for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++) {
+  $content .= "<tr><td></td><td><small><i>".$lang["member_groups"]."</i></small></td></tr>\n";
+  $content .= "<tr> <td>".$lang["usergroups"].":</td> <td><select name=\"usergroup[]\" MULTIPLE size=\"4\">\n";
+  for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++) {
 
     $found=0;
-    $content .= "<OPTION value=\"".$usergroup_row["id"]."\"";
+    $content .= "<option value=\"".$usergroup_row["id"]."\"";
 
     //loop all groups the user is in and tag the ones he is in
     @db_data_seek( $usergroups_users_q ); //reset mysql internal pointer each cycle
@@ -102,8 +102,8 @@ if( $admin == 1 ) {
 
       if( $usergroups_users_row["usergroupid"] == $usergroup_row["id"] ) {
         $content .= " SELECTED >";
-	$found=1;
-	break;
+    $found=1;
+    break;
       }
     }
 
@@ -111,20 +111,20 @@ if( $admin == 1 ) {
     if( $found == 0 )
       $content .= " >";
 
-    $content .= $usergroup_row["name"]."</OPTION>";
-
+    $content .= $usergroup_row["name"]."</option>";
   }
-  $content .= "</SELECT><SMALL><I>".$lang["select_instruct"]."</I></SMALL></TD></TR>\n";
+  $content .= "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n";
 }
 
-$content .= "</TABLE>";
-$content .= "<INPUT TYPE=\"submit\" NAME=\"Add\" value=\"".$lang["submit_changes"]."\">";
-$content .= "<INPUT TYPE=\"reset\">";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"action\" value=\"edit\">";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"x\" value=\"".$x."\">";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"userid\" value=\"".$userid."\">";
-$content .= "</FORM>";
+$content .= "</table>".
+            "<input type=\"submit\" NAME=\"Add\" value=\"".$lang["submit_changes"]."\">".
+            "<input type=\"reset\">".
+            "<input type=\"hidden\" NAME=\"action\" value=\"edit\">".
+            "<input type=\"hidden\" NAME=\"x\" value=\"$x\">".
+            "<input type=\"hidden\" NAME=\"userid\" value=\"$userid\">".
+            "</form>".
+            "</center><br /><br />";
 
-new_box($lang["edit_user"], "<CENTER>".$content."</CENTER>" );
+new_box($lang["edit_user"], $content );
 
 ?>

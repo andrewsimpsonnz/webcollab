@@ -35,33 +35,33 @@ $content = "";
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
+include_once(BASE."includes/security.php" );
 
 //query
-$q = db_query( "SELECT * FROM users WHERE deleted='f' ORDER by fullname" );
+$q = db_query("SELECT * FROM users WHERE deleted='f' ORDER by fullname" );
 
 //check for enough users
-if( db_numrows($q) < 1 ) {
-  new_box($lang["users"], "<SMALL>".$lang["no_users"]."</SMALL>" );
+if(db_numrows($q) < 1 ) {
+  new_box($lang["users"], "<small>".$lang["no_users"]."</small>" );
   return;
 }
 
-$content = "<TABLE border=\"0\">\n";
+$content = "<small><table border=\"0\">\n";
 
 //show them
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
-  $content .= "<TR><TD><SMALL><A href=\"users.php?x=".$x."&action=show&userid=".$row["id"]."\">".$row["fullname"]."</A></SMALL></TD>";
+for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+  $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&userid=".$row["id"]."\">".$row["fullname"]."</a></small></td>";
 
-  if( $admin == 1 ) {
-    $content .= "<TD align=\"right\" nowrap><SMALL> [<A href=\"users/user_del.php?x=".$x."&userid=".$row["id"]."\">".$lang["del"]."</A>]".
-                "[<A href=\"users.php?x=".$x."&userid=".$row["id"]."&action=edit\">".$lang["edit"]."</A>]</SMALL></TD>";
+  if($admin == 1 ) {
+    $content .= "<td align=\"right\" nowrap><small> [<a href=\"users/user_del.php?x=$x&amp;userid=".$row["id"]."\">".$lang["del"]."</a>]".
+                "[<a href=\"users.php?x=$x&amp;userid=".$row["id"]."&amp;action=edit\">".$lang["edit"]."</a>]</small></td>";
   }
-  $content .= "</TR>\n";
+  $content .= "</tr>\n";
 }
 
-$content .= "</TABLE>";
+$content .= "</table></small>";
 
 //show it
-new_box($lang["existing_users"], "<SMALL>".$content."</SMALL>" );
+new_box($lang["existing_users"], $content );
 
 ?>

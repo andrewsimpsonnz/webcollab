@@ -33,10 +33,10 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to  continue" );
 
-include_once( BASE."includes/security.php" );
+include_once(BASE."includes/security.php" );
 
 //admins only
-if( $admin != 1 )
+if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 //secure
@@ -46,26 +46,24 @@ if( ! isset($_GET["taskgroupid"]) || ! is_numeric($_GET["taskgroupid"]) )
 $taskgroupid = $_GET["taskgroupid"];
 
 //get taskgroup information
-$q = db_query("SELECT * FROM taskgroups WHERE id=".$taskgroupid);
+$q = db_query("SELECT * FROM taskgroups WHERE id=$taskgroupid" );
 $row = db_fetch_array( $q, 0 );
 
-$content = "<BR>\n";
-$content .= "<FORM method=\"POST\" action=\"taskgroups/taskgroup_submit.php\">\n";
-$content .= "<TABLE border=\"0\">\n";
-$content .= "<TR> <TD>".$lang["taskgroup_name"]."</TD> <TD><INPUT type=\"input\" name=\"name\" value=\"".$row["name"]."\" size=\"30\"></TD> </TR>\n";
-$content .= "<TR> <TD>".$lang["taskgroup_description"]."</TD><TD><INPUT type=\"input\" name=\"description\" value=\"".$row["description"]."\" size=\"30\"></TD> </TR>\n";
-$content .= "</TABLE>\n";
+$content =  "<br />\n".
+            "<form method=\"POST\" action=\"taskgroups/taskgroup_submit.php\">\n".
+              "<table border=\"0\">\n".
+                "<tr><td>".$lang["taskgroup_name"]."</td> <td><input type=\"input\" name=\"name\" value=\"".$row["name"]." \"size=\"30\"></td></tr>\n".
+                "<tr><td>".$lang["taskgroup_description"]."</td><td><input type=\"input\" name=\"description\" value=\"".$row["description"]." \"size=\"30\"></td></tr>\n".
+              "</table>\n".
+              "<input type=\"hidden\" name=\"x\" value=\"$x\"> ".
+              "<input type=\"hidden\" name=\"taskgroupid\" value=\"$taskgroupid\">".
+              "<input type=\"hidden\" name=\"action\" value=\"edit\"> ".
+              "<input type=\"submit\" name=\"Add\" value=\"".$lang["submit_changes"]."\"> ".
+              "<input type=\"reset\">".
+            "</form>\n".
+            "<br /><br />\n";
 
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"x\" value=\"".$x."\"> ";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"taskgroupid\" value=\"".$taskgroupid."\"> ";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"action\" value=\"edit\"> ";
-
-$content .= "<INPUT TYPE=\"submit\" NAME=\"Add\" value=\"".$lang["submit_changes"]."\"> ";
-$content .= "<INPUT TYPE=\"reset\">";
-$content .= "</FORM>\n";
-$content .= "<BR><BR>\n";
-
-new_box( $lang["edit_taskgroup"], $content );
+new_box($lang["edit_taskgroup"], $content );
 
 
 ?>

@@ -36,20 +36,17 @@ $content = "";
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
+include_once(BASE."includes/security.php" );
 
 //add an option to add users
-if( $admin == 1 ) {
-  $content .= "\n<A href=\"users.php?x=".$x."&action=manage\">".$lang["manage"]."</A>";
-  $content .= "\n<BR>\n<A href=\"users.php?x=".$x."&action=add\">".$lang["add"]."</A><BR>\n";
-
+if($admin == 1 ) {
+  $content .= "<a href=\"users.php?x=$x&amp;action=manage\">".$lang["manage"]."</a><br />\n".
+              "<a href=\"users.php?x=$x&amp;action=add\">".$lang["add"]."</a><br />\n";
 }
 
-$content .= "<A href=\"users.php?x=".$x."&action=showonline\">".$lang["who_online"]."</A><BR>\n";
-$content .= "<A href=\"users.php?x=".$x."&action=edit&userid=".$uid."\">".$lang["edit_details"]."</A><BR>\n";
-$content .= "<A href=\"users.php?x=".$x."&action=show&userid=".$uid."\">".$lang["show_details"]."</A><BR>\n";
-
-
+$content .= "<a href=\"users.php?x=$x&amp;action=showonline\">".$lang["who_online"]."</a><br />\n".
+            "<a href=\"users.php?x=$x&amp;action=edit&userid=$uid\">".$lang["edit_details"]."</a><br />\n".
+            "<a href=\"users.php?x=$x&amp;action=show&userid=$uid\">".$lang["show_details"]."</a><br />\n";
 
 //show it
 new_box($lang["users"], $content );

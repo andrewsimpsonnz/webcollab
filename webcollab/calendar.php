@@ -64,71 +64,71 @@ for( $i=0 ; $row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
 }
 
 //set up form for user input
-$content .= "<BR><DIV align=\"center\">\n";
-$content .= "<FORM method=\"POST\" action=\"calendar.php\">";
+$content .= "<br /><div align=\"center\">\n";
+$content .= "<form method=\"POST\" action=\"calendar.php\">";
 //month (must be in decimal, 'cause that's what database uses!)
-$content .= "<SELECT name=\"month\">\n";
+$content .= "<select name=\"month\">\n";
 for( $i=1; $i<13 ; $i++) {
-  $content .= "<OPTION value=\"".$i."\"";
+  $content .= "<option value=\"$i\"";
 
   if( $month == $i ) $content .= " SELECTED";
   //use ($i-1) because array starts at zero
-  $content .= ">".$month_array[($i-1)]."</OPTION>\n";
+  $content .= ">".$month_array[($i-1)]."</option>\n";
   }
-$content .=  "</SELECT>\n";
+$content .=  "</select>\n";
 
 //year
-$content .= "<SELECT name=\"year\">\n";
+$content .= "<select name=\"year\">\n";
 for( $i=2001; $i<2011 ; $i++) {
-  $content .= "<OPTION value=\"".$i."\"";
+  $content .= "<option value=\"$i\"";
 
   if( $year == $i ) $content .= " SELECTED";
-  $content .= ">".$i."</OPTION>\n";
+  $content .= ">".$i."</option>\n";
   }
-$content .=  "</SELECT>\n".
-             "<INPUT type=\"hidden\" name=\"x\" value=\"".$x."\">\n".
-             "<INPUT type=\"submit\" value=\"Change\">\n".
-             "</FORM>\n<BR>\n";
+$content .=  "</select>\n".
+             "<input type=\"hidden\" name=\"x\" value=\"".$x."\">\n".
+             "<input type=\"submit\" value=\"Change\">\n".
+             "</form>\n<br />\n";
 
 //number of days in month
-$numdays = date("t",mktime(0,0,0,$month,1,$year));
+$numdays = date("t", mktime(0, 0, 0, $month, 1, $year ) );
 
 //main calendar table
-$content .= "<TABLE border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"97%\">\n<TR>\n";
-$content .= "<TD colspan=\"7\" valign=\"middle\" align=\"center\"><B>".date("F",mktime(0,0,0,$month,1,$year))."</B>\n</TD>\n";
-$content .= "</TR>\n";
+$content .= "<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"97%\">\n<tr>\n";
+$content .= "<td colspan=\"7\" valign=\"middle\" align=\"center\"><b>".date("F", mktime(0, 0, 0, $month, 1, $year ) )."</b>\n</td>\n";
+$content .= "</tr>\n";
 
 //weekdays
-$content .= "<TR valign=\"middle\" align=\"center\">\n";
+$content .= "<tr valign=\"middle\" align=\"center\">\n";
 foreach($week_array as $value) {
-  $content .= "<TD width=\"13.86%\"><B>".$value."</B></TD>\n";
+  $content .= "<td width=\"13.86%\"><b>$value</b></td>\n";
 }
-$content .= "</TR>\n";
+$content .= "</tr>\n";
 
 //show lead in to dates
 $content .= "<TR valign=\"top\" align=\"center\">\n";
-for ($i = 0; $i < $dayone = date("w",mktime(0,0,0,$month,1,$year)); $i++) {
-  $content .= "<TD>&nbsp;</TD>\n";
+for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); $i++ ) {
+  $content .= "<td>&nbsp;</td>\n";
 }
 
 //show dates
-for ($num = 1; $num <= $numdays; $num++) {
-  if ($i >= 7) {
-    $content .= "</TR>\n".
-                "<TR valign=\"top\" align=\"center\">\n";
+for ($num = 1; $num <= $numdays; $num++ ) {
+  if ($i >= 7 ) {
+    $content .= "</tr>\n".
+                "<Tr valign=\"top\" align=\"center\">\n";
     $i=0;
   }
-  $content .= "<TD ";
+  $content .= "<Td ";
 
   //highlight today
   if($num == $today)
     $content .= "bgcolor=\"#C0C0C0\"";
 
-  $content .= ">".$num."<BR>";
+  $content .= ">$num<br />";
   $pad = 0;
 
   //search for tasks on this date
-  $q = db_query( "SELECT id, name, parent, status, usergroupid, globalaccess FROM tasks WHERE deadline='".$year."-".$month."-".$num."'" );
+  $q = db_query( "SELECT id, name, parent, status, usergroupid, globalaccess FROM tasks WHERE deadline='$year-$month-$num'" );
 
   if( db_numrows($q) > 0 ) {
     for( $j=0 ; $row = @db_fetch_array($q, $j ) ; $j++) {
@@ -136,65 +136,62 @@ for ($num = 1; $num <= $numdays; $num++) {
       //check for private usergroups
       if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
 
-	if( ! in_array( $row["usergroupid"], $usergroup ) )
+        if( ! in_array( $row["usergroupid"], $usergroup ) )
           continue;
       }
 
       switch( $row["status"]) {
-
         case "notactive":
-	case "cantcomplete":
-	case "nolimit":
-	  //don't show if not active
-	  continue;
-	  break;
+        case "cantcomplete":
+        case "nolimit":
+          //don't show if not active
+          continue;
+        break;
 
         default:
-	  //active task or project
+          //active task or project
           switch( $row["parent"]) {
+             case "0":
+               //project
+               //check if tasks are all complete
+               if( db_result( db_query( "SELECT COUNT(*) FROM tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent>0" ), 0, 0 ) == 0 )
+                 $name = "<font color=\"green\"><u>".$row["name"]."</u>";
+               else
+                 $name = "<font color=\"blue\">".$row["name"];
+               $content .= "<a href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$name."</font></a><br />\n";
+             break;
 
-          case "0":
-            //project
-	    //check if tasks are all complete
-	    if( db_result( db_query( "SELECT COUNT(*) FROM tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent>0" ), 0, 0 ) == 0 )
-              $name = "<FONT color=\"green\"><U>".$row["name"]."</U>";
-	    else
-	      $name = "<FONT color=\"blue\">".$row["name"];
+             default:
+            //task
+              if( $row["status"] == "done" )
+                $name = "<font color=\"green\">".$row["name"];
+              else
+                $name = "<font color=\"red\">".$row["name"];
 
-	    $content .= "<A href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$name."</FONT></A><BR>\n";
-	    break;
-
-          default:
-	    //task
-	    if( $row["status"] == "done" )
-              $name = "<FONT color=\"green\">".$row["name"];
-            else
-              $name = "<FONT color=\"red\">".$row["name"];
-
-	    $content .= "<A href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$name."</FONT></A><BR>\n";
-	    break;
-         }
-         break;
+              $content .= "<a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["id"]."\">".$name."</font></a><br />\n";
+            break;
+          }
+        break;
       }
       $pad++;
     }
   }
   //pad out the cells to the required depth
-  while( $pad < 5 ) {
-    $content .= "<BR>";
+  while($pad < 5 ) {
+    $content .= "<br />";
     $pad++;
   }
 
-  $content .= "</TD>\n";
+  $content .= "</td>\n";
   $i++;
 }
-$content .= "</TR>\n";
-$content .= "</TABLE>\n<BR>\n";
+$content .= "</tr>\n";
+$content .= "</table>\n<br />\n";
 
-include_once( BASE."lang/".$LOCALE."_long_message.php" );
-$content .= "<B>[<A href=\"main.php?x=".$x."\">".$calendar_key."<BR>\n</DIV>\n";
+include_once(BASE."lang/".$LOCALE."_long_message.php" );
+$content .= "<b>[<a href=\"main.php?x=".$x."\">".$calendar_key."<br />\n</div>\n";
 
-new_box( $lang["calendar"], $content );
+new_box($lang["calendar"], $content );
 
 create_bottom();
 ?>

@@ -35,7 +35,7 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
+include_once(BASE."includes/security.php" );
 
 //first check if we are admin
 if( $admin != 1 )
@@ -46,36 +46,36 @@ $q = db_query( "SELECT id, fullname FROM users WHERE deleted='t' ORDER BY fullna
 
 //check for enough users
 if( db_numrows($q) < 1 ) {
-  new_box($lang["deleted_users"], "<SMALL><SMALL>".$lang["no_deleted_users"]."</SMALL></SMALL>" );
+  new_box($lang["deleted_users"], "<small><small>".$lang["no_deleted_users"]."</small></small>" );
   return;
 }
 
-$content = "<TABLE border=\"0\">\n";
+$content = "<table border=\"0\">\n";
 
 //show them
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
-  $content .= "<TR><TD><SMALL><A href=\"users.php?x=".$x."&action=show&userid=".$row["id"]."\">".$row["fullname"]."</A></SMALL></SMALL></TD>\n";
-  $content .= "<TD align=\"right\" nowrap><SMALL><SMALL> [<A href=\"users/user_submit.php?x=".$x."&action=revive&userid=".$row["id"]."\">".$lang["revive"]."</A>]";
+for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+  $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></small></small></td>\n";
+  $content .= "<td align=\"right\" nowrap><small><small> [<a href=\"users/user_submit.php?x=$x&amp;action=revive&amp;userid=".$row["id"]."\">".$lang["revive"]."</a>]";
 
   //if this user has NO posts, NO tasks owned AND NO tasks created then we can delete him forever :)
 
   //Get the number of tasks created
-  if( db_result( db_query( "SELECT COUNT(*) FROM tasks WHERE creator=".$row["id"] ), 0, 0 ) == 0 ) {
+  if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE creator=".$row["id"] ), 0, 0 ) == 0 ) {
 
     //Get the number of tasks owned
-    if( db_result(  db_query( "SELECT COUNT(*) FROM tasks WHERE owner=".$row["id"] ), 0, 0 ) == 0 ) {
+    if(db_result(db_query( "SELECT COUNT(*) FROM tasks WHERE owner=".$row["id"] ), 0, 0 ) == 0 ) {
 
       //Get the number of forum posts
-      if( db_result(  db_query( "SELECT COUNT(*) FROM forum WHERE userid=".$row["id"] ), 0, 0 ) == 0 ) {
-        $content .= " [<A href=\"users/user_del.php?x=".$x."&action=permdel&userid=".$row["id"]."\" onClick=\"return confirm( '".sprintf($lang["permdel_javascript_sprt"], $row["fullname"] )."' )\">".$lang["permdel"]." </A>]";
+      if(db_result(db_query( "SELECT COUNT(*) FROM forum WHERE userid=".$row["id"] ), 0, 0 ) == 0 ) {
+        $content .= " [<a href=\"users/user_del.php?x=$x&amp;action=permdel&amp;userid=".$row["id"]."\" onClick=\"return confirm( '".sprintf($lang["permdel_javascript_sprt"], $row["fullname"] )."' )\">".$lang["permdel"]." </a>]";
       }
     }
   }
-  $content.="</SMALL></SMALL></TD></TR>\n";
+  $content.="</small></small></td></tr>\n";
 
 }
 
-$content .= "</TABLE>";
+$content .= "</table>";
 
 //show it
 new_box($lang["deleted_users"], $content );

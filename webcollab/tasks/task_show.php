@@ -34,8 +34,8 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
-include_once( BASE."includes/time.php" );
+include_once(BASE."includes/security.php" );
+include_once(BASE."includes/time.php" );
 
 //is there an id ?
 if( ! isset( $_GET["taskid"]) || ! is_numeric($_GET["taskid"]) || $_GET["taskid"] == 0 )
@@ -44,63 +44,63 @@ if( ! isset( $_GET["taskid"]) || ! is_numeric($_GET["taskid"]) || $_GET["taskid"
 $taskid = $_GET["taskid"];
 
 //check usergroup security
-include_once( BASE."includes/usergroup_security.php");
+include_once(BASE."includes/usergroup_security.php");
 
 //select the task info
-$q = db_query("SELECT * FROM tasks WHERE tasks.id=".$taskid );
+$q = db_query("SELECT * FROM tasks WHERE tasks.id=$taskid" );
 
 //get the data
-if( ! ( $row = db_fetch_array($q, 0 ) ) )
+if( ! ($row = db_fetch_array($q, 0 ) ) )
   error("Task show", "There was an error in fetching the tasks' data.");
 
 //mark this as seen in seen ;)
-@db_query("DELETE FROM seen WHERE userid=".$uid." AND taskid=".$taskid, 0);
-db_query("INSERT INTO seen(userid, taskid, time) VALUES (".$uid.", ".$taskid.", current_timestamp(0) ) " );
+@db_query("DELETE FROM seen WHERE userid=$uid AND taskid=$taskid", 0);
+db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, $taskid, current_timestamp(0) ) " );
 
 //start of header table
-$content = "<TABLE width=\"98%\"><TR><TD>\n";
+$content = "<table width=\"98%\"><tr><td>\n";
 
 //percentage_completed gauge if this is a project
 if( $row["parent"] == 0 ) {
   $percent_completed = round(percent_complete( $taskid));
-  $content .= sprintf( $lang["percent_project_sprt"], $percent_completed )."<BR>\n";
-  $content .= show_percent( $percent_completed )."<BR>";
+  $content .= sprintf( $lang["percent_project_sprt"], $percent_completed )."<br />\n";
+  $content .= show_percent( $percent_completed )."<br />";
 }
 //project/task name
-$content .= "<B>".$row["name"]."</B><BR><BR></TD></TR>\n";
+$content .= "<b>".$row["name"]."</b><br /><br /></td></tr>\n";
 
 //show text
-$content .= "<TR><TD bgcolor=\"#EEEEEE\" width=\"95%\">\n";
+$content .= "<tr><td bgcolor=\"#EEEEEE\" width=\"95%\">\n";
 /* automagically make links and email adresses clickable */
 $text = $row["text"];
 //$text = preg_replace("/(^|\s)((https?|ftp):\/\/[^\s\)<'\"]+)/", "$1<a href=\"$2\" onclick=\"window.open(this.href,'_blank');return false;\">$2</a>", $text);
 //$text = preg_replace("/(^|\s)(www\.[^\s\)<'\"]+)/", "$1<a href=\"http://$2\" onclick=\"window.open(this.href,'_blank');return false;\">$2</a>", $text);
-$text = preg_replace("(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))","<a href=\"mailto:\\0\">\\0</a>",$text);
+$text = preg_replace("(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))","<a href=\"mailto:\\0\">\\0</a>", $text );
 
 $content .= nl2br($text);
-$content .= "</TD></TR></TABLE>\n";
+$content .= "</td></tr></table>\n";
 
 //start of info table
-$content .= "<TABLE border=\"0\">\n";
+$content .= "<table border=\"0\">\n";
 
 //get owner information
 if( $row["owner"] == 0 ) {
-  $content .= "<TR><TD>".$lang["owned_by"].":</TD><TD>".$lang["nobody"]."</TD></TR>\n";
+  $content .= "<tr><td>".$lang["owned_by"].":</td><td>".$lang["nobody"]."</td></tr>\n";
 } else {
   $owner = db_result( db_query("SELECT fullname FROM users WHERE id=".$row["owner"] ), 0, 0  );
-  $content .= "<TR><TD>".$lang["owned_by"].": </TD><TD><A href=\"".$BASE_URL."users.php?x=".$x."&action=show&userid=".$row["owner"]."\">".$owner."</A></TD></TR>\n";
+  $content .= "<tr><td>".$lang["owned_by"].": </td><td><a href=\"".$BASE_URL."users.php?x=$x&amp;action=show&userid=".$row["owner"]."\">".$owner."</a></td></tr>\n";
 }
 
 //get creator information
 $creator = db_result( db_query("SELECT fullname FROM users WHERE id=".$row["creator"] ), 0, 0  );
-$content .= "<TR><TD>".$lang["created_on"].": </TD><TD>".nicedate($row["created"])." by <A href=\"".$BASE_URL."users.php?x=".$x."&action=show&userid=".$row["creator"]."\">".$creator."</A></TD></TR>\n";
+$content .= "<tr><td>".$lang["created_on"].": </td><td>".nicedate($row["created"])." by <a href=\"".$BASE_URL."users.php?x=$x&amp;action=show&amp;userid=".$row["creator"]."\">".$creator."</a></td></tr>\n";
 
 //get deadline
-$content .= "<TR><TD>".$lang["deadline"].": </TD><TD>".nicedate($row["deadline"])."</TD></TR>\n";
+$content .= "<tr><td>".$lang["deadline"].": </td><td>".nicedate($row["deadline"])."</td></tr>\n";
 
 //get priority
-$content .= "<TR><TD>".$lang["priority"].": </TD><TD>";
-switch( $row["priority"] ) {
+$content .= "<tr><td>".$lang["priority"].": </td><td>";
+switch($row["priority"] ) {
 
   case 0:
     $content .=  $task_state["dontdo"];
@@ -112,19 +112,19 @@ switch( $row["priority"] ) {
     $content .=  $task_state["normal"];
     break;
   case 3:
-    $content .=  "<B>".$task_state["high"]."</B>";
+    $content .=  "<b>".$task_state["high"]."</b>";
     break;
   case 4:
-    $content .=  "<B><FONT color=\"red\">".$task_state["yesterday"]."</FONT></B>";
+    $content .=  "<b><font color=\"red\">".$task_state["yesterday"]."</font></b>";
     break;
 }
-$content .= "</TD></TR>\n";
+$content .= "</td></tr>\n";
 
 //if this is a project don't show status info and task completion date
-if( $row["parent"] != 0 ) {
+if($row["parent"] != 0 ) {
 
-  $content .= "<TR><TD>".$lang["status"].": </TD><TD>";
-  switch( $row["status"] ) {
+  $content .= "<tr><td>".$lang["status"].": </td><td>";
+  switch($row["status"] ) {
 
     case "created":
       $content .=  $task_state["new"];
@@ -136,7 +136,7 @@ if( $row["parent"] != 0 ) {
       $content .=  $task_state["active"];
       break;
     case "cantcomplete":
-      $content .=  "<B>".$task_state["cantcomplete"]."</B>";
+      $content .=  "<b>".$task_state["cantcomplete"]."</b>";
       break;
     case "done":
       $content .=  $task_state["done"];
@@ -145,16 +145,16 @@ if( $row["parent"] != 0 ) {
       $content .=  $row["status"];
       break;
   }
-  $content .= "</TD></TR>\n";
+  $content .= "</td></tr>\n";
 
   //is there a finished date ?
-  switch( $row["status"] ) {
+  switch($row["status"] ) {
     case "done":
-      $content .= "<TR><TD>".$lang["completed_on"].": </TD><TD>".nicedate($row["finished_time"])."</TD></TR>\n";
+      $content .= "<tr><td>".$lang["completed_on"].": </td><td>".nicedate($row["finished_time"])."</td></tr>\n";
       break;
 
     case "cantcomplete":
-      $content .= "<TR><TD>".$lang["modified_on"].": </TD><TD>".nicedate($row["finished_time"])."</TD></TR>\n";
+      $content .= "<tr><td>".$lang["modified_on"].": </td><td>".nicedate($row["finished_time"])."</td></tr>\n";
       break;
 
     default:
@@ -163,46 +163,46 @@ if( $row["parent"] != 0 ) {
 }
 else{
   //project - show the finish date and status
-  switch( $row["status"] ) {
+  switch($row["status"] ) {
     case "cantcomplete":
-      $content .= "<TR><TD>".$lang["status"].": </TD><TD><B>".$lang["project_on_hold"]."</B></TD></TR>\n";
-      $content .= "<TR><TD>".$lang["modified_on"].": </TD><TD>".nicedate($row["finished_time"])."</TD></TR>\n";
+      $content .= "<tr><td>".$lang["status"].": </td><td><b>".$lang["project_on_hold"]."</b></td></tr>\n";
+      $content .= "<tr><td>".$lang["modified_on"].": </td><td>".nicedate($row["finished_time"])."</td></tr>\n";
       break;
 
     case "notactive":
-      $content .= "<TR><TD>".$lang["status"].": </TD><TD>".$lang["project_planned"]."</TD></TR>\n";
+      $content .= "<tr><td>".$lang["status"].": </td><td>".$lang["project_planned"]."</td></tr>\n";
       break;
 
     case "nolimit":
-      $content .= "<TR><TD>".$lang["status"].": </TD><TD>".$lang["project_no_deadline"]."</TD></TR>\n";
+      $content .= "<tr><td>".$lang["status"].": </td><td>".$lang["project_no_deadline"]."</td></tr>\n";
       break;
 
     default:
-      if( $percent_completed == 100 ) {
+      if($percent_completed == 100 ) {
         $completed_date = @db_result( db_query( "SELECT MAX(finished_time) FROM tasks WHERE parent<>0 AND projectid=".$taskid ), 0, 0 );
-        $content .= "<TR><TD>".$lang["completed_on"].": </TD><TD>".nicedate($completed_date)."</TD></TR>\n";
+        $content .= "<tr><td>".$lang["completed_on"].": </td><td>".nicedate($completed_date)."</td></tr>\n";
       }
       break;
   }
 }
 
 //task group
-if( $row["parent"] != 0 ) {
+if($row["parent"] != 0 ) {
 
-  switch( $row["taskgroupid"] ){
+  switch($row["taskgroupid"] ){
     case "0":
-      $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#taskgroup\" target=\"helpwindow\">".$lang["taskgroup"]."</A>: </TD><TD>".$lang["none"]."<BR>\n";
+      $content .= "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#taskgroup\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td><td>".$lang["none"]."<br />\n";
       break;
 
     default:
-      $taskgroup = db_result( db_query("SELECT name FROM taskgroups WHERE id=".$row["taskgroupid"] ), 0, 0 );
-      $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#taskgroup\" target=\"helpwindow\">".$lang["taskgroup"]."</A>: </TD><TD>".$taskgroup."</TD></TR>\n";
+      $taskgroup = db_result(db_query("SELECT name FROM taskgroups WHERE id=".$row["taskgroupid"] ), 0, 0 );
+      $content .= "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#taskgroup\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td><td>".$taskgroup."</td></tr>\n";
       break;
   }
 }
 
 //set title variables as approriate for task or project
-switch( $row["parent"] ){
+switch($row["parent"] ){
   case "0":
     $title = $lang["project_details"];
     $type = $lang["project"];
@@ -216,49 +216,49 @@ switch( $row["parent"] ){
 
 //show the usergroupid
 if( $row["usergroupid"] != 0 ) {
-  $usergroup = db_result( db_query("SELECT name FROM usergroups WHERE id=".$row["usergroupid"] ), 0, 0  );
-  $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </TD><TD>".$usergroup." ";
+  $usergroup = db_result(db_query("SELECT name FROM usergroups WHERE id=".$row["usergroupid"] ), 0, 0  );
+  $content .= "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td><td>".$usergroup." ";
 
   switch($row["globalaccess"] ){
     case 't':
-      $content .= sprintf($lang["task_accessible_sprt"], $type )."</TD></TR>\n";
+      $content .= sprintf($lang["task_accessible_sprt"], $type )."</td></tr>\n";
       break;
 
     case 'f':
     default:
-      $content .= "<B>".sprintf($lang["task_not_accessible_sprt"], $type )."</B></TD></TR>\n";
+      $content .= "<b>".sprintf($lang["task_not_accessible_sprt"], $type )."</b></td></tr>\n";
       break;
   }
 
   if($row["groupaccess"] == 't' )
-      $content .= "<TR><TD>&nbsp;</TD><TD><I>".sprintf($lang["usergroup_can_edit_sprt"], $type )."</I></TD></TR>\n";
+      $content .= "<tr><td>&nbsp;</td><td><I>".sprintf($lang["usergroup_can_edit_sprt"], $type )."</I></td></tr>\n";
 
 }
 else {
-  $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </TD><TD>".sprintf($lang["task_not_in_usergroup_sprt"], $type )."</TD></TR>\n";
+  $content .= "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td><td>".sprintf($lang["task_not_in_usergroup_sprt"], $type )."</td></tr>\n";
 }
 
-$content .= "</TABLE>\n";
+$content .= "</table>\n";
 
 //this part shows all the options the users has
-$content .= "<BR><DIV align=\"center\"><SMALL>\n";
+$content .= "<br /><div align=\"center\"><small>\n";
 
 //set add function for task or project
 switch( $row["parent"] ){
   case "0":
-    $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=add&parentid=".$taskid."\">".$lang["add_task"]."</A>] \n";
+    $content .= "[<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang["add_task"]."</a>] \n";
     break;
 
  default:
-    $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=add&parentid=".$taskid."\">".$lang["add_subtask"]."</A>] \n";
+    $content .= "[<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang["add_subtask"]."</a>] \n";
     break;
 }
 
 //see if user is in usergroup and can edit
-switch( $row["groupaccess"] ) {
+switch($row["groupaccess"] ) {
   case "t";
     $group = FALSE;
-    $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
+    $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$uid" );
     for( $i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
     if($row["usergroupid"] == $usergroup_row[0] ){
       $group = TRUE;
@@ -275,38 +275,38 @@ switch( $row["groupaccess"] ) {
 
 switch( $row["owner"] ){
   case "0":
-    if( $admin == 1 ){
+    if($admin == 1 ){
       //admin edit
-      $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=edit&taskid=".$taskid."\">".$lang["edit"]."</A>] \n";
+      $content .= "[<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]."</a>] \n";
     }
     //I'll take it!
-    $content .= "[<A href=\"".$BASE_URL."tasks/task_submit.php?x=".$x."&action=meown&taskid=".$taskid."\">".$lang["i_take_it"]."</A>] \n";
+    $content .= "[<a href=\"".$BASE_URL."tasks/task_submit.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang["i_take_it"]."</a>] \n";
     break;
 
   case ($uid):
-    $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=edit&taskid=".$taskid."\">".$lang["edit"]."</A>] \n";
+    $content .= "[<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]."</a>] \n";
     //if not finished and not a project; then [I finished it!] button
-    if( ( $row["status"] != "done" ) && ( $row["parent"] != 0 ) ) {
-      $content .= "[<A href=\"".$BASE_URL."tasks/task_submit.php?x=".$x."&action=done&taskid=".$taskid."\">".$lang["i_finished"]."</A>] \n";
+    if( ($row["status"] != "done" ) && ($row["parent"] != 0 ) ) {
+      $content .= "[<a href=\"".$BASE_URL."tasks/task_submit.php?x=$x&amp;action=done&amp;taskid=".$taskid."\">".$lang["i_finished"]."</a>] \n";
     }
     // deown the task
-    $content .= "[<A href=\"".$BASE_URL."tasks/task_submit.php?x=".$x."&action=deown&taskid=".$taskid."\">".$lang["i_dont_want"]."</A>] \n";
+    $content .= "[<a href=\"".$BASE_URL."tasks/task_submit.php?x=$x&amp;action=deown&amp;taskid=".$taskid."\">".$lang["i_dont_want"]."</a>] \n";
     break;
 
   default:
     if($admin == 1 ){
       //edit
-      $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=edit&taskid=".$taskid."\">".$lang["edit"]."</A>] \n";
+      $content .= "[<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=edit&taskid=".$taskid."\">".$lang["edit"]."</a>] \n";
       //take over
-      $content .= "[<A href=\"".$BASE_URL."tasks/task_submit.php?x=".$x."&action=meown&taskid=".$taskid."\">".sprintf($lang["take_over_sprt"], $type)."</A>] \n";
+      $content .= "[<a href=\"".$BASE_URL."tasks/task_submit.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_sprt"], $type)."</a>] \n";
     }
     if($group )
       //if user is in the usergroup & groupaccess is set
-      $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=edit&taskid=".$taskid."\">".$lang["edit"]."</A>] \n";
+      $content .= "[<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]."</a>] \n";
     break;
 }
 
-$content .= "</SMALL></DIV><BR>\n";
+$content .= "</small></div><br />\n";
 
 new_box( $title, $content );
 ?>

@@ -1,32 +1,33 @@
 TODO
 ====
 
-*MySQL Transaction Support
-
-Latest version of MySQL can use InnoDB tables with transaction support. In the 
-current stable MySQL 3.x.x versions the InnoDB support defaults(?) to off.  
-Should add an additional abstraction layer file (with transactions) for MySQL
-with InnoDB turned on.
-
-*Borland Interbase
-
-Linux Journal readers survey put Interbase third in popularity behind MySQL and
-PostgreSQL.  Had a quick look at the Borland documentation, looks feasible to
-write an abstraction layer.
-
 *Task Deadlines ahead of Project Deadlines
 
-The code lets you put a task deadline ahead of a project deadline.  In real life 
+The code lets you put a task deadline ahead of a project deadline.  In real life
 this is not possible.  Possibly should error trap this.
 
-*Popup Warnings
+*Reporting
 
-Some minor warnings could be popup boxes rather than a new screen.  So far I 
-haven't worked out any practical way to do this without lots of (bloated) code 
-and javascript.  Also want to maintain cross platform browser compatibility.
+Reporting suitable for printing out.
+
 
 *Translations
 
-Translation files are in /lang and /help.  
+Translation files are in /lang and /help.
+
+
+
+*Documentation
+
+* Make task_list xhtml compliant with lists
+
+* Testing - usergroup edit, database conversion, database creation, innodb
+
+- update spanish language files & move files into lang
+
+- Update TODO
+
+
+
 
 

@@ -33,17 +33,17 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."includes/security.php" );
+include_once(BASE."includes/security.php" );
 
 //secure values
 $content = "";
 
 //create content
-$content .= "<A href=\"main.php?x=".$x."\">".$lang["home_page"]."</A><BR>\n".
-            "<A href=\"tasks.php?x=".$x."&action=summary\">".$lang["summary_page"]."</A><BR>\n".
-            "<A href=\"users.php?x=".$x."&action=todo\">".$lang["todo_list"]."</A><BR>\n".
-            "<A href=\"calendar.php?x=".$x."\">".$lang["calendar"]."</A><BR>\n".
-            "<A href=\"includes/logout.php?x=".$x."\">".$lang["log_out"]."</A><BR>\n";
+$content .= "<a href=\"main.php?x=$x\">".$lang["home_page"]."</a><br />\n".
+            "<a href=\"tasks.php?x=$x&amp;action=summary\">".$lang["summary_page"]."</a><br />\n".
+            "<a href=\"users.php?x=$x&amp;action=todo\">".$lang["todo_list"]."</a><br />\n".
+            "<a href=\"calendar.php?x=$x\">".$lang["calendar"]."</a><br />\n".
+            "<a href=\"includes/logout.php?x=$x\">".$lang["log_out"]."</a><br />\n";
 
 //show
 new_box( $lang["main_menu"], $content );

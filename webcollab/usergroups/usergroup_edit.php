@@ -40,49 +40,46 @@ if( $admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 //secure
-if( ! ( isset($_GET["usergroupid"]) && is_numeric($_GET["usergroupid"]) ) )
+if( ! (isset($_GET["usergroupid"] ) && is_numeric($_GET["usergroupid"] ) ) )
   error("Usergroup edit", "Not a valid value for usergroupid." );
 
-$usergroupid = $_GET["usergroupid"];  
+$usergroupid = $_GET["usergroupid"];
 
 //get taskgroup information
-$q = db_query("SELECT * FROM usergroups WHERE id=".$usergroupid);
+$q = db_query("SELECT * FROM usergroups WHERE id=".$usergroupid );
 $row = db_fetch_array( $q, 0 );
 
-$content = "<BR>\n";
-$content .= "<FORM method=\"POST\" action=\"usergroups/usergroup_submit.php\">\n";
-$content .= "<TABLE border=\"0\">\n";
-$content .= "<TR> <TD>".$lang["usergroup_name"]."</TD> <TD><INPUT type=\"input\" name=\"name\" value=\"".$row["name"]."\" size=\"30\"></TD> </TR>\n";
-$content .= "<TR> <TD>".$lang["usergroup_description"]."</TD> <TD><INPUT type=\"input\" name=\"description\" value=\"".$row["description"]."\" size=\"30\"></TD> </TR>\n";
+$content = "<br />\n".
+           "<form method=\"POST\" action=\"usergroups/usergroup_submit.php\">\n".
+             "<table border=\"0\">\n".
+               "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"input\" name=\"name\" value=\"".$row["name"]."\" size=\"30\"></td></tr>\n".
+               "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" value=\"".$row["description"]."\" size=\"30\"></td></tr>\n";
 
 //add users
-$user_q = db_query( "SELECT fullname, id FROM users ORDER BY fullname" );
+$user_q = db_query("SELECT fullname, id FROM users ORDER BY fullname" );
 //$member_q = db_query( "SELECT users.id as id FROM users, usergroups_users WHERE usergroupid=".$row["id"]." AND usergroups_users.userid=users.id" );
-$member_q = db_query( "SELECT users.id as id FROM users LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id) WHERE usergroupid=".$row["id"] );
-$content .= "<TR> <TD>".$lang["members"]."</TD> <TD><SELECT name=\"member[]\" MULTIPLE size=\"4\">\n";
+$member_q = db_query("SELECT users.id as id FROM users LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id) WHERE usergroupid=".$row["id"] );
+$content .=    "<tr><td>".$lang["members"]."</td><td><select name=\"member[]\" multiple size=\"4\">\n";
 
-for( $i=0 ; $user_row = @db_fetch_array($user_q, $i) ; $i++) {
-  $content .= "<OPTION value=\"".$user_row["id"]."\"";
+for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++ ) {
+  $content .= "<option value=\"".$user_row["id"]."\"";
 
-  @db_data_seek( $member_q ); //reset mysql internal pointer each cycle
-  for( $j=0 ; $member_row = @db_fetch_array($member_q, $j) ; $j++)
-    if ($member_row["id"] == $user_row["id"])
+  @db_data_seek($member_q ); //reset mysql internal pointer each cycle
+  for($j=0 ; $member_row = @db_fetch_array($member_q, $j ) ; $j++ )
+    if ($member_row["id"] == $user_row["id"] )
       $content .= " SELECTED";
-  $content .= ">".$user_row["fullname"]."</OPTION>";
+  $content .= ">".$user_row["fullname"]."</option>";
 }
 
-$content .= "</SELECT><SMALL><I>".$lang["select_instruct"]."</I></SMALL></TD></TR>\n";
-
-$content .= "</TABLE>\n";
-
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"x\" value=\"".$x."\"> ";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"usergroupid\" value=\"".$usergroupid."\"> ";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"action\" value=\"edit\"> ";
-
-$content .= "<INPUT TYPE=\"submit\" NAME=\"Add\" value=\"".$lang["edit_usergroup"]."\"> ";
-$content .= "<INPUT TYPE=\"reset\">";
-$content .= "</FORM>\n";
-$content .= "<BR><BR>\n";
+$content .=    "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
+             "</table>\n".
+             "<input type=\"hidden\" name=\"x\" value=\"$x\"> ".
+             "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\"> ".
+             "<input type=\"hidden\" name=\"action\" value=\"edit\"> ".
+             "<input type=\"submit\" name=\"Add\" value=\"".$lang["edit_usergroup"]."\"> ".
+             "<input type=\"reset\">".
+           "</form>\n".
+           "<br /><br />\n";
 
 new_box( $lang["edit_usergroup"], $content );
 
