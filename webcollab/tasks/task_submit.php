@@ -264,7 +264,7 @@ if( valid_string($_REQUEST["action"]) ) {
 				      current_timestamp(0),
 				      ".$owner.",
 				      ".$uid.",
-                                      '".$deadline."',
+                      '".$deadline."',
 				      current_timestamp(0),
 				      ".$priority.",
 				      ".$parentid.",
@@ -406,16 +406,16 @@ if( valid_string($_REQUEST["action"]) ) {
 
         //change the info
         db_query( "UPDATE tasks
-	           SET name='".safe_data($name)."',
-                       text='".safe_data($text)."',
+	           SET name='".$name."',
+               text='".$text."',
 		       edited=current_timestamp(0),
 		       owner=".$owner.",
 		       deadline='".$deadline."',
 		       finished_time=current_timestamp(0),
 		       priority=".$priority.",
-                       taskgroupid=".$taskgroupid.",
+               taskgroupid=".$taskgroupid.",
 		       usergroupid=".$usergroupid.",
-                       status='".safe_data($status)."',
+               status='".$status."',
 		       globalaccess='".$globalaccess."'
 		   WHERE id=".$taskid );
 
@@ -441,11 +441,7 @@ if( valid_string($_REQUEST["action"]) ) {
 	      break;
           }
 	}
-	
-        //you have already seen this item, no need to announce it to you
-        db_query("INSERT INTO seen(userid, taskid, time)
-                   VALUES(".$uid.",".$taskid.",current_timestamp(0) )");
-	
+		
 	//transaction complete
 	db_commit();
 
