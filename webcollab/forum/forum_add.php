@@ -2,13 +2,11 @@
 /*
   $Id$
 
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  
   WebCollab
   ---------------------------------------
-  Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
-  with much help from the people noted in the README
-
-  Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
-  by Andrew Simpson <andrew.simpson@paradise.net.nz>
+  Based on original file written for Core APM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -101,7 +99,7 @@ $content .=   "<tr><td>".$lang["message"]."</td><td><textarea name=\"text\" rows
               "<tr><td><label for=\"owner\">"."Send email to owner - translate me"."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" $DEFAULT_OWNER ></td></tr>\n".
               "<tr><td><label for=\"usergroup\">"."Send email to usergroup - translate me"."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" $DEFAULT_GROUP ></td></tr>\n".
               "</table></p>\n".
-              "<p><input type=\"submit\" value=\"".$lang["post"]."\" />&nbsp;".
+              "<p><input type=\"submit\" value=\"".$lang["post"]."\" onclick=\"return fieldCheck()\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
               "</form>\n";
 

@@ -1,14 +1,13 @@
 <?php
 /*
   $Id$
+  
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
-  with much help from the people noted in the README
-
-  Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
-  by Andrew Simpson <andrew.simpson@paradise.net.nz>
+  
+  Based on CoreAPM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -54,7 +53,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
 $content .=     "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
               "</table></p>\n".
-              "<p><input type=\"submit\" value=\"".$lang["add_usergroup"]."\" />&nbsp;".
+              "<p><input type=\"submit\" value=\"".$lang["add_usergroup"]."\" onclick=\"return fieldCheck()\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
             "</form>\n";
 

@@ -1,14 +1,12 @@
 <?php
 /*
   $Id$
+  
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
-  with much help from the people noted in the README
-
-  Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
-  by Andrew Simpson <andrew.simpson@paradise.net.nz>
+  Based on Core APM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -44,7 +42,7 @@ $content =
                 "<tr><td>".$lang["taskgroup_name"]."</td><td><input type=\"input\" name=\"name\" size=\"30\" /></td></tr>\n".
                 "<tr><td>".$lang["taskgroup_description"]."</td><td><input type=\"input\"name=\"description\"size=\"30\" /></td></tr>\n".
               "</table></p>\n".
-              "<p><input type=\"submit\" value=\"".$lang["add_taskgroup"]."\" />&nbsp;\n".
+              "<p><input type=\"submit\" value=\"".$lang["add_taskgroup"]."\" onclick=\"return fieldCheck()\" />&nbsp;\n".
               "<input type=\"reset\"  value=\"".$lang["reset"]."\" /></p>\n".
             "</form>\n";
 

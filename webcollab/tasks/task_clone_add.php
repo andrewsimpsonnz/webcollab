@@ -65,7 +65,7 @@ else{
               "<tr><td colspan=\"2\"><i>".$lang["note_clone"]."</i></td><tr>\n".
               "<tr><td>".$lang["project_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
               "</table></p>\n".
-              "<p><input type=\"submit\" value=\"".$lang["add_project"]."\" />&nbsp;".
+              "<p><input type=\"submit\" value=\"".$lang["add_project"]."\" onclick=\"return fieldCheck()\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
               "</form>\n";
 
