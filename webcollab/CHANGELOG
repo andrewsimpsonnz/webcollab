@@ -1,10 +1,12 @@
 WebCollab CVS
-*** 20 March 2004
+*** 21 March 2004
   Andrew Simpson
 
 - bugfix: add stripslashes to emails where required
 
 - bugfix:  German translation spelling error  
+
+- upgrade security model
 
 WebCollab CVS
 *** 28 February 2004
