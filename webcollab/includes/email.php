@@ -29,6 +29,7 @@
   Refer to RFC 821, RFC 822 and RFC 2045 for SMTP.
   Refer to RFC 2554 for SMTP AUTH
   Refer to RFC 2076 for a summary of common headers
+  Refer to RFC 1869 for extended hello (EHLO)
 
 */
 
@@ -111,11 +112,28 @@ function email($to, $subject, $message ) {
   if(substr($res, 0, 3 ) != "220" )
     debug("Incorrect handshaking response from SMTP server at $host <br /><br />Response from SMTP server was $res" );
 
-  //send HELO to server
+  //send HELO to server (RFC 821)
   fputs($connection, "HELO ".$_SERVER["SERVER_NAME"]."\r\n" );
   $res = fgets($connection, 256 );
   if(substr($res, 0, 3 ) != "250" )
     debug("Incorrect HELO response from SMTP server at $host <br /><br />Response from SMTP server was $res" );
+
+  //do extended HELO to see if we support 8bit mime (RFC 1869)
+  if($email_encode = "8bit" ) {
+    $bit = false;
+    fputs($connection, "EHLO ".$_SERVER["SERVER_NAME"]."\r\n" );
+    while($res = fgets($connection, 256 ) ) {
+      if(substr($res, 0, 3 ) != "250" )
+        break;
+      if( ! strpos($res, "8BITMIME" ) === false ) {
+        $bit = true;
+        break;
+      }
+    }
+    //if we don't support 8bit use quoted-printable
+    if( ! $bit )
+      $email_encode = "quoted-printable";
+  }
 
   //do SMTP AUTH if required
   if($SMTP_AUTH == "Y" ) {
@@ -224,6 +242,8 @@ function email($to, $subject, $message ) {
   //normalise end-of-lines in message body to \n - and change back to \r\n later
   $message = str_replace("\r\n", "\n", $message );
   $message = str_replace("\r", "\n", $message );
+  //make sure message ends in a new line \n
+  $message = $message."\n";
 
   //encode message body
   switch($email_encode ){
@@ -237,20 +257,19 @@ function email($to, $subject, $message ) {
     case "7bit":
     case "8bit":
       //break up any lines longer than 998 bytes (RFC 821)
-      $message = wordwrap($message, 998, "\n" );
+      $message = wordwrap($message, 998, "\n", 1 );
+      //lines consisting of single "." get padded by appending a <space>
+      $message = str_replace("\n.\n", "\n. \n", $message );
       break;
 
     case "quoted-printable":
-      if(substr($message, -2 ) != "\n" )
-          $message .= "\n";
-
       //replace high ascii, control and = characters (RFC 2045)
       $message = preg_replace('/([\000-\010\013\014\016-\037\075\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $message);
       //replace spaces and tabs when it's the last character on a line (RFC 2045)
       $message = preg_replace("/([\011\040])\n/e", "'='.sprintf('%02X', ord('\\1')).'\n'", $message);
       //break up any lines longer than 76 characters with soft line breaks " =\r\n" (RFC 2045)
       //(end of line \n gets changed to \r\n after explode)
-      $message = wordwrap($message, 74, " =\n" );
+      $message = wordwrap($message, 74, " =\n", 1 );
       break;
 
     default:
