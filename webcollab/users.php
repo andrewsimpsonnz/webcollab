@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz> 
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -51,11 +51,7 @@ if( ! isset($_REQUEST["action"]) )
       include("usergroups/usergroup_menubox.php" );
 
       goto_main();
-      include_once("lang/lang_long.php" );
-      $content = $user_info.
-      "<div align=\"center\"><font class=\"textlink\">[<a href=\"users.php?x=$x&amp;action=add\">".$lang["add"]."</a>]&nbsp;\n".
-      "[<a href=\"users.php?x=$x&amp;action=showonline\">".$lang["who_online"]."</a>]</font></div>\n";
-      new_box($lang["manage_users"], $content, "boxdata2" );
+      include("users/user_info.php" );
       create_bottom();
       break;
 
