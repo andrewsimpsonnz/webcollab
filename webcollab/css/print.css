@@ -77,7 +77,7 @@ TD.boxdata {
 
 
 /* Class for text at page bottom */
-.loadtime {
+.bottomtext {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 9pt;
   padding-left: 10pt;
