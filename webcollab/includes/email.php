@@ -67,7 +67,7 @@ function email($to, $subject, $message ) {
   $host = SMTP_HOST;
   $connection = @fsockopen($host, 25, $errno, $errstr, 10 );
   if (!$connection )
-    debug("Unable to open SMTP connection to ".$host."<br /><br />Error ".$errno." ".$errstr );
+    debug("Unable to open TCP/IP connection to ".$host."<br /><br />Reported socket error: ".$errno." ".$errstr );
 
   //sometimes the SMTP server takes a little longer to respond
   // Windows does not have support for this timeout function before PHP ver 4.3.0
@@ -181,13 +181,12 @@ function & clean($encoded ) {
   //reinstate encoded html back to original text
   $trans = array_flip(get_html_translation_table(HTML_ENTITIES, ENT_NOQUOTES ) );
   $text = strtr($encoded, $trans );
-  $text = preg_replace('/&#(\d+);/me', "chr('$1')", $text );
+  $text = preg_replace('/&#(\d{2,3});/e', "chr('$1')", $text );
   
   //remove any dangerous tags that exist after decoding
-  $text = preg_replace("/(<\/?)(\w+|s+)([^>]*>)/e", "'$1'.ltrim(strtoupper('$2')).'$3'", $text );
-  $text = str_replace(array("<APPLET", "<OBJECT", "<SCRIPT", "<EMBED", "<FORM", "<?", "<%" ), "<**** ", $text );
-
-return $text;
+  $text = preg_replace("/(<\/?\s*)(APPLET|SCRIPT|EMBED|FORM|\?|%)(\w*|\s*)([^>]*>)/i", "\\1****\\3\\4", $text );
+  
+  return $text;
 }
 
 //
