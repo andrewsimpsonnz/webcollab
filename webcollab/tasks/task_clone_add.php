@@ -40,8 +40,9 @@ $taskid = $_GET["taskid"];
 
 $content = "";
 
-$content .= "<form name=\"inputform\" method=\"POST\" action=\"tasks/task_clone_submit.php\">\n".
+$content .= "<form name=\"inputform\" method=\"POST\" action=\"tasks.php\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
+            "<input type=\"hidden\" name=\"action\" value=\"submit_clone\" />\n ".
             "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\" />\n".
             "<p><table border=\"0\">\n";
 

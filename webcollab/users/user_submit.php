@@ -34,6 +34,7 @@ require_once(BASE."includes/security.php" );
 
 include_once(BASE."includes/email.php" );
 include_once(BASE."lang/lang_email.php" );
+include_once(BASE."includes/time.php" );
 
 $usergroup_names = "";
 $admin_state ="";
@@ -67,14 +68,14 @@ ignore_user_abort(TRUE);
       $row = db_fetch_array($q, 0 );
 
       //mail the user the happy news :)
-      $message = sprintf($email_revive, $MANAGER_NAME, date("F j, Y, H:i"), $row["name"], $row["fullname"], $EMAIL_ADMIN );
+      $message = sprintf($email_revive, $MANAGER_NAME, email_date(time() ), $row["name"], $row["fullname"], $EMAIL_ADMIN );
       email($row["email"], $title_revive, $message );
 
       break;
 
 
     //add a user
-    case "insert":
+    case "submit_insert":
 
       //only for the l33t
       if( $admin != 1 )
@@ -144,7 +145,7 @@ ignore_user_abort(TRUE);
         $usergroup_names = $lang["not_usergroup"]."\n";
       if($admin_rights == "t" )
         $admin_state = $lang["admin_priv"]."\n";
-      $message = sprintf($email_welcome, $MANAGER_NAME, date("F j, Y, H:i"), $EMAIL_ADMIN, $name, $password,$usergroup_names,
+      $message = sprintf($email_welcome, $MANAGER_NAME, email_date(time() ), $EMAIL_ADMIN, $name, $password,$usergroup_names,
                   $fullname, $BASE_URL, $admin_state );
       email($email, $title_welcome, $message );
 
@@ -152,7 +153,7 @@ ignore_user_abort(TRUE);
 
 
    //edit a user
-   case "edit":
+   case "submit_edit":
 
       //check input has been provided
       $input_array = array("name", "fullname", "email" );
@@ -244,7 +245,7 @@ ignore_user_abort(TRUE);
           $admin_state = $lang["admin_priv"]."\n";
         //email the changes to the user
         //$uid_email and $uid_name are in security.php
-        $message = sprintf($email_user_change1, $MANAGER_NAME, date("F j, Y, H:i"), $uid_name, $uid_email, $name,
+        $message = sprintf($email_user_change1, $MANAGER_NAME, email_date(time() ), $uid_name, $uid_email, $name,
                 $password, $usergroup_names, $fullname, $admin_state );
         email($email, $title_user_change1, $message );
 
@@ -267,7 +268,7 @@ ignore_user_abort(TRUE);
                             WHERE id=$uid" );
 
           //email the changes to the user
-          $message = sprintf($email_user_change2, $MANAGER_NAME, date("F j, Y, H:i"), $name, $password, $fullname );
+          $message = sprintf($email_user_change2, $MANAGER_NAME, email_date(time() ), $name, $password, $fullname );
           email($email, $title_user_change2, $message );
         }
         else {
@@ -279,7 +280,7 @@ ignore_user_abort(TRUE);
                             WHERE id=$uid" );
 
           //email the changes to the user
-          $message = sprintf( $email_user_change3, $MANAGER_NAME, date("F j, Y, H:i"), $name, $fullname );
+          $message = sprintf( $email_user_change3, $MANAGER_NAME, email_date(time() ), $name, $fullname );
           email( $email, $title_user_change3, $message );
         }
       }
@@ -300,5 +301,5 @@ if ( $admin == 1 ) {
         header( "location: ".$BASE_URL."users.php?x=$x&action=show&userid=$uid" );
         die;
       }
-
+      
 ?>

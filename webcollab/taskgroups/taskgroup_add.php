@@ -35,9 +35,9 @@ if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 $content =
-            "<form name=\"inputform\" method=\"POST\" action=\"taskgroups/taskgroup_submit.php\">\n".
+            "<form name=\"inputform\" method=\"POST\" action=\"taskgroups.php\">\n".
               "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-              "<input type=\"hidden\" name=\"action\" value=\"insert\" />\n".
+              "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n".
               "<p><table border=\"0\">\n".
                 "<tr><td>".$lang["taskgroup_name"]."</td><td><input type=\"input\" name=\"name\" size=\"30\" /></td></tr>\n".
                 "<tr><td>".$lang["taskgroup_description"]."</td><td><input type=\"input\"name=\"description\"size=\"30\" /></td></tr>\n".

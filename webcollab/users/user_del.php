@@ -1,14 +1,13 @@
 <?php
 /*
   $Id$
+  
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
-  with much help from the people noted in the README
-
-  Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
-  by Andrew Simpson <andrew.simpson@paradise.net.nz>
+  
+  Based on CoreAPM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -98,7 +97,7 @@ switch($_GET["action"] ){
 
     //mail the user that he/she had been deleted
     include_once(BASE."lang/lang_email.php" );
-    $message = sprintf($email_delete_user, $MANAGER_NAME, date("F j, Y, H:i"), $EMAIL_ADMIN );
+    $message = sprintf($email_delete_user, $MANAGER_NAME, email_date(time() ), $EMAIL_ADMIN );
     email($email, $title_delete_user, $message );
 
     break;

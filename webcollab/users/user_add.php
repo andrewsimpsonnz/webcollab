@@ -1,10 +1,12 @@
 <?php
 /*
   $Id$
+  
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
+  Based on CoreAPM by Dennis Fleurbaaij 2001/2002
   with much help from the people noted in the README
 
   Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
@@ -38,8 +40,8 @@ if($admin != 1 )
 
 
 $content =
-           "<form name=\"inputform\" method=\"POST\" action=\"users/user_submit.php\">".
-             "<input type=\"hidden\" name=\"action\" value=\"insert\" />".
+           "<form name=\"inputform\" method=\"POST\" action=\"users.php\">".
+             "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />".
              "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
              "<p><table border=\"0\">".
                "<tr><td>".$lang["login_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".

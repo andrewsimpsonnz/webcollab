@@ -39,10 +39,10 @@ $userid = "";
 if($admin == 1 ) {
 
   //is there a uid ?
-  if( ! isset($_GET["userid"]) || ! is_numeric($_GET["userid"]) )
+  if( ! isset($_REQUEST["userid"]) || ! is_numeric($_REQUEST["userid"]) )
     error("User edit", "No userid was specified" );
 
-  $userid = $_GET["userid"];
+  $userid = $_REQUEST["userid"];
 
   //query for user
   $q = db_query("SELECT * FROM users WHERE id=$userid" );
@@ -63,8 +63,8 @@ if( ! ($row = db_fetch_array($q , 0 ) ) )
 
 
 //show data
-$content =  "<form method=\"POST\" action=\"users/user_submit.php\">\n".
-              "<input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
+$content =  "<form method=\"POST\" action=\"users.php\">\n".
+              "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
               "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
               "<input type=\"hidden\" name=\"userid\" value=\"$userid\" />\n".
               "<p><table border=\"0\">".

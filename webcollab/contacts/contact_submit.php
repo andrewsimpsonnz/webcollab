@@ -41,7 +41,7 @@ if( ! isset( $_REQUEST["action"] ) )
   switch($_REQUEST["action"] ) {
 
     //insert a new contact
-    case "insert":
+    case "submit_add":
       if(isset($_POST["lastname"] )  && isset($_POST["lastname"] ) && strlen($_POST["lastname"] ) > 0 && strlen($_POST["firstname"] ) > 0 ){
 
         db_query( "INSERT INTO contacts(firstname,
@@ -79,7 +79,7 @@ if( ! isset( $_REQUEST["action"] ) )
 
       break;
 
-    case "edit":
+    case "submit_edit":
      //edit an existing entry
      if(isset($_POST["lastname"] ) && isset($_POST["lastname"] ) && strlen($_POST["lastname"] ) > 0 && strlen($_POST["firstname"] ) > 0  && is_numeric($contactid ) ) {
 
@@ -105,7 +105,7 @@ if( ! isset( $_REQUEST["action"] ) )
 
     break;
 
-    case "delete":
+    case "submit_delete":
       if(is_numeric($contactid ) ) {
         //delete the contact
         db_query("DELETE FROM contacts WHERE id=$contactid" );

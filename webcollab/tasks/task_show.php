@@ -281,17 +281,17 @@ switch( $row["owner"] ){
       $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]."</a>]&nbsp;\n";
     }
     //I'll take it!
-    $content .= "[<a href=\"tasks/task_submit.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang["i_take_it"]."</a>]&nbsp;\n";
+    $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang["i_take_it"]."</a>]&nbsp;\n";
     break;
 
   case ($uid):
     $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]."</a>]&nbsp;\n";
     //if not finished and not a project; then [I finished it!] button
     if( ($row["status"] != "done" ) && ($row["parent"] != 0 ) ) {
-      $content .= "[<a href=\"tasks/task_submit.php?x=$x&amp;action=done&amp;taskid=".$taskid."\">".$lang["i_finished"]."</a>]&nbsp;\n";
+      $content .= "[<a href=\"tasks.php?x=$x&amp;action=done&amp;taskid=".$taskid."\">".$lang["i_finished"]."</a>]&nbsp;\n";
     }
     // deown the task
-    $content .= "[<a href=\"tasks/task_submit.php?x=$x&amp;action=deown&amp;taskid=".$taskid."\">".$lang["i_dont_want"]."</a>]&nbsp;\n";
+    $content .= "[<a href=\"tasks.php?x=$x&amp;action=deown&amp;taskid=".$taskid."\">".$lang["i_dont_want"]."</a>]&nbsp;\n";
     break;
 
   default:
@@ -299,7 +299,7 @@ switch( $row["owner"] ){
       //edit
       $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&taskid=".$taskid."\">".$lang["edit"]."</a>]&nbsp;\n";
       //take over
-      $content .= "[<a href=\"tasks/task_submit.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_$type"] )."</a>]&nbsp;\n";
+      $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_$type"] )."</a>]&nbsp;\n";
     }
     if($group )
       //if user is in the usergroup & groupaccess is set

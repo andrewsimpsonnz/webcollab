@@ -95,6 +95,17 @@ if( ! isset($_REQUEST["action"]) )
       include("tasks/task_summary_list.php" );
       create_bottom();
       break;
+    
+    //todo list
+    case "todo":
+      create_top($lang["todo_list"] );
+      include("includes/mainmenu.php" );
+      include("users/user_menubox.php" );
+      include("users/user_existing_menubox.php" );
+      goto_main();
+      include("tasks/task_todo_list.php" );
+      create_bottom();
+      break;
 
     //clone
     case "clone":
@@ -106,7 +117,21 @@ if( ! isset($_REQUEST["action"]) )
       include("tasks/task_clone_add.php" );
       create_bottom();
       break;
-
+   
+   //submit options
+   case "submit_insert":
+   case "submit_update":
+   case "meown":
+   case "deown":
+   case "done":
+      include("tasks/task_submit.php" );
+      break;   
+            
+   //submit clone
+   case "submit_clone":
+       include("tasks/task_submit_clone.php" );
+      break;   
+            
     //printable task info
     case "show_print":
       create_top($lang["task_info"], 2 );

@@ -32,6 +32,7 @@ require_once( BASE."includes/security.php" );
 
 include_once(BASE."includes/admin_config.php" );
 include_once(BASE."includes/email.php" );
+include_once(BASE."includes/time.php" );
 include_once(BASE."config.php" );
 
 
@@ -182,7 +183,7 @@ if(isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
            $status = "";
            break;
        }
-       $message = sprintf($email, $MANAGER_NAME, date("F j, Y, H:i") ).
+       $message = sprintf($email, $MANAGER_NAME, email_date(time() ) ).
                    sprintf($delete_list, $name_project, $name_task, $status, $row["text"] );
        email($row["email"], $title, $message );
     }

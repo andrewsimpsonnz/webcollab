@@ -45,10 +45,10 @@ $q = db_query("SELECT * FROM taskgroups WHERE id=$taskgroupid" );
 $row = db_fetch_array( $q, 0 );
 
 $content =
-            "<form method=\"POST\" action=\"taskgroups/taskgroup_submit.php\">\n".
+            "<form method=\"POST\" action=\"taskgroups.php\">\n".
               "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
               "<input type=\"hidden\" name=\"taskgroupid\" value=\"$taskgroupid\" />\n".
-              "<input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
+              "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
               "<p><table border=\"0\">\n".
                 "<tr><td>".$lang["taskgroup_name"]."</td> <td><input type=\"input\" name=\"name\" value=\"".$row["name"]." \"size=\"30\" /></td></tr>\n".
                 "<tr><td>".$lang["taskgroup_description"]."</td><td><input type=\"input\" name=\"description\" value=\"".$row["description"]." \"size=\"30\" /></td></tr>\n".

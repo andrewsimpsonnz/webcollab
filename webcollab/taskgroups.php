@@ -37,11 +37,11 @@ include_once("includes/screen.php" );
 //
 // The action handler
 //
-if( ! isset($_GET["action"]) )
+if( ! isset($_REQUEST["action"]) )
  error("Taskgroup action handler", "No request given");
 
   //what do you want to taskgroup today =]
-  switch( $_GET["action"] ) {
+  switch( $_REQUEST["action"] ) {
 
     //gives a window and some options to do to the poor 'old taskgroup
     case "manage":
@@ -75,7 +75,13 @@ if( ! isset($_GET["action"]) )
       create_bottom();
       break;
 
-
+    //submit
+    case "submit_edit":
+    case "submit_insert":
+    case "submit_del":
+    include("taskgroups/taskgroup_submit.php" );
+    break;
+         
     //Error case
     default:
       error("Taskgroup action handler", "Invalid request given");

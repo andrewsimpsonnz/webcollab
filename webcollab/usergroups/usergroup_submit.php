@@ -45,7 +45,7 @@ ignore_user_abort(TRUE);
   switch($_REQUEST["action"] ) {
 
     //delete a usergroup
-    case "del":
+    case "submit_del":
 
       if(isset($_GET["usergroupid"]) && is_numeric($_GET["usergroupid"]) ) {
 
@@ -73,7 +73,7 @@ ignore_user_abort(TRUE);
 
 
     //insert a new usergroup
-    case "insert":
+    case "submit_insert":
 
       if(isset($_POST["name"] ) && strlen($_POST["name"] ) > 0 ) {
 
@@ -110,7 +110,7 @@ ignore_user_abort(TRUE);
       break;
 
     //edit a usergroup
-    case "edit":
+    case "submit_edit":
 
       if( ! isset($_POST["usergroupid"] ) || ! is_numeric($_POST["usergroupid"] ) )
         error("Usergroup submit", "Not a valid value for usergroupid" );

@@ -101,16 +101,6 @@ if( ! isset($_REQUEST["action"]) )
       create_bottom();
       break;
 
-    case "todo":
-      create_top($lang["todo_list"] );
-      include("includes/mainmenu.php" );
-      include("users/user_menubox.php" );
-      include("users/user_existing_menubox.php" );
-      goto_main();
-      include("tasks/task_todo_list.php" );
-      create_bottom();
-      break;
-
     //admin email
     case "email":
       create_top($lang["email"] );
@@ -120,6 +110,24 @@ if( ! isset($_REQUEST["action"]) )
       create_bottom();
       break;
 
+    //submit to submission engine
+    case "submit_email":
+      include("users/user_mail_send.php" );
+      break;
+                  
+    //submit to submission engine
+    case "submit_insert":
+    case "submit_edit":
+    case "revive":
+      include("users/user_submit.php" );
+      break;
+    
+    //delete to submission engine
+    case "del":
+    case "permdel":    
+      include("users/user_del.php" );
+      break;
+         
     //Error case
     default:
       error("Users action handler", "Invalid request given" );

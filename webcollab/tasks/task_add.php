@@ -52,9 +52,9 @@ $priority_select_box = "<tr><td>".$lang["priority"].":</td> <td>\n".
 if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) )
   $javascript = "onsubmit=\"return dateCheck()\" ";
 
-$content .= "<form name=\"inputform\" method=\"POST\" action=\"tasks/task_submit.php\" $javascript>\n";
+$content .= "<form name=\"inputform\" method=\"POST\" action=\"tasks.php\" $javascript>\n";
 $content .= "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ";
-$content .= "<input type=\"hidden\" name=\"action\" value=\"insert\" />\n ";
+$content .= "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n ";
 
 //this is split up in 2 parts for readabilities' sake
 

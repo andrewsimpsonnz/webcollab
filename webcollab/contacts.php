@@ -71,6 +71,11 @@ if( ! isset($_REQUEST["action"] ) )
       create_bottom();
       break;
 
+    case "submit_add":
+    case "submit_edit":
+    case "submit_delete":
+      include("contacts/contact_submit.php" );
+      break;    
 
     //Error case
     default:

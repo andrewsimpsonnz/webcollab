@@ -46,6 +46,10 @@ switch ($_REQUEST["action"] ) {
     include("admin/admin_config_edit.php" );
     create_bottom();
     break;
+    
+  case "submit":
+    include("admin/admin_config_submit.php" );
+    break;  
 
   //error case
   default:

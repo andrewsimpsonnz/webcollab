@@ -45,15 +45,6 @@ if( ! isset($_REQUEST["action"]) )
       include("files/file_list.php" );
       break;
 
-    //upload a file
-    case "upload":
-      create_top($lang["file_choose"], 0, "userfile", 1 );
-      include("includes/mainmenu.php" );
-      goto_main();
-      include("files/file_upload.php" );
-      create_bottom();
-      break;
-
     //admin files
     case "admin":
       create_top($lang["file_admin"] );
@@ -64,7 +55,26 @@ if( ! isset($_REQUEST["action"]) )
       include("files/file_admin.php" );
       create_bottom();
       break;
+    
+    //upload a file
+    case "upload":
+      create_top($lang["file_choose"], 0, "userfile", 1 );
+      include("includes/mainmenu.php" );
+      goto_main();
+      include("files/file_upload.php" );
+      create_bottom();
+      break;
 
+    //download a file
+    case "download":
+      include("files/file_download.php" );
+      break;
+      
+    case "submit_del":
+    case "submit_upload":
+      include("files/file_submit.php" );
+      break;  
+      
     //Error case
     default:
       error("File action handler", "Invalid request given" );

@@ -56,12 +56,12 @@ require_once(BASE."includes/usergroup_security.php" );
 //find out the tasks' name
 $taskname = db_result(db_query("SELECT name FROM tasks WHERE id=$taskid" ), 0, 0);
 
-$content .= "<form name=\"inputform\" method=\"POST\" action=\"forum/forum_submit.php\">\n";
+$content .= "<form name=\"inputform\" method=\"POST\" action=\"forum.php\">\n";
 //set some hidden values
-$content .= "<input type=\"hidden\" name=\"action\" value=\"add\" />\n".
-            "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\" />\n".
-            "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
-            "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\" />\n";
+$content .=  "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
+                   "<input type=\"hidden\" name=\"action\" value=\"submit_add\" />\n".
+                   "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\" />\n".
+                   "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\" />\n";
 
 
 //find out some of the parent's data

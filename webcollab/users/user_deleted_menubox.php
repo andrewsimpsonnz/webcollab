@@ -1,14 +1,12 @@
 <?php
 /*
   $Id$
+  
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
-  with much help from the people noted in the README
-
-  Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
-  by Andrew Simpson <andrew.simpson@paradise.net.nz>
+  Based on CoreAPM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -55,7 +53,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
   //if this user has NO tasks owned then we can delete him forever :)
   if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE owner=".$row["id"] ), 0, 0 ) == 0 ) {
-    $content .= "&nbsp;[<a href=\"users/user_del.php?x=$x&amp;action=permdel&amp;userid=".$row["id"]."\" onClick=\"return confirm( '".sprintf($lang["permdel_javascript_sprt"], $row["fullname"] )."' )\">".$lang["permdel"]." </a>]";
+    $content .= "&nbsp;[<a href=\"users.php?x=$x&amp;action=permdel&amp;userid=".$row["id"]."\" onClick=\"return confirm( '".sprintf($lang["permdel_javascript_sprt"], $row["fullname"] )."' )\">".$lang["permdel"]." </a>]";
   }
   $content.="</font></td></tr>\n";
 }

@@ -34,11 +34,11 @@ include_once("includes/screen.php" );
 //
 // The action handler
 //
-if( ! isset($_GET["action"]) ) 
+if( ! isset($_REQUEST["action"]) ) 
   error("Usergroup action handler", "No action given");
 
   //what do you want to usergroup today =]
-  switch( $_GET["action"] ) {
+  switch( $_REQUEST["action"] ) {
 
     //gives a window and some options to do to the poor 'old usergroup
     case "manage":
@@ -74,6 +74,12 @@ if( ! isset($_GET["action"]) )
       create_bottom();
       break;
 
+    //submit
+    case "submit_edit":
+    case "submit_insert":
+    case "submit_del":
+    include("usergroups/usergroup_submit.php" );
+    break;
 
     //Error case
     default:

@@ -86,9 +86,9 @@ if( ($row = db_fetch_array($q, 0 ) ) < 0 )
 //all okay show task info
 $content = "";
 
-$content .= "<form method=\"POST\" action=\"tasks/task_submit.php\" $javascript>\n".
+$content .= "<form method=\"POST\" action=\"tasks.php\" $javascript>\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
-            "<input type=\"hidden\" name=\"action\" value=\"update\" />\n ".
+            "<input type=\"hidden\" name=\"action\" value=\"submit_update\" />\n ".
             "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\" />";
             
 //add project deadline for javascript where applicable

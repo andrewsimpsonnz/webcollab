@@ -46,9 +46,9 @@ $taskid = $_GET["taskid"];
 //check usergroup security
 require_once(BASE."includes/usergroup_security.php" );
 
-$content =  "<form name=\"inputform\" method=\"POST\" enctype=\"multipart/form-data\"  action=\"files/file_submit.php\">\n".
-              "<input type=\"hidden\" name=\"action\" value=\"upload\" />\n".
+$content =  "<form name=\"inputform\" method=\"POST\" enctype=\"multipart/form-data\"  action=\"files.php\">\n".
               "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+              "<input type=\"hidden\" name=\"action\" value=\"submit_upload\" />\n".
               "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\" />\n".
               "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"$FILE_MAXSIZE\" />\n".
               "<p><table border=\"0\">\n".

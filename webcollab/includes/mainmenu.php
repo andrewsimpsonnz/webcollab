@@ -36,7 +36,7 @@ $content = "";
 //create content
 $content .= "<a href=\"main.php?x=$x\">".$lang["home_page"]."</a><br />\n".
             "<a href=\"tasks.php?x=$x&amp;action=summary\">".$lang["summary_page"]."</a><br />\n".
-            "<a href=\"users.php?x=$x&amp;action=todo\">".$lang["todo_list"]."</a><br />\n".
+            "<a href=\"tasks.php?x=$x&amp;action=todo\">".$lang["todo_list"]."</a><br />\n".
             "<a href=\"calendar.php?x=$x\">".$lang["calendar"]."</a><br />\n".
             "<a href=\"logout.php?x=$x\">".$lang["log_out"]."</a><br />\n";
 

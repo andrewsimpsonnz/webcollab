@@ -42,9 +42,10 @@ if( $admin != 1 ) {
 
 //start form data
 $content .=
-        "<form method=\"POST\" action=\"admin/admin_config_submit.php\">\n".
+        "<form method=\"POST\" action=\"admin.php\">\n".
           "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
-          "<p><table border=\"0\">\n";
+          "<input type=\"hidden\" name=\"action\" value=\"submit\">\n".
+                    "<p><table border=\"0\">\n";
 
 //get config data
 $q = db_query("SELECT * FROM config" );

@@ -126,7 +126,7 @@ switch($selection ) {
     break;
 }
 
-$content .= "<form method=\"POST\" action=\"users.php\">\n".
+$content .= "<form method=\"POST\" action=\"tasks.php\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\">\n ".
             "<p><table border=\"0\">\n".

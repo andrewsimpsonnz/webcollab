@@ -41,7 +41,7 @@ if( ! ($row = db_fetch_array( db_query( "SELECT * FROM contacts WHERE id=".$cont
 
 $content =
     "<form method=\"POST\" action=\"contacts/contact_submit.php\">\n".
-      "<input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
+      "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" />\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
       "<p><table border=\"0\">\n".
@@ -65,13 +65,12 @@ $content .=
       "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
       "</form>";
 
-
 //delete options
 $content .=
-      "<form method=\"POST\" action=\"contacts/contact_submit.php\">\n".
-      "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
-      "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" />\n".
+      "<form method=\"POST\" action=\"contacts.php\">\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+      "<input type=\"hidden\" name=\"action\" value=\"submit_delete\" />\n".
+      "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" />\n".
       "<p><input type=\"submit\" value=\"".$lang["del_contact"]."\" onClick=\"return confirm('".$lang["confirm_del_javascript"]."')\" />\n".
       "</p></form>";
 

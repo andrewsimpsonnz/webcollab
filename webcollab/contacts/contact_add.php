@@ -36,9 +36,9 @@ $content = "";
 $q = "";
 
 $content .=
-        "<form name=\"inputform\" method=\"POST\" action=\"contacts/contact_submit.php\">\n".
+        "<form name=\"inputform\" method=\"POST\" action=\"contacts.php\">\n".
           "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-          "<input type=\"hidden\" name=\"action\" value=\"insert\" />\n".
+          "<input type=\"hidden\" name=\"action\" value=\"submit_add\" />\n".
           "<p><table border=\"0\">\n".
             "<tr><td><i>".$lang["firstname"]."</i></td><td><input type=\"text\" name=\"firstname\" size=\"30\" /></td></tr>\n".
             "<tr><td><i>".$lang["lastname"]."</i></td><td><input type=\"text\" name=\"lastname\" size=\"30\" /></td></tr>\n".

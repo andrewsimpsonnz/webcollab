@@ -44,7 +44,7 @@ ignore_user_abort(TRUE);
   switch($_REQUEST["action"] ) {
 
     //delete a taskgroup
-    case "del":
+    case "submit_del":
 
       if( ! isset($_GET["taskgroupid"] ) || ! is_numeric($_GET["taskgroupid"]) )
         error("Taskgroup submit", "Not a valid value for taskgroupid" );
@@ -60,7 +60,7 @@ ignore_user_abort(TRUE);
       break;
 
     //insert a new taskgroup
-    case "insert":
+    case "submit_insert":
 
       if(isset($_POST["name"] ) && strlen($_POST["name"] ) > 0 ) {
 
@@ -78,7 +78,7 @@ ignore_user_abort(TRUE);
 
 
     //edit an existing taskgroup
-    case "edit":
+    case "submit_edit":
 
       if( ! isset($_POST["taskgroupid"] ) || ! is_numeric($_POST["taskgroupid"] ) )
         error("Taskgroup submit", "Not a valid value for taskgroupid" );
