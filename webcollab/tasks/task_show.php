@@ -57,7 +57,7 @@ db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, $taskid, now() ) 
 //text link for 'printer friendly' page
 $content = "<font class=\"textlink\">";
 if(isset($_GET["action"]) && $_GET["action"] == "show_print" )
-  $content  .= "[<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$lang["normal_version"]."</a>]<br />";
+  $content  .= "<p>[<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$lang["normal_version"]."</a>]</p>";
 else
   $content  .= "<div align=\"right\">[<a href=\"tasks.php?x=$x&amp;action=show_print&amp;taskid=$taskid\">".$lang["print_version"]."</a>]</div>";
 $content .= "</font>\n";
