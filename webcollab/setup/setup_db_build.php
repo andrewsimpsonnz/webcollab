@@ -91,7 +91,7 @@ include_once("./screen_setup.php" );
 
     //sanity check
     if( ! is_readable($db_schema ) ) {
-      error_setup("Database schema is missing.  Check that the file $db_schema exists and is readable by the webserver." );
+      error_setup("Database schema is missing.  Check that the file /db/$db_schema exists and is readable by the webserver." );
     }
 
     //open schema file
