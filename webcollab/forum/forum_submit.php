@@ -32,45 +32,85 @@ require_once(BASE."includes/security.php" );
 include_once(BASE."includes/admin_config.php");
 
 //
-// Finds children messages recursively and puts them in an array
+// Function for listing all posts of a task
 //
-function find_and_report_children($postid ) {
+function find_posts( $postid ) {
 
-  global $arrayindex, $ids;
+  global $post_array, $parent_array, $match_array, $index;
 
-  //query for children
-  if( ! ($q = db_query("SELECT id FROM ".PRE."forum WHERE parent=$postid", 0) ) )
-    return;
-  if(db_numrows($q ) == 0 )
-    return;
+  $parent_array = "";
+  $index = 0; 
+  $j = 0;
+  
+  $taskid = db_result(db_query("SELECT taskid FROM ".PRE."forum WHERE id=$postid" ), 0, 0 );
 
-  //loop all children and put them in an array
-  for($i=0; $row = @db_fetch_num($q, $i ); $i++) {
-    $ids[$arrayindex] = $row[0];
-    $arrayindex++;
-    find_and_report_children($row[0] );
+  $q = db_query("SELECT id, parent FROM ".PRE."forum WHERE taskid=$taskid" );
+
+  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+
+    //put values into array
+    $post_array[$i]["id"] = $row["id"];
+    $post_array[$i]["parent"] = $row["parent"];
+  
+    //if this is a subpost, store the parent id 
+    if($row["parent"] != 0 ) {
+      $parent_array[$j] = $row["parent"];
+      $j++;
+    }
   }
+    
+  //record first match
+  $match_array[$index] = $postid;
+  $index++;
+  
+  if(sizeof($parent_array) > 10 )
+    $parent_array = array_unique($parent_array);
+  
+  //if selected post has children (subposts), iterate recursively to find them 
+  if(in_array($postid, (array)$parent_array ) ){
+    find_children($postid);
+  }
+  
   return;
 }
 
+//
+// List subposts (recursive function)
+//
+function find_children($parent ) {
+
+  global $post_array, $parent_array, $match_array, $index;
+
+  $max = sizeof($post_array);
+       
+  for($i=0 ; $i < $max ; $i++ ) {
+  
+    if($post_array[$i]["parent"] != $parent ){
+      continue;
+    }
+    $match_array[$index] = $post_array[$i]["id"];
+    $index++;
+    
+    //if this post has children (subposts), iterate recursively to find them
+    if(in_array($post_array[$i]["id"], $parent_array ) ){
+      find_children($post_array[$i]["id"] );
+    }
+  }
+  return;
+}      
 
 //
 // Perform delete of all forum messages in the thread below the selected message
 //
 function delete_messages($postid ) {
 
-  global $arrayindex, $ids;
+  global $match_array, $index;
 
-  //add the postid itself
-  $ids[0] = $postid;
-
-  //find all recursively linked children
-  $arrayindex=1;
-  find_and_report_children($postid );
-
+  find_posts($postid );
+    
   // perform the delete - delete from newest post first to oldest post last to prevent database referential errors
-  for($i=0; $i < $arrayindex; $i++ ) {
-    db_query("DELETE FROM ".PRE."forum WHERE id=".$ids[($arrayindex - 1) - $i] );
+  for($i=0; $i < $index; $i++ ) {
+    db_query("DELETE FROM ".PRE."forum WHERE id=".$match_array[($index - 1) - $i] );
   }
   return;
 }

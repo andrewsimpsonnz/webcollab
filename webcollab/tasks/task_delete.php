@@ -34,26 +34,70 @@ include_once(BASE."includes/admin_config.php" );
 include_once(BASE."tasks/task_common.php" );
 
 //
-// Finds children recursively and puts them in an array
+// Function for listing all tasks of an id tree
 //
-function find_and_report_children($taskid ) {
+function find_tasks( $taskid, $projectid ) {
 
-  global $arrayindex, $ids;
+  global $task_array, $parent_array, $match_array, $index;
 
-  //query for children
-  if( ! ($q = db_query("SELECT id FROM ".PRE."tasks WHERE parent=$taskid", 0 ) ) ) return;
-  if(db_numrows($q) == 0 ) return;
+  $parent_array = "";
+  $index = 0; 
+  $j = 0;
+    
+  $q = db_query("SELECT id, parent FROM ".PRE."tasks WHERE projectid=$projectid" );
 
-  //loop all children and put them in an array
-  for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
-    $ids[$arrayindex] = $row[0];
-    $arrayindex++;
-    find_and_report_children($row[0] );
+  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+
+    //put values into array
+    $task_array[$i]["id"] = $row["id"];
+    $task_array[$i]["parent"] = $row["parent"];
+  
+    //if this is a subpost, store the parent id 
+    if($row["parent"] != 0 ) {
+      $parent_array[$j] = $row["parent"];
+      $j++;
+    }
   }
-
+    
+  //record first match
+  $match_array[$index] = $taskid;
+  $index++;
+  
+  if(sizeof($parent_array) > 10 )
+    $parent_array = array_unique($parent_array);
+  
+  //if selected task has children (subtasks), iterate recursively to find them 
+  if(in_array($taskid, (array)$parent_array ) ){
+    find_children($taskid);
+  }
+  
   return;
 }
 
+//
+// List subtasks (recursive function)
+//
+function find_children($parent ) {
+
+  global $task_array, $parent_array, $match_array, $index;
+
+  $max = sizeof($task_array);
+       
+  for($i=0 ; $i < $max ; $i++ ) {
+  
+    if($task_array[$i]["parent"] != $parent ){
+      continue;
+    }
+    $match_array[$index] = $task_array[$i]["id"];
+    $index++;
+    
+    //if this post has children (subtasks), iterate recursively to find them
+    if(in_array($task_array[$i]["id"], $parent_array ) ){
+      find_children($task_array[$i]["id"] );
+    }
+  }
+  return;
+}      
 
 //
 // advanced database-wide task-delete !!
@@ -87,21 +131,11 @@ if( ($admin != 1) && ($uid != $row["owner"]) )
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
-//find our return-location
-if($row["parent"] == 0 )
-  $returnvalue = BASE_URL."main.php?x=$x";
-else
-  $returnvalue = BASE_URL."tasks.php?x=$x&action=show&taskid=".$row["parent"];
-
 //begin transaction
 db_begin();
 
-//add the task itself
-$ids[0] = $taskid;
-
 //find all recursively linked children
-$arrayindex=1;
-find_and_report_children( $taskid );
+find_tasks( $taskid, $row["projectid"] );
 
 /* delete:
 - all forum posts linked to it
@@ -109,16 +143,17 @@ find_and_report_children( $taskid );
 - the item itself
 - files
 */
-for($i=0 ; $i < $arrayindex ; $i++ ) {
+
+for($i=0 ; $i < $index ; $i++ ) {
 
   //delete all from seen table
-  db_query("DELETE FROM ".PRE."seen WHERE taskid=".$ids[$i] );
+  db_query("DELETE FROM ".PRE."seen WHERE taskid=".$match_array[$i] );
 
   //delete forum posts
-  db_query("DELETE FROM ".PRE."forum WHERE taskid=".$ids[$i] );
+  db_query("DELETE FROM ".PRE."forum WHERE taskid=".$match_array[$i] );
 
   //delete all files physically
-  $fq = db_query("SELECT oid, filename FROM ".PRE."files WHERE taskid=".$ids[$i] );
+  $fq = db_query("SELECT oid, filename FROM ".PRE."files WHERE taskid=".$match_array[$i] );
   for($j=0 ; $frow = @db_fetch_array($fq, $j ) ; $j++) {
 
     if(file_exists(FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
@@ -127,10 +162,10 @@ for($i=0 ; $i < $arrayindex ; $i++ ) {
   }
 
   //delete all files attached to it in the database
-  db_query("DELETE FROM ".PRE."files WHERE taskid=".$ids[$i] );
+  db_query("DELETE FROM ".PRE."files WHERE taskid=".$match_array[$i] );
 
   //delete item
-  db_query("DELETE FROM ".PRE."tasks WHERE id=".$ids[$i] );
+  db_query("DELETE FROM ".PRE."tasks WHERE id=".$match_array[$i] );
 
 }
 
@@ -200,6 +235,12 @@ if(($row["owner"] != 0 ) && ($uid != $row["owner"]) ) {
   $message = $email . sprintf($delete_list, $name_project, $name_task, $status, $row["text"] );
   email($row["email"], $title, $message );
 }
+
+//find our return-location
+if($row["parent"] == 0 )
+  $returnvalue = BASE_URL."main.php?x=$x";
+else
+  $returnvalue = BASE_URL."tasks.php?x=$x&action=show&taskid=".$row["parent"];
 
 header("Location: ".$returnvalue);
 
