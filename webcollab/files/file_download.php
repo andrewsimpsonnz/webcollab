@@ -73,11 +73,11 @@ $file_q = db_query("SELECT oid, filename, size, mime FROM files WHERE id=$fileid
 $file_row = db_fetch_array( $file_q, 0);
 
 //check the file exists
-if( ! ( file_exists( $FILE_BASE."/".$file_row["oid"]."__".$file_row["filename"] ) ) )
+if( ! ( file_exists( $FILE_BASE."/".$file_row["oid"]."__".($file_row["filename"] ) ) ) )
   error("Download file", "The file ".$file_row["filename"]." is missing from the server" );
 
 //open the file
-$fp = fopen( $FILE_BASE."/".$file_row["oid"]."__".addslashes($file_row["filename"]), "rb" );
+$fp = fopen( $FILE_BASE."/".$file_row["oid"]."__".($file_row["filename"]), "rb" );
 if($fp == 0 )
   error("Download file", "File handle for ".$file_row["filename"]." cannot be opened" );
 
