@@ -67,7 +67,8 @@ function listTasks($projectid ) {
     
     //check if user can view this task
     if( ($ADMIN != 1 ) && ($row[4] != "t" ) && ($row[5] != 0 ) ) {
-      if( ! in_array( $row[5], (array)$GID ) )
+      $test = array_search( $row[5], (array)$GID );
+      if($test === FALSE || $test === NULL )   
         continue;
     }
   
@@ -94,8 +95,7 @@ function listTasks($projectid ) {
         break;
     }
     
-    $task_array[$l]['task'] = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_array[$l]['id']."\">".
-                              $row[1].$suffix;
+    $task_array[$l]['task'] = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_array[$l]['id']."\">".$row[1].$suffix;
                                
         
     //if this is a subtask, store the parent id 
@@ -123,7 +123,8 @@ function listTasks($projectid ) {
     $j++; 
     
     //if this task has children (subtasks), iterate recursively to find them 
-    if(in_array($task_array[$i]['id'], (array)$parent_array ) ){
+    $test = array_search($task_array[$i]['id'], (array)$parent_array );
+    if(!($test === FALSE || $test === NULL ) ){
       $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";
@@ -132,7 +133,8 @@ function listTasks($projectid ) {
   //look for any orphaned tasks, and show them too
   if($max != sizeof($shown_array) ) {
     for($i=0 ; $i < $max ; $i++ ) {
-      if( ! in_array($task_array[$i]['id'], (array)$shown_array ) ) 
+      $test = array_search($task_array[$i]['id'], (array)$shown_array );
+      if($test === FALSE || $test === NULL ) 
         $content .= $task_array[$i]['task']."</li>\n";
     }
   } 
@@ -166,7 +168,8 @@ function find_children($parent ) {
     $j++;
             
     //if this task has children (subtasks), iterate recursively to find them
-    if(in_array($task_array[$i]['id'], (array)$parent_array ) ){
+    $test = array_search($task_array[$i]['id'], (array)$parent_array );
+    if(! ($test === FALSE || $test === NULL ) ){
       $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";    

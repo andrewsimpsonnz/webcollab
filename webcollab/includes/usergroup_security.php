@@ -45,7 +45,8 @@ if( ! ($group_row = db_fetch_num($group_q, 0 ) ) )
 if( ($ADMIN != 1) && ($group_row[0] != 0 ) && ($group_row[1] == 'f' ) ) {
 
   //check if the user has a matching group
-  if( ! in_array($group_row[0], (array)$GID ) )
+  $test = array_search($group_row[0], (array)$GID );
+  if($test === FALSE || $test === NULL )
     warning($lang['access_denied'], $lang['private_usergroup'] );
 }
 
@@ -63,7 +64,8 @@ else {
 if( ($ADMIN != 1) && ($project_row[0] != 0 ) && ($project_row[1] == 'f' ) ) {
 
   //check if the user has a matching group
-  if( ! in_array($project_row[0], (array)$GID ) )
+  $test = array_search($project_row[0], (array)$GID );
+  if($test === FALSE || $test === NULL )
     warning($lang['access_denied'], $lang['private_usergroup'] );
 }
 
