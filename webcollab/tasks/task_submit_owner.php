@@ -56,7 +56,7 @@ ignore_user_abort(TRUE);
     case "done":
 
       //check if the user has enough rights
-      if( ($ADMIN != 1 ) && (! user_access($taskid) ) )
+      if( ! user_access($taskid) )
         error("Task submit", "Access denied, you do not have enough rights to do that" );
 
       db_query("UPDATE ".PRE."tasks SET status='done', finished_time=now(), edited=now() WHERE id=$taskid" );
@@ -81,7 +81,7 @@ ignore_user_abort(TRUE);
     case "deown":
 
       //check if the user has enough rights
-      if( ($ADMIN != 1 ) && (db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE id=$taskid AND owner=$UID" ), 0, 0 ) < 1) )
+      if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE id=$taskid AND owner=$UID" ), 0, 0 ) < 1 )
         warning($lang['task_submit'], $lang['not_owner'] );
 
       //note: self-securing query
