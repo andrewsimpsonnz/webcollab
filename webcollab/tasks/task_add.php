@@ -36,7 +36,7 @@ include_once(BASE."includes/admin_config.php" );
 include_once(BASE."includes/time.php" );
 
 //shows a priority-select box
-$priority_select_box = "<tr><td>Priority:</td> <td>\n".
+$priority_select_box = "<tr><td>".$lang["priority"].":</td> <td>\n".
                        "<SELECT name=\"priority\">\n".
                        "<option value=\"0\">".$task_state["dontdo"]."</option>\n".
                        "<option value=\"1\">".$task_state["low"]."</option>\n".

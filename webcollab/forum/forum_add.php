@@ -90,7 +90,7 @@ else {
 }
 
 //build up the text-entry part
-$content .=   "<tr><td>Message:</td><td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
+$content .=   "<tr><td>".$lang["message"]."</td><td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
               "</table>\n".
               "<input type=\"submit\" value=\"".$lang["post"]."\"> ".
               "<input type=\"reset\" value=\"".$lang["reset"]."\">".

@@ -83,7 +83,7 @@ for( $i=2001; $i<2011 ; $i++) {
   }
 $content .=  "</select>\n".
              "<input type=\"hidden\" name=\"x\" value=\"".$x."\">\n".
-             "<input type=\"submit\" value=\"Change\">\n".
+             "<input type=\"submit\" value=\"".$lang["update"]."\">\n".
              "</form>\n<br />\n";
 
 //number of days in month
