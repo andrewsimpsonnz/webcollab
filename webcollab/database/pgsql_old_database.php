@@ -62,7 +62,7 @@ function db_query($query, $dieonerror=1 ) {
     if(DATABASE_HOST != "localhost" )
       $host = "host=".DATABASE_HOST;
 
-    if( ! ($database_connection = @pg_connect("$host user=DATABASE_USER dbname=DATABASE_NAME password=DATABASE_PASSWORD" ) ) )
+    if( ! ($database_connection = @pg_connect("$host user=".DATABASE_USER." dbname=".DATABASE_NAME. "password=".DATABASE_PASSWORD ) ) )
       error("No database connection",  "Sorry but there seems to be a problem in connecting to the database" );
 
     //make sure dates will be handled properly by internal date routines
