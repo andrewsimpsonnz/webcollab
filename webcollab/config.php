@@ -10,6 +10,13 @@
 //------------------------------------------------------------------------------------------
 // Important parameters are between these dotted lines
 
+//ALLOWING WEB-BASED SETUP
+
+  //Allow web-based the setup prgram to alter this file (values are "N", or "Y").
+  //Defaults to "N" (not allowed) after the first successful web install.
+  //** For security: change this to "N" **
+  $WEB_CONFIG = "Y";
+
 //BASE DIRECTORY
 
   //You need to add the full webservername and dir to WebCollab here. Example"
@@ -61,9 +68,10 @@
        their web browsers, and viewing all the files.  (The default location given is NOT outside
        the webserver root, but it makes first-time setup easier).
     3. The $FILE_BASE is the full path to the operating system root, not the webserver root directory.
-    4. PHP and Apache settings will overide the maximum file size set here.  
+    4. PHP and Apache settings will overide the maximum file size set here.
 
   */
+
 //----------------------------------------------------------------------------------------------
 // Less important items below this line
 
@@ -87,7 +95,7 @@
       //location of SMTP server (ip address or FQDN)
       $SMTP_HOST = "localhost";
 
-	  //use smtp auth? ('Y' or 'N')
+      //use smtp auth? ('Y' or 'N')
       $SMTP_AUTH = "N";
         //if using $SMTP_AUTH give username & password
         $MAIL_USER = "";
@@ -109,8 +117,5 @@
 
   //Use external webserver authorisation to login (values are "N", or "Y")
   $WEB_AUTH = "N";
-
-  //Disable check for ip spoofing during sessions (values are "N", or "Y" - default is "N" for security)
-  $NO_IP_CHECK = "N";
 
 ?>
