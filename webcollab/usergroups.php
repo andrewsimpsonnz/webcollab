@@ -50,7 +50,7 @@ if( ! valid_string($_GET["action"]) )
       include("users/user_menubox.php" );
       goto_main();
       include("usergroups/usergroup_manage.php" );
-      include_once("lang/".$LOCALE."_long_message.php" );
+      include_once("lang/lang_long.php" );
       $content = $usergroup_info;
       new_box($lang["info_usergroup_manage"], $content );
       create_bottom();

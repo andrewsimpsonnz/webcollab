@@ -36,7 +36,7 @@ include_once(BASE."includes/admin_config.php" );
 include_once(BASE."includes/time.php" );
 include_once(BASE."includes/email.php" );
 include_once(BASE."config.php" );
-include_once(BASE."lang/".$LOCALE."_email.php" );
+include_once(BASE."lang/lang_email.php" );
 
 //
 //validate input data as either numeric > 0 or zero

@@ -43,9 +43,9 @@ if( ! valid_string($_REQUEST["action"]) )
   switch($_REQUEST["action"] ) {
 
     //create a box with the tasks from the current one
-    case "list":
-      include("tasks/task_list.php" );
-      break;
+    //case "list":
+    //  include("tasks/task_list.php" );
+    //  break;
 
     //show a task
     case "show":

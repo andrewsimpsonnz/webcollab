@@ -234,7 +234,7 @@ if($row["parent"] != 0 ){
 
   //get all users in order to show a task owner
   $taskgroup_q = db_query("SELECT id, name FROM taskgroups ORDER BY name" );
-  $content .= "<tr> <td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#taskgroup\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td> <td><select name=\"taskgroupid\">\n";
+  $content .= "<tr> <td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td> <td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang["no_group"]."</option>\n";
 
   for( $i=0 ; $user_row = @db_fetch_array($taskgroup_q, $i ) ; $i++) {
@@ -254,7 +254,7 @@ if($row["parent"] != 0 ){
 
 //show all user-groups
 $usergroup_q = db_query("SELECT name, id FROM usergroups ORDER BY name" );
-$content .= "<tr> <td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </td> <td><select name=\"usergroupid\">\n";
+$content .= "<tr> <td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </td> <td><select name=\"usergroupid\">\n";
 $content .= "<option value=\"0\">".$lang["no_group"]."</option>\n";
 
 for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++) {
@@ -279,8 +279,8 @@ $group = "";
 if($row["groupaccess"] == 't' )
   $group = "CHECKED";
 
-$content .= "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" $global></td></tr>\n".
-            "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#groupaccess\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" $group></td></tr>\n".
+$content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users"]."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" $global></td></tr>\n".
+            "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" $group></td></tr>\n".
 
             "<tr> <td>".$lang["task_description"]."</td> <td><TEXTAREA name=\"text\" rows=\"5\" cols=\"60\">".$row["text"]."</TEXTAREA></td> </tr>\n".
 

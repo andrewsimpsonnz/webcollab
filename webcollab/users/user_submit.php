@@ -33,7 +33,7 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 include_once(BASE."includes/email.php" );
-include_once(BASE."lang/".$LOCALE."_email.php" );
+include_once(BASE."lang/lang_email.php" );
 
 $usergroup_names = "";
 $admin_state ="";

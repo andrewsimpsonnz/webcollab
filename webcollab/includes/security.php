@@ -32,7 +32,7 @@
 require_once("path.php" );
 
 include_once(BASE."config.php" );
-include_once(BASE."lang/language.php" );
+include_once(BASE."lang/lang.php" );
 include_once(BASE."includes/database.php" );
 include_once(BASE."includes/common.php" );
 

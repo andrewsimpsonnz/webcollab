@@ -57,9 +57,9 @@ $row = db_fetch_array( $q, 0 );
 
 //email addresses
 $content .=
-            "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help_admin.php#admin\" target=\"helpwindow\">".$lang["admin_email"]."</a>: </td><td><INPUT type=\"text\" name=\"email_admin\" value=\"".$row["email_admin"]."\" size=\"30\"></td></tr>\n".
-            "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help_admin.php#reply\" target=\"helpwindow\">".$lang["email_reply"]."</a>:</td><td><INPUT type=\"text\" name=\"reply_to\" value=\"".$row["reply_to"]."\" size=\"30\"></td></tr>\n".
-            "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help_admin.php#from\" target=\"helpwindow\">".$lang["email_from"]."</a>:</td><td><INPUT type=\"text\" name=\"from\" value=\"".$row["email_from"]."\" size=\"30\"></td></tr>\n";
+            "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin\" target=\"helpwindow\">".$lang["admin_email"]."</a>: </td><td><INPUT type=\"text\" name=\"email_admin\" value=\"".$row["email_admin"]."\" size=\"30\"></td></tr>\n".
+            "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin\" target=\"helpwindow\">".$lang["email_reply"]."</a>:</td><td><INPUT type=\"text\" name=\"reply_to\" value=\"".$row["reply_to"]."\" size=\"30\"></td></tr>\n".
+            "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin\" target=\"helpwindow\">".$lang["email_from"]."</a>:</td><td><INPUT type=\"text\" name=\"from\" value=\"".$row["email_from"]."\" size=\"30\"></td></tr>\n";
 
 //get mailing list
 $q = db_query("SELECT DISTINCT * FROM maillist" );
@@ -68,7 +68,7 @@ for( $i=0 ; $row_mail = @db_fetch_array($q, $i ) ; $i++) {
 $maillist .= $row_mail["email"]."\n";
 }
 
-$content .= "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help_admin.php#list\" target=\"helpwindow\">".$lang["mailing_list"]."</a>: </td><td><textarea name=\"email\" rows=\"5\" cols=\"30\">".$maillist."</textarea><br /><br /></td></tr>\n";
+$content .= "<tr><td><a href=\"help/help_language.php?item=list&amp;type=admin\" target=\"helpwindow\">".$lang["mailing_list"]."</a>: </td><td><textarea name=\"email\" rows=\"5\" cols=\"30\">".$maillist."</textarea><br /><br /></td></tr>\n";
 
 $content .= "<tr><td nowrap colspan=\"2\"><b>".$lang["default_checkbox"]."</b></td></tr>\n".
             "<tr><td colspan=\"2\">&nbsp;</td></tr>";

@@ -184,7 +184,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
 $content .= "</tr>\n";
 $content .= "</table>\n<br />\n";
 
-include_once(BASE."lang/".$LOCALE."_long_message.php" );
+include_once(BASE."lang/lang_long.php" );
 $content .= "<b>[<a href=\"main.php?x=".$x."\">".$calendar_key."<br />\n</div>\n";
 
 new_box($lang["calendar"], $content );

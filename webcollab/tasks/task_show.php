@@ -189,12 +189,12 @@ if($row["parent"] != 0 ) {
 
   switch($row["taskgroupid"] ){
     case "0":
-      $content .= "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#taskgroup\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td><td>".$lang["none"]."<br />\n";
+      $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td><td>".$lang["none"]."<br />\n";
       break;
 
     default:
       $taskgroup = db_result(db_query("SELECT name FROM taskgroups WHERE id=".$row["taskgroupid"] ), 0, 0 );
-      $content .= "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#taskgroup\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td><td>".$taskgroup."</td></tr>\n";
+      $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td><td>".$taskgroup."</td></tr>\n";
       break;
   }
 }
@@ -215,7 +215,7 @@ switch($row["parent"] ){
 //show the usergroupid
 if( $row["usergroupid"] != 0 ) {
   $usergroup = db_result(db_query("SELECT name FROM usergroups WHERE id=".$row["usergroupid"] ), 0, 0  );
-  $content .= "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td><td>".$usergroup." ";
+  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td><td>".$usergroup." ";
 
   switch($row["globalaccess"] ){
     case 't':
@@ -233,7 +233,7 @@ if( $row["usergroupid"] != 0 ) {
 
 }
 else {
-  $content .= "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td><td>".sprintf($lang["task_not_in_usergroup_sprt"], $type )."</td></tr>\n";
+  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td><td>".sprintf($lang["task_not_in_usergroup_sprt"], $type )."</td></tr>\n";
 }
 
 $content .= "</table>\n";

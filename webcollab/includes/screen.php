@@ -67,7 +67,7 @@
 require_once("path.php" );
 
 include_once( BASE."config.php" );
-include_once( BASE."lang/language.php" );
+include_once( BASE."lang/lang.php" );
 
 //
 // Creates the inital window, and sets some vars. This _HAS_ to be the first function because of the header() calls

@@ -32,7 +32,7 @@
 require_once("path.php" );
 
 include_once(BASE."config.php" );
-include_once(BASE."lang/language.php" );
+include_once(BASE."lang/lang.php" );
 
 //define domain name for cookies
 $domain_array = explode('/', str_replace('http://', '', $BASE_URL ) );

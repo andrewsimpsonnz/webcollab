@@ -54,7 +54,7 @@ if( ! valid_string($_REQUEST["action"]) )
       }
 
       goto_main();
-      include_once("lang/".$LOCALE."_long_message.php" );
+      include_once("lang/lang_long.php" );
       new_box($lang["manage_users"], $user_info.
       "<div align=\"center\">[<a href=\"users.php?x=$x&amp;action=add\">".$lang["add"]."</a>]".
       "[<a href=\"users.php?x=$x&amp;action=showonline\">".$lang["who_online"]."</a>]</div><br /><br />" );
