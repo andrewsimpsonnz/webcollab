@@ -26,33 +26,9 @@
 
 */
 
-require("../config.php" );
-include("./screen_setup.php" );
-
-//
-//Error trap function
-//
-
-function error_setup($message ) {
-
-  create_top_setup("Setup" );
-  new_box_setup("Setup error", $message, "boxdata", "singlebox" );
-  create_bottom_setup();
-  die;
-
-}
-
-//security check
-if(isset($DATABASE_NAME ) && $DATABASE_NAME != "" ) {
-  //this is not an initial install, log in before proceeding
-  require_once('../includes/security.php' );
-
-  if($admin != 1 ) {
-    error_setup("You are not authorised to do this" );
-  }
-}
-else
-  $x = "";
+require_once("../config.php" );
+require_once("./security_setup.php" );
+include_once("./screen_setup.php" );
 
 //
 //Database build
@@ -81,21 +57,14 @@ else
     $database_host = "localhost";
   }
 
-  //skip making database
-  if(! isset($_POST["make_database"]) || ! $_POST["make_database"] == "on" ){
-    $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-    header("Location: ".$path."setup2.php?x=$x&db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
-    die;
-  }
-
   switch ($database_type) {
 
   case "mysql":
   case "mysql_innodb":
     //connect to database server
     if( ! ( $database_connection = @mysql_connect( $database_host, $database_user, $database_password ) ) ) {
-      error_setup( "Sorry but there seems to be a problem in connecting to the database server at $database_host<br />".
-                    "Check that your user and password is correct.  Also check that the database is running.<br /><br />".
+      error_setup( "Cannot connect to a database server at $database_host<br /><br />".
+                    "Check that your specified user and password are correct, and that the database is running.<br /><br />".
                     "User:     $database_user<br />Password: $database_password<br />" );
     }
 
@@ -104,11 +73,11 @@ else
 
       //no database exists yet - try and create it...
       if( ! ($result = @mysql_query( "CREATE DATABASE ".$database_name, $database_connection ) ) )
-        error_setup("The database creation had the following error: <br />".mysql_error($database_connection) );
+        error_setup("Connected to the database server, but database creation had the following error: <br />".mysql_error($database_connection) );
 
       //select the newly created database
       if( ! @mysql_select_db( $database_name, $database_connection ) )
-        error_setup("Not able to select database. Error message was: <br />".mysql_error($database_connection) );
+        error_setup("Created a new database, but not able to select the new database. Error message was: <br />".mysql_error($database_connection) );
     }
 
     if($database_type == "mysql") {
@@ -159,8 +128,8 @@ else
 
       //connect to database server with standard 'template1' database
       if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=template1 password=".$database_password ) ) ) {
-        error_setup("Sorry but there seems to be a problem in connecting to the database server at $database_host<br />".
-                    "No existing database, and cannot connect to PostgreSQL to create a new database.<br /><br />".
+        error_setup("Cannot connect to the database server at $database_host<br />".
+                    "No existing database, and cannot connect to PostgreSQL with template1 to create a new database.<br /><br />".
                     "User:     $database_user<br />Password: $database_password<br /><br />".
                     "Check user and password, then try creating the database manually and running setup again." );
       }
@@ -227,8 +196,21 @@ else
                  "<li>Continue with a manual configuration by editing the file directly.</li>\n" );
   }
 
-  $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-  header("Location: ".$path."setup2.php?x=$x&db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
-  die;
+create_top_setup("Database Setup" );
+
+$content =  "<form method=\"POST\" action=\"setup2.php\">\n".
+            "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+            "<input type=\"hidden\" name=\"db_host\" value=\"$database_host\" />\n".
+            "<input type=\"hidden\" name=\"db_user\" value=\"$database_user\" />\n".
+            "<input type=\"hidden\" name=\"db_pass\" value=\"$database_password\" />\n".
+            "<input type=\"hidden\" name=\"db_name\" value=\"$database_name\" />\n".
+            "<input type=\"hidden\" name=\"db_type\" value=\"$database_type\" />\n".
+            "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n".
+            "<div align=\"center\">Your database has been successfully created.<br /><br />\n".
+            "<input type=\"submit\" value=\"Continue\" /></div>\n".
+            "</form>\n";
+
+new_box_setup( "Setup - Stage 1 of 3 : Database Creation", $content, "boxdata", "singlebox" );
+create_bottom_setup();
 
 ?>

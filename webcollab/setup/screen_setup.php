@@ -55,9 +55,9 @@ function create_top_setup($title="" ) {
 
 <head>
   <title><?php echo $title ?></title>
-  <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
-  <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <link REL="StyleSheet" HREF=../css.css TYPE="text/css">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="StyleSheet" href=../css.css type="text/css">
 </head>
 
 <body>
@@ -110,7 +110,7 @@ function new_box_setup($title, $content, $style="boxdata", $size="tablebox" ) {
   echo "\n<br />";
 
   echo "
-  <table class=\"".$size."\">
+  <table class=\"".$size."\" cellspacing=\"0\">
     <tr>
       <td class=\"boxhead\">".$title."</td>
     </tr>

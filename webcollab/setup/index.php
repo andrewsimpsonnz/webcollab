@@ -26,9 +26,9 @@
 
 */
 
-$CONFIG_STATE = "";
+require_once("../config.php" );
 include_once("screen_setup.php" );
-include_once("../config.php" );
+
 
 //error condition
 function secure_error($reason ) {
@@ -48,7 +48,6 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   $login_q ="";
 
   include_once("../includes/database.php" );
-  include_once("../includes/common.php" );
 
   //encrypt password
   $md5pass = md5( $_POST["password"] );
@@ -88,21 +87,22 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   db_query("INSERT INTO logins( user_id, session_key, ip, lastaccess )
                        VALUES('".$user_id."', '".$session_key."', '".$ip."', now() )" );
 
-  //remove any old cookies (don't want session persistence here)
-  if(isset($_COOKIE["webcollab_session"] ) )
-    setcookie("webcollab_session", "0" );
-
   //relocate the user to the next screen
   $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
   header("Location: ".$path."database_skip.php?x=".$session_key);
   die;
 }
 
-//security check
+//security checks
+if( ! isset($WEB_CONFIG ) || $WEB_CONFIG != "Y" ) {
+  secure_error("Current configuration file does not allow web-based setup" );
+  die;
+}
+
 if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" ) {
   //this is an initial install
   $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-  header("Location: ".$path."setup1.php" );
+  header("Location: ".$path."database_skip.php" );
   die;
 }
 
@@ -112,11 +112,12 @@ create_top_setup("Login" );
 $content = "Admin login is required for setup:<br /><br />\n".
            "<form name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
              "<table border=\"0\">\n".
-               "<tr><td>Login: </td><td><INPUT type=\"text\" name=\"username\" size=\"30\"></td></tr>\n".
-               "<tr><td>Password: </td><td><INPUT type=\"password\" name=\"password\" value=\"\" size=\"30\"></td></tr>\n".
-             "</table>".
-             "<input type=\"submit\" value=\"Login\"><br /><br />\n".
-             "</form>";
+               "<tr><td>Login: </td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
+               "<tr><td>Password: </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
+             "</table>\n".
+             "<div align=\"center\">\n".
+             "<input type=\"submit\" value=\"Login\" /><br /><br />\n".
+             "</div></form>\n";
 
 //set box options
 new_box_setup("Login", $content, "boxdata", "singlebox" );

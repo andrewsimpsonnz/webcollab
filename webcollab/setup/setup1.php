@@ -26,47 +26,25 @@
 
 */
 
-require("../config.php" );
-include("./screen_setup.php" );
+require_once("../config.php" );
+require_once("./security_setup.php" );
+include_once("./screen_setup.php" );
 
-//
-//Error trap function
-//
-
-function error_setup($message ) {
-
-  create_top_setup("Setup" );
-  new_box_setup("Setup error", $message, "boxdata", "singlebox" );
-  create_bottom_setup();
-  die;
-
-}
-
-//security check
-if(isset($DATABASE_NAME ) && $DATABASE_NAME != "" ) {
-  //this is not an initial install, log in before proceeding
-  require_once('../includes/security.php' );
-
-  if($admin != 1 ) {
-    error_setup("You are not authorised to do this" );
-  }
-}
-else
-  $x = "";
 
 create_top_setup("Setup Screen" );
 
-$content =
-"<p><b>Setup - Stage 1 of 3 : Database Setup</b></p>\n".
+$content ="<p><b>Setup - Stage 1 of 3 : Database Setup</b></p>\n";
+
+$content .=
 "<form method=\"POST\" action=\"database_build.php\">\n".
   "<table border=\"0\">\n".
     "<tr><td></td><td><br />The details of your database</td></tr>\n".
-    "<tr align=\"left\"><td><b>Your database name: </b></td><td><input type=\"text\" name=\"database_name\" size=\"30\"></td></tr>\n".
+    "<tr align=\"left\"><td><b>Your database name: </b></td><td><input type=\"text\" name=\"database_name\" size=\"30\" /></td></tr>\n".
     "<tr><td></td><td><br /></td></tr>\n".
-    "<tr align=\"left\"><td><b>Database user: </b></td><td><input type=\"text\" name=\"database_user\" size=\"30\"></td></tr>\n".
-    "<tr align=\"left\"><td><b>Database password: </b></td><td><input type=\"text\" name=\"database_password\" size=\"30\"></td></tr>\n".
+    "<tr align=\"left\"><td><b>Database user: </b></td><td><input type=\"text\" name=\"database_user\" size=\"30\" /></td></tr>\n".
+    "<tr align=\"left\"><td><b>Database password: </b></td><td><input type=\"text\" name=\"database_password\" size=\"30\" /></td></tr>\n".
     "<tr><td></td><td><br /></td></tr>\n".
-    "<tr align=\"left\"><td><b>Database host: </b></td><td><input type=\"text\" name=\"database_host\" value=\"localhost\" size=\"15\"></td></tr>\n".
+    "<tr align=\"left\"><td><b>Database host: </b></td><td><input type=\"text\" name=\"database_host\" value=\"localhost\" size=\"15\" /></td></tr>\n".
     "<tr align=\"left\"><td><b>Database type:</b></td> <td>\n".
     "<select name=\"database_type\">\n".
       "<option value=\"mysql\" SELECTED >mysql</option>\n".
@@ -74,10 +52,9 @@ $content =
       "<option value=\"mysql_innodb\">mysql with innodb</option>\n".
     "</select></td></tr>\n".
     "<tr><td><br /></td><tr>\n".
-    "<tr><td colspan=\"2\">Do you want WebCollab to create the database now?  <input type=\"checkbox\" name=\"make_database\" CHECKED ></td></tr>\n".
     "</table><br />\n".
-  "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
-  "<input type=\"submit\" value=\"Submit\">\n".
+  "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+  "<input type=\"submit\" value=\"Submit\" />\n".
 "</form>\n";
 
 new_box_setup("Setup - Stage 1 of 3", $content, "boxdata", "tablebox" );
