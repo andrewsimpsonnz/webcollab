@@ -49,7 +49,7 @@ function listTasks($task_id ) {
                         $epoch now() ) AS now
                         FROM tasks
                         WHERE projectid=$task_id
-                        AND parent>0
+                        AND parent<>0
                         AND status<>'done'
                         ORDER BY deadline DESC" );
 

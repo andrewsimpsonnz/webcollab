@@ -43,8 +43,8 @@ function percent_complete($taskid ) {
   if($taskid == "" )
     return;
 
-  $tasks_completed = db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent>0 AND projectid=$taskid AND status='done'" ), 0, 0 );
-  $total_tasks = db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent>0 AND projectid=$taskid" ), 0, 0 );
+  $tasks_completed = db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent<>0 AND projectid=$taskid AND status='done'" ), 0, 0 );
+  $total_tasks = db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent<>0 AND projectid=$taskid" ), 0, 0 );
 
   switch($tasks_completed ) {
     case 0:

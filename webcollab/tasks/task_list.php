@@ -253,31 +253,31 @@ $query = "SELECT tasks.id AS id,
 //==== end of recursive function ====
 
 //is the parentid set in tasks.php ?
-if( ! isset($parentid) || ! is_numeric($parentid) )
-  $parentid = 0;
-
-if( ! isset($taskid) || ! is_numeric($taskid) || $taskid == 0 )
+if( ! isset($parentid) || ! is_numeric($parentid) || $parentid == 0 )
   error( "Task list", "Not a valid value for taskid");
 
 //find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query
-$parent_query = db_query("SELECT parent FROM tasks GROUP BY parent" );
+$projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=$parentid" ), 0, 0 );
+$parent_query = db_query("SELECT DISTINCT parent FROM tasks WHERE projectid=$projectid" );
 $parent_array = NULL;
 for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; $i++ ) {
   $parent_array[$i] = $row["parent"];
 }
 
-//check to see if any tasks at this task level have the taskgroup descriptor set. 
+//check to see if any tasks at this task level have the taskgroup descriptor set.
 //Use this later to toggle the taskgroup headings.
 if( db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent=$parentid AND taskgroupid<>0" ), 0, 0 ) > 0 )
   $taskgroup_flag = 1;
 else
   $taskgroup_flag = 0;
-  
 
-$content  = list_tasks($parentid );
+
+$task_content  = list_tasks($parentid );
 
 //show it
-if( $content != "" ) 
-  new_box( $lang["tasks"], $content."<BR>" );
+if($task_content != "" ){
+  $content = "<br />$task_content<br />";
+  new_box( $lang["tasks"], $content );
+}
 
 ?>
