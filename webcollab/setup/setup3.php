@@ -130,12 +130,6 @@ $content = "<?php\n".
 '  $EMAIL_ERROR= "'.$data["email_error"].'";'."\n\n".
 '  //enable email to send messages? (Values are "Y" or "N")'."\n".
 '  $USE_EMAIL = "'.$data["use_email"].'";'."\n\n".
-'  //mail transport agent. Values are "mail" (local sockets and/or sendmail) or "SMTP" (network mail server)'."\n".
-'  // default is "mail"'."\n".
-/*
-'  $MAIL_METHOD = "'.$data["mail_method"].'";'."\n\n".
-'  //-- These variables below are only required if "SMTP" is chosen above'."\n\n".
-*/
 '    //location of SMTP server (ip address or FQDN)'."\n".
 '    $SMTP_HOST = "'.$data["smtp_host"].'";'."\n\n".
 '    //use smtp auth? ("Y" or "N")'."\n".
@@ -143,10 +137,6 @@ $content = "<?php\n".
 '      //if using $SMTP_AUTH give username & password'."\n".
 '      $MAIL_USER = "'.$data["mail_user"].'";'."\n".
 '      $MAIL_PASSWORD = "'.$data["email_password"]."\";\n\n".
-'  /*Note:'."\n".
-'      Use $MAIL_METHOD = "mail", which uses local sockets and is faster.  If "mail" does not work (it is not reliable'."\n".
-'      on all operating systems), change to "SMTP", which uses an SMTP connection over tcp/ip.'."\n".
-'   */'."\n\n".
 '//-- Splash image --'."\n\n".
 '  //custom image to replace the webcollab banner on login page (relative base directory is /images)'."\n".
 '    //(place your image into /images directory)'."\n".
@@ -161,6 +151,8 @@ $content = "<?php\n".
 '  $NO_ERROR = "N";'."\n".
 '  //Use external webserver authorisation to login (values are "N", or "Y")'."\n".
 '  $WEB_AUTH = "N";'."\n".
+'  //Disable check for ip spoofing during sessions (values are "N", or "Y" - default is "N" for security)'."\n".
+'  $NO_IP_CHECK = "N";'."\n".
 "?>\n";
 
 //open file for writing
