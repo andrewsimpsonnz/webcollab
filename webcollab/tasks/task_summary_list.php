@@ -323,12 +323,12 @@ else
 
 switch($sortby ) {
   case "taskgroupid":
-    $content .= $lang["usergroupid"];
+    $content .= "usergroupid";
     break;
 
   case "usergroupid":
   default:
-    $content .= $lang["taskgroupid"];
+    $content .= "taskgroupid";
     break;
 }
 
