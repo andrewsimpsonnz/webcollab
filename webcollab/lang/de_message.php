@@ -82,10 +82,8 @@ $lang = array(
  "no" => "Nein",
  "action" => "Aktion",
  "task" => "Aufgabe",
- //"task_lc" => "Aufgabe",
  "tasks" => "Aufgaben",
  "project" => "Projekt",
- //"project_lc" => "Projekt",
  "info" => "Info",
  "bytes" => " bytes",
  "select_instruct" => "(Verwende Strg f&uuml;r Mehrfachauswahl oder um nichts auszuw&auml;hlen)",
@@ -96,16 +94,16 @@ $lang = array(
  "please_login" => "Bitte melden Sie sich an",
 
  //graphic items
- "late_g" => "&nbsp;LATE&nbsp;",
- "new_g" => "&nbsp;NEW&nbsp;",
- "updated_g" => "&nbsp;UPDATED&nbsp;",
+ "late_g" => "&nbsp;VERSP&Auml;TET&nbsp;",
+ "new_g" => "&nbsp;NEU&nbsp;",
+ "updated_g" => "&nbsp;AKTUALISIERT&nbsp;",
 
 //admin config
  "admin_config" => "Administrator Konfiguration",
  "email_settings" => "Email-Header Einstellungen",
  "admin_email" => "Administrator-Email",
- "email_reply" => "Email 'weiter an'",
- "email_from" => "Email 'von'",
+ "email_reply" => "Email 'Antwort an'",
+ "email_from" => "Email 'Von'",
  "mailing_list" => "Mailingliste",
  "default_checkbox" => "Voreinstellung der Checkboxen f&uuml;r Projekte und Aufgaben",
  "allow_globalaccess" => "Erlaube globalen Zugriff?",
@@ -146,9 +144,7 @@ $lang = array(
  "no_file_uploads" => "Die Einstellungen des Servers dieser Website erlauben keine Datei-Uploads",
  "file" => "Datei:",
  "uploader" => "Ersteller/in:",
- //**
  "files_assoc_project" => "Mit Projekt verkn&uuml;pfte Dateien",
- //**
  "files_assoc_task" => "Mit Aufgabe verkn&uuml;pfte Dateien",
  "file_admin" => "Dateiverwalter",
  "add_file" => "Datei hinzuf&uuml;gen",
@@ -171,7 +167,7 @@ $lang = array(
  "reply" => "Antwort",
  "new_post" => "Neue Nachricht",
  "public_user_forum" => "Offenes Benutzerforum",
- "private_forum_sprt" => "Privates Forum fr Gruppe '%s' ",
+ "private_forum_sprt" => "Privates Forum f&uuml;r Gruppe '%s' ",
  "forum_submit" => "Beitrag absenden",
  "no_message" => "Keine Nachricht angegeben! Bitte gehen Sie zur&uuml;ck und versuchen Sie es noch einmal",
  "add_reply" => "Antwort hinzuf&uuml;gen",
@@ -230,7 +226,7 @@ $lang = array(
  "login_name" => "Loginname",
  "full_name" => "Vollst&auml;ndiger Name",
  "password" => "Passwort",
- "blank_for_current_password" => "(Freilassen, um bestehendes Passwort zu bernehmen)",
+ "blank_for_current_password" => "(Freilassen, um bestehendes Passwort zu &uuml;bernehmen)",
  "email" => "E-Mail",
  "admin" => "Administrator",
  "is_admin" => "Kann administrieren?",
@@ -316,10 +312,8 @@ $lang = array(
  "overdue_sprt" => "%d Tage &uuml;berf&auml;llig",
  "edit_task" => "Aufgabe bearbeiten",
  "edit_project" => "Projekt bearbeiten",
- "no_reparent" => "Es gibt kein bergeordnetes Projekt",
- //**
+ "no_reparent" => "Es gibt kein &uuml;bergeordnetes Projekt",
  "del_javascript_project_sprt" => "Hiermit wird Projekt %s gel&ouml;scht. Sind sie sicher?",
- //**
  "del_javascript_task_sprt" => "Hiermit wird Aufgabe %s gel&ouml;scht. Sind sie sicher?",
  "add_task" => "Aufgabe hinzuf&uuml;gen",
  "add_subtask" => "Unteraufgabe hinzuf&uuml;gen",
@@ -328,15 +322,10 @@ $lang = array(
  "uncategorised" => "Nicht eingeordnet",
  "admin" => "Admininstrator",
  "global" => "Global",
- //"options" => " Eigenschaften",
- //**
- "delete_project" => "L&ouml;sche Projekt",
- //**
- "delete_task" => "L&ouml;sche Aufgabe",
- //**
- "project_options" => "Projekt Eigenschaften",
- //**
- "task_options" => "Aufgabe Eigenschaften",
+ "delete_project" => "Projekt l&ouml;schen",
+ "delete_task" => "Aufgabe l&ouml;schen",
+ "project_options" => "Projekteigenschaften",
+ "task_options" => "Aufgabeneigenschaften",
  "task_navigation" => "Aufgaben-Navigation",
  "no_projects" => "Es gibt keine Projekte in dieser Ansicht",
  "completed" => "Fertiggestellt",
@@ -352,22 +341,17 @@ $lang = array(
  "completed_on" => "Fertiggestellt am",
  "modified_on" => "Ver&auml;ndert am",
  "project_on_hold" => "Projekt ist im Wartezustand",
- //**
  "project_accessible" => "(Dieses Projekt ist &ouml;ffentlich zug&auml;nglich f&uuml;r alle Benutzer)",
- "task_accessible" => "(Dieses Aufgabe ist &ouml;ffentlich zug&auml;nglich f&uuml;r alle Benutzer)",
- //**
+ "task_accessible" => "(Diese Aufgabe ist &ouml;ffentlich zug&auml;nglich f&uuml;r alle Benutzer)",
  "project_not_accessible" => "(Dieses Projekt ist nur f&uuml; Mitglieder der Benutzergruppe zug&auml;nglich)",
- "task_not_accessible" => "(Dieses Aufgabe ist nur f&uuml; Mitglieder der Benutzergruppe zug&auml;nglich)",
- //**
+ "task_not_accessible" => "(Diese Aufgabe ist nur f&uuml; Mitglieder der Benutzergruppe zug&auml;nglich)",
  "project_not_in_usergroup" => "Projekt keiner Benutzergruppe zugeordnet und f&uuml;r alle Benutzer zug&auml;nglich.",
  "task_not_in_usergroup" => "Aufgabe keiner Benutzergruppe zugeordnet und f&uuml;r alle Benutzer zug&auml;nglich.",
- //**
  "usergroup_can_edit_project" => "Dieses Projekt kann auch durch Mitglieder der Benutzergruppe bearbeitet werden.",
- "usergroup_can_edit_task" => "Dieses Aufgabe kann auch durch Mitglieder der Benutzergruppe bearbeitet werden.",
+ "usergroup_can_edit_task" => "Diese Aufgabe kann auch durch Mitglieder der Benutzergruppe bearbeitet werden.",
  "i_take_it" => "Ich &uuml;bernehm' es :)",
  "i_finished" => "Ich habe fertig!",
  "i_dont_want" => "Ich habe die Schnauze voll",
- //**
  "take_over_project" => "Projekt &uuml;bernehmen",
  "take_over_task" => "Aufgabe &uuml;bernehmen",
  "task_info" => "Informationen &uuml;ber Aufgabe",
@@ -387,6 +371,10 @@ $lang = array(
  "group" => "Gruppe",
  "by_usergroup" => " (durch Benutzergruppe)",
  "by_taskgroup" => " (durch Aufgabengruppe)",
+ "by_deadline" => " (nach Fertigstellungsdatum)",
+ "by_status" => " (nach Status)",
+ "by_owner" => " (nach Eigent&uuml;mer)",
+
 
 
 //bits 'n' pieces

@@ -24,7 +24,9 @@
 
   Language files (long messages) for 'fr' (French/Français)
 
-  Maintainer: 
+  Translation: Olivier Chaussavoine
+
+  Maintainer:
 
 */
 

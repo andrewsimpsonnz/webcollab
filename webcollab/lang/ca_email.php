@@ -65,9 +65,9 @@ $email_edit_group_task    = "Hola,\n\nAquest &eacute;s el %s lloc informant-li q
 $title_delete_project     = $ABBR_MANAGER_NAME.": Projecte eliminada";
 $title_delete_task        = $ABBR_MANAGER_NAME.": Tasca eliminada";
 $email_delete_project     = "Hola,\n\nAquest &eacute;s el %s lloc informant-li que un projecte al seu c&agrave;rreg ha estat eliminat el %s\n\n".
-                              "Gr&agrave;cies per dirigir la projecte al seu moment.";
+                              "Gr&agrave;cies per dirigir la projecte al seu moment.\n\n";
 $email_delete_task        = "Hola,\n\nAquest &eacute;s el %s lloc informant-li que un tasca al seu c&agrave;rreg ha estat eliminat el %s\n\n".
-                              "Gr&agrave;cies per dirigir la tasca al seu moment.";
+                              "Gr&agrave;cies per dirigir la tasca al seu moment.\n\n";
 
 $delete_list = "Projecte: %s\n".
                 "Tasca:    %s\n".

@@ -37,36 +37,36 @@ $email_list = "Projekt:  %s\n".
               "Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n%s\n";
 
 
-$title_takeover_project   = $ABBR_MANAGER_NAME.": Eins von Ihren Projekten bzw. Aufgaben ist &uuml;bergeben worden.";
-$title_takeover_task      = $ABBR_MANAGER_NAME.": Eins von Ihren Projekten bzw. Aufgaben ist &uuml;bergeben worden.";
-$email_takeover_project   = "Hallo,\n\nIhre %s-Seite informiert Sie, dass Projekt durch den Administrator an %s &uuml;bergen wurde.\n\n";
-$email_takeover_task      = "Hallo,\n\nIhre %s-Seite informiert Sie, dass Aufagabe durch den Administrator an %s &uuml;bergen wurde.\n\n";
+$title_takeover_project   = $ABBR_MANAGER_NAME.": Eins von Ihren Projekten ist &uuml;bergeben worden";
+$title_takeover_task      = $ABBR_MANAGER_NAME.": Eine von Ihren Aufgaben ist &uuml;bergeben worden";
+$email_takeover_project   = "Hallo,\n\nIhre %s-Seite informiert Sie, dass ihr Projekt durch den Administrator an %s &uuml;bergen wurde.\n\n";
+$email_takeover_task      = "Hallo,\n\nIhre %s-Seite informiert Sie, dass ihre Aufgabe durch den Administrator an %s &uuml;bergen wurde.\n\n";
 
-$title_new_owner_project  = $ABBR_MANAGER_NAME.": Neue Projekt f&uuml; Sie";
-$title_new_owner_task     = $ABBR_MANAGER_NAME.": Neue Aufagabe f&uuml; Sie";
-$email_new_owner_project  = "Hallo,\n\nIhre %s-Seite informiert Sie, dass ein(e) Projekt die Sie verwalten auf %s ge&auml;ndert wurde.\n\nHier im Detail:\n\n";
-$email_new_owner_task     = "Hallo,\n\nIhre %s-Seite informiert Sie, dass ein(e) Aufagabe die Sie verwalten auf %s ge&auml;ndert wurde.\n\nHier im Detail:\n\n";
+$title_new_owner_project  = $ABBR_MANAGER_NAME.": Neues Projekt f&uuml;r Sie";
+$title_new_owner_task     = $ABBR_MANAGER_NAME.": Neue Aufgabe f&uuml;r Sie";
+$email_new_owner_project  = "Hallo,\n\nIhre %s-Seite informiert Sie, dass ein Projekt, das Sie verwalten, auf %s ge&auml;ndert wurde.\n\nHier im Detail:\n\n";
+$email_new_owner_task     = "Hallo,\n\nIhre %s-Seite informiert Sie, dass eine Aufgabe, die Sie verwalten, auf %s ge&auml;ndert wurde.\n\nHier im Detail:\n\n";
 
-$title_new_group_project  = $ABBR_MANAGER_NAME.": Neue Gruppe Projekt: %s";
-$title_new_group_task     = $ABBR_MANAGER_NAME.": Neue Gruppe Aufagabe: %s";
-$email_new_group_project  = "Hallo,\n\nIhre %s-Seite informiert sie, dass eine neue Gruppe Projekt erstellt worden ist am %s\n\nDetails:\n\n";
-$email_new_group_task     = "Hallo,\n\nIhre %s-Seite informiert sie, dass eine neue Gruppe Aufagabe erstellt worden ist am %s\n\nDetails:\n\n";
+$title_new_group_project  = $ABBR_MANAGER_NAME.": Neue Gruppe f&uuml;r Projekt %s";
+$title_new_group_task     = $ABBR_MANAGER_NAME.": Neue Gruppe f&uuml;r Aufgabe %s";
+$email_new_group_project  = "Hallo,\n\nIhre %s-Seite informiert sie, dass eine neue Gruppe erstellt worden ist am %s\n\nDetails:\n\n";
+$email_new_group_task     = "Hallo,\n\nIhre %s-Seite informiert sie, dass eine neue Gruppe erstellt worden ist am %s\n\nDetails:\n\n";
 
 $title_edit_owner_project = $ABBR_MANAGER_NAME.": Ihr Projekt wurde bearbeitet";
-$title_edit_owner_task    = $ABBR_MANAGER_NAME.": Ihr Aufagabe wurde bearbeitet";
-$email_edit_owner_project ="Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Projekt Projekt am %s bearbeitet wurde.\n\nDetails:\n\n"; //is this right?
-$email_edit_owner_task    ="Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Projeckt Aufagabe am %s bearbeitet wurde.\n\nDetails:\n\n"; //same
+$title_edit_owner_task    = $ABBR_MANAGER_NAME.": Ihre Aufgabe wurde bearbeitet";
+$email_edit_owner_project ="Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Projekt am %s bearbeitet wurde.\n\nDetails:\n\n";
+$email_edit_owner_task    ="Hallo,\n\nIhre %s-Seite informiert sie, dass ihre Aufgabe am %s bearbeitet wurde.\n\nDetails:\n\n";
 
 $title_edit_group_project = $ABBR_MANAGER_NAME.": Projekt aktualisiert";
-$title_edit_group_task    = $ABBR_MANAGER_NAME.": Aufagabe aktualisiert";
-$email_edit_group_project = "Hallo,\n\nIhre %s-Seite informiert sie, dass ein(e) Projekt, die %s geh&ouml;rt am %s bearbeitet wurde.\n\nDetails:\n\n";
-$email_edit_group_task    = "Hallo,\n\nIhre %s-Seite informiert sie, dass ein(e) Aufagabe, die %s geh&ouml;rt am %s bearbeitet wurde.\n\nDetails:\n\n";
+$title_edit_group_task    = $ABBR_MANAGER_NAME.": Aufgabe aktualisiert";
+$email_edit_group_project = "Hallo,\n\nIhre %s-Seite informiert sie, dass ein Projekt, das %s geh&ouml;rt am %s bearbeitet wurde.\n\nDetails:\n\n";
+$email_edit_group_task    = "Hallo,\n\nIhre %s-Seite informiert sie, dass eine Aufgabe, die %s geh&ouml;rt am %s bearbeitet wurde.\n\nDetails:\n\n";
 
 $title_delete_project     = $ABBR_MANAGER_NAME.": Projekt gel&ouml;scht";
-$title_delete_task        = $ABBR_MANAGER_NAME.": Aufagabe gel&ouml;scht";
-$email_delete_project     = "Hallo,\n\nIhre %s-Seite informiert sie, dass ein(e) Projekt, das/die ihnen geh&ouml;rte, gel&ouml;scht worden ist am %s\n\n".
-                              "Danke f&uuml;r die Verwaltung der Projekt, solange es sie gab.\n\n";
-$email_delete_task        = "Hallo,\n\nIhre %s-Seite informiert sie, dass ein(e) Aufagabe, das/die ihnen geh&ouml;rte, gel&ouml;scht worden ist am %s\n\n".
+$title_delete_task        = $ABBR_MANAGER_NAME.": Aufgabe gel&ouml;scht";
+$email_delete_project     = "Hallo,\n\nIhre %s-Seite informiert sie, dass ein Projekt, das ihnen geh&ouml;rte, gel&ouml;scht worden ist am %s\n\n".
+                              "Danke f&uuml;r die Verwaltung des Projektes, solange es existierte.\n\n";
+$email_delete_task        = "Hallo,\n\nIhre %s-Seite informiert sie, dass eine Aufgabe, die ihnen geh&ouml;rte, gel&ouml;scht worden ist am %s\n\n".
                               "Danke f&uuml;r die Verwaltung der Aufgabe, solange es sie gab.\n\n";
 
 $delete_list =  "Projekt:  %s\n".
@@ -76,7 +76,7 @@ $delete_list =  "Projekt:  %s\n".
 
 
 $title_welcome      = "Willkommen bei ".$ABBR_MANAGER_NAME;
-$email_welcome      = "Hallo,\n\nEs begr&uuml;&szlig;t sie die %s-Seite auf %s.\n\n".
+$email_welcome      = "Hallo,\n\nEs begr&uuml;&szlig;t sie die %s-Seite am %s.\n\n".
 			"Da sie neu hier sind, werde ich zuerst ein Paar Dinge erkl&auml;ren, so dass sie schnell zu arbeiten beginnen k&ouml;nnen.\n\n".
 			"Dies ist ein Projektverwaltungswerkzeug. Der Hauptbildschirm wird ihnen die momentan vorhandenen Projekte zeigen. ".
 			"Wenn sie auf einen der Namen klicken, k&ouml;nnen sie die zum Projekt geh&ouml;rigen Aufgaben einsehen. Hier wird die Arbeit ablaufen.\n\n".

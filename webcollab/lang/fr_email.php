@@ -24,6 +24,8 @@
 
   Email text language files for 'fr' (French/Français)
 
+  Translation: Olivier Chaussavoine
+
   Maintainer:
 
 */

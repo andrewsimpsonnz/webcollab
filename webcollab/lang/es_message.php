@@ -367,7 +367,9 @@ $lang = array(
  "group" => "Grupo",
  "by_usergroup" => " (por usergroup)",
  "by_taskgroup" => " (por taskgroup)",
-
+ "by_deadline" => " (por l&iacute;mite)",
+ "by_status" => " (por estado)",
+ "by_owner" => " (por propietario)",
 
 //bits 'n' pieces
   "calendar" => "Calendario",

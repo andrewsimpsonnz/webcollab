@@ -159,7 +159,6 @@ $lang = array(
  "no_file_uploads" => "The server configuration for this site does not allow file uploads to be made",
  "file" => "File:",
  "uploader" => "Uploader:",
- //&&
  "files_assoc_project" => "Files associated with this project",
  "files_assoc_task" => "Files associated with this task",
  "file_admin" => "File admin",
@@ -325,7 +324,6 @@ $lang = array(
  "edit_task" => "Edit task",
  "edit_project" => "Edit project",
  "no_reparent" => "None (a top-level project)",
- //&&
  "del_javascript_project_sprt" => "This will delete project %s. Are you sure?",
  "del_javascript_task_sprt" => "This will delete task %s. Are you sure?",
  "add_task" => "Add task",
@@ -344,7 +342,6 @@ $lang = array(
  "ccompleted" => "Completed",
  "project_hold_sprt" => "Project On Hold from %s",
  "project_planned" => "Planned Project",
- //&&
  "percent_sprt" => "%d%% of the tasks are done",
  "project_no_deadline" => "No deadline set for this project",
  "no_allowed_projects" => "There are no projects that you are allowed to view",
@@ -355,22 +352,17 @@ $lang = array(
  "completed_on" => "Completed on",
  "modified_on" => "Modified on",
  "project_on_hold" => "Project is on hold",
- //&&
  "project_accessible" => "(This project is publicly accessible by all users)",
  "task_accessible" => "(This task is publicly accessible by all users)",
- //&&
  "project_not_accessible" => "(This project is only accessible by members of the usergroup)",
  "task_not_accessible" => "(This task is only accessible by members of the usergroup)",
- //&&
  "project_not_in_usergroup" => "This project is not part of a usergroup and is accessible by all users.",
  "task_not_in_usergroup" => "This task is not part of a usergroup and is accessible by all users.",
- //&&
  "usergroup_can_edit_project" => "This project can also be edited by members of the usergroup.",
  "usergroup_can_edit_task" => "This task can also be edited by members of the usergroup.",
  "i_take_it" => "I'll take it :)",
  "i_finished" => "I finished it!",
  "i_dont_want" => "I don't want it anymore",
- //&&
  "take_over_project" => "Take over project",
  "take_over_task" => "Take over task",
  "task_info" => "Task information",
@@ -390,6 +382,9 @@ $lang = array(
  "group" => "Group",
  "by_usergroup" => " (by usergroup)",
  "by_taskgroup" => " (by taskgroup)",
+ "by_deadline" => " (by deadline)",
+ "by_status" => " (by status)",
+ "by_owner" => " (by owner)",
 
 
 //bits 'n' pieces

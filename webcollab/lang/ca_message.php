@@ -380,6 +380,10 @@ $lang = array(
  "group" => "Grup",
  "by_usergroup" => " (per usergroup)",
  "by_taskgroup" => " (per taskgroup)",
+ "by_deadline" => " (per l&iacute;mit)",
+ "by_status" => " (per estat)",
+ "by_owner" => " (per propietari)",
+
 
 
 //bits 'n' pieces

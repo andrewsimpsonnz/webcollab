@@ -28,6 +28,8 @@
 
   Language files for 'fr' (French/Français)
 
+  Translation: Olivier Chaussavoine
+
   Maintainer:
 
 */
@@ -292,7 +294,7 @@ $lang = array(
  "no_group" => "Aucun groupe",
  "all_groups" => "tout les groupes",
 //**
- "all_users" => "All users",
+ "all_users" => "Tous les utilisateurs",
  "all_users_view" => "Tous les utilisateurs peuvent-ils voir cette t&acirc;che ?",
  "group_edit" => "Tout utilisateur du groupe peut-il &eacute;diter ?",
  "project_description" => "Description du projet",
@@ -368,6 +370,10 @@ $lang = array(
  "group" => "Groupe",
  "by_usergroup" => " (par groupe d'utilisateurs)",
  "by_taskgroup" => " (par groupe de t&acirc;ches)",
+ "by_deadline" => " (par date de fin)",
+ "by_status" => " (par statut)",
+ "by_owner" => " (par propri&eacute;taire)",
+
 
 
 //bits 'n' pieces
