@@ -11,7 +11,7 @@
 <h3>FAQ INDEX</h3>
 <p><a href="#setup">Setup Problems</a><br>
 <a href="#startup">Startup Problems</a><br>
-<a href="#custom">Cutomising WebCollab</a><br>
+<a href="#custom">Customising WebCollab</a><br>
 <a href="#files">Uploading Files</a><br>
 <a href="#email">Email</a><br>
 <a href="#security">Security</a><br>
@@ -25,8 +25,8 @@
 <h3>SETUP PROBLEMS</h3>
 <dl>
 <dt>1. Setup program says that database can be created, but cannot write to the config file.</dt>
-<dd>The webserver does not/cannot have permissions to write to the config file.  You need to make the
-config file world-writeable.  The config file is <i>config.php</i> in the root directory of WebCollab.
+<dd>The web server does not/cannot have permissions to write to the config file.  You need to make the
+config file world-writable.  The config file is <i>config.php</i> in the root directory of WebCollab.
 <pre class="screen">
 #chmod 666 config.php
 </pre>
@@ -73,43 +73,43 @@ Remove the semi-colon ';' from the module you want, and restart Apache. <br>
 <br>
 Also - many  Linux distributions have separate packages (*.rpm, *.deb, etc)
 for the main PHP files and the MySQL/PostgreSQL PHP support.  You need to install the relevant
-modulepackage as well.</dd>
-<dt>3. "Can login, but the main page is not found (404 error)."</dt>
+module package as well.</dd>
+<dt>3. Setup says "Your version of PHP does not have support for MySQL..." or "Your version of PHP does not have support for PostgreSQL..." and then dies.</dt>
+<dd>This is the same as the problem above.</dd>
+<dt>4. "Can login, but the main page is not found (404 error)."</dt>
 <dd>Check that the the parameter $BASE_URL is correctly stated in config.php.
  Did you remember to add the trailing slash "/" as the config file says?</dd>
-<dt>4. "Does WebCollab use cookies?"</dt>
+<dt>5. "Does WebCollab use cookies?"</dt>
 <dd>Yes, if possible. Cookies are preferred for session management, but aren't
 reliable with all browsers.<br>
 <br>
 Webcollab attempts to set a session cookie at the login.  Additionally it
 uses encoded URI's at this stage, also for session management.  If the session cookie is found to be
-successful (ie the user's browser accepts the cookie), the encoded URI's are dropped. Otherwise
+successful (I.e. the user's browser accepts the cookie), the encoded URI's are dropped. Otherwise
 session management with encoded URI is continued.<br>
 <br>
-The session cookie lasts only as long as the current session.  It should be automatically destroyed
+The session cookie lasts only as long as the current session.  It will be automatically destroyed
 when the browser is closed, or the user logs out.</dd>
 <dt>5. "Does Magic Quotes need to be set 'on' or 'off' in php.ini?"</dt>
-<dd>No, WebCollab reads the magic_quote setting in php.ini, and uses addslashes() on input data if
-magic quotes is 'off' in php.ini.</dd>
+<dd>When magic_quotes set to 'on' in php.ini, input data is automatically feed through the addslashes() function for security.  WebCollab reads the php.ini file, and applies addslashes() on input data if magic quotes is set to 'off'.  The addslashes() function is important to prevent SQL injection attacks.</dd>
 <dt>6. "Does Register Globals need to be 'on' in php.ini?"</dt>
-<dd>The Register Globals setting does not affect WebCollab. For security reasons it has defaulted to
-'off' since PHP 4.2.0.</dd>
+<dd>Software written for early versions of PHP (prior to version 4.1.0) often requires Register Globals to properly receive input data. However for important security reasons Register Globals has defaulted to 'off' since PHP 4.2.0.  WebCollab does not require Register Globals.  You should leave Register Globals 'off' for better web site security, unless it is specifically required to be 'on' for other scripts.</dd>
 </dl>
 <a name="custom"></a>
 <h3>CUSTOMISING WEBCOLLAB</h3>
 <dl>
 <dt>1. Can the 'Done', 'Active', 'On Hold' etc, labels be changed?</dt>
-<dd>Yes, all the parameters are defined in the language files in /webcollab/lang/ They can be easily
+<dd>Yes, all the parameters are defined in the language files in /WebCollab/lang/ They can be easily
 changed to suit.<br>
 <br>
 Alternatively, a new customised language file can be set up and defined in
-/webcollab/lang/language.php</dd>
+/lang/language.php</dd>
 <dt>2. Can the splash screen image be changed?</dt>
-<dd>Yes, add the new image to /webcollab/images/ and set the $SITE_IMG parameter in config.php</dd>
+<dd>Yes, add the new image to /images/ and set the $SITE_IMG parameter in /config/config.php</dd>
 <dt>3. Can background colours and text styles be changed?</dt>
-<dd>Yes, see the style sheet /webcollab/css.css.</dd>
-<dt>4. Can external webserver authorisation be used instead of the login screen.</dt>
-<dd>Yes, set the $WEB_AUTH parameter to "Y" in config.php.  Username is taken from the REMOTE_USER
+<dd>Yes, see the style sheet /css/default.css.</dd>
+<dt>4. Can external web server authorisation be used instead of the login screen.</dt>
+<dd>Yes, set the $WEB_AUTH parameter to "Y" in /config/config.php.  Username is taken from the REMOTE_USER
 environment variable set by Apache.</dd>
 <dt>5. What web browsers is WebCollab compatible with?</dt>
 <dd>WebCollab is valid HTML 4.01 and uses CSS1 cascading style sheets.  Some Javascript is used, but
@@ -119,56 +119,72 @@ To the extent that most common browsers will accept, WebCollab is also valid XHT
 <a name="files"></a>
 <h3>UPLOADING FILES</h3>
 <dl>
-<dt>1. Error message about directory not writeable when uploading files with the file upload
+<dt>1. Error message about directory not writable when uploading files with the file upload
 feature.</dt>
-<dd>For Linux and *nix: Make sure the /webcollab/files/filebase directory is writeable by the
-webserver. This means the directory should be either owned by the webserveruser (usually apache, www
-or www-data) or the directory must be world-writeable.<br>
+<dd>For Linux and *nix: Make sure the /files/filebase directory is writable by the
+web server. This means the directory should be either owned by the web server user (usually apache, www
+or www-data) or the directory must be world-writable.<br>
 <br>
 Use 'chmod 777 filebase' from the files directory, and preferably move the directory outside the
-webserver root - see item 3 below.</dd>
+web server root - see item 3 below.</dd>
 <dt>2. File upload gives message about server configuration not allowing uploads.</dt>
 <dd>Check that the PHP configuration file, php.ini, is set to allow file uploads. Check that
 'file_uploads = On', or file uploads cannot work.</dd>
 <dt>3. File upload security.</dt>
-<dd>If you use the default /webcollab/files/filebase directory, it is possible for users to navigate
-to the directory with their browsers and view the files present.  WebCollab has the filebase
-directoryprotected by a index.html file and .htaccess file, but this is not foolproof.<br>
+<dd>If you use the default /files/filebase directory, it is possible for users to navigate
+to the directory with their browsers and view the files present.  WebCollab has the /filebase
+directory protected by a index.html file and .htaccess file. Also, the filenames have a ID prefix added to them to prevent filename 'guessing' by attackers, but none of these measures are particularly foolproof.<br>
 <br>
-Ideally, for good security move the file upload directory to outside the webserver root
+Ideally, for good security move the file upload directory to outside the web server root
 directory.  WebCollab can accommodate an upload directory in any location of the local
-file system - not just the webserver root directory.  Make sure the chosen directory is writeable
-by the user that normally runs the webserver. </dd>
+file system - not just the web server root directory.  Make sure the chosen directory is writable
+by the user that normally runs the web server. </dd>
 </dl>
 <a name="email"></a>
 <h3>EMAIL SETUP</h3>
 <dl>
 <dt>1. How does email work in WebCollab?</dt>
 <dd>Early versions of WebCollab used the mail() function call in PHP.  In most cases it worked, but
-it can be difficult, particularly with Windows machines.<br>
+it proved troublesome with some SMTP servers.<br>
 <br>
 WebCollab now uses the standard SMTP protocol over TCP/IP to 'talk' to a mail server.  The mail
-server can be remote or local.<br>
+server can be remote or local.  Internally mail is handled by a purpose written SMTP mailer that is compliant to RFC 821 (RFC 2821), RFC 822, et al, for SMTP.<br>
 <br>
-In config.php:<br>
+In /config/config.php:<br>
 <br>
 $SMTP_HOST = DNS name or IP address of the SMTP server</dd>
+<dt>2. My SMTP server needs me to use SMTP AUTH before accepting mail!</dt>
+<dd>If SMTP AUTH is enabled in the config file, WebCollab will automatically login with 'plain', 'login' or 'CRAM-MD5' authorisation.  The required auth format is automatically detected.<br />
+<br />
+You need to set your login name and password in the /config/config.php file.<br />
+<br />
+WebCollab complies to RFC 2195 (CRAM-MD5), RFC 2554 (SMTP AUTH) and RFC 2595 (auth plain).</dd>
+<dt>3. Can WebCollab handle non US-ASCII characters (i.e. Languages other than US English).</dt>
+<dd>For languages with more than "us-ASCII" characters (e.g.: French, German, Spanish etc), WebCollab
+ attempts to send emails in 8 bit format.  This is accepted by almost all mail servers.  Sendmail, for instance, has had 8bit support since 1993.<br>
+<br>
+If the upstream SMTP server does not advertise support for 8 bit mail, WebCollab reverts to 'quoted-printable' encoding.  This follows the requirements of RFC 1652 (8BITMIME), RFC 1869 (Extended EHLO), RFC 2045 (quoted-printable), and RFC 2047 (8 bit extensions).</dd>   
 </dl>
 <a name="security"></a>
 <h3>SECURITY</h3>
 <dl>
 <dt>1. What are practical measures to increase site security?<dt>
 <dd>
+WebCollab has been coded with strong security measures.  In practical use WebCollab security has proven to be very robust.<br />
+<br />
+Practical measures to enhance security include:<br />
+<br />
 <ul>
-<li>Shift the uploaded file directory to outside the webserver root.  WebCollab can write to anywhere
- in the filesystem. Check that the web server has write permissions for the chosen directory.  This 
+<li>Shift the uploaded file directory to outside the web server root.  WebCollab can write to anywhere
+ in the file system. Check that the web server has write permissions for the chosen directory.  This 
  prevents uses uploading files, then navigating to the upload directory with a browser and executing
  the file.</li>
 <li>Use a non-root user for the database.  The database user should have minimal privileges, and not be
  able to create and/or delete tables.</li>
-<li>Delete, or protect with .htaccess the setup directory.</li>
-<li>Make sure the file <i>config.php</i> is not world writeable.</li>
+<li>Make sure that Apache configuration allows .htaccess files to set &lt;Limit&gt; in WebCollab directory. WebCollab uses .htaccess files to protect subdirectories.</li>
+<li>Make sure the file <i>/config/config.php</i> is not world writable and not owned by the web server user.</li>
 <li>Use an SSL layer for access with WebCollab.</li>
+<li>Delete unecessary files.  For instance the /setup directory and update.php.</li>
 </ul>
 </dd>
 </dl>
@@ -176,7 +192,7 @@ $SMTP_HOST = DNS name or IP address of the SMTP server</dd>
 <h3>REMOTE DATABASE</h3>
 <dl>
 <dt>1. Why can't remote databases be used with PostgreSQL?</dt>
-<dd>Since version 6.3 (March 1998) PostgreSQL uses unix domain sockets by default. TCP port will NOT
+<dd>Since version 6.3 (March 1998) PostgreSQL uses UNIX domain sockets by default. TCP port will NOT
 be opened by default. The TCP option can be enabled with the '-i' flag to postmaster and it's
 meaning is: "listen on TCP/ IP sockets as well as Unix domain sockets".<br>
 <br>
@@ -193,44 +209,48 @@ to the database.</dd>
 <dt>1. What are the database types in the config file?</dt>
 <dd>
 <table>
-<tr><td>postgresql</td><td>=&gt; Postgresql abstraction layer</td></tr>
+<tr><td>postgresql</td><td>=&gt; PostgreSQL abstraction layer</td></tr>
 <tr><td>mysql</td><td>=&gt; standard MySQL abstraction layer</td></tr>
 <tr><td>mysql_innodb</td><td>=&gt; MySQL abstraction layer with innodb transaction
 support</td></tr>
 </table>
 </dd>
+<dt>2. PHP5 is bundled with SQLite.  Why doesn't WebCollab support this too?</dt>
+<dd>At present SQLite does not have sufficient date/time functions to work with the WebCollab code.
 </dl>
 <a name="transactions"></a>
 <h3>TRANSACTIONS</h3>
 <dl>
 <dt>1. Are database transactions used?</dt>
-<dd>The PostgreSQL abstraction layer always uses transactions to provide better security against
-power failure or hardware/software crashes during database operations causing corruption.<br>
+<dd>The PostgreSQL abstraction layer always uses transactions because:
+<ul>
+<li>They provide better data security in the event of power failure or hardware/software crashes during database write operations.  Incomplete data is not witten to the database,  and data corruption or loss is avoided.</li>
+<li>Without transactions it is possible for two users to alter the same data simultaneously, leading to data corruption.  With transactions this is prevented by design.</li> 
+</ul>
 <br>
-The mysql_innodb abstraction layer uses transactions.  For MySQL version 3.23.xx the database must
-be correctly configured to allow innodb databases to be used.  See the online MySQL manual for more
-details:<br>
-<a href="http://www.mysql.com/doc/en/InnoDB_in_MySQL_3.23.html">
-http://www.mysql.com/doc/en/InnoDB_in_MySQL_3.23.html</a><br>
+The mysql_innodb abstraction layer also uses transactions.<br>
 <br>
- For MySQL version 4.0, and above, innodb database support is enabled by default.  For these
+For MySQL version 4.0, and above, innodb database support is enabled by default.  For these
 versions (and configured 3.23.xx versions) it is recommended that the database be created with
-the mysql_innodb database creation script, and the mysql_innodb abstraction layer is used.
-Using transactions significantly reduces the risk of corrupted databases.
+the mysql_innodb database creation script, and the mysql_innodb abstraction layer is used.<br />
+<br />
+For MySQL version 3.23.xx the database server <u>must</u> first be correctly configured to allow innodb databases to be used.  See the on line MySQL manual for more details:<br>
+<a href="http://www.mysql.com/doc/en/InnoDB_in_MySQL_3.23.html">
+http://www.mysql.com/doc/en/InnoDB_in_MySQL_3.23.html</a>
 </dd>
 </dl>
 <a name="backup"></a>
 <h3>DATABASE BACKUP</h3>
 <dl>
 <dt>1. Can the database be backed up?</dt>
-<dd>Two UNIX based shell scripts are provided in /webcollab/db for backing up WebCollab
+<dd>Two UNIX based shell scripts are provided in /db for backing up WebCollab
 databases.<br>
 <br>
 MySQL:<br>
 <br>
 <em>dump_mysql.sh</em><br>
 &nbsp;&nbsp;&nbsp;Usage: dump_mysql.sh &nbsp;&lt;database user&gt;&nbsp;&lt;database
-name&gt;&nbsp;&lt;databasepassword&gt;<br>
+name&gt;&nbsp;&lt;database password&gt;<br>
 <br>
 PostgreSQL:<br>
 <br>
@@ -251,9 +271,9 @@ up machine at regular intervals. </dd>
 <li><i>en_long_message.php</i> - long text descriptions used in a few screens.</li>
 <li><i>en_email.php</i> - text used in the automated emails.</li>
 </ol>
-Each file contains a single string per line, with an <i>id</i> on the lefthand side. For example:<br><br>
+Each file contains a single string per line, with an <i>id</i> on the left hand side. For example:<br><br>
 "planned" => "Planned (not active)"<br><br>
-Translate the righthand side to your language.  Save the file (replacing 'en' with your language).<br><br>
+Translate the right hand side to your language.  Save the file (replacing 'en' with your language).<br><br>
 The 'help' files are similar, but are mostly written in HTML text.  They are found in the /help directory.
 </dd>
 <dt>2. How do I install the translation files that I've written?</dt>
@@ -264,9 +284,7 @@ The 'help' files are similar, but are mostly written in HTML text.  They are fou
 <li>Send the translated files to the author (andrewsimpson@users.sourceforge.net), they will be returned
  with updated files.</li>
 </ul>
-Final step is obviously to alter the locale in the config file.<br><br>
-Authors note:  I need translators and translation maintainers for WebCollab!
-</dd>
+Final step is obviously to alter the locale in the /config/config file.</dd>
 </dl>
 </body>
 </html>
