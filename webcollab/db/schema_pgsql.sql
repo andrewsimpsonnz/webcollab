@@ -51,6 +51,7 @@ CREATE TABLE "usergroups" (
 	"id" integer DEFAULT nextval('"usergroups_id_seq"'::text) NOT NULL,
 	"name" character varying(100) NOT NULL,
 	"description" character varying(255),
+	"private" integer DEFAULT 0::int NOT NULL,
 	Constraint "usergroups_pkey" Primary Key ("id")
 );
 CREATE INDEX usergroups_name_idx ON usergroups USING btree (name);
@@ -148,7 +149,6 @@ CREATE INDEX files_name_idx ON files USING btree (taskid);
 CREATE TABLE "usergroups_users" (
 	"usergroupid" integer NOT NULL,
 	"userid" integer NOT NULL,
-	"private" integer DEFAULT 0::int NOT NULL,
 	Constraint "usergroups_users_pkey" Primary Key ("userid", "usergroupid")
 );
 
@@ -169,7 +169,7 @@ CREATE TABLE "config" (
 CREATE TABLE "login_attempt" (
 	"name" character varying(100) NOT NULL,
 	"ip" character varying(100) NOT NULL,
-	"last_attempt" timestamp with time zone NOT NULL DEFAULT current_timestamp(0))
+	"last_attempt" timestamp with time zone NOT NULL DEFAULT current_timestamp(0)
 );
 
 INSERT INTO users ( id, name, fullname, password, email, admin, deleted )
