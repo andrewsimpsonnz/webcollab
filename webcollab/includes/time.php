@@ -68,8 +68,9 @@ function nicetime($timestamp, $addtime=0 ) {
   if(empty($timestamp) )
     return "";
   
-  //server timezone offset is subtracted because date() automatically adds it on!!        
-  $local = $timestamp - date("Z") + (TZ * 3600);
+  //get timestamp into the chosen timezone 
+  //  we use date('Z') for server timezone (assumes the webserver and database server share the same timezone)      
+  $local = $timestamp - date('Z') + (TZ * 3600);
   
   //format is 2004-Aug-02  
   if(! $addtime)
