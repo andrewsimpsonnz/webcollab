@@ -1,4 +1,29 @@
 WebCollab CVS
+*** 12 July 2004
+  Andrew Simpson
+
+- bugfix: Feature Request 975181 not fully completed previously
+
+- bugfix: common.php still using the (outdated) mail() function
+
+- bugfix: #986264 Moving projects onto their own tasks
+
+WebCollab 1.60 RC1
+*** 3 July 2004
+  Andrew Simpson
+
+- release
+
+WebCollab CVS
+*** 3 July 2004
+  Andrew Simpson
+
+- French language updated (Julien Dupont)
+
+- bugfix: calendar shows month heading in correct language locale
+
+
+WebCollab CVS
 *** 27 June 2004
   Andrew Simpson
 
