@@ -51,13 +51,13 @@
 // file uploads
 
   //upload to what directory ?
-  $FILE_BASE = "var/www/html/webcollab/files/filebase";
+  $FILE_BASE = "/var/www/html/webcollab/files/filebase";
 
   //max file size in bytes ( 2 mb default)
   $FILE_MAXSIZE = 2000000;
 
 /*Note:
-  1. Make sure the filebase directory exists, and is writeable by the webserver, or you
+  1. Make sure the file_base directory exists, and is writeable by the webserver, or you
      won't be able to upload any files.
   2. The filebase directory should be outside your webserver root directory to maintain file
      security.  This is important to prevent users navigating to the file directory with
