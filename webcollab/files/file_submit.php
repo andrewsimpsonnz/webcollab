@@ -35,7 +35,8 @@ require_once( BASE."includes/security.php" );
 include_once( BASE."config.php" );
 
 //update or insert ?
-if(isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) ) {
+if( ! isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) )
+  error("File submit", "No action given" );
 
   switch($_REQUEST["action"] ) {
 
@@ -162,9 +163,6 @@ if(isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) ) {
       error("File submit", "Invalid request given");
    break;
   }
-}
-else
-  error("File submit", "No action given" );
 
 if(isset($_GET["taskid"]) && $_GET["taskid"] == -1 ) //can only occur from files.php --> file_admin.php --> delete
   header("location: ".BASE."files.php?x=$x&action=admin" );

@@ -36,8 +36,9 @@ if( isset($_POST["contactid"]) )
   $contactid = $_POST["contactid"];
 
 //edit, insert, delete ?
-if(valid_string( $_REQUEST["action"] ) ) {
-
+if( ! valid_string( $_REQUEST["action"] ) )
+  error("Contact submit", "No request given" );
+  
   switch($_REQUEST["action"] ) {
 
     //insert a new contact
@@ -121,11 +122,6 @@ if(valid_string( $_REQUEST["action"] ) ) {
       error("Contact submit", "Invalid request");
       break;
   }
-
-}
-else
-  error("Contact submit", "No request given" );
-
 
 //this is quite crappy but it works ;)
 header("location: ".BASE."main.php?x=$x" );

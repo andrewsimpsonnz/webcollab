@@ -37,7 +37,8 @@ if( $admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 
-if(valid_string($_REQUEST["action"] ) ) {
+if( ! valid_string($_REQUEST["action"] ) )
+  error("Usergroups submit", "No action given" );
 
   switch($_REQUEST["action"] ) {
 
@@ -131,7 +132,7 @@ if(valid_string($_REQUEST["action"] ) ) {
 
             (array)$member = $_POST["member"];
             $max = sizeof($member);
-            for($i=0 ; i < $max ; $i++ ) {
+            for($i=0 ; $i < $max ; $i++ ) {
               if(isset($member[$i]) && is_numeric( $member[$i] ) ) {
                 db_query("INSERT INTO usergroups_users(userid, usergroupid) VALUES(".$member[$i].", $usergroupid)" );
               }
@@ -149,9 +150,6 @@ if(valid_string($_REQUEST["action"] ) ) {
       error("Usergroup submit", "Invalid request given" );
       break;
   }
-}
-else
-  error("Usergroups submit", "No action given" );
 
 header("location: ".BASE."usergroups.php?x=$x&action=manage");
 

@@ -37,7 +37,8 @@ if( $admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 
-if(isset($_REQUEST["action"]) ) {
+if(! valid_string($_REQUEST["action"]) )
+  error("Taskgroups submit", "No action given" );
 
   switch($_REQUEST["action"] ) {
 
@@ -99,9 +100,6 @@ if(isset($_REQUEST["action"]) ) {
       error("Taskgroup submit", "Invalid request given" );
       break;
   }
-}
-else
-  error("Taskgroups submit", "No action given" );
 
 header("location: ".BASE."taskgroups.php?x=$x&action=manage");
 

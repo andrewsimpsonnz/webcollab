@@ -88,7 +88,8 @@ function check($var ) {
 return $var;
 }
 
-if(valid_string($_REQUEST["action"]) ) {
+if( ! valid_string($_REQUEST["action"]) )
+  error("Forum submit", "No request given" );
 
   switch($_REQUEST["action"] ) {
 
@@ -192,9 +193,6 @@ if(valid_string($_REQUEST["action"]) ) {
       error("Forum submit", "Invalid request specified");
       break;
   }
-}
-else
-  error("Forum submit", "No request given" );
 
 //go back to where this request came from
 header("location: ../tasks.php?x=$x&action=show&taskid=".$_REQUEST["taskid"] );
