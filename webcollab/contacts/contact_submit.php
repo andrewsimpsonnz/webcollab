@@ -36,14 +36,14 @@ if( isset($_POST["contactid"]) )
   $contactid = $_POST["contactid"];
 
 //edit, insert, delete ?
-if( ! valid_string( $_REQUEST["action"] ) )
+if( ! isset( $_REQUEST["action"] ) )
   error("Contact submit", "No request given" );
-  
+
   switch($_REQUEST["action"] ) {
 
     //insert a new contact
     case "insert":
-          if(valid_string( $_POST["lastname"] ) && valid_string($_POST["firstname"] ) ){
+          if(isset($_POST["lastname"] )  && isset($_POST["lastname"] ) && strlen($_POST["lastname"] ) > 0 && strlen($_POST["firstname"] ) > 0 ){
 
         db_query( "INSERT INTO contacts(firstname,
                                         lastname,
@@ -82,7 +82,7 @@ if( ! valid_string( $_REQUEST["action"] ) )
 
     case "edit":
      //edit an existing entry
-         if(valid_string($_POST["lastname"]) && valid_string($_POST["firstname"] ) && is_numeric($contactid ) ) {
+         if(isset($_POST["lastname"] )  && isset($_POST["lastname"] ) && strlen($_POST["lastname"] ) > 0 && strlen($_POST["firstname"] ) > 0  && is_numeric($contactid ) ) {
 
         db_query("UPDATE contacts SET
                     firstname='".safe_data($_POST["firstname"])."',
