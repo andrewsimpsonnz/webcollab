@@ -255,7 +255,7 @@ $numdays = date("t", mktime(0, 0, 0, $month, 1, $year ) );
 //main calendar table
 $content .= "<div style=\"text-align: center\">\n".
             "<table class=\"outline\" cellspacing=\"0\" border=\"1px\" width=\"97%\">\n<tr>\n".
-            "<td colspan=\"7\" align=\"center\" valign=\"middle\"><b>".$month_array[(int)$month]."</b>\n</td>\n".
+            "<td colspan=\"7\" class=\"monthcell\" align=\"center\" valign=\"middle\"><b>".$month_array[(int)$month]."</b>\n</td>\n".
             "</tr>\n";
 
 //weekdays

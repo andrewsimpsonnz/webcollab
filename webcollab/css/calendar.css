@@ -7,10 +7,20 @@ TABLE.outline {
   text-align: center;
 }
 
+TD.monthcell {
+  font-weight: bold;
+  vertical-align: middle;
+  border-width: 1px;
+  background: #1e4b79;
+  color: #ffffff;
+}
+
 TD.weekcell {
   width: 13.86%;
   border-width: 1px; 
   border-style: solid; 
+  background: #3e6b99;
+  color: #ffffff;
 }
 
 TD.datecell {
