@@ -1,8 +1,15 @@
+/* Hack for full height table
+ - see: http://www.apptools.com/examples/tableheight.php */
+HTML {
+  height : 100%;
+}
+
 BODY {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
   margin : 0;
   padding : 0;
+  height : 100%;
   background : #6085AC;
   color : #000000;
 }
@@ -25,10 +32,12 @@ LI LI {
   list-style-type: circle;
 }
 
+/* CSS hack for XHTML strict */
 IMG {
   border-width : 0;
 }
 
+/* CSS hack to hide hidden input fields */
 FIELDSET {
    border: none;
    margin: 0;
@@ -42,7 +51,32 @@ TABLE {
   padding : 0;
 }
 
-/* Table outline for login screen
+/* Global container box */
+TABLE.container {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12px;
+  margin-left : auto;
+  margin-right : auto;
+  border-width : 0;
+  border-collapse : collapse;
+  padding : 0;
+  width : 100%;
+  height : 100%;
+}  
+
+/* Masthead band to top of page */
+TD.masthead {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 10px;
+  text-align : left;
+  padding-top : 4px;
+  padding-left : 3px;
+  height : 20px;
+  background : #000000;
+  color : #EEEEEE;
+}
+
+/* Box outline for login screen
   - reduced width
   - aligned centre
 */
@@ -86,7 +120,7 @@ TD {
   font-size : 12px;
 }
 
-/* Box masthead styling */
+/* Box head styling */
 TD.boxhead {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
@@ -163,16 +197,14 @@ TD.redbar {
   color : #000000;
 }
 
-/* Masthead band to top of page */
-.masthead {
+/* Class for text at page bottom */
+TD.bottomtext {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 10px;
-  text-align : left;
-  padding-top : 4px;
-  padding-left : 3px;
-  height : 20px;
-  background : #000000;
-  color : #EEEEEE;
+  text-align : center;
+  vertical-align : bottom;
+  padding-bottom : 10px;
+  color : #1e4b79;
 }
 
 /* Font for text based hyperlinks in [brackets] */
@@ -180,14 +212,6 @@ TD.redbar {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 10px;
   font-weight : bold;
-}
-
-/* Class for text at page bottom */
-.bottomtext {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10px;
-  text-align : center;
-  color : #1e4b79;
 }
 
 /* Class for late graphic */
