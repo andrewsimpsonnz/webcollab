@@ -66,23 +66,19 @@ $content .= "<TR> <TD>".$lang["creation_time"]."</TD> <TD>".nicedate($row["creat
 // find parent for task and show it.
 if( $row["parent"] != 0 ) {
 
-  $tasksq = db_query( "SELECT name FROM tasks WHERE id=".$row["projectid"]);
-    if( ! ( $project = db_result( $tasksq, 0, 0 ) ) )
-      error("Task edit", "Database error, task has no parent project");
-
-  $content .= "<TR> <TD>Project:</TD> <TD>".$project."</TD></TR>\n";
+  $project = db_result(db_query( "SELECT name FROM tasks WHERE id=".$row["projectid"]), 0, 0 );
+  $content .= "<TR> <TD>".$lang["pproject"].":</TD> <TD><A HREF=\"tasks.php?x=".$x."&action=show&taskid=".$row["projectid"]."\">".$project."</A></TD></TR>\n";
 
   if( $row["parent"] != $row["projectid"] ) {
-    $tasksq = db_query( "SELECT name FROM tasks WHERE id=".$row["parent"]);
-      if( ! ( $parent = db_result( $tasksq, 0, 0 ) ) )
-        error("Task edit", "Database error, task has no parent");
-
-    $content .= "<TR> <TD>".$lang["parent_task"]."</TD> <TD>".$parent."</TD></TR>\n";
+    $parent = db_result(db_query( "SELECT name FROM tasks WHERE id=".$row["parent"]), 0, 0);
+    $content .= "<TR> <TD>".$lang["parent_task"]."</TD> <TD><A HREF=\"tasks.php?x=".$x."&action=show&taskid=".$row["parent"]."\">".$parent."</A></TD></TR>\n";
   }
+  $content .= "<TR> <TD>".$lang["task_name"].":</TD> <TD><INPUT type=\"input\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></TD> </TR>\n";
 }
-
-
-$content .= "<TR> <TD>".$lang["task_name"].":</TD> <TD><INPUT type=\"input\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></TD> </TR>\n";
+else {
+  //project
+  $content .= "<TR> <TD>".$lang["project_name"].":</TD> <TD><INPUT type=\"input\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></TD> </TR>\n";
+}
 
 //deadline
 $content .= "<TR> <TD>".$lang["deadline"].":</TD> <TD>".date_select_from_timestamp($row["deadline"])."</TD> </TR>\n";
@@ -242,12 +238,11 @@ for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++) {
     }
 $content .= "</SELECT></TD></TR>\n";
 
+$global = "";
 if( $row["globalaccess"] == 't' )
-  $content .= "<TR><TD>".$lang["all_users"]."</TD><TD><INPUT type=\"checkbox\" name=\"globalaccess\" CHECKED></TD></TR>\n";
-else
-  $content .= "<TR><TD>".$lang["all_users"]."</TD><TD><INPUT type=\"checkbox\" name=\"globalaccess\"></TD></TR>\n";
+  $global = "CHECKED";
 
-
+$content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</TD><TD><INPUT type=\"checkbox\" name=\"globalaccess\" ".$global."></TD></TR>\n";
 
 $content .= "<TR> <TD>".$lang["task_description"]."</TD> <TD><TEXTAREA name=\"text\" rows=\"5\" cols=\"60\">".$row["text"]."</TEXTAREA></TD> </TR>\n";
 
