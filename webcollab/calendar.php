@@ -144,6 +144,7 @@ for ($num = 1; $num <= $numdays; $num++) {
 
         case "notactive":
 	case "cantcomplete":
+	case "nolimit":
 	  //don't show if not active
 	  continue;
 	  break;

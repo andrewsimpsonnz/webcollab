@@ -190,6 +190,13 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       $content .= "<I>".$lang["project_planned"]."</I><BR>\n";
       break;
 
+    case "nolimit":
+      $content .= $percent_complete.$lang["percent"]."<BR>\n";
+      $content .= "<I>".$lang["project_no_deadline"]."</I><BR>\n";
+      //show subtasks that are not complete
+      $content .= listTasks( $row["id"] );
+      break;
+
     case "active":
     default:
       $content .= $percent_complete.$lang["percent"]."<BR>\n";

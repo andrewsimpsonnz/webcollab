@@ -173,6 +173,10 @@ else{
       $content .= "<TR><TD>".$lang["status"].": </TD><TD>".$lang["project_planned"]."</TD></TR>\n";
       break;
 
+    case "nolimit":
+      $content .= "<TR><TD>".$lang["status"].": </TD><TD>".$lang["project_no_deadline"]."</TD></TR>\n";
+      break;
+
     default:
       if( $percent_completed == 100 ) {
         $completed_date = @db_result( db_query( "SELECT MAX(finished_time) FROM tasks WHERE parent<>0 AND projectid=".$taskid ), 0, 0 );

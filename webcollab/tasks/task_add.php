@@ -180,6 +180,7 @@ else {
   $content .= "<TR> <TD>Status:</TD> <TD>\n";
   $content .= "<SELECT name=\"status\">\n";
   $content .=  "<OPTION value=\"notactive\" >".$task_state["planned_project"]."</OPTION>\n";
+  $content .=  "<OPTION value=\"nolimit\" >".$task_state["no_deadline_project"]."</OPTION>\n";
   $content .=  "<OPTION value=\"active\" SELECTED >".$task_state["active_project"]."</OPTION>\n";
   $content .=  "<OPTION value=\"cantcomplete\" >".$task_state["cantcomplete"]."</OPTION>\n";
   $content .= "</SELECT></TD></TR>";

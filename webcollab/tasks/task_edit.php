@@ -187,23 +187,28 @@ else{
   //status for projects - 'done' is calculated from tasks
   switch( $row["status"] ) {
     case "notactive":
-      $s1 = " SELECTED"; $s2 = ""; $s3 ="";
+      $s1 = " SELECTED"; $s2 = ""; $s3 = ""; $s4 = "";
+      break;
+
+    case "nolimit":
+      $s1 = ""; $s2 = " SELECTED"; $s3 = ""; $s4 ="";
+      break;
+
+    case "cantcomplete":
+      $s1 = ""; $s2 = ""; $s3 = ""; $s4 =" SELECTED";
       break;
 
     case "active":
     default:
-      $s1 = ""; $s2 = " SELECTED"; $s3 ="";
-      break;
-
-    case "cantcomplete":
-      $s1 = ""; $s2 = ""; $s3 =" SELECTED";
+      $s1 = ""; $s2 = ""; $s3 = " SELECTED"; $s4 ="";
       break;
   }
   $content .= "<TR> <TD>".$lang["status"].":</TD> <TD>\n";
   $content .= "<SELECT name=\"status\">\n";
   $content .=  "<OPTION value=\"notactive\"".$s1.">".$task_state["planned_project"]."</OPTION>\n";
-  $content .=  "<OPTION value=\"active\"".$s2.">".$task_state["active_project"]."</OPTION>\n";
-  $content .=  "<OPTION value=\"cantcomplete\"".$s3.">".$task_state["cantcomplete"]."</OPTION>\n";
+  $content .=  "<OPTION value=\"nolimit\"".$s2.">".$task_state["no_deadline_project"]."</OPTION>\n";
+  $content .=  "<OPTION value=\"active\"".$s3.">".$task_state["active_project"]."</OPTION>\n";
+  $content .=  "<OPTION value=\"cantcomplete\"".$s4.">".$task_state["cantcomplete"]."</OPTION>\n";
   $content .= "</SELECT></TD></TR>";
 }
 
