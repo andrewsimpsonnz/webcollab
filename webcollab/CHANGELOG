@@ -1,4 +1,14 @@
 WebCollab CVS
+*** 13 September 2003
+  Andrew Simpson
+
+- add <label> tags
+
+- don't seed random number generators unnecessarily
+
+- more XHTML compliance
+
+WebCollab CVS
 *** 9 September 2003
   Andrew Simpson
 
