@@ -6,7 +6,7 @@
 
   WebCollab
   ---------------------------------------
-  This file orginally written as CoreAPM by Dennis Fleurbaaij 2001/2002
+  Parts of this file originally written for Core APM by Dennis Fleurbaaij 2001/2002.
  
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -65,7 +65,7 @@ include_once(BASE."lang/lang.php" );
 //
 // Creates the inital window
 //
-function create_top($title="", $page_type=0, $cursor="" ) {
+function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
 
   global $uid_name, $admin, $MANAGER_NAME, $WEBCOLLAB_VERSION, $lang, $web_charset;
 
@@ -113,14 +113,33 @@ function create_top($title="", $page_type=0, $cursor="" ) {
     echo  "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\">\n";
 
   //javascript to position cursor in the first box
-  if($cursor != "" ) {
-    echo "<script language=\"JavaScript\" type=\"text/javascript\">\n".
-         "<!-- \n".
-         "function cursor() {document.inputform.".$cursor.".focus();}\n".
-         " // -->\n".
-         "</script>\n".
-         "</head>\n\n".
-         "<body onLoad=cursor()>\n";
+  if($cursor || $date) {
+    echo "<script language=\"JavaScript\" type=\"text/javascript\">\n";
+    echo "<!-- \n";
+    if($cursor)
+      echo "function placeCursor() {document.inputform.".$cursor.".focus();}\n";
+    if($check){
+      echo "function fieldCheck(){\n".
+               "var result=true;\n".
+               "if(document.inputform.".$cursor.".value==\"\"){\n".
+               "alert('Please enter a value for the missing field');\n".
+               "document.inputform.".$cursor.".focus();\n".
+               "result=false;}\n".
+               "return result;}\n";
+     }
+    if($date) {
+      echo  "function dateCheck() {\n".
+               "var inputDate = Date.UTC(document.inputform.year.value, (document.inputform.month.value-1), document.inputform.day.value )/1000;\n".
+               "var finishDate = document.inputform.projectDate.value;\n".
+               "if(finishDate - inputDate < -7200 )\n".
+               "return confirm('The entered date occurs after the project finish date');\n".     
+               "return;}\n";
+      }
+      echo " // -->\n".
+               "</script>\n".
+               "</head>\n\n";
+      if($cursor)
+        echo  "<body onLoad=placeCursor()>\n";
   }
   else {
     echo "</head>\n\n".
