@@ -55,7 +55,7 @@ if( ( !isset($CONFIG_STATE ) ) || $CONFIG_STATE != "first install" ) {
 //essential values - must be present
 $array = array("db_name", "db_user", "db_password", "db_type", "db_host", "base_url", "locale" );
 foreach($array as $var ) {
-  if(! isset($_POST[$var]) ) {
+  if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
     error_setup("Variable ".$var." is not set");
   }
   $data[$var] = $_POST[$var];
