@@ -77,11 +77,9 @@ $lang = array(
  "yes" => "Si",
  "no" => "No",
  "action" => "Accion",
- "task" => "tarea",
- "ttask" => "Tarea",
+ "task" => "Tarea",
  "tasks" => "Tareas",
- "project" => "proyecto",
- "pproject" => "Proyecto",
+ "project" => "Proyecto",
  "info" => "Info",
  "bytes" => " bytes",
  "select_instruct" => "(Usar ctrl para seleccionar mas, o para ninguno)",
@@ -360,7 +358,7 @@ $lang = array(
 
 
 //bits 'n' pieces
-  "calendar" => "Calendario"
+  "calendar" => "Calendario",
 //**
   "all_users" => "All users"
    );
