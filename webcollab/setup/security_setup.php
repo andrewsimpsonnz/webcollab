@@ -77,7 +77,7 @@ else {
 
   //check for ip address
   if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
-    error_setup("Server not able to detect your IP address." );
+    error_setup("Server not able to detect your IP address. Session aborted as a security precaution." );
   }
 
   //seems okay at first, now go cross-checking with the known data from the database
@@ -99,25 +99,24 @@ else {
     error_setup("Error while fetching users' data");
   }
 
-  //session does exist, now cross-check with ip address
-  if($ip != $row["ip"] ) {
-    db_query("DELETE FROM logins WHERE session_key='$x'" );
-    error_setup("Your IP address $ip has changed since your last action.  Session deleted as a precaution."  );
-  }
-
   //if database table LEFT JOIN gives no rows will get NULL here
   if($row["user_id"] == NULL ){
     error_setup("No valid user-id found");
   }
 
+  //check rights
+  if($row["admin"] != 't' )
+    error_setup("You need to be an administrator to use this function" );
+  
   //check the last logintime (there is a 10 min limit)
   if( ($row["now"]-$row["sec_lastaccess"]) > 600 ) {
     db_query("UPDATE logins SET session_key='' WHERE user_id=".$row["user_id"] );
     error_setup("Security timeout of 10 minutes has occurred on this session." );
   }
 
-  //check rights
-  if($row["admin"] != 't' )
-    error_setup("You need to be an administrator to use this function" );
+  //update the "I was here" time
+  db_query("UPDATE logins SET lastaccess=now() WHERE session_key='".$x."' AND user_id=".$row["user_id"] );
+
 }
+  
 ?>
