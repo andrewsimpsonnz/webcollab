@@ -261,9 +261,15 @@ $q = db_query("SELECT tasks.id AS id,
 
 //==== end of recursive function ====
 
+//
+// MAIN PROGRAM
+//
+
 //is the parentid set in tasks.php ?
-if( ! isset($parentid) || ! is_numeric($parentid) || $parentid == 0 )
+if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) || $_GET["taskid"] == 0 )
   error( "Task list", "Not a valid value for taskid");
+
+$parentid = $_GET["taskid"];
 
 $projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=$parentid" ), 0, 0 );
 
