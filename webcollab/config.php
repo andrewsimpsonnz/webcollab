@@ -84,11 +84,6 @@
   //  default is "Y".
   $USE_EMAIL = "Y";
 
-  //mail transport agent. Values are "mail" (local sockets and/or sendmail) or "SMTP" (network mail server).
-  // default is "mail".
-  $MAIL_METHOD = "mail";
-
-    //These two variables are only required if "SMTP" is chosen above
       //location of SMTP server (ip address or FQDN)
       $SMTP_HOST = "localhost";
 
@@ -97,11 +92,6 @@
         //if using $SMTP_AUTH give username & password
         $MAIL_USER = "";
         $MAIL_PASSWORD = "";
-
-  /*Note:
-     Use $MAIL_METHOD = "mail", which uses local sockets and is faster.  If "mail" does not work (it is not reliable
-     on all operating systems), change to "SMTP", which uses an SMTP connection over tcp/ip.
-  */
 
 //MINOR CONFIG PARAMETERS
 
