@@ -31,6 +31,8 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
+include_once(BASE."includes/admin_config.php");
+
 //
 // Finds children messages recursively and puts them in an array
 //
@@ -158,6 +160,63 @@ ignore_user_abort(TRUE);
       db_query("UPDATE tasks SET lastforumpost=now() WHERE id=$taskid" );
       db_commit();
 
+      //set up emails
+      $mail_group = "";
+      $s = "";
+      $flag = false;
+      //get & add the mailing list
+      if($EMAIL_MAILINGLIST != "" ) {
+        $mail_group = $EMAIL_MAILINGLIST;
+        $s = ", ";
+        $flag = true;
+      }
+
+      //get task data
+      $q = db_query("SELECT name, usergroupid FROM tasks WHERE id=$taskid" );
+      $task_row = db_fetch_array($q, 0 );
+
+      //if usergroup set, get the user list
+      if($task_row["usergroupid"] ){
+        $q = db_query("SELECT users.email
+                              FROM users
+                              LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
+                              WHERE usergroups_users.usergroupid=".$task_row["usergroupid"].
+                              " AND users.deleted='f'" );
+
+        for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+          $mail_group .= $s.$row[0];
+          $s = ", ";
+          $flag = true;
+        }
+      }
+
+      //do we need to email?
+      if($flag ){
+        include_once(BASE."includes/email.php" );
+
+        switch($parentid ) {
+          case 0:
+            //this is a new post
+            email($mail_group, $ABBR_MANAGER_NAME." New forum post: ".$task_row["name"], "New forum post by $uid_name:\n".$_POST["text"] );
+            break;
+
+          default:
+            //this is a reply to an earlier post
+            $q = db_query("SELECT forum.text AS text,
+                           users.fullname AS username
+                           FROM forum
+                           LEFT JOIN users ON (forum.userid=users.id)
+                           WHERE forum.id=$parentid" );
+
+            $row = db_fetch_array($q, 0 );
+
+            if($row["username"] == NULL )
+              $row["username"] = "----";
+
+            email($mail_group, $ABBR_MANAGER_NAME." Forum post reply: ".$task_row["name"], "Original post by ".$row["username"]." said:\n".$row["text"]."\n\nNew reply by $uid_name is:\n".$_POST["text"] );
+            break;
+        }
+      }
       break;
 
     //owner of the thread can delete, admin can delete
