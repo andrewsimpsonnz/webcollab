@@ -222,23 +222,30 @@ $content .= "</TD></TR></TABLE>\n";
 //this part shows all the options the users has
 $content .= "<BR><DIV align=\"center\"><SMALL>\n";
 
+//set variables as appropriate for task or project
 switch( $row["parent"] ){
 
   case "0":
     $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=add&parentid=".$taskid."\">".$lang["add_task"]."</A>] \n";
+    $title = $lang["project_details"];
+    $type = $lang["project"];
     break;
 
  default:
     $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=add&parentid=".$taskid."\">".$lang["add_subtask"]."</A>] \n";
+    $title = $lang["task_info"];
+    $type = $lang["task"];
     break;
 }
-
+  
 switch( $row["owner"] ){
 
   case "0":
     if( $admin == 1 ){
+      //admin edit
       $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=edit&taskid=".$taskid."\">".$lang["edit"]."</A>] \n";
     }
+    //I'll take it!
     $content .= "[<A href=\"".$BASE_URL."tasks/task_submit.php?x=".$x."&action=meown&taskid=".$taskid."\">".$lang["i_take_it"]."</A>] \n";
     break;
 
@@ -246,7 +253,7 @@ switch( $row["owner"] ){
     $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=edit&taskid=".$taskid."\">".$lang["edit"]."</A>] \n";
     //if not finished and not a project; then [I finished it!] button
     if( ( $row["status"] != "done" ) && ( $row["parent"] != 0 ) ) {
-    $content .= "[<A href=\"".$BASE_URL."tasks/task_submit.php?x=".$x."&action=done&taskid=".$taskid."\">".$lang["i_finished"]."</A>] \n";
+      $content .= "[<A href=\"".$BASE_URL."tasks/task_submit.php?x=".$x."&action=done&taskid=".$taskid."\">".$lang["i_finished"]."</A>] \n";
     }
     // deown the task
     $content .= "[<A href=\"".$BASE_URL."tasks/task_submit.php?x=".$x."&action=deown&taskid=".$taskid."\">".$lang["i_dont_want"]."</A>] \n";
@@ -254,18 +261,15 @@ switch( $row["owner"] ){
 
   default:
     if( $admin == 1 ){
+      //edit
       $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=edit&taskid=".$taskid."\">".$lang["edit"]."</A>] \n";
-      $content .= "[<A href=\"".$BASE_URL."tasks/task_submit.php?x=".$x."&action=meown&taskid=".$taskid."\">".$lang["take_over"]."</A>] \n";
+      //take over
+      $content .= "[<A href=\"".$BASE_URL."tasks/task_submit.php?x=".$x."&action=meown&taskid=".$taskid."\">".sprintf($lang["take_over_sprt"], $type)."</A>] \n";
     }
     break;
 }
 
 $content .= "</SMALL></DIV><BR>\n";
-
-$title = $lang["task_info"];
-
-if( $row["parent"] == 0 )
-  $title = $lang["project_details"];
 
 new_box( $title, $content );
 ?>
