@@ -42,7 +42,6 @@ include_once( BASE."includes/common.php");
 
 //set some base variables
 $database_connection = "";
-$last_insert = "oid";
 $delim = "'";
 $epoch = "extract(epoch FROM ";
 $day_part = "DATE_PART('day', ";
@@ -53,8 +52,8 @@ $interval = "";
 //
 function db_query($query, $dieonerror=1 ) {
 
-  global $database_connection, $db_name, $db_error_message, $db_content ;
-  global $database_query_time, $database_query_count;
+  global $database_connection;
+  global $database_query_time, $database_query_count, $db_content;
 
   if( ! $database_connection ) {
     //set initial value
@@ -67,7 +66,24 @@ function db_query($query, $dieonerror=1 ) {
       error("No database connection",  "Sorry but there seems to be a problem in connecting to the database" );
 
     //make sure dates will be handled properly by internal date routines
-    $q = db_query("SET DATESTYLE TO 'European, ISO' ");
+    pg_query($database_connection, "SET DATESTYLE TO 'European, ISO'");
+    
+    //get server encoding
+    $q = @pg_query($database_connection, 'SHOW SERVER_ENCODING' );
+    
+    //SQL_ASCII is not encoded, other server encodings need to be corrected by the PostgreSQL client
+    if(pg_num_rows($q ) > 0 ){
+      if(pg_fetch_result($q, 0, 0 ) != 'SQL_ASCII' ) { 
+        pg_encoding();
+      }
+    }
+    else {
+      //prior to version 7.4 a 'notice' is used instead of a query result
+      $notice = @pg_last_notice($database_connection );   
+      if(strpos($notice, 'encoding' ) && (strpos($notice, 'SQL_ASCII' ) === false ) ){
+        pg_encoding();
+      }
+    }    
   }
   
   //start time
@@ -149,9 +165,11 @@ return $result_row;
 //
 // last oid
 //
-function db_lastoid($q ) {
-
-  $lastoid = pg_last_oid($q );
+function db_lastoid($seq_name ) {
+  
+  //must be done after an insert, and within a transaction
+  $result = db_query("SELECT CURRVAL('$seq_name') AS seq" );
+  $lastoid = pg_fetch_result( $result, 0, 0 );
 
 return $lastoid;
 }
@@ -198,6 +216,37 @@ function db_commit() {
 
   pg_query($database_connection, "COMMIT WORK" );
 
+return;
+}
+
+//
+//set client encoding for specific single byte character sets
+//
+function pg_encoding() {
+
+  global $database_connection;
+
+  switch(strtoupper(CHARACTER_SET ) ) {
+
+    case 'KOI8-R':
+      $pg_encoding = 'KOI8';
+      break;
+       
+    case 'WINDOWS-1251':
+      $pg_encoding = 'WIN';
+      break;
+
+    default: 
+    case 'ISO-8859-1':
+      $pg_encoding = 'LATIN1';
+      break;
+  }      
+          
+  //set client encoding to match character set in use
+  if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
+    error("Database client encoding", "Cannot set PostgreSQL client encoding to the required ".CHARACTER_SET."character set." );
+  }  
+  
 return;
 }
 

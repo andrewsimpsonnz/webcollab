@@ -65,9 +65,9 @@ include_once(BASE."lang/lang.php" );
 //
 // Creates the initial window
 //
-function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
+function create_top($title="", $page_type=0, $cursor="", $check="", $date="", $redirect_time=0 ) {
 
-  global $UID_NAME, $ADMIN, $lang, $web_charset, $top_done, $bottom_text;
+  global $UID_NAME, $ADMIN, $lang, $top_done, $bottom_text;
   global $loadtime;
   
   //only build top once...
@@ -95,15 +95,20 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
   header("Cache-Control: no-store, no-cache, must-revalidate");
   header("Cache-Control: post-check=0, pre-check=0", false);
   header("Pragma: no-cache");
-  header("Content-Type: text/html; charset=".$web_charset."");
-
+  header("Content-Type: text/html; charset=".CHARACTER_SET );
+  
+  //do a refresh if required
+  if($redirect_time != 0) {
+    header("Refresh: $redirect_time; url=".BASE_URL."index.php" );
+  }
+  
   $content = "<!DOCTYPE html PUBLIC\n".
              "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
              "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n".
              "<html>\n\n".
              "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
              "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
-             "<!-- (c) 2002 - 2004 Andrew Simpson -->\n\n".
+             "<!-- (c) 2002-2005 Andrew Simpson -->\n\n".
              "<head>\n";
 
   //flush buffer
@@ -114,15 +119,29 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
 
   $content  =  "<title>".$title."</title>\n".
                "<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".
-               "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".$web_charset."\" />\n";
-
-  if($page_type == 2 )
-    $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/print.css\" type=\"text/css\" />\n";
-  else
-    $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\" />\n";
+               "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".CHARACTER_SET."\" />\n";
   
-  if($page_type == 3 )
-    $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/calendar.css\" type=\"text/css\" />\n";  
+  //do a refresh if required
+  if($redirect_time != 0) {
+    $content .= "<meta http-equiv=\"Refresh\" content=\"$redirect_time;url=".BASE_URL."index.php\" />\n";
+  }
+
+  switch($page_type) {
+    case 2: //print
+      $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/print.css\" type=\"text/css\" />\n";
+      break;
+    
+    case 3: //calendar
+      $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\" />\n";
+      $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/calendar.css\" type=\"text/css\" />\n";
+      break;
+       
+    case 0: //main window + menu sidebar
+    case 1: //single main window (no menu sidebar)
+    default:            
+      $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\" />\n";
+      break;         
+  }
   
   //javascript to position cursor in the first box
   if($cursor || $check || $date) {
@@ -135,7 +154,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
     if($check){
       $content .= "function fieldCheck(){\n".
                           "if(document.getElementById('".$check."').value==\"\"){\n".
-                          "alert('".$lang["missing_field_javascript"]."');\n".
+                          "alert('".$lang['missing_field_javascript']."');\n".
                           "document.getElementById('".$check."').focus();\n".
                           "return false;}\n".
                           "return;}\n";
@@ -144,13 +163,13 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
       $content .= "function dateCheck() {\n".
                           "var daysMonth = new Array(31, 29, 31, 30, 30, 30, 31, 31, 30, 31, 30, 31 );\n". 
                           "if(document.getElementById('day').value > daysMonth[(document.getElementById('month').value-1)] ){\n".
-                          "alert('".$lang["invalid_date_javascript"]."');\n".
+                          "alert('".$lang['invalid_date_javascript']."');\n".
                           "return false;}\n". 
                           "var finishDate = document.getElementById('projectDate').value;\n".
                           "if(finishDate > 0 ){\n".
                           "var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value )/1000;\n".
-                          "if(finishDate - inputDate < -7200 ){\n".
-                          "return confirm('".$lang["finish_date_javascript"]."');} }\n".     
+                          "if(inputDate - finishDate > 7200 ){\n".
+                          "return confirm('".$lang['finish_date_javascript']."');} }\n".     
                           "return;}\n";
       }
       $content .= " // -->\n".
@@ -252,12 +271,21 @@ function create_bottom() {
   //end the main table row
   echo "</td></tr>\n</table>";
 
-  if($bottom_text ){
-    if($bottom_text == 1 )
+  switch($bottom_text) {
+    case 0: //no bottom text
+      $align = "";
+      break;
+      
+    case 1:
       $align = "style=\"text-align: left\"";
-    else
+      break;
+      
+    case 2:
+    default:
       $align = "style=\"text-align: center\"";
-   
+      break;
+  }  
+    
     //shows the logo
     echo "<div class=\"bottomtext\" $align>Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;2002-2004</div>\n";
     
@@ -268,7 +296,7 @@ function create_bottom() {
           sprintf("Total execution time: %.4f", $finishtime)."<br />".
           sprintf("Total database time: %.4f", $database_query_time )."<br />".
           sprintf("Query count: %d", $database_query_count)."</div><br />\n";
-  }
+  
 
   new_box("Database Optimisation", $db_content );
    

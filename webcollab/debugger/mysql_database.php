@@ -32,7 +32,6 @@ include_once(BASE."includes/common.php" );
 
 //set some base variables
 $database_connection = "";
-$last_insert = "id";
 $delim = "";
 $epoch = "UNIX_TIMESTAMP( ";
 $day_part = "DAYOFMONTH( ";
@@ -148,14 +147,11 @@ return $result_row;
 //
 // last oid
 //
-function db_lastoid($q ) {
+function db_lastoid($seq ) {
 
-  global $database_connection, $db_error_message;
+  global $database_connection;
 
-  if( ! ( $lastoid = mysql_insert_id($database_connection ) ) ) {
-    $db_error_message = mysql_error($database_connection );
-    error("Database error", "Unable to get last insert id.<br /><br /> $db_error_message" );
-  }
+  $lastoid = mysql_insert_id($database_connection );
 
 return $lastoid;
 }
