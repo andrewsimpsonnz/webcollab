@@ -37,8 +37,6 @@ General formatting:
 
 "xxxx"     == string in title case (eg: "Project")
 
-"xxxx_lc"  == (lower case) String used in sentence case (eg: "project" as in "Edit project").
-
 "xxxx_sprt" == formatted print string (eg: "Files associated with this %s" - where %s is inserted by the code)
 
               Formatted strings with %1/$s, %2/$s, %3/$s etc. can have parameters interchanged - as in:
@@ -54,7 +52,6 @@ General formatting:
 //required language encodings
 $web_charset = "iso-8859-1";
 $email_charset = "us-ascii";
-$email_encode = "7bit";
 
 //dates
 $month_array = array ( "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" );
@@ -100,10 +97,8 @@ $lang = array(
  "no" => "No",
  "action" => "Action",
  "task" => "Task",
- "task_lc" => "task",
  "tasks" => "Tasks",
  "project" => "Project",
- "project_lc" => "project",
  "info" => "Info",
  "bytes" => " bytes",
  "select_instruct" => "(Use ctrl to select more, or to select none)",
@@ -148,7 +143,6 @@ $lang = array(
  "notes" => "Notes:",
  "add_contact" => "Add contact",
  "del_contact" => "Delete contact",
- //"del_javascript" => "This will delete this contact.  Are you sure?",
  "contact_info" => "Contact information",
  "contacts" => "Contacts",
  "contact_add_info" => "If you add a company name then that will be displayed instead of the user's name.",
@@ -163,7 +157,9 @@ $lang = array(
  "no_file_uploads" => "The server configuration for this site does not allow file uploads to be made",
  "file" => "File:",
  "uploader" => "Uploader:",
- "files_assoc_sprt" => "Files associated with this %s",
+ //&&
+ "files_assoc_project" => "Files associated with this project",
+ "files_assoc_task" => "Files associated with this task",
  "file_admin" => "File admin",
  "add_file" => "Add file",
  "files" => "Files",
@@ -205,7 +201,6 @@ $lang = array(
  "no_key_sprt" => "No valid session key. Please <a href=\"%sindex.php\">login</a>",
  "no_session" => "No such session, please <a href=\"%sindex.php\">log-in</a>",
  "session_timeout_sprt" => "Access denied, last action was %1\$d minutes ago and the timeout is 60 minutes, please <a href=\"%2\$sindex.php\">re-login</a>",
- //"ip_spoof_sprt" =>"Spoofed ip address detected from your ip (%s) this session has been deleted as a precaution, please <a href=\"%sindex.php\">re-login</a>",
  "access_denied" => "Access denied",
  "private_usergroup" => "Sorry, this area is in a private usergroup and you do not have access rights.",
  "invalid_date" => "Invalid date",
@@ -311,7 +306,7 @@ $lang = array(
  "no_group" => "No group",
  "all_groups" => "All groups",
  "all_users" => "All users",
- "all_users_view" => "All users can view this task?",
+ "all_users_view" => "All users can view this item?",
  "group_edit" => "Anyone in the usergroup can edit?",
  "project_description" => "Project description",
  "task_description" => "Task description",
@@ -328,7 +323,9 @@ $lang = array(
  "edit_task" => "Edit task",
  "edit_project" => "Edit project",
  "no_reparent" => "None (a top-level project)",
- "del_javascript_sprt" => "This will delete %1\$s %2\$s. Are you sure?",
+ //&&
+ "del_javascript_project_sprt" => "This will delete project %s. Are you sure?",
+ "del_javascript_task_sprt" => "This will delete task %s. Are you sure?",
  "add_task" => "Add task",
  "add_subtask" => "Add subtask",
  "add_project" => "Add project",
@@ -336,22 +333,17 @@ $lang = array(
  "uncategorised" => "Uncategorised",
  "admin" => "Admin",
  "global" => "Global",
- //"options" => " options",
- //**
  "delete_project" => "Delete project",
- //**
  "delete_task" => "Delete task",
- //**
  "project_options" => "Project options",
- //**
  "task_options" => "Task options",
- //
  "task_navigation" => "Task navigation",
  "no_projects" => "There are no projects to view",
  "ccompleted" => "Completed",
  "project_hold" => "Project On Hold from ",
  "project_planned" => "Planned Project",
- "percent" => "% of the tasks are done",
+ //&&
+ "percent_sprt" => "%d%% of the tasks are done",
  "project_no_deadline" => "No deadline set for this project",
  "no_allowed_projects" => "There are no projects that you are allowed to view",
  "projects" => "Projects",
@@ -361,14 +353,24 @@ $lang = array(
  "completed_on" => "Completed on",
  "modified_on" => "Modified on",
  "project_on_hold" => "Project is on hold",
- "task_accessible_sprt" => "(This %s is publicly accessible by all users)",
- "task_not_accessible_sprt" => "(This %s is only accessible by members of the usergroup)",
- "task_not_in_usergroup_sprt" => "This %s is not part of a usergroup and is accessible by all users.",
- "usergroup_can_edit_sprt" => "This %s can also be edited by members of the usergroup.",
+ //&&
+ "project_accessible" => "(This project is publicly accessible by all users)",
+ "task_accessible" => "(This task is publicly accessible by all users)",
+ //&&
+ "project_not_accessible" => "(This project is only accessible by members of the usergroup)",
+ "task_not_accessible" => "(This task is only accessible by members of the usergroup)",
+ //&&
+ "project_not_in_usergroup" => "This project is not part of a usergroup and is accessible by all users.",
+ "task_not_in_usergroup" => "This task is not part of a usergroup and is accessible by all users.",
+ //&&
+ "usergroup_can_edit_project" => "This project can also be edited by members of the usergroup.",
+ "usergroup_can_edit_task" => "This task can also be edited by members of the usergroup.",
  "i_take_it" => "I'll take it :)",
  "i_finished" => "I finished it!",
  "i_dont_want" => "I don't want it anymore",
- "take_over_sprt" => "Take over %s",
+ //&&
+ "take_over_project" => "Take over project",
+ "take_over_task" => "Take over task",
  "task_info" => "Task information",
  "project_details" => "Project details",
  "todo_list_for" => "ToDo list for: ",
@@ -383,8 +385,6 @@ $lang = array(
  "future" => "Future",
  "flags" => "Flags",
  "owner" => "Owner",
- "usergroupid" => "usergroupid",
- "taskgroupid" => "taskgroupid",
  "group" => "Group",
  "by_usergroup" => " (by usergroup)",
  "by_taskgroup" => " (by taskgroup)",
