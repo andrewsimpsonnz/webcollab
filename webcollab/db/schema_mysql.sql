@@ -35,6 +35,7 @@ CREATE TABLE users (
 	password VARCHAR(200) NOT NULL,
 	email VARCHAR(200) NOT NULL,
 	admin VARCHAR(5) NOT NULL DEFAULT 'f',
+	private TINYINT NOT NULL DEFAULT 0,
 	deleted VARCHAR(5) NOT NULL DEFAULT 'f',
         INDEX (fullname(10))
 );
@@ -44,6 +45,7 @@ CREATE TABLE usergroups (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(100) NOT NULL,
 	description VARCHAR(255),
+	private TINYINT NOT NULL DEFAULT 0,
         INDEX (name(10))
 );
 

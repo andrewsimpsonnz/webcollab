@@ -39,6 +39,7 @@ CREATE TABLE "users" (
 	"password" character varying(200) NOT NULL,
 	"email" character varying(200) NOT NULL,
 	"admin" boolean NOT NULL DEFAULT 'f'::bool,
+	"private" integer DEFAULT 0::int NOT NULL,
 	"deleted" boolean NOT NULL DEFAULT 'f'::bool,
 	Constraint "users_pkey" Primary Key ("id")
 );
@@ -147,6 +148,7 @@ CREATE INDEX files_name_idx ON files USING btree (taskid);
 CREATE TABLE "usergroups_users" (
 	"usergroupid" integer NOT NULL,
 	"userid" integer NOT NULL,
+	"private" integer DEFAULT 0::int NOT NULL,
 	Constraint "usergroups_users_pkey" Primary Key ("userid", "usergroupid")
 );
 
