@@ -568,6 +568,7 @@ ignore_user_abort(TRUE);
           $email2 = $email_edit_group_task;
           $title2 = $title_edit_group_task;
           $name_task = $name;
+          break;
       }
 
       switch($owner ) {
