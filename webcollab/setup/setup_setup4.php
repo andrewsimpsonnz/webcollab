@@ -42,7 +42,7 @@ foreach($array_essential as $var ) {
 
 //non-essential values
 $array_optional = array("manager_name", "abbr_manager_name", "file_base", "file_maxsize", "email_error", "use_email",
-                "smtp_host", "smtp_auth", "mail_user", "mail_password", "new_db" );
+                "smtp_host", "new_db" );
 
 foreach($array_optional as $var ) {
   if(! isset($_POST[$var]) )
@@ -52,7 +52,7 @@ foreach($array_optional as $var ) {
 }
 
 //convert checkboxes to 'Y' or 'N'
-$array = array("use_email", "smtp_auth" );
+$array = array("use_email" );
 foreach($array as $var ) {
   if($data[$var] == "on" )
     $data[$var] = "Y";
@@ -219,16 +219,6 @@ if($data["use_email"] == "Y" && $data["smtp_host"] == NULL ) {
 $content .= "<tr><th><i>SMTP Host:</i></th><td>".$data["smtp_host"]."</td><td>$status</td></tr>\n";
 
 $status = "<font color=\"green\"><b>OK !</b></font>";
-
-if($data["use_email"] == "Y" && $data["smtp_auth"] == "Y" && ($data["mail_user"] == NULL || $data["mail_password"] == NULL ) ) {
-  $status = "<font color=\"blue\"><b>SMTP AUTH parameters must be specified!</b></font>";
-  $flag = $flag + 1;
-}
-
-$content .= "<tr><td></td><td><br /></td></tr>".
-            "<tr><th><i>Use SMTP AUTH?</i></th><td>".$data["smtp_auth"]."</td></tr>\n".
-            "<tr><th><i>SMTP AUTH username:</i></th><td>".$data["mail_user"]."</td><td>$status</td></tr>\n".
-            "<tr><th><i>SMTP AUTH password:</i></th><td>".$data["mail_password"]."</td></tr>\n";
 
 if($flag > 9 )
   $status = "<font color=\"red\"><b>Fatal errors detected in configuration!</b></font>";

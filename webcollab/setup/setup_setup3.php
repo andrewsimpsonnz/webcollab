@@ -227,24 +227,10 @@ if( ! isset($SMTP_HOST) )
 $content .= "<tr><td><br /><br /></td><td><i>Items below are required if email is enabled</i></tr>\n".
             "<tr><th><i>SMTP Host:</i></th><td><input type=\"text\" name=\"smtp_host\" value=\"$SMTP_HOST\" size=\"50\" /></td></tr>\n";
 
-if(isset($SMTP_AUTH) && $SMTP_AUTH == "Y" ) {
-  $setting = "CHECKED";
-}
-else{
-  $setting = "";
-  $MAIL_USER = "";
-  $MAIL_PASSWORD = "";
-}
-
-$content .= "<tr><td></td><td><br /></td></tr>\n".
-            "<tr><th><i>Use SMTP AUTH?</i></th><td><input type=\"checkbox\" name=\"smtp_auth\" $setting  /></td></tr>\n".
-            "<tr><td></td><td><br /><i>Below is only required if SMTP AUTH is selected</i></td></tr>\n".
-            "<tr><th><i>SMTP AUTH username:</i></th><td><input type=\"text\" name=\"mail_user\" value=\"$MAIL_USER\" size=\"30\" /></td></tr>\n".
-            "<tr><th><i>SMTP AUTH password:</i></th><td><input type=\"text\" name=\"mail_password\" value=\"$MAIL_PASSWORD\" size=\"30\" /></td></tr>\n".
-            "<tr><td></td><td>&nbsp;</td></tr>\n".
-            "<tr><td></td><td><input type=\"submit\" value=\"Submit\" /></td></tr>\n".
-            "</table></p>\n".
-            "</form>\n";
+$content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
+             "<tr><td></td><td><input type=\"submit\" value=\"Submit\" /></td></tr>\n".
+             "</table></p>\n".
+             "</form>\n";
 
 new_box_setup( "Setup - Stage 3 of 5 : Configuration", $content, "boxdata", "tablebox" );
 create_bottom_setup();

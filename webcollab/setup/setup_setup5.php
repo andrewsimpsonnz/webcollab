@@ -42,7 +42,7 @@ foreach($array as $var ) {
 
 //non-essential values
 $array = array("manager_name", "abbr_manager_name", "file_base", "file_maxsize", "email_error", "use_email",
-                "smtp_host", "smtp_auth", "mail_user", "mail_password", "new_db" );
+                "smtp_host", "new_db" );
 
 foreach($array as $var ) {
   if(! isset($_POST[$var]) )
@@ -115,10 +115,10 @@ $content = "<?php\n".
 '    //location of SMTP server (ip address or FQDN)'."\n".
 '    $SMTP_HOST = "'.$data["smtp_host"].'";'."\n\n".
 '    //use smtp auth? ("Y" or "N")'."\n".
-'    $SMTP_AUTH = "'.$data["smtp_auth"].'";'."\n".
+'    $SMTP_AUTH = "N";'."\n".
 '      //if using $SMTP_AUTH give username & password'."\n".
-'      $MAIL_USER = "'.$data["mail_user"].'";'."\n".
-'      $MAIL_PASSWORD = "'.$data["mail_password"]."\";\n\n".
+'      $MAIL_USER = "";'."\n".
+'      $MAIL_PASSWORD = "";'."\n\n".
 '//-- Splash image --'."\n\n".
 '  //custom image to replace the webcollab banner on login page (relative base directory is /images)'."\n".
 '    //(place your image into /images directory)'."\n".
