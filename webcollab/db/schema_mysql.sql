@@ -28,7 +28,6 @@ CREATE TABLE tasks (
         INDEX (status)
 );
 
-
 CREATE TABLE users (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(200) NOT NULL,
@@ -144,6 +143,12 @@ CREATE TABLE config (
 	groupaccess VARCHAR(50),
 	owner VARCHAR(200),
 	usergroup VARCHAR(200)
+);
+
+CREATE TABLE login_attempt ( 
+	name VARCHAR(100) NOT NULL,                                               
+	ip VARCHAR(100) NOT NULL,
+	last_attempt DATETIME NOT NULL
 );
 
 INSERT INTO users ( id, name, fullname, password, email, admin, deleted )

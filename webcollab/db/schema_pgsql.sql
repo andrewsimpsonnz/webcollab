@@ -150,7 +150,7 @@ CREATE TABLE "usergroups_users" (
 	Constraint "usergroups_users_pkey" Primary Key ("userid", "usergroupid")
 );
 
-CREATE TABLE maillist (
+CREATE TABLE "maillist" (
 	"email" character varying(200)
 );
 
@@ -162,6 +162,12 @@ CREATE TABLE "config" (
 	"groupaccess" character varying(200),
 	"owner" character varying(200),
 	"usergroup" character varying(200)
+);
+
+CREATE TABLE "login_attempt" (
+	"name" character varying(100) NOT NULL,
+	"ip" character varying(100) NOT NULL,
+	"last_attempt" timestamp with time zone NOT NULL DEFAULT current_timestamp(0))
 );
 
 INSERT INTO users ( id, name, fullname, password, email, admin, deleted )

@@ -153,6 +153,14 @@ CREATE TABLE config (
 )
 TYPE = InnoDB;
 
+
+CREATE TABLE login_attempt ( 
+	name VARCHAR(100) NOT NULL,                                               
+	ip VARCHAR(100) NOT NULL,
+	last_attempt DATETIME NOT NULL
+)
+TYPE = InnoDB;
+
 INSERT INTO users ( id, name, fullname, password, email, admin, deleted )
 VALUES( 1, 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );
 
