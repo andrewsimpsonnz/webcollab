@@ -50,7 +50,7 @@ $content .=    "<form method=\"post\" action=\"setup_handler.php\">\n".
                 "<input type=\"hidden\" name=\"action\" value=\"setup2\" />\n".
                 "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n";
 
-if(defined(DATABASE_NAME) && DATABASE_NAME != "" ) {
+if(defined('DATABASE_NAME') && DATABASE_NAME != "" ) {
   $content .= "<p>A database is already specified in the configuration file.  Do you wish to create a new database?</p>\n";
 }
 else{

@@ -42,7 +42,7 @@ if(isset($_POST["new_db"]) && $_POST["new_db"] == "N" )
 else
   $new_db = "Y";
 
-if(defined(DATABASE_NAME ) && DATABASE_NAME != "" ) {
+if(defined('DATABASE_NAME' ) && DATABASE_NAME != "" ) {
 
   //this is not an initial install
   if($new_db == "N" ){
@@ -103,7 +103,7 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\">".
             "<input type=\"hidden\" name=\"new_db\" value=\"$new_db\" />\n".
             "<table border=\"0\">";
 
-if( ! defined(DATABASE_NAME ) || DATABASE_NAME == "" ){
+if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == "" ){
   $file_path = realpath(dirname(__FILE__ ).'/..' ).'/';
   $BASE_URL = str_replace( $_SERVER["DOCUMENT_ROOT"], "http://".$_SERVER["HTTP_HOST"], $file_path );
 }
@@ -115,7 +115,7 @@ $content .= "<tr><td></td><td><br /><b><u>Basic Settings</u></b></td></tr>\n".
             "<tr><td></td><td><br />Base URL address of site. (Don't forget the trailing slash - e.g. http://mydomain.com/webcollab/).</td></tr>\n".
             "<tr><th>Site address:</th><td><input type=\"text\" name=\"base_url\" value=\"".$BASE_URL."\" size=\"50\" /></td></tr>\n";
 
-if( ! defined(MANAGER_NAME) || MANAGER_NAME == "" )
+if( ! defined('MANAGER_NAME') || MANAGER_NAME == "" )
   $MANAGER_NAME = "WebCollab Project Management";
 else
   $MANAGER_NAME = MANAGER_NAME;
@@ -123,7 +123,7 @@ else
 $content .= "<tr><td></td><td><br />The name of the site</td></tr>\n".
             "<tr><th>Site name:</th><td><input type=\"text\" name=\"manager_name\" value=\"".$MANAGER_NAME."\" size=\"50\" /></td></tr>\n";
 
-if( ! defined(ABBR_MANAGER_NAME) || ABBR_MANAGER_NAME == "" )
+if( ! defined('ABBR_MANAGER_NAME') || ABBR_MANAGER_NAME == "" )
   $ABBR_MANAGER_NAME = "WebCollab";
 else
   $ABBR_MANAGER_NAME = ABBR_MANAGER_NAME;
@@ -163,12 +163,12 @@ $content .= "<tr><th>Database type:</th><td><select name=\"db_type\">\n".
 //file settings
 $content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td></tr>\n";
 
-if( ! defined(DATABASE_NAME ) || DATABASE_NAME == "" )
+if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == "" )
   $FILE_BASE = realpath(dirname(__FILE__ )."/.." )."/files/filebase";
 else 
   $FILE_BASE = FILE_BASE;
 
-if( ! defined(FILE_MAXSIZE) || FILE_MAXSIZE == "" )
+if( ! defined('FILE_MAXSIZE') || FILE_MAXSIZE == "" )
   $FILE_MAXSIZE = "2000000";
 else
   $FILE_MAXSIZE = FILE_MAXSIZE;
@@ -182,7 +182,7 @@ $content .= "<tr><td></td><td><br />Location where uploaded files will be stored
 //language settings
 $content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></tr>\n";
 
-if( ! defined(LOCALE) || LOCALE == NULL )
+if( ! defined('LOCALE') || LOCALE == NULL )
   $LOCALE = "en";
 else
   $LOCALE = LOCALE;
@@ -256,7 +256,7 @@ $content .=  "<tr><td></td><td><br /></td></tr>\n".
              "</select></td></tr>\n";
                         
 //email settings
-if(defined(USE_EMAIL) && USE_EMAIL == "N" )
+if(defined('USE_EMAIL') && USE_EMAIL == "N" )
   $setting = "";
 else
   $setting = "checked";
@@ -265,7 +265,7 @@ $content .= "<tr><td></td><td><br /><br /><b><u>Email Settings</u></b></td></tr>
             "<tr><td></td><td><br /></td></tr>\n".
             "<tr><th>Use email?</th><td><input type=\"checkbox\" name=\"use_email\" $setting  /></td></tr>\n";
             
-if(defined(SMTP_HOST) )
+if(defined('SMTP_HOST') )
   $SMTP_HOST = SMTP_HOST;
 else
   $SMTP_HOST = "localhost";
