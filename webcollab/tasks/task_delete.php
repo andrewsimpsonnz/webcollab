@@ -147,12 +147,14 @@ if(isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
     if($uid != $row["id"] ) {
        include_once(BASE."lang/lang_email.php" );
        if($row["parent"] == 0 ) {
-         $name_task = $row["name"];
+         $name_project = $row["name"];
+         $name_task = "";
          $title = $title_delete_project;
          $email = $email_delete_project;
        }
        else {
-         $name_task = db_result(db_query("SELECT name FROM tasks WHERE tasks.id=".$row["projectid"] ), 0, 0 );
+         $name_project = db_result(db_query("SELECT name FROM tasks WHERE tasks.id=".$row["projectid"] ), 0, 0 );
+         $name_task = $row["name"];
          $title = $title_delete_task;
          $email = $email_delete_task;
        }
@@ -181,7 +183,8 @@ if(isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
            $status = "";
            break;
        }
-       $message = trans(sprintf( $email, $MANAGER_NAME, date("F j, Y, H:i"), $name_task, $row["name"],$status, clean($row["text"]) ) );
+       $message = trans(sprintf( $email, $MANAGER_NAME, date("F j, Y, H:i") ).
+                         sprintf($delete_list, $name_project, $name_task, $status, clean($row["text"]) ) );
        email($row["email"], $title, $message );
     }
   }
