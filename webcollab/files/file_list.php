@@ -59,11 +59,14 @@ $q = db_query("SELECT files.oid AS oid,
                         FROM files
                         LEFT JOIN tasks ON (files.taskid=tasks.id)
                         LEFT JOIN users ON (users.id=files.uploader)
-                        WHERE files.taskid=$taskid" );
+                        WHERE files.taskid=$taskid
+                        ORDER BY uploaded" );
+
+$content .= "<br />";
 
 if(db_numrows($q ) != 0 ) {
 
-  $content .= "<br /><table border=\"0\">";
+  $content .= "<table border=\"0\">\n";
 
   //show them
   for($i=0 ; $row = @db_fetch_array($q, $i) ; $i++ ) {
