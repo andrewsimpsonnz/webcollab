@@ -123,9 +123,9 @@ if( ! isset($WEB_CONFIG ) || $WEB_CONFIG != "Y" ) {
 }
 
 //version check
-if(version_compare(PHP_VERSION, "4.1.0" ) == -1 ) {
+//version_compare() is only in PHP 4.1.0, and above.
+if(strcmp('4.1.0', PHP_VERSION ) > 0 )
   secure_error("WebCollab needs PHP version 4.1.0, or higher.  This version is ".PHP_VERSION );
-}
 
 //check for initial install
 if($DATABASE_NAME == "" ) {
