@@ -1,4 +1,18 @@
 WebCollab CVS
+*** 1 February 2004
+  Andrew Simpson
+
+- add better HTML labels to calendar, admin email & todo
+
+- pgsql database build can now autodetect & use post-version 4.2.0 pgsql commands
+
+- better detection of pre-4.1.0 versions in setup
+
+- setup now checks SMTP port instead of MX record
+
+- add version string to HTML output
+
+WebCollab CVS
 *** 25 January 2004
   Andrew Simpson
 
