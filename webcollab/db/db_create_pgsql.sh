@@ -12,7 +12,9 @@ fi
 # does the database already exist ?
 DB_EXISTS=`echo "" | psql -U $1 $2 &> /dev/null && echo "1" || echo "0"`
 if [ $DB_EXISTS = "1" ]; then
-  echo "The selected database already exists."
+  echo "The selected database already exists"
+  echo "No databases created"
+  echo "Exit 1"
   exit
 fi
 
