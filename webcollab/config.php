@@ -29,7 +29,7 @@
   $DATABASE_USER="";
   $DATABASE_PASSWORD="";
 
-//Database type (valid options are "mysql" and "postgresql")
+//Database type (usual valid options are "mysql" and "postgresql")
   //**
   $DATABASE_TYPE="mysql";
 
@@ -37,10 +37,12 @@
   //**  
   $DATABASE_HOST="localhost";
 
-/*Note: $DATABASE_HOST is not used for Postgresql. To use remote connections with PostgreSQL:
-   - Edit pg_hba.conf (Postgresql config) to allow tcp/ip connections
-   - Start postmaster with -i option
-   - Edit /includes/pgsql_database.php to allow remote hosts
+/*Note: 
+  For PostgreSQL $DATABASE_HOST should not be changed from localhost.
+  To use remote tcp/ip connections with PostgreSQL:
+   - Edit pg_hba.conf (PostgreSQL config file) to allow tcp/ip connections
+   - Start PostgreSQL postmaster with -i option
+   - Change $DATABASE_HOST as required
 */
 
 //email addresses
@@ -72,6 +74,7 @@
 
   $LOCALE = "en";
 
+  
 // email configuration
 
   //enable email to send messages? (Values are "Y" or "N").
@@ -87,7 +90,11 @@
       $SMTP_HOST = "localhost";
       //domain name to be used in SMTP HELO greeting
       $DOMAIN = "localhost.localdomain";  
-  
+
+/*Note:
+   Use $MAIL_METHOD = "mail", which uses local sockets and is faster.  If "mail" does not work (it is not reliable
+   on all operating systems), change to "SMTP", which uses an SMTP connection over tcp/ip.
+*/  
     
 // minor config parameters
 
