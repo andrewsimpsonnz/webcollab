@@ -102,6 +102,8 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   //relocate the user to the next screen
   $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
   header("Location: ".$path."setup_setup1.php?x=".$session_key);
+  secure_error("Auto page redirect could not detect server configuration.&nbsp;".
+                "You will need to do a manual configuration" );
   die;
 }
 
@@ -125,6 +127,8 @@ if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" ) {
   //this is an initial install
   $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
   header("Location: ".$path."setup_setup1.php" );
+  secure_error("Auto page redirect could not detect server configuration.&nbsp;".
+                "You will need to do a manual configuration" );
   die;
 }
 
