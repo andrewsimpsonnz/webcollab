@@ -154,7 +154,7 @@ if( valid_string($_REQUEST["action"]) ) {
 
 	  db_begin();
 	  //get the current owner and task details
-	  $q = db_query("SELECT users.id as id, tasks.projectid as projectid, tasks.name as name ,tasks.text as text, tasks.status as status
+	  $q = db_query("SELECT users.id as id, tasks.projectid as projectid, tasks.parent as parent, tasks.name as name ,tasks.text as text, tasks.status as status
                                               FROM tasks LEFT JOIN users ON (users.id=tasks.owner)
                                               WHERE  tasks.id=".$taskid );
 
@@ -170,12 +170,21 @@ if( valid_string($_REQUEST["action"]) ) {
             $q = db_query("SELECT email FROM users WHERE users.id=".$row["id"], 0 );
 	    $email_address_old_owner = db_result( $q, 0, 0 );
 
-            //get project name
-            $name_project = db_result(db_query("SELECT name FROM tasks WHERE id=".$projectid ), 0, 0 );
-
+            if($row["parent"] == 0 ) {
+	      //project
+	      $type = $lang["project"];
+	      $name_project = $row["name"];
+	      $name_task = "";
+	    }
+	    else{    
+	      $type = $lang["task"];
+	      $name_project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
+	      $name_task = $row["name"];
+	    }
+	    
             //send email
 	    //$username and $useremail are from security.php
-            $message = sprintf( $email_takeover, $MANAGER_NAME, date("F j, Y, H:i"), $name_project, $row["name"], $username, $useremail, quotemeta($row["text"]), $BASE_URL );
+            $message = sprintf( $email_takeover, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name_task, $username, $useremail, quotemeta($row["text"]), $BASE_URL );
 	    email( $email_address_old_owner, $title_takeover, $message );
           }
 
