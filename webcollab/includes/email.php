@@ -45,7 +45,7 @@ include_once(BASE."includes/admin_config.php" );
 //function to reinstate html in text and remove any dangerous html scripting tags
 //
 
-function clean($encoded ) {
+function &clean($encoded ) {
 
   //reinstate encoded html back to original text
   $trans = array_flip(get_html_translation_table(HTML_ENTITIES, ENT_NOQUOTES ) );
@@ -65,12 +65,12 @@ return $text;
 //function to prepare and encode message body for transmission
 //
 
-function message($message ) {
+function &message($message, &$email_encode, &$message_charset, &$body ) {
 
-  global $email_encode, $email_charset, $message_charset, $bit8, $body;
+  global $email_charset, $bit8;
 
   //clean up message
-  $message = clean($message );
+  $message =& clean($message );
   //check if message contains high bit ascii characters and set encoding to match mailer capabilities
   switch(preg_match('/([\177-\377])/', $message ) ) {
     case true:
@@ -139,14 +139,14 @@ return $message_lines;
 //function to prepare and encode the 'subject' line for transmission
 //
 
-function subject($subject ) {
+function &subject($subject ) {
 
   global $email_charset;
 
   //get rid of any line breaks (\r\n, \n, \r) in subject line
   $subject = preg_replace("/(\015\012)|(\015)|(\012)/", " ", $subject );
   //reinstate any HTML in subject back to text
-  $subject = clean($subject );
+  $subject =& clean($subject );
 
   //encode subject with 'printed-quotable' if high ASCII characters are present
   switch(preg_match('/([\177-\377])/', $subject ) ) {
@@ -231,20 +231,23 @@ return $headers;
 //function to get a response from a SMTP command to the server
 //
 
-function response($connection) {
+function response() {
 
-  global $res;
+  global $connection;
 
-  $res = "";
+  $res[0] = "";
   while($str = fgets($connection, 256 ) ) {
-    $res .= $str;
+    $res[0] .= $str;
     //<space> after three digit code indicates this is last line of data ("-" for more lines)
     if(substr($str, 3, 1) == " " )
       break;
   }
-  $code = substr($res, 0, 3 );
+  $res[1] = substr($res[0], 0, 3 );
 
-  return $code;
+  //$res[0] is full response string from SMTP server
+  //$res[1] is the 3 digit numeric code from the SMTP server
+
+  return $res;
 }
 
 //
@@ -253,15 +256,18 @@ function response($connection) {
 
 function email($to, $subject, $message ) {
 
-  global $EMAIL_FROM, $EMAIL_REPLY_TO, $USE_EMAIL, $SMTP_HOST, $SMTP_AUTH,
-         $email_charset, $email_encode, $message_charset, $body, $res, $bit8, $connection;
+  global $EMAIL_FROM, $EMAIL_REPLY_TO, $USE_EMAIL, $SMTP_HOST, $bit8, $connection;
+
+  $email_encode = "";
+  $message_charset = "";
+  $body = "";
 
   if($USE_EMAIL == "N" ) {
     //email is turned off in config file
     return;
   }
 
-  if( @strlen($to) == 0 ) {
+  if(@strlen($to) == 0 ) {
     //no email address specified - end function
     return;
   }
@@ -270,44 +276,49 @@ function email($to, $subject, $message ) {
 
   //open an SMTP connection at the mail host
   $host = $SMTP_HOST;
-  $connection = fsockopen ($host, 25, &$errno, &$errstr, 10 );
+  $connection = fsockopen($host, 25, &$errno, &$errstr, 10 );
   if (!$connection )
     debug("Unable to open SMTP connection to ".$host."<br /><br />Error ".$errno." ".$errstr );
 
   //sometimes the SMTP server takes a little longer to respond
   // Windows does not have support for this timeout function before PHP ver 4.3.0
   if(function_exists('socket_set_timeout') )
-    socket_set_timeout($connection, 10, 0 );
-  if(response($connection ) != "220" )
-    debug("Incorrect handshaking response from SMTP server at $host <br /><br />Response from SMTP server was $res" );
+    @socket_set_timeout($connection, 10, 0 );
+  $res = response();
+  if($res[1] != "220" )
+    debug("Incorrect handshaking response from SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
 
   //do extended hello (EHLO)
   fputs($connection, "EHLO ".$_SERVER["SERVER_NAME"]."\r\n" );
   //if EHLO not working, try the older HELO...
-  if(response($connection ) != "250" ) {
+  $res = response();
+  if($res[1] != "250" ) {
     fputs($connection, "HELO ".$_SERVER["SERVER_NAME"]."\r\n" );
-    if(response($connection ) != "250" )
-      debug("Incorrect HELO response from SMTP server at $host <br /><br />Response from SMTP server was $res" );
+    $res = response();
+    if($res[1] != "250" )
+      debug("Incorrect HELO response from SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
   }
   //see if server is offering 8bit mime capability
   $bit8 = false;
-  if( ! strpos($res, "8BITMIME" ) === false )
+  if( ! strpos($res[0], "8BITMIME" ) === false )
     $bit8 = true;
 
   //arrange message - and set email encoding
   //(we *must* do this before 'MAIL FROM:'  to get the email encoding correct)
-  $message_lines = message($message );
+  $message_lines =& message($message, $email_encode, $message_charset, $body );
 
   //envelope from
   fputs($connection, "MAIL FROM: <$EMAIL_FROM>$body\r\n" );
-  if(response($connection) != "250" )
-    debug("Incorrect response to MAIL FROM command from SMTP server at $host <br /><br />Response from SMTP server was $res" );
+  $res = response();
+  if($res[1] != "250" )
+    debug("Incorrect response to MAIL FROM command from SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
 
   //envelope to
   $address_list = explode(",", $to );
   foreach($address_list as $email_to ) {
     fputs($connection, "RCPT TO: <".trim($email_to ).">\r\n" );
-    switch(response($connection) ) {
+    $res = response();
+    switch($res[1] ) {
       case "250":
       case "251":
         //acceptable responses
@@ -316,20 +327,21 @@ function email($to, $subject, $message ) {
       case "450":
       case "550":
         //mail box error
-        warning("Mailbox error for $email_to <br /><br />Response from SMTP server was $res" );
+        warning("Mailbox error for $email_to <br /><br />Response from SMTP server was ".$res[0] );
         break;
 
       default:
         //anything else is no good
-        debug("Incorrect response to RCPT TO: $email_to from SMTP server at $host <br /><br />Response from SMTP server was $res" );
+        debug("Incorrect response to RCPT TO: $email_to from SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
         break;
     }
   }
 
   //start data transmission
   fputs($connection, "DATA\r\n" );
-  if(response($connection) != "354" )
-    debug("Incorrect response to DATA command from SMTP server at $host <br /><br />Response from SMTP server was $res" );
+  $res = response();
+  if($res[1] != "354" )
+    debug("Incorrect response to DATA command from SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
 
   //assemble the headers and message for transmission
   $message_lines = array_merge(headers($to, $subject ), $message_lines );
@@ -340,13 +352,15 @@ function email($to, $subject, $message ) {
 
   //ok all the message data has been sent - finish with a period on it's own line
   fputs($connection, ".\r\n" );
-  if(response($connection) != "250" )
-    debug("Error sending data<br /><br />Response from SMTP server  at $host was $res" );
+  $res = response();
+  if($res[1] != "250" )
+    debug("Error sending data<br /><br />Response from SMTP server  at $host was ".$res[0] );
 
   //say bye bye
   fputs($connection, "QUIT\r\n" );
-  if(response($connection) != "221" )
-    debug("Incorrect response to QUIT request from SMTP server at $host <br /><br />Response from SMTP server was $res" );
+  $res = response();
+  if($res[1] != "221" )
+    debug("Incorrect response to QUIT request from SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
 
   fclose($connection );
 
