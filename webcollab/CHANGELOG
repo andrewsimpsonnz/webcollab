@@ -1,4 +1,18 @@
 WebCollab CVS
+*** 14 June 2003
+  Andrew Simpson
+
+- bugfix: modify variable verification routine in /tasks/task_submit.php and /forum/forum_submit.php
+
+WebCollab CVS
+*** 5 June 2003
+  Andrew Simpson
+
+- fix minor typo in error message in /includes/security.php
+
+- add beta versions of setup program
+
+WebCollab CVS
 *** 24 May 2003
   Andrew Simpson
 
@@ -12,7 +26,7 @@ WebCollab CVS
 
 - bugfix: MySQL innodb does not unlock tables after use
 
-- bugfix: files_submit does not recognise MySQL innodb
+- bugfix: files_submit.php does not recognise MySQL innodb
 
 - add FAQ
 
