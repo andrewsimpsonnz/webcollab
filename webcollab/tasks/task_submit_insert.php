@@ -35,97 +35,42 @@ include_once(BASE."includes/admin_config.php" );
 include_once(BASE."includes/time.php" );
 include_once(BASE."lang/lang_email.php" );
 include_once(BASE."tasks/task_common.php" );
+include_once(BASE."tasks/task_submit.php" );
 
-//
-//validate input data as either numeric > 0 or zero
-//
-function check($var ) {
 
-  //validate as numeric
-    if(is_numeric($var) )
-      return intval($var);
-  //catch all for weird inputs
-  $var = 0;
-
-return $var;
-}
-
-//
-//generate status message for emails
-//
-function status($status, $deadline ) {
-
-  global $task_state, $lang;
-
-  switch($status) {
-    case "created":
-      $message = $task_state["new"]."\n".$lang["deadline"].": ".nicedate($deadline);
-      break;
-
-    case "notactive":
-      $message = $task_state["planned"];
-      break;
-
-    case "active":
-      $message = $task_state["active"]."\n".$lang["deadline"].": ".nicedate($deadline);
-      break;
-
-    case "cantcomplete":
-      $message = $task_state["cantcomplete"];
-      break;
-
-    case "done":
-      $message = $task_state["done"];
-      break;
-
-    case "nolimit":
-    default:
-      $message = "";
-      break;
-  }
-
-return $message;
-}
-
-//MAIN PROGRAM
-
-if( ! isset($_POST["name"]) || strlen($_POST["name"]) == 0 )
+//check task name is present
+if(empty($_POST["name"]) )
   warning($lang["task_submit"], $lang["missing_values"] );
+$name = safe_data($_POST["name"]);
 
-//check input has been provided
-$input_array = array("parentid", "projectid", "owner", "priority", "status", "taskgroupid", "usergroupid");
+//mandatory numeric inputs
+$input_array = array("owner", "projectid", "parentid", "priority", "taskgroupid", "usergroupid" );
 foreach($input_array as $var ) {
-  if( ! isset($_POST[$var]) || strlen($_POST[$var]) == 0 ) {
-    error( "Task submit", "Variable ".$var." is not set" );
+  if(! isset($_POST[$var]) || ! is_numeric($_POST[$var]) ) {
+    error( "Task submit", "Variable ".$var." is not correctly set" );
   }
+  ${$var} = intval($_POST[$var]);
 }
 
-$name        = safe_data($_POST["name"]);
-//text can be multi lines
-$text        = safe_data_long($_POST["text"]);
-$status      = safe_data($_POST["status"]);
+//madatory text inputs
+if(empty($_POST["status"]) )
+  error( "Task submit", "Variable status is not correctly set" );
+$status = safe_data($_POST["status"]);
 
-$parentid    = check($_POST["parentid"]);
-$projectid   = check($_POST["projectid"]);
-$owner       = check($_POST["owner"]);
-$priority    = check($_POST["priority"]);
-$taskgroupid = check($_POST["taskgroupid"]);
-$usergroupid = check($_POST["usergroupid"]);
+//optional text input (can be multiple lines)
+$text = safe_data_long($_POST["text"]);
 
 //get the submitted date
 $deadline = date_to_datetime($_POST["day"], $_POST["month"], $_POST["year"] );
 
-//boolean for globalaccess
-if(isset($_POST["globalaccess"]) && $_POST["globalaccess"] == "on" )
-  $globalaccess = "t";
+//boolean for globalaccess, groupaccess
+$input_array = array("globalaccess", "groupaccess" );
+foreach($input_array as $var ) {
+if(isset($_POST[$var]) && $_POST[$var] == "on" )
+  ${$var} = "t";
 else
-  $globalaccess = "f";
-
-//and for groupaccess
-if(isset($_POST["groupaccess"]) && $_POST["groupaccess"] == "on" )
-  $groupaccess = "t";
-else
-  $groupaccess = "f";
+  ${$var} = "f";
+}
 
 //carry out some data consistency checking
 if( $parentid != 0 ) {

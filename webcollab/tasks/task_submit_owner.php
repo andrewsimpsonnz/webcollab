@@ -35,91 +35,18 @@ include_once(BASE."includes/admin_config.php" );
 include_once(BASE."includes/time.php" );
 include_once(BASE."lang/lang_email.php" );
 include_once(BASE."tasks/task_common.php" );
-
-//
-//validate input data as either numeric > 0 or zero
-//
-function check($var ) {
-
-  //validate as numeric
-    if(is_numeric($var) )
-      return intval($var);
-  //catch all for weird inputs
-  $var = 0;
-
-return $var;
-}
-
-//
-//generate status message for emails
-//
-function status($status, $deadline ) {
-
-  global $task_state, $lang;
-
-  switch($status) {
-    case "created":
-      $message = $task_state["new"]."\n".$lang["deadline"].": ".nicedate($deadline);
-      break;
-
-    case "notactive":
-      $message = $task_state["planned"];
-      break;
-
-    case "active":
-      $message = $task_state["active"]."\n".$lang["deadline"].": ".nicedate($deadline);
-      break;
-
-    case "cantcomplete":
-      $message = $task_state["cantcomplete"];
-      break;
-
-    case "done":
-      $message = $task_state["done"];
-      break;
-
-    case "nolimit":
-    default:
-      $message = "";
-      break;
-  }
-
-return $message;
-}
-
-//
-//function to verify user access
-//
-function user_access($taskid ) {
-
-  global $uid, $gid;
-
-  $q = db_query("SELECT owner, usergroupid, groupaccess FROM ".PRE."tasks WHERE id=$taskid" );
-  $row = db_fetch_num($q, 0 );
-
-  //user is owner
-  if($row[0] == $uid )
-    return TRUE;
-
-  //no usergroup set
-  if($row[1] == 0 )
-    return FALSE;
-
-  //if groupaccess is set, check user is in usergroup
-  if($row[2] == "t" ) {
-    if(in_array($row[1], (array)$gid ) )
-      return TRUE;
-  }
-  //no access for this user
-  return FALSE;
-}
+include_once(BASE."tasks/task_submit.php" );
 
 
-//MAIN PROGRAM
 //update or insert ?
-if( ! isset($_REQUEST["action"]) )
+if(empty($_REQUEST["action"]) )
   error("Task submit", "No request given" );
 
+if(empty($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
+  error("Task submit", "No taskid given" );
+  
+$taskid = intval($_GET["taskid"]);
+  
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
@@ -127,11 +54,6 @@ ignore_user_abort(TRUE);
 
     //mark it as completed!
     case "done":
-
-      if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
-        error("Task submit", "You did not specify which task to complete" );
-
-      $taskid = intval($_GET["taskid"]);
 
       //check if the user has enough rights
       if( ($admin != 1 ) && (! user_access($taskid) ) )
@@ -158,11 +80,6 @@ ignore_user_abort(TRUE);
     //drop ownership 
     case "deown":
 
-      if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"] ) )
-        error("Task submit", "You did not specify which task to disown" );
-
-      $taskid = intval($_GET["taskid"]);
-
       //check if the user has enough rights
       if( ($admin != 1 ) && (db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE id=$taskid AND owner=$uid" ), 0, 0 ) < 1) )
         warning($lang["task_submit"], $lang["not_owner"] );
@@ -174,11 +91,6 @@ ignore_user_abort(TRUE);
 
     //take owership of a task
     case "meown":
-
-      if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
-        error("Task submit", "You did not specify which task to take/own" );
-
-      $taskid = intval($_GET["taskid"]);
 
       //admin has no bounds checking
       //non-admins can only take non-owned tasks

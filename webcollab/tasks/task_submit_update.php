@@ -37,20 +37,6 @@ include_once(BASE."lang/lang_email.php" );
 include_once(BASE."tasks/task_common.php" );
 
 //
-//validate input data as either numeric > 0 or zero
-//
-function check($var ) {
-
-  //validate as numeric
-    if(is_numeric($var) )
-      return intval($var);
-  //catch all for weird inputs
-  $var = 0;
-
-return $var;
-}
-
-//
 //generate status message for emails
 //
 function status($status, $deadline ) {
@@ -137,50 +123,50 @@ function reparent_children($task_id ) {
 return;
 }
 
-if( ! isset($_POST["name"]) || strlen($_POST["name"]) == 0 )
+if(empty($_POST["name"]) )
   warning($lang["task_submit"], $lang["missing_values"] );
 
-//check input has been provided
-$input_array = array("taskid", "owner", "parentid", "priority", "status", "taskgroupid", "usergroupid");
+$name = safe_data($_POST["name"]);
+
+//mandatory numeric inputs
+$input_array = array("owner", "parentid", "priority", "taskgroupid", "usergroupid" );
 foreach($input_array as $var ) {
-  if( ! isset($_POST[$var]) || strlen($_POST[$var]) == 0 ) {
-    error( "Task submit", "Variable ".$var." is not set" );
+  if(! isset($_POST[$var]) || ! is_numeric($_POST[$var]) ) {
+    error( "Task submit", "Variable ".$var." is not correctly set" );
   }
+  ${$var} = intval($_POST[$var]);
 }
 
-$name        = safe_data($_POST["name"]);
-$text        = safe_data_long($_POST["text"]);
-$status      = safe_data($_POST["status"]);
+//special case: taskid cannot be zero
+if(empty($_POST["taskid"]) || ! is_numeric($_POST["taskid"]) ) 
+  error( "Task submit", "Variable taskid is not correctly set" );
 
-$taskid      = check($_POST["taskid"]);
-$owner       = check($_POST["owner"]);
-$parentid    = check($_POST["parentid"]);
-$priority    = check($_POST["priority"]);
-$taskgroupid = check($_POST["taskgroupid"]);
-$usergroupid = check($_POST["usergroupid"]);
+$taskid = intval($_POST["taskid"]);
 
-if($taskid == 0 )
-  error("Task submit","Invalid value for taskid" );
+//mandatory text inputs
+if(empty($_POST["status"]) )
+  error( "Task submit", "Variable status is not correctly set" );
+$status = safe_data($_POST["status"]);
+
+//optional text input (can be multiple lines)
+$text = safe_data_long($_POST["text"]);
+
+//get the submitted date
+$deadline = date_to_datetime($_POST["day"], $_POST["month"], $_POST["year"] );
+
+//boolean for globalaccess, groupaccess
+$input_array = array("globalaccess", "groupaccess" );
+foreach($input_array as $var ) {
+if(isset($_POST[$var]) && $_POST[$var] == "on" )
+  ${$var} = "t";
+else
+  ${$var} = "f";
+}
 
 //check if the user has enough rights
 if( ($admin != 1 ) && (! user_access($taskid ) ) )
   warning($lang["task_submit"], $lang["not_owner"] );
-
-//get the submitted date
-$deadline = date_to_datetime( $_POST["day"], $_POST["month"], $_POST["year"] );
-
-//boolean for globalaccess
-if(isset($_POST["globalaccess"]) && $_POST["globalaccess"] == "on" )
-  $globalaccess = "t";
-else
-  $globalaccess = "f";
-
-//and for groupaccess
-if(isset($_POST["groupaccess"]) && $_POST["groupaccess"] == "on" )
-  $groupaccess = "t";
-else
-  $groupaccess = "f";
-
+    
 //begin transaction
 db_begin();
 
