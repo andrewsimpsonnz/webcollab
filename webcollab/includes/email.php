@@ -347,7 +347,7 @@ function email($to, $subject, $message ) {
   $lines_out = "";
   //check if we need to break up into several smaller lines
   while(strlen($line ) > 998 ) {
-    $pos = strrpos(substr($line, 0, 998 ), "," );
+    $pos = strrpos(substr($line, 0, 998 ), " " );
     $lines_out[] = substr($line, 0, $pos );
     $line = "\t".substr($line, $pos + 1 );
   }
@@ -358,21 +358,12 @@ function email($to, $subject, $message ) {
     fputs($connection, "$line_out\r\n" );
   }
 
-
-  //generate unique message id
-
-  //  early PHP versions need to have the random number generator seeded first
-  if(version_compare(PHP_VERSION, "4.2.0" ) == -1 )
-    mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );
-
-  $uniq_id = md5(mt_rand() );
-
   //assemble remaining message headers (RFC 821 / RFC 2045)
 
   $headers = array("From: ".$EMAIL_FROM."\r\n",
                     "Reply-To: ".$EMAIL_REPLY_TO."\r\n",
                     "Subject: ".$subject,
-                    "Message-Id: <".$uniq_id."@".$_SERVER["SERVER_NAME"].">\r\n",
+                    "Message-Id: <".uniqid("", true )."@".$_SERVER["SERVER_NAME"].">\r\n",
                     "X-Mailer: WebCollab (PHP/" . phpversion().")\r\n",
                     "X-Priority: 3\r\n",
                     "X-Sender: ".$EMAIL_REPLY_TO."\r\n",
