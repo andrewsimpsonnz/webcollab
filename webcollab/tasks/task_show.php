@@ -256,13 +256,8 @@ switch( $row["parent"] ){
 switch($row["groupaccess"] ) {
   case "t";
     $group = FALSE;
-    $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$uid" );
-    for( $i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
-    if($row["usergroupid"] == $usergroup_row[0] ){
+    if(in_array($row["usergroupid"], (array)$gid ) )
       $group = TRUE;
-      break;
-      }
-    }
     break;
 
   case "f":
@@ -309,4 +304,3 @@ $content .= "</font></div></p>\n";
 new_box( $title, $content, "boxdata2" );
 
 ?>
-
