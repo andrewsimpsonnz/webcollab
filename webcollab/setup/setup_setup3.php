@@ -177,15 +177,19 @@ if( ! isset($LOCALE) )
 
 switch($LOCALE) {
   case "en":
-    $s1 = "SELECTED"; $s2 = ""; $s3 = "";
+    $s1 = "SELECTED"; $s2 = ""; $s3 = ""; $s4 = "";
     break;
 
   case "es":
-    $s1 = ""; $s2 = "SELECTED"; $s3 = "";
+    $s1 = ""; $s2 = "SELECTED"; $s3 = ""; $s4 = "";
     break;
 
   case "fr":
-    $s1 = ""; $s2 = ""; $s3 = "SELECTED";
+    $s1 = ""; $s2 = ""; $s3 = "SELECTED"; $s4 = "";
+    break;
+
+  case "ca":
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = "SELECTED";
     break;
 }
 
@@ -194,6 +198,7 @@ $content .= "<tr><td></td><td><br /></td></tr>\n".
             "<option value=\"en\" $s1 >English</option>\n".
             "<option value=\"es\" $s2 >Spanish</option>\n".
             "<option value=\"fr\" $s3 >French</option>\n".
+            "<option value=\"ca\" $s4 >Catalan</option>\n".
             "</select></td></tr>\n";
 
 //email settings
@@ -201,7 +206,7 @@ $setting = "CHECKED";
 if(isset($USE_EMAIL) && $USE_EMAIL == "N" )
   $setting = "";
 
-$content .= "<tr><td></td><td><br /><br /><B><U>Email Settings</U></B></td></tr>\n".
+$content .= "<tr><td></td><td><br /><br /><b><u>Email Settings</u></b></td></tr>\n".
             "<tr><td></td><td><br /></td></tr>\n".
             "<tr><th>Use email?</th><td><input type=\"checkbox\" name=\"use_email\" $setting  /></td></tr>\n";
 

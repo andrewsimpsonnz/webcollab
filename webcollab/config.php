@@ -77,7 +77,7 @@
 
 //LANGUAGE FILES
 
-  // available locales are "en" (English), "es" (Spanish), "fr" (French).
+  // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan).
   $LOCALE = "en";
 
 //EMAIL ADDRESS

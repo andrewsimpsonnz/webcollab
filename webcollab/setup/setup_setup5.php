@@ -51,6 +51,9 @@ foreach($array as $var ) {
     $data[$var] = $_POST[$var];
 }
 
+//if user aborts, let the script carry onto the end
+ignore_user_abort(TRUE);
+
 //set up output string
 $content = "<?php\n".
 '/*'."\n".
@@ -102,7 +105,7 @@ $content = "<?php\n".
 '//----------------------------------------------------------------------------------------------'."\n".
 '// Less important items below this line'."\n\n".
 '//-- Language --'."\n\n".
-'  // available locales are "en" (English), "es" (Spanish), "fr" (French)'."\n".
+'  // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan)'."\n".
 '  $LOCALE = "'.$data["locale"].'";'."\n\n".
 '//-- Email --'."\n\n".
 '  //If an error occurs, who do you want the error to be mailed to ?'."\n".

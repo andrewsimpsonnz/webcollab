@@ -32,6 +32,10 @@ require_once(BASE."config.php" );
 
 switch($LOCALE ) {
 
+  case "ca":
+    include(BASE."lang/ca_email.php" );
+    break;
+
   case "es":
     include(BASE."lang/es_email.php" );
     break;
