@@ -56,7 +56,7 @@ mysql_query("SET AUTOCOMMIT = 1" );
 //
 function db_query( $query, $dieonerror=1 ) {
 
-  global $database_connection, $database_query_time, $database_query_count, $database_connection, $db_name, $db_error_message ;
+  global $database_connection, $database_query_time, $database_query_count, $db_name, $db_error_message ;
 
   //count queries
   $database_query_count++;
