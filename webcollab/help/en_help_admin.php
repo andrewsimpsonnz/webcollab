@@ -31,43 +31,42 @@ require_once("path.php" );
 
 include_once(BASE."includes/screen.php" );
 
+$web_charset = "iso-8859-1";
+
 create_top("Help", 1 );
 
 $content = "
-	<a name=\"admin\"><br /></a>
-	<b>Admin email:</b><br />
-	This is the email address of the site admin that deals with day to day running of the site.
-	<br /><br />
-	Automated emails from the site, particularly regarding users' accounts, will give this address as the person to contact.
-	<br /><br />
-	This address should always be set.  If in doubt, enter your email address here!
-	<br /><br />
-
-	<a name=\"reply\"><br /></a>
-	<b>Email 'reply to':</b><br />
-	The 'reply-to' header field for emails from this site.
-	<br /><br />
-	If in doubt, set the same as Admin email.
-	<br /><br />
-
-	<a name=\"from\"><br /></a>
-	<b>Email 'from':</b><br />
-	The 'from' header field for emails from the site.
-	<br /><br />
-	If in doubt, set the same as Admin email.
-	<br /><br />
-
-	<a name=\"list\"><br /></a>
-	<b>Mailing list:</b><br />
-	When emails are sent to the usergroup, they will also be sent to the email addresses listed here.  This function is to
+	<a name=\"admin\"></a>
+	<p><b>Admin email:</b></p>
+	<p>This is the email address of the site admin that deals with day to day running of the site.
+	</p>
+	<p>Automated emails from the site, particularly regarding users' accounts, will give this address as the person to contact.
+	</p>
+	<p>This address should always be set.  If in doubt, enter your email address here!
+	</p>
+	<a name=\"reply\"></a>
+	<p><b>Email 'reply to':</b></p>
+	<p>The 'reply-to' header field for emails from this site.
+	</p>
+	<p>If in doubt, set the same as Admin email.
+	</p>
+	<a name=\"from\"></a>
+	<p><b>Email 'from':</b></p>
+	<p>The 'from' header field for emails from the site.
+	</p>
+	<p>If in doubt, set the same as Admin email.
+	</p>
+	<a name=\"list\"></a>
+	<p><b>Mailing list:</b></p>
+	<p>When emails are sent to the usergroup, they will also be sent to the email addresses listed here.  This function is to
 	keep Project Manager's abreast of the current status.
-	<br /><br />
-	For emails to be sent to the usergroup, the 'send to usergroup' checkbox in Project/Task add (or edit), must be checked.
-	This can be done by the default setting below, or by the user manually checking the box.
-	<br /><br />
-	Note that users can overide the default settings by un-checking the box manually.
-	<br /><br />
-	Setting a usergroup to private does not affect the mailing list.
+	</p>
+	<p>For emails to be sent to the usergroup, the 'send to usergroup' checkbox in Project/Task add (or edit), must be checked.</p>
+	<p>This can be done by the default setting below, or by the user manually checking the box.
+	</p>
+	<p>Note that users can overide the default settings by un-checking the box manually.
+	</p>
+	<p>Setting a usergroup to private does not affect the mailing list.</p>
 	";
 
   new_box( "Help", $content );

@@ -32,44 +32,45 @@ require_once("path.php" );
 
 include_once(BASE."includes/screen.php" );
 
+$web_charset = "iso-8859-1";
+
 create_top("Help", 1 );
 
 $content = "
-	<a name=\"admin\"><br /></a>
-	<b>Administrator-Email:</b><br />
-	Dies ist die Emailadresse des Administrators, der sich darum k&uuml;mmert, da&szlig; die Site l&auml;uft.
-	<br /><br />
-	Automatisch versendete Emails von dieser Site, insbesondere die Benutzerkonten betreffend, geben diese Adresse als die der Kontaktperson an.
-	<br /><br />
-	Diese Adresse sollte stets gesetzt sein.  Wenn sie unsicher sind, geben sie ihre Emailadresse hier an!
-	<br /><br />
+	<p><a name=\"admin\"><br /></a>
+	<b>Administrator-Email:</b></p>
+	<p>Dies ist die Emailadresse des Administrators, der sich darum k&uuml;mmert, da&szlig; die Site l&auml;uft.
+	</p>
+	<p>Automatisch versendete Emails von dieser Site, insbesondere die Benutzerkonten betreffend, geben diese Adresse als die der Kontaktperson an.
+	</p>
+	<p>Diese Adresse sollte stets gesetzt sein.  Wenn sie unsicher sind, geben sie ihre Emailadresse hier an!
+	</p>
 
-	<a name=\"reply\"><br /></a>
-	<b>Email 'reply to':</b><br />
-	Das 'reply-to' Header-Feld f&uuml;r Emails von dieser Site.
-	<br /><br />
-	Wenn sie unsicher sind, geben sie dieselbe Adresse wie unter Administrator-Email an.
-	<br /><br />
-
+	<a name=\"reply\"></a>
+	<p><b>Email 'reply to':</b></p>
+	<p>Das 'reply-to' Header-Feld f&uuml;r Emails von dieser Site.
+	</p>
+	<p>Wenn sie unsicher sind, geben sie dieselbe Adresse wie unter Administrator-Email an.
+	</p>
 	<a name=\"from\"><br /></a>
-	<b>Email 'from':</b><br />
-	Das 'from' Header-Feld f&uuml;r Emails von dieser Site.
-	<br /><br />
-	Wenn sie unsicher sind, geben sie dieselbe Adresse wie unter Administrator-Email an.
-	<br /><br />
-
-	<a name=\"list\"><br /></a>
-	<b>Mailingliste:</b><br />
-	Wenn Emails an eine Nutzergruppe gesendet werden, werden ebenfalls Emails an die hier eingetragenen Emailadressen
+	<p><b>Email 'from':</b></p>
+	<p>Das 'from' Header-Feld f&uuml;r Emails von dieser Site.
+	</p>
+	<p>Wenn sie unsicher sind, geben sie dieselbe Adresse wie unter Administrator-Email an.
+	</p>
+	<a name=\"list\"></a>
+	<p><b>Mailingliste:</b></p>
+	<p>Wenn Emails an eine Nutzergruppe gesendet werden, werden ebenfalls Emails an die hier eingetragenen Emailadressen
 	gesendet. Diese Funktion ist dazu gedacht, Projektmanager &uuml;ber den aktuellen Status auf dem Laufenden zu halten.
-	<br /><br />
-	Damit Emails an die Nutzergruppe gesendet werden, mu&szlig; das Auswahlfeld 'Der Benutzergruppe eine E-Mail mit den
+	</p>
+	<p>Damit Emails an die Nutzergruppe gesendet werden, mu&szlig; das Auswahlfeld 'Der Benutzergruppe eine E-Mail mit den
 	&auml;nderungen schicken?' auf der Projekt- oder Aufgabenseite aktiviert sein.
 	Die Standardeinstellung f&uuml;r neue Aufgaben und Projekte wird hier gesetzt, kann aber beim Erstellen	
 	manuell gesetzt werden.
-	<br /><br />
-	Das Einstellen einer Nutzergruppe hat keine Auswirkungen auf das Feld 'Mailingliste'.
-	";
+	</p>
+	<p>Das Einstellen einer Nutzergruppe hat keine Auswirkungen auf das Feld 'Mailingliste'.
+	</p>
+        ";
 
   new_box( "Help", $content );
   create_bottom();
