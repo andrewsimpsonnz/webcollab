@@ -167,7 +167,9 @@ CREATE TABLE "config" (
 	"globalaccess" character varying(200),
 	"groupaccess" character varying(200),
 	"owner" character varying(200),
-	"usergroup" character varying(200)
+	"usergroup" character varying(200),
+	"project_order"  character varying(200),
+	"task_order"  character varying(200)
 );
 
 CREATE TABLE "login_attempt" (
@@ -179,5 +181,5 @@ CREATE TABLE "login_attempt" (
 INSERT INTO users ( name, fullname, password, email, admin, deleted )
 VALUES( 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );
 
-INSERT INTO config ( globalaccess, groupaccess )
-VALUES( 'checked', '' );
+INSERT INTO config ( globalaccess, groupaccess,  project_order, task_order )
+VALUES( 'checked', '', 'ORDER BY name', 'ORDER BY name' );
