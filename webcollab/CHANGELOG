@@ -1,4 +1,18 @@
 WebCollab CVS
+*** 2 January 2005
+  Andrew Simpson
+
+- added improved calendar navigation patch (Credit: Larry Steeger (russte) )
+
+- added regex validation of database names in setup
+
+- changed input validation to better accommodate characters sets other than ISO-8859-1
+
+- usuability improvements to archive, guest users in ToDo and Calendar
+
+- check validity of database naming in setup
+
+WebCollab CVS
 *** 31 December 2004
   Andrew Simpson
 
@@ -10,7 +24,7 @@ WebCollab CVS
   
 - bugfix: (Bug #1089722) SQL error in task_delete.php for prefixed database (Credit: hs_dino)
 
-- make email addresses and web links clickable in project/task description
+- make email addresses and web links clickable in project/task description (Feature Request #1089944)
    
 WebCollab CVS
 *** 18 December 2004
