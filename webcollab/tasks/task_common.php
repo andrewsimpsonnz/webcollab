@@ -61,16 +61,16 @@ function show_percent($percent = 0 ) {
   $width = 400;
   switch($percent) {
     case 100:
-      return "<table width=\"$width\"><tr><td width=\"$width\" class=\"greenbar\"></td></tr></table>\n";
+      return "<table width=\"$width\"><tr><td style=\"width : $width\" class=\"greenbar\"></td></tr></table>\n";
       break;
 
     case 0:
-      return "<table width=\"$width\"><tr><td width=\"$width\" class=\"redbar\"></td></tr></table>\n";
+      return "<table width=\"$width\"><tr><td style=\"width : $width\" class=\"redbar\"></td></tr></table>\n";
       break;
 
     default:
-      $out  = "<table width=\"$width\"><tr><td width=\"".($percent * ($width/100))."\" class=\"greenbar\">";
-      $out .= "</td><td width=\"".($width-($percent*($width/100)))."\" class=\"redbar\"></td></tr></table>\n";
+      $out  = "<table width=\"$width\"><tr><td style=\"width :".($percent * ($width/100))."\" class=\"greenbar\">";
+      $out .= "</td><td style=\"width :".($width-($percent*($width/100)))."\" class=\"redbar\"></td></tr></table>\n";
       return $out;
       break;
   }

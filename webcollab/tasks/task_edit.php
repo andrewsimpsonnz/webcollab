@@ -98,7 +98,7 @@ if($taskid_row["parent"] != 0 )
   
 //all okay show task info
 $content .= "<form method=\"post\" action=\"tasks.php\" $javascript>\n".
-            "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"submit_update\" />\n ".
             "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid_row["id"]."\" />\n";
                                       
@@ -108,7 +108,7 @@ switch($taskid_row["parent"] ) {
     //project
     $type = "project";
     //no taskgroups in projects
-    $content .= "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" />\n ".
+    $content .= "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n ".
                 "<table class=\"celldata\">\n".
                 "<tr><td>".$lang["creation_time"]."</td><td>".nicedate($taskid_row["created"] )."</td></tr>\n".
                 "<tr><td>".$lang["project_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$taskid_row["name"]."\" /></td></tr>\n";
@@ -118,7 +118,7 @@ switch($taskid_row["parent"] ) {
     //task
     $type = "task";
     //show project finish date for javascript 
-    $content .=  "<input type=\"hidden\" name=\"projectDate\" value=\"".$project_row["deadline"]."\" />\n".          
+    $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_row["deadline"]."\" /></fieldset>\n".          
                  "<table class=\"celldata\">\n".
                  "<tr><td>".$lang["creation_time"]."</td><td>".nicedate($taskid_row["created"] )."</td></tr>\n".
                  "<tr><td>".$lang["project"] .":</td><td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$taskid_row["projectid"]."\">".$project_row["name"]."</a></td></tr>\n";
@@ -284,7 +284,7 @@ if($taskid_row["parent"] != 0 ){
 
   //get all users in order to show a task owner
   $taskgroup_q = db_query("SELECT id, name FROM ".PRE."taskgroups ORDER BY name" );
-  $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td> <td><select name=\"taskgroupid\">\n";
+  $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help'); return false\">".$lang["taskgroup"]."</a>: </td> <td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang["no_group"]."</option>\n";
 
   for( $i=0 ; $user_row = @db_fetch_array($taskgroup_q, $i ) ; $i++) {
@@ -302,7 +302,7 @@ if($taskid_row["parent"] != 0 ){
 
 //show all user-groups
 $usergroup_q = db_query("SELECT id, name FROM ".PRE."usergroups ORDER BY name" );
-$content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td> <td><select name=\"usergroupid\">\n";
+$content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help'); return false\">".$lang["usergroup"]."</a>: </td> <td><select name=\"usergroupid\">\n";
 $content .= "<option value=\"0\">".$lang["no_group"]."</option>\n";
 
 for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
@@ -332,8 +332,8 @@ $group = "";
 if($taskid_row["groupaccess"] == 't' )
   $group = "checked=\"checked\"";
 
-$content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users_view"]."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" $global /></td></tr>\n".
-             "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" $group /></td></tr>\n".
+$content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help'); return false\">".$lang["all_users_view"]."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" $global /></td></tr>\n".
+             "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help'); return false\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" $group /></td></tr>\n".
 
              "<tr><td>".$lang[$type."_description"]."</td> <td><textarea name=\"text\" rows=\"5\" cols=\"60\">".$taskid_row["text"]."</textarea></td> </tr>\n".
 
@@ -349,10 +349,10 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
 
 //delete options
 $content .= "<br /><br />\n<form method=\"post\" action=\"tasks.php\">\n".
-             "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
+             "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />".
              "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
              "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid_row["id"]."\" />\n".
-             "<input type=\"submit\" value=\"".$lang["delete_$type"]."\" onclick=\"return confirm('".sprintf($lang["del_javascript_".$type."_sprt"], $taskid_row["name"] )."')\" />\n".
+             "<input type=\"submit\" value=\"".$lang["delete_$type"]."\" onclick=\"return confirm('".sprintf($lang["del_javascript_".$type."_sprt"], $taskid_row["name"] )."')\" /></fieldset>\n".
              "</form>\n";
 
 new_box($lang["edit_$type"], $content );

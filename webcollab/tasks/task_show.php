@@ -66,9 +66,9 @@ db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES ($uid, $taskid, n
 
 //text link for 'printer friendly' page
 if(isset($_GET["action"]) && $_GET["action"] == "show_print" )
-  $content  = "<p><font class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$lang["normal_version"]."</a>]</font></p>";
+  $content  = "<p><span class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$lang["normal_version"]."</a>]</span></p>";
 else
-  $content  = "<div align=\"right\"><font class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;action=show_print&amp;taskid=$taskid\">".$lang["print_version"]."</a>]</font></div>\n";
+  $content  = "<div style=\"text-align : right\"><span class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;action=show_print&amp;taskid=$taskid\">".$lang["print_version"]."</a>]</span></div>\n";
 
 //percentage_completed gauge if this is a project
 if( $taskid_row["parent"] == 0 ) {
@@ -83,7 +83,7 @@ $content .= "<table width=\"98%\"><tr><td>\n";
 $content .= "<b>".$taskid_row["name"]."</b><br /><br /></td></tr>\n";
 
 //show text
-$content .= "<tr><td bgcolor=\"#EEEEEE\" width=\"95%\">\n";
+$content .= "<tr><td style=\"background : #EEEEEE; width : 95%\">\n";
 
 $content .= nl2br($taskid_row["text"] );
 $content .= "</td></tr></table>\n";
@@ -127,7 +127,7 @@ switch($taskid_row["priority"] ) {
     $content .=  "<b>".$task_state["high"]."</b>";
     break;
   case 4:
-    $content .=  "<b><font color=\"red\">".$task_state["yesterday"]."</font></b>";
+    $content .=  "<b><span class=\"red\">".$task_state["yesterday"]."</span></b>";
     break;
 }
 $content .= "</td></tr>\n";
@@ -202,11 +202,11 @@ if($taskid_row["parent"] != 0 ) {
 
   switch($taskid_row["taskgroupid"] ){
     case "0":
-      $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td><td>".$lang["none"]."</td></tr>\n";
+      $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help'); return false\">".$lang["taskgroup"]."</a>: </td><td>".$lang["none"]."</td></tr>\n";
       break;
 
     default:
-      $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td><td>".$row["taskgroup_name"]."</td></tr>\n";
+      $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help'); return false\">".$lang["taskgroup"]."</a>: </td><td>".$row["taskgroup_name"]."</td></tr>\n";
       break;
   }
 }
@@ -226,7 +226,7 @@ switch($taskid_row["parent"] ){
 
 //show the usergroupid
 if( $taskid_row["usergroupid"] != 0 ) {
-  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td><td>".$row["usergroup_name"]." ";
+  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help'); return false\">".$lang["usergroup"]."</a>: </td><td>".$row["usergroup_name"]." ";
 
   switch($taskid_row["globalaccess"] ){
     case 't':
@@ -244,13 +244,13 @@ if( $taskid_row["usergroupid"] != 0 ) {
 
 }
 else {
-  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td><td>".$lang[$type."_not_in_usergroup"]."</td></tr>\n";
+  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help'); return false\">".$lang["usergroup"]."</a>: </td><td>".$lang[$type."_not_in_usergroup"]."</td></tr>\n";
 }
 
 $content .= "</table>\n";
 
 //this part shows all the options the users has
-$content .= "<div align=\"center\"><font class=\"textlink\">\n";
+$content .= "<div style=\"text-align : center\"><span class=\"textlink\">\n";
 
 //set add function for task or project
 switch( $taskid_row["parent"] ){
@@ -310,7 +310,7 @@ switch( $taskid_row["owner"] ){
     break;
 }
 
-$content .= "</font></div>\n";
+$content .= "</span></div>\n";
 
 new_box( $title, $content, "boxdata2" );
 

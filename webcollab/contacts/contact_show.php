@@ -62,10 +62,10 @@ $content .=
     "</table>\n".
     "<p><i>".$lang["notes"]."</i><br />".nl2br($row["notes"] )."</p>\n".
     "<form method=\"post\" action=\"contacts.php\" >\n".
-      "<input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
+      "<fieldset><input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"".$row["id"]."\" />\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-      "<input type=\"submit\" name=\"Add\" value=\"".$lang["edit_contact"]."\" />\n".
+      "<input type=\"submit\" value=\"".$lang["edit_contact"]."\" /></fieldset>\n".
    "</form>";
 
 new_box($lang["contact_info"], $content );

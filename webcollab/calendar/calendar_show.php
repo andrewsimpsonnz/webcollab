@@ -122,10 +122,10 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ){
   $task_dates[$i] = (int)$row[0];
 }
 
-$content .= "<div align=\"center\">\n".
-            "<form method=\"post\" action=\"calendar.php\">".
-            "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
-            "<table border=\"0\">\n".
+$content .= "<form method=\"post\" action=\"calendar.php\">\n".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" /></fieldset>\n ".
+            "<div style=\"text-align: center\">\n".
+            "<table style=\"margin-left: auto; margin-right: auto\">\n".
             "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1 /><label for=\"users\">".$lang["users"]."</label></td><td>\n".
             "<label for=\"users\"><select name=\"userid\">\n".
             "<option value=\"0\"$s2>".$lang["all_users"]."</option>\n";
@@ -175,10 +175,12 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= ">".$row["name"]."</option>\n";
 }
 
-$content .= "</select></label></td></tr>\n</table>\n<br />\n";
+$content .= "</select></label></td></tr>\n<tr><td>&nbsp;</td></tr></table></div>\n";
 
 //month (must be in decimal, 'cause that's what database uses!)
-$content .= "<table border=\"0\"><tr><td>\n<select name=\"month\">\n";
+$content .= "<div style=\"text-align: center\">\n".
+            "<table style=\"margin-left: auto; margin-right: auto\">\n"
+            "<tr><td>\n<select name=\"month\">\n";
 for( $i=1; $i<13 ; $i++) {
   $content .= "<option value=\"$i\"";
 
@@ -197,41 +199,41 @@ for( $i=2001; $i<2011 ; $i++) {
   }
 $content .=  "</select></td>\n".
              "<td><input type=\"submit\" value=\"".$lang["update"]."\" /></td></tr>\n".
-             "</table></form>\n<br /><br />\n";
+             "</table></div></form>\n<br /><br />\n";
 
 //number of days in month
 $numdays = date("t", mktime(0, 0, 0, $month, 1, $year ) );
 
 //main calendar table
-$content .= "<table style=\"border-width: 1px; border-style: solid; border-collapse: collapse; width: 97%\" align=\"center\" cellspacing=\"0\" border=\"1\">\n<tr>\n";
-$content .= "<td colspan=\"7\" style=\"vertical-align: middle; text-align: center\"><b>".$month_array[(int)$month]."</b>\n</td>\n";
+$content .= "<table class=\"main\" cellspacing=\"0\" border=\"1\">\n<tr>\n";
+$content .= "<td colspan=\"7\" class=\"month\"><b>".$month_array[(int)$month]."</b>\n</td>\n";
 $content .= "</tr>\n";
 
 //weekdays
-$content .= "<tr style=\"vertical-align: middle; text-align: center\">\n";
+$content .= "<tr class=\"weekrow\">\n";
 foreach($week_array as $value) {
-  $content .= "<td style=\"border-width: 1px; border-style: solid; width:13.86%\"><b>$value</b></td>\n";
+  $content .= "<td class=\"weekcell\"><b>$value</b></td>\n";
 }
 $content .= "</tr>\n";
 
 //show lead in to dates
-$content .= "<tr style=\"vertical-align: top; text-align: center\">\n";
+$content .= "<tr class=\"blankrow\">\n";
 for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); $i++ ) {
-  $content .= "<td style=\"border-width: 1px; border-style: solid\">&nbsp;</td>\n";
+  $content .= "<td class=\"blankcell\">&nbsp;</td>\n";
 }
 
 //show dates
 for ($num = 1; $num <= $numdays; $num++ ) {
   if ($i >= 7 ) {
     $content .= "</tr>\n".
-                "<tr style=\"vertical-align: top; text-align: center\" valign=\"top\">\n";
+                "<tr class=\"daterow\" valign=\"top\">\n";
     $i=0;
   }
-  $content .= "<td style=\"border-width: 1px; border-style: solid\" ";
+  $content .= "<td class=\"datecell\" ";
 
   //highlight today
   if($num == $today)
-    $content .= "bgcolor=\"#C0C0C0\"";
+    $content .= "style=\"background : #C0C0C0\"";
 
   $content .= ">$num<br />";
   $pad = 0;
@@ -274,22 +276,22 @@ for ($num = 1; $num <= $numdays; $num++ ) {
                //project
                //check if tasks are all complete
                if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent>0" ), 0, 0 ) == 0 )
-                 $name = "<font color=\"green\"><u>".$row["name"]."</u>";
+                 $name = "<span class=\"green\"><span class=\"underline\">".$row["name"]."</span>";
                else
-                 $name = "<font color=\"blue\">".$row["name"];
-               $content .= "<img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
-                           "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">$name</font></a><br />\n";
+                 $name = "<span class=\"blue\">".$row["name"];
+               $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
+                           "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">$name</span></a><br />\n";
              break;
 
              default:
             //task
               if($row["status"] == "done" )
-                $name = "<font color=\"green\">".$row["name"];
+                $name = "<span class=\"green\">".$row["name"];
               else
-                $name = "<font color=\"red\">".$row["name"];
+                $name = "<span class=\"red\">".$row["name"];
 
-              $content .= "<img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
-                          "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">$name</font></a><br />\n";
+              $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
+                          "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">$name</span></a><br />\n";
             break;
           }
         break;
@@ -310,7 +312,8 @@ $content .= "</tr>\n";
 $content .= "</table>\n<br />\n";
 
 include_once(BASE."lang/lang_long.php" );
-$content .= "<b>[<a href=\"main.php?x=".$x."\">".$calendar_key."<br />\n</div>\n";
+$content .= "<div style=\"text-align: center\">\n".
+            "<b>[<a href=\"main.php?x=".$x."\">".$calendar_key."<br />\n</div>\n";
 
 new_box($lang["calendar"], $content );
 

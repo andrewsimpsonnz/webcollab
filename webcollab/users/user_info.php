@@ -36,10 +36,10 @@ if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 $content = $user_info.
-           "<div align=\"center\"><font class=\"textlink\">".
+           "<div style=\"text-align:center\"><span class=\"textlink\">".
            "[<a href=\"users.php?x=$x&amp;action=add\">".$lang["add"]."</a>]&nbsp;\n".
            "[<a href=\"users.php?x=$x&amp;action=showonline\">".$lang["who_online"]."</a>]".
-           "</font></div>\n";
+           "</span></div>\n";
 
 new_box($lang["manage_users"], $content, "boxdata2" );
 

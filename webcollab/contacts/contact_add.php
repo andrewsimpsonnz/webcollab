@@ -36,11 +36,11 @@ $content = "";
 $q = "";
 
 $content .=
-        "<form name=\"inputform\" method=\"post\" action=\"contacts.php\">\n".
-          "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-          "<input type=\"hidden\" name=\"action\" value=\"submit_add\" />\n".
+        "<form method=\"post\" action=\"contacts.php\">\n".
+          "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+          "<input type=\"hidden\" name=\"action\" value=\"submit_add\" /></fieldset>\n".
           "<table class=\"celldata\">\n".
-            "<tr><td><i>".$lang["firstname"]."</i></td><td><input type=\"text\" name=\"firstname\" size=\"30\" /></td></tr>\n".
+            "<tr><td><i>".$lang["firstname"]."</i></td><td><input id=\"firstname\" type=\"text\" name=\"firstname\" size=\"30\" /></td></tr>\n".
             "<tr><td><i>".$lang["lastname"]."</i></td><td><input type=\"text\" name=\"lastname\" size=\"30\" /></td></tr>\n".
             "<tr><td><i>".$lang["company"]."</i></td><td><input type=\"text\" name=\"company\" size=\"30\" /></td></tr>\n".
             "<tr><td><i>".$lang["home_phone"]."</i></td><td><input type=\"text\" name=\"tel_home\" size=\"30\" /></td></tr>\n".

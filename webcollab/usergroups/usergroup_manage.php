@@ -41,7 +41,7 @@ $q = db_query("SELECT * FROM ".PRE."usergroups ORDER BY name" );
 //nothing here yet
 if(db_numrows($q) == 0 ) {
   $content = "<p>".$lang["no_usergroups"]."</p>\n".
-             "<font class=\"textlink\"><a href=\"usergroups.php?x=$x&amp;action=add\">[".$lang["add"]."]</a></font>\n";
+             "<span class=\"textlink\"><a href=\"usergroups.php?x=$x&amp;action=add\">[".$lang["add"]."]</a></span>\n";
 
   new_box($lang["usergroup_manage"], $content );
   return;
@@ -60,8 +60,8 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
     $private = $lang["no"]; 
   
   $content .= "<tr><td>".$row["name"]."</td><td>".$row["description"]."</td><td>".$private."</td>".
-              "<td><font class=\"textlink\"><a href=\"usergroups.php?x=$x&amp;action=submit_del&amp;usergroupid=".$row["id"]."\" onclick=\"return confirm( '".$lang["confirm_del_javascript"]."')\">[".$lang["del"]."]</a></font>&nbsp;".
-              "<font class=\"textlink\"><a href=\"usergroups.php?x=".$x."&amp;action=edit&amp;usergroupid=".$row["id"]."\">[".$lang["edit"]."]</a></font></td></tr>";
+              "<td><span class=\"textlink\"><a href=\"usergroups.php?x=$x&amp;action=submit_del&amp;usergroupid=".$row["id"]."\" onclick=\"return confirm( '".$lang["confirm_del_javascript"]."')\">[".$lang["del"]."]</a></span>&nbsp;".
+              "<span class=\"textlink\"><a href=\"usergroups.php?x=".$x."&amp;action=edit&amp;usergroupid=".$row["id"]."\">[".$lang["edit"]."]</a></span></td></tr>";
 
   //get users from that group
   $usersq = db_query("SELECT fullname,
@@ -73,14 +73,14 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
                             ORDER BY ".PRE."users.fullname" );
 
   for($j=0 ; $userrow = @db_fetch_array($usersq, $j ) ; $j++ ) {
-    $content .= "<tr><td colspan=\"4\" align=\"left\"><small>(<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$userrow["id"]."\">".$userrow["fullname"]."</a>)</small></td></tr>";
+    $content .= "<tr><td style=\"text-align:left\" colspan=\"4\"><small>(<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$userrow["id"]."\">".$userrow["fullname"]."</a>)</small></td></tr>";
   }
-  $content .=   "<tr><td colspan=\"3\" align=\"left\">&nbsp;</td></tr>";
+  $content .=   "<tr><td style=\"text-align:left\" colspan=\"3\">&nbsp;</td></tr>";
 
 }
 
 $content .=   "</table>\n".
-              "<p><font class=\"textlink\">[<a href=\"usergroups.php?x=".$x."&amp;action=add\">".$lang["add"]."</a>]</font></p>\n";
+              "<p><span class=\"textlink\">[<a href=\"usergroups.php?x=".$x."&amp;action=add\">".$lang["add"]."</a>]</span></p>\n";
 
 new_box($lang["manage_usergroups"], $content, "boxdata2" );
 

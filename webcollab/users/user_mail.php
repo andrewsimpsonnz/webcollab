@@ -42,8 +42,8 @@ if( $admin != 1 ) {
 //start form data
 $content .=
         "<form method=\"post\" action=\"users.php\">\n".
-          "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-          "<input type=\"hidden\" name=\"action\" value=\"submit_email\" />\n".
+          "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+          "<input type=\"hidden\" name=\"action\" value=\"submit_email\" /></fieldset>\n".
           "<table class=\"celldata\">\n".
           "<tr><td><input type=\"radio\" value=\"all\" name=\"group\" id=\"all\" checked=\"checked\" /><label for=\"all\">".$lang["all_users"]."</label></td></tr>\n".
           "<tr><td><input type=\"radio\" value=\"maillist\" name=\"group\" id=\"maillist\" /><label for=\"maillist\">".$lang["mailing_list"]."</label></td></tr>\n".

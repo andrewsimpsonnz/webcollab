@@ -70,7 +70,7 @@ function listTasks($task_id, $tail ) {
           $content .= $row["name"]."</a>".$lang["due_tomorrow"];
        }
        else {
-         $content .= "<font color=\"#FF0000\">".$row["name"]."</font></a>";
+         $content .= "<span class=\"red\">".$row["name"]."</span></a>";
        }
      $content .= "</li>\n";
    }
@@ -117,7 +117,7 @@ else
 
 // check if there are projects
 if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE parent=0" ), 0, 0 ) < 1 ) {
-  $content = "<div align=\"center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add"]."</a></div>\n";
+  $content = "<div style=\"text-align : center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add"]."</a></div>\n";
   new_box( $lang["no_projects"], $content );
   return;
 }
@@ -141,8 +141,8 @@ switch($selection ) {
 }
 
 $content .= "<form method=\"post\" action=\"tasks.php\">\n".
-            "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
-            "<input type=\"hidden\" name=\"action\" value=\"todo\" />\n ".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
+            "<input type=\"hidden\" name=\"action\" value=\"todo\" /></fieldset>\n ".
             "<table class=\"celldata\">\n".
             "<tr><td>".$lang["todo_list_for"]."</td></tr>".
             "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"user\"$s1 /><label for=\"user\">".$lang["users"]."</label></td><td>\n".

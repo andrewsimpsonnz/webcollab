@@ -40,7 +40,7 @@ function secure_error( $reason = "Unauthorised area" ) {
   global $lang;
 
   create_top($lang["login"], 1 );
-  new_box($lang["error"], "<div align=\"center\"><br />$reason<br /></div>", "boxdata", "singlebox"  );
+  new_box($lang["error"], "<div style=\"text-align : center\"><br />$reason<br /></div>", "boxdata", "singlebox"  );
   create_bottom();
   die;
 
@@ -159,7 +159,7 @@ if(isset($_COOKIE["webcollab_session"] ) && strlen($_COOKIE["webcollab_session"]
 
 create_top($lang["login"], 1, "username" );
 
-$content = "<div align=\"center\">";
+$content = "<div style=\"text-align:center\">";
 
 if( $SITE_IMG != "" ) {
   $content .=  "<img src=\"images/".$SITE_IMG."\" /><br />";
@@ -169,32 +169,29 @@ else {
 }
 
 $content .= "<p>".$lang["please_login"].":</p>\n".
-           "<form name=\"inputform\" method=\"post\" action=\"index.php\">\n".
-           "<table border=\"0\" >\n".
-           "<tr align=\"left\" ><td>".$lang["login"].": </td><td><input type=\"text\" name=\"username\" value=\"\" size=\"30\" /></td></tr>\n".
-           "<tr align=\"left\" ><td>".$lang["password"].": </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
-           "</table>\n<br />\n".
-           "<p><input type=\"submit\" value=\"".$lang["login"]."\" /></p>\n".
-
-           "<div align=\"center\">";
-
-switch( $DATABASE_TYPE ) {
+            "<form method=\"post\" action=\"index.php\">\n".
+            "<table style=\"margin-left:auto; margin-right:auto;\">\n".
+            "<tr align=\"left\" ><td>".$lang["login"].": </td><td><input id=\"username\" type=\"text\" name=\"username\" value=\"\" size=\"30\" /></td></tr>\n".
+            "<tr align=\"left\" ><td>".$lang["password"].": </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
+            "</table>\n".
+            "<p>&nbsp;</p>\n".
+            "<p><input type=\"submit\" value=\"".$lang["login"]."\" /></p>\n";
+  switch( $DATABASE_TYPE ) {
   case "postgresql":
-    $content .= "<a href=\"http://www.postgres.org\"><img border=\"0\" src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\" /></a>";
+    $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\" /></a></p>";
     break; 
   
   case "mysql":
   case "mysql_innodb":
-    $content .= "<a href=\"http://www.mysql.com\"><img border=\"0\" src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\" /></a>\n";
+    $content .= "<p><a href=\"http://www.mysql.com\"><img src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\" /></a></p>\n";
     break;
     
   default:           
-     $content .= "<a href=\"http://www.php.net\"><img border=\"0\" src=\"images/php-logo.gif\" alt=\"PHP 4 code\" /></a>";
+     $content .= "<p><a href=\"http://www.php.net\"> <img src=\"images/php-logo.gif\" alt=\"PHP 4 code\" /></a></p>";
      break;
 }      
            
-$content .= "</div>".
-            "</form>".
+$content .= "</form>".
             "</div>";
 
 //set box options

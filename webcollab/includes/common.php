@@ -101,7 +101,7 @@ function error($box_title, $content ) {
   create_top("ERROR", 1 );
 
   if($NO_ERROR != "Y" )
-    new_box( $box_title, "<div align=\"center\">".$content."</div>", "boxdata", "singlebox" );
+    new_box( $box_title, "<div style=\"text-align : center\">".$content."</div>", "boxdata", "singlebox" );
     else
     new_box($lang["report"], $lang["warning"], "boxdata2", "singlebox" );
 
@@ -154,7 +154,7 @@ function warning($box_title, $message ) {
 
   create_top($lang["error"], 1 );
 
-  $content = "<div align=\"center\">$message</div>\n";
+  $content = "<div style=\"text-align : center\">$message</div>\n";
 
   new_box($box_title, $content, "boxdata", "singlebox" );
 

@@ -2,6 +2,7 @@ BODY {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
   margin : 0;
+  padding : 0;
   background : #6085AC;
   color : #000000;
 }
@@ -11,12 +12,6 @@ FONT {
   font-size : 12px;
 }
 
-/* Font for text based hyperlinks in [brackets] */
-FONT.textlink {
-  font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10px;
-  font-weight : bold;
-}
 
 LI {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
@@ -28,6 +23,16 @@ LI LI {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
   list-style-type: circle;
+}
+
+IMG {
+  border-width : 0;
+}
+
+FIELDSET {
+   border: none;
+   margin: 0;
+   padding: 0;
 }
 
 TABLE {
@@ -167,7 +172,14 @@ TD.redbar {
   padding-left : 3px;
   height : 20px;
   background : #000000;
-  color : #eeeeee;
+  color : #EEEEEE;
+}
+
+/* Font for text based hyperlinks in [brackets] */
+.textlink {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 10px;
+  font-weight : bold;
 }
 
 /* Class for text at page bottom */
@@ -206,6 +218,30 @@ TD.redbar {
   color : #000000;
 }
 
+/* Class for green text */
+.green {
+  color : #006400;
+}
+
+/* Class for orange text */
+.orange {
+  color : #FFA500;
+}
+
+/* Class for grey text */
+.grey {
+  color : #BEBEBE;
+}
+
+/* Class for blue text */
+.blue {
+  color : #0000FF;
+}
+
+/* Class for red text */
+.red {
+  color : #FF0000;
+}
 
 a:link {
   color : #003399;

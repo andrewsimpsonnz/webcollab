@@ -125,7 +125,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   if($year  == -1 )  $year = date("Y");
 
   //day
-  $content = "<select name=\"day\">\n";
+  $content = "<select id=\"day\" name=\"day\">\n";
   for($i=1 ; $i<32 ; $i++ ) {
     $content .= "<option value=\"$i\"";
 
@@ -136,7 +136,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   $content .=  "</select>\n";
 
   //month (must be in decimal, 'cause that's what postgres uses!)
-  $content .= "<select name=\"month\">\n";
+  $content .= "<select id=\"month\" name=\"month\">\n";
   for( $i=1; $i<13 ; $i++) {
     $content .= "<option value=\"$i\"";
 
@@ -147,7 +147,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   $content .=  "</select>\n";
 
   //year
-  $content .= "<select name=\"year\">\n";
+  $content .= "<select id=\"year\" name=\"year\">\n";
   for($i=2001; $i<2011 ; $i++ ) {
     $content .= "<option value=\"$i\"";
 

@@ -45,7 +45,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
     case "0":
       //project
-      $content .= "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".substr($taskid_row["name"], 0, 20 )."<br />\n";
+      $content .= "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".substr($taskid_row["name"], 0, 20 )."<br />\n";
       break;
 
     case ($taskid_row["projectid"] ):
@@ -56,7 +56,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
       
       $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$taskid_row["projectid"]."\">$project_name</a><br />\n".
                   "<small><b>".$lang["task"].":</b></small><br />\n".
-                  "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".substr($taskid_row["name"], 0, 20 )."<br />\n";
+                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".substr($taskid_row["name"], 0, 20 )."<br />\n";
       break;
 
     default:
@@ -71,7 +71,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
                   "<small><b>".$lang["parent_task"].":</b></small><br />\n".
                   "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$taskid_row["parent"]."\">$parent_name</a><br />\n".
                   "<small><b>".$lang["task"].":</b></small><br />\n".
-                  "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".$taskid_row["name"]."<br />\n";
+                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".$taskid_row["name"]."<br />\n";
       break;
 
   }
@@ -99,7 +99,7 @@ elseif( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ){
     case "0":
       //new task under project
       $content .= "<small><b>".$lang["task"].":</b></small><br />\n".
-                  "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>New task</i><br />\n";
+                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>New task</i><br />\n";
       break;
 
     default:
@@ -107,7 +107,7 @@ elseif( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ){
       $content .= "<small><b>".$lang["parent_task"].":</b></small><br />\n".
                   "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$parentid\">".$row["name"]."</a><br />\n".
                   "<small><b>".$lang["task"].":</b></small><br />\n".
-                  "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>New task</i><br />\n";
+                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>New task</i><br />\n";
       break;
 
   }

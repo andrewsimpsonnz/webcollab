@@ -93,8 +93,8 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
   header("Content-Type: text/html; charset=".$web_charset."");
 
   $content = "<!DOCTYPE html PUBLIC\n".
-             "\"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n".
-             "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n".
+             "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
+             "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n".
              "<html>\n\n".
              "<!-- WebCollab ".$WEBCOLLAB_VERSION." -->\n".
              "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
@@ -115,29 +115,32 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
     $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/print.css\" type=\"text/css\" />\n";
   else
     $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\" />\n";
-
+  if($page_type == 3 )
+    $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/calendar.css\" type=\"text/css\" />\n";  
   //javascript to position cursor in the first box
   if($cursor || $date) {
-    $content .=  "<script language=\"JavaScript\" type=\"text/javascript\">\n".
+    $content .=  "<script type=\"text/javascript\">\n".
                  "<!-- \n";
-    if($cursor)
-      $content .= "function placeCursor() {document.inputform.".$cursor.".focus();}\n";
+    if($cursor){
+      $content .= "function placeCursor() {document.getElementById('".$cursor."').focus();}\n";
+    }
+       
     if($check){
       $content .= "function fieldCheck(){\n".
-                          "if(document.inputform.".$cursor.".value==\"\"){\n".
+                          "if(document.getElementById('".$cursor."').value==\"\"){\n".
                           "alert('".$lang["missing_field_javascript"]."');\n".
-                          "document.inputform.".$cursor.".focus();\n".
+                          "document.getElementById('".$cursor."').focus();\n".
                           "return false;}\n".
                           "return;}\n";
      }
     if($date) {
       $content .= "function dateCheck() {\n".
                           "var daysMonth = new Array(31, 29, 31, 30, 30, 30, 31, 31, 30, 31, 30, 31 );\n". 
-                          "if(document.inputform.day.value > daysMonth[(document.inputform.month.value-1)] ){\n".
+                          "if(document.getElementById('day').value > daysMonth[(document.getElementById('month').value-1)] ){\n".
                           "alert('".$lang["invalid_date_javascript"]."');\n".
                           "return false;}\n". 
-                          "var inputDate = Date.UTC(document.inputform.year.value, (document.inputform.month.value-1), document.inputform.day.value )/1000;\n".
-                          "var finishDate = document.inputform.projectDate.value;\n".
+                          "var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value )/1000;\n".
+                          "var finishDate = document.getElementById('projectDate').value;\n".
                           "if(finishDate - inputDate < -7200 ){\n".
                           "return confirm('".$lang["finish_date_javascript"]."');}\n".     
                           "return;}\n";
@@ -146,7 +149,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
                          "</script>\n".
                          "</head>\n\n";
       if($cursor)
-        $content .= "<body onLoad=\"placeCursor()\">\n";
+        $content .= "<body onload=\"placeCursor()\">\n";
       else
         $content .= "<body>\n";
   }
@@ -160,7 +163,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
   
   //create the main table
   $content  =  "<!-- start main table -->\n".
-                     "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">\n";
+                     "<table cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" style=\"margin-left:auto; margin-right:auto;\">\n";
 
 
   switch ($page_type ) {
@@ -174,22 +177,23 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
         $content .=  sprintf( $lang["user_homepage_sprt"], $uid_name );
       $content .=  "</div></td></tr>\n";
       //create menu sidebar
-      $content .=  "<tr valign=\"top\"><td style=\"width: 175px\" align=\"center\">\n";
+      $content .=  "<tr valign=\"top\"><td style=\"width: 175px; margin-left:auto; margin-right:auto; text-align: center\">\n";
       break;
 
     case 1: //single main window (no menu sidebar)
+    case 3: //calendar  
       $content .=  "<tr><td>";
       $content .=  "<div class=\"masthead\">";
       if($uid_name != "" )
         $content .=  sprintf( $lang["user_homepage_sprt"], $uid_name );
       $content .= "</div></td></tr>\n";
       //create single window over entire screen
-      $content .= "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";
+      $content .= "<tr valign=\"top\" ><td style=\"width: 100%; margin-left:auto; margin-right:auto; text-align: center\">\n";
       break;
 
     case 2: //printable screen
       //create single window over paper width
-      $content .= "<tr valign=\"top\"><td style=\"width: 576pt\" align=\"center\">\n";
+      $content .= "<tr valign=\"top\"><td style=\"width: 576pt; margin-left:auto; margin-right:auto; text-align: center\">\n";
   }
 
   //flush buffer
@@ -221,7 +225,7 @@ function new_box($title, $box_content, $style="boxdata", $size="tablebox" ) {
 // End the left frame and go the the right one
 //
 function goto_main() {
-  echo '</td><td align="center">';
+  echo "</td><td style=\"margin-left:auto; margin-right:auto; text-align: center\">";
   return;
 }
 
@@ -237,7 +241,7 @@ function create_bottom() {
   echo "</td></tr>\n</table>\n";
 
   //shows the logo
-  echo "<div class=\"bottomtext\">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" target=\"newwindow\">WebCollab</a>&nbsp;&copy;2002-2004</div>\n<br />\n";
+  echo "<div class=\"bottomtext\">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;2002-2004</div>\n";
   //end xml parsing
   echo "</body>\n</html>\n";
   return;

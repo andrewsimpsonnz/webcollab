@@ -77,7 +77,7 @@ function listTasks($task_id ) {
      default:
       //check if late
       if( ($now - $row[5] ) >= 86400 ) {
-        $content .= "<font class=\"late\">".$lang["late_g"]."</font>";
+        $content .= "<span class=\"late\">".$lang["late_g"]."</span>";
       }
       break;
     }
@@ -114,7 +114,7 @@ $active_only = 0;
 
 //check if there are projects
 if(db_numrows($q) < 1 ) {
-  $content .= "<div align=\"center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a></div>\n";
+  $content .= "<div style=\"text-align : center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a></div>\n";
   new_box($lang["no_projects"], $content );
   return;
 }
@@ -123,8 +123,8 @@ if(isset($_GET["active"] ) )
   $active_only = $_GET["active"];
 
 //text link for 'active' switch
-$content .= "<table border=\"0\" width=\"98%\"><tr><td>\n".
-            "<font class=\"textlink\">";
+$content .= "<table style=\"width : 98%\"><tr><td>\n".
+            "<span class=\"textlink\">";
 if($active_only )
   $content .= "[<a href=\"main.php?x=".$x."&amp;active=0\">".$lang["show_all_projects"]."</a>]";
 else
@@ -134,11 +134,11 @@ else
 if(isset($_GET["action"]) && $_GET["action"] == "project_print" )
   $content  .= "\n[<a href=\"main.php?x=".$x."&amp;active=".$active_only."\">".$lang["normal_version"]."</a>]";
 else
-  $content  .= "</font></td>\n<td align=\"right\"><font class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;active=".$active_only."&amp;action=project_print\">".$lang["print_version"]."</a>]";
-$content .= "</font></td></tr>\n</table>\n";
+  $content  .= "</span></td>\n<td style=\"text-align : right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;active=".$active_only."&amp;action=project_print\">".$lang["print_version"]."</a>]";
+$content .= "</span></td></tr>\n</table>\n";
 
 //setup main table
-$content .= "<table border=\"0\" cellpadding=\"20\">\n";
+$content .= "<table cellpadding=\"20\">\n";
 
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
@@ -197,7 +197,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
     case "cantcomplete":
       $content .= "<i>".sprintf($lang["project_hold_sprt"], nicedate($row["finished_time"]) )."</i><br />\n";
-      $content .= "<img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row["deadline"] )."<br />\n";
+      $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row["deadline"] )."<br />\n";
       break;
 
     case "notactive":
@@ -214,7 +214,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     case "active":
     default:
       $content .= sprintf($lang["percent_sprt"], $row["completed"] )."<br />\n";
-      $content .= "<img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row["deadline"] )." ";
+      $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row["deadline"] )." ";
       $state = ($row["due"]-$row["now"] )/86400 ;
       if($state > 1 ) {
         $content .=  "(".sprintf($lang["due_sprt"], ceil($state) ).")\n";
@@ -225,15 +225,15 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       else {
         switch( -ceil($state) ) {
           case "0":
-            $content .=  "<font color=\"#006400\">(".$lang["due_today"].")</font><br />\n";
+            $content .=  "<span class=\"green\">(".$lang["due_today"].")</span><br />\n";
             break;
 
           case "1":
-            $content .= "<font color=\"#FF0000\">(".$lang["overdue_1"].")</font><br />\n";
+            $content .= "<span class=\"red\">(".$lang["overdue_1"].")</span><br />\n";
             break;
 
           default:
-            $content .= "<font color=\"#FF0000\">(".sprintf($lang["overdue_sprt"], -ceil($state) ).")</font><br />\n";
+            $content .= "<span class=\"red\">(".sprintf($lang["overdue_sprt"], -ceil($state) ).")</span><br />\n";
             break;
         }
       }
@@ -252,7 +252,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 $content .= "</table>\n";
 
 if($flag != 1 )
-  $content .= "<p>".$lang["no_allowed_projects"]."</p>\n";
+  $content .= "<div style=\"text-align : center\">".$lang["no_allowed_projects"]."</div>\n";
 
 new_box($lang["projects"], $content );
 

@@ -36,11 +36,11 @@ if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 $content =
-            "<form name=\"inputform\" method=\"post\" action=\"usergroups.php\">\n".
-              "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
-              "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />".
+            "<form method=\"post\" action=\"usergroups.php\">\n".
+              "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+              "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" /></fieldset>\n".
               "<table class=\"celldata\">\n".
-                "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
+                "<tr><td>".$lang["usergroup_name"]."</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
                 "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"text\" name=\"description\" size=\"30\" /></td></tr>\n".
                 "<tr><td>&nbsp;</td></tr>\n".
                 "<tr><td><label for=\"private\">".$lang["private_usergroup"].":</label></td><td><input type=\"checkbox\" name=\"private_group\" id=\"private\" /></td></tr>\n".

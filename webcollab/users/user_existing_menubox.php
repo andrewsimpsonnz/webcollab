@@ -56,7 +56,7 @@ if(db_numrows($q) < 1 ) {
   return;
 }
 
-$content = "<table border=\"0\" align=\"left\">\n";
+$content = "<table style=\"text-align:left\">\n";
 
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
@@ -69,8 +69,8 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></small></td>";
 
   if($admin == 1 ) {
-    $content .= "<td align=\"right\" nowrap=\"nowrap\"><font class=\"textlink\"> [<a href=\"users.php?x=$x&amp;userid=".$row["id"]."&amp;action=del\">".$lang["del"]."</a>]".
-                "[<a href=\"users.php?x=$x&amp;userid=".$row["id"]."&amp;action=edit\">".$lang["edit"]."</a>]</font></td>";
+    $content .= "<td style=\"text-align:right; white-space:nowrap\"><span class=\"textlink\"> [<a href=\"users.php?x=$x&amp;userid=".$row["id"]."&amp;action=del\">".$lang["del"]."</a>]".
+                "[<a href=\"users.php?x=$x&amp;userid=".$row["id"]."&amp;action=edit\">".$lang["edit"]."</a>]</span></td>";
   }
   $content .= "</tr>\n";
 }

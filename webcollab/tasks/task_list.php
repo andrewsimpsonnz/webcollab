@@ -151,7 +151,7 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
         case 0:
           //new and never visited by this user
           //$alert_content .= "<img border=\"0\" src=\"images/new.gif\" height=\"12\" width=\"31\" alt =\"new\" />";
-          $alert_content .= "<font class=\"new\">".$lang["new_g"]."</font>&nbsp;";
+          $alert_content .= "<span class=\"new\">".$lang["new_g"]."</span>&nbsp;";
           break;
 
         default:
@@ -162,17 +162,17 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
           if( ($seen - $row["edited"] ) < 0 ) {
             //edited
             //$alert_content .= "<img border=\"0\" src=\"images/updated.gif\" height=\"12\" width=\"60\" alt=\"updated\" /> &nbsp;";
-            $alert_content .= "<font class=\"updated\">".$lang["updated_g"]."</font>&nbsp;";
+            $alert_content .= "<span class=\"updated\">".$lang["updated_g"]."</span>&nbsp;";
           }
 
           //are there forum changes ?
           if($seen - $row["lastpost"] < 0 ) {
-            $alert_content .= "<img border=\"0\" src=\"images/message.gif\" height=\"10\" width=\"14\" alt=\"message\" /> &nbsp;";
+            $alert_content .= "<img src=\"images/message.gif\" height=\"10\" width=\"14\" alt=\"message\" /> &nbsp;";
           }
 
           //are there file upload changes ?
           if($seen - $row["lastfileupload"] < 0 ) {
-            $alert_content .= "<img border=\"0\" src=\"images/file.gif\" height=\"11\" width=\"11\" alt=\"file\" /> &nbsp;";
+            $alert_content .= "<img src=\"images/file.gif\" height=\"11\" width=\"11\" alt=\"file\" /> &nbsp;";
           }
           break;
        }
@@ -181,19 +181,19 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
     //status
     switch($row["status"] ) {
       case "done":
-        $status_content="<font color=\"#006400\">(".$task_state["completed"]." ".nicedate($row["finished_time"]).")</font>";
+        $status_content="<span class=\"green\">(".$task_state["completed"]." ".nicedate($row["finished_time"]).")</span>";
         break;
 
       case "active":
-        $status_content="<font color=\"#FFA500\">(".$task_state["active"].")</font>";
+        $status_content="<span class=\"orange\">(".$task_state["active"].")</span>";
         break;
 
       case "notactive":
-        $status_content="<font color=\"#BEBEBE\">(".$task_state["planned"].")</font>";
+        $status_content="<span class=\"grey\">(".$task_state["planned"].")</span>";
         break;
 
       case "cantcomplete":
-        $status_content="<font color=\"#0000FF\">(".$task_state["cantcomplete"]." ".nicedate($row["finished_time"]).")</font>";
+        $status_content="<span class=\"blue\">(".$task_state["cantcomplete"]." ".nicedate($row["finished_time"]).")</>";
         break;
     }
 
@@ -230,15 +230,15 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
           switch( -ceil($state) ) {
 
             case 0:
-              $this_content .=  "<font color=\"#00640\">(<i>".$lang["due_today"]."</i>)</font>";
+              $this_content .=  "<span class=\"green\">(<i>".$lang["due_today"]."</i>)</span>";
               break;
 
             case 1:
-              $this_content .= "<font color=\"#FF0000\">(".$lang["overdue_1"].")</font>";
+              $this_content .= "<span class=\"red\">(".$lang["overdue_1"].")</span>";
               break;
 
             default:
-              $this_content .= "<font color=\"#FF0000\">(".sprintf($lang["overdue_sprt"], -ceil($state) ).")</font>";
+              $this_content .= "<span class=\"red\">(".sprintf($lang["overdue_sprt"], -ceil($state) ).")</span>";
               break;
           }
         }

@@ -61,9 +61,9 @@ if($row["private"] && ( ! $admin ) ) {
 }
 
 if($row["deleted"] == 't' )
-  $content .= "<b><div align=\"center\"><font color=\"red\">".$lang["user_deleted"]."</font></div></b><br />";
+  $content .= "<b><div style=\"text-align:center\"><span class=\"red\">".$lang["user_deleted"]."</span></div></b><br />";
 
-$content .= "<table border=\"0\">".
+$content .= "<table>".
               "<tr><td>".$lang["login"].":</td><td>".$row["name"]."</td></tr>\n".
               "<tr><td>".$lang["full_name"].":</td><td>".$row["fullname"]."</td></tr>\n".
               "<tr><td>".$lang["email"].":</td><td><a href=\"mailto:".$row["email"]."\">".$row["email"]."</a></td></tr>\n";
@@ -182,19 +182,19 @@ if( $tasks_owned + $projects_owned > 0 ) {
     //status
     switch( $row["status"] ) {
       case "done":
-        $status_content="<font color=\"#006400\">(".$task_state["done"]."&nbsp;".nicedate($row["finished_time"]).")</font>";
+        $status_content="<span class=\"green\">(".$task_state["done"]."&nbsp;".nicedate($row["finished_time"]).")</span>";
         break;
 
       case "active":
-        $status_content="<font color=\"#FFA500\">(".$task_state["active"].")</font>";
+        $status_content="<span class=\"orange\">(".$task_state["active"].")</span>";
         break;
 
       case "notactive":
-        $status_content="<font color=\"#006400\">(".$task_state["planned"].")</font>";
+        $status_content="<span class=\"green\">(".$task_state["planned"].")</span>";
         break;
 
       case "cantcomplete":
-        $status_content="<font color=\"#0000FF\">(".$task_state["cantcomplete"]."&nbsp;".nicedate($row["finished_time"]).")</font>";
+        $status_content="<span class=\"blue\">(".$task_state["cantcomplete"]."&nbsp;".nicedate($row["finished_time"]).")</span>";
         break;
     }
 

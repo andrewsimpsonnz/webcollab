@@ -36,11 +36,11 @@ if($admin != 1 )
 
 
 $content =
-           "<form name=\"inputform\" method=\"post\" action=\"users.php\">".
-             "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />".
-             "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
-             "<table class=\"celldata\">".
-               "<tr><td>".$lang["login_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
+           "<form method=\"post\" action=\"users.php\">\n".
+             "<fieldset><input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n".
+             "<input type=\"hidden\" name=\"x\" value=\"$x\" /></fieldset>\n".
+             "<table class=\"celldata\">\n".
+               "<tr><td>".$lang["login_name"].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
                "<tr><td>".$lang["full_name"].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" /></td></tr>\n".
                "<tr><td>".$lang["password"].":</td><td><input type=\"password\" name=\"password\" size=\"30\" /></td></tr>\n".
                "<tr><td>".$lang["email"].":</td><td><input type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".

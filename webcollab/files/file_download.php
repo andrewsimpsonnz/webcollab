@@ -54,6 +54,17 @@ $fp = fopen( $FILE_BASE."/".$row["oid"]."__".($row["filename"]), "rb" );
 if($fp == 0 )
   error("Download file", "File handle for ".$row["filename"]." cannot be opened" );
 
+//get rid of some problematic system settings
+@ob_end_clean();
+@ini_set('zlib.output_compression', 'Off');
+@set_time_limit(0);
+
+//these headers are for IE 6
+header("Pragma: public");
+header("Cache-Control: no-store, max-age=0, no-cache, must-revalidate");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Cache-control: private");
+
 //send the headers describing the file type
 header("Content-Type: ".$row["mime"]);
 header("Content-Disposition: inline; filename=".$row["filename"]);

@@ -40,10 +40,10 @@ $taskid = intval($_GET["taskid"]);
 
 $content = "";
 
-$content .= "<form name=\"inputform\" method=\"post\" action=\"tasks.php\">\n".
-            "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
+$content .= "<form method=\"post\" action=\"tasks.php\">\n".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"submit_clone\" />\n ".
-            "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\" />\n".
+            "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\" /></fieldset>\n".
             "<table class=\"celldata\">\n";
 
 $q = db_query("SELECT name, parent FROM ".PRE."tasks WHERE id=$taskid" );
@@ -52,7 +52,7 @@ $row = db_fetch_array($q, 0 );
 
 if($row["parent"] == 0 ){
   $content .= "<tr><td>".$lang["project_cloned"]."</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$row["name"]."</a></td></tr>\n".
-              "<tr><td>".$lang["project_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
+              "<tr><td>".$lang["project_name"].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang["add_project"]."\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
@@ -64,7 +64,7 @@ if($row["parent"] == 0 ){
 else{
   $content .= "<tr><td>".$lang["task_cloned"]."</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$row["name"]."</a></td></tr>\n".
               "<tr><td colspan=\"2\"><i>".$lang["note_clone"]."</i></td><tr>\n".
-              "<tr><td>".$lang["project_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
+              "<tr><td>".$lang["project_name"].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang["add_project"]."\" onclick=\"return fieldCheck()\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".

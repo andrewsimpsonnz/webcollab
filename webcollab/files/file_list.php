@@ -61,17 +61,17 @@ $q = db_query("SELECT ".PRE."files.oid AS oid,
 
 if(db_numrows($q ) != 0 ) {
 
-  $content .= "<table border=\"0\">\n";
+  $content .= "<table>\n";
 
   //show them
   for($i=0 ; $row = @db_fetch_array($q, $i) ; $i++ ) {
 
     //file part
-    $content .= "<tr><td><a href=\"files.php?x=$x&amp;action=download&amp;fileid=".$row["id"]."\" target=\"filewindow\">".$row["filename"]."</a> <small>(".$row["size"].$lang["bytes"].") </small>";
+    $content .= "<tr><td><a href=\"files.php?x=$x&amp;action=download&amp;fileid=".$row["id"]."\" onclick=\"window.open('files.php?x=$x&amp;action=download&amp;fileid=".$row["id"]."'); return false\">".$row["filename"]."</a> <small>(".$row["size"].$lang["bytes"].") </small>";
 
     //owners of the file and admins have a "delete" option
     if( ($admin == 1) || ($uid == $taskid_row["owner"] ) || ($uid == $row["uploader"] ) ) {
-      $content .= "&nbsp;<font class=\"textlink\">[<a href=\"files.php?x=$x&amp;action=submit_del&amp;fileid=".$row["id"]."&amp;taskid=$taskid\" onclick=\"return confirm('".sprintf( $lang["del_file_javascript_sprt"], $row["filename"] )."' )\">".$lang["del"]."</a>]</font></td></tr>\n";
+      $content .= "&nbsp;<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;action=submit_del&amp;fileid=".$row["id"]."&amp;taskid=$taskid\" onclick=\"return confirm('".sprintf( $lang["del_file_javascript_sprt"], $row["filename"] )."' )\">".$lang["del"]."</a>]</span></td></tr>\n";
     } else
       $content .= "</td></tr>\n";
 
@@ -88,7 +88,7 @@ if(db_numrows($q ) != 0 ) {
   $content .= "</table>";
 }
 
-$content .= "<font class=\"textlink\">[<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang["add_file"]."</a>]</font>";
+$content .= "<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang["add_file"]."</a>]</span>";
 
 new_box($lang["files_assoc_".$type], $content, "boxdata2" );
 

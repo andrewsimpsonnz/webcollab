@@ -42,9 +42,9 @@ if( $admin != 1 ) {
 
 //start form data
 $content .=
-        "<form method=\"post\" action=\"admin.php\">\n".
-          "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-          "<input type=\"hidden\" name=\"action\" value=\"submit\" />\n".
+          "<form method=\"post\" action=\"admin.php\">\n".
+          "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+          "<input type=\"hidden\" name=\"action\" value=\"submit\" /></fieldset>\n".
           "<table class=\"celldata\" >\n";
 
 //get config data
@@ -54,13 +54,13 @@ $row = db_fetch_array( $q, 0 );
 if($USE_EMAIL == "Y" ){
 
   $content .=
-            "<tr><td nowrap=\"nowrap\" colspan=\"2\"><b>".$lang["email_settings"]."</b><br /><br /></td></tr>\n";
+            "<tr><td style=\"white-space : nowrap\" colspan=\"2\"><b>".$lang["email_settings"]."</b><br /><br /></td></tr>\n";
 
   //email addresses
   $content .=
-            "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin\" target=\"helpwindow\">".$lang["admin_email"]."</a>: </td><td><input type=\"text\" name=\"email_admin\" value=\"".$row["email_admin"]."\" size=\"30\" /></td></tr>\n".
-            "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin\" target=\"helpwindow\">".$lang["email_reply"]."</a>:</td><td><input type=\"text\" name=\"reply_to\" value=\"".$row["reply_to"]."\" size=\"30\" /></td></tr>\n".
-            "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin\" target=\"helpwindow\">".$lang["email_from"]."</a>:</td><td><input type=\"text\" name=\"from\" value=\"".$row["email_from"]."\" size=\"30\" /></td></tr>\n";
+            "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin\" onclick=\"window.open('help/help_language.php?item=admin&amp;type=admin'); return false\" >".$lang["admin_email"]."</a>:</td><td><input type=\"text\" name=\"email_admin\" value=\"".$row["email_admin"]."\" size=\"30\" /></td></tr>\n".
+            "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin\" onclick=\"window.open('help/help_language.php?item=reply&amp;type=admin'); return false\">".$lang["email_reply"]."</a>:</td><td><input type=\"text\" name=\"reply_to\" value=\"".$row["reply_to"]."\" size=\"30\" /></td></tr>\n".
+            "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin\" onclick=\"window.open('help/help_language.php?item=from&amp;type=admin'); return false\">".$lang["email_from"]."</a>:</td><td><input type=\"text\" name=\"from\" value=\"".$row["email_from"]."\" size=\"30\" /></td></tr>\n";
 
   //get mailing list
   $q = db_query("SELECT DISTINCT * FROM ".PRE."maillist" );
@@ -69,12 +69,12 @@ if($USE_EMAIL == "Y" ){
     $maillist .= $row_mail["email"]."\n";
   }
 
-  $content .= "<tr><td><a href=\"help/help_language.php?item=list&amp;type=admin\" target=\"helpwindow\">".$lang["mailing_list"]."</a>: </td><td><textarea name=\"email\" rows=\"5\" cols=\"30\">".$maillist."</textarea></td></tr>\n".
+  $content .= "<tr><td><a href=\"help/help_language.php?item=list&amp;type=admin\" onclick=\"window.open('help/help_language.php?item=list&amp;type=admin'); return false\">".$lang["mailing_list"]."</a>: </td><td><textarea name=\"email\" rows=\"5\" cols=\"30\">".$maillist."</textarea></td></tr>\n".
                "</table>\n".
                "<table class=\"celldata\" >\n";
 }
 
-$content .= "<tr><td nowrap colspan=\"2\"><b>".$lang["default_checkbox"]."</b><br /><br /></td></tr>\n";
+$content .= "<tr><td colspan=\"2\"><b>".$lang["default_checkbox"]."</b><br /><br /></td></tr>\n";
 
 //defaults for task checkboxes
 $content .= "<tr><td><label for=\"access\">".$lang["allow_globalaccess"]."</label></td><td><input type=\"checkbox\" name=\"access\" id=\"access\" ".$row["globalaccess"]." /></td></tr>\n".

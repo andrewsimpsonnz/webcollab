@@ -56,9 +56,9 @@ require_once(BASE."includes/usergroup_security.php" );
 //find out the tasks' name
 $taskname = db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=$taskid" ), 0, 0 );
 
-$content .= "<form name=\"inputform\" method=\"post\" action=\"forum.php\">\n";
+$content .= "<form method=\"post\" action=\"forum.php\">\n";
 //set some hidden values
-$content .=  "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
+$content .=  "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />".
              "<input type=\"hidden\" name=\"action\" value=\"submit_add\" />\n".
              "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\" />\n".
              "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\" />\n";
@@ -81,21 +81,21 @@ if($parentid != 0 ) {
     $row["username"] = "----";
 
   //show a box with the original post
-  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" />\n".
-              "<table border=\"0\">\n".
-              "<tr><td>".$lang["orig_message"]."</td><td bgcolor=\"#EEEEEE\">".$row["text"]."</td></tr>\n";
+  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" /></fieldset>\n".
+              "<table>\n".
+              "<tr><td>".$lang["orig_message"]."</td><td style=\"background:#EEEEEE\">".$row["text"]."</td></tr>\n";
 }
 else {
   $row = "";
 
   //This is a new thread so we don't have a valid parent
-  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"0\" />\n".
-              "<table border=\"0\">\n";
+  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"0\" /></fieldset>\n".
+              "<table>\n";
 }
 
 //build up the text-entry part
-$content .=   "<tr><td>".$lang["message"]."</td><td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
-              "</table><br />\n".
+$content .=   "<tr><td>".$lang["message"]."</td><td><textarea id=\"text\" name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
+              "</table>\n".
               "<table class=\"celldata\">\n".
               "<tr><td><label for=\"owner\">".$lang["forum_email_owner"]."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" $DEFAULT_OWNER /></td></tr>\n".
               "<tr><td><label for=\"usergroup\">".$lang["forum_email_usergroup"]."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" $DEFAULT_GROUP /></td></tr>\n".

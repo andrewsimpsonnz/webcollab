@@ -46,7 +46,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
   }
 }
 
-$content .= "<table border=\"0\">\n";
+$content .= "<table>\n";
 //users online in last hour
 $q = db_query("SELECT ".PRE."logins.lastaccess AS last,
             ".PRE."users.id AS id,
@@ -58,7 +58,7 @@ $q = db_query("SELECT ".PRE."logins.lastaccess AS last,
             AND ".PRE."users.deleted='f'
             ORDER BY ".PRE."logins.lastaccess DESC" );
 
-$content .= "<tr><td nowrap=\"nowrap\" colspan=\"2\"><b>".$lang["online"]."</b></td></tr>\n";
+$content .= "<tr><td style=\"white-space:nowrap\" colspan=\"2\"><b>".$lang["online"]."</b></td></tr>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
   
   //user test for privacy
@@ -70,7 +70,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
   $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></td><td>".nicetime($row["last"])."</td></tr>\n";
 }
 
-$content .= "<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+$content .= "<tr><td style=\"white-space:nowrap\"colspan=\"2\">&nbsp;</td></tr>\n";
 //users previously online 
 $q = db_query("SELECT ".PRE."logins.lastaccess AS last,
             ".PRE."users.id AS id,

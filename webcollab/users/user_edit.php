@@ -62,9 +62,9 @@ if( ! ($row = db_fetch_array($q , 0 ) ) )
 
 //show data
 $content =  "<form method=\"post\" action=\"users.php\">\n".
-              "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
+              "<fieldset><input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
               "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-              "<input type=\"hidden\" name=\"userid\" value=\"$userid\" />\n".
+              "<input type=\"hidden\" name=\"userid\" value=\"$userid\" /></fieldset>\n".
               "<table class=\"celldata\">".
               "<tr><td>".$lang["login_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\" /></td></tr>\n".
               "<tr><td>".$lang["full_name"].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" value=\"".$row["fullname"]."\" /></td></tr>\n".

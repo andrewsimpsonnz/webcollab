@@ -81,17 +81,17 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
       $this_content .= "<li><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["fullname"]."</a>";
 
     $this_content .= "&nbsp;(".nicetime( $row["posted"] ).")</small>".
-                     "&nbsp;<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=".$row["id"]."&amp;taskid=$taskid";
+                     "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=".$row["id"]."&amp;taskid=$taskid";
 
     //if this is a post to a private forum then announce it to the poster-engine
     if($usergroupid != 0 )
       $this_content .= "&amp;usergroupid=$usergroupid";
 
-    $this_content .= "\">".$lang["reply"]."</a>]</font>\n";
+    $this_content .= "\">".$lang["reply"]."</a>]</span>\n";
 
     //owners of the thread, owners of the post and admins have a "delete" option
     if( ($admin==1) || ($uid == $taskid_row["owner"] ) || ($uid == $row["postowner"] ) ) {
-      $this_content .= " <font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=submit_del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onclick=\"return confirm( '".$lang["confirm_del_javascript"]."' )\">".$lang["del"]."</a>]</font>";
+      $this_content .= " <span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=submit_del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onclick=\"return confirm( '".$lang["confirm_del_javascript"]."' )\">".$lang["del"]."</a>]</span>";
     }
 
     $this_content .= "<br />\n".$row["text"]."\n";
@@ -127,8 +127,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 //public forums
 //
 
-//don't show public forum if task is set to private
-if($taskid_row["globalaccess"] == 't' ){
+//don't show public forum if task is set to private usergroup only (and a usergroup is set) 
+if( ! ($taskid_row["globalaccess"] == 'f' && $taskid_row["usergroupid"] != 0 ) ){
 
   $content = "";
 
@@ -137,7 +137,7 @@ if($taskid_row["globalaccess"] == 't' ){
   if($ul_flag == 1 )
     $content .= "</ul>\n<br />\n";
   //add an option to add posts
-  $content .= "<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang["new_post"]."</a>]</font>";
+  $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang["new_post"]."</a>]</span>";
   //show it
   new_box($lang["public_user_forum"], $content, "boxdata2" );
 }
@@ -159,7 +159,7 @@ if($taskid_row["usergroupid"] != 0 ) {
     if($ul_flag == 1 )
       $content .= "</ul>\n<br />\n";
     //add an option to add posts
-    $content .= "<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=".$taskid_row["usergroupid"]."&amp;\">".$lang["new_post"]."</a>]</font>";
+    $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=".$taskid_row["usergroupid"]."&amp;\">".$lang["new_post"]."</a>]</span>";
     //get usergroup
     $usergroup_name = db_result(db_query("SELECT name FROM ".PRE."usergroups WHERE id=".$taskid_row["usergroupid"] ), 0, 0 );
     //show it

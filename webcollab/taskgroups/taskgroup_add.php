@@ -35,11 +35,11 @@ if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 $content =
-            "<form name=\"inputform\" method=\"post\" action=\"taskgroups.php\">\n".
-              "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-              "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n".
+            "<form method=\"post\" action=\"taskgroups.php\">\n".
+              "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+              "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" /></fieldset>\n".
               "<table class=\"celldata\">\n".
-                "<tr><td>".$lang["taskgroup_name"]."</td><td><input type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
+                "<tr><td>".$lang["taskgroup_name"]."</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
                 "<tr><td>".$lang["taskgroup_description"]."</td><td><input type=\"text\"name=\"description\"size=\"30\" /></td></tr>\n".
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang["add_taskgroup"]."\" onclick=\"return fieldCheck()\" />&nbsp;\n".

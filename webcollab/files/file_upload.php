@@ -45,13 +45,13 @@ $taskid = $_GET["taskid"];
 //check usergroup security
 require_once(BASE."includes/usergroup_security.php" );
 
-$content =  "<form name=\"inputform\" method=\"post\" enctype=\"multipart/form-data\"  action=\"files.php\">\n".
-              "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+$content =  "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"files.php\">\n".
+              "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"submit_upload\" />\n".
               "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\" />\n".
-              "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"$FILE_MAXSIZE\" />\n".
+              "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"$FILE_MAXSIZE\" /></fieldset>\n".
               "<table class=\"celldata\">\n".
-              "<tr><td>".$lang["file_choose"]."</td><td><input type=\"file\" name=\"userfile\" /></td></tr>\n".
+              "<tr><td>".$lang["file_choose"]."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile\" /></td></tr>\n".
               "<tr><td>".$lang["description"].":</td> <td><textarea name=\"description\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
               "<tr><td></td><td>".sprintf( $lang["max_file_sprt"], $FILE_MAXSIZE/1000 )."</td></tr>\n".
               "</table>\n".
