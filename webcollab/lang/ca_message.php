@@ -93,6 +93,11 @@ $lang = array(
  "no_login" => "Acc&egrave;s denegat, identificador o contrasenya incorrectes",
  "please_login" => "Benvingut, per favor identifiqui's",
 
+ //graphic items
+ "late_g" => "&nbsp;LATE&nbsp;",
+ "new_g" => "&nbsp;NEW&nbsp;",
+ "updated_g" => "&nbsp;UPDATED&nbsp;",
+
 //admin config
  "admin_config" => "Admin config",
  "email_settings" => "Email header settings",

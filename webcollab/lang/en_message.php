@@ -39,13 +39,15 @@ General formatting:
 
 "xxxx_lc"  == (lower case) String used in sentence case (eg: "project" as in "Edit project").
 
-"xxxx_sprt == formatted print string (eg: "Files associated with this %s" - where %s is inserted by the code)
+"xxxx_sprt" == formatted print string (eg: "Files associated with this %s" - where %s is inserted by the code)
 
               Formatted strings with %1/$s, %2/$s, %3/$s etc. can have parameters interchanged - as in:
 
                  "Message from %1\$s about %2\$s" _could also be_ "Message about %2\$s from %1\$s"
 
               This can be useful for translating to different languages.
+
+ "xxxx_g" == graphical string
 
 */
 
@@ -110,7 +112,12 @@ $lang = array(
  "error" => "Error",
  "no_login" => "Access denied, incorrect login or password",
  "please_login" => "Please log in",
- 
+
+//graphic items
+ "late_g" => "&nbsp;LATE&nbsp;",
+ "new_g" => "&nbsp;NEW&nbsp;",
+ "updated_g" => "&nbsp;UPDATED&nbsp;",
+
 //admin config
  "admin_config" => "Admin config",
  "email_settings" => "Email header settings",

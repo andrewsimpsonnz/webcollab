@@ -95,7 +95,12 @@ $lang = array(
  "error" => "Erreur",
  "no_login" => "Acces refus&eacute;, utilisateur ou mot de passe incorrect",
  "please_login" => "Merci de vous connecter",
- 
+
+ //graphic items
+ "late_g" => "&nbsp;LATE&nbsp;",
+ "new_g" => "&nbsp;NEW&nbsp;",
+ "updated_g" => "&nbsp;UPDATED&nbsp;",
+
 //admin config
  "admin_config" => "Config Admin",
  "email_settings" => "Param&egrave;tre ent&ecirc;te Email",

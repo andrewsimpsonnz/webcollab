@@ -96,6 +96,11 @@ $lang = array(
  "no_login" => "Zugriff verweigert, Benutzername oder Passwort ist falsch",
  "please_login" => "Bitte melden Sie sich an",
 
+ //graphic items
+ "late_g" => "&nbsp;LATE&nbsp;",
+ "new_g" => "&nbsp;NEW&nbsp;",
+ "updated_g" => "&nbsp;UPDATED&nbsp;",
+
 //admin config
  "admin_config" => "Administrator Konfiguration",
  "email_settings" => "Email-Header Einstellungen",

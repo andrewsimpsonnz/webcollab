@@ -92,17 +92,21 @@ $lang = array(
  "error" => "Error",
  "no_login" => "Acceso denegado, login o pass incorrectos",
  "please_login" => "Bienvenido, por favor ingrese",
- 
+
+ //graphic items
+ "late_g" => "&nbsp;LATE&nbsp;",
+ "new_g" => "&nbsp;NEW&nbsp;",
+ "updated_g" => "&nbsp;UPDATED&nbsp;",
+
 //admin config
  "admin_config" => "Admin config",
- "email_settings" => "Email header settings", 
+ "email_settings" => "Email header settings",
  "admin_email" => "Admin email",
  "email_reply" => "Email 'reply to'",
  "email_from" => "Email 'from'",
  "mailing_list" => "Mailing list",
  "default_checkbox" => "Marca el checkbox Default para Proyectos/Tareas",
  "allow_globalaccess" => "Permite acceso global?",
-//**
  "allow_group_edit" => "Permitir a todo el usergroup editar?",
  "set_email_owner" => "Siempre email al propietario con los cambios?",
  "set_email_group" => "Siempre email al Grupo-usuarios con cambios?",
@@ -136,7 +140,6 @@ $lang = array(
  //files
  "manage_files" => "Manipular archivos",
  "no_files" => "No hay archivos enviados para manipular.",
-//**
  "no_file_uploads" => "La configuraci&oacute;n de este sitio web no permite subir ficheros",
  "file" => "Archivo:",
  "uploader" => "Uploader:",
@@ -315,7 +318,7 @@ $lang = array(
  "admin" => "Admin",
  "global" => "Global",
  //"options" => " opciones",
- //** 
+ //**
  "delete_project" => "Borrar Proyecto",
  //**
  "delete_task" => "Borrar Tarea",
