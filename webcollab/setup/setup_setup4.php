@@ -66,8 +66,8 @@ $flag = 0;
 
 create_top_setup("Setup Screen" );
 
-$content .= "<p><table border=\"0\">";
-            "<form method=\"POST\" action=\"setup_handler.php\">";
+$content .= "<form method=\"POST\" action=\"setup_handler.php\">".
+            "<table border=\"0\">";
 
 //output essential values for POST
 foreach($array_essential as $var ) {
@@ -301,7 +301,7 @@ $content .= "<input type=\"hidden\" name=\"$var\" value=\"".$data[$var]."\" />\n
 //show 'try again' button
 $content .= "<tr><td></td><td><input type=\"submit\" value=\"Re-enter Config Data\" /></td></tr>\n".
             "</form>\n".
-            "</table></p>\n";
+            "</table>\n";
             
 new_box_setup( "Setup - Stage 4 of 5 : Verifying Data", $content, "boxdata", "tablebox" );
 create_bottom_setup();
