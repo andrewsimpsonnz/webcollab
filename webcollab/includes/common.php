@@ -123,13 +123,16 @@ function error($box_title, $content ) {
 //
 // Builds up a warning screen
 //
-function warning($box_title, $content ) {
+function warning($box_title, $message ) {
 
   include_once(BASE."includes/screen.php" );
 
   create_top("Warning", 1 );
 
-  new_box($box_title, "<div align=\"center\">".$content."</div>", "boxdata", "singlebox" );
+  $content = "<div align=\"center\">$message<br /><br />\n".
+             "<form><input type=\"submit\" value=\"Go Back\" onclick=\"history.back()\"></form></div>\n";
+
+  new_box($box_title, $content, "boxdata", "singlebox" );
 
   create_bottom();
 
