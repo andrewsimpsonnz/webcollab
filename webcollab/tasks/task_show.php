@@ -57,7 +57,6 @@ $q = db_query("SELECT ".$epoch.PRE."tasks.created) AS epoch_created,
                       LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."tasks.usergroupid)
                       WHERE ".PRE."tasks.id=$taskid" );
 
-
 //get the data
 if( ! ($row = db_fetch_array($q, 0 ) ) )
   error("Task show", "The requested item has either been deleted, or is now invalid.");
@@ -134,69 +133,71 @@ switch($taskid_row["priority"] ) {
 }
 $content .= "</td></tr>\n";
 
-//if this is a project don't show status info and task completion date
-if($taskid_row["parent"] != 0 ) {
-
-  $content .= "<tr><td>".$lang["status"].": </td><td>";
-  switch($taskid_row["status"] ) {
-
-    case "created":
-      $content .=  $task_state["new"];
-      break;
-    case "notactive":
-      $content .=  $task_state["planned"];
-      break;
-    case "active":
-      $content .=  $task_state["active"];
-      break;
-    case "cantcomplete":
-      $content .=  "<b>".$task_state["cantcomplete"]."</b>";
-      break;
-    case "done":
-      $content .=  $task_state["done"];
-      break;
-    default:
-      $content .=  $taskid_row["status"];
-      break;
-  }
-  $content .= "</td></tr>\n";
-
-  //is there a finished date ?
-  switch($taskid_row["status"] ) {
-    case "done":
-      $content .= "<tr><td>".$lang["completed_on"].": </td><td>".nicetime($row["epoch_finished"])."</td></tr>\n";
-      break;
-
-    case "cantcomplete":
-      $content .= "<tr><td>".$lang["modified_on"].": </td><td>".nicetime($row["epoch_finished"])."</td></tr>\n";
-      break;
-
-    default:
-      break;
-  }
-}
-else{
-  //project - show the finish date and status
-  switch($taskid_row["status"] ) {
-    case "cantcomplete":
-      $content .= "<tr><td>".$lang["status"].": </td><td><b>".$lang["project_on_hold"]."</b></td></tr>\n";
-      $content .= "<tr><td>".$lang["modified_on"].": </td><td>".nicetime($row["epoch_finished"])."</td></tr>\n";
-      break;
-
-    case "notactive":
-      $content .= "<tr><td>".$lang["status"].": </td><td>".$lang["project_planned"]."</td></tr>\n";
-      break;
-
-    case "nolimit":
-      $content .= "<tr><td>".$lang["status"].": </td><td>".$lang["project_no_deadline"]."</td></tr>\n";
-      break;
-
-    case "done":
-    default:
-      if($taskid_row["completed"] == 100 )  
-        $content .= "<tr><td>".$lang["completed_on"].": </td><td>".nicetime($row["epoch_completion"] )."</td></tr>\n";
-      break;
-  }
+//status info and task completion date
+switch($taskid_row["parent"] ) { 
+  case 0:
+    //project - show the finish date and status
+    switch($taskid_row["status"] ) {
+      case "cantcomplete":
+        $content .= "<tr><td>".$lang["status"].": </td><td><b>".$lang["project_on_hold"]."</b></td></tr>\n";
+        $content .= "<tr><td>".$lang["modified_on"].": </td><td>".nicetime($row["epoch_finished"])."</td></tr>\n";
+        break;
+  
+      case "notactive":
+        $content .= "<tr><td>".$lang["status"].": </td><td>".$lang["project_planned"]."</td></tr>\n";
+        break;
+  
+      case "nolimit":
+        $content .= "<tr><td>".$lang["status"].": </td><td>".$lang["project_no_deadline"]."</td></tr>\n";
+        break;
+  
+      case "done":
+      default:
+        if($taskid_row["completed"] == 100 )  
+          $content .= "<tr><td>".$lang["completed_on"].": </td><td>".nicetime($row["epoch_completion"] )."</td></tr>\n";
+        break;
+    }
+    break;
+    
+  default:  
+    //task 
+    $content .= "<tr><td>".$lang["status"].": </td><td>";
+    switch($taskid_row["status"] ) {
+      case "created":
+        $content .=  $task_state["new"];
+        break;
+      case "notactive":
+        $content .=  $task_state["planned"];
+        break;
+      case "active":
+        $content .=  $task_state["active"];
+        break;
+      case "cantcomplete":
+        $content .=  "<b>".$task_state["cantcomplete"]."</b>";
+        break;
+      case "done":
+        $content .=  $task_state["done"];
+        break;
+      default:
+        $content .=  $taskid_row["status"];
+        break;
+    }
+    $content .= "</td></tr>\n";
+  
+    //is there a finished date ?
+    switch($taskid_row["status"] ) {
+      case "done":
+        $content .= "<tr><td>".$lang["completed_on"].": </td><td>".nicetime($row["epoch_finished"])."</td></tr>\n";
+        break;
+  
+      case "cantcomplete":
+        $content .= "<tr><td>".$lang["modified_on"].": </td><td>".nicetime($row["epoch_finished"])."</td></tr>\n";
+        break;
+  
+      default:
+        break;
+    }
+    break;
 }
 
 //task group
@@ -211,19 +212,6 @@ if($taskid_row["parent"] != 0 ) {
       $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help'); return false\">".$lang["taskgroup"]."</a>: </td><td>".$row["taskgroup_name"]."</td></tr>\n";
       break;
   }
-}
-
-//set title variables as approriate for task or project
-switch($taskid_row["parent"] ){
-  case "0":
-    $title = $lang["project_details"];
-    $type = "project";
-    break;
-
- default:
-    $title = $lang["task_info"];
-    $type = "task";
-    break;
 }
 
 //show the usergroupid
@@ -254,30 +242,18 @@ $content .= "</table>\n";
 //this part shows all the options the users has
 $content .= "<div style=\"text-align : center\"><span class=\"textlink\">\n";
 
-//set add function for task or project
-switch( $taskid_row["parent"] ){
-  case "0":
+//set add function and title for task or project
+switch($type){
+  case "project":
+    $title = $lang["project_details"];
     $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang["add_task"]."</a>]&nbsp;\n";
     break;
 
- default:
+  case "task":
+    $title = $lang["task_info"];
     $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang["add_subtask"]."</a>]&nbsp;\n";
     break;
 }
-
-//see if user is in usergroup and can edit
-switch($taskid_row["groupaccess"] ) {
-  case "t";
-    $group = FALSE;
-    if(in_array($taskid_row["usergroupid"], (array)$gid ) )
-      $group = TRUE;
-    break;
-
-  case "f":
-  default:
-    $group = FALSE;
-    break;
-  }
 
 switch( $taskid_row["owner"] ){
   case "0":
@@ -306,9 +282,15 @@ switch( $taskid_row["owner"] ){
       //take over
       $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_$type"] )."</a>]&nbsp;\n";
     }
-    if($group )
-      //if user is in the usergroup & groupaccess is set
-      $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]."</a>]\n";
+    if(($taskid_row["groupaccess"] == "t") && (in_array($taskid_row["usergroupid"], (array)$gid ) ) ){
+      //user is in the usergroup & groupaccess is set
+      $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]."</a>]&nbsp;\n";
+        
+      //if not finished and not a project; then [I finished it!] button
+      if( ($taskid_row["status"] != "done" ) && ($taskid_row["parent"] != 0 ) ) {
+        $content .= "[<a href=\"tasks.php?x=$x&amp;action=done&amp;taskid=".$taskid."\">".$lang["i_finished"]."</a>]\n";
+      }
+    }
     break;
 }
 
