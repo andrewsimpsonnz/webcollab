@@ -120,12 +120,22 @@ if(isset($_POST["database_name"]) ) {
     $schema = fread($handle, filesize($db_schema ) );
     fclose($handle );
 
-    //separate schema into individual table setups
-    $table_array = explode(";", $schema );
+    //roughly separate schema into individual table setups
+    $schema_array = explode(";", $schema );
+
+    //clean up the trailing and ending whitespaces and remove any null strings
+    $max = sizeof($schema_array );
+    $j = 0;
+    for($i=0 ; $i < $max ; $i++) {
+      if(strlen($input = trim($schema_array[$i] ) ) > 0 ) {
+        $table_array[$j] = $input;
+        $j++;
+      }
+    }
 
     //create each table
     foreach($table_array as $table ){
-      if( ! ($result = @mysql_query( $table, $database_connection ) ) ) {
+      if( ! ($result = @mysql_query($table, $database_connection ) ) ) {
         error_setup("The database creation had the following error:<br /> ".mysql_error($database_connection) );
       }
     }
@@ -171,14 +181,24 @@ if(isset($_POST["database_name"]) ) {
     $schema = fread($handle, filesize("../db/schema_pgsql.sql") );
     fclose($handle );
 
-    //separate schema into individual table setups
-    $table_array = explode(";", $schema );
+    //roughly separate schema into individual table setups
+    $schema_array = explode(";", $schema );
+
+    //clean up the trailing and ending whitespaces and remove any null strings
+    $max = sizeof($schema_array );
+    $j = 0;
+    for($i=0 ; $i < $max ; $i++) {
+      if(strlen($input = trim($schema_array[$i] ) ) > 0 ) {
+        $table_array[$j] = $input;
+        echo "value is:".$input."<BR>";
+        $j++;
+      }
+    }
 
     //create tables from schema
     foreach($table_array as $table ){
       if( ! ($result = @pg_exec($database_connection, $table ) ) ) {
-        if(pg_errormessage($database_connection) != NULL )
-          error_setup("The database creation had the following error:<br /> ".pg_errormessage($database_connection) );
+        error_setup("The database creation had the following error:<br /> ".pg_errormessage($database_connection) );
       }
     }
     break;
