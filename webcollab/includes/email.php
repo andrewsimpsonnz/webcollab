@@ -184,7 +184,7 @@ function & clean($encoded ) {
   $text = strtr($encoded, $trans );
 
   //remove any dangerous tags that exist after decoding
-  $text = preg_replace("/(<\/?)(\w+)([^>]*>)/e", "'$1'.strtoupper('$2').'$3'", $text );
+  $text = preg_replace("/(<\/?)(\w+|s+)([^>]*>)/e", "'$1'.ltrim(strtoupper('$2')).'$3'", $text );
   $text = str_replace(array("<APPLET", "<OBJECT", "<SCRIPT", "<EMBED", "<FORM", "<?", "<%" ), "<**** ", $text );
 
 return $text;
@@ -335,7 +335,7 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   }
   $headers[] = $line;
   //assemble remaining message headers (RFC 821 / RFC 2045)
-  $headers[] = "From: ".EMAIL_FROM;
+  $headers[] = "From: WebCollab ".EMAIL_FROM;
   $headers[] = "Reply-To: ".EMAIL_REPLY_TO;
 
   $headers = array_merge($headers, subject($subject ) );
@@ -346,7 +346,7 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   $headers[] = "X-Sender: ".EMAIL_REPLY_TO;
   $headers[] = "Return-Path: <".EMAIL_REPLY_TO.">";
   $headers[] = "Mime-Version: 1.0";
-  $headers[] = "Content-Type: text/plain; ".$message_charset;
+  $headers[] = "Content-Type: text/plain; charset=".$message_charset;
   $headers[] = "Content-Transfer-Encoding: ".$email_encode;
   $headers[] = "";
 
