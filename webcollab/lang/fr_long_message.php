@@ -29,30 +29,30 @@
 */
 
 
-$taskgroup_info =   "<ul><li>Si vous effacez votre groupe de tache , toutes les taches de ce groupe seront déclassées.</li>\n".
-                      "<li>Vous pouvez changer le nom de la catégorie sans modifier les taches.</li>\n".
-                      "<li>Deux groupes de taches ne peuvent avoir le même nom.</li></ul>\n";
+$taskgroup_info =   "<ul><li>Si vous effacez votre groupe de tache , toutes les taches de ce groupe seront d&eacute;class&eacute;es.</li>\n".
+                      "<li>Vous pouvez changer le nom de la cat&eacute;gorie sans modifier les taches.</li>\n".
+                      "<li>Deux groupes de taches ne peuvent avoir le m&ecirc;me nom.</li></ul>\n";
 
-$usergroup_info =   "<ul><li>Si vous effacez un groupe d'utilisateurs toutes leurs contributions dans le forum vont être détruites aussi.</li>\n".
+$usergroup_info =   "<ul><li>Si vous effacez un groupe d'utilisateurs toutes leurs contributions dans le forum vont &ecirc;tre d&eacute;truites aussi.</li>\n".
                       "<li>Vous pouvez changer le nom de groupe d'utilisateurs sans modifier les utilisateurs.</li>\n".
-                      "<li>Deux groupe d'utilisateurs ne peuvent avoir le même nom.</li></ul>\n";
+                      "<li>Deux groupe d'utilisateurs ne peuvent avoir le m&ecirc;me nom.</li></ul>\n";
 
-$user_info      =    "Merci de sélectionner votre activité dans le menu à gauche.<br /><br />".
+$user_info      =    "Merci de s&eacute;lectionner votre activit&eacute; dans le menu &agrave; gauche.<br /><br />".
                       "Pour informations:<br />".
                       "<ul>".
-                      "<li>Les utilisateurs disposent de deux étapes pour effacer, la seconde est permanente.</li>\n".
-                      "<li>Un utilisateur effacé pert toutes ses taches mais pas ses contributions dans les forums.</li>\n".
-                      "<li>Un utilisateur détruit de façon permanente perd tout.</li>\n".
-                      "<li>Vous ne pouvez pas effacer de manière permanente un utilisateur qui dispose de contributions dans les forums.</li>\n".
-                      "<li>Un utilisateur effacé conserve une trace de ces taches sous forme de liste et peux les utiliser jusqu'à ce que cette liste soit vide.</li>\n".
-                      "<li>TOUTE les actions effectuées sur un ulisateur lui sont confirmées par email.</li>\n".
-                      "<li>Les mot de passes sont cryptés. On ne peut qu'en affecter un nouveau.</li>\n".
-                      "<li>Les mot de passes sont envoyés par email seulement une fois. Merci d'être prudent sur leur lieu de stockage!</li>\n".
-                      "<li>Un utilisateur peut s'éditer lui même sans que l'administrateur ne soit mis au courrant , cela économise du temps (et des emails)</li>\n".
+                      "<li>Les utilisateurs disposent de deux &eacute;tapes pour effacer, la seconde est permanente.</li>\n".
+                      "<li>Un utilisateur effac&eacute; pert toutes ses taches mais pas ses contributions dans les forums.</li>\n".
+                      "<li>Un utilisateur d&eacute;truit de façon permanente perd tout.</li>\n".
+                      "<li>Vous ne pouvez pas effacer de mani&egrave;re permanente un utilisateur qui dispose de contributions dans les forums.</li>\n".
+                      "<li>Un utilisateur effac&eacute; conserve une trace de ces taches sous forme de liste et peux les utiliser jusqu'&agrave; ce que cette liste soit vide.</li>\n".
+                      "<li>TOUTE les actions effectu&eacute;es sur un ulisateur lui sont confirm&eacute;es par email.</li>\n".
+                      "<li>Les mot de passes sont crypt&eacute;s. On ne peut qu'en affecter un nouveau.</li>\n".
+                      "<li>Les mot de passes sont envoy&eacute;s par email seulement une fois. Merci d'&ecirc;tre prudent sur leur lieu de stockage!</li>\n".
+                      "<li>Un utilisateur peut s'&eacute;diter lui m&ecirc;me sans que l'administrateur ne soit mis au courrant , cela &eacute;conomise du temps (et des emails)</li>\n".
                       "</ul>\n";
 
 $calendar_key    = "<i>Retour au menu principal</i></a>]</b><br />\n".
-                      "<p><b><u>Légende du Calendrier</u></b><br /><br />\n".
+                      "<p><b><u>L&eacute;gende du Calendrier</u></b><br /><br />\n".
 	              "<font color=\"blue\">Projet (avec taches en cours)</font><br />\n".
                       "<font color=\"green\"><u>Projet </u>(toutes les taches sont finies)</font><br />\n".
                       "<font color=\"red\">Tache (en cours)</font><br />\n".
