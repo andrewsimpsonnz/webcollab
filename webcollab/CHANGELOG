@@ -1,4 +1,28 @@
 WebCollab CVS
+*** 3 November 2003
+(Andrew Simpson)
+
+- bugfix: Don't show deleted users in usergroups
+
+- bugfix: Logic errors in to_do and calendar
+
+WebCollab CVS
+*** 1 November 2003
+(Andrew Simpson)
+
+- better internationalisation of language files
+
+- minor bugfixing and optimising in email.php after previous re-write
+
+- improve email contents from task_delete.php
+
+- improve email contents from task_submit.php
+
+- minor formatting and optimising in task_submit.php
+
+- bugfix: Email to 'nobody' in task submit causes error
+
+WebCollab CVS
 *** 27 October 2003
 (Andrew Simpson)
 
