@@ -26,63 +26,67 @@
 */
 
 //get our location
-require_once("path.php" );
+require_once('path.php' );
 
-include_once(BASE."config/config.php" );
+include_once(BASE.'config/config.php' );
 
 switch(LOCALE ) {
 
-  case "bg":
-    include(BASE."lang/bg_email.php" );
+  case 'bg':
+    include(BASE.'lang/bg_email.php' );
     break;
 
-  case "ca":
-    include(BASE."lang/ca_email.php" );
+  case 'ca':
+    include(BASE.'lang/ca_email.php' );
     break;
 
-  case "da":
-    include(BASE."lang/da_email.php" );
+  case 'da':
+    include(BASE.'lang/da_email.php' );
     break;
 
-  case "de":
-    include(BASE."lang/de_email.php" );
+  case 'de':
+    include(BASE.'lang/de_email.php' );
     break;
 
-  case "es":
-    include(BASE."lang/es_email.php" );
+  case 'es':
+    include(BASE.'lang/es_email.php' );
     break;
 
-  case "fr":
-    include(BASE."lang/fr_email.php" );
+  case 'fr':
+    include(BASE.'lang/fr_email.php' );
     break;
 
-  case "hu":
-    include(BASE."lang/hu_email.php" );
+  case 'hu':
+    include(BASE.'lang/hu_email.php' );
     break;
 
-  case "it":
-    include(BASE."lang/it_email.php" );
+  case 'it':
+    include(BASE.'lang/it_email.php' );
     break;
   
-  case "ja":
-    include(BASE."lang/ja_email.php" );
+  case 'ja':
+    include(BASE.'lang/ja_email.php' );
     break;
 
-  case "ko":
-    include(BASE."lang/ko_email.php" );
+  case 'ko':
+    include(BASE.'lang/ko_email.php' );
     break;
 
-  case "pt-br":
-    include(BASE."lang/pt-br_email.php" );
+  case 'pt-br':
+    include(BASE.'lang/pt-br_email.php' );
     break;
 
-  case "ru":
-    include(BASE."lang/ru_email.php" );
+  case 'ru':
+    include(BASE.'lang/ru_email.php' );
     break;
-        
-  case "en":
+  
+  case 'se':
+    include(BASE.'lang/se_email.php' );
+    break;
+      
+  case 'en':
   default:
-    include(BASE."lang/en_email.php" );
+    include(BASE.'lang/en_email.php' );
     break;
 }
 

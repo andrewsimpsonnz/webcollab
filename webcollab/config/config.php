@@ -80,7 +80,7 @@
   // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan),
   //                       "de" (German), "it" (Italian), "bg" (Bulgarian), "da" (Danish),
   //                       "ko" (Korean), "pt-br" (Brazilian Portuguese), "hu" (Hungarian),
-  //                       "ru" (Russian), "ja" (Japanese)
+  //                       "ru" (Russian), "ja" (Japanese), "se" (Swedish)
   
   define('LOCALE', "en" );
   

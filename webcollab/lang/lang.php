@@ -26,63 +26,67 @@
 */
 
 //get our location
-require_once("path.php" );
+require_once('path.php' );
 
-include_once(BASE."config/config.php" );
+include_once(BASE.'config/config.php' );
 
 switch(LOCALE ) {
 
-  case "bg":
-    include(BASE."lang/bg_message.php" );
+  case 'bg':
+    include(BASE.'lang/bg_message.php' );
     break;
 
-  case "ca":
-    include(BASE."lang/ca_message.php" );
+  case 'ca':
+    include(BASE.'lang/ca_message.php' );
     break;
 
-  case "da":
-    include(BASE."lang/da_message.php" );
+  case 'da':
+    include(BASE.'lang/da_message.php' );
     break;
 
-  case "de":
-    include(BASE."lang/de_message.php" );
+  case 'de':
+    include(BASE.'lang/de_message.php' );
     break;
 
-  case "es":
-    include(BASE."lang/es_message.php" );
+  case 'es':
+    include(BASE.'lang/es_message.php' );
     break;
 
-  case "fr":
-    include(BASE."lang/fr_message.php" );
+  case 'fr':
+    include(BASE.'lang/fr_message.php' );
     break;
 
-  case "hu":
-    include(BASE."lang/hu_message.php" );
+  case 'hu':
+    include(BASE.'lang/hu_message.php' );
     break;
 
-  case "it":
-    include(BASE."lang/it_message.php" );
+  case 'it':
+    include(BASE.'lang/it_message.php' );
     break;
   
-  case "ja":
-    include(BASE."lang/ja_message.php" );
+  case 'ja':
+    include(BASE.'lang/ja_message.php' );
     break;
     
-  case "ko":
-    include(BASE."lang/ko_message.php" );
+  case 'ko':
+    include(BASE.'lang/ko_message.php' );
     break;
 
-  case "pt-br":
-    include(BASE."lang/pt-br_message.php" );
+  case 'pt-br':
+    include(BASE.'lang/pt-br_message.php' );
     break;
 
-  case "ru":
-    include(BASE."lang/ru_message.php" );
+  case 'ru':
+    include(BASE.'lang/ru_message.php' );
     break;
-      
-  case "en":
+        
+  case 'se':
+    include(BASE.'lang/se_message.php' );
+    break;
+
+  case 'en':
   default:
-    include(BASE."lang/en_message.php" );
+    include(BASE.'lang/en_message.php' );
     break;
 }
 

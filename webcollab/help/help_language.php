@@ -26,77 +26,90 @@
 */
 
 //get our location
-require_once("path.php" );
+require_once('path.php' );
 
-require_once(BASE."config/config.php" );
+require_once(BASE.'config/config.php' );
 
 $help_item = $_GET['item'];
 $help_type = $_GET['type'];
 
 switch(LOCALE ) {
 
-  case "bg":
+  case 'bg':
     switch($help_type ) {
-      case "admin":
-        header("Location: ".BASE_URL."help/bg_help_admin.php#".$help_item );
+      case 'admin':
+        header('Location: '.BASE_URL.'help/bg_help_admin.php#'.$help_item );
         break;
 
-      case "help":
+      case 'help':
       default:
-        header("Location: ".BASE_URL."help/bg_help.php#".$help_item );
+        header('Location: '.BASE_URL.'help/bg_help.php#'.$help_item );
         break;
     }
     break;
   
-  case "es":
+  case 'es':
     switch($help_type ) {
-      case "admin":
-        header("Location: ".BASE_URL."help/es_help_admin.php#".$help_item );
+      case 'admin':
+        header('Location: '.BASE_URL.'help/es_help_admin.php#'.$help_item );
         break;
 
-      case "help":
+      case 'help':
       default:
-        header("Location: ".BASE_URL."help/es_help.php#".$help_item );
+        header('Location: '.BASE_URL.'help/es_help.php#'.$help_item );
         break;
     }
     break;
 
-  case "de":
+  case 'de':
     switch($help_type ) {
-      case "admin":
-        header("Location: ".BASE_URL."help/de_help_admin.php#".$help_item );
+      case 'admin':
+        header('Location: '.BASE_URL.'help/de_help_admin.php#'.$help_item );
         break;
 
-      case "help":
+      case 'help':
       default:
-        header("Location: ".BASE_URL."help/de_help.php#".$help_item );
+        header('Location: '.BASE_URL.'help/de_help.php#'.$help_item );
         break;
     }
     break;
   
-  case "ru":
+  case 'ru':
     switch($help_type ) {
-      case "admin":
-        header("Location: ".BASE_URL."help/ru_help_admin.php#".$help_item );
+      case 'admin':
+        header('Location: '.BASE_URL.'help/ru_help_admin.php#'.$help_item );
         break;
 
-      case "help":
+      case 'help':
       default:
-        header("Location: ".BASE_URL."help/ru_help.php#".$help_item );
+        header('Location: '.BASE_URL.'help/ru_help.php#'.$help_item );
         break;
     }
     break;
 
-  case "en":
+  case 'se':
+    switch($help_type ) {
+      case 'admin':
+        header('Location: '.BASE_URL.'help/se_help_admin.php#'.$help_item );
+        break;
+
+      case 'help':
+      default:
+        header('Location: '.BASE_URL.'help/se_help.php#'.$help_item );
+        break;
+    }
+    break;
+    
+  case 'en':
   default:
    switch($help_type ) {
-      case "admin":
-        header("Location: ".BASE_URL."help/en_help_admin.php#".$help_item );
+      case 'admin':
+        header('Location: '.BASE_URL.'help/en_help_admin.php#'.$help_item );
         break;
 
-      case "help":
+      case 'help':
       default:
-        header("Location: ".BASE_URL."help/en_help.php#".$help_item );
+        header('Location: '.BASE_URL.'help/en_help.php#'.$help_item );
         break;
     }
 }
