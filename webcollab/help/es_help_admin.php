@@ -35,15 +35,13 @@
 */
 
 //get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, it does not make any sense to continue" );
+require_once("path.php" );
 
-include_once( BASE."includes/screen.php" );
+include_once(BASE."includes/screen.php" );
 
-create_top("Help",1);
+create_top("Help", 1 );
 
 $content = "
-	<br />
 	<a name=\"admin\"><br /></a>
 	<b>Admin email:</b><br />
 	Esta es la direccion de email del administrador del sitio que se encarga del dia a dia.
@@ -78,9 +76,8 @@ $content = "
 	Notar que los usuarios pueden cambiar es estado default cambiand el check del checkbox manualmente.
 	<br /><br />
 	Seteando al grupo de usuario (usergroups) como privado no afecta a la lista de correo.
-	<br /><br />
 	";
 
-  new_box( "Help", $content );
+  new_box("Help", $content );
   create_bottom();
 ?>

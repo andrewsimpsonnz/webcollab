@@ -32,13 +32,11 @@
 //get our location
 require_once("path.php" );
 
-include_once( BASE."includes/screen.php" );
+include_once(BASE."includes/screen.php" );
 
-create_top("Help",1);
+create_top("Help", 1 );
 
 $content = "
-
-<br />
 <a name=\"usergroup\"><br /></a>
 <b>User groups:</b><br />
 Most projects or tasks have a group of users working together in one specific area.  A Usergroup is
@@ -64,7 +62,7 @@ readable.  By putting tasks into a Taskgroup the list will be automatically grou
 subsections (by Taskgroup) and be much more readable.  Tasks that have no Taskgroup assigned will
 be grouped as Uncategorised.<br />
 <br />
-To summarise:  If no tasks in a project have a Taskgroup set, the task listing will be a long list. 
+To summarise:  If no tasks in a project have a Taskgroup set, the task listing will be a long list.
 If at least one task has the Taskgroup set, all the tasks will be listed by Taskgroup.<br />
 <br />
 
@@ -156,11 +154,7 @@ the display toggles between the two kinds of groups.</li>
 indicates the name of the task.
 You can click on the name in order to see more information.</li>
 </ul>
-<br />
-
-<br />
-
 ";
-  new_box( "Help", $content );
+  new_box("Help", $content );
   create_bottom();
 ?>

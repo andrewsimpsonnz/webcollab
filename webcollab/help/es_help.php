@@ -34,16 +34,13 @@
 */
 
 //get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
 
 include_once( BASE."includes/screen.php" );
 
-create_top("Help",1);
+create_top("Help", 1 );
 
 $content = "
-
-<br />
 <a name=\"usergroup\"><br /></a>
 <b>User groups:</b><br />
 La mayoria de los proyectos y tareas tiene un grupo de usuarios trabajando juntos en una especifica area. Un usergroup es un grupo de usuarios que comparten un area de trabajo similar. Las notificaciones por e-mail pueden ser enviadas al usergroup, mas que a un unico usuario.<br />
@@ -145,11 +142,8 @@ se cambia la informacion entre estos dos tipos de grupos.</li>
 indica el nombre de la tarea.
 Puede hacer click en el nombre para ver mas informacion.</li>
 </ul>
-<br />
-
-<br />
-
 ";
-  new_box( "Help", $content );
-  create_bottom();
+
+new_box("Help", $content );
+create_bottom();
 ?>

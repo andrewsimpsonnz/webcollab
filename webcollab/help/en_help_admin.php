@@ -37,10 +37,9 @@ require_once("path.php" );
 
 include_once(BASE."includes/screen.php" );
 
-create_top("Help",1);
+create_top("Help", 1 );
 
 $content = "
-	<br />
 	<a name=\"admin\"><br /></a>
 	<b>Admin email:</b><br />
 	This is the email address of the site admin that deals with day to day running of the site.
@@ -75,7 +74,6 @@ $content = "
 	Note that users can overide the default settings by un-checking the box manually.
 	<br /><br />
 	Setting a usergroup to private does not affect the mailing list.
-	<br /><br />
 	";
 
   new_box( "Help", $content );
