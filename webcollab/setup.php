@@ -55,23 +55,39 @@ function secure_error($message ) {
 if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
 
   $q = "";
-  $login_q = "";
+  $username = safe_data($_POST["username"]);
+  //encrypt password
+  $md5pass = md5($_POST["password"] );
 
+  //no ip (possible?)
+  if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
+    secure_error("Unable to determine ip address");
+  }
+  
   include_once("database/database.php" );
   include_once("includes/common.php" );
 
-  //encrypt password
-  $md5pass = md5($_POST["password"] );
-  $login_q = "SELECT id
-              FROM users
-              WHERE deleted='f'
-              AND admin='t'
-              AND name='".safe_data($_POST["username"])."'
-              AND password='".$md5pass."'";
-
-
-  //no database connection
-  $q = db_query($login_q );
+  //count the number of recent login attempts
+  $count_attempts = db_result(@db_query("SELECT COUNT(*) FROM login_attempt 
+                                                WHERE name='".$username."' 
+                                                AND last_attempt > (now()-INTERVAL ".$delim."10 MINUTE".$delim.") LIMIT 6" ), 0, 0 );
+    
+  //protect against password guessing attacks 
+  if($count_attempts > 3 ) {
+    secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+  }                                                                              
+    
+  //record this login attempt
+  db_query("INSERT INTO login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
+                                                                                     
+  //do query and check database connection
+  if( ! $q = db_query("SELECT id FROM users
+                             WHERE deleted='f'
+                             AND admin='t'
+                             AND name='"$username."'
+                             AND password='".$md5pass."'", 0 ) ){
+    secure_error("Not a valid username, or password" );
+  }
 
   //no such user-password combination
   if( @db_numrows($q) < 1 ) {
@@ -84,11 +100,6 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
     secure_error("Unknown user id");
   }
 
-  //no ip (possible?)
-  if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
-    secure_error("Unable to determine ip address");
-  }
-
   //user is okay log him/her in
 
   //create session key
@@ -99,7 +110,8 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
 
   //remove the old login information
   @db_query("DELETE FROM logins WHERE user_id=".$user_id );
-
+  @db_query("DELETE FROM login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
+   
   //log the user in
   db_query("INSERT INTO logins( user_id, session_key, ip, lastaccess )
                        VALUES('".$user_id."', '".$session_key."', '".$ip."', now() )" );
