@@ -163,19 +163,25 @@ ignore_user_abort(TRUE);
       //set up emails
       $mail_group = "";
       $s = "";
-      $flag = false;
-      //get & add the mailing list
-      if($EMAIL_MAILINGLIST != "" ) {
-        $mail_group = $EMAIL_MAILINGLIST;
-        $s = ", ";
-        $flag = true;
-      }
+      $mail_flag = false;
 
       //get task data
-      $q = db_query("SELECT name, usergroupid FROM tasks WHERE id=$taskid" );
+      $q = db_query("SELECT tasks.name AS name,
+                            tasks.usergroupid AS usergroupid,
+                            users.email AS email
+                            FROM tasks
+                            LEFT JOIN users ON (tasks.owner=users.id)
+                            WHERE tasks.id=$taskid" );
       $task_row = db_fetch_array($q, 0 );
 
-      //if usergroup set, get the user list
+      //set owner's email
+      if($task_row["email"] ) {
+        $mail_group .= $task_row["email"];
+        $s = ", ";
+        $mail_flag = true;
+      }
+
+      //if usergroup set, add the user list
       if($task_row["usergroupid"] ){
         $q = db_query("SELECT users.email
                               FROM users
@@ -186,12 +192,18 @@ ignore_user_abort(TRUE);
         for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
           $mail_group .= $s.$row[0];
           $s = ", ";
-          $flag = true;
+          $mail_flag = true;
         }
       }
 
+      //get & add the mailing list
+      if($EMAIL_MAILINGLIST != "" ) {
+        $mail_group .= $s.$EMAIL_MAILINGLIST;
+        $mail_flag = true;
+      }
+
       //do we need to email?
-      if($flag ){
+      if($mail_flag ){
         include_once(BASE."includes/email.php" );
 
         switch($parentid ) {
