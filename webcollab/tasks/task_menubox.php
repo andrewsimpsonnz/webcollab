@@ -68,12 +68,13 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
                 "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onClick=\"return confirm( '".sprintf($lang["del_javascript_".$type."_sprt"], $row["name"] )."')\">".$lang["delete_$type"]."</a><br />\n".
                 "<br /><small><b>".$lang["global"].":</b></small><br />\n";
   }
-  $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang["add_task"]."</a><br />\n";
+  $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=$taskid\">".$lang["add_task"]."</a><br />\n";
+  $content .= "<a href=\"tasks.php?x=$x&amp;action=clone&amp;taskid=$taskid\">"."Clone - translate me & add type"."</a><br />\n";
+
 }
 
 //the task-independent part
 $content .= "<a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a><br />\n";
-
 new_box( $lang[$type."_options"], $content, "boxmenu" );
 
 ?>

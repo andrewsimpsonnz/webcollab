@@ -98,6 +98,18 @@ if( ! isset($_REQUEST["action"]) )
       create_bottom();
       break;
 
+    //clone
+    case "clone":
+      create_top($lang["add_task"], 0, "name" );
+      include("includes/mainmenu.php" );
+      include("tasks/task_navigate.php" );
+      include("tasks/task_menubox.php" );
+      goto_main();
+      include("tasks/task_clone_add.php" );
+      create_bottom();
+      break;
+
+
     //Error case
     default:
       error("Task action handler", "Invalid request");
