@@ -117,7 +117,7 @@ if( ! isset($_REQUEST["action"]) )
         $last_oid = db_lastoid($q );
 
         //get the uid of the last user
-        $user_id = db_result(db_query("SELECT id FROM users WHERE $last_insert = $last_oid" ), 0, 0 );
+        $user_id = db_result(db_query("SELECT id FROM users WHERE $last_insert=$last_oid" ), 0, 0 );
 
         //insert all selected usergroups in the usergroups_users table
         (array)$usergroup = $_POST["usergroup"];
@@ -184,7 +184,7 @@ if( ! isset($_REQUEST["action"]) )
         $userid = $_POST["userid"];
 
         //prohibit 2 people from choosing the same username
-        if( db_result( db_query("SELECT COUNT(*) FROM users WHERE name='$name' AND NOT id=$userid", 0 ), 0, 0 ) > 0 )
+        if(db_result(db_query("SELECT COUNT(*) FROM users WHERE name='$name' AND NOT id=$userid", 0 ), 0, 0 ) > 0 )
           warning($lang["duplicate_user"], sprintf($lang["duplicate_change_user_sprt"], $name ) );
 
         //begin transaction
@@ -202,7 +202,6 @@ if( ! isset($_REQUEST["action"]) )
                                 WHERE id=$userid" );
         }
         else{
-
           //update data without password
           $q = db_query("UPDATE users
                                 SET name='$name',
@@ -230,9 +229,9 @@ if( ! isset($_REQUEST["action"]) )
               $usergroup_names .= db_result( $q, 0, 0 )."\n";
             }
           }
-          //transaction complete
-          db_commit();
         }
+        //transaction complete
+        db_commit();
 
         if($usergroup_names == "" )
           $usergroup_names = $lang["not_usergroup"]."\n";
