@@ -61,12 +61,14 @@ else{
   //return to login screen
   header("Location: ".$BASE_URL."index.php");
   die;
-  //error($lang["security_manager"], sprintf($lang["no_key_sprt"], $BASE_URL ) );
 }
 
 //seems okay at first, now go cross-checking with the known data from the database
-if( ! ($q = db_query("SELECT logins.user_id AS user_id, logins.ip AS ip, logins.lastaccess AS lastaccess,
-                             users.email AS email, users.admin AS admin, users.fullname AS fullname,
+if( ! ($q = db_query("SELECT logins.user_id AS user_id,
+                             logins.lastaccess AS lastaccess,
+                             users.email AS email,
+                             users.admin AS admin,
+                             users.fullname AS fullname,
                              $epoch now() ) AS now,
                              $epoch lastaccess) AS sec_lastaccess
                              FROM logins
@@ -79,7 +81,6 @@ if(db_numrows($q) != 1 ) {
   //return to login screen
   header("Location: ".$BASE_URL."index.php");
   die;
-  //error($lang["security_manager"], sprintf($lang["no_session"], $BASE_URL ) );
 }
 
 if( ! ( $row = db_fetch_array($q, 0) ) ) {
