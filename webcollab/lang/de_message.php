@@ -86,13 +86,10 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['login']                       = 'Login';
     $lang['error']                       = 'Fehler';
     $lang['no_login']                    = 'Zugriff verweigert, Benutzername oder Passwort falsch';
-//**    
-    $lang['redirect_sprt']               = 'You will automatically return to Login after a %d second delay';
-//**
-    $lang['login_now']                   = 'Please click here to return to Login now';   
+    $lang['redirect_sprt']               = 'Sie gelangen automatisch zur Loginseite nach %d Sekunden';
+    $lang['login_now']                   = 'Bitte klicken sie hier, um jetzt zur Loginseite zur&uuml;ckzukehren';
     $lang['please_login']                = 'Bitte melden Sie sich an';
-//**    
-    $lang['go']                          = 'Go!';
+    $lang['go']                          = 'Los!';
     
  //graphic items
     $lang['late_g']                      = '&nbsp;VERSP&Auml;TET&nbsp;';
@@ -111,15 +108,12 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['allow_group_edit']            = 'Ist es allen Benutzern der Gruppe erlaubt, die Daten zu bearbeiten?';
     $lang['set_email_owner']             = 'Den Besitzer immer per Email &uuml;ber Ver&auml;nderungen benachrichtigen?';
     $lang['set_email_group']             = 'Soll die Benutzergruppe immer bei Ver&auml;nderungen benachrichtigt werden?';
-//**    
-    $lang['project_listing_order']       = 'Project listing order';
-//**    
-    $lang['task_listing_order']          = 'Task listing order'; 
+    $lang['project_listing_order']       = 'Projektsortierung nach';
+    $lang['task_listing_order']          = 'Aufgabensortierung nach'; 
     $lang['configuration']               = 'Konfiguration';
 
 //archive
-//**
-    $lang['archived_projects']           = 'Archived Projects';    
+    $lang['archived_projects']           = 'Archivierte Projekte';    
 
  //contacts
     $lang['firstname']                   = 'Vorname:';
@@ -181,10 +175,8 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['forum_submit']                = 'Beitrag absenden';
     $lang['no_message']                  = 'Keine Nachricht angegeben! Bitte gehen Sie zur&uuml;ck und versuchen Sie es noch einmal';
     $lang['add_reply']                   = 'Antwort hinzuf&uuml;gen';
-//**  
-    $lang['last_post_sprt']             = 'Last post %s'; //Note to translators: context is 'Last post 2004-Dec-22'
-//**   
-    $lang['recent_posts']               = 'Recent forum posts';      
+    $lang['last_post_sprt']              = 'Letzter Beitrag %s'; //Note to translators: context is 'Last post 2004-Dec-22'
+    $lang['recent_posts']                = 'Neueste Beitr&auml:ge';
 
  //includes
     $lang['report']                      = 'Report';
@@ -195,8 +187,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['calendar']                    = 'Kalender';
     $lang['log_out']                     = 'Abmelden';
     $lang['main_menu']                   = 'Hauptmen&uuml;';
-//**
-    $lang['archive']                     = 'Archive';   
+    $lang['archive']                     = 'Archiv';
     $lang['user_homepage_sprt']          = 'Startseite von %s';
     $lang['missing_field_javascript']    = 'Bitte geben sie einen Wert in das leere Feld ein';
     $lang['invalid_date_javascript']     = 'Bitte &auml;hlen sie ein g&uuml;ltiges Kalenderdatum';
@@ -245,13 +236,10 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['email']                       = 'E-Mail';
     $lang['admin']                       = 'Administrator';
     $lang['private_user']                = 'Privater Nutzer';
- //**
-    $lang['normal_user']                 = 'Normal user'; 
-    $lang['is_admin']                    = 'Kann administrieren?';
- //**
-    $lang['is_guest']                    = 'Is a guest?';
- //**
-    $lang['guest']                       = 'Guest user';
+    $lang['normal_user']                 = 'Normaler Nutzer';
+    $lang['is_admin']                    = 'Administrator';
+    $lang['is_guest']                    = 'Gast';
+    $lang['guest']                       = 'Gast';
     $lang['user_info']                   = 'Informationen &uuml;ber den Nutzer';
     $lang['deleted_users']               = 'Gel&ouml;schte Nutzer';
     $lang['no_deleted_users']            = 'Es gibt keine gel&ouml;schten Nutzer.';
@@ -342,8 +330,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['add_project']                 = 'Projekt hinzuf&uuml;gen';
     $lang['clone_project']               = 'Projekt klonen';
     $lang['clone_task']                  = 'Aufgabe klonen';
-//**    
-    $lang['quick_jump']                  = 'Quick Jump'; 
+    $lang['quick_jump']                  = 'Schnellauswahl'; 
     $lang['no_edit']                     = 'Dieser Eintrag geh&ouml;rt ihnen nicht und deshalb d&uuml;rfen sie ihn nicht bearbeiten. Fragen sie einen Administrator oder den Eigent&uuml;mer, die &Auml;nderungen vorzunehmen.';
     $lang['uncategorised']               = 'Nicht eingeordnet';
     $lang['admin']                       = 'Admininstrator';
@@ -352,13 +339,10 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['delete_task']                 = 'Aufgabe l&ouml;schen';
     $lang['project_options']             = 'Projekteigenschaften';
     $lang['task_options']                = 'Aufgabeneigenschaften';
-//**    
-    $lang['javascript_archive_project']  = 'This will archive project %s.  Are you sure?';
-//**    
-    $lang['archive_project']             = 'Archive project';
+    $lang['javascript_archive_project']  = 'Projekt %s wird archiviert.  Sind sie sicher?';
+    $lang['archive_project']             = 'Archiviere Projekt';
     $lang['task_navigation']             = 'Aufgaben-Navigation';
-//**
-    $lang['new_task']                    = 'New task';    
+    $lang['new_task']                    = 'Neue Aufgabe';    
     $lang['no_projects']                 = 'Es gibt keine Projekte in dieser Ansicht';
     $lang['show_all_projects']           = 'Zeige alle Projekte';
     $lang['show_active_projects']        = 'Zeige nur aktive Projekte';
@@ -416,9 +400,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['calendar']                    = 'Kalender';
     $lang['normal_version']              = 'Normalversion';
     $lang['print_version']               = 'Druckversion';
-//**    
-    $lang['condensed_view']              = 'Condensed view';
-//**    
-    $lang['full_view']                   = 'Full view';
+    $lang['condensed_view']              = 'Kurzansicht';
+    $lang['full_view']                   = 'Vollst&auml;ndige Ansicht';
 
 ?>
