@@ -194,7 +194,7 @@ else{
     case "done":
     default:
       if($taskid_row["completed"] == 100 )  
-        $content .= "<tr><td>".$lang["completed_on"].": </td><td>".nicetime($row["epoch_completed"] )."</td></tr>\n";
+        $content .= "<tr><td>".$lang["completed_on"].": </td><td>".nicetime($row["epoch_completion"] )."</td></tr>\n";
       break;
   }
 }
