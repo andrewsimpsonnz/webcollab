@@ -44,15 +44,15 @@ $content .=
         "<form method=\"POST\" action=\"users/user_mail_send.php\">\n".
           "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
           "<table border=\"0\">\n".
-          "<tr><td><input type=\"radio\" value=\"all\" name=\"group\" id=\"all\" checked /><label for=\"all\">All users</label></td></tr>\n".
-          "<tr><td><input type=\"radio\" value=\"maillist\" name=\"group\" id=\"maillist\" /><label for=\"maillist\">Mailing list only</label></td></tr>\n".
-          "<tr><td><input type=\"radio\" value=\"group\" name=\"group\" id=\"group\" /><label for=\"group\">Usergroup selected from below</label></td></tr>\n";
+          "<tr><td><input type=\"radio\" value=\"all\" name=\"group\" id=\"all\" checked /><label for=\"all\" />All users</label></td></tr>\n".
+          "<tr><td><input type=\"radio\" value=\"maillist\" name=\"group\" id=\"maillist\" /><label for=\"maillist\" />Mailing list only</label></td></tr>\n".
+          "<tr><td><input type=\"radio\" value=\"group\" name=\"group\" id=\"group\" /><label for=\"group\" />Usergroup selected from below</label></td></tr>\n";
 
 //add user-groups
-$usergroup_q = db_query("SELECT name, id FROM usergroups ORDER BY name" );
+$q = db_query("SELECT name, id FROM usergroups ORDER BY name" );
 $content .=  "<tr><td>".$lang["usergroup"].":</td><td><select name=\"usergroup[]\" multiple size=\"4\">\n";
-for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
-  $content .= "<option value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</option>";
+for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
+  $content .= "<option value=\"".$row["id"]."\">".$row["name"]."</option>";
 }
 $content .= "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
             "</table><br /><br />\n".

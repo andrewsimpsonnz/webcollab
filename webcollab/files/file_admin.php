@@ -41,7 +41,7 @@ if($admin != 1 )
 
 
 //get the files from this task
-$file_q = db_query("SELECT files.oid AS oid,
+$q = db_query("SELECT files.oid AS oid,
                         files.id AS id,
                         files.filename AS filename,
                         files.uploaded AS uploaded,
@@ -59,7 +59,7 @@ $file_q = db_query("SELECT files.oid AS oid,
                         LEFT JOIN users ON (users.id=files.uploader)
                         ORDER BY task_name" );
 
-if(db_numrows($file_q) == 0 ) {
+if(db_numrows($q) == 0 ) {
  $content = $lang["no_files"]."\n";
 
  new_box($lang["manage_files"], $content );
@@ -67,7 +67,7 @@ if(db_numrows($file_q) == 0 ) {
 }
 
 //show them
-for($i=0 ; $row = @db_fetch_array($file_q, $i ) ; $i++ ) {
+for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
   $content .= "<table border=\"0\">\n";
 

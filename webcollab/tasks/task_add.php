@@ -50,8 +50,8 @@ $priority_select_box = "<tr><td>".$lang["priority"].":</td> <td>\n".
 
 
 $content .= "<form name=\"inputform\" method=\"POST\" action=\"tasks/task_submit.php\">\n";
-$content .= "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ";
-$content .= "<input type=\"hidden\" name=\"action\" value=\"insert\">\n ";
+$content .= "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ";
+$content .= "<input type=\"hidden\" name=\"action\" value=\"insert\" />\n ";
 
 //this is split up in 2 parts for readabilities' sake
 
@@ -64,8 +64,8 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   $q = db_query("SELECT name, deadline, status, owner, parent, projectid FROM tasks WHERE id=$parentid" );
   $task_row = @db_fetch_array($q, $i );
 
-  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\">\n".
-              "<input type=\"hidden\" name=\"projectid\" value=\"".$task_row["projectid"]."\">\n".
+  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" />\n".
+              "<input type=\"hidden\" name=\"projectid\" value=\"".$task_row["projectid"]."\" />\n".
               "<table border=\"0\">\n";
   //show project name
   if( $task_row["projectid"] == $parentid)
@@ -80,7 +80,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
     $content .= "<tr><td>".$lang["parent_task"].":</td> <td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_row["parent"]."\">".$task_row["name"]."</a></td> </tr>\n";
   }
   $content .= "<tr><td>".$lang["creation_time"].":</td> <td>".date("F j, Y, H:i")."</td> </tr>\n".
-              "<tr><td>".$lang["task_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\"></td> </tr>\n".
+              "<tr><td>".$lang["task_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
               "<tr><td>".$lang["deadline"].":</td> <td>".date_select_from_timestamp( $task_row["deadline"] )." <small><i>".$lang["taken_from_parent"]."</i></small></td> </tr>\n";
 
   //priority
@@ -136,18 +136,18 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
     $content .= "<option value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</option>\n";
 
   $content .= "</select></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users"]."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS."></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT."></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users"]."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS." /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT." /></td></tr>\n".
 
               "<tr> <td>".$lang["task_description"]."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
 
               //do we need to email ?
-              "<tr><td><label for=\"mailowner\">".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER."></label></td></tr>\n".
-              "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP."></label></td></tr>\n".
+              "<tr><td><label for=\"mailowner\">".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER." /></label></td></tr>\n".
+              "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></label></td></tr>\n".
 
               "</table><br /><br />\n".
-              "<input type=\"submit\" value=\"Add task\"> ".
-              "<input type=\"reset\" value=\"".$lang["reset"]."\">".
+              "<input type=\"submit\" value=\"".$lang["add_task"]."\" />&nbsp;".
+              "<input type=\"reset\" value=\"".$lang["reset"]."\" />".
               "</form>\n";
 
   new_box( $lang["add_task"], $content );
@@ -157,14 +157,14 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
 // ADD A NEW PROJECT
 else {
 
-  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"0\">\n".
-              "<input type=\"hidden\" name=\"projectid\" value=\"0\">\n".
+  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"0\" />\n".
+              "<input type=\"hidden\" name=\"projectid\" value=\"0\" />\n".
               //taskgroup - we don't have this for projects
-              "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\">\n".
+              "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" />\n".
 
               "<table border=\"0\">\n".
               "<tr><td>".$lang["creation_time"].":</td><td>".date("F j, Y, H:i")."</td></tr>\n".
-              "<tr><td>".$lang["project_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\"></td> </tr>\n".
+              "<tr><td>".$lang["project_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
 
               //deadline
               "<tr><td>".$lang["deadline"].":</td> <td>".date_select()."</td> </tr>\n";
@@ -206,18 +206,18 @@ else {
     $content .= "<option value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</option>\n";
 
   $content .= "</select></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users"]."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS."></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT."></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users"]."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS." /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT." /></td></tr>\n".
 
               "<tr> <td>".$lang["project_description"]."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
 
               //do we need to email ?
-              "<tr><td><label for=\"mailowner\">".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER."></label></td></tr>\n".
-              "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP."></label></td></tr>\n".
+              "<tr><td><label for=\"mailowner\">".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER." /></label></td></tr>\n".
+              "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></label></td></tr>\n".
 
               "</table><br /><br />\n".
-              "<input type=\"submit\" value=\"".$lang["add_project"]."\">\n ".
-              "<input type=\"reset\" value=\"".$lang["reset"]."\">\n".
+              "<input type=\"submit\" value=\"".$lang["add_project"]."\" />&nbsp;".
+              "<input type=\"reset\" value=\"".$lang["reset"]."\" />\n".
               "</form>\n";
 
   new_box( $lang["add_new_project"], $content );

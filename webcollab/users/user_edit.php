@@ -65,10 +65,10 @@ if( ! ($row = db_fetch_array($q , 0 ) ) )
 //show data
 $content =  "<form method=\"POST\" action=\"users/user_submit.php\">".
             "<table border=\"0\">".
-              "<tr><td>".$lang["login_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></td></tr>\n".
-              "<tr><td>".$lang["full_name"].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" value=\"".$row["fullname"]."\"></td></tr>\n".
-              "<tr><td>".$lang["password"].":</td><td><input type=\"password\" name=\"password\" size=\"30\" value=\"\"></td><td><small><i>".$lang["blank_for_current_password"]."</i></small></td></tr>\n".
-              "<tr><td>".$lang["email"].":</td><td><input type=\"text\" name=\"email\" size=\"30\" value=\"".$row["email"]."\"></td></tr>\n";
+              "<tr><td>".$lang["login_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\" /></td></tr>\n".
+              "<tr><td>".$lang["full_name"].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" value=\"".$row["fullname"]."\" /></td></tr>\n".
+              "<tr><td>".$lang["password"].":</td><td><input type=\"password\" name=\"password\" size=\"30\" value=\"\" /></td><td><small><i>".$lang["blank_for_current_password"]."</i></small></td></tr>\n".
+              "<tr><td>".$lang["email"].":</td><td><input type=\"text\" name=\"email\" size=\"30\" value=\"".$row["email"]."\" /></td></tr>\n";
 
 //dangerous action!
 if( $admin == 1 ) {
@@ -86,7 +86,7 @@ if( $admin == 1 ) {
   $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
   $content .= "<tr><td></td><td colspan=\"2\"><small><i>".$lang["member_groups"]."</i></small></td></tr>\n".
               "<tr><td>".$lang["usergroups"].":</td>".
-              "<td colspan=\"2\"><select name=\"usergroup[]\" MULTIPLE size=\"4\">\n";
+              "<td colspan=\"2\"><select name=\"usergroup[]\" multiple size=\"4\">\n";
 
   for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++) {
 

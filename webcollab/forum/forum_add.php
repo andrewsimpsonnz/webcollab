@@ -59,10 +59,10 @@ if( ($taskname = db_result(db_query("SELECT name FROM tasks WHERE id=$taskid" ),
 
 $content .= "<form name=\"inputform\" method=\"POST\" action=\"forum/forum_submit.php\">\n";
 //set some hidden values
-$content .= "<input type=\"hidden\" name=\"action\" value=\"add\">\n".
-            "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\">\n".
-            "<input type=\"hidden\" name=\"x\" value=\"$x\">".
-            "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\">\n";
+$content .= "<input type=\"hidden\" name=\"action\" value=\"add\" />\n".
+            "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\" />\n".
+            "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
+            "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\" />\n";
 
 
 //find out some of the parent's data
@@ -76,7 +76,7 @@ if( is_numeric($parentid) && ($parentid != 0) ) {
                                             WHERE forum.id=$parentid" ), 0 );
 
   //show a box with the original post
-  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\">\n".
+  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" />\n".
               "<table border=\"0\">\n".
               "<tr><td>".$lang["orig_message"]."</td><td bgcolor=\"#EEEEEE\">".nl2br( $parent_array["text"] )."</td></tr>\n";
 }
@@ -84,15 +84,15 @@ else {
   $parent_array = "";
 
   //This is a new thread so we don't have a valid parent
-  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"0\">\n".
+  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"0\" />\n".
               "<table border=\"0\">\n";
 }
 
 //build up the text-entry part
 $content .=   "<tr><td>".$lang["message"]."</td><td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
               "</table>\n".
-              "<input type=\"submit\" value=\"".$lang["post"]."\"> ".
-              "<input type=\"reset\" value=\"".$lang["reset"]."\">".
+              "<input type=\"submit\" value=\"".$lang["post"]."\" /> ".
+              "<input type=\"reset\" value=\"".$lang["reset"]."\" />".
               "</form>\n";
 
 //show a reply or a new-post box

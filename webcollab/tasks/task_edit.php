@@ -85,9 +85,9 @@ if( ($row = db_fetch_array($q, 0 ) ) < 0 )
 $content = "";
 
 $content .= "<form method=\"POST\" action=\"tasks/task_submit.php\">\n".
-            "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ".
-            "<input type=\"hidden\" name=\"action\" value=\"update\">\n ".
-            "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\">".
+            "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
+            "<input type=\"hidden\" name=\"action\" value=\"update\" />\n ".
+            "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\" />".
             "<table border=\"0\">\n".
             "<tr><td>".$lang["creation_time"]."</td> <td>".nicedate($row["created"] )."</td></tr>\n";
 
@@ -101,11 +101,11 @@ if($row["parent"] != 0 ) {
     $parent = db_result(db_query( "SELECT name FROM tasks WHERE id=".$row["parent"]), 0, 0);
     $content .= "<tr><td>".$lang["parent_task"]."</td><td><a href=\"tasks.php?x=".$x."&action=show&taskid=".$row["parent"]."\">".$parent."</a></td></tr>\n";
   }
-  $content .= "<tr><td>".$lang["task_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></td></tr>\n";
+  $content .= "<tr><td>".$lang["task_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\" /></td></tr>\n";
 }
 else {
   //project
-  $content .= "<tr><td>".$lang["project_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></td></tr>\n";
+  $content .= "<tr><td>".$lang["project_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\" /></td></tr>\n";
 }
 
 //deadline
@@ -249,7 +249,7 @@ if($row["parent"] != 0 ){
   }
   $content .= "</SELECT></td></tr>\n";
 } else
-  $content .= "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\">\n ";
+  $content .= "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" />\n ";
 
 
 //show all user-groups
@@ -279,18 +279,18 @@ $group = "";
 if($row["groupaccess"] == 't' )
   $group = "CHECKED";
 
-$content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users"]."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" $global></td></tr>\n".
-            "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" $group></td></tr>\n".
+$content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users"]."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" $global /></td></tr>\n".
+            "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" $group /></td></tr>\n".
 
             "<tr> <td>".$lang["task_description"]."</td> <td><TEXTAREA name=\"text\" rows=\"5\" cols=\"60\">".$row["text"]."</TEXTAREA></td> </tr>\n".
 
             //do we need to email ?
-            "<tr><td><label for=\"mailowner\">".$lang["email_new_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" $DEFAULT_OWNER></label></td></tr>\n".
-            "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" $DEFAULT_GROUP></label></td></tr>\n".
+            "<tr><td><label for=\"mailowner\">".$lang["email_new_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" $DEFAULT_OWNER /></label></td></tr>\n".
+            "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" $DEFAULT_GROUP /></label></td></tr>\n".
 
             "</table><br /><br />\n".
-            "<input type=\"submit\" value=\"".$lang["edit"]."\"> ".
-            "<input type=\"reset\" value=\"".$lang["reset"]."\">".
+            "<input type=\"submit\" value=\"".$lang["edit"]."\" />&nbsp;".
+            "<input type=\"reset\" value=\"".$lang["reset"]."\" />".
             "</form>\n";
 
 if($row["parent"] == 0 ) {
@@ -303,11 +303,11 @@ else{
 }
 
 //delete options
-$content .= "<form method=\"POST\" action=\"tasks.php\">\n".
-            "<input type=\"hidden\" name=\"x\" value=\"$x\">".
-            "<input type=\"hidden\" name=\"action\" value=\"delete\">\n".
-            "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\">\n".
-            "<input type=\"submit\" value=\"".$lang["delete"]." ".$title."\" onClick=\"return confirm('".sprintf($lang["del_javascript_sprt"], $title, $row["name"] )."')\">\n".
+$content .= "<br /><br />\n<form method=\"POST\" action=\"tasks.php\">\n".
+            "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
+            "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
+            "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\" />\n".
+            "<input type=\"submit\" value=\"".$lang["delete"]." ".$title."\" onClick=\"return confirm('".sprintf($lang["del_javascript_sprt"], $title, $row["name"] )."')\" />\n".
             "</form>\n";
 
 new_box( $full_title, $content );
