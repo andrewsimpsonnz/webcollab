@@ -27,7 +27,7 @@
   ---------
 
   Language files for 'en' (English)
-  
+
   Maintainer: Andrew Simpson <andrew.simpson@paradise.net.nz>
 
 */
@@ -95,6 +95,7 @@ $lang = array(
  "mailing_list" => "Mailing list",
  "default_checkbox" => "Default checkbox settings for Project/Tasks",
  "allow_globalaccess" => "Allow global access?",
+ "allow_group_edit" => "Allow all in usergroup to edit?",
  "set_email_owner" => "Always email owner with changes?",
  "set_email_group" => "Always email usergroup with changes?",
  "configuration" => "Configuration",
@@ -271,6 +272,7 @@ $lang = array(
  "no_group" => "No group",
  "all_groups" => "All groups",
  "all_users" => "All users can view this task?",
+ "group_edit" => "Anyone in the usergroup can edit?",
  "project_description" => "Project description",
  "task_description" => "Task description",
  "email_owner" => "Send an email to the owner with the changes?",
@@ -311,6 +313,7 @@ $lang = array(
  "task_accessible_sprt" => "(This %s is publicly accessible by all users)",
  "task_not_accessible_sprt" => "(This %s is only accessible by members of the usergroup)",
  "task_not_in_usergroup_sprt" => "This %s is not part of a usergroup and is accessible by all users.",
+ "usergroup_can_edit_sprt" => "This %s can also be edited by members of the usergroup.",
  "i_take_it" => "I'll take it :)",
  "i_finished" => "I finished it!",
  "i_dont_want" => "I don't want it anymore",
