@@ -33,6 +33,10 @@ require_once(BASE."includes/security.php" );
 //data check
 $taskid = intval($taskid);
 
+//admins can go free, the rest are checked
+if($ADMIN == 1 )
+  return;
+
 //get the tasks' security info
 if( ! ($group_q = db_query("SELECT usergroupid, globalaccess, projectid FROM ".PRE."tasks WHERE id=$taskid" ) ) )
   error("Usergroup security", "There was an error in the data query." );
@@ -41,12 +45,11 @@ if( ! ($group_q = db_query("SELECT usergroupid, globalaccess, projectid FROM ".P
 if( ! ($group_row = db_fetch_num($group_q, 0 ) ) )
   error("Usergroup security", "There was an error in fetching the permission data." );
 
-//admins can go free the rest is checked
-if( ($ADMIN != 1) && ($group_row[0] != 0 ) && ($group_row[1] == 'f' ) ) {
+//check usergroup rights
+if( ($group_row[0] != 0 ) && ($group_row[1] == 'f' ) ) {
 
   //check if the user has a matching group
-  $test = array_search($group_row[0], (array)$GID );
-  if($test === FALSE || $test === NULL )
+  if(! in_array($group_row[0], (array)$GID, TRUE ) )
     warning($lang['access_denied'], $lang['private_usergroup'] );
 }
 
@@ -54,19 +57,14 @@ if( ($ADMIN != 1) && ($group_row[0] != 0 ) && ($group_row[1] == 'f' ) ) {
 if($group_row[2] != $taskid ) {
   $project_q = db_query("SELECT usergroupid, globalaccess FROM ".PRE."tasks WHERE id=".$group_row[2] );
   $project_row = db_fetch_num($project_q, 0 );
-}
-else {
-  $project_row[0] = $group_row[0];
-  $project_row[1] = $group_row[1];
-}  
 
-//check if project is marked private 
-if( ($ADMIN != 1) && ($project_row[0] != 0 ) && ($project_row[1] == 'f' ) ) {
+  //check if project is marked private 
+  if(($project_row[0] != 0 ) && ($project_row[1] == 'f' ) ) {
 
-  //check if the user has a matching group
-  $test = array_search($project_row[0], (array)$GID );
-  if($test === FALSE || $test === NULL )
-    warning($lang['access_denied'], $lang['private_usergroup'] );
+    //check if the user has a matching group
+    if(! in_array($project_row[0], (array)$GID, TRUE ) )
+      warning($lang['access_denied'], $lang['private_usergroup'] );
+  }
 }
 
 ?>
