@@ -2,12 +2,10 @@
 /*
   $Id$
  
- (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+ (c) 2004 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
  
   WebCollab
   ---------------------------------------
-  Based on original file for CoreAPM by Dennis Fleurbaaij 2001/2002
-  
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -30,6 +28,7 @@
 require_once("includes/security.php" );
 include_once("includes/screen.php" );
 
+
 //
 // The action handler
 //
@@ -40,7 +39,13 @@ if( ! isset($_REQUEST['action']) )
   switch($_REQUEST['action'] ) {
 
     //show a task
-    case "show":
+    case "show":      
+      
+      //catch & redirect hack for invalid entry from ProjectJump
+      if(isset($_REQUEST['taskid']) && $_REQUEST['taskid'] == -1 ){
+        header("Location: ".BASE_URL."main.php?x=$x" );
+      }
+      
       create_top($lang['task_info']);
       include("includes/mainmenu.php" );
       include("tasks/task_navigate.php" );
@@ -91,7 +96,8 @@ if( ! isset($_REQUEST['action']) )
     case "summary":
       create_top($lang['summary_list'] );
       include("includes/mainmenu.php" );
-      include("tasks/task_menubox.php" );
+      if($GUEST == 0 )
+        include("tasks/task_menubox.php" );
       goto_main();
       include("tasks/task_summary_list.php" );
       create_bottom();
