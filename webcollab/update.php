@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
   
   WebCollab
   ---------------------------------------
@@ -43,32 +43,6 @@ function secure_error($message ) {
   create_bottom_setup();
   die;
 
-}
-
-
-//
-// PERCENT COMPLETE
-//
-
-function percent_complete($taskid ) {
-  
-  $q = db_query("SELECT status FROM tasks WHERE projectid=".$taskid." AND parent<>0"  );
-  
-  $total_tasks = 0;
-  $tasks_completed = 0;
-  
-  for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) { 
-    $total_tasks++;
-      
-    if($row[0] == 'done')
-      $tasks_completed++;
-    }
-  
-  //project with no tasks is complete
-  if($total_tasks == 0 )
-    return 100;
-  
-  return($tasks_completed * 100 / $total_tasks );  
 }
 
 
@@ -223,8 +197,24 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
     
     for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       
-      //set completed percentage project record
-      $percent_completed = round(percent_complete($row["id"] ) );
+      $q_complete = db_query("SELECT status FROM tasks WHERE projectid=".$row["id"]." AND parent<>0"  );
+  
+      $total_tasks = 0;
+      $tasks_completed = 0;
+      
+      for($j=0 ; $row_complete = @db_fetch_num($q_complete, $j ) ; $j++ ) { 
+        $total_tasks++;
+          
+        if($row_complete[0] == 'done')
+          $tasks_completed++;
+        }
+      
+      //project with no tasks is complete
+      if($total_tasks == 0 )
+        $percent_completed = 0;
+      else
+        $percent_completed = ($tasks_completed * 100 / $total_tasks );  
+      
       db_query("UPDATE tasks SET completed=".$percent_completed." WHERE id=".$row["id"] );
 
       //for completed project set the completion time

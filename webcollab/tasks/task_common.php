@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2003 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2003 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -40,19 +40,18 @@ function percent_complete($taskid ) {
   $q = db_query("SELECT status FROM tasks WHERE projectid=".$taskid." AND parent<>0"  );
   
   for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) { 
-  
+    
     $total_tasks++;
       
     if($row[0] == 'done')
       $tasks_completed++;
-      
-  }
+    }
   
   //project with no tasks is complete
   if($total_tasks == 0 )
-    return 100;
+    return 0;
   
-  return($tasks_completed / ($total_tasks ) ) * 100;  
+  return round(($tasks_completed / ($total_tasks ) ) * 100 );  
 }
 
 //
