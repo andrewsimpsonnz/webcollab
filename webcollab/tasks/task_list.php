@@ -228,15 +228,15 @@ $q = db_query("SELECT tasks.id AS id,
     }
 
     //finish the line
-    $this_content .= "</small>\n";
+    $this_content .= "</small>";
 
     //recursive search if the subtask is listed in parent_array (it has children then)
     if(in_array( $row["id"], $parent_array, FALSE) ) {
       $this_content .= list_tasks( $row["id"]);
-      $this_content .= "</ul></li>";
+      $this_content .= "\n</ul></li>\n";
     }
     else{
-      $this_content .= "</li>";
+      $this_content .= "</li>\n";
     }
   }
 
@@ -273,7 +273,7 @@ $task_content  = list_tasks($parentid );
 //show it
 if($task_content != "" ){
   //finish off the closing </ul>
-  $content = $task_content."</ul>";
+  $content = $task_content."\n</ul>\n";
   new_box( $lang["tasks"], $content );
 }
 
