@@ -5,6 +5,9 @@ WebCollab CVS
 
 - bugfix: Private users not in a usergroup can't see themselves (Bug #1169390) (Paul Whittington - pwhittin)
 
+- bugfix: Non-usergroup members can't see public usergroup names in drop down menus to task add/edit and todo 
+
+- change $UID and $ADMIN to defined constants 
 
 WebCollab CVS
 *** 9 March 2005
