@@ -178,16 +178,15 @@ debug		Debug!
 
 function & clean($encoded ) {
 
-  /*
-  //reinstate encoded html back to original text
+  
+  //reinstate htmlentities back to ordinary text
   $trans = array_flip(get_html_translation_table(HTML_ENTITIES, ENT_NOQUOTES ) );
   $text = strtr($encoded, $trans );
   $text = preg_replace('/&#(\d{2,3});/e', "chr('$1')", $text );
-  */
-  
-  //characters escaped/encoded to avoid SQL injection/CSS attacks are reinstated. 
-  $trans = array('\;'=>';', '&lt;'=>'<', '&gt;'=>'>','&#124;'=>'|', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=', '&amp;'=>'&' );  
-  $text = strtr($encoded, $trans );
+    
+  //characters previously escaped/encoded to avoid SQL injection/CSS attacks are reinstated. 
+  $trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=' );  
+  $text = strtr($text, $trans );
   
   //remove any dangerous tags that exist after decoding
   $text = preg_replace("/(<\/?\s*)(APPLET|SCRIPT|EMBED|FORM|\?|%)(\w*|\s*)([^>]*>)/i", "\\1****\\3\\4", $text );
