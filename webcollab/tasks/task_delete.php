@@ -33,7 +33,6 @@ require_once( BASE."includes/security.php" );
 include_once(BASE."includes/admin_config.php" );
 include_once(BASE."includes/email.php" );
 include_once(BASE."includes/time.php" );
-include_once(BASE."config.php" );
 
 
 //

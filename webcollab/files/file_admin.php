@@ -28,9 +28,9 @@
 
 */
 require_once("path.php" );
+
 require_once(BASE."includes/security.php" );
 
-include_once(BASE."config.php" );
 include_once(BASE."includes/time.php" );
 
 $content = "";

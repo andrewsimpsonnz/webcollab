@@ -27,7 +27,7 @@
 
 require_once("path.php" );
 
-include_once(BASE."config.php" );
+include_once(BASE."config/config.php" );
 
 switch($DATABASE_TYPE ) {
 

@@ -31,8 +31,6 @@
 require_once("path.php" );
 require_once( BASE."includes/security.php" );
 
-include_once( BASE."config.php" );
-
 //update or insert ?
 if( ! isset($_REQUEST["action"]) || strlen($_REQUEST["action"]) == 0 )
   error("File submit", "No action given" );

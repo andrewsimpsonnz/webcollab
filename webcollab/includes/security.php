@@ -29,7 +29,7 @@
 
 require_once("path.php" );
 
-require_once(BASE."config.php" );
+require_once(BASE."config/config.php" );
 require_once(BASE."lang/lang.php" );
 require_once(BASE."database/database.php" );
 require_once(BASE."includes/common.php" );

@@ -36,7 +36,7 @@ function date_to_datetime($day, $month, $year ) {
 
   //check for valid calendar date
   if( ! checkdate($month, $day, $year ) ) {
-    warning($lang["invalid_date"], sprintf($lang["invalid_date_sprt"], $year."-".$month_array[$month - 1 ]."-".$day ) );
+    warning($lang["invalid_date"], sprintf($lang["invalid_date_sprt"], $year."-".$month_array[$month ]."-".$day ) );
   }
 
   //pad single digits into double digits (that way nicedate() works too...)
@@ -66,9 +66,8 @@ function nicedate($timestamp ) {
   //need to force $month to be an integer to make all it work
   $month = (int)$date_array[1];
   $day = $date_array[2];
-  $nicedate = $year."-".$month_array[$month - 1 ]."-".$day;
+  $nicedate = $year."-".$month_array[$month]."-".$day;
   return $nicedate;
-
 }
 
 //
@@ -88,10 +87,10 @@ function nicetime($timestamp ) {
   //need to force $month to be an integer to make all it work
   $month = (int)$date_array[1];
   $day = $date_array[2];
-  $nicetime = $year."-".$month_array[$month - 1 ]."-".$day." ".$time;
+  $nicetime = $year."-".$month_array[$month]."-".$day." ".$time;
   return $nicetime;
-
 }
+
 
 //
 // Give back a row that holds the date which comes from a pg timestamp
@@ -109,11 +108,9 @@ function date_select_from_timestamp($timestamp="" ) {
 
   $date_array = explode("-", $temp_array[0] );
 
-
   //show line
   return date_select($date_array[2], $date_array[1], $date_array[0] );
 }
-
 
 
 //
@@ -122,11 +119,10 @@ function date_select_from_timestamp($timestamp="" ) {
 function date_select($day=-1, $month=-1, $year=-1 ) {
   global $month_array;
 
-  //this is quite stupid
+  //filter for no date set
   if($day   == -1 )   $day = date("d");
   if($month == -1 ) $month = date("m");
   if($year  == -1 )  $year = date("Y");
-
 
   //day
   $content = "<select name=\"day\">\n";
@@ -139,7 +135,6 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   }
   $content .=  "</select>\n";
 
-
   //month (must be in decimal, 'cause that's what postgres uses!)
   $content .= "<select name=\"month\">\n";
   for( $i=1; $i<13 ; $i++) {
@@ -147,8 +142,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
 
     if($month == $i ) $content .= " SELECTED";
 
-    //use ($i-1) because array starts at zero
-    $content .= ">".$month_array[($i-1)]."</option>\n";
+    $content .= ">".$month_array[($i)]."</option>\n";
   }
   $content .=  "</select>\n";
 

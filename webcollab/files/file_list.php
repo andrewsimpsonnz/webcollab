@@ -31,8 +31,6 @@
 require_once("path.php" );
 require_once( BASE."includes/security.php" );
 
-include_once( BASE."config.php" );
-
 $content = "";
 
 if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )

@@ -27,7 +27,7 @@
 
 require_once("path.php" );
 
-include_once(BASE."config.php" );
+include_once(BASE."config/config.php" );
 include_once(BASE."includes/common.php" );
 
 //set some base variables

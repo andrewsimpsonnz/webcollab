@@ -31,7 +31,7 @@
 if( ! @require( "path.php" ) )
   die( "No valid path found, not able to continue" );
 
-include_once( BASE."config.php" );
+include_once( BASE."config/config.php" );
 include_once( BASE."includes/common.php");
 
 /* NOTE!

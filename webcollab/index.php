@@ -116,7 +116,6 @@ if(isset($_COOKIE["webcollab_session"] ) && strlen($_COOKIE["webcollab_session"]
 
   include_once "includes/common.php";
   include_once "database/database.php";
-  include_once "config.php";
 
   if( ! isset($SESSION_TIMEOUT ) )
     $SESSION_TIMEOUT = 1;

@@ -32,7 +32,6 @@ require_once( BASE."includes/security.php" );
 
 include_once(BASE."tasks/task_common.php" );
 include_once(BASE."includes/time.php" );
-include_once(BASE."config.php" );
 
 //
 // List tasks
