@@ -100,7 +100,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
       $seen = 0;
 
     //flags column
-    $alink = "<A href=\"tasks.php?x=$x&action=show&taskid=".$row["id"]."\">";
+    $alink = "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row["id"]."\">";
 
     if( (db_numrows($seenq ) ) < 1 ) {
       $f1 = $alink."C</a>";
@@ -223,7 +223,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
     }
     else {
       $owner = db_result(db_query("SELECT fullname FROM users WHERE id=".$row["owner"] ), 0, 0  );
-      $owner = "<a href=\"users.php?x=".$x."&action=show&userid=".$row["owner"]."\">".$owner."</a>";
+      $owner = "<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row["owner"]."\">".$owner."</a>";
     }
 
     //group column
@@ -289,10 +289,10 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
     //show graphical taskbar
     if( ($row["parent"] == 0 ) && ($depth >= 0 ) ) {
       if( ($percent_completed = round(percent_complete($row["id"] ) ) ) > 0 ) {
-        $result .= "<table width=\"200\"><tr><td height=\"2\"  width=\"".($percent_completed*2)."\" bgcolor=\"#008B45\" nowrap></td><td width=\"".(200-($percent_completed*2))."\" bgcolor=\"#FFA500\" nowrap></td></tr></table>\n";
+        $result .= "<table width=\"200\"><tr><td height=\"2\"  width=\"".($percent_completed*2)."\" bgcolor=\"#008B45\" nowrap=\"nowrap\"></td><td width=\"".(200-($percent_completed*2))."\" bgcolor=\"#FFA500\" nowrap=\"nowrap\"></td></tr></table>\n";
       }
       else {
-        $result .= "<table width=\"200\"><tr><td height=\"2\" width=\"200\" bgcolor=\"#FFA500\" nowrap></td></tr></table>\n";
+        $result .= "<table width=\"200\"><tr><td height=\"2\" width=\"200\" bgcolor=\"#FFA500\" nowrap=\"nowrap\"></td></tr></table>\n";
       }
     }
 
@@ -314,11 +314,10 @@ else
   $sortby = "";
 
 //text link for 'printer friendly' page
-$content = "<font class=\"textlink\">";
 if(isset($_GET["action"]) && $_GET["action"] == "summary_print" )
-  $content  .= "<p>[<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=$sortby\">".$lang["normal_version"]."</a>]</p>";
+  $content  = "<p><font class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=".$sortby."\">".$lang["normal_version"]."</a>]</font></p>";
 else
-  $content  .= "<div align=\"right\">[<a href=\"tasks.php?x=$x&amp;action=summary_print&amp;sortby=$sortby\">".$lang["print_version"]."</a>]</div>";
+  $content  = "<div align=\"right\"><font class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary_print&amp;sortby=".$sortby."\">".$lang["print_version"]."</a>]</font></div>";
 
 $content .= "<table border=\"0\">\n";
 $content .= "<tr><td colspan=\"3\"><small><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#summarypage\" target=\"helpwindow\"><b>".$lang["flags"]."</b></a></small></td><td><small>";
@@ -343,7 +342,7 @@ switch($sortby ) {
 
 $content .= "\">";
 $content .= "<b>".$lang["group"]."</b></a></small></td><td><small>";
-$content .= "<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=taskname\">";
+$content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=taskname\">";
 $content .= "<b>".$lang["task"]."</b></a></small></td></tr>";
 
 //get list of private projects and put them in an array for later use

@@ -129,7 +129,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   for($i=1 ; $i<32 ; $i++ ) {
     $content .= "<option value=\"$i\"";
 
-    if($day == $i ) $content .= " selected";
+    if($day == $i ) $content .= " selected=\"selected\"";
 
     $content .= ">$i</option>\n";
   }
@@ -140,7 +140,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   for( $i=1; $i<13 ; $i++) {
     $content .= "<option value=\"$i\"";
 
-    if($month == $i ) $content .= " selected";
+    if($month == $i ) $content .= " selected=\"selected\"";
 
     $content .= ">".$month_array[($i)]."</option>\n";
   }
@@ -151,7 +151,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   for($i=2001; $i<2011 ; $i++ ) {
     $content .= "<option value=\"$i\"";
 
-    if($year == $i ) $content .= " selected";
+    if($year == $i ) $content .= " selected=\"selected\"";
 
     $content .= ">".$i."</option>\n";
   }

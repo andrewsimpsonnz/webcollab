@@ -124,18 +124,18 @@ if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent=0" ), 0, 0 ) < 1 
 //set selection & associated defaults for the text boxes
 switch($selection ) {
   case "group":
-    $userid = 0; $s1 = ""; $s2 = " selected"; $s3 = " checked"; $s4 = "";
+    $userid = 0; $s1 = ""; $s2 = " selected=\"selected\""; $s3 = " checked=\"checked\""; $s4 = "";
     $tail = "AND usergroupid=$groupid";
     if($groupid == 0 )
-      $s4 = " selected";
+      $s4 = " selected=\"selected\"";
     break;
 
   case "user":
   default:
-    $groupid = 0; $s1 = " checked"; $s2 = ""; $s3 = ""; $s4 = " selected";
+    $groupid = 0; $s1 = " checked=\"checked\""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
     $tail = "AND owner=$userid";
     if($userid == 0 )
-      $s2 = " selected";
+      $s2 = " selected=\"selected\"";
     break;
 }
 
@@ -163,7 +163,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //highlight current selection
   if( $row[ "id" ] == $userid )
-    $content .= " selected";
+    $content .= " selected=\"selected\"";
 
   $content .= ">".$row["fullname"]."</option>\n";
 }
@@ -188,7 +188,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //highlight current selection
   if( $row[ "id" ] == $groupid )
-    $content .= " selected";
+    $content .= " selected=\"selected\"";
 
   $content .= ">".$row["name"]."</option>\n";
 }

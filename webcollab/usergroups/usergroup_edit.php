@@ -72,7 +72,7 @@ for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++ ) {
   @db_data_seek($member_q ); //reset mysql internal pointer each cycle
   for($j=0 ; $member_row = @db_fetch_array($member_q, $j ) ; $j++ )
     if ($member_row["id"] == $user_row["id"] )
-      $content .= " selected";
+      $content .= " selected=\"selected\"";
   $content .= ">".$user_row["fullname"]."</option>\n";
 }
 

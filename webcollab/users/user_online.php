@@ -57,7 +57,7 @@ $q = db_query("SELECT logins.lastaccess AS last,
             AND users.deleted='f'
             ORDER BY logins.lastaccess DESC" );
 
-$content .= "<tr><td nowrap colspan=\"2\"><b>".$lang["online"]."</b></td></tr>\n";
+$content .= "<tr><td nowrap=\"nowrap\" colspan=\"2\"><b>".$lang["online"]."</b></td></tr>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
   
   //user test for privacy

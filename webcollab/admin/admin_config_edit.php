@@ -54,8 +54,7 @@ $row = db_fetch_array( $q, 0 );
 if($USE_EMAIL == "Y" ){
 
   $content .=
-            "<tr><td nowrap colspan=\"2\"><b>".$lang["email_settings"]."</b></td></tr>\n".
-            "<tr><td colspan=\"2\">&nbsp;</td></tr>";
+            "<tr><td nowrap=\"nowrap\" colspan=\"2\"><b>".$lang["email_settings"]."</b><br /><br /></td></tr>\n";
 
   //email addresses
   $content .=
@@ -75,15 +74,13 @@ if($USE_EMAIL == "Y" ){
                "<table class=\"celldata\" >\n";
 }
 
-$content .= "<tr><td nowrap colspan=\"2\"><b>".$lang["default_checkbox"]."</b></td></tr>\n".
-            "<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+$content .= "<tr><td nowrap colspan=\"2\"><b>".$lang["default_checkbox"]."</b><br /><br /></td></tr>\n";
 
 //defaults for task checkboxes
 $content .= "<tr><td><label for=\"access\">".$lang["allow_globalaccess"]."</label></td><td><input type=\"checkbox\" name=\"access\" id=\"access\" ".$row["globalaccess"]." /></td></tr>\n".
             "<tr><td><label for=\"group_edit\">".$lang["allow_group_edit"]."</label></td><td><input type=\"checkbox\" name=\"group_edit\" id=\"group_edit\" ".$row["groupaccess"]." /></td></tr>\n".
             "<tr><td><label for=\"owner\">".$lang["set_email_owner"]."</label></td><td><input type=\"checkbox\" name=\"owner\" id=\"owner\" ".$row["owner"]." /></td></tr>\n".
             "<tr><td><label for=\"usergroup\">".$lang["set_email_group"]."</label></td><td><input type=\"checkbox\" name=\"usergroup\" id=\"usergroup\" ".$row["usergroup"]." /></td></tr>\n".
-            "<tr><td>&nbsp;</td></tr>\n".
           "</table>\n";
 
 

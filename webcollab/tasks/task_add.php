@@ -56,7 +56,7 @@ $priority_select_box = "<tr><td>".$lang["priority"].":</td> <td>\n".
                        "<select name=\"priority\">\n".
                        "<option value=\"0\">".$task_state["dontdo"]."</option>\n".
                        "<option value=\"1\">".$task_state["low"]."</option>\n".
-                       "<option value=\"2\" selected>".$task_state["normal"]."</option>\n".
+                       "<option value=\"2\" selected=\"selected\">".$task_state["normal"]."</option>\n".
                        "<option value=\"3\">".$task_state["high"]."</option>\n".
                        "<option value=\"4\">".$task_state["yesterday"]."</option>\n".
                        "</select>\n</td></tr>\n";
@@ -111,7 +111,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   //status
   $content .= "<tr><td>".$lang["status"].":</td> <td>\n".
               "<select name=\"status\">\n".
-              "<option value=\"created\" selected >".$task_state["new"]."</option>\n".
+              "<option value=\"created\" selected=\"selected\" >".$task_state["new"]."</option>\n".
               "<option value=\"notactive\" >".$task_state["planned"]."</option>\n".
               "<option value=\"active\" >".$task_state["active"]."</option>\n".
               "<option value=\"cantcomplete\" >".$task_state["cantcomplete"]."</option>\n".
@@ -136,7 +136,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
 
     //default owner is present user
     if( $user_row[ "id" ] == $uid )
-      $content .= " selected";
+      $content .= " selected=\"selected\"";
 
     $content .= ">".$user_row["fullname"]."</option>\n";
   }
@@ -210,7 +210,7 @@ else {
               "<select name=\"status\">\n".
               "<option value=\"notactive\" >".$task_state["planned_project"]."</option>\n".
               "<option value=\"nolimit\" >".$task_state["no_deadline_project"]."</option>\n".
-              "<option value=\"active\" selected >".$task_state["active_project"]."</option>\n".
+              "<option value=\"active\" selected=\"selected\" >".$task_state["active_project"]."</option>\n".
               "<option value=\"cantcomplete\" >".$task_state["cantcomplete"]."</option>\n".
               "</select></td></tr>";
 
@@ -230,7 +230,7 @@ else {
 
       //owner is user
       if( $user_row["id"] == $uid ) {
-        $content .= " selected";
+        $content .= " selected=\"selected\"";
       }
     $content .= ">".$user_row["fullname"]."</option>\n";
   }

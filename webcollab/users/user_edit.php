@@ -79,13 +79,13 @@ if( $admin == 1 ) {
   
   //private user
   if( $row["private"] == 1 )
-    $content .= "<tr><td><label for=\"private\">".$lang["private_user"].":</label></td><td><input type=\"checkbox\" name=\"private_user\" checked id=\"private\" /></td></tr>\n";
+    $content .= "<tr><td><label for=\"private\">".$lang["private_user"].":</label></td><td><input type=\"checkbox\" name=\"private_user\" checked=\"checked\" id=\"private\" /></td></tr>\n";
   else  
     $content .= "<tr><td><label for=\"private\">".$lang["private_user"].":</label></td><td><input type=\"checkbox\" name=\"private_user\" id=\"private\" /></td></tr>\n";
 
   //is admin?
   if( $row["admin"] == 't' )
-    $content .= "<tr><td><label for=\"admin\">".$lang["is_admin"].":</label></td><td><input type=\"checkbox\" name=\"admin_rights\" checked id=\"admin\" /></td></tr>\n";
+    $content .= "<tr><td><label for=\"admin\">".$lang["is_admin"].":</label></td><td><input type=\"checkbox\" name=\"admin_rights\" checked=\"checked\" id=\"admin\" /></td></tr>\n";
   else
     $content .= "<tr><td><label for=\"admin\">".$lang["is_admin"].":</label></td><td><input type=\"checkbox\" name=\"admin_rights\" id=\"admin\" /></td></tr>\n";
 
@@ -96,7 +96,7 @@ if( $admin == 1 ) {
   $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
   $content .= "<tr><td></td><td colspan=\"2\"><small><i>".$lang["member_groups"]."</i></small></td></tr>\n".
               "<tr><td>".$lang["usergroups"].":</td>".
-              "<td colspan=\"2\"><select name=\"usergroup[]\" multiple size=\"4\">\n";
+              "<td colspan=\"2\"><select name=\"usergroup[]\" multiple=\"multiple\" size=\"4\">\n";
 
   for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++) {
 
@@ -108,7 +108,7 @@ if( $admin == 1 ) {
     for($j=0 ; $usergroups_users_row = @db_fetch_array($usergroups_users_q, $j ) ; $j++) {
 
       if($usergroups_users_row["usergroupid"] == $usergroup_row["id"] ) {
-        $content .= " selected>";
+        $content .= " selected=\"selected\">";
     $found=1;
     break;
       }

@@ -66,22 +66,22 @@ else{
 
 //check and validate checkboxes
 if(isset($_POST["access"]) && $_POST["access"] == "on" )
-  $access = "checked";
+  $access = "checked=\"checked\"";
 else
   $access = "";
 
 if(isset($_POST["group_edit"]) && $_POST["group_edit"] == "on" )
-  $group_edit = "checked";
+  $group_edit = "checked=\"checked\"";
 else
   $group_edit = "";
 
 if(isset($_POST["owner"]) && $_POST["owner"] == "on" )
-  $owner = "checked";
+  $owner = "checked=\"checked\"";
 else
   $owner = "";
 
 if(isset($_POST["usergroup"]) && $_POST["usergroup"] == "on" )
-  $usergroup = "checked";
+  $usergroup = "checked=\"checked\"";
 else
   $usergroup = "";
 
@@ -93,9 +93,6 @@ db_query("UPDATE config SET email_admin='".$email_admin."',
                             groupaccess='".$group_edit."',
                             owner='".$owner."',
                             usergroup='".$usergroup."'");
-
-
-
 
 //if no email end here
 if($USE_EMAIL != "Y" )
