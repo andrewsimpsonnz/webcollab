@@ -171,9 +171,9 @@ function error( $box_title, $content ) {
 //
 function warning( $box_title, $content ) {
 
-  create_top("ERROR", 1);
+  create_top("Warning", 1);
 
-  new_box( $box_title, "<CENTER>".$content."</CENTER>" );
+  new_box( $box_title, "<BR><CENTER>".$content."</CENTER><BR>", "500" );
 
   create_bottom();
 
