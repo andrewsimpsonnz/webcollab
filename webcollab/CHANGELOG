@@ -1,3 +1,16 @@
+WebCollab CVS
+*** 8 August 2004
+
+- allow for user-selected timezones for pgsql/mysql handling
+
+- allow for user-selected timezones in calendar.php
+
+- bugfix: GMT/UTC adjustment for 'task finish' after 'project finish' checking was incorrect
+
+- bugfix: database query in files_submit.php (joo_ru)
+
+- bugfix: splitting of quoted-printable in subject line of emails was incorrect (joo_ru)
+
 WebCollab 1.61 - Celmisia
 *** 1 August 2004
 
