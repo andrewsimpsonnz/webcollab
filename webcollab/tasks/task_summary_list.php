@@ -133,28 +133,29 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
     //status column
       if( ($row["parent"] == 0 ) ) {
 
-        if(db_result( db_query( "SELECT COUNT(*) FROM tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent<>0" ), 0, 0 ) == 0 ) {
-	  $color = "";
-	  $status = $task_state["done"];
-        } else {
-          switch( $row["status"] ) {
-            case "notactive":
-	      $color = "";
-              $status =  $task_state["task_planned"];
-              break;
+        switch( $row["status"] ) {
+          case "notactive":
+	    $color = "";
+            $status =  $task_state["task_planned"];
+            break;
 
-            case "cantcomplete":
-	      $color = "";
-              $status =  "<FONT color=\"blue\">".$task_state["cantcomplete"]."</FONT>";
-              break;
+          case "cantcomplete":
+	    $color = "";
+            $status =  "<FONT color=\"blue\">".$task_state["cantcomplete"]."</FONT>";
+            break;
 
-	    default:
+	  default:
+	    if(db_result( db_query( "SELECT COUNT(*) FROM tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent<>0" ), 0, 0 ) == 0 ) {
+	      $color = "";
+	      $status = $task_state["done"];
+	    }
+	    else {	
 	      $status = "<FONT color=\"grey\">".$lang["pproject"]."</FONT>";
-	      break;
-	  }    
-        }
-
-      } else {
+	    }
+	    break;
+	}    
+      }
+      else {
 
       switch( $row["status"] ) {
         case "done":
