@@ -1,6 +1,14 @@
 WebCollab CVS
+*** 17 May 2003
+  Andrew Simpson
+
+- allow for projects with no deadline
+
+WebCollab CVS
 *** 11 May 2003
   Andrew Simpson
+
+- add Spanish language files (Daniel Lujan)
 
 - add provision for editing from usergroup
 
