@@ -6,6 +6,8 @@ WebCollab CVS
 
 - bugfix: Fix null time/date giving output of Jan 1970 (zero in 'Unix epoch' time)   
 
+- bugfix: Usergroup cannot edit task even when access is granted
+
 WebCollab CVS
 *** 10 September 2004
   Andrew Simpson 
