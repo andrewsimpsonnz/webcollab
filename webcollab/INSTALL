@@ -4,7 +4,8 @@
 
  - Database - either:
        - Postgresql > 7.10
-       - MySQL > 3.23
+         or
+       - MySQL > 3.23.x
 
  - PHP > 4.10
 
@@ -35,7 +36,8 @@
         =# \q
 
 
-  ( NOTE: 'database user', 'database name' and 'password' are your particular database values without the ' and ')
+  ( NOTE: 'database user', 'database name' and 'password' are your particular database values
+    without the ' and ')
 
 
 
@@ -66,11 +68,11 @@
 
  - Login as admin / admin123
 
- - Click on 'Admin config' (near bottom of lefthand menu block), and enter Admin Email (your email address),
-   Reply-To (your address) and From (server email account, or your address).
+ - Click on 'Admin config' (near bottom of lefthand menu block), and enter Admin Email (your email
+   address), Reply-To (your address) and From (server email account, or your address).
 
- - Optional: With a text editor comment out in the file index.php the 'Powered by MySQL' logo line, and
-    uncomment the 'Powered by Postgresql' logo line!!
+ - Optional: With a text editor comment out in the file index.php the 'Powered by MySQL' logo line,
+   and uncomment the 'Powered by Postgresql' logo line!!
 
 
   Enjoy!
@@ -98,7 +100,8 @@
         mysql> \q
 
 
-  ( NOTE: 'database user', 'database name' and 'password' are your particular database values without the ' and ')
+  ( NOTE: 'database user', 'database name' and 'password' are your particular database values
+    without the ' and ')
 
 
 
@@ -133,9 +136,8 @@
 
  - Login as admin / admin123
 
- - Click on 'Admin config' (near bottom of lefthand menu block), and enter Admin Email (your email address),
-   Reply-To (your address) and From (server email account, or your address).
-
+ - Click on 'Admin config' (near bottom of lefthand menu block) enter Admin Email (your email
+   address), Reply-To (your address) and From (server email account, or your address).
 
   Enjoy!
 
@@ -145,4 +147,31 @@
 
  - Make sure the ./files/filebase directory is writeable by the webserver.
 
- - Ideally, for good security move the file upload directory to outside the webserver root directory.
+ - Ideally, for good security move the file upload directory to outside the webserver root
+   directory.  Webcollab can accommodate an upload directory in any location - not just areas that
+   are directly accessed by Apache.
+
+
+  COMMON PROBLEMS
+  ===============
+
+
+ - "Initial installation works, but logging in as admin has no effect (no error message either)."
+
+     - This problem has often occurred with PHP 4.0.6 and lower.  WebCollab will only run on PHP
+       4.1.0, or higher.  PHP 4.0.6 does not support $_POST[], $_GET[] or $_REQUEST[] global arrays. 
+
+ - "Initial installation works, but logging in as admin gives a blank screen."
+
+     - Check that PHP has your database extensions compiled in.  Create a PHP file like this:
+       
+         <?php
+           phpinfo();
+         ?>
+  
+     - When viewed with a web browser it will list all the compiled options.
+
+     - Most distributions have separate PHP packages for MySQL and PostgreSQL.
+      
+
+  
