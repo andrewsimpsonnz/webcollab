@@ -242,7 +242,7 @@ else {
 $content .= "</table></p>\n";
 
 //this part shows all the options the users has
-$content .= "<div align=\"center\"><font class=\"textlink\">\n";
+$content .= "<p><div align=\"center\"><font class=\"textlink\">\n";
 
 //set add function for task or project
 switch( $row["parent"] ){
@@ -307,7 +307,7 @@ switch( $row["owner"] ){
     break;
 }
 
-$content .= "</font></div>\n";
+$content .= "</font></div></p>\n";
 
 new_box( $title, $content, "boxdata2" );
 

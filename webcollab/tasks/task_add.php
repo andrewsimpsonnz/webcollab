@@ -40,13 +40,13 @@ $content = "";
 
 //shows a priority-select box
 $priority_select_box = "<tr><td>".$lang["priority"].":</td> <td>\n".
-                       "<SELECT name=\"priority\">\n".
+                       "<select name=\"priority\">\n".
                        "<option value=\"0\">".$task_state["dontdo"]."</option>\n".
                        "<option value=\"1\">".$task_state["low"]."</option>\n".
                        "<option value=\"2\" SELECTED>".$task_state["normal"]."</option>\n".
                        "<option value=\"3\">".$task_state["high"]."</option>\n".
                        "<option value=\"4\">".$task_state["yesterday"]."</option>\n".
-                       "</SELECT>\n</td></tr>\n";
+                       "</select>\n</td></tr>\n";
 
 
 $content .= "<form name=\"inputform\" method=\"POST\" action=\"tasks/task_submit.php\">\n";
@@ -101,7 +101,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   $users_q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname");
 
   //owner box
-  $content .= "<tr><td>".$lang["task_owner"].":</td> <td><SELECT name=\"owner\">\n".
+  $content .= "<tr><td>".$lang["task_owner"].":</td> <td><select name=\"owner\">\n".
               "<option value=\"0\">".$lang["nobody"]."</option>\n";
   for( $i=0 ; $user_row = @db_fetch_array($users_q, $i ) ; $i++) {
     $content .= "<option value=\"".$user_row["id"]."\"";
@@ -113,7 +113,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
     $content .= ">".$user_row["fullname"]."</option>\n";
   }
 
-  $content .= "</SELECT></td></tr>\n";
+  $content .= "</select></td></tr>\n";
 
   //get all taskgroups in order to show a task owner
   $q = db_query("SELECT id, name FROM taskgroups ORDER BY name");
@@ -146,8 +146,8 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
               "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></label></td></tr>\n".
 
               "</table></p>\n".
-              "<input type=\"submit\" value=\"".$lang["add_task"]."\" />&nbsp;".
-              "<input type=\"reset\" value=\"".$lang["reset"]."\" />".
+              "<p><input type=\"submit\" value=\"".$lang["add_task"]."\" />&nbsp;".
+              "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
               "</form>\n";
 
   new_box( $lang["add_task"], $content );
@@ -195,7 +195,7 @@ else {
       }
     $content .= ">".$row["fullname"]."</option>\n";
   }
-  $content .= "</SELECT></td></tr>\n";
+  $content .= "</select></td></tr>\n";
 
   //show all the groups
   $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
@@ -216,8 +216,8 @@ else {
               "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></label></td></tr>\n".
 
               "</table></p>\n".
-              "<input type=\"submit\" value=\"".$lang["add_project"]."\" />&nbsp;".
-              "<input type=\"reset\" value=\"".$lang["reset"]."\" />\n".
+              "<p><input type=\"submit\" value=\"".$lang["add_project"]."\" />&nbsp;".
+              "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
               "</form>\n";
 
   new_box( $lang["add_new_project"], $content );

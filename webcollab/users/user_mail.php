@@ -61,9 +61,9 @@ $content .= "</select><small><i>".$lang["select_instruct"]."</i></small></td></t
             "<tr><td>".$lang["message"]."</td><td><textarea name=\"message\" rows=\"10\" cols=\"60\" /></textarea></td></tr>\n".
             "<tr><td></td><td>".$lang["message_sent_maillist"]."</td></tr>\n".
             "</table></p>\n".
-            "<input type=\"submit\" value=\"".$lang["post"]."\" />\n".
+            "<p><input type=\"submit\" value=\"".$lang["post"]."\" />\n".
             "<input type=\"reset\" value=\"".$lang["reset"]."\" />\n".
-            "</form>\n";
+            "</p></form>\n";
 
 new_box($lang["admin_email"], $content );
 ?>

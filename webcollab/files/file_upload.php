@@ -56,8 +56,8 @@ $content =  "<form name=\"inputform\" method=\"POST\" enctype=\"multipart/form-d
                 "<tr><td>".$lang["description"].":</td> <td><textarea name=\"description\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
                 "<tr><td></td><td>".sprintf( $lang["max_file_sprt"], $FILE_MAXSIZE/1000 )."</td></tr>\n".
               "</table></p>\n".
-              "<input type=\"submit\" value=\"".$lang["upload"]."\" />\n".
-              "<input type=\"reset\" value=\"".$lang["reset"]."\" />\n".
+              "<p><input type=\"submit\" value=\"".$lang["upload"]."\" />\n".
+              "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
             "</form>\n";
 
 new_box($lang["add_file"], $content );

@@ -87,8 +87,8 @@ $content .= "<tr><td><label for=\"access\">".$lang["allow_globalaccess"]."</labe
 
 
 $content .=
-          "<input type=\"submit\" value=\"".$lang["update"]."\">&nbsp;".
-          "<input type=\"reset\" value=\"".$lang["reset"]."\">".
+          "<p><input type=\"submit\" value=\"".$lang["update"]."\">&nbsp;".
+          "<input type=\"reset\" value=\"".$lang["reset"]."\"></p>\n".
         "</form>\n";
 
 new_box( $lang["configuration"], $content );

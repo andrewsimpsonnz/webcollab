@@ -48,6 +48,9 @@ $row = db_fetch_array( $q, 0 );
 
 $content =
            "<form method=\"POST\" action=\"usergroups/usergroup_submit.php\">\n".
+             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+             "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\" />\n".
+             "<input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
              "<p><table border=\"0\">\n".
                "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"input\" name=\"name\" value=\"".$row["name"]."\" size=\"30\" /></td></tr>\n".
                "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" value=\"".$row["description"]."\" size=\"30\" /></td></tr>\n";
@@ -59,7 +62,7 @@ $member_q = db_query("SELECT users.id AS id
                             LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
                             WHERE usergroupid=".$row["id"] );
 
-$content .=    "<tr><td>".$lang["members"]."</td><td><select name=\"member[]\" multiple size=\"4\" />\n";
+$content .=    "<tr><td>".$lang["members"]."</td><td><select name=\"member[]\" multiple=\"multiple\" size=\"4\">\n";
 
 for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++ ) {
   $content .= "<option value=\"".$user_row["id"]."\"";
@@ -73,11 +76,8 @@ for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++ ) {
 
 $content .=    "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
              "</table></p>\n".
-             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-             "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\" />\n".
-             "<input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
-             "<input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;\n".
-             "<input type=\"reset\" value=\"".$lang["reset"]."\" />\n".
+             "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;".
+             "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
            "</form>\n";
 
 new_box( $lang["edit_usergroup"], $content );

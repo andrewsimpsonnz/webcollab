@@ -44,7 +44,10 @@ if( ! ($row = db_fetch_array( db_query( "SELECT * FROM contacts WHERE id=".$cont
 
 $content =
     "<form method=\"POST\" action=\"contacts/contact_submit.php\">\n".
-    "<p><table border=\"0\">\n".
+      "<input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
+      "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" />\n".
+      "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+      "<p><table border=\"0\">\n".
         "<tr><td><i>".$lang["firstname"]."</i></td><td><input type=\"text\" name=\"firstname\" value=\"".$row["firstname"]."\"size=\"30\" /></td></tr>\n".
         "<tr><td><i>".$lang["lastname"]."</i></td><td><input type=\"text\" name=\"lastname\" value=\"".$row["lastname"]."\" size=\"30\" /></td></tr>\n".
         "<tr><td><i>".$lang["company"]."</i></td><td><input type=\"text\" name=\"company\" value=\"".$row["company"]."\" size=\"30\" /></td></tr>\n".
@@ -61,12 +64,8 @@ $content =
 
 //edit options
 $content .=
-      "<input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
-      "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" />\n".
-      "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-      "<input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;\n".
-      "<input type=\"reset\" value=\"".$lang["reset"]."\" />\n".
-      "<br /><br />\n".
+      "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;".
+      "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
       "</form>";
 
 
@@ -76,8 +75,8 @@ $content .=
       "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" />\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-      "<input type=\"submit\" value=\"".$lang["del_contact"]."\" onClick=\"return confirm('".$lang["confirm_del"]."')\" />\n".
-      "</form>";
+      "<p><input type=\"submit\" value=\"".$lang["del_contact"]."\" onClick=\"return confirm('".$lang["confirm_del"]."')\" />\n".
+      "</p></form>";
 
 new_box( $lang["contact_info"], $content );
 
