@@ -49,13 +49,19 @@ function percent_complete( $taskid ) {
   $tasks_completed = db_result( db_query("SELECT COUNT(*) FROM tasks WHERE parent>0 AND projectid=".$taskid." AND status='done'" ), 0, 0 );
   $total_tasks = db_result( db_query("SELECT COUNT(*) FROM tasks WHERE parent>0 AND projectid=".$taskid ), 0, 0 );
 
-  if( $tasks_completed == 0 )
-    return 0;
+  switch ($tasks_completed ) {
+    case 0: 
+      return 0;
+      break;
 
-  if( $tasks_completed == $total_tasks )
-    return 100;
+    case ($total_tasks):
+      return 100;
+      break;
 
-  return ( $tasks_completed / $total_tasks ) * 100;
+    default: 
+      return ( $tasks_completed / $total_tasks ) * 100;
+      break;
+  }    
 }
 
 
@@ -67,15 +73,21 @@ function show_percent( $percent = 0 ) {
   $out = "";
   $width=400;
   $height=4;
-  if( $percent >= 100 ) {
-    return "<TABLE width=\"".$width."\"><TR><TD height=\"".$height."\" width=\"".$width."\" bgcolor=\"green\" nowrap></TD></TR></TABLE>\n";
+  switch ($percent) {
+    case 100:
+      return "<TABLE width=\"".$width."\"><TR><TD height=\"".$height."\" width=\"".$width."\" bgcolor=\"green\" nowrap></TD></TR></TABLE>\n";
+      break;
+   
+    case 0:
+      return "<TABLE width=\"".$width."\"><TR><TD height=\"".$height."\" width=\"".$width."\" bgcolor=\"orange\" nowrap></TD></TR></TABLE>\n";
+      break;
+  
+    default:
+      $out .= "<TABLE width=\"".$width."\"><TR><TD height=\"".$height."\" width=\"".($percent * ($width/100))."\" bgcolor=\"green\" nowrap>";
+      $out .= "</TD><TD width=\"".($width-($percent*($width/100)))."\" bgcolor=\"orange\" nowrap></TD></TR></TABLE>\n";
+      return $out;
+      break;
   }
-  if( $percent <= 0 ) {
-    return "<TABLE width=\"".$width."\"><TR><TD height=\"".$height."\" width=\"".$width."\" bgcolor=\"orange\" nowrap></TD></TR></TABLE>\n";
-  }
-  $out .= "<TABLE width=\"".$width."\"><TR><TD height=\"".$height."\" width=\"".($percent * ($width/100))."\" bgcolor=\"green\" nowrap>";
-  $out .= "</TD><TD width=\"".($width-($percent*($width/100)))."\" bgcolor=\"orange\" nowrap></TD></TR></TABLE>\n";
-  return $out;
 }
 
 
