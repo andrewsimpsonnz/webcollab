@@ -1,33 +1,95 @@
 FONT {
-  font-family: "Helvetica", Verdana, Arial, Sans-serif; 
+  font-family: "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 10pt;
 }
 
 LI {
-  font-family: "Helvetica", Verdana, Arial, Sans-serif; 
+  font-family: "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 10pt;
   list-style-type: circle;
 }
 
 TD {
-  font-family: "Helvetica", Verdana, Arial, Sans-serif; 
+  font-family: "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 10pt;
 }
-
-DL {
-  font-family: "Helvetica", Verdana, Arial, Sans-serif; 
-  font-size : 10pt;
-}
-
 
 BODY {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif; 
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 10pt;
   margin : 0;
   background : #6085AC;
   color : #000000;
 }
 
+.masthead {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 10pt;
+  text-align : left;
+  padding-left : 3px;
+  height : 20px;
+  background : #000000;
+  color : #eeeeee;
+}
+
+.loginbox {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 10pt;
+  text-align : center;
+  border : 0;
+  padding : 0;
+  width : 400;
+}
+
+.tablebox {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 10pt;
+  text-align : left;
+  border : 0;
+  padding : 0;
+  width : 97%;
+}
+
+.boxhead {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 10pt;
+  font-weight : bold;
+  text-align : left;
+  padding-top : 3px;
+  padding-bottom : 3px;
+  padding-left : 3px;
+  background : #1e4b79;
+  color : #ffffff;
+}
+
+.boxmenu {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 10pt;
+  text-align : left;
+  padding-top : 3px;
+  padding-bottom : 3px;
+  padding-left : 3px;
+  background : #ffffff;
+  color : #000000;
+}
+
+.boxdata {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 10pt;
+  text-align : left;
+  padding-top : 20px;
+  padding-left : 5px;
+  padding-bottom : 20px;
+  background : #ffffff;
+  color : #000000;
+}
+
+.loadtime {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 10pt;
+  text-align : center;
+  color : #1e4b79;
+}
 
 a:link {
   color : #003399;
