@@ -117,8 +117,23 @@ switch($taskid_row["parent"] ) {
   default:
     //task
     $type = "task";
-    //show project finish date for javascript 
-    $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_row["deadline"]."\" /></fieldset>\n".          
+    
+    //show project finish date for javascript (projectDate is converted to GMT/UTC because Javascript uses this)
+    switch ($DATABASE_TYPE) {
+      case "postgresql":
+        //date GMT/UTC = date - selected_timezone_offset + 1 day 
+        $project_deadline = $project_row["deadline"] - ($TZ * 3600) + 86400;
+        break;
+        
+      case "mysql":
+      case "mysql_innodb":
+      default:
+        //date GMT/UTC = date - database_timezone_offset + 1 day
+        $project_deadline = $project_row["deadline"] - date("Z") + 86400;
+        break;
+    }
+    
+    $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" /></fieldset>\n".          
                  "<table class=\"celldata\">\n".
                  "<tr><td>".$lang["creation_time"]."</td><td>".nicedate($taskid_row["created"] )."</td></tr>\n".
                  "<tr><td>".$lang["project"] .":</td><td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$taskid_row["projectid"]."\">".$project_row["name"]."</a></td></tr>\n";
