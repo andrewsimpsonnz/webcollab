@@ -44,7 +44,7 @@ $content =
               "</table><br /><br />\n".
               "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"insert\" />\n".
-              "<input type=\"submit\" value=\"".$lang["add_taskgroup"]."\" />\n".
+              "<input type=\"submit\" value=\"".$lang["add_taskgroup"]."\" />&nbsp;\n".
               "<input type=\"reset\"  value=\"".$lang["reset"]."\" />\n".
             "</form>\n";
 

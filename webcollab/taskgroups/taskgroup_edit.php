@@ -55,7 +55,7 @@ $content =
               "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
               "<input type=\"hidden\" name=\"taskgroupid\" value=\"$taskgroupid\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
-              "<input type=\"submit\" value=\"".$lang["submit_changes"]."\" />\n".
+              "<input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;\n".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" />\n".
             "</form>\n";
 
