@@ -40,8 +40,9 @@ function safe_data($body ) {
   //return null for nothing input
   if(! @strlen($body) )
     return "";
-      
-  $body = clean_up($body);
+  
+  //clean up & remove whitespace      
+  $body = trim(clean_up($body) );
   
   //limit line length for single line entries
   if(strlen($body ) > 100 ) 
@@ -73,19 +74,19 @@ return $body;
 
 function clean_up($body ) {
 
+  //normalise any UTF-8 that's floated in...
+  $body = utf8_decode($body );
+
   //protect against database query attack
   if(! get_magic_quotes_gpc() )
     $body = addslashes($body );
   
   //allow only defined ISO-8859-1 characters - other weird stuff is replaced with "*"
   $body = preg_replace('/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s', "*", $body );
-
-    
-  //allow only properly formed UTF-8 characters
-  //$body = preg_replace('/([^\x09\x0a\x0c\x20-\x7e]|[\xc0-\xdf][^\x80-\xbf]|[\xe0-\xef][^\x80-\xbf]{2}|[\xf0-\xf7][^\x80-\xbf]{3})/s', "*", $body );
   
-  //use HTML encoding for characters that could be used for css <script> attacks or SQL injection
-  $body = str_replace(array(';', '<', '>', '|','(', ')', '+', '-' ), array('&#059;', '&lt;', '&gt;', '&#124;', '&#040;', '&#041;', '&#043;', '&#045;'), $body );
+  //use HTML encoding for characters that could be used for css <script> attacks
+  // and escape (with '\') characters that could be used for SQL injection attacks 
+  $body = str_replace(array(';', '<', '>', '|','(', ')', '+', '-', '=' ), array('\;', '&lt;', '&gt;', '&#124;', '\(', '\)', '\+', '\-', '\=' ), $body );
   
   return $body;
 }
@@ -95,7 +96,7 @@ function clean_up($body ) {
 //
 function error($box_title, $content ) {
 
-  global $uid_name, $uid_email, $MANAGER_NAME, $EMAIL_ERROR, $EMAIL_FROM, $EMAIL_REPLY_TO, $DEBUG, $NO_ERROR, $WEBCOLLAB_VERSION, $db_error_message;
+  global $uid_name, $uid_email, $MANAGER_NAME, $EMAIL_ERROR, $DEBUG, $NO_ERROR, $WEBCOLLAB_VERSION, $db_error_message;
 
   include_once(BASE."includes/screen.php" );
 
@@ -129,10 +130,8 @@ function error($box_title, $content ) {
             "WebCollab version: $WEBCOLLAB_VERSION\n".
             "POST vars: $post\n\n";
 
-  mail($EMAIL_ERROR,
-        "ERROR on $MANAGER_NAME" , $message,
-        "From: ".$EMAIL_FROM."\nReply-To: ".$EMAIL_REPLY_TO."\nX-Mailer: PHP/" . phpversion() );
-
+  mail($EMAIL_ERROR, "ERROR on $MANAGER_NAME", $message );
+        
   if($DEBUG == "Y" )
     new_box("Error Debug", nl2br($message) );
 
