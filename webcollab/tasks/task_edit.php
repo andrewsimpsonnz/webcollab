@@ -234,7 +234,7 @@ if($row["parent"] != 0 ){
 
   //get all users in order to show a task owner
   $taskgroup_q = db_query("SELECT id, name FROM taskgroups ORDER BY name" );
-  $content .= "<tr> <td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td> <td><select name=\"taskgroupid\">\n";
+  $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td> <td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang["no_group"]."</option>\n";
 
   for( $i=0 ; $user_row = @db_fetch_array($taskgroup_q, $i ) ; $i++) {
@@ -254,7 +254,7 @@ if($row["parent"] != 0 ){
 
 //show all user-groups
 $usergroup_q = db_query("SELECT name, id FROM usergroups ORDER BY name" );
-$content .= "<tr> <td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </td> <td><select name=\"usergroupid\">\n";
+$content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </td> <td><select name=\"usergroupid\">\n";
 $content .= "<option value=\"0\">".$lang["no_group"]."</option>\n";
 
 for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++) {
@@ -285,8 +285,8 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
             "<tr> <td>".$lang["task_description"]."</td> <td><TEXTAREA name=\"text\" rows=\"5\" cols=\"60\">".$row["text"]."</TEXTAREA></td> </tr>\n".
 
             //do we need to email ?
-            "<tr><td>".$lang["email_new_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" $DEFAULT_OWNER></td></tr>\n".
-            "<tr><td>".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" $DEFAULT_GROUP></td></tr>\n".
+            "<tr><td><label for=\"mailowner\">".$lang["email_new_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" $DEFAULT_OWNER></label></td></tr>\n".
+            "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" $DEFAULT_GROUP></label></td></tr>\n".
 
             "</table><br /><br />\n".
             "<input type=\"submit\" value=\"".$lang["edit"]."\"> ".

@@ -74,9 +74,9 @@ $content =  "<form method=\"POST\" action=\"users/user_submit.php\">".
 if( $admin == 1 ) {
 
   if( $row["admin"] == 't' )
-    $content .= "<tr><td>".$lang["is_admin"].":</td><td><input type=\"checkbox\" name=\"admin_rights\" CHECKED></td></tr>\n";
+    $content .= "<tr><td><label for=\"admin\">".$lang["is_admin"].":</label></td><td><input type=\"checkbox\" name=\"admin_rights\" CHECKED id=\"admin\" /></td></tr>\n";
   else
-    $content .= "<tr><td>".$lang["is_admin"].":</td><td><input type=\"checkbox\" name=\"admin_rights\"></td></tr>\n";
+    $content .= "<tr><td><label for=\"admin\">".$lang["is_admin"].":</label></td><td><input type=\"checkbox\" name=\"admin_rights\" id=\"admin\" /></td></tr>\n";
 }
 
 //add user-groups (only admins can do this)
@@ -114,11 +114,11 @@ if( $admin == 1 ) {
 }
 
 $content .= "</table><br /><br />".
-            "<input type=\"hidden\" name=\"action\" value=\"edit\">".
-            "<input type=\"hidden\" name=\"x\" value=\"$x\">".
-            "<input type=\"hidden\" name=\"userid\" value=\"$userid\">".
-            "<input type=\"submit\" value=\"".$lang["submit_changes"]."\">".
-            "<input type=\"reset\" value=\"".$lang["reset"]."\">".
+            "<input type=\"hidden\" name=\"action\" value=\"edit\" />".
+            "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
+            "<input type=\"hidden\" name=\"userid\" value=\"$userid\" />".
+            "<input type=\"submit\" value=\"".$lang["submit_changes"]."\" />".
+            "<input type=\"reset\" value=\"".$lang["reset"]."\" />".
             "</form>";
 
 new_box($lang["edit_user"], $content );

@@ -42,27 +42,27 @@ if( $admin != 1 ) {
 //start form data
 $content .=
         "<form method=\"POST\" action=\"users/user_mail_send.php\">\n".
-          "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
+          "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
           "<table border=\"0\">\n".
-          "<tr><td><input type=\"radio\" value=\"all\" name=\"group\" checked>All users</td></tr>\n".
-          "<tr><td><input type=\"radio\" value=\"maillist\" name=\"group\">Mailing list only</td></tr>\n".
-          "<tr><td><input type=\"radio\" value=\"group\" name=\"group\">Usergroup selected from below</td></tr>\n";
+          "<tr><td><input type=\"radio\" value=\"all\" name=\"group\" id=\"all\" checked /><label for=\"all\">All users</label></td></tr>\n".
+          "<tr><td><input type=\"radio\" value=\"maillist\" name=\"group\" id=\"maillist\" /><label for=\"maillist\">Mailing list only</label></td></tr>\n".
+          "<tr><td><input type=\"radio\" value=\"group\" name=\"group\" id=\"group\" /><label for=\"group\">Usergroup selected from below</label></td></tr>\n";
 
 //add user-groups
 $usergroup_q = db_query("SELECT name, id FROM usergroups ORDER BY name" );
-$content .=  "<tr><td>".$lang["usergroup"].":</td><td><SELECT name=\"usergroup[]\" MULTIPLE size=\"4\">\n";
+$content .=  "<tr><td>".$lang["usergroup"].":</td><td><select name=\"usergroup[]\" multiple size=\"4\">\n";
 for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
   $content .= "<option value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</option>";
 }
 $content .= "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
-            "</table><br /><br />".
+            "</table><br /><br />\n".
             "<table border=\"0\">\n".
-            "<tr><td>Subject:</td> <td><input type=\"text\" name=\"subject\" size=\"30\"></td></tr>\n".
-            "<tr><td>Message:</td><td><textarea name=\"message\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
-            "<tr><td></td><td>For all selections the message is sent to the mailing list.</td></tr>\n".
+            "<tr><td>Subject:</td> <td><input type=\"text\" name=\"subject\" size=\"30\" /></td></tr>\n".
+            "<tr><td>Message:</td><td><textarea name=\"message\" rows=\"10\" cols=\"60\" /></textarea></td></tr>\n".
+            "<tr><td></td><td>For all selections the message is also sent to the mailing list.</td></tr>\n".
             "</table><br />\n".
-            "<input type=\"submit\" value=\"Send\">\n".
-            "<input type=\"reset\" value=\"".$lang["reset"]."\">\n".
+            "<input type=\"submit\" value=\"Send\" />\n".
+            "<input type=\"reset\" value=\"".$lang["reset"]."\" />\n".
             "</form>\n";
 
 new_box("Email - translate me!", $content );

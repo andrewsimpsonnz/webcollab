@@ -83,7 +83,7 @@ function listTasks($task_id ) {
      default:
       //check if late
       if( ($task_row["now"] - $task_row["task_due"] ) >= 86400 ) {
-        $status = "&nbsp;<img border=\"0\" src=\"images/late.gif\" height=\"9\" width=\"23\" alt=\"late\">";
+        $status = "&nbsp;<img border=\"0\" src=\"images/late.gif\" height=\"9\" width=\"23\" alt=\"late\" />";
       }
       break;
     }
@@ -182,7 +182,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
     case "cantcomplete":
       $content .= "<i>".$lang["project_hold"].nicedate( $row["finished_time"])."</i><br />\n";
-      $content .= "<img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\"> &nbsp; ".nicedate( $row["deadline"] )."<br />\n";
+      $content .= "<img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row["deadline"] )."<br />\n";
       break;
 
     case "notactive":
@@ -199,7 +199,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     case "active":
     default:
       $content .= $percent_complete.$lang["percent"]."<br />\n";
-      $content .= "<img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\"> &nbsp; ".nicedate( $row["deadline"] )." ";
+      $content .= "<img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row["deadline"] )." ";
       $state = ($row["due"]-$row["now"] )/86400 ;
       if($state > 1 ) {
         $content .=  "(".sprintf($lang["due_sprt"], ceil($state) ).")\n";

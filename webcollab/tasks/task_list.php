@@ -140,7 +140,7 @@ $q = db_query("SELECT tasks.id AS id,
       switch(db_numrows($seenq ) ) {
         case "0":
           //new and never visited by this user
-          $alert_content .= "<img border=\"0\" src=\"images/new.gif\" height=\"12\" width=\"31\">";
+          $alert_content .= "<img border=\"0\" src=\"images/new.gif\" height=\"12\" width=\"31\" alt =\"new\" />";
           break;
 
         default:
@@ -148,17 +148,17 @@ $q = db_query("SELECT tasks.id AS id,
           $seen = db_result($seenq, 0, 0 );
           if( ($seen - $row["edited"] ) < 0 ) {
             //edited
-            $alert_content .= "<img border=\"0\" src=\"images/updated.gif\" height=\"12\" width=\"60\"> &nbsp;";
+            $alert_content .= "<img border=\"0\" src=\"images/updated.gif\" height=\"12\" width=\"60\" alt=\"updated\" /> &nbsp;";
           }
 
           //are there forum changes ?
           if($seen - $row["lastpost"] < 0 ) {
-            $alert_content .= "<img border=\"0\" src=\"images/message.gif\" height=\"10\" width=\"14\"> &nbsp;";
+            $alert_content .= "<img border=\"0\" src=\"images/message.gif\" height=\"10\" width=\"14\" alt=\"message\" /> &nbsp;";
           }
 
           //are there file upload changes ?
           if($seen - $row["lastfileupload"] < 0 ) {
-            $alert_content .= "<img border=\"0\" src=\"images/file.gif\" height=\"11\" width=\"11\"> &nbsp;";
+            $alert_content .= "<img border=\"0\" src=\"images/file.gif\" height=\"11\" width=\"11\" alt=\"file\" /> &nbsp;";
           }
           break;
        }

@@ -92,7 +92,7 @@ $content .= "<div align=\"center\">\n".
             "<form method=\"POST\" action=\"calendar.php\">".
             "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ".
             "<table border=\"0\">\n".
-            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\"$s1>".$lang["users"]."</td><td>\n".
+            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1><label for=\"users\">".$lang["users"]."</label></td><td>\n".
             "<select name=\"userid\">\n".
             "<option value=\"0\"$s2>All users - translate me</option>\n";
 
@@ -111,7 +111,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 }
 
 $content .= "</select></td></tr>\n".
-            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\"$s3>".$lang["usergroups"]."</td>\n".
+            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3><label for=\"group\">".$lang["usergroups"]."</label></td>\n".
             "<td><select name=\"groupid\">\n".
             "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
 
@@ -230,7 +230,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
                  $name = "<font color=\"green\"><u>".$row["name"]."</u>";
                else
                  $name = "<font color=\"blue\">".$row["name"];
-               $content .= "<img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\">".
+               $content .= "<img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
                            "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">$name</font></a><br />\n";
              break;
 
@@ -241,7 +241,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
               else
                 $name = "<font color=\"red\">".$row["name"];
 
-              $content .= "<img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\">".
+              $content .= "<img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
                           "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">$name</font></a><br />\n";
             break;
           }

@@ -123,7 +123,7 @@ $content .= "<form method=\"POST\" action=\"users.php\">\n".
             "<input type=\"hidden\" name=\"action\" value=\"todo\">\n ".
             "<table border=\"0\">\n".
             "<tr><td>".$lang["todo_list_for"]."</td></tr>".
-            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\"$s1>".$lang["users"]."</td><td>\n".
+            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"user\"$s1><label for=\"user\">".$lang["users"]."</label></td><td>\n".
             "<select name=\"userid\">\n".
             "<option value=\"0\"$s2>".$lang["nobody"]."</option>\n";
 
@@ -142,7 +142,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 }
 
 $content .= "</select></td></tr>\n".
-            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\"$s3>".$lang["usergroups"]."</td><td>\n".
+            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3><label for=\"group\">".$lang["usergroups"]."</label></td><td>\n".
             "<select name=\"groupid\">\n".
             "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
 

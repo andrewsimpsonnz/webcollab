@@ -142,8 +142,8 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
               "<tr> <td>".$lang["task_description"]."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
 
               //do we need to email ?
-              "<tr><td>".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" ".$DEFAULT_OWNER."></td></tr>\n".
-              "<tr><td>".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" ".$DEFAULT_GROUP."></td></tr>\n".
+              "<tr><td><label for=\"mailowner\">".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER."></label></td></tr>\n".
+              "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP."></label></td></tr>\n".
 
               "</table><br /><br />\n".
               "<input type=\"submit\" value=\"Add task\"> ".
@@ -212,8 +212,8 @@ else {
               "<tr> <td>".$lang["project_description"]."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
 
               //do we need to email ?
-              "<tr><td>".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" ".$DEFAULT_OWNER."></td></tr>\n".
-              "<tr><td>".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" ".$DEFAULT_GROUP."></td></tr>\n".
+              "<tr><td><label for=\"mailowner\">".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER."></label></td></tr>\n".
+              "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP."></label></td></tr>\n".
 
               "</table><br /><br />\n".
               "<input type=\"submit\" value=\"".$lang["add_project"]."\">\n ".
