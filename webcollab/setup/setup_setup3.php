@@ -78,8 +78,8 @@ if($flag ){
     $db_user = $_POST["db_user"];
   else
     $db_user = "";
-  if(isset($_POST["db_pass"]) )
-    $db_password = $_POST["db_pass"];
+  if(isset($_POST["db_password"]) )
+    $db_password = $_POST["db_password"];
   else
     $db_password = "";
   if(isset($_POST["db_type"]) )

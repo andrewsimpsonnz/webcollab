@@ -66,8 +66,10 @@ $flag = 0;
 
 create_top_setup("Setup Screen" );
 
-$content .= "<form method=\"POST\" action=\"setup_handler.php\">".
-            "<table border=\"0\">";
+$content .= "<table border=\"0\">\n".
+            "<tr><td>\n".
+            "<form method=\"POST\" action=\"setup_handler.php\">";
+            
 
 //output essential values for POST
 foreach($array_essential as $var ) {
@@ -133,7 +135,7 @@ switch ($url["scheme"] ){
 }
 
 //basic settings
-$content .= "<tr><td></td><td><br /><b><u>Basic Settings</u></b></td></tr>\n".
+$content .= "</td><td><br /><b><u>Basic Settings</u></b></td></tr>\n".
             "<tr><td></td><td>&nbsp;</td></tr>\n".
             "<tr><th>Site address:</th><td>".$data["base_url"]."</td><td>$status</td></tr>\n".
             "<tr><th>Site name:</th><td>".$data["manager_name"]."</td></tr>\n".
@@ -278,16 +280,16 @@ else {
 $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
             "<tr><td></td><td colspan=\"2\">$status<br /><br /></td></tr>\n".
             "<tr><td></td><td><input type=\"submit\" value=\"Write Data to Config File\" /></td></tr>\n".
-            "</form>\n";
-
+            "</form>\n".
+            "<tr><td></td><td>&nbsp;</td></tr>\n";
 
 //form for 'try again' button
-$content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
-            "<p><form method=\"POST\" action=\"setup_handler.php\">\n".
+$content .= "<tr><td></td><td>\n".
+            "<form method=\"POST\" action=\"setup_handler.php\">\n".            
             "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />";
-
+            
 //output essential values for POST
 foreach($array_essential as $var ) {
 $content .= "<input type=\"hidden\" name=\"$var\" value=\"".$data[$var]."\" />\n";
@@ -299,7 +301,7 @@ $content .= "<input type=\"hidden\" name=\"$var\" value=\"".$data[$var]."\" />\n
 }
 
 //show 'try again' button
-$content .= "<tr><td></td><td><input type=\"submit\" value=\"Re-enter Config Data\" /></td></tr>\n".
+$content .= "<input type=\"submit\" value=\"Re-enter Config Data\" /></td></tr>\n".
             "</form>\n".
             "</table>\n";
             
