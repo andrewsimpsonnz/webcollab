@@ -254,6 +254,11 @@ if( valid_string($_REQUEST["action"]) ) {
 	else
 	  $globalaccess="f";
 
+	if( isset($_POST["groupaccess"]) && $_POST["groupaccess"]=="on" )
+	  $groupaccess="t";
+	else
+	  $groupaccess="f";
+
         //carry out some data consistency checking
         if( $parentid != 0 ) {
 
@@ -281,6 +286,7 @@ if( valid_string($_REQUEST["action"]) ) {
 				      taskgroupid,
 				      usergroupid,
 				      globalaccess,
+				      groupaccess,
 				      status )
 				      values( '".$name."',
 				      '".$text."',
