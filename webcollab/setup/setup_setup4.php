@@ -66,7 +66,8 @@ $flag = 0;
 
 create_top_setup("Setup Screen" );
 
-$content .= "<form method=\"POST\" action=\"setup_handler.php\">";
+$content .= "<p><table border=\"0\">";
+            "<form method=\"POST\" action=\"setup_handler.php\">";
 
 //output essential values for POST
 foreach($array_essential as $var ) {
@@ -79,9 +80,9 @@ $content .= "<input type=\"hidden\" name=\"$var\" value=\"".$data[$var]."\" />\n
 }
 
 $content .= "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-             "<input type=\"hidden\" name=\"action\" value=\"setup5\" />\n".
-            "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />\n".
-            "<p><table border=\"0\">";
+            "<input type=\"hidden\" name=\"action\" value=\"setup5\" />\n".
+            "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />\n";
+            
 
 //set variables
 $status = "<font color=\"green\"><b>OK !</b></font>";
@@ -263,26 +264,39 @@ else {
     $status = "<font color=\"blue\"><b>Warning errors in configuration.  Proceed with caution!</b></font>";
   }
   else{
-    $status = "<font color=\"green\"><b>No errors detected in the input configuration. Press button to proceed.</b></font>";
+    $status = "<font color=\"green\"><b>No errors detected in the input configuration. Press 'Write to Config' button to proceed.</b></font>";
   }
 }
 
+//show 'write to file' button
 $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
             "<tr><td></td><td colspan=\"2\">$status<br /><br /></td></tr>\n".
             "<tr><td></td><td><input type=\"submit\" value=\"Write Data to Config File\" /></td></tr>\n".
-            "</table></p>\n".
             "</form>\n";
 
-/*
-$content .= "<form method=\"POST\" action=\"setup_setup3.php\">\n".
+
+//form for 'try again' button
+$content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
+            "<p><form method=\"POST\" action=\"setup_handler.php\">\n".
+            "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
-            "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />".
-            "<p><table border=\"0\">".
-            "<tr><td></td><td><input type=\"submit\" value=\"Re-enter Config Data\" /></td></tr>\n".
-            "</table></p>\n".
-            "</form>\n";
-*/
+            "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />";
 
+//output essential values for POST
+foreach($array_essential as $var ) {
+$content .= "<input type=\"hidden\" name=\"$var\" value=\"".$data[$var]."\" />\n";
+}
+
+//output optional values for POST
+foreach($array_optional as $var ) {
+$content .= "<input type=\"hidden\" name=\"$var\" value=\"".$data[$var]."\" />\n";
+}
+
+//show 'try again' button
+$content .= "<tr><td></td><td><input type=\"submit\" value=\"Re-enter Config Data\" /></td></tr>\n".
+            "</form>\n".
+            "</table></p>\n";
+            
 new_box_setup( "Setup - Stage 4 of 5 : Verifying Data", $content, "boxdata", "tablebox" );
 create_bottom_setup();
 
