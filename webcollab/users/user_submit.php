@@ -92,7 +92,7 @@ ignore_user_abort(TRUE);
       if(empty($_POST['password']))
         warning( $lang['value_missing'], sprintf( $lang['field_sprt'], 'password' ) );
       
-      $password = md5($_POST['password']);
+      $password = $_POST['password'];
       
       //do basic check on email address
       if(! ereg("^.+@.+\..+$", $email ) )
@@ -128,7 +128,7 @@ ignore_user_abort(TRUE);
       db_begin();
       //insert into the users table
       $q = db_query("INSERT INTO ".PRE."users(name, fullname, password, email, private, admin, guest, deleted)
-                     VALUES('$name', '$fullname', '$password', '$email', '$private_user', '$admin_user',  '$guest_user', 'f')" );
+                     VALUES('$name', '$fullname', '".md5($password)."', '$email', '$private_user', '$admin_user',  '$guest_user', 'f')" );
 
       //if the user is assigned to any groups execute the following code to add him/her
       if( isset($_POST['usergroup']) ) {
@@ -180,7 +180,7 @@ ignore_user_abort(TRUE);
       if(empty($_POST['password']) )
         $password = "";
       else
-        $password = md5($_POST['password']);  
+        $password = $_POST['password'];  
       
       //check email address
       if(! ereg("^.+@.+\..+$", $email ) )
@@ -231,7 +231,7 @@ ignore_user_abort(TRUE);
                                 SET name='$name',
                                 fullname='$fullname',
                                 email='$email',
-                                password='$password',
+                                password='".md5($password)."',
                                 private='$private_user',
                                 admin='$admin_user',
                                 guest='$guest_user'
@@ -297,7 +297,7 @@ ignore_user_abort(TRUE);
           db_query("UPDATE ".PRE."users
                             SET name='$name',
                             fullname='$fullname',
-                            password='$password',
+                            password='".md5($password)."',
                             email='$email'
                             WHERE id=$UID" );
 
