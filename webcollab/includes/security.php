@@ -37,10 +37,12 @@ include_once(BASE."includes/database.php" );
 include_once(BASE."includes/common.php" );
 
 //clean up some variables
-$q="";
-$ip="";
-$x="";
-$admin=0;
+$q = "";
+$ip = "";
+$x = "";
+$admin = 0;
+$cookie_flag = 0;
+
 
 //check for some values that HAVE to be present to be allowed (ip, session_key)
 if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
@@ -50,6 +52,7 @@ if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
 //$x can be from either a GET, POST or COOKIE - check for cookie first
 if(isset($_COOKIE["webcollab_session"] ) && (strlen($_COOKIE["webcollab_session"] ) == 32 ) ){
   $x = $_COOKIE["webcollab_session"];
+  $cookie_flag = 1;
 }
 elseif(isset($_REQUEST["x"]) && (strlen($_REQUEST["x"] ) == 32 ) ){
   $x = safe_data($_REQUEST["x"]);
@@ -108,11 +111,9 @@ else
 //update the "I was here" time
 db_query("UPDATE logins SET lastaccess=now() WHERE session_key='$x' AND user_id=$uid" );
 
-//check to see if cookies are being used
-if(isset($_COOKIE["webcollab_session"] ) ) {
-  //cookies in use, re-check that cookie can be set and unset URL session key 
-  if(setcookie("webcollab_session", $x, time()+86400, directory(), $_SERVER["SERVER_NAME"], 0  ) );
-    $x = 0;
+//if cookies are being used we don't need encoded URL
+if($cookie_flag = 1 ) {
+  $x = 0;
 }
 
 // this gives:
