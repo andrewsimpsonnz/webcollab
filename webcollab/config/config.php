@@ -79,7 +79,9 @@
 
   // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan),
   //                       "de" (German), "it" (Italian), "bg" (Bulgarian), "da" (Danish)
-
+  $LOCALE = "en";
+  
+  
 //TIMEZONE
   //timezone offset from GMT/UTC (hours)
   $TZ = 0;
@@ -129,6 +131,6 @@
   define("PRE", "" );
 
   //version info
-  $WEBCOLLAB_VERSION = "pre-1.60 - CVS working copy";
+  $WEBCOLLAB_VERSION = "1.62";
 
 ?>
