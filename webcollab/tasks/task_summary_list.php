@@ -126,7 +126,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
       $color = "#FF0000";
     }
     else if( $due == 0 ) {
-      $color = "#00640";
+      $color = "#006400";
     }
     else {
       $color = "";
@@ -137,54 +137,69 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
 
         switch( $row["status"] ) {
           case "notactive":
-	    $color = "";
+            $color = "";
+            $date = "";
             $status =  $task_state["task_planned"];
             break;
 
+          case "nolimit":
+            $color = "";
+            $date = "";
+            $status = "";
+            break;
+
           case "cantcomplete":
-	    $color = "";
+            $color = "";
+            $date = "";
             $status =  "<FONT color=\"#0000FF\">".$task_state["cantcomplete"]."</FONT>";
             break;
 
-	  default:
-	    if(db_result( db_query( "SELECT COUNT(*) FROM tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent<>0" ), 0, 0 ) == 0 ) {
-	      $color = "#00640";
-	      $status = $task_state["done"];
-	    }
-	    else {	
-	      $status = $lang["pproject"];
-	    }
-	    break;
-	}    
+          default:
+            $date = nicedate($row["deadline"] );
+            if(db_result( db_query( "SELECT COUNT(*) FROM tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent<>0" ), 0, 0 ) == 0 ) {
+              $color = "#006400";
+              $status = $task_state["done"];
+            }
+            else {
+              $status = $lang["pproject"];
+            }
+            break;
+        }
       }
       else {
 
       switch( $row["status"] ) {
         case "done":
           $color = "";
+          $date = nicedate($row["deadline"] );
           $status =  "<FONT color=\"#006400\">".$task_state["done"]."</FONT>";
           break;
 
         case "created":
+          $date = nicedate($row["deadline"] );
           $status =  $task_state["new"];
           break;
-	  
+
         case "active":
+          $date = nicedate($row["deadline"] );
           $color = "#FFA500";
           $status =  $task_state["task_active"];
           break;
-	  
+
         case "notactive":
           $color = "#BEBEBE";
+          $date = "";
           $status =  $task_state["task_planned"];
           break;
 
         case "cantcomplete":
-	  $color = "";
+          $color = "";
+          $date = "";
           $status =  "<FONT color=\"#0000FF\">".$task_state["cantcomplete"]."</FONT>";
           break;
 
         default:
+          $date = nicedate($row["deadline"] );
           $status =  "<FONT color=\"#FFA500\">".$row["status"]."</FONT>";
           break;
       }
@@ -195,6 +210,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
       switch( $row["status"] ) {
         case "created":
         case "notactive":
+        case "nolimit":
            $owner = $lang["nobody"];
            break;
 
@@ -244,7 +260,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
 
     //Add deadline column
     if ($due <= 360) {
-      $result .= nicedate( $row["deadline"] );
+      $result .= $date;
     } else {
       $result .= $lang["future"];
     }
