@@ -54,28 +54,32 @@ ignore_user_abort(TRUE);
 switch($_GET["action"] ){
 
   case "permdel":
-    //kiss your ass goodbye :)
-    db_begin();
 
-    //free up any tasks owned (should be none)
-    @db_query("UPDATE tasks SET owner=0 WHERE owner=$userid" );
+    if(db_result(db_query("SELECT COUNT(*) FROM users WHERE id=$userid AND deleted='t'" ), 0, 0 ) == 1 ) {
 
-    //remove user from forum messages
-    db_query("UPDATE forum SET userid=0 WHERE userid=$userid" );
+      //kiss your ass goodbye :)
+      db_begin();
 
-    //delete user FROM login tables
-    db_query("DELETE FROM logins WHERE user_id=$userid" );
+      //free up any tasks owned (should be none)
+      @db_query("UPDATE tasks SET owner=0 WHERE owner=$userid" );
 
-    //delete from seen table
-    db_query("DELETE FROM seen WHERE userid=$userid" );
+      //remove user from forum messages
+      db_query("UPDATE forum SET userid=0 WHERE userid=$userid" );
 
-    //delete from usergroups_users
-    db_query("DELETE FROM usergroups_users WHERE userid=$userid" );
+      //delete user FROM login tables
+      db_query("DELETE FROM logins WHERE user_id=$userid" );
 
-    //delete from users table
-    db_query("DELETE FROM users WHERE id=$userid" );
+      //delete from seen table
+      db_query("DELETE FROM seen WHERE userid=$userid" );
 
-    db_commit();
+      //delete from usergroups_users
+      db_query("DELETE FROM usergroups_users WHERE userid=$userid" );
+
+      //delete from users table
+      db_query("DELETE FROM users WHERE id=$userid" );
+
+      db_commit();
+    }
 
     break;
 
