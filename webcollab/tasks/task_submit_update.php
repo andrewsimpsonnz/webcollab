@@ -35,70 +35,7 @@ include_once(BASE."includes/admin_config.php" );
 include_once(BASE."includes/time.php" );
 include_once(BASE."lang/lang_email.php" );
 include_once(BASE."tasks/task_common.php" );
-
-//
-//generate status message for emails
-//
-function status($status, $deadline ) {
-
-  global $task_state, $lang;
-
-  switch($status) {
-    case "created":
-      $message = $task_state["new"]."\n".$lang["deadline"].": ".nicedate($deadline);
-      break;
-
-    case "notactive":
-      $message = $task_state["planned"];
-      break;
-
-    case "active":
-      $message = $task_state["active"]."\n".$lang["deadline"].": ".nicedate($deadline);
-      break;
-
-    case "cantcomplete":
-      $message = $task_state["cantcomplete"];
-      break;
-
-    case "done":
-      $message = $task_state["done"];
-      break;
-
-    case "nolimit":
-    default:
-      $message = "";
-      break;
-  }
-
-return $message;
-}
-
-//
-//function to verify user access
-//
-function user_access($taskid ) {
-
-  global $uid, $gid;
-
-  $q = db_query("SELECT owner, usergroupid, groupaccess FROM ".PRE."tasks WHERE id=$taskid" );
-  $row = db_fetch_num($q, 0 );
-
-  //user is owner
-  if($row[0] == $uid )
-    return TRUE;
-
-  //no usergroup set
-  if($row[1] == 0 )
-    return FALSE;
-
-  //if groupaccess is set, check user is in usergroup
-  if($row[2] == "t" ) {
-    if(in_array($row[1], (array)$gid ) )
-      return TRUE;
-  }
-  //no access for this user
-  return FALSE;
-}
+include_once(BASE."tasks/task_submit.php" );
 
 //
 // Recursive function to find chldren tasks and reset their projectid's
@@ -233,7 +170,7 @@ if($parentid == 0 ) {
 }
 
 //set completed percentage project record
-$percent_completed = round(percent_complete($projectid ) );
+$percent_completed = percent_complete($projectid );
 db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$projectid );
 
 //for completed project set the completion time

@@ -145,7 +145,7 @@ if($parentid != 0 ) {
 db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES($uid, $taskid, now() )");
 
 //set completed percentage project record
-$percent_completed = round(percent_complete($projectid ) );
+$percent_completed = percent_complete($projectid );
 db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$projectid );
 
 //for completed project set the completion time
