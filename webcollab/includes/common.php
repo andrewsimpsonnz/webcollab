@@ -136,7 +136,7 @@ function error( $box_title, $content ) {
   create_top("ERROR", 1);
 
 
-  if( $NO_ERROR != 1 )
+  if( $NO_ERROR != "Y" )
     new_box( $box_title, "<CENTER>".$content."</CENTER>" );
     else
     new_box($lang["report"], "<BR>".$lang["warning"]."<BR><BR>" );
@@ -168,7 +168,7 @@ function error( $box_title, $content ) {
 	$message,
         "From: ".$EMAIL_FROM."\nReply-To: ".$EMAIL_REPLY_TO."\nX-Mailer: PHP/" . phpversion() );
 
-  if( $DEBUG == 1)
+  if( $DEBUG == "Y")
     new_box( "Error Debug", nl2br($message) );
 
   create_bottom();
