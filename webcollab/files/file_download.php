@@ -38,7 +38,8 @@ $fileid = intval($_GET["fileid"]);
 if( ! ($q = db_query("SELECT oid, filename, size, mime, taskid FROM ".PRE."files WHERE id=$fileid" ) ) )
   error("Download file", "There was an error in the data query");
 
-$row = db_fetch_array( $q, 0);
+if( ! $row = db_fetch_array( $q, 0) )
+  error("Download file", "Invalid fileid given" );   
 
 //check usergroup security
 $taskid = $row["taskid"];

@@ -78,8 +78,10 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
 
 //get info about the parent of this task
   $q = db_query("SELECT name, deadline, status, owner, parent, projectid FROM ".PRE."tasks WHERE id=$parentid" );
-  $task_row = @db_fetch_array($q, 0 );
-
+  
+  if( ! $task_row = db_fetch_array($q, 0 ) )
+    error("Task add", "No parent for taskid" );
+  
   //add the project deadline for the javascript
   // Note: date(Z) converts to GMT/UTC  since javascript doesn't use localtime
   $project_deadline = db_result(db_query("SELECT ".$epoch."deadline) FROM ".PRE."tasks WHERE id=".$task_row["projectid"] ) ) + (int)date("Z");

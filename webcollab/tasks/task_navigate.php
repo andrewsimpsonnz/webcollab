@@ -85,7 +85,8 @@ elseif( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ){
 
   //get task parent details
   $q = db_query("SELECT name, parent, projectid FROM ".PRE."tasks WHERE id=".$parentid );
-  $row = db_fetch_array( $q, 0);
+  if( ! $row = db_fetch_array( $q, 0) )
+    error("Task navigate", "Parent does not exist" );
 
   //get project name
   $project_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$row["projectid"] ), 0, 0 ), 0, 20);

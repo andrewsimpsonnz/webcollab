@@ -74,7 +74,8 @@ if($parentid != 0 ) {
                          LEFT JOIN users ON (forum.userid=users.id)
                          WHERE forum.id=$parentid" );
 
-  $row = db_fetch_array($q, 0 );
+  if( ! $row = db_fetch_array($q, 0 ) )
+    error("Forum add", "Forum post has invalid parent" );
 
   if($row["username"] == NULL )
     $row["username"] = "----";
