@@ -137,7 +137,7 @@ if( ! isset($_REQUEST["action"]) )
             
    //submit clone
    case "submit_clone":
-       include("tasks/task_submit_clone.php" );
+       include("tasks/task_clone_submit.php" );
        break;   
             
     //printable task info
