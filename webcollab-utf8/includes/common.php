@@ -73,31 +73,36 @@ function safe_data_long($body ) {
   $body = str_replace("\r\n", "\n", $body );
   $body = str_replace("\r", "\n", $body );
   //break up long non-wrap words
-  $body = preg_replace("/[^\s\n\t]{100}/", "$0\n", $body );
+  $body = preg_replace("/[^\s\n\t]{100}/u", "$0\n", $body );
 
 return $body;
 }
 
 function clean_up($body ) {
 
-  //allow only normal byte range of UTF-8 characters
+  //allow only normal byte range of UTF-8 characters upto U+00010000
   preg_match_all('/([\x09\x0a\x0d\x20-\x7e]|'.
                    '[\xc0-\xdf][\x80-\xbf]|'.
-                   '[\xe0-\xef][\x80-\xbf]{2}|'.
-                   '[\xf0-\xf7][\x80-\xbf]{3}|'.
-                   '[\xf8-\xfb][\x80-\xbf]{4}|'.
-                   '[\xfc-\xfd][\x80-\xbf]{5})+/S', $body, $ar );
-  
+                   '[\xe0-\xef][\x80-\xbf]{2})+/S', $body, $ar );
+
+/*                 Remainder of range beyond U+00010000 are:   
+                   '[\xf0-\xf7][\x80-\xbf]{3}'    (U-00010000 - U-001FFFFF)
+                   '[\xf8-\xfb][\x80-\xbf]{4}'    (U-00200000 - U-03FFFFFF)
+                   '[\xfc-\xfd][\x80-\xbf]{5}'    (U-04000000 - U-7FFFFFFF)
+*/    
   $body = join("?", $ar[0] );
   
-  //reject overly long UTF8 forms (lines 1-6) and illegal UTF16 surrogates (lines 6 & 7)  
+  //reject overly long UTF8 forms (lines 1, 2 & 3) and illegal UTF16 surrogates (lines 4 & 5)  
   $body = preg_replace('/([\xc0-\xc1][\x80-\xbf]|'.
                          '[\xe0][\x80-\x9f][\x80-\xbf]|'.
                          '[\xf0][\x80-\x8f][\x80-\xbf]{2}|'.
-                         '[\xf8][\x80-\x87][\x80-\xbf]{3}|'.
-                         '[\xfc][\x80-\x83][\x80-\xbf]{4}|'.
                          '[\xed][\xa0-\xbf][\x80-\xbf]|'.
                          '[\xef][\xbf][\xbe-\xbf])/S', "?", $body );
+  
+/*                      Remainder of overly long UTF8 above U+00010000  
+                         '[\xf8][\x80-\x87][\x80-\xbf]{3}'
+                         '[\xfc][\x80-\x83][\x80-\xbf]{4}'
+*/
   
   //protect against database query attack
   if(! get_magic_quotes_gpc() )
