@@ -38,17 +38,10 @@ function date_to_datetime($day, $month, $year ) {
   if( ! checkdate($month, $day, $year ) ) {
     warning($lang["invalid_date"], sprintf($lang["invalid_date_sprt"], $year."-".$month_array[$month ]."-".$day ) );
   }
-
-  //pad single digits into double digits (that way nicedate() works too...)
-  if($month < 10 ) {
-    $month = "0".$month;
-  }
-
-  if($day < 10 ) {
-    $day = "0".$day;
-  }
-
-  return $year."-".$month."-".$day." 00:00:00";
+  
+  //format is 2004-08-02 00:00:00
+  //(security note: formatted string here prevents SQL injection attacks)
+  return sprintf("%04d-%02d-%02d 00:00:00", $year, $month, $day );
 }
 
 //
@@ -60,76 +53,79 @@ function nicedate($timestamp ) {
     $nicedate = "";
     return $nicedate;
   }
-  $date_array = substr($timestamp, 0, 10 );
-  $date_array = explode("-", $date_array );
-  $year = $date_array[0];
-  //need to force $month to be an integer to make all it work
-  $month = (int)$date_array[1];
-  $day = $date_array[2];
-  $nicedate = $year."-".$month_array[$month]."-".$day;
-  return $nicedate;
+  $date_array = explode("-", substr($timestamp, 0, 10) );
+  
+  //format is 2004-Aug-02
+  return sprintf("%s-%s-%02d", $date_array[0], $month_array[(int)($date_array[1])], (int)$date_array[2]);
 }
 
 //
 // Strip the UTC offset from a date *and time* variable and make it look nice
 //
 function nicetime($timestamp ) {
-  global $month_array;
+  global $month_array, $DATABASE_TYPE;
 
   if($timestamp == "" ) {
     $nicetime = "";
     return $nicetime;
   }
-  $time = substr($timestamp, 11, 5 );
-  $date_array = substr($timestamp, 0, 10 );
-  $date_array = explode("-", $date_array );
-  $year = $date_array[0];
-  //need to force $month to be an integer to make all it work
-  $month = (int)$date_array[1];
-  $day = $date_array[2];
-  $nicetime = $year."-".$month_array[$month]."-".$day." ".$time;
-  return $nicetime;
+  $date_array = explode("-", substr($timestamp, 0, 10 ) );
+  $time_array = explode(":", substr($timestamp, 11, 5 ) );
+  
+  if($DATABASE_TYPE == "postgresql"){ 
+  
+    //postgres' has timezone information in the data output
+    $timezone = substr($timestamp, -3 );
+        
+    //format is 2004-Aug-02 18:06 +1200 
+    return sprintf("%d-%s-%02d %02d:%02d %s00", $date_array[0], $month_array[(int)($date_array[1])], $date_array[2], $time_array[0], $time_array[1], $timezone );
+  }
+    
+  //MySQL with manually set timezone
+  //format is 2004-Aug-02 18:06 +1200  
+  return sprintf("%d-%s-%02d %02d:%02d %s", $date_array[0], $month_array[(int)($date_array[1])], $date_array[2], $time_array[0], $time_array[1], date("O") );
 }
-
-
+  
 //
-// Give back a row that holds the date which comes from a pg timestamp
+// Give back a row that holds the date which comes from a pg/my timestamp
 //
 function date_select_from_timestamp($timestamp="" ) {
 
-  if($timestamp == "" ) {
-    $temp_array[0] = date("Y-m-d" );
-  }
-  else {
-
-    //deparse the line
-    $temp_array = explode(" ", $timestamp );
-  }
-
-  $date_array = explode("-", $temp_array[0] );
-
+  if($timestamp == "" )
+    return date_select(-1, -1, -1 );
+    
+  //deparse the line
+  $date_array = explode("-", substr($timestamp, 0, 10 ) );
+  
   //show line
   return date_select($date_array[2], $date_array[1], $date_array[0] );
 }
-
 
 //
 //show a date-time selection row
 //
 function date_select($day=-1, $month=-1, $year=-1 ) {
-  global $month_array;
+  global $month_array, $DATABASE_TYPE, $TZ;
 
   //filter for no date set
-  if($day   == -1 )   $day = date("d");
-  if($month == -1 ) $month = date("m");
-  if($year  == -1 )  $year = date("Y");
+  if($day == -1 || $month == -1 || $year == -1 ) {
+   if($DATABASE_TYPE == "postgresql" && $TZ != NULL )
+     $epoch = date("U") - date("Z") + ($TZ * 3600);
+   else
+     $epoch = date("U");
+   
+    $day = date("d", $epoch );
+    $month = date("m", $epoch );
+    $year = date("Y", $epoch );
+  }
 
   //day
   $content = "<select id=\"day\" name=\"day\">\n";
   for($i=1 ; $i<32 ; $i++ ) {
     $content .= "<option value=\"$i\"";
 
-    if($day == $i ) $content .= " selected=\"selected\"";
+    if($day == $i )
+      $content .= " selected=\"selected\"";
 
     $content .= ">$i</option>\n";
   }
@@ -140,7 +136,8 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   for( $i=1; $i<13 ; $i++) {
     $content .= "<option value=\"$i\"";
 
-    if($month == $i ) $content .= " selected=\"selected\"";
+    if($month == $i )
+      $content .= " selected=\"selected\"";
 
     $content .= ">".$month_array[($i)]."</option>\n";
   }
@@ -148,10 +145,11 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
 
   //year
   $content .= "<select id=\"year\" name=\"year\">\n";
-  for($i=2001; $i<2011 ; $i++ ) {
+  for($i=2001; $i<2015 ; $i++ ) {
     $content .= "<option value=\"$i\"";
 
-    if($year == $i ) $content .= " selected=\"selected\"";
+    if($year == $i )
+      $content .= " selected=\"selected\"";
 
     $content .= ">".$i."</option>\n";
   }
