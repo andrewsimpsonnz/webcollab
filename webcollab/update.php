@@ -29,7 +29,7 @@
 require_once("path.php" );
 
 require_once(BASE."config/config.php" );
-include_once(BASE."includes/screen.php" );
+include_once(BASE."setup/screen_setup.php" );
 
 
 //
@@ -174,9 +174,9 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   $content .= "<p>Database update action has been completed.</p>\n";
   
   //display box calls
-  create_top("Info" );
-  new_box("Update completed", $content, "boxdata", "singlebox" );
-  create_bottom();
+  create_top_setup("Info" );
+  new_box_setup("Update completed", $content, "boxdata", "singlebox" );
+  create_bottom_setup();
   die;
 }
        
@@ -185,7 +185,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
 //
 
 //login box screen code 
-create_top("Login" );
+create_top_setup("Login" );
 
 $content = "<p>Admin login is required for database update:</p>\n".
            "<form name=\"inputform\" method=\"POST\" action=\"update.php\">\n".
@@ -198,8 +198,8 @@ $content = "<p>Admin login is required for database update:</p>\n".
              "</div></form>\n";
 
 //set box options
-new_box("Login", $content, "boxdata", "singlebox" );
+new_box_setup("Login", $content, "boxdata", "singlebox" );
 
-create_bottom();
+create_bottom_setup();
 
 ?>
