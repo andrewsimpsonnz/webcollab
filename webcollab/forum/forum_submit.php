@@ -36,11 +36,11 @@ include_once(BASE."includes/admin_config.php");
 //
 function find_posts( $postid ) {
 
-  global $post_array, $parent_array, $match_array, $index;
+  global $post_array, $parent_array, $match_array, $index, $post_count;
 
   $parent_array = "";
   $index = 0; 
-  $j = 0;
+  $parent_count = 0;
   
   $taskid = db_result(db_query("SELECT taskid FROM ".PRE."forum WHERE id=$postid" ), 0, 0 );
 
@@ -54,17 +54,14 @@ function find_posts( $postid ) {
   
     //if this is a subpost, store the parent id 
     if($row['parent'] != 0 ) {
-      $parent_array[$j] = $row['parent'];
-      $j++;
+      $parent_array[$parent_count] = $row['parent'];
+      $parent_count++;
     }
   }
-    
+  
   //record first match
   $match_array[$index] = $postid;
   $index++;
-  
-  if(sizeof($parent_array) > 10 )
-    $parent_array = array_unique($parent_array);
   
   //if selected post has children (subposts), iterate recursively to find them 
   if(in_array($postid, (array)$parent_array ) ){
@@ -79,11 +76,9 @@ function find_posts( $postid ) {
 //
 function find_children($parent ) {
 
-  global $post_array, $parent_array, $match_array, $index;
+  global $post_array, $parent_array, $match_array, $index, $post_count;
 
-  $max = sizeof($post_array);
-       
-  for($i=0 ; $i < $max ; $i++ ) {
+  for($i=0 ; $i < $post_count ; $i++ ) {
   
     if($post_array[$i]['parent'] != $parent ){
       continue;

@@ -48,11 +48,12 @@ require_once(BASE."includes/usergroup_security.php" );
 function list_posts_from_task( $taskid, $usergroupid ) {
 
   global $ADMIN, $x, $UID, $lang, $TASKID_ROW, $epoch;
-  global $post_array, $parent_array;
+  global $post_array, $parent_array, $post_count;
 
   $parent_array = "";
-  $j = 0;
-
+  $parent_count = 0;
+  $post_count   = 0;
+  
   $q = db_query("SELECT ".PRE."forum.text AS text,
                         ".PRE."forum.id AS id,
                         ".$epoch.PRE."forum.posted) AS posted,
@@ -103,20 +104,17 @@ function list_posts_from_task( $taskid, $usergroupid ) {
     }
 
     $post_array[$i]['post'] = $this_post."<br />\n".$row['text']."\n";
-
+    $post_count++;
+    
     //if this is a subpost, store the parent id 
     if($row['parent'] != 0 ) {
-      $parent_array[$j] = $row['parent'];
-      $j++;
+      $parent_array[$parent_count] = $row['parent'];
+      $parent_count++;
     }
   }
   
-  if(sizeof($parent_array) > 10 )
-    $parent_array = array_unique($parent_array);
-  $max = sizeof($post_array);
-
   //iteration for first level posts
-  for($i=0 ; $i < $max ; $i++ ){
+  for($i=0 ; $i < $post_count ; $i++ ){
   
     //ignore subtasks in this iteration
     if($post_array[$i]['parent'] != 0 ){
@@ -139,12 +137,11 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 //
 function find_children($parent ) {
 
-  global $post_array, $parent_array;
+  global $post_array, $parent_array, $post_count;
 
   $content = "<ul>\n";
-  $max = sizeof($post_array);
        
-  for($i=0 ; $i < $max ; $i++ ) {
+  for($i=0 ; $i < $post_count ; $i++ ) {
   
     if($post_array[$i]['parent'] != $parent ){
       continue;

@@ -39,12 +39,13 @@ include_once(BASE."includes/time.php" );
 function listTasks($projectid ) {
   global $x, $epoch, $now ,$ADMIN, $GID, $lang, $task_state, $tz_offset;
   global $task_order;
-  global $task_array, $parent_array, $shown_array, $j;
+  global $task_array, $parent_array, $shown_array, $shown_count, $task_count;
    
   $parent_array = "";
-  $j = 0;
-  $k = 0;
-  $l = 0;
+  $shown_array  = "";
+  $shown_count  = 0;  //counter for $shown_array
+  $parent_count = 0;  //counter for $parent_array
+  $task_count   = 0;  //counter for $task_array
     
   $q = db_query("SELECT id,
                         name,
@@ -73,8 +74,8 @@ function listTasks($projectid ) {
     }
   
     //put values into array
-    $task_array[$l]['id'] = $row[0];
-    $task_array[$l]['parent'] = $row[2];
+    $task_array[$task_count]['id'] = $row[0];
+    $task_array[$task_count]['parent'] = $row[2];
     
     //add suffix information
     switch( $row[3] ) {
@@ -95,23 +96,19 @@ function listTasks($projectid ) {
         break;
     }
     
-    $task_array[$l]['task'] = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_array[$l]['id']."\">".$row[1].$suffix;
+    $task_array[$task_count]['task'] = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_array[$task_count]['id']."\">".$row[1].$suffix;
                                
         
     //if this is a subtask, store the parent id 
     if($row[2] != $projectid ) {
-      $parent_array[$k] = $row[2];
-      $k++;
+      $parent_array[$parent_count] = $row[2];
+      $parent_count++;
     }
-  $l++;  
+  $task_count++;  
   }
   
-  if(sizeof($parent_array) > 10 )
-    $parent_array = array_unique($parent_array);
-  $max = sizeof($task_array);
-  
   //iteration for main tasks
-  for($i=0 ; $i < $max ; $i++ ){
+  for($i=0 ; $i < $task_count ; $i++ ){
   
     //ignore subtasks in this iteration
     if($task_array[$i]['parent'] != $projectid ){
@@ -119,8 +116,8 @@ function listTasks($projectid ) {
     }
     //show line
     $content .= $task_array[$i]['task'];
-    $shown_array[$j]  = $task_array[$i]['id'];
-    $j++; 
+    $shown_array[$shown_count] = $task_array[$i]['id'];
+    $shown_count++; 
     
     //if this task has children (subtasks), iterate recursively to find them 
     $test = array_search($task_array[$i]['id'], (array)$parent_array );
@@ -131,8 +128,8 @@ function listTasks($projectid ) {
   }
  
   //look for any orphaned tasks, and show them too
-  if($max != sizeof($shown_array) ) {
-    for($i=0 ; $i < $max ; $i++ ) {
+  if($task_count != $shown_count ) {
+    for($i=0 ; $i < $task_count ; $i++ ) {
       $test = array_search($task_array[$i]['id'], (array)$shown_array );
       if($test === FALSE || $test === NULL ) 
         $content .= $task_array[$i]['task']."</li>\n";
@@ -152,20 +149,19 @@ function listTasks($projectid ) {
 //
 function find_children($parent ) {
 
-  global $task_array, $parent_array, $shown_array, $j;
+  global $task_array, $parent_array, $shown_array, $task_count, $shown_count;
 
   $content = "<ul>\n";
-  $max = sizeof($task_array);
          
-  for($i=0 ; $i < $max ; $i++ ) {
+  for($i=0 ; $i < $task_count ; $i++ ) {
     
     //ignore tasks not directly under this parent
     if($task_array[$i]['parent'] != $parent ){
       continue;
     }
     $content .= $task_array[$i]['task'];
-    $shown_array[$j] = $task_array[$i]['id'];
-    $j++;
+    $shown_array[$shown_count] = $task_array[$i]['id'];
+    $shown_count++;
             
     //if this task has children (subtasks), iterate recursively to find them
     $test = array_search($task_array[$i]['id'], (array)$parent_array );

@@ -38,11 +38,12 @@ include_once(BASE."tasks/task_common.php" );
 //
 function find_tasks( $taskid, $projectid ) {
 
-  global $task_array, $parent_array, $match_array, $index;
+  global $task_array, $parent_array, $match_array, $index, $task_count;
 
   $parent_array = "";
   $index = 0; 
-  $j = 0;
+  $parent_count = 0;
+  $task_count = 0;
     
   $q = db_query("SELECT id, parent FROM ".PRE."tasks WHERE projectid=$projectid" );
 
@@ -51,20 +52,18 @@ function find_tasks( $taskid, $projectid ) {
     //put values into array
     $task_array[$i]['id'] = $row['id'];
     $task_array[$i]['parent'] = $row['parent'];
+    $task_count++;
   
-    //if this is a subpost, store the parent id 
+    //if this is a subtask, store the parent id 
     if($row['parent'] != 0 ) {
-      $parent_array[$j] = $row['parent'];
-      $j++;
+      $parent_array[$parent_count] = $row['parent'];
+      $parent_count++;
     }
   }
     
   //record first match
   $match_array[$index] = $taskid;
   $index++;
-  
-  if(sizeof($parent_array) > 10 )
-    $parent_array = array_unique($parent_array);
   
   //if selected task has children (subtasks), iterate recursively to find them 
   if(in_array($taskid, (array)$parent_array ) ){
@@ -79,11 +78,9 @@ function find_tasks( $taskid, $projectid ) {
 //
 function find_children($parent ) {
 
-  global $task_array, $parent_array, $match_array, $index;
-
-  $max = sizeof($task_array);
+  global $task_array, $parent_array, $match_array, $index, $task_count;
        
-  for($i=0 ; $i < $max ; $i++ ) {
+  for($i=0 ; $i < $task_count ; $i++ ) {
   
     if($task_array[$i]['parent'] != $parent ){
       continue;
