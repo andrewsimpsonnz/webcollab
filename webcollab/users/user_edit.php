@@ -64,7 +64,7 @@ if( ! ($row = db_fetch_array($q , 0 ) ) )
 
 //show data
 $content =  "<form method=\"POST\" action=\"users/user_submit.php\">".
-            "<table border=\"0\">".
+            "<p><table border=\"0\">".
               "<tr><td>".$lang["login_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\" /></td></tr>\n".
               "<tr><td>".$lang["full_name"].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" value=\"".$row["fullname"]."\" /></td></tr>\n".
               "<tr><td>".$lang["password"].":</td><td><input type=\"password\" name=\"password\" size=\"30\" value=\"\" /></td><td><small><i>".$lang["blank_for_current_password"]."</i></small></td></tr>\n".
@@ -113,7 +113,7 @@ if( $admin == 1 ) {
   $content .= "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n";
 }
 
-$content .= "</table><br /><br />".
+$content .= "</table></p>".
             "<input type=\"hidden\" name=\"action\" value=\"edit\" />".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
             "<input type=\"hidden\" name=\"userid\" value=\"$userid\" />".

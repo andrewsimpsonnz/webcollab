@@ -43,7 +43,7 @@ if( $admin != 1 ) {
 $content .=
         "<form method=\"POST\" action=\"users/user_mail_send.php\">\n".
           "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-          "<table border=\"0\">\n".
+          "<p><table border=\"0\">\n".
           "<tr><td><input type=\"radio\" value=\"all\" name=\"group\" id=\"all\" checked /><label for=\"all\" />".$lang["all_users"]."</label></td></tr>\n".
           "<tr><td><input type=\"radio\" value=\"maillist\" name=\"group\" id=\"maillist\" /><label for=\"maillist\" />".$lang["mailing_list"]."</label></td></tr>\n".
           "<tr><td><input type=\"radio\" value=\"group\" name=\"group\" id=\"group\" /><label for=\"group\" />".$lang["select_usergroup"]."</label></td></tr>\n";
@@ -55,12 +55,12 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $content .= "<option value=\"".$row["id"]."\">".$row["name"]."</option>";
 }
 $content .= "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
-            "</table><br /><br />\n".
-            "<table border=\"0\">\n".
+            "</table></p>\n".
+            "<p><table border=\"0\">\n".
             "<tr><td>".$lang["subject"]."</td><td><input type=\"text\" name=\"subject\" size=\"60\" /></td></tr>\n".
             "<tr><td>".$lang["message"]."</td><td><textarea name=\"message\" rows=\"10\" cols=\"60\" /></textarea></td></tr>\n".
             "<tr><td></td><td>".$lang["message_sent_maillist"]."</td></tr>\n".
-            "</table><br />\n".
+            "</table></p>\n".
             "<input type=\"submit\" value=\"".$lang["post"]."\" />\n".
             "<input type=\"reset\" value=\"".$lang["reset"]."\" />\n".
             "</form>\n";

@@ -38,7 +38,7 @@ $q = "";
 
 $content .=
         "<form name=\"inputform\" method=\"POST\" action=\"contacts/contact_submit.php\">\n".
-        "<table border=\"0\">\n".
+        "<p><table border=\"0\">\n".
             "<tr><td><i>".$lang["firstname"]."</i></td><td><input type=\"text\" name=\"firstname\" size=\"30\" /></td></tr>\n".
             "<tr><td><i>".$lang["lastname"]."</i></td><td><input type=\"text\" name=\"lastname\" size=\"30\" /></td></tr>\n".
             "<tr><td><i>".$lang["company"]."</i></td><td><input type=\"text\" name=\"company\" size=\"30\" /></td></tr>\n".
@@ -50,8 +50,8 @@ $content .=
             "<tr><td><i>".$lang["postal"]."</i></td><td><input type=\"text\" name=\"postal\" size=\"30\" /></td></tr>\n".
             "<tr><td><i>".$lang["city"]."</i></td><td><input type=\"text\" name=\"city\" size=\"30\" /></td></tr>\n".
             "<tr><td><i>".$lang["email"]."</i></td><td><input type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".
-          "</table><br />\n".
-          "<i>".$lang["notes"]."</i><br /><textarea name=\"notes\" rows=\"6\" cols=\"50\"></textarea><br /><br />\n".
+          "</table></p>\n".
+          "<p><i>".$lang["notes"]."</i><br /><textarea name=\"notes\" rows=\"6\" cols=\"50\"></textarea></p>\n".
           "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
           "<input type=\"hidden\" name=\"action\" value=\"insert\" />\n".
           "<input type=\"submit\" value=\"".$lang["add_contact"]."\" />\n".

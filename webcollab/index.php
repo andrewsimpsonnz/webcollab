@@ -143,16 +143,16 @@ else {
   $content .=  "<img src=\"images/webcollab.png\" alt=\"WebCollab logo\" /><br />";
 }
 
-$content .= "<br />".$lang["please_login"].":<br /><br />\n".
+$content .= "<p>".$lang["please_login"].":</p>\n".
            "<form name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
-           "<table border=\"0\">\n".
+           "<p><table border=\"0\">\n".
            "<tr><td>".$lang["login"].": </td><td><input type=\"text\" name=\"username\" value=\"$username\" size=\"30\" /></td></tr>\n".
            "<tr><td>".$lang["password"].": </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
-           "</table>".
-           "<input type=\"submit\" value=\"".$lang["login"]."\"><br /><br />\n".
+           "</table></p>".
+           "<p><input type=\"submit\" value=\"".$lang["login"]."\"></p>\n".
 
            "<div align=\"center\">".
-           "<br /><br />\n".
+           //"<br /><br />\n".
            //
            // Select one, or more images from selection below
            //

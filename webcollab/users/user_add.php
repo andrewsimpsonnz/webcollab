@@ -39,7 +39,7 @@ if($admin != 1 )
 
 $content =
            "<form name=\"inputform\" method=\"POST\" action=\"users/user_submit.php\">".
-             "<table border=\"0\">".
+             "<p><table border=\"0\">".
                "<tr><td>".$lang["login_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
                "<tr><td>".$lang["full_name"].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" /></td></tr>\n".
                "<tr><td>".$lang["password"].":</td><td><input type=\"password\" name=\"password\" size=\"30\" /></td></tr>\n".
@@ -53,7 +53,7 @@ for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
   $content .=  "<option value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</option>";
 }
 $content .=    "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
-            "</table><br /><br />".
+            "</table></p>".
             "<input type=\"hidden\" name=\"action\" value=\"insert\" />".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
             "<input type=\"submit\" value=\"".$lang["add"]."\" />&nbsp;".

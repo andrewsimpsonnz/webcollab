@@ -56,7 +56,7 @@ if( ! ($row = db_fetch_array($q, 0 ) ) )
 db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, $taskid, now() ) " );
 
 //start of header table
-$content = "<table width=\"98%\"><tr><td>\n";
+$content = "<p><table width=\"98%\"><tr><td>\n";
 
 //percentage_completed gauge if this is a project
 if( $row["parent"] == 0 ) {
@@ -76,10 +76,10 @@ $text = $row["text"];
 $text = preg_replace("(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))","<a href=\"mailto:\\0\">\\0</a>", $text );
 
 $content .= nl2br($text);
-$content .= "</td></tr></table>\n";
+$content .= "</td></tr></table></p>\n";
 
 //start of info table
-$content .= "<table border=\"0\">\n";
+$content .= "<p><table border=\"0\">\n";
 
 //get owner information
 if( $row["owner"] == 0 ) {
@@ -239,10 +239,10 @@ else {
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td><td>".sprintf($lang["task_not_in_usergroup_sprt"], $type )."</td></tr>\n";
 }
 
-$content .= "</table>\n";
+$content .= "</table></p>\n";
 
 //this part shows all the options the users has
-$content .= "<br /><div align=\"center\"><font class=\"textlink\">\n";
+$content .= "<div align=\"center\"><font class=\"textlink\">\n";
 
 //set add function for task or project
 switch( $row["parent"] ){

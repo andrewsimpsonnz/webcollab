@@ -151,16 +151,16 @@ create_top_setup("Setup Screen" );
 
 $content = "<div align=\"center\">\n".
             "<p>Setup is complete.</p>\n".
-            "<p>The configuration information has been saved to 'config.php'.".
+            "<p>The configuration information has been saved to 'config.php'. ".
             "You can edit this file with a text editor to make further changes to configuration.</p>\n".
             "<p>Please press the button to login...</p>\n";
 
 if($data["new_db"] == "Y" )
   $content .= "<p>You have a new database. Your default login and password are 'admin' and 'admin123'</p>\n";
 
-$content .=  "<form name=\"inputform\" method=\"POST\" action=\"../index.php\">\n".
-             "<input type=\"submit\" value=\"Login\" /><br /><br />\n".
-             "</form>\n".
+$content .=  "<p><form name=\"inputform\" method=\"POST\" action=\"../index.php\">\n".
+             "<input type=\"submit\" value=\"Login\" />\n".
+             "</form></p>\n".
              "</div>\n";
 
 new_box_setup("Setup - Stage 5 of 5", $content, "boxdata", "singlebox" );

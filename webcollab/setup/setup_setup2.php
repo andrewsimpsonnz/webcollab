@@ -39,7 +39,7 @@ $content .=
 "<form method=\"POST\" action=\"setup_db_build.php\">\n".
   "<p>Please enter database details.  The database user given here must be able to create databases.<br />\n".
   "(If desired, you can change the database user to a less privileged user in the next screen entry).</p>\n".
-  "<table border=\"0\">\n".
+  "<p><table border=\"0\">\n".
     "<tr><td></td><td><br />The details for your database are:</td></tr>\n".
     "<tr align=\"left\"><td><b>Your database name: </b></td><td><input type=\"text\" name=\"database_name\" size=\"30\" /></td></tr>\n".
     "<tr><td></td><td>&nbsp;</td></tr>\n".
@@ -53,8 +53,7 @@ $content .=
       "<option value=\"postgresql\">postgresql</option>\n".
       "<option value=\"mysql_innodb\">mysql with innodb</option>\n".
     "</select></td></tr>\n".
-    "<tr><td><br /></td><tr>\n".
-    "</table><br />\n".
+    "</table></p>\n".
   "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
   "<input type=\"submit\" value=\"Submit\" />\n".
 "</form>\n";

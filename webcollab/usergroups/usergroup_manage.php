@@ -41,7 +41,7 @@ $q = db_query("SELECT * FROM usergroups ORDER BY name" );
 
 //nothing here yet
 if(db_numrows($q) == 0 ) {
-  $content = "<br />".$lang["no_usergroups"]."<br /><br />\n".
+  $content = "<p>".$lang["no_usergroups"]."</p>\n".
              "<font class=\"textlink\"><a href=\"usergroups.php?x=$x&amp;action=add\">[".$lang["add"]."]</a></font>\n";
 
   new_box($lang["usergroup_manage"], $content );
@@ -49,7 +49,7 @@ if(db_numrows($q) == 0 ) {
 }
 
 $content =
-             "<table border=\"0\">\n".
+             "<p><table border=\"0\">\n".
                "<tr><th>".$lang["name"]."</th><th>".$lang["description"]."</th><th>".$lang["action"]."</th></tr>\n";
 
 //show all usergroups
@@ -73,7 +73,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
 }
 
-$content .=   "</table><br />\n".
+$content .=   "</table></p>\n".
               "<font class=\"textlink\">[<a href=\"usergroups.php?x=".$x."&amp;action=add\">".$lang["add"]."</a>]</font>";
 
 new_box($lang["manage_usergroups"], $content, "boxdata2" );

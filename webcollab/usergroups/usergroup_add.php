@@ -38,7 +38,7 @@ if($admin != 1 )
 
 $content =
             "<form name=\"inputform\" method=\"POST\" action=\"usergroups/usergroup_submit.php\">\n".
-              "<table border=\"0\">\n".
+              "<p><table border=\"0\">\n".
                 "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"input\" name=\"name\" size=\"30\" /></td></tr>\n".
                 "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" size=\"30\" /></td></tr>\n";
 
@@ -51,7 +51,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 }
 
 $content .=     "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
-              "</table><br /><br />\n".
+              "</table></p>\n".
               "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
               "<input type=\"hidden\" name=\"action\" value=\"insert\" />".
               "<input type=\"submit\" value=\"".$lang["add_usergroup"]."\" />&nbsp;".

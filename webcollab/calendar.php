@@ -96,7 +96,7 @@ switch($selection ) {
 $content .= "<div align=\"center\">\n".
             "<form method=\"POST\" action=\"calendar.php\">".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
-            "<table border=\"0\">\n".
+            "<p><table border=\"0\">\n".
             "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1 /><label for=\"users\" />".$lang["users"]."</label></td><td>\n".
             "<select name=\"userid\">\n".
             "<option value=\"0\"$s2>".$lang["all_users"]."</option>\n";
@@ -134,10 +134,10 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= ">".$row["name"]."</option>\n";
 }
 
-$content .= "</select></td></tr>\n</table><br /><br />\n";
+$content .= "</select></td></tr>\n</table></p>\n";
 
 //month (must be in decimal, 'cause that's what database uses!)
-$content .= "<table border=\"0\"><tr><td>\n<select name=\"month\">\n";
+$content .= "<p><table border=\"0\"><tr><td>\n<select name=\"month\">\n";
 for( $i=1; $i<13 ; $i++) {
   $content .= "<option value=\"$i\"";
 
@@ -157,7 +157,7 @@ for( $i=2001; $i<2011 ; $i++) {
   }
 $content .=  "</select></td>\n".
              "<td><input type=\"submit\" value=\"".$lang["update"]."\" /></td></tr>\n".
-             "</table></form><br />\n";
+             "</table></form></p>\n";
 
 //get usergroups of user, and put them in a simple array for later use
 $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
@@ -169,7 +169,7 @@ for( $i=0 ; $row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
 $numdays = date("t", mktime(0, 0, 0, $month, 1, $year ) );
 
 //main calendar table
-$content .= "<table style=\"border-width: 1px; border-style: solid; border-collapse: collapse; width: 97%\" cellspacing=\"0\" border=\"1\">\n<tr>\n";
+$content .= "<table style=\"border-width: 1px; border-style: solid; border-collapse: collapse; width: 97%\" align=\"center\" cellspacing=\"0\" border=\"1\">\n<tr>\n";
 $content .= "<td colspan=\"7\" style=\"vertical-align: middle; text-align: center\"><b>".date("F", mktime(0, 0, 0, $month, 1, $year ) )."</b>\n</td>\n";
 $content .= "</tr>\n";
 

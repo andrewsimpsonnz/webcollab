@@ -131,14 +131,14 @@ if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" ) {
 //login box screen code 
 create_top_setup("Login" );
 
-$content = "Admin login is required for setup:<br /><br />\n".
+$content = "<p>Admin login is required for setup:</p>\n".
            "<form name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
-             "<table border=\"0\">\n".
+             "<p><table border=\"0\">\n".
                "<tr><td>Login: </td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
                "<tr><td>Password: </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
-             "</table>\n".
+             "</table></p>\n".
              "<div align=\"center\">\n".
-             "<input type=\"submit\" value=\"Login\" /><br /><br />\n".
+             "<p><input type=\"submit\" value=\"Login\" /></p>\n".
              "</div></form>\n";
 
 //set box options

@@ -48,7 +48,7 @@ if( ! isset($_REQUEST["action"] ) )
       include("contacts/contact_menubox.php" );
       goto_main();
       include("contacts/contact_add.php" );
-      new_box($lang["info"], "<br />".$lang["contact_add_info"]."<br /><br />" );
+      new_box($lang["info"], $lang["contact_add_info"] );
       create_bottom();
       break;
 

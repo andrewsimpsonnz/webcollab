@@ -100,7 +100,7 @@ $content .= "<form method=\"POST\" action=\"setup_setup4.php\">".
             "<input type=\"hidden\" name=\"action\" value=\"insert\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"$new_db\" />\n".
-            "<table border=\"0\">";
+            "<p><table border=\"0\">";
 
 if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" ){
   $file_path = realpath(dirname(__FILE__ ).'/..' ).'/';
@@ -238,7 +238,7 @@ $content .= "<tr><td></td><td><br /></td></tr>\n".
             "<tr><th><i>SMTP AUTH password:</i></th><td><input type=\"text\" name=\"mail_password\" value=\"$MAIL_PASSWORD\" size=\"30\" /></td></tr>\n".
             "<tr><td></td><td>&nbsp;</td></tr>\n".
             "<tr><td></td><td><input type=\"submit\" value=\"Submit\" /></td></tr>\n".
-            "</table><br /><br />\n".
+            "</table></p>\n".
             "</form>\n";
 
 new_box_setup( "Setup - Stage 3 of 5 : Configuration", $content, "boxdata", "tablebox" );

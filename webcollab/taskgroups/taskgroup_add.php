@@ -38,10 +38,10 @@ if($admin != 1 )
 
 $content =
             "<form name=\"inputform\" method=\"POST\" action=\"taskgroups/taskgroup_submit.php\">\n".
-              "<table border=\"0\">\n".
+              "<p><table border=\"0\">\n".
                 "<tr><td>".$lang["taskgroup_name"]."</td><td><input type=\"input\" name=\"name\" size=\"30\" /></td></tr>\n".
                 "<tr><td>".$lang["taskgroup_description"]."</td><td><input type=\"input\"name=\"description\"size=\"30\" /></td></tr>\n".
-              "</table><br /><br />\n".
+              "</table></p>\n".
               "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"insert\" />\n".
               "<input type=\"submit\" value=\"".$lang["add_taskgroup"]."\" />&nbsp;\n".

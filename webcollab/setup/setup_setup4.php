@@ -79,7 +79,7 @@ $content .= "<input type=\"hidden\" name=\"$var\" value=\"".$data[$var]."\" />\n
 
 $content .= "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />\n".
-            "<table border=\"0\">";
+            "<p><table border=\"0\">";
 
 //set variables
 $status = "<font color=\"green\"><b>OK !</b></font>";
@@ -221,7 +221,7 @@ else {
 $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
             "<tr><td></td><td colspan=\"2\">$status<br /><br /></td></tr>\n".
             "<tr><td></td><td><input type=\"submit\" value=\"Continue\" /></td></tr>\n".
-            "</table><br /><br />\n".
+            "</table></p>\n".
             "</form>\n";
 
 new_box_setup( "Setup - Stage 4 of 5 : Verifying Data", $content, "boxdata", "tablebox" );

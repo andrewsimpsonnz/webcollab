@@ -66,7 +66,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
 
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" />\n".
               "<input type=\"hidden\" name=\"projectid\" value=\"".$task_row["projectid"]."\" />\n".
-              "<table border=\"0\">\n";
+              "<p><table border=\"0\">\n";
   //show project name
   if( $task_row["projectid"] == $parentid)
     $project = $task_row["name"];
@@ -145,7 +145,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
               "<tr><td><label for=\"mailowner\">".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER." /></label></td></tr>\n".
               "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></label></td></tr>\n".
 
-              "</table><br /><br />\n".
+              "</table></p>\n".
               "<input type=\"submit\" value=\"".$lang["add_task"]."\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" />".
               "</form>\n";
@@ -162,7 +162,7 @@ else {
               //taskgroup - we don't have this for projects
               "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" />\n".
 
-              "<table border=\"0\">\n".
+              "<p><table border=\"0\">\n".
               "<tr><td>".$lang["creation_time"].":</td><td>".date("F j, Y, H:i")."</td></tr>\n".
               "<tr><td>".$lang["project_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
 
@@ -215,7 +215,7 @@ else {
               "<tr><td><label for=\"mailowner\">".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER." /></label></td></tr>\n".
               "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></label></td></tr>\n".
 
-              "</table><br /><br />\n".
+              "</table></p>\n".
               "<input type=\"submit\" value=\"".$lang["add_project"]."\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" />\n".
               "</form>\n";

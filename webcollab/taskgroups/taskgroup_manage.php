@@ -41,7 +41,7 @@ $q = db_query("SELECT * FROM taskgroups ORDER BY name" );
 
 //nothing here yet
 if(db_numrows($q) == 0 ) {
-  $content = $lang["no_taskgroups"]."<br /><br />\n".
+  $content = "<p>".$lang["no_taskgroups"]."</p>\n".
              "<font class=\"textlink\"><a href=\"taskgroups.php?x=$x&amp;action=add\">[".$lang["add"]."]</a></font>\n";
 
   new_box($lang["taskgroup_manage"], $content );
@@ -49,7 +49,7 @@ if(db_numrows($q) == 0 ) {
 }
 
 $content =
-            "<table border=\"0\">\n".
+            "<p><table border=\"0\">\n".
               "<tr><th>".$lang["name"]."</th><th>".$lang["description"]."</th><th>".$lang["action"]."</th></tr>\n";
 
 //show all taskgroups
@@ -60,7 +60,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
 }
 
-$content .=   "</table><br />\n".
+$content .=   "</table></p>\n".
             "<font class=\"textlink\">[<a href=\"taskgroups.php?x=$x&amp;action=add\">".$lang["add"]."</a>]</font>";
 
 new_box( $lang["manage_taskgroups"], $content, "boxdata2" );

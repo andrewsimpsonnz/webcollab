@@ -143,7 +143,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
 $content .= "<form method=\"POST\" action=\"users.php\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\">\n ".
-            "<table border=\"0\">\n".
+            "<p><table border=\"0\">\n".
             "<tr><td>".$lang["todo_list_for"]."</td></tr>".
             "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"user\"$s1><label for=\"user\">".$lang["users"]."</label></td><td>\n".
             "<select name=\"userid\">\n".
@@ -184,8 +184,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
 $content .= "</select><br /><br /></td></tr>\n".
             "<tr><td><input type=\"submit\" value=\"".$lang["update"]."\"></td></tr>\n".
-            "</table></form>\n".
-            "<br />\n";
+            "</table></p>\n".
+            "</form>\n";
 
 // show all uncompleted tasks and projects belonging to this user or group
 for( $iter=0 ; $task_row = @db_fetch_array( $query, $iter ) ; $iter++) {

@@ -63,7 +63,7 @@ $content .=   "<div align=\"center\"><input type=\"submit\" value=\"Yes\" /></di
                "<br /><div align=\"center\"><input type=\"submit\" value=\"No\" /></div>\n".
                "</form>\n";
 
-new_box_setup( "Setup - Stage 1 of 5 : Database Configuration Option", $content, "boxdata2", "singlebox" );
+new_box_setup( "Setup - Stage 1 of 5 : Database Configuration Option", $content, "boxdata", "singlebox" );
 create_bottom_setup();
 
 ?>

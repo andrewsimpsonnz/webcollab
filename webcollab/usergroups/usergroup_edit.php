@@ -48,7 +48,7 @@ $row = db_fetch_array( $q, 0 );
 
 $content =
            "<form method=\"POST\" action=\"usergroups/usergroup_submit.php\">\n".
-             "<table border=\"0\">\n".
+             "<p><table border=\"0\">\n".
                "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"input\" name=\"name\" value=\"".$row["name"]."\" size=\"30\" /></td></tr>\n".
                "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" value=\"".$row["description"]."\" size=\"30\" /></td></tr>\n";
 
@@ -72,7 +72,7 @@ for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++ ) {
 }
 
 $content .=    "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
-             "</table><br /><br />\n".
+             "</table></p>\n".
              "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
              "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\" />\n".
              "<input type=\"hidden\" name=\"action\" value=\"edit\" />\n".

@@ -88,7 +88,7 @@ $content .= "<form method=\"POST\" action=\"tasks/task_submit.php\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"update\" />\n ".
             "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\" />".
-            "<table border=\"0\">\n".
+            "<p><table border=\"0\">\n".
             "<tr><td>".$lang["creation_time"]."</td> <td>".nicedate($row["created"] )."</td></tr>\n";
 
 if($row["parent"] == 0 ) {
@@ -302,7 +302,7 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
             "<tr><td><label for=\"mailowner\">".$lang["email_new_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" $DEFAULT_OWNER /></label></td></tr>\n".
             "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" $DEFAULT_GROUP /></label></td></tr>\n".
 
-            "</table><br /><br />\n".
+            "</table></p>\n".
             "<input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;".
             "<input type=\"reset\" value=\"".$lang["reset"]."\" />".
             "</form>\n";
