@@ -5,6 +5,13 @@ WebCollab CVS
 
 - added Russian translation (Credit: Eugene N. Shilaev)
 
+- bugfix: Email address with hyphen doesn't work (Bug #1160332) (Credit: Alan Walls )
+
+- added tasks to initially inherit public/private access from their parent (Bug #1160393) (Credit: Mark Nienberg - mnienberg)  
+
+- added tasks to initially inherit taskgroup from their parent
+
+- bugfix: Date check in screen.php has 30 days in month of May (should be 31 days) (Bug #1161698)
 
 WebCollab CVS
 *** 6 March 2005
