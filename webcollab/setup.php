@@ -114,7 +114,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   //create session key
   // seed number is not required for PHP 4.2.0, and higher
   if(version_compare(PHP_VERSION, "4.2.0" ) == -1 )
-  mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );
+    mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );  
   $session_key = md5(mt_rand() );
 
   //remove the old login information
@@ -127,11 +127,16 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   db_query("INSERT INTO ".PRE."logins( user_id, session_key, ip, lastaccess )
                        VALUES('".$user_id."', '".$session_key."', '".$ip."', now() )" );
 
+  include_once("setup/setup_setup1.php" );
+                       
+  /*
   //relocate the user to the next screen
   $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
   header("Location: ".$path."setup_handler.php?x=".$session_key."&action=setup1" );
   secure_error("Auto page redirect could not detect server configuration.&nbsp;".
                 "You will need to do a manual configuration" );
+  
+  */
   die;
 }
 
@@ -153,10 +158,15 @@ if(strcmp('4.1.0', PHP_VERSION ) > 0 )
 //check for initial install
 if(DATABASE_NAME == "" ) {
   //this is an initial install
+  
+ include("setup/setup_setup1.php" );
+
+  /*
   $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
   header("Location: ".$path."setup_handler.php?action=setup1" );
   secure_error("Auto page redirect could not detect server configuration.&nbsp;".
                 "You will need to do a manual configuration" );
+  */
   die;
 }
 

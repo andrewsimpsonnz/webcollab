@@ -129,7 +129,7 @@ include_once(BASE."setup/screen_setup.php" );
       if( ! ($result = @mysql_query($table, $database_connection ) ) ) {
         error_setup("The database table creation had the following error:<br /><br /> ".
                             "<b>".mysql_error($database_connection)."</b><br /><br /> ".
-                            "The error message was created by the PostgreSQL database server." );
+                            "The error message was created by the MySQL database server." );
       }
     }
     break;

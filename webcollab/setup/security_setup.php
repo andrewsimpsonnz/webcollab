@@ -26,12 +26,13 @@
 */
 
 //set initial safe values
-$WEB_CONFIG = "N";
+if( ! isset($WEB_CONFIG ) )
+  $WEB_CONFIG = "N";
 
 require_once("path.php" );
 
 //read config files
-require(BASE."config/config.php" );
+require_once(BASE."config/config.php" );
 include_once(BASE."database/database.php" );
 include_once(BASE."setup/screen_setup.php" );
 

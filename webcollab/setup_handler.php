@@ -37,9 +37,9 @@ if( ! isset($_REQUEST['action']) )
   //what do you want to task today =]
   switch($_REQUEST['action'] ) {
 
-    case "setup1":
-      include("setup/setup_setup1.php" );
-      break;
+    //case "setup1":
+    //  include("setup/setup_setup1.php" );
+    //  break;
 
     case "setup2":
       include("setup/setup_setup2.php" );
