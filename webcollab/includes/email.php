@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2003 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz> 
+  (c) 2003 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -66,7 +66,7 @@ function email($to, $subject, $message ) {
 
   //open an SMTP connection at the mail host
   $host = $SMTP_HOST;
-  $connection = @fsockopen($host, 25, &$errno, &$errstr, 10 );
+  $connection = @fsockopen($host, 25, $errno, $errstr, 10 );
   if (!$connection )
     debug("Unable to open SMTP connection to ".$host."<br /><br />Error ".$errno." ".$errstr );
 
