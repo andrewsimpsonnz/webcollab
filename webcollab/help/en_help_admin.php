@@ -33,50 +33,49 @@
 */
 
 //get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, it does not make any sense to continue" );
+require_once("path.php" );
 
-include_once( BASE."includes/screen.php" );
+include_once(BASE."includes/screen.php" );
 
 create_top("Help",1);
 
 $content = "
-	<BR>
-	<A name=\"admin\"><BR></A>
-	<B>Admin email:</B><BR>
+	<br />
+	<a name=\"admin\"><br /></a>
+	<b>Admin email:</b><br />
 	This is the email address of the site admin that deals with day to day running of the site.
-	<BR><BR>
+	<br /><br />
 	Automated emails from the site, particularly regarding users' accounts, will give this address as the person to contact.
-	<BR><BR>
+	<br /><br />
 	This address should always be set.  If in doubt, enter your email address here!
-	<BR><BR>
+	<br /><br />
 
-	<A name=\"reply\"><BR></A>
-	<B>Email 'reply to':</B><BR>
+	<a name=\"reply\"><br /></a>
+	<b>Email 'reply to':</b><br />
 	The 'reply-to' header field for emails from this site.
-	<BR><BR>
+	<br /><br />
 	If in doubt, set the same as Admin email.
-	<BR><BR>
+	<br /><br />
 
-	<A name=\"from\"><BR></A>
-	<B>Email 'from':</B><BR>
+	<a name=\"from\"><br /></a>
+	<b>Email 'from':</b><br />
 	The 'from' header field for emails from the site.
-	<BR><BR>
+	<br /><br />
 	If in doubt, set the same as Admin email.
-	<BR><BR>
+	<br /><br />
 
-	<A name=\"list\"><BR></A>
-	<B>Mailing list:</B><BR>
+	<a name=\"list\"><br /></a>
+	<b>Mailing list:</b><br />
 	When emails are sent to the usergroup, they will also be sent to the email addresses listed here.  This function is to
 	keep Project Manager's abreast of the current status.
-	<BR><BR>
+	<br /><br />
 	For emails to be sent to the usergroup, the 'send to usergroup' checkbox in Project/Task add (or edit), must be checked.
 	This can be done by the default setting below, or by the user manually checking the box.
-	<BR><BR>
+	<br /><br />
 	Note that users can overide the default settings by un-checking the box manually.
-	<BR><BR>
+	<br /><br />
 	Setting a usergroup to private does not affect the mailing list.
-	<BR><BR>
+	<br /><br />
 	";
 
   new_box( "Help", $content );

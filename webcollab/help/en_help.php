@@ -111,14 +111,14 @@ indicates that a posting was made to the task's forum</li>
 <br />
 <li><b>F</b>:
 indicates that a file was uploaded for the task</li>
-</UL>
+</ul>
 If a flag is present,
 then you can click on it in order to show the associated task.</li>
 <br />
 <li><b>Deadline</b>:
 indicates when the task is due.
 If the date appears in <font color=\"red\">red</font>,
-then the task is overdue; 
+then the task is overdue;
 otherwise,
 If the date appears in <font color=\"green\">green</font>,
 then the task is due today</li>
@@ -139,23 +139,23 @@ awaiting some external event</li>
 indicates that the task is being worked on</li>
 <li><font color=\"darkgreen\">Done</font>:
 indicates that the task is completed</li>
-</UL>
+</ul>
 </li>
 <br />
-<li><b>Owner</b>: 
+<li><b>Owner</b>:
 indicates who the task is assigned to.
 You can click on the name in order to see more information about that
 person.</li>
 <br />
-<li><b>Group</b>: 
+<li><b>Group</b>:
 indicates either the usergroup or the taskgroup associated with the task.
 If you click on this column header,
 the display toggles between the two kinds of groups.</li>
 <br />
-<li><b>Task</b>: 
+<li><b>Task</b>:
 indicates the name of the task.
 You can click on the name in order to see more information.</li>
-</UL>
+</ul>
 <br />
 
 <br />
