@@ -48,7 +48,7 @@ function add($taskid, $new_parent, $new_name ) {
     $q = db_query("SELECT id FROM ".PRE."tasks WHERE parent=$taskid" );
 
     //clone all the tasks at this level
-    for( $i=0; $row = db_fetch_array($q, $i ); $i++ ) {
+    for( $i=0; $row = @db_fetch_array($q, $i ); $i++ ) {
       $new_taskid = copy_across($row['id'], $new_parent, NULL );
 
       //recursive function if the subtask is listed in parent_array (it has children then)
