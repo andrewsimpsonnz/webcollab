@@ -78,7 +78,12 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
   //show all forum posts on this level
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
-    $this_content .= "<li><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["fullname"]."</a> (".nicetime( $row["posted"] ).")</small>".
+    if($row["fullname"] == NULL )
+      $this_content .= "<li><small>----";
+    else
+      $this_content .= "<li><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["fullname"]."</a>";
+
+    $this_content .= "&nbsp;(".nicetime( $row["posted"] ).")</small>".
                      "&nbsp;<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=".$row["id"]."&amp;taskid=$taskid";
 
     //if this is a post to a private forum then announce it to the poster-engine
