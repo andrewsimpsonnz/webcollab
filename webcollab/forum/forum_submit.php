@@ -108,7 +108,7 @@ ignore_user_abort(TRUE);
       $input_array = array("parentid", "taskid" );
       foreach($input_array as $var ) {
         if( ! isset($_POST[$var] ) || strlen($_POST[$var] ) == 0 ) {
-          error("Forum submit", "Variable ".$var." is not set" );
+          error("Forum submit", "Variable $var is not set" );
         }
       }
 
@@ -123,16 +123,18 @@ ignore_user_abort(TRUE);
       $usergroupid = check($_POST["usergroupid"]);
       $taskid      = check($_POST["taskid"]);
 
-      $mail_owner = "";
-      $mail_group = "";
+      if($taskid == 0 )
+        error("Forum submit", "Taskid not valid");
 
       if($_POST["mail_owner"] == "on")
         $mail_owner = true;
+      else
+        $mail_owner = "";
+
       if($_POST["mail_group"] == "on")
         $mail_group = true;
-
-      if($taskid == 0 )
-        error("Forum submit", "Taskid not valid");
+      else
+        $mail_group = "";
 
       //do data consistency check on parentid
       if($parentid != 0 ) {
