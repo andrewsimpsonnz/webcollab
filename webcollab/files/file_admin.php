@@ -83,7 +83,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   if( $row["description"] != "" )
     $content .= "<tr><td colspan=\"2\"><small><i>".$row["description"]."</i></small></td></tr>\n";
 
-  $content .= "</table>\n";
+  $content .= "</table><br />\n";
 }
 
 new_box( $lang["manage_files"], $content );
