@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -91,20 +91,20 @@ function clean_up($body ) {
     
     case "EUC_KR":
     case "EUC_CN":
-      $body = preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                 // CS0 ASCII
-                              '|[\xa1-\xfe]{2}/', $body, $ar );           // CS1 GB2312-80 
+      $body = preg_match_all('/([\x09\x0a\x0d\x20-\x7f]'.                   // CS0  ASCII
+                              '|[\xa1-\xfe]{2})+/', $body, $ar );           // CS1  GB2312-80 
       $body = join("?", $ar[0] );
       break;
     
-    case "SHIFT-JIS":
-      $body = preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                 // ASCII
-                              '|[\x81-\x9f\xe0-\xfc][\x40-\x7e\x80-\xfc]'. // JIS X 0208:1997
-                              '|[\xa0-\xdf]/', $body, $ar );              // half width katakana
+    case "EUC-JP":
+      $body = preg_match_all('/([\x09\x0a\x0d\x20-\x7f]'.                   // CS0  ASCII
+                              '|[\xa1-\xfe]{2}'.                            // CS1  JIS X 0208:1997
+                              '|\x8e[\xa0-\xdf]'.                           // CS2  half width katakana
+                              '|\x8f[\xa1-\xfe]{2})+/', $body, $ar );       // CS3  JIS X 0212-1990   
       $body = join("?", $ar[0] );
       break;
              
     case "UTF-8":
-    default:
       //allow only normal UTF-8 characters up to U+10000, which is the limit of 3 byte characters
       // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )   
       preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                         // ASCII characters
@@ -115,6 +115,13 @@ function clean_up($body ) {
     
       $body = join("?", $ar[0] );
       break;
+  
+    default:
+      //for compatability with standard WebCollab
+      if(isset($validation_regex ) )  
+        $body = preg_replace($validation_regex, '?', $body );
+      break;
+  
   }    
  
   //protect against database query attack

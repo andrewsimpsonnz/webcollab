@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>  
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>  
   
   WebCollab
   ---------------------------------------
@@ -44,7 +44,9 @@ include_once( BASE."includes/common.php");
 $database_connection = "";
 $last_insert = "oid";
 $delim = "'";
-$epoch = "extract( epoch from ";
+$epoch = "extract(epoch FROM ";
+$day_part = "DATE_PART('day', ";
+$interval = "";
 
 //
 // Provides a safe way to do a query
@@ -64,17 +66,25 @@ function db_query($query, $dieonerror=1 ) {
       error("No database connection",  "Sorry but there seems to be a problem in connecting to the database" );
 
     //make sure dates will be handled properly by internal date routines
-    $q = db_query("SET DATESTYLE TO 'European, ISO' ");
+    pg_query($database_connection, "SET DATESTYLE TO 'European, ISO'");
     
-    //set client encoding to required character set 
-    $pg_encoding = pg_encoding();
+    //get server encoding
+    $q = @pg_query($database_connection, 'SHOW SERVER_ENCODING' );
     
-    if($pg_encoding){
-      if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ) 
-        error("Database client encoding", "Cannot set PostgreSQL client to ".CHARACTER_SET." character encoding" ); 
+    //SQL_ASCII is not encoded, other server encodings need to be corrected by the PostgreSQL client
+    if(pg_num_rows($q ) > 0 ){
+      if(pg_fetch_result($q, 0, 0 ) != 'SQL_ASCII' ) { 
+        pg_encoding();
+      }
     }
+    else {
+      //prior to version 7.4 a 'notice' is used instead of a query result
+      $notice = @pg_last_notice($database_connection );   
+      if(strpos($notice, 'encoding' ) && (strpos($notice, 'SQL_ASCII' ) === false ) ){
+        pg_encoding();
+      }
+    }    
   }
-
   //do it
   if( ! ($result = @pg_query($database_connection, $query ) ) ) {
 
@@ -187,29 +197,28 @@ return;
 
 function pg_encoding() {
 
-  switch(strtoupper(CHARACTER_SET ) ) {
+  global $database_connection;
 
-    case 'UTF-8':
-      $pg_encoding = 'UNICODE';
-      break; 
+  switch(strtoupper(CHARACTER_SET ) ) {
 
     case 'EUC_JP':
     case 'EUC_CN':
     case 'EUC_KR':
-    case 'EUC_TW':
-    case 'KOI8':
       $pg_encoding = strtoupper(CHARACTER_SET );
       break;
-       
-    case 'WINDOWS-1256':
-      $pg_encoding = 'WIN1256';
-      break;
-
-    default:
-      $pg_encoding = NULL;
-      break;
+                     
+    case 'UTF-8':
+    default:  
+      $pg_encoding = 'UNICODE';
+      break; 
   }      
-return $pg_encoding;
+          
+  //set client encoding to match character set in use
+  if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
+    error("Database client encoding", "Cannot set PostgreSQL client encoding to the required ".CHARACTER_SET."character set." );
+  }  
+  
+return;
 }
 
 ?>

@@ -21,7 +21,7 @@ CREATE TABLE tasks (
 	lastfileupload DATETIME NOT NULL,
         completed TINYINT NOT NULL DEFAULT 0,
         completion_time DATETIME NOT NULL,
-        archive VARCHAR(5) NOT NULL DEFAULT 'f',
+        archive TINYINT NOT NULL DEFAULT 0,
         INDEX (owner),
         INDEX (parent),
         INDEX (name(10)),
@@ -40,7 +40,7 @@ CREATE TABLE users (
 	email VARCHAR(200) NOT NULL,
 	admin VARCHAR(5) NOT NULL DEFAULT 'f',
 	private TINYINT NOT NULL DEFAULT 0,
-        guest VARCHAR(5) NOT NULL DEFAULT 'f',
+        guest TINYINT NOT NULL DEFAULT 0,
 	deleted VARCHAR(5) NOT NULL DEFAULT 'f',
         INDEX (fullname(10))
 )
@@ -154,6 +154,8 @@ CREATE TABLE config (
 	groupaccess VARCHAR(50),
 	owner VARCHAR(50),
 	usergroup VARCHAR(50),
+	project_order VARCHAR(50),
+	task_order VARCHAR(50)
 )
 CHARACTER SET = utf8;
 

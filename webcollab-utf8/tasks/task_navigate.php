@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2003 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -45,27 +45,27 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ) {
 
     case "0":
       //project
-      $content .= "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".mb_strimwidth($taskid_row["name"], 0, 20 )."<br />\n";
+      $content .= "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".mb_strimwidth($TASKID_ROW["name"], 0, 20 )."<br />\n";
       break;
 
     case ($TASKID_ROW['projectid'] ):
       //task under project
       
       //get project name (limited to 20 characters)
-      $project_name = mb_strimwidth(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$taskid_row["projectid"] ), 0, 0 ), 0, 20);
+      $project_name = mb_strimwidth(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$TASKID_ROW["projectid"] ), 0, 0 ), 0, 20);
       
-      $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$taskid_row["projectid"]."\">$project_name</a><br />\n".
+      $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$TASKID_ROW["projectid"]."\">$project_name</a><br />\n".
                   "<small><b>".$lang["task"].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".mb_strimwidth($taskid_row["name"], 0, 20 )."<br />\n";
+                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".mb_strimwidth($TASKID_ROW["name"], 0, 20 )."<br />\n";
       break;
 
     default:
       //task with parent task
       
       //get project name
-      $project_name = mb_strimwidth(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$taskid_row["projectid"] ), 0, 0 ), 0, 20);
+      $project_name = mb_strimwidth(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$TASKID_ROW["projectid"] ), 0, 0 ), 0, 20);
       //get parent name
-      $parent_name = mb_strimwidth(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$taskid_row["parent"] ), 0, 0 ), 0, 20);
+      $parent_name = mb_strimwidth(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$TASKID_ROW["parent"] ), 0, 0 ), 0, 20);
       
       $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">$project_name</a><br />\n".
                   "<small><b>".$lang['parent_task'].":</b></small><br />\n".
