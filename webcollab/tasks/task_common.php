@@ -75,4 +75,55 @@ function show_percent($percent = 0 ) {
   }
 }
 
+//
+// Project Jump function
+//
+function project_jump($taskid=0) {
+  global $x, $lang, $ADMIN, $GID;
+  
+  // query to get the non-completed projects
+  $q = db_query("SELECT id,
+                        name,
+                        globalaccess,
+                        usergroupid
+                        FROM ".PRE."tasks
+                        WHERE parent=0
+                        AND completed<>100
+                        AND archive=0
+                        ORDER BY name" );
+  
+  //check if there are projects
+  if(db_numrows($q) > 0 ){
+      
+    // Prepare the form
+    $content  = "<form id=\"ProjectQuickJump\" method=\"get\" action=\"tasks.php\">\n".
+                "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+                "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n".
+                "<div><select name=\"taskid\">\n".
+                "<option value=\"-1\">".$lang['quick_jump']."</option>\n";
+  
+    // loop through the data
+    for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
+    
+      //check if user can view this project
+      if( ($ADMIN != 1 ) && ($row['globalaccess'] != "t" ) && ($row['usergroupid'] != 0 ) ) {
+        if( ! in_array( $row['usergroupid'], (array)$GID ) )
+          continue;
+      }
+          
+      $content .= "<option value=\"".$row["id"]."\"";
+      if($taskid == $row["id"]) {
+        $content .= " selected=\"selected\"";
+      }
+      $content .= ">".$row["name"]."</option>\n";
+    }
+  
+  // wrap up the select and the submit
+  $content .= "</select>\n".
+              "<a href=\"javascript:document.getElementById('ProjectQuickJump').submit();\"><small>".$lang['go']."</small></a></div>\n".
+              "</form>\n";
+  }
+return $content;
+}  
+
 ?>

@@ -35,6 +35,8 @@ include_once(BASE."tasks/task_common.php" );
 include_once(BASE."includes/details.php" );
 include_once(BASE."includes/time.php" );
 
+//secure variables
+$content = "";
 
 //is there an id ?
 if( ! isset( $_GET['taskid']) || ! is_numeric($_GET['taskid']) || $_GET['taskid'] == 0 )
@@ -65,12 +67,18 @@ if( ! ($row = db_fetch_array($q, 0 ) ) )
 @db_query("DELETE FROM ".PRE."seen WHERE userid=$UID AND taskid=$taskid", 0);
 db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES ($UID, $taskid, now() ) " );
 
-//text link for 'printer friendly' page
-if(isset($_GET['action']) && $_GET['action'] == "show_print" )
-  $content  = "<p><span class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$lang['normal_version']."</a>]</span></p>";
-else
-  $content  = "<div style=\"text-align : right\"><span class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;action=show_print&amp;taskid=$taskid\">".$lang['print_version']."</a>]</span></div>\n";
 
+//text link for 'printer friendly' page
+if(isset($_GET['action']) && $_GET['action'] == "show_print" ) {
+  $content  .= "<p><span class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$lang['normal_version']."</a>]</span></p>";
+}
+else{
+  //show 'project jump' select box
+  $content .= project_jump($taskid);
+  //show print tag
+  $content .= "<div style=\"text-align : right\"><span class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;action=show_print&amp;taskid=$taskid\">".$lang['print_version']."</a>]</span></div>\n";
+}  
+    
 //percentage_completed gauge if this is a project
 if( $TASKID_ROW['parent'] == 0 ) {
   $content .= sprintf( $lang['percent_project_sprt'], $TASKID_ROW['completed'] )."\n";

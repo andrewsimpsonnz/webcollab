@@ -247,6 +247,10 @@ $content .= "</span></td></tr>\n</table>\n";
 //setup main table
 $content .= "<table>\n";
 
+//show 'project jump' select box
+if(! isset($action) || $action != 'project_print')
+  $content .= "<tr><td class=\"projectlist\" style=\"padding-bottom : 0px\">\n".project_jump(0)."</td></tr>\n";
+  
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
@@ -285,7 +289,6 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   //to indicate that there are viewable projects
   $flag = 1;
 
-  //start list
   $content .= "<tr><td class=\"projectlist\">\n";
 
   //show name and a link
