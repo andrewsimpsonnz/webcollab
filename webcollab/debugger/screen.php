@@ -292,7 +292,7 @@ function create_bottom() {
     //shows the time it took to load the page
     list($usec, $sec)=explode(" ", microtime());
     $finishtime = ( (float)$usec + (float)$sec ) - $loadtime;
-    echo "<div class=\"bottomtext\" style=\"text-align: center\"><font color=\"#1E4B79\">\n".
+    echo "<div class=\"bottomtext\" style=\"text-align: center\">\n".
           sprintf("Total execution time: %.4f", $finishtime)."<br />".
           sprintf("Total database time: %.4f", $database_query_time )."<br />".
           sprintf("Query count: %d", $database_query_count)."</div><br />\n";
