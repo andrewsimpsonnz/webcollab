@@ -1,14 +1,28 @@
-WebCollab 1.30
+WebCollab CVS
+*** 10 April 2003
+  Andrew Simpson
+
+- minor enhancements and usability improvements
+
+- bugfix: ToDo list due date measuring can be 1 day out
+
+- bugfix: Projectid not set in email mailout for admin take over
+
+- update seen table when updating task
+
+- improve Help files   
+
+WebCollab CVS
 *** 6 April 2003
   Andrew Simpson
 
-- Bugfix: Previous edit broke show users online
+- bugfix: Previous edit broke show users online
 
-- Force MySQL to put uncategorised tasks at the bottom of listing
+- force MySQL to put uncategorised tasks at the bottom of listing
 
 - more detailed licence notes added at request of Free Software Foundation (no effect on licence terms)
 
-- Bugfix:  When deleting uploaded files, delete file database record even if file has already been physically removed
+- bugfix/enhancement: When deleting uploaded files, delete file database record even if file has already been physically removed
 
 WebCollab 1.30
 *** 2 April 2003
