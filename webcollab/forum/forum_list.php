@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -38,7 +38,7 @@ if( ! (isset($_GET['taskid']) && is_numeric($_GET['taskid']) ) )
   error("Forum list", "Not a valid taskid" );
 
 $taskid = intval($_GET['taskid']);
-
+  
 //check usergroup security
 require_once(BASE."includes/usergroup_security.php" );
 
@@ -58,7 +58,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
                         ".$epoch.PRE."forum.posted) AS posted,
                         ".PRE."forum.userid AS postowner,
                         ".PRE."users.id AS userid,
-                        ".PRE."users.fullname As fullname,
+                        ".PRE."users.fullname AS fullname,
                         ".PRE."forum.parent AS parent
                         FROM ".PRE."forum
                         LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."forum.userid)
@@ -177,7 +177,8 @@ if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) )
   if($ul_flag == 1 )
     $content .= "<br />\n";
   //add an option to add posts
-  $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang['new_post']."</a>]</span>";
+  if($TASKID_ROW['archive'] != 't' )
+    $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang['new_post']."</a>]</span>";
   //show it
   new_box($lang['public_user_forum'], $content, "boxdata2" );
 }
@@ -199,7 +200,8 @@ if($TASKID_ROW['usergroupid'] != 0 ) {
     if($ul_flag == 1 )
       $content .= "<br />\n";
     //add an option to add posts
-    $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=".$TASKID_ROW['usergroupid']."&amp;\">".$lang['new_post']."</a>]</span>";
+    if($TASKID_ROW['archive'] != 't' )
+      $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=".$TASKID_ROW['usergroupid']."&amp;\">".$lang['new_post']."</a>]</span>";
     //get usergroup
     $usergroup_name = db_result(db_query("SELECT name FROM ".PRE."usergroups WHERE id=".$TASKID_ROW['usergroupid'] ), 0, 0 );
     //show it
