@@ -32,7 +32,7 @@ require_once(BASE."setup/security_setup.php" );
 include_once(BASE."setup/screen_setup.php" );
 
 //essential values - must be present
-$array_essential = array("db_name", "db_user", "db_password", "db_type", "db_host", "base_url", "locale", "timezone" );
+$array_essential = array("db_name", "db_user", "db_type", "db_host", "base_url", "locale", "timezone" );
 foreach($array_essential as $var ) {
   if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
     error_setup("Variable ".$var." is not set");
@@ -42,7 +42,7 @@ foreach($array_essential as $var ) {
 
 
 //non-essential values
-$array_optional = array("manager_name", "abbr_manager_name", "file_base", "file_maxsize", "use_email", "smtp_host", "new_db" );
+$array_optional = array("manager_name", "abbr_manager_name", "db_password", "file_base", "file_maxsize", "use_email", "smtp_host", "new_db" );
 
 foreach($array_optional as $var ) {
   if(! isset($_POST[$var]) )
@@ -97,7 +97,7 @@ switch ($url["scheme"] ){
     break;
 
   case "http":
-    if($fp = fsockopen ($url["host"], 80, $errno, $errstr, 5 ) ) {
+    if($fp = @fsockopen ($url["host"], 80, $errno, $errstr, 5 ) ) {
       //this function may not work in Windows (prefix with '@')
       @socket_set_timeout($fp, 1 );
       //socket open - request HEAD
@@ -106,7 +106,7 @@ switch ($url["scheme"] ){
       while (trim($line) != "") {
         if( ! strpos($line, "404" ) === FALSE ){
           //404 - not found
-          $status = "<font color=\"red\"><b>Invalid URL given!</b></font>";
+          $status = "<font color=\"red\"><b>URL gives '404' page not found!</b></font>";
           $flag = $flag + 10;
           break;
         }
@@ -122,13 +122,17 @@ switch ($url["scheme"] ){
     }
     else{
       //could not open socket
-      $status = "<font color=\"blue\"><b>Not able to verify URL</b></font>";
+      $meta = @socket_get_status($fp);
+      if($meta['timed_out'] )
+        $status = "<font color=\"blue\"><b>Connection timeout: Not able to verify URL</b></font>";
+      else
+        $status = "<font color=\"blue\"><b>No connection: Not able to verify URL</b></font>";
       $flag = $flag + 1;
     }
     break;
 
   default:
-    $status = "<font color=\"red\"><b>Invalid URL given! Try adding 'http://' prefix.</b></font>";
+    $status = "<font color=\"red\"><b>Cannot recognise URL: Try adding 'http://' prefix?</b></font>";
     $flag = $flag + 10;
     break;
 }
