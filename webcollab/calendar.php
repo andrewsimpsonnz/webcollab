@@ -33,7 +33,8 @@ create_top( $lang["calendar"], 1 );
 
 //secure variables
 $content = "";
-$usergroup[0] = 0;
+$no_access_project[0] = 0;
+$no_access_group[0] = 0;
 
 //set selection default
 if(isset($_POST["selection"]) && strlen($_POST["selection"]) > 0 )
@@ -88,6 +89,14 @@ switch($selection ) {
       $tail = "";
       $s2 = " SELECTED";
     break;
+}
+
+//get list of private projects and put them in an array for later use
+$q = db_query("SELECT id, usergroupid FROM tasks WHERE parent=0 AND globalaccess='f'" );
+
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
+  $no_access_project[$i] = $row[0];
+  $no_access_group[$i] = $row[1];
 }
 
 $content .= "<div align=\"center\">\n".
@@ -198,7 +207,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
   if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE deadline='$year-$month-$num' $tail" ), 0, 0 ) > 0 ) {
 
   //rows exist for this date - get them!
-  $q = db_query("SELECT id, name, parent, status, usergroupid, globalaccess FROM tasks WHERE deadline='$year-$month-$num' $tail" );
+  $q = db_query("SELECT id, name, parent, status, usergroupid, globalaccess, projectid FROM tasks WHERE deadline='$year-$month-$num' $tail" );
 
     for( $j=0 ; $row = @db_fetch_array($q, $j ) ; $j++) {
 
@@ -206,6 +215,14 @@ for ($num = 1; $num <= $numdays; $num++ ) {
       if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
 
         if( ! in_array( $row["usergroupid"], (array)$gid ) )
+          continue;
+      }
+
+      //don't show tasks in private usergroup projects
+      if( ($admin != 1 ) && in_array($row["projectid"], (array)$no_access_project) ) {
+        $key = array_search($row["projectid"], $no_access_project );
+
+        if( ! in_array($no_access_group[$key], (array)$gid ) )
           continue;
       }
 
@@ -252,7 +269,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
     $content .= "<br />";
     $pad++;
   }
-  
+
   $content .= "</td>\n";
   $i++;
 }

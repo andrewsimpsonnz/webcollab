@@ -102,11 +102,8 @@ if(isset($_POST["groupid"]) && is_numeric($_POST["groupid"]) )
 else
   $groupid = 0;
 
-//query to get the all the projects
-$query = db_query("SELECT id, name FROM tasks WHERE parent=0 ORDER BY name" );
-
 // check if there are projects
-if(db_numrows($query ) < 1 ) {
+if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent=0" ), 0, 0 ) < 1 ) {
   $content = "<div align=\"center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add"]."</a></div>\n";
   new_box( $lang["no_projects"], $content );
   return;
@@ -177,14 +174,24 @@ $content .= "</select><br /><br /></td></tr>\n".
             "</table></p>\n".
             "</form>\n";
 
-// show all uncompleted tasks and projects belonging to this user or group
-for( $iter=0 ; $task_row = @db_fetch_array( $query, $iter ) ; $iter++) {
+//query to get the all the projects
+$q = db_query("SELECT id, name, usergroupid, globalaccess FROM tasks WHERE parent=0 ORDER BY name" );
 
-  $new_content = listTasks($task_row["id"], $tail );
+// show all uncompleted tasks and projects belonging to this user or group
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
+
+   //check for private usergroups
+   if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
+
+     if( ! in_array( $row["usergroupid"], (array)$gid ) )
+       continue;
+   }
+
+  $new_content = listTasks($row["id"], $tail );
 
   //if no task, don't show project name either
-  if( $new_content != "" ) {
-    $content .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;<b>".$task_row["name"]."</b></p>\n".
+  if($new_content != "" ) {
+    $content .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;<b>".$row["name"]."</b></p>\n".
                 "<ul>".$new_content."</ul>\n";
     //set flag to show there is at least one uncompleted task
     $flag = 1;

@@ -33,6 +33,8 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 $content = "";
+$no_access_project[0] = 0;
+$no_access_group[0] = 0;
 
 //get some stupid errors
 if( ! isset($_GET["userid"]) || ! is_numeric($_GET["userid"]) || $_GET["userid"] == 0 )
@@ -120,8 +122,16 @@ new_box($lang["user_info"], $content );
 if( $numberoftasksowned + $numberofprojectsowned > 0 ) {
   $content = "<ul>";
 
+  //get list of private projects and put them in an array for later use
+  $q = db_query("SELECT id, usergroupid FROM tasks WHERE parent=0 AND globalaccess='f'" );
+
+  for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
+    $no_access_project[$i] = $row[0];
+    $no_access_group[$i] = $row[1];
+  }
+
   //Get the number of tasks
-  $q = db_query("SELECT id, name, parent, status, finished_time, usergroupid, globalaccess FROM tasks WHERE owner=$userid" );
+  $q = db_query("SELECT id, name, parent, status, finished_time, usergroupid, globalaccess, projectid FROM tasks WHERE owner=$userid" );
 
   //show them
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
@@ -131,6 +141,14 @@ if( $numberoftasksowned + $numberofprojectsowned > 0 ) {
 
       if( ! in_array( $row["usergroupid"], (array)$gid ) )
         continue;
+    }
+
+    //don't show tasks in private usergroup projects
+    if( ($admin != 1 ) && in_array($row["projectid"], (array)$no_access_project ) ) {
+      $key = array_search($row["projectid"], $no_access_project );
+
+        if( ! in_array($no_access_group[$key], (array)$gid ) )
+          continue;
     }
 
     $status_content = "";
