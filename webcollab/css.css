@@ -37,10 +37,12 @@ LI LI {
 TABLE.singlebox {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
-  text-align : center;
-  border : 0;
-  padding : 0;
+  margin-left : auto;
+  margin-right : auto;
   width : 400px;
+  text-align : center;
+  border-width : 0;
+  padding : 0;
 }
 
 /* Standard table box */
@@ -48,7 +50,7 @@ TABLE.tablebox {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
   text-align : left;
-  border : 0;
+  border-width: 0;
   padding : 0;
   width : 97%;
 }
@@ -64,7 +66,7 @@ TD.boxhead {
   font-size : 12px;
   font-weight : bold;
   text-align : left;
-  border : 0;
+  border-width : 0;
   padding-top : 3px;
   padding-bottom : 3px;
   padding-left : 3px;
@@ -77,7 +79,7 @@ TD.boxmenu {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
   text-align : left;
-  border : 0;
+  border-width : 0;
   padding-top : 3px;
   padding-bottom : 3px;
   padding-left : 3px;
@@ -90,7 +92,7 @@ TD.boxdata {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
   text-align : left;
-  border : 0;
+  border-width : 0;
   padding-top : 20px;
   padding-left : 5px;
   padding-bottom : 20px;
@@ -105,7 +107,7 @@ TD.boxdata2 {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
   text-align : left;
-  border : 0;
+  border-width : 0;
   padding-top : 20px;
   padding-left : 5px;
   padding-bottom : 5px;
