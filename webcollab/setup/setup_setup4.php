@@ -87,31 +87,44 @@ $url = parse_url($data["base_url"]);
 
 //check that URL can be found
 //open socket to http host
-if($fp = fsockopen ($url["host"], 80 ) ) {
-  //socket open - request HEAD
-  fputs($fp,"HEAD ".$url["path"]." HTTP/1.0\n\n");
-  $line = fgets($fp, 2048 );
-  while (trim($line) != "") {
-    if( ! strpos($line, "404" ) === FALSE ){
-      //404 - not found
-      $status = "<font color=\"red\"><b>Invalid URL given!</b></font>";
-      $flag = $flag + 10;
-      break;
+switch ($url["scheme"] ){
+  case "https":
+    $status = "<font color=\"blue\"><b>OK ! (Setup cannot verify SSL connections)</b></font>";
+    break;
+
+  case "http":
+    if($fp = fsockopen ($url["host"], 80 ) ) {
+      //socket open - request HEAD
+      fputs($fp,"HEAD ".$url["path"]." HTTP/1.0\n\n");
+      $line = fgets($fp, 2048 );
+      while (trim($line) != "") {
+        if( ! strpos($line, "404" ) === FALSE ){
+          //404 - not found
+          $status = "<font color=\"red\"><b>Invalid URL given!</b></font>";
+          $flag = $flag + 10;
+          break;
+        }
+        if( ! strpos($line, "301" ) === FALSE ){
+          //301 - moved permanently
+          $status = "<font color=\"blue\"><b>Need to add trailing slash ( e.g. ".$url["path"]."/ )</b></font>";
+          $flag = $flag + 1;
+          break;
+        }
+        $line = fgets($fp, 2048 );
+      }
+    fclose($fp);
     }
-    if( ! strpos($line, "301" ) === FALSE ){
-      //301 - moved permanently
-      $status = "<font color=\"blue\"><b>Need to add trailing slash ( e.g. ".$url["path"]."/ )</b></font>";
+    else{
+      //could not open socket
+      $status = "<font color=\"blue\"><b>Not able to verify URL</b></font>";
       $flag = $flag + 1;
-      break;
     }
-    $line = fgets($fp, 2048 );
-  }
-fclose($fp);
-}
-else{
-  //could not open socket
-  $status = "<font color=\"blue\"><b>Not able to verify URL</b></font>";
-  $flag = $flag + 1;
+    break;
+
+  default:
+    $status = "<font color=\"red\"><b>Invalid URL given! Try adding 'http://' prefix.</b></font>";
+    $flag = $flag + 10;
+    break;
 }
 
 //basic settings
@@ -176,10 +189,20 @@ $content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td
             "<tr><th>File location:</th><td>".$data["file_base"]."</td><td>$status</td></tr>\n".
             "<tr><th>File size:</th><td>".$data["file_maxsize"]."</td></tr>\n";
 
+$status = "<font color=\"green\"><b>OK !</b></font>";
+
+//check language file exists and is readable
+if( (! is_readable("../lang/".$data["locale"]."_message.php" ) )
+  || (! is_readable("../lang/".$data["locale"]."_long_message.php" ) )
+  || (! is_readable("../lang/".$data["locale"]."_email.php" ) ) ) {
+  $status = "<font color=\"red\"><b>Language file either does not exist, or file has been moved!</b></font>";
+  $flag = $flag + 10;
+}
+
 //language settings
 $content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></tr>\n".
             "<tr><td></td><td>&nbsp;</td></tr>\n".
-            "<tr><th>Language:</th><td>".$data["locale"]."</td></tr>\n".
+            "<tr><th>Language:</th><td>".$data["locale"]."</td><td>$status</td></tr>\n".
             "<tr><td></td><td><br /><br /><B><U>Email Settings</U></B></td></tr>\n".
             "<tr><td></td><td>&nbsp;</td></tr>\n".
             "<tr><th>Use email?</th><td>".$data["use_email"]."</td></tr>\n";
