@@ -35,6 +35,6 @@ require_once(BASE."includes/security.php" );
 db_query("UPDATE ".PRE."logins SET session_key='' WHERE user_id=$uid" );
 setcookie("webcollab_session", "" );
 
-header("Location: ".$BASE_URL."index.php" );
+header("Location: ".BASE_URL."index.php" );
 
 ?>

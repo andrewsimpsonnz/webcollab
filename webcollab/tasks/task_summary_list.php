@@ -37,7 +37,7 @@ include_once(BASE."includes/time.php" );
 //initialise variables
 $no_access_project[0] = 0;
 $no_access_group[0] = 0;
-$tz_offset = ($TZ * 3600) - date("Z");
+$tz_offset = (TZ * 3600) - date("Z");
 
 //
 // MAIN FUNCTION
@@ -324,7 +324,7 @@ else
   $content  = "<div style=\"text-align: right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary_print&amp;sortby=".$sortby."\">".$lang["print_version"]."</a>]</span></div>";
 
 $content .= "<table>\n";
-$content .= "<tr><td colspan=\"3\"><small><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#summarypage\" onclick=\"window.open('".$BASE_URL."help/".$LOCALE."_help.php#summarypage'); return false\"><b>".$lang["flags"]."</b></a></small></td><td><small>";
+$content .= "<tr><td colspan=\"3\"><small><a href=\"help/help_language.php?item=summarypage&amp;type=help\" onclick=\"window.open('help/help_language.php?item=summarypage&amp;type=help'); return false\"><b>".$lang["flags"]."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=deadline\">";
 $content .= "<b>".$lang["deadline"]."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=status\">";

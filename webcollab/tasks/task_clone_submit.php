@@ -191,6 +191,6 @@ if($percent_completed == 100 ){
 //end transaction
 db_commit();
 
-header("Location: ".$BASE_URL."main.php?x=$x" );
+header("Location: ".BASE_URL."main.php?x=$x" );
 die;
 ?>

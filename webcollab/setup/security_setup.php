@@ -27,7 +27,6 @@
 
 //set initial safe values
 $WEB_CONFIG = "N";
-$DATABASE_NAME = "--";
 
 require_once("path.php" );
 
@@ -61,7 +60,7 @@ if($WEB_CONFIG != "Y" ) {
   die;
 }
 
-if($DATABASE_NAME == "" ) {
+if( ! defined(DATABASE_NAME ) || DATABASE_NAME == "" ) {
   //this is a first install
   $x = "";
 }

@@ -156,6 +156,6 @@ ignore_user_abort(TRUE);
       break;
   }
 
-header("Location: ".$BASE_URL."usergroups.php?x=$x&action=manage");
+header("Location: ".BASE_URL."usergroups.php?x=$x&action=manage");
 
 ?>

@@ -260,6 +260,6 @@ ignore_user_abort(TRUE);
   }
 
 //go back to where this request came from
-header("Location: ".$BASE_URL."tasks.php?x=$x&action=show&taskid=".$_REQUEST["taskid"] );
+header("Location: ".BASE_URL."tasks.php?x=$x&action=show&taskid=".$_REQUEST["taskid"] );
 
 ?>

@@ -33,17 +33,17 @@ require_once(BASE."config/config.php" );
 $help_item = $_GET["item"];
 $help_type = $_GET["type"];
 
-switch($LOCALE ) {
+switch(LOCALE ) {
 
   case "bg":
     switch($help_type ) {
       case "admin":
-        header("Location: ".$BASE_URL."help/bg_help_admin.php#".$help_item );
+        header("Location: ".BASE_URL."help/bg_help_admin.php#".$help_item );
         break;
 
       case "help":
       default:
-        header("Location: ".$BASE_URL."help/bg_help.php#".$help_item );
+        header("Location: ".BASE_URL."help/bg_help.php#".$help_item );
         break;
     }
     break;
@@ -51,12 +51,12 @@ switch($LOCALE ) {
   case "es":
     switch($help_type ) {
       case "admin":
-        header("Location: ".$BASE_URL."help/es_help_admin.php#".$help_item );
+        header("Location: ".BASE_URL."help/es_help_admin.php#".$help_item );
         break;
 
       case "help":
       default:
-        header("Location: ".$BASE_URL."help/es_help.php#".$help_item );
+        header("Location: ".BASE_URL."help/es_help.php#".$help_item );
         break;
     }
     break;
@@ -64,12 +64,12 @@ switch($LOCALE ) {
   case "de":
     switch($help_type ) {
       case "admin":
-        header("Location: ".$BASE_URL."help/de_help_admin.php#".$help_item );
+        header("Location: ".BASE_URL."help/de_help_admin.php#".$help_item );
         break;
 
       case "help":
       default:
-        header("Location: ".$BASE_URL."help/de_help.php#".$help_item );
+        header("Location: ".BASE_URL."help/de_help.php#".$help_item );
         break;
     }
     break;
@@ -78,12 +78,12 @@ switch($LOCALE ) {
   default:
    switch($help_type ) {
       case "admin":
-        header("Location: ".$BASE_URL."help/en_help_admin.php#".$help_item );
+        header("Location: ".BASE_URL."help/en_help_admin.php#".$help_item );
         break;
 
       case "help":
       default:
-        header("Location: ".$BASE_URL."help/en_help.php#".$help_item );
+        header("Location: ".BASE_URL."help/en_help.php#".$help_item );
         break;
     }
 }

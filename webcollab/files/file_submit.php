@@ -75,15 +75,15 @@ ignore_user_abort(TRUE);
       require_once(BASE."includes/usergroup_security.php" );
 
       //check the destination directory is writeable by the webserver
-      if( ! is_writable($FILE_BASE."/" ) ) {
+      if( ! is_writable(FILE_BASE."/" ) ) {
         unlink($_FILES["userfile"]["tmp_name"] );
         error("Configuration error", "The upload directory does not have write permissions set properly.  File upload has not been accepted.");
       }
 
       //check for ridiculous uploads
-      if($_FILES["userfile"]["size"] > $FILE_MAXSIZE ) {
+      if($_FILES["userfile"]["size"] > FILE_MAXSIZE ) {
         unlink($_FILES["userfile"]["tmp_name"] );
-        warning($lang["file_submit"], sprintf( $lang["file_too_big_sprt"], $FILE_MAXSIZE ) );
+        warning($lang["file_submit"], sprintf( $lang["file_too_big_sprt"], FILE_MAXSIZE ) );
       }
 
       //check for dangerous file uploads
@@ -134,7 +134,7 @@ ignore_user_abort(TRUE);
       else
         $filename = $_FILES["userfile"]["name"];
 
-      if( ! move_uploaded_file( $_FILES["userfile"]["tmp_name"], $FILE_BASE."/".$last_oid."__".$filename ) ) {
+      if( ! move_uploaded_file( $_FILES["userfile"]["tmp_name"], FILE_BASE."/".$last_oid."__".$filename ) ) {
         db_query("DELETE FROM ".PRE."files WHERE ".$last_insert."=".$last_oid );
         unlink($_FILES["userfile"]["tmp_name"] );
           db_rollback();
@@ -142,11 +142,11 @@ ignore_user_abort(TRUE);
       }
 
       //work around for mysql (which doesn't have an OID column)
-      if(substr($DATABASE_TYPE, 0, 5) == "mysql" )
+      if(substr(DATABASE_TYPE, 0, 5) == "mysql" )
         db_query("UPDATE ".PRE."files SET oid=".$last_oid." WHERE id=".$last_oid );
 
       //disarm it
-      chmod($FILE_BASE."/".$last_oid."__".$filename, 0644 );
+      chmod(FILE_BASE."/".$last_oid."__".$filename, 0644 );
       db_commit();
 
       //set up emails
@@ -225,8 +225,8 @@ ignore_user_abort(TRUE);
         if( ($admin == 1) || ($uid == $row["owner"] ) || ($uid == $row["uploader"] ) ) {
 
           //delete file from disk
-          if(file_exists($FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
-            unlink($FILE_BASE."/".$row["oid"]."__".$row["filename"] );
+          if(file_exists(FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
+            unlink(FILE_BASE."/".$row["oid"]."__".$row["filename"] );
           }
           //delete record of file
           db_query("DELETE FROM ".PRE."files WHERE oid=".$row["oid"] );
@@ -240,11 +240,11 @@ ignore_user_abort(TRUE);
   }
 
 if(isset($_GET["taskid"]) && $_GET["taskid"] == -1 ) { //can only occur from files.php --> file_admin.php --> delete
-  header("Location: ".$BASE_URL."files.php?x=$x&action=admin" );
+  header("Location: ".BASE_URL."files.php?x=$x&action=admin" );
   die;
 }
 else {
-  header("Location: ".$BASE_URL."tasks.php?x=$x&action=show&taskid=".$_REQUEST["taskid"] );
+  header("Location: ".BASE_URL."tasks.php?x=$x&action=show&taskid=".$_REQUEST["taskid"] );
 }
 
 ?>

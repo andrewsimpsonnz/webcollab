@@ -114,14 +114,13 @@ function javascript_escape($body ) {
 //
 function error($box_title, $content ) {
 
-  global $uid_name, $uid_email, $db_error_message, $MANAGER_NAME, $DEBUG, $NO_ERROR, $WEBCOLLAB_VERSION;
-  global $EMAIL_ERROR, $SMTP_AUTH;
+  global $uid_name, $uid_email, $db_error_message;
   
   include_once(BASE."includes/screen.php" );
   
   create_top("ERROR", 1 );
 
-  if($NO_ERROR != "Y" )
+  if(NO_ERROR != "Y" )
     new_box( $box_title, "<div style=\"text-align : center\">".$content."</div>", "boxdata", "singlebox" );
     else
     new_box($lang["report"], $lang["warning"], "boxdata2", "singlebox" );
@@ -135,7 +134,7 @@ function error($box_title, $content ) {
 
 
   //email to the error-catcher
-  $message = "Hello,\n This is the $MANAGER_NAME site and I have an error :/  \n".
+  $message = "Hello,\n This is the MANAGER_NAME site and I have an error :/  \n".
             "\n\n".
             "User that created the error: $uid_name ( $uid_email )\n".
             "The erroneous component: $box_title\n".
@@ -146,15 +145,15 @@ function error($box_title, $content ) {
             "Browser: ".$_SERVER["HTTP_USER_AGENT"]."\n".
             "Time: ".date("F j, Y, H:i")."\n".
             "IP: ".$_SERVER["REMOTE_ADDR"]."\n".
-            "WebCollab version: $WEBCOLLAB_VERSION\n".
+            "WebCollab version:".WEBCOLLAB_VERSION."\n".
             "POST vars: $post\n\n";
   
-  if($EMAIL_ERROR != NULL ){
+  if(EMAIL_ERROR != NULL ){
     include_once(BASE."includes/email.php" );
-    email($EMAIL_ERROR, "ERROR on $MANAGER_NAME", $message );
+    email(EMAIL_ERROR, "ERROR on MANAGER_NAME", $message );
   }
         
-  if($DEBUG == "Y" )
+  if(DEBUG == "Y" )
     new_box("Error Debug", nl2br($message) );
 
   create_bottom();

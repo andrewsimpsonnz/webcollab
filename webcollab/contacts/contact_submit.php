@@ -119,6 +119,6 @@ switch($_REQUEST["action"] ) {
     break;
 }
 
-header("Location: ".$BASE_URL."main.php?x=$x" );
+header("Location: ".BASE_URL."main.php?x=$x" );
 
 ?>

@@ -41,7 +41,7 @@ $content = "";
 function list_tasks($parent ) {
 
   global $x, $uid, $gid, $admin, $parentid, $parent_array, $epoch, $lang;
-  global $taskgroup_flag, $task_state, $NEW_TIME, $DATABASE_TYPE, $ul_flag, $now, $tz_offset;
+  global $taskgroup_flag, $task_state, $ul_flag, $now, $tz_offset;
 
   //init values
   $stored_groupname = NULL;
@@ -50,7 +50,7 @@ function list_tasks($parent ) {
   $ul_flag = 0;
 
 //force mysql to put 'uncategorised' items at the bottom
-if(substr($DATABASE_TYPE, 0, 5) == "mysql" )
+if(substr(DATABASE_TYPE, 0, 5) == "mysql" )
   $no_group = "IF(".PRE."taskgroups.name IS NULL, 1, 0), ";
 
 //query to get the children for this taskid
@@ -137,10 +137,10 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
     //have you seen this task yet ?
     $seen_test = db_result(db_query("SELECT COUNT(*) FROM ".PRE."seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" ), 0, 0);
 
-    //don't show alert content for changes more than $NEW_TIME (in seconds)
-    if( ($now - max($row["edited"], $row["lastpost"], $row["lastfileupload"] ) ) > 86400*$NEW_TIME ) {
+    //don't show alert content for changes more than NEW_TIME (in seconds)
+    if( ($now - max($row["edited"], $row["lastpost"], $row["lastfileupload"] ) ) > 86400*NEW_TIME ) {
 
-      //task is over limit in $NEW_TIME and still not looked at by you, mark it as seen, and move on...
+      //task is over limit in NEW_TIME and still not looked at by you, mark it as seen, and move on...
       if( $seen_test < 1 )
         db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES ($uid, ".$row["id"].", now() ) " );
     }
@@ -280,7 +280,7 @@ $row = db_fetch_num($q, 0 );
 
 //set variables
 $now = $row[2];
-$tz_offset = ($TZ * 3600) - date("Z");
+$tz_offset = (TZ * 3600) - date("Z");
 
 if( ($admin != 1) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
 

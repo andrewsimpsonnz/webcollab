@@ -51,7 +51,7 @@ $content .=
 $q = db_query("SELECT * FROM ".PRE."config" );
 $row = db_fetch_array( $q, 0 );
 
-if($USE_EMAIL == "Y" ){
+if(USE_EMAIL == "Y" ){
 
   $content .=
             "<tr><td style=\"white-space : nowrap\" colspan=\"2\"><b>".$lang["email_settings"]."</b><br /><br /></td></tr>\n";

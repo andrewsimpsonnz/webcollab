@@ -29,7 +29,7 @@ require_once("path.php" );
 
 include_once(BASE."config/config.php" );
 
-switch($DATABASE_TYPE ) {
+switch(DATABASE_TYPE ) {
 
   case "mysql":
     include(BASE."database/mysql_database.php" );

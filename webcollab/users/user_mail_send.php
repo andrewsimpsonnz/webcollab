@@ -146,5 +146,5 @@ if(strlen($to ) != 0 ) {
 }
 
 //all done: warp back to main screen (Aye, aye captain).
-header("Location: ".$BASE_URL."main.php?x=$x" );
+header("Location: ".BASE_URL."main.php?x=$x" );
 ?>

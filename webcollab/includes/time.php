@@ -63,22 +63,22 @@ function nicedate($timestamp ) {
 // Take an epoch value (unix timestamp) and make it look nice *and* in the correct timezone
 //
 function nicetime($timestamp, $addtime=0 ) {
-  global $month_array, $TZ;
+  global $month_array;
 
   if(empty($timestamp) )
     return "";
   
   //server timezone offset is subtracted because date() automatically adds it on!!        
-  $local = $timestamp - date("Z") + ($TZ * 3600);
+  $local = $timestamp - date("Z") + (TZ * 3600);
   
   //format is 2004-Aug-02  
   if(! $addtime)
     return date("Y-", $local).$month_array[(date("n", $local))].date("-d", $local);
   
-  if($TZ >= 0 )
-    $offset = sprintf("+%02d00", $TZ );
+  if(TZ >= 0 )
+    $offset = sprintf("+%02d00", TZ );
   else
-    $offset = sprintf("%03d00", $TZ );
+    $offset = sprintf("%03d00", TZ );
   
   //format is 2004-Aug-02 18:06 +1200 
   return date("Y-", $local).$month_array[(date("n", $local))].date("-d H:i ", $local).$offset;
@@ -104,11 +104,11 @@ function date_select_from_timestamp($timestamp="" ) {
 //show a date-time selection row
 //
 function date_select($day=-1, $month=-1, $year=-1 ) {
-  global $month_array, $TZ;
+  global $month_array;
 
   //filter for no date set
   if($day == -1 || $month == -1 || $year == -1 ) {
-    $local = time() - date("Z") + ($TZ * 3600);
+    $local = time() - date("Z") + (TZ * 3600);
     $day   = date("d", $local );
     $month = date("m", $local );
     $year  = date("Y", $local );

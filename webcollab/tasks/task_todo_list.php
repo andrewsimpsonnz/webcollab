@@ -34,10 +34,14 @@ require_once( BASE."includes/security.php" );
 // List tasks
 //
 
-function listTasks($task_id, $tail ) {
-   global $x, $admin, $gid, $userid, $epoch, $lang, $tz_offset;
+function listTasks($task_id, $tail, $projectid ) {
+  global $x, $admin, $gid, $userid, $epoch, $lang, $tz_offset;
+  global $task_array, $parent_array, $shown_array;
+   
+  $parent_array = "";
+   
   // show all subtasks that are not complete
-  $q = db_query( "SELECT id, name, owner, deadline, usergroupid, globalaccess,
+  $q = db_query( "SELECT id, name, owner, deadline, parent, usergroupid, globalaccess,
                         $epoch deadline) AS task_due,
                         $epoch now() ) AS now
                         FROM ".PRE."tasks
@@ -45,37 +49,113 @@ function listTasks($task_id, $tail ) {
                         AND parent<>0
                         AND (status='created' OR status='active')
                         $tail
-                        ORDER BY deadline DESC" );
+                        ORDER BY name" );
+  
   if(db_numrows($q ) == 0 )
     return;
 
-   $content = "";
+  $content = "<ul>\n";  
 
-   for( $iter=0 ; $row = @db_fetch_array($q, $iter ) ; $iter++) {
+  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+    
+    //check for private usergroups
+    if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] != 't' ) ) {
+      if( ! in_array( $row["usergroupid"], (array)$gid ) )
+        continue;
+    }
 
-     //check for private usergroups
-     if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
+    //put values into array
+    $task_array[$i]["id"] = $row["id"];
+    $task_array[$i]["parent"] = $row["parent"];
+         
+    $this_task = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
 
-       if( ! in_array( $row["usergroupid"], (array)$gid ) )
-         continue;
-     }
-
-     $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
-
-     //add highlighting if deadline is due
-     $state = ceil( ($row["task_due"] + $tz_offset - $row["now"] )/86400 );
-     if($state > 1) {
-       $content .= $row["name"]."</a>".sprintf($lang["due_in_sprt"], $state );
-       } else if($state > 0) {
-          $content .= $row["name"]."</a>".$lang["due_tomorrow"];
-       }
-       else {
-         $content .= "<span class=\"red\">".$row["name"]."</span></a>";
-       }
-     $content .= "</li>\n";
-   }
-return $content;
+    //add highlighting if deadline is due
+    $state = ceil( ($row["task_due"] + $tz_offset - $row["now"] )/86400 );
+    if($state > 1) {
+      $this_task .= $row["name"]."</a>".sprintf($lang["due_in_sprt"], $state );
+    }
+    else if($state > 0) {
+      $this_task .= $row["name"]."</a>".$lang["due_tomorrow"];
+    }
+    else{
+      $this_task .= "<span class=\"red\">".$row["name"]."</span></a>";
+    }
+    
+    $task_array[$i]["task"] = $this_task."\n";
+    
+    //if this is a subtask, store the parent id 
+    if($row["parent"] != $projectid ) {
+      $parent_array[] = $row["parent"];
+    }
+  }   
+    
+  if(sizeof($parent_array) > 10 )
+    $parent_array = array_unique($parent_array);
+  $max = sizeof($task_array);
+  
+  //iteration for main tasks
+  for($i=0 ; $i < $max ; $i++ ){
+  
+    //ignore subtasks in this iteration
+    if($task_array[$i]["parent"] != $projectid ){
+      continue;
+    }
+    $content .= $task_array[$i]["task"];
+    $shown_array[] = $task_array[$i]["id"];
+    
+    //if this task has children (subtasks), iterate recursively to find them 
+    if(in_array($task_array[$i]["id"], (array)$parent_array ) ){
+      $content .= find_children($task_array[$i]["id"] );
+    }
+    $content .= "</li>\n";
+  }
+  
+  //look for any orphaned tasks, and show them too
+  if($max != sizeof($shown_array) ) {
+    for($i=0 ; $i < $max ; $i++ ) {
+      if( ! in_array($task_array[$i]["id"], (array)$shown_array ) ) 
+        $content .= $task_array[$i]["task"]."</li>\n";
+    }
+  }
+  $content .= "</ul>\n";  
+    
+  unset($task_array);
+  unset($shown_array);
+  unset($parent_array);
+   
+  return $content;
 }
+
+//
+// List subtasks (recursive function)
+//
+function find_children($parent ) {
+
+  global $task_array, $parent_array, $shown_array;
+
+  $content = "<ul>\n";
+  $max = sizeof($task_array);
+       
+  for($i=0 ; $i < $max ; $i++ ) {
+    
+    //ignore tasks not directly under this parent
+    if($task_array[$i]["parent"] != $parent ){
+      continue;
+    }
+    $content .= $task_array[$i]["task"];
+    $shown_array[] = $task_array[$i]["id"];
+    
+    //if this task has children (subtasks), iterate recursively to find them
+    if(in_array($task_array[$i]["id"], $parent_array ) ){
+      $content .= find_children($task_array[$i]["id"] );
+    }
+    $content .= "</li>\n";    
+  }
+  $content .= "</ul>\n"; 
+  return $content;
+}      
+
 
 //
 //START OF MAIN PROGRAM
@@ -85,7 +165,7 @@ $flag = 0;
 $content = "";
 $usergroup[0] = 0;
 $allowed[0] = 0; 
-$tz_offset = ($TZ * 3600) - date("Z");
+$tz_offset = (TZ * 3600) - date("Z");
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid,
@@ -201,7 +281,7 @@ $content .= "</select></label><br /><br /></td></tr>\n".
             "</form>\n";
 
 //query to get the all the projects
-$q = db_query("SELECT id, name, usergroupid, globalaccess FROM ".PRE."tasks WHERE parent=0 ORDER BY name" );
+$q = db_query("SELECT id, name, projectid, usergroupid, globalaccess FROM ".PRE."tasks WHERE parent=0 ORDER BY name" );
 
 // show all uncompleted tasks and projects belonging to this user or group
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
@@ -213,12 +293,11 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
        continue;
    }
 
-  $new_content = listTasks($row["id"], $tail );
+  $new_content = listTasks($row["id"], $tail, $row["projectid"] );
 
   //if no task, don't show project name either
   if($new_content != "" ) {
-    $content .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;<b>".$row["name"]."</b></p>\n".
-                "<ul>".$new_content."</ul>\n";
+    $content .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;<b>".$row["name"]."</b></p>\n".$new_content."\n";
     //set flag to show there is at least one uncompleted task
     $flag = 1;
   }

@@ -110,6 +110,6 @@ switch($_GET["action"] ){
 
 }
 
-header("Location: ".$BASE_URL."users.php?x=$x&action=manage");
+header("Location: ".BASE_URL."users.php?x=$x&action=manage");
 
 ?>

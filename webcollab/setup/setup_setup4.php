@@ -176,8 +176,8 @@ switch($data["db_type"]) {
       //set initial value
       $host = "";
       //now adjust if necessary
-      if($DATABASE_HOST != "localhost" )
-        $host = "host=".$DATABASE_HOST;
+      if($data["db_host"] != "localhost" )
+        $host = "host=".$data["db_host"];
         
       //connect to db
       if( ! @pg_connect($host." user=".$data["db_user"]." dbname=".$data["db_name"]." password=".$data["db_password"] ) ) {

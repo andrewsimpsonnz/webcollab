@@ -67,7 +67,7 @@ include_once(BASE."lang/lang.php" );
 //
 function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
 
-  global $uid_name, $admin, $MANAGER_NAME, $WEBCOLLAB_VERSION, $lang, $web_charset, $top_done, $bottom_text;
+  global $uid_name, $admin, $lang, $web_charset, $top_done, $bottom_text;
   
   //only build top once...
   //  (we don't use headers_sent() 'cause it seems to be buggy in PHP5)
@@ -96,7 +96,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
              "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
              "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n".
              "<html>\n\n".
-             "<!-- WebCollab ".$WEBCOLLAB_VERSION." -->\n".
+             "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
              "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
              "<!-- (c) 2002 - 2004 Andrew Simpson -->\n\n".
              "<head>\n";
@@ -105,7 +105,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
   echo $content;                  
                     
   if( $title == "" )
-    $title = $MANAGER_NAME;
+    $title = MANAGER_NAME;
 
   $content  =  "<title>".$title."</title>\n".
                "<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".

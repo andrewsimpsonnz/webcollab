@@ -46,11 +46,11 @@ $taskid = $row["taskid"];
 require_once(BASE."includes/usergroup_security.php" );
 
 //check the file exists
-if( ! ( file_exists( $FILE_BASE."/".$row["oid"]."__".($row["filename"] ) ) ) )
+if( ! ( file_exists( FILE_BASE."/".$row["oid"]."__".($row["filename"] ) ) ) )
   error("Download file", "The file ".$row["filename"]." is missing from the server" );
 
 //open the file
-$fp = fopen( $FILE_BASE."/".$row["oid"]."__".($row["filename"]), "rb" );
+$fp = fopen( FILE_BASE."/".$row["oid"]."__".($row["filename"]), "rb" );
 if($fp == 0 )
   error("Download file", "File handle for ".$row["filename"]." cannot be opened" );
 

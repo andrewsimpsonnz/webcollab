@@ -30,7 +30,7 @@ require_once("path.php" );
 
 include_once(BASE."config/config.php" );
 
-switch($LOCALE ) {
+switch(LOCALE ) {
 
   case "bg":
     include(BASE."lang/bg_email.php" );

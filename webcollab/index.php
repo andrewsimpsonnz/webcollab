@@ -28,7 +28,6 @@
 */
 
 //secure variables
-$WEB_AUTH = "N";
 $content = "";
 
 include( "includes/screen.php" );
@@ -48,7 +47,7 @@ function secure_error( $reason = "Unauthorised area" ) {
 
 //valid login attempt ?
 if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["username"]) > 0 && strlen($_POST["password"]) > 0 )
-    || (isset($_SERVER["REMOTE_USER"])  && (strlen($_SERVER["REMOTE_USER"]) > 0 ) && $WEB_AUTH == "Y" ) ) {
+    || (isset($_SERVER["REMOTE_USER"])  && (strlen($_SERVER["REMOTE_USER"]) > 0 ) && WEB_AUTH == "Y" ) ) {
 
   $q = "";
   $login_q ="";
@@ -64,7 +63,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["us
     secure_error("Unable to determine ip address");
   }
  
-  if($WEB_AUTH == "Y" ) {
+  if(WEB_AUTH == "Y" ) {
       //construct login query
       $login_q = "SELECT id FROM ".PRE."users WHERE name='".safe_data($_SERVER["REMOTE_USER"] )."' AND deleted='f'";
   }
@@ -134,7 +133,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["us
 
   //relocate the user to the main screen
   //(we use both URI session key and cookies initially - in case cookies don't work)
-  header("Location: ".$BASE_URL."main.php?x=$session_key");
+  header("Location: ".BASE_URL."main.php?x=$session_key");
   die;
 }
 
@@ -143,16 +142,13 @@ if(isset($_COOKIE["webcollab_session"] ) && strlen($_COOKIE["webcollab_session"]
  
   include_once "includes/common.php"; 
   include_once "database/database.php"; 
- 
-  if( ! isset($SESSION_TIMEOUT ) ) 
-    $SESSION_TIMEOUT = 1;
     
   //check if session is valid and within time limits
   if(db_result(@db_query("SELECT COUNT(*) FROM ".PRE."logins
                                  WHERE session_key='".safe_data($_COOKIE["webcollab_session"])."'
-                                 AND lastaccess > (now()-INTERVAL ".$delim.round($SESSION_TIMEOUT)." HOUR".$delim.")" ) ) == 1 ) {
+                                 AND lastaccess > (now()-INTERVAL ".$delim.round(SESSION_TIMEOUT)." HOUR".$delim.")" ) ) == 1 ) {
     //relocate to main screen, and let security.php do further checking on session validity
-    header("Location: ".$BASE_URL."main.php?x=0");
+    header("Location: ".BASE_URL."main.php?x=0");
     die;
   }
 }
@@ -161,8 +157,8 @@ create_top($lang["login"], 1, "username" );
 
 $content = "<div style=\"text-align:center\">";
 
-if( $SITE_IMG != "" ) {
-  $content .=  "<img src=\"images/".$SITE_IMG."\" /><br />";
+if( SITE_IMG != "" ) {
+  $content .=  "<img src=\"images/".SITE_IMG."\" /><br />";
 }
 else {
   $content .=  "<img src=\"images/webcollab_logo.jpg\" alt=\"WebCollab logo\" /><br />";
@@ -176,7 +172,7 @@ $content .= "<p>".$lang["please_login"].":</p>\n".
             "</table>\n".
             "<p>&nbsp;</p>\n".
             "<p><input type=\"submit\" value=\"".$lang["login"]."\" /></p>\n";
-  switch( $DATABASE_TYPE ) {
+  switch( DATABASE_TYPE ) {
   case "postgresql":
     $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\" /></a></p>";
     break; 

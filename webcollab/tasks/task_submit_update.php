@@ -267,6 +267,6 @@ if(isset($_POST["maillist"]) && ($_POST["maillist"]=="on") ) {
 email($usergroup, $title2, $message );
 }
 
-header("Location: ".$BASE_URL."tasks.php?x=$x&action=show&taskid=$taskid" );
+header("Location: ".BASE_URL."tasks.php?x=$x&action=show&taskid=$taskid" );
 
 ?>

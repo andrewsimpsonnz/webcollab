@@ -22,43 +22,43 @@
   //You need to add the full webservername and dir to WebCollab here. Example"
   // "http://www.your-url-here.com/backend/org/" (don't forget the tailing slash)
   //**!!
-  $BASE_URL="";
+  define('BASE_URL', "" );
 
   //The name of the site
-  $MANAGER_NAME="WebCollab Project Management";
+  define('MANAGER_NAME', "WebCollab Project Management" );
 
   //The abbreviated name for the site (for use in email subject lines)
-  $ABBR_MANAGER_NAME="WebCollab";
+  define('ABBR_MANAGER_NAME',"WebCollab" );
 
 //DATABASE OPTIONS
   //**!!
-  $DATABASE_NAME="";
-  $DATABASE_USER="";
-  $DATABASE_PASSWORD="";
+  define('DATABASE_NAME', "" );
+  define('DATABASE_USER', "" );
+  define('DATABASE_PASSWORD', "" );
 
 //Database type (valid options are "mysql", "postgresql" and "mysql_innodb")
   //**!!
-  $DATABASE_TYPE="mysql";
+  define('DATABASE_TYPE', "mysql" );
 
 //Database host (usually "localhost")
   //**!!
-  $DATABASE_HOST="localhost";
+  define('DATABASE_HOST', "localhost" );
 
   /*Note:
-    For PostgreSQL $DATABASE_HOST should not be changed from localhost.
+    For PostgreSQL DATABASE_HOST should not be changed from localhost.
     To use remote tcp/ip connections with PostgreSQL:
      - Edit pg_hba.conf (PostgreSQL config file) to allow tcp/ip connections
      - Start PostgreSQL postmaster with -i option
-     - Change $DATABASE_HOST as required
+     - Change DATABASE_HOST as required
   */
 
 //FILE UPLOADS
 
   //upload to what directory ?
-  $FILE_BASE = "/var/www/html/webcollab/files/filebase";
+  define('FILE_BASE', "/var/www/html/webcollab/files/filebase" );
 
   //max uploaded file size in bytes (2 Mb is the default)
-  $FILE_MAXSIZE = 2000000;
+  define('FILE_MAXSIZE', 2000000 );
 
   /*Note:
     1. Make sure the file_base directory exists, and is writeable by the webserver, or you
@@ -67,7 +67,7 @@
        security.  This is important to prevent users navigating to the file directory with
        their web browsers, and viewing all the files.  (The default location given is NOT outside
        the webserver root, but it makes first-time setup easier).
-    3. The $FILE_BASE is the full path to the operating system root, not the webserver root directory.
+    3. The FILE_BASE is the full path to the operating system root, not the webserver root directory.
     4. PHP and Apache settings will overide the maximum file size set here.
 
   */
@@ -79,58 +79,58 @@
 
   // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan),
   //                       "de" (German), "it" (Italian), "bg" (Bulgarian), "da" (Danish)
-  $LOCALE = "en";
+  define('LOCALE', "en" );
   
   
 //TIMEZONE
   //timezone offset from GMT/UTC (hours)
-  $TZ = 0;
+  define(TZ, 0 );
 
 //EMAIL ADDRESS
 
   //If an error occurs, who do you want the error to be mailed to ?
-  $EMAIL_ERROR="";
+  define('EMAIL_ERROR', "" );
 
 
 //EMAIL CONFIGURATION
 
   //enable email to send messages? (Values are "Y" or "N").
   //  default is "Y".
-  $USE_EMAIL = "Y";
+  define('USE_EMAIL', "Y" );
 
       //location of SMTP server (ip address or FQDN)
-      $SMTP_HOST = "localhost";
+      define('SMTP_HOST', "localhost" );
 
       //use smtp auth? ('Y' or 'N')
-      $SMTP_AUTH = "N";
-        //if using $SMTP_AUTH give username & password
-        $MAIL_USER = "";
-        $MAIL_PASSWORD = "";
+      define('SMTP_AUTH', "N" );
+        //if using SMTP_AUTH give username & password
+        define('MAIL_USER', "" );
+        define('MAIL_PASSWORD', "" );
 
 //MINOR CONFIG PARAMETERS
 
   //session timeout in hours
-  $SESSION_TIMEOUT = 1;
+  define('SESSION_TIMEOUT', 1 );
 
   //number of days that new or updated tasks should be highlighted as 'New' or 'Updated'
-  $NEW_TIME = 14;
+  define('NEW_TIME', 14 );
 
   //custom image to replace the webcollab banner on splash page (base directory is /images)
-  $SITE_IMG = "";
+  define('SITE_IMG', "" );
 
   //show full debugging messages on the screen when errors occur (values are "N", or "Y")
-  $DEBUG = "N";
+  define('DEBUG', "N" );
 
   //Don't show full error message on the screen - just a 'sorry, try again' message (values are "N", or "Y")
-  $NO_ERROR = "N";
+  define('NO_ERROR', "N" );
 
   //Use external webserver authorisation to login (values are "N", or "Y")
-  $WEB_AUTH = "N";
+  define('WEB_AUTH', "N" );
 
   //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match) 
-  define("PRE", "" );
+  define('PRE', "" );
 
   //version info
-  $WEBCOLLAB_VERSION = "1.62";
+  define('WEBCOLLAB_VERSION', "1.62" );
 
 ?>

@@ -36,7 +36,7 @@ $content = "";
 if($admin == 1 ) {
   $content .= "<a href=\"users.php?x=$x&amp;action=add\">".$lang["add"]."</a><br />\n".
               "<a href=\"users.php?x=$x&amp;action=manage\">".$lang["manage"]."</a><br />\n";
- if($USE_EMAIL != "N")
+ if(USE_EMAIL != "N")
    $content .= "<a href=\"users.php?x=$x&amp;action=email\">".$lang["email_users"]."</a><br />\n";
 }
 

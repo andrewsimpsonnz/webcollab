@@ -26,7 +26,6 @@
 */
 
 //set initial safe values
-$DATABASE_NAME = "--";
 $WEB_CONFIG = "N";
 
 //read config files
@@ -152,7 +151,7 @@ if(strcmp('4.1.0', PHP_VERSION ) > 0 )
   secure_error("WebCollab needs PHP version 4.1.0, or higher.  This version is ".PHP_VERSION );
 
 //check for initial install
-if($DATABASE_NAME == "" ) {
+if(DATABASE_NAME == "" ) {
   //this is an initial install
   $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
   header("Location: ".$path."setup_handler.php?action=setup1" );

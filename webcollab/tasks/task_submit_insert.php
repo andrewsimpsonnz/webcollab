@@ -244,11 +244,11 @@ email($usergroup, sprintf($title2, $name), $message );
 
 //don't use the default break-out sequence but go to or the parent's page of the project
 if($parentid != 0 ) {
-  header("Location: ".$BASE_URL."tasks.php?x=$x&action=show&taskid=$parentid" );
+  header("Location: ".BASE_URL."tasks.php?x=$x&action=show&taskid=$parentid" );
   die;
 }
 else {
-  header("Location: ".$BASE_URL."main.php?x=$x" );
+  header("Location: ".BASE_URL."main.php?x=$x" );
   die;
 }
 ?>

@@ -50,7 +50,7 @@ function listTasks($projectid ) {
                         globalaccess, 
                         usergroupid, 
                         ".$epoch." deadline )
-                       FROM ".PRE."tasks WHERE projectid=$projectid 
+                       FROM ".PRE."tasks WHERE projectid=$projectid
                        AND status<>'done'
                        AND parent<>0
                        ORDER BY name" );
@@ -177,7 +177,7 @@ $flag = 0;
 $active_only = 0;
 $condensed = 0;
 $project_print = 0;
-$tz_offset = ($TZ * 3600) - date("Z");
+$tz_offset = (TZ * 3600) - date("Z");
 
 // query to get the projects
 $q = db_query("SELECT id,

@@ -45,7 +45,7 @@ ignore_user_abort(TRUE);
 
 $input_array = array("email_admin", "reply_to", "from" );
 
-if($USE_EMAIL == "Y" ){
+if(USE_EMAIL == "Y" ){
 
   //check and validate email addresses
   foreach($input_array as $var) {
@@ -83,8 +83,8 @@ db_query("UPDATE ".PRE."config SET email_admin='".$email_admin."',
                             usergroup='".$usergroup."'");
 
 //if no email end here
-if($USE_EMAIL != "Y" )
-  header("Location: ".$BASE_URL."main.php?x=$x" );
+if(USE_EMAIL != "Y" )
+  header("Location: ".BASE_URL."main.php?x=$x" );
 
 /*
 Begin mailing list clean up
@@ -121,5 +121,5 @@ if( isset($email_list ) ) {
 }
 //all done!
 
-header("Location: ".$BASE_URL."main.php?x=$x" );
+header("Location: ".BASE_URL."main.php?x=$x" );
 ?>

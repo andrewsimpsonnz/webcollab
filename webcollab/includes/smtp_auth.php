@@ -7,7 +7,7 @@
   
   WebCollab
   ---------------------------------------
-    This program is free software; you can redistribute it and/or modify it under the
+  This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
 
@@ -36,8 +36,6 @@
 
 function smtp_auth($connection, $cap) {
 
-   global $MAIL_USER, $MAIL_PASSWORD;
-
    if(strpos($cap, "AUTH" ) === false )
         debug("SMTP server cannot do SMTP AUTH<br /><br />Capability response from SMTP server was ".nl2br($cap ) );
 
@@ -48,7 +46,7 @@ function smtp_auth($connection, $cap) {
 
      if($res[1] == "334" ) {
        //send username/password
-       fputs($connection, base64_encode($MAIL_USER."\0".$MAIL_USER."\0".$MAIL_PASSWORD )."\r\n" );
+       fputs($connection, base64_encode(MAIL_USER."\0".MAIL_USER."\0".MAIL_PASSWORD )."\r\n" );
        $res = response();
        if($res[1] != "235" )
          debug("Username/password not accepted SMTP server at $host for AUTH PLAIN<br /><br />Response from SMTP server was ".$res[0] );
@@ -64,13 +62,13 @@ function smtp_auth($connection, $cap) {
 
      if($res[1] == "334" ) {
        //send username
-       fputs($connection, base64_encode($MAIL_USER )."\r\n" );
+       fputs($connection, base64_encode(MAIL_USER )."\r\n" );
        $res = response();
        if($res[1] != "334" )
          debug("Username not accepted SMTP server at $host for AUTH LOGIN<br /><br />Response from SMTP server was ".$res[0] );
 
        //send password
-       fputs($connection, base64_encode($MAIL_PASSWORD )."\r\n" );
+       fputs($connection, base64_encode(MAIL_PASSWORD )."\r\n" );
        $res = response();
        if($res[1] != "235" )
          debug("Password not accepted SMTP server at $host for AUTH LOGIN<br /><br />Response from SMTP server was ".$res[0] );
@@ -87,7 +85,7 @@ function smtp_auth($connection, $cap) {
      if($res[1] == "334" ) {
        //$data is 'shared secret' sent by server
        $data = base64_decode(substr($res[0], 4 ) );
-       $key = $MAIL_PASSWORD;
+       $key = MAIL_PASSWORD;
 
        //the algorithm below does mhash() without needing the external mhash library to be installed on PHP
        if(strlen($key) > 64 ){
@@ -101,7 +99,7 @@ function smtp_auth($connection, $cap) {
 
        $mhash = md5($k_opad.pack("H*",md5($k_ipad.$data ) ) );
 
-       fputs($connection, base64_encode($MAIL_USER." ".$mhash )."\r\n" );
+       fputs($connection, base64_encode(MAIL_USER." ".$mhash )."\r\n" );
        $res = response();
        if($res[1] != "235" )
          debug("CRAM-MD5 mhash not accepted SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );

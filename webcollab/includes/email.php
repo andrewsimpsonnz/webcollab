@@ -39,7 +39,7 @@ require_once(BASE."includes/security.php" );
 
 include_once(BASE."includes/admin_config.php" );
 
-if( $SMTP_AUTH == "Y" )
+if( SMTP_AUTH == "Y" )
   include_once(BASE."includes/smtp_auth.php" );
 
 //
@@ -48,13 +48,13 @@ if( $SMTP_AUTH == "Y" )
 
 function email($to, $subject, $message ) {
 
-  global $USE_EMAIL, $SMTP_HOST, $SMTP_AUTH, $bit8, $connection;
+  global $bit8, $connection;
 
   $email_encode = "";
   $message_charset = "";
   $body = "";
 
-  if($USE_EMAIL == "N" ) {
+  if(USE_EMAIL == "N" ) {
     //email is turned off in config file
     return;
   }
@@ -64,7 +64,7 @@ function email($to, $subject, $message ) {
   }
 
   //open an SMTP connection at the mail host
-  $host = $SMTP_HOST;
+  $host = SMTP_HOST;
   $connection = @fsockopen($host, 25, $errno, $errstr, 10 );
   if (!$connection )
     debug("Unable to open SMTP connection to ".$host."<br /><br />Error ".$errno." ".$errstr );
@@ -94,7 +94,7 @@ function email($to, $subject, $message ) {
     $bit8 = true;
 
    //do SMTP_AUTH if required
-   if($SMTP_AUTH == "Y" )
+   if(SMTP_AUTH == "Y" )
      smtp_auth($connection, $cap );
 
   //arrange message - and set email encoding
@@ -379,9 +379,9 @@ function response() {
 
  function debug($error ){
 
-   global $DEBUG, $connection;
+   global $connection;
 
-   if($DEBUG == "Y" ) {
+   if(DEBUG == "Y" ) {
      $time_out = "";
      $meta = @socket_get_status($connection);
      if($meta["timed_out"] )

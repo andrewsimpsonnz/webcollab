@@ -42,16 +42,16 @@ if(isset($_POST["new_db"]) && $_POST["new_db"] == "N" )
 else
   $new_db = "Y";
 
-if(isset($DATABASE_NAME ) && $DATABASE_NAME != "" ) {
+if(defined(DATABASE_NAME ) && DATABASE_NAME != "" ) {
 
   //this is not an initial install
   if($new_db == "N" ){
     //existing configuration being reused
-    $db_name     = $DATABASE_NAME;
-    $db_user     = $DATABASE_USER;
-    $db_password = $DATABASE_PASSWORD;
-    $db_type     = $DATABASE_TYPE;
-    $db_host     = $DATABASE_HOST;
+    $db_name     = DATABASE_NAME;
+    $db_user     = DATABASE_USER;
+    $db_password = DATABASE_PASSWORD;
+    $db_type     = DATABASE_TYPE;
+    $db_host     = DATABASE_HOST;
     $flag = 0;
   }
 }
@@ -103,27 +103,33 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\">".
             "<input type=\"hidden\" name=\"new_db\" value=\"$new_db\" />\n".
             "<table border=\"0\">";
 
-if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" ){
+if( ! defined(DATABASE_NAME ) || DATABASE_NAME == "" ){
   $file_path = realpath(dirname(__FILE__ ).'/..' ).'/';
-  $BASE_URL  = str_replace( $_SERVER["DOCUMENT_ROOT"], "http://".$_SERVER["HTTP_HOST"], $file_path );
+  $BASE_URL = str_replace( $_SERVER["DOCUMENT_ROOT"], "http://".$_SERVER["HTTP_HOST"], $file_path );
 }
+else
+  $BASE_URL = BASE_URL;
 
 //basic settings
 $content .= "<tr><td></td><td><br /><b><u>Basic Settings</u></b></td></tr>\n".
             "<tr><td></td><td><br />Base URL address of site. (Don't forget the trailing slash - e.g. http://mydomain.com/webcollab/).</td></tr>\n".
-            "<tr><th>Site address:</th><td><input type=\"text\" name=\"base_url\" value=\"$BASE_URL\" size=\"50\" /></td></tr>\n";
+            "<tr><th>Site address:</th><td><input type=\"text\" name=\"base_url\" value=\"".$BASE_URL."\" size=\"50\" /></td></tr>\n";
 
-if( ! isset($MANAGER_NAME) || $MANAGER_NAME == "" )
+if( ! defined(MANAGER_NAME) || MANAGER_NAME == "" )
   $MANAGER_NAME = "WebCollab Project Management";
+else
+  $MANAGER_NAME = MANAGER_NAME;
 
 $content .= "<tr><td></td><td><br />The name of the site</td></tr>\n".
-            "<tr><th>Site name:</th><td><input type=\"text\" name=\"manager_name\" value=\"$MANAGER_NAME\" size=\"50\" /></td></tr>\n";
+            "<tr><th>Site name:</th><td><input type=\"text\" name=\"manager_name\" value=\"".$MANAGER_NAME."\" size=\"50\" /></td></tr>\n";
 
-if( ! isset($ABBR_MANAGER_NAME) || $ABBR_MANAGER_NAME == "" )
+if( ! defined(ABBR_MANAGER_NAME) || ABBR_MANAGER_NAME == "" )
   $ABBR_MANAGER_NAME = "WebCollab";
+else
+  $ABBR_MANAGER_NAME = ABBR_MANAGER_NAME;
 
 $content .= "<tr><td></td><td><br />An abbreviated name of the site for emails</td></tr>\n".
-            "<tr><th>Abbreviated site name:</th><td><input type=\"text\" name=\"abbr_manager_name\" value=\"$ABBR_MANAGER_NAME\" size=\"30\" /></td></tr>\n";
+            "<tr><th>Abbreviated site name:</th><td><input type=\"text\" name=\"abbr_manager_name\" value=\"".$ABBR_MANAGER_NAME."\" size=\"30\" /></td></tr>\n";
 
 //database settings
 $content .= "<tr><td></td><td><br /><br /><b><u>Database Settings</u></b><br /><br /></td></tr>\n".
@@ -157,23 +163,29 @@ $content .= "<tr><th>Database type:</th><td><select name=\"db_type\">\n".
 //file settings
 $content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td></tr>\n";
 
-if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" )
+if( ! defined(DATABASE_NAME ) || DATABASE_NAME == "" )
   $FILE_BASE = realpath(dirname(__FILE__ )."/.." )."/files/filebase";
+else 
+  $FILE_BASE = FILE_BASE;
 
-if( ! isset($FILE_MAXSIZE) || $FILE_MAXSIZE == NULL )
+if( ! defined(FILE_MAXSIZE) || FILE_MAXSIZE == "" )
   $FILE_MAXSIZE = "2000000";
+else
+  $FILE_MAXSIZE = FILE_MAXSIZE;
 
 $content .= "<tr><td></td><td><br />Location where uploaded files will be stored</td></tr>\n".
-            "<tr><th>File location:</th><td><input type=\"text\" name=\"file_base\" value=\"$FILE_BASE\" size=\"50\" /></td></tr>\n".
+            "<tr><th>File location:</th><td><input type=\"text\" name=\"file_base\" value=\"".$FILE_BASE."\" size=\"50\" /></td></tr>\n".
 
             "<tr><td></td><td><br />Maximum size of file that can be uploaded (bytes)</td></tr>\n".
-            "<tr><th>File size:</th><td><input type=\"text\" name=\"file_maxsize\" value=\"$FILE_MAXSIZE\" size=\"20\" /></td></tr>\n";
+            "<tr><th>File size:</th><td><input type=\"text\" name=\"file_maxsize\" value=\"".$FILE_MAXSIZE."\" size=\"20\" /></td></tr>\n";
 
 //language settings
 $content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></tr>\n";
 
-if( ! isset($LOCALE) || $LOCALE == NULL )
+if( ! defined(LOCALE) || LOCALE == NULL )
   $LOCALE = "en";
+else
+  $LOCALE = LOCALE;
 
 //initialise array with null values
 for( $i=0 ; $i < 8 ; $i++ ) {
@@ -200,8 +212,10 @@ $content .= "<tr><td></td><td><br /></td></tr>\n".
 //timezone setting
 $content .= "<tr><td></td><td><br /><br /><b><u>Timezone Setting</u></b></td></tr>\n";
 
-if( ! isset($TZ) || $TZ == NULL )
+if( ! defined(TZ) || TZ == NULL )
   $TZ = (int)date("Z")/3600;
+else
+  $TZ = TZ;
 
 //initialise array with null values  
 for( $i=1 ; $i < 27 ; $i++ ) {
@@ -239,22 +253,25 @@ $content .=  "<tr><td></td><td><br /></td></tr>\n".
              "<option value=\"11\"$s[24]>GMT +1100</option>\n".
              "<option value=\"12\"$s[25]>GMT +1200</option>\n".
              "<option value=\"13\"$s[26]>GMT +1300</option>\n".
-             "</select></td></tr>\n".
+             "</select></td></tr>\n";
                         
 //email settings
-$setting = "checked";
-if(isset($USE_EMAIL) && $USE_EMAIL == "N" )
+if(defined(USE_EMAIL) && USE_EMAIL == "N" )
   $setting = "";
+else
+  $setting = "checked";
 
 $content .= "<tr><td></td><td><br /><br /><b><u>Email Settings</u></b></td></tr>\n".
             "<tr><td></td><td><br /></td></tr>\n".
             "<tr><th>Use email?</th><td><input type=\"checkbox\" name=\"use_email\" $setting  /></td></tr>\n";
             
-if( ! isset($SMTP_HOST) )
+if(defined(SMTP_HOST) )
+  $SMTP_HOST = SMTP_HOST;
+else
   $SMTP_HOST = "localhost";
 
 $content .= "<tr><td></td><td><br /><br /><i>SMTP host is required if email is enabled</i></tr>\n".
-            "<tr><th><i>SMTP Host:</i></th><td><input type=\"text\" name=\"smtp_host\" value=\"$SMTP_HOST\" size=\"50\" /></td></tr>\n";
+            "<tr><th><i>SMTP Host:</i></th><td><input type=\"text\" name=\"smtp_host\" value=\"".$SMTP_HOST."\" size=\"50\" /></td></tr>\n";
 
 $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
              "<tr><td></td><td><input type=\"submit\" value=\"Submit\" /></td></tr>\n".

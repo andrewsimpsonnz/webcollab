@@ -57,7 +57,7 @@ elseif(isset($_REQUEST["x"]) && (strlen($_REQUEST["x"] ) == 32 ) ){
 }
 else{
   //return to login screen
-  header("Location: ".$BASE_URL."index.php");
+  header("Location: ".BASE_URL."index.php");
   die;
 }
 
@@ -76,7 +76,7 @@ if( ! ($q = db_query("SELECT ".PRE."logins.user_id AS user_id,
 
 if(db_numrows($q) != 1 ) {
   //return to login screen
-  header("Location: ".$BASE_URL."index.php");
+  header("Location: ".BASE_URL."index.php");
   die;
 }
 
@@ -89,15 +89,12 @@ if($row["user_id"] == NULL ){
   error("Security manager", "No valid user-id found");
 }
 
-if( ! isset($SESSION_TIMEOUT ) )
-  $SESSION_TIMEOUT = 1;
-
-//check the last login time (there is an inactivity time limit set by $SESSION_TIMEOUT)
-if( ($row["now"] - $row["sec_lastaccess"]) > $SESSION_TIMEOUT * 3600 ) {
+//check the last login time (there is an inactivity time limit set by SESSION_TIMEOUT)
+if( ($row["now"] - $row["sec_lastaccess"]) > SESSION_TIMEOUT * 3600 ) {
   db_query("UPDATE ".PRE."logins SET session_key='' WHERE user_id=".$row["user_id"] );
   setcookie("webcollab_session", "" );
   warning( $lang["security_manager"], sprintf($lang["session_timeout_sprt"],
-            round(($row["now"] - $row["sec_lastaccess"] )/60), $SESSION_TIMEOUT*60, $BASE_URL ) );
+            round(($row["now"] - $row["sec_lastaccess"] )/60), SESSION_TIMEOUT*60, BASE_URL ) );
 }
 
 //all data seems okay !!

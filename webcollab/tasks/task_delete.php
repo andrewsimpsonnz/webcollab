@@ -89,9 +89,9 @@ ignore_user_abort(TRUE);
 
 //find our return-location
 if($row["parent"] == 0 )
-  $returnvalue = $BASE_URL."main.php?x=$x";
+  $returnvalue = BASE_URL."main.php?x=$x";
 else
-  $returnvalue = $BASE_URL."tasks.php?x=$x&action=show&taskid=".$row["parent"];
+  $returnvalue = BASE_URL."tasks.php?x=$x&action=show&taskid=".$row["parent"];
 
 //begin transaction
 db_begin();
@@ -121,8 +121,8 @@ for($i=0 ; $i < $arrayindex ; $i++ ) {
   $fq = db_query("SELECT oid, filename FROM ".PRE."files WHERE taskid=".$ids[$i] );
   for($j=0 ; $frow = @db_fetch_array($fq, $j ) ; $j++) {
 
-    if(file_exists($FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
-      unlink( $FILE_BASE."/".$row["oid"]."__".$row["filename"] );
+    if(file_exists(FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
+      unlink( FILE_BASE."/".$row["oid"]."__".$row["filename"] );
     }
   }
 

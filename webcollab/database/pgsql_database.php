@@ -54,16 +54,15 @@ $interval = "";
 function db_query($query, $dieonerror=1 ) {
 
   global $database_connection;
-  global $DATABASE_HOST, $DATABASE_USER, $DATABASE_NAME, $DATABASE_PASSWORD;
 
   if( ! $database_connection ) {
     //set initial value
     $host = "";
     //now adjust if necessary
-    if($DATABASE_HOST != "localhost" )
-      $host = "host=".$DATABASE_HOST;
+    if(DATABASE_HOST != "localhost" )
+      $host = "host=".DATABASE_HOST;
 
-    if( ! ($database_connection = @pg_connect("$host user=$DATABASE_USER dbname=$DATABASE_NAME password=$DATABASE_PASSWORD" ) ) )
+    if( ! ($database_connection = @pg_connect("$host user=DATABASE_USER dbname=DATABASE_NAME password=DATABASE_PASSWORD" ) ) )
       error("No database connection",  "Sorry but there seems to be a problem in connecting to the database" );
 
     //make sure dates will be handled properly by internal date routines

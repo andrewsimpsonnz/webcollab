@@ -43,15 +43,14 @@ $interval = "INTERVAL ";
 function db_query( $query, $dieonerror=1 ) {
 
   global $database_connection, $db_name, $db_error_message ;
-  global $DATABASE_HOST, $DATABASE_USER, $DATABASE_PASSWORD, $DATABASE_NAME;
 
   if( ! $database_connection ) {
 
     //global variables don't seem to work within mysql functions
-    $db_host = $DATABASE_HOST;
-    $db_user = $DATABASE_USER;
-    $db_pass = $DATABASE_PASSWORD;
-    $db_name = $DATABASE_NAME;
+    $db_host = DATABASE_HOST;
+    $db_user = DATABASE_USER;
+    $db_pass = DATABASE_PASSWORD;
+    $db_name = DATABASE_NAME;
 
     //make connection
     if( ! ($database_connection = @mysql_pconnect($db_host, $db_user, $db_pass ) ) )

@@ -295,11 +295,11 @@ ignore_user_abort(TRUE);
   }
 
 if ( $admin == 1 ) {
-        header("Location: ".$BASE_URL."users.php?x=$x&action=manage" );
+        header("Location: ".BASE_URL."users.php?x=$x&action=manage" );
         die;
       }
       else {
-        header( "location: ".$BASE_URL."users.php?x=$x&action=show&userid=$uid" );
+        header( "location: ".BASE_URL."users.php?x=$x&action=show&userid=$uid" );
         die;
       }
       

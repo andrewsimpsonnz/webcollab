@@ -151,6 +151,6 @@ ignore_user_abort(TRUE);
       break;
 }
 
-header("Location: ".$BASE_URL."tasks.php?x=$x&action=show&taskid=$taskid" );
+header("Location: ".BASE_URL."tasks.php?x=$x&action=show&taskid=$taskid" );
 
 ?>
