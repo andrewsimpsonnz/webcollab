@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
     
   WebCollab
   ---------------------------------------
@@ -80,7 +80,7 @@ else
 
 switch($project_order) {  
   case "deadline":
-    $project_list = "ORDER BY due DESC, name";
+    $project_list = "ORDER BY due ASC, name";
     break;
     
   case "priority":
@@ -100,7 +100,7 @@ else
   
 switch($task_order) {  
   case "deadline":
-    $task_list = "ORDER BY due DESC, name";
+    $task_list = "ORDER BY due ASC, name";
     break;
     
   case "priority":
