@@ -51,6 +51,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
   global $post_array, $parent_array;
 
   $parent_array = "";
+  $j = 0;
 
   $q = db_query("SELECT ".PRE."forum.text AS text,
                         ".PRE."forum.id AS id,
@@ -102,7 +103,8 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 
     //if this is a subpost, store the parent id 
     if($row["parent"] != 0 ) {
-      $parent_array[] = $row["parent"];
+      $parent_array[$j] = $row["parent"];
+      $j++;
     }
   }
   

@@ -39,9 +39,11 @@ include_once(BASE."includes/time.php" );
 
 function listTasks($projectid ) {
   global $x, $epoch, $now ,$admin, $gid, $lang, $task_state, $tz_offset;
-  global $task_array, $parent_array, $shown_array;
+  global $task_array, $parent_array, $shown_array, $j;
    
   $parent_array = "";
+  $j = 0;
+  $k = 0;
     
   $q = db_query("SELECT id,
                         name,
@@ -96,7 +98,8 @@ function listTasks($projectid ) {
         
     //if this is a subtask, store the parent id 
     if($row[2] != $projectid ) {
-      $parent_array[] = $row[2];
+      $parent_array[$k] = $row[2];
+      $k++;
     }
   }
   
@@ -113,7 +116,8 @@ function listTasks($projectid ) {
     }
     //show line
     $content .= $task_array[$i]["task"];
-    $shown_array[]  = $task_array[$i]["id"]; 
+    $shown_array[$j]  = $task_array[$i]["id"];
+    $j++; 
     
     //if this task has children (subtasks), iterate recursively to find them 
     if(in_array($task_array[$i]["id"], (array)$parent_array ) ){
@@ -143,7 +147,7 @@ function listTasks($projectid ) {
 //
 function find_children($parent ) {
 
-  global $task_array, $parent_array, $shown_array;
+  global $task_array, $parent_array, $shown_array, $j;
 
   $content = "<ul>\n";
   $max = sizeof($task_array);
@@ -155,7 +159,8 @@ function find_children($parent ) {
       continue;
     }
     $content .= $task_array[$i]["task"];
-    $shown_array[] = $task_array[$i]["id"];
+    $shown_array[$j] = $task_array[$i]["id"];
+    $j++;
             
     //if this task has children (subtasks), iterate recursively to find them
     if(in_array($task_array[$i]["id"], (array)$parent_array ) ){
@@ -230,7 +235,7 @@ else
 $content .= "</span></td></tr>\n</table>\n";
 
 //setup main table
-$content .= "<table cellpadding=\"20\">\n";
+$content .= "<table>\n";
 
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
