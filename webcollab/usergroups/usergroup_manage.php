@@ -55,7 +55,7 @@ $content =
 //show all usergroups
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $content .= "<tr><td>".$row["name"]."</td><td>".$row["description"]." </td>".
-              "<td><font class=\"textlink\"><a href=\"usergroups/usergroup_submit.php?x=$x&amp;action=del&amp;usergroupid=".$row["id"]."\" onClick=\"return confirm( '".$lang["confirm_del"]."')\">[".$lang["del"]."]</a></font>&nbsp;".
+              "<td><font class=\"textlink\"><a href=\"usergroups/usergroup_submit.php?x=$x&amp;action=del&amp;usergroupid=".$row["id"]."\" onClick=\"return confirm( '".$lang["confirm_del_javascript"]."')\">[".$lang["del"]."]</a></font>&nbsp;".
                 "<font class=\"textlink\"><a href=\"usergroups.php?x=".$x."&action=edit&usergroupid=".$row["id"]."\">[".$lang["edit"]."]</a></font></td></tr>";
 
   //get users from that group
