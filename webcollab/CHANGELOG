@@ -1,4 +1,13 @@
 WebCollab CVS
+*** 12 February 2005
+
+- add Brazilian Portuguese translation (Credit: Eduardo Alvim)
+
+- bugfix: remove input validation from paswords to allow all characters to be used (Credit: Tom Dickson)
+
+- bugfix: refactor task indenting engine due to limitations/problems with sizeof() functions   
+
+WebCollab CVS
 *** 4 February 2005
 
 - update German language (Credit: Michael Bunk)
