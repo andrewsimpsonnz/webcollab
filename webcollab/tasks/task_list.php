@@ -40,12 +40,17 @@ include_once( BASE."includes/security.php" );
 //
 function list_tasks( $parent ) {
 
-  global $x, $uid, $BASE_URL, $parent_array, $epoch, $taskgroup_flag, $lang, $task_state, $NEW_TIME;
+  global $x, $uid, $BASE_URL, $parent_array, $epoch, $taskgroup_flag, $lang, $task_state, $NEW_TIME, $DATABASE_TYPE;
 
   //init values
   $stored_groupname = "";
   $this_content = "";
+  $no_group = "";
 
+//force mysql to put 'uncategorised' items at the bottom
+if( $DATABASE_TYPE == "mysql")
+  $no_group = "IF(taskgroups.name IS NULL, 1, 0), ";   
+  
   //query to get the children for this taskid
   $query="SELECT tasks.id AS id,
                  tasks.name AS taskname,
@@ -64,7 +69,7 @@ function list_tasks( $parent ) {
 	  LEFT JOIN users ON ( users.id=tasks.owner )
 	  LEFT JOIN taskgroups ON (taskgroups.id=tasks.taskgroupid)
 	  WHERE tasks.parent=".$parent."
-	  ORDER by groupname, taskname";
+	  ORDER by ".$no_group."groupname, taskname";
 
   //query
   $q = db_query( $query );
@@ -85,7 +90,7 @@ function list_tasks( $parent ) {
 
     //if there are other tasks with taskgroup set, then set "Uncategorised"
     $groupname = $row["groupname"];
-    if( ($taskgroup_flag == 1 ) && ($row["groupname"] == "" ) )
+    if( ($taskgroup_flag == 1 ) && ( ! isset($row["groupname"]) ) )
       $groupname = $lang["uncategorised"];
 
     //if the groupname changes from last time, show the change, otherwise do nothing (also implies that if there are no groups within the
