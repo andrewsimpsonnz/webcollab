@@ -84,7 +84,7 @@ function listTasks($projectid ) {
     //show line
     $content .= $task_array[$i]['task'];
     $shown_array[$shown_count] = $task_array[$i]['id'];
-    $shown_count++; 
+    ++$shown_count; 
     
     //if this task has children (subtasks), iterate recursively to find them 
     if(in_array($task_array[$i]['id'], (array)$parent_array, TRUE ) ) {
@@ -95,7 +95,7 @@ function listTasks($projectid ) {
  
   //look for any orphaned tasks, and show them too
   if($task_count != $shown_count ) {
-    for($i=0 ; $i < $task_count ; $i++ ) {
+    for($i=0 ; $i < $task_count ; ++$i ) {
       if(! in_array($task_array[$i]['id'], (array)$shown_array, TRUE ) )
         $content .= $task_array[$i]['task']."</li>\n";
     }
@@ -271,7 +271,7 @@ if(! isset($action) || $action != 'project_print')
   $content .= "<tr><td class=\"projectlist\" style=\"padding-bottom : 0px\">\n".project_jump(0)."</td></tr>\n";
   
 //show all projects
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   //check the user has rights to view this project
   if( (! $ADMIN ) && ($row['globalaccess'] != "t" ) && ( $row['usergroupid'] != 0 ) ) {
@@ -353,11 +353,11 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       }
       else {
         switch( -ceil($state) ) {
-          case '0':
+          case 0:
             $content .=  "<span class=\"green\">(".$lang['due_today'].")</span><br />\n";
             break;
 
-          case '1':
+          case 1:
             $content .= "<span class=\"red\">(".$lang['overdue_1'].")</span><br />\n";
             break;
 
