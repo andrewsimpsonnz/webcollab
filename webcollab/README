@@ -1,0 +1,153 @@
+  WebCollab
+  =========
+
+Based on Core-lan-org (Core Advanced Project Manager) Version 1.11.
+
+We started using CoreAPM in November 2001 for project managing our workload.  Along the way, we
+made changes and improvements to the source code - most of which were fed back into the main CoreAPM
+development tree.
+
+After version 1.11 was released, several changes were made to the development model that didn't suit
+our needs.  Because of this we maintained our own development version, based on version 1.11, but
+keeping pace with developments in the main source tree.
+
+Over time our version has slowly moved away from the main tree, and is now uniquely different from
+the current CoreAPM software.
+
+Notable additions:
+
+- Added capability for MySQL database
+
+- Added database abstraction layers for ease of porting to other databases
+
+- Database optimisations for more speed
+
+- Database transactions (Postgresql only) used for more stability
+
+- Database connections can be on remote machines (MySQL, limited on PostgreSQL)
+
+- Added language files for ease of translation
+
+- Added calendar function, task navigation panel and improved ToDo list
+
+- Added admin config section
+
+- The 'new' and 'updated' graphics now automatically expire after period given in config file
+
+- Major usablity improvements
+
+- File upload can now write to a directory away from the webserver root (enhanced security)
+
+- HTML formatting rewritten to be more compatible with all browsers
+
+- Code rewritten for more speed
+
+- Security improvements
+
+- Extensive debugging
+
+
+Principal differences to CoreAPM 2.02:
+
+- Does not handle time accounting
+
+- Database structures are not directly compatible
+
+- Webcollab runs MySQL database as well as PostgreSQL
+
+
+Andrew Simpson <andrew.simpson@paradise.net.nz>
+
+
+
+
+
+
+** Original Core-lan-org Version 1.11 **
+========================================
+
+Hi,
+
+You've just unpacked our own homegrown, open sourced, GPL licenced taskmanager.
+
+
+Story:
+------
+I am chairman of a lanparty ( CORE lan; www.core-lan.nl ). As it's a +-400 person event there where
+a load
+of factors to keep track of. After trying it on paper, I've build this. Love it, leave it or mail me
+with improvements or ideas.
+
+
+Required:
+---------
+- Webserver  www.apache.org
+- PHP        www.php.net > 4.0.2
+- Postgresql www.postgres.net (no mysql is undiscussable, get a REAL db :)
+
+
+Handy/integratable with:
+------------------------
+- Mailinglists (advised !)
+- Email (nearly a required!)
+- Current systems
+
+
+Features:
+---------
+- Project level view.
+- Split a project up into tasks and assign them to you co-workers.
+- User management.
+- Per task/project forum.
+- Detailed view of user's progress.
+- Detailed view of task progress.
+- Advanced task-progress functions.
+- Advanced user-task-versioning, showing changes and new forum posts on a per-user basis.
+- Secure on many levels.
+- Easy installation.
+- Easy configuration.
+- Loads of user-emailing.
+- Can inform users via email of changes of just about anything.
+- Admins get all errors via email, even before the user is whining for changes ;-).
+- LOADS of handy and nifty things that are not worth to put here.
+- You can keep contacts and assign them to tasks.
+- There is database-backup facility in /db.
+- Modular and easily extendible.
+- private and public forums.
+- Security with users and groups just like in unix.
+- Help features with clear and easy explinations help your people to lessen the load on admins
+- You can attach files to tasks, projects and usergroups
+
+
+Suggested use for efficient work and hints:
+-------------------------------------------
+* If a user owns a task/project he/she can edit the task and set the status of the task, this
+  way you can keep track of your projects.
+* Task-owners are also forum-owners.
+* Admins are like in unix, gods.
+* Delete 'database.sql' after installation.
+* If you have loads of tasks to a project, create "task groups" to order them.
+* Users and tasks can be assigned to groups this gives people to communicate with eachother without
+other people knowing
+* Secure tasks that no-one should be looking at
+
+Credits:
+--------
+Stefan ScheeleComments and design-issues.
+Andy de BruinComments, error reporting and beta-testing
+Bram Pouwelse
+Dyon Beaart
+Gilles Haverbeke
+Joost Jan Basting
+Kelly Koomans
+Michael Koopman
+ibuildings.nlI worked there for a while and I learned a load on this subject by working with achivo 
+(www.achivo.com).
+Dave Cridland from redwire.com
+Andrew Simpson for helping me out on the code and language
+
+
+Coder:
+------
+Dennis Fleurbaaij (dennis@core-lan.nl)
+

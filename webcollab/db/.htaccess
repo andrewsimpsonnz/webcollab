@@ -1,0 +1,7 @@
+AuthUserFile /dev/null
+AuthGroupFile /dev/null
+AuthName 'No access'
+AuthType Basic
+<Limit GET>
+require valid-user
+</Limit>

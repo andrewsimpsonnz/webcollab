@@ -1,0 +1,46 @@
+FONT {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif; 
+  font-size : 10pt;
+}
+
+LI {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif; 
+  font-size : 10pt;
+}
+
+TD {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif; 
+  font-size : 10pt;
+}
+
+BODY {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif; 
+  font-size : 10pt;
+  margin : 0;
+  background : #6085AC;
+  color : #000000;
+}
+
+
+a:link {
+  color : #003399;
+  background : transparent;
+  text-decoration : none;
+}
+
+a:visited {
+  color : #660066;
+  background : transparent;
+  text-decoration : none;
+}
+
+a:hover {
+  color : #003399;
+  background : transparent;
+  text-decoration : underline;
+}
+
+
+
+
+

@@ -1,0 +1,148 @@
+
+  REQUIREMENTS
+  ============
+
+ - Database - either:
+       - Postgresql > 7.10
+       - MySQL > 3.23
+
+ - PHP > 4.10
+
+ - SMTP mail server
+
+ - Apache web server
+
+
+  INSTALLATION for PostgreSQL
+  ===========================
+
+
+ 1a. *Manual method*
+     ===============
+
+ - Choose a convenient database name
+
+ - Make sure you know your database username and password
+
+ - Create new database in PostgreSQL with your chosen database name
+
+        # createdb -W -U 'username' 'database name'
+
+           (Enter password when prompted)
+
+        =# CREATE DATABASE 'database name';
+
+        =# \q
+
+
+  ( NOTE: 'database user', 'database name' and 'password' are your particular database values without the ' and ')
+
+
+
+ - Change to ./db directory
+
+ - Read schema
+
+        # psql -U 'username' -e 'database name' < schema-pgsql.sql
+
+
+ - Go to Section 2. below
+
+
+ 1b. *Automated method*
+     ==================
+
+ - Change to ./db directory
+
+ - Run "db_create_pgsql.sh"
+
+        # ./db_create_pgsql.sh 'database user' 'database name'
+
+
+ 2. *Configuration*
+    ===============
+
+ - Fill in the config.php file
+
+ - Login as admin / admin123
+
+ - Click on 'Admin config' (near bottom of lefthand menu block), and enter Admin Email (your email address),
+   Reply-To (your address) and From (server email account, or your address).
+   
+ - Optional: With a text editor comment out the 'Powered by MySQL' logo line, and uncomment the 'Powered by 
+   Postgresql' logo line!!  
+
+
+  Enjoy!
+
+
+  INSTALLATION for MySQL
+  ======================
+
+
+ 1a. *Manual method*
+     ===============
+
+ - Choose a convenient database name
+
+ - Make sure you know your database username and password
+
+ - Create new database in MySQL
+
+        # mysql -u 'database username' -p
+
+           (Enter password when prompted)
+
+        mysql> CREATE DATABASE 'database name';
+
+        mysql> \q
+
+
+  ( NOTE: 'database user', 'database name' and 'password' are your particular database values without the ' and ')
+
+
+
+ - Change to ./db directory
+
+ - Read schema
+
+        # mysql 'database name' -u 'database user' -p < ./schema_mysql.sql
+
+
+ - Go to Section 2. below
+
+
+ 1b. *Automated method*
+     ==================
+
+ - Choose a convenient database name
+
+ - Make sure you know your database username and password
+
+ - Change to ./db directory
+
+ - Run './db_create_mysql.sh'
+
+        # ./db_create_mysql.sh 'database username' 'database name' 'password'
+
+
+ 2. *Configuration*
+    ===============
+
+ - Fill in the config.php file
+
+ - Login as admin / admin123
+
+ - Click on 'Admin config' (near bottom of lefthand menu block), and enter Admin Email (your email address),
+   Reply-To (your address) and From (server email account, or your address).
+
+
+  Enjoy!
+
+
+  UPLOADING FILES
+  ===============
+
+ - Make sure the ./files/filebase directory is writeable by the webserver.
+
+ - Ideally, for good security move the file upload directory to outside the webserver root directory.
