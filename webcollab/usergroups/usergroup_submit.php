@@ -80,6 +80,11 @@ ignore_user_abort(TRUE);
 
         $name        = safe_data($_POST["name"]);
         $description = safe_data($_POST["description"]);
+        
+        if( isset($_POST["private_group"]) && ( $_POST["private_group"] == "on" ) )
+          $private_group = 1;
+        else
+          $private_group = 0;
 
         //check for duplicates
         if(db_result(db_query("SELECT COUNT(*) FROM usergroups WHERE name='$name'"), 0, 0 ) > 0 )
@@ -87,7 +92,7 @@ ignore_user_abort(TRUE);
 
           //begin transaction
           db_begin();
-          $q = db_query("INSERT INTO usergroups(name, description ) VALUES ('$name', '$description')" );
+          $q = db_query("INSERT INTO usergroups(name, description, private ) VALUES ('$name', '$description', '$private_group')" );
 
           if(isset($_POST["member"] ) ) {
 
@@ -121,12 +126,18 @@ ignore_user_abort(TRUE);
         $name        = safe_data($_POST["name"] );
         $description = safe_data($_POST["description"] );
         $usergroupid = intval($_POST["usergroupid"] );
+        
+        if( isset($_POST["private_group"]) && ( $_POST["private_group"] == "on" ) )
+          $private_group = 1;
+        else
+          $private_group = 0;
+
 
         //begin transaction
         db_begin();
 
         //do the update
-        db_query("UPDATE usergroups SET name='$name', description='$description' WHERE id=$usergroupid" );
+        db_query("UPDATE usergroups SET name='$name', description='$description', private='$private_group' WHERE id=$usergroupid" );
 
         //clean out existing usergroups_users then update with the new
         db_query("DELETE FROM usergroups_users WHERE usergroupid=$usergroupid" );

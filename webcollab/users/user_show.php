@@ -46,6 +46,19 @@ $q = db_query("SELECT * FROM users WHERE id=$userid" );
 //get info
 if( ! ($row = db_fetch_array($q, 0 ) ) )
   error("Database error", "Error in fetching result" );
+  
+//test if user is private
+if($row["private"] && ( ! $admin ) ) {
+  //get usergroups of user
+  $q_group = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$row["id"] );
+  for( $i=0 ; $row_group = @db_fetch_num($q_group, $i ) ; $i++) {
+    $user_gid[$i] = $row_group[0];
+  }
+  //check if users are in the same usergroup
+  if( ! array_intersect($user_gid, $gid ) ) {
+    warning("Private user", "This user has a private profile that cannot be viewed by you - translate me!" );
+  }
+}
 
 if($row["deleted"] == 't' )
   $content .= "<b><div align=\"center\"><font color=\"red\">".$lang["user_deleted"]."</font></div></b><br />";
@@ -60,8 +73,14 @@ if($row["admin"] == "t" )
 else
   $content .= "<tr><td>".$lang["admin"].":</td><td>".$lang["no"]."</td></tr>\n";
 
+if($row["private"] == 1 )
+  $content .= "<tr><td>"."Private - translate me".":</td><td>".$lang["yes"]."</td></tr>\n";
+else
+  $content .= "<tr><td>"."Private - translate me".":</td><td>".$lang["no"]."</td></tr>\n";
+
 //create a list of all the groups the user is in
-$q = db_query("SELECT usergroups.name
+$q = db_query("SELECT usergroups.name AS name,
+                      usergroups.id AS id
                       FROM usergroups
                       LEFT JOIN usergroups_users ON (usergroups_users.usergroupid=usergroups.id)
                       WHERE usergroups_users.userid=".$row["id"] );
@@ -71,9 +90,16 @@ if(db_numrows($q) < 1 ) {
 }
 else{
   $content .= "<tr><td>".$lang["usergroups"].": </td><td>";
+  $alert = "";
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ){
-    $content .= $row["name"]." ";
+    //test for private usergroups
+    if( (! $admin ) && ( ! in_array($row["id"], (array)$gid ) ) ) {
+      $alert = "(This user is a member of private usergroups that cannot be viewed by you)";
+      continue;
+    }
+    $content .= $row["name"]."&nbsp;";
   }
+  $content .= $alert;
   $content .= "</td></tr>\n";
 }
 

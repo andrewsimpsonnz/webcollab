@@ -49,11 +49,17 @@ if(db_numrows($q) == 0 ) {
 
 $content =
              "<p><table border=\"0\">\n".
-               "<tr><th>".$lang["name"]."</th><th>".$lang["description"]."</th><th>".$lang["action"]."</th></tr>\n";
+               "<tr><th>".$lang["name"]."</th><th>".$lang["description"]."</th><th>"."Private? - translate me"."</th><th>".$lang["action"]."</th></tr>\n";
 
 //show all usergroups
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
-  $content .= "<tr><td>".$row["name"]."</td><td>".$row["description"]." </td>".
+  
+  if($row["private"] )
+    $private = $lang["yes"];
+  else
+    $private = $lang["no"]; 
+  
+  $content .= "<tr><td>".$row["name"]."</td><td>".$row["description"]."</td><td>".$private."</td>".
               "<td><font class=\"textlink\"><a href=\"usergroups.php?x=$x&amp;action=submit_del&amp;usergroupid=".$row["id"]."\" onClick=\"return confirm( '".$lang["confirm_del_javascript"]."')\">[".$lang["del"]."]</a></font>&nbsp;".
                 "<font class=\"textlink\"><a href=\"usergroups.php?x=".$x."&action=edit&usergroupid=".$row["id"]."\">[".$lang["edit"]."]</a></font></td></tr>";
 

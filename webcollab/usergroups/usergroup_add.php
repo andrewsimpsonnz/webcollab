@@ -41,7 +41,8 @@ $content =
               "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />".
               "<p><table border=\"0\">\n".
                 "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"input\" name=\"name\" size=\"30\" /></td></tr>\n".
-                "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" size=\"30\" /></td></tr>\n";
+                "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" size=\"30\" /></td></tr>\n".
+                "<tr><td><label for=\"private\">"."Private usergroup - translate me!".":</label></td><td><input type=\"checkbox\" name=\"private_group\" id=\"private\" /></td></tr>\n";
 
 //add users
 $q = db_query("SELECT fullname, id FROM users WHERE deleted='f' ORDER BY fullname" );

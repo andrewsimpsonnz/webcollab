@@ -45,6 +45,20 @@ $content = "<table border=\"0\" align=\"left\">\n";
 
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
+
+  //test if user is private
+  if($row["private"] && ( ! $admin ) ) {
+    //get usergroups of user
+    $q_group = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$row["id"] );
+    for( $i=0 ; $row_group = @db_fetch_num($q_group, $i ) ; $i++) {
+      $user_gid[$i] = $row_group[0];
+    }
+    //check if users are in the same usergroup
+    if( ! array_intersect($user_gid, $gid ) ) {
+      continue;
+    }
+  }
+
   $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></small></td>";
 
   if($admin == 1 ) {

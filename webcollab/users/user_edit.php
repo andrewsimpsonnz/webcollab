@@ -73,6 +73,11 @@ $content =  "<form method=\"POST\" action=\"users.php\">\n".
 
 //dangerous action!
 if( $admin == 1 ) {
+  
+  if( $row["private"] == 1 )
+    $content .= "<tr><td><label for=\"private\">"."Private user - translate me!".":</label></td><td><input type=\"checkbox\" name=\"private_user\" CHECKED id=\"private\" /></td></tr>\n";
+  else  
+    $content .= "<tr><td><label for=\"private\">"."Private user - translate me!".":</label></td><td><input type=\"checkbox\" name=\"private_user\" id=\"private\" /></td></tr>\n";
 
   if( $row["admin"] == 't' )
     $content .= "<tr><td><label for=\"admin\">".$lang["is_admin"].":</label></td><td><input type=\"checkbox\" name=\"admin_rights\" CHECKED id=\"admin\" /></td></tr>\n";

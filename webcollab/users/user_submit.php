@@ -98,6 +98,11 @@ ignore_user_abort(TRUE);
       $fullname = safe_data($_POST["fullname"]);
       $password = safe_data($_POST["password"]);
 
+      if( isset($_POST["private_user"]) && ( $_POST["private_user"] == "on" ) )
+        $private_user = 1;
+      else
+        $private_user = 0;
+      
       if( isset($_POST["admin_rights"]) && ( $_POST["admin_rights"] == "on" ) )
         $admin_rights = "t";
       else
@@ -110,8 +115,8 @@ ignore_user_abort(TRUE);
       //begin transaction
       db_begin();
       //insert into the users table
-      $q = db_query("INSERT INTO users(name, fullname, password, email, admin, deleted)
-                     VALUES('$name', '$fullname', '".md5($password)."','$email','$admin_rights', 'f')" );
+      $q = db_query("INSERT INTO users(name, fullname, password, email, private, admin, deleted)
+                     VALUES('$name', '$fullname', '".md5($password)."','$email','$private_user','$admin_rights', 'f')" );
 
       //if the user is assigned to any groups execute the following code to add him/her
       if( isset($_POST["usergroup"]) ) {
@@ -172,6 +177,11 @@ ignore_user_abort(TRUE);
       $fullname = safe_data($_POST["fullname"]);
       $password = safe_data($_POST["password"]);
 
+      if( isset($_POST["private_user"]) && ( $_POST["private_user"] == "on" ) )
+        $private_user = 1;
+      else
+        $private_user = 0;
+      
       if(isset($_POST["admin_rights"]) && ( $_POST["admin_rights"] == "on" ) )
         $admin_rights = "t";
       else
@@ -201,6 +211,7 @@ ignore_user_abort(TRUE);
                                 fullname='$fullname',
                                 email='$email',
                                 password='".md5($password)."',
+                                private='$private_user',
                                 admin='$admin_rights'
                                 WHERE id=$userid" );
         }
@@ -210,6 +221,7 @@ ignore_user_abort(TRUE);
                                 SET name='$name',
                                 fullname='$fullname',
                                 email='$email',
+                                private='$private_user',
                                 admin='$admin_rights'
                                 WHERE id=$userid" );
         }

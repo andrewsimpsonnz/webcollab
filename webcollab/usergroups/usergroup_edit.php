@@ -52,15 +52,16 @@ $content =
              "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\" />\n".
              "<p><table border=\"0\">\n".
                "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"input\" name=\"name\" value=\"".$row["name"]."\" size=\"30\" /></td></tr>\n".
-               "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" value=\"".$row["description"]."\" size=\"30\" /></td></tr>\n";
+               "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" value=\"".$row["description"]."\" size=\"30\" /></td></tr>\n".
+               "<tr><td><label for=\"private\">"."Private usergoup - translate me!".":</label></td><td><input type=\"checkbox\" name=\"private_group\" id=\"private\" /></td></tr>\n";
 
 //add users
 $user_q = db_query("SELECT fullname, id FROM users WHERE deleted='f' ORDER BY fullname" );
 $member_q = db_query("SELECT users.id AS id
-                                              FROM users
-                                              LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
-                                              WHERE usergroupid=".$row["id"]."
-                                              AND deleted='f'"  );
+                             FROM users
+                             LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
+                             WHERE usergroupid=".$row["id"]."
+                             AND deleted='f'"  );
 
 $content .=    "<tr><td>".$lang["members"]."</td><td><select name=\"member[]\" multiple=\"multiple\" size=\"4\">\n";
 

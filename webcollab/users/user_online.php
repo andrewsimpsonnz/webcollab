@@ -33,9 +33,11 @@ require_once(BASE."includes/security.php" );
 $content = "";
 
 $content .= "<table border=\"0\">\n";
+//users online in last hour
 $q = db_query("SELECT logins.lastaccess AS last,
             users.id AS id,
-            users.fullname AS fullname
+            users.fullname AS fullname,
+            users.private AS private
             FROM logins
             LEFT JOIN users ON (users.id=logins.user_id)
             WHERE logins.lastaccess > ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
@@ -43,13 +45,33 @@ $q = db_query("SELECT logins.lastaccess AS last,
             ORDER BY logins.lastaccess DESC" );
 
 $content .= "<tr><td nowrap colspan=\"2\"><b>".$lang["online"]."</b></td></tr>\n";
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++)
-    $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></td><td>".nicetime($row["last"])."</td></tr>\n";
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
+  
+  //test if user is private
+  if($row["private"] && ( ! $admin ) ) {
+    
+    //get usergroups of user
+    $q_group = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$row["id"] );
+    for( $i=0 ; $row_group = @db_fetch_num($q_group, $i ) ; $i++) {
+      $user_gid[$i] = $row_group[0];
+    }
+    
+    //check if users are in the same usergroup
+    if( ! array_intersect($user_gid, $gid ) ) {
+      continue;
+    }
+  }
+  
+  //show output
+  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></td><td>".nicetime($row["last"])."</td></tr>\n";
+}
 
 $content .= "<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+//users previously online 
 $q = db_query("SELECT logins.lastaccess AS last,
             users.id AS id,
-            users.fullname AS fullname
+            users.fullname AS fullname,
+            users.private AS private
             FROM logins
             LEFT JOIN users ON (users.id=logins.user_id)
             WHERE logins.lastaccess < ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
@@ -58,7 +80,25 @@ $q = db_query("SELECT logins.lastaccess AS last,
 
 $content .= "<tr><td colspan=\"2\"><b>".$lang["not_online"]."</b></td></tr>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
-    $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></td><td>".nicetime($row["last"])."</td></tr>\n";
+  
+  //test if user is private
+  if($row["private"] && ( ! $admin ) ) {
+    
+    //get usergroups of user
+    $q_group = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$row["id"] );
+    for( $i=0 ; $row_group = @db_fetch_num($q_group, $i ) ; $i++) {
+      $user_gid[$i] = $row_group[0];
+    }
+    
+    //check if users are in the same usergroup
+    if( ! array_intersect($user_gid, $gid ) ) {
+      continue;
+    }
+  }
+  
+  //show output
+  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></td><td>".nicetime($row["last"])."</td></tr>\n";
+
 }
 $content .= "</table>\n";
 

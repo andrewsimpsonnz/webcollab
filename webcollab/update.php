@@ -104,7 +104,6 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   //user is okay!
 
   //remove the old login information
-  @db_query("DELETE FROM logins WHERE user_id=".$user_id );
   @db_query("DELETE FROM login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
    
   
@@ -146,7 +145,18 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
     }
   $alert .= "<p>Updated from version pre-1.60 database</p>\n";
   } 
-  create_top_setup("Info" );
+    
+  //update for version 1.51 -> 1.60
+  if(! (db_query("SELECT private FROM users", 0 ) ) ) {
+     db_query("ALTER TABLE users ADD COLUMN private INT" );
+     db_query("ALTER TABLE users ALTER COLUMN private SET DEFAULT 0" );
+  }
+  
+  //update for version 1.51 -> 1.60
+  if(! (db_query("SELECT private FROM usergroups", 0 ) ) ) {
+     db_query("ALTER TABLE usergroups ADD COLUMN private INT" );
+     db_query("ALTER TABLE usergroups ALTER COLUMN private SET DEFAULT 0" );
+  }
   $content = "<p>Update was successfully completed.</p>\n";
 
   if( ! $alert )
@@ -154,25 +164,16 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   
   $content .= $alert;  
     
-  //set box options
-  new_box_setup("Update", $content, "boxdata", "singlebox" );
+  //display box calls
+  create_top_setup("Info" );
+  new_box_setup("Update completed", $content, "boxdata", "singlebox" );
+  create_bottom_setup();
   die;
 }
 
 //
 // MAIN PROGRAM
 //
-
-
-//check for initial install
-if($DATABASE_NAME == "" ) {
-  //this is an initial install
-  $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-  header("Location: ".$path."setup_handler.php?action=setup1" );
-  secure_error("Auto page redirect could not detect server configuration.&nbsp;".
-                "You will need to do a manual configuration" );
-  die;
-}
 
 //login box screen code 
 create_top_setup("Login" );
