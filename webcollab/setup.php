@@ -61,24 +61,31 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   $username = safe_data($_POST["username"]);
   //encrypt password
   $md5pass = md5($_POST["password"] );
+  $flag_attempt = FALSE;
 
   //no ip (possible?)
   if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
     secure_error("Unable to determine ip address");
   }
+   
+  //limit login attempts if post-1.60 database is being used 
+  if(@db_query("SELECT * FROM ".PRE."login_attempt LIMIT 1", 0 ) ) {
+        
   
-  //count the number of recent login attempts
-  $count_attempts = db_result(@db_query("SELECT COUNT(*) FROM ".PRE."login_attempt 
-                                                WHERE name='".$username."' 
-                                                AND last_attempt > (now()-INTERVAL ".$delim."10 MINUTE".$delim.") LIMIT 6" ), 0, 0 );
+    //count the number of recent login attempts
+    $count_attempts = db_result(@db_query("SELECT COUNT(*) FROM ".PRE."login_attempt 
+                                                  WHERE name='".$username."' 
+                                                  AND last_attempt > (now()-INTERVAL ".$delim."10 MINUTE".$delim.") LIMIT 6" ), 0, 0 );
+      
+    //protect against password guessing attacks 
+    if($count_attempts > 3 ) {
+      secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+    }                                                                              
+    $flag_attempt = TRUE; 
     
-  //protect against password guessing attacks 
-  if($count_attempts > 3 ) {
-    secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
-  }                                                                              
-    
-  //record this login attempt
-  db_query("INSERT INTO ".PRE."login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
+    //record this login attempt
+    db_query("INSERT INTO ".PRE."login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
+  }
                                                                                      
   //do query and check database connection
   if( ! $q = db_query("SELECT id FROM ".PRE."users
@@ -110,7 +117,9 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
 
   //remove the old login information
   @db_query("DELETE FROM ".PRE."logins WHERE user_id=".$user_id );
-  @db_query("DELETE FROM ".PRE."login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
+  //remove the old login information for post 1.60 database
+  if($flag_attempt )
+    @db_query("DELETE FROM ".PRE."login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
    
   //log the user in
   db_query("INSERT INTO ".PRE."logins( user_id, session_key, ip, lastaccess )
