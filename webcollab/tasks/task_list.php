@@ -49,30 +49,30 @@ function list_tasks($parent ) {
   $no_group = "";
   $ul_flag = 0;
 
-//force mysql to put 'uncategorised' items at the bottom
-if(substr(DATABASE_TYPE, 0, 5) == "mysql" )
-  $no_group = "IF(".PRE."taskgroups.name IS NULL, 1, 0), ";
-
-//query to get the children for this taskid
-$q = db_query("SELECT ".PRE."tasks.id AS id,
-                ".PRE."tasks.name AS taskname,
-                ".PRE."tasks.status AS status,
-                $epoch ".PRE."tasks.finished_time) AS finished_time,
-                $epoch ".PRE."tasks.deadline) AS due,
-                $epoch ".PRE."tasks.edited) AS edited,
-                $epoch ".PRE."tasks.lastforumpost) AS lastpost,
-                $epoch ".PRE."tasks.lastfileupload) AS lastfileupload,
-                ".PRE."tasks.globalaccess AS globalaccess,
-                ".PRE."tasks.usergroupid AS usergroupid,
-                ".PRE."users.fullname AS username,
-                ".PRE."users.id AS userid,
-                ".PRE."taskgroups.name AS groupname,
-                ".PRE."taskgroups.description AS groupdescription
-                FROM ".PRE."tasks
-                LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."tasks.owner)
-                LEFT JOIN ".PRE."taskgroups ON (".PRE."taskgroups.id=".PRE."tasks.taskgroupid)
-                WHERE ".PRE."tasks.parent=$parent
-                ORDER by $no_group groupname, taskname" );
+  //force mysql to put 'uncategorised' items at the bottom
+  if(substr(DATABASE_TYPE, 0, 5) == "mysql" )
+    $no_group = "IF(".PRE."taskgroups.name IS NULL, 1, 0), ";
+  
+  //query to get the children for this taskid
+  $q = db_query("SELECT ".PRE."tasks.id AS id,
+                  ".PRE."tasks.name AS taskname,
+                  ".PRE."tasks.status AS status,
+                  $epoch ".PRE."tasks.finished_time) AS finished_time,
+                  $epoch ".PRE."tasks.deadline) AS due,
+                  $epoch ".PRE."tasks.edited) AS edited,
+                  $epoch ".PRE."tasks.lastforumpost) AS lastpost,
+                  $epoch ".PRE."tasks.lastfileupload) AS lastfileupload,
+                  ".PRE."tasks.globalaccess AS globalaccess,
+                  ".PRE."tasks.usergroupid AS usergroupid,
+                  ".PRE."users.fullname AS username,
+                  ".PRE."users.id AS userid,
+                  ".PRE."taskgroups.name AS groupname,
+                  ".PRE."taskgroups.description AS groupdescription
+                  FROM ".PRE."tasks
+                  LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."tasks.owner)
+                  LEFT JOIN ".PRE."taskgroups ON (".PRE."taskgroups.id=".PRE."tasks.taskgroupid)
+                  WHERE ".PRE."tasks.parent=$parent
+                  ORDER by $no_group groupname, taskname" );
 
   //check for any tasks.  If no tasks end recursive function
   if(db_numrows($q) < 1 )
@@ -92,7 +92,12 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
     if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
       if( ! in_array( $row['usergroupid'], (array)$GID ) )
-         continue;
+        //recursive search if the subtask is listed in parent_array (it has children then)
+        if(in_array( $row['id'], $parent_array, FALSE) ) {
+          $this_content .= list_tasks( $row['id']);
+          $this_content .= "\n</ul></li>\n";
+        }
+        continue;
     }
 
 
@@ -285,7 +290,7 @@ $tz_offset = (TZ * 3600) - date("Z");
 if( (! ADMIN ) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
 
   //check if the user has a matching group
-  if( ! in_array($project_row[0], (array)$GID ) )
+  if( ! in_array($row[0], (array)$GID ) )
     return;
 }
 
