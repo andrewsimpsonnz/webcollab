@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2003 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2003 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -52,7 +52,7 @@ $content .=
     "<tr align=\"left\"><td><b>Database host: </b></td><td><input type=\"text\" name=\"database_host\" value=\"localhost\" size=\"15\" /></td></tr>\n".
     "<tr align=\"left\"><td><b>Database type:</b></td> <td>\n".
     "<select name=\"database_type\">\n".
-      "<option value=\"mysql\" selected >mysql</option>\n".
+      "<option value=\"mysql\" selected=\"selected\" >mysql</option>\n".
       "<option value=\"postgresql\">postgresql</option>\n".
       "<option value=\"mysql_innodb\">mysql with innodb</option>\n".
     "</select></td></tr>\n".

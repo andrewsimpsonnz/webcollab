@@ -135,8 +135,7 @@ switch ($url["scheme"] ){
 }
 
 //basic settings
-$content .= "</td><td><br /><b><u>Basic Settings</u></b></td></tr>\n".
-            "<tr><td></td><td>&nbsp;</td></tr>\n".
+$content .= "</td><td><br /><b><u>Basic Settings</u></b></tr>\n".
             "<tr><th>Site address:</th><td>".$data["base_url"]."</td><td>$status</td></tr>\n".
             "<tr><th>Site name:</th><td>".$data["manager_name"]."</td></tr>\n".
             "<tr><th>Abbreviated site name:</th><td>".$data["abbr_manager_name"]."</td></tr>\n";
@@ -196,8 +195,7 @@ switch($data["db_type"]) {
 }
 
 //database settings
-$content .= "<tr><td></td><td><br /><b><u>Database Settings</u></b></td></tr>".
-            "<tr><td>&nbsp;</td></tr>".
+$content .= "<tr><td></td><td><br /><br /><b><u>Database Settings</u></b></td></tr>".
             "<tr><th>Database name:</th><td>".$data["db_name"]."</td><td>$status</td></tr>\n".
             "<tr><th>Database user:</th><td>".$data["db_user"]."</td></tr>\n".
             "<tr><th>Database password:</th><td>".$data["db_password"]."</td></tr>\n".
@@ -214,7 +212,6 @@ if( ! is_writable($data["file_base"]) ) {
 
 //file settings
 $content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td></tr>\n".
-            "<tr><td></td><td>&nbsp;</td></tr>\n".
             "<tr><th>File location:</th><td>".$data["file_base"]."</td><td>$status</td></tr>\n".
             "<tr><th>File size:</th><td>".$data["file_maxsize"]."</td></tr>\n";
 
@@ -230,10 +227,8 @@ if( (! is_readable(BASE."lang/".$data["locale"]."_message.php" ) )
 
 //language settings
 $content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></tr>\n".
-            "<tr><td></td><td>&nbsp;</td></tr>\n".
             "<tr><th>Language:</th><td>".$data["locale"]."</td><td>$status</td></tr>\n".
-            "<tr><td></td><td><br /><br /><b><u>Email Settings</u></b></td></tr>\n".
-            "<tr><td></td><td>&nbsp;</td></tr>\n".
+            "<tr><td></td><td><br /><br /><b><u>Email Settings</u></b><br /></td></tr>\n".
             "<tr><th>Use email?</th><td>".$data["use_email"]."</td></tr>\n";
             "<tr><td></td><td><br /><br />If an error occurs on the site, who do we email?</td></tr>\n".
             "<tr><th>Error emails sent to:</th><td>".$data["email_error"]."</td></tr>\n";
