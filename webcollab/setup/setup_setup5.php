@@ -105,7 +105,7 @@ $content = "<?php\n".
 '//----------------------------------------------------------------------------------------------'."\n".
 '// Less important items below this line'."\n\n".
 '//-- Language --'."\n\n".
-'  // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan), "de" (German)'."\n".
+'  // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan), "de" (German), "it" (Italian)'."\n".
 '  $LOCALE = "'.$data["locale"].'";'."\n\n".
 '//-- Email --'."\n\n".
 '  //If an error occurs, who do you want the error to be mailed to ?'."\n".
@@ -114,11 +114,6 @@ $content = "<?php\n".
 '  $USE_EMAIL = "'.$data["use_email"].'";'."\n\n".
 '    //location of SMTP server (ip address or FQDN)'."\n".
 '    $SMTP_HOST = "'.$data["smtp_host"].'";'."\n\n".
-'    //use smtp auth? ("Y" or "N")'."\n".
-'    $SMTP_AUTH = "N";'."\n".
-'      //if using $SMTP_AUTH give username & password'."\n".
-'      $MAIL_USER = "";'."\n".
-'      $MAIL_PASSWORD = "";'."\n\n".
 '//-- Splash image --'."\n\n".
 '  //custom image to replace the webcollab banner on login page (relative base directory is /images)'."\n".
 '    //(place your image into /images directory)'."\n".
