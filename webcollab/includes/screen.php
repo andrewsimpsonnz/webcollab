@@ -69,7 +69,7 @@ include_once(BASE."lang/lang.php" );
 //
 function create_top($title="", $no_menu=0, $cursor="" ) {
 
-  global $username, $admin, $topbuild, $MANAGER_NAME, $lang, $web_charset;
+  global $uid_name, $admin, $topbuild, $MANAGER_NAME, $lang, $web_charset;
 
   //don't rebuild the top again if already built
   if($topbuild == 1 )
@@ -138,8 +138,8 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
   echo "<div class=\"masthead\">";
 
   //show username if applicable
-  if($username != "" )
-    echo sprintf( $lang["user_homepage_sprt"], $username );
+  if($uid_name != "" )
+    echo sprintf( $lang["user_homepage_sprt"], $uid_name );
 
   echo "</div></td></tr>\n";
 

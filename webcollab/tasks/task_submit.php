@@ -240,9 +240,9 @@ ignore_user_abort(TRUE);
           }
 
         //send email
-        //$username and $useremail are from security.php
+        //$uid_name and $uid_email are from security.php
         $message = sprintf($email, $MANAGER_NAME, date("F j, Y, H:i") ).
-                    sprintf($email_list, $name_project, $name_task, status($row["status"], $row["deadline"]), $username, $useremail, $row["text"], $BASE_URL );
+                    sprintf($email_list, $name_project, $name_task, status($row["status"], $row["deadline"]), $uid_name, $uid_email, $row["text"], $BASE_URL );
         email( $email_address_old_owner, $title, $message );
         }
       }

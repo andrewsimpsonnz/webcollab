@@ -243,8 +243,8 @@ ignore_user_abort(TRUE);
         if($admin_rights == "t" )
           $admin_state = $lang["admin_priv"]."\n";
         //email the changes to the user
-        //$useremail and $username are in security.php
-        $message = sprintf($email_user_change1, $MANAGER_NAME, date("F j, Y, H:i"), $username, $useremail, $name,
+        //$uid_email and $uid_name are in security.php
+        $message = sprintf($email_user_change1, $MANAGER_NAME, date("F j, Y, H:i"), $uid_name, $uid_email, $name,
                 $password, $usergroup_names, $fullname, $admin_state );
         email($email, $title_user_change1, $message );
 

@@ -104,8 +104,8 @@ if( ($row["now"] - $row["sec_lastaccess"]) > $SESSION_TIMEOUT * 3600 ) {
 //all data seems okay !!
 
 $uid = $row["user_id"];
-$username = $row["fullname"];
-$useremail = $row["email"];
+$uid_name = $row["fullname"];
+$uid_email = $row["email"];
 
 if($row["admin"] == 't' )
   $admin = 1;
@@ -123,8 +123,8 @@ db_query("UPDATE logins SET lastaccess=now() WHERE session_key='$session_key' AN
 
 // this gives:
 //
-// username = users's full name
-// useremail = user's email address
+// uid_name = users's full name
+// uid_email = user's email address
 // uid = user's id
 // admin [0,1] = is the user an admin ?
 // gid[] = array of user's groups
