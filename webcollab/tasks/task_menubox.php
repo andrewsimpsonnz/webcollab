@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,6 +35,9 @@ $clone = "";
 $archive = "";
 $menu_type = "project";
 
+if($GUEST == 1 )
+  warning($lang['access_denied'], $lang['not_owner'] );
+
 //the task dependent part
 if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ) {
 
@@ -42,24 +45,27 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ) {
   
   include_once(BASE."includes/details.php" );
   
-  $menu_type = $TYPE;
-  
-  if(($ADMIN == 1 ) || ($TASKID_ROW['owner'] == $UID ) ) {
-    $content .= "<small><b>".$lang['admin'].":</b></small><br />\n".
-                "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_$TYPE"]."</a><br />\n".
-                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang["delete_$TYPE"]."</a><br />\n".
-                "<br /><small><b>".$lang['global'].":</b></small><br />\n";
+  //don't show options for archived projects
+  if($TASKID_ROW['archive'] != 't' ){
     
-    if(($TYPE == "project" ) && ($TASKID_ROW['archive'] == 'f' ) ){
-      $archive = "<a href=\"archive.php?x=$x&amp;action=submit_archive&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf("This will archive the project %s.  Continue? -translate", javascript_escape($TASKID_ROW['name'] ) )."')\">"."Archive project-translate"."</a><br />\n";
+    $menu_type = $TYPE;
+    
+    if(($ADMIN == 1 ) || ($TASKID_ROW['owner'] == $UID )  ) {
+      $content .= "<small><b>".$lang['admin'].":</b></small><br />\n".
+                  "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_$TYPE"]."</a><br />\n".
+                  "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang["delete_$TYPE"]."</a><br />\n".
+                  "<br /><small><b>".$lang['global'].":</b></small><br />\n";
+      
+      if(($TYPE == "project" ) && ($TASKID_ROW['archive'] == 'f' ) ){
+        $archive = "<a href=\"archive.php?x=$x&amp;action=submit_archive&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang['javascript_archive_project'], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang['archive_project']."</a><br />\n";
+      }
     }
+    $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=$taskid\">".$lang['add_task']."</a><br />\n";
+  
+    if($ADMIN == 1 )
+      $clone = "<a href=\"tasks.php?x=$x&amp;action=clone&amp;taskid=$taskid\">".$lang["clone_$TYPE"]."</a><br />\n";
   }
-  $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=$taskid\">".$lang['add_task']."</a><br />\n";
-
-  if($ADMIN == 1 )
-    $clone = "<a href=\"tasks.php?x=$x&amp;action=clone&amp;taskid=$taskid\">".$lang["clone_$TYPE"]."</a><br />\n";
 }
-
 //the task-independent part
 $content .= "<a href=\"tasks.php?x=$x&amp;action=add\">".$lang['add_project']."</a><br />\n";
 $content .= $archive.$clone;

@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>  
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>  
   
   WebCollab
   ---------------------------------------
@@ -137,6 +137,7 @@ $content .= "</td></tr>\n";
 switch($TASKID_ROW['parent'] ) { 
   case 0:
     //project - show the finish date and status
+    $title = $lang['project_details'];
     switch($TASKID_ROW['status'] ) {
       case "cantcomplete":
         $content .= "<tr><td>".$lang['status'].": </td><td><b>".$lang['project_on_hold']."</b></td></tr>\n";
@@ -161,6 +162,7 @@ switch($TASKID_ROW['parent'] ) {
     
   default:  
     //task 
+    $title = $lang['task_info'];
     $content .= "<tr><td>".$lang['status'].": </td><td>";
     switch($TASKID_ROW['status'] ) {
       case "created":
@@ -242,59 +244,60 @@ $content .= "</table>\n";
 //this part shows all the options the users has
 $content .= "<div style=\"text-align : center\"><span class=\"textlink\">\n";
 
-//set add function and title for task or project
-switch($TYPE){
-  case "project":
-    $title = $lang['project_details'];
-    if($GUEST == 0 )
-      $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a>]&nbsp;\n";
-    break;
-
-  case "task":
-    $title = $lang['task_info'];
-    if($GUEST == 0 )
-      $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_subtask']."</a>]&nbsp;\n";
-    break;
-}
-
-switch( $TASKID_ROW['owner'] ){
-  case "0":
-    if($ADMIN == 1 ){
-      //admin edit
+//if archived we allow no adjustments
+if($TASKID_ROW['archive'] != 't' ) {
+  //set add function and title for task or project
+  switch($TYPE){
+    case "project":
+      if($GUEST == 0 )
+        $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a>]&nbsp;\n";
+      break;
+  
+    case "task":
+      if($GUEST == 0 ) 
+        $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_subtask']."</a>]&nbsp;\n";
+      break;
+  }
+  
+  switch( $TASKID_ROW['owner'] ){
+    case "0":
+      if($ADMIN == 1 ){
+        //admin edit
+        $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
+      }
+      //I'll take it!
+      if($GUEST == 0 )
+        $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang['i_take_it']."</a>]&nbsp;\n";
+      break;
+  
+    case ($UID):
       $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
-    }
-    //I'll take it!
-    if($GUEST == 0 )
-      $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang['i_take_it']."</a>]&nbsp;\n";
-    break;
-
-  case ($UID):
-    $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
-    //if not finished and not a project; then [I finished it!] button
-    if( ($TASKID_ROW['status'] != "done" ) && ($TASKID_ROW['parent'] != 0 ) ) {
-      $content .= "[<a href=\"tasks.php?x=$x&amp;action=done&amp;taskid=".$taskid."\">".$lang['i_finished']."</a>]&nbsp;\n";
-    }
-    // deown the task
-    $content .= "[<a href=\"tasks.php?x=$x&amp;action=deown&amp;taskid=".$taskid."\">".$lang['i_dont_want']."</a>]&nbsp;\n";
-    break;
-
-  default:
-    if($ADMIN == 1 ){
-      //edit
-      $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
-      //take over
-      $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_".$TYPE] )."</a>]&nbsp;\n";
-    }
-    if(($TASKID_ROW['groupaccess'] == "t") && (in_array($TASKID_ROW['usergroupid'], (array)$GID ) ) ){
-      //user is in the usergroup & groupaccess is set
-      $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
-        
       //if not finished and not a project; then [I finished it!] button
       if( ($TASKID_ROW['status'] != "done" ) && ($TASKID_ROW['parent'] != 0 ) ) {
-        $content .= "[<a href=\"tasks.php?x=$x&amp;action=done&amp;taskid=".$taskid."\">".$lang['i_finished']."</a>]\n";
+        $content .= "[<a href=\"tasks.php?x=$x&amp;action=done&amp;taskid=".$taskid."\">".$lang['i_finished']."</a>]&nbsp;\n";
       }
-    }
-    break;
+      // deown the task
+      $content .= "[<a href=\"tasks.php?x=$x&amp;action=deown&amp;taskid=".$taskid."\">".$lang['i_dont_want']."</a>]&nbsp;\n";
+      break;
+  
+    default:
+      if($ADMIN == 1 ){
+        //edit
+        $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
+        //take over
+        $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_".$TYPE] )."</a>]&nbsp;\n";
+      }
+      if(($TASKID_ROW['groupaccess'] == "t") && (in_array($TASKID_ROW['usergroupid'], (array)$GID ) ) ){
+        //user is in the usergroup & groupaccess is set
+        $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
+          
+        //if not finished and not a project; then [I finished it!] button
+        if( ($TASKID_ROW['status'] != "done" ) && ($TASKID_ROW['parent'] != 0 ) ) {
+          $content .= "[<a href=\"tasks.php?x=$x&amp;action=done&amp;taskid=".$taskid."\">".$lang['i_finished']."</a>]\n";
+        }
+      }
+      break;
+  }
 }
 
 $content .= "</span></div>\n";
