@@ -33,10 +33,7 @@ require_once(BASE."includes/security.php" );
 //
 //
 function percent_complete($taskid ) {
-
-  if($taskid == "" )
-    return 0;
-
+  
   $tasks_completed = 0;
   $total_tasks = 0;
   
@@ -48,12 +45,13 @@ function percent_complete($taskid ) {
       
     if($row[0] == 'done')
       $tasks_completed++;
+      
   }
   
-  //project will always show on the list
-  if($total_tasks == 1 )
-    return 0;
-    
+  //project with no tasks is complete
+  if($total_tasks - 1 == 0 )
+    return 100;
+  
   return($tasks_completed / ($total_tasks - 1 ) ) * 100;  
 }
 
