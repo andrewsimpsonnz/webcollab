@@ -1,10 +1,24 @@
 WebCollab CVS
+*** 17 July 2003
+  Andrew Simpson
+
+- improve cookie scripting
+
+- change to faster and more secure algorithm for session key generation 
+
+WebCollab CVS
 *** 12 July 2003
   Andrew Simpson
 
 - change to cookies for session management with encoded URL as a failsafe backup
 
-- separate task functions into task_common.php 
+- separate task functions into task_common.php
+
+- move user_online code to a separate file
+
+- improve internationalisation and error recovery in translated texts
+
+- bugfix:  Some texts were missed, and only showing in 'en' (English)
 
 WebCollab CVS
 *** 5 July 2003
