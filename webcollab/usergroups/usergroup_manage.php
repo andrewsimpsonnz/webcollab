@@ -42,7 +42,7 @@ $q = db_query("SELECT * FROM usergroups ORDER BY name" );
 //nothing here yet
 if(db_numrows($q) == 0 ) {
   $content = "<br />".$lang["no_usergroups"]."<br /><br />\n".
-             "<a href=\"usergroups.php?x=$x&amp;action=add\">[".$lang["add"]."]</a><br /><br />\n";
+             "<font class=\"textlink\"><a href=\"usergroups.php?x=$x&amp;action=add\">[".$lang["add"]."]</a></font>\n";
 
   new_box($lang["usergroup_manage"], $content );
   return;
