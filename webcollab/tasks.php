@@ -118,19 +118,27 @@ if( ! isset($_REQUEST["action"]) )
       create_bottom();
       break;
    
-   //submit options
+   //insert new task
    case "submit_insert":
+      include("tasks/task_insert_submit.php" );
+      break;   
+   
+   //update task   
    case "submit_update":
+      include("tasks/task_update_submit.php" );
+      break;   
+   
+   //misc. update items
    case "meown":
    case "deown":
    case "done":
-      include("tasks/task_submit.php" );
+      include("tasks/task_owner_submit.php" );
       break;   
             
    //submit clone
    case "submit_clone":
        include("tasks/task_submit_clone.php" );
-      break;   
+       break;   
             
     //printable task info
     case "show_print":
