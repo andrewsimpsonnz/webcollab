@@ -25,13 +25,11 @@
 
 */
 
-//set initial safe values
-$DATABASE_NAME = "--";
-$WEB_CONFIG = "N";
 
-//read config files
-require_once("config/config.php" );
-include_once("setup/screen_setup.php" );
+require_once("path.php" );
+
+require_once(BASE."config/config.php" );
+include_once(BASE."includes/screen.php" );
 
 
 //
@@ -54,11 +52,13 @@ function secure_error($message ) {
 //valid login attempt ?
 if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
 
-  include_once("database/database.php" );
-  include_once("includes/common.php" );
+  include_once(BASE."database/database.php" );
+  include_once(BASE."includes/common.php" );
   
+  //set variables
   $q = "";
-  $alert = "";
+  $content = "";
+  $flag_attempt = FALSE;
   $username = safe_data($_POST["username"]);
   //encrypt password
   $md5pass = md5($_POST["password"] );
@@ -67,16 +67,25 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
     secure_error("Unable to determine ip address");
   }
+
+  //limit login attempts if post-1.60 database is being used 
+  if(db_query("SELECT * FROM login_attempt LIMIT 1", 0 ) ) {
+      
+    //count the number of recent login attempts
+    if( ! $q = @db_query("SELECT COUNT(*) FROM login_attempt 
+                               WHERE name='".$username."' 
+                               AND last_attempt > (now()-INTERVAL ".$delim."10 MINUTE".$delim.") LIMIT 4", 0 ) ) {
+      secure_error("Unable to connect to database.  Please try again later." );
+    }
   
-  //count the number of recent login attempts
-  $count_attempts = db_result(@db_query("SELECT COUNT(*) FROM login_attempt 
-                                                WHERE name='".$username."' 
-                                                AND last_attempt > (now()-INTERVAL ".$delim."10 MINUTE".$delim.") LIMIT 6" ), 0, 0 );
-    
-  //protect against password guessing attacks 
-  if($count_attempts > 3 ) {
-    secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
-  }                                                                              
+    $count_attempts = db_result($q, 0, 0 );
+      
+    //protect against password guessing attacks 
+    if($count_attempts > 3 ) {
+      secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+    }
+    $flag_attempt = TRUE;                                                                              
+  }
     
   //record this login attempt
   db_query("INSERT INTO login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
@@ -101,18 +110,19 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
     secure_error("Unknown user id");
   }
 
-  //user is okay!
+  //user is okay log him/her in
 
-  //remove the old login information
-  @db_query("DELETE FROM login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
-   
-  
+  //remove the old login information for post 1.60 database
+  if($flag_attempt )
+    @db_query("DELETE FROM login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
+
+    
   //update for version 1.32 -> 1.40
   if(! (db_query("SELECT groupaccess FROM config", 0 ) ) ) {
      db_query("ALTER TABLE tasks ADD COLUMN groupaccess VARCHAR(5)" );
      db_query("ALTER TABLE tasks ALTER COLUMN groupaccess SET DEFAULT 'f'" );
      db_query("ALTER TABLE config ADD COLUMN groupaccess VARCHAR(50)" );
-     $alert .= "<p>Updated from version pre-1.40 database</p>\n"; 
+     $content .= "<p>Updating from version pre-1.40 database ... success!</p>\n"; 
   }
   
   //update for version 1.51 -> 1.60
@@ -143,7 +153,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
         error("Database type not specified in config file." );
         break;
     }
-  $alert .= "<p>Updated from version pre-1.60 database</p>\n";
+  $content .= "<p>Updating from version pre-1.60 database ... success!</p>\n";
   } 
     
   //update for version 1.51 -> 1.60
@@ -157,28 +167,27 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
      db_query("ALTER TABLE usergroups ADD COLUMN private INT" );
      db_query("ALTER TABLE usergroups ALTER COLUMN private SET DEFAULT 0" );
   }
-  $content = "<p>Update was successfully completed.</p>\n";
-
-  if( ! $alert )
-    $alert = "<p>No database updates were required</p>\n";
   
-  $content .= $alert;  
-    
+  if( ! $content )
+    $content .= "<p>No database updates were required.</p>\n";
+  
+  $content .= "<p>Database update action has been completed.</p>\n";
+  
   //display box calls
-  create_top_setup("Info" );
-  new_box_setup("Update completed", $content, "boxdata", "singlebox" );
-  create_bottom_setup();
+  create_top("Info" );
+  new_box("Update completed", $content, "boxdata", "singlebox" );
+  create_bottom();
   die;
 }
-
+       
 //
 // MAIN PROGRAM
 //
 
 //login box screen code 
-create_top_setup("Login" );
+create_top("Login" );
 
-$content = "<p>Admin login is required for update:</p>\n".
+$content = "<p>Admin login is required for database update:</p>\n".
            "<form name=\"inputform\" method=\"POST\" action=\"update.php\">\n".
              "<p><table border=\"0\">\n".
                "<tr><td>Login: </td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
@@ -189,8 +198,8 @@ $content = "<p>Admin login is required for update:</p>\n".
              "</div></form>\n";
 
 //set box options
-new_box_setup("Login", $content, "boxdata", "singlebox" );
+new_box("Login", $content, "boxdata", "singlebox" );
 
-create_bottom_setup();
+create_bottom();
 
 ?>
