@@ -37,7 +37,7 @@ include_once( "includes/time.php" );
 //
 // code to handle an action state
 //
-if( ! valid_string($_REQUEST["action"]) )
+if( ! isset($_REQUEST["action"]) )
   error("Users action handler", "No request given" );
 
   switch($_REQUEST["action"] ) {

@@ -35,7 +35,7 @@ include_once("includes/screen.php" );
 //
 // The action handler
 //
-if( ! valid_string($_REQUEST["action"]) )
+if( ! isset($_REQUEST["action"]) )
   error("Task action handler", "No action given");
 
 

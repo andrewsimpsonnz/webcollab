@@ -39,7 +39,7 @@ include_once("includes/screen.php" );
 //
 // The action handler
 //
-if( ! valid_string($_GET["action"]) )
+if( ! isset($_GET["action"]) )
  error("Taskgroup action handler", "No request given");
 
   //what do you want to taskgroup today =]

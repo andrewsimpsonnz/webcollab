@@ -36,7 +36,7 @@ include_once("includes/screen.php" );
 //
 // The action handler
 //
-if( ! valid_string($_GET["action"]) ) 
+if( ! isset($_GET["action"]) ) 
   error("Usergroup action handler", "No action given");
 
   //what do you want to usergroup today =]

@@ -38,7 +38,7 @@ if($admin != 1 )
 //
 // The action handler
 //
-if( ! valid_string($_REQUEST["action"] ) )
+if( ! isset($_REQUEST["action"] ) || strlen($_REQUEST["action"] ) == 0  )
   error("Admin action handler", "No request given" );
 
 switch ($_REQUEST["action"] ) {

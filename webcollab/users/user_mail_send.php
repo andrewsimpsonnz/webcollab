@@ -43,18 +43,18 @@ if( $admin != 1 ) {
 $address_array = "";
 
 // send to users or groups?
-if( ! isset($_POST["group"]) || ! valid_string($_POST["group"]) )
+if( ! isset($_POST["group"]) )
   error("Email action handler", "No request given" );
 
 //check we have a message!
-if( ! valid_string($_POST["message"] ) )
+if( ! isset($_POST["message"] ) || strlen($_POST["message"] ) == 0 )
   warning($lang["admin_email"], $lang["no_message"] );
 
 //wordwrap and clean out nasty stuff
 $message = wordwrap(clean($_POST["message"], 100 ) );
 
 //subject
-if(valid_string($_POST["subject"] ) )
+if(isset($_POST["subject"] ) )
   $subject = clean($_POST["subject"] );
 else
   $subject = "";

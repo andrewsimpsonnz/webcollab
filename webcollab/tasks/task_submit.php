@@ -30,7 +30,7 @@
 */
 
 require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once(BASE."includes/security.php" );
 
 include_once(BASE."includes/admin_config.php" );
 include_once(BASE."includes/time.php" );
@@ -121,7 +121,7 @@ function user_access($taskid ) {
 
 //MAIN PROGRAM
 //update or insert ?
-if( ! valid_string($_REQUEST["action"]) ) 
+if( ! isset($_REQUEST["action"]) )
   error("Task submit", "No request given" );
 
   switch( $_REQUEST["action"] ) {
@@ -129,7 +129,7 @@ if( ! valid_string($_REQUEST["action"]) )
     //mark it as completed!
     case "done":
 
-      if( isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
+      if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
         $taskid = $_GET["taskid"];
 
@@ -151,7 +151,7 @@ if( ! valid_string($_REQUEST["action"]) )
     //drop ownership (if admins want to switch ownershit they will have to do it via the edit box instead of the deown button)
     case "deown":
 
-      if( isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
+      if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
         $taskid = $_GET["taskid"];
 
@@ -171,7 +171,7 @@ if( ! valid_string($_REQUEST["action"]) )
     //take owership of a task
     case "meown":
 
-      if( isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
+      if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
         $taskid = $_GET["taskid"];
 
         //admin has no bounds checking
@@ -204,12 +204,12 @@ if( ! valid_string($_REQUEST["action"]) )
 
             if($row["parent"] == 0 ) {
               //project
-              $type = $lang["project"];
+              $type = strtolower($lang["project"] );
               $name_project = $row["name"];
               $name_task = "";
             }
             else{
-              $type = $lang["task"];
+              $type = strtolower($lang["task"] );
               $name_project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
               $name_task = $row["name"];
             }
@@ -221,7 +221,7 @@ if( ! valid_string($_REQUEST["action"]) )
           }
 
         }else
-          db_query( "UPDATE tasks SET owner=$uid WHERE id=$taskid AND owner=0" );
+          db_query("UPDATE tasks SET owner=$uid WHERE id=$taskid AND owner=0" );
       }
       else
         error("Task submit", "You did not specify which task to take/own" );
@@ -230,11 +230,11 @@ if( ! valid_string($_REQUEST["action"]) )
 
     //insert a new task
     case "insert":
-      if( valid_string($_POST["name"]) ) {
+      if(isset($_POST["name"]) && strlen($_POST["name"]) > 0 ) {
         //check input has been provided
         $input_array = array("parentid", "projectid", "owner", "priority", "status", "taskgroupid", "usergroupid");
         foreach($input_array as $var ) {
-          if(! valid_string($_POST[$var]) ) {
+          if( ! isset($_POST[$var]) || strlen($_POST[$var]) == 0 ) {
             error( "Task submit", "Variable ".$var." is not set" );
           }
         }
@@ -340,11 +340,11 @@ if( ! valid_string($_REQUEST["action"]) )
         $name_project = db_result(db_query("SELECT name FROM tasks WHERE id=$projectid" ), 0, 0 );
 
         //set project/task type for emails
-        $type = $lang["task"];
+        $type = strtolower($lang["task"] );
         $name_task = $name;
 
         if( $parentid == 0 ){
-          $type = $lang["project"];
+          $type = strtolower($lang["project"] );
           $name_task = "";
         }
 
@@ -408,11 +408,11 @@ if( ! valid_string($_REQUEST["action"]) )
     //update a task
     case "update":
 
-      if( valid_string($_POST["name"]) ) {
+      if( isset($_POST["name"]) && strlen($_POST["name"]) > 0 ) {
         //check input has been provided
         $input_array = array("taskid", "owner", "priority", "status", "taskgroupid", "usergroupid");
         foreach($input_array as $var ) {
-          if(! valid_string($_POST[$var]) ) {
+          if( ! isset($_POST[$var]) || strlen($_POST[$var]) == 0 ) {
             error( "Task submit", "Variable ".$var." is not set" );
           }
         }
@@ -504,7 +504,7 @@ if( ! valid_string($_REQUEST["action"]) )
         $type = $lang["task"];
         $name_task = $name;
         if( $row["parent"]== 0 ){
-          $type = $lang["project"];
+          $type = strtolower($lang["project"] );
           $name_task = "";
         }
 

@@ -36,7 +36,7 @@ $content = "";
 $usergroup[0] = 0;
 
 //set selection default
-if(isset($_POST["selection"]) && valid_string($_POST["selection"]) )
+if(isset($_POST["selection"]) && strlen($_POST["selection"]) > 0 )
   $selection = ($_POST["selection"]);
 else
   $selection = "user";
@@ -45,7 +45,7 @@ else
 if(isset($_POST["userid"]) && is_numeric($_POST["userid"]) )
   $userid = ($_POST["userid"]);
 else
-  $userid = 0;
+  $userid = $uid;
 
 //set usergroup default
 if(isset($_POST["groupid"]) && is_numeric($_POST["groupid"]) )
@@ -95,7 +95,7 @@ $content .= "<div align=\"center\">\n".
             "<form method=\"POST\" action=\"calendar.php\">".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
             "<table border=\"0\">\n".
-            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1><label for=\"users\" />".$lang["users"]."</label></td><td>\n".
+            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1><label for=\"users\" />".$lang["users"]."</label></td><td>\n".
             "<select name=\"userid\">\n".
             "<option value=\"0\"$s2>".$lang["all_users"]."</option>\n";
 
@@ -114,7 +114,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 }
 
 $content .= "</select></td></tr>\n".
-            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3><label for=\"group\" />".$lang["usergroups"]."</label></td>\n".
+            "<tr align=\"left\"><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3><label for=\"group\" />".$lang["usergroups"]."</label></td>\n".
             "<td><select name=\"groupid\">\n".
             "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
 

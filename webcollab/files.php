@@ -35,7 +35,7 @@ include_once("includes/screen.php" );
 //
 // The action handler
 //
-if( ! valid_string($_REQUEST["action"]) )
+if( ! isset($_REQUEST["action"]) )
   error("Contacts action handler", "No request given" );
 
   //what do you want to task today =]

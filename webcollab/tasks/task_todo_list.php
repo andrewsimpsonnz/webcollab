@@ -87,7 +87,7 @@ $content = "";
 $usergroup[0] = 0;
 
 //check validity of inputs
-if(isset($_POST["selection"]) && valid_string($_POST["selection"]) )
+if(isset($_POST["selection"]) && strlen($_POST["selection"]) > 0 )
   $selection = ($_POST["selection"]);
 else
   $selection = "user";

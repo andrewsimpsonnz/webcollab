@@ -37,7 +37,7 @@ if( $admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 
-if( ! valid_string($_REQUEST["action"] ) )
+if( ! isset($_REQUEST["action"] ) )
   error("Usergroups submit", "No action given" );
 
   switch($_REQUEST["action"] ) {
@@ -45,7 +45,7 @@ if( ! valid_string($_REQUEST["action"] ) )
     //delete a usergroup
     case "del":
 
-      if(isset($_GET["usergroupid"] ) && is_numeric($_GET["usergroupid"] ) ) {
+      if(isset($_GET["usergroupid"]) && is_numeric($_GET["usergroupid"]) ) {
 
         $usergroupid = $_GET["usergroupid"];
 
@@ -73,7 +73,7 @@ if( ! valid_string($_REQUEST["action"] ) )
     //insert a new usergroup
     case "insert":
 
-      if(isset($_POST["name"] ) && valid_string($_POST["name"] ) ) {
+      if(isset($_POST["name"] ) && strlen($_POST["name"] ) > 0 ) {
 
         $name        = safe_data($_POST["name"]);
         $description = safe_data($_POST["description"]);
@@ -113,7 +113,7 @@ if( ! valid_string($_REQUEST["action"] ) )
       if( ! isset($_POST["usergroupid"] ) || ! is_numeric($_POST["usergroupid"] ) )
         error("Usergroup submit", "Not a valid value for usergroupid" );
 
-      if(isset($_POST["name"] ) && valid_string($_POST["name"] ) ) {
+      if(isset($_POST["name"] ) && strlen($_POST["name"]) > 0 ) {
 
         $name        = safe_data($_POST["name"] );
         $description = safe_data($_POST["description"] );

@@ -35,7 +35,7 @@ include_once("includes/screen.php" );
 //
 // The action handler
 //
-if( ! valid_string($_GET["action"]) )
+if( ! isset($_GET["action"]) )
  error("Forum action handler", "No request given");
 
   //what do you want to forum today =]

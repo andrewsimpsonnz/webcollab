@@ -39,7 +39,7 @@ $usergroup_names = "";
 $admin_state ="";
 
 //update or insert ?
-if( ! valid_string($_REQUEST["action"]) )
+if( ! isset($_REQUEST["action"]) )
   error("User submit", "No request given" );
 
   switch($_REQUEST["action"] ) {
@@ -80,7 +80,7 @@ if( ! valid_string($_REQUEST["action"]) )
       //check input has been provided
       $input_array = array("name", "fullname", "password", "email" );
       foreach( $input_array as $var ) {
-        if( ! valid_string($_POST[$var]) ) {
+        if( ! isset($_POST[$var]) || strlen($_POST[$var]) == 0 ) {
           warning( $lang["value_missing"], sprintf( $lang["field_sprt"], $var ) );
         }
       }
@@ -154,7 +154,7 @@ if( ! valid_string($_REQUEST["action"]) )
       //check input has been provided
       $input_array = array("name", "fullname", "email" );
       foreach($input_array as $var ) {
-        if( ! valid_string($_POST[$var]) ) {
+        if( ! isset($_POST[$var]) || strlen($_POST[$var]) == 0 ) {
           warning($lang["value_missing"], sprintf($lang["field_sprt"], $var ) );
         }
       }
