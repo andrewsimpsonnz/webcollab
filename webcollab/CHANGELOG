@@ -6,6 +6,8 @@ WebCollab CVS
 
 - improve listing engine for forums (reduce database calls) 
 
+- provide condensed view to project listing
+
 WebCollab 1.62 - Canopus
 *** 12 October 2004
   Andrew Simpson 
