@@ -54,6 +54,7 @@ $q = db_query("SELECT logins.lastaccess AS last,
             FROM logins
             LEFT JOIN users ON (users.id=logins.user_id)
             WHERE logins.lastaccess < ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
+            AND user.deleted='f'
             ORDER BY logins.lastaccess DESC" );
 
 $content .= "<tr><td colspan=\"2\"><b>".$lang["not_online"]."</b></td></tr>\n";
