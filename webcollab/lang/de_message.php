@@ -25,7 +25,7 @@
 
   Translation: Sebastian Knapp, Michael Bunk
 
-  Maintainer:
+  Maintainer: Michael Bunk <micha137 at users.sourceforge.net>
 
 */
 
@@ -66,7 +66,7 @@ $lang = array(
  "add" => "Hinzuf&uuml;gen",
  "update" => "Aktualisieren",
  "submit_changes" => "&Auml;nderungen best&auml;tigen",
- "continue" => "Continue",
+ "continue" => "Weiter",
  "reset" => "Zur&uuml;cksetzen",
  "manage" => "Verwalten",
  "edit" => "Bearbeiten",
@@ -80,12 +80,12 @@ $lang = array(
  "tasks" => "Aufgaben",
  "project" => "Projekt",
  "info" => "Info",
- "bytes" => " bytes",
+ "bytes" => " Bytes",
  "select_instruct" => "(Verwende Strg f&uuml;r Mehrfachauswahl oder um nichts auszuw&auml;hlen)",
  "member_groups" => "Der Benutzer ist Mitglied in den markierten Gruppen (wenn es welche gibt).",
  "login" => "Login",
  "error" => "Fehler",
- "no_login" => "Zugriff verweigert, Benutzername oder Passwort ist falsch",
+ "no_login" => "Zugriff verweigert, Benutzername oder Passwort falsch",
  "please_login" => "Bitte melden Sie sich an",
 
  //graphic items
@@ -94,7 +94,7 @@ $lang = array(
  "updated_g" => "&nbsp;AKTUALISIERT&nbsp;",
 
 //admin config
- "admin_config" => "Administrator Konfiguration",
+ "admin_config" => "Administrator-Konfiguration",
  "email_settings" => "Email-Header Einstellungen",
  "admin_email" => "Administrator-Email",
  "email_reply" => "Email 'Antwort an'",
@@ -108,7 +108,7 @@ $lang = array(
  "configuration" => "Konfiguration",
 
 
-//contacts
+ //contacts
  "firstname" => "Vorname:",
  "lastname" => "Nachname:",
  "company" => "Firma:",
@@ -144,11 +144,9 @@ $lang = array(
  "files" => "Dateien",
  "file_choose" => "Datei zum Hochladen:",
  "upload" => "Hochladen",
-//**
- "file_email_owner" => "Email notification of new file to the owner?",
- //**
- "file_email_usergroup" => "Email notification of new file to the usergroup?",
-  "max_file_sprt" => "Die hochzuladende Datei muss kleiner als %s kB sein.",
+ "file_email_owner" => "Sende Benachrichtigungsemail &uuml;ber neue Datei an den Eigent&uuml;mer?",
+ "file_email_usergroup" => "Sende Benachrichtigungsemail &uuml;ber neue Datei an Nutzergruppe?",
+ "max_file_sprt" => "Die hochzuladende Datei muss kleiner als %s kB sein.",
  "file_submit" => "Datei absenden",
  "no_upload" => "Es wurde keine Datei hochgeladen.  Bitte gehen Sie zur&uuml;ck und versuchen Sie es noch einmal.",
  "file_too_big_sprt" => "Die maximale Dateigr&ouml;&szlig;e ist %s Bytes. Ihr Upload war zu gro&szlig; und wurde gel&ouml;scht.",
@@ -159,13 +157,11 @@ $lang = array(
  "orig_message" => "Originalnachricht:",
  "post" => "Versenden",
  "message" => "Nachricht:",
- "post_reply_sprt" => "Sende eine Antwort auf die Nachricht von '%s' ber '%s'",
+ "post_reply_sprt" => "Sende eine Antwort auf die Nachricht von '%s' &uuml;ber '%s'",
  "post_message_sprt" => "Sende eine Nachricht an: '%s'",
-  //**
- "forum_email_owner" => "Email forum message to the owner?",
- //**
- "forum_email_usergroup" => "Email forum message to the usergroup?",
-"reply" => "Antwort",
+ "forum_email_owner" => "Sende Forenbeitrag an Eigent&uuml;mer?",
+ "forum_email_usergroup" => "Sende Forenbeitrag an Nutzergruppe?",
+ "reply" => "Antwort",
  "new_post" => "Neue Nachricht",
  "public_user_forum" => "Offenes Benutzerforum",
  "private_forum_sprt" => "Privates Forum f&uuml;r Gruppe '%s' ",
@@ -175,27 +171,24 @@ $lang = array(
 
  //includes
  "report" => "Report",
- "warning" => "<h1>Entschuldigung!</h1><P>Der Vorgang kann im Moment nicht verarbeitet werden. Bitte versuchen Sie es sp&auml;ter noch einmal.</p>",
+ "warning" => "<h1>Entschuldigung!</h1><P>Der Vorgang kann im Moment nicht abgearbeitet werden. Bitte versuchen Sie es sp&auml;ter noch einmal.</p>",
  "home_page" => "Startseite",
  "summary_page" => "&Uuml;bersicht",
  "todo_list" => "Aufgaben",
  "calendar" => "Kalender",
  "log_out" => "Abmelden",
- "main_menu" => "Hauptmenu",
+ "main_menu" => "Hauptmen&uuml;",
  "user_homepage_sprt" => "Startseite von %s",
  //"load_time_sprt" => "Diese Seite ben&ouml;tigte %.3f Sekunden zum Laden.  Davon wurden %.3f Sekunden f&uuml;r %d Datenbanktransaktionen verwendet.",
- //**
- "missing_field_javascript" => "Please enter a value for the missing field",
- //**
- "invalid_date_javascript" => "Please choose a valid calendar date",
- //**
- "finish_date_javascript" => "The entered date occurs after the project finish date!",
+ "missing_field_javascript" => "Bitte geben sie einen Wert in das leere Feld ein",
+ "invalid_date_javascript" => "Bitte &auml;hlen sie ein g&uuml;ltiges Kalenderdatum",
+ "finish_date_javascript" => "Das angegebene Datum liegt nach dem Fertigstellungstermin des Projekts!",
  "security_manager" => "Sicherheitsverwaltung",
  //"no_key_sprt" => "Keine g&uuml;ltige Session-ID. Bitte gehen Sie zum <a href=\"%sindex.php\">Login</a>",
  //"no_session" => "Unbekannte Session-ID, bitte neu <a href=\"%sindex.php\">einloggen</a>.",
  "session_timeout_sprt" => "Zugriff verweigert, Ihre letzte Aktion war vor %d Minuten. %d Minuten bleibt eine Session ohne Aktion g&uuml;ltig, bitte neu <a href=\"%sindex.php\">anmelden</a>.",
  "access_denied" => "Zugriff verweigert",
- "private_usergroup" => "Dieser Bereich ist in einer privaten Benutzergruppe und sie haben keine Zugriffsrechte.",
+ "private_usergroup" => "Dieser Bereich ge&ouml;rt zu einer privaten Benutzergruppe und sie haben keine Zugriffsrechte.",
  "invalid_date" => "Ung&uuml;ltiges Datum",
  "invalid_date_sprt" => "Das Datum %s ist kein g&uuml;ltiges Kalenderdatum (Pr&uuml;fen sie die Anzahl der Monatstage!). Bitte gehen sie zur&uuml;ck und geben sie eine neues Datum ein!",
 
@@ -217,8 +210,7 @@ $lang = array(
  "usergroup_name" => "Name der Nutzergruppe:",
  "usergroup_description" => "Kurzbeschreibung der Nutzergruppe:",
  "members" => "Mitglieder:",
-  //**
- "private_usergroup" => "Private usergroup",
+ "private_usergroup" => "Private Nutzergruppe",
  "add_usergroup" => "Nutzergruppe hinzuf&uuml;gen",
  "add_new_usergroup" => "Neue Nutzergruppe hinzuf&uuml;gen",
  "edit_usergroup" => "Nutzergruppe bearbeiten",
@@ -236,8 +228,7 @@ $lang = array(
  "blank_for_current_password" => "(Freilassen, um bestehendes Passwort zu &uuml;bernehmen)",
  "email" => "E-Mail",
  "admin" => "Administrator",
- //**
- "private_user" => "Private user",
+ "private_user" => "Privater Nutzer",
  "is_admin" => "Kann administrieren?",
  "user_info" => "Informationen &uuml;ber den Nutzer",
  "deleted_users" => "Gel&ouml;schte Nutzer",
@@ -250,9 +241,8 @@ $lang = array(
  "no_users" => "Dem System sind keine Nutzer bekannt",
  "users" => "Nutzer",
  "existing_users" => "Vorhandene Nutzer",
-  //**
- "private_profile" => "This user has a private profile that cannot be viewed by you.",
- "private_usergroup_profile" => "(This user is a member of private usergroups that cannot be viewed by you)",
+ "private_profile" => "Dieser Nutzer hat ein privates Profil, das von ihnen nicht eingesehen werden darf.",
+ "private_usergroup_profile" => "(Dieser Nutzer ist Mitglied einer privaten Nutzergruppe, welche nicht von ihnen eingesehen werden darf)",
  "email_users" => "Email an Nutzer",
  "select_usergroup" => "Folgende Nutzergruppe:",
  "subject" => "Betreff:",
@@ -267,7 +257,7 @@ $lang = array(
  "last_time_here" => "Zum letzten Mal hier gesehen:",
  "number_items_created" => "Anzahl der erzeugten Eintr&auml;ge in Datenbank:",
  "number_projects_owned" => "Anzahl der eigenen Projekte:",
- "number_tasks_owned" => "Anzahl der eigenen Augaben:",
+ "number_tasks_owned" => "Anzahl der eigenen Aufgaben:",
  "number_tasks_completed" => "Anzahl der abgeschlossenen Aufgaben:",
  "number_forum" => "Anzahl der Sendungen an das Forum:",
  "number_files" => "Anzahl der hochgeladenen Dateien:",
@@ -276,7 +266,7 @@ $lang = array(
  "invalid_email" => "Ung&uuml;ltige E-Mail-Adresse",
  "invalid_email_given_sprt" => "Die E-Mail-Adresse '%s' ist ung&uuml;ltig. Bitte gehen sie zur&uuml;ck und versuchen es noch einmal!",
  "duplicate_user" => "Nutzername doppelt vorhanden",
- "duplicate_change_user_sprt" => "Der Nutzer '%s' existiert bereits. Bitte &auml;ndern sie einen Namen.",
+ "duplicate_change_user_sprt" => "Der Nutzer '%s' existiert bereits. Bitte &auml;ndern sie seinen Namen.",
  "value_missing" => "Wert fehlt",
  "field_sprt" => "Bitte gehen sie zur&uuml;ck und f&uuml;llen sie das Feld '%s' aus!",
  "admin_priv" => "Hinweis: Sie haben Administratorrechte bekommen.",
@@ -286,7 +276,7 @@ $lang = array(
  "not_online" => "Der Rest",
  "user_activity" => "Nutzeraktivit&auml;t",
 
-  //tasks
+ //tasks
  "add_new_task" => "Neue Aufgabe hinzuf&uuml;gen",
  "priority" => "Priorit&auml;t",
  "parent_task" => "&Uuml;bergeordnete Aufgabe",
@@ -300,14 +290,14 @@ $lang = array(
  "task_owner" => "Eigent&uuml;mer der Aufgabe",
  "project_owner" => "Eigent&uuml;mer des Projekts",
  "taskgroup" => "Aufgabengruppe",
- "usergroup" => "Benutzergruppe",
+ "usergroup" => "Nutzergruppe",
  "nobody" => "Niemand",
  "none" => "Keine",
  "no_group" => "Keine Gruppe",
  "all_groups" => "Alle Gruppen",
  "all_users" => "Alle Nutzer",
  "all_users_view" => "K&ouml;nnen alle Nutzer diese Aufgabe einsehen?",
- "group_edit" => "Kann jeder in der Benutzergruppe bearbeiten?",
+ "group_edit" => "Kann jeder in der Nutzergruppe bearbeiten?",
  "project_description" => "Projektbeschreibung",
  "task_description" => "Aufgabenbeschreibung",
  "email_owner" => "Dem Eigent&uuml;mer eine E-Mail mit den &Auml;nderungen schicken?",
@@ -328,11 +318,9 @@ $lang = array(
  "add_task" => "Aufgabe hinzuf&uuml;gen",
  "add_subtask" => "Unteraufgabe hinzuf&uuml;gen",
  "add_project" => "Projekt hinzuf&uuml;gen",
- //**
- "clone_project" => "Clone project",
- //**
- "clone_task" => "Clone task", 
- "no_edit" => "Dieser Eintrag geh&ouml;rt ihnen nicht und deshalb d&uuml;rfen sie ihn nicht bearbeiten. Fragen sie einen Administrator oder den Eigent&uuml;ner, die &Auml;nderungen vorzunehmen.",
+ "clone_project" => "Projekt klonen",
+ "clone_task" => "Aufgabe klonen", 
+ "no_edit" => "Dieser Eintrag geh&ouml;rt ihnen nicht und deshalb d&uuml;rfen sie ihn nicht bearbeiten. Fragen sie einen Administrator oder den Eigent&uuml;mer, die &Auml;nderungen vorzunehmen.",
  "uncategorised" => "Nicht eingeordnet",
  "admin" => "Admininstrator",
  "global" => "Global",
@@ -342,14 +330,13 @@ $lang = array(
  "task_options" => "Aufgabeneigenschaften",
  "task_navigation" => "Aufgaben-Navigation",
  "no_projects" => "Es gibt keine Projekte in dieser Ansicht",
- //**
- "show_all_projects" => "Show all projects",
- "show_active_projects" => "Show only active projects",
+ "show_all_projects" => "Zeige alle Projekte",
+ "show_active_projects" => "Zeige nur aktive Projekte",
  "completed" => "Fertiggestellt",
  "project_hold_sprt" => "Projekt aufgeschoben seit %s",
  "project_planned" => "Geplantes Projekt",
  "percent_sprt" => "%d%% der Aufgaben sind erledigt",
- "project_no_deadline" => "Kein Fertigstellungstermin gesetzt f&uuml;r dieses Projekt",
+ "project_no_deadline" => "Kein Fertigstellungstermin f&uuml;r dieses Projekt gesetzt",
  "no_allowed_projects" => "Es gibt keine Projekte, die sie einsehen d&uuml;rfen",
  "projects" => "Projekte",
  "percent_project_sprt" => "Dieses Projekt ist zu %d%% fertiggestellt",
@@ -360,7 +347,7 @@ $lang = array(
  "project_on_hold" => "Projekt ist im Wartezustand",
  "project_accessible" => "(Dieses Projekt ist &ouml;ffentlich zug&auml;nglich f&uuml;r alle Benutzer)",
  "task_accessible" => "(Diese Aufgabe ist &ouml;ffentlich zug&auml;nglich f&uuml;r alle Benutzer)",
- "project_not_accessible" => "(Dieses Projekt ist nur f&uuml; Mitglieder der Benutzergruppe zug&auml;nglich)",
+ "project_not_accessible" => "(Dieses Projekt ist nur f&uuml;r Mitglieder der Benutzergruppe zug&auml;nglich)",
  "task_not_accessible" => "(Diese Aufgabe ist nur f&uuml;r Mitglieder der Benutzergruppe zug&auml;nglich)",
  "project_not_in_usergroup" => "Projekt keiner Benutzergruppe zugeordnet und f&uuml;r alle Benutzer zug&auml;nglich.",
  "task_not_in_usergroup" => "Aufgabe keiner Benutzergruppe zugeordnet und f&uuml;r alle Benutzer zug&auml;nglich.",
@@ -391,14 +378,13 @@ $lang = array(
  "by_deadline" => " (nach Fertigstellungsdatum)",
  "by_status" => " (nach Status)",
  "by_owner" => " (nach Eigent&uuml;mer)",
- //**
- "project_cloned" => "Project to be cloned :",
- "task_cloned" => "Task to be cloned :",
- "note_clone" => "Note: The task will be cloned as a new project",
+ "project_cloned" => "Zu klonendes Projekt: ",
+ "task_cloned" => "Zu klonende Aufgabe: ",
+ "note_clone" => "Bemerkung: Die Aufgabe wird als neues Projekt erscheinen",
 
-//bits 'n' pieces
-  "calendar" => "Kalender",
-  "normal_version" => "Normal version",
-  "print_version" => "Print version"
+ //bits 'n' pieces
+ "calendar" => "Kalender",
+ "normal_version" => "Normalversion",
+ "print_version" => "Druckversion"
  );
 ?>

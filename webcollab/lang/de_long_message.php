@@ -34,20 +34,17 @@ $taskgroup_info =   "<ul><li>Wenn eine Aufgabengruppe gel&ouml;scht wird, wird d
                       "<li>Es d&uuml;rfen keine zwei Aufgabengruppen mit dem gleichen Namen existieren.</li></ul>\n";
 
 $usergroup_info =   "<ul><li>Wenn eine Nutzergruppe gel&ouml;scht wird, werden alle zugeh&ouml;rigen privaten Forumsbeitr&auml;ge gel&ouml;scht.</li>\n".
-                      //**
-                      "<li>Private usergroups can only be seen by the members of that private usergroup.</li>\n".
+                      "<li>Private Nutzergruppen k&ouml;nnen nur von Mitgliedern dieser privaten Nutzergruppe gesehen werden.</li>\n".
                       "<li>Der Name einer Nutzergruppe kann ohne Nebenwirkung auf die zugeordneten Nutzer ge&auml;ndert werden.</li>\n".
                       "<li>Es d&uuml;rfen keine zwei Nutzergruppen mit dem gleichen Namen existieren.</li></ul>\n";
 
 $user_info      =    "Bitte w&auml;hlen sie ihre Aktion aus dem Men&uuml; links.<br /><br />".
                       "Hinweise:<br />".
                       "<ul>".
-                      //**
-                      "<li>Private users can only be seen by members of the same usergroup.</li>\n".
+                      "<li>Private Nutzer k&ouml;nnen nur von Mitgliedern der gleichen Nutzergruppe gesehen werden.</li>\n".
                       "<li>Nutzer haben zwei Stadien des Gel&ouml;schtseins. Das zweite ist dauerhaft.</li>\n".
                       "<li>Ein gel&ouml;schter Nutzer verliert alle seine Aufgaben, aber nicht seine Forumsbeitr&auml;ge.</li>\n".
                       "<li>Ein dauerhaft gel&ouml;schter Nutzer hat alles verloren.</li>\n".
-                      //"<li>Man kann keinen Nutzer dauerhaft l&ouml;schen, der noch Forumsbeitr&auml;ge hat.</li>\n".
                       "<li>Ein gel&ouml;schter Nutzer beh&auml;lt die Sichtbarkeit der f&uuml;r ihn sichtbaren Aufgaben und erh&auml;lt sie nach der Wiederbelebung zur&uuml;ck.</li>\n".
                       "<li>ALLE Aktionen, die mit einem Nutzer geschehen, werden ihm/ihr per Email mitgeteilt.</li>\n".
                       "<li>Die Passw&ouml;rter werden verschl&uuml;sselt in der Datenbank gespeichert. Man kann nur neue vergeben.</li>\n".
