@@ -34,7 +34,7 @@ $web_charset = "iso-8859-1";
 $email_charset = "iso-8859-1";
 
 //dates
-$month_array = array ( "Jan", "Feb", "M&auml;rz", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" );
+$month_array = array ( "Jan", "Feb", "M&auml;r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" );
 $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
 
 //task states
@@ -342,7 +342,7 @@ $lang = array(
  "project_accessible" => "(Dieses Projekt ist &ouml;ffentlich zug&auml;nglich f&uuml;r alle Benutzer)",
  "task_accessible" => "(Diese Aufgabe ist &ouml;ffentlich zug&auml;nglich f&uuml;r alle Benutzer)",
  "project_not_accessible" => "(Dieses Projekt ist nur f&uuml; Mitglieder der Benutzergruppe zug&auml;nglich)",
- "task_not_accessible" => "(Diese Aufgabe ist nur f&uuml; Mitglieder der Benutzergruppe zug&auml;nglich)",
+ "task_not_accessible" => "(Diese Aufgabe ist nur f&uuml;r Mitglieder der Benutzergruppe zug&auml;nglich)",
  "project_not_in_usergroup" => "Projekt keiner Benutzergruppe zugeordnet und f&uuml;r alle Benutzer zug&auml;nglich.",
  "task_not_in_usergroup" => "Aufgabe keiner Benutzergruppe zugeordnet und f&uuml;r alle Benutzer zug&auml;nglich.",
  "usergroup_can_edit_project" => "Dieses Projekt kann auch durch Mitglieder der Benutzergruppe bearbeitet werden.",
