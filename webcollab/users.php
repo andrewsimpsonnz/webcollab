@@ -113,6 +113,15 @@ if( ! valid_string($_REQUEST["action"]) )
       create_bottom();
       break;
 
+    //admin email
+    case "email":
+      create_top($lang["email"] );
+      include("includes/mainmenu.php" );
+      goto_main();
+      include("users/user_mail.php" );
+      create_bottom();
+      break;
+
     //Error case
     default:
       error("Users action handler", "Invalid request given" );
