@@ -4,11 +4,6 @@
 
   WebCollab
   ---------------------------------------
-  Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
-  with much help from the people noted in the README
-
-  Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
-  by Andrew Simpson <andrew.simpson@paradise.net.nz>
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -329,6 +324,8 @@ $lang = array(
  "add_task" => "Add task",
  "add_subtask" => "Add subtask",
  "add_project" => "Add project",
+ "clone_project" => "Clone project",
+ "clone_task" => "Clone task",
  "no_edit" => "You do not own this item and therefore you may not edit it",
  "uncategorised" => "Uncategorised",
  "admin" => "Admin",
@@ -339,7 +336,8 @@ $lang = array(
  "task_options" => "Task options",
  "task_navigation" => "Task navigation",
  "no_projects" => "There are no projects to view",
- "ccompleted" => "Completed",
+ "show_all_projects" => "Show all projects",
+ "show_active_projects" => "Show only active projects",
  "project_hold_sprt" => "Project On Hold from %s",
  "project_planned" => "Planned Project",
  "percent_sprt" => "%d%% of the tasks are done",
@@ -385,10 +383,14 @@ $lang = array(
  "by_deadline" => " (by deadline)",
  "by_status" => " (by status)",
  "by_owner" => " (by owner)",
-
+ "project_cloned" => "Project to be cloned :",
+ "task_cloned" => "Task to be cloned :",
+ "note_clone" => "Note: The task will be cloned as a new project",
 
 //bits 'n' pieces
-  "calendar" => "Calendar"
+  "calendar" => "Calendar",
+  "normal_version" => "Normal version",
+  "print_version" => "Print version"
    );
 
 ?>

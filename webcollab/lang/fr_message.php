@@ -188,7 +188,6 @@ $lang = array(
  "no_key_sprt" => "Pas de session valide. Merci de vous connecter <a href=\"%sindex.php\">Profil</a>",
  "no_session" => "Pas de session, merci de vous <a href=\"%sindex.php\">connecter</a>",
  "session_timeout_sprt" => "Acc&eacute;s refus&eacute;, la derni&egrave;re action a &eacute;t&eacute; faite il y &agrave; %1\$d minutes et la session s'est ferm&eacute;e apr&egrave;s %2\$d minutes, merci de vous  <a href=\"%sindex.php\">re-connecter</a>",
- //"ip_spoof_sprt" =>"Usurpation d'adresse IP d&eacute;tect&eacute;e depuis votre adresse IP (%s) cette session a &eacute;t&eacute; &eacute;ffac&eacute;e par pr&eacute;caution, merci de vous <A href=\"%sindex.php\">re-connecter</A>",
  "access_denied" => "Acc&egrave;s refus&eacute;",
  "private_usergroup" => "D&eacute;sol&eacute;, cette zone est priv&eacute;e et elle est r&eacute;serv&eacute;e &agrave; un groupe d'utilisateurs. Vous n'y avez pas acc&egrave;s.",
  "invalid_date" => "Date invalide",
@@ -317,6 +316,10 @@ $lang = array(
  "add_task" => "Ajout tache",
  "add_subtask" => "Ajout sous tache",
  "add_project" => "Ajout projet",
+ //**
+ "clone_project" => "Clone project",
+ //**
+ "clone_task" => "Clone task", 
  "no_edit" => "Vous n'&ecirc;tes pas propri&eacute;taire de cet &eacute;l&eacute;ment et vous ne pouvez pas l'&eacute;diter. Demandez &agrave; l'administrateur, ou au propri&eacute;taire de ces t&acirc;ches de le faire pour vous.",
  "uncategorised" => "Non class&eacute;",
  "admin" => "Admin",
@@ -327,6 +330,9 @@ $lang = array(
  "task_options" => "Options t&acirc;che",
  "task_navigation" => "Navigation t&acirc;ches",
  "no_projects" => "Pas de projet &agrave; afficher",
+ //**
+ "show_all_projects" => "Show all projects",
+ "show_active_projects" => "Show only active projects",
  "completed" => "Termin&eacute;",
  "project_hold_sprt" => "Projet sous controle de %s",
  "project_planned" => "Projet Planifi&eacute;",
@@ -373,12 +379,15 @@ $lang = array(
  "by_deadline" => " (par date de fin)",
  "by_status" => " (par statut)",
  "by_owner" => " (par propri&eacute;taire)",
-
-
+ //**
+ "project_cloned" => "Project to be cloned :",
+ "task_cloned" => "Task to be cloned :",
+ "note_clone" => "Note: The task will be cloned as a new project",
 
 //bits 'n' pieces
-  "calendar" => "Calendrier"
-
+  "calendar" => "Calendrier",
+  "normal_version" => "Normal version",
+  "print_version" => "Print version"
    );
 
 ?>

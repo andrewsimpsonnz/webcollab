@@ -5,8 +5,6 @@
   WebCollab
   ---------------------------------------
 
-  This file created 2003 by Andrew Simpson <andrew.simpson@paradise.net.nz>
-
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -79,10 +77,8 @@ $lang = array(
  "no" => "No",
  "action" => "Acci&oacute;",
  "task" => "Tasca",
- //"task_lc" => "tasca",
  "tasks" => "Tasques",
  "project" => "Projecte",
- //"project_lc" => "projecte",
  "info" => "Info",
  "bytes" => " bytes",
  "select_instruct" => "(Usar ctrl per a seleccionar m&eacute;s, o per a cap)",
@@ -127,7 +123,6 @@ $lang = array(
  "notes" => "Notes:",
  "add_contact" => "Afegir contacte",
  "del_contact" => "Esborrar contacte",
- //"del_javascript" => "S\'esborrara el contacte. Esteu segurs?",
  "contact_info" => "Dades del Contacte",
  "contacts" => "Contactes",
  "contact_add_info" => "Si afegeix el nom d'una companyia aquesta es mostrar&agrave; en comptes del usuari.",
@@ -314,6 +309,10 @@ $lang = array(
  "add_task" => "Afegir tasca",
  "add_subtask" => "Afegir sub-tasca",
  "add_project" => "Afegir projecte",
+ //**
+ "clone_project" => "Clone project",
+ //**
+ "clone_task" => "Clone task", 
  "no_edit" => "No &eacute;s propietari d'aquest, no pot editar-lo. Demani a un administrador, o al propietari de la tasca per a que ho faci per vost&egrave;.",
  "uncategorised" => "No categoritzat",
  "admin" => "Admin",
@@ -327,9 +326,12 @@ $lang = array(
  "project_options" => "Projecte opcions",
  //**
  "task_options" => "Tasca opcions",
- //
+ //**
  "task_navigation" => "Navegar tasques",
  "no_projects" => "No hi ha projecte per veure",
+ //**
+ "show_all_projects" => "Show all projects",
+ "show_active_projects" => "Show only active projects",
  "completed" => "Complert",
  "project_hold_sprt" => "Projecte susp&egrave;s des de %s",
  "project_planned" => "Projecte planejat",
@@ -375,18 +377,23 @@ $lang = array(
  "future" => "Futur",
  "flags" => "Banderes",
  "owner" => "Propietari",
- //"usergroupid" => "usergroupid",
- //"taskgroupid" => "taskgroupid",
  "group" => "Grup",
  "by_usergroup" => " (per usergroup)",
  "by_taskgroup" => " (per taskgroup)",
  "by_deadline" => " (per l&iacute;mit)",
  "by_status" => " (per estat)",
  "by_owner" => " (per propietari)",
+ //**
+ "project_cloned" => "Project to be cloned :",
+ "task_cloned" => "Task to be cloned :",
+ "note_clone" => "Note: The task will be cloned as a new project",
 
 
 
 //bits 'n' pieces
-  "calendar" => "Calendari" );
+  "calendar" => "Calendari",
+  "normal_version" => "Normal version",
+  "print_version" => "Print version"
+   );
 
 ?>

@@ -4,11 +4,6 @@
 
   WebCollab
   ---------------------------------------
-  Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
-  with much help from the people noted in the README
-
-  Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
-  by Andrew Simpson <andrew.simpson@paradise.net.nz>
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -331,6 +326,10 @@ $lang = array(
  "add_task" => "Aggiungi attivit&agrave;",
  "add_subtask" => "Aggiungi subattivit&agrave;",
  "add_project" => "Aggiungi progetto",
+ //**
+ "clone_project" => "Clone project",
+ //**
+ "clone_task" => "Clone task", 
  "no_edit" => "Non sei il proprietario di questo item e non puoi editarlo. Chiedi ad un admin o al proprietario dell'item di effettuare l'operazione.",
  "uncategorised" => "Non categorizzata",
  "admin" => "Admin",
@@ -341,7 +340,9 @@ $lang = array(
  "task_options" => "Opzioni dell'attivit&agrave;",
  "task_navigation" => "Navigazione nelle attivit&agrave;",
  "no_projects" => "Non ci sono progetti da vedere",
- "ccompleted" => "Completato",
+ //**
+ "show_all_projects" => "Show all projects",
+ "show_active_projects" => "Show only active projects",
  "project_hold_sprt" => "Progetto congelato da %s",
  "project_planned" => "Progetto previsto",
  "percent_sprt" => "%d%% delle attivit&agrave; completate",
@@ -387,10 +388,15 @@ $lang = array(
  "by_deadline" => " (per scadenza)",
  "by_status" => " (per stato)",
  "by_owner" => " (per assegnatario)",
-
+ //**
+ "project_cloned" => "Project to be cloned :",
+ "task_cloned" => "Task to be cloned :",
+ "note_clone" => "Note: The task will be cloned as a new project",
 
 //bits 'n' pieces
-  "calendar" => "Calendario"
+  "calendar" => "Calendario",
+  "normal_version" => "Normal version",
+  "print_version" => "Print version"
    );
 
 ?>

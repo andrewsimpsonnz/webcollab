@@ -4,9 +4,7 @@
 
   WebCollab
   ---------------------------------------
-
-  This file created 2003 by Andrew Simpson <andrew.simpson@paradise.net.nz>
-
+  
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -79,10 +77,8 @@ $lang = array(
  "no" => "No",
  "action" => "Accion",
  "task" => "Tarea",
- //"task_lc" => "tarea",
  "tasks" => "Tareas",
  "project" => "Proyecto",
- //"project_lc" => "proyecto",
  "info" => "Info",
  "bytes" => " bytes",
  "select_instruct" => "(Usar ctrl para seleccionar m&aacute;s, o para ninguno)",
@@ -127,7 +123,6 @@ $lang = array(
  "notes" => "Notas:",
  "add_contact" => "Agregar contacto",
  "del_contact" => "Eliminar contacto",
- //"del_javascript" => "Se eliminara el contacto. Esta seguro?",
  "contact_info" => "Datos del Contacto",
  "contacts" => "Contactos",
  "contact_add_info" => "If agrega el nombre de una compania esta sera mostrada en lugar del nombre del usuario.",
@@ -185,7 +180,6 @@ $lang = array(
  "no_key_sprt" => "Clave de sesi&oacute;n NO v&aacute;lida. Por favor <a href=\"%sindex.php\">Ingrese</a>",
  "no_session" => "Sesi&oacute;n inexistente, por favor <a href=\"%sindex.php\">Ingrese</A>",
  "session_timeout_sprt" => "Acceo denegado, &uacute;ltima acci&oacute;n fue %d minutos atr&aacute;s y el tiempo de expiraci&oacute;n es de %d minutos, por favor <a href=\"%sindex.php\">Ingrese</a>",
- //"ip_spoof_sprt" =>"Spoofed ip address detected from your ip (%s) this session has been deleted as a precaution, please <A href=\"%sindex.php\">re-login</A>",
  "access_denied" => "Acceso denegado",
  "private_usergroup" => "Disculpe, esta area es privada de un grupo y ud no tiene derecho de acceso.",
  "invalid_date" => "Fecha inv&aacute;lida",
@@ -314,6 +308,10 @@ $lang = array(
  "add_task" => "Agregar Tarea",
  "add_subtask" => "Agregar sub-Tarea",
  "add_project" => "Agregar Proyecto",
+ //**
+ "clone_project" => "Clone project",
+ //**
+ "clone_task" => "Clone task", 
  "no_edit" => "No es propietario de este, no puede editarlo. Pida a un administrador, o al propietario de la tarea para que lo haga por Ud.",
  "uncategorised" => "No categorizado",
  "admin" => "Admin",
@@ -324,6 +322,9 @@ $lang = array(
  "task_options" => "Tarea opciones",
  "task_navigation" => "Navegar tareas",
  "no_projects" => "No hay proyecto para ver",
+ //**
+ "show_all_projects" => "Show all projects",
+ "show_active_projects" => "Show only active projects",
  "completed" => "Completado",
  "project_hold_sprt" => "Proyecto suspendido desde %s",
  "project_planned" => "Proyecto planeado",
@@ -370,9 +371,15 @@ $lang = array(
  "by_deadline" => " (por l&iacute;mite)",
  "by_status" => " (por estado)",
  "by_owner" => " (por propietario)",
+ "project_cloned" => "Project to be cloned :",
+ "task_cloned" => "Task to be cloned :",
+ "note_clone" => "Note: The task will be cloned as a new project",
+
 
 //bits 'n' pieces
   "calendar" => "Calendario",
+  "normal_version" => "Normal version",
+  "print_version" => "Print version"
    );
 
 ?>

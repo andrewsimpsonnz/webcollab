@@ -4,11 +4,6 @@
 
   WebCollab
   ---------------------------------------
-  Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
-  with much help from the people noted in the README
-
-  Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
-  by Andrew Simpson <andrew.simpson@paradise.net.nz>
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -184,11 +179,9 @@ $lang = array(
  "user_homepage_sprt" => "Startseite von %s",
  "load_time_sprt" => "Diese Seite ben&ouml;tigte %.3f Sekunden zum Laden.  Davon wurden %.3f Sekunden f&uuml;r %d Datenbanktransaktionen verwendet.",
  "security_manager" => "Sicherheitsverwaltung",
- "no_key_sprt" => "Keine g&uuml;ltige Session-ID. Bitte gehen Sie zum <A href=\"%sindex.php\">Login</A>",
- "no_session" => "Unbekannte Session-ID, bitte neu <A href=\"%sindex.php\">einloggen</A>.",
- "session_timeout_sprt" => "Zugriff verweigert, Ihre letzte Aktion war vor %d Minuten. %d Minuten bleibt eine Session ohne Aktion g&uuml;ltig, bitte neu <A href=\"%sindex.php\">anmelden</A>.",
- //line below removed version 1.49+
- //"ip_spoof_sprt" =>"Es wurde festgestellt, da&szlig; sie eine gef&auml;lschte IP-Adresse verwenden (%s). Diese Sitzung wurde vorsichtshalber gel&ouml;scht. Bitte loggen sie sich <A href=\"%sindex.php\">neu ein</A>",
+ "no_key_sprt" => "Keine g&uuml;ltige Session-ID. Bitte gehen Sie zum <a href=\"%sindex.php\">Login</a>",
+ "no_session" => "Unbekannte Session-ID, bitte neu <a href=\"%sindex.php\">einloggen</a>.",
+ "session_timeout_sprt" => "Zugriff verweigert, Ihre letzte Aktion war vor %d Minuten. %d Minuten bleibt eine Session ohne Aktion g&uuml;ltig, bitte neu <a href=\"%sindex.php\">anmelden</a>.",
  "access_denied" => "Zugriff verweigert",
  "private_usergroup" => "Dieser Bereich ist in einer privaten Benutzergruppe und sie haben keine Zugriffsrechte.",
  "invalid_date" => "Ung&uuml;ltiges Datum",
@@ -293,9 +286,7 @@ $lang = array(
  "none" => "Keine",
  "no_group" => "Keine Gruppe",
  "all_groups" => "Alle Gruppen",
- //for version 1.49+ uncomment the line below, and comment out the next line
  "all_users" => "Alle Nutzer",
- //"all_users" => "K&ouml;nnen alle Nutzer diese Aufgabe einsehen?",
  "all_users_view" => "K&ouml;nnen alle Nutzer diese Aufgabe einsehen?",
  "group_edit" => "Kann jeder in der Benutzergruppe bearbeiten?",
  "project_description" => "Projektbeschreibung",
@@ -318,6 +309,10 @@ $lang = array(
  "add_task" => "Aufgabe hinzuf&uuml;gen",
  "add_subtask" => "Unteraufgabe hinzuf&uuml;gen",
  "add_project" => "Projekt hinzuf&uuml;gen",
+ //**
+ "clone_project" => "Clone project",
+ //**
+ "clone_task" => "Clone task", 
  "no_edit" => "Dieser Eintrag geh&ouml;rt ihnen nicht und deshalb d&uuml;rfen sie ihn nicht bearbeiten. Fragen sie einen Administrator oder den Eigent&uuml;ner, die &Auml;nderungen vorzunehmen.",
  "uncategorised" => "Nicht eingeordnet",
  "admin" => "Admininstrator",
@@ -328,6 +323,9 @@ $lang = array(
  "task_options" => "Aufgabeneigenschaften",
  "task_navigation" => "Aufgaben-Navigation",
  "no_projects" => "Es gibt keine Projekte in dieser Ansicht",
+ //**
+ "show_all_projects" => "Show all projects",
+ "show_active_projects" => "Show only active projects",
  "completed" => "Fertiggestellt",
  "project_hold_sprt" => "Projekt aufgeschoben seit %s",
  "project_planned" => "Geplantes Projekt",
@@ -374,9 +372,14 @@ $lang = array(
  "by_deadline" => " (nach Fertigstellungsdatum)",
  "by_status" => " (nach Status)",
  "by_owner" => " (nach Eigent&uuml;mer)",
-
-
+ //**
+ "project_cloned" => "Project to be cloned :",
+ "task_cloned" => "Task to be cloned :",
+ "note_clone" => "Note: The task will be cloned as a new project",
 
 //bits 'n' pieces
-  "calendar" => "Kalender" );
+  "calendar" => "Kalender",
+  "normal_version" => "Normal version",
+  "print_version" => "Print version"
+ );
 ?>
