@@ -99,37 +99,7 @@ if( ! valid_string($_REQUEST["action"]) )
       include("users/user_menubox.php" );
       include("users/user_existing_menubox.php" );
       goto_main();
-
-      $content = "<br />\n<table border=\"0\">\n";
-      $q = db_query("SELECT logins.lastaccess AS last,
-                users.id AS id,
-                users.fullname AS fullname
-                FROM logins
-                LEFT JOIN users ON (users.id=logins.user_id)
-                WHERE logins.lastaccess > ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
-                ORDER BY logins.lastaccess DESC" );
-
-      $content .= "<tr><td nowrap colspan=\"2\"><b>".$lang["online"]."</b></td></tr>\n";
-      for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++)
-        $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></td><td>".nicetime($row["last"])."</td></tr>\n";
-
-      $content .= "<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
-      $q = db_query("SELECT logins.lastaccess AS last,
-                users.id AS id,
-                users.fullname AS fullname
-                FROM logins
-                LEFT JOIN users ON (users.id=logins.user_id)
-                WHERE logins.lastaccess < ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
-                ORDER BY logins.lastaccess DESC" );
-
-      $content .= "<tr><td colspan=\"2\"><b>".$lang["not_online"]."</b></td></tr>\n";
-      for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
-        $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></td><td>".nicetime($row["last"])."</td></tr>\n";
-      }
-      $content .= "</table>\n<br />";
-
-      new_box($lang["user_activity"], $content );
-
+      include("users/user_online.php" );
       create_bottom();
       break;
 
