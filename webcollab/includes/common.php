@@ -77,11 +77,15 @@ function clean_up($body ) {
   if(! get_magic_quotes_gpc() )
     $body = addslashes($body );
   
-  //allow only normal written characters - other weird stuff is replaced with "*"
-  $body = preg_replace('[^\009\010\013\032-\126\160-\255]', "*", $body );
+  //allow only defined ISO-8859-1 characters - other weird stuff is replaced with "*"
+  $body = preg_replace('/([^\x09\x0a\x0c\x20-\x7e\xa0-\xff])/s', "*", $body );
+
+    
+  //allow only properly formed UTF-8 characters
+  //$body = preg_replace('/([^\x09\x0a\x0c\x20-\x7e]|[\xc0-\xdf][^\x80-\xbf]|[\xe0-\xef][^\x80-\xbf]{2}|[\xf0-\xf7][^\x80-\xbf]{3})/s', "*", $body );
   
   //use HTML encoding for characters that could be used for css <script> attacks or SQL injection
-  $body = str_replace(array('&', '<', '>', ';', '|','(', ')', '+', '-' ), array('&amp;', '&lt;', '&gt;', '&#059', '&#124', '&#040', '&#041', '&#043', '&#045'), $body );
+  $body = str_replace(array(';', '<', '>', '|','(', ')', '+', '-' ), array('&#059;', '&lt;', '&gt;', '&#124;', '&#040;', '&#041;', '&#043;', '&#045;'), $body );
   
   return $body;
 }
