@@ -2,11 +2,10 @@
 /*
   $Id$
 
+  (c) 2003 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  
   WebCollab
   ---------------------------------------
-
-  This file written in 2003 by Andrew Simpson <andrew.simpson@paradise.net.nz>
-
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -54,7 +53,7 @@ function create_top_setup($title="" ) {
        "<title>$title</title>\n".
        "<meta http-equiv=\"Pragma\" content=\"no-cache\">".
        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n".
-       "<link rel=\"StyleSheet\" href=../css.css type=\"text/css\">\n".
+       "<link rel=\"StyleSheet\" href=../css/default.css type=\"text/css\">\n".
        "</head>\n\n".
        "<body>\n".
        "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">\n";

@@ -7,7 +7,7 @@
   WebCollab
   ---------------------------------------
   
-  This file originally written as part of Core APM by Dennis Fleurbaaij 2001/2002.
+  Parts of this file originally written as Core APM by Dennis Fleurbaaij 2001/2002.
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;

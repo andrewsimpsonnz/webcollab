@@ -1,6 +1,8 @@
 <?php
 /*
   $Id$
+  
+  (c) 2003 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
 
   WebCollab
   ---------------------------------------

@@ -2,11 +2,10 @@
 /*
   $Id$
 
+  (c) 2003 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  
   WebCollab
   ---------------------------------------
-
-  This file written in 2003 by Andrew Simpson <andrew.simpson@paradise.net.nz>
-
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -58,7 +57,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   $q = "";
   $login_q = "";
 
-  include_once("../includes/database.php" );
+  include_once("../database/database.php" );
   include_once("../includes/common.php" );
 
   //encrypt password

@@ -2,14 +2,13 @@
 /*
   $Id$
 
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz> 
+
   WebCollab
   ---------------------------------------
-  Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
-  with much help from the people noted in the README
-
-  Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
-  by Andrew Simpson <andrew.simpson@paradise.net.nz>
-
+  
+  This file originally written as part of Core APM by Dennis Fleurbaaij 2001/2002.
+  
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
