@@ -42,7 +42,7 @@ $q = db_query("SELECT * FROM taskgroups ORDER BY name" );
 //nothing here yet
 if(db_numrows($q) == 0 ) {
   $content = $lang["no_taskgroups"]."\n".
-             "<a href=\"taskgroups.php?x=$x&amp;action=add\">[".$lang["add"]."]</a><br /><br />\n";
+             "<font class=\"textlink\"><a href=\"taskgroups.php?x=$x&amp;action=add\">[".$lang["add"]."]</a></font><br /><br />\n";
 
   new_box($lang["taskgroup_manage"], $content );
   return;
@@ -55,14 +55,14 @@ $content =
 //show all taskgroups
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= "<tr><td>".$row["name"]." </td><td>".$row["description"]." </td>".
-              "<td><a href=\"taskgroups/taskgroup_submit.php?x=$x&amp;action=del&taskgroupid=".$row["id"]."\" onClick=\"return confirm( '".$lang["confirm_del"]."')\">[".$lang["del"]."]</a> ".
-              "<td><a href=\"taskgroups.php?x=$x&amp;action=edit&amp;taskgroupid=".$row["id"]."\">[".$lang["edit"]."]</a></td></tr>";
+              "<td><font class=\"textlink\"><a href=\"taskgroups/taskgroup_submit.php?x=$x&amp;action=del&taskgroupid=".$row["id"]."\" onClick=\"return confirm( '".$lang["confirm_del"]."')\">[".$lang["del"]."]</a></font>&nbsp;".
+              "<td><font class=\"textlink\"><a href=\"taskgroups.php?x=$x&amp;action=edit&amp;taskgroupid=".$row["id"]."\">[".$lang["edit"]."]</a></font></td></tr>";
 
 }
 
 $content .=   "</table><br />\n".
-            "[<a href=\"taskgroups.php?x=$x&amp;action=add\">".$lang["add"]."</a>]";
+            "<font class=\"textlink\">[<a href=\"taskgroups.php?x=$x&amp;action=add\">".$lang["add"]."</a>]</font>";
 
-new_box( $lang["manage_taskgroups"], $content );
+new_box( $lang["manage_taskgroups"], $content, "boxdata2" );
 
 ?>

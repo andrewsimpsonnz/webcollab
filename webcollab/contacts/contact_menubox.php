@@ -59,7 +59,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
 
 //the add button
-$content .= "<br />\n[<a href=\"contacts.php?x=$x&amp;action=add\">".$lang["add_contact"]."</a>]";
+$content .= "<br />\n<font class=\"textlink\">[<a href=\"contacts.php?x=$x&amp;action=add\">".$lang["add_contact"]."</a>]</font>\n";
 
 //show the box
 new_box($lang["contacts"], $content, "boxmenu" );
