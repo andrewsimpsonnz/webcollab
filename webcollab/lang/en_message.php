@@ -47,6 +47,8 @@ General formatting:
 
  "xxxx_g" == graphical string
 
+ "xxxx_javascript == javascript string with single quotes escaped as in "Confirmer l\'effacement!"
+
 */
 
 //required language encodings
@@ -92,7 +94,7 @@ $lang = array(
  "edit" => "Edit",
  "delete" => "Delete",
  "del" => "Del",
- "confirm_del" => "Confirm delete!",
+ "confirm_del_javascript" => "Confirm delete!",
  "yes" => "Yes",
  "no" => "No",
  "action" => "Action",
