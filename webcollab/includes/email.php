@@ -121,7 +121,7 @@ function email($to, $subject, $message ) {
       case "450":
       case "550":
         //mail box error
-        warning("Mailbox error for $email_to <br /><br />Response from SMTP server was ".$res[0] );
+        warning("Mailbox error", "Mailbox error for $email_to <br /><br />Response from SMTP server was ".$res[0] );
         break;
 
       default:
