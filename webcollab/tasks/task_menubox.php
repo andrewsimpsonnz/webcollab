@@ -29,18 +29,13 @@
 
 */
 
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
 
 //secure variables
 $content  = "";
 $title = $lang["ttask"];
 $taskid = "";
-
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once( BASE."includes/security.php" );
-include_once( BASE."includes/database.php" );
 
 //the task dependent part
 if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
@@ -54,7 +49,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
     $owner=false;
 
   if( ($admin==1) || $owner ) {
-    
+
     $q = db_query("SELECT name, parent FROM tasks WHERE id=$taskid" );
     $row = db_fetch_array($q, 0 );
     if($row["parent"] == 0 )

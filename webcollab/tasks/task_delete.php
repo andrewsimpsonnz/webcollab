@@ -28,12 +28,9 @@
   Deletes a task
 
 */
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once(BASE."includes/security.php" );
 include_once(BASE."includes/admin_config.php" );
 include_once(BASE."includes/email.php" );
 include_once(BASE."config.php" );
@@ -64,7 +61,7 @@ function find_and_report_children($taskid ) {
 //
 // advanced database-wide task-delete !!
 //
-if( isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
+if(isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
 
    $taskid = $_REQUEST["taskid"];
 
@@ -78,9 +75,9 @@ if( isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
 
   //find our return-location
   if( ($parentid = db_result(db_query("SELECT parent FROM tasks WHERE id=$taskid" ), 0, 0)) == 0 )
-    $returnvalue = "main.php?x=".$x;
+    $returnvalue = "main.php?x=$x";
   else
-    $returnvalue = "tasks.php?x=$x&action=show&taskid=".$parentid;
+    $returnvalue = "tasks.php?x=$x&action=show&taskid=$parentid";
 
   //begin transaction
   db_begin();

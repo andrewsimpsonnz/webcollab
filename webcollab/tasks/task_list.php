@@ -29,11 +29,8 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once(BASE."includes/security.php" );
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
 
 //init values
 $content = "";
@@ -41,7 +38,7 @@ $content = "";
 //
 // Functionalised recursive query
 //
-function list_tasks( $parent ) {
+function list_tasks($parent ) {
 
   global $x, $uid, $BASE_URL, $parent_array, $epoch, $taskgroup_flag, $lang, $task_state, $NEW_TIME, $DATABASE_TYPE, $parentid;
 
@@ -52,33 +49,33 @@ function list_tasks( $parent ) {
 
 //force mysql to put 'uncategorised' items at the bottom
 if( $DATABASE_TYPE == "mysql")
-  $no_group = "IF(taskgroups.name IS NULL, 1, 0), ";   
-  
+  $no_group = "IF(taskgroups.name IS NULL, 1, 0), ";
+
   //query to get the children for this taskid
-  $query="SELECT tasks.id AS id,
-                 tasks.name AS taskname,
-		 tasks.status AS status,
-		 tasks.finished_time AS finished_time,
-		 ".$epoch."tasks.deadline) AS due,
-		 ".$epoch."tasks.edited) AS edited,
-		 ".$epoch."tasks.lastforumpost) AS lastpost,
-		 ".$epoch."tasks.lastfileupload) AS lastfileupload,
-		 users.fullname AS username,
-		 users.id AS userid,
-		 taskgroups.name AS groupname,
-		 taskgroups.description AS groupdescription,
-                 ".$epoch."now()) AS now
-	  FROM tasks
-	  LEFT JOIN users ON ( users.id=tasks.owner )
-	  LEFT JOIN taskgroups ON (taskgroups.id=tasks.taskgroupid)
-	  WHERE tasks.parent=".$parent."
-	  ORDER by ".$no_group."groupname, taskname";
+$query = "SELECT tasks.id AS id,
+                tasks.name AS taskname,
+                tasks.status AS status,
+                tasks.finished_time AS finished_time,
+                $epoch tasks.deadline) AS due,
+                $epoch tasks.edited) AS edited,
+                $epoch tasks.lastforumpost) AS lastpost,
+                $epoch tasks.lastfileupload) AS lastfileupload,
+                users.fullname AS username,
+                users.id AS userid,
+                taskgroups.name AS groupname,
+                taskgroups.description AS groupdescription,
+                $epoch now()) AS now
+                FROM tasks
+                LEFT JOIN users ON ( users.id=tasks.owner )
+                LEFT JOIN taskgroups ON (taskgroups.id=tasks.taskgroupid)
+                WHERE tasks.parent=$parent
+                ORDER by $no_group groupname, taskname";
 
   //query
-  $q = db_query( $query );
+  $q = db_query($query );
 
   //check for any tasks.  If no tasks end recursive function
-  if( db_numrows($q) < 1 )
+  if(db_numrows($q) < 1 )
     return;
 
   //determine if the first line will be a task listing or a taskgroup name
@@ -108,31 +105,31 @@ if( $DATABASE_TYPE == "mysql")
           $this_content .= "</ul>\n";
 
         //show taskgroup name
-	$this_content .= "<p> &nbsp;<b>".$groupname."</b>";
+        $this_content .= "<p> &nbsp;<b>".$groupname."</b>";
 
-	//add taskgroup description
-	if($row["groupdescription"] != NULL )
+        //add taskgroup description
+        if($row["groupdescription"] != NULL )
           $this_content .=  "&nbsp;<i>( ".$row["groupdescription"]." )</i>";
 
         $this_content .= "</p>\n";
         $this_content .= "<ul>\n";
-	//store current groupname
-	$stored_groupname = $groupname;
+        //store current groupname
+        $stored_groupname = $groupname;
       }
     }
-    
+
     $alert_content = "";
     $this_content .= "<li>";
     $status_content = "";
 
     //have you seen this task yet ?
-    $seenq = db_query("SELECT ".$epoch."time) FROM seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" );
+    $seenq = db_query("SELECT  $epoch time) FROM seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" );
 
     //don't show alert content for changes more than $NEW_TIME (in seconds)
     if( ($row["now"] - max($row["edited"], $row["lastpost"], $row["lastfileupload"] ) ) > 86400*$NEW_TIME ) {
 
       //task is over limit in $NEW_TIME and still not looked at by you, mark it as seen, and move on...
-      if((db_numrows( $seenq ) ) < 1 )
+      if( (db_numrows( $seenq ) ) < 1 )
         db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, ".$row["id"].", current_timestamp(0) ) " );
     }
     //task was changed - show the changes to you
@@ -142,12 +139,12 @@ if( $DATABASE_TYPE == "mysql")
         case "0":
           //new and never visited by this user
           $alert_content .= "<img border=\"0\" src=\"images/new.gif\" height=\"12\" width=\"31\">";
-	  break;
+          break;
 
         default:
           //check if edited since last visit
           $seen = db_result($seenq, 0, 0 );
-          if(($seen - $row["edited"] ) < 0 ) {
+          if( ($seen - $row["edited"] ) < 0 ) {
             //edited
             $alert_content .= "<img border=\"0\" src=\"images/updated.gif\" height=\"12\" width=\"60\"> &nbsp;";
           }
@@ -161,7 +158,7 @@ if( $DATABASE_TYPE == "mysql")
           if($seen - $row["lastfileupload"] < 0 ) {
             $alert_content .= "<img border=\"0\" src=\"images/file.gif\" height=\"11\" width=\"11\"> &nbsp;";
           }
-	  break;
+          break;
        }
     }
 
@@ -169,19 +166,19 @@ if( $DATABASE_TYPE == "mysql")
     switch($row["status"] ) {
       case "done":
         $status_content="<font color=\"#006400\">(".$task_state["completed"]." ".nicedate($row["finished_time"]).")</font>";
-	break;
+        break;
 
       case "active":
         $status_content="<font color=\"#FFA500\">(".$task_state["active"].")</font>";
-	break;
+        break;
 
       case "notactive":
         $status_content="<font color=\"#BEBEBE\">(".$task_state["planned"].")</font>";
-	break;
+        break;
 
       case "cantcomplete":
         $status_content="<font color=\"#0000FF\">(".$task_state["cantcomplete"]." ".nicedate($row["finished_time"]).")</font>";
-	break;
+        break;
     }
 
 
@@ -209,7 +206,7 @@ if( $DATABASE_TYPE == "mysql")
       case "done":
       case "notactive":
       case "cantcomplete":
-       break;
+        break;
 
       default:
         $state = ($row["due"]-$row["now"] )/86400 ;
@@ -222,11 +219,11 @@ if( $DATABASE_TYPE == "mysql")
         else {
           switch( -ceil($state) ) {
 
-            case "0":
+            case 0:
               $this_content .=  "<font color=\"#00640\">(<i>".$lang["due_today"]."</i>)</font>";
               break;
 
-            case "1":
+            case 1:
               $this_content .= "<font color=\"#FF0000\">(".$lang["overdue_1"].")</font>";
               break;
 

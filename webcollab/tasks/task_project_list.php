@@ -30,11 +30,9 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
 
-include_once(BASE."includes/security.php" );
 include_once(BASE."includes/time.php" );
 include_once(BASE."config.php" );
 
@@ -102,7 +100,7 @@ function listTasks($task_id ) {
 //
 
 //some inital make-nice code
-$content = "<br />\n";
+$content = "";
 $flag = 0;
 $usergroup[0] = 0;
 
@@ -146,9 +144,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $flag = 1;
 
   //start list
-  $content .= "<table border=\"0\">";
-  $content .= "<tr>\n<td width=\"20\">\n<!-- indent for project list -->\n</td>\n<td>\n";
-  
+  $content .= "<table border=\"0\" cellpadding=\"20\">\n<td>";
+
   //show name and a link
   $content .= "<a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["id"]."\"><b>".$row["name"]."</b></a>\n";
 
@@ -205,7 +202,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       if($state > 1 ) {
         $content .=  "(".sprintf($lang["due_sprt"], ceil($state) ).")\n";
       }
-      else if( $state > 0 ) {
+      else if($state > 0 ) {
         $content .=  "(".$lang["tomorrow"].")\n";
       }
       else {
@@ -229,9 +226,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       break;
     }
   //end list
-  $content .= "</td>\n</tr>\n</table>\n<br />";
+  $content .= "</td>\n</tr>\n</table>\n";
 }
-$content .= "<br />\n";
+//$content .= "<br />\n";
 
 if($flag != 1 ) $content = $lang["no_allowed_projects"];
 

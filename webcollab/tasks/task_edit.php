@@ -29,11 +29,9 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
 
-include_once( BASE."includes/security.php" );
 include_once( BASE."includes/admin_config.php" );
 include_once( BASE."includes/time.php" );
 
@@ -74,7 +72,7 @@ $taskid = $_GET["taskid"];
 
 // can this user edit this task ?
 if( ! user_access($taskid ) )
-  warning( $lang["access_denied"], $lang["no_edit"] );
+  warning($lang["access_denied"], $lang["no_edit"] );
 
 //get all the needed info from the task
 $q = db_query("SELECT * FROM tasks WHERE id=$taskid" );
@@ -93,7 +91,7 @@ $content .= "<form method=\"POST\" action=\"tasks/task_submit.php\">\n".
             "<tr> <td>".$lang["creation_time"]."</td> <td>".nicedate($row["created"] )."</td> </tr>\n";
 
 // find parent for task and show it.
-if( $row["parent"] != 0 ) {
+if($row["parent"] != 0 ) {
 
   $project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
   $content .= "<tr> <td>".$lang["pproject"].":</td> <td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["projectid"]."\">$project</a></td></tr>\n";
@@ -102,11 +100,11 @@ if( $row["parent"] != 0 ) {
     $parent = db_result(db_query( "SELECT name FROM tasks WHERE id=".$row["parent"]), 0, 0);
     $content .= "<tr> <td>".$lang["parent_task"]."</td> <td><a href=\"tasks.php?x=".$x."&action=show&taskid=".$row["parent"]."\">".$parent."</a></td></tr>\n";
   }
-  $content .= "<tr> <td>".$lang["task_name"].":</td> <td><input type=\"input\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></td> </tr>\n";
+  $content .= "<tr> <td>".$lang["task_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></td> </tr>\n";
 }
 else {
   //project
-  $content .= "<tr> <td>".$lang["project_name"].":</td> <td><input type=\"input\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></td> </tr>\n";
+  $content .= "<tr> <td>".$lang["project_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></td> </tr>\n";
 }
 
 //deadline
@@ -114,7 +112,7 @@ $content .= "<tr> <td>".$lang["deadline"].":</td> <td>".date_select_from_timesta
 
 //priority
 
-  switch( $row["priority"] ) {
+  switch($row["priority"] ) {
       case "0":
       $s1 = "SELECTED"; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
       break;
@@ -148,10 +146,10 @@ $content .= "<tr> <td>".$lang["priority"].":</td> <td>\n".
             "</select></td></tr>\n";
 
 // status
-if( $row["parent"] != 0 ) {
+if($row["parent"] != 0 ) {
 
 //status for tasks
-  switch( $row["status"] ) {
+  switch($row["status"] ) {
     case "notactive":
       $s1 = ""; $s2 = " SELECTED"; $s3 = ""; $s4 =""; $s5 = "";
       break;
@@ -185,7 +183,7 @@ if( $row["parent"] != 0 ) {
 }
 else{
   //status for projects - 'done' is calculated from tasks
-  switch( $row["status"] ) {
+  switch($row["status"] ) {
     case "notactive":
       $s1 = " SELECTED"; $s2 = ""; $s3 = ""; $s4 = "";
       break;
@@ -213,7 +211,7 @@ else{
 }
 
 //task owner
-$user_q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname");
+$user_q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname" );
 $content .= "<tr> <td>".$lang["task_owner"].":</td> <td><SELECT name=\"owner\">\n".
             "<option value=\"0\">".$lang["nobody"]."</option>\n";
 
@@ -231,10 +229,10 @@ $content .= "</SELECT></td></tr>\n";
 
 
 //show a selection box with the Taskgroups
-if( $row["parent"] != 0 ){
+if($row["parent"] != 0 ){
 
   //get all users in order to show a task owner
-  $taskgroup_q = db_query("SELECT id, name FROM taskgroups ORDER BY name");
+  $taskgroup_q = db_query("SELECT id, name FROM taskgroups ORDER BY name" );
   $content .= "<tr> <td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#taskgroup\" target=\"helpwindow\">".$lang["taskgroup"]."</a>: </td> <td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang["no_group"]."</option>\n";
 
@@ -242,7 +240,7 @@ if( $row["parent"] != 0 ){
 
     $content .= "<option value=\"".$user_row["id"]."\"";
 
-    if( $row["taskgroupid"] == $user_row["id"] )
+    if($row["taskgroupid"] == $user_row["id"] )
       $content .= " SELECTED";
 
     $content .= ">".$user_row["name"]."</option>\n";
@@ -254,7 +252,7 @@ if( $row["parent"] != 0 ){
 
 
 //show all user-groups
-$usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
+$usergroup_q = db_query("SELECT name, id FROM usergroups ORDER BY name" );
 $content .= "<tr> <td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </td> <td><select name=\"usergroupid\">\n";
 $content .= "<option value=\"0\">".$lang["no_group"]."</option>\n";
 
@@ -273,11 +271,11 @@ for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++) {
 $content .= "</select></td></tr>\n";
 
 $global = "";
-if( $row["globalaccess"] == 't' )
+if($row["globalaccess"] == 't' )
   $global = "CHECKED";
 
 $group = "";
-if( $row["groupaccess"] == 't' )
+if($row["groupaccess"] == 't' )
   $group = "CHECKED";
 
 $content .= "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" $global></td></tr>\n".
@@ -295,10 +293,11 @@ $content .= "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalacce
             "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\">".
             "</form>\n";
 
-if( $row["parent"] == 0 ) {
+if($row["parent"] == 0 ) {
   $full_title = $lang["edit_project"];
   $title = $lang["project"];
-}else{
+}
+else{
   $full_title = $lang["edit_task"];
   $title = $lang["task"];
 }
@@ -312,7 +311,6 @@ $content .= "<form method=\"POST\" action=\"tasks.php\">\n".
             "</form>\n".
 
             "<br /><br />\n";
-
 
 new_box( $full_title, $content );
 

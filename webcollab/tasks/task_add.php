@@ -29,12 +29,9 @@
 
 */
 
-//get our location
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
 
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not make able to continue" );
-
-include_once( BASE."includes/security.php" );
 include_once( BASE."includes/admin_config.php" );
 include_once( BASE."includes/time.php" );
 
@@ -76,15 +73,15 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
     $project = $task_row["name"];
   else
     $project = db_result(db_query("SELECT name FROM tasks WHERE id=".$task_row["projectid"] ), 0, 0 );
-  
-  $content .= "<tr><td>".$lang["pproject"].":</td> <td><a href=\"tasks.php?x=".$x."&action=show&taskid=".$task_row["projectid"]."\">".$project."</a></td></tr>\n";
-  
+
+  $content .= "<tr><td>".$lang["pproject"].":</td> <td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$task_row["projectid"]."\">$project</a></td></tr>\n";
+
   //check if task has a parent task
   if( $task_row["parent"] != 0 ) {
-    $content .= "<tr><td>".$lang["parent_task"].":</td> <td><a href=\"tasks.php?x=".$x."&action=show&taskid=".$task_row["parent"]."\">".$task_row["name"]."</a></td> </tr>\n";
+    $content .= "<tr><td>".$lang["parent_task"].":</td> <td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$task_row["parent"]."\">".$task_row["name"]."</a></td> </tr>\n";
   }
   $content .= "<tr><td>".$lang["creation_time"].":</td> <td>".date("F j, Y, H:i")."</td> </tr>\n".
-              "<tr><td>".$lang["task_name"].":</td> <td><input type=\"input\" name=\"name\" size=\"30\"></td> </tr>\n".
+              "<tr><td>".$lang["task_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\"></td> </tr>\n".
               "<tr><td>".$lang["deadline"].":</td> <td>".date_select_from_timestamp( $task_row["deadline"] )." <small><i>".$lang["taken_from_parent"]."</i></small></td> </tr>\n";
 
   //priority
@@ -168,7 +165,7 @@ else {
               "<input type=\"hidden\" name=\"projectid\" value=\"0\">\n".
 
               "<tr> <td>".$lang["creation_time"].":</td><td>".date("F j, Y, H:i")."</td> </tr>\n".
-              "<tr> <td>".$lang["project_name"].":</td> <td><input type=\"input\" name=\"name\" size=\"30\"></td> </tr>\n".
+              "<tr> <td>".$lang["project_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\"></td> </tr>\n".
 
               //deadline
               "<tr><td>".$lang["deadline"].":</td> <td>".date_select()."</td> </tr>\n";

@@ -28,13 +28,8 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once(BASE."includes/security.php" );
-include_once(BASE."includes/database.php" );
-include_once(BASE."includes/common.php" );
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
 
 //
 // List tasks
@@ -99,7 +94,7 @@ if( db_numrows( $query ) < 1 ) {
   return;
 }
 
-$content .= "<table border=\"0\">\n".
+$content .= "<br /><table border=\"0\">\n".
             "<form method=\"POST\" action=\"users.php\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\">\n ".
@@ -132,7 +127,7 @@ for( $iter=0 ; $task_row = @db_fetch_array( $query, $iter ) ; $iter++) {
 
   //if no task, don't show project name either
   if( $new_content != "" ) {
-    $content .= "<ul><b>".$task_row["name"]."</b></ul>\n".
+    $content .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;<b>".$task_row["name"]."</b></p>\n".
                 "<ul>".$new_content."</ul>\n";
     //set flag to show there is at least one uncompleted task
     $flag = 1;

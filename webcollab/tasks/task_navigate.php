@@ -27,15 +27,11 @@
 
 */
 
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
 
 //secure variables
 $content  = "";
-
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once(BASE."includes/security.php" );
 
 //existing task or project
 if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
@@ -77,7 +73,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
   }
 
-  new_box( "Task navigation", $content );
+  new_box("Task navigation", $content );
 }
 
 //new task
@@ -89,7 +85,7 @@ elseif( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ){
   $row = db_fetch_array( $q, 0);
 
   //get project name
-  $project_name = substr(db_result(db_query( "SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 ), 0, 20);
+  $project_name = substr(db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 ), 0, 20);
 
   $content .= "<small><b>".$lang["pproject"].":</b></small><br />\n".
               "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["projectid"]."\">$project_name</a><br />\n";

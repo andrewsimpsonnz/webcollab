@@ -29,12 +29,9 @@
 
 */
 
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once(BASE."includes/security.php" );
 include_once(BASE."includes/time.php" );
 
 //is there an id ?
@@ -44,7 +41,7 @@ if( ! isset( $_GET["taskid"]) || ! is_numeric($_GET["taskid"]) || $_GET["taskid"
 $taskid = $_GET["taskid"];
 
 //check usergroup security
-include_once(BASE."includes/usergroup_security.php");
+require_once(BASE."includes/usergroup_security.php");
 
 //select the task info
 $q = db_query("SELECT * FROM tasks WHERE tasks.id=$taskid" );
@@ -87,12 +84,12 @@ $content .= "<table border=\"0\">\n";
 if( $row["owner"] == 0 ) {
   $content .= "<tr><td>".$lang["owned_by"].":</td><td>".$lang["nobody"]."</td></tr>\n";
 } else {
-  $owner = db_result( db_query("SELECT fullname FROM users WHERE id=".$row["owner"] ), 0, 0  );
+  $owner = db_result(db_query("SELECT fullname FROM users WHERE id=".$row["owner"] ), 0, 0  );
   $content .= "<tr><td>".$lang["owned_by"].": </td><td><a href=\"".$BASE_URL."users.php?x=$x&amp;action=show&userid=".$row["owner"]."\">".$owner."</a></td></tr>\n";
 }
 
 //get creator information
-$creator = db_result( db_query("SELECT fullname FROM users WHERE id=".$row["creator"] ), 0, 0  );
+$creator = db_result(db_query("SELECT fullname FROM users WHERE id=".$row["creator"] ), 0, 0  );
 $content .= "<tr><td>".$lang["created_on"].": </td><td>".nicedate($row["created"])." by <a href=\"".$BASE_URL."users.php?x=$x&amp;action=show&amp;userid=".$row["creator"]."\">".$creator."</a></td></tr>\n";
 
 //get deadline
@@ -309,5 +306,6 @@ switch( $row["owner"] ){
 $content .= "</small></div><br />\n";
 
 new_box( $title, $content );
+
 ?>
 

@@ -29,11 +29,9 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
 
-include_once(BASE."includes/security.php" );
 include_once(BASE."includes/admin_config.php" );
 include_once(BASE."includes/time.php" );
 include_once(BASE."includes/email.php" );
@@ -123,7 +121,8 @@ function user_access($taskid ) {
 
 //MAIN PROGRAM
 //update or insert ?
-if( valid_string($_REQUEST["action"]) ) {
+if( ! valid_string($_REQUEST["action"]) ) 
+  error("Task submit", "No request given" );
 
   switch( $_REQUEST["action"] ) {
 
@@ -549,11 +548,6 @@ if( valid_string($_REQUEST["action"]) ) {
       error("Task submit", "Invalid request given");
       break;
   }
-
-}
-else
-  error("Task submit", "No request given" );
-
 
 //this is quite crappy but it works ;)
 header("location: ".BASE."tasks.php?x=$x&action=show&taskid=$taskid" );
