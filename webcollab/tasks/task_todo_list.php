@@ -116,17 +116,21 @@ if(db_numrows($query ) < 1 ) {
 switch($selection ) {
   case "group":
     $userid = 0; $s1 = ""; $s2 = " SELECTED"; $s3 = " CHECKED"; $s4 = "";
-    if($groupid == 0 )
-      $s4 = " CHECKED";
     $tail = "AND usergroupid=$groupid";
+    if($groupid == 0 ) {
+      $s4 = " CHECKED";
+      $tail = "";
+    }
     break;
 
   case "user":
   default:
     $groupid = 0; $s1 = " CHECKED"; $s2 = ""; $s3 = ""; $s4 = " SELECTED";
-    if($userid == 0 )
-      $s2 = " SELECTED";
     $tail = "AND owner=$userid";
+    if($userid == 0 ) {
+      $s2 = " SELECTED";
+      $tail = "";
+    }
     break;
 }
 
