@@ -148,6 +148,10 @@ If at least one task has the Taskgroup set, all the tasks will be listed by Task
 Programming Quirks
 ==================
 
+"'The time has come,' the Walrus said, 'to talk of many things: Of shoes - and ships - and sealing
+wax - of cabbages - and kings - and why the sea is boiling hot - and whether pigs have wings.'"
+  -- Lewis Carroll (1832 - 1898): Through the Looking Glass
+
 
 - If an existing project is put 'On Hold' or 'Planned', any uncompleted existing tasks in the
 project will also be put to 'On Hold' or 'Planned' respectively.
