@@ -1,4 +1,18 @@
 WebCollab CVS
+*** 18 October 2003
+
+- add HTML entities to text translation to email messages
+
+- add charset control to language files
+
+- general formatting
+
+- bugfix: input field in usergroup boxes
+
+- bugfix: rewrite task_edit.php & task_menubox.php for better language compatibility
+
+
+WebCollab CVS
 *** 12 October 2003
 
 - German translation added (Michael Bunk)
