@@ -84,11 +84,11 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
 
   //log the user in
   db_query("INSERT INTO logins( user_id, session_key, ip, lastaccess )
-                       VALUES('".$user_id."', '".$session_key."', '".$ip."', current_timestamp(0) )" );
+                       VALUES('".$user_id."', '".$session_key."', '".$ip."', now() )" );
 
   //remove any old cookies (don't want session persistence here)
   if(isset($_COOKIE["webcollab_session"] ) )
-    setcookie("webcollab_session", "0", time()-3600 , directory(), $_SERVER["SERVER_NAME"], 0  );
+    setcookie("webcollab_session", "0" );
 
   //relocate the user to the main screen
   $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";

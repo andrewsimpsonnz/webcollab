@@ -38,8 +38,7 @@ include_once(BASE."includes/common.php");
     $db_name = $DATABASE_NAME;
 
 
-if( ! ( $database_connection = mysql_connect($db_host, $db_user, $db_pass ) ) ) {
-  $db_error_message = mysql_error($database_connection);
+if( ! ( $database_connection = @mysql_connect($db_host, $db_user, $db_pass ) ) ) {
   error( "No database connection",  "Sorry but there seems to be a problem in connecting to the database");
 }
 
@@ -67,7 +66,7 @@ function db_query( $query, $dieonerror=1 ) {
   $starttime = ( (float)$usec + (float)$sec );
 
   //check for a database connection
-  if( ! mysql_select_db($db_name, $database_connection ) ) {
+  if( ! @mysql_select_db($db_name, $database_connection ) ) {
     $db_error_message = mysql_error($database_connection );
     error("Database error", "No connection to a database" );
   }

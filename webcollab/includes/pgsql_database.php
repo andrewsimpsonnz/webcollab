@@ -76,19 +76,15 @@ function db_query($query, $dieonerror=1 ) {
   list($usec, $sec) = explode(" ", microtime() );
   $starttime = ( (float)$usec + (float)$sec );
 
-  //check the query
-  if( $query == "" )
-    error("Database Query error", "There was no query" );
-
   //check for a database connection
   if( ! $database_connection )
-    error("Database Query error", "There was no connection to a database" );
+    error("Database query error", "Connection to database has been unexpectedly lost" );
 
   //do it
-  if( ! ($result = @pg_query( $database_connection, $query ) ) ) {
+  if( ! ($result = @pg_query($database_connection, $query ) ) ) {
 
     if($dieonerror==1)
-      error("Database Query error", "The following query :<BR><BR><B> $query </B><BR><BR>Had the following error:<BR><B>".pg_errormessage($database_connection)."</B>" );
+      error("Database query error", "The following query :<br /><br /><b> $query </b><br /><br />Had the following error:<br /><b>".pg_errormessage($database_connection)."</b>" );
   }
 
   //add query time to global query time
