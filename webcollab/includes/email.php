@@ -169,7 +169,7 @@ clean		Reinstate encoded html back to original text.
 message		Prepare message body, and if necessary, 'quoted-printable' encode for SMTP transmission.
 subject		Check subject line and 'quoted printable' encode if required for SMTP transmission.
 headers		Assemble message headers to RFC 822.
-response		Get response to client command from the connected SMTP server.
+response	Get response to client command from the connected SMTP server.
 debug		Debug!
 */
 
@@ -335,7 +335,7 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   }
   $headers[] = $line;
   //assemble remaining message headers (RFC 821 / RFC 2045)
-  $headers[] = "From: WebCollab ".EMAIL_FROM;
+  $headers[] = "From: WebCollab <".EMAIL_FROM.">";
   $headers[] = "Reply-To: ".EMAIL_REPLY_TO;
 
   $headers = array_merge($headers, subject($subject ) );
