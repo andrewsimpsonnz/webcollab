@@ -28,7 +28,7 @@
 //get our location
 require_once("path.php" );
 
-require_once(BASE."config/config.php" );
+include_once(BASE."config/config.php" );
 
 switch($LOCALE ) {
 
