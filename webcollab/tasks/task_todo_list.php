@@ -35,7 +35,7 @@ require_once( BASE."includes/security.php" );
 // List tasks
 //
 
-function listTasks($task_id ) {
+function listTasks($task_id, $tail ) {
    global $x, $userid, $epoch, $lang;
   // show all subtasks that are not complete
   $q_tasks = db_query( "SELECT id, name, owner, deadline,
@@ -45,7 +45,7 @@ function listTasks($task_id ) {
                         WHERE projectid=$task_id
                         AND parent<>0
                         AND (status='created' OR status='active')
-                        AND owner=$userid
+                        $tail
                         ORDER BY deadline DESC" );
   if(db_numrows($q_tasks ) == 0 )
     return;
@@ -75,14 +75,24 @@ return $content;
 //START OF MAIN PROGRAM
 //
 
-$userid = $uid;
 $flag = 0;
 $content = "";
+
+//check validity of inputs
+if(isset($_POST["selection"]) && valid_string($_POST["selection"]) )
+  $selection = ($_POST["selection"]);
+else
+  $selection = "user";
 
 if(isset($_POST["userid"]) && is_numeric($_POST["userid"]) )
   $userid = ($_POST["userid"]);
 else
   $userid = $uid;
+
+if(isset($_POST["groupid"]) && is_numeric($_POST["groupid"]) )
+  $groupid = ($_POST["groupid"]);
+else
+  $groupid = 0;
 
 //query to get the all the projects
 $query = db_query("SELECT id, name FROM tasks WHERE parent=0 ORDER BY name" );
@@ -94,17 +104,34 @@ if(db_numrows($query ) < 1 ) {
   return;
 }
 
+//set selection & associated defaults for the text boxes
+switch($selection ) {
+  case "group":
+    $tail = "AND usergroupid=$groupid";
+    $userid = 0; $s1 = ""; $s2 = " SELECTED"; $s3 = " CHECKED"; $s4 = "";
+    break;
+
+  case "user":
+  default:
+    $tail = "AND owner=$userid";
+    $groupid = 0; $s1 = " CHECKED"; $s2 = ""; $s3 = ""; $s4 = " SELECTED";
+    break;
+}
+
 $content .= "<form method=\"POST\" action=\"users.php\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\">\n ".
             "<table border=\"0\">\n".
-            "<tr><td>".$lang["todo_list_for"]."</td><td><select name=\"userid\">\n".
-            "<option value=\"0\">".$lang["nobody"]."</option>\n";
+            "<tr><td>".$lang["todo_list_for"]."</td></tr>".
+            "<td><input type=\"radio\" value=\"user\" name=\"selection\"$s1>".$lang["users"]."</td><td>\n".
+            "<select name=\"userid\">\n".
+            "<option value=\"0\"$s2>".$lang["nobody"]."</option>\n";
 
 //get all users for option box
-$users_q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname");
+$q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname");
 
-for( $i=0 ; $row = @db_fetch_array($users_q, $i ) ; $i++) {
+//user input box fields
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= "<option value=\"".$row["id"]."\"";
 
   //highlight current selection
@@ -114,16 +141,34 @@ for( $i=0 ; $row = @db_fetch_array($users_q, $i ) ; $i++) {
   $content .= ">".$row["fullname"]."</option>\n";
 }
 
-$content .= "</select></td>\n".
-            "<td>\n".
-            "<input type=\"submit\" value=\"".$lang["update"]."\"></td></tr>\n".
+$content .= "</select></td></tr>\n".
+            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\"$s3>".$lang["usergroups"]."</td><td>\n".
+            "<select name=\"groupid\">\n".
+            "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
+
+//get all groups for option box
+$q = db_query("SELECT id, name FROM usergroups ORDER BY name" );
+
+//usergroup input box fields
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+  $content .= "<option value=\"".$row["id"]."\"";
+
+  //highlight current selection
+  if( $row[ "id" ] == $groupid )
+    $content .= " SELECTED";
+
+  $content .= ">".$row["name"]."</option>\n";
+}
+
+$content .= "</select><br /><br /></td></tr>\n".
+            "<tr><td><input type=\"submit\" value=\"".$lang["update"]."\"></td></tr>\n".
             "</table></form>\n".
             "<br />\n";
 
-// show all uncompleted tasks and projects belonging to this user
+// show all uncompleted tasks and projects belonging to this user or group
 for( $iter=0 ; $task_row = @db_fetch_array( $query, $iter ) ; $iter++) {
 
-  $new_content = listTasks($task_row["id"] );
+  $new_content = listTasks($task_row["id"], $tail );
 
   //if no task, don't show project name either
   if( $new_content != "" ) {
