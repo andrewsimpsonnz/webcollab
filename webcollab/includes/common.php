@@ -38,8 +38,8 @@ include_once(BASE."lang/lang.php" );
 function safe_data($body ) {
   
   //return null for nothing input
-  if(! @strlen($body) )
-    return "";
+  if(empty($body) )
+    return $body;
   
   //clean up & remove whitespace      
   $body = trim(clean_up($body) );
@@ -58,8 +58,8 @@ return $body;
 function safe_data_long($body ) {
 
   //return null for nothing input
-  if(! @strlen($body) )
-    return "";
+  if(empty($body) )
+    return $body;
     
   $body = clean_up($body);
   
@@ -83,7 +83,10 @@ function clean_up($body ) {
   
   //use HTML encoding for characters that could be used for css <script> attacks
   // and escape (with '\') characters that could be used for SQL injection attacks 
-  $body = str_replace(array(';', '<', '>', '|','(', ')', '+', '-', '=' ), array('\;', '&lt;', '&gt;', '&#124;', '\(', '\)', '\+', '\-', '\=' ), $body );
+  //$body = str_replace(array(';', '<', '>', '|','(', ')', '+', '-', '=' ), array('\;', '&lt;', '&gt;', '&#124;', '\(', '\)', '\+', '\-', '\=' ), $body );
+  
+  $trans = array(';'=>'&#059;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;');
+  $body = strtr($body, $trans ); 
   
   return $body;
 }
