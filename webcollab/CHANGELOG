@@ -11,7 +11,9 @@ WebCollab CVS
 
 - bugfix: rewrite task_edit.php & task_menubox.php for better language compatibility
 
-- added 'quoted-printable' and 'base64' encoding to email.php
+- added '8bit', 'quoted-printable' and 'base64' encoding to email.php
+
+- check for 8BITMIME capability on upstream mail server before using '8bit' encoding 
 
 WebCollab CVS
 *** 12 October 2003
