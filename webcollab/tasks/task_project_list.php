@@ -2,14 +2,11 @@
 /*
   $Id$
 
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
-  with much help from the people noted in the README
-
-  Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
-  by Andrew Simpson <andrew.simpson@paradise.net.nz>
+  Original file written as part of Core APM by Dennis Fleurbaaij 2001/2002.
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -67,35 +64,31 @@ function listTasks($task_id ) {
         continue;
     }
 
-    $content .= "<li>";
-    $status = "";
+    $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">".$row["name"]."</a> &nbsp;";
 
     switch( $row["status"] ) {
 
       case "cantcomplete":
-       $status = "<b><i>".$task_state["cantcomplete"]."</i></b>";
+       $content .= "<b><i>".$task_state["cantcomplete"]."</i></b>";
        break;
 
      case "notactive":
-       $status = "<i>".$task_state["task_planned"]."</i>";
+       $content .= "<i>".$task_state["task_planned"]."</i>";
        break;
 
      default:
       //check if late
       if( ($row["now"] - $row["task_due"] ) >= 86400 ) {
         //$status = "&nbsp;<img border=\"0\" src=\"images/late.gif\" height=\"9\" width=\"23\" alt=\"late\" />";
-        $status = "<font class=\"late\">".$lang["late_g"]."</font>";
+        $content .= "<font class=\"late\">".$lang["late_g"]."</font>";
       }
       break;
     }
-    $content .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">".$row["name"]."</a> &nbsp;".$status;
     $content .= "</li>\n";
   }
-  $content .= "</ul>";
+  $content .= "</ul>\n";
   return $content;
 }
-
-
 
 //
 //START OF MAIN PROGRAM
@@ -162,6 +155,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
         break;
 
       case "active":
+      case "nolimit":
       default:
         //carry on & show details
         break;
@@ -194,13 +188,12 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
     case "cantcomplete":
     case "notactive":
-    //no adjustment required
-    break;
+      //no adjustment required
+      break;
 
-  default:
-    if($percent_complete == 100 )
-      //set done
-      $project_status = "done";
+    default:
+      if($percent_complete == 100 )
+        $project_status = "done";
       break;
   }
 
@@ -265,7 +258,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
 $content .= "</table>\n";
 
-if($flag != 1 ) $content = $lang["no_allowed_projects"];
+if($flag != 1 )
+  $content = $lang["no_allowed_projects"];
 
 new_box($lang["projects"], $content );
 
