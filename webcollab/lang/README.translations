@@ -36,7 +36,7 @@ The righthand side of the equals sign is the string to be translated.  The strin
 enclosed in single (or double) quotes and ends with a semi-colon.
 
 Note:  Translated text enclosed by single quotes must have any another single quote(s)
-must be 'escaped' to prevent the text parser becoming confused.  This is done by adding a
+escaped to prevent the text parser becoming confused.  This is done by adding a
 backslash ('\') before the single quote.  For example:
 
     $lang['orig_message']                = 'Message d\'origine:'; 
@@ -123,7 +123,7 @@ This code must appear in the xx_message.php file
 
 "ISO-8859-1" is the character encoding that is used in the translation file.  It can be
 any generally accepted IANA character set (e.g. iso-8859-1, cp-1252, koi8-r).  This value
-is passed onto the web browser.
+is passed on to the web browser.
 
 Please use single-byte character sets with standard WebCollab.  The Unicode version of
 WebCollab will work better with multi-byte character sets (e.g. utf-8, euc_kr, gb2312). 
@@ -169,4 +169,4 @@ To make the translation active, three files in /lang need to be altered:
     case "xx":
     include(BASE."lang/xx_email.php" );
     break;
-    
+
