@@ -1,0 +1,159 @@
+Files
+=====
+
+There are three message translation files in this directory:
+
+    xx_message.php
+    
+    xx_long_message.php
+    
+    xx_email.php
+    
+For the keen translators there are two help files in /help:
+
+    xx_help_admin.php
+    
+    xx_help.php
+    
+    
+General Arrangement
+=================== 
+
+Here is how the translation files work:
+
+
+    $lang['name']                       = 'Name';
+  ^^^^^^^^^^^^^^^^
+         
+The lefthand side of the equals sign is the call up tag for the word string (text).  This
+needs to remain as shown.  
+    
+       
+    $lang['name']                       = 'Name';
+                                         ^^^^^^^^
+
+The righthand side of the equals sign is the string to be translated.  The string is
+enclosed in single (or double) quotes and ends with a semi-colon.
+
+Note:  Translated text enclosed by single quotes must have any another single quote(s)
+must be 'escaped' to prevent the text parser becoming confused.  This is done by adding a
+backslash ('\') before the single quote.  For example:
+
+    $lang['orig_message']                = 'Message d\'origine:'; 
+    
+    
+The same applies to translated text enclosed by double quotes and containing double
+quote(s).    
+                                           
+Some messages contain strings like %s, %1$s, \n and HTML (<br />, <b>, <p> etc).
+
+  %s, %1$s           - are placeholders for values to be inserted by the code.
+  \n                 - tells the browser to place a linebreak in the HTML code.
+  <br />, <b>, <p>   - are HTML formatting codes
+  
+  ABBR_MANAGER_NAME )
+  MANAGER_NAME      )- are all defined values set by the code
+  BASE_URL          )    (e.g. MANAGER_NAME = WebCollab)
+                      
+                        
+    
+General Style for xx_message.php
+================================
+
+
+**     $lang['xxxx']
+     
+String (eg: 'Project')
+
+
+**     $lang['xxxx_sprt']
+     
+Formatted print string 
+(eg: 'Files associated with this %s' - where %s is inserted by the code)
+
+Note: Formatted strings with %1$s; %2$s; %3$s etc. can have parameters interchanged - as
+in:
+
+'Message from %1$s about %2$s'
+ 
+ _could also be_ 
+
+'Message about %2$s from %1$s'
+    
+
+**    $lang['xxxx_g']
+    
+Graphical string (e.g. '&nbsp;LATE&nbsp;')
+
+Note:  To look correct on the screen, these items should start and end with a HTML space
+(&nbsp;).
+
+
+**    $lang['xxxx_javascript']
+
+String is used in Javascript (No special requirements).
+
+(eg: 'Are you sure you want to delete?') 
+
+    
+
+Special Strings in xx_message.php
+=================================
+
+$month_array = array (NULL, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+'Oct', 'Nov', 'Dec' );
+
+This list contains abbreviated months of the year.  The first item is always NULL (with
+no quotes around).
+
+
+
+$week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
+
+This list contains abbreviated days of the week. 
+
+
+Character Encoding
+==================
+
+This code must appear in the xx_message.php file
+
+//required language encodings
+$web_charset = 'iso-8859-1';
+$email_charset = 'iso-8859-1';
+
+
+$web_charset is the character encoding that is used in the translation file.  It can be
+any generally accepted character set (e.g. iso-8859-1, cp-1252, koi8-r).  This value is
+passed onto the web browser.
+
+$email_charset is as above, but used for emails.
+
+For most West European languages use iso-8859-1. 
+
+
+Making the Translation Active
+=============================
+
+To make the translation active, three files in /lang need to be altered:
+
+1. To 'lang.php', add the line below to the existing list:
+
+    case "xx":
+    include(BASE."lang/xx_message.php" );
+    break;
+    
+   (Change xx to suit your language!)
+
+2.  To 'lang_long.php', add the line below to the existing list:
+
+    case "xx":
+    include(BASE."lang/xx_long_message.php" );
+    break;
+
+3.  To 'lang_email.php', add the line below to the existing list:
+
+    case "xx":
+    include(BASE."lang/xx_email.php" );
+    break;
+    
