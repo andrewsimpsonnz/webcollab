@@ -23,7 +23,7 @@
 
   Language files for 'en' (English)
 
-  Maintainer: Andrew Simpson <andrew.simpson@paradise.net.nz>
+  Maintainer: Andrew Simpson <andrew.simpson at paradise.net.nz>
 
 */
 
@@ -357,7 +357,9 @@ $lang = array(
  "task_options" => "Task options",
  "task_navigation" => "Task navigation",
  "no_projects" => "There are no projects to view",
+ //**
  "show_all_projects" => "Show all projects",
+ //**
  "show_active_projects" => "Show only active projects",
  "project_hold_sprt" => "Project On Hold from %s",
  "project_planned" => "Planned Project",
@@ -404,8 +406,11 @@ $lang = array(
  "by_deadline" => " (by deadline)",
  "by_status" => " (by status)",
  "by_owner" => " (by owner)",
+ //**
  "project_cloned" => "Project to be cloned :",
+ //**
  "task_cloned" => "Task to be cloned :",
+ //**
  "note_clone" => "Note: The task will be cloned as a new project",
 
 //bits 'n' pieces

@@ -24,7 +24,7 @@
 
   Language files (long messages) for 'ca' (Catalan)
 
-  Trnaslation: Daniel Hernandez (dhernan2@pie.xtec.es)
+  Trnaslation: Daniel Hernandez (dhernan2 at pie.xtec.es)
 
   Maintainer: 
 

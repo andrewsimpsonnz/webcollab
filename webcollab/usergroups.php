@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz> 
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
   
   WebCollab
   ---------------------------------------
@@ -78,8 +78,8 @@ if( ! isset($_REQUEST["action"]) )
     case "submit_edit":
     case "submit_insert":
     case "submit_del":
-    include("usergroups/usergroup_submit.php" );
-    break;
+      include("usergroups/usergroup_submit.php" );
+      break;
 
     //Error case
     default:

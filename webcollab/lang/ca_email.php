@@ -24,7 +24,7 @@
 
   Email text language files for 'ca' (Catalan)
 
-  Translation: Daniel Hernandez (dhernan2@pie.xtec.es)
+  Translation: Daniel Hernandez (dhernan2 at pie.xtec.es)
 
   Maintainer:
 
