@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>FAQhtml</title>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+ <link REL="StyleSheet" HREF=doc.css TYPE="text/css">
+</head>
+<body>
+<h1>WebCollab Frequently Asked Questions (FAQ)</h1>
+<h3>START UP PROBLEMS</h3>
+<dl>
+<dt>1. "Initial installation works, but logging in as admin has no effect
+(no error message either)."</dt>
+<dd>This problem has often occurred with PHP 4.0.6 and lower.  WebCollab will
+only run on PHP  4.1.0, or higher.  PHP 4.0.6 does not support $_POST[], $_GET[] or $_REQUEST[]
+global arrays.</dd>
+<dt>2. "Initial installation works, but logging in as admin gives a blank
+screen."</dt>
+<dd>Check that PHP has your database extensions compiled in.  From the command
+line type 'php -m':<br>
+<br>
+# php -m<br>
+Running PHP 4.2.2<br>
+Zend Engine v1.2.0, Copyright (c) 1998-2002 Zend Technologies<br>
+<br>
+[PHP Modules]<br>
+mysql<br>
+pgsql<br>
+<br>
+[Zend Modules]<br>
+<br>
+#<br>
+<br>
+Look for mysql and/or pgsql as required in the modules listing that follows.<br>
+<br>
+Most likely cause is that the default file for php.ini has the mysql or pgsql
+module line commented out.  Look for lines in php.ini like this:<br>
+<br>
+;extension=mysql.so<br>
+;extension=pgsql.so<br>
+<br>
+Remove the semi-colon ';' from the module you want, and restart Apache. <br>
+<br>
+Also - many  Linux distributions have separate packages (*.rpm, *.deb, etc)
+for the main PHP files and the MySQL/PostgreSQL PHP support.  You need to install the relevant
+modulepackage as well.</dd>
+<dt>3. "Can login, but the main page is not found (404 error)."</dt>
+<dd>Check that the the parameter $BASE_URL is correctly stated in config.php.
+ Did you remember to add the trailing slash "/" as the config file says?</dd>
+<dt>4. "Does WebCollab use cookies?"</dt>
+<dd>Yes, if possible. Cookies are preferred for session management, but aren't
+reliable with all browsers.<br>
+<br>
+Webcollab attempts to set a session cookie at the login.  Additionally it
+uses encoded URI's at this stage, also for session management.  If the session cookie is found to be
+successful (ie the user's browser accepts the cookie), the encoded URI's are dropped. Otherwise
+session management with encoded URI is continued.<br>
+<br>
+The session cookie lasts only as long as the current session.  It should be automatically destroyed
+when the browser is closed, or the user logs out.</dd>
+<dt>5. "Does Magic Quotes need to be set 'on' or 'off' in php.ini?"</dt>
+<dd>No, WebCollab reads the magic_quote setting in php.ini, and uses addslashes() on input data if
+magicquotes is 'off'in php.ini.</dd>
+<dt>6. "Does Register Globals need to be 'on' in php.ini?"</dt>
+<dd>The Register Globals setting does not affect WebCollab. For security reasons it has defaulted to
+'off' since PHP 4.2.0.</dd>
+</dl>
+<h3>CUSTOMISING WEBCOLLAB</h3>
+<dl>
+<dt>1. Can the 'Done', 'Active', 'On Hold' etc, labels be changed?</dt>
+<dd>Yes, all the parameters are defined in the language files in /webcollab/lang/ They can be easily
+changed to suit.<br>
+<br>
+Alternatively, a new customised language file can be set up and defined in
+/webcollab/lang/language.php</dd>
+<dt>2. Can the splash screen image be changed?</dt>
+<dd>Yes, add the new image to /webcollab/images/ and set the $SITE_IMG parameter in config.php</dd>
+<dt>3. Can background colours be changed?</dt>
+<dd>Yes, see the style sheet /webcollab/css.css and /webcollab/includes/screen.php.</dd>
+<dt>4. Can external webserver authorisation be used instead of the login screen.</dt>
+<dd>Yes, set the $WEB_AUTH parameter to "Y" in config.php.  Username is taken from the REMOTE_USER
+environment variable set by Apache.</dd>
+</dl>
+<h3>UPLOADING FILES</h3>
+<dl>
+<dt>1. Error message about wrong configuration when uploading files with the file upload
+feature.</dt>
+<dd>For Linux and *nix: Make sure the /webcollab/files/filebase directory is writeable by the
+webserver. This means the directory should be either owned by the webserveruser (usually apache, www
+orwww-data) or the directory must be world-writeable.<br>
+<br>
+Use 'chmod 777 filebase' from the files directory, and preferably move the directory outside the
+webserver root - see item 3 below.</dd>
+<dt>2. File upload gives message about server configuration not allowing uploads.</dt>
+<dd>Check that the PHP configuration file, php.ini, is set to allow file uploads. Check that
+'file_uploads = On', or file uploads cannot work.</dd>
+<dt>3. File upload security.</dt>
+<dd>If you use the default /webcollab/files/filebase directory, it is possible for users to navigate
+to the directory with their browsers and view the files present.  WebCollab has the filebase
+directoryprotected by a index.html file and .htaccess file, but this is not foolproof.<br>
+<br>
+Ideally, for good security move the file upload directory to outside the webserver root
+directory.  WebCollab can accommodate an upload directory in any location of the local
+file system - not just the webserver root directory.  Make sure the chosen directory is writeable
+by the user that normally runs the webserver. </dd>
+</dl>
+<h3>EMAIL SETUP</h3>
+<dl>
+<dt>1. How does email work in WebCollab?</dt>
+<dd>Early versions of WebCollab used the mail() function call in PHP.  In most cases it worked, but
+it can be difficult, particularly with Windows machines.<br>
+<br>
+WebCollab now uses the standard SMTP protocol over TCP/IP to 'talk' to a mail server.  The mail
+server can be remote or local.<br>
+<br>
+In config.php:<br>
+<br>
+$SMTP_HOST = DNS name or IP address of the SMTP server</dd>
+</dl>
+<h3>REMOTE DATABASE</h3>
+<dl>
+<dt>1. Why can't remote databases be used with PostgreSQL?</dt>
+<dd>Since version 6.3 (March 1998) PostgreSQL uses unix domain sockets by default. TCP port will NOT
+be opened by default. The TCP option can be enabled with the '-i' flag topostmasterand it's meaning
+is: "listen on TCP/ IP sockets as well as Unix domain sockets".<br>
+<br>
+Usually the pg_hba.conf (PostgreSQL config file) also needs to be edited to allow TCP/IP
+connections.<br>
+<br>
+Changing $DATABASE_HOST in config.php from "localhost" to anything else (including
+127.0.0.1) without reconfiguring PostgreSQL will <u>always</u> prevent WebCollab from connecting
+to the database.</dd>
+</dl>
+<h3>DATABASE TYPES</h3>
+<dl>
+<dt>1. What are the database types in the config file?</dt>
+<dd>
+<table>
+<tr><td>postgresql</td><td>=&gt; Postgresql abstraction layer</td></tr>
+<tr><td>mysql</td><td>=&gt; standard MySQL abstraction layer</td></tr>
+<tr><td>mysql_innodb</td><td>=&gt; MySQL abstraction layer with innodb transaction
+support</td></tr>
+</table>
+</dd>
+</dl>
+<h3>TRANSACTIONS</h3>
+<dl>
+<dt>1. Are database transactions used?</dt>
+<dd>The PostgreSQL abstraction layer always uses transactions to provide better security against
+power failure (or crash) during writing causing errors, or other similar database
+corruption.<br>
+<br>
+The mysql_innodb abstraction layer uses transactions.  For MySQL version 3.23.xx the database must
+be correctly configured to allow innodb databases to be used.  See the online MySQL manual for
+more details:<br>
+<a 
+href="http://www.mysql.com/doc/en/InnoDB_in_MySQL_3.23.html">
+http://www.mysql.com/doc/en/InnoDB_in_MySQL_3.23.html</a><br>
+<br>
+ For MySQL version 4.0, and above, innodb database support is enabled by default.  For these
+versions (and configured 3.23.xx versions) it is recommended that the database be created with
+the mysql_innodb database creation script, and the mysql_innodb abstraction layer is used.
+Using transactions significantly reduces the risk of corrupted databases.
+</dd>
+</dl>
+<h3>DATABASE BACKUP</h3>
+<dl>
+<dt>1. Can the database be backed up?</dt>
+<dd>Two UNIX based shell scripts are provided in /webcollab/db for backing up WebCollab
+databases.<br>
+<br>
+MySQL:<br>
+<br>
+<em>dump_mysql.sh</em><br>
+&nbsp;&nbsp;&nbsp;Usage: dump_mysql.sh &nbsp;&lt;database user&gt;&nbsp;&lt;database
+name&gt;&nbsp;&lt;databasepassword&gt;<br>
+<br>
+PostgreSQL:<br>
+<br>
+<em>dump_postgresql.sh</em><br>
+&nbsp;&nbsp;&nbsp;Usage: dump_postgresql.sh &nbsp;&lt;database name&gt;<br>
+<br>
+Both dump into a plain text file.  They can be automated with a cron job and emailed to a back
+up machine at regular intervals. </dd>
+</dl>
+</body>
+</html>

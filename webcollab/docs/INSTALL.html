@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>FAQhtml</title>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+ <link REL="StyleSheet" HREF=doc.css TYPE="text/css">
+</head>
+<body>
+<h1>WebCollab Setup</h1>
+<h3>SETUP FOR MYSQL</h3>
+<h4>1. Database Setup and Customisation:</h4>
+<p><b>Note</b>: If you are using Linux, you can automate database creation and populating
+with tables. See <a href="#linux">below</a>.</p>
+<ul>
+<li>Make sure you have a valid user account and password for MySQL.  (We'll call them 'user_name'and
+'your_password' in this example).</li>
+<li>Choose a new MySQL database name with aconvenient name of your choice.  (We'll call the database
+'webcollab' in this example).</li>
+<li>Enter the MySQL database command mode.  Make sure that your user_name has enough rights to
+make new databases.  Enter your password when prompted.</li>
+</ul>
+<pre class="screen"># mysql -u user_name -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 114 to server version: 3.23.54
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql>
+</pre>
+<ul>
+<li>Create the database 'webcollab', and then quit the command mode.  Don't forget the semi-colon
+at the end of the first line!</li>
+</ul>
+<pre class="screen">
+mysql> CREATE DATABASE webcollab;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> \q
+Bye
+#
+</pre>
+<h4>2. Populate Database:</h4>
+<ul>
+<li>Use the provided "webcollab-*.**/db/mysql.sql" script to populate the webcollab
+database.</li>
+<li>For a *nix system navigate to your webserver root directory.  Enter your password again when
+prompted.</li>
+</ul>
+<pre class="screen">
+#mysql -u user_name -p webcollab<./webcollab-*.**/db/schema_mysql.sql
+</pre>
+<ul>
+<li>If you are installing to a Windows system, then from the command prompt, work your way into the
+"webcollab/db" folder.  Then, run the following command:</li>
+</ul>
+<pre class="screen">
+ mysql -uuser_name -pyour_password webcollab>schema_mysql.sql
+</pre>
+<h4>3. Configuration File Customization:</h4>
+<ul>
+<li>Open the file webcollab/config.php with your favourite text editor.</li>
+<li>Fill in <b>$BASE_URL</b> with the address of your site:</li>
+</ul>
+<pre class="screen">
+$BASE_URL = "http//yourdomain.com/webcollab-*.**/";
+</pre>
+<ul>
+<li>Fill in <b>$DATABASE_NAME</b>, <b>$DATABASE_USER</b> and <b>$DATABASE_PASSWORD</b>:</li>
+</ul>
+<pre class="screen">
+$DATABASE_NAME="webcollab";
+$DATABASE_USER="user_name";
+$DATABASE_PASSWORD="your_password";
+</pre>
+<ul>
+<li>If you are using a database on a remote machine, then change the default value of
+<b>$DATABASE_HOST</b> too.</li>
+<li>Save and close the file.</li>
+</ul>
+<h4>4. Getting Online:</h4>
+<ul>
+<li>Point your browser to http://yourdomain.com/webcollab-*.**/index.php.  If all is well, you
+should see a login page.<br>Username: <b>admin</b>
+<br>Password: <b>admin123</b>
+<br>&nbsp;
+</ul>
+<h4>5. Change Admin Password and Email Address</h4>
+<ul>
+<li>Click on the 'Edit user details' button and change the admin password (and email address) as
+soon as possible.</li>
+</ul>
+<h4>6. Admin Config Setup</h4>
+<ul>
+<li>From the main screen, click on the 'Admin config' link in the menu boxes, lefthand side of
+page.  Depending on your screen resolution, you may have to scroll down to see it.</li>
+<li>Enter the requiste email addresses for your site into the boxes.  Click on the descriptions for
+more help.</li>
+<li>The default checkbox settings in the lower part of the form can be left for now.</li>
+<li>Press the update button.</li>
+</ul>
+<a name="linux"></a>
+<h3>AUTOMATED MYSQL INSTALLATION FOR LINUX</h3>
+<ol>
+<li>Proceed through steps 1 and 2 as above.</li>
+<li>Create and Populate the Database</li>
+<ul>
+<li>Make sure you have a valid user account and password for MySQL.  (We'll call them 'user_name'
+ and 'your_password' in this example).</li>
+<li>Choose a new MySQL database name with a convenient name of your choice.  (We'll call the
+database 'webcollab' in this example).</li>
+<li>Navigate to your webserver root directory.</li>
+<li>Run the command db_create_mysql.sh with the required options</li>
+</ul>
+<pre class="screen">
+#./webcollab-*.**/db/db_create_mysql.sh user_namewebcollab your_password
+</pre>
+<ul>
+<li>All done!</li>
+<li>Carry on from step 4 above.</li>
+</ul>
+</ol>
+<h3>SETUP FOR POSTGRESQL</h3>
+<h4>1. PostgreSQL Database Setup and Customisation:</h4>
+<p><b>Note</b>: If you are using Linux, you can automate database creation and populating
+with tables. See <a href="#linux_postgres">below</a>.</p>
+<ul>
+<li>Make sure you have a valid user account and password for PostgreSQL.  (We'll call them
+'user_name'and'your_password' in this example).</li>
+<li>Choose a new PostgreSQL database name with a convenient name of your choice.  (We'll call the
+database'webcollab' in this example).</li>
+<li>Enter the MySQL database command mode.  Make sure that your user_name has enough rights to
+make new databases.  Enter your password when prompted.</li>
+</ul>
+<pre class="screen">
+# createdb -W -U user_name webcollab
+Enter password:
+=# CREATE DATABASE 'database name';
+=# \q
+</pre>
+<h4>2. Populate Database:</h4>
+<ul>
+<li>Use the provided "webcollab-*.**/db/pgsql.sql" script to populate the webcollab database.</li>
+<li>For a *nix system navigate to your webserver root directory.  Enter your password again when
+prompted.</li>
+</ul>
+<pre class="screen">
+# psql -U 'database_user' -e 'database_name' < schema-pgsql.sql
+</pre>
+<h4>3. Configuration File Customization:</h4>
+<ul>
+<li>Open the file webcollab/config.php with your favourite text editor.</li>
+<li>Fill in <b>$BASE_URL</b> with the address of your site:</li>
+</ul>
+<pre class="screen">
+$BASE_URL = "http//yourdomain.com/webcollab-*.**/";
+</pre>
+<ul>
+<li>Fill in <b>$DATABASE_NAME</b>, <b>$DATABASE_USER</b>, <b>$DATABASE_PASSWORD</b> and
+<b>DATABASE_TYPE</b>:</li>
+</ul>
+<pre class="screen">
+$DATABASE_NAME="webcollab";
+$DATABASE_USER="user_name";
+$DATABASE_PASSWORD="your_password";
+$DATABASE_TYPE="postgresql"
+</pre>
+<ul>
+<li>Do not changethe default value of <b>$DATABASE_HOST</b> unless you have
+re-configured PostgreSQL to accept TCP/IP connections</li>
+<li>Save and close the file.</li>
+<li><em>Optional:</em> With a text editor comment out in the file index.php the 'Powered by MySQL'
+logo line, and uncomment the 'Powered by Postgresql' logo line!!</li>
+<li>Follow on from the MySQL instructions above</li>
+</ul>
+<a name="linux_postgres"></a>
+<h3>AUTOMATED POSTGRESQL INSTALLATION FOR LINUX</h3>
+<ol>
+<li>Create and Populate the Database</li>
+<ul>
+<li>Make sure you have a valid user account and password for PostgreSQL.  (We'll call them
+'user_name'and 'your_password' in this example).</li>
+<li>Choose a new PostgreSQL database name with a convenient name of your choice.  (We'll call the
+database 'webcollab' in this example).</li>
+<li>Navigate to your webserver root directory.</li>
+<li>Run the command db_create_mysql.sh with the required options</li>
+</ul>
+<pre class="screen">
+# ./db_create_pgsql.sh user_name webcollab
+</pre>
+<ul>
+<li>All done!</li>
+<li>Carry on from step 3 above.</li>
+</ul>
+</ol>
+</body>
+</html>
