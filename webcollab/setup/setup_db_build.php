@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2003 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -59,6 +59,9 @@ include_once(BASE."setup/screen_setup.php" );
     $database_host = "localhost";
   }
 
+  if(preg_match('/[^A-Z0-9_$]/i', $database_name ) )
+    error_setup("Database names can only consist of alphanumeric characters, '_' (underscore), and '$'."); 
+  
   switch ($database_type) {
 
   case "mysql":
