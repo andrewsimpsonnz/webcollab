@@ -217,7 +217,7 @@ else {
   $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </TD><TD>".$lang["task_not_in_usergroup"]."</TD></TR>\n";
 }
 
-$content .= "</TD></TR></TABLE>\n";
+$content .= "</TABLE>\n";
 
 //this part shows all the options the users has
 $content .= "<BR><DIV align=\"center\"><SMALL>\n";
