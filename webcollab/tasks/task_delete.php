@@ -134,20 +134,6 @@ for($i=0 ; $i < $arrayindex ; $i++ ) {
 
 }
 
-/*
-//if remaining tasks are completed, then mark the project as 'done'
-if($row["parent"] != 0 ){ 
-  if(round(percent_complete($projectid ) ) == 100 ){
-    db_query("UPDATE ".PRE."tasks SET status='done', finished_time=now() WHERE id=".$row["projectid"] );
-  }
-  else{
-    if(db_result(db_query("SELECT status FROM ".PRE."tasks WHERE id=".$row["projectid"] ), 0, 0 ) == 'done' ) {
-    db_query("UPDATE ".PRE."tasks SET status='active', finished_time=now() WHERE id=".$row["projectid"] );
-    }
-  }  
-}
-*/
-
 if($row["parent"] != 0 ){    
   //set the new completed percentage project record
   $percent_completed = round(percent_complete($row["projectid"] ) );
