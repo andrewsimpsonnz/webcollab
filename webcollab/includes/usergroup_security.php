@@ -53,6 +53,7 @@ if( ($group_row[0] != 0 ) && ($group_row[1] == 'f' ) ) {
     warning($lang['access_denied'], $lang['private_usergroup'] );
 }
 
+/*
 //if this is a task, then get project data  
 if($group_row[2] != $taskid ) {
   $project_q = db_query("SELECT usergroupid, globalaccess FROM ".PRE."tasks WHERE id=".$group_row[2] );
@@ -66,5 +67,5 @@ if($group_row[2] != $taskid ) {
       warning($lang['access_denied'], $lang['private_usergroup'] );
   }
 }
-
+*/
 ?>
