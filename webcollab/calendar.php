@@ -124,7 +124,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
   $pad = 0;
 
   //search for tasks on this date
-  $q = db_query( "SELECT id, name, parent, status, usergroupid, globalaccess FROM tasks WHERE deadline='$year-$month-$num'" );
+  $q = db_query("SELECT id, name, parent, status, usergroupid, globalaccess FROM tasks WHERE deadline='$year-$month-$num'" );
 
   if( db_numrows($q) > 0 ) {
     for( $j=0 ; $row = @db_fetch_array($q, $j ) ; $j++) {
@@ -136,7 +136,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
           continue;
       }
 
-      switch( $row["status"]) {
+      switch($row["status"] ) {
         case "notactive":
         case "cantcomplete":
         case "nolimit":
@@ -146,11 +146,11 @@ for ($num = 1; $num <= $numdays; $num++ ) {
 
         default:
           //active task or project
-          switch( $row["parent"]) {
+          switch($row["parent"] ) {
              case "0":
                //project
                //check if tasks are all complete
-               if( db_result( db_query( "SELECT COUNT(*) FROM tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent>0" ), 0, 0 ) == 0 )
+               if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent>0" ), 0, 0 ) == 0 )
                  $name = "<font color=\"green\"><u>".$row["name"]."</u>";
                else
                  $name = "<font color=\"blue\">".$row["name"];
@@ -159,7 +159,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
 
              default:
             //task
-              if( $row["status"] == "done" )
+              if($row["status"] == "done" )
                 $name = "<font color=\"green\">".$row["name"];
               else
                 $name = "<font color=\"red\">".$row["name"];

@@ -39,8 +39,8 @@ function listTasks($task_id ) {
    global $x, $userid, $epoch, $lang;
   // show all subtasks that are not complete
   $q_tasks = db_query( "SELECT id, name, owner, deadline,
-                        $epoch deadline) as task_due,
-                        $epoch now() ) as now
+                        $epoch deadline) AS task_due,
+                        $epoch now() ) AS now
                         FROM tasks
                         WHERE projectid=$task_id
                         AND parent<>0
@@ -54,7 +54,7 @@ function listTasks($task_id ) {
 
    for( $iter=0 ; $task_row = @db_fetch_array($q_tasks, $iter ) ; $iter++) {
 
-     $content .= "<li> <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_row[ "id" ]."\">";
+     $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_row[ "id" ]."\">";
 
      //add highlighting if deadline is due
      $state = ceil( ($task_row["task_due"]-$task_row["now"] )/86400 );
@@ -85,7 +85,7 @@ else
   $userid = $uid;
 
 //query to get the all the projects
-$query = db_query("SELECT id, name FROM tasks WHERE parent = 0 ORDER BY name" );
+$query = db_query("SELECT id, name FROM tasks WHERE parent=0 ORDER BY name" );
 
 // check if there are projects
 if(db_numrows($query ) < 1 ) {
