@@ -78,7 +78,7 @@ function listTasks( $task_id ) {
        break;
 
      case "notactive":
-       $status = "<I>".$lang["task_planned"]."</I>";
+       $status = "<I>".$task_state["task_planned"]."</I>";
        break;
 
      default:

@@ -140,7 +140,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
           switch( $row["status"] ) {
             case "notactive":
 	      $color = "";
-              $status =  $lang["task_planned"];
+              $status =  $task_state["task_planned"];
               break;
 
             case "cantcomplete":
@@ -165,10 +165,15 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
         case "created":
           $status =  $task_state["new"];
           break;
-
+	  
+        case "active":
+          $color = "orange";
+          $status =  $task_state["task_active"];
+          break;
+	  
         case "notactive":
           $color = "";
-          $status =  $lang["task_planned"];
+          $status =  $task_state["task_planned"];
           break;
 
         case "cantcomplete":
