@@ -66,11 +66,12 @@ include_once(BASE."setup/screen_setup.php" );
     //check we can do mysql functions!!
     if( ! function_exists('mysql_connect' ) )
       error_setup( "Your version of PHP does not have support for MySQL<br /><br />".
-                   "Check that MySQL support is compiled in, and enabled in php.ini config file<br />" );
+                   "Check that MySQL support is installed, and the MySQL extension is enabled in the 'php.ini' configuration file<br /><br />".
+                   "Refer to the FAQ document for more information." );
     //connect to database server
     if( ! ( $database_connection = @mysql_connect( $database_host, $database_user, $database_password ) ) ) {
       error_setup( "Cannot connect to a database server at $database_host<br /><br />".
-                    "Check that your specified user and password are correct, and that the database is running.<br /><br />".
+                    "Check that your specified user and password are correct, and that a MySQL database is running on $database_host.<br /><br />".
                     "User:     $database_user<br />Password: $database_password<br />" );
     }
 
@@ -79,7 +80,9 @@ include_once(BASE."setup/screen_setup.php" );
 
       //no database exists yet - try and create it...
       if( ! ($result = @mysql_query( "CREATE DATABASE ".$database_name, $database_connection ) ) )
-        error_setup("Connected to the database server, but database creation had the following error: <br />".mysql_error($database_connection) );
+        error_setup("Connected successfully to the database server, but database creation had the following error: <br />".
+                             "<b>".mysql_error($database_connection)."</b><br /><br />".
+                             "The error message was created by the MySQL database server." );
 
       //select the newly created database
       if( ! @mysql_select_db( $database_name, $database_connection ) )
@@ -101,7 +104,7 @@ include_once(BASE."setup/screen_setup.php" );
 
     //open schema file
     if( ! $handle = fopen($db_schema, "r" ) ) {
-      error_setup("Not able to read database schema file" );
+      error_setup("Not able to read database schema file." );
     }
 
     //input the file
@@ -124,7 +127,9 @@ include_once(BASE."setup/screen_setup.php" );
     //create each table
     foreach($table_array as $table ){
       if( ! ($result = @mysql_query($table, $database_connection ) ) ) {
-        error_setup("The database table creation had the following error:<br /> ".mysql_error($database_connection) );
+        error_setup("The database table creation had the following error:<br /><br /> ".
+                            "<b>".mysql_error($database_connection)."</b><br /><br /> ".
+                            "The error message was created by the PostgreSQL database server." );
       }
     }
     break;
