@@ -1,6 +1,6 @@
 BODY {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
   margin : 0;
   background : #6085AC;
   color : #000000;
@@ -8,53 +8,53 @@ BODY {
 
 FONT {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
 }
 
 FONT.textlink {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 8pt;
-  font-style : bolder; 
+  font-size : 10px;
+  font-style : bold;
 }
 
 LI {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
   list-style-type: circle;
 }
 
 LI LI {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
   list-style-type: disc;
 }
 
 TD {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
 }
 
-.loginbox {
+TABLE.loginbox {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
   text-align : center;
   border : 0;
   padding : 0;
   width : 400px;
 }
 
-.tablebox {
+TABLE.tablebox {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
   text-align : left;
   border : 0;
   padding : 0;
   width : 97%;
 }
 
-.boxhead {
+TD.boxhead {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
   font-weight : bold;
   text-align : left;
   padding-top : 3px;
@@ -64,9 +64,9 @@ TD {
   color : #ffffff;
 }
 
-.boxmenu {
+TD.boxmenu {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
   text-align : left;
   padding-top : 3px;
   padding-bottom : 3px;
@@ -75,9 +75,9 @@ TD {
   color : #000000;
 }
 
-.boxdata {
+TD.boxdata {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
   text-align : left;
   padding-top : 20px;
   padding-left : 5px;
@@ -86,9 +86,9 @@ TD {
   color : #000000;
 }
 
-.boxdata2 {
+TD.boxdata2 {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
   text-align : left;
   padding-top : 20px;
   padding-left : 5px;
@@ -99,8 +99,9 @@ TD {
 
 .masthead {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
   text-align : left;
+  padding-top : 4px;
   padding-left : 3px;
   height : 20px;
   background : #000000;
@@ -109,7 +110,7 @@ TD {
 
 .loadtime {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
   text-align : center;
   color : #1e4b79;
 }
