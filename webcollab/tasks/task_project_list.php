@@ -206,15 +206,15 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 	  switch( -ceil($state) ) {
 
 	    case "0":
-              $content .=  "<FONT color=\"green\">(".$lang["due_today"].")</FONT><BR>\n";
+              $content .=  "<FONT color=\"#006400\">(".$lang["due_today"].")</FONT><BR>\n";
 	      break;
 
 	    case "1":
-              $content .= "<FONT color=\"red\">(".$lang["overdue_1"].")</FONT><BR>\n";
+              $content .= "<FONT color=\"#FF0000\">(".$lang["overdue_1"].")</FONT><BR>\n";
 	      break;
 
 	    default:
-              $content .= "<FONT color=\"red\">(".sprintf($lang["overdue_sprt"], -ceil($state) ).")</FONT><BR>\n";
+              $content .= "<FONT color=\"#FF0000\">(".sprintf($lang["overdue_sprt"], -ceil($state) ).")</FONT><BR>\n";
 	      break;
             }
       }

@@ -75,16 +75,16 @@ function show_percent( $percent = 0 ) {
   $height=4;
   switch ($percent) {
     case 100:
-      return "<TABLE width=\"".$width."\"><TR><TD height=\"".$height."\" width=\"".$width."\" bgcolor=\"green\" nowrap></TD></TR></TABLE>\n";
+      return "<TABLE width=\"".$width."\"><TR><TD height=\"".$height."\" width=\"".$width."\" bgcolor=\"#008B45\" nowrap></TD></TR></TABLE>\n";
       break;
    
     case 0:
-      return "<TABLE width=\"".$width."\"><TR><TD height=\"".$height."\" width=\"".$width."\" bgcolor=\"orange\" nowrap></TD></TR></TABLE>\n";
+      return "<TABLE width=\"".$width."\"><TR><TD height=\"".$height."\" width=\"".$width."\" bgcolor=\"#FFA500\" nowrap></TD></TR></TABLE>\n";
       break;
   
     default:
-      $out .= "<TABLE width=\"".$width."\"><TR><TD height=\"".$height."\" width=\"".($percent * ($width/100))."\" bgcolor=\"green\" nowrap>";
-      $out .= "</TD><TD width=\"".($width-($percent*($width/100)))."\" bgcolor=\"orange\" nowrap></TD></TR></TABLE>\n";
+      $out .= "<TABLE width=\"".$width."\"><TR><TD height=\"".$height."\" width=\"".($percent * ($width/100))."\" bgcolor=\"#008B45\" nowrap>";
+      $out .= "</TD><TD width=\"".($width-($percent*($width/100)))."\" bgcolor=\"#FFA500\" nowrap></TD></TR></TABLE>\n";
       return $out;
       break;
   }

@@ -133,25 +133,25 @@ if( $numberoftasksowned + $numberofprojectsowned > 0 ) {
     //status
     switch( $row["status"] ) {
       case "done":
-        $status_content="<FONT color=\"darkgreen\">(".$task_state["done"]." ".nicedate($row["finished_time"]).")</FONT>";
+        $status_content="<FONT color=\"#006400\">(".$task_state["done"]." ".nicedate($row["finished_time"]).")</FONT>";
 	break;
 
       case "active":
-        $status_content="<FONT color=\"orange\">(".$task_state["active"].")</FONT>";
+        $status_content="<FONT color=\"#FFA500\">(".$task_state["active"].")</FONT>";
 	break;
 
       case "notactive":
-        $status_content="<FONT color=\"darkgreen\">(".$task_state["planned"].")</FONT>";
+        $status_content="<FONT color=\"#006400\">(".$task_state["planned"].")</FONT>";
 	break;
 
       case "cantcomplete":
-        $status_content="<FONT color=\"blue\">(".$task_state["cantcomplete"]." ".nicedate($row["finished_time"]).")</FONT>";
+        $status_content="<FONT color=\"#0000FF\">(".$task_state["cantcomplete"]." ".nicedate($row["finished_time"]).")</FONT>";
 	break;
     }
 
     if($row["parent"] == 0 )
       //project 
-      $status_content ="<FONT color=\"red\">(".$lang["pproject"].")</FONT>";
+      $status_content ="<FONT color=\"#FF0000\">(".$lang["pproject"].")</FONT>";
 
     //show the task
     $content .= "<LI><A href=\"".BASE."tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$row["name"]."</A> ".$status_content."<BR>\n";

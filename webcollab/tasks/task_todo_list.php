@@ -68,7 +68,7 @@ function listTasks( $task_id ) {
        } else if($state > 0) {
        $content .= $task_row[ "name" ]."</A>".$lang["due_tomorrow"];
        } else {
-       $content .= "<FONT color=\"red\">".$task_row[ "name" ]."</A></FONT>";
+       $content .= "<FONT color=\"#FF0000\">".$task_row[ "name" ]."</A></FONT>";
        }
      $content .= "</LI>\n";
    }

@@ -168,19 +168,19 @@ if( $DATABASE_TYPE == "mysql")
     //status
     switch( $row["status"] ) {
       case "done":
-        $status_content="<FONT color=\"darkgreen\">(".$task_state["completed"]." ".nicedate($row["finished_time"]).")</FONT>";
+        $status_content="<FONT color=\"#006400\">(".$task_state["completed"]." ".nicedate($row["finished_time"]).")</FONT>";
 	break;
 
       case "active":
-        $status_content="<FONT color=\"orange\">(".$task_state["active"].")</FONT>";
+        $status_content="<FONT color=\"#FFA500\">(".$task_state["active"].")</FONT>";
 	break;
 
       case "notactive":
-        $status_content="<FONT color=\"gray\">(".$task_state["planned"].")</FONT>";
+        $status_content="<FONT color=\"#BEBEBE\">(".$task_state["planned"].")</FONT>";
 	break;
 
       case "cantcomplete":
-        $status_content="<FONT color=\"blue\">(".$task_state["cantcomplete"]." ".nicedate($row["finished_time"]).")</FONT>";
+        $status_content="<FONT color=\"#0000FF\">(".$task_state["cantcomplete"]." ".nicedate($row["finished_time"]).")</FONT>";
 	break;
     }
 
@@ -222,15 +222,15 @@ if( $DATABASE_TYPE == "mysql")
 	    switch( -ceil($state) ) {
 
 	      case "0":
-                $this_content .=  "<FONT color=\"green\">(<I>".$lang["due_today"]."</I>)</FONT>";
+                $this_content .=  "<FONT color=\"#00640\">(<I>".$lang["due_today"]."</I>)</FONT>";
 	        break;
 
 	      case "1":
-                $this_content .= "<FONT color=\"red\">(".$lang["overdue_1"].")</FONT>";
+                $this_content .= "<FONT color=\"#FF0000\">(".$lang["overdue_1"].")</FONT>";
 	        break;
 
 	      default:
-                $this_content .= "<FONT color=\"red\">(".sprintf( $lang["overdue_sprt"], -ceil($state) ).")</FONT>";
+                $this_content .= "<FONT color=\"#FF0000\">(".sprintf( $lang["overdue_sprt"], -ceil($state) ).")</FONT>";
 	        break;
               }
         }

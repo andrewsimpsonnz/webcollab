@@ -123,10 +123,10 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
     }
 
     if( $due < 0 ) {
-      $color = "red";
+      $color = "#FF0000";
     }
     else if( $due == 0 ) {
-      $color = "green";
+      $color = "#00640";
     }
     else {
       $color = "";
@@ -143,16 +143,16 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
 
           case "cantcomplete":
 	    $color = "";
-            $status =  "<FONT color=\"blue\">".$task_state["cantcomplete"]."</FONT>";
+            $status =  "<FONT color=\"#0000FF\">".$task_state["cantcomplete"]."</FONT>";
             break;
 
 	  default:
 	    if(db_result( db_query( "SELECT COUNT(*) FROM tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent<>0" ), 0, 0 ) == 0 ) {
-	      $color = "";
+	      $color = "#00640";
 	      $status = $task_state["done"];
 	    }
 	    else {	
-	      $status = "<FONT color=\"grey\">".$lang["pproject"]."</FONT>";
+	      $status = $lang["pproject"];
 	    }
 	    break;
 	}    
@@ -162,7 +162,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
       switch( $row["status"] ) {
         case "done":
           $color = "";
-          $status =  "<FONT color=\"darkgreen\">".$task_state["done"]."</FONT>";
+          $status =  "<FONT color=\"#006400\">".$task_state["done"]."</FONT>";
           break;
 
         case "created":
@@ -170,22 +170,22 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
           break;
 	  
         case "active":
-          $color = "orange";
+          $color = "#FFA500";
           $status =  $task_state["task_active"];
           break;
 	  
         case "notactive":
-          $color = "";
+          $color = "#BEBEBE";
           $status =  $task_state["task_planned"];
           break;
 
         case "cantcomplete":
 	  $color = "";
-          $status =  "<FONT color=\"blue\">".$task_state["cantcomplete"]."</FONT>";
+          $status =  "<FONT color=\"#0000FF\">".$task_state["cantcomplete"]."</FONT>";
           break;
 
         default:
-          $status =  "<FONT color=\"orange\">".$row["status"]."</FONT>";
+          $status =  "<FONT color=\"#FFA500\">".$row["status"]."</FONT>";
           break;
       }
   }
@@ -199,7 +199,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
            break;
 
         default:
-           $owner = "<FONT color=\"red\">".$lang["nobody"]."</FONT>";
+           $owner = "<FONT color=\"#FF0000\">".$lang["nobody"]."</FONT>";
            break;
       }
     }
@@ -271,10 +271,10 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
     //show graphical taskbar
     if( ($row["parent"] == 0 ) && ( $depth >= 0 )) {
       if( ($percent_completed = round(percent_complete($row["id"]))) > 0 ) {
-        $result .= "<TABLE width=\"200\"><TR><TD height=\"2\"  width=\"".($percent_completed*2)."\" bgcolor=\"green\" nowrap></TD><TD width=\"".(200-($percent_completed*2))."\" bgcolor=\"orange\" nowrap></TD></TR></TABLE>\n";
+        $result .= "<TABLE width=\"200\"><TR><TD height=\"2\"  width=\"".($percent_completed*2)."\" bgcolor=\"#008B45\" nowrap></TD><TD width=\"".(200-($percent_completed*2))."\" bgcolor=\"#FFA500\" nowrap></TD></TR></TABLE>\n";
       }
       else {
-        $result .= "<TABLE width=\"200\"><TR><TD height=\"2\" width=\"200\" bgcolor=\"orange\" nowrap></TD></TR></TABLE>\n";
+        $result .= "<TABLE width=\"200\"><TR><TD height=\"2\" width=\"200\" bgcolor=\"#FFA500\" nowrap></TD></TR></TABLE>\n";
       }
     }
 
