@@ -47,7 +47,7 @@ require_once(BASE."includes/usergroup_security.php" );
 //
 function list_posts_from_task( $taskid, $usergroupid ) {
 
-  global $ADMIN, $x, $UID, $lang, $TASKID_ROW, $epoch;
+  global $x, $lang, $TASKID_ROW, $epoch;
   global $post_array, $parent_array, $post_count;
 
   $parent_array = "";
@@ -99,7 +99,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
     }
 
     //owners of the thread, owners of the post and admins have a "delete" option
-    if( ($ADMIN==1) || ($UID == $TASKID_ROW['owner'] ) || ($UID == $row['postowner'] ) ) {
+    if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['postowner'] ) ) {
       $this_post .= " <span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=submit_del&amp;postid=".$row['id']."&amp;taskid=$taskid\" onclick=\"return confirm( '{$lang['confirm_del_javascript']}' )\">{$lang['del']}</a>]</span>";
     }
 
@@ -194,7 +194,7 @@ if($TASKID_ROW['usergroupid'] != 0 ) {
 
   $content = "";
 
-  if(in_array($TASKID_ROW['usergroupid'], (array)$GID ) || $ADMIN == 1 ) {
+  if(in_array($TASKID_ROW['usergroupid'], (array)$GID ) || ADMIN ) {
 
     $content .= list_posts_from_task( $taskid, $TASKID_ROW['usergroupid'] );
     if($ul_flag == 1 )

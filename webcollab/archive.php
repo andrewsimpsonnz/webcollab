@@ -41,7 +41,7 @@ if( ! isset($_REQUEST['action'] ) )
     case "list":
       create_top($lang['projects'] );
       include("includes/mainmenu.php" );
-      if($GUEST == 0 )
+      if(! GUEST )
         include("tasks/task_menubox.php" );
       include("users/user_menubox.php" );
       goto_main();

@@ -31,10 +31,10 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 //secure vars
-$userid = "";
+$userid = '';
 
 //is an admin everything can be queried otherwise only yourself can be queried
-if($ADMIN == 1 ) {
+if(ADMIN == 1 ) {
 
   //is there a uid ?
   if(empty($_REQUEST['userid']) || ! is_numeric($_REQUEST['userid']) )
@@ -52,7 +52,7 @@ if($ADMIN == 1 ) {
 else {
 
   //user
-  $q = db_query("SELECT * FROM ".PRE."users WHERE id=$UID" );
+  $q = db_query("SELECT * FROM ".PRE."users WHERE id=".UID );
 }
 
 //fetch data
@@ -72,7 +72,7 @@ $content =  "<form method=\"post\" action=\"users.php\">\n".
               "<tr><td>".$lang['email'].":</td><td><input type=\"text\" name=\"email\" size=\"30\" value=\"".$row['email']."\" /></td></tr>\n";
 
 //dangerous action!
-if( $ADMIN == 1 ) {
+if( ADMIN == 1 ) {
 
   //add blank line
   $content .= "<tr><td>&nbsp;</td></tr>\n";

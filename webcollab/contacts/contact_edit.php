@@ -29,7 +29,7 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
-if($GUEST == 1)
+if(GUEST )
   error("Contact edit", "Guest not authorised" );
 
 //we need a valid contactid

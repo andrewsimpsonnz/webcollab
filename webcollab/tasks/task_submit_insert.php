@@ -38,7 +38,7 @@ include_once(BASE."tasks/task_common.php" );
 include_once(BASE."tasks/task_submit.php" );
 
 //deny guest users
-if($GUEST == 1)
+if(GUEST )
  warning($lang['access_denied'], $lang['not_owner'] );  
 
 //check task name is present
@@ -112,7 +112,7 @@ $q = db_query("INSERT INTO ".PRE."tasks(name,
               now(),
               now(),
               $owner,
-              $UID,
+              ".UID.",
               '$deadline',
               now(),
               $priority,
@@ -144,7 +144,7 @@ if($parentid != 0 ) {
 }
 
 //you have already seen this item, no need to announce it to you
-db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES($UID, $taskid, now() )");
+db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES(".UID.", $taskid, now() )");
 
 //set completed percentage project record
 $percent_completed = percent_complete($projectid );

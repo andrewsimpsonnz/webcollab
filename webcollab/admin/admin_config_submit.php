@@ -34,11 +34,10 @@ require_once(BASE."includes/security.php" );
 $content = "";
 
 //only admin
-if( $ADMIN != 1 ) {
+if( ! ADMIN )
   error("Not permitted", "This function is for admins only" );
-  return;
-}
 
+  
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 

@@ -28,7 +28,7 @@
 require_once("includes/security.php" );
 include_once("includes/screen.php" );
 
-if($ADMIN != 1 )
+if(! ADMIN )
   return;
 
 //

@@ -30,10 +30,10 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
-$content = "";
+$content = '';
 $no_access_project[0] = 0;
-$no_access_group[0] = 0;
-$user_gid = "";
+$no_access_group[0]   = 0;
+$user_gid = '';
 
 //get some stupid errors
 if(empty($_GET['userid']) || ! is_numeric($_GET['userid']) )
@@ -49,7 +49,7 @@ if( ! ($row = db_fetch_array($q, 0 ) ) )
   error("Database error", "Error in fetching result" );
   
 //test if user is private
-if($row['private'] && ($row['id'] != $UID ) && ( ! $ADMIN ) ) {
+if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) ) {
   //get usergroups of user
   $q_group = db_query("SELECT usergroupid FROM ".PRE."usergroups_users WHERE userid=".$row['id'] );
   for( $i=0 ; $row_group = @db_fetch_num($q_group, $i ) ; $i++) {
@@ -101,7 +101,7 @@ else{
   $usergroups = "";
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ){
     //test for private usergroups
-    if( ($row['private']) && (! $ADMIN ) && ( ! in_array($row['id'], (array)$GID ) ) ) {
+    if( ($row['private']) && (! ADMIN ) && ( ! in_array($row['id'], (array)$GID ) ) ) {
       $alert = "<br />".$lang['private_usergroup_profile'];
       continue;
     }
@@ -170,14 +170,14 @@ if( $tasks_owned + $projects_owned > 0 ) {
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
     //check for private usergroups
-    if( ($ADMIN != 1) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
+    if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
       if( ! in_array( $row['usergroupid'], (array)$GID ) )
         continue;
     }
 
     //don't show tasks in private usergroup projects
-    if( ($ADMIN != 1 ) && in_array($row['projectid'], (array)$no_access_project ) ) {
+    if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project ) ) {
       $key = array_search($row['projectid'], $no_access_project );
 
         if( ! in_array($no_access_group[$key], (array)$GID ) )

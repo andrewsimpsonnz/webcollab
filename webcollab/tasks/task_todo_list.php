@@ -169,8 +169,8 @@ if(isset($_POST['userid']) && is_numeric($_POST['userid']) ){
 }
 else{
   
-  if($GUEST == 0 )
-    $userid = $UID;
+  if(! GUEST )
+    $userid = UID;
   else
     $userid = 0;
 }
@@ -221,7 +221,7 @@ $q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       
   //user test for privacy
-  if($row['private'] && ($row['id'] !=  $UID ) && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
+  if($row['private'] && ($row['id'] !=  UID ) && ( ! ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
     continue;
   }
     
@@ -246,7 +246,7 @@ $q = db_query("SELECT id, name, private FROM ".PRE."usergroups ORDER BY name" );
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     
   //usergroup test for privacy
-  if( (! $ADMIN ) && ($row['private'] ) && ( ! in_array($row['id'], (array)$GID ) ) ) {
+  if( (! ADMIN ) && ($row['private'] ) && ( ! in_array($row['id'], (array)$GID ) ) ) {
     continue;
   }
     
@@ -278,7 +278,7 @@ $q = db_query( "SELECT id, name, owner, deadline, parent, usergroupid, globalacc
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //check for private usergroups
-  if( (! $ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] != 't' ) ) {
+  if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] != 't' ) ) {
     if( ! in_array( $row['usergroupid'], (array)$GID ) )
       continue;
   }
@@ -316,7 +316,7 @@ $q = db_query("SELECT id, name, usergroupid, globalaccess FROM ".PRE."tasks WHER
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
    //check for private usergroups
-   if( ($ADMIN != 1) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
+   if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
      if( ! in_array( $row['usergroupid'], (array)$GID ) )
        continue;

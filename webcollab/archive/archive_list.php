@@ -32,7 +32,7 @@ include_once(BASE."tasks/task_common.php" );
 include_once(BASE."includes/time.php" );
 
 //some inital values
-$content = "";
+$content = '';
 $flag = 0;
 $archive_print = 0;
 
@@ -75,7 +75,7 @@ $content .= "<table>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //check the user has rights to view this project
-  if( ($ADMIN != 1 ) && ($row['globalaccess'] != "t" ) && ( $row['usergroupid'] != 0 ) ) {
+  if( (! ADMIN ) && ($row['globalaccess'] != "t" ) && ( $row['usergroupid'] != 0 ) ) {
     if( ! in_array( $row['usergroupid'], (array)$GID ) )
       continue;
   }
@@ -135,7 +135,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )."<br />";
       break;
   }
-  if($ADMIN == 1 || $UID == $row['owner'] ){
+  if(ADMIN || UID == $row['owner'] ){
   
     $content .= "<span class=\"textlink\">[<a href=\"archive.php?x=$x&amp;action=submit_restore&amp;taskid=".$row['id']."\">".$lang['revive']."</a>]&nbsp;&nbsp;&nbsp;&nbsp;".
                 "[<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$row['id']."\" onclick=\"return confirm( '".sprintf($lang["del_javascript_project_sprt"], javascript_escape($row['name'] ) )."')\">".$lang['del']."</a>]</span>\n";

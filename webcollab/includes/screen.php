@@ -67,7 +67,7 @@ include_once(BASE."lang/lang.php" );
 //
 function create_top($title="", $page_type=0, $cursor="", $check="", $date="", $redirect_time=0 ) {
 
-  global $UID_NAME, $ADMIN, $lang, $top_done, $bottom_text;
+  global $lang, $top_done, $bottom_text;
   
   //only build top once...
   //  (we don't use headers_sent() 'cause it seems to be buggy in PHP5)
@@ -193,8 +193,8 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="", $r
       //create the masthead part of the main window
       $content .=  "<tr valign=\"top\"><td colspan=\"2\" class=\"masthead\">";
       //show username if applicable
-      if($UID_NAME != "" )
-        $content .=  sprintf( $lang['user_homepage_sprt'], $UID_NAME );
+      if(defined('UID_NAME') )
+        $content .=  sprintf( $lang['user_homepage_sprt'], UID_NAME );
       $content .=  "</td></tr>\n";
       //create menu sidebar
       $content .=  "<tr valign=\"top\"><td style=\"width: 175px;\" align=\"center\">\n";
@@ -204,8 +204,8 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="", $r
     case 1: //single main window (no menu sidebar)
     case 3: //calendar  
       $content .=  "<tr valign=\"top\"><td class=\"masthead\">";
-      if($UID_NAME != "" )
-        $content .=  sprintf( $lang['user_homepage_sprt'], $UID_NAME );
+      if(defined('UID_NAME' ) )
+        $content .=  sprintf( $lang['user_homepage_sprt'], UID_NAME );
       $content .= "</td></tr>\n";
       //create single window over entire screen
       $content .= "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";

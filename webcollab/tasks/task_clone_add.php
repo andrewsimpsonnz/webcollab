@@ -30,7 +30,7 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 //admins only
-if($ADMIN != 1 )
+if(! ADMIN )
   error("Unauthorised access", "This function is for admins only." );
 
 if(empty($_GET['taskid']) && ! is_numeric($_GET['taskid']) )

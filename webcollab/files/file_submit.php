@@ -36,7 +36,7 @@ if(empty($_REQUEST['action']))
   error("File submit", "No action given" );
 
 //deny guest users
-if($GUEST == 1)
+if(GUEST )
  warning($lang['access_denied'], $lang['not_owner'] );  
   
 //if user aborts, let the script carry onto the end
@@ -119,7 +119,7 @@ ignore_user_abort(TRUE);
                                             ".$_FILES['userfile']['size'].",
                                             '$description',
                                             now(),
-                                            $UID,
+                                            ".UID.",
                                             $taskid,
                                             '".$_FILES['userfile']['type']."' ) ");
 
@@ -196,7 +196,7 @@ ignore_user_abort(TRUE);
         if(get_magic_quotes_gpc() )
           $message = stripslashes($message );
  
-        email($mail_list, sprintf($title_file_post, $task_row['name'] ), sprintf($email_file_post, $UID_NAME, $_FILES['userfile']['name'], $message ) );
+        email($mail_list, sprintf($title_file_post, $task_row['name'] ), sprintf($email_file_post, UID_NAME, $_FILES['userfile']['name'], $message ) );
       }
 
       break;
@@ -221,7 +221,7 @@ ignore_user_abort(TRUE);
          //show it
         $row = @db_fetch_array($q, 0 );
         //owners of the file and admins can delete files
-        if( ($ADMIN == 1) || ($UID == $row['owner'] ) || ($UID == $row['uploader'] ) ) {
+        if( (ADMIN ) || (UID == $row['owner'] ) || (UID == $row['uploader'] ) ) {
 
           //delete file from disk
           if(file_exists(FILE_BASE."/".$row['fileid']."__".$row['filename'] ) ) {

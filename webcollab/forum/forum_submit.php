@@ -162,18 +162,18 @@ ignore_user_abort(TRUE);
           //public post
           db_begin();
           db_query ("INSERT INTO ".PRE."forum(parent, taskid, posted, text, userid, usergroupid)
-                                           VALUES ($parentid, $taskid, now(), '$text', $UID, 0)" );
+                                           VALUES ($parentid, $taskid, now(), '$text', ".UID.", 0)" );
           break;
 
         default:
           //private post
           //check if the user does belong to that group
-          if(($ADMIN!=1 ) && ( ! in_array($usergroupid, (array)$GID ) ) )
+          if((! ADMIN ) && ( ! in_array($usergroupid, (array)$GID ) ) )
             error("Forum submit", "You do not have enough rights to post in that forum" );
 
           db_begin();
           db_query ("INSERT INTO ".PRE."forum(parent, taskid, posted, text, userid, usergroupid)
-                                            VALUES ($parentid, $taskid, now(), '$text', $UID, $usergroupid)" );
+                                            VALUES ($parentid, $taskid, now(), '$text', ".UID.", $usergroupid)" );
           break;
 
       }
@@ -232,7 +232,7 @@ ignore_user_abort(TRUE);
         switch($parentid ) {
           case 0:
             //this is a new post
-            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_post, $UID_NAME, $message) );
+            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_post, UID_NAME, $message) );
             break;
 
           default:
@@ -251,7 +251,7 @@ ignore_user_abort(TRUE);
             //remove any HTML linebreaks that nl2br() has put into the text...
             $original_message =  str_replace("<br />", "", $row['text'] );
 
-            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_reply, $UID_NAME, $row['username'], $original_message, $message ) );
+            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_reply, UID_NAME, $row['username'], $original_message, $message ) );
             break;
         }
       }
@@ -263,8 +263,10 @@ ignore_user_abort(TRUE);
         error("Forum submit", "Postid not valid" );
       $postid = intval($_GET['postid'] );
 
-      switch($ADMIN ) {
+      switch(ADMIN ) {
+        
         case 1:
+        case true:
           //admin can delete all
           db_begin();
           delete_messages($postid );
@@ -272,11 +274,12 @@ ignore_user_abort(TRUE);
           break;
 
         case 0:
+        case false:
         default:
           //check if user is owner of the task or the owner of the post
           if(
-          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum LEFT JOIN ".PRE."tasks ON (".PRE."forum.taskid=".PRE."tasks.id) WHERE ".PRE."tasks.owner=$UID AND ".PRE."forum.id=$postid" ), 0, 0 ) == 1 ) ||
-          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum WHERE userid=$UID AND id=$postid" ), 0, 0 ) == 1 ) ) {
+          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum LEFT JOIN ".PRE."tasks ON (".PRE."forum.taskid=".PRE."tasks.id) WHERE ".PRE."tasks.owner=".UID." AND ".PRE."forum.id=$postid" ), 0, 0 ) == 1 ) ||
+          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum WHERE userid=".UID." AND id=$postid" ), 0, 0 ) == 1 ) ) {
 
             db_begin();
             delete_messages( $postid );

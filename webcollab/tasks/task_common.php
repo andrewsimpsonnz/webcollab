@@ -79,7 +79,7 @@ function show_percent($percent = 0 ) {
 // Project Jump function
 //
 function project_jump($taskid=0) {
-  global $x, $lang, $ADMIN, $GID;
+  global $x, $lang, $GID;
   
   // query to get the non-completed projects
   $q = db_query("SELECT id,
@@ -106,7 +106,7 @@ function project_jump($taskid=0) {
     for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
     
       //check if user can view this project
-      if( ($ADMIN != 1 ) && ($row['globalaccess'] != "t" ) && ($row['usergroupid'] != 0 ) ) {
+      if( (! ADMIN ) && ($row['globalaccess'] != "t" ) && ($row['usergroupid'] != 0 ) ) {
         if( ! in_array( $row['usergroupid'], (array)$GID ) )
           continue;
       }

@@ -39,7 +39,7 @@ $content = "";
 $javascript = "";
 $allowed[0] = 0; 
 
-if($GUEST == 1)
+if(GUEST )
  warning($lang['access_denied'], $lang['not_owner'] );  
 
 
@@ -136,14 +136,14 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
   for( $i=0 ; $user_row = @db_fetch_array($users_q, $i ) ; $i++) {
       
     //user test for privacy
-    if($user_row['private'] && ($user_row['id'] != $UID ) && ( ! $ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
+    if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
       continue;
     }
     
     $content .= "<option value=\"".$user_row['id']."\"";
 
     //default owner is present user
-    if( $user_row[ "id" ] == $UID )
+    if( $user_row[ "id" ] == UID )
       $content .= " selected=\"selected\"";
 
     $content .= ">".$user_row['fullname']."</option>\n";
@@ -178,7 +178,7 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
   for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
     
     //usergroup test for privacy
-    if( (! $ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
+    if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
       continue;
     }
     
@@ -255,14 +255,14 @@ else {
   for( $i=0 ; $user_row = @db_fetch_array($user_q, $i) ; $i++) {
     
     //user test for privacy
-    if($user_row['private'] && ($user_row['id'] != $UID ) && ( ! $ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
+    if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
       continue;
     }
 
     $content .= "<option value=\"".$user_row['id']."\"";
 
       //owner is user
-      if( $user_row['id'] == $UID ) {
+      if( $user_row['id'] == UID ) {
         $content .= " selected=\"selected\"";
       }
     $content .= ">".$user_row['fullname']."</option>\n";
@@ -277,7 +277,7 @@ else {
   for( $i=0 ; $group_row = @db_fetch_array($group_q, $i ) ; $i++) {
     
     //usergroup test for privacy
-    if( (! $ADMIN ) && ($group_row['private'] ) && ( ! in_array($group_row['id'], (array)$GID ) ) ) {
+    if( (! ADMIN ) && ($group_row['private'] ) && ( ! in_array($group_row['id'], (array)$GID ) ) ) {
       continue;
     }
 

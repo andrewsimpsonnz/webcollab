@@ -31,7 +31,7 @@ require_once(BASE."includes/security.php" );
 $taskid = intval($_GET['taskid']);
   
 //check if the user has enough rights
-if( ($ADMIN != 1 ) && (db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE id=$taskid AND owner=$UID" ), 0, 0 ) < 1) )
+if( ( ! ADMIN ) && (db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE id=$taskid AND owner=".UID ), 0, 0 ) < 1) )
   warning($lang['task_submit'], $lang['not_owner'] );
 
 $projectid = db_result(db_query("SELECT projectid FROM ".PRE."tasks WHERE id=$taskid" ), 0, 0 );  

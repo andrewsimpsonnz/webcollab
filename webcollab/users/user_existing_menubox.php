@@ -30,7 +30,7 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
-$content = "";
+$content    = '';
 $allowed[0] = 0;
 
 
@@ -62,13 +62,13 @@ $content = "<table style=\"text-align:left\">\n";
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
   //user test for privacy
-  if($row['private'] && ($row['id'] != $UID ) && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
+  if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
     continue;
   }
 
   $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></small></td>";
 
-  if($ADMIN == 1 ) {
+  if(ADMIN ) {
     $content .= "<td style=\"text-align:right; white-space:nowrap\"><span class=\"textlink\"> [<a href=\"users.php?x=$x&amp;userid=".$row['id']."&amp;action=del\">".$lang['del']."</a>]".
                 "[<a href=\"users.php?x=$x&amp;userid=".$row['id']."&amp;action=edit\">".$lang['edit']."</a>]</span></td>";
   }

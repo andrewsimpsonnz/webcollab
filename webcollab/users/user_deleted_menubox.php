@@ -31,7 +31,7 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 //first check if we are admin
-if($ADMIN != 1 )
+if(! ADMIN )
   return;
 
 
@@ -50,7 +50,7 @@ $content = "<table>\n";
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></small></td>\n";
   $content .= "<td style=\"text-align:right; white-space:nowrap\"><span class=\"textlink\">&nbsp;[<a href=\"users.php?x=$x&amp;action=revive&amp;userid=".$row['id']."\">".$lang['revive']."</a>]";
-
+  
   //if this user has NO tasks owned then we can delete him forever :)
   if( ! db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE owner=".$row['id'] ), 0, 0 ) ) {
     $content .= "&nbsp;[<a href=\"users.php?x=$x&amp;action=permdel&amp;userid=".$row['id']."\" onclick=\"return confirm( '".sprintf($lang['permdel_javascript_sprt'], javascript_escape($row['fullname'] ) )."' )\">".$lang['permdel']." </a>]";

@@ -71,21 +71,21 @@ return $message;
 //
 function user_access($taskid ) {
 
-  global $UID, $GID, $GUEST, $ADMIN;
+  global $GID;
   
   //guest has no access rights
-  if($GUEST == 1 )
+  if(GUEST )
     return FALSE;
     
   //admin always has rights
-  if($ADMIN == 1 )
+  if(ADMIN )
     return TRUE;  
 
   $q = db_query("SELECT owner, usergroupid, groupaccess FROM ".PRE."tasks WHERE id=$taskid" );
   $row = db_fetch_num($q, 0 );
 
   //user is owner
-  if($row[0] == $UID )
+  if($row[0] == UID )
     return TRUE;
 
   //no usergroup set

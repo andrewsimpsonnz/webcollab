@@ -32,7 +32,7 @@ require_once(BASE."includes/security.php" );
 include_once(BASE."tasks/task_common.php" );
 
 //admins only
-if($ADMIN != 1 )
+if(! ADMIN )
   error("Unauthorised access", "This function is for admins only." );
 
 //
@@ -76,8 +76,6 @@ function add($taskid, $new_parent, $new_name ) {
 
 function copy_across($taskid, $new_parent, $name ) {
 
-    global $UID;
-
     //get task details
     $q = db_query("SELECT * FROM ".PRE."tasks WHERE id=$taskid" );
     $row = db_fetch_array($q, 0 );
@@ -120,7 +118,7 @@ function copy_across($taskid, $new_parent, $name ) {
                     now(),
                     now(),
                     '".$row['owner']."',
-                    $UID,
+                    ".UID.",
                     '".$row['deadline']."',
                     now(),
                     ".$row['priority'].",
@@ -140,7 +138,7 @@ function copy_across($taskid, $new_parent, $name ) {
       db_query("UPDATE ".PRE."tasks SET projectid=$new_taskid WHERE id=$new_taskid" );
 
     //you have already seen this item, no need to announce it to you
-    db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES($UID, $new_taskid, now() )");
+    db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES(".UID.", $new_taskid, now() )");
 
   return $new_taskid;
 }

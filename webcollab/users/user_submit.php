@@ -34,8 +34,8 @@ include_once(BASE."includes/email.php" );
 include_once(BASE."lang/lang_email.php" );
 include_once(BASE."includes/time.php" );
 
-$usergroup_names = "";
-$admin_state ="";
+$usergroup_names = '';
+$admin_state = '';
 
 //update or insert ?
 if(empty($_REQUEST['action']) )
@@ -50,7 +50,7 @@ ignore_user_abort(TRUE);
     case "revive":
 
       //only for the admins
-      if($ADMIN != 1 )
+      if(! ADMIN )
         error("Authorisation failed", "You have to be admin to do this" );
 
       if(empty($_GET['userid']) && ! is_numeric($_GET['userid']) )
@@ -77,7 +77,7 @@ ignore_user_abort(TRUE);
     case "submit_insert":
 
       //only for the l33t
-      if( $ADMIN != 1 )
+      if( ! ADMIN )
         error("Authorisation failed", "You have to be admin to do this" );
 
       //check input has been provided
@@ -186,7 +186,7 @@ ignore_user_abort(TRUE);
       if(! ereg("^.+@.+\..+$", $email ) )
         warning($lang['invalid_email'], sprintf($lang['invalid_email_given_sprt'], $email ) );
       
-      if( $ADMIN == 1 ) {
+      if(ADMIN ) {
 
         //check for a userid
         if(empty($_POST['userid']) || ! is_numeric($_POST['userid']) )
@@ -278,8 +278,7 @@ ignore_user_abort(TRUE);
         if($admin_user == "t" )
           $admin_state = $lang['admin_priv']."\n";
         //email the changes to the user
-        //$UID_EMAIL and $UID_NAME are in security.php
-        $message = sprintf($email_user_change1, $UID_NAME, $UID_EMAIL, $name,
+        $message = sprintf($email_user_change1, UID_NAME, UID_EMAIL, $name,
                 $password, $usergroup_names, $fullname, $admin_state );
         email($email, $title_user_change1, $message );
 
@@ -288,7 +287,7 @@ ignore_user_abort(TRUE);
         //this is secure option where the user cannot change important values
 
         //prohibit 2 people from choosing the same username
-        if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE name='$name' AND NOT id=$UID", 0 ), 0, 0 ) > 0 )
+        if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE name='$name' AND NOT id=".UID, 0 ), 0, 0 ) > 0 )
           warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
 
         //did the user change his/her password ?
@@ -299,7 +298,7 @@ ignore_user_abort(TRUE);
                             fullname='$fullname',
                             password='".md5($password)."',
                             email='$email'
-                            WHERE id=$UID" );
+                            WHERE id=".UID );
 
           //email the changes to the user
           $message = sprintf($email_user_change2, $name, $password, $fullname );
@@ -311,7 +310,7 @@ ignore_user_abort(TRUE);
                             SET name='$name',
                             fullname='$fullname',
                             email='$email'
-                            WHERE id=$UID" );
+                            WHERE id=".UID );
 
           //email the changes to the user
           $message = sprintf( $email_user_change3, $name, $fullname );
@@ -327,12 +326,12 @@ ignore_user_abort(TRUE);
       break;
   }
 
-if ( $ADMIN == 1 ) {
+if (ADMIN ) {
         header("Location: ".BASE_URL."users.php?x=$x&action=manage" );
         die;
       }
       else {
-        header( "location: ".BASE_URL."users.php?x=$x&action=show&userid=$UID" );
+        header( "location: ".BASE_URL."users.php?x=$x&action=show&userid=".UID );
         die;
       }
       

@@ -62,7 +62,7 @@ $content .=
     "</table>\n".
     "<p><i>".$lang['notes']."</i><br />".nl2br(html_links($row['notes'] ) )."</p>\n";
     
-if($GUEST == 0 ){    
+if(! GUEST ){    
   $content .=    
     "<form method=\"post\" action=\"contacts.php\" >\n".
       "<fieldset><input type=\"hidden\" name=\"action\" value=\"edit\" />\n".

@@ -49,9 +49,9 @@ if( ! isset($_REQUEST['action']) )
       create_top($lang['task_info']);
       include("includes/mainmenu.php" );
       include("tasks/task_navigate.php" );
-      if($GUEST == 0 )
+      if(! GUEST )
         include("tasks/task_menubox.php" );
-      if( $ADMIN == 1 ) {
+      if(ADMIN ) {
         include("taskgroups/taskgroup_menubox.php" );
         include("usergroups/usergroup_menubox.php" );
         //include("admin/admin_config_menubox.php" );
@@ -96,7 +96,7 @@ if( ! isset($_REQUEST['action']) )
     case "summary":
       create_top($lang['summary_list'] );
       include("includes/mainmenu.php" );
-      if($GUEST == 0 )
+      if(! GUEST )
         include("tasks/task_menubox.php" );
       goto_main();
       include("tasks/task_summary_list.php" );

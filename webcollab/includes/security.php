@@ -35,13 +35,10 @@ require_once(BASE."database/database.php" );
 require_once(BASE."includes/common.php" );
 
 //clean up some variables
-$q = "";
-$ip = "";
-$x = 0;
-$ADMIN = 0;
+$q   = '';
+$ip  = '';
+$x   = 0;
 $session_key = 0;
-$GID[0] = 0;
-$GUEST = 1;
 
 //check for some values that HAVE to be present to be allowed (ip, session_key)
 if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
@@ -101,24 +98,34 @@ if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
 
 //all data seems okay !!
 
-$UID = $row['user_id'];
-$UID_NAME = $row['fullname'];
-$UID_EMAIL = $row['email'];
-$GUEST = $row['guest'];
+define('UID', $row['user_id'] );
+define('GUEST', $row['guest'] );
 
 if($row['admin'] == 't' )
-  $ADMIN = 1;
+  define('ADMIN', 1 );
 else
-  $ADMIN = 0;
+  define('ADMIN', 0 );
+
+define('UID_NAME', $row['fullname'] );
+define('UID_EMAIL', $row['email'] );
+    
+
 
 //get usergroups of user
-$q = db_query("SELECT usergroupid FROM ".PRE."usergroups_users WHERE userid=".$UID );
+$q = db_query("SELECT usergroupid FROM ".PRE."usergroups_users WHERE userid=".UID );
+
+//prevent hacking with register globals turned on
+if(isset($GID) )
+  unset($GID);
+$GID[0] = 0;
+
+//list usergroups
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
   $GID[$i] = $row[0];
 }
 
 //update the "I was here" time
-db_query("UPDATE ".PRE."logins SET lastaccess=now() WHERE session_key='$session_key' AND user_id=$UID" );
+db_query("UPDATE ".PRE."logins SET lastaccess=now() WHERE session_key='$session_key' AND user_id=".UID );
 
 // this gives:
 //

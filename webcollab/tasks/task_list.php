@@ -40,7 +40,7 @@ $content = "";
 //
 function list_tasks($parent ) {
 
-  global $x, $UID, $GID, $ADMIN, $parentid, $parent_array, $epoch, $lang;
+  global $x, $GID, $parentid, $parent_array, $epoch, $lang;
   global $taskgroup_flag, $task_state, $ul_flag, $now, $tz_offset;
 
   //init values
@@ -89,7 +89,7 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
     //check for private usergroups
-    if( ($ADMIN != 1) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
+    if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
       if( ! in_array( $row['usergroupid'], (array)$GID ) )
          continue;
@@ -135,14 +135,14 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
     $this_content .= "<li>";
 
     //have you seen this task yet ?
-    $seen_test = db_result(db_query("SELECT COUNT(*) FROM ".PRE."seen WHERE taskid=".$row['id']." AND userid=".$UID." LIMIT 1" ), 0, 0);
+    $seen_test = db_result(db_query("SELECT COUNT(*) FROM ".PRE."seen WHERE taskid=".$row['id']." AND userid=".UID." LIMIT 1" ), 0, 0);
 
     //don't show alert content for changes more than NEW_TIME (in seconds)
     if( ($now - max($row['edited'], $row['lastpost'], $row['lastfileupload'] ) ) > 86400*NEW_TIME ) {
 
       //task is over limit in NEW_TIME and still not looked at by you, mark it as seen, and move on...
       if( $seen_test < 1 )
-        db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES ($UID, ".$row['id'].", now() ) " );
+        db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES (".UID.", ".$row['id'].", now() ) " );
     }
     //task has changed since last seen - show the changes to you
     else {
@@ -155,7 +155,7 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
           break;
 
         default:
-          $seenq = db_query("SELECT $epoch time) FROM ".PRE."seen WHERE taskid=".$row['id']." AND userid=".$UID." LIMIT 1" );
+          $seenq = db_query("SELECT $epoch time) FROM ".PRE."seen WHERE taskid=".$row['id']." AND userid=".UID." LIMIT 1" );
 
           //check if edited since last visit
           $seen = db_result($seenq, 0, 0 );
@@ -282,7 +282,7 @@ $row = db_fetch_num($q, 0 );
 $now = $row[2];
 $tz_offset = (TZ * 3600) - date("Z");
 
-if( ($ADMIN != 1) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
+if( (! ADMIN ) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
 
   //check if the user has a matching group
   if( ! in_array($project_row[0], (array)$GID ) )

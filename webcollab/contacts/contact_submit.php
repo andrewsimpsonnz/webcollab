@@ -31,7 +31,7 @@
 require_once("path.php" );
 require_once( BASE."includes/security.php" );
 
-if($GUEST == 1)
+if(GUEST )
   error("Contact submit", "Guest not authorised" );
 
 //edit, insert, delete ?
@@ -72,8 +72,8 @@ switch($_REQUEST['action'] ) {
                                   '".safe_data($_POST['city'])."',
                                   '".safe_data($_POST['email'])."',
                                   '".safe_data_long($_POST['notes'])."',
-                                  $UID,
-                                  $UID,
+                                  ".UID.",
+                                  ".UID.",
                                   now() )" );
     break;
 
@@ -100,7 +100,7 @@ switch($_REQUEST['action'] ) {
                   city='".safe_data($_POST['city'])."',
                   email='".safe_data($_POST['email'])."',
                   notes='".safe_data_long($_POST['notes'])."',
-                  added_by=$UID,
+                  added_by=".UID.",
                   date=now()
                   WHERE id = '$contactid'");
 

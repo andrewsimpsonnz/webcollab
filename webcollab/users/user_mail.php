@@ -34,7 +34,7 @@ require_once(BASE."includes/security.php" );
 $content = "";
 
 //only for admins
-if( $ADMIN != 1 ) {
+if( ! ADMIN ) {
   error( "Not permitted", "This function is for admins only" );
   return;
 }

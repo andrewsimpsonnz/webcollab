@@ -33,7 +33,7 @@ require_once(BASE."includes/security.php" );
 $content = "";
 
 //add an option to add users
-if($ADMIN == 1 ) {
+if(ADMIN ) {
   $content .= "<a href=\"users.php?x=$x&amp;action=add\">".$lang['add']."</a><br />\n".
               "<a href=\"users.php?x=$x&amp;action=manage\">".$lang['manage']."</a><br />\n";
  if(USE_EMAIL != "N")
@@ -41,8 +41,8 @@ if($ADMIN == 1 ) {
 }
 
 $content .= "<a href=\"users.php?x=$x&amp;action=showonline\">".$lang['who_online']."</a><br />\n".
-            "<a href=\"users.php?x=$x&amp;action=edit&amp;userid=$UID\">".$lang['edit_details']."</a><br />\n".
-            "<a href=\"users.php?x=$x&amp;action=show&amp;userid=$UID\">".$lang['show_details']."</a><br />\n";
+            "<a href=\"users.php?x=$x&amp;action=edit&amp;userid=".UID."\">".$lang['edit_details']."</a><br />\n".
+            "<a href=\"users.php?x=$x&amp;action=show&amp;userid=".UID."\">".$lang['show_details']."</a><br />\n";
 
 //show it
 new_box($lang['users'], $content, "boxmenu" );

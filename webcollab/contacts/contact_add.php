@@ -35,7 +35,7 @@ require_once( BASE."includes/security.php" );
 $content = "";
 $q = "";
 
-if($GUEST == 1)
+if(GUEST )
   error("Contact add", "Guest not authorised" );
 
 $content .=

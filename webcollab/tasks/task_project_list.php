@@ -182,7 +182,7 @@ if(! $condensed) {
   for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
     
     //check if user can view this task
-    if( (! $ADMIN ) && ($row[5] != 't' ) && ($row[6] != 0 ) ) {
+    if( (! ADMIN ) && ($row[5] != 't' ) && ($row[6] != 0 ) ) {
       if(! in_array( $row[6], (array)$GID, TRUE ) );
         continue;
     }
@@ -274,7 +274,7 @@ if(! isset($action) || $action != 'project_print')
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   //check the user has rights to view this project
-  if( (! $ADMIN ) && ($row['globalaccess'] != "t" ) && ( $row['usergroupid'] != 0 ) ) {
+  if( (! ADMIN ) && ($row['globalaccess'] != "t" ) && ( $row['usergroupid'] != 0 ) ) {
     if( ! in_array( $row['usergroupid'], (array)$GID ) )
       continue;
   }

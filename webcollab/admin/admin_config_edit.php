@@ -35,10 +35,8 @@ $content = "";
 $maillist = "";
 
 //only for admins
-if( $ADMIN != 1 ) {
+if( ! ADMIN )
   error( "Not permitted", "This function is for admins only" );
-  return;
-}
 
 //start form data
 $content .=

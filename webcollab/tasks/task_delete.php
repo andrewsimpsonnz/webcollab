@@ -123,7 +123,7 @@ if( ! $row = db_fetch_array($q, 0) )
   error("Task delete", "The selected task does not exist.");
 
 //can this user delete this task ?
-if( ($ADMIN != 1) && ($UID != $row['owner']) )
+if( (! ADMIN ) && (UID != $row['owner']) )
   error("Access denied", "You do not own this task and therefore you may not delete it." );
 
 //if user aborts, let the script carry onto the end
@@ -183,7 +183,7 @@ if($row['parent'] != 0 ){
 db_commit();
 
 //inform the user that his task has been deleted by an admin
-if(($row['owner'] != 0 ) && ($UID != $row['owner']) ) {
+if(($row['owner'] != 0 ) && (UID != $row['owner']) ) {
   
   include_once(BASE."includes/email.php" );
   include_once(BASE."includes/time.php" );

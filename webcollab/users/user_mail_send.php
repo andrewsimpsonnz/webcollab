@@ -34,7 +34,7 @@ include_once(BASE."includes/email.php" );
 include_once(BASE."includes/admin_config.php" );
 
 //only for admins
-if( $ADMIN != 1 ) {
+if( ! ADMIN ) {
   error( "Not permitted", "This function is for admins only" );
   return;
 }

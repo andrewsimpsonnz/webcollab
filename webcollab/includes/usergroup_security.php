@@ -34,7 +34,7 @@ require_once(BASE."includes/security.php" );
 $taskid = intval($taskid);
 
 //admins can go free, the rest are checked
-if($ADMIN == 1 )
+if(ADMIN )
   return;
 
 //get the tasks' security info

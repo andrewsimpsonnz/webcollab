@@ -30,14 +30,15 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 //secure variables
-$content  = "";
-$clone = "";
-$archive = "";
-$menu_type = "project";
-$taskid = -1;
+$content   = '';
+$clone     = '';
+$archive   = '';
+$menu_type = 'project';
+$taskid    = -1;
 
-if($GUEST == 1 )
-  warning($lang['access_denied'], $lang['not_owner'] );  
+//guests shouldn't get here
+if(GUEST )
+  return;  
 
 //get taskid (if any)
 if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ){
@@ -51,7 +52,7 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ){
     
     $menu_type = $TYPE;
     
-    if(($ADMIN == 1 ) || ($TASKID_ROW['owner'] == $UID )  ) {
+    if((ADMIN ) || ($TASKID_ROW['owner'] == UID )  ) {
       $content .= "<small><b>".$lang['admin'].":</b></small><br />\n".
                   "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_$TYPE"]."</a><br />\n".
                   "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang["delete_$TYPE"]."</a><br />\n".
@@ -63,7 +64,7 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ){
     }
     $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=$taskid\">".$lang['add_task']."</a><br />\n";
   
-    if($ADMIN == 1 )
+    if(ADMIN )
       $clone = "<a href=\"tasks.php?x=$x&amp;action=clone&amp;taskid=$taskid\">".$lang["clone_$TYPE"]."</a><br />\n";
   }
 }
