@@ -122,11 +122,11 @@ ignore_user_abort(TRUE);
       $taskid      = check($_POST["taskid"]);
 
       if($taskid == 0 )
-        error( "Forum submit", "Taskid not valid");
+        error("Forum submit", "Taskid not valid");
 
       //do data consistency check on parentid
       if($parentid != 0 ) {
-        if(db_result(db_query( "SELECT COUNT(*) FROM forum WHERE id=$parentid" ), 0, 0 ) == 0 )
+        if(db_result(db_query("SELECT COUNT(*) FROM forum WHERE id=$parentid" ), 0, 0 ) == 0 )
           error("Forum submit", "Data consistency error - child post has no parent" );
       }
 
@@ -134,29 +134,31 @@ ignore_user_abort(TRUE);
       require_once(BASE."includes/usergroup_security.php" );
 
       //okay now check if we need to post in the public or the private forums of the task
-      if($usergroupid != 0 ) {
+      switch($usergroupid ) {
+        case 0:
+          //public post
+          db_begin();
+          db_query ("INSERT INTO forum(parent, taskid, posted, text, userid, usergroupid)
+                      VALUES ($parentid, $taskid, now(), '$text', $uid, 0)" );
+          break;
 
-        //check if the user does belong to that group
-        if( ($admin!=1) && ( ! in_array( $usergroupid, (array)$gid ) ) )
-          error("Forum submit", "You do not have enough rights to post in that forum" );
+        default:
+          //private post
+          //check if the user does belong to that group
+          if(($admin!=1 ) && ( ! in_array($usergroupid, (array)$gid ) ) )
+            error("Forum submit", "You do not have enough rights to post in that forum" );
 
-        //private post
-        db_begin();
-        db_query ("INSERT INTO forum(parent, taskid, posted, text, userid, usergroupid)
-                VALUES ($parentid, $taskid, now(), '$text', $uid, $usergroupid)" );
+          db_begin();
+          db_query ("INSERT INTO forum(parent, taskid, posted, text, userid, usergroupid)
+                      VALUES ($parentid, $taskid, now(), '$text', $uid, $usergroupid)" );
+          break;
+
       }
-      else {
-        //public post
-        db_begin();
-        db_query ("INSERT INTO forum(parent, taskid, posted, text, userid, usergroupid)
-                  VALUES ($parentid, $taskid, now(), '$text', $uid, 0)" );
-      }
-      //set when the last forum post to this task was done to the database
+      //set time of last forum post to this task
       db_query("UPDATE tasks SET lastforumpost=now() WHERE id=$taskid" );
       db_commit();
 
       break;
-
 
     //owner of the thread can delete, admin can delete
     case "del":
