@@ -36,7 +36,7 @@ include_once( "../config.php" );
 function error_setup($message ) {
 
   create_top_setup("Setup", 1 );
-  new_box_setup("Setup error", "<center><br />".$message."<br /></center>" );
+  new_box_setup("Setup error", "<center><br />".$message."<br /><br /></center>" );
   create_bottom_setup();
   die;
 
@@ -48,17 +48,16 @@ function error_setup($message ) {
 
 if(isset($_POST["database_name"]) ) {
 
-  $array = array("database_name", "database_user", "database_password", "database_type" );
-  foreach( $array as $var) {
-    if(! isset($_POST[$var]) ) {
-      error_setup("Variable ".$var." was not entered" );
+  $input_array = array("database_name", "database_user", "database_password", "database_type" );
+  $message_array =array( "'Your database name'", "'Database user'", "'Database password'", "'Database type'" );
+  $i = 0;
+  foreach( $input_array as $var) {
+    if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
+      error_setup("The field for ".$message_array[$i]." was not entered.<br /><br />".
+                   "Please go back and enter all the required data fields." );
     }
+  $i++;
   }
-
-  //skip making database
-  if(isset($_POST["make_database"]) && $_POST["make_database"] != "on" )
-    header("location: setup2.php?db_host=".$database_host."&amp;db_user=".$database_user."&amp;db_pass=".$database_password."&amp;db_name=".$database_name."&amp;db_type=".$database_type );
-
 
   $database_name     = $_POST["database_name"];
   $database_user     = $_POST["database_user"];
@@ -72,6 +71,13 @@ if(isset($_POST["database_name"]) ) {
     $database_host = "localhost";
   }
 
+  //skip making database
+  if(isset($_POST["make_database"]) && $_POST["make_database"] == "on" ){
+    continue;
+  }
+  else{
+    header("location: setup2.php?db_host=".$database_host."&db_user=".$database_user."&db_pass=".$database_password."&db_name=".$database_name."&db_type=".$database_type );
+  }
   switch ($database_type) {
 
   case "mysql":
@@ -175,7 +181,7 @@ if(isset($_POST["database_name"]) ) {
     break;
   }
 
-  header("location: setup2.php?db_host=".$database_host."&amp;db_user=".$database_user."&amp;db_pass=".$database_password."&amp;db_name=".$database_name."&amp;db_type=".$database_type );
+  header("location: setup2.php?db_host=".$database_host."&db_user=".$database_user."&db_pass=".$database_password."&db_name=".$database_name."&db_type=".$database_type );
 }
 
 //
@@ -191,8 +197,8 @@ create_top_setup("Setup Screen", 1);
 $content = "<center>\n".
 "<br /><br />\n".
 "<img src=\"../images/webcollab.png\" alt=\"WebCollab logo\"></img><br /><br />\n".
-"<p><b>Setup - Stage 1 of 3 : Database Creation</b></p>\n".
-"<form name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
+"<p><b>Setup - Stage 1 of 3 : Database Setup</b></p>\n".
+"<form method=\"POST\" action=\"index.php\">\n".
   "<table border=\"0\">\n".
     "<tr align=\"left\"><td>Your database name: </td><td><input type=\"text\" name=\"database_name\" size=\"30\"></td></tr>\n".
     "<tr align=\"left\"><td>Database user: </td><td><input type=\"text\" name=\"database_user\" size=\"30\"></td></tr>\n".
@@ -203,9 +209,9 @@ $content = "<center>\n".
       "<option value=\"mysql\" SELECTED >mysql</option>\n".
       "<option value=\"postgresql\">postgresql</option>\n".
     "</select></td></tr>\n".
-
-  "</table><br />\n".
-  "Do you want to create the database now?  <input type=\"checkbox\" name=\"make_database\" CHECKED ><br />\n".
+    "<tr><td></td><tr>\n".
+    "<tr><td colspan=\"2\">Do you want WebCollab to create the database now?  <input type=\"checkbox\" name=\"make_database\" CHECKED ></td></tr>\n".
+    "</table><br />\n".
   "<input type=\"submit\" value=\"Submit\"><br /><br />\n".
 "</form>\n".
 "</center>\n".
