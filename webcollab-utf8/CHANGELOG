@@ -1,26 +1,38 @@
-WebCollab Unicode
+WebCollab Unicode CVS
+*** 6 March 2005
+Andrew Simpson
+
+- merge to WebCollab CVS (post 1.70)
+
+- add timezone handling within database (needs MySQL 4.1+, or PostgreSQL)
+
+- refactor /includes/time.php (plus all associated files) to allow database timezone handling
+
+WebCollab Unicode CVS
 *** 22 January 2005
 Andrew Simpson
 
 - merge to WebCollab 1.69
 
+- make MySQL 4.1+ or PostgreSQL 7.2+ minimium requirement
+
 - set client encoding on MySQL 4.1
 
 - set client encoding on PostgreSQL 
  
-WebCollab Unicode
+WebCollab Unicode CVS
 *** 9 January 2005
 Andrew Simpson
 
 - allow for character encoding other than UTF-8
 
-WebCollab Unicode
+WebCollab Unicode CVS
 *** 31 December 2004
 Andrew Simpson
 
 - merge/add Korean language from WebCollab CVS
 
-WebCollab Unicode
+WebCollab Unicode CVS
 *** 11 December 2004
 Andrew Simpson
 
@@ -32,7 +44,7 @@ Andrew Simpson
 
 - release
 
-WebCollab Unicode Add-ons
+WebCollab Unicode Add-ons CVS
 *** 9 December 2004
 Andrew Simpson
 
@@ -40,7 +52,7 @@ Andrew Simpson
 
 - add HTML entities to UTF-8 conversion
 
-WebCollab Unicode Add-ons
+WebCollab Unicode Add-ons CVS
 *** 5 December 2004
 Andrew Simpson
 
