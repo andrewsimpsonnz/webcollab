@@ -84,6 +84,19 @@ return $content;
 $flag = 0;
 $content = "";
 $usergroup[0] = 0;
+$allowed[0] = 0; 
+
+//get list of common users in private usergroups that this user can view 
+$q = db_query("SELECT usergroupid, userid 
+                      FROM usergroups_users 
+                      LEFT JOIN usergroups ON (usergroups.id=usergroups_users.usergroupid)
+                      WHERE usergroups.private=1");
+
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+  if(in_array($row[0], (array)$gid ) && ! in_array($row[1], (array)$allowed ) ) {
+   $allowed[] = $row[1];
+  }
+}
 
 //check validity of inputs
 if(isset($_POST["selection"]) && strlen($_POST["selection"]) > 0 )
@@ -136,10 +149,16 @@ $content .= "<form method=\"POST\" action=\"tasks.php\">\n".
             "<option value=\"0\"$s2>".$lang["nobody"]."</option>\n";
 
 //get all users for option box
-$q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname");
+$q = db_query("SELECT id, fullname, private FROM users WHERE deleted='f' ORDER BY fullname");
 
 //user input box fields
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+      
+  //user test for privacy
+  if($row["private"] && ( ! $admin ) && ( ! in_array($row["id"], (array)$allowed ) ) ){
+    continue;
+  }
+    
   $content .= "<option value=\"".$row["id"]."\"";
 
   //highlight current selection
@@ -155,10 +174,16 @@ $content .= "</select></label></td></tr>\n".
             "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
 
 //get all groups for option box
-$q = db_query("SELECT id, name FROM usergroups ORDER BY name" );
+$q = db_query("SELECT id, name, private FROM usergroups ORDER BY name" );
 
 //usergroup input box fields
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+    
+  //usergroup test for privacy
+  if( (! $admin ) && ( ! in_array($row["id"], (array)$gid ) ) ) {
+    continue;
+  }
+    
   $content .= "<option value=\"".$row["id"]."\"";
 
   //highlight current selection

@@ -36,6 +36,19 @@ include_once(BASE."includes/time.php" );
 
 $usergroup[0] = 0;
 $javascript = "";
+$allowed[0] = 0; 
+
+//get list of common users in private usergroups that this user can view 
+$q = db_query("SELECT usergroupid, userid 
+                      FROM usergroups_users 
+                      LEFT JOIN usergroups ON (usergroups.id=usergroups_users.usergroupid)
+                      WHERE usergroups.private=1");
+
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+  if(in_array($row[0], (array)$gid ) && ! in_array($row[1], (array)$allowed ) ) {
+   $allowed[] = $row[1];
+  }
+}
 
 //
 //check user access
@@ -249,12 +262,18 @@ switch($row["parent"] ){
 }
 
 //task owner
-$user_q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname" );
+$user_q = db_query("SELECT id, fullname, private FROM users WHERE deleted='f' ORDER BY fullname" );
 $content .= "<tr> <td>".$lang[$type."_owner"].":</td> <td><SELECT name=\"owner\">\n".
             "<option value=\"0\">".$lang["nobody"]."</option>\n";
 
 //select the user first
 for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++) {
+      
+  //user test for privacy
+  if($user_row["private"] && ( ! $admin ) && ( ! in_array($user_row["id"], (array)$allowed ) ) ){
+    continue;
+  }
+    
   $content .= "<option value=\"".$user_row["id"]."\"";
 
   if( $row["owner"] == $user_row["id"] )
@@ -289,11 +308,16 @@ if($row["parent"] != 0 ){
   $content .= "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" />\n ";
 
 //show all user-groups
-$usergroup_q = db_query("SELECT name, id FROM usergroups ORDER BY name" );
+$usergroup_q = db_query("SELECT id, name FROM usergroups ORDER BY name" );
 $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </td> <td><select name=\"usergroupid\">\n";
 $content .= "<option value=\"0\">".$lang["no_group"]."</option>\n";
 
-for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++) {
+for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
+    
+  //usergroup test for privacy
+  if( (! $admin ) && ( ! in_array($usergroup_row["id"], (array)$gid ) ) ) {
+    continue;
+  }
 
   $content .= "<option value=\"".$usergroup_row["id"]."\"";
 
@@ -304,7 +328,7 @@ for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++) {
 
     $content .= $usergroup_row["name"]."</option>\n";
 
-    }
+}
 $content .= "</select></td></tr>\n";
 
 $global = "";

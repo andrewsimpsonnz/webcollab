@@ -37,6 +37,19 @@ include_once(BASE."includes/time.php" );
 //secure vars
 $content = "";
 $javascript = "";
+$allowed[0] = 0; 
+
+//get list of common users in private usergroups that this user can view 
+$q = db_query("SELECT usergroupid, userid 
+                      FROM usergroups_users 
+                      LEFT JOIN usergroups ON (usergroups.id=usergroups_users.usergroupid)
+                      WHERE usergroups.private=1");
+
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+  if(in_array($row[0], (array)$gid ) && ! in_array($row[1], (array)$allowed ) ) {
+   $allowed[] = $row[1];
+  }
+}
 
 //shows a priority-select box
 $priority_select_box = "<tr><td>".$lang["priority"].":</td> <td>\n".
@@ -107,12 +120,18 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
 
 
   //get all users in order to show a task owner
-  $users_q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname");
+  $users_q = db_query("SELECT id, fullname, private FROM users WHERE deleted='f' ORDER BY fullname");
 
   //owner box
   $content .= "<tr><td>".$lang["task_owner"].":</td> <td><select name=\"owner\">\n".
               "<option value=\"0\">".$lang["nobody"]."</option>\n";
   for( $i=0 ; $user_row = @db_fetch_array($users_q, $i ) ; $i++) {
+      
+    //user test for privacy
+    if($user_row["private"] && ( ! $admin ) && ( ! in_array($user_row["id"], (array)$allowed ) ) ){
+      continue;
+    }
+    
     $content .= "<option value=\"".$user_row["id"]."\"";
 
     //default owner is present user
@@ -141,9 +160,15 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td> <td><SELECT name=\"usergroupid\">\n";
   $content .= "<option value=\"0\">".$lang["all_groups"]."</option>\n";
 
-  for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++)
+  for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
+    
+    //usergroup test for privacy
+    if( (! $admin ) && ( ! in_array($usergroup_row["id"], (array)$gid ) ) ) {
+      continue;
+    }
+    
     $content .= "<option value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</option>\n";
-
+  }
   $content .= "</select></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users_view"]."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS." /></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT." /></td></tr>\n".
@@ -190,29 +215,41 @@ else {
               "</select></td></tr>";
 
   //get all users in order to show a task owner
-  $users_q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname");
+  $user_q = db_query("SELECT id, fullname, private FROM users WHERE deleted='f' ORDER BY fullname");
 
   //owner
   $content .= "<tr><td>".$lang["project_owner"].":</td><td><select name=\"owner\">\n";
-  for( $i=0 ; $row = @db_fetch_array($users_q, $i) ; $i++) {
-    $content .= "<option value=\"".$row["id"]."\"";
+  for( $i=0 ; $user_row = @db_fetch_array($user_q, $i) ; $i++) {
+    
+    //user test for privacy
+    if($user_row["private"] && ( ! $admin ) && ( ! in_array($user_row["id"], (array)$allowed ) ) ){
+      continue;
+    }
+
+    $content .= "<option value=\"".$user_row["id"]."\"";
 
       //owner is user
-      if( $row["id"] == $uid ) {
+      if( $user_row["id"] == $uid ) {
         $content .= " SELECTED";
       }
-    $content .= ">".$row["fullname"]."</option>\n";
+    $content .= ">".$user_row["fullname"]."</option>\n";
   }
   $content .= "</select></td></tr>\n";
 
   //show all the groups
-  $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
+  $group_q = db_query( "SELECT id, name, private FROM usergroups ORDER BY name" );
   $content .= "<tr> <td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td> <td><select name=\"usergroupid\">\n".
               "<option value=\"0\">".$lang["all_groups"]."</option>\n";
 
-  for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++)
-    $content .= "<option value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</option>\n";
+  for( $i=0 ; $group_row = @db_fetch_array($group_q, $i ) ; $i++) {
+    
+    //usergroup test for privacy
+    if( (! $admin ) && ( ! in_array($group_row["id"], (array)$gid ) ) ) {
+      continue;
+    }
 
+    $content .= "<option value=\"".$group_row["id"]."\">".$group_row["name"]."</option>\n";
+  }
   $content .= "</select></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users_view"]."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS." /></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT." /></td></tr>\n".
@@ -224,7 +261,7 @@ else {
               "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></label></td></tr>\n".
 
               "</table></p>\n".
-              "<p><input type=\"submit\" value=\"".$lang["add_project"]."\" />&nbsp;".
+              "<p><input type=\"submit\" value=\"".$lang["add_project"]."\"  onclick=\"return fieldCheck()\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
               "</form>\n";
 
