@@ -87,6 +87,13 @@ if( ! isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) )
         //alter task lastfileupload
         db_query("UPDATE tasks SET lastfileupload=current_timestamp(0) WHERE id=$taskid" );
 
+        //addslashes to stored filename only if magic quotes is 'off'
+        //(prevents database errors)
+        if(! get_magic_quotes_gpc() )
+          $db_filename = addslashes($_FILES["userfile"]["name"] );
+        else
+          $db_filename = $_FILES["userfile"]["name"];
+
         //alter file database administration
         $upload_q = db_query( "INSERT INTO files (filename,
                                                     size,
@@ -95,7 +102,7 @@ if( ! isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) )
                                                     uploader,
                                                     taskid,
                                                     mime )
-                                VALUES ('".$_FILES["userfile"]["name"]."',
+                                            VALUES ('$db_filename',
                                                     ".$_FILES["userfile"]["size"].",
                                                     '$description',
                                                     current_timestamp(0),
@@ -105,7 +112,15 @@ if( ! isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) )
 
         //copy it
         $last_oid = db_lastoid( $upload_q);
-        if( !move_uploaded_file( $_FILES["userfile"]["tmp_name"], $FILE_BASE."/".$last_oid."__".$_FILES["userfile"]["name"] ) ) {
+
+        //stripslashes from filename if magic quotes is 'on'
+        //(prevents slash being read as a directory in Windows!!) 
+        if(get_magic_quotes_gpc() )
+          $filename = stripslashes($_FILES["userfile"]["name"] );
+        else
+          $filename = $_FILES["userfile"]["name"];
+
+        if( !move_uploaded_file( $_FILES["userfile"]["tmp_name"], $FILE_BASE."/".$last_oid."__".$filename ) ) {
           db_query( "DELETE FROM files WHERE ".$last_insert."=".$last_oid );
           unlink( $_FILES["userfile"]["tmp_name"] );
           db_rollback();
@@ -117,7 +132,7 @@ if( ! isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) )
           db_query( "UPDATE files SET oid=".$last_oid." WHERE id=".$last_oid );
 
         //disarm it
-        chmod($FILE_BASE."/".$last_oid."__".$_FILES["userfile"]["name"], 0644 );
+        chmod($FILE_BASE."/".$last_oid."__".$filename, 0644 );
         db_commit();
 
       }
