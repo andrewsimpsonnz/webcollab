@@ -43,10 +43,15 @@ else
   $selection = 'user';
 
 //set user default
-if(isset($_POST['userid']) && is_numeric($_POST['userid']) )
+if(isset($_POST['userid']) && is_numeric($_POST['userid']) ){
   $userid = ($_POST['userid']);
-else
-  $userid = $UID;
+}
+else{
+  if($GUEST == 0 )
+    $userid = $UID;
+  else
+    $userid = 0;
+}
 
 //set usergroup default
 if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) )
@@ -220,8 +225,8 @@ $content .= "</select></label></td></tr>\n".
 //month (must be in decimal, 'cause that's what database uses!)
 $content .= "<div style=\"text-align: center\">\n".
             "<table style=\"margin-left: auto; margin-right: auto\">\n".
-            "<tr><td><input type=\"submit\" alt=\"".$lang['last_year']."\" name=\"lastyear\" value=\"&lt;&lt;\" /></td>\n".
-            "<td><input type=\"submit\" alt=\"".$lang['last_month']."\" name=\"lastmonth\" value=\"&lt;\" /></td>\n".
+            "<tr><td><input type=\"submit\" name=\"lastyear\" value=\"&lt;&lt;\" /></td>\n".
+            "<td><input type=\"submit\" name=\"lastmonth\" value=\"&lt;\" /></td>\n".
             "<td>\n<select name=\"month\">\n";
 for( $i=1; $i<13 ; $i++) {
   $content .= "<option value=\"$i\"";
@@ -240,8 +245,8 @@ for( $i=2001; $i<2011 ; $i++) {
   $content .= ">".$i."</option>\n";
   }
 $content .=  "</select></td>\n".
-             "<td><input type=\"submit\" alt=\"".$lang['next_month']."\" name=\"nextmonth\" value=\"&gt;\" /></td>\n".
-             "<td><input type=\"submit\" alt=\"".$lang['next_year']."\" name=\"nextyear\" value=\"&gt;&gt;\" /></td></tr>\n".
+             "<td><input type=\"submit\" name=\"nextmonth\" value=\"&gt;\" /></td>\n".
+             "<td><input type=\"submit\" name=\"nextyear\" value=\"&gt;&gt;\" /></td></tr>\n".
              "</table></div></form>\n<br /><br />\n";
 
 //number of days in month
