@@ -353,7 +353,7 @@ $content .= "<br /><br />\n<form method=\"post\" action=\"tasks.php\">\n".
              "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />".
              "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
              "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid_row["id"]."\" />\n".
-             "<input type=\"submit\" value=\"".$lang["delete_$type"]."\" onclick=\"return confirm('".sprintf($lang["del_javascript_".$type."_sprt"], $taskid_row["name"] )."')\" /></fieldset>\n".
+             "<input type=\"submit\" value=\"".$lang["delete_$type"]."\" onclick=\"return confirm('".sprintf($lang["del_javascript_".$type."_sprt"], javascript_escape($taskid_row["name"] ) )."')\" /></fieldset>\n".
              "</form>\n";
 
 new_box($lang["edit_$type"], $content );

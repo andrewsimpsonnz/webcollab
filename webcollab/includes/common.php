@@ -89,12 +89,23 @@ function clean_up($body ) {
 }
 
 //
-// single and double quotes in HTML edit fields are changed to HTML encoding (addslashes doesn't help here)
+// single and double quotes in HTML edit fields are changed to HTML encoding (addslashes doesn't work for HTML)
 //
 function html_escape($body ) {
 
-  $trans = array('"'=>'&quot;', "'"=>'&#039' );
-  
+  $trans = array('"'=>'&quot;', "'"=>'&apos;' );
+    
+  return strtr($body, $trans );
+}
+
+//
+// single quotes in javascript fields are double escaped (PHP removes one of the escape characters)
+// double quotes are changed to HTML (escaping won't work) 
+// 
+function javascript_escape($body ) {
+
+  $trans = array('"'=>'&quot;', "'"=>"\\'" );
+    
   return strtr($body, $trans );
 }
 

@@ -71,7 +71,7 @@ if(db_numrows($q ) != 0 ) {
 
     //owners of the file and admins have a "delete" option
     if( ($admin == 1) || ($uid == $taskid_row["owner"] ) || ($uid == $row["uploader"] ) ) {
-      $content .= "&nbsp;<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;action=submit_del&amp;fileid=".$row["id"]."&amp;taskid=$taskid\" onclick=\"return confirm('".sprintf( $lang["del_file_javascript_sprt"], $row["filename"] )."' )\">".$lang["del"]."</a>]</span></td></tr>\n";
+      $content .= "&nbsp;<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;action=submit_del&amp;fileid=".$row["id"]."&amp;taskid=$taskid\" onclick=\"return confirm('".sprintf( $lang["del_file_javascript_sprt"], javascript_escape($row["filename"] ) )."' )\">".$lang["del"]."</a>]</span></td></tr>\n";
     } else
       $content .= "</td></tr>\n";
 
