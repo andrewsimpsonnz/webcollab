@@ -1,4 +1,16 @@
 WebCollab CVS
+***2 May 2003
+  Andrew Simpson
+
+- make font colours more consistent and websafe
+
+- add innodb support for MySQL
+
+- update PostgreSQL function calls to properly support post-PHP 4.2.0 coding
+
+- simplify stylesheet 
+
+WebCollab CVS
 *** 27 April 2003
   Andrew Simpson
 
