@@ -40,12 +40,12 @@ include_once( BASE."includes/security.php" );
 include_once( BASE."config.php" );
 
 
-//add an option to add users
+//add an option to admin files
 if( $admin == 1 )
-  $content .= "<A href=\"files.php?x=".$x."&action=admin\">".$lang["file_admin"]."</A><BR>\n";
+  $content .= "<a href=\"files.php?x=$x&amp;action=admin\">".$lang["file_admin"]."</a><br />\n";
 
 if( $taskid != -1 )
-  $content .= "<A href=\"".$BASE_URL."files.php?x=".$x."&taskid=".$taskid."&action=upload\">".$lang["add_file"]."</A><BR>\n";
+  $content .= "<a href=\"".$BASE_URL."files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang["add_file"]."</a><br />\n";
 
 
 //show it

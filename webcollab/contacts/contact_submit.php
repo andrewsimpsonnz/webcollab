@@ -47,36 +47,36 @@ if( valid_string( $_REQUEST["action"] ) ) {
     case "insert":
           if( valid_string( $_POST["lastname"] ) && valid_string($_POST["firstname"] ) ){
 
-        db_query( "INSERT INTO contacts(  firstname,
-                                          lastname,
-	  			          company,
-				          tel_home,
-				          gsm,
-				          fax,
-				          tel_business,
-				          address,
-				          postal,
-				          city,
-				          email,
-						  notes,
-				          added_by,
-						  user_id,
-					      date )
-                             values( '".safe_data($_POST["firstname"])."',
-			             '".safe_data($_POST["lastname"])."',
-				     '".safe_data($_POST["company"])."',
-				     '".safe_data($_POST["tel_home"])."',
-				     '".safe_data($_POST["gsm"])."',
-				     '".safe_data($_POST["fax"])."',
-				     '".safe_data($_POST["tel_business"])."',
-				     '".safe_data($_POST["address"])."',
-				     '".safe_data($_POST["postal"])."',
-				     '".safe_data($_POST["city"])."',
-				     '".safe_data($_POST["email"])."',
-				     '".safe_data($_POST["notes"])."',
-				     ".$uid.",
-					 ".$uid.",
-				     current_timestamp(0) )" );
+        db_query( "INSERT INTO contacts(firstname,
+                                        lastname,
+                                        company,
+                                        tel_home,
+                                        gsm,
+                                        fax,
+                                        tel_business,
+                                        address,
+                                        postal,
+                                        city,
+                                        email,
+                                        notes,
+                                        added_by,
+                                        user_id,
+                                        date )
+                                    values('".safe_data($_POST["firstname"])."',
+                                    '".safe_data($_POST["lastname"])."',
+                                    '".safe_data($_POST["company"])."',
+                                    '".safe_data($_POST["tel_home"])."',
+                                    '".safe_data($_POST["gsm"])."',
+                                    '".safe_data($_POST["fax"])."',
+                                    '".safe_data($_POST["tel_business"])."',
+                                    '".safe_data($_POST["address"])."',
+                                    '".safe_data($_POST["postal"])."',
+                                    '".safe_data($_POST["city"])."',
+                                    '".safe_data($_POST["email"])."',
+                                    '".safe_data($_POST["notes"])."',
+                                    $uid,
+                                    $uid,
+                                    current_timestamp(0) )" );
       }else
         warning( $lang["contact_submit"], $lang["contact_warn"] );
 
@@ -86,22 +86,22 @@ if( valid_string( $_REQUEST["action"] ) ) {
      //edit an existing entry
          if( valid_string( $_POST["lastname"]) && valid_string( $_POST["firstname"] ) && is_numeric( $contactid ) ) {
 
-        db_query( "UPDATE contacts SET
-					firstname='".safe_data($_POST["firstname"])."',
-					lastname='".safe_data($_POST["lastname"])."',
-					company='".safe_data($_POST["company"])."',
-					tel_home='".safe_data($_POST["tel_home"])."',
-					gsm='".safe_data($_POST["gsm"])."',
-					fax='".safe_data($_POST["fax"])."',
-					tel_business='".safe_data($_POST["tel_business"])."',
-					address='".safe_data($_POST["address"])."',
-					postal='".safe_data($_POST["postal"])."',
-					city='".safe_data($_POST["city"])."',
-					email='".safe_data($_POST["email"])."',
-					notes='".safe_data($_POST["notes"])."',
-					added_by=".$uid.",
-					date=current_timestamp(0)
-       					WHERE id = '".$contactid."'");
+        db_query("UPDATE contacts SET
+                    firstname='".safe_data($_POST["firstname"])."',
+                    lastname='".safe_data($_POST["lastname"])."',
+                    company='".safe_data($_POST["company"])."',
+                    tel_home='".safe_data($_POST["tel_home"])."',
+                    gsm='".safe_data($_POST["gsm"])."',
+                    fax='".safe_data($_POST["fax"])."',
+                    tel_business='".safe_data($_POST["tel_business"])."',
+                    address='".safe_data($_POST["address"])."',
+                    postal='".safe_data($_POST["postal"])."',
+                    city='".safe_data($_POST["city"])."',
+                    email='".safe_data($_POST["email"])."',
+                    notes='".safe_data($_POST["notes"])."',
+                    added_by=$uid,
+                    date=current_timestamp(0)
+                    WHERE id = '$contactid'");
 
      }else
         warning( $lang["contact_submit"], $lang["contact_warn"] );
@@ -109,10 +109,11 @@ if( valid_string( $_REQUEST["action"] ) ) {
     break;
 
     case "delete":
-      if( is_numeric( $contactid ) ) {
+      if(is_numeric($contactid ) ) {
         //delete the contact
         db_query("DELETE FROM contacts WHERE id=".$contactid );
-        } else {
+        }
+        else {
         error( "Contact submit", "Invalid value specified for contactid" );
       }
 

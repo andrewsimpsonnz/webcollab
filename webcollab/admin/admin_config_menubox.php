@@ -36,7 +36,7 @@ include_once( BASE."includes/security.php" );
 
 //add an option to add users
 if( $admin == 1 )
-  $content .= "<A href=\"admin.php?x=".$x."&action=admin\">".$lang["admin_config"]."</A><BR>\n";
+  $content .= "<a href=\"admin.php?x=".$x."&amp;action=admin\">".$lang["admin_config"]."</a><br />\n";
 
 //show it
 new_box( $lang["admin_config"], $content );

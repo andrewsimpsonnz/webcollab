@@ -5,7 +5,7 @@
   WebCollab
   ---------------------------------------
   Created 2003 by Andrew Simpson
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -42,7 +42,11 @@ if( ! isset($_GET["fileid"]) || ! is_numeric($_GET["fileid"]) )
 $fileid = $_GET["fileid"];
 
 //check usergroups associated with this file
-if( ! ($q = db_query("SELECT tasks.usergroupid,tasks.globalaccess FROM files LEFT JOIN tasks ON (files.taskid=tasks.id) WHERE files.id=".$fileid ) ) )
+if( ! ($q = db_query("SELECT tasks.usergroupid,
+                             tasks.globalaccess
+                             FROM files
+                             LEFT JOIN tasks ON (files.taskid=tasks.id)
+                             WHERE files.id=".$fileid ) ) )
   error("Download file", "There was an error in the data query.");
 
 //get the data
@@ -53,17 +57,17 @@ if( ! ($row = db_fetch_array($q, 0 ) ) )
 if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
   //check if the user has a matching group
   $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
-  for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++) {
+  for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
 
     //found it
-    if( $row["usergroupid"] == $usergroup_row["usergroupid"] ) {
+    if($row["usergroupid"] == $usergroup_row["usergroupid"] ) {
       $found=1;
       break;
     }
   }
-  
+
   //deny access if not in the group
-  if( $found != 1 )
+  if($found != 1 )
     warning($lang["access_denied"], $lang["private_usergroup"] );
 }
 
@@ -73,13 +77,13 @@ $file_row = db_fetch_array( $file_q, 0);
 
 //check the file exists
 if( ! ( file_exists( $FILE_BASE."/".$file_row["oid"]."__".$file_row["filename"] ) ) )
-  error( "Download file", "The file ".$file_row["filename"]." is missing from the server" );
+  error("Download file", "The file ".$file_row["filename"]." is missing from the server" );
 
 //open the file
 $fp = fopen( $FILE_BASE."/".$file_row["oid"]."__".addslashes($file_row["filename"]), "rb" );
-if( $fp == 0 )
-  error( "Download file", "File handle for ".$file_row["filename"]." cannot be opened" );
-    
+if($fp == 0 )
+  error("Download file", "File handle for ".$file_row["filename"]." cannot be opened" );
+
 //send the headers describing the file type
 header("Content-Type: ".$file_row["mime"]);
 header("Content-Disposition: inline; filename=".$file_row["filename"]);

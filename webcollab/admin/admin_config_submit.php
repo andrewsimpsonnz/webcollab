@@ -78,12 +78,12 @@ else
 
 //update config database
 db_query( "UPDATE config SET email_admin='".$email_admin."',
-                             reply_to='".$reply_to."',
-			     email_from='".$from."',
-			     globalaccess='".$access."',
-				 groupaccess='".$group_edit."',
-			     owner='".$owner."',
-			     usergroup='".$usergroup."'");
+                            reply_to='".$reply_to."',
+                            email_from='".$from."',
+                            globalaccess='".$access."',
+                            groupaccess='".$group_edit."',
+                            owner='".$owner."',
+                            usergroup='".$usergroup."'");
 
 /*
 Begin mailing list clean up
@@ -92,15 +92,15 @@ Because we get the mailing list input from a textarea, it needs thorough filteri
 */
 
 //roughly separate out the email list by newlines, spaces, formfeeds etc...
-$input_list = split( "[ \f\r\n\t]+", $_POST["email"] );
-
-//initialise secondary counter
-$j = 0;
+$input_list = split("[ \f\r\n\t]+", $_POST["email"] );
 
 //step through the split input array looking for email addresses
-for( $i=0 ; $i < sizeof($input_list) ; $i++) {
+$max = sizeof($input_list);
+//initialise secondary counter
+$j = 0;
+for( $i=0 ; $i < $max ; $i++) {
   //check for valid address anywhere this data string
-  if( ereg("[a-z0-9\-\.]+@[a-z0-9\-\.]+\.[a-z0-9]+", $input_list[$i], $value ) ) {
+  if(ereg("[a-z0-9\-\.]+@[a-z0-9\-\.]+\.[a-z0-9]+", $input_list[$i], $value ) ) {
     //found one - remove any whitespace at each end, then save it
     $email_list[$j] = trim($value[0]);
     $j++;
@@ -109,12 +109,13 @@ for( $i=0 ; $i < sizeof($input_list) ; $i++) {
 
 //drop old list
 //can't use a transaction here - postgres' does not like it!
-db_query( "TRUNCATE TABLE maillist");
+db_query("TRUNCATE TABLE maillist");
 
 //add new list
 if( isset($email_list ) ) {
-  for( $i=0 ; $i < sizeof($email_list) ; $i++ ) {
-    db_query( "INSERT INTO maillist (email) VALUES ('".$email_list[$i]."')" );
+  $max = sizeof($email_list);
+  for( $i=0 ; $i < $max ; $i++ ) {
+    db_query("INSERT INTO maillist (email) VALUES ('".$email_list[$i]."')" );
   }
 }
 //all done!

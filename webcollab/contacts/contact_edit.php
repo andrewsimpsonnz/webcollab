@@ -45,42 +45,43 @@ $contactid = $_POST["contactid"];
 if( ! ($row = db_fetch_array( db_query( "SELECT * FROM contacts WHERE id=".$contactid ), 0 ) ) )
   error("Database value error", "There is no information for the contact that you specified");
 
-$content = "<BR>\n".
-"<FORM method=\"POST\" action=\"contacts/contact_submit.php\">\n".
-"<TABLE border=\"0\">\n".
-
-	"<TR><TD><I>".$lang["firstname"]."</I> </TD><TD><INPUT type=\"input\" name=\"firstname\" value=\"".$row["firstname"]."\"size=\"30\"</TD></TR>\n".
-	"<TR><TD><I>".$lang["lastname"]."</I> </TD><TD><INPUT type=\"input\" name=\"lastname\" value=\"".$row["lastname"]."\" size=\"30\"></TD></TR>\n".
-	"<TR><TD><I>".$lang["company"]."</I> </TD><TD><INPUT type=\"input\" name=\"company\" value=\"".$row["company"]."\" size=\"30\"></TD></TR>\n".
-	"<TR><TD><I>".$lang["home_phone"]."</I> </TD><TD><INPUT type=\"input\" name=\"tel_home\" value=\"".$row["tel_home"]."\" size=\"30\"></TD></TR>\n".
-	"<TR><TD><I>".$lang["mobile"]."</I> </TD><TD><INPUT type=\"input\" name=\"gsm\" value=\"".$row["gsm"]."\" size=\"30\"></TD></TR>\n".
-	"<TR><TD><I>".$lang["fax"]."</I> </TD><TD><INPUT type=\"input\" name=\"fax\" value=\"".$row["fax"]."\" size=\"30\"></TD></TR>\n".
-	"<TR><TD><I>".$lang["bus_phone"]."</I> </TD><TD><INPUT type=\"input\" name=\"tel_business\" value=\"".$row["tel_business"]."\" size=\"30\"></TD></TR>\n".
-	"<TR><TD><I>".$lang["address"]."</I> </TD><TD><INPUT type=\"input\" name=\"address\" value=\"".$row["address"]."\" size=\"30\"></TD></TR>\n".
-	"<TR><TD><I>".$lang["postal"]."</I> </TD><TD><INPUT type=\"input\" name=\"postal\" value=\"".$row["postal"]."\" size=\"30\"></TD></TR>\n".
-	"<TR><TD><I>".$lang["city"]."</I> </TD><TD><INPUT type=\"input\" name=\"city\" value=\"".$row["city"]."\" size=\"30\"></TD></TR>\n".
-	"<TR><TD><I>".$lang["email"]."</I> </TD><TD><INPUT type=\"input\" name=\"email\" value=\"".$row["email"]."\" size=\"30\"></TD></TR>\n".
-	"</TABLE><BR>\n".
-	"<I>".$lang["notes"]."</I><BR><TEXTAREA  name=\"notes\" rows=\"6\" cols=\"50\">". $row["notes"] ."</TEXTAREA><BR><BR>";
+$content = "<br />\n".
+	"<form method=\"POST\" action=\"contacts/contact_submit.php\">\n".
+	  "<table border=\"0\">\n".
+	    "<tr><td><i>".$lang["firstname"]."</i> </td><td><input type=\"input\" name=\"firstname\" value=\"".$row["firstname"]."\"size=\"30\"</td></tr>\n".
+	    "<tr><td><i>".$lang["lastname"]."</i> </td><td><input type=\"input\" name=\"lastname\" value=\"".$row["lastname"]."\" size=\"30\"></td></tr>\n".
+	    "<tr><td><i>".$lang["company"]."</i> </td><td><input type=\"input\" name=\"company\" value=\"".$row["company"]."\" size=\"30\"></td></tr>\n".
+	    "<tr><td><i>".$lang["home_phone"]."</i> </td><td><input type=\"input\" name=\"tel_home\" value=\"".$row["tel_home"]."\" size=\"30\"></td></tr>\n".
+	    "<tr><td><i>".$lang["mobile"]."</i> </td><td><input type=\"input\" name=\"gsm\" value=\"".$row["gsm"]."\" size=\"30\"></td></tr>\n".
+	    "<tr><td><i>".$lang["fax"]."</i> </td><td><input type=\"input\" name=\"fax\" value=\"".$row["fax"]."\" size=\"30\"></td></tr>\n".
+	    "<tr><td><i>".$lang["bus_phone"]."</i> </td><td><input type=\"input\" name=\"tel_business\" value=\"".$row["tel_business"]."\" size=\"30\"></td></tr>\n".
+	    "<tr><td><i>".$lang["address"]."</i> </td><td><input type=\"input\" name=\"address\" value=\"".$row["address"]."\" size=\"30\"></td></tr>\n".
+	    "<tr><td><i>".$lang["postal"]."</i> </td><td><input type=\"input\" name=\"postal\" value=\"".$row["postal"]."\" size=\"30\"></td></tr>\n".
+	    "<tr><td><i>".$lang["city"]."</i> </td><td><input type=\"input\" name=\"city\" value=\"".$row["city"]."\" size=\"30\"></td></tr>\n".
+	    "<tr><td><i>".$lang["email"]."</i> </td><td><input type=\"input\" name=\"email\" value=\"".$row["email"]."\" size=\"30\"></td></tr>\n".
+	  "</table><br />\n".
+	  "<i>".$lang["notes"]."</i><br /><textarea  name=\"notes\" rows=\"6\" cols=\"50\">".$row["notes"]."</textarea><br /><br />";
 
 //edit options
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"action\" value=\"edit\">\n".
-              "<INPUT TYPE=\"hidden\" NAME=\"contactid\" value=\"".$contactid."\">\n".
-              "<INPUT TYPE=\"hidden\" NAME=\"x\" value=\"".$x."\">\n".
-	"<INPUT TYPE=\"submit\" NAME=\"".$lang["add"]."\" value=\"Submit\">\n".
-	"<INPUT TYPE=\"reset\">\n".
-	"<BR><BR>\n".
-	"</FORM>";
+$content .=
+	  "<input type=\"hidden\" name=\"action\" value=\"edit\">\n".
+	  "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\">\n".
+	  "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
+	  "<input type=\"submit\" name=\"".$lang["add"]."\" value=\"Submit\">\n".
+	  "<input type=\"reset\">\n".
+	  "<br /><br />\n".
+	"</form>";
 
 
 //delete options
-$content .= "<FORM method=\"POST\" action=\"contacts/contact_submit.php\">\n".
-	"<INPUT TYPE=\"hidden\" name=\"action\" value=\"delete\">\n".
-	"<INPUT TYPE=\"hidden\" name=\"contactid\" value=\"".$contactid."\">\n".
-	"<INPUT TYPE=\"hidden\" NAME=\"x\" value=\"".$x."\">\n".
-	"<INPUT TYPE=\"submit\" NAME=\"Add\" value=\"".$lang["del_contact"]."\" onClick=\"return confirm( '".$lang["del_javascript"]."')\">\n".
-	"<BR><BR>\n".
-	"</FORM>";
+$content .=
+	"<form method=\"POST\" action=\"contacts/contact_submit.php\">\n".
+	  "<input type=\"hidden\" name=\"action\" value=\"delete\">\n".
+	  "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\">\n".
+	  "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
+	  "<input type=\"submit\" name=\"Add\" value=\"".$lang["del_contact"]."\" onClick=\"return confirm( '".$lang["del_javascript"]."')\">\n".
+	  "<br /><br />\n".
+	"</form>";
 
 new_box( $lang["contact_info"], $content );
 

@@ -51,27 +51,28 @@ if( ! ($row = db_fetch_array( db_query( "SELECT * FROM contacts WHERE id=".$cont
   error("Database value error", "There is no information for the user that you specified");
 
 
-$content .= "<TABLE border=\"0\">\n".
-	    "<TR><TD><I>".$lang["firstname"]."</I> </TD><TD>".$row["firstname"]."</TD></TR>\n".
-	    "<TR><TD><I>".$lang["lastname"]."</I> </TD><TD>".$row["lastname"]."</TD></TR>\n".
-	    "<TR><TD><I>".$lang["company"]."</I> </TD><TD>".$row["company"]."</TD></TR>\n".
-	    "<TR><TD><I>".$lang["home_phone"]."</I> </TD><TD>".$row["tel_home"]."</TD></TR>\n".
-	    "<TR><TD><I>".$lang["mobile"]."</I> </TD><TD>".$row["gsm"]."</TD></TR>\n".
-	    "<TR><TD><I>".$lang["bus_phone"]."</I> </TD><TD>".$row["tel_business"]."</TD></TR>\n".
-	    "<TR><TD><I>".$lang["fax"]."</I> </TD><TD>".$row["fax"]."</TD></TR>\n".
-	    "<TR><TD><I>".$lang["address"]."</I> </TD><TD>".$row["address"]."</TD></TR>\n".
-	    "<TR><TD><I>".$lang["postal"]."</I> </TD><TD>".$row["postal"]."</TD></TR>\n".
-	    "<TR><TD><I>".$lang["city"]."</I> </TD><TD>".$row["city"]."</TD></TR>\n".
-	    "<TR><TD><I>".$lang["email"]."</I> </TD><TD><A href=\"mailto:".$row["email"]."\">".$row["email"]."</A></TD></TR>\n".
-	    "</TABLE><BR>\n".
-	    "<I>".$lang["notes"]."</I><BR>".nl2br( $row["notes"] )."<BR>\n".
-"<FORM method=\"POST\" action=\"contacts.php\">\n".
-"<INPUT TYPE=\"hidden\" name=\"action\" value=\"edit\">\n".
-"<INPUT TYPE=\"hidden\" name=\"contactid\" value=\"".$row["id"]."\">\n".
-"<INPUT TYPE=\"hidden\" name=\"x\" value=\"".$x."\">\n".
-"<INPUT TYPE=\"submit\" name=\"Add\" value=\"".$lang["edit_contact"]."\">\n".
-"<BR><BR>\n".
-"</FORM>";
+$content .=
+    "<table border=\"0\">\n".
+       "<tr><td><i>".$lang["firstname"]."</i> </td><td>".$row["firstname"]."</td></tr>\n".
+       "<tr><td><i>".$lang["lastname"]."</i> </td><td>".$row["lastname"]."</td></tr>\n".
+       "<tr><td><i>".$lang["company"]."</i> </td><td>".$row["company"]."</td></tr>\n".
+       "<tr><td><i>".$lang["home_phone"]."</i> </td><td>".$row["tel_home"]."</td></tr>\n".
+       "<tr><td><i>".$lang["mobile"]."</i> </td><td>".$row["gsm"]."</td></tr>\n".
+       "<tr><td><i>".$lang["bus_phone"]."</i> </td><td>".$row["tel_business"]."</td></tr>\n".
+       "<tr><td><i>".$lang["fax"]."</i> </td><td>".$row["fax"]."</td></tr>\n".
+       "<tr><td><i>".$lang["address"]."</i> </td><td>".$row["address"]."</td></tr>\n".
+       "<tr><td><i>".$lang["postal"]."</i> </td><td>".$row["postal"]."</td></tr>\n".
+       "<tr><td><i>".$lang["city"]."</i> </td><td>".$row["city"]."</td></tr>\n".
+       "<tr><td><i>".$lang["email"]."</i> </td><td><a href=\"mailto:".$row["email"]."\">".$row["email"]."</a></td></tr>\n".
+    "</table><br />\n".
+    "<i>".$lang["notes"]."</i><br />".nl2br($row["notes"] )."<br />\n".
+    "<form method=\"POST\" action=\"contacts.php\">\n".
+      "<input type=\"hidden\" name=\"action\" value=\"edit\">\n".
+      "<input type=\"hidden\" name=\"contactid\" value=\"".$row["id"]."\">\n".
+      "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
+      "<input type=\"submit\" name=\"Add\" value=\"".$lang["edit_contact"]."\">\n".
+      "<br /><br />\n".
+   "</form>";
 
 
 new_box( $lang["contact_info"], $content );

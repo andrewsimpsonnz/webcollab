@@ -44,25 +44,23 @@ $taskid = $_GET["taskid"];
 //check usergroup security
 include_once( BASE."includes/usergroup_security.php" );
 
-$content = "<BR><FORM name=\"inputform\" method=\"POST\" enctype=\"multipart/form-data\"  action=\"".$BASE_URL."files/file_submit.php\">\n";
+$content =  "<center><br />".
+            "<form name=\"inputform\" method=\"POST\" enctype=\"multipart/form-data\"  action=\"".$BASE_URL."files/file_submit.php\">\n".
+              "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"$FILE_MAXSIZE\">\n".
+              "<table border=\"0\">\n".
+                "<tr><td>".$lang["file_choose"]."</td><td><input type=\"file\" name=\"userfile\"></td></tr>\n".
+                "<tr><td>".$lang["description"].":</td> <td><textarea name=\"description\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
+                "<tr><td nowrap colspan=\"2\">".sprintf( $lang["max_file_sprt"], $FILE_MAXSIZE/1000 )."</td></tr>\n".
+              "</table>\n".
+              "<input type=\"submit\" name=\"Upload\" value=\"".$lang["upload"]."\">\n".
+              "<input type=\"reset\">\n".
+              "<input type=\"hidden\" name=\"action\" value=\"upload\">\n".
+              "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
+              "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\">\n".
+            "</form>\n".
+            "</center>";
 
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"MAX_FILE_SIZE\" value=\"".$FILE_MAXSIZE."\">\n";
-
-$content .= "<TABLE border=\"0\">\n";
-$content .= "<TR><TD>".$lang["file_choose"]."</TD><TD><INPUT type=\"file\" name=\"userfile\"></TD></TR>\n";
-$content .= "<TR><TD>".$lang["description"].":</TD> <TD><TEXTAREA name=\"description\" rows=\"10\" cols=\"60\"></TEXTAREA></TD></TR>\n";
-$content .= "<TR><TD nowrap colspan=\"2\">".sprintf( $lang["max_file_sprt"], $FILE_MAXSIZE/1000 )."</TD></TR>\n";
-$content .= "</TABLE>\n";
-
-$content .= "<INPUT TYPE=\"submit\" NAME=\"Upload\" value=\"".$lang["upload"]."\">\n";
-$content .= "<INPUT TYPE=\"reset\">\n";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"action\" value=\"upload\">\n";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"x\" value=\"".$x."\">\n";
-$content .= "<INPUT TYPE=\"hidden\" NAME=\"taskid\" value=\"".$taskid."\">\n";
-
-$content .= "</FORM>\n";
-
-new_box( $lang["add_file"], "<CENTER>".$content."</CENTER>" );
+new_box($lang["add_file"], $content );
 
 
 ?>

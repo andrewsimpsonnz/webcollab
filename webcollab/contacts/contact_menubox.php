@@ -51,20 +51,20 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   if( $row["company"] != "" ) {
      if ($row["company"] != $company){
-       $content .= $row["company"]."<BR>";
+       $content .= $row["company"]."<br />";
        }
      $show = $row["lastname"].", ".strtoupper( Substr( $row["firstname"], 0, 1 ) ).".";
-     $content .= "<A HREF=\"contacts.php?x=".$x."&action=show&contactid=".$row["id"]."\">".$show."</A><BR>";
+     $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row["id"]."\">$show</a><br />";
      $company =  $row["company"];
    }else {
     $show = $row["lastname"].", ".strtoupper( Substr( $row["firstname"], 0, 1 ) ).".";
-    $content .= "<A HREF=\"contacts.php?x=".$x."&action=show&contactid=".$row["id"]."\">".$show."</A><BR>";
+    $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row["id"]."\">$show</a><br />";
     }
 }
 
 
 //the add button
-$content .= "<BR>\n[<a href=\"contacts.php?x=".$x."&action=add\">".$lang["add_contact"]."</a>]";
+$content .= "<br />\n[<a href=\"contacts.php?x=$x&amp;action=add\">".$lang["add_contact"]."</a>]";
 
 //show the box
 new_box( $lang["contacts"], $content );
