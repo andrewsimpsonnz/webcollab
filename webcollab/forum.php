@@ -47,7 +47,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //add a forum post/reply
     case "add":
-      create_top($lang["add_reply"], 0, "text", 1 );
+      create_top($lang["add_reply"], 0, "text", "text" );
       include("includes/mainmenu.php");
       goto_main();
       include("forum/forum_add.php");

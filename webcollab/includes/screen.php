@@ -120,7 +120,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
     $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/calendar.css\" type=\"text/css\" />\n";  
   
   //javascript to position cursor in the first box
-  if($cursor || $date) {
+  if($cursor || $check || $date) {
     $content .=  "<script type=\"text/javascript\">\n".
                  "<!-- \n";
     if($cursor){
@@ -129,9 +129,9 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
        
     if($check){
       $content .= "function fieldCheck(){\n".
-                          "if(document.getElementById('".$cursor."').value==\"\"){\n".
+                          "if(document.getElementById('".$check."').value==\"\"){\n".
                           "alert('".$lang["missing_field_javascript"]."');\n".
-                          "document.getElementById('".$cursor."').focus();\n".
+                          "document.getElementById('".$check."').focus();\n".
                           "return false;}\n".
                           "return;}\n";
      }

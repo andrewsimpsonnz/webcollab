@@ -61,7 +61,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //add a task
     case "add":
-      create_top($lang["add_task"], 0, "name", 1, 1 );
+      create_top($lang["add_task"], 0, "name", "name", 1 );
       include("includes/mainmenu.php" );
       include("tasks/task_navigate.php" );
       include("tasks/task_menubox.php" );
@@ -77,7 +77,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //edit a task
     case "edit":
-      create_top($lang["edit_task"], 0, 0, 0, 1 );
+      create_top($lang["edit_task"], 0, 0, "name", 1 );
       include("includes/mainmenu.php" );
       include("tasks/task_navigate.php" );
       include("tasks/task_menubox.php" );
@@ -109,7 +109,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //clone
     case "clone":
-      create_top($lang["add_task"], 0, "name", 1 );
+      create_top($lang["add_task"], 0, "name", "name" );
       include("includes/mainmenu.php" );
       include("tasks/task_navigate.php" );
       include("tasks/task_menubox.php" );

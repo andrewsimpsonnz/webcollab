@@ -56,7 +56,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //add a usergroup
     case "add":
-      create_top($lang["add_new_usergroup"], 0, "name", 1 );
+      create_top($lang["add_new_usergroup"], 0, "name", "name" );
       include("includes/mainmenu.php" );
       include("usergroups/usergroup_menubox.php" );
       goto_main();

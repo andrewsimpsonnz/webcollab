@@ -57,7 +57,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //show a taskgroup
     case "add":
-      create_top($lang["add_taskgroup"], 0, "name", 1 );
+      create_top($lang["add_taskgroup"], 0, "name", "name" );
       include("includes/mainmenu.php" );
       include("taskgroups/taskgroup_menubox.php" );
       goto_main();
