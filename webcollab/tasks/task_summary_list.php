@@ -44,7 +44,6 @@ include_once( BASE."includes/time.php" );
 function project_summary( $tail, $depth=0, $equiv="" ) {
   global $x, $uid, $admin, $BASE_URL, $lang, $task_state;
   global $sortby;
-  global $PROJECT_ORDERED_BY;
   global $epoch;
 
   $q = db_query( "SELECT tasks.id AS id,
@@ -273,7 +272,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
 
     $result .= "</TD></TR>\n";
     if( $depth >= 0 ) {
-      $result .= project_summary( "WHERE tasks.parent='".$row["id"]."' ORDER BY ".$PROJECT_ORDERED_BY, $depth+1 );
+      $result .= project_summary( "WHERE tasks.parent='".$row["id"]."' ORDER BY taskname", $depth+1 );
     }
   }
 
@@ -344,8 +343,7 @@ switch( $sortby ) {
     break;
 
   default:
-    $content .= project_summary( "WHERE parent=0
-	         ORDER BY ".$PROJECT_ORDERED_BY, 0 );
+    $content .= project_summary( "WHERE parent=0 ORDER BY taskname", 0 );
     $suffix = "";
     break;
 }
