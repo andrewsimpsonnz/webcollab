@@ -66,7 +66,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
   $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=$taskid\">".$lang["add_task"]."</a><br />\n";
 
   if($admin = 1 )
-    $clone = "<a href=\"tasks.php?x=$x&amp;action=clone&amp;taskid=$taskid\">"."Clone - translate me & add type"."</a><br />\n";
+    $clone = "<a href=\"tasks.php?x=$x&amp;action=clone&amp;taskid=$taskid\">".$lang["clone_$type"]."</a><br />\n";
 }
 
 //the task-independent part

@@ -3,12 +3,11 @@
   
   $Id$
 
+  (c) 2002 -2004 Andrew Simpson 
+  
   WebCollab
   ---------------------------------------
-  Created 2002 by Marshall Rose
-  with much help from the people noted in the README
-
-  Rewritten from Version 1.11 by Andrew Simpson <andrew.simpson@paradise.net.nz>
+  This file originally written as part of Core APM by Marshall Rose 2002.
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -317,9 +316,9 @@ else
 //text link for 'printer friendly' page
 $content = "<font class=\"textlink\">";
 if(isset($_GET["action"]) && $_GET["action"] == "summary_print" )
-  $content  .= "<p>[<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=$sortby\">"."Normal page - translate me"."</a>]</p>";
+  $content  .= "<p>[<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=$sortby\">".$lang["normal_version"]."</a>]</p>";
 else
-  $content  .= "<div align=\"right\">[<a href=\"tasks.php?x=$x&amp;action=summary_print&amp;sortby=$sortby\">"."Print version - translate me"."</a>]</div>";
+  $content  .= "<div align=\"right\">[<a href=\"tasks.php?x=$x&amp;action=summary_print&amp;sortby=$sortby\">".$lang["print_version"]."</a>]</div>";
 
 $content .= "<table border=\"0\">\n";
 $content .= "<tr><td colspan=\"3\"><small><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#summarypage\" target=\"helpwindow\"><b>".$lang["flags"]."</b></a></small></td><td><small>";

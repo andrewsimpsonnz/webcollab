@@ -2,13 +2,12 @@
 /*
   $Id$
 
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>  
+  
   WebCollab
   ---------------------------------------
-  Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
-  with much help from the people noted in the README
-
-  Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
-  by Andrew Simpson <andrew.simpson@paradise.net.nz>
+  
+  This file originally written as part of Core APM by Dennis Fleurbaaij 2001/2002.
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -58,9 +57,9 @@ db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, $taskid, now() ) 
 //text link for 'printer friendly' page
 $content = "<font class=\"textlink\">";
 if(isset($_GET["action"]) && $_GET["action"] == "show_print" )
-  $content  .= "[<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">"."Normal page - translate me"."</a>]<br />";
+  $content  .= "[<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$lang["normal_version"]."</a>]<br />";
 else
-  $content  .= "<div align=\"right\">[<a href=\"tasks.php?x=$x&amp;action=show_print&amp;taskid=$taskid\">"."Print version - translate me"."</a>]</div>";
+  $content  .= "<div align=\"right\">[<a href=\"tasks.php?x=$x&amp;action=show_print&amp;taskid=$taskid\">".$lang["print_version"]."</a>]</div>";
 $content .= "</font>\n";
 
 //percentage_completed gauge if this is a project

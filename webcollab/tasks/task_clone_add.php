@@ -2,11 +2,11 @@
 /*
   $Id$
 
+  (c) 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-
-  This file written in 2004 by Andrew Simpson <andrew.simpson@paradise.net.nz>
-
+  
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -50,10 +50,10 @@ $q = db_query("SELECT name, parent FROM tasks WHERE id=$taskid" );
 $row = db_fetch_array($q, 0 );
 
 if($row["parent"] == 0 ){
-  $content .= "<tr><td>Original project name - translate me :</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$row["name"]."</a></td></tr>\n".
+  $content .= "<tr><td>".$lang["project_cloned"]."</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$row["name"]."</a></td></tr>\n".
               "<tr><td>".$lang["project_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
               "</table></p>\n".
-              "<p><input type=\"submit\" value=\"".$lang["add_task"]."\" />&nbsp;".
+              "<p><input type=\"submit\" value=\"".$lang["add_project"]."\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
               "</form>\n";
 
@@ -61,10 +61,11 @@ if($row["parent"] == 0 ){
 
 }
 else{
-  $content .= "<tr><td>Original task name - translate me :</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$row["name"]."</a></td></tr>\n".
-              "<tr><td>".$lang["task_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
+  $content .= "<tr><td>".$lang["task_cloned"]."</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$row["name"]."</a></td></tr>\n".
+              "<tr><td colspan=\"2\"><i>".$lang["note_clone"]."</i></td><tr>\n".
+              "<tr><td>".$lang["project_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
               "</table></p>\n".
-              "<p><input type=\"submit\" value=\"".$lang["add_task"]."\" />&nbsp;".
+              "<p><input type=\"submit\" value=\"".$lang["add_project"]."\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
               "</form>\n";
 

@@ -6,7 +6,7 @@
 
   WebCollab
   ---------------------------------------
-  Original file written as part of Core APM by Dennis Fleurbaaij 2001/2002.
+  This file originally written as part of Core APM by Dennis Fleurbaaij 2001/2002.
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -127,15 +127,15 @@ if(isset($_GET["active"] ) )
 $content .= "<table border=\"0\" width=\"98%\"><tr><td>\n".
             "<font class=\"textlink\">";
 if($active_only )
-  $content .= "[<a href=\"main.php?x=$x&amp;active=0\">"."Show all projects - translate me"."</a>]";
+  $content .= "[<a href=\"main.php?x=$x&amp;active=0\">".$lang["show_all_projects"]."</a>]";
 else
-  $content .= "[<a href=\"main.php?x=$x&amp;active=1\">"."Show only active projects - translate me"."</a>]";
+  $content .= "[<a href=\"main.php?x=$x&amp;active=1\">".$lang["show_active_projects"]."</a>]";
 
 //text link for 'printer friendly' page
 if(isset($_GET["action"]) && $_GET["action"] == "project_print" )
-  $content  .= "\n[<a href=\"main.php?x=$x&amp;active=$active_only\">"."Normal page - translate me"."</a>]";
+  $content  .= "\n[<a href=\"main.php?x=$x&amp;active=$active_only\">".$lang["normal_version"]."</a>]";
 else
-  $content  .= "</font></td>\n<td align=\"right\"><font class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;active=$active_only&amp;action=project_print\">"."Print version - translate me"."</a>]";
+  $content  .= "</font></td>\n<td align=\"right\"><font class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;active=$active_only&amp;action=project_print\">".$lang["print_version"]."</a>]";
 $content .= "<font></td></tr>\n</table>\n";
 
 //setup main table
