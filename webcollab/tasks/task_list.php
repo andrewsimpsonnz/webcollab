@@ -135,7 +135,7 @@ $q = db_query("SELECT tasks.id AS id,
     $this_content .= "<li>";
 
     //have you seen this task yet ?
-    $seen_test = db_query("SELECT COUNT(*) FROM seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" );
+    $seen_test = db_result(db_query("SELECT COUNT(*) FROM seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" ), 0, 0);
 
     //don't show alert content for changes more than $NEW_TIME (in seconds)
     if( ($row["now"] - max($row["edited"], $row["lastpost"], $row["lastfileupload"] ) ) > 86400*$NEW_TIME ) {
@@ -155,7 +155,7 @@ $q = db_query("SELECT tasks.id AS id,
           break;
 
         default:
-          $seenq = db_query("SELECT  $epoch time) FROM seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" );
+          $seenq = db_query("SELECT $epoch time) FROM seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" );
 
           //check if edited since last visit
           $seen = db_result($seenq, 0, 0 );
