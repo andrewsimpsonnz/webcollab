@@ -77,7 +77,7 @@
 
 //LANGUAGE FILES
 
-  // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan), "de" (German).
+  // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan), "de" (German), "it" (Italian).
   $LOCALE = "en";
 
 //EMAIL ADDRESS
@@ -95,11 +95,6 @@
       //location of SMTP server (ip address or FQDN)
       $SMTP_HOST = "localhost";
 
-      //use smtp auth? ('Y' or 'N')
-      $SMTP_AUTH = "N";
-        //if using $SMTP_AUTH give username & password
-        $MAIL_USER = "";
-        $MAIL_PASSWORD = "";
 
 //MINOR CONFIG PARAMETERS
 
