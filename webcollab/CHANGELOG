@@ -1,4 +1,27 @@
 WebCollab CVS
+*** 25 January 2005
+
+- remove OID column usuage in Postgresql (OID was depreciated after PostgreSQL 7.2, and will be partially removed after 8.0)
+
+- change file upload in PostgreSQL to be not reliant on OID columns
+
+- fix task after project javascript to get timezones right - again
+
+- update Danish translation (Credit: Jens Thomsen)
+
+WebCollab 1.69
+*** 20 January 2005
+  Andrew Simpson
+ 
+- release
+  
+WebCollab CVS
+*** 19 January 2005
+  Andrew Simpson
+ 
+- fixed bug #1104049 - PostgreSQL 7.3 (and earlier) giving client encoding warnings (Credit: Larry Steeger (russte) ) 
+
+WebCollab CVS
 *** 13 January 2005
   Andrew Simpson
 
