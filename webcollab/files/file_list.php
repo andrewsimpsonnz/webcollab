@@ -44,8 +44,7 @@ $taskid = intval($_REQUEST['taskid']);
 require_once( BASE."includes/usergroup_security.php" );
 
 //get the files from this task
-$q = db_query("SELECT ".PRE."files.oid AS oid,
-                        ".PRE."files.id AS id,
+$q = db_query("SELECT ".PRE."files.id AS id,
                         ".PRE."files.filename AS filename,
                         ".$epoch.PRE."files.uploaded) AS uploaded,
                         ".PRE."files.size AS size,

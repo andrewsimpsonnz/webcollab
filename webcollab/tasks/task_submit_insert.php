@@ -126,8 +126,7 @@ $q = db_query("INSERT INTO ".PRE."tasks(name,
               now() )" );
 
 // get taskid for the new task/project
-$last_oid = db_lastoid($q );
-$taskid = db_result(db_query("SELECT id FROM ".PRE."tasks WHERE $last_insert = $last_oid" ), 0, 0 );
+$taskid = db_lastoid('tasks_id_seq' );
 
 //for a new project set the projectid variable reset correctly
 if($parentid == 0 || $projectid == 0 )  {

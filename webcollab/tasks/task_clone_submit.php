@@ -76,7 +76,7 @@ function add($taskid, $new_parent, $new_name ) {
 
 function copy_across($taskid, $new_parent, $name ) {
 
-    global $UID, $last_insert;
+    global $UID;
 
     //get task details
     $q = db_query("SELECT * FROM ".PRE."tasks WHERE id=$taskid" );
@@ -133,8 +133,7 @@ function copy_across($taskid, $new_parent, $name ) {
                     '".addslashes($row['status'])."')" );
 
     // get taskid for the new task/project
-    $last_oid = db_lastoid($q );
-    $new_taskid = db_result(db_query("SELECT id FROM ".PRE."tasks WHERE $last_insert = $last_oid" ), 0, 0 );
+    $new_taskid = db_lastoid('tasks_id_seq' );
 
     //for a new project set the projectid variable reset correctly
     if($new_parent == 0 )

@@ -90,11 +90,7 @@ ignore_user_abort(TRUE);
       }
 
       //check for dangerous file uploads
-      if( strstr($_FILES['userfile']['name'], ".php" ) ||
-          strstr($_FILES['userfile']['name'], ".php3" ) ||
-          strstr($_FILES['userfile']['name'], ".php4" ) ||
-          strstr($_FILES['userfile']['name'], ".js" ) ||
-          strstr($_FILES['userfile']['name'], ".asp" ) ) {
+     if(preg_match('/(\.php|\.php3|\.php4|\.js|\.asp)$/', $_FILES['userfile']['name'] ) ) {
             unlink($_FILES['userfile']['tmp_name'] );
             error("File submit", "The file types .php, .php3, .php4, .js and .asp are not acceptable for security reasons. You must either rename or compress the file.");
       }
@@ -127,9 +123,9 @@ ignore_user_abort(TRUE);
                                             $taskid,
                                             '".$_FILES['userfile']['type']."' ) ");
 
-      //copy it
-      $last_oid = db_lastoid($q );
-
+      //get last insert id 
+      $fileid = db_lastoid('files_id_seq' );
+      
       //stripslashes from filename if magic quotes is 'on'
       //(prevents slash being read as a directory in Windows!!)
       if(get_magic_quotes_gpc() )
@@ -137,19 +133,19 @@ ignore_user_abort(TRUE);
       else
         $filename = $_FILES['userfile']['name'];
 
-      if( ! move_uploaded_file( $_FILES['userfile']['tmp_name'], FILE_BASE."/".$last_oid."__".$filename ) ) {
-        db_query("DELETE FROM ".PRE."files WHERE ".$last_insert."=".$last_oid );
+      //copy it
+      if( ! move_uploaded_file( $_FILES['userfile']['tmp_name'], FILE_BASE."/".$fileid."__".$filename ) ) {
+        db_query("DELETE FROM ".PRE."files WHERE id=".$fileid );
         unlink($_FILES['userfile']['tmp_name'] );
-          db_rollback();
-          error("File submit", "Internal error: The file cannot be moved to filebase directory, deleting upload" );
+        db_rollback();
+        error("File submit", "Internal error: The file cannot be moved to filebase directory, deleting upload" );
       }
 
-      //work around for mysql (which doesn't have an OID column)
-      if(substr(DATABASE_TYPE, 0, 5) == "mysql" )
-        db_query("UPDATE ".PRE."files SET oid=".$last_oid." WHERE id=".$last_oid );
-
+      //set the fileid in the database
+      db_query("UPDATE ".PRE."files SET fileid=".$fileid." WHERE id=".$fileid );
+      
       //disarm it
-      chmod(FILE_BASE."/".$last_oid."__".$filename, 0644 );
+      chmod(FILE_BASE."/".$fileid."__".$filename, 0644 );
       db_commit();
 
       //set up emails
@@ -214,7 +210,7 @@ ignore_user_abort(TRUE);
 
       //get the files from this task
       $q = db_query("SELECT ".PRE."files.uploader AS uploader,
-                                   ".PRE."files.oid AS oid,
+                                   ".PRE."files.fileid AS fileid,
                                    ".PRE."files.filename AS filename,
                                    ".PRE."tasks.owner AS owner
                                    FROM ".PRE."files
@@ -228,11 +224,11 @@ ignore_user_abort(TRUE);
         if( ($ADMIN == 1) || ($UID == $row['owner'] ) || ($UID == $row['uploader'] ) ) {
 
           //delete file from disk
-          if(file_exists(FILE_BASE."/".$row['oid']."__".$row['filename'] ) ) {
-            unlink(FILE_BASE."/".$row['oid']."__".$row['filename'] );
+          if(file_exists(FILE_BASE."/".$row['fileid']."__".$row['filename'] ) ) {
+            unlink(FILE_BASE."/".$row['fileid']."__".$row['filename'] );
           }
           //delete record of file
-          db_query("DELETE FROM ".PRE."files WHERE oid=".$row['oid'] );
+          db_query("DELETE FROM ".PRE."files WHERE fileid=".$row['fileid'] );
         }
       }
     break;

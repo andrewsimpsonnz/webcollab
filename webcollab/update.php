@@ -260,9 +260,36 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     db_query("ALTER TABLE ".PRE."config ADD COLUMN task_order VARCHAR(200)" );
     db_query("UPDATE ".PRE."config SET task_order='ORDER BY name'" );
   
-    $content .= "<p>Updating from version pre-1.70 database ... success!</p>\n";
+    $content .= "<p>Updating from version pre-1.69 database ... success!</p>\n";
   }
     
+  //update for version 1.69 -> 1.70
+  if(! (db_query("SELECT fileid FROM ".PRE."files", 0 ) ) ) {
+    //set parameters for appropriate for database
+    switch (DATABASE_TYPE) {
+      case "mysql":
+      case "mysql_innodb":
+        db_query("ALTER TABLE ".PRE."files CHANGE COLUMN oid fileid INT" );
+        break;
+                  
+      case "postgresql":
+        db_query("ALTER TABLE ".PRE."files ADD COLUMN fileid INTEGER" ); 
+        
+        $q = db_query("SELECT id, oid FROM ".PRE."files" );
+        
+        for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+          db_query("UPDATE ".PRE."files SET fileid=".$row['oid']." WHERE id=".$row['id'] );
+        }
+        break;
+      
+      default:
+        error("Database type not specified in config file." );
+        break;
+    }
+    $content .= "<p>Updating from version pre-1.70 database ... success!</p>\n";  
+  }
+  
+  
   if( ! $content )
     $content .= "<p>No database updates were required.</p>\n";
   

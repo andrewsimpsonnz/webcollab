@@ -94,8 +94,7 @@ ignore_user_abort(TRUE);
         if(isset($_POST['member'] ) ) {
 
           // get the usergroupid
-          $last_oid = db_lastoid($q );
-          $usergroupid = db_result( db_query("SELECT id FROM ".PRE."usergroups WHERE $last_insert=$last_oid" ), 0, 0 );
+          $usergroupid = db_lastoid('usergroups_id_seq' );
 
           (array)$member = $_POST['member'];
           $max = sizeof($member);

@@ -35,7 +35,7 @@ if(empty($_GET['fileid']) || ! is_numeric($_GET['fileid']) )
 $fileid = intval($_GET['fileid']);
 
 //get the files info
-if( ! ($q = db_query("SELECT oid, filename, size, mime, taskid FROM ".PRE."files WHERE id=$fileid" ) ) )
+if( ! ($q = db_query("SELECT fileid, filename, size, mime, taskid FROM ".PRE."files WHERE id=$fileid" ) ) )
   error("Download file", "There was an error in the data query");
 
 if( ! $row = db_fetch_array( $q, 0) )
@@ -46,11 +46,11 @@ $taskid = $row['taskid'];
 require_once(BASE."includes/usergroup_security.php" );
 
 //check the file exists
-if( ! ( file_exists( FILE_BASE."/".$row['oid']."__".($row['filename'] ) ) ) )
+if( ! ( file_exists( FILE_BASE."/".$row['fileid']."__".($row['filename'] ) ) ) )
   error("Download file", "The file ".$row['filename']." is missing from the server" );
 
 //open the file
-$fp = fopen( FILE_BASE."/".$row['oid']."__".($row['filename']), "rb" );
+$fp = fopen( FILE_BASE."/".$row['fileid']."__".($row['filename']), "rb" );
 if($fp == 0 )
   error("Download file", "File handle for ".$row['filename']." cannot be opened" );
 

@@ -129,10 +129,7 @@ ignore_user_abort(TRUE);
       if( isset($_POST['usergroup']) ) {
 
         //get the oid of the just-inserted user
-        $last_oid = db_lastoid($q );
-
-        //get the uid of the last user
-        $user_id = db_result(db_query("SELECT id FROM ".PRE."users WHERE $last_insert=$last_oid" ), 0, 0 );
+        $user_id = db_lastoid('users_id_seq' );
 
         //insert all selected usergroups in the usergroups_users table
         (array)$usergroup = $_POST['usergroup'];
