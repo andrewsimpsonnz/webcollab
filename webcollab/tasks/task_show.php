@@ -32,6 +32,7 @@
 require_once("path.php" );
 require_once( BASE."includes/security.php" );
 
+include_once(BASE."tasks/task_common.php" );
 include_once(BASE."includes/time.php" );
 
 //is there an id ?
@@ -85,12 +86,12 @@ if( $row["owner"] == 0 ) {
   $content .= "<tr><td>".$lang["owned_by"].":</td><td>".$lang["nobody"]."</td></tr>\n";
 } else {
   $owner = db_result(db_query("SELECT fullname FROM users WHERE id=".$row["owner"] ), 0, 0  );
-  $content .= "<tr><td>".$lang["owned_by"].": </td><td><a href=\"".$BASE_URL."users.php?x=$x&amp;action=show&userid=".$row["owner"]."\">".$owner."</a></td></tr>\n";
+  $content .= "<tr><td>".$lang["owned_by"].": </td><td><a href=\"users.php?x=$x&amp;action=show&userid=".$row["owner"]."\">".$owner."</a></td></tr>\n";
 }
 
 //get creator information
 $creator = db_result(db_query("SELECT fullname FROM users WHERE id=".$row["creator"] ), 0, 0  );
-$content .= "<tr><td>".$lang["created_on"].": </td><td>".nicedate($row["created"])." by <a href=\"".$BASE_URL."users.php?x=$x&amp;action=show&amp;userid=".$row["creator"]."\">".$creator."</a></td></tr>\n";
+$content .= "<tr><td>".$lang["created_on"].": </td><td>".nicedate($row["created"])." by <a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["creator"]."\">".$creator."</a></td></tr>\n";
 
 //get deadline
 $content .= "<tr><td>".$lang["deadline"].": </td><td>".nicedate($row["deadline"])."</td></tr>\n";
@@ -243,11 +244,11 @@ $content .= "<br /><div align=\"center\"><small>\n";
 //set add function for task or project
 switch( $row["parent"] ){
   case "0":
-    $content .= "[<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang["add_task"]."</a>] \n";
+    $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang["add_task"]."</a>] \n";
     break;
 
  default:
-    $content .= "[<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang["add_subtask"]."</a>] \n";
+    $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang["add_subtask"]."</a>] \n";
     break;
 }
 
@@ -274,32 +275,32 @@ switch( $row["owner"] ){
   case "0":
     if($admin == 1 ){
       //admin edit
-      $content .= "[<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]."</a>] \n";
+      $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]."</a>] \n";
     }
     //I'll take it!
-    $content .= "[<a href=\"".$BASE_URL."tasks/task_submit.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang["i_take_it"]."</a>] \n";
+    $content .= "[<a href=\"tasks/task_submit.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang["i_take_it"]."</a>] \n";
     break;
 
   case ($uid):
-    $content .= "[<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]."</a>] \n";
+    $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]."</a>] \n";
     //if not finished and not a project; then [I finished it!] button
     if( ($row["status"] != "done" ) && ($row["parent"] != 0 ) ) {
-      $content .= "[<a href=\"".$BASE_URL."tasks/task_submit.php?x=$x&amp;action=done&amp;taskid=".$taskid."\">".$lang["i_finished"]."</a>] \n";
+      $content .= "[<a href=\"tasks/task_submit.php?x=$x&amp;action=done&amp;taskid=".$taskid."\">".$lang["i_finished"]."</a>] \n";
     }
     // deown the task
-    $content .= "[<a href=\"".$BASE_URL."tasks/task_submit.php?x=$x&amp;action=deown&amp;taskid=".$taskid."\">".$lang["i_dont_want"]."</a>] \n";
+    $content .= "[<a href=\"tasks/task_submit.php?x=$x&amp;action=deown&amp;taskid=".$taskid."\">".$lang["i_dont_want"]."</a>] \n";
     break;
 
   default:
     if($admin == 1 ){
       //edit
-      $content .= "[<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=edit&taskid=".$taskid."\">".$lang["edit"]."</a>] \n";
+      $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&taskid=".$taskid."\">".$lang["edit"]."</a>] \n";
       //take over
-      $content .= "[<a href=\"".$BASE_URL."tasks/task_submit.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_sprt"], $type)."</a>] \n";
+      $content .= "[<a href=\"tasks/task_submit.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_sprt"], $type)."</a>] \n";
     }
     if($group )
       //if user is in the usergroup & groupaccess is set
-      $content .= "[<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]."</a>] \n";
+      $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]."</a>] \n";
     break;
 }
 

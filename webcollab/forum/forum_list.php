@@ -31,12 +31,12 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
-include_once( BASE."config.php" );
-include_once( BASE."includes/time.php" );
+include_once(BASE."config.php" );
+include_once(BASE."includes/time.php" );
 
 
 //check the taskid is valid
-if( ! ( isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) )
+if( ! (isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) )
   error("Forum list", "Not a valid taskid" );
 
 $taskid = $_GET["taskid"];
@@ -49,7 +49,7 @@ require_once(BASE."includes/usergroup_security.php" );
 //
 function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 
-  global $admin, $x, $uid, $BASE_URL, $lang;
+  global $admin, $x, $uid, $lang;
 
   $query="SELECT forum.text AS text,
         forum.id AS id,
@@ -79,8 +79,8 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
   //show all forum posts on this level
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
-    $this_content .= "<li><small><a href=\"".$BASE_URL."users.php?x=$x&amp;action=show&userid=".$row["userid"]."\">".$row["fullname"]."</a> (".nicetime( $row["posted"] ).")".
-                     " [<a href=\"".$BASE_URL."forum.php?x=$x&amp;action=add&amp;parentid=".$row["id"]."&amp;taskid=$taskid";
+    $this_content .= "<li><small><a href=\"users.php?x=$x&amp;action=show&userid=".$row["userid"]."\">".$row["fullname"]."</a> (".nicetime( $row["posted"] ).")".
+                     " [<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=".$row["id"]."&amp;taskid=$taskid";
 
     //if this is a post to a private forum then announce it to the poster-engine
     if($usergroupid != 0 )
@@ -90,7 +90,7 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 
     //owners of the thread, owners of the post and admins have a "delete" option
     if( ($admin==1) || ($uid == $row["taskowner"] ) || ($uid == $row["postowner"] ) ) {
-      $this_content .= " <small>[<a href=\"".$BASE_URL."forum/forum_submit.php?x=$x&amp;action=del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm( '".$lang["confirm_del"]."' )\">".$lang["del"]."</a>]</small>\n";
+      $this_content .= " <small>[<a href=\"forum/forum_submit.php?x=$x&amp;action=del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm( '".$lang["confirm_del"]."' )\">".$lang["del"]."</a>]</small>\n";
     }
 
     $this_content .= "<br />".nl2br($row["text"] )."\n";
@@ -115,7 +115,7 @@ $content = "<br />\n";
 $content .= list_posts_from_task( 0, $taskid, 0 );
 $content .= "<br />\n";
 //add an option to add posts
-$content .= "<small>[<a href=\"".$BASE_URL."forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang["new_post"]."</a>]</small>";
+$content .= "<small>[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang["new_post"]."</a>]</small>";
 //show it
 new_box($lang["public_user_forum"], $content );
 
@@ -154,7 +154,7 @@ if( $task_usergroup != 0 ) {
     $content = "<br />\n";
     //add an option to add posts
     $usergroup_name = db_result( db_query("SELECT name FROM usergroups WHERE id=$task_usergroup" ), 0, 0 );
-    $content .= "<small>[<a href=\"".$BASE_URL."forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=$task_usergroup&amp;\">".$lang["new_post"]."</a>]</small>";
+    $content .= "<small>[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=$task_usergroup&amp;\">".$lang["new_post"]."</a>]</small>";
     //show it
     new_box(sprintf($lang["private_forum_sprt"], $usergroup_name ), $content );
   }

@@ -72,16 +72,16 @@ if(db_numrows($q ) != 0 ) {
   for($i=0 ; $row = @db_fetch_array($q, $i) ; $i++ ) {
 
     //file part
-    $content .= "<tr><td><a href=\"".$BASE_URL."files/file_download.php?x=$x&amp;fileid=".$row["id"]."\" window=\"_new\">".$row["filename"]."</a> <small>(".$row["size"].$lang["bytes"].") </small>";
+    $content .= "<tr><td><a href=\"files/file_download.php?x=$x&amp;fileid=".$row["id"]."\" window=\"_new\">".$row["filename"]."</a> <small>(".$row["size"].$lang["bytes"].") </small>";
 
     //owners of the file and admins have a "delete" option
     if( ($admin == 1) || ($uid == $row["owner"] ) || ($uid == $row["uploader"] ) ) {
-      $content .= " [<a href=\"".$BASE_URL."files/file_submit.php?x=$x&amp;action=del&fileid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm('".sprintf( $lang["del_file_javascript_sprt"], $row["filename"] )."' )\">".$lang["del"]."</a>]</tr></td>\n";
+      $content .= " [<a href=\"files/file_submit.php?x=$x&amp;action=del&amp;fileid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm('".sprintf( $lang["del_file_javascript_sprt"], $row["filename"] )."' )\">".$lang["del"]."</a>]</tr></td>\n";
     } else
       $content .= "</tr></td>\n";
 
     //user part
-    $content .= "<tr><td>".$lang["uploader"]." <a href=\"".$BASE_URL."users.php?x=$x&amp;action=show&userid=".$row["userid"]."\">".$row["username"]."</a> (".nicetime( $row["uploaded"] ).")</tr></td>\n";
+    $content .= "<tr><td>".$lang["uploader"]." <a href=\"users.php?x=$x&amp;action=show&userid=".$row["userid"]."\">".$row["username"]."</a> (".nicetime( $row["uploaded"] ).")</tr></td>\n";
 
     //show description
     if( $row["description"] != "" )
@@ -93,7 +93,7 @@ if(db_numrows($q ) != 0 ) {
   $content .= "</table>";
 }
 
-$content .= "<small>[<a href=\"".$BASE_URL."files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang["add_file"]."</a>]</small>";
+$content .= "<small>[<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang["add_file"]."</a>]</small>";
 
 $type = $lang["project"];
 if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent=0 AND id=$taskid" ) ) == 0 )
