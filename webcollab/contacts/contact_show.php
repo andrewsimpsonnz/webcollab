@@ -57,8 +57,8 @@ $content .= "<TABLE border=\"0\">\n".
 	    "<TR><TD><I>".$lang["company"]."</I> </TD><TD>".$row["company"]."</TD></TR>\n".
 	    "<TR><TD><I>".$lang["home_phone"]."</I> </TD><TD>".$row["tel_home"]."</TD></TR>\n".
 	    "<TR><TD><I>".$lang["mobile"]."</I> </TD><TD>".$row["gsm"]."</TD></TR>\n".
-	    "<TR><TD><I>".$lang["fax"]."</I> </TD><TD>".$row["fax"]."</TD></TR>\n".
 	    "<TR><TD><I>".$lang["bus_phone"]."</I> </TD><TD>".$row["tel_business"]."</TD></TR>\n".
+	    "<TR><TD><I>".$lang["fax"]."</I> </TD><TD>".$row["fax"]."</TD></TR>\n".
 	    "<TR><TD><I>".$lang["address"]."</I> </TD><TD>".$row["address"]."</TD></TR>\n".
 	    "<TR><TD><I>".$lang["postal"]."</I> </TD><TD>".$row["postal"]."</TD></TR>\n".
 	    "<TR><TD><I>".$lang["city"]."</I> </TD><TD>".$row["city"]."</TD></TR>\n".
@@ -68,12 +68,12 @@ $content .= "<TABLE border=\"0\">\n".
 "<FORM method=\"POST\" action=\"contacts.php\">\n".
 "<INPUT TYPE=\"hidden\" name=\"action\" value=\"edit\">\n".
 "<INPUT TYPE=\"hidden\" name=\"contactid\" value=\"".$row["id"]."\">\n".
-"<INPUT TYPE=\"hidden\" NAME=\"x\" value=\"".$x."\">\n".
-"<INPUT TYPE=\"submit\" NAME=\"Add\" value=\"".$lang["edit_contact"]."\">\n".
+"<INPUT TYPE=\"hidden\" name=\"x\" value=\"".$x."\">\n".
+"<INPUT TYPE=\"submit\" name=\"Add\" value=\"".$lang["edit_contact"]."\">\n".
 "<BR><BR>\n".
 "</FORM>";
 
 
-new_box( "Contact information", $content );
+new_box( $lang["contact_info"], $content );
 
 ?>
