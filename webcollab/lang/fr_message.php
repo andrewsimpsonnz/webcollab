@@ -21,9 +21,9 @@
   Function:
   ---------
 
-  Language files for 'fr' (French/FranÃ§ais)
+  Language files for 'fr' (French/Français)
 
-  Translation: Olivier Chaussavoine
+  Translation: Olivier Chaussavoine / Julien Dupont
 
   Maintainer:
 
@@ -146,9 +146,9 @@ $lang = array(
  "file_choose" => "Fichier &agrave; t&eacute;l&eacute;charger:",
  "upload" => "T&eacute;l&eacute;chargement",
   //**
- "file_email_owner" => "Email notification of new file to the owner?",
+ "file_email_owner" => "Avertir par mail le propri&eacute;taire du nouveau fichier ?",
  //**
- "file_email_usergroup" => "Email notification of new file to the usergroup?",
+ "file_email_usergroup" => "Notifier par mail le groupe d'utilisateur du nouveau fichier ?",
  "max_file_sprt" => "un fichier &agrave; t&eacute;l&eacute;charger doit faire moins de %1\$s kilo-octets.",
  "file_submit" => "Fichier T&eacute;l&eacute;charger ",
  "no_upload" => "Aucun fichier n'a &eacute;t&eacute; t&eacute;l&eacute;charg&eacute;. Merci de revenir en arri&egrave;re et de renouveller.",
@@ -162,10 +162,8 @@ $lang = array(
  "message" => "Message:",
  "post_reply_sprt" => "R&eacute;pondre &agrave; une contribution de '%s' &agrave; propos de '%s'",
  "post_message_sprt" => "R&eacute;pondre &agrave; la contribution &agrave;: '%s'",
-  //**
- "forum_email_owner" => "Email forum message to the owner?",
- //**
- "forum_email_usergroup" => "Email forum message to the usergroup?",
+ "forum_email_owner" => "Envoyer le message du forum par mail  au propri&eacute;taire ?",
+ "forum_email_usergroup" => "Envoyer le message du forum au groupe d'utilisateur ?",
  "reply" => "R&eacute;pondre",
  "new_post" => "Nouvelle contribution",
  "public_user_forum" => "Forum public",
@@ -185,13 +183,10 @@ $lang = array(
  "main_menu" => "Menu Principal",
  "user_homepage_sprt" => "%1\$s : page principale",
  //"load_time_sprt" => "Cette page a &eacute;t&eacute; charg&eacute;e en %1\$.3f secondes.  Sur ce temps, %2\$.3f secondes ont &eacute;t&eacute; utilis&eacute; pour ex&eacute;cuter %3\$d transactions dans la base de donn&eacute;es",
- //**
- "missing_field_javascript" => "Please enter a value for the missing field",
- //**
- "invalid_date_javascript" => "Please choose a valid calendar date",
- //**
- "finish_date_javascript" => "The entered date occurs after the project finish date!",
-"security_manager" => "Gestion Securit&eacute;",
+ "missing_field_javascript" => "Compl&ecirc;tez, s\'il vous plait, le champ manquant ",
+ "invalid_date_javascript" => "Choisissez une date valide",
+ "finish_date_javascript" => "La date entr&eacute;e arrivera apr&egrave;s la date de fin du projet !",
+ "security_manager" => "Gestion Securit&eacute;",
  //"no_key_sprt" => "Pas de session valide. Merci de vous connecter <a href=\"%sindex.php\">Profil</a>",
  //"no_session" => "Pas de session, merci de vous <a href=\"%sindex.php\">connecter</a>",
  "session_timeout_sprt" => "Acc&eacute;s refus&eacute;, la derni&egrave;re action a &eacute;t&eacute; faite il y &agrave; %1\$d minutes et la session s'est ferm&eacute;e apr&egrave;s %2\$d minutes, merci de vous  <a href=\"%sindex.php\">re-connecter</a>",
@@ -218,8 +213,7 @@ $lang = array(
  "usergroup_name" => "Nom du groupe d'utilisateurs:",
  "usergroup_description" => "Description du groupe d'utilisateurs:",
  "members" => "Membres:",
- //**
- "private_usergroup" => "Private usergroup",
+ "private_usergroup" => "Groupe d'utilisateur priv&eacute;",
  "add_usergroup" => "Ajouter au groupe d'utilisateurs",
  "add_new_usergroup" => "Ajouter un nouveau groupe d'utilisateurs",
  "edit_usergroup" => "Editer un groupe d'utilisateurs",
@@ -237,8 +231,7 @@ $lang = array(
  "blank_for_current_password" => "(Laisser vide ne modifie pas le mot de passe)",
  "email" => "E-mail",
  "admin" => "Admin",
-  //**
- "private_user" => "Private user",
+ "private_user" => "Utilisateur priv&eacute;",
  "is_admin" => "Est-il admin?",
  "user_info" => "Information utilisateur",
  "deleted_users" => "Effacer les utilisateurs",
@@ -251,11 +244,10 @@ $lang = array(
  "no_users" => "Aucun utilisateur connu sur ce syst&egrave;me",
  "users" => "Utilisateurs",
  "existing_users" => "Utilisateurs existants",
- //**
- "private_profile" => "This user has a private profile that cannot be viewed by you.",
+ "private_profile" => "Vous ne pouvez voir le profil priv&eacute;de cet utilisateur.",
  "private_usergroup_profile" => "(This user is a member of private usergroups that cannot be viewed by you)",
  "email_users" => "Email utilisateurs",
- "select_usergroup" => "Usergroup s&eacute;lectionn&eacute;s de la liste ci-dessous:",
+ "select_usergroup" => "Groupe d'utilisateur s&eacute;lectionn&eacute;s de la liste ci-dessous:",
  "subject" => "Sujet:",
  "message_sent_maillist" => "Dans tous les cas le message est aussi envoy&eacute; &agrave; la liste de diffusion.",
  "who_online" => "Qui est connect&eacute;?",
@@ -306,7 +298,6 @@ $lang = array(
  "none" => "Vide",
  "no_group" => "Aucun groupe",
  "all_groups" => "tout les groupes",
-//**
  "all_users" => "Tous les utilisateurs",
  "all_users_view" => "Tous les utilisateurs peuvent-ils voir cette t&acirc;che ?",
  "group_edit" => "Tout utilisateur du groupe peut-il &eacute;diter ?",
@@ -330,10 +321,8 @@ $lang = array(
  "add_task" => "Ajout tache",
  "add_subtask" => "Ajout sous tache",
  "add_project" => "Ajout projet",
- //**
- "clone_project" => "Clone project",
- //**
- "clone_task" => "Clone task", 
+ "clone_project" => "Projet clone",
+ "clone_task" => "t&acirc;che clone", 
  "no_edit" => "Vous n'&ecirc;tes pas propri&eacute;taire de cet &eacute;l&eacute;ment et vous ne pouvez pas l'&eacute;diter. Demandez &agrave; l'administrateur, ou au propri&eacute;taire de ces t&acirc;ches de le faire pour vous.",
  "uncategorised" => "Non class&eacute;",
  "admin" => "Admin",
@@ -344,9 +333,8 @@ $lang = array(
  "task_options" => "Options t&acirc;che",
  "task_navigation" => "Navigation t&acirc;ches",
  "no_projects" => "Pas de projet &agrave; afficher",
- //**
- "show_all_projects" => "Show all projects",
- "show_active_projects" => "Show only active projects",
+ "show_all_projects" => "Montrer tous les projets",
+ "show_active_projects" => "Montrer seulement les projets actifs",
  "completed" => "Termin&eacute;",
  "project_hold_sprt" => "Projet sous controle de %s",
  "project_planned" => "Projet Planifi&eacute;",
@@ -393,15 +381,14 @@ $lang = array(
  "by_deadline" => " (par date de fin)",
  "by_status" => " (par statut)",
  "by_owner" => " (par propri&eacute;taire)",
- //**
- "project_cloned" => "Project to be cloned :",
- "task_cloned" => "Task to be cloned :",
- "note_clone" => "Note: The task will be cloned as a new project",
+ "project_cloned" => "Projet a cloner :",
+ "task_cloned" => "T&acirc;che &agrave; cloner :",
+ "note_clone" => "Note : cette t&acirc;che sera clon&eacute;e comme un nouveau projet",
 
 //bits 'n' pieces
   "calendar" => "Calendrier",
-  "normal_version" => "Normal version",
-  "print_version" => "Print version"
+  "normal_version" => "Version normale",
+  "print_version" => "Version imprimable"
    );
 
 ?>

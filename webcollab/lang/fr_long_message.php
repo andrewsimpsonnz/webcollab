@@ -22,9 +22,9 @@
   Function:
   ---------
 
-  Language files (long messages) for 'fr' (French/Franï¿½is)
+  Language files (long messages) for 'fr' (French/Français)
 
-  Translation: Olivier Chaussavoine
+  Translation: Olivier Chaussavoine / Julien Dupont
 
   Maintainer:
 
@@ -36,16 +36,16 @@ $taskgroup_info =   "<ul><li>Si vous effa&ccedil;ez votre groupe de t&acirc;che,
                       "<li>Deux groupes de t&acirc;ches ne peuvent avoir le m&ecirc;me nom.</li></ul>\n";
 
 $usergroup_info =   "<ul><li>Si vous effacez un groupe d'utilisateurs, toutes leurs contributions dans le forum vont aussi &ecirc;tre d&eacute;truites.</li>\n".
-                     //**
-                     "<li>Private usergroups can only be seen by the members of that private usergroup.</li>\n".
+                     "<li> Les groupes d'utilisateurs priv&eacute;s ne peuvent &acirc;tre vu que par les membres appartenant au groupe priv&eacute;
+.</li>\n".
                       "<li>Vous pouvez changer le nom de groupe d'utilisateurs sans modifier les utilisateurs.</li>\n".
                       "<li>Deux groupe d'utilisateurs ne peuvent avoir le m&ecirc;me nom.</li></ul>\n";
 
 $user_info      =    "Merci de s&eacute;lectionner votre activit&eacute; dans le menu &agrave; gauche.<br /><br />".
                       "Pour informations:<br />".
                       "<ul>".
-                      //**
-                      "<li>Private users can only be seen by members of the same usergroup.</li>\n".
+                      "<li>Des utilisateurs priv&eacute;es ne peuvent &ecirc;tre vu que par les membres du m&ecirc;me groupe d'utilisateur
+.</li>\n".
                       "<li>Un utilisateur est effa&ccedil;&eacute; en deux &eacute;tapes, la seconde est permanente.</li>\n".
                       "<li>Un utilisateur effac&eacute; perd toutes ses t&acirc;ches mais ses contributions aux forums sont conserv&eacute;es.</li>\n".
                       "<li>Un utilisateur d&eacute;truit de mani&egrave;re permanente efface tout.</li>\n".
@@ -62,6 +62,6 @@ $calendar_key    = "<i>Retour au menu principal</i></a>]</b><br />\n".
 	              "<font color=\"blue\">Projet (avec t&acirc;ches en cours)</font><br />\n".
                       "<font color=\"green\"><u>Projet </u>(toutes les t&acirc;ches sont finies)</font><br />\n".
                       "<font color=\"red\">t&acirc;che (en cours)</font><br />\n".
-	              "<font color=\"green\">t&acirc;che (finie)</font>\n";
+	              "<font color=\"green\">t&acirc;che (finie)</font></p>\n";
 
 ?>
