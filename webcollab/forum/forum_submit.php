@@ -110,14 +110,12 @@ ignore_user_abort(TRUE);
         }
       }
 
-      $text = safe_data($_POST["text"], 1 );
-      //make email adresses clickable
-      $text = preg_replace("(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))","<a href=\"mailto:\\0\">\\0</a>", $text );
-      //normalise any embedded line breaks (\r\n, \r, \n) to \n line breaks
-      $text = str_replace("\r\n", "\n", $text );
-      $text = str_replace("\r", "\n", $text );
-      //break up long lines and add HTML line breaks
-      $text = nl2br(wordwrap($text, 60, "\n", 1 ) );
+      $text = safe_data_long($_POST["text"] );
+      //make email adresses and web links clickable
+      $text = preg_replace("/(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))/", "<a href=\"mailto:\\0\">\\0</a>", $text );
+      $text = preg_replace("/((http|ftp)+(s)?:\/\/[^\s]+)/i", "\n<a href=\"$0\" target=\"new\">$0</a>\n", $text );
+      $text = nl2br($text );
+
 
       $parentid    = check($_POST["parentid"]);
       $usergroupid = check($_POST["usergroupid"]);

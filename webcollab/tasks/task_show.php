@@ -69,17 +69,9 @@ $content .= "<b>".$row["name"]."</b><br /><br /></td></tr>\n";
 
 //show text
 $content .= "<tr><td bgcolor=\"#EEEEEE\" width=\"95%\">\n";
-/* automagically make links and email adresses clickable */
+
 $text = $row["text"];
-//$text = preg_replace("/(^|\s)((https?|ftp):\/\/[^\s\)<'\"]+)/", "$1<a href=\"$2\" onclick=\"window.open(this.href,'_blank');return false;\">$2</a>", $text);
-//$text = preg_replace("/(^|\s)(www\.[^\s\)<'\"]+)/", "$1<a href=\"http://$2\" onclick=\"window.open(this.href,'_blank');return false;\">$2</a>", $text);
-$text = preg_replace("(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))","<a href=\"mailto:\\0\">\\0</a>", $text );
-
-//normalise embedded line breaks (\r\n, \r) to \n line breaks
-$text = str_replace("\r\n", "\n", $text );
-$text = str_replace("\r", "\n", $text );
-
-$content .= nl2br(wordwrap($text, 100, "\n", 1 ) );
+$content .= nl2br($text );
 $content .= "</td></tr></table></p>\n";
 
 //start of info table
@@ -93,7 +85,7 @@ if( $row["owner"] == 0 ) {
   $content .= "<tr><td>".$lang["owned_by"].": </td><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["owner"]."\">".$owner."</a></td></tr>\n";
 }
 
-//get creator information (null if creator has been deleted!) 
+//get creator information (null if creator has been deleted!)
 $creator = @db_result(db_query("SELECT fullname FROM users WHERE id=".$row["creator"] ), 0, 0  );
 $content .= "<tr><td>".$lang["created_on"].": </td><td>";
 if($creator == NULL )

@@ -35,10 +35,9 @@ include_once(BASE."config.php" );
 include_once(BASE."lang/lang.php" );
 
 //
-// Ensures that all the data is code free so that a malcious user cannot
-// ruin the entire site.
+// Input validation (single line input)
 //
-function safe_data($body, $multi_line=0 ) {
+function safe_data($body ) {
 
 global $web_charset;
 
@@ -46,17 +45,37 @@ global $web_charset;
   if(! get_magic_quotes_gpc() )
     $body = addslashes($body );
 
-  //$body = strip_tags( $body, '<a><b><i><u>' );
   //$body = htmlspecialchars($body, ENT_NOQUOTES );
   $body = htmlentities($body, ENT_NOQUOTES, $web_charset );
 
   //limit line length for single line entries
-  if($multi_line == false )
-    $body = substr($body, 0, 100 );
+  $body = substr($body, 0, 100 );
 
-return($body );
+return $body;
 }
 
+
+//
+// Input validation (multiple line input)
+//
+function safe_data_long($body ) {
+
+global $web_charset;
+
+  //protect against database query attack
+  if(! get_magic_quotes_gpc() )
+    $body = addslashes($body );
+
+  //remove HTML in input & encode high ASCII characters
+  $body = htmlentities($body, ENT_NOQUOTES, $web_charset );
+  //normalise line breaks
+  $body = str_replace("\r\n", "\n", $body );
+  $body = str_replace("\r", "\n", $body );
+  //break up long non-wrap words
+  $body = preg_replace("/[^\s\n\t]{100}/", "$0\n", $body );
+
+return $body;
+}
 
 //
 // Builds up an error screen

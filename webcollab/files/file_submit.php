@@ -54,15 +54,14 @@ ignore_user_abort(TRUE);
       }
 
       $taskid = $_POST["taskid"];
-      $description = safe_data($_POST["description"], 1 );
-      //normalise line breaks to \n
-      $description = str_replace("\r\n", "\n", $description );
-      $description = str_replace("\r", "\n", $description );
-      //break up long lines and add HTML line breaks
-      $description = nl2br(wordwrap($description, 100, "\n", 1 ) );
+      $description = safe_data_long($_POST["description"] );
+      //make email adresses and web links clickable
+      $description = preg_replace("(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))","<a href=\"mailto:\\0\">\\0</a>", $description );
+      $description = preg_replace("/((http|ftp)+(s)?:\/\/[^\s]+)/i", "\n<a href=\"$0\" target=\"new\">$0</a>\n", $description );
+      $description = nl2br($description );
 
       //check usergroup security
-      require_once( BASE."includes/usergroup_security.php" );
+      require_once(BASE."includes/usergroup_security.php" );
 
       //check if there was an upload
       if( ! is_uploaded_file( $_FILES["userfile"]["tmp_name"] ) ) {

@@ -263,7 +263,7 @@ ignore_user_abort(TRUE);
 
       $name        = safe_data($_POST["name"]);
       //text can be multi lines
-      $text        = safe_data($_POST["text"], 1 );
+      $text        = safe_data_long($_POST["text"]);
       $status      = safe_data($_POST["status"]);
 
       $parentid    = check($_POST["parentid"]);
@@ -457,7 +457,7 @@ ignore_user_abort(TRUE);
       }
 
       $name        = safe_data($_POST["name"]);
-      $text        = safe_data($_POST["text"], 1 );
+      $text        = safe_data_long($_POST["text"]);
       $status      = safe_data($_POST["status"]);
 
       $taskid      = check($_POST["taskid"]);

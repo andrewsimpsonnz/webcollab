@@ -43,7 +43,7 @@ if( ! isset( $_REQUEST["action"] ) )
 
     //insert a new contact
     case "insert":
-          if(isset($_POST["lastname"] )  && isset($_POST["lastname"] ) && strlen($_POST["lastname"] ) > 0 && strlen($_POST["firstname"] ) > 0 ){
+      if(isset($_POST["lastname"] )  && isset($_POST["lastname"] ) && strlen($_POST["lastname"] ) > 0 && strlen($_POST["firstname"] ) > 0 ){
 
         db_query( "INSERT INTO contacts(firstname,
                                         lastname,
@@ -71,7 +71,7 @@ if( ! isset( $_REQUEST["action"] ) )
                                     '".safe_data($_POST["postal"])."',
                                     '".safe_data($_POST["city"])."',
                                     '".safe_data($_POST["email"])."',
-                                    '".safe_data($_POST["notes"], 1 )."',
+                                    '".safe_data_long($_POST["notes"])."',
                                     $uid,
                                     $uid,
                                     now() )" );
@@ -82,7 +82,7 @@ if( ! isset( $_REQUEST["action"] ) )
 
     case "edit":
      //edit an existing entry
-         if(isset($_POST["lastname"] )  && isset($_POST["lastname"] ) && strlen($_POST["lastname"] ) > 0 && strlen($_POST["firstname"] ) > 0  && is_numeric($contactid ) ) {
+     if(isset($_POST["lastname"] ) && isset($_POST["lastname"] ) && strlen($_POST["lastname"] ) > 0 && strlen($_POST["firstname"] ) > 0  && is_numeric($contactid ) ) {
 
         db_query("UPDATE contacts SET
                     firstname='".safe_data($_POST["firstname"])."',
@@ -96,7 +96,7 @@ if( ! isset( $_REQUEST["action"] ) )
                     postal='".safe_data($_POST["postal"])."',
                     city='".safe_data($_POST["city"])."',
                     email='".safe_data($_POST["email"])."',
-                    notes='".safe_data($_POST["notes"], 1 )."',
+                    notes='".safe_data_long($_POST["notes"])."',
                     added_by=$uid,
                     date=now()
                     WHERE id = '$contactid'");
