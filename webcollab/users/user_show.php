@@ -56,7 +56,7 @@ if($row["private"] && ( ! $admin ) ) {
   }
   //check if users are in the same usergroup
   if( ! array_intersect($user_gid, $gid ) ) {
-    warning($lang["private user"], $lang["private_profile"] );
+    warning($lang["private_user"], $lang["private_profile"] );
   }
 }
 
@@ -79,8 +79,9 @@ else
   $content .= "<tr><td>".$lang["private_user"].":</td><td>".$lang["no"]."</td></tr>\n";
 
 //create a list of all the groups the user is in
-$q = db_query("SELECT usergroups.name AS name,
-                      usergroups.id AS id
+$q = db_query("SELECT usergroups.id AS id,
+                      usergroups.name AS name,
+                      usergroups.private AS private
                       FROM usergroups
                       LEFT JOIN usergroups_users ON (usergroups_users.usergroupid=usergroups.id)
                       WHERE usergroups_users.userid=".$row["id"] );
@@ -93,8 +94,8 @@ else{
   $alert = "";
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ){
     //test for private usergroups
-    if( (! $admin ) && ( ! in_array($row["id"], (array)$gid ) ) ) {
-      $alert = $lang["private_usergroup_profile"];
+    if( ($row["private"]) && (! $admin ) && ( ! in_array($row["id"], (array)$gid ) ) ) {
+      $alert = "<br />".$lang["private_usergroup_profile"];
       continue;
     }
     $content .= $row["name"]."&nbsp;";
