@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -48,7 +48,6 @@ if( ! isset($_REQUEST['action']) )
     //admin files
     case "admin":
       create_top($lang['file_admin'] );
-      $taskid=-1;
       include("includes/mainmenu.php" );
       include("files/file_menubox.php" );
       goto_main();
