@@ -97,7 +97,7 @@ $content .= "<div align=\"center\">\n".
             "<form method=\"POST\" action=\"calendar.php\">".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
             "<table border=\"0\">\n".
-            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1><label for=\"users\" />".$lang["users"]."</label></td><td>\n".
+            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1 /><label for=\"users\" />".$lang["users"]."</label></td><td>\n".
             "<select name=\"userid\">\n".
             "<option value=\"0\"$s2>".$lang["all_users"]."</option>\n";
 
@@ -116,7 +116,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 }
 
 $content .= "</select></td></tr>\n".
-            "<tr align=\"left\"><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3><label for=\"group\" />".$lang["usergroups"]."</label></td>\n".
+            "<tr align=\"left\"><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3 /><label for=\"group\" />".$lang["usergroups"]."</label></td>\n".
             "<td><select name=\"groupid\">\n".
             "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
 
@@ -169,31 +169,32 @@ for( $i=0 ; $row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
 $numdays = date("t", mktime(0, 0, 0, $month, 1, $year ) );
 
 //main calendar table
-$content .= "<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"97%\">\n<tr>\n";
-$content .= "<td colspan=\"7\" valign=\"middle\" align=\"center\"><b>".date("F", mktime(0, 0, 0, $month, 1, $year ) )."</b>\n</td>\n";
+$content .= "<table style=\"border-width: 1px; border-style: solid; border-collapse: collapse; width: 97%\" cellspacing=\"0\" border=\"1\">\n<tr>\n";
+$content .= "<td colspan=\"7\" style=\"vertical-align: middle; text-align: center\"><b>".date("F", mktime(0, 0, 0, $month, 1, $year ) )."</b>\n</td>\n";
 $content .= "</tr>\n";
 
 //weekdays
-$content .= "<tr valign=\"middle\" align=\"center\">\n";
+$content .= "<tr style=\"vertical-align: middle; text-align: center\">\n";
 foreach($week_array as $value) {
-  $content .= "<td width=\"13.86%\"><b>$value</b></td>\n";
+  $content .= "<td style=\"border-width: 1px; border-style: solid; width:13.86%\"><b>$value</b></td>\n";
 }
 $content .= "</tr>\n";
 
 //show lead in to dates
-$content .= "<tr valign=\"top\" align=\"center\">\n";
+//$content .= "<tr valign=\"top\" align=\"center\">\n";
+$content .= "<tr style=\"vertical-align: top; text-align: center\">\n";
 for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); $i++ ) {
-  $content .= "<td>&nbsp;</td>\n";
+  $content .= "<td style=\"border-width: 1px; border-style: solid\">&nbsp;</td>\n";
 }
 
 //show dates
 for ($num = 1; $num <= $numdays; $num++ ) {
   if ($i >= 7 ) {
     $content .= "</tr>\n".
-                "<tr valign=\"top\" align=\"center\">\n";
+                "<tr style=\"vertical-align: top; text-align: center\">\n";
     $i=0;
   }
-  $content .= "<td ";
+  $content .= "<td style=\"border-width: 1px; border-style: solid\" ";
 
   //highlight today
   if($num == $today)
