@@ -147,7 +147,7 @@ return;
 if( ! isset($_REQUEST["action"]) )
   error("Task submit", "No request given" );
 
-//if user aborts, let the script carry onto the end   
+//if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
   switch($_REQUEST["action"] ) {
@@ -243,7 +243,7 @@ ignore_user_abort(TRUE);
           //send email
           //$username and $useremail are from security.php
           $message = sprintf($email_takeover, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name_task, $username, $useremail, clean($row["text"]), $BASE_URL );
-          email( $email_address_old_owner, $title_takeover, $message );
+          email( $email_address_old_owner, $title_takeover, trans($message ) );
           }
 
         }else
@@ -382,7 +382,7 @@ ignore_user_abort(TRUE);
           if($email_address_owner != "" ) {
             $message = sprintf($email_new_owner, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name_task,
                        status($status, $deadline), clean($text), $BASE_URL );
-            email($email_address_owner, sprintf($title_new_owner, $type ), $message );
+            email($email_address_owner, sprintf($title_new_owner, $type ), trans($message ) );
           }
         }
 
@@ -398,7 +398,7 @@ ignore_user_abort(TRUE);
 
           $message = sprintf($email_new_group, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name_task, $name_owner,
                       status($status, $deadline), clean($text), $BASE_URL );
-          email($EMAIL_MAILINGLIST, sprintf($title_new_group, $type).$name, $message );
+          email($EMAIL_MAILINGLIST, sprintf($title_new_group, $type).$name, trans($message ) );
 
           if($usergroupid != 0 ) {
             $usergroup = "";
@@ -413,7 +413,7 @@ ignore_user_abort(TRUE);
               $usergroup .= $s.$userrow["email"];
               $s = ", ";
             }
-            email($usergroup, sprintf($title_new_group, $type).$name, $message );
+            email($usergroup, sprintf($title_new_group, $type).$name, trans($message ) );
           }
         }
 
@@ -558,7 +558,7 @@ ignore_user_abort(TRUE);
           if($email_address_owner != "" ) {
             $message = sprintf( $email_edit_owner, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name_task,
                  status($status, $deadline), clean($text), $BASE_URL );
-            email( $email_address_owner, sprintf($title_edit_owner, $type ), $message );
+            email( $email_address_owner, sprintf($title_edit_owner, $type ), trans($message ) );
           }
         }
 
@@ -573,7 +573,7 @@ ignore_user_abort(TRUE);
 
           $message = sprintf($email_edit_group, $MANAGER_NAME, $type, $name_owner, date("F j, Y, H:i"), $name_project, $name_task,
                  status($status, $deadline), clean($text), $BASE_URL );
-          email($EMAIL_MAILINGLIST, sprintf($title_edit_group, ucfirst($type ) ), $message );
+          email($EMAIL_MAILINGLIST, sprintf($title_edit_group, ucfirst($type ) ), trans($message ) );
 
           if($usergroupid != 0 ) {
             $usergroup = "";
@@ -589,7 +589,7 @@ ignore_user_abort(TRUE);
               $usergroup .= $s.$userrow["email"];
               $s = ", ";
             }
-            email($usergroup, sprintf($title_edit_group, ucfirst($type ) ), $message );
+            email($usergroup, sprintf($title_edit_group, ucfirst($type ) ), trans($message ) );
           }
         }
       }

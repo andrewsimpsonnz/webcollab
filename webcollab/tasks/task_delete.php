@@ -179,7 +179,7 @@ if(isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
            break;
        }
        include_once(BASE."lang/lang_email.php" );
-       $message = sprintf( $email_delete_task, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_task, $row["name"],$status, clean($row["text"]) );
+       $message = trans(sprintf( $email_delete_task, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_task, $row["name"],$status, clean($row["text"]) ) );
        email($row["email"], sprintf($title_delete_task, ucfirst($type) ), $message );
     }
   }
