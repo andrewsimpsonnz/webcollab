@@ -112,6 +112,21 @@ TD.boxdata {
   color : #000000;
 }
 
+/* Box content styling for project listing */
+TD.boxdata {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12pt;
+  text-align : left;
+  border-width : 0;
+  border-collapse : collapse;
+  padding-top : 10pt;
+  padding-left : 0pt;
+  padding-right : 5pt;
+  padding-bottom : 10pt;
+  background : #ffffff;
+  color : #000000;
+}
+
 /* Green progress bar */
 TD.greenbar {
   border-width : 0;
