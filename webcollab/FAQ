@@ -41,8 +41,8 @@ quotes is 'off' in php.ini.
 
 
 
-   CHANGING LABEL PARAMETERS
-   =========================
+   CUSTOMISING WEBCOLLAB
+   =====================
 
 1. Can the 'Done', 'Active', 'On Hold' etc, labels be changed?
 
@@ -61,6 +61,12 @@ Yes, add the new image to /webcollab/images/  and set the $SITE_IMG parameter in
 3. Can background colours be changed?
 
 Yes, see the style sheet /webcollab/css.css and /webcollab/includes/screen.php.
+
+
+4. Can external webserver authorisation be used instead of the login screen.
+
+Yes, set the $WEB_AUTH parameter to "Y" in config.php.  Username is taken from the REMOTE_USER
+environment variable set by Apache. 
 
 
 
@@ -153,6 +159,21 @@ For MySQL version 4.0, and above, innodb database support is enabled by default.
 mysql_innodb database creation script, and the mysql_innodb abstraction layer is used. Using
 transactions significantly reduces the risk of corrupted databases.
 
+
+
+  DATABASE BACKUP
+  ===============
+
+Two UNIX based shell scripts are provided in /webcollab/db for backing up WebCollab databases.
+
+- dump_mysql.sh for MySQL
+  Usage: dump_mysql.sh <database user> <database name> <database password>
+
+- dump_postgresql.sh for Postgresql
+  Usage: dump_postgresql.sh <database name>
+
+Both dump into a plain text file.  They can be automated with a cron job and emailed to a back up
+machine at regular intervals. 
 
 
 
