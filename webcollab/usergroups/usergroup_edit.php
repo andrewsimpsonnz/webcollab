@@ -49,8 +49,8 @@ $row = db_fetch_array( $q, 0 );
 $content =
            "<form method=\"POST\" action=\"usergroups/usergroup_submit.php\">\n".
              "<table border=\"0\">\n".
-               "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"input\" name=\"name\" value=\"".$row["name"]."\" size=\"30\"></td></tr>\n".
-               "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" value=\"".$row["description"]."\" size=\"30\"></td></tr>\n";
+               "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"input\" name=\"name\" value=\"".$row["name"]."\" size=\"30\" /></td></tr>\n".
+               "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" value=\"".$row["description"]."\" size=\"30\" /></td></tr>\n";
 
 //add users
 $user_q = db_query("SELECT fullname, id FROM users ORDER BY fullname" );
@@ -59,7 +59,7 @@ $member_q = db_query("SELECT users.id AS id
                             LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
                             WHERE usergroupid=".$row["id"] );
 
-$content .=    "<tr><td>".$lang["members"]."</td><td><select name=\"member[]\" multiple size=\"4\">\n";
+$content .=    "<tr><td>".$lang["members"]."</td><td><select name=\"member[]\" multiple size=\"4\" />\n";
 
 for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++ ) {
   $content .= "<option value=\"".$user_row["id"]."\"";
@@ -68,16 +68,16 @@ for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++ ) {
   for($j=0 ; $member_row = @db_fetch_array($member_q, $j ) ; $j++ )
     if ($member_row["id"] == $user_row["id"] )
       $content .= " SELECTED";
-  $content .= ">".$user_row["fullname"]."</option>";
+  $content .= ">".$user_row["fullname"]."</option>\n";
 }
 
 $content .=    "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
              "</table><br /><br />\n".
-             "<input type=\"hidden\" name=\"x\" value=\"$x\"> ".
-             "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\"> ".
-             "<input type=\"hidden\" name=\"action\" value=\"edit\"> ".
-             "<input type=\"submit\" value=\"".$lang["edit_usergroup"]."\"> ".
-             "<input type=\"reset\" value=\"".$lang["reset"]."\">".
+             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+             "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\" />\n".
+             "<input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
+             "<input type=\"submit\" value=\"".$lang["edit_usergroup"]."\" />\n".
+             "<input type=\"reset\" value=\"".$lang["reset"]."\" />\n".
            "</form>\n";
 
 new_box( $lang["edit_usergroup"], $content );

@@ -67,7 +67,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
                             ORDER BY fullname" );
 
   for($j=0 ; $userrow = @db_fetch_array($usersq, $j ) ; $j++ ) {
-    $content .= "<tr><td colspan=\"3\" align=\"left\"><SMALL>(<a href=\"users.php?x=$x&amp;action=show&userid=".$userrow["id"]."\">".$userrow["fullname"]."</a>)</small></td></tr>";
+    $content .= "<tr><td colspan=\"3\" align=\"left\"><small>(<a href=\"users.php?x=$x&amp;action=show&userid=".$userrow["id"]."\">".$userrow["fullname"]."</a>)</small></td></tr>";
   }
   $content .=   "<tr><td colspan=\"3\" align=\"left\">&nbsp;</td></tr>";
 
