@@ -134,7 +134,7 @@ function error($box_title, $content ) {
 
 
   //email to the error-catcher
-  $message = "Hello,\n This is the MANAGER_NAME site and I have an error :/  \n".
+  $message = "Hello,\n This is the ".MANAGER_NAME." site and I have an error :/  \n".
             "\n\n".
             "User that created the error: $UID_NAME ( $UID_EMAIL )\n".
             "The erroneous component: $box_title\n".
@@ -150,7 +150,7 @@ function error($box_title, $content ) {
   
   if(EMAIL_ERROR != NULL ){
     include_once(BASE."includes/email.php" );
-    email(EMAIL_ERROR, "ERROR on MANAGER_NAME", $message );
+    email(EMAIL_ERROR, "ERROR on ".MANAGER_NAME, $message );
   }
         
   if(DEBUG == "Y" )
