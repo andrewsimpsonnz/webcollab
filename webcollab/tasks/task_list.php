@@ -35,12 +35,15 @@ if( ! @require( "path.php" ) )
 
 include_once( BASE."includes/security.php" );
 
+//init values
+$content = "";
+
 //
 // Functionalised recursive query
 //
 function list_tasks( $parent ) {
 
-  global $x, $uid, $BASE_URL, $parent_array, $epoch, $taskgroup_flag, $lang, $task_state, $NEW_TIME, $DATABASE_TYPE;
+  global $x, $uid, $BASE_URL, $parent_array, $epoch, $taskgroup_flag, $lang, $task_state, $NEW_TIME, $DATABASE_TYPE, $parentid;
 
   //init values
   $stored_groupname = "";
@@ -78,41 +81,46 @@ if( $DATABASE_TYPE == "mysql")
   if( db_numrows($q) < 1 )
     return;
 
-  //determine if the first line will be a task or a taskgroup descriptor
-  //if it's a groupname we dont need to set the leading <UL> (html 4.01 again :/)
-  if($taskgroup_flag == 0 )
-    $this_content .= "<UL>";
-  else
+  //determine if the first line will be a task listing or a taskgroup name
+  //if it's a taskgroup name we don't need to set the leading <UL>
+  if( ($taskgroup_flag == 1 ) && ($parent == $parentid ) )
     $this_content .= "";
+  else
+    $this_content .= "<UL>";
 
   //show all tasks
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+  
+    //check if there are taskgroups set, and if this is the first layer of tasks
+    if( ($taskgroup_flag == 1 ) && ($parent == $parentid ) ) {
+     
+      //set taskgroup name, or 'Uncategorised' if none
+      if( $row["groupname"] == NULL )
+        $groupname = $lang["uncategorised"];
+      else  
+        $groupname = $row["groupname"];
+      
+      //check if taskgroup has changed from last iteration
+      if($stored_groupname != $groupname ) {
 
-    //if there are other tasks with taskgroup set, then set "Uncategorised"
-    $groupname = $row["groupname"];
-    if( ($taskgroup_flag == 1 ) && ( ! isset($row["groupname"]) ) )
-      $groupname = $lang["uncategorised"];
+        //don't need </UL> for first line of output (no <UL> is set)
+        if( $stored_groupname != "" )
+          $this_content .= "</UL>\n";
 
-    //if the groupname changes from last time, show the change, otherwise do nothing (also implies that if there are no groups within the
-    //children of a task, not even "Uncategorised" is shown)
-    if( $stored_groupname != $groupname ) {
-
-    //quick hack to tackle HTML 4.01 verification (<UL></UL> bug)
-    if( $stored_groupname != "" )
-      $this_content .= "</UL>\n";
-
-      $stored_groupname = $groupname;
-
-      $this_content .= "<P> &nbsp;<B>".$groupname."</B>";
-
-      //add description
-      if( $row["groupdescription"] != "" )
-        $this_content .= "&nbsp;<I>( ".$row["groupdescription"]." )</I>";
-
+        //show taskgroup name
+	$this_content .= "<P> &nbsp;<B>".$groupname."</B>";
+        
+	//add taskgroup description 
+	if($row["groupdescription"] != NULL )
+          $this_content .=  "&nbsp;<I>( ".$row["groupdescription"]." )</I>";    
+      
         $this_content .= "</P>\n";
         $this_content .= "<UL>\n";
+	//store current groupname
+	$stored_groupname = $groupname;
+      }
     }
-
+    
     $alert_content = "";
     $this_content .= "<LI>";
     $status_content = "";
@@ -238,7 +246,7 @@ if( $DATABASE_TYPE == "mysql")
     }
   }
 
-  //finish all the LI and LU's
+  //finish all the UL's
   $this_content .= "</UL>";
 
   return $this_content;
@@ -253,29 +261,25 @@ if( ! isset($parentid) || ! is_numeric($parentid) )
 if( ! isset($taskid) || ! is_numeric($taskid) || $taskid == 0 )
   error( "Task list", "Not a valid value for taskid");
 
-
-
 //find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query
-//$parent_query = db_query( "SELECT parent, COUNT(parent) FROM tasks GROUP BY parent" );
 $parent_query = db_query( "SELECT parent FROM tasks GROUP BY parent" );
-$parent_array = null;
+$parent_array = NULL;
 for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; $i++ ) {
   $parent_array[$i] = $row["parent"];
 }
 
-//check to see if any tasks in this project have the taskgroup descriptor set.  Use this later to toggle the taskgroup headings.
-$taskgroup_flag = 0;
-$project = db_result( db_query( "SELECT projectid FROM tasks WHERE id=".$taskid ), 0, 0);
-$groupq = db_query( "SELECT COUNT(*) FROM tasks WHERE projectid=".$project." AND taskgroupid<>0 AND taskgroupid IS NOT NULL" );
-
-if( db_result( $groupq, 0, 0 ) > 0 ){
+//check to see if any tasks at this task level have the taskgroup descriptor set. 
+//Use this later to toggle the taskgroup headings.
+if( db_result(db_query( "SELECT COUNT(*) FROM tasks WHERE parent=".$parentid." AND taskgroupid<>0" ), 0, 0 ) > 0 )
   $taskgroup_flag = 1;
-}
+else
+  $taskgroup_flag = 0;
+  
 
 $content = list_tasks( $parentid );
 
 //show it
-if( $content != "" )
+if( $content != "" ) 
   new_box( $lang["tasks"], $content."<BR>" );
 
 ?>
