@@ -1,9 +1,16 @@
 WebCollab CVS
+*** 12 May 2004
+  Andrew Simpson
+
+- reduce number of database calls in project listing (optimisation)
+
+- user_show optimised
+
+WebCollab CVS
 *** 31 April 2004
   Andrew Simpson
 
 - reduce number of database calls in task listing (optimisation)
-
 
 WebCollab CVS
 *** 31 April 2004
