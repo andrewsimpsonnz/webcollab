@@ -42,7 +42,6 @@ include_once( BASE."includes/common.php");
 
 //set some base variables
 $database_connection = "";
-$last_insert = "oid";
 $delim = "'";
 $epoch = "extract(epoch FROM ";
 $day_part = "DATE_PART('day', ";
@@ -84,6 +83,9 @@ function db_query($query, $dieonerror=1 ) {
         pg_encoding();
       }
     }    
+  if(! @pg_query($database_connection, 'SET TIME ZONE '.TZ ) )
+    error("Database error",  "Not able to set timezone" );
+  
   }
   //do it
   if( ! ($result = @pg_query($database_connection, $query ) ) ) {
@@ -139,9 +141,11 @@ return $result_row;
 //
 // last oid
 //
-function db_lastoid($q ) {
-
-  $lastoid = pg_last_oid($q );
+function db_lastoid($seq_name ) {
+  
+  //must be done after an insert, and within a transaction
+  $result = db_query("SELECT CURRVAL('$seq_name') AS seq" );
+  $lastoid = pg_fetch_result( $result, 0, 0 );
 
 return $lastoid;
 }
