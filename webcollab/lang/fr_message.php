@@ -28,14 +28,13 @@
 
   Language files for 'fr' (French/Français)
 
-  Maintainer: 
+  Maintainer:
 
 */
 
 //required language encodings
 $web_charset = "iso-8859-1";
 $email_charset = "iso-8859-1";
-$email_encode = "8bit";
 
 //dates
 $month_array = array ( "Jan", "Fev", "Mar", "Avr", "Mai", "Jui", "Jul", "Aou", "Sep", "Oct", "Nov", "Dec" );
@@ -83,10 +82,8 @@ $lang = array(
  "no" => "Non",
  "action" => "Action",
  "task" => "Tache",
- "task_lc" => "tache",
  "tasks" => "Taches",
  "project" => "Projet",
- "project_lc" => "projet",
  "info" => "Info",
  "bytes" => " octes",
  "select_instruct" => "(Utilisation de CTRL pour plusieurs s&eacute;lections ou aucune s&eacute;lection)",
@@ -147,7 +144,9 @@ $lang = array(
  "no_file_uploads" => "The server configuration for this site does not allow file uploads to be made",
  "file" => "Fichier:",
  "uploader" => "T&eacute;l&eacute;charger:",
- "files_assoc_sprt" => "Fichiers associ&eacute;s avec %s",
+ //**
+ "files_assoc_project" => "Fichiers associ&eacute;s avec projet",
+ "files_assoc_task" => "Fichiers associ&eacute;s avec tache",
  "file_admin" => "Admin Fichier",
  "add_file" => "Ajouter fichier",
  "files" => "Fichiers",
@@ -286,7 +285,7 @@ $lang = array(
  "parent_task" => "Tache parente",
  "creation_time" => "Date de cr&eacute;ation",
  //**
- "by" => " by ", //Note to translators: context is 'Creation time: <date> by <user>'
+ "by_sprt" => "%1\$s by %2\$s", //Note to translators: context is 'Creation time: <date> by <user>'
  "project_name" => "Nom du projet",
  "task_name" => "Nom de la tache",
  "deadline" => "Date de fin",
@@ -320,7 +319,9 @@ $lang = array(
  "edit_project" => "Editer le projet",
  //**
  "no_reparent" => "None (a top-level project)",
- "del_javascript_sprt" => "Ceci va d&eacute;truire %s %s. Etes vous sûr?",
+ //**
+ "del_javascript_project_sprt" => "Ceci va d&eacute;truire projet %s. Etes vous s&ucirc;r?",
+ "del_javascript_task_sprt" => "Ceci va d&eacute;truire tache %s. Etes vous s&ucirc;r?",
  "add_task" => "Ajout tache",
  "add_subtask" => "Ajout sous tache",
  "add_project" => "Ajout projet",
@@ -328,7 +329,6 @@ $lang = array(
  "uncategorised" => "D&eacute;class&eacute;",
  "admin" => "Admin",
  "global" => "Global",
- //"options" => " options",
  //**
  "delete_project" => "Delete project",
  //**
@@ -342,7 +342,7 @@ $lang = array(
  "completed" => "Fini",
  "project_hold" => "Projet sous controle de ",
  "project_planned" => "Projet Planifi&eacute;",
- "percent" => "% des taches effectu&eacute;es",
+ "percent_sprt" => "%d%% des taches effectu&eacute;es",
  "project_no_deadline" => "Pas de date de fin pour ce projet",
  "no_allowed_projects" => "Aucun projet que vous &ecirc;te autoris&eacute; d'afficher",
  "projects" => "Projets",
@@ -352,14 +352,24 @@ $lang = array(
  "completed_on" => "Fini le",
  "modified_on" => "Modifi&eacute; le",
  "project_on_hold" => "Projet est en cours",
- "task_accessible_sprt" => "(Ceci %s est publiquement accessible &agrave; tous les utilisateurs)",
- "task_not_accessible_sprt" => "(Ceci %s est seulement accessible aux membres du groupe d'utilisateurs)",
- "task_not_in_usergroup_sprt" => "Ceci %s n'est pas accessible au groupe d'utilisateurs mais est accessible &agrave; tous les utilisateurs.",
- "usergroup_can_edit_sprt" => "Ceci %s peut aussi &ecirc;tre &eacute;diter par les membres du groupe d'utilisateurs.",
+ //**
+ "project_accessible" => "(Ceci projet est publiquement accessible &agrave; tous les utilisateurs)",
+ "task_accessible" => "(Ceci %s est publiquement accessible &agrave; tous les utilisateurs)",
+ //**
+ "project_not_accessible" => "(Ceci tache est seulement accessible aux membres du groupe d'utilisateurs)",
+ "task_not_accessible" => "(Ceci projet est seulement accessible aux membres du groupe d'utilisateurs)",
+ //**
+ "project_not_in_usergroup" => "Ceci projet n'est pas accessible au groupe d'utilisateurs mais est accessible &agrave; tous les utilisateurs.",
+ "task_not_in_usergroup" => "Ceci tache n'est pas accessible au groupe d'utilisateurs mais est accessible &agrave; tous les utilisateurs.",
+ //**
+ "usergroup_can_edit_project" => "Ceci projet peut aussi &ecirc;tre &eacute;diter par les membres du groupe d'utilisateurs.",
+ "usergroup_can_edit_task" => "Ceci tache peut aussi &ecirc;tre &eacute;diter par les membres du groupe d'utilisateurs.",
  "i_take_it" => "Je prends",
  "i_finished" => "J'ai finis avec!",
  "i_dont_want" => "Je n'en veux plus",
- "take_over_sprt" => "Je prends %s",
+ //**
+ "take_over_project" => "Je prends projet",
+ "take_over_task" => "Je prends tache",
  "task_info" => "Information Tache ",
  "project_details" => "D&eacute;tails projet",
  "todo_list_for" => "Liste &agrave;-faire pour le : ",
@@ -374,8 +384,6 @@ $lang = array(
  "future" => "Futur",
  "flags" => "Drapeaux",
  "owner" => "Propri&eacute;taire",
- "usergroupid" => "IDGroupe",
- "taskgroupid" => "IDGroupeTache",
  "group" => "Groupe",
  "by_usergroup" => " (par groupe d'utilisateurs)",
  "by_taskgroup" => " (par groupe de taches)",
