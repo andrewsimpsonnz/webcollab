@@ -76,6 +76,7 @@ $content .= "<TR><TD nowrap colspan=\"2\"><B>".$lang["default_checkbox"]."</B></
 
 //defaults for task checkboxes
 $content .= "<TR><TD>".$lang["allow_globalaccess"]."</TD><TD><INPUT type=\"checkbox\" name=\"access\" ".$row["globalaccess"]."></TD></TR>\n".
+            "<TR><TD>".$lang["allow_group_edit"]."</TD><TD><INPUT type=\"checkbox\" name=\"group_edit\" ".$row["groupaccess"]."></TD></TR>\n".
             "<TR><TD>".$lang["set_email_owner"]."</TD><TD><INPUT type=\"checkbox\" name=\"owner\" " .$row["owner"]."></TD></TR>\n".
             "<TR><TD>".$lang["set_email_group"]."</TD><TD><INPUT type=\"checkbox\" name=\"usergroup\"  ".$row["usergroup"]."></TD></TR>\n".
             "<TR><TD colspan=\"2\">&nbsp;</TD></TR>".

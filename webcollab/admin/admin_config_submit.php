@@ -61,6 +61,11 @@ if( isset($_POST["access"]) && $_POST["access"] == "on" )
 else
   $access = "";
 
+if( isset($_POST["group_edit"]) && $_POST["group_edit"] == "on" )
+  $group_edit = "checked";
+else
+  $group_edit = "";
+
 if( isset($_POST["owner"]) && $_POST["owner"] == "on" )
   $owner = "checked";
 else
@@ -76,6 +81,7 @@ db_query( "UPDATE config SET email_admin='".$email_admin."',
                              reply_to='".$reply_to."',
 			     email_from='".$from."',
 			     globalaccess='".$access."',
+				 groupaccess='".$group_edit."',
 			     owner='".$owner."',
 			     usergroup='".$usergroup."'");
 
