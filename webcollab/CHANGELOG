@@ -1,3 +1,19 @@
+WebCollab 1.30
+*** 6 April 2003
+  Andrew Simpson
+
+- Bugfix: Previous edit broke show users online
+
+- Force MySQL to put uncategorised tasks at the bottom of listing
+
+- more detailed licence notes added at request of Free Software Foundation (no effect on licence terms)
+
+WebCollab 1.30
+*** 2 April 2003
+  Andrew Simpson
+  
+- release
+
 WebCollab CVS
 *** 30 March 2003
   Andrew Simpson
@@ -6,11 +22,12 @@ WebCollab CVS
 
 - Minor bugfixes and clarity improvements
 
-WebCollab-beta 1.30 Release
+WebCollab-beta 1.30
 *** 22 March 2003
   Andrew Simpson
 
-
+- release
+  
 WebCollab CVS
 *** 15 March 2003
   Andrew Simpson
