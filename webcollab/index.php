@@ -96,8 +96,8 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && valid_string($_PO
   //user is okay log him/her in
 
   //create session key
-  srand((double)microtime()*1000000);
-  $session_key = md5(rand(0,42352352) . "would you hack me with this string to randomise");
+  mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );
+  $session_key = md5(mt_rand() );
 
   //remove the old login information
   @db_query("DELETE FROM logins WHERE user_id=$user_id" );
@@ -106,7 +106,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && valid_string($_PO
   db_query("INSERT INTO logins( user_id, session_key, ip, lastaccess ) VALUES ('$user_id', '$session_key', '$ip', now() )" );
 
   //try and set a session cookie (if the browser will let us)
-  setcookie("session_key", $session_key, time()+3600, "/", $DOMAIN, 0  );
+  setcookie("session_key", $session_key, time()+3600, directory(), domain(), 0  );
   //(No need to record an error here if unsuccessful: code will revert to URI session keys)
 
   //relocate the user to the main screen
