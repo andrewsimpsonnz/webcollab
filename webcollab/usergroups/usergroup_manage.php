@@ -69,7 +69,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
                             FROM ".PRE."users
                             LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.userid=".PRE."users.id)
                             WHERE usergroupid=".$row["id"]."
-                            AND ".PRE."deleted='f'
+                            AND ".PRE."users.deleted='f'
                             ORDER BY ".PRE."users.fullname" );
 
   for($j=0 ; $userrow = @db_fetch_array($usersq, $j ) ; $j++ ) {

@@ -122,7 +122,7 @@ for( $i=0 ; $i < $max ; $i++) {
 
 //drop old list
 //can't use a transaction here - postgres' does not like it!
-db_query("TRUNCATE TABLE maillist");
+db_query("TRUNCATE TABLE ".PRE."maillist");
 
 //add new list
 if( isset($email_list ) ) {

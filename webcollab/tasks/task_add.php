@@ -40,8 +40,8 @@ $javascript = "";
 $allowed[0] = 0; 
 
 //get list of common users in private usergroups that this user can view 
-$q = db_query("SELECT ".PRE."usergroup_users.usergroupid AS usergroupid,
-                      ".PRE." usergroup_users.userid AS userid 
+$q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid,
+                      ".PRE."usergroups_users.userid AS userid 
                       FROM ".PRE."usergroups_users 
                       LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."usergroups_users.usergroupid)
                       WHERE ".PRE."usergroups.private=1");

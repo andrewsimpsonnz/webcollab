@@ -367,17 +367,17 @@ switch($sortby ) {
     break;
 
   case "owner":
-    $content .= project_summary("LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."tasks.owner) ORDER BY username,deadline,taskname", -1, ", users.fullname AS username" );
+    $content .= project_summary("LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."tasks.owner) ORDER BY username,deadline,taskname", -1, ", ".PRE."users.fullname AS username" );
     $suffix = $lang["by_owner"];
     break;
 
   case "usergroupid":
-    $content .= project_summary("LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."tasks.usergroupid) ORDER BY usergroupname,deadline,taskname", -1, ", usergroups.name AS usergroupname" );
+    $content .= project_summary("LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."tasks.usergroupid) ORDER BY usergroupname,deadline,taskname", -1, ", ".PRE."usergroups.name AS usergroupname" );
     $suffix = $lang["by_usergroup"];
     break;
 
   case "taskgroupid":
-    $content .= project_summary("LEFT JOIN ".PRE."taskgroups ON (".PRE."taskgroups.id=".PRE."tasks.taskgroupid) ORDER BY taskgroupname,deadline,taskname", -1, ", taskgroups.name AS taskgroupname" );
+    $content .= project_summary("LEFT JOIN ".PRE."taskgroups ON (".PRE."taskgroups.id=".PRE."tasks.taskgroupid) ORDER BY taskgroupname,deadline,taskname", -1, ", ".PRE."taskgroups.name AS taskgroupname" );
     $suffix = $lang["by_taskgroup"];
     break;
 

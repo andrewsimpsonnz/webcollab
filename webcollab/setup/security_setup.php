@@ -81,13 +81,17 @@ else {
   }
 
   //seems okay at first, now go cross-checking with the known data from the database
-  if( ! ($q = db_query("SELECT logins.user_id AS user_id, logins.ip AS ip, logins.lastaccess AS lastaccess,
-                             users.email AS email, users.admin AS admin, users.fullname AS fullname,
-                             $epoch now() ) AS now,
-                             $epoch lastaccess) AS sec_lastaccess
-                             FROM ".PRE."logins
-                             LEFT JOIN users ON (users.id=logins.user_id)
-                             WHERE session_key='$x'", 0 ) ) ) {
+  if( ! ($q = db_query("SELECT ".PRE."logins.user_id AS user_id, 
+                               ".PRE."logins.ip AS ip, 
+                               ".PRE."logins.lastaccess AS lastaccess,
+                               ".PRE."users.email AS email, 
+                               ".PRE."users.admin AS admin, 
+                               ".PRE."users.fullname AS fullname,
+                               $epoch now() ) AS now,
+                               $epoch lastaccess) AS sec_lastaccess
+                               FROM ".PRE."logins
+                               LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."logins.user_id)
+                               WHERE ".PRE."logins.session_key='$x'", 0 ) ) ) {
     error_setup("Database not able to verify session key");
   }
 

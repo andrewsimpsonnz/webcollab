@@ -51,7 +51,7 @@ function list_tasks($parent ) {
 
 //force mysql to put 'uncategorised' items at the bottom
 if(substr($DATABASE_TYPE, 0, 5) == "mysql" )
-  $no_group = "IF(taskgroups.name IS NULL, 1, 0), ";
+  $no_group = "IF(".PRE."taskgroups.name IS NULL, 1, 0), ";
 
 //query to get the children for this taskid
 $q = db_query("SELECT ".PRE."tasks.id AS id,
