@@ -36,14 +36,14 @@ include_once( "../config.php" );
 function error_setup( $reason ) {
 
   create_top_setup("Setup", 1 );
-  new_box_setup("Setup error", "<CENTER><BR>".$reason."<BR></CENTER>" );
+  new_box_setup("Setup error", "<center><br />".$reason."<br /></center>" );
   create_bottom_setup();
   die;
 
 }
 
 //security check
-if($CONFIG_STATE != "initial install" ){
+if( ( !isset($CONFIG_STATE ) ) || $CONFIG_STATE != "first install" ) {
   include_once('../includes/security.php' );
 
   if($admin != 1 ) {
@@ -86,45 +86,81 @@ foreach($array as $var ) {
 //set up output string
 $content = "<?php\n".
 '//-- Title and Location parameters --'."\n\n".
-'$BASE_URL = "'.$data["base_url"].'";'."\n".
-'$MANAGER_NAME = "'.$data["manager_name"].'";'."\n".
-'$ABBR_MANAGER_NAME = "'.$data["abbr_manager_name"].'";'."\n\n".
+'  //You need to add the full webservername and dir to WebCollab here. Example'."\n".
+'  //"http://www.your-url-here.com/backend/org/" (do not forget the tailing slash)'."\n".
+'  $BASE_URL = "'.$data["base_url"].'";'."\n\n".
+'  //The name of the site'."\n".
+'  $MANAGER_NAME = "'.$data["manager_name"].'";'."\n\n".
+'  //The abbreviated name for the site (for use in email subject lines)'."\n".
+'  $ABBR_MANAGER_NAME = "'.$data["abbr_manager_name"].'";'."\n\n".
 '//-- Database parameters --'."\n\n".
-'$DATABASE_NAME = "'.$data["db_name"].'";'."\n".
-'$DATABASE_USER = "'.$data["db_user"].'";'."\n".
-'$DATABASE_PASSWORD = "'.$data["db_password"].'";'."\n".
-'$DATABASE_TYPE = "'.$data["db_type"].'";'."\n".
-'$DATABASE_HOST = "'.$data["db_host"].'";'."\n\n".
+'  $DATABASE_NAME = "'.$data["db_name"].'";'."\n".
+'  $DATABASE_USER = "'.$data["db_user"].'";'."\n".
+'  $DATABASE_PASSWORD = "'.$data["db_password"].'";'."\n\n".
+'  //Database type (usual valid options are "mysql" and "postgresql")'."\n".
+'  $DATABASE_TYPE = "'.$data["db_type"].'";'."\n\n".
+'  //Database host (usually "localhost")'."\n".
+'  $DATABASE_HOST = "'.$data["db_host"].'";'."\n\n".
+'    /*Note:'."\n".
+'      For PostgreSQL $DATABASE_HOST should not be changed from localhost.'."\n".
+'      To use remote tcp/ip connections with PostgreSQL:'."\n".
+'       - Edit pg_hba.conf (PostgreSQL config file) to allow tcp/ip connections'."\n".
+'       - Start PostgreSQL postmaster with -i option'."\n".
+'       - Change $DATABASE_HOST as required'."\n".
+'    */'."\n\n".
 '//-- File upload parameters --'."\n\n".
-'$FILE_BASE = "'.$data["file_base"].'";'."\n".
-'$FILE_MAXSIZE = "'.$data["file_maxsize"].'";'."\n".
+'  //upload to what directory ?'."\n".
+'  $FILE_BASE = "'.$data["file_base"].'";'."\n\n".
+'  //max file size in bytes'."\n".
+'  $FILE_MAXSIZE = "'.$data["file_maxsize"].'";'."\n\n".
+'    /*Note:'."\n".
+'      1. Make sure the file_base directory exists, and is writeable by the webserver, or you'."\n".
+'         will not be able to upload any files.'."\n".
+'      2. The filebase directory should be outside your webserver root directory to maintain file'."\n".
+'         security.  This is important to prevent users navigating to the file directory with'."\n".
+'         their web browsers, and viewing all the files.  (The default location given is NOT outside'."\n".
+'         the webserver root, but it makes first-time setup easier).'."\n".
+'    */'."\n\n".
 '//----------------------------------------------------------------------------------------------'."\n".
 '// Less important items below this line'."\n\n".
 '//-- Language --'."\n\n".
-'$LOCALE = "'.$data["locale"].'";'."\n\n".
+'  $LOCALE = "'.$data["locale"].'";'."\n\n".
 '//-- Email --'."\n\n".
-'$EMAIL_ERROR= "'.$data["email_error"].'";'."\n".
-'$USE_EMAIL = "'.$data["use_email"].'";'."\n".
-'$MAIL_METHOD = "'.$data["mail_method"].'";'."\n".
-'//-- These variables below are only required if "SMTP" is chosen above'."\n".
-'   $SMTP_HOST = "'.$data["smtp_host"].'";'."\n".
-'   $SMTP_AUTH = "'.$data["smtp_auth"].'";'."\n".
-'   $MAIL_USER = "'.$data["mail_user"].'";'."\n".
-'   $MAIL_PASSWORD = "'.$data["email_password"]."\";\n\n".
+'  //If an error occurs, who do you want the error to be mailed to ?'."\n".
+'  $EMAIL_ERROR= "'.$data["email_error"].'";'."\n\n".
+'  //enable email to send messages? (Values are "Y" or "N")'."\n".
+'  $USE_EMAIL = "'.$data["use_email"].'";'."\n\n".
+'  //mail transport agent. Values are "mail" (local sockets and/or sendmail) or "SMTP" (network mail server)'."\n".
+'  // default is "mail"'."\n".
+'  $MAIL_METHOD = "'.$data["mail_method"].'";'."\n\n".
+'  //-- These variables below are only required if "SMTP" is chosen above'."\n\n".
+'    //location of SMTP server (ip address or FQDN)'."\n".
+'    $SMTP_HOST = "'.$data["smtp_host"].'";'."\n\n".
+'    //use smtp auth? ("Y" or "N")'."\n".
+'    $SMTP_AUTH = "'.$data["smtp_auth"].'";'."\n".
+'      //if using $SMTP_AUTH give username & password'."\n".
+'      $MAIL_USER = "'.$data["mail_user"].'";'."\n".
+'      $MAIL_PASSWORD = "'.$data["email_password"]."\";\n\n".
+'  /*Note:'."\n".
+'      Use $MAIL_METHOD = "mail", which uses local sockets and is faster.  If "mail" does not work (it is not reliable'."\n".
+'      on all operating systems), change to "SMTP", which uses an SMTP connection over tcp/ip.'."\n".
+'   */'."\n\n".
 '//-- Splash image --'."\n\n".
-'$SITE_IMG = "'.$data["site_img"].'";'."\n\n".
+'  //custom image to replace the webcollab banner on login page (relative base directory is /images)'."\n".
+'    //(place your image into /images directory)'."\n".
+'  $SITE_IMG = "'.$data["site_img"].'";'."\n\n".
 '//-- MINOR CONFIG PARAMETERS --'."\n\n".
 '//-- These items need to be edited directly from this file --'."\n\n".
-'//number of days that new or updated tasks should be highlighted as \'New\' or \'Updated\''."\n".
-'$NEW_TIME = "14";'."\n".
-'//show full debugging messages on the screen when errors occur (values are "N", or "Y")'."\n".
-'$DEBUG = "N";'."\n".
-'//Do not show full error message on the screen - just a \'sorry, try again\' message (values are "N", or "Y")'."\n".
-'$NO_ERROR = "N";'."\n".
-'//Use external webserver authorisation to login (values are "N", or "Y")'."\n".
-'$WEB_AUTH = "N";'."\n".
-'//change this to \'initial install\' to have the installer create a new database'."\n".
-'$CONFIG_STATE = "complete";'."\n".
+'  //number of days that new or updated tasks should be highlighted as \'New\' or \'Updated\''."\n".
+'  $NEW_TIME = "14";'."\n".
+'  //show full debugging messages on the screen when errors occur (values are "N", or "Y")'."\n".
+'  $DEBUG = "N";'."\n".
+'  //Do not show full error message on the screen - just a \'sorry, try again\' message (values are "N", or "Y")'."\n".
+'  $NO_ERROR = "N";'."\n".
+'  //Use external webserver authorisation to login (values are "N", or "Y")'."\n".
+'  $WEB_AUTH = "N";'."\n".
+'  //Flag for automated setup program to indicate that initial setup has been completed'."\n".
+'  $CONFIG_STATE = "installed";'."\n".
 "?>\n";
 
 //open file for writing
@@ -141,22 +177,20 @@ if(! $handle = fopen("../config.php", "w" ) ) {
 //show success message
 create_top_setup("Setup Screen", 1);
 
-$content = "<CENTER>\n".
-"<BR><BR>\n".
-"<IMG src=\"../images/webcollab.png\" alt=\"WebCollab logo\"><BR><BR>\n".
-"<P><B>Setup - Stage 3 of 3 : Your first login...</B></P>\n".
-"<P>Setup is complete.</P>\n".
-"<P>Please press the button to login for the first time.</P>\n";
+$content = "<center>\n".
+"<br /><br />\n".
+"<p>Setup is complete.</p>\n".
+"<p>Please press the button to login...</p>\n";
 
-if($CONFIG_STATE == "initial install" )
-  $content .= "<P>Your login and password are \'admin\' and \'admin123\'</P>\n";
+if(isset($CONFIG_STATE ) && $CONFIG_STATE == "first install" )
+  $content .= "<p>Your login and password are 'admin' and 'admin123'</p>\n";
 
-$content .= "<P>Enjoy!</P>\n".
-"<FORM name=\"inputform\" method=\"POST\" action=\"../index.php\">\n".
-"<INPUT type=\"submit\" value=\"Login\"><BR><BR>\n".
-"</FORM>\n".
-"<DIV align=\"CENTER\">\n".
-"<BR><BR>\n";
+$content .= "<p>Enjoy!</p>\n".
+"<form name=\"inputform\" method=\"POST\" action=\"../index.php\">\n".
+"<input type=\"submit\" value=\"Login\"><br /><br />\n".
+"</form>\n".
+"</center>\n".
+"<br /><br />\n";
 
 new_box_setup("Setup - Stage 3 of 3", $content, 400 );
 

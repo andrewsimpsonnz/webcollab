@@ -29,9 +29,6 @@
 include_once( "./screen_setup.php" );
 include_once( "../config.php" );
 
-if($CONFIG_STATE != "initial install" )
-  header("location: login.php" );
-
 //
 //Error trap function
 //
@@ -39,7 +36,7 @@ if($CONFIG_STATE != "initial install" )
 function error_setup($message ) {
 
   create_top_setup("Setup", 1 );
-  new_box_setup("Setup error", "<CENTER><BR>".$message."<BR></CENTER>" );
+  new_box_setup("Setup error", "<center><br />".$message."<br /></center>" );
   create_bottom_setup();
   die;
 
@@ -58,6 +55,11 @@ if(isset($_POST["database_name"]) ) {
     }
   }
 
+  //skip making database
+  if(isset($_POST["make_database"]) && $_POST["make_database"] != "on" )
+    header("location: setup2.php?db_host=".$database_host."&amp;db_user=".$database_user."&amp;db_pass=".$database_password."&amp;db_name=".$database_name."&amp;db_type=".$database_type );
+
+
   $database_name     = $_POST["database_name"];
   $database_user     = $_POST["database_user"];
   $database_password = $_POST["database_password"];
@@ -75,9 +77,9 @@ if(isset($_POST["database_name"]) ) {
   case "mysql":
     //connect to database server
     if( ! ( $database_connection = mysql_connect( $database_host, $database_user, $database_password ) ) ) {
-      error_setup( "Sorry but there seems to be a problem in connecting to the database server at ".$database_host."<BR>".
-                    "Check that your user and password is correct.  Also check that the database is running.<BR><BR>".
-                    "User:     ".$database_user."<BR>Password: ".$database_password."<BR>" );
+      error_setup( "Sorry but there seems to be a problem in connecting to the database server at ".$database_host."<br />".
+                    "Check that your user and password is correct.  Also check that the database is running.<br /><br />".
+                    "User:     ".$database_user."<br />Password: ".$database_password."<br />" );
     }
 
     //try and select the database
@@ -85,11 +87,11 @@ if(isset($_POST["database_name"]) ) {
 
       //no database exists yet - try and create it...
       if( ! ($result = @mysql_query( "CREATE DATABASE ".$database_name, $database_connection ) ) )
-        error_setup("The database creation had the following error: <BR>".mysql_error($database_connection) );
+        error_setup("The database creation had the following error: <br />".mysql_error($database_connection) );
 
       //select the newly created database
       if( ! @mysql_select_db( $database_name, $database_connection ) )
-        error_setup("Not able to select database. Error message was: <BR>".mysql_error($database_connection) );
+        error_setup("Not able to select database. Error message was: <br />".mysql_error($database_connection) );
     }
 
     //sanity check
@@ -111,10 +113,8 @@ if(isset($_POST["database_name"]) ) {
 
     //create each table
     foreach($table_array as $table ){
-      if($table != "" ) {
-        if( ! ($result = @mysql_query( $table, $database_connection ) ) ) {
-          error_setup("The database creation had the following error:<BR> ".mysql_error($database_connection) );
-        }
+      if( ! ($result = @mysql_query( $table, $database_connection ) ) ) {
+        error_setup("The database creation had the following error:<br /> ".mysql_error($database_connection) );
       }
     }
     break;
@@ -125,15 +125,15 @@ if(isset($_POST["database_name"]) ) {
 
       //connect to database server with standard 'template1' database
       if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=template1 password=".$database_password ) ) ) {
-        error_setup( "Sorry but there seems to be a problem in connecting to the database server at ".$database_host."<BR>".
-                    "No existing database, and cannot connect to PostgreSQL to create a new database.<BR><BR>".
-                    "User:     ".$database_user."<BR>Password: ".$database_password."<BR><BR>".
+        error_setup( "Sorry but there seems to be a problem in connecting to the database server at ".$database_host."<br />".
+                    "No existing database, and cannot connect to PostgreSQL to create a new database.<br /><br />".
+                    "User:     ".$database_user."<br />Password: ".$database_password."<br /><br />".
                     "Check user and password, then try creating the database manually and running setup again." );
       }
 
       //create new database
       if( ! ($result = @pg_exec($database_connection, "CREATE DATABASE ".$database_name ) ) ) {
-        error_setup("Connected to database, but the new database creation had the following error:<BR>".pg_errormessage($database_connection) );
+        error_setup("Connected to database, but the new database creation had the following error:<br />".pg_errormessage($database_connection) );
       }
 
       //close the standard template database
@@ -164,10 +164,8 @@ if(isset($_POST["database_name"]) ) {
 
     //create tables from schema
     foreach($table_array as $table ){
-      if($table != "" ) {
-        if( ! ($result = @pg_exec($database_connection, $table ) ) ) {
-          error_setup("The database creation had the following error:<BR> ".pg_errormessage($database_connection) );
-        }
+      if( ! ($result = @pg_exec($database_connection, $table ) ) ) {
+        error_setup("The database creation had the following error:<br /> ".pg_errormessage($database_connection) );
       }
     }
     break;
@@ -177,36 +175,41 @@ if(isset($_POST["database_name"]) ) {
     break;
   }
 
-  header("location: setup2.php?db_host=".$database_host."&db_user=".$database_user."&db_pass=".$database_password."&db_name=".$database_name."&db_type=".$database_type );
+  header("location: setup2.php?db_host=".$database_host."&amp;db_user=".$database_user."&amp;db_pass=".$database_password."&amp;db_name=".$database_name."&amp;db_type=".$database_type );
 }
 
 //
 //Main input screen
 //
 
+//check if already setup previously
+if( ( !isset($CONFIG_STATE ) ) || $CONFIG_STATE != "first install" )
+  header("location: login.php" );
 
 create_top_setup("Setup Screen", 1);
 
-$content = "<CENTER>\n".
-"<BR><BR>\n".
-"<IMG src=\"../images/webcollab.png\" alt=\"WebCollab logo\"><BR><BR>\n".
-"<P><B>Setup - Stage 1 of 3 : Database Creation</B></P>\n".
-"<FORM name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
-  "<TABLE border=\"0\">\n".
-    "<TR align=\"left\"><TD>Your database name: </TD><TD><INPUT type=\"text\" name=\"database_name\" size=\"30\"></TD></TR>\n".
-    "<TR align=\"left\"><TD>Database user: </TD><TD><INPUT type=\"text\" name=\"database_user\" size=\"30\"></TD></TR>\n".
-    "<TR align=\"left\"><TD>Database password: </TD><TD><INPUT type=\"text\" name=\"database_password\" size=\"30\"></TD></TR>\n".
-    "<TR align=\"left\"><TD>Database host: </TD><TD><INPUT type=\"text\" name=\"database_host\" value=\"localhost\" size=\"15\"></TD></TR>\n".
-    "<TR align=\"left\"><TD>Database type:</TD> <TD>\n".
-    "<SELECT name=\"database_type\">\n".
-      "<OPTION value=\"mysql\" SELECTED >mysql</OPTION>\n".
-      "<OPTION value=\"postgresql\">postgresql</OPTION>\n".
-    "</SELECT></TD></TR>\n".
-  "</TABLE>\n".
-  "<INPUT type=\"submit\" value=\"Submit\"><BR><BR>\n".
-"</FORM>\n".
-"<DIV align=\"CENTER\">\n".
-"<BR><BR>\n";
+$content = "<center>\n".
+"<br /><br />\n".
+"<img src=\"../images/webcollab.png\" alt=\"WebCollab logo\"></img><br /><br />\n".
+"<p><b>Setup - Stage 1 of 3 : Database Creation</b></p>\n".
+"<form name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
+  "<table border=\"0\">\n".
+    "<tr align=\"left\"><td>Your database name: </td><td><input type=\"text\" name=\"database_name\" size=\"30\"></td></tr>\n".
+    "<tr align=\"left\"><td>Database user: </td><td><input type=\"text\" name=\"database_user\" size=\"30\"></td></tr>\n".
+    "<tr align=\"left\"><td>Database password: </td><td><input type=\"text\" name=\"database_password\" size=\"30\"></td></tr>\n".
+    "<tr align=\"left\"><td>Database host: </td><td><input type=\"text\" name=\"database_host\" value=\"localhost\" size=\"15\"></td></tr>\n".
+    "<tr align=\"left\"><td>Database type:</td> <td>\n".
+    "<select name=\"database_type\">\n".
+      "<option value=\"mysql\" SELECTED >mysql</option>\n".
+      "<option value=\"postgresql\">postgresql</option>\n".
+    "</select></td></tr>\n".
+
+  "</table><br />\n".
+  "Do you want to create the database now?  <input type=\"checkbox\" name=\"make_database\" CHECKED ><br />\n".
+  "<input type=\"submit\" value=\"Submit\"><br /><br />\n".
+"</form>\n".
+"</center>\n".
+"<br /><br />\n";
 
 new_box_setup("Setup - Stage 1 of 3", $content, 400 );
 
