@@ -34,7 +34,7 @@ LI LI {
   - reduced width
   - aligned centre
 */
-TABLE.loginbox {
+TABLE.singlebox {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
   text-align : center;
@@ -64,6 +64,7 @@ TD.boxhead {
   font-size : 12px;
   font-weight : bold;
   text-align : left;
+  border : 0;
   padding-top : 3px;
   padding-bottom : 3px;
   padding-left : 3px;
@@ -76,6 +77,7 @@ TD.boxmenu {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
   text-align : left;
+  border : 0;
   padding-top : 3px;
   padding-bottom : 3px;
   padding-left : 3px;
@@ -88,6 +90,7 @@ TD.boxdata {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
   text-align : left;
+  border : 0;
   padding-top : 20px;
   padding-left : 5px;
   padding-bottom : 20px;
@@ -102,6 +105,7 @@ TD.boxdata2 {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
   text-align : left;
+  border : 0;
   padding-top : 20px;
   padding-left : 5px;
   padding-bottom : 5px;
@@ -112,7 +116,7 @@ TD.boxdata2 {
 /* Masthead band to top of page */
 .masthead {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
+  font-size : 10px;
   text-align : left;
   padding-top : 4px;
   padding-left : 3px;
