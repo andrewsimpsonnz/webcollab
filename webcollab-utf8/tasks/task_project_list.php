@@ -49,7 +49,7 @@ function listTasks($projectid ) {
   $task_count   = 0;  //counter for $task_array
     
   //search for uncompleted tasks by projectid
-  $task_key = array_keys($task_projectid, $projectid );
+  $task_key = array_keys((array)$task_projectid, $projectid );
   
   if(sizeof($task_key) < 1 )
     return;
@@ -142,6 +142,7 @@ function find_children($parent ) {
 $content = "";
 $flag = 0;
 $project_print = 0;
+$task_projectid = "";
 
 if(isset($_GET['active'] ) )
   $active_only = $_GET['active'];
