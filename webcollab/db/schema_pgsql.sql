@@ -20,7 +20,7 @@ CREATE TABLE "tasks" (
 	"globalaccess" boolean NOT NULL DEFAULT 't',
 	"groupaccess" boolean NOT NULL DEFAULT 'f',
 	"lastfileupload" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
-        "completed" DEFAULT 0:: int NOT NULL,
+        "completed" integer DEFAULT 0::int NOT NULL,
         "completion_time" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
 	Constraint "tasks_pkey" Primary Key ("id")
 );
