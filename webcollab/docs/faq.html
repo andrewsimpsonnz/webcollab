@@ -268,8 +268,6 @@ Practical measures to enhance security include:<br />
 <dl>
 <dt>1. What character encoding does WebCollab use?  Or, what characters can be used with WebCollab?</dt>
 <dd>The character encoding is set by the language file in use.  For instance, English, French & German all use ISO-8859-1 encoding (this is also known as Latin 1 encoding).   WebCollab is fully internationalised and language files should be able to be set up with most international character encodings.  Multi-byte character encodings schemes will probably need the (optional) multi-byte strings library installed in PHP, and the related mb_function overloading to be enabled in php.ini.<br />
-<br />
-Note: For some character encodings the input filter regex in /includes/common.php may need adjusting.  The filter is set to pass all bytes within the range of printable ISO-8859-x characters.  To date, this has fortuitously also matched every other character set tried.<br />
 <br />  
 For better internationalisation capability, the Unicode version of WebCollab should be used.  This natively supports over 650 languages.  The database and PHP requirements, are however, much more stringent.   
 </dd>
