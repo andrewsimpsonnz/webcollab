@@ -33,6 +33,7 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 include_once(BASE."config.php" );
+include_once(BASE."includes/admin_config.php" );
 
 //check if file uploads are allowed in php.ini file
 if( ! (bool)ini_get("file_uploads" ) )
@@ -52,15 +53,18 @@ $content =  "<form name=\"inputform\" method=\"POST\" enctype=\"multipart/form-d
               "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\" />\n".
               "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"$FILE_MAXSIZE\" />\n".
               "<p><table border=\"0\">\n".
-                "<tr><td>".$lang["file_choose"]."</td><td><input type=\"file\" name=\"userfile\" /></td></tr>\n".
-                "<tr><td>".$lang["description"].":</td> <td><textarea name=\"description\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
-                "<tr><td></td><td>".sprintf( $lang["max_file_sprt"], $FILE_MAXSIZE/1000 )."</td></tr>\n".
+              "<tr><td>".$lang["file_choose"]."</td><td><input type=\"file\" name=\"userfile\" /></td></tr>\n".
+              "<tr><td>".$lang["description"].":</td> <td><textarea name=\"description\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
+              "<tr><td></td><td>".sprintf( $lang["max_file_sprt"], $FILE_MAXSIZE/1000 )."</td></tr>\n".
+              "</table></p>\n".
+              "<p><table border=\"0\">\n".
+              "<tr><td><label for=\"owner\">"."Send email to owner - translate me"."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" $DEFAULT_OWNER ></td></tr>\n".
+              "<tr><td><label for=\"usergroup\">"."Send email to usergroup - translate me"."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" $DEFAULT_GROUP ></td></tr>\n".
               "</table></p>\n".
               "<p><input type=\"submit\" value=\"".$lang["upload"]."\" />\n".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
             "</form>\n";
 
 new_box($lang["add_file"], $content );
-
 
 ?>

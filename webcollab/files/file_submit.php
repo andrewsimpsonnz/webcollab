@@ -46,9 +46,15 @@ ignore_user_abort(TRUE);
     //handle a file upload
     case "upload":
 
+      //check if there was an upload
+      if( ! is_uploaded_file($_FILES["userfile"]["tmp_name"] ) ) {
+        //no file upload occurred
+        warning($lang["file_submit"], $lang["no_upload"] );
+      }
+
       if( ! isset($_POST["taskid"]) || ! is_numeric($_POST["taskid"]) ) {
         //delete any upload before invoking the error function
-        if( is_uploaded_file( $_FILES["userfile"]["tmp_name"] ) )
+        if(is_uploaded_file( $_FILES["userfile"]["tmp_name"] ) )
           unlink( $_FILES["userfile"]["tmp_name"] );
         error("File submit", "Not a valid taskid");
       }
@@ -60,34 +66,38 @@ ignore_user_abort(TRUE);
       $description = preg_replace("/((http|ftp)+(s)?:\/\/[^\s]+)/i", "\n<a href=\"$0\" target=\"new\">$0</a>\n", $description );
       $description = nl2br($description );
 
+      if($_POST["mail_owner"] == "on")
+        $mail_owner = true;
+      else
+        $mail_owner = "";
+
+      if($_POST["mail_group"] == "on")
+        $mail_group = true;
+      else
+        $mail_group = "";
+
       //check usergroup security
       require_once(BASE."includes/usergroup_security.php" );
 
-      //check if there was an upload
-      if( ! is_uploaded_file( $_FILES["userfile"]["tmp_name"] ) ) {
-        //no file upload occurred
-        warning($lang["file_submit"], $lang["no_upload"] );
-      }
-
       //check the destination directory is writeable by the webserver
-      if( ! is_writable( $FILE_BASE."/" ) ) {
+      if( ! is_writable($FILE_BASE."/" ) ) {
         unlink($_FILES["userfile"]["tmp_name"] );
         error("Configuration error", "The upload directory does not have write permissions set properly.  File upload has not been accepted.");
       }
 
       //check for ridiculous uploads
       if($_FILES["userfile"]["size"] > $FILE_MAXSIZE ) {
-        unlink( $_FILES["userfile"]["tmp_name"] );
-        warning( $lang["file_submit"], sprintf( $lang["file_too_big_sprt"], $FILE_MAXSIZE ) );
+        unlink($_FILES["userfile"]["tmp_name"] );
+        warning($lang["file_submit"], sprintf( $lang["file_too_big_sprt"], $FILE_MAXSIZE ) );
       }
 
       //check for dangerous file uploads
-      if( strstr( $_FILES["userfile"]["name"], ".php" ) ||
-          strstr( $_FILES["userfile"]["name"], ".php3" ) ||
-          strstr( $_FILES["userfile"]["name"], ".php4" ) ||
-          strstr( $_FILES["userfile"]["name"], ".js" ) ||
-          strstr( $_FILES["userfile"]["name"], ".asp" ) ) {
-            unlink( $_FILES["userfile"]["tmp_name"] );
+      if( strstr($_FILES["userfile"]["name"], ".php" ) ||
+          strstr($_FILES["userfile"]["name"], ".php3" ) ||
+          strstr($_FILES["userfile"]["name"], ".php4" ) ||
+          strstr($_FILES["userfile"]["name"], ".js" ) ||
+          strstr($_FILES["userfile"]["name"], ".asp" ) ) {
+            unlink($_FILES["userfile"]["tmp_name"] );
             error("File submit", "The file types .php, .php3, .php4, .js and .asp are not acceptable for security reasons. You must either rename or compress the file.");
       }
 
@@ -98,7 +108,7 @@ ignore_user_abort(TRUE);
 
       //addslashes to stored filename only if magic quotes is 'off'
       //(prevents database errors)
-      if(! get_magic_quotes_gpc() )
+      if( ! get_magic_quotes_gpc() )
         $db_filename = addslashes($_FILES["userfile"]["name"] );
       else
         $db_filename = $_FILES["userfile"]["name"];
@@ -129,22 +139,68 @@ ignore_user_abort(TRUE);
       else
         $filename = $_FILES["userfile"]["name"];
 
-      if( !move_uploaded_file( $_FILES["userfile"]["tmp_name"], $FILE_BASE."/".$last_oid."__".$filename ) ) {
+      if( ! move_uploaded_file( $_FILES["userfile"]["tmp_name"], $FILE_BASE."/".$last_oid."__".$filename ) ) {
         db_query("DELETE FROM files WHERE ".$last_insert."=".$last_oid );
-        unlink( $_FILES["userfile"]["tmp_name"] );
+        unlink($_FILES["userfile"]["tmp_name"] );
           db_rollback();
-          error( "File submit", "Internal error: The file cannot be moved to filebase directory, deleting upload" );
+          error("File submit", "Internal error: The file cannot be moved to filebase directory, deleting upload" );
       }
 
       //work around for mysql (which doesn't have an OID column)
       if(substr($DATABASE_TYPE, 0, 5) == "mysql" )
-        db_query( "UPDATE files SET oid=".$last_oid." WHERE id=".$last_oid );
+        db_query("UPDATE files SET oid=".$last_oid." WHERE id=".$last_oid );
 
       //disarm it
       chmod($FILE_BASE."/".$last_oid."__".$filename, 0644 );
       db_commit();
 
-    break;
+      //set up emails
+      $mail_list = "";
+      $s = "";
+
+      //get task data
+      $q = db_query("SELECT tasks.name AS name,
+                            tasks.usergroupid AS usergroupid,
+                            users.email AS email
+                            FROM tasks
+                            LEFT JOIN users ON (tasks.owner=users.id)
+                            WHERE tasks.id=$taskid" );
+      $task_row = db_fetch_array($q, 0 );
+
+      //set owner's email
+      if($task_row["email"] && $mail_owner ) {
+        $mail_list .= $task_row["email"];
+        $s = ", ";
+      }
+
+      //if usergroup set, add the user list
+      if($task_row["usergroupid"] && $mail_group ){
+        $q = db_query("SELECT users.email
+                              FROM users
+                              LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
+                              WHERE usergroups_users.usergroupid=".$task_row["usergroupid"].
+                              " AND users.deleted='f'" );
+
+        for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+          $mail_list .= $s.$row[0];
+          $s = ", ";
+        }
+      }
+
+      //do we need to email?
+      if(strlen($mail_list) > 0 ){
+        include_once(BASE."includes/email.php" );
+
+        //get & add the mailing list
+        if($EMAIL_MAILINGLIST != "" )
+          $mail_list .= $s.$EMAIL_MAILINGLIST;
+
+        email($mail_list, $ABBR_MANAGER_NAME." New file upload: ".$task_row["name"], "New file upload by $uid_name:\n".
+                          "Filename:    ".$_FILES["userfile"]["name"]."\n".
+                          "Description :".$_POST["description"] );
+      }
+
+      break;
 
     case "del":
 
