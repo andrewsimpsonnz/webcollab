@@ -40,12 +40,13 @@ $content = "";
 //
 function list_tasks($parent ) {
 
-  global $x, $uid, $parent_array, $epoch, $taskgroup_flag, $lang, $task_state, $NEW_TIME, $DATABASE_TYPE, $parentid;
+  global $x, $uid, $parent_array, $epoch, $taskgroup_flag, $lang, $task_state, $NEW_TIME, $DATABASE_TYPE, $parentid, $ul_flag;
 
   //init values
   $stored_groupname = NULL;
   $this_content = "";
   $no_group = "";
+  $ul_flag = 0;
 
 //force mysql to put 'uncategorised' items at the bottom
 if( $DATABASE_TYPE == "mysql")
@@ -115,6 +116,9 @@ $q = db_query("SELECT tasks.id AS id,
         $stored_groupname = $groupname;
       }
     }
+
+    //tell main progam we have set <ul> (and that we have output to display)
+    $ul_flag = 1;
 
     $alert_content = "";
     $status_content = "";
@@ -240,9 +244,6 @@ $q = db_query("SELECT tasks.id AS id,
     }
   }
 
-  //finish all the UL's
-  //$this_content .= "</ul>";
-
   return $this_content;
 }
 
@@ -268,12 +269,12 @@ else
   $taskgroup_flag = 0;
 
 
-$task_content  = list_tasks($parentid );
+$content  = list_tasks($parentid );
 
-//show it
-if($task_content != "" ){
+//if there is output, then show it
+if($ul_flag == 1 ){
   //finish off the closing </ul>
-  $content = $task_content."\n</ul>\n";
+  $content .= "\n</ul>\n";
   new_box( $lang["tasks"], $content );
 }
 
