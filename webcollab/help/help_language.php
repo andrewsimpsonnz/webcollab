@@ -49,7 +49,6 @@ switch($LOCALE ) {
     break;
 
   case "en":
-  case "fr":
   default:
    switch($help_type ) {
       case "admin":
