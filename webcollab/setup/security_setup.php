@@ -52,7 +52,7 @@ function error_setup($message ) {
 //clean up some variables
 $q = "";
 $ip = "";
-$x = "";
+$x = 0;
 $admin = 0;
 
 //security checks
@@ -61,18 +61,22 @@ if($WEB_CONFIG != "Y" ) {
   die;
 }
 
-if( ! defined(DATABASE_NAME ) || DATABASE_NAME == "" ) {
+if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == "" ) {
   //this is a first install
   $x = "";
 }
-else {
-
-  //get session key - $x can be from either a GET or POST
+else{
+  //get session key from either a GET or POST
   if(isset($_REQUEST["x"]) && (strlen($_REQUEST["x"] ) == 32 ) ){
     $x = safe_data($_REQUEST["x"]);
   }
-  else{
-    error_setup("No session key." );
+  //check for existing variable
+  elseif(isset($session_key) && (strlen($session_key) == 32 ) ){
+    $x = safe_data($session_key);
+  }
+  //nothing
+  else{   
+    error_setup("No session key." );  
   }
 
   //check for ip address
@@ -123,7 +127,5 @@ else {
 
   //update the "I was here" time
   db_query("UPDATE ".PRE."logins SET lastaccess=now() WHERE session_key='".$x."' AND user_id=".$row["user_id"] );
-
-}
-  
+}  
 ?>
