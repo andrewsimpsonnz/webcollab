@@ -1,4 +1,9 @@
 WebCollab CVS
+*** 28 February 2005
+
+- added Hungarian translation (Credit: Széll Tamás)
+
+WebCollab CVS
 *** 21 February 2005
 
 - fix HTML syntax error in task_list (Bug #1144512)  (Credit: hs_dino)
