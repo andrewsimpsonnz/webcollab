@@ -144,7 +144,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
                          "</script>\n".
                          "</head>\n\n";
       if($cursor)
-        $content .=  "<body onLoad=placeCursor()>\n";
+        $content .=  "<body onLoad=\"placeCursor()\">\n";
       else
         $content .= "<body>\n";
   }
