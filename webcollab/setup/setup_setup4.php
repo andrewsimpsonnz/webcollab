@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2003 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2003 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -232,7 +232,7 @@ if( (! is_readable(BASE."lang/".$data["locale"]."_message.php" ) )
 $content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></tr>\n".
             "<tr><td></td><td>&nbsp;</td></tr>\n".
             "<tr><th>Language:</th><td>".$data["locale"]."</td><td>$status</td></tr>\n".
-            "<tr><td></td><td><br /><br /><B><U>Email Settings</U></B></td></tr>\n".
+            "<tr><td></td><td><br /><br /><b><u>Email Settings</u></b></td></tr>\n".
             "<tr><td></td><td>&nbsp;</td></tr>\n".
             "<tr><th>Use email?</th><td>".$data["use_email"]."</td></tr>\n";
             "<tr><td></td><td><br /><br />If an error occurs on the site, who do we email?</td></tr>\n".

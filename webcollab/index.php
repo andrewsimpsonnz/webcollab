@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -171,8 +171,8 @@ else {
 $content .= "<p>".$lang["please_login"].":</p>\n".
            "<form name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
            "<p><table border=\"0\">\n".
-           "<tr><td>".$lang["login"].": </td><td><input type=\"text\" name=\"username\" value=\"\" size=\"30\" /></td></tr>\n".
-           "<tr><td>".$lang["password"].": </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
+           "<tr align=\"left\" ><td>".$lang["login"].": </td><td><input type=\"text\" name=\"username\" value=\"\" size=\"30\" /></td></tr>\n".
+           "<tr align=\"left\" ><td>".$lang["password"].": </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
            "</table></p>".
            "<p><input type=\"submit\" value=\"".$lang["login"]."\"></p>\n".
 

@@ -36,7 +36,7 @@
   $DATABASE_USER="";
   $DATABASE_PASSWORD="";
 
-//Database type (usual valid options are "mysql" and "postgresql")
+//Database type (valid options are "mysql", "postgresql" and "mysql_innodb")
   //**!!
   $DATABASE_TYPE="mysql";
 
@@ -77,7 +77,8 @@
 
 //LANGUAGE FILES
 
-  // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan), "de" (German), "it" (Italian).
+  // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan),
+  //                       "de" (German), "it" (Italian), "bg" (Bulgarian)
   $LOCALE = "en";
 
 //EMAIL ADDRESS
