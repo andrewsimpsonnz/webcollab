@@ -26,12 +26,8 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once( BASE."includes/security.php" );
-include_once( BASE."includes/screen.php" );
+require_once("includes/security.php" );
+include_once("includes/screen.php" );
 
 create_top( $lang["calendar"], 1 );
 

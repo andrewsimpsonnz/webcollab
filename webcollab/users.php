@@ -29,7 +29,7 @@
 
 */
 
-include_once( "includes/security.php" );
+require_once( "includes/security.php" );
 include_once( "includes/screen.php" );
 include_once( "includes/time.php" );
 
@@ -37,14 +37,15 @@ include_once( "includes/time.php" );
 //
 // code to handle an action state
 //
-if( valid_string($_REQUEST["action"]) ) {
+if( ! valid_string($_REQUEST["action"]) )
+  error("Users action handler", "No request given" );
 
   switch($_REQUEST["action"] ) {
 
     //give the user-manager screen
     case "manage":
       create_top("Manage users" );
-      include("includes/mainmenu.php");
+      include("includes/mainmenu.php" );
       include("users/user_menubox.php" );
       include("users/user_existing_menubox.php" );
       if( $admin == 1 ) {
@@ -63,40 +64,40 @@ if( valid_string($_REQUEST["action"]) ) {
     //Add a user
     case "add":
       create_top($lang["add_user"], 0, "name" );
-      include( "includes/mainmenu.php");
-      include( "users/user_menubox.php" );
+      include("includes/mainmenu.php" );
+      include("users/user_menubox.php" );
       goto_main();
-      include( "users/user_add.php" );
+      include("users/user_add.php" );
       create_bottom();
       break;
 
     //Edit a user
     case "edit":
       create_top($lang["edit_user"] );
-      include( "includes/mainmenu.php");
-      include( "users/user_menubox.php" );
+      include("includes/mainmenu.php" );
+      include("users/user_menubox.php" );
       goto_main();
-      include( "users/user_edit.php" );
+      include("users/user_edit.php" );
       create_bottom();
       break;
 
     //show user's personal details
     case "show":
       create_top($lang["user_info"] );
-      include( "includes/mainmenu.php");
-      include( "users/user_menubox.php" );
-      include( "users/user_existing_menubox.php" );
+      include("includes/mainmenu.php" );
+      include("users/user_menubox.php" );
+      include("users/user_existing_menubox.php" );
       goto_main();
-      include( "users/user_show.php" );
+      include("users/user_show.php" );
       create_bottom();
       break;
 
     //who is online ?
     case "showonline":
       create_top($lang["users_online"] );
-      include( "includes/mainmenu.php");
-      include( "users/user_menubox.php" );
-      include( "users/user_existing_menubox.php" );
+      include("includes/mainmenu.php" );
+      include("users/user_menubox.php" );
+      include("users/user_existing_menubox.php" );
       goto_main();
 
       $content = "<br />\n<table border=\"0\">\n";
@@ -147,8 +148,5 @@ if( valid_string($_REQUEST["action"]) ) {
       error("Users action handler", "Invalid request given" );
       break;
   }
-}
-else
-  error("Users action handler", "No request given" );
 
 ?>

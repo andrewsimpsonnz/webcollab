@@ -29,14 +29,14 @@
 
 */
 
-include_once("includes/security.php" );
+require_once("includes/security.php" );
 include_once("includes/screen.php" );
-
 
 //
 // The action handler
 //
-if(valid_string($_REQUEST["action"] ) ) {
+if( ! valid_string($_REQUEST["action"] ) )
+  error("Contacts action handler", "No request given" );
 
   //what do you want to contact today =]
   switch($_REQUEST["action"] ) {
@@ -44,11 +44,11 @@ if(valid_string($_REQUEST["action"] ) ) {
     //gives a window and some options to do to the poor 'old contact manager
     case "add":
       create_top($lang["add_contact"], 0, "firstname" );
-      include( "includes/mainmenu.php");
-      include( "contacts/contact_menubox.php" );
+      include("includes/mainmenu.php" );
+      include("contacts/contact_menubox.php" );
       goto_main();
-      include( "contacts/contact_add.php" );
-      new_box( $lang["info"], "<br />".$lang["contact_add_info"]."<br /><br />" );
+      include("contacts/contact_add.php" );
+      new_box($lang["info"], "<br />".$lang["contact_add_info"]."<br /><br />" );
       create_bottom();
       break;
 
@@ -59,7 +59,7 @@ if(valid_string($_REQUEST["action"] ) ) {
       include("includes/mainmenu.php" );
       include("contacts/contact_menubox.php" );
       goto_main();
-      include( "contacts/contact_show.php" );
+      include("contacts/contact_show.php" );
       create_bottom();
       break;
 
@@ -78,8 +78,6 @@ if(valid_string($_REQUEST["action"] ) ) {
       error("Contacts action handler", "Invalid request given") ;
       break;
   }
-}
-else
-  error("Contacts action handler", "No request given" );
+
 
 ?>

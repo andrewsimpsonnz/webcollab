@@ -29,14 +29,15 @@
 
 */
 
-include_once( "includes/security.php" );
-include_once( "includes/screen.php" );
+require_once("includes/security.php" );
+include_once("includes/screen.php" );
 
 
 //
 // The action handler
 //
-if( valid_string($_GET["action"]) ) {
+if( ! valid_string($_GET["action"]) ) 
+  error("Usergroup action handler", "No action given");
 
   //what do you want to usergroup today =]
   switch( $_GET["action"] ) {
@@ -44,13 +45,13 @@ if( valid_string($_GET["action"]) ) {
     //gives a window and some options to do to the poor 'old usergroup
     case "manage":
       create_top($lang["manage_usergroups"]);
-      include( "includes/mainmenu.php");
-      include( "usergroups/usergroup_menubox.php" );
-      include( "users/user_menubox.php" );
+      include("includes/mainmenu.php" );
+      include("usergroups/usergroup_menubox.php" );
+      include("users/user_menubox.php" );
       goto_main();
-      include( "usergroups/usergroup_manage.php" );
-      include_once( "lang/".$LOCALE."_long_message.php" );
-      $content = $usergroup_info; 
+      include("usergroups/usergroup_manage.php" );
+      include_once("lang/".$LOCALE."_long_message.php" );
+      $content = $usergroup_info;
       new_box($lang["info_usergroup_manage"], $content );
       create_bottom();
       break;
@@ -58,20 +59,20 @@ if( valid_string($_GET["action"]) ) {
     //add a usergroup
     case "add":
       create_top($lang["add_new_usergroup"], 0, "name" );
-      include( "includes/mainmenu.php");
-      include( "usergroups/usergroup_menubox.php" );
+      include("includes/mainmenu.php" );
+      include("usergroups/usergroup_menubox.php" );
       goto_main();
-      include( "usergroups/usergroup_add.php" );
+      include("usergroups/usergroup_add.php" );
       create_bottom();
       break;
 
     //edit a usergroup
     case "edit":
       create_top($lang["edit_usergroup"] );
-      include( "includes/mainmenu.php");
-      include( "usergroups/usergroup_menubox.php" );
+      include("includes/mainmenu.php" );
+      include("usergroups/usergroup_menubox.php" );
       goto_main();
-      include( "usergroups/usergroup_edit.php" );
+      include("usergroups/usergroup_edit.php" );
       create_bottom();
       break;
 
@@ -81,8 +82,5 @@ if( valid_string($_GET["action"]) ) {
       error("Usergroup action handler", "Invalid request given");
       break;
   }
-}
-else
-  error("Usergroup action handler", "No action given");
 
 ?>

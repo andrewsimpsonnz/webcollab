@@ -29,13 +29,15 @@
 
 */
 
-include_once("includes/security.php" );
+require_once("includes/security.php" );
 include_once("includes/screen.php" );
 
 //
 // The action handler
 //
-if( valid_string($_REQUEST["action"]) ) {
+if( ! valid_string($_REQUEST["action"]) )
+  error("Task action handler", "No action given");
+
 
   //what do you want to task today =]
   switch($_REQUEST["action"] ) {
@@ -58,7 +60,7 @@ if( valid_string($_REQUEST["action"]) ) {
       }
       include("files/file_menubox.php" );
       goto_main();
-      include("tasks/task_show.php");
+      include("tasks/task_show.php" );
       $parentid = $_GET["taskid"];
       include("tasks/task_list.php" );
       include("forum/forum_list.php" );
@@ -108,8 +110,5 @@ if( valid_string($_REQUEST["action"]) ) {
       error("Task action handler", "Invalid request");
       break;
   }
-}
-else
-  error("Task action handler", "No action given");
 
 ?>

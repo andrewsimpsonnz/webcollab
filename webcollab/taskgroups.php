@@ -33,14 +33,14 @@
 
 */
 
-include_once( "includes/security.php" );
-include_once( "includes/screen.php" );
-
+require_once("includes/security.php" );
+include_once("includes/screen.php" );
 
 //
 // The action handler
 //
-if( valid_string($_GET["action"]) ) {
+if( ! valid_string($_GET["action"]) )
+ error("Taskgroup action handler", "No request given");
 
   //what do you want to taskgroup today =]
   switch( $_GET["action"] ) {
@@ -48,11 +48,11 @@ if( valid_string($_GET["action"]) ) {
     //gives a window and some options to do to the poor 'old taskgroup
     case "manage":
       create_top($lang["manage_taskgroups"]);
-      include( "includes/mainmenu.php");
-      include( "taskgroups/taskgroup_menubox.php" );
+      include("includes/mainmenu.php" );
+      include("taskgroups/taskgroup_menubox.php" );
       goto_main();
-      include( "taskgroups/taskgroup_manage.php" );
-      include_once( "lang/".$LOCALE."_long_message.php" ); //get message
+      include("taskgroups/taskgroup_manage.php" );
+      include_once("lang/".$LOCALE."_long_message.php" ); //get message
       new_box( $lang["info_taskgroup_manage"], $taskgroup_info );
       create_bottom();
       break;
@@ -60,20 +60,20 @@ if( valid_string($_GET["action"]) ) {
     //show a taskgroup
     case "add":
       create_top($lang["add_taskgroup"], 0, "name" );
-      include( "includes/mainmenu.php");
-      include( "taskgroups/taskgroup_menubox.php" );
+      include("includes/mainmenu.php" );
+      include("taskgroups/taskgroup_menubox.php" );
       goto_main();
-      include( "taskgroups/taskgroup_add.php" );
+      include("taskgroups/taskgroup_add.php" );
       create_bottom();
       break;
 
     //show a taskgroup
     case "edit":
       create_top($lang["edit_taskgroup"]);
-      include( "includes/mainmenu.php");
-      include( "taskgroups/taskgroup_menubox.php" );
+      include("includes/mainmenu.php");
+      include("taskgroups/taskgroup_menubox.php" );
       goto_main();
-      include( "taskgroups/taskgroup_edit.php" );
+      include("taskgroups/taskgroup_edit.php" );
       create_bottom();
       break;
 
@@ -83,8 +83,5 @@ if( valid_string($_GET["action"]) ) {
       error("Taskgroup action handler", "Invalid request given");
       break;
   }
-}
-else
-  error("Taskgroup action handler", "No request given");
 
 ?>

@@ -29,18 +29,14 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once(BASE."includes/security.php" );
-include_once(BASE."includes/screen.php" );
-
+require_once("includes/security.php" );
+include_once("includes/screen.php" );
 
 //
 // The action handler
 //
-if(valid_string($_REQUEST["action"]) ) {
+if( ! valid_string($_REQUEST["action"]) )
+  error("Contacts action handler", "No request given" );
 
   //what do you want to task today =]
   switch($_REQUEST["action"] ) {
@@ -49,7 +45,6 @@ if(valid_string($_REQUEST["action"]) ) {
     case "list":
       include("files/file_list.php" );
       break;
-
 
     //upload a file
     case "upload":
@@ -71,14 +66,10 @@ if(valid_string($_REQUEST["action"]) ) {
       create_bottom();
       break;
 
-
     //Error case
     default:
       error("File action handler", "Invalid request given" );
       break;
   }
-}
-else
-  error("File action handler", "No request given" );
 
 ?>
