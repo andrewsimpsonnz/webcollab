@@ -22,6 +22,7 @@ CREATE TABLE "tasks" (
 	"lastfileupload" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
         "completed" integer DEFAULT 0::int NOT NULL,
         "completion_time" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
+        "archive" boolean NOT NULL DEFAULT 'f',
 	Constraint "tasks_pkey" Primary Key ("id")
 );
 CREATE INDEX tasks_owner_idx ON tasks USING btree ("owner");

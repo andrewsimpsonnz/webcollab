@@ -21,6 +21,7 @@ CREATE TABLE tasks (
 	lastfileupload DATETIME NOT NULL,
         completed TINYINT NOT NULL DEFAULT 0,
         completion_time DATETIME NOT NULL,
+        archive VARCHAR(5) NOT NULL DEFAULT 'f',
         INDEX (owner),
         INDEX (parent),
         INDEX (name(10)),
