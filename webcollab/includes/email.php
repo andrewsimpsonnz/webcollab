@@ -56,6 +56,18 @@ function clean($encoded ) {
 return $text;
 }
 
+//
+//function to reinstate html (used for languages with non us-ascii characters)
+//
+
+function trans($encoded ) {
+
+  //reinstate encoded html back to original text
+  $trans = array_flip(get_html_translation_table(HTML_ENTITIES, ENT_NOQUOTES ) );
+  $text = strtr($encoded, $trans );
+
+return $text;
+}
 
 //
 // Email sending function
@@ -63,7 +75,7 @@ return $text;
 
 function email($to, $subject, $message ) {
 
-  global $EMAIL_FROM, $EMAIL_REPLY_TO, $USE_EMAIL, $SMTP_HOST, $SMTP_AUTH, $MAIL_USER, $MAIL_PASSWORD;
+  global $EMAIL_FROM, $EMAIL_REPLY_TO, $USE_EMAIL, $SMTP_HOST, $SMTP_AUTH, $MAIL_USER, $MAIL_PASSWORD, $email_charset, $email_encode;
 
   if($USE_EMAIL == "N" ) {
     //email is turned off in config file
@@ -196,8 +208,8 @@ function email($to, $subject, $message ) {
                         "X-Sender: ".$EMAIL_REPLY_TO."\r\n",
                         "Return-Path: <".$EMAIL_REPLY_TO.">\r\n",
                         "Mime-Version: 1.0\r\n",
-                        "Content-Type: text/plain; charset=us-ascii\r\n",
-                        "Content-Transfer-Encoding: 7 bit\r\n \r\n");
+                        "Content-Type: text/plain; $email_charset\r\n",
+                        "Content-Transfer-Encoding: $email_encode\r\n \r\n");
 
   //send headers line by line
   for( $i=0; $i < 11; $i++ ) {

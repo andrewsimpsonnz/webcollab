@@ -74,7 +74,7 @@ include_once( BASE."lang/lang.php" );
 //
 function create_top($title="", $no_menu=0, $cursor="" ) {
 
-  global $username, $admin, $topbuild, $MANAGER_NAME, $lang;
+  global $username, $admin, $topbuild, $MANAGER_NAME, $lang, $web_charset;
 
   if( $title == "" ) $title=$MANAGER_NAME;
 
@@ -117,7 +117,7 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
 <head>
   <title><?php echo $title ?></title>
   <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $web_charset; ?>">
   <link rel="StyleSheet" href="<?php echo BASE; ?>css.css" type="text/css">
   <?php echo $position; ?>
 </head>

@@ -31,6 +31,11 @@
 
 */
 
+//required language encodings
+$web_charset = "iso-8859-1";
+$email_charset = "iso-8859-1";
+$email_encode = "8 bit";
+
 //dates
 $month_array = array ( "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" );
 $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
