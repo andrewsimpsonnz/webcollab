@@ -1,4 +1,11 @@
 WebCollab CVS
+*** 5 April 2005
+
+- Swedish translation added (Credit: Göran Källqvist )
+
+- bugfix: Data validation could corrupt SQL strings (Bug #1176733) (Credit: Thomas Briggs)
+
+WebCollab CVS
 *** 24 March 2005
 
 - bugfix: After reparenting update completion status of former project (Bug #1168886) (Joel W. - wampl3r)
@@ -46,7 +53,7 @@ WebCollab CVS
 
 - fix escapes on javascript (Bug #1147634)  (Joann Zimmerman)
 
-WebCollab 1.70
+WebCollab 1.70 - Angelus
 *** 15 February 2005
 
 - release
