@@ -3,7 +3,7 @@
 /*
   $Id$
   
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -36,6 +36,7 @@
 */
 
 $WEBCOLLAB_PATH = '/var/www/webcollab-unicode-devel';
+$SERVER_NAME    = '';
 
 require_once($WEBCOLLAB_PATH."/config/config.php" );
 
@@ -76,7 +77,7 @@ debug		Debug logger
 //
 function email($mailid, $to, $subject, $message ){
   
-  global $bit8, $connection;
+  global $bit8, $connection, $SERVER_NAME;
   
   $bit8 = "";
   $connection = "";
@@ -92,7 +93,7 @@ function email($mailid, $to, $subject, $message ){
   //open an SMTP connection at the mail host
   $connection = @fsockopen(SMTP_HOST, 25, $errno, $errstr, 10 );
   if (!$connection )
-    debug("Unable to open TCP/IP connection to ".SMTP_HOST."<br /><br />Reported socket error: ".$errno." ".$errstr );
+    debug("Unable to open TCP/IP connection to ".SMTP_HOST."\nReported socket error: ".$errno." ".$errstr );
   
   //sometimes the SMTP server takes a little longer to respond
   // Windows does not have support for this timeout function before PHP ver 4.3.0
@@ -100,17 +101,17 @@ function email($mailid, $to, $subject, $message ){
     @socket_set_timeout($connection, 10, 0 );
   $res = response();
   if($res[1] != "220" )
-    debug("Incorrect handshaking response from SMTP server at ".SMTP_HOST." <br /><br />Response from SMTP server was ".$res[0] );
+    debug("Incorrect handshaking response from SMTP server at ".SMTP_HOST."\nResponse from SMTP server was ".$res[0] );
   
   //do extended hello (EHLO)
-  fputs($connection, "EHLO ".$_SERVER['SERVER_NAME']."\r\n" );
+  fputs($connection, "EHLO ".$SERVER_NAME."\r\n" );
   //if EHLO not working, try the older HELO...
   $res = response();
   if($res[1] != "250" ) {
-    fputs($connection, "HELO ".$_SERVER['SERVER_NAME']."\r\n" );
+    fputs($connection, "HELO ".$SERVER_NAME."\r\n" );
     $res = response();
     if($res[1] != "250" )
-      debug("Incorrect HELO response from SMTP server at ".SMTP_HOST." <br /><br />Response from SMTP server was ".$res[0] );
+      debug("Incorrect HELO response from SMTP server at ".SMTP_HOST."\nResponse from SMTP server was ".$res[0] );
   }
   //see if server is offering 8bit mime capability
   $bit8 = false;
@@ -136,7 +137,7 @@ function email($mailid, $to, $subject, $message ){
   fputs($connection, "MAIL FROM: <".$email_from.">".$body."\r\n" );
   $res = response();
   if($res[1] != "250" )
-    debug("Incorrect response to MAIL FROM command from SMTP server at ".SMTP_HOST." <br /><br />Response from SMTP server was ".$res[0] );
+    debug("Incorrect response to MAIL FROM command from SMTP server at ".SMTP_HOST."\nResponse from SMTP server was ".$res[0] );
   
   //envelope to
   $address_list = explode(",", $to );
@@ -157,7 +158,7 @@ function email($mailid, $to, $subject, $message ){
   
       default:
         //anything else is no good
-        debug("Incorrect response to RCPT TO: ".$email_to." from SMTP server at ".SMTP_HOST." <br /><br />Response from SMTP server was ".$res[0] );
+        debug("Incorrect response to RCPT TO: ".$email_to." from SMTP server at ".SMTP_HOST."\nResponse from SMTP server was ".$res[0] );
         break;
     }
   }
@@ -166,7 +167,7 @@ function email($mailid, $to, $subject, $message ){
   fputs($connection, "DATA\r\n" );
   $res = response();
   if($res[1] != "354" )
-    debug("Incorrect response to DATA command from SMTP server at ".SMTP_HOST." <br /><br />Response from SMTP server was ".$res[0] );
+    debug("Incorrect response to DATA command from SMTP server at ".SMTP_HOST."\nResponse from SMTP server was ".$res[0] );
   
   //assemble the headers and message for transmission
   $message_lines = array_merge(headers($to, $subject, $email_encode, $message_charset, $email_from, $email_reply_to ), $message_lines );
@@ -185,13 +186,12 @@ function email($mailid, $to, $subject, $message ){
   fputs($connection, "QUIT\r\n" );
   $res = response();
   if($res[1] != "221" )
-    debug("Incorrect response to QUIT request from SMTP server at ".SMTP_HOST." <br /><br />Response from SMTP server was ".$res[0] );
+    debug("Incorrect response to QUIT request from SMTP server at ".SMTP_HOST."\nResponse from SMTP server was ".$res[0] );
   
   fclose($connection );
   
   //remove sent email from database spool
   db_query("DELETE FROM ".PRE."mail_spool WHERE id = ".$mailid );
-  db_query("DELETE FROM ".PRE."mail_log WHERE mailid = ".$mailid );
 }
 
 
@@ -329,7 +329,9 @@ return $subject_lines;
 //function to assemble mail headers
 //
 function headers($to, $subject, $email_encode, $message_charset, $email_from, $email_reply_to ) {
-    
+  
+  global $SERVER_NAME;  
+  
   //set the date - in RFC 822 format
   $headers = array("Date: ".date("r") );
 
@@ -349,7 +351,7 @@ function headers($to, $subject, $email_encode, $message_charset, $email_from, $e
 
   $headers = array_merge($headers, subject($subject ) );
 
-  $headers[] = "Message-Id: <".uniqid("")."@".$_SERVER['SERVER_NAME'].">";
+  $headers[] = "Message-Id: <".uniqid("")."@".$SERVER_NAME.">";
   $headers[] = "X-Mailer: WebCollab (PHP/".phpversion().")";
   $headers[] = "X-Priority: 3";
   $headers[] = "X-Sender: ".$email_reply_to;
@@ -392,7 +394,7 @@ function response() {
 function smtp_auth($connection, $cap) {
 
    if(strpos($cap, "AUTH" ) === false )
-        debug("SMTP server cannot do SMTP AUTH<br /><br />Capability response from SMTP server was ".nl2br($cap ) );
+        debug("SMTP server cannot do SMTP AUTH\nCapability response from SMTP server was ".nl2br($cap ) );
 
    //try plain auth
    if( ! strpos($cap, "PLAIN" ) === false ) {
@@ -404,7 +406,7 @@ function smtp_auth($connection, $cap) {
        fputs($connection, base64_encode(MAIL_USER."\0".MAIL_USER."\0".MAIL_PASSWORD )."\r\n" );
        $res = response();
        if($res[1] != "235" )
-         debug("Username/password not accepted SMTP server at ".SMTP_HOST." for AUTH PLAIN<br /><br />Response from SMTP server was ".$res[0] );
+         debug("Username/password not accepted SMTP server at ".SMTP_HOST." for AUTH PLAIN\nResponse from SMTP server was ".$res[0] );
 
      return;
      }
@@ -420,13 +422,13 @@ function smtp_auth($connection, $cap) {
        fputs($connection, base64_encode(MAIL_USER )."\r\n" );
        $res = response();
        if($res[1] != "334" )
-         debug("Username not accepted SMTP server at ".SMTP_HOST." for AUTH LOGIN<br /><br />Response from SMTP server was ".$res[0] );
+         debug("Username not accepted SMTP server at ".SMTP_HOST." for AUTH LOGIN\nResponse from SMTP server was ".$res[0] );
 
        //send password
        fputs($connection, base64_encode(MAIL_PASSWORD )."\r\n" );
        $res = response();
        if($res[1] != "235" )
-         debug("Password not accepted SMTP server at ".SMTP_HOST." for AUTH LOGIN<br /><br />Response from SMTP server was ".$res[0] );
+         debug("Password not accepted SMTP server at ".SMTP_HOST." for AUTH LOGIN\nResponse from SMTP server was ".$res[0] );
 
        return;
        }
@@ -457,13 +459,13 @@ function smtp_auth($connection, $cap) {
        fputs($connection, base64_encode(MAIL_USER." ".$mhash )."\r\n" );
        $res = response();
        if($res[1] != "235" )
-         debug("CRAM-MD5 mhash not accepted SMTP server at ".SMTP_HOST." <br /><br />Response from SMTP server was ".$res[0] );
+         debug("CRAM-MD5 mhash not accepted SMTP server at ".SMTP_HOST."\nResponse from SMTP server was ".$res[0] );
 
        return;
      }
    }
 
-   debug("AUTH not accepted by SMTP server at ".SMTP_HOST." <br /><br />Capability response from SMTP server was ".nl2br($cap) );
+   debug("AUTH not accepted by SMTP server at ".SMTP_HOST."\nCapability response from SMTP server was ".nl2br($cap) );
 
    return;
 }
@@ -619,6 +621,7 @@ function db_encoding() {
       if(! mysql_query("SET NAMES '".$my_encoding."'", $database_connection ) ){
         fwrite(STDERR, "Database error with character encoding: ".mysql_error($database_connection)."\n" );
         //echo "Database error with character encoding: ".mysql_error($database_connection)."\n";
+        die;
       }
       break; 
     
@@ -626,6 +629,7 @@ function db_encoding() {
       if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
         fwrite(STDERR, "Database error with character encoding: ".pg_last_error($database_connection)."\n" );
         //echo "Database error with character encoding: ".pg_last_error($database_connection)."\n";
+        die;
       }  
       break;
   }
@@ -642,21 +646,21 @@ return;
   //check if socket timeout occurred 
   $meta = @socket_get_status($connection);
   if($meta['timed_out'] )
-    $error .= "<br /><br />Socket timeout has occurred";
-
-  //log the problem
-  db_query("INSERT INTO ".PRE."mail_log(mailid, message, log_time) VALUES(".$mailid.", $error, now() )" );
+    $error .= "\nSocket timeout has occurred";
   
-  //check for too many recurring errors
-  $q = db_query("SELECT COUNT(*) FROM ".PRE."mail_log WHERE id= ".$row['id'] );
+  fwrite(STDERR, "Database error with character encoding: ".pg_last_error($database_connection)."\n" );
+    
+  $q = db_query("SELECT send_attempts FROM ".PRE."mail_spool WHERE mailid=".$mailid );
   $result = fetch_row($q, 0 );
-  
-  if($result[0] > 6 ){
-    db_query("DELETE FROM ".PRE."mail_spool WHERE mailid = ".$row['id'] );
-    db_query("INSERT INTO ".PRE."mail_log(mailid, message, log_time) VALUES(".$row['id'].", 'Too many mail errors, deleting from mail spool', now() )" );
+ 
+  if($result['send_attempts'] > 6 ){
+    db_query("DELETE FROM ".PRE."mail_spool WHERE id=".$mailid );
   }
-              
-  return;
+  else {
+  //log the attempt
+  db_query("UPDATE ".PRE."mail_spool SET send_attempts=".($result['send_attempts'] + 1 ) );
+  }                    
+  exit;
 }
  
 ?>

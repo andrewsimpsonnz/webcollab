@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -21,7 +21,7 @@
   Function:
   ---------
 
-  Sends spools emails on database for later sending
+  Spools emails on database for later sending
 
 
 */
@@ -46,17 +46,9 @@ function email($to, $subject, $message ) {
     //no email address specified - end function
     return;
   }
- 
-  db_begin();
   
   //spool message
-  db_query("INSERT INTO ".PRE."mail_spool(mail_to, subject, message, character_set ) VALUES('".$to."', '".$subject."', '".$message."', '".CHARACTER_SET."')" ); 
-  
-  //log event
-  $mail_id = db_lastoid('mail_spool_id' );
-  db_query("INSERT INTO ".PRE."mail_log(mailid, message, log_time) VALUES(".$mail_id.", 'New message in mail queue ready for processing', now() )" );
-
-  db_commit();
+  db_query("INSERT INTO ".PRE."mail_spool(mail_to, subject, message, character_set ) VALUES('".$to."', '".addslashes($subject)."', '".addslashes($message)."', '".CHARACTER_SET."')" ); 
   
   return;
 }
