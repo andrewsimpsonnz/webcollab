@@ -57,7 +57,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 $content .= "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
             "</table><br /><br />\n".
             "<table border=\"0\">\n".
-            "<tr><td>Subject:</td><td><input type=\"text\" name=\"subject\" size=\"30\" /></td></tr>\n".
+            "<tr><td>".$lang["subject"]."</td><td><input type=\"text\" name=\"subject\" size=\"30\" /></td></tr>\n".
             "<tr><td>".$lang["message"]."</td><td><textarea name=\"message\" rows=\"10\" cols=\"60\" /></textarea></td></tr>\n".
             "<tr><td></td><td>".$lang["message_sent_maillist"]."</td></tr>\n".
             "</table><br />\n".
