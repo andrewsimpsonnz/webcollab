@@ -56,17 +56,19 @@ $q = db_query("SELECT id,
 
 //check if there are projects
 if(db_numrows($q) < 1 ) {
-  $content .= "<div style=\"text-align : center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang['add_project']."</a></div>\n";
+  $content .= "<div style=\"text-align : center\">".$lang['no_allowed_projects']."</div>\n";
   new_box($lang['no_projects'], $content );
   return;
 }
 
 //text link for 'printer friendly' page
-if(isset($_GET['action']) && $action == "archive_print" ) 
-  $content  .= "\n[<a href=\"main.php?x=".$x.">".$lang['normal_version']."</a>]";
-else
+if(isset($_GET['action']) && $action == "archive_print" ) { 
+  $content  .= "[<a href=\"archive.php?x=".$x."&amp;action=list\">".$lang['normal_version']."</a>]\n";
+}
+else {
   $content  .= "<table><td style=\"text-align : right\"><span class=\"textlink\">[<a href=\"archive.php?x=".$x."&amp;action=archive_print\">".$lang['print_version']."</a>]";
-$content .= "</span></td></tr>\n</table>\n";
+  $content .= "</span></td></tr>\n</table>\n";
+}
 
 //setup main table
 $content .= "<table>\n";
@@ -149,6 +151,6 @@ $content .= "</table>\n";
 if($flag != 1 )
   $content .= "<div style=\"text-align : center\">".$lang['no_allowed_projects']."</div>\n";
 
-new_box($lang['projects'], $content );
+new_box("Archived projects - translate", $content );
 
 ?>

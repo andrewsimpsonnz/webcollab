@@ -37,11 +37,13 @@ $taskid = intval($_GET['taskid']);
 if( ($ADMIN != 1 ) && (db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE id=$taskid AND owner=$UID" ), 0, 0 ) < 1) )
   warning($lang['task_submit'], $lang['not_owner'] );
 
+$projectid = db_result(db_query("SELECT projectid FROM ".PRE."tasks WHERE id=$taskid" ), 0, 0 );  
+  
 switch($_REQUEST['action'] ) {
 
   case "submit_archive":
-    //do the archive
-    db_query("UPDATE ".PRE."tasks SET archive='t' WHERE id=$taskid" );
+    //do the archiving
+    db_query("UPDATE ".PRE."tasks SET archive='t' WHERE projectid=$projectid" );
         
     header("Location: ".BASE_URL."main.php?x=$x" );
     die;
@@ -49,7 +51,7 @@ switch($_REQUEST['action'] ) {
     
   case "submit_restore":
     //do the restore
-    db_query("UPDATE ".PRE."tasks SET archive='f' WHERE id=$taskid" );
+    db_query("UPDATE ".PRE."tasks SET archive='f' WHERE projectid=$projectid" );
         
     header("Location: ".BASE_URL."tasks.php?x=$x&action=show&taskid=$taskid" );
     die;
