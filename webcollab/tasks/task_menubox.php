@@ -35,19 +35,14 @@ require_once( BASE."includes/security.php" );
 //secure variables
 $content  = "";
 $type = "project";
+$clone = "";
 
 //the task dependent part
 if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
   $taskid = $_GET["taskid"];
 
-  //find out if the user owns this task
-  if(@db_result(db_query("SELECT COUNT(*) FROM tasks WHERE id=$taskid AND owner=$uid" ), 0, 0 ) == 1 )
-    $owner = true;
-  else
-    $owner = false;
-
-  if( ($admin == 1 ) || $owner ) {
+  if( ($admin == 1 ) || @db_result(db_query("SELECT COUNT(*) FROM tasks WHERE id=$taskid AND owner=$uid" ), 0, 0 ) == 1) {
 
     $q = db_query("SELECT name, parent FROM tasks WHERE id=$taskid" );
     $row = db_fetch_array($q, 0 );
@@ -69,12 +64,15 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
                 "<br /><small><b>".$lang["global"].":</b></small><br />\n";
   }
   $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=$taskid\">".$lang["add_task"]."</a><br />\n";
-  $content .= "<a href=\"tasks.php?x=$x&amp;action=clone&amp;taskid=$taskid\">"."Clone - translate me & add type"."</a><br />\n";
 
+  if($admin = 1 )
+    $clone = "<a href=\"tasks.php?x=$x&amp;action=clone&amp;taskid=$taskid\">"."Clone - translate me & add type"."</a><br />\n";
 }
 
 //the task-independent part
 $content .= "<a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a><br />\n";
+$content .= $clone;
+
 new_box( $lang[$type."_options"], $content, "boxmenu" );
 
 ?>
