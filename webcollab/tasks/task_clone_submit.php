@@ -29,9 +29,14 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
+//admins only
+if($admin != 1 )
+  error("Unauthorised access", "This function is for admins only." );
+
+
 function add($taskid, $new_parent, $new_name ) {
 
-  global $uid, $parent_array;
+  global $parent_array;
 
   if($new_parent != 0 ) {
     //now cloning a child task
@@ -40,10 +45,6 @@ function add($taskid, $new_parent, $new_name ) {
     //clone all the tasks at this level
     for( $i=0; $row = db_fetch_array($q, $i ); $i++ ) {
       $new_taskid = copy_across($row["id"], $new_parent, NULL );
-
-      //skip to next if wasn't in usergroup
-      if($new_taskid == 0 )
-        continue;
 
       //recursive function if the subtask is listed in parent_array (it has children then)
       if(in_array($row["id"], (array)$parent_array ) ) {
@@ -55,12 +56,9 @@ function add($taskid, $new_parent, $new_name ) {
     //now cloning the topmost task (project)
     $new_taskid = copy_across($taskid, 0, $new_name );
 
-    //don't do if wasn't in usergroup
-    if($new_taskid != 0 ) {
-      //recursive function if the subtask is listed in parent_array (it has children then)
-      if(in_array($taskid, (array)$parent_array ) )
-        add($taskid, $new_taskid, NULL );
-    }
+    //recursive function if the subtask is listed in parent_array (it has children then)
+    if(in_array($taskid, (array)$parent_array ) )
+      add($taskid, $new_taskid, NULL );
   }
 
   return;
@@ -69,30 +67,22 @@ function add($taskid, $new_parent, $new_name ) {
 
 function copy_across($taskid, $new_parent, $name ) {
 
-    global $uid, $admin, $last_insert;
+    global $uid, $last_insert;
 
     //get task details
     $q = db_query("SELECT * FROM tasks WHERE id=$taskid" );
     $row = db_fetch_array($q, 0 );
-
-    //check usergroup security
-    if(($admin != 1) && ($row["usergroup"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
-      if( ! in_array($usergroup, (array)$gid ) )
-      return 0;
-    }
 
     //set values
     if($new_parent != 0 ) {
       //new task
       $new_projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=$new_parent" ), 0, 0 );
       $new_name = $row["name"];
-      $new_owner = $row["owner"];
     }
     else{
       //new project (adjust projectid later)
       $new_projectid = 0;
       $new_name = $name;
-      $new_owner = $uid;
     }
 
     //insert data
@@ -120,7 +110,7 @@ function copy_across($taskid, $new_parent, $name ) {
                     now(),
                     now(),
                     now(),
-                    '$new_owner',
+                    '".$row["owner"]."',
                     $uid,
                     '".$row["deadline"]."',
                     now(),
@@ -162,9 +152,6 @@ if( ! isset($_POST["name"]) )
   warning("Project clone", "Project name is not set" );
 
 $name = safe_data($_POST["name"]);
-
-//check usergroup security
-require_once(BASE."includes/usergroup_security.php" );
 
 //find all parent-tasks in this project and add them to an array for later use
 $projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=$taskid" ), 0, 0 );

@@ -29,13 +29,14 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
+//admins only
+if($admin != 1 )
+  error("Unauthorised access", "This function is for admins only." );
+
 if( ! isset($_GET["taskid"]) && ! is_numeric($_GET["taskid"]) )
   error("Task clone", "Taskid not set" );
 
 $taskid = $_GET["taskid"];
-
-//check usergroup security
-require_once(BASE."includes/usergroup_security.php" );
 
 $content = "";
 
