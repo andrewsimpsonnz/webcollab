@@ -1,4 +1,12 @@
 WebCollab CVS
+*** 24 March 2005
+
+- bugfix: After reparenting update completion status of former project (Bug #1168886) (Joel W. - wampl3r)
+
+- bugfix: Private users not in a usergroup can't see themselves (Bug #1169390) (Paul Whittington - pwhittin)
+
+
+WebCollab CVS
 *** 9 March 2005
 
 - refactor task_todo_list.php to have minimal database calls (significant efficiency improvement) 
@@ -7,7 +15,7 @@ WebCollab CVS
 
 - bugfix: Email address with hyphen doesn't work (Bug #1160332) (Credit: Alan Walls )
 
-- added tasks to initially inherit public/private access from their parent (Bug #1160393) (Credit: Mark Nienberg - mnienberg)  
+- added tasks to initially inherit public/private access from their parent (Bug #1160393) (Mark Nienberg - mnienberg)  
 
 - added tasks to initially inherit taskgroup from their parent
 
@@ -33,7 +41,7 @@ WebCollab CVS
 
 - fix HTML syntax error in task_list (Bug #1144512)  (Credit: hs_dino)
 
-- fix escapes on javascript (Bug #1147634)  (Credit: Joann Zimmerman)
+- fix escapes on javascript (Bug #1147634)  (Joann Zimmerman)
 
 WebCollab 1.70
 *** 15 February 2005
@@ -45,7 +53,7 @@ WebCollab CVS
 
 - add Brazilian Portuguese translation (Credit: Eduardo Alvim)
 
-- bugfix: remove input validation from paswords to allow all characters to be used (Credit: Tom Dickson)
+- bugfix: remove input validation from paswords to allow all characters to be used (Tom Dickson)
 
 - bugfix: refactor task indenting engine due to limitations/problems with sizeof() functions   
 
@@ -83,7 +91,7 @@ WebCollab CVS
 *** 19 January 2005
   Andrew Simpson
  
-- fixed bug #1104049 - PostgreSQL 7.3 (and earlier) giving client encoding warnings (Credit: Larry Steeger (russte) ) 
+- fixed bug #1104049 - PostgreSQL 7.3 (and earlier) giving client encoding warnings (Larry Steeger (russte) ) 
 
 WebCollab CVS
 *** 13 January 2005
