@@ -84,32 +84,17 @@ function clean_up($body ) {
   $body = preg_replace('/&#\d{2,5};/ue', "utf8_entity_decode('$0')", $body );
   //decode hex HTML entities added by web browser
   $body = preg_replace('/&#x([a-fA-F0-7]{2,8});/ue', "utf8_entity_decode('&#'.hexdec('$1').';')", $body );
-  
-  //allow only normal UTF-8 characters up to U+10000, which is up to three bytes per character
-  // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )   
-  preg_match_all('/([\x09\x0a\x0d\x20-\x7e]|'.
-                   '[\xc0-\xdf][\x80-\xbf]|'.
-                   '[\xe0-\xef][\x80-\xbf]{2})+/S', $body, $ar );
 
-/*                 Remainder of range beyond U+10000 are:   
-                   '[\xf0-\xf7][\x80-\xbf]{3}'    (U-10000 - U-1FFFFF)  4 byte character
-                   '[\xf8-\xfb][\x80-\xbf]{4}'    (U-200000 - U-3FFFFFF) 5 byte ""
-                   '[\xfc-\xfd][\x80-\xbf]{5}'    (U-4000000 - U-7FFFFFFF) 6 byte ""
-*/    
+  //allow only normal UTF-8 characters up to U+10000, which is the limit of 3 byte characters
+  // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )   
+  preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                       // ASCII characters
+                 '|[\xc2-\xdf][\x80-\xbf]'.                         // 2-byte UTF-8 (except overly longs)
+                 '|\xe0[\xa0-\xbf][\x80-\xbf]'.                     // 3 byte (except overly longs)
+                 '|[\xe1-\xec\xee\xef][\x80-\xbf]{2}'.              // 3 byte (except overly longs)
+                 '|\xed[\x80-\x9f][\x80-\xbf])+/', $body, $ar );    // 3 byte (except UTF-16 surrogates)
+
   $body = join("?", $ar[0] );
-  
-  //reject overly long UTF8 forms (lines 1, 2 & 3) and illegal UTF16 surrogates (lines 4 & 5)  
-  $body = preg_replace('/([\xc0-\xc1][\x80-\xbf]|'.
-                         '[\xe0][\x80-\x9f][\x80-\xbf]|'.
-                         '[\xf0][\x80-\x8f][\x80-\xbf]{2}|'.
-                         '[\xed][\xa0-\xbf][\x80-\xbf]|'.
-                         '[\xef][\xbf][\xbe-\xbf])/S', "?", $body );
-  
-/*                      Remainder of overly long UTF8 above U+10000  
-                         '[\xf8][\x80-\x87][\x80-\xbf]{3}'
-                         '[\xfc][\x80-\x83][\x80-\xbf]{4}'
-*/
-  
+ 
   //protect against database query attack
   if(! get_magic_quotes_gpc() )
     $body = addslashes($body );
