@@ -340,7 +340,7 @@ $lang = array(
  "task_navigation" => "Task navigation",
  "no_projects" => "There are no projects to view",
  "ccompleted" => "Completed",
- "project_hold" => "Project On Hold from ",
+ "project_hold_sprt" => "Project On Hold from %s",
  "project_planned" => "Planned Project",
  //&&
  "percent_sprt" => "%d%% of the tasks are done",

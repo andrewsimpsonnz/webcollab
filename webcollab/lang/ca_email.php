@@ -30,11 +30,11 @@
 
 */
 $email_list = "Projecte: %s\n".
-               "Tasca:    %s\n".
-               "Estat:   %s\n".
-               "A c&agrave;rreg:  %s ( %s )\n".
-               "Text:\n%s\n\n".
-               "Dirigir-se al lloc web per a mes detalls.\n\n%s\n";
+              "Tasca:    %s\n".
+              "Estat:    %s\n".
+              "A c&agrave;rreg:  %s ( %s )\n".
+              "Text:\n%s\n\n".
+              "Dirigir-se al lloc web per a mes detalls.\n\n%s\n";
 
 $title_takeover_project   = $ABBR_MANAGER_NAME.": El seu item ha estat reassignat";
 $title_takeover_task      = $ABBR_MANAGER_NAME.": El seu item ha estat reassignat";
@@ -84,38 +84,38 @@ $email_welcome      = "Hola,\n\nAquest &eacute;s el lloc %s donant-li la benving
 			"Vost&eacute; pot tamb&eacute; fer-se c&agrave;rreg o prendre propietat de tasques i es trobar&agrave; habilitat per editar i tots els enviaments al f&ograve;rum seran rebuts. ".
 			"A mesura que avan? en la seva feina, per favor editi el text de les seves tasques i l'estat de tal forma que tothom pugui mantenir un seguiment del seu progr&eagrave;s. ".
 			"\n\nNo em resta m&eacute;s que desijar-li &egrave;xits i informar-li que pot enviar un correu a %s si es troba amb alguna dificultat.\n\n --Bona sort !\n\n".
-			"Usuari:      %s\n".
-			"Clau:   %s\n\n".
+			"Usuari:  %s\n".
+			"Clau:    %s\n\n".
 			"Usergroups: %s".
-			"Nom:    %s\n".
-			"Website:    %s\n\n".
+			"Nom:     %s\n".
+			"Website: %s\n\n".
 			"%s";
 
 $title_user_change1 = $ABBR_MANAGER_NAME.": Edici&oacute; del seu compte per un administrador";
 $email_user_change1 = "Hola,\n\nAquest &eacute;s el %s lloc informant-li que el seu compte ha estat modificat el %s per %s ( %s ) \n\n".
-			"Usuari:      %s\n".
+			"Usuari: %s\n".
 			"Clau:   %s\n\n".
 			"Usergroups: %s".
-			"Nom:     %s\n\n".
+			"Nom:    %s\n\n".
 			"%s";
 
 $title_user_change2 = $ABBR_MANAGER_NAME.": Edici&oacute; del seu compte";
 $email_user_change2 = "Hola,\n\nAquest &eacute;s el %s lloc confirmant-li que ha modificat amb &egrave;xit el seu compte el %s\n\n".
-			"Usuari:    %s\n".
-			"Clau: %s\n\n".
-			"Nom:   %s\n";
+			"Usuari: %s\n".
+			"Clau:   %s\n\n".
+			"Nom:    %s\n";
 
 $title_user_change3 = $ABBR_MANAGER_NAME.": Edici&oacute; del seu compte";
 $email_user_change3 = "Hola,\n\nAquest &eacute;s el %s lloc confirmant-li que ha modificat amb &egrave;xit el seu compte el %s\n\n".
-			"Usuari:    %s\n".
+			"Usuari: %s\n".
 			"La seva clau NO ha estat modificada.\n\n".
-			"Nom:   %s\n";
+			"Nom:    %s\n";
 
 
 $title_revive       = $ABBR_MANAGER_NAME.": Compte reactivtat";
 $email_revive       = "Hola,\n\nAquest &eacute;s el %s lloc informant-li que el seu compte ha estat reactivat el  %s.\n\n".
 			"Usuari: %s\n".
-			"Clau:  %s\n\n".
+			"Clau:   %s\n\n".
 			"No podem enviar-li la seva clau perqu&egrave; est&agrave; encriptada. \n\n".
 			"Si ha perdut la seva clau, envii un correu per %s per a sol&middot;licitar una nova clau.";
 

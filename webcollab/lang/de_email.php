@@ -21,7 +21,7 @@
 
   Function:
   ---------
-  
+
   Translation: Sebastian Knapp, Michael Bunk
   Email text language files for 'de' (German)
 
@@ -30,10 +30,11 @@
 */
 
 $email_list = "Projekt:  %s\n".
-               "Aufgabe:  %s\n".
-               "Besitzer: %s ( %s )\n".
-               "Text:\n%s\n\n".
-               "Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n%s\n";
+              "Aufgabe:  %s\n".
+              "Status:   %s\n".
+              "Besitzer: %s ( %s )\n".
+              "Text:\n%s\n\n".
+              "Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n%s\n";
 
 
 $title_takeover_project   = $ABBR_MANAGER_NAME.": Eins von Ihren Projekten bzw. Aufgaben ist &uuml;bergeben worden.";
@@ -46,8 +47,8 @@ $title_new_owner_task     = $ABBR_MANAGER_NAME.": Neue Aufagabe f&uuml; Sie";
 $email_new_owner_project  = "Hallo,\n\nIhre %s-Seite informiert Sie, dass ein(e) Projekt die Sie verwalten auf %s ge&auml;ndert wurde.\n\nHier im Detail:\n\n";
 $email_new_owner_task     = "Hallo,\n\nIhre %s-Seite informiert Sie, dass ein(e) Aufagabe die Sie verwalten auf %s ge&auml;ndert wurde.\n\nHier im Detail:\n\n";
 
-$title_new_group_project  = $ABBR_MANAGER_NAME.": Neue Gruppe Projekt: ";
-$title_new_group_task     = $ABBR_MANAGER_NAME.": Neue Gruppe Aufagabe: ";
+$title_new_group_project  = $ABBR_MANAGER_NAME.": Neue Gruppe Projekt: %s";
+$title_new_group_task     = $ABBR_MANAGER_NAME.": Neue Gruppe Aufagabe: %s";
 $email_new_group_project  = "Hallo,\n\nIhre %s-Seite informiert sie, dass eine neue Gruppe Projekt erstellt worden ist am %s\n\nDetails:\n\n";
 $email_new_group_task     = "Hallo,\n\nIhre %s-Seite informiert sie, dass eine neue Gruppe Aufagabe erstellt worden ist am %s\n\nDetails:\n\n";
 
@@ -71,7 +72,7 @@ $email_delete_task        = "Hallo,\n\nIhre %s-Seite informiert sie, dass ein(e)
 $delete_list =  "Projekt:  %s\n".
                 "Aufgabe:  %s\n".
                 "Status:   %s\n\n".
-                "Text: \n%s\n";
+                "Text:\n%s\n";
 
 
 $title_welcome      = "Willkommen bei ".$ABBR_MANAGER_NAME;

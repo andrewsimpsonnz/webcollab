@@ -29,11 +29,11 @@
 */
 
 $email_list =  "Project:  %s\n".
-                "Task:     %s\n".
-                "Status:   %s\n".
-                "Owner:    %s ( %s )\n".
-                "Text:\n%s\n\n".
-                "Please go to the website for more details.\n\n%s\n";
+               "Task:     %s\n".
+               "Status:   %s\n".
+               "Owner:    %s ( %s )\n".
+               "Text:\n%s\n\n".
+               "Please go to the website for more details.\n\n%s\n";
 
 
 $title_takeover_project  = $ABBR_MANAGER_NAME.": Your project taken over";
@@ -46,8 +46,8 @@ $email_takeover_project  = "Hello,\n\nThis is the %1\$s site informing you that 
 $title_new_owner_project = $ABBR_MANAGER_NAME.": New project for you";
 $title_new_owner_task     = $ABBR_MANAGER_NAME.": New task for you";
 
-$email_new_owner_project = "Hello,\n\nThis is the %1\$s site informing you that a project you (now) own was changed on %2\$s.\n\nHere are the details:\n\n";
-$email_new_owner_task    = "Hello,\n\nThis is the %1\$s site informing you that a task you (now) own was changed on %2\$s.\n\nHere are the details:\n\n";
+$email_new_owner_project = "Hello,\n\nThis is the %1\$s site informing you that a project was created on %2\$s, and you are the owner of that project.\n\nHere are the details:\n\n";
+$email_new_owner_task    = "Hello,\n\nThis is the %1\$s site informing you that a task was created on %2\$s, and you are the owner of that task.\n\nHere are the details:\n\n";
 
 
 $title_new_group_project = $ABBR_MANAGER_NAME.": New project: %s";
@@ -81,10 +81,10 @@ $email_delete_task       = "Hello,\n\n".
                            "This is the %1\$s site informing you that a task you did own was deleted on %2\$s\n\n".
                            "Thanks for managing the task while it lasted.\n\n";
 
-$delete_list =  "Project:  %s\n".
-                "Task:  %s\n".
-                "Status:   %s\n\n".
-                "Text: \n%s\n\n";
+$delete_list = "Project: %s\n".
+                "Task:   %s\n".
+                "Status: %s\n\n".
+                "Text:\n%s\n\n";
 
 $title_welcome      = "Welcome to the ".$ABBR_MANAGER_NAME;
 $email_welcome      = "Hello,\n\nThis is the %1\$s site welcoming you to me ;) on %2\$s.\n\n".
@@ -119,13 +119,13 @@ $email_user_change2 = "Hello,\n\nThis is the %1\$s site confirming that you have
 
 $title_user_change3 = $ABBR_MANAGER_NAME.": Edit of your account";
 $email_user_change3 = "Hello,\n\nThis is the %1\$s site confirming that you have successfully changed your account on %2\$s\n\n".
-			"Login:    %3\$s\n".
+			"Login: %3\$s\n".
 			"Your existing password has not changed.\n\n".
-			"Name:     %4\$s\n";
+			"Name:  %4\$s\n";
 
 
 $title_revive       = $ABBR_MANAGER_NAME.": Account reactivated";
-$email_revive       = "Hello,\n\nThis is the %1\$s site informing you that your account has been re-enabled on %\$2s.\n\n".
+$email_revive       = "Hello,\n\nThis is the %1\$s site informing you that your account has been re-enabled on %2\$s.\n\n".
 			"Loginname: %3\$s\n".
 			"Username:  %4\$s\n\n".
 			"We cannot send you your password because it is encrypted. \n\n".

@@ -31,11 +31,11 @@
 */
 
 $email_list = "Proyecto: %s\n".
-               "Tarea:    %s\n".
-               "Estado:   %s\n".
-               "A cargo:  %s ( %s )\n".
-               "Texto:\n%s\n\n".
-               "Dirigirse al sitio web para mas detalles.\n\n%s\n";
+              "Tarea:    %s\n".
+              "Estado:   %s\n".
+              "A cargo:  %s ( %s )\n".
+              "Texto:\n%s\n\n".
+              "Dirigirse al sitio web para mas detalles.\n\n%s\n";
 
 
 $title_takeover_project   = $ABBR_MANAGER_NAME.": Su item ha sido reasignado";
@@ -89,7 +89,7 @@ $email_welcome      = "Hola,\n\nEste es el sitio %s dandole la bienvenida ;) el 
 			"Login:      %s\n".
 			"Password:   %s\n\n".
 			"Usergroups: %s".
-			"Nombre:    %s\n".
+			"Nombre:     %s\n".
 			"Website:    %s\n\n".
 			"%s";
 
