@@ -55,7 +55,7 @@ if( valid_string( $_REQUEST["action"] ) ) {
 
     //gives a window and some options to do to the poor 'old contact manager
     case "show":
-      create_top($lang["show_contacts"]);
+      create_top($lang["show_contact"]);
       include( "includes/mainmenu.php");
       include( "contacts/contact_menubox.php" );
       goto_main();
@@ -64,7 +64,7 @@ if( valid_string( $_REQUEST["action"] ) ) {
       break;
 
  case "edit":
-      create_top($lang["edit_contacts"]);
+      create_top($lang["edit_contact"]);
       include( "includes/mainmenu.php");
       include( "contacts/contact_menubox.php" );
       goto_main();
