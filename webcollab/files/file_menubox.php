@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
   
   WebCollab
   ---------------------------------------
@@ -31,15 +31,15 @@
 require_once("path.php" );
 require_once( BASE."includes/security.php" );
 
+//admins only
+if($ADMIN != 1 )
+  error("Unauthorised access", "This function is for admins only." );
+
 //secure values
 $content = "";
 
 //add an option to admin files
-if($ADMIN == 1 )
-  $content .= "<a href=\"files.php?x=$x&amp;action=admin\">".$lang['file_admin']."</a><br />\n";
-
-if($taskid != -1 && $GUEST == 0 )
-  $content .= "<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang['add_file']."</a><br />\n";
+$content .= "<a href=\"files.php?x=$x&amp;action=admin\">".$lang['file_admin']."</a><br />\n";
 
 //show it
 new_box( $lang['files'], $content, "boxmenu" );
