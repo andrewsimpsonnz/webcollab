@@ -240,7 +240,7 @@ ignore_user_abort(TRUE);
 
         //send email
         //$uid_name and $uid_email are from security.php
-        $message = sprintf($email, $MANAGER_NAME, date("F j, Y, H:i") ).
+        $message = sprintf($email, $MANAGER_NAME, (date("d")." ".$month_array[(date("n")-1)]." ".date("Y H:i T") ) ).
                     sprintf($email_list, $name_project, $name_task, status($row["status"], $row["deadline"]), $uid_name, $uid_email, $row["text"], $BASE_URL );
         email( $email_address_old_owner, $title, $message );
         }
@@ -376,7 +376,11 @@ ignore_user_abort(TRUE);
           $email2 = $email_new_group_task;
           $title1 = $title_new_owner_task;
           $title2 = $title_new_group_task;
-          $name_task = $name;
+          //get rid of magic_quotes - it is not required here
+          if(get_magic_quotes_gpc() )
+            $name_task = stripslashes($name );
+          else
+            $name_task = $name;
           break;
       }
 
@@ -393,11 +397,15 @@ ignore_user_abort(TRUE);
           $email_owner = $row[1];
           break;
       }
+          
+      //get rid of magic_quotes - it is not required here
+      if(get_magic_quotes_gpc() )
+        $text = stripslashes($text );
 
       //email owner ?
       if(isset($_POST["mailowner"]) && ($_POST["mailowner"]=="on") && ($owner != 0) ) {
         $email_address_owner = db_result( db_query("SELECT email FROM users WHERE id=".$owner, 0), 0, 0 );
-        $message = sprintf($email1, $MANAGER_NAME, date("F j, Y, H:i") ).
+        $message = sprintf($email1, $MANAGER_NAME, (date("d")." ".$month_array[(date("n")-1)]." ".date("Y H:i T") ) ).
                     sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text, $BASE_URL );
         email($email_address_owner, $title1, $message );
       }
@@ -405,7 +413,7 @@ ignore_user_abort(TRUE);
       //do we need to send an email to the user group to announce this message
       if(isset($_POST["maillist"]) && $_POST["maillist"] == "on" ) {
 
-        $message = sprintf($email2, $MANAGER_NAME, date("F j, Y, H:i") ).
+        $message = sprintf($email2, $MANAGER_NAME,  (date("d")." ".$month_array[(date("n")-1)]." ".date("Y H:i T") ) ).
                     sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text, $BASE_URL );
 
         $usergroup = "";
@@ -567,7 +575,11 @@ ignore_user_abort(TRUE);
           $title1 = $title_edit_owner_task;
           $email2 = $email_edit_group_task;
           $title2 = $title_edit_group_task;
-          $name_task = $name;
+          //get rid of magic_quotes - it is not required here
+          if(get_magic_quotes_gpc() )
+            $name_task = stripslashes($name );
+          else
+            $name_task = $name;
           break;
       }
 
@@ -585,12 +597,16 @@ ignore_user_abort(TRUE);
           break;
        }
 
+       //get rid of magic_quotes - it is not required here
+       if(get_magic_quotes_gpc() )
+          $text = stripslashes($text );
+ 
       //email owner ?
       if(isset($_POST["mailowner"]) && ($_POST["mailowner"]=="on") && ($owner != 0) ) {
 
         $email_address_owner = db_result(db_query("SELECT email FROM users WHERE id=$owner", 0), 0, 0 );
 
-        $message = sprintf($email1, $MANAGER_NAME, date("F j, Y, H:i") ).
+        $message = sprintf($email1, $MANAGER_NAME, (date("d")." ".$month_array[(date("n")-1)]." ".date("Y H:i T") ) ).
                     sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text, $BASE_URL );
         email($email_address_owner, $title1, $message );
       }
@@ -598,7 +614,7 @@ ignore_user_abort(TRUE);
       //email the user group ?
       if(isset($_POST["maillist"]) && ($_POST["maillist"]=="on") ) {
 
-        $message = sprintf($email2, $MANAGER_NAME, $name_owner, date("F j, Y, H:i") ).
+        $message = sprintf($email2, $MANAGER_NAME, $name_owner, (date("d")." ".$month_array[(date("n")-1)]." ".date("Y H:i T") ) ).
                     sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text, $BASE_URL );
 
         $usergroup = "";
