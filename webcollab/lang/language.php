@@ -26,25 +26,26 @@
 */
 
 //get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
 
-//this creates an error if language is not set.  Email, long messages & help files are not checked.  
+require_once(BASE."config.php" );
 
-include_once( BASE."config.php" );  
-
-switch( $LOCALE ) {
+switch($LOCALE ) {
 
   case "en":
-    include( BASE."lang/en_message.php" );
+    include(BASE."lang/en_message.php" );
     break;
 
   case "es":
-    include( BASE."lang/es_message.php" );
+    include(BASE."lang/es_message.php" );
+    break;
+
+  case "fr":
+    include(BASE."lang/fr_message.php" );
     break;
 
   default:
-    die( "No language locale specified in configuration file" );
+    die("No language locale specified in configuration file" );
     break;
 }
 
