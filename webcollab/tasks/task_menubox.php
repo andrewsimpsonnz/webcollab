@@ -37,9 +37,9 @@ $clone = "";
 //the task dependent part
 if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
-  $taskid = $_GET["taskid"];
+  $taskid = intval($_GET["taskid"]);
 
-  if( ($admin == 1 ) || @db_result(db_query("SELECT COUNT(*) FROM tasks WHERE id=$taskid AND owner=$uid" ), 0, 0 ) == 1) {
+  if( ($admin == 1 ) || (@db_result(db_query("SELECT COUNT(*) FROM tasks WHERE id=$taskid AND owner=$uid" ), 0, 0 ) ) ) {
 
     $q = db_query("SELECT name, parent FROM tasks WHERE id=$taskid" );
     $row = db_fetch_array($q, 0 );
@@ -62,7 +62,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
   }
   $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=$taskid\">".$lang["add_task"]."</a><br />\n";
 
-  if($admin = 1 )
+  if($admin == 1 )
     $clone = "<a href=\"tasks.php?x=$x&amp;action=clone&amp;taskid=$taskid\">".$lang["clone_$type"]."</a><br />\n";
 }
 

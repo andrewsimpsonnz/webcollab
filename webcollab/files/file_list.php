@@ -36,7 +36,7 @@ $content = "";
 if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
   return;
 
-$taskid = $_GET["taskid"];
+$taskid = intval($_GET["taskid"]);
 
 //check usergroup security
 require_once( BASE."includes/usergroup_security.php" );

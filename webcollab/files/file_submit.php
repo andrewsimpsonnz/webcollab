@@ -56,7 +56,7 @@ ignore_user_abort(TRUE);
         error("File submit", "Not a valid taskid");
       }
 
-      $taskid = $_POST["taskid"];
+      $taskid = intval($_POST["taskid"]);
       $description = safe_data_long($_POST["description"] );
       //make email adresses and web links clickable
       $description = preg_replace("(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))","<a href=\"mailto:\\0\">\\0</a>", $description );
@@ -209,7 +209,7 @@ ignore_user_abort(TRUE);
       if( ! isset($_GET["fileid"] ) || ! is_numeric($_GET["fileid"] ) )
         error("File submit", "Not a valid fileid" );
 
-      $fileid = $_GET["fileid"];
+      $fileid = intval($_GET["fileid"]);
 
       //get the files from this task
       $q = db_query("SELECT files.uploader AS uploader,
@@ -220,17 +220,19 @@ ignore_user_abort(TRUE);
                                    LEFT JOIN tasks ON (files.taskid=tasks.id)
                                    WHERE files.id=$fileid" );
 
-      //show it
-      $row = @db_fetch_array($q, 0 );
-      //owners of the file and admins can delete files
-      if( ($admin==1) || ($uid == $row["owner"] ) || ($uid == $row["uploader"] ) ) {
+      if(db_numrows($q ) != 0 ) {
+         //show it
+        $row = @db_fetch_array($q, 0 );
+        //owners of the file and admins can delete files
+        if( ($admin == 1) || ($uid == $row["owner"] ) || ($uid == $row["uploader"] ) ) {
 
-        //delete file from disk
-        if(file_exists($FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
-          unlink($FILE_BASE."/".$row["oid"]."__".$row["filename"] );
+          //delete file from disk
+          if(file_exists($FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
+            unlink($FILE_BASE."/".$row["oid"]."__".$row["filename"] );
+          }
+          //delete record of file
+          db_query("DELETE FROM files WHERE oid=".$row["oid"] );
         }
-        //delete record of file
-        db_query("DELETE FROM files WHERE oid=".$row["oid"] );
       }
     break;
 

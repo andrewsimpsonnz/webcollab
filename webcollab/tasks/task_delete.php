@@ -62,7 +62,7 @@ function find_and_report_children($taskid ) {
 //
 if(isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
 
-  $taskid = $_REQUEST["taskid"];
+  $taskid = intval($_REQUEST["taskid"]);
 
   //if user aborts, let the script carry onto the end
   ignore_user_abort(TRUE);

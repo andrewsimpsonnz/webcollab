@@ -38,7 +38,7 @@ if($admin != 1 )
 if( ! isset($_GET["taskgroupid"]) || ! is_numeric($_GET["taskgroupid"]) )
   error("Value error", "There is no taskgroupid specified." );
 
-$taskgroupid = $_GET["taskgroupid"];
+$taskgroupid = intval($_GET["taskgroupid"]);
 
 //get taskgroup information
 $q = db_query("SELECT * FROM taskgroups WHERE id=$taskgroupid" );

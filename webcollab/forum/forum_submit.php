@@ -82,7 +82,7 @@ function check($var ) {
 
   //validate as numeric
     if(is_numeric($var) )
-      return $var;
+      return intval($var);
   //catch all for weird inputs
   $var = 0;
 return $var;
@@ -117,9 +117,9 @@ ignore_user_abort(TRUE);
       $text = nl2br($text );
 
 
-      $parentid    = check($_POST["parentid"]);
+      $parentid = check($_POST["parentid"]);
       $usergroupid = check($_POST["usergroupid"]);
-      $taskid      = check($_POST["taskid"]);
+      $taskid = check($_POST["taskid"]);
 
       if($taskid == 0 )
         error("Forum submit", "Taskid not valid");
@@ -149,7 +149,7 @@ ignore_user_abort(TRUE);
           //public post
           db_begin();
           db_query ("INSERT INTO forum(parent, taskid, posted, text, userid, usergroupid)
-                      VALUES ($parentid, $taskid, now(), '$text', $uid, 0)" );
+                                           VALUES ($parentid, $taskid, now(), '$text', $uid, 0)" );
           break;
 
         default:
@@ -160,7 +160,7 @@ ignore_user_abort(TRUE);
 
           db_begin();
           db_query ("INSERT INTO forum(parent, taskid, posted, text, userid, usergroupid)
-                      VALUES ($parentid, $taskid, now(), '$text', $uid, $usergroupid)" );
+                                            VALUES ($parentid, $taskid, now(), '$text', $uid, $usergroupid)" );
           break;
 
       }

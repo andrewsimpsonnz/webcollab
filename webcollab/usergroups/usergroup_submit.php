@@ -49,7 +49,7 @@ ignore_user_abort(TRUE);
 
       if(isset($_GET["usergroupid"]) && is_numeric($_GET["usergroupid"]) ) {
 
-        $usergroupid = $_GET["usergroupid"];
+        $usergroupid = intval($_GET["usergroupid"] );
 
         db_begin();
 
@@ -63,7 +63,8 @@ ignore_user_abort(TRUE);
         db_query("DELETE FROM usergroups WHERE id=$usergroupid" );
 
         //update the tasks table by resetting the deleted usergroup id to zero
-        db_query("UPDATE tasks SET usergroupid=0 WHERE usergroupid=$usergroupid" );
+        @db_query("UPDATE tasks SET usergroupid=0 WHERE usergroupid=$usergroupid" );
+        
         db_commit();
       }
       else
@@ -98,7 +99,7 @@ ignore_user_abort(TRUE);
             $max = sizeof($member);
             for($i=0 ; $i < $max ; $i++ ) {
               if(isset($member[$i]) && is_numeric($member[$i] ) ) {
-                db_query("INSERT INTO usergroups_users(userid, usergroupid) VALUES(".$member[$i].", $usergroupid)" );
+                db_query("INSERT INTO usergroups_users(userid, usergroupid) VALUES(".intval($member[$i]).", $usergroupid)" );
               }
           }
         }
@@ -119,7 +120,7 @@ ignore_user_abort(TRUE);
 
         $name        = safe_data($_POST["name"] );
         $description = safe_data($_POST["description"] );
-        $usergroupid = safe_data($_POST["usergroupid"] );
+        $usergroupid = intval($_POST["usergroupid"] );
 
         //begin transaction
         db_begin();
@@ -136,7 +137,7 @@ ignore_user_abort(TRUE);
             $max = sizeof($member);
             for($i=0 ; $i < $max ; $i++ ) {
               if(isset($member[$i]) && is_numeric( $member[$i] ) ) {
-                db_query("INSERT INTO usergroups_users(userid, usergroupid) VALUES(".$member[$i].", $usergroupid)" );
+                db_query("INSERT INTO usergroups_users(userid, usergroupid) VALUES(".intval($member[$i]).", $usergroupid)" );
               }
             }
           }

@@ -38,34 +38,34 @@ $content = "";
 if( ! isset($_REQUEST["usergroupid"]) || ! is_numeric($_REQUEST["usergroupid"]) )
   $usergroupid = 0;
 else
-  $usergroupid = $_REQUEST["usergroupid"];
+  $usergroupid = intval($_REQUEST["usergroupid"]);
 
 if( ! isset($_REQUEST["parentid"]) || ! is_numeric($_REQUEST["parentid"]) )
   $parentid = 0;
 else
-  $parentid = $_REQUEST["parentid"];
+  $parentid = intval($_REQUEST["parentid"]);
 
 if( ! isset($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
   error("Forum add", "Not a valid value for taskid");
 
-$taskid = $_REQUEST["taskid"];
+$taskid = intval($_REQUEST["taskid"]);
 
 //check usergroup security
 require_once(BASE."includes/usergroup_security.php" );
 
 //find out the tasks' name
-$taskname = db_result(db_query("SELECT name FROM tasks WHERE id=$taskid" ), 0, 0);
+$taskname = db_result(db_query("SELECT name FROM tasks WHERE id=$taskid" ), 0, 0 );
 
 $content .= "<form name=\"inputform\" method=\"POST\" action=\"forum.php\">\n";
 //set some hidden values
 $content .=  "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
-                   "<input type=\"hidden\" name=\"action\" value=\"submit_add\" />\n".
-                   "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\" />\n".
-                   "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\" />\n";
+             "<input type=\"hidden\" name=\"action\" value=\"submit_add\" />\n".
+             "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\" />\n".
+             "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\" />\n";
 
 
 //find out some of the parent's data
-if(is_numeric($parentid) && ($parentid != 0) ) {
+if($parentid != 0 ) {
 
   //get the text from the parent and the username of the person that posted that text
   $q = db_query("SELECT forum.text AS text,
@@ -96,8 +96,8 @@ else {
 $content .=   "<tr><td>".$lang["message"]."</td><td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
               "</table><br />\n".
               "<p><table border=\"0\">\n".
-              "<tr><td><label for=\"owner\">".$lang["forum_email_owner"]."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" $DEFAULT_OWNER ></td></tr>\n".
-              "<tr><td><label for=\"usergroup\">".$lang["forum_email_usergroup"]."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" $DEFAULT_GROUP ></td></tr>\n".
+              "<tr><td><label for=\"owner\">".$lang["forum_email_owner"]."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" $DEFAULT_OWNER /></td></tr>\n".
+              "<tr><td><label for=\"usergroup\">".$lang["forum_email_usergroup"]."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" $DEFAULT_GROUP /></td></tr>\n".
               "</table></p>\n".
               "<p><input type=\"submit\" value=\"".$lang["post"]."\" onclick=\"return fieldCheck()\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".

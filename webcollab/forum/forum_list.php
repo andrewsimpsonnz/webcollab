@@ -36,7 +36,7 @@ include_once(BASE."includes/time.php" );
 if( ! (isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) )
   error("Forum list", "Not a valid taskid" );
 
-$taskid = $_GET["taskid"];
+$taskid = intval($_GET["taskid"]);
 
 //check usergroup security
 require_once(BASE."includes/usergroup_security.php" );
@@ -92,7 +92,7 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 
     //owners of the thread, owners of the post and admins have a "delete" option
     if( ($admin==1) || ($uid == $row["taskowner"] ) || ($uid == $row["postowner"] ) ) {
-      $this_content .= " <font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=submit_del&amp;&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm( '".$lang["confirm_del_javascript"]."' )\">".$lang["del"]."</a>]</font>";
+      $this_content .= " <font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=submit_del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm( '".$lang["confirm_del_javascript"]."' )\">".$lang["del"]."</a>]</font>";
     }
 
     $this_content .= "<br />\n".$row["text"]."\n";

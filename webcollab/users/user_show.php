@@ -38,7 +38,7 @@ $no_access_group[0] = 0;
 if( ! isset($_GET["userid"]) || ! is_numeric($_GET["userid"]) || $_GET["userid"] == 0 )
   error("User show", "No userid was given" );
 
-$userid = $_GET["userid"];
+$userid = intval($_GET["userid"]);
 
 //select
 $q = db_query("SELECT * FROM users WHERE id=$userid" );

@@ -34,7 +34,7 @@ $content  = "";
 
 //existing task or project
 if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
-  $taskid = $_GET["taskid"];
+  $taskid = intval($_GET["taskid"]);
 
   // get task details
   $q = db_query("SELECT name, projectid, parent FROM tasks WHERE id=$taskid" );

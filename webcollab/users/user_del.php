@@ -42,7 +42,7 @@ if($admin != 1 )
 if( ! isset($_GET["userid"]) || ! is_numeric($_GET["userid"]) )
   error("User delete", "No userid specified" );
 
-$userid = $_GET["userid"];
+$userid = intval($_GET["userid"]);
 
 if( ! isset($_GET["action"] ) )
   error("User delete", "No action specified" );
@@ -83,22 +83,25 @@ switch($_GET["action"] ){
     break;
 
   case "del":
-    //mark user as deleted
-    db_begin();
-    db_query("UPDATE users SET deleted='t' WHERE id=$userid" );
+     
+     //if user exists we can delete them
+     if(db_result(db_query("SELECT COUNT(*) FROM users WHERE id=$userid" ), 0, 0 ) ) {
+       //mark user as deleted
+       db_begin();
+       db_query("UPDATE users SET deleted='t' WHERE id=$userid" );
 
-    //free all tasks that that user has done
-    @db_query("UPDATE tasks SET owner=0 WHERE owner=$userid" );
-    db_commit();
+       //free all tasks that that user has done
+       @db_query("UPDATE tasks SET owner=0 WHERE owner=$userid" );
+       db_commit();
 
-    //get the users' info
-    $q = db_query("SELECT email FROM users WHERE id=$userid" );
-    $email = db_result($q, 0, 0 );
+       //get the users' info
+       $q = db_query("SELECT email FROM users WHERE id=$userid" );
+       $email = db_result($q, 0, 0 );
 
-    //mail the user that he/she had been deleted
-    include_once(BASE."lang/lang_email.php" );
-    email($email, $title_delete_user, $email_delete_user );
-
+       //mail the user that he/she had been deleted
+       include_once(BASE."lang/lang_email.php" );
+       email($email, $title_delete_user, $email_delete_user );
+     }      
     break;
 
   default:

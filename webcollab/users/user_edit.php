@@ -40,7 +40,7 @@ if($admin == 1 ) {
   if( ! isset($_REQUEST["userid"]) || ! is_numeric($_REQUEST["userid"]) )
     error("User edit", "No userid was specified" );
 
-  $userid = $_REQUEST["userid"];
+  $userid = intval($_REQUEST["userid"]);
 
   //query for user
   $q = db_query("SELECT * FROM users WHERE id=$userid" );

@@ -49,14 +49,17 @@ ignore_user_abort(TRUE);
       if( ! isset($_GET["taskgroupid"] ) || ! is_numeric($_GET["taskgroupid"]) )
         error("Taskgroup submit", "Not a valid value for taskgroupid" );
 
-      $taskgroupid = $_GET["taskgroupid"];
+      $taskgroupid = intval($_GET["taskgroupid"]);
 
-      db_begin();
-      //move the tasks to a non-working task-group
-      @db_query("UPDATE tasks SET taskgroupid=0 WHERE taskgroupid='$taskgroupid'" );
-      //delete the group
-      db_query("DELETE FROM taskgroups WHERE id=$taskgroupid" );
-      db_commit();
+      //if taskgroup exists we can delete it :)
+      if(db_result(db_query("SELECT COUNT(*) FROM taskgroups WHERE taskgroupid='$taskgroupid'" ) {
+        db_begin();
+        //move the tasks to a non-working task-group
+        @db_query("UPDATE tasks SET taskgroupid=0 WHERE taskgroupid='$taskgroupid'" );
+        //delete the group
+        db_query("DELETE FROM taskgroups WHERE id=$taskgroupid" );
+        db_commit();
+      }
       break;
 
     //insert a new taskgroup
@@ -87,7 +90,7 @@ ignore_user_abort(TRUE);
 
         $name        = safe_data($_POST["name"] );
         $description = safe_data($_POST["description"] );
-        $taskgroupid = safe_data($_POST["taskgroupid"] );
+        $taskgroupid = intval($_POST["taskgroupid"] );
 
         db_query("UPDATE taskgroups SET name='$name', description='$description' WHERE id=$taskgroupid" );
       }

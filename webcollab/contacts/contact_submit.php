@@ -32,7 +32,7 @@ require_once("path.php" );
 require_once( BASE."includes/security.php" );
 
 if( isset($_POST["contactid"]) )
-  $contactid = $_POST["contactid"];
+  $contactid = intval($_POST["contactid"]);
 
 //edit, insert, delete ?
 if( ! isset( $_REQUEST["action"] ) )
@@ -106,14 +106,9 @@ if( ! isset( $_REQUEST["action"] ) )
     break;
 
     case "submit_delete":
-      if(is_numeric($contactid ) ) {
-        //delete the contact
-        db_query("DELETE FROM contacts WHERE id=$contactid" );
-      }
-      else {
-        error("Contact submit", "Invalid value specified for contactid" );
-      }
-
+        //delete the contact (if it exists) 
+        if(db_result(db_query("SELECT COUNT(*) FROM contacts WHERE id=".$contactid ) , 0 , 0 ) )
+          db_query("DELETE FROM contacts WHERE id=".$contactid );
       break;
 
     //default error

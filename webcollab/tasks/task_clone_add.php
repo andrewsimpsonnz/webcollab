@@ -36,7 +36,7 @@ if($admin != 1 )
 if( ! isset($_GET["taskid"]) && ! is_numeric($_GET["taskid"]) )
   error("Task clone", "Taskid not set" );
 
-$taskid = $_GET["taskid"];
+$taskid = intval($_GET["taskid"]);
 
 $content = "";
 

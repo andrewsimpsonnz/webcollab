@@ -267,7 +267,7 @@ $q = db_query("SELECT tasks.id AS id,
 if( ! isset($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) || $_REQUEST["taskid"] == 0 )
   error( "Task list", "Not a valid value for taskid");
 
-$parentid = $_REQUEST["taskid"];
+$parentid = intval($_REQUEST["taskid"]);
 
 $projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=$parentid" ), 0, 0 );
 

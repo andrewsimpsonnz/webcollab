@@ -56,19 +56,20 @@ ignore_user_abort(TRUE);
       if( ! isset($_GET["userid"]) && ! is_numeric($_GET["userid"]) )
         error("User submit", "No userid was specified." );
 
-      $userid = $_GET["userid"];
+      $userid = intval($_GET["userid"]);
 
-      //undelete
-      db_query("UPDATE users SET deleted='f' WHERE id=$userid" );
+      if(db_result(db_query("SELECT COUNT(*) FROM users WHERE deleted='t' AND id=$userid" ), 0, 0 ) ) {
+        //undelete
+        db_query("UPDATE users SET deleted='f' WHERE id=$userid" );
 
-      //get the users' info
-      $q = db_query("SELECT name, fullname, email FROM users where id=$userid" );
-      $row = db_fetch_array($q, 0 );
+        //get the users' info
+        $q = db_query("SELECT name, fullname, email FROM users where id=$userid" );
+        $row = db_fetch_array($q, 0 );
 
-      //mail the user the happy news :)
-      $message = sprintf($email_revive, $row["name"], $row["fullname"] );
-      email($row["email"], $title_revive, $message );
-
+        //mail the user the happy news :)
+        $message = sprintf($email_revive, $row["name"], $row["fullname"] );
+        email($row["email"], $title_revive, $message );
+      }
       break;
 
 
@@ -181,9 +182,9 @@ ignore_user_abort(TRUE);
 
         //check for a userid
         if( ! isset($_POST["userid"]) || ! is_numeric($_POST["userid"]) )
-          error("User submit", "No userid specified ?");
+          error("User submit", "No userid specified");
 
-        $userid = $_POST["userid"];
+        $userid = intval($_POST["userid"]);
 
         //prohibit 2 people from choosing the same username
         if(db_result(db_query("SELECT COUNT(*) FROM users WHERE name='$name' AND NOT id=$userid", 0 ), 0, 0 ) > 0 )

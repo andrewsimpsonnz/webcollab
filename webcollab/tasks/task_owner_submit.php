@@ -43,7 +43,7 @@ function check($var ) {
 
   //validate as numeric
     if(is_numeric($var) )
-      return $var;
+      return intval($var);
   //catch all for weird inputs
   $var = 0;
 
@@ -131,7 +131,7 @@ ignore_user_abort(TRUE);
       if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
         error("Task submit", "You did not specify which task to complete" );
 
-      $taskid = $_GET["taskid"];
+      $taskid = intval($_GET["taskid"]);
 
       //check if the user has enough rights
       if( ($admin != 1 ) && (! user_access($taskid) ) )
@@ -150,7 +150,7 @@ ignore_user_abort(TRUE);
       if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"] ) )
         error("Task submit", "You did not specify which task to disown" );
 
-      $taskid = $_GET["taskid"];
+      $taskid = intval($_GET["taskid"]);
 
       //check if the user has enough rights
       if( ($admin != 1 ) && (db_result(db_query("SELECT COUNT(*) FROM tasks WHERE id=$taskid AND owner=$uid" ), 0, 0 ) < 1) )
@@ -167,7 +167,7 @@ ignore_user_abort(TRUE);
       if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
         error("Task submit", "You did not specify which task to take/own" );
 
-      $taskid = $_GET["taskid"];
+      $taskid = intval($_GET["taskid"]);
 
       //admin has no bounds checking
       //non-admins can only take non-owned tasks

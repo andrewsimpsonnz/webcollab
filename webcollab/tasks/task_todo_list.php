@@ -92,12 +92,12 @@ else
   $selection = "user";
 
 if(isset($_POST["userid"]) && is_numeric($_POST["userid"]) )
-  $userid = ($_POST["userid"]);
+  $userid = intval($_POST["userid"]);
 else
   $userid = $uid;
 
 if(isset($_POST["groupid"]) && is_numeric($_POST["groupid"]) )
-  $groupid = ($_POST["groupid"]);
+  $groupid = intval($_POST["groupid"]);
 else
   $groupid = 0;
 

@@ -32,7 +32,7 @@ require_once( BASE."includes/security.php" );
 if( ! isset($_GET["fileid"]) || ! is_numeric($_GET["fileid"]) )
   return;
 
-$fileid = $_GET["fileid"];
+$fileid = intval($_GET["fileid"]);
 
 //get the files info
 if( ! ($q = db_query("SELECT oid, filename, size, mime, taskid FROM files WHERE id=$fileid" ) ) )

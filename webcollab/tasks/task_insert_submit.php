@@ -43,7 +43,7 @@ function check($var ) {
 
   //validate as numeric
     if(is_numeric($var) )
-      return $var;
+      return intval($var);
   //catch all for weird inputs
   $var = 0;
 

@@ -61,7 +61,7 @@ $content .= "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n
 // add a new TASK
 if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
 
-  $parentid = $_GET["parentid"];
+  $parentid = intval($_GET["parentid"]);
 
 //get info about the parent of this task
   $q = db_query("SELECT name, deadline, status, owner, parent, projectid FROM tasks WHERE id=$parentid" );

@@ -38,7 +38,7 @@ include_once(BASE."includes/time.php" );
 if( ! isset( $_GET["taskid"]) || ! is_numeric($_GET["taskid"]) || $_GET["taskid"] == 0 )
   error("Task show", "Not a valid value for taskid" );
 
-$taskid = $_GET["taskid"];
+$taskid = intval($_GET["taskid"]);
 
 //check usergroup security
 require_once(BASE."includes/usergroup_security.php");

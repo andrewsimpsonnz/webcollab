@@ -47,11 +47,14 @@ $content =
                "<tr><td><label for=\"admin\">".$lang["is_admin"].":</label></td><td><input type=\"checkbox\" name=\"admin_rights\" id=\"admin\" /></td></tr>\n";
 
 //add user-groups
-$usergroup_q = db_query("SELECT name, id FROM usergroups ORDER BY name" );
+$q = db_query("SELECT name, id FROM usergroups ORDER BY name" );
+
 $content .=    "<tr><td>".$lang["usergroup"].":</td><td><select name=\"usergroup[]\" multiple size=\"4\">\n";
-for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
-  $content .=  "<option value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</option>";
+
+for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
+  $content .=  "<option value=\"".$row["id"]."\">".$row["name"]."</option>";
 }
+
 $content .=    "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
             "</table></p>\n".
             "<p><input type=\"submit\" value=\"".$lang["add"]."\" />&nbsp;".

@@ -146,7 +146,7 @@ $parent_array = NULL;
 if( ! isset($_POST["taskid"]) || ! is_numeric($_POST["taskid"] ) || $_POST["taskid"] == 0 )
   error("Project clone", "Not a valid value for taskid");
 
-$taskid = $_POST["taskid"];
+$taskid = intval($_POST["taskid"]);
 
 if( ! isset($_POST["name"]) )
   warning("Project clone", "Project name is not set" );

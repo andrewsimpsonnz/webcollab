@@ -33,14 +33,14 @@ require_once(BASE."includes/security.php" );
 if( ! isset( $_POST["contactid"] ) || ! is_numeric( $_POST["contactid"] ) )
   error("Contact engine", "Not a valid value for contactid");
 
-$contactid = $_POST["contactid"];
+$contactid = intval($_POST["contactid"]);
 
 //get contact information
 if( ! ($row = db_fetch_array( db_query( "SELECT * FROM contacts WHERE id=".$contactid ), 0 ) ) )
   error("Database value error", "There is no information for the contact that you specified");
 
 $content =
-    "<form method=\"POST\" action=\"contacts/contact_submit.php\">\n".
+    "<form method=\"POST\" action=\"contacts.php\">\n".
       "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" />\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".

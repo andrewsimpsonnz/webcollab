@@ -39,7 +39,7 @@ if( $admin != 1 )
 if( ! (isset($_GET["usergroupid"] ) && is_numeric($_GET["usergroupid"] ) ) )
   error("Usergroup edit", "Not a valid value for usergroupid." );
 
-$usergroupid = $_GET["usergroupid"];
+$usergroupid = intval($_GET["usergroupid"]);
 
 //get taskgroup information
 $q = db_query("SELECT * FROM usergroups WHERE id=$usergroupid" );
@@ -57,10 +57,10 @@ $content =
 //add users
 $user_q = db_query("SELECT fullname, id FROM users WHERE deleted='f' ORDER BY fullname" );
 $member_q = db_query("SELECT users.id AS id
-                            FROM users
-                            LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
-                            WHERE usergroupid=".$row["id"]."
-                            AND deleted='f'"  );
+                                              FROM users
+                                              LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
+                                              WHERE usergroupid=".$row["id"]."
+                                              AND deleted='f'"  );
 
 $content .=    "<tr><td>".$lang["members"]."</td><td><select name=\"member[]\" multiple=\"multiple\" size=\"4\">\n";
 
