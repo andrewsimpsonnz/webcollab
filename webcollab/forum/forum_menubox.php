@@ -43,8 +43,8 @@ $q = db_query("SELECT ".PRE."forum.taskid AS taskid,
                       ".PRE."tasks.usergroupid AS usergroupid
                     FROM ".PRE."forum 
                     LEFT JOIN ".PRE."tasks ON (".PRE."tasks.id=".PRE."forum.taskid)
-                    WHERE posted > ( now()-INTERVAL ".$delim.(NEW_TIME * 24 )." HOUR".$delim.")
-                    GROUP BY taskid 
+                    WHERE ".PRE."forum.posted > ( now()-INTERVAL ".$delim.NEW_TIME." DAY".$delim.")
+                    GROUP BY taskid, taskname, globalaccess, tasks.usergroupid
                     ORDER BY recentpost DESC" );
 
 //iterate for posts                            
@@ -73,7 +73,5 @@ if($list != "") {
   $content = "<small>".$list."<br />\nLast post ".nicedate($lastpost)."</small>\n";
   new_box("Recent forum posts", $content, "boxmenu" ); 
 }
-
-mysql_free_result($q);
 
 ?>
