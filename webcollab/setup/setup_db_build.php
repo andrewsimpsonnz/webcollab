@@ -62,6 +62,10 @@ include_once("./screen_setup.php" );
 
   case "mysql":
   case "mysql_innodb":
+    //check we can do mysql functions!!
+    if( ! function_exists('mysql_connect' ) )
+      error_setup( "Your version of PHP does not have support for MySQL<br /><br />".
+                   "Check that MySQL support is compiled in, and enabled in php.ini config file<br />" );
     //connect to database server
     if( ! ( $database_connection = @mysql_connect( $database_host, $database_user, $database_password ) ) ) {
       error_setup( "Cannot connect to a database server at $database_host<br /><br />".
@@ -125,6 +129,11 @@ include_once("./screen_setup.php" );
     break;
 
   case "postgresql":
+    //check we can do pgsql functions!!
+    if( ! function_exists('pg_connect' ) )
+      error_setup( "Your version of PHP does not have support for PostgreSQL<br /><br />".
+                   "Check that PostgreSQL support is compiled in, and enabled in php.ini config file<br />" );
+
     if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=".$database_name." password=".$database_password ) ) ) {
       //selected database doesn't exist - need to create it
 

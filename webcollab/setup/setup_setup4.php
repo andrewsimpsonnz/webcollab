@@ -143,22 +143,38 @@ switch($data["db_type"]) {
 
   case "mysql":
   case "mysql_innodb":
-    if( ! ($database_connection = @mysql_connect( $data["db_host"], $data["db_user"], $data["db_password"] ) ) ) {
-      $status = "<font color=\"red\"><b>Can't connect to specified database server!</b></font>";
+    //check we can do mysql functions!!
+    if( ! function_exists('mysql_connect' ) ) {
+      $status = "<font color=\"red\"><b>Fatal error: PHP does not have support for MySQL</b></font>";
       $flag = $flag + 10;
     }
     else {
-      if( ! @mysql_select_db($data["db_name"], $database_connection ) ) {
-        $status = "<font color=\"red\"><b>Can't connect to specified database!</b></font>";
+      //connect to db
+      if( ! ($database_connection = @mysql_connect( $data["db_host"], $data["db_user"], $data["db_password"] ) ) ) {
+        $status = "<font color=\"red\"><b>Can't connect to specified database server!</b></font>";
         $flag = $flag + 10;
+      }
+      else {
+        if( ! @mysql_select_db($data["db_name"], $database_connection ) ) {
+          $status = "<font color=\"red\"><b>Can't connect to specified database!</b></font>";
+          $flag = $flag + 10;
+        }
       }
     }
     break;
 
   case "postgresql":
-    if( ! @pg_connect("user=".$data["db_user"]." dbname=".$data["db_name"]." password=".$data["db_password"] ) ) {
-      $status = "<font color=\"red\"><b>Can't connect to specified database!</b></font>";
+    //check we can do postgresql functions!!
+    if( ! function_exists('pg_connect' ) ) {
+      $status = "<font color=\"red\"><b>Fatal error: PHP does not have support for PostgreSQL</b></font>";
       $flag = $flag + 10;
+    }
+    else {
+      //connect to db
+      if( ! @pg_connect("user=".$data["db_user"]." dbname=".$data["db_name"]." password=".$data["db_password"] ) ) {
+        $status = "<font color=\"red\"><b>Can't connect to specified database!</b></font>";
+        $flag = $flag + 10;
+      }
     }
     break;
 
@@ -179,7 +195,7 @@ $content .= "<tr><td></td><td><br /><b><u>Database Settings</u></b></td></tr>".
 
 $status = "<font color=\"green\"><b>OK !</b></font>";
 
-//check files directory exists 
+//check files directory exists
 if( ! is_writable($data["file_base"]) ) {
   $status = "<font color=\"blue\"><b>Directory either does not exist, or is not writable!</b></font>";
   $flag = $flag + 1;
@@ -255,7 +271,7 @@ else {
     $status = "<font color=\"blue\"><b>Warning errors in configuration.  Proceed with caution!</b></font>";
   }
   else{
-    $status = "<font color=\"green\"><b>No errors detected in the input configuration.</b></font>";
+    $status = "<font color=\"green\"><b>No errors detected in the input configuration. Press button to proceed.</b></font>";
   }
 }
 
