@@ -29,14 +29,16 @@
 */
 
 require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once(BASE."includes/security.php" );
+
+include_once(BASE."includes/details.php" );
 
 $content = "";
 
-if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
-  return;
+if( ! isset($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
+  error("File list", "The taskid input is not valid" ); 
 
-$taskid = intval($_GET["taskid"]);
+$taskid = intval($_REQUEST["taskid"]);
 
 //check usergroup security
 require_once( BASE."includes/usergroup_security.php" );
@@ -50,11 +52,9 @@ $q = db_query("SELECT files.oid AS oid,
                         files.mime AS mime,
                         files.description AS description,
                         files.uploader AS uploader,
-                        tasks.owner AS owner,
                         users.id AS userid,
                         users.fullname AS username
                         FROM files
-                        LEFT JOIN tasks ON (files.taskid=tasks.id)
                         LEFT JOIN users ON (users.id=files.uploader)
                         WHERE files.taskid=$taskid
                         ORDER BY uploaded" );
@@ -70,7 +70,7 @@ if(db_numrows($q ) != 0 ) {
     $content .= "<tr><td><a href=\"files.php?x=$x&amp;action=download&amp;fileid=".$row["id"]."\" target=\"filewindow\">".$row["filename"]."</a> <small>(".$row["size"].$lang["bytes"].") </small>";
 
     //owners of the file and admins have a "delete" option
-    if( ($admin == 1) || ($uid == $row["owner"] ) || ($uid == $row["uploader"] ) ) {
+    if( ($admin == 1) || ($uid == $taskid_row["owner"] ) || ($uid == $row["uploader"] ) ) {
       $content .= "&nbsp;<font class=\"textlink\">[<a href=\"files.php?x=$x&amp;action=submit_del&amp;fileid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm('".sprintf( $lang["del_file_javascript_sprt"], $row["filename"] )."' )\">".$lang["del"]."</a>]</font></td></tr>\n";
     } else
       $content .= "</td></tr>\n";
@@ -89,10 +89,6 @@ if(db_numrows($q ) != 0 ) {
 }
 
 $content .= "<font class=\"textlink\">[<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang["add_file"]."</a>]</font>";
-
-$type = "project";
-if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent=0 AND id=$taskid" ) ) == 0 )
-  $type = "task";
 
 new_box($lang["files_assoc_".$type], $content, "boxdata2" );
 

@@ -29,6 +29,7 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
+include_once(BASE."includes/details.php" );
 include_once(BASE."includes/time.php" );
 
 
@@ -46,24 +47,22 @@ require_once(BASE."includes/usergroup_security.php" );
 //
 function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
 
-  global $parent_array, $ul_flag, $admin, $x, $uid, $lang;
+  global $parent_array, $ul_flag, $admin, $x, $uid, $lang, $taskid_row;
 
   $ul_flag = 0;
 
   $q = db_query("SELECT forum.text AS text,
-                forum.id AS id,
-                forum.posted AS posted,
-                forum.userid AS postowner,
-                users.id AS userid,
-                users.fullname AS fullname,
-                tasks.owner AS taskowner
-                FROM forum
-                LEFT JOIN users ON (users.id=forum.userid)
-                LEFT JOIN tasks ON (tasks.id=forum.taskid )
-                WHERE forum.taskid=$taskid
-                AND forum.parent=$parentid
-                AND forum.usergroupid=$usergroupid
-                ORDER BY forum.posted" );
+                        forum.id AS id,
+                        forum.posted AS posted,
+                        forum.userid AS postowner,
+                        users.id AS userid,
+                        users.fullname AS fullname
+                        FROM forum
+                        LEFT JOIN users ON (users.id=forum.userid)
+                        WHERE forum.taskid=$taskid
+                        AND forum.parent=$parentid
+                        AND forum.usergroupid=$usergroupid
+                        ORDER BY forum.posted" );
 
   //check for any posts
   if(db_numrows($q ) < 1 ) {
@@ -91,7 +90,7 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
     $this_content .= "\">".$lang["reply"]."</a>]</font>\n";
 
     //owners of the thread, owners of the post and admins have a "delete" option
-    if( ($admin==1) || ($uid == $row["taskowner"] ) || ($uid == $row["postowner"] ) ) {
+    if( ($admin==1) || ($uid == $taskid_row["owner"] ) || ($uid == $row["postowner"] ) ) {
       $this_content .= " <font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=submit_del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm( '".$lang["confirm_del_javascript"]."' )\">".$lang["del"]."</a>]</font>";
     }
 
@@ -123,16 +122,13 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $parent_array[$i] = $row["parent"];
 }
 
-//get usergroup and check for globalaccess
-$q = db_query("SELECT usergroupid, globalaccess FROM tasks WHERE id=$taskid" );
-$row = db_fetch_array($q, 0 );
 
 //
 //public forums
 //
 
 //don't show public forum if task is set to private
-if($row["globalaccess"] == 't' ){
+if($taskid_row["globalaccess"] == 't' ){
 
   $content = "";
 
@@ -153,18 +149,19 @@ if($row["globalaccess"] == 't' ){
 //show all posts that are private to that task's user-group if you are within the group (so AND user AND task have to belong to the same group)
 
 //dont show private forums if the task has not yet been assigned to a usergroup
-if($row["usergroupid"] != 0 ) {
+if($taskid_row["usergroupid"] != 0 ) {
 
   $content = "";
 
-  if(in_array($row["usergroupid"], (array)$gid ) || $admin == 1 ) {
+  if(in_array($taskid_row["usergroupid"], (array)$gid ) || $admin == 1 ) {
 
-    $content .= list_posts_from_task(0, $taskid, $row["usergroupid"] );
+    $content .= list_posts_from_task(0, $taskid, $taskid_row["usergroupid"] );
     if($ul_flag == 1 )
       $content .= "</ul>\n<br />\n";
     //add an option to add posts
-    $usergroup_name = db_result( db_query("SELECT name FROM usergroups WHERE id=".$row["usergroupid"] ), 0, 0 );
-    $content .= "<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=".$row["usergroupid"]."&amp;\">".$lang["new_post"]."</a>]</font>";
+    $content .= "<font class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=".$taskid_row["usergroupid"]."&amp;\">".$lang["new_post"]."</a>]</font>";
+    //get usergroup
+    $usergroup_name = db_result(db_query("SELECT name FROM usergroups WHERE id=".$taskid_row["usergroupid"] ), 0, 0 );
     //show it
     new_box(sprintf($lang["private_forum_sprt"], $usergroup_name ), $content, "boxdata2" );
   }

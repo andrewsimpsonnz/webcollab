@@ -27,7 +27,7 @@
 */
 
 require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once(BASE."includes/security.php" );
 
 //secure variables
 $content  = "";
@@ -38,26 +38,13 @@ $clone = "";
 if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
   $taskid = intval($_GET["taskid"]);
+  
+  include_once(BASE."includes/details.php" );
 
-  if( ($admin == 1 ) || (@db_result(db_query("SELECT COUNT(*) FROM tasks WHERE id=$taskid AND owner=$uid" ), 0, 0 ) ) ) {
-
-    $q = db_query("SELECT name, parent FROM tasks WHERE id=$taskid" );
-    $row = db_fetch_array($q, 0 );
-
-    switch($row["parent"]) {
-      case 0:
-        $type = "project";
-        break;
-
-      default:
-        $type = "task";
-        break;
-    }
-
-
+  if(($admin == 1 ) || ($taskid_row["owner"] == $uid ) ) {
     $content .= "<small><b>".$lang["admin"].":</b></small><br />\n".
                 "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_$type"]."</a><br />\n".
-                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onClick=\"return confirm( '".sprintf($lang["del_javascript_".$type."_sprt"], $row["name"] )."')\">".$lang["delete_$type"]."</a><br />\n".
+                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onClick=\"return confirm( '".sprintf($lang["del_javascript_".$type."_sprt"], $taskid_row["name"] )."')\">".$lang["delete_$type"]."</a><br />\n".
                 "<br /><small><b>".$lang["global"].":</b></small><br />\n";
   }
   $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=$taskid\">".$lang["add_task"]."</a><br />\n";

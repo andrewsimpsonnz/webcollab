@@ -31,6 +31,7 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
+include_once(BASE."includes/details.php" );
 include_once(BASE."includes/admin_config.php" );
 include_once(BASE."includes/time.php" );
 
@@ -53,81 +54,75 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
 //
 //check user access
 //
-function user_access($taskid ) {
+function user_access($owner, $usergroupid, $groupaccess ) {
 
   global $uid, $gid, $admin;
 
   if($admin == 1)
     return TRUE;
 
-  $q = db_query("SELECT owner, usergroupid, groupaccess FROM tasks WHERE id=$taskid" );
-  $row = db_fetch_num($q, 0 );
-
-  if($row[0] == $uid )
+  if($owner == $uid )
     return TRUE;
 
-  if($row[1] == 0 )
+  if($usergroupid == 0 )
     return FALSE;
 
-  if( $row[2] == "t" ) {
+  if( $groupaccess == "t" ) {
     if(in_array($row[1], (array)$gid ) )
       return TRUE;
   }
   return FALSE;
 }
 
-//check for valid integer
-if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) || $_GET["taskid"] == 0 )
-  error("Task edit", "Not a valid value for taskid.");
+//set variable
+$content = "";
+
+if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
+  error("Task edit", "The taskid input is not valid" ); 
 
 $taskid = intval($_GET["taskid"]);
 
-// can this user edit this task ?
-if( ! user_access($taskid ) )
+//can this user edit this task ?
+if( ! user_access($taskid_row["owner"], $taskid_row["usergroupid"], $taskid_row["groupaccess"] ) )
   warning($lang["access_denied"], $lang["no_edit"] );
+  
+  
+//get parent details - if any
+$q = db_query("SELECT name, ".$epoch."deadline) AS deadline FROM tasks WHERE id=".$taskid_row["projectid"] );
+$parent_row = db_fetch_array($q, 0 );
 
-//get all the needed info from the task
-$q = db_query("SELECT * FROM tasks WHERE id=$taskid" );
-
-//get info
-if( ($row = db_fetch_array($q, 0 ) ) < 0 )
-  error("Database error", "Unable to retrieve the needed information.");
-
- if($row["parent"] != 0 ) 
-   $javascript = "onsubmit= \"return dateCheck()\" ";
+//add javascript for date checking
+if($taskid_row["parent"] != 0 ) 
+  $javascript = "onsubmit= \"return dateCheck()\" ";
   
 //all okay show task info
-$content = "";
-
 $content .= "<form method=\"POST\" action=\"tasks.php\" $javascript>\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"submit_update\" />\n ".
-            "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\" />";
+            "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid_row["id"]."\" />";
             
 //add project deadline for javascript where applicable
-if($row["parent"] != 0 ){
-  $project_deadline = db_result(db_query("SELECT ".$epoch."deadline) FROM tasks WHERE id=".$row["projectid"] ) ) + (int)date("Z");
-  $content .=  "<input type=\"hidden\" name=\"projectDate\" value=\"$project_deadline\" />\n";            
+if($taskid_row["parent"] != 0 ){
+  $content .=  "<input type=\"hidden\" name=\"projectDate\" value=\"".$parent_row["deadline"]."\" />\n";            
 }
               
 $content .=  "<p><table border=\"0\">\n".
-            "<tr><td>".$lang["creation_time"]."</td><td>".nicedate($row["created"] )."</td></tr>\n";
+            "<tr><td>".$lang["creation_time"]."</td><td>".nicedate($taskid_row["created"] )."</td></tr>\n";
            
 //select either project or task for text
-switch($row["parent"] ) {
+switch($taskid_row["parent"] ) {
   case 0:
     //project
     $type = "project";
     //project input box
-    $content .= "<tr><td>".$lang["project_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\" /></td></tr>\n";
+    $content .= "<tr><td>".$lang["project_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$taskid_row["name"]."\" /></td></tr>\n";
     break;
 
   default:
     //task
     $type = "task";
     //show project name
-    $project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
-    $content .= "<tr><td>".$lang["project"] .":</td><td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["projectid"]."\">$project</a></td></tr>\n";
+    $content .= "<tr><td>".$lang["project"] .":</td><td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$taskid_row["projectid"]."\">".$parent_row["name"]."</a></td></tr>\n";
     break;
 }
 
@@ -136,7 +131,7 @@ $content .= "<tr><td>".$lang["parent_task"].":</td><td><select name=\"parentid\"
 $parentq = db_query("SELECT id, name, usergroupid, globalaccess FROM tasks WHERE id<>$taskid ORDER BY name");
 $content .= "<option value=\"0\"";
 
-if($row["parent"] == 0 )
+if($taskid_row["parent"] == 0 )
   $content .= " SELECTED";
 $content .= ">".$lang["no_reparent"]."</option>\n";
 
@@ -149,22 +144,22 @@ for( $i=0; $parent_row = @db_fetch_array($parentq, $i ); $i++) {
   }
 
   $content .= "<option value=\"".$parent_row["id"]."\"";
-  if($row["parent"] == $parent_row["id"] )
+  if($taskid_row["parent"] == $parent_row["id"] )
     $content .= " SELECTED";
   $content .= ">".$parent_row["name"]."</option>\n";
   }
 $content .="</select></td></tr>\n";
 
 //show task (if applicable)
-if($row["parent"] != 0 )
-  $content .= "<tr><td>".$lang["task_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\" /></td></tr>\n";
+if($taskid_row["parent"] != 0 )
+  $content .= "<tr><td>".$lang["task_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$taskid_row["name"]."\" /></td></tr>\n";
 
 //deadline
-$content .= "<tr><td>".$lang["deadline"].":</td><td>".date_select_from_timestamp($row["deadline"])."</td></tr>\n";
+$content .= "<tr><td>".$lang["deadline"].":</td><td>".date_select_from_timestamp($taskid_row["deadline"])."</td></tr>\n";
 
 //priority
 
-  switch($row["priority"] ) {
+  switch($taskid_row["priority"] ) {
       case "0":
       $s1 = "SELECTED"; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
       break;
@@ -197,10 +192,10 @@ $content .= "<tr><td>".$lang["priority"].":</td><td>\n".
             "<option value=\"4\"$s5>".$task_state["yesterday"]."</option>\n".
             "</select></td></tr>\n";
 
-switch($row["parent"] ){
+switch($taskid_row["parent"] ){
   case 0:
     //status for projects - 'done' is calculated from tasks
-    switch($row["status"] ) {
+    switch($taskid_row["status"] ) {
       case "notactive":
         $s1 = " SELECTED"; $s2 = ""; $s3 = ""; $s4 = "";
         break;
@@ -229,7 +224,7 @@ switch($row["parent"] ){
 
     default:
       //status for tasks
-      switch($row["status"] ) {
+      switch($taskid_row["status"] ) {
         case "notactive":
           $s1 = ""; $s2 = " SELECTED"; $s3 = ""; $s4 =""; $s5 = "";
           break;
@@ -276,7 +271,7 @@ for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++) {
     
   $content .= "<option value=\"".$user_row["id"]."\"";
 
-  if( $row["owner"] == $user_row["id"] )
+  if( $taskid_row["owner"] == $user_row["id"] )
     $content .= " SELECTED";
 
   $content .= ">".$user_row["fullname"]."</option>\n";
@@ -286,7 +281,7 @@ $content .= "</SELECT></td></tr>\n";
 
 
 //show a selection box with the Taskgroups
-if($row["parent"] != 0 ){
+if($taskid_row["parent"] != 0 ){
 
   //get all users in order to show a task owner
   $taskgroup_q = db_query("SELECT id, name FROM taskgroups ORDER BY name" );
@@ -297,7 +292,7 @@ if($row["parent"] != 0 ){
 
     $content .= "<option value=\"".$user_row["id"]."\"";
 
-    if($row["taskgroupid"] == $user_row["id"] )
+    if($taskid_row["taskgroupid"] == $user_row["id"] )
       $content .= " SELECTED";
 
     $content .= ">".$user_row["name"]."</option>\n";
@@ -321,7 +316,7 @@ for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
 
   $content .= "<option value=\"".$usergroup_row["id"]."\"";
 
-    if( $row["usergroupid"] == $usergroup_row["id"] )
+    if( $taskid_row["usergroupid"] == $usergroup_row["id"] )
       $content .= " SELECTED >\n";
     else
       $content .= ">\n";
@@ -332,17 +327,17 @@ for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
 $content .= "</select></td></tr>\n";
 
 $global = "";
-if($row["globalaccess"] == 't' )
+if($taskid_row["globalaccess"] == 't' )
   $global = "CHECKED";
 
 $group = "";
-if($row["groupaccess"] == 't' )
+if($taskid_row["groupaccess"] == 't' )
   $group = "CHECKED";
 
 $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users_view"]."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" $global /></td></tr>\n".
              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" $group /></td></tr>\n".
 
-             "<tr> <td>".$lang[$type."_description"]."</td> <td><TEXTAREA name=\"text\" rows=\"5\" cols=\"60\">".$row["text"]."</TEXTAREA></td> </tr>\n".
+             "<tr> <td>".$lang[$type."_description"]."</td> <td><TEXTAREA name=\"text\" rows=\"5\" cols=\"60\">".$taskid_row["text"]."</TEXTAREA></td> </tr>\n".
 
              //do we need to email ?
              "<tr><td><label for=\"mailowner\">".$lang["email_new_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" $DEFAULT_OWNER /></label></td></tr>\n".
@@ -357,8 +352,8 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
 $content .= "<br /><br />\n<form method=\"POST\" action=\"tasks.php\">\n".
              "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
              "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
-             "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\" />\n".
-             "<input type=\"submit\" value=\"".$lang["delete_$type"]."\" onClick=\"return confirm('".sprintf($lang["del_javascript_".$type."_sprt"], $row["name"] )."')\" />\n".
+             "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid_row["id"]."\" />\n".
+             "<input type=\"submit\" value=\"".$lang["delete_$type"]."\" onClick=\"return confirm('".sprintf($lang["del_javascript_".$type."_sprt"], $taskid_row["name"] )."')\" />\n".
              "</form>\n";
 
 new_box($lang["edit_$type"], $content );

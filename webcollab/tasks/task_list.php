@@ -28,7 +28,9 @@
 */
 
 require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once(BASE."includes/security.php" );
+
+include_once(BASE."includes/details.php" );
 
 //init values
 $content = "";
@@ -133,26 +135,28 @@ $q = db_query("SELECT tasks.id AS id,
     $this_content .= "<li>";
 
     //have you seen this task yet ?
-    $seenq = db_query("SELECT  $epoch time) FROM seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" );
+    $seen_test = db_query("SELECT COUNT(*) FROM seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" );
 
     //don't show alert content for changes more than $NEW_TIME (in seconds)
     if( ($row["now"] - max($row["edited"], $row["lastpost"], $row["lastfileupload"] ) ) > 86400*$NEW_TIME ) {
 
       //task is over limit in $NEW_TIME and still not looked at by you, mark it as seen, and move on...
-      if( (db_numrows( $seenq ) ) < 1 )
+      if( $seen_test < 1 )
         db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, ".$row["id"].", now() ) " );
     }
     //task has changed since last seen - show the changes to you
     else {
 
-      switch(db_numrows($seenq ) ) {
-        case "0":
+      switch($seen_test ) {
+        case 0:
           //new and never visited by this user
           //$alert_content .= "<img border=\"0\" src=\"images/new.gif\" height=\"12\" width=\"31\" alt =\"new\" />";
           $alert_content .= "<font class=\"new\">".$lang["new_g"]."</font>&nbsp;";
           break;
 
         default:
+          $seenq = db_query("SELECT  $epoch time) FROM seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" );
+
           //check if edited since last visit
           $seen = db_result($seenq, 0, 0 );
           if( ($seen - $row["edited"] ) < 0 ) {
@@ -269,10 +273,8 @@ if( ! isset($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) || $_REQUE
 
 $parentid = intval($_REQUEST["taskid"]);
 
-$projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=$parentid" ), 0, 0 );
-
 //check for private usergroup projects
-$q = db_query("SELECT usergroupid, globalaccess FROM tasks WHERE id=$projectid" );
+$q = db_query("SELECT usergroupid, globalaccess FROM tasks WHERE id=".$taskid_row["projectid"] );
 $row = db_fetch_num($q, 0 );
 
 if( ($admin != 1) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
@@ -283,7 +285,7 @@ if( ($admin != 1) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
 }
 
 //find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query
-$parent_query = db_query("SELECT DISTINCT parent FROM tasks WHERE projectid=$projectid" );
+$parent_query = db_query("SELECT DISTINCT parent FROM tasks WHERE projectid=".$taskid_row["projectid"] );
 $parent_array = NULL;
 for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; $i++ ) {
   $parent_array[$i] = $row["parent"];

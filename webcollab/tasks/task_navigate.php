@@ -34,43 +34,38 @@ $content  = "";
 
 //existing task or project
 if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
+
   $taskid = intval($_GET["taskid"]);
 
-  // get task details
-  $q = db_query("SELECT name, projectid, parent FROM tasks WHERE id=$taskid" );
-
-  //get the data
-  if( ! $row = db_fetch_array($q, 0) )
-    error("Task navigate", "The requested item has either been deleted, or is now invalid.");
-
+  include_once(BASE."includes/details.php" );
+  
   //get project name (limited to 20 characters)
-  $project_name = substr(db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 ), 0, 20);
-
+  $project_name = substr(db_result(db_query("SELECT name FROM tasks WHERE id=".$taskid_row["projectid"] ), 0, 0 ), 0, 20);
   $content .= "<small><b>".$lang["project"].":</b></small><br />\n";
 
-  switch( $row["parent"] ) {
+  switch($taskid_row["parent"] ) {
 
     case "0":
       //project
       $content .= "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />$project_name<br />\n";
       break;
 
-    case ($row["projectid"] ):
+    case ($taskid_row["projectid"] ):
       //task under project
-      $task_name = substr($row["name"], 0, 20 );
-      $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["projectid"]."\">$project_name</a><br />\n".
+      $task_name = $project_name;
+      $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$taskid_row["projectid"]."\">$project_name</a><br />\n".
                   "<small><b>".$lang["task"].":</b></small><br />\n".
                   "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />$task_name<br />\n";
       break;
 
     default:
       //task with parent task
-      $parent_name = substr(db_result(db_query("SELECT name FROM tasks WHERE id=".$row["parent"] ), 0, 0 ), 0, 20);
-      $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["projectid"]."\">$project_name</a><br />\n".
+      $parent_name = substr(db_result(db_query("SELECT name FROM tasks WHERE id=".$taskid_row["parent"] ), 0, 0 ), 0, 20);
+      $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$taskid_row["projectid"]."\">$project_name</a><br />\n".
                   "<small><b>".$lang["parent_task"].":</b></small><br />\n".
-                  "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["parent"]."\">$parent_name</a><br />\n".
+                  "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$taskid_row["parent"]."\">$parent_name</a><br />\n".
                   "<small><b>".$lang["task"].":</b></small><br />\n".
-                  "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".$row["name"]."<br />\n";
+                  "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".$taskid_row["name"]."<br />\n";
       break;
 
   }
