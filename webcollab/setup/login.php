@@ -34,7 +34,7 @@ include_once("../config.php" );
 function secure_error($reason ) {
 
   create_top_setup("Error", 1 );
-  new_box_setup("Error", "<CENTER><BR>".$reason."<BR></CENTER>" );
+  new_box_setup("Error", "<center><br />".$reason."<br /></center>" );
   create_bottom_setup();
   die;
 
@@ -98,23 +98,21 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
 
 create_top_setup("Login", 1 );
 
-$content = "<CENTER>";
+$content = "<center>";
 
-$content .= "<BR>Admin login is required for setup:<BR><BR>\n".
-           "<FORM name=\"inputform\" method=\"POST\" action=\"login.php\">\n".
-           "<TABLE border=\"0\">\n".
-           "<TR><TD>Login: </TD><TD><INPUT type=\"text\" name=\"username\" size=\"30\"></TD></TR>\n".
-           "<TR><TD>Password: </TD><TD><INPUT type=\"password\" name=\"password\" value=\"\" size=\"30\"></TD></TR>\n".
-           "</TABLE>".
-           "<INPUT type=\"submit\" value=\"Login\"><BR><BR>\n".
-
-           "<DIV align=\"center\">".
-           "<BR><BR>\n".
-           "</DIV>".
-           "</FORM>".
-
-           "</CENTER>".
-           "<BR>";
+$content .= "<br />Admin login is required for setup:<br /><br />\n".
+           "<form name=\"inputform\" method=\"POST\" action=\"login.php\">\n".
+             "<table border=\"0\">\n".
+               "<tr><td>Login: </td><td><INPUT type=\"text\" name=\"username\" size=\"30\"></td></tr>\n".
+               "<tr><td>Password: </td><td><INPUT type=\"password\" name=\"password\" value=\"\" size=\"30\"></td></tr>\n".
+             "</table>".
+             "<input type=\"submit\" value=\"Login\"><br /><br />\n".
+             "<div align=\"center\">".
+             "<br /><br />\n".
+             "</div>".
+             "</form>".
+           "</center>".
+           "<br />";
 
 //set box options
 new_box_setup("Login", $content, "400" );

@@ -47,40 +47,40 @@ function create_top_setup($title="", $no_menu=0 ) {
 
   ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML>
+<html>
 
 <!-- (c) 2002 - 2003 Andrew Simpson -->
 
 
-<HEAD>
-  <TITLE><?php echo $title ?></TITLE>
-  <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <LINK REL="StyleSheet" HREF=../css.css TYPE="text/css">
-</HEAD>
+<head>
+  <title><?php echo $title ?></TITLE>
+  <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+  <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+  <link REL="StyleSheet" HREF=../css.css TYPE="text/css">
+</head>
 
-<BODY>
+<body>
 
 <?php /* Main table init */ ?>
-<TABLE cellspacing="0" cellpadding="0" border="0" width="100%" align="center">
+<table cellspacing="0" cellpadding="0" border="0" width="100%" align="center">
 
   <?php
 
   //create the info part of the main window
-  echo "<TR>\n<TD bgcolor=\"#000000\" colspan=\"2\" align=\"center\" valign=\"top\">\n";
-  echo "<TABLE border=\"0\" width=\"100%\"><TR><TD align=\"left\" bgcolor=\"#000000\">\n";
+  echo "<tr>\n<td bgcolor=\"#000000\" colspan=\"2\" align=\"center\" valign=\"top\">\n";
+  echo "<table border=\"0\" width=\"100%\"><tr><td align=\"left\" bgcolor=\"#000000\">\n";
 
-  echo "</TD><TD bgcolor=\"#000000\" align=\"right\">\n";
-  echo "<FONT color=\"#FFFFFF\"><SMALL>(c) 2003</SMALL>\n</FONT>\n</TD>\n</TR>";
+  echo "</td><td bgcolor=\"#000000\" align=\"right\">\n";
+  echo "<font color=\"#FFFFFF\"><small>(c) 2003</small>\n</font>\n</td>\n</tr>";
 
-  echo "</TABLE></TD></TR>\n";
+  echo "</table></td></tr>\n";
 
 
   //if we choose to have only one space, we center it in stead of pushing it to the left
   if( $no_menu == 0 )
-    echo "<TR valign=\"top\"><TD width=\"175\" align=\"center\">";
+    echo "<tr valign=\"top\"><td width=\"175\" align=\"center\">";
   else
-    echo "<TR valign=\"top\"><TD width=\"100%\" align=\"center\">";
+    echo "<tr valign=\"top\"><td width=\"100%\" align=\"center\">";
 
 }
 
@@ -92,13 +92,13 @@ function create_top_setup($title="", $no_menu=0 ) {
 function create_bottom_setup() {
 
   //clean
-  echo "<BR>";
+  echo "<br />";
 
   //end the main table
-  echo "</TD></TR></TABLE>";
+  echo "</td></tr></table>";
 
   //end xml parsing
-  echo "\n</BODY>\n</HTML>\n";
+  echo "\n</body>\n</html>\n";
 
 }
 
@@ -109,17 +109,17 @@ function new_box_setup( $title, $content, $width="97%" ) {
 
 
   echo "\n<!-- start of ".$title."-box -->";
-  echo "\n<BR>";
+  echo "\n<br />";
 
   echo "
-  <TABLE border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"".$width."\">
-    <TR>
-      <TD bgcolor=\"#1E4B79\" align=\"left\"><FONT color=\"white\"><B>".$title."</B></FONT></TD>
-    </TR>
-    <TR>
-      <TD bgcolor=\"#FFFFFF\" align=\"left\">\n".$content."\n</TD>
-    </TR>
-  </TABLE>\n <!-- end -->\n";
+  <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"".$width."\">
+    <tr>
+      <td bgcolor=\"#1E4B79\" align=\"left\"><FONT color=\"white\"><b>".$title."</b></font></td>
+    </tr>
+    <tr>
+      <td bgcolor=\"#FFFFFF\" align=\"left\">\n".$content."\n</td>
+    </tr>
+  </table>\n <!-- end -->\n";
 }
 
 ?>
