@@ -53,9 +53,11 @@ include_once(BASE."setup/screen_setup.php" );
 
   if(isset($_POST["database_password"] ) ) {
     $database_password = $_POST["database_password"];
-  else
+  }
+  else {
     $database_password = "";
-  
+  }
+    
   if( isset($_POST["database_host"] ) ) {
     $database_host = $_POST["database_host"];
   }
