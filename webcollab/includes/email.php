@@ -373,7 +373,7 @@ function email($to, $subject, $message ) {
                     "Reply-To: ".$EMAIL_REPLY_TO."\r\n",
                     "Subject: ".$subject,
                     "Message-Id: <".$uniq_id."@".$_SERVER["SERVER_NAME"].">\r\n",
-                    "X-Mailer: PHP/" . phpversion()."\r\n",
+                    "X-Mailer: WebCollab (PHP/" . phpversion().")\r\n",
                     "X-Priority: 3\r\n",
                     "X-Sender: ".$EMAIL_REPLY_TO."\r\n",
                     "Return-Path: <".$EMAIL_REPLY_TO.">\r\n",
