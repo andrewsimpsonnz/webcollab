@@ -79,9 +79,9 @@ function nicetime($timestamp, $addtime=0 ) {
   $minutes = abs(TZ - floor(TZ)) * 60;
   
   if(TZ >= 0 )
-    $offset = sprintf("+%02d%02d", TZ, $minutes );
+    $offset = sprintf("+%02d%02d", floor(TZ), $minutes );
   else
-    $offset = sprintf("%03d%02d", TZ, $minutes );
+    $offset = sprintf("%03d%02d", floor(TZ), $minutes );
   
   //format is 2004-Aug-02 18:06 +1200 
   return date("Y-", $local).$month_array[(date("n", $local))].date("-d H:i ", $local).$offset;
