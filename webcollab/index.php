@@ -41,29 +41,41 @@ function secure_error( $reason = "Unauthorised area" ) {
   new_box($lang["error"], "<CENTER><BR>".$reason."<BR></CENTER>" );
   create_bottom();
   die;
-   
+
 }
 
 
 //valid login attempt ?
-if( isset($_POST["username"]) && isset($_POST["password"]) && valid_string($_POST["username"]) && valid_string($_POST["password"]) ) {
-  
-  $q="";
-  $md5pass="";
-  $admin=0;
-  
+if( (isset($_POST["username"]) && isset($_POST["password"]) && valid_string($_POST["username"]) && valid_string($_POST["password"]) )
+   || (isset($_SERVER["REMOTE_USER"]) ) ) {
+
+  $q = "";
+  $login_q ="";
+  $auth = FALSE;
+
   include_once "includes/database.php";
 
-  //protect database against attack
-  if(! get_magic_quotes_gpc() ) {
-    $_POST["username"] = addslashes($_POST["username"]);
+  if(isset($WEB_AUTH ) && isset($_SERVER["REMOTE_USER"]) ){
+    if($WEB_AUTH == "Y" )
+      $auth = TRUE;
   }
 
-  $md5pass = md5( $_POST["password"] );
+  if($auth){
+    $login_q = "SELECT id FROM users WHERE deleted='f' AND name='".$_SERVER["REMOTE_USER"]."'";
+  }
+  else{
+    //encrypt password
+    $md5pass = md5( $_POST["password"] );
+    //protect database against attack
+    if(! get_magic_quotes_gpc() ) {
+      $_POST["username"] = addslashes($_POST["username"]);
+    }
+    $login_q = "SELECT id FROM users WHERE deleted='f' AND name='".$_POST["username"]."' AND password='".$md5pass."'";
+  }
 
   //no database connection
-  if( ! ($q = db_query( "SELECT id FROM users WHERE deleted='f' AND name='".$_POST["username"]."' AND password='".$md5pass."'"  ) ) ) {
-    secure_error("No database connection, no point in logging in and no way to verify");
+  if( ! ($q = db_query($login_q ) ) ) {
+    secure_error("No database connection, not able to login to verify username");
   }
 
   //no such user-password combination
