@@ -43,7 +43,7 @@ switch(DATABASE_TYPE ) {
         break;
 
       case -1:
-      default:
+      default:    
         include(BASE."database/pgsql_old_database.php" );
         break;
     }
