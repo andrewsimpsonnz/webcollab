@@ -50,12 +50,12 @@ if( ! isset($_POST["group"]) )
 if( ! isset($_POST["message"] ) || strlen($_POST["message"] ) == 0 )
   warning($lang["admin_email"], $lang["no_message"] );
 
-//wordwrap and clean out nasty stuff
-$message = wordwrap(clean($_POST["message"], 100 ) );
+//wordwrap
+$message = wordwrap($_POST["message"], 100 );
 
 //subject
 if(isset($_POST["subject"] ) )
-  $subject = clean($_POST["subject"] );
+  $subject = $_POST["subject"];
 else
   $subject = "";
 

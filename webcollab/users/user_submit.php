@@ -67,8 +67,8 @@ ignore_user_abort(TRUE);
       $row = db_fetch_array($q, 0 );
 
       //mail the user the happy news :)
-      $message = trans(sprintf( $email_revive, $MANAGER_NAME, date("F j, Y, H:i"), $row["name"], $row["fullname"], $EMAIL_ADMIN ) );
-      email( $row["email"], $title_revive, $message );
+      $message = sprintf($email_revive, $MANAGER_NAME, date("F j, Y, H:i"), $row["name"], $row["fullname"], $EMAIL_ADMIN );
+      email($row["email"], $title_revive, $message );
 
       break;
 
@@ -144,8 +144,8 @@ ignore_user_abort(TRUE);
         $usergroup_names = $lang["not_usergroup"]."\n";
       if($admin_rights == "t" )
         $admin_state = $lang["admin_priv"]."\n";
-      $message = trans(sprintf($email_welcome, $MANAGER_NAME, date("F j, Y, H:i"), $EMAIL_ADMIN, $name, $password,$usergroup_names,
-                  $fullname, $BASE_URL, $admin_state ) );
+      $message = sprintf($email_welcome, $MANAGER_NAME, date("F j, Y, H:i"), $EMAIL_ADMIN, $name, $password,$usergroup_names,
+                  $fullname, $BASE_URL, $admin_state );
       email($email, $title_welcome, $message );
 
       break;
@@ -244,8 +244,8 @@ ignore_user_abort(TRUE);
           $admin_state = $lang["admin_priv"]."\n";
         //email the changes to the user
         //$useremail and $username are in security.php
-        $message = trans(sprintf($email_user_change1, $MANAGER_NAME, date("F j, Y, H:i"), $username, $useremail, $name,
-                $password, $usergroup_names, $fullname, $admin_state ) );
+        $message = sprintf($email_user_change1, $MANAGER_NAME, date("F j, Y, H:i"), $username, $useremail, $name,
+                $password, $usergroup_names, $fullname, $admin_state );
         email($email, $title_user_change1, $message );
 
       }
@@ -267,7 +267,7 @@ ignore_user_abort(TRUE);
                             WHERE id=$uid" );
 
           //email the changes to the user
-          $message = trans(sprintf($email_user_change2, $MANAGER_NAME, date("F j, Y, H:i"), $name, $password, $fullname ) );
+          $message = sprintf($email_user_change2, $MANAGER_NAME, date("F j, Y, H:i"), $name, $password, $fullname );
           email($email, $title_user_change2, $message );
         }
         else {
@@ -279,7 +279,7 @@ ignore_user_abort(TRUE);
                             WHERE id=$uid" );
 
           //email the changes to the user
-          $message = trans(sprintf( $email_user_change3, $MANAGER_NAME, date("F j, Y, H:i"), $name, $fullname ) );
+          $message = sprintf( $email_user_change3, $MANAGER_NAME, date("F j, Y, H:i"), $name, $fullname );
           email( $email, $title_user_change3, $message );
         }
       }

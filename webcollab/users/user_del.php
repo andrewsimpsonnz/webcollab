@@ -101,7 +101,7 @@ else {
 
   //mail the user that he/she had been deleted
   include_once(BASE."lang/lang_email.php" );
-  $message = trans(sprintf($email_delete_user, $MANAGER_NAME, date("F j, Y, H:i"), $EMAIL_ADMIN ) );
+  $message = sprintf($email_delete_user, $MANAGER_NAME, date("F j, Y, H:i"), $EMAIL_ADMIN );
   email($email, $title_delete_user, $message );
 }
 
