@@ -66,6 +66,6 @@ $calendar_key       =  "<i>Към Меню</i></a>]</b><br />\n".
                           "<font color=\"blue\">Проект (с незавършени задачи)</font><br />\n".
                           "<font color=\"green\"><u>Проект </u>(напълно завършен)</font><br />\n".
                           "<font color=\"red\">Задача (незавършена)</font><br />\n".
-                          "<font color=\"green\">Задача (завършена)</font><br />\n";
+                          "<font color=\"green\">Задача (завършена)</font><br /></p>\n";
 
 ?>
