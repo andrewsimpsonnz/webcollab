@@ -58,7 +58,7 @@ function listTasks( $task_id ) {
   if( !$q_tasks or db_numrows( $q_tasks ) == 0)
     return;
 
-   $content = "<UL>";
+   $content = "<DD><UL>";
 
    for( $iter=0 ; $task_row = @db_fetch_array($q_tasks, $iter ) ; $iter++) {
 
@@ -84,14 +84,14 @@ function listTasks( $task_id ) {
      default:
       //check if late
       if( ($task_row["now"] - $task_row["task_due"] ) >= 86400 ) {
-        $status = "&nbsp;<img border=\"0\" src=\"images/late.gif\" height=\"9\" width=\"23\">";
+        $status = "&nbsp;<img border=\"0\" src=\"images/late.gif\" height=\"9\" width=\"23\" alt=\"late\">";
       }
       break;
     }
-    $content .= "<A HREF=\"tasks.php?x=".$x."&action=show&taskid=".$task_row["id"]."\">".$task_row["name"]."</A> &nbsp;".$status;
+    $content .= "<A HREF=\"tasks.php?x=".$x."&action=show&taskid=".$task_row["id"]."\">".$task_row["name"]."</A> &nbsp;".$status."\n";
     $content .= "</LI>\n";
   }
-  $content .= "</UL>";
+  $content .= "</UL></DD>";
   return $content;
 }
 
@@ -102,7 +102,7 @@ function listTasks( $task_id ) {
 //
 
 //some inital make-nice code
-$content = "<UL><BR>";
+$content = "";
 $flag = 0;
 $usergroup[0] = 0;
 
@@ -145,12 +145,15 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   //to indicate that there are viewable projects
   $flag = 1;
 
+  //start list
+  $content .= "<BR><DL>";
+  
   //show name and a link
-  $content .= "<A href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\"><B>".$row["name"]."</B></A>\n";
+  $content .= "<DD><A href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\"><B>".$row["name"]."</B></A></DD>\n";
 
   // Show a nice %-of-tasks-completed bar
   $percent_complete = round(percent_complete($row["id"]));
-  $content .= show_percent( $percent_complete );
+  $content .= "<DD>".show_percent( $percent_complete )."</DD>\n";
 
   //set project status
   $project_status = $row["status"];
@@ -159,10 +162,12 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
     case "cantcomplete":
     case "notactive":
+    //no adjustment required
     break;
 
   default:
     if($percent_complete == 100 )
+      //set done
       $project_status = "done";
       break;
   }
@@ -172,43 +177,43 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
     case "done":
       $finished = db_result( db_query( "SELECT MAX(finished_time) FROM tasks WHERE projectid =".$row["id"]." AND parent>0" ), 0, 0 );
-      $content .= $lang["ccompleted"]." (".nicedate( $finished ).")<BR>\n";
+      $content .= "<DD>".$lang["ccompleted"]." (".nicedate( $finished ).")</DD>\n";
       break;
 
     case "cantcomplete":
-      $content .= "<I>".$lang["project_hold"].nicedate( $row["finished_time"])."</I><BR>\n";
-      $content .= "<img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\"> &nbsp; ".nicedate( $row["deadline"] )."<BR>\n";
+      $content .= "<DD><I>".$lang["project_hold"].nicedate( $row["finished_time"])."</I></DD>\n";
+      $content .= "<DD><img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\"> &nbsp; ".nicedate( $row["deadline"] )."<\DD>\n";
       break;
 
     case "notactive":
-      $content .= "<I>".$lang["project_planned"]."</I><BR>\n";
+      $content .= "<DD><I>".$lang["project_planned"]."</I><BR>\n";
       break;
 
     case "active":
     default:
-      $content .= $percent_complete.$lang["percent"]."<BR>";
-      $content .= "<img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\"> &nbsp; ".nicedate( $row["deadline"] )." ";
+      $content .= "<DD>".$percent_complete.$lang["percent"]."</DD>\n";
+      $content .= "<DD><img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\"> &nbsp; ".nicedate( $row["deadline"] )." ";
       $state = ( $row["due"]-$row["now"] )/86400 ;
-      if( $state > 1 ) {
-        $content .=  "(".sprintf($lang["due_sprt"], ceil($state) ).")";
+      if( $state > 1 ) {        
+	$content .=  "(".sprintf($lang["due_sprt"], ceil($state) ).")</DD>\n";
       }
       else if( $state > 0 ) {
-	$content .=  "(".$lang["tomorrow"].")";
+	$content .=  "(".$lang["tomorrow"].")</DD>\n";
       }
       else {
 
 	  switch( -ceil($state) ) {
 
 	    case "0":
-              $content .=  "<FONT color=\"green\">(".$lang["due_today"].")</FONT>";
+              $content .=  "<FONT color=\"green\">(".$lang["due_today"].")</FONT></DD>\n";
 	      break;
 
 	    case "1":
-              $content .= "<FONT color=\"red\">(".$lang["overdue_1"].")</FONT>";
+              $content .= "<FONT color=\"red\">(".$lang["overdue_1"].")</FONT></DD>\n";
 	      break;
 
 	    default:
-              $content .= "<FONT color=\"red\">(".sprintf($lang["overdue_sprt"], -ceil($state) ).")</FONT>";
+              $content .= "<FONT color=\"red\">(".sprintf($lang["overdue_sprt"], -ceil($state) ).")</FONT></DD>\n";
 	      break;
             }
       }
@@ -217,9 +222,10 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       $content .= listTasks( $row["id"] );
       break;
     }
-  $content .= "<BR><BR>\n";
+  //end list
+  $content .= "</DL>\n";
 }
-$content .= "</UL>\n";
+$content .= "<BR><BR>\n";
 
 if( $flag != 1 ) $content = $lang["no_allowed_projects"];
 
