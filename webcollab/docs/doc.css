@@ -1,6 +1,6 @@
 BODY {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 11pt;
+  font-size : 12px;
   margin : 20px;
   background : "#FFFFFF";
   color : #000000;
@@ -8,12 +8,12 @@ BODY {
 
 FONT {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
 }
 
 H1 {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 18pt;
+  font-size : 20px;
   padding-top : 5px;
   padding-bottom : 20px;
   background : #BCD2EE;
@@ -22,7 +22,7 @@ H1 {
 
 H3 {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12pt;
+  font-size : 14px;
   padding-top : 5px;
   padding-bottom : 20px;
   background : #D9D9D9;
@@ -32,19 +32,19 @@ H3 {
 
 P {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
   padding-top : 0px;
   padding-bottom : 5px;
 }
 
 TD {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
 }
 
 DT {
    font-family: "Helvetica", Verdana, Arial, Sans-serif;
-   font-size : 11pt;
+   font-size : 12px;
    font-weight : bold;
    padding-top : 0px;
    padding-bottom : 20px;
@@ -52,7 +52,7 @@ DT {
 
 DD {
    font-family: "Helvetica", Verdana, Arial, Sans-serif;
-   font-size : 10pt;
+   font-size : 12px;
    padding-top : 0px;
    padding-bottom : 40px;
 
@@ -60,14 +60,14 @@ DD {
 
 LI {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10pt;
+  font-size : 12px;
   padding-top : 0px;
   padding-bottom : 5px;
 }
 
  PRE.screen{
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10px;
+  font-size : 12px;
   background-color : #F2F2F2;
   padding-top : 0px;
   padding-bottom : 5px;

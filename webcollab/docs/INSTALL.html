@@ -37,6 +37,7 @@ databases can be created.</p>
 <h4>2. Altering Setup</h4>
 <ol>
 <li>For UNIX: Make config.php writeable by everyone.</li>
+<li>Edit config.php and change $WEB_CONFIG = "Y" (it should have defaulted to "N").</li>
 <li>Point your web browser at http://your_site/webcollab_directory/setup/index.php</li>
 <li>Enter an admin login and password</li>
 <li>Follow the on-screen instructions to setup WebCollab.</li>
@@ -128,7 +129,7 @@ more help.</li>
 <h3>AUTOMATED MYSQL INSTALLATION FOR LINUX</h3>
 <ol>
 <li>Proceed through steps 1 and 2 as above.</li>
-<li>Create and Populate the Database</li>
+<li>Create and Populate the Database
 <ul>
 <li>Make sure you have a valid user account and password for MySQL.  (We'll call them 'user_name'
  and 'your_password' in this example).</li>
@@ -141,7 +142,7 @@ database 'webcollab' in this example).</li>
 </pre></li>
 <li>All done!</li>
 <li>Carry on from step 4 above.</li>
-</ul>
+</ul></li>
 </ol>
 <a name="postgresql"></a>
 <h3>MANUAL SETUP FOR POSTGRESQL</h3>
@@ -179,7 +180,7 @@ prompted.
 $BASE_URL = "http//yourdomain.com/webcollab-*.**/";
 </pre></li>
 <li>Fill in <b>$DATABASE_NAME</b>, <b>$DATABASE_USER</b>, <b>$DATABASE_PASSWORD</b> and
-<b>DATABASE_TYPE</b>:</li>
+<b>DATABASE_TYPE</b>:
 <pre class="screen">
 $DATABASE_NAME="webcollab";
 $DATABASE_USER="user_name";
@@ -196,7 +197,7 @@ logo line, and uncomment the 'Powered by Postgresql' logo line!!</li>
 <a name="linux_postgres"></a>
 <h3>AUTOMATED POSTGRESQL INSTALLATION FOR LINUX</h3>
 <ol>
-<li>Create and Populate the Database</li>
+<li>Create and Populate the Database
 <ul>
 <li>Make sure you have a valid user account and password for PostgreSQL.  (We'll call them
 'user_name'and 'your_password' in this example).</li>
@@ -209,7 +210,7 @@ database 'webcollab' in this example).</li>
 </pre></li>
 <li>All done!</li>
 <li>Carry on from step 3 above.</li>
-</ul>
+</ul><li>
 </ol>
 </body>
 </html>
