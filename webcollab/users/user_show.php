@@ -150,8 +150,8 @@ if( $numberoftasksowned + $numberofprojectsowned > 0 ) {
     }
 
     if($row["parent"] == 0 )
-      //project 
-      $status_content ="<FONT color=\"#FF0000\">(".$lang["pproject"].")</FONT>";
+      //project
+      $status_content ="(".$lang["pproject"].")";
 
     //show the task
     $content .= "<LI><A href=\"".BASE."tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$row["name"]."</A> ".$status_content."<BR>\n";
