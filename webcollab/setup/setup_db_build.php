@@ -222,10 +222,11 @@ include_once(BASE."setup/screen_setup.php" );
 
   //check if config file can be written to
   if( ! is_writable("config/config.php" ) ) {
-    error_setup( "Your database has been successfully setup.<br \><br \>\n".
-                 "The config file (config.php) exists, but the webserver does not have permissions to write to it.<br /><br />\n".
+    error_setup( "<p>Creating a new database for WebCollab ... success!</p>\n".
+                 "<p>Your database has been successfully setup.</p>\n".
+                 "<p>The config file (config.php) exists, but the webserver does not have permissions to write to it.<br /><br />\n".
                  "You can either:<ul>\n<li>Change the file permissions to allow the webserver to write to the file 'config.php'</li>\n".
-                 "<li>Continue with a manual configuration by editing the file directly.</li>\n" );
+                 "<li>Continue with a manual configuration by editing the file directly.</li></p>\n" );
   }
 
 create_top_setup("Database Setup" );
@@ -235,12 +236,13 @@ $content =  "<form method=\"POST\" action=\"setup_handler.php\">\n".
             "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
             "<input type=\"hidden\" name=\"db_host\" value=\"$database_host\" />\n".
             "<input type=\"hidden\" name=\"db_user\" value=\"$database_user\" />\n".
-            "<input type=\"hidden\" name=\"db_pass\" value=\"$database_password\" />\n".
+            "<input type=\"hidden\" name=\"db_password\" value=\"$database_password\" />\n".
             "<input type=\"hidden\" name=\"db_name\" value=\"$database_name\" />\n".
             "<input type=\"hidden\" name=\"db_type\" value=\"$database_type\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n".
-            "<div align=\"center\">Your database has been successfully created.<br /><br />\n".
-            "<input type=\"submit\" value=\"Continue\" /></div>\n".
+            "<div align=\"center\"><p>Creating a new database for WebCollab ... success!</p>\n".
+            "<p>Your new database has been successfully created.</p><br />\n".
+            "<input type=\"submit\" value=\"Continue to configuration\" /></div>\n".
             "</form>\n";
 
 new_box_setup( "Setup - Stage 3 of 5 : Database Creation", $content, "boxdata", "singlebox" );
