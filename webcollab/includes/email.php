@@ -119,7 +119,7 @@ function email($to, $subject, $message ) {
     debug("Incorrect HELO response from SMTP server at $host <br /><br />Response from SMTP server was $res" );
 
   //do extended HELO to see if we support 8bit mime (RFC 1869)
-  if($email_encode = "8bit" ) {
+  if($email_encode == "8bit" ) {
     $bit = false;
     fputs($connection, "EHLO ".$_SERVER["SERVER_NAME"]."\r\n" );
     while($res = fgets($connection, 256 ) ) {
