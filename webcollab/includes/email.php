@@ -53,10 +53,7 @@ function & clean($encoded ) {
 
   //remove any dangerous tags that exist after decoding
   $text = preg_replace("/(<\/?)(\w+)([^>]*>)/e", "'\\1'.strtoupper('\\2').'\\3'", $text );
-  $block_tag = array("APPLET", "OBJECT", "SCRIPT", "EMBED", "FORM", "?", "%" );
-  foreach ($block_tag as $value ) {
-    $text = str_replace("<".$value, "<**** ", $text );
-  }
+  $text = str_replace(array("<APPLET", "<OBJECT", "<SCRIPT", "<EMBED", "<FORM", "<?", "<%" ), "<**** ", $text );
 
 return $text;
 }
@@ -144,7 +141,7 @@ function &subject($subject ) {
   global $email_charset;
 
   //get rid of any line breaks (\r\n, \n, \r) in subject line
-  $subject = preg_replace("/(\015\012)|(\015)|(\012)/", " ", $subject );
+  $subject = str_replace(array("\r\n", "\r", "\n"), " ", $subject );
   //reinstate any HTML in subject back to text
   $subject =& clean($subject );
 
