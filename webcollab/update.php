@@ -237,7 +237,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
      db_query("UPDATE ".PRE."tasks SET archive='f'" );
           
      $content .= "<p>Updating from version pre-1.70 database ... success!</p>\n";
-  //}
+  }
     
   if( ! $content )
     $content .= "<p>No database updates were required.</p>\n";
