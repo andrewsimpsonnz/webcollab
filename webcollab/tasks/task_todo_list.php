@@ -38,7 +38,7 @@ require_once( BASE."includes/security.php" );
 function listTasks($task_id, $tail ) {
    global $x, $admin, $usergroup, $userid, $epoch, $lang;
   // show all subtasks that are not complete
-  $q_tasks = db_query( "SELECT id, name, owner, deadline, usergroupid, globalaccess,
+  $q = db_query( "SELECT id, name, owner, deadline, usergroupid, globalaccess,
                         $epoch deadline) AS task_due,
                         $epoch now() ) AS now
                         FROM tasks
@@ -47,12 +47,12 @@ function listTasks($task_id, $tail ) {
                         AND (status='created' OR status='active')
                         $tail
                         ORDER BY deadline DESC" );
-  if(db_numrows($q_tasks ) == 0 )
+  if(db_numrows($q ) == 0 )
     return;
 
    $content = "";
 
-   for( $iter=0 ; $task_row = @db_fetch_array($q_tasks, $iter ) ; $iter++) {
+   for( $iter=0 ; $row = @db_fetch_array($q, $iter ) ; $iter++) {
 
      //check for private usergroups
      if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
@@ -61,17 +61,17 @@ function listTasks($task_id, $tail ) {
          continue;
      }
 
-     $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_row[ "id" ]."\">";
+     $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
 
      //add highlighting if deadline is due
-     $state = ceil( ($task_row["task_due"]-$task_row["now"] )/86400 );
+     $state = ceil( ($row["task_due"]-$row["now"] )/86400 );
      if($state > 1) {
-       $content .= $task_row["name"]."</a>".sprintf($lang["due_in_sprt"], $state );
+       $content .= $row["name"]."</a>".sprintf($lang["due_in_sprt"], $state );
        } else if($state > 0) {
-          $content .= $task_row["name"]."</a>".$lang["due_tomorrow"];
+          $content .= $row["name"]."</a>".$lang["due_tomorrow"];
        }
        else {
-         $content .= "<font color=\"#FF0000\">".$task_row["name"]."</font></a>";
+         $content .= "<font color=\"#FF0000\">".$row["name"]."</font></a>";
        }
      $content .= "</li>\n";
    }
