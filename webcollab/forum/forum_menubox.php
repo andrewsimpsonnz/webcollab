@@ -2,12 +2,10 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Based on original file written for Core APM by Dennis Fleurbaaij 2001/2002
-
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -44,7 +42,7 @@ $q = db_query("SELECT ".PRE."forum.taskid AS taskid,
                     FROM ".PRE."forum 
                     LEFT JOIN ".PRE."tasks ON (".PRE."tasks.id=".PRE."forum.taskid)
                     WHERE ".PRE."forum.posted > ( now()-INTERVAL ".$delim.NEW_TIME." DAY".$delim.")
-                    GROUP BY taskid, taskname, globalaccess, tasks.usergroupid
+                    GROUP BY taskid, taskname, globalaccess, ".PRE."tasks.usergroupid
                     ORDER BY recentpost DESC" );
 
 //iterate for posts                            
