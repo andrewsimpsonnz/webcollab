@@ -1,4 +1,16 @@
 WebCollab Unicode Add-ons
+*** 5 December 2004
+Andrew Simpson
+
+- upload to Sourceforge CVS
+
+- improve malformed UTF8 detection regex
+
+- improve 'dangerous tags' detection regex 
+
+- check for mb_string library in setup
+
+WebCollab Unicode Add-ons
 *** 10 October 2004
 Andrew Simpson
 
