@@ -122,6 +122,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
 //remove duplicate addresses, and put into a comma sorted list
 $to = "";
+$s = "";
 while(list(,$address) = @each($address_array ) ) {
   if(strpos($to, $address ) === FALSE ) {
     $to .= $s.$address;
