@@ -21,13 +21,13 @@ FONT.textlink {
 LI {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
-  list-style-type: circle;
+  list-style-type: disc;
 }
 
 LI LI {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
-  list-style-type: disc;
+  list-style-type: circle;
 }
 
 /* Table outline for login screen
@@ -67,9 +67,8 @@ TD.boxhead {
   font-weight : bold;
   text-align : left;
   border-width : 0;
-  padding-top : 3px;
-  padding-bottom : 3px;
-  padding-left : 3px;
+  border-collapse : collapse;
+  padding : 3px;
   background : #1e4b79;
   color : #ffffff;
 }
@@ -80,9 +79,8 @@ TD.boxmenu {
   font-size : 12px;
   text-align : left;
   border-width : 0;
-  padding-top : 3px;
-  padding-bottom : 3px;
-  padding-left : 3px;
+  border-collapse : collapse;
+  padding : 3px;
   background : #ffffff;
   color : #000000;
 }
@@ -93,8 +91,10 @@ TD.boxdata {
   font-size : 12px;
   text-align : left;
   border-width : 0;
+  border-collapse : collapse;
   padding-top : 20px;
   padding-left : 5px;
+  padding-right : 5px;
   padding-bottom : 20px;
   background : #ffffff;
   color : #000000;
@@ -108,8 +108,10 @@ TD.boxdata2 {
   font-size : 12px;
   text-align : left;
   border-width : 0;
+  border-collapse : collapse;
   padding-top : 20px;
   padding-left : 5px;
+  padding-right : 5px;
   padding-bottom : 5px;
   background : #ffffff;
   color : #000000;
