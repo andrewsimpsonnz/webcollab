@@ -59,7 +59,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
                          ".PRE."tasks.usergroupid AS usergroupid,
                          ".PRE."tasks.globalaccess AS globalaccess,
                          ".PRE."tasks.projectid AS projectid,
-                         vtasks.completed AS completed,
+                         ".PRE."tasks.completed AS completed,
                          $epoch now() ) AS now,
                          $epoch deadline) AS due,
                          $epoch ".PRE."tasks.edited ) AS edited,
