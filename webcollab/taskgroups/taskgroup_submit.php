@@ -45,19 +45,18 @@ if(! isset($_REQUEST["action"]) )
     //delete a taskgroup
     case "del":
 
-      if(isset($_POST["taskgroupid"] ) && is_numeric($_POST["taskgroupid"]) ) {
-
-        $taskgroupid = $_GET["taskgroupid"];
-        db_begin();
-        //move the tasks to a non-working task-group
-        @db_query("UPDATE tasks SET taskgroupid=0 WHERE taskgroupid='$taskgroupid'" );
-        //delete the group
-        db_query("DELETE FROM taskgroups WHERE id=$taskgroupid" );
-        db_commit();
-      }
-      else
+      if( ! isset($_GET["taskgroupid"] ) || ! is_numeric($_GET["taskgroupid"]) )
         error("Taskgroup submit", "Not a valid value for taskgroupid" );
-    break;
+
+      $taskgroupid = $_GET["taskgroupid"];
+
+      db_begin();
+      //move the tasks to a non-working task-group
+      @db_query("UPDATE tasks SET taskgroupid=0 WHERE taskgroupid='$taskgroupid'" );
+      //delete the group
+      db_query("DELETE FROM taskgroups WHERE id=$taskgroupid" );
+      db_commit();
+      break;
 
     //insert a new taskgroup
     case "insert":
