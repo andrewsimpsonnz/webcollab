@@ -174,7 +174,7 @@ ignore_user_abort(TRUE);
       if($task_row["usergroupid"] && $mail_group ){
         $q = db_query("SELECT ".PRE."users.email
                               FROM ".PRE."users
-                              LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.".PRE."userid=users.id)
+                              LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.userid=".PRE."users.id)
                               WHERE ".PRE."usergroups_users.usergroupid=".$task_row["usergroupid"].
                               " AND ".PRE."users.deleted='f'" );
 
