@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-  <title>FAQhtml</title>
+  <title>WebCollab Frequently Asked Questions</title>
   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
  <link REL="StyleSheet" HREF=doc.css TYPE="text/css">
 </head>
@@ -12,6 +12,7 @@
 <p><a href="#setup">Setup Problems</a><br>
 <a href="#startup">Startup Problems</a><br>
 <a href="#custom">Customising WebCollab</a><br>
+<a href="#tuning">Performance Tuning</a><br>
 <a href="#files">Uploading Files</a><br>
 <a href="#email">Email</a><br>
 <a href="#security">Security</a><br>
@@ -35,15 +36,17 @@ For security, reinstate afterwards with:
 #chmod 664 config.php
 </pre>
 </dd>
+<dt>2. How to upgrade from an earlier version of WebCollab?</dt>
+<dd>Refer to the INSTALLATION file.  Briefly, all versions are upgradable by adding the new files.  Versions pre-1.40 and pre-1.60 need to have the database upgraded with the tools function.</dd>
 </dl>
 <a name="startup"></a>
 <h3>START UP PROBLEMS</h3>
 <dl>
 <dt>1. "Initial installation works, but logging in as admin has no effect
 (no error message either)."</dt>
-<dd>This problem has often occurred with PHP 4.0.6 and lower.  WebCollab will
-only run on PHP  4.1.0, or higher.  PHP 4.0.6 does not support $_POST[], $_GET[] or $_REQUEST[]
-global arrays.</dd>
+<dd>This problem occurs with PHP 4.0.6 and lower.  WebCollab will only run on PHP  4.1.0, or higher.  Earlier versions of PHP do not support $_POST, $_GET or $_REQUEST global arrays, which are necessary for WebCollab to function.<br />
+<br />
+(The setup program now checks for early versions of PHP and will record an error).</dd>
 <dt>2. "Initial installation works, but logging in as admin gives a blank
 screen."</dt>
 <dd>Check that PHP has your database extensions compiled in.  From the command
@@ -116,6 +119,19 @@ environment variable set by Apache.</dd>
 this is not essential.  This means WebCollab is compatible with most contemporary web browsers. 
 To the extent that most common browsers will accept, WebCollab is also valid XHTML 1.0.</dd>
 </dl>
+<a name="tuning"></a>
+<h3>PERFORMANCE TUNING</h3>
+<dl>
+<dt>1. Can output buffering be used to speed up WebCollab?</dt>
+<dd>WebCollab is normally very fast.  Most bottlenecks are caused by database performance rather than PHP throughput.<br />
+<br />
+The /includes/screen.php file contains 'commented out' code for compressed output buffering with ob_handler().  When this is enabled the output to the browser will be 'gzipped' before transmission, providing the browser is capable of accepting gzipped HTML - and most are.  However, there is a downside to this form of output buffering: Compression does not start until <u>all</u> the page is rendered by the web server.  This creates a noticeably high latency in page loading; for this reason the code has been 'commented out' in WebCollab.<br />
+<br />
+The preferred method of output buffering is with zlib.output_compression set in php.ini. Refer to <a href="http://www.php.net/manual/en/ref.zlib.php#ini.zlib.output-compression" target="new_window">PHP Manual</a> for more information.  The downside of this option is that zlib.output_compression is not available on all versions or flavours of PHP.  
+</dd>
+<dt>2. Is caching worthwhile?</dt>
+<dd>WebCollab uses a modular codebase with a high reuse factor.  Compiler caches will work well with WebCollab.  Ioncube PHP Accelerator has proven very compatible with WebCollab; Turck MMCache and Zend products should also work well.</dd>
+</dl>
 <a name="files"></a>
 <h3>UPLOADING FILES</h3>
 <dl>
@@ -159,9 +175,9 @@ $SMTP_HOST = DNS name or IP address of the SMTP server</dd>
 You need to set your login name and password in the /config/config.php file.<br />
 <br />
 WebCollab complies to RFC 2195 (CRAM-MD5), RFC 2554 (SMTP AUTH) and RFC 2595 (auth plain).</dd>
-<dt>3. Can WebCollab handle non US-ASCII characters (i.e. Languages other than US English).</dt>
+<dt>3. Can WebCollab handle non US-ASCII characters (i.e. Languages other than US English)?</dt>
 <dd>For languages with more than "us-ASCII" characters (e.g.: French, German, Spanish etc), WebCollab
- attempts to send emails in 8 bit format.  This is accepted by almost all mail servers.  Sendmail, for instance, has had 8bit support since 1993.<br>
+ attempts to send emails in 8 bit format.  This is accepted by almost all mail servers.  Sendmail, for instance, has had 8 bit support since 1993.<br>
 <br>
 If the upstream SMTP server does not advertise support for 8 bit mail, WebCollab reverts to 'quoted-printable' encoding.  This follows the requirements of RFC 1652 (8BITMIME), RFC 1869 (Extended EHLO), RFC 2045 (quoted-printable), and RFC 2047 (8 bit extensions).</dd>   
 </dl>
@@ -181,7 +197,7 @@ Practical measures to enhance security include:<br />
  the file.</li>
 <li>Use a non-root user for the database.  The database user should have minimal privileges, and not be
  able to create and/or delete tables.</li>
-<li>Make sure that Apache configuration allows .htaccess files to set &lt;Limit&gt; in WebCollab directory. WebCollab uses .htaccess files to protect subdirectories.</li>
+<li>Make sure that Apache configuration allows .htaccess files to set &lt;Limit&gt; in WebCollab directory. WebCollab uses .htaccess files extensively to protect subdirectories.</li>
 <li>Make sure the file <i>/config/config.php</i> is not world writable and not owned by the web server user.</li>
 <li>Use an SSL layer for access with WebCollab.</li>
 <li>Delete unecessary files.  For instance the /setup directory and update.php.</li>
@@ -259,6 +275,10 @@ PostgreSQL:<br>
 <br>
 Both dump into a plain text file.  They can be automated with a cron job and emailed to a back
 up machine at regular intervals. </dd>
+<dt>2. Can the database also be backed up via the website?</dt>
+<dd>WebCollab does have a facility for doing this, though the software may not work on all platforms yet.  Point your web browser at /tools.php, enter an admin login and password and then select 'backup'.  The backup will emailed to the Site Admin set up in Admin Config.<br />
+<br />
+Modifications & code patches to the backup code for different operating systems would be appreciated.</dd>
 </dl>
 <a name="translation"></a>
 <h3>TRANSLATIONS</h3>
