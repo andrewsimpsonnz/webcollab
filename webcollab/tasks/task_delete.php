@@ -200,7 +200,7 @@ if(($row['owner'] != 0 ) && ($UID != $row['owner']) ) {
       break;
       
     default:
-      $name_project = db_result(db_query("SELECT name FROM ".PRE."tasks WHERE tasks.id=".$row['projectid'] ), 0, 0 );
+      $name_project = db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$row['projectid'] ), 0, 0 );
       $name_task = $row['name'];
       $title = $title_delete_task;
       $email = $email_delete_task;
