@@ -29,15 +29,26 @@ Most Linux distributions have separate packages (*.rpm, *.deb, etc) for the main
 MySQL/PostgreSQL PHP support.
 
 
-3. "Can login and get main screen, but sometimes pages are not found (404 error)."
+3. "Does WebCollab use cookies?"
 
-Check that the the parameter $BASE_URL is correctly stated in config.php.
+Yes, and no. Cookies are preferred for session management, but aren't reliable with all browsers.
+
+Webcollab attempts to set a session cookie at the login.  Additionally it uses encoded URI's at this
+stage, also for session management.  If the session cookie is found to be successful (ie the user's
+browser accepts the cookie), the encoded URI's are dropped. Otherwise session management with
+encoded URI is continued. 
 
 
 4. "Does Magic Quotes need to be set 'on' or 'off' in php.ini?"
 
 No, WebCollab reads the magic_quote setting in php.ini, and uses addslashes() on input data if magic
 quotes is 'off' in php.ini.
+
+
+5. "Does Register Globals need to be 'on' in php.ini?"
+
+The Register Globals setting does not affect WebCollab. For security reasons it has defaulted to
+'off' since PHP 4.2.0. 
 
 
 
@@ -79,10 +90,14 @@ For Linux and *nix: Make sure the /webcollab/files/filebase directory is writeab
 webserver.  This means the directory should be either owned by the webserver user (usually apache,
 www or www-data) or the directory must be world-writeable.
 
+Use 'chmod 777 filebase' from the files directory, and preferably move the directory outside the
+webserver root - see item 3 below. 
+
 
 2. File upload gives message about server configuration not allowing uploads.
 
-Check that the PHP configuration file, php.ini, is set to allow file uploads.  Check that 'file_upload = 1'.
+Check that the PHP configuration file, php.ini, is set to allow file uploads.  Check that
+'file_uploads = On', or file uploads cannot work.
 
 
 3. File upload security.
@@ -92,8 +107,9 @@ the directory with their browsers and view the files present.  WebCollab has the
 protected by a index.html file and .htaccess file, but this is not foolproof.
 
 Ideally, for good security move the file upload directory to outside the webserver root directory.
-WebCollab can accommodate an upload directory in any location - not just areas that are directly
-accessed by Apache.
+WebCollab can accommodate an upload directory in any location of the local file system - not just
+the webserver root directory.  Make sure the chosen directory is writeable by the user that
+normally runs the webserver. 
 
 
 
