@@ -1,4 +1,19 @@
 WebCollab CVS
+*** 17 April 2003
+  Andrew Simpson
+
+- validate HTML output against HTML 4.01.  Make corrections. 
+
+- rewrite project_list to be HTML 4.01 compliant
+
+- rewrite task_list to be HTML 4.01 compliant
+
+- rewrite taskgroup code in task_list to be more logical
+
+- bugfix: Project summary showing projects 'on hold' or 'planned' as 'done' 
+
+
+WebCollab CVS
 *** 10 April 2003
   Andrew Simpson
 
