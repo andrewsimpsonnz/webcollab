@@ -45,6 +45,8 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
   global $x, $uid, $admin, $BASE_URL, $lang, $task_state;
   global $sortby;
   global $epoch;
+  
+  $usergroup[0] = 0;
 
   $q = db_query( "SELECT tasks.id AS id,
                          tasks.parent AS parent,
@@ -289,7 +291,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
 // MAIN PROGRAM starts here
 //
 
-$content  = "<TABLE>\n";
+$content  = "<TABLE border=\"0\">\n";
 $content .= "<TR><TD colspan=\"3\"><SMALL><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#summarypage\" target=\"helpwindow\"><B>".$lang["flags"]."</B></A></SMALL></TD><TD><SMALL>";
 $content .= "<A href=\"tasks.php?x=".$x."&action=summary&sortby=deadline\">";
 $content .= "<B>".$lang["deadline"]."</B></A></SMALL></TD><TD><SMALL>";
