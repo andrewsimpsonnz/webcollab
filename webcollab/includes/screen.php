@@ -69,13 +69,11 @@ include_once(BASE."lang/lang.php" );
 //
 function create_top($title="", $page_type=0, $cursor="" ) {
 
-  global $uid_name, $admin, $topbuild, $MANAGER_NAME, $lang, $web_charset;
+  global $uid_name, $admin, $MANAGER_NAME, $WEBCOLLAB_VERSION, $lang, $web_charset;
 
-  //don't rebuild the top again if already built
-  if($topbuild == 1 )
+  //only build top once...
+  if(headers_sent() )
     return;
-  else
-    $topbuild = 1;
 
   //first of all record our loading time
   global $loadtime;
@@ -99,6 +97,7 @@ function create_top($title="", $page_type=0, $cursor="" ) {
 
   echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n".
        "<html>\n\n".
+       "<!-- WebCollab $WEBCOLLAB_VERSION -->\n".
        "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
        "<!-- (c) 2002 - 2004 Andrew Simpson -->\n\n".
        "<head>\n";
@@ -137,7 +136,7 @@ function create_top($title="", $page_type=0, $cursor="" ) {
 
   switch ($page_type ) {
 
-    case 0: //window + menu sidebar
+    case 0: //main window + menu sidebar
       //create the masthead part of the main window
       echo  "<tr><td colspan=\"2\">";
       echo "<div class=\"masthead\">";
@@ -149,7 +148,7 @@ function create_top($title="", $page_type=0, $cursor="" ) {
       echo "<tr valign=\"top\"><td style=\"width: 175px\" align=\"center\">\n";
       break;
 
-    case 1: //single window
+    case 1: //single main window (no menu sidebar)
       echo "<tr><td>";
       echo "<div class=\"masthead\">";
       if($uid_name != "" )
@@ -160,8 +159,8 @@ function create_top($title="", $page_type=0, $cursor="" ) {
       break;
 
     case 2: //printable screen
-    //create single window over paper width
-    echo "<tr valign=\"top\"><td style=\"width: 576pt\" align=\"center\">\n";
+      //create single window over paper width
+      echo "<tr valign=\"top\"><td style=\"width: 576pt\" align=\"center\">\n";
   }
 
   return;
