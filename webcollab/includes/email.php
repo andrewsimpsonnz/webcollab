@@ -177,8 +177,10 @@ function email($to, $subject, $message ) {
   }
 
   //generate unique message id
-  mt_srand(time());
-  $uniq_id = md5(uniqid(mt_rand()));
+  if(version_compare(PHP_VERSION, "4.2.0" ) == -1 )
+    mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );
+
+  $uniq_id = md5(mt_rand() );
 
   //we can reasonably assume that these headers will always be less than 998 characters per line
   //(subject line is truncated just to be sure)

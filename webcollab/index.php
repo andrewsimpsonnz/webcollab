@@ -91,7 +91,10 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && valid_string($_PO
   //user is okay log him/her in
 
   //create session key
-  mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );
+  // seed number is not required for PHP 4.2.0, and higher
+  if(version_compare(PHP_VERSION, "4.2.0" ) == -1 )
+    mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );
+
   $session_key = md5(mt_rand() );
 
   //remove the old login information
