@@ -216,10 +216,16 @@ if($row["parent"] != $parentid ) {
     $projectid = $taskid;
   else
     $projectid = db_result(db_query("SELECT projectid FROM ".PRE."tasks WHERE id=$parentid" ), 0, 0 );
-
-  //update this task, then recursively search for children tasks and reparent them too.
-  db_query("UPDATE ".PRE."tasks SET projectid=$projectid, parent=$parentid WHERE id=$taskid" );
-  reparent_children($taskid );
+  
+  //can't put a project onto it's own tasks
+  if(($projectid == $row["projectid"] ) && ($row["parent"] == 0 ) ){
+    //do nothing
+  }
+  else {
+    //update this task, then recursively search for children tasks and reparent them too.
+    db_query("UPDATE ".PRE."tasks SET projectid=$projectid, parent=$parentid WHERE id=$taskid" );
+    reparent_children($taskid );
+  }
 }
 
 //make adjustments for child tasks
@@ -324,11 +330,11 @@ if(isset($_POST["maillist"]) && ($_POST["maillist"]=="on") ) {
   }
 
   if($usergroupid != 0 ) {
-    $q = db_query("SELECT users.email
+    $q = db_query("SELECT ".PRE."users.email
                       FROM ".PRE."users
-                      LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
-                      WHERE usergroups_users.usergroupid=$usergroupid
-                      AND users.deleted='f'");
+                      LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.userid=".PRE."users.id)
+                      WHERE ".PRE."usergroups_users.usergroupid=$usergroupid
+                      AND ".PRE."users.deleted='f'");
 
     for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
       $usergroup .= $s.$row[0];
