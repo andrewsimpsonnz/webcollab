@@ -1,4 +1,9 @@
 #!/bin/bash
+#
+# This script does backups of a PostgreSQL database
+#
+# dump_postgresql.sh <database name>
+#
 
 if [ "x$1" = "x" ]; then
   echo "Format: $0 <database name>"

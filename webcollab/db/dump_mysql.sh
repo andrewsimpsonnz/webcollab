@@ -1,6 +1,11 @@
 #!/bin/bash
+#
+# This script does backups of a MySQL database
+#
+# dump_mysql.sh <database user> <database name> <database password>
+#
 
-if [ "x$2" = "x" ]; then
+if [ "x$3" = "x" ]; then
   echo "Format: $0 <database user> <database name> <database password>"
   exit
 fi
