@@ -1,10 +1,20 @@
 WebCollab CVS
+*** 31 April 2004
+  Andrew Simpson
+
+- improve regex used to detect css attempts in email
+
+- Add 'name' to From header in email (SpamAssassin complains) 
+
+- bugfix: Character set in use is not correctly defined in email headers
+
+WebCollab CVS
 *** 28 April 2004
   Andrew Simpson
 
-- input validation much improved
+- input validation of text is much improved
 
-- bugfix: Email dot stuffing on newlines not working
+- bugfix: Email dot stuffing on newlines not working properly
 
 WebCollab CVS
 *** 24 April 2004
