@@ -48,61 +48,64 @@ $userid = $_GET["userid"];
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
-if(isset($_GET["action"] ) && $_GET["action"] == "permdel" ) {
+if( ! isset($_GET["action"] ) )
+  error("User delete", "No action specified" );
 
-  //kiss your ass goodbye :)
-  db_begin();
+//if user aborts, let the script carry onto the end
+ignore_user_abort(TRUE);
 
-  //Get the number of tasks created
-  //if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE creator=$userid" ), 0, 0 ) == 0 ) {
+switch($_GET["action"] ){
 
-    //Get the number of tasks owned
-    if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE owner=$userid" ), 0, 0 ) == 0 ) {
+  case "permdel":
+    //kiss your ass goodbye :)
+    db_begin();
 
-      //Get the number of forum posts
-      if(db_result(db_query("SELECT COUNT(*) FROM forum WHERE userid=$userid" ), 0, 0 ) == 0 ) {
+    //free up any tasks owned (should be none)
+    @db_query("UPDATE tasks SET owner=0 WHERE owner=$userid" );
 
-        //delete user from login tables
-        db_query("DELETE FROM logins WHERE user_id=$userid" );
+    //remove user from forum messages
+    db_query("UPDATE forum SET userid=0 WHERE userid=$userid" );
 
-        //delete from seen table
-        db_query("DELETE FROM seen WHERE userid=$userid" );
+    //delete user FROM login tables
+    db_query("DELETE FROM logins WHERE user_id=$userid" );
 
-        //delete from usergroups_users
-        db_query("DELETE FROM usergroups_users WHERE userid =$userid" );
+    //delete from seen table
+    db_query("DELETE FROM seen WHERE userid=$userid" );
 
-        //get the users' info
-        $q = db_query("SELECT email FROM users where id=$userid" );
-        $email = db_result($q, 0, 0) ;
+    //delete from usergroups_users
+    db_query("DELETE FROM usergroups_users WHERE userid=$userid" );
 
-        //delete from users table
-        db_query("DELETE FROM users WHERE id=$userid" );
+    //delete from users table
+    db_query("DELETE FROM users WHERE id=$userid" );
 
-        //mail the user that he/she had been deleted
-        //$message = "Hello,\n\nThis is the ".$MANAGER_NAME." site informing you that your account has been PERMANENTLY deleted on ".date("F j, Y, H:i").".\n\nWe are sorry that you have left and I would like to thank you for your work!\n\nIf you object or think this is an error mail to ".$EMAIL_ADMIN." .";
-        //email( $email, $ABBR_MANAGER_NAME.": Account PERMANENTLY deleted.", $message );
-      }
-    }
-  //}
-db_commit();
-}
-else {
-  //mark user as deleted
-  db_begin();
-  db_query("UPDATE users SET deleted='t' WHERE id=$userid" );
+    db_commit();
 
-  //free all tasks that that user has done
-  @db_query("UPDATE tasks SET owner=0 WHERE owner=$userid" );
-  db_commit();
+    break;
 
-  //get the users' info
-  $q = db_query("SELECT email FROM users WHERE id=$userid" );
-  $email = db_result($q, 0, 0 );
+  case "del":
+    //mark user as deleted
+    db_begin();
+    db_query("UPDATE users SET deleted='t' WHERE id=$userid" );
 
-  //mail the user that he/she had been deleted
-  include_once(BASE."lang/lang_email.php" );
-  $message = sprintf($email_delete_user, $MANAGER_NAME, date("F j, Y, H:i"), $EMAIL_ADMIN );
-  email($email, $title_delete_user, $message );
+    //free all tasks that that user has done
+    @db_query("UPDATE tasks SET owner=0 WHERE owner=$userid" );
+    db_commit();
+
+    //get the users' info
+    $q = db_query("SELECT email FROM users WHERE id=$userid" );
+    $email = db_result($q, 0, 0 );
+
+    //mail the user that he/she had been deleted
+    include_once(BASE."lang/lang_email.php" );
+    $message = sprintf($email_delete_user, $MANAGER_NAME, date("F j, Y, H:i"), $EMAIL_ADMIN );
+    email($email, $title_delete_user, $message );
+
+    break;
+
+  default:
+    error("User delete action handler", "Invalid request given");
+    break;
+
 }
 
 header("Location: ".$BASE_URL."users.php?x=$x&action=manage");

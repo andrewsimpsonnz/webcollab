@@ -36,14 +36,15 @@ require_once(BASE."includes/security.php" );
 if($admin != 1 )
   return;
 
-//query
-$q = db_query("SELECT id, fullname FROM users WHERE deleted='t' ORDER BY fullname" );
 
-//check for enough users
-if(db_numrows($q) < 1 ) {
+//check for deleted users
+if(db_result(db_query("SELECT COUNT(*) FROM users WHERE deleted='t'" ), 0, 0 ) == 0 ) {
   new_box($lang["deleted_users"], "<small>".$lang["no_deleted_users"]."</small>", "boxmenu" );
   return;
 }
+
+//query
+$q = db_query("SELECT id, fullname FROM users WHERE deleted='t' ORDER BY fullname" );
 
 $content = "<table border=\"0\">\n";
 
@@ -52,20 +53,10 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></small></td>\n";
   $content .= "<td align=\"right\" nowrap><font class=\"textlink\">&nbsp;[<a href=\"users/user_submit.php?x=$x&amp;action=revive&amp;userid=".$row["id"]."\">".$lang["revive"]."</a>]";
 
-  //if this user has NO posts, NO tasks owned AND NO tasks created then we can delete him forever :)
-
-  //Get the number of tasks created
-  //if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE creator=".$row["id"] ), 0, 0 ) == 0 ) {
-
-    //Get the number of tasks owned
-    if(db_result(db_query( "SELECT COUNT(*) FROM tasks WHERE owner=".$row["id"] ), 0, 0 ) == 0 ) {
-
-      //Get the number of forum posts
-      if(db_result(db_query( "SELECT COUNT(*) FROM forum WHERE userid=".$row["id"] ), 0, 0 ) == 0 ) {
-        $content .= "&nbsp;[<a href=\"users/user_del.php?x=$x&amp;action=permdel&amp;userid=".$row["id"]."\" onClick=\"return confirm( '".sprintf($lang["permdel_javascript_sprt"], $row["fullname"] )."' )\">".$lang["permdel"]." </a>]";
-      }
-    }
-  //}
+  //if this user has NO tasks owned then we can delete him forever :)
+  if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE owner=".$row["id"] ), 0, 0 ) == 0 ) {
+    $content .= "&nbsp;[<a href=\"users/user_del.php?x=$x&amp;action=permdel&amp;userid=".$row["id"]."\" onClick=\"return confirm( '".sprintf($lang["permdel_javascript_sprt"], $row["fullname"] )."' )\">".$lang["permdel"]." </a>]";
+  }
   $content.="</font></td></tr>\n";
 }
 
