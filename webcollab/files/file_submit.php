@@ -114,7 +114,7 @@ if( isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) ) {
 	}
 
         //work around for mysql (which doesn't have an OID column)
-        if( $DATABASE_TYPE == "mysql")
+        if(substr($DATABASE_TYPE, 0, 5) == "mysql" )
           db_query( "UPDATE files SET oid=".$last_oid." WHERE id=".$last_oid );
 
         //disarm it
