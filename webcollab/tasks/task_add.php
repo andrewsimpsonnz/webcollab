@@ -199,7 +199,7 @@ else {
   $content .= "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\">\n";
 
   //show all the groups
-  $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" ).
+  $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
   $content .= "<tr> <td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td> <td><select name=\"usergroupid\">\n".
               "<option value=\"0\">".$lang["all_groups"]."</option>\n";
 
