@@ -74,17 +74,20 @@ else
 //set selection & associated defaults for the text boxes
 switch($selection ) {
   case "group":
-    $tail = "AND usergroupid=$groupid";
     $userid = 0; $s1 = ""; $s2 = " SELECTED"; $s3 = " CHECKED"; $s4 = "";
+    if($groupid == 0 )
+      $s4 = " CHECKED";
+    $tail = "AND usergroupid=$groupid";
     break;
 
   case "user":
   default:
-    if($userid == 0 )
-      $tail = "";
-    else
-      $tail = "AND owner=$userid";
+    $tail = "AND owner=$userid";
     $groupid = 0; $s1 = " CHECKED"; $s2 = ""; $s3 = ""; $s4 = " SELECTED";
+    if($userid == 0 ){
+      $s2 = " SELECTED";
+      $tail = "";
+    }
     break;
 }
 
