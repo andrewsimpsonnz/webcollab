@@ -20,26 +20,32 @@
 databases can be created.</p>
 <h4>1. First Time Setup</h4>
 <ol>
+<li>For UNIX and other *nix OS: 
+<ul>
 <li>Navigate to your main WebCollab directory.</li>
-<li>For UNIX: Make [webcollab_directory]/config/config.php file writable by everyone.
+<li>Make [webcollab_directory]/config/config.php file writable by everyone.
 <pre class="screen">
 #chmod 666 config.php
-</pre>
+</pre></li>
+</ul>
 </li>
 <li>Point your web browser at http://your_site/webcollab_directory/setup.php (Replace
 'your_site'and 'webcollab_directory' with the relevant values for your site.</li>
 <li>Follow the on-screen instructions to setup WebCollab.</li>
-<li>For UNIX: Make config.php protected again.
+<li>For UNIX and other *nix OS: 
+<ul>
+<li>Make config.php protected again.
 <pre class="screen">
 #chmod 664 config.php
-</pre>
+</pre></li>
+</ul>
 </li>
 <li>Login at http://your_site/webcollab_directory/index.php (The default username/password is admin / admin123).</li>
 </ol>
 <h4>3. Altering Setup</h4>
 <ol>
 <li>For UNIX: Make [webcollab_directory]/config/config.php writable by everyone.</li>
-<li>Edit config.php and change $WEB_CONFIG = "Y" (it should have defaulted to "N").</li>
+<li>Edit config.php, and change $WEB_CONFIG = "Y" (it should have defaulted to "N").</li>
 <li>Point your web browser at http://your_site/webcollab_directory/setup/index.php</li>
 <li>Enter an admin login and password</li>
 <li>Follow the on-screen instructions to setup WebCollab.</li>
@@ -52,15 +58,32 @@ databases can be created.</p>
 <li>For UNIX: Make sure [webcollab_directory]/config/config.php file is writable by everyone.</li>
 <li>Point your web browser at http://your_site/webcollab_directory/setup.php (Replace
 'your_site'and 'webcollab_directory' with the relevant values for your site.</li>
-<li>At the first screen prompt, choose to use an <b>existing database</b> - instead of creating a new database.</li>
+<li>At the first screen prompt, choose to use an <b>existing database</b>. Do not create a new database.</li>
 <li>Enter your current database details at the screen prompt that follows.</li>
 <li>Let the setup program continue to the conclusion, but do not attempt to login.</li>
 <li>Point your browser at http://your_site/webcollab_directory/update.php (Replace
 'your_site'and 'webcollab_directory' with the relevant values for the new files on your site).</li>
 <li>Login as requested...</li>
 <li>Database upgrade is done automatically (If database upgrades are in fact not required, no harm will be done).</li>
-<li>All done!</li>
-<li>You can now delete your old WebCollab directory, and rename the new WebCollab directory to match the old.  Note that you <b>must</b> change the $BASE_URL parameter in /config/config.php to match the correct directory.</li>
+<li>If you are storing uploaded files in the default upload directory of /files/filebase, you need to copy/move the existing uploaded files across to the same directory in the new WebCollab.</li>
+<li>You can now delete your old WebCollab directory, and rename the new WebCollab directory to match the old.  Note that you <b>must</b> change the BASE_URL parameter in /config/config.php to match the correct directory. You will also need to the same for the FILE_BASE parameter, if you use the default directory.  To do this:
+<ul>
+<li>Open config.php with your favourite text editor</li>
+<li>Find the line with <b>BASE_URL</b>.  It is near the top of the file.
+<pre class="screen">
+define('BASE_URL', "http//yourdomain.com/old_webcollab_directory/" );
+</pre></li>
+<li>Change this line to match the new directory (Don't forget the trailing slash...)
+<pre class="screen">
+define('BASE_URL', "http//yourdomain.com/<i>new_webcollab_directory/</i>" );
+</pre></li>
+<li>Now make sure that FILE_BASE is pointing to the right upload directory.  The entry needs to be a full path to the new upload directory:
+<pre class="screen">
+define('FILE_BASE', "/var/www/html/webcollab/files/filebase" );
+</pre></li>
+<li>Save the edited file.</li>
+</ul>
+</li>
 <li>For UNIX: Make config.php protected again.</li>
 </ol>
 <p>The database upgrades (if required) are backwardly compatible and do not affect stored data.  However, as with all upgrades, backing up your data is a sensible precaution.<br />
@@ -113,18 +136,18 @@ prompted.
 <h4>3. Configuration File Customization:</h4>
 <ol>
 <li>Open the file webcollab/config/config.php with your favourite text editor.</li>
-<li>Fill in <b>$BASE_URL</b> with the address of your site:
+<li>Fill in the line <b>define('BASE_URL', "");</b> with the address of your site:
 <pre class="screen">
-$BASE_URL = "http//yourdomain.com/webcollab-*.**/";
+define('BASE_URL', "http//yourdomain.com/webcollab-*.**/" );
 </pre></li>
-<li>Fill in <b>$DATABASE_NAME</b>, <b>$DATABASE_USER</b> and <b>$DATABASE_PASSWORD</b>:
+<li>Fill in the lines with <b>DATABASE_NAME</b>, <b>DATABASE_USER</b> and <b>DATABASE_PASSWORD</b>:
 <pre class="screen">
-$DATABASE_NAME="webcollab";
-$DATABASE_USER="user_name";
-$DATABASE_PASSWORD="your_password";
+define('DATABASE_NAME', "webcollab" );
+define('DATABASE_USER', "user_name" );
+define('DATABASE_PASSWORD', "your_password" );
 </pre></li>
 <li>If you are using a database on a remote machine, then change the default value of
-<b>$DATABASE_HOST</b> too.</li>
+<b>DATABASE_HOST</b> too.</li>
 <li>Save and close the file.</li>
 </ol>
 <h4>4. Getting Online:</h4>
@@ -197,19 +220,19 @@ prompted.
 <h4>3. Configuration File Customization:</h4>
 <ol>
 <li>Open the file webcollab/config.php with your favourite text editor.</li>
-<li>Fill in <b>$BASE_URL</b> with the address of your site:
+<li>Fill in the line <b>define('BASE_URL', "");</b> with the address of your site:
 <pre class="screen">
-$BASE_URL = "http//yourdomain.com/webcollab-*.**/";
+define('BASE_URL', "http//yourdomain.com/webcollab-*.**/" );
 </pre></li>
-<li>Fill in <b>$DATABASE_NAME</b>, <b>$DATABASE_USER</b>, <b>$DATABASE_PASSWORD</b> and
+<li>Fill in the lines with <b>DATABASE_NAME</b>, <b>DATABASE_USER</b>, <b>DATABASE_PASSWORD</b> and
 <b>DATABASE_TYPE</b>:
 <pre class="screen">
-$DATABASE_NAME="webcollab";
-$DATABASE_USER="user_name";
-$DATABASE_PASSWORD="your_password";
-$DATABASE_TYPE="postgresql"
+define('DATABASE_NAME', "webcollab" );
+define('DATABASE_USER', "user_name" );
+define('DATABASE_PASSWORD', "your_password" );
+define('DATABASE_TYPE', "postgresql" );
 </pre></li>
-<li>Do not change the default value of <b>$DATABASE_HOST</b> unless you have
+<li>Do not change the default value of <b>DATABASE_HOST</b> unless you have
 re-configured PostgreSQL to accept TCP/IP connections</li>
 <li>Save and close the file.</li>
 <li>Follow on from the MySQL instructions above</li>

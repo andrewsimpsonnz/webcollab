@@ -175,9 +175,13 @@ web server root - see item 3 below.</dd>
 $FILE_MAXSIZE = 2000000;
 </pre>
 The default file size limit is 2 Mb.</li> 
-<li>There is a setting in Apache which you may need to change. On Red Hat Linux this setting is very low by default, you can change the limit by adding or editing a line in Apache's httpd.conf with the upload size in bytes (different operating systems may have these files in different locations):<br />
+<li>There are settings in Apache which you may need to change. In particular this affects large file uploads. On Red Hat Linux this setting is very low by default, you can change the limit by adding or editing a lines in Apache's httpd.conf with the upload size in bytes (different operating systems may have these files in different locations):<br />
 <pre class="screen">
-LimitRequestBody 10485760
+&lt;Files  *.php&gt;
+   SetOutputFilter PHP
+   SetInputFilter PHP
+   LimitRequestBody 10485760
+&lt;/Files&gt;   
 </pre>
 The size limit in this example is 10 Mb (10,485,760 bytes)</li>
 <li>PHP also has two more byte limits, which you can set in php.ini, and sometimes in a .htaccess file:<br />
@@ -222,7 +226,14 @@ WebCollab complies to RFC 2195 (CRAM-MD5), RFC 2554 (SMTP AUTH) and RFC 2595 (au
  attempts to send emails in 8 bit format.  This is accepted by almost all mail servers.  Sendmail, for instance, has had 8 bit support since 1993.<br />
 <br />
 If the upstream SMTP server does not advertise support for 8 bit mail, WebCollab reverts to 'quoted-printable' encoding.  This follows the requirements of RFC 1652 (8BITMIME), RFC 1869 (Extended EHLO), RFC 2045 (quoted-printable), and RFC 2047 (8 bit extensions).</dd>   
-<dt>4. What is the mailing list (mentioned in Admin Email), and how does it work?</dt>
+<dt>4. Common problems getting email to work.</dt>
+<dd><ul>
+<li>Check the mailserver set in config is the correct address and can be accessed by the web server.  This is a particularly common problem.  If during setup configuration the setup program gives a warning error, you do not have the right mailserver address.</li>
+<li>As an Admin go into 'Admin config' menu and make sure the return addresses are set for email.  These must be valid return addresses for the email server you are using.  Incorrect or lack of any address in Admin config, will usually cause the server to reject emails from WebCollab</li>
+<li>For SMTP AUTH the return address must be valid for for the username / password combination.
+</ul>
+</dd>
+<dt>5. What is the mailing list (mentioned in Admin Email), and how does it work?</dt>
 <dd>The mailing list is set up in Admin Config, which can only be accessed by an admin.<br />
 <br />
 Every email sent by WebCollab (except user details) is also sent to the mailing list.  Users on the mailing list will then get a lot of mail, but they will be fully abreast of the site workings.   
