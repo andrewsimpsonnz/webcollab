@@ -26,7 +26,8 @@
 
 */
 
-include( "./screen_setup.php" );
+require("../config.php" );
+include("./screen_setup.php" );
 
 //
 //Error trap function
@@ -48,7 +49,7 @@ function error_setup($message ) {
 if(isset($_POST["database_name"]) ) {
 
   $input_array = array("database_name", "database_user", "database_password", "database_type" );
-  $message_array =array( "'Your database name'", "'Database user'", "'Database password'", "'Database type'" );
+  $message_array =array("'Your database name'", "'Database user'", "'Database password'", "'Database type'" );
   $i = 0;
   foreach( $input_array as $var) {
     if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
@@ -146,7 +147,7 @@ if(isset($_POST["database_name"]) ) {
 
       //connect to database server with standard 'template1' database
       if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=template1 password=".$database_password ) ) ) {
-        error_setup( "Sorry but there seems to be a problem in connecting to the database server at $database_host<br />".
+        error_setup("Sorry but there seems to be a problem in connecting to the database server at $database_host<br />".
                     "No existing database, and cannot connect to PostgreSQL to create a new database.<br /><br />".
                     "User:     $database_user<br />Password: $database_password<br /><br />".
                     "Check user and password, then try creating the database manually and running setup again." );
@@ -162,7 +163,7 @@ if(isset($_POST["database_name"]) ) {
 
       //open the new database
       if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=".$database_name." password=".$database_password ) ) ) {
-        error_setup( "New database was created successfully, but cannot re-connect to the database server.");
+        error_setup("New database was created successfully, but cannot re-connect to the database server." );
       }
     }
 
@@ -177,7 +178,7 @@ if(isset($_POST["database_name"]) ) {
     }
 
     //input the file
-    $schema = fread($handle, filesize("../db/schema_pgsql.sql") );
+    $schema = fread($handle, filesize("../db/schema_pgsql.sql" ) );
     fclose($handle );
 
     //roughly separate schema into individual table setups
@@ -202,8 +203,18 @@ if(isset($_POST["database_name"]) ) {
     break;
 
   default:
-    error_setup("Not a valid database type");
+    error_setup("Not a valid database type" );
     break;
+  }
+
+  //check if config file exists and can be written to
+  if(file_exists("../config.php" ) ) {
+    if( ! is_writable("../config.php" ) ) {
+      error_setup("Your database has been successfully setup.<br \><br \>\n".
+                 "The config file (config.php) exists, but the webserver does not have permissions to write to it.<br />\n".
+                 "You can either:<ul>\n<li>Change the file permissions to allow the webserver to write to the file 'config.php'</li>\n".
+                 "<li>Continue with a manual configuration by editing the file directly.</li>\n" );
+    }
   }
 
   header("location: setup2.php?db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
@@ -212,22 +223,6 @@ if(isset($_POST["database_name"]) ) {
 //
 //Main input screen
 //
-
-
-//check if config file exists and can be written to
-if(is_readable("../config.php" ) ) {
-  //this 'if' statement must have { } - see PHP notes for 'include'
-  if(is_writable("../config.php" ) ) {
-    include("../config.php" );
-  }
-  else{
-    error_setup("The config file (config.php) exists, but the webserver does not have permissions to write to it.<br />\n".
-                 "You can either:<ul>\n<li>Change the permissions to allow the webserver to write to the file 'config.php'</li>\n".
-                 "<li>Delete the file, and the setup program will create a new file with appropriate permissions.</li>\n".
-                 "<li>Do a manual configuration.</li>\n" );
-  }
-}
-
 
 //check if already setup previously
 if( ( ! isset($DATABASE_NAME ) ) || $DATABASE_NAME != "" )

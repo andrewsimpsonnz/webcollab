@@ -26,8 +26,8 @@
 
 */
 
-include_once( "./screen_setup.php" );
-include_once( "../config.php" );
+require_once("../config.php" );
+include_once("./screen_setup.php" );
 
 //
 //Error trap function
@@ -43,12 +43,11 @@ function error_setup( $reason ) {
 }
 
 //security check
-if( ( !isset($DATABASE_NAME ) ) || $DATABASE_NAME != "" ) {
+if( (isset($DATABASE_NAME ) ) && $DATABASE_NAME != "" ) {
   include_once('../includes/security.php' );
 
   if($admin != 1 ) {
     error_setup("You are not authorised to do this");
-    exit;
   }
 }
 
@@ -159,8 +158,6 @@ $content = "<?php\n".
 '  $NO_ERROR = "N";'."\n".
 '  //Use external webserver authorisation to login (values are "N", or "Y")'."\n".
 '  $WEB_AUTH = "N";'."\n".
-'  //Flag for automated setup program to indicate that initial setup has been completed'."\n".
-'  $CONFIG_STATE = "installed";'."\n".
 "?>\n";
 
 //open file for writing
