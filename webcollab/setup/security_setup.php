@@ -80,6 +80,9 @@ else {
     error_setup("Server not able to detect your IP address. Session aborted as a security precaution." );
   }
 
+  if(! defined('PRE' ) )
+    define('PRE', "" );
+  
   //seems okay at first, now go cross-checking with the known data from the database
   if( ! ($q = db_query("SELECT ".PRE."logins.user_id AS user_id, 
                                ".PRE."logins.ip AS ip, 

@@ -67,7 +67,10 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
     secure_error("Unable to determine ip address");
   }
-   
+  
+  if(! defined('PRE') )
+    define('PRE', "" );
+  
   //limit login attempts if post-1.60 database is being used 
   if(@db_query("SELECT * FROM ".PRE."login_attempt LIMIT 1", 0 ) ) {
         
