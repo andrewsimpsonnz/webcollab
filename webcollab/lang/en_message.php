@@ -201,7 +201,7 @@ $lang = array(
  "security_manager" => "Security manager",
  "no_key_sprt" => "No valid session key. Please <a href=\"%sindex.php\">login</a>",
  "no_session" => "No such session, please <a href=\"%sindex.php\">log-in</a>",
- "session_timeout_sprt" => "Access denied, last action was %1\$d minutes ago and the timeout is 60 minutes, please <a href=\"%2\$sindex.php\">re-login</a>",
+ "session_timeout_sprt" => "Access denied, last action was %1\$d minutes ago and the timeout is %2\$d minutes, please <a href=\"%3\$sindex.php\">re-login</a>",
  "access_denied" => "Access denied",
  "private_usergroup" => "Sorry, this area is in a private usergroup and you do not have access rights.",
  "invalid_date" => "Invalid date",

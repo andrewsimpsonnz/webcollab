@@ -59,7 +59,10 @@ elseif(isset($_REQUEST["x"]) && (strlen($_REQUEST["x"] ) == 32 ) ){
   $x = safe_data($_REQUEST["x"]);
 }
 else{
-  error($lang["security_manager"], sprintf($lang["no_key_sprt"], $BASE_URL ) );
+  //return to login screen
+  header("Location: ".$BASE_URL."index.php");
+  die;
+  //error($lang["security_manager"], sprintf($lang["no_key_sprt"], $BASE_URL ) );
 }
 
 //seems okay at first, now go cross-checking with the known data from the database
@@ -74,7 +77,10 @@ if( ! ($q = db_query("SELECT logins.user_id AS user_id, logins.ip AS ip, logins.
 }
 
 if(db_numrows($q) != 1 ) {
-  error($lang["security_manager"], sprintf($lang["no_session"], $BASE_URL ) );
+  //return to login screen
+  header("Location: ".$BASE_URL."index.php");
+  die;
+  //error($lang["security_manager"], sprintf($lang["no_session"], $BASE_URL ) );
 }
 
 if( ! ( $row = db_fetch_array($q, 0) ) ) {
@@ -86,10 +92,11 @@ if($row["user_id"] == NULL ){
   error("Security manager", "No valid user-id found");
 }
 
-//check the last logintime (there is a 60 min limit)
-if( ($row["now"]-$row["sec_lastaccess"]) > 3600 ) {
+//check the last login time (there is an inactivity time limit set by $SESSION_TIMEOUT)
+if( ($row["now"] - $row["sec_lastaccess"]) > $SESSION_TIMEOUT * 3600 ) {
   db_query("UPDATE logins SET session_key='' WHERE user_id=".$row["user_id"] );
-  warning( $lang["security_manager"], sprintf( $lang["session_timeout_sprt"], round( ($row["now"] - $row["sec_lastaccess"])/60), $BASE_URL ) );
+  warning( $lang["security_manager"], sprintf($lang["session_timeout_sprt"],
+            round(($row["now"] - $row["sec_lastaccess"] )/60), $SESSION_TIMEOUT*60, $BASE_URL ) );
 }
 
 //all data seems okay !!

@@ -203,7 +203,7 @@ $lang = array(
  "security_manager" => "Gestore della sicurezza",
  "no_key_sprt" => "Session key non valida. Prego effettuare <a href=\"%sindex.php\">login</a>",
  "no_session" => "Sessione non trovata, prego effettuare <a href=\"%sindex.php\">log-in</a>",
- "session_timeout_sprt" => "Accesso negato, l'ultima azione risale a %d minuti fa e il timeout &egrave; di 60 minuti, prego effettuare <a href=\"%sindex.php\">re-login</a>",
+ "session_timeout_sprt" => "Accesso negato, l'ultima azione risale a %d minuti fa e il timeout &egrave; di %d minuti, prego effettuare <a href=\"%sindex.php\">re-login</a>",
  "access_denied" => "Accesso negato",
  "private_usergroup" => "Spiacente, questa area si trova in un gruppo privato e tu non hai il permesso di accedervi.",
  "invalid_date" => "Data non valida",

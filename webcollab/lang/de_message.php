@@ -186,7 +186,7 @@ $lang = array(
  "security_manager" => "Sicherheitsverwaltung",
  "no_key_sprt" => "Keine g&uuml;ltige Session-ID. Bitte gehen Sie zum <A href=\"%sindex.php\">Login</A>",
  "no_session" => "Unbekannte Session-ID, bitte neu <A href=\"%sindex.php\">einloggen</A>.",
- "session_timeout_sprt" => "Zugriff verweigert, Ihre letzte Aktion war vor %d Minuten. 60 Minuten bleibt eine Session ohne Aktion g&uuml;ltig, bitte neu <A href=\"%sindex.php\">anmelden</A>.",
+ "session_timeout_sprt" => "Zugriff verweigert, Ihre letzte Aktion war vor %d Minuten. %d Minuten bleibt eine Session ohne Aktion g&uuml;ltig, bitte neu <A href=\"%sindex.php\">anmelden</A>.",
  //line below removed version 1.49+
  //"ip_spoof_sprt" =>"Es wurde festgestellt, da&szlig; sie eine gef&auml;lschte IP-Adresse verwenden (%s). Diese Sitzung wurde vorsichtshalber gel&ouml;scht. Bitte loggen sie sich <A href=\"%sindex.php\">neu ein</A>",
  "access_denied" => "Zugriff verweigert",
