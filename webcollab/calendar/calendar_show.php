@@ -33,7 +33,8 @@ require_once("includes/security.php" );
 $content = "";
 $no_access_project[0] = 0;
 $no_access_group[0] = 0;
-
+$allowed[0] = 0;
+ 
 //set selection default
 if(isset($_POST["selection"]) && strlen($_POST["selection"]) > 0 )
   $selection = ($_POST["selection"]);
@@ -97,6 +98,18 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
   $no_access_group[$i] = $row[1];
 }
 
+//get list of common users in private usergroups that this user can view 
+$q = db_query("SELECT usergroupid, userid 
+                      FROM usergroups_users 
+                      LEFT JOIN usergroups ON (usergroups.id=usergroups_users.usergroupid)
+                      WHERE usergroups.private=1");
+
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+  if(in_array($row[0], (array)$gid ) && ! in_array($row[1], (array)$allowed ) ) {
+   $allowed[] = $row[1];
+  }
+}
+
 $content .= "<div align=\"center\">\n".
             "<form method=\"POST\" action=\"calendar.php\">".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
@@ -106,10 +119,16 @@ $content .= "<div align=\"center\">\n".
             "<option value=\"0\"$s2>".$lang["all_users"]."</option>\n";
 
 //get all users for option box
-$q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname");
+$q = db_query("SELECT id, fullname, private FROM users WHERE deleted='f' ORDER BY fullname");
 
 //user input box fields
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+
+  //user test for privacy
+  if($row["private"] && ( ! $admin ) && ( ! in_array($row["id"], (array)$allowed ) ) ){
+    continue;
+  }
+
   $content .= "<option value=\"".$row["id"]."\"";
 
   //highlight current selection
@@ -125,10 +144,16 @@ $content .= "</select></label></td></tr>\n".
             "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
 
 //get all groups for option box
-$q = db_query("SELECT id, name FROM usergroups ORDER BY name" );
+$q = db_query("SELECT id, name, private FROM usergroups ORDER BY name" );
 
 //usergroup input box fields
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+
+  //usergroup test for privacy
+  if( (! $admin ) && ($row["private"] ) && ( ! in_array($row["id"], $gid ) ) ) {
+  continue;
+  }
+
   $content .= "<option value=\"".$row["id"]."\"";
 
   //highlight current selection
