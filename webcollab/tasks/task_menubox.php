@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -31,8 +31,8 @@ require_once(BASE."includes/security.php" );
 
 //secure variables
 $content  = "";
-$type = "project";
 $clone = "";
+$menu_type = "project";
 
 //the task dependent part
 if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
@@ -41,9 +41,8 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
   
   include_once(BASE."includes/details.php" );
   
-  if($taskid_row["parent"] != 0 )
-    $type = "task";
-
+  $menu_type = $type; //$type is set in details.php
+  
   if(($admin == 1 ) || ($taskid_row["owner"] == $uid ) ) {
     $content .= "<small><b>".$lang["admin"].":</b></small><br />\n".
                 "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_$type"]."</a><br />\n".
@@ -60,6 +59,6 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 $content .= "<a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a><br />\n";
 $content .= $clone;
 
-new_box( $lang[$type."_options"], $content, "boxmenu" );
+new_box( $lang[$menu_type."_options"], $content, "boxmenu" );
 
 ?>
