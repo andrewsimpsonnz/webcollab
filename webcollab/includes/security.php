@@ -48,8 +48,8 @@ if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
 }
 
 //$x can be from either a GET, POST or COOKIE - check for cookie first
-if(isset($_COOKIE["session_key"] ) && (strlen($_COOKIE["session_key"] ) == 32 ) ){
-  $x = $_COOKIE["session_key"];
+if(isset($_COOKIE["webcollab_session"] ) && (strlen($_COOKIE["webcollab_session"] ) == 32 ) ){
+  $x = $_COOKIE["webcollab_session"];
 }
 elseif(isset($_REQUEST["x"]) && (strlen($_REQUEST["x"] ) == 32 ) ){
   $x = safe_data($_REQUEST["x"]);
@@ -109,11 +109,10 @@ else
 db_query("UPDATE logins SET lastaccess=now() WHERE session_key='$x' AND user_id=$uid" );
 
 //check to see if cookies are being used
-if(isset($_COOKIE["session_key"] ) ) {
-  //cookies in use; update the cookie
-  setcookie("session_key", $x, time()+3600, directory(), domain(), 0  );
-  //and unset the URI encoded session key
-  $x = 0;
+if(isset($_COOKIE["webcollab_session"] ) ) {
+  //cookies in use, re-check that cookie can be set and unset URL session key 
+  if(setcookie("webcollab_session", $x, time()+86400, directory(), $_SERVER["SERVER_NAME"], 0  ) );
+    $x = 0;
 }
 
 // this gives:

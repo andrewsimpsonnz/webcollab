@@ -24,7 +24,7 @@
 
   Function
   --------
-  
+
   Logs person out
   
 */
@@ -37,8 +37,8 @@ require_once(BASE."includes/security.php" );
 db_query("UPDATE logins SET session_key='' WHERE user_id=$uid" );
 
 //remove session cookie
-setcookie("session_key", $x, time()-3700, directory(), domain(), 0  );
+setcookie("webcollab_session", "0", time()-3600, directory(), $_SERVER["SERVER_NAME"], 0  );
 
-header("Location: ".BASE."index.php" );
+header("Location: ".$BASE_URL."index.php" );
 
 ?>

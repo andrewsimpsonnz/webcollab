@@ -48,7 +48,7 @@ if( isset($DATABASE_NAME ) && $DATABASE_NAME != "" ) {
   include_once('../includes/security.php' );
 
   if($admin != 1 ) {
-    error_setup("You are not authorised to do this");
+    error_setup("You are not authorised to do this" );
   }
 
   //read existing configuration
@@ -89,9 +89,7 @@ $content .= "<form method=\"POST\" action=\"setup3.php\">".
 
 if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" ){
   $file_path = realpath(dirname(__FILE__ ).'/..' ).'/';
-  $file_root = $_SERVER["DOCUMENT_ROOT"];
-  $server    = $_SERVER["HTTP_HOST"];
-  $BASE_URL  = str_replace( $file_root, "http://$server", $file_path );
+  $BASE_URL  = str_replace( $_SERVER["DOCUMENT_ROOT"], "http://".$_SERVER["HTTP_HOST"], $file_path );
 }
 
 //basic settings

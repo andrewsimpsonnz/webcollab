@@ -47,25 +47,20 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   $q = "";
   $login_q ="";
 
-  include_once("../includes/database.php");
+  include_once("../includes/database.php" );
+  include_once("../includes/common.php" );
 
   //encrypt password
   $md5pass = md5( $_POST["password"] );
-  //protect database against attack
-  if(! get_magic_quotes_gpc() ) {
-    $_POST["username"] = addslashes($_POST["username"]);
-  }
-  $login_q = "SELECT id FROM users WHERE deleted='f' AND name='".$_POST["username"]."' AND password='".$md5pass."'";
+  $login_q = "SELECT id FROM users WHERE deleted='f' AND name='".safe_data($_POST["username"])."' AND password='".$md5pass."'";
 
 
   //no database connection
-  if( ! ($q = db_query($login_q ) ) ) {
-    secure_error("No database connection, not able to login to verify username");
-  }
+  $q = db_query($login_q );
 
   //no such user-password combination
   if( @db_numrows($q) < 1 ) {
-      secure_error($lang["no_login"]);
+      secure_error("Not a valid username, or password" );
   }
 
   //no user-id
@@ -81,8 +76,8 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   //user is okay log him/her in
 
   //create session key
-  srand((double)microtime()*1000000);
-  $session_key = md5(rand(0,42352352) . "would you hack me with this string to randomise");
+  mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );
+  $session_key = md5(mt_rand() );
 
   //remove the old login information
   @db_query("DELETE FROM logins WHERE user_id=".$user_id );
@@ -90,9 +85,14 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   //log the user in
   db_query("INSERT INTO logins( user_id, session_key, ip, lastaccess )
                        VALUES('".$user_id."', '".$session_key."', '".$ip."', current_timestamp(0) )" );
-  //relocate the user to the main screen
-  header("location: setup2.php?x=".$session_key);
 
+  //remove any old cookies (don't want session persistence here)
+  if(isset($_COOKIE["webcollab_session"] ) )
+    setcookie("webcollab_session", "0", time()-3600 , directory(), $_SERVER["SERVER_NAME"], 0  );
+
+  //relocate the user to the main screen
+  $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
+  header("Location: ".$path."setup2.php?x=".$session_key);
   die;
 }
 

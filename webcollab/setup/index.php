@@ -73,7 +73,9 @@ if(isset($_POST["database_name"]) ) {
 
   //skip making database
   if(! isset($_POST["make_database"]) || ! $_POST["make_database"] == "on" ){
-    header("location: setup2.php?db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
+    $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
+    header("Location: ".$path."setup2.php?db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
+    die;
   }
 
   switch ($database_type) {
@@ -215,7 +217,9 @@ if(isset($_POST["database_name"]) ) {
                  "<li>Continue with a manual configuration by editing the file directly.</li>\n" );
   }
 
-  header("location: setup2.php?db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
+  $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
+  header("Location: ".$path."setup2.php?db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
+  die;
 }
 
 //
@@ -224,8 +228,11 @@ if(isset($_POST["database_name"]) ) {
 
 
 //check if already setup previously
-if( ( ! isset($DATABASE_NAME ) ) || $DATABASE_NAME != "" )
-  header("location: login.php" );
+if( ( ! isset($DATABASE_NAME ) ) || $DATABASE_NAME != "" ) {
+  $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
+  header("Location: ".$path."login.php" );
+  die;
+}
 
 //check if config file can actually be written to..
 if( ! is_writable("../config.php" ) && ! isset($_POST["skip_warn"] ) ) {
