@@ -73,21 +73,25 @@ $content =  "<form method=\"POST\" action=\"users.php\">\n".
 
 //dangerous action!
 if( $admin == 1 ) {
-  
-  if( $row["private"] == 1 )
-    $content .= "<tr><td><label for=\"private\">"."Private user - translate me!".":</label></td><td><input type=\"checkbox\" name=\"private_user\" CHECKED id=\"private\" /></td></tr>\n";
-  else  
-    $content .= "<tr><td><label for=\"private\">"."Private user - translate me!".":</label></td><td><input type=\"checkbox\" name=\"private_user\" id=\"private\" /></td></tr>\n";
 
+  //add blank line
+  $content .= "<tr><td>&nbsp;</td></tr>\n";
+  
+  //private user
+  if( $row["private"] == 1 )
+    $content .= "<tr><td><label for=\"private\">".$lang["private_user"].":</label></td><td><input type=\"checkbox\" name=\"private_user\" CHECKED id=\"private\" /></td></tr>\n";
+  else  
+    $content .= "<tr><td><label for=\"private\">".$lang["private_user"].":</label></td><td><input type=\"checkbox\" name=\"private_user\" id=\"private\" /></td></tr>\n";
+
+  //is admin?
   if( $row["admin"] == 't' )
     $content .= "<tr><td><label for=\"admin\">".$lang["is_admin"].":</label></td><td><input type=\"checkbox\" name=\"admin_rights\" CHECKED id=\"admin\" /></td></tr>\n";
   else
     $content .= "<tr><td><label for=\"admin\">".$lang["is_admin"].":</label></td><td><input type=\"checkbox\" name=\"admin_rights\" id=\"admin\" /></td></tr>\n";
-}
 
-//add user-groups (only admins can do this)
-if( $admin == 1 ) {
-
+  //add blank line
+  $content .= "<tr><td>&nbsp;</td></tr>\n";
+  
   //add user-groups
   $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
   $content .= "<tr><td></td><td colspan=\"2\"><small><i>".$lang["member_groups"]."</i></small></td></tr>\n".

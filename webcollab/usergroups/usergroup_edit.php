@@ -53,8 +53,9 @@ $content =
              "<p><table border=\"0\">\n".
                "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"input\" name=\"name\" value=\"".$row["name"]."\" size=\"30\" /></td></tr>\n".
                "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" value=\"".$row["description"]."\" size=\"30\" /></td></tr>\n".
-               "<tr><td><label for=\"private\">"."Private usergoup - translate me!".":</label></td><td><input type=\"checkbox\" name=\"private_group\" id=\"private\" /></td></tr>\n";
-
+               "<tr><td>&nbsp;</td></tr>\n".
+               "<tr><td><label for=\"private\">".$lang["private_usergroup"].":</label></td><td><input type=\"checkbox\" name=\"private_group\" id=\"private\" /></td></tr>\n".
+               "<tr><td>&nbsp;</td></tr>\n";
 //add users
 $user_q = db_query("SELECT fullname, id FROM users WHERE deleted='f' ORDER BY fullname" );
 $member_q = db_query("SELECT users.id AS id

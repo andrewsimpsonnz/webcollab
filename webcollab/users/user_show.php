@@ -56,7 +56,7 @@ if($row["private"] && ( ! $admin ) ) {
   }
   //check if users are in the same usergroup
   if( ! array_intersect($user_gid, $gid ) ) {
-    warning("Private user", "This user has a private profile that cannot be viewed by you - translate me!" );
+    warning($lang["private user"], $lang["private_profile"] );
   }
 }
 
@@ -74,9 +74,9 @@ else
   $content .= "<tr><td>".$lang["admin"].":</td><td>".$lang["no"]."</td></tr>\n";
 
 if($row["private"] == 1 )
-  $content .= "<tr><td>"."Private - translate me".":</td><td>".$lang["yes"]."</td></tr>\n";
+  $content .= "<tr><td>".$lang["private_user"].":</td><td>".$lang["yes"]."</td></tr>\n";
 else
-  $content .= "<tr><td>"."Private - translate me".":</td><td>".$lang["no"]."</td></tr>\n";
+  $content .= "<tr><td>".$lang["private_user"].":</td><td>".$lang["no"]."</td></tr>\n";
 
 //create a list of all the groups the user is in
 $q = db_query("SELECT usergroups.name AS name,
@@ -94,7 +94,7 @@ else{
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ){
     //test for private usergroups
     if( (! $admin ) && ( ! in_array($row["id"], (array)$gid ) ) ) {
-      $alert = "(This user is a member of private usergroups that cannot be viewed by you)";
+      $alert = $lang["private_usergroup_profile"];
       continue;
     }
     $content .= $row["name"]."&nbsp;";
