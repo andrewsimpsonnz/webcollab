@@ -1,5 +1,31 @@
 WebCollab CVS
+*** 27 October 2003
+(Andrew Simpson)
+
+- rearrange email.php in logical blocks for readability
+
+- remove 'base64' and 'binary' encoding from email.php
+
+- remove SMTP_AUTH from setup code
+
+- only send '8bit' email if the message is actually 8bit (default to 7bit)
+
+- encode 8bit email 'subject' headers in quoted-printable as per RFC 2047
+
+- remove $email_encode from language files - mailer code can automatically determine this now
+
+- bugfix: removed incorrect $lang references from task_summary_list.php
+
+- bugfix: too many commas in mailinglist (/includes/admin_config.php)
+
+- bugfix: incorrect and fatal response code in SMTP AUTH (email.php)
+
+- SMTP AUTH has never worked - no bug reports, and a proper implementation would be complicated.
+    (Plan to remove this code after next release.)
+
+WebCollab CVS
 *** 18 October 2003
+(Andrew Simpson)
 
 - add HTML entities to text translation to email messages
 
@@ -11,12 +37,13 @@ WebCollab CVS
 
 - bugfix: rewrite task_edit.php & task_menubox.php for better language compatibility
 
-- added '8bit', 'quoted-printable' and 'base64' encoding to email.php
+- added '8bit', 'quoted-printable', 'binary' and 'base64' encoding to email.php
 
-- check for 8BITMIME capability on upstream mail server before using '8bit' encoding 
+- check for 8BITMIME capability on upstream mail server before using '8bit' encoding
 
 WebCollab CVS
 *** 12 October 2003
+(Andrew Simpson)
 
 - German translation added (Michael Bunk)
 
