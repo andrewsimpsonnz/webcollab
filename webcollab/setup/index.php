@@ -34,10 +34,10 @@ include_once("./screen_setup.php" );
 // ERROR FUNCTION
 //
 
-function secure_error($reason ) {
+function secure_error($message ) {
 
   create_top_setup("Error" );
-  new_box_setup("Error", $reason, "boxdata", "singlebox" );
+  new_box_setup("Error", "<div align=\"center\">".$message."</div>", "boxdata", "singlebox" );
   create_bottom_setup();
   die;
 

@@ -114,7 +114,7 @@ function warning($box_title, $message ) {
 
   create_top($lang["error"], 1 );
 
-  $content = "<div align=\"center\">$message\n";
+  $content = "<div align=\"center\">$message</div>\n";
 
   new_box($box_title, $content, "boxdata", "singlebox" );
 
