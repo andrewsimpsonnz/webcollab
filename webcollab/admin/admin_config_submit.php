@@ -35,7 +35,7 @@ $content = "";
 
 //only admin
 if( $admin != 1 ) {
-  error( "Not permitted", "This function is for admins only" );
+  error("Not permitted", "This function is for admins only" );
   return;
 }
 
@@ -44,15 +44,15 @@ if($USE_EMAIL == "Y" ){
   //check and validate email addresses
   $input_array = array("email_admin", "reply_to", "from", "error" );
     foreach( $input_array as $var) {
-      if( isset($_POST[$var]) && valid_string($_POST[$var]) ) {
+      if(isset($_POST[$var]) && strlen($_POST[$var]) > 0 ) {
         if( ! ereg("^.+@.+\..+$", $_POST[$var] ) )
           warning( $lang["invalid email"], sprintf( $lang["invalid_email_given_sprt"], $_POST[$var] ) );
       }
   }
 
-  $email_admin = safe_data($_POST["email_admin"]);
-  $reply_to    = safe_data($_POST["reply_to"]);
-  $from        = safe_data($_POST["from"]);
+  $email_admin = safe_data($_POST["email_admin"] );
+  $reply_to    = safe_data($_POST["reply_to"] );
+  $from        = safe_data($_POST["from"] );
 
 }
 else{
@@ -62,28 +62,28 @@ else{
 }
 
 //check and validate checkboxes
-if( isset($_POST["access"]) && $_POST["access"] == "on" )
+if(isset($_POST["access"]) && $_POST["access"] == "on" )
   $access = "checked";
 else
   $access = "";
 
-if( isset($_POST["group_edit"]) && $_POST["group_edit"] == "on" )
+if(isset($_POST["group_edit"]) && $_POST["group_edit"] == "on" )
   $group_edit = "checked";
 else
   $group_edit = "";
 
-if( isset($_POST["owner"]) && $_POST["owner"] == "on" )
+if(isset($_POST["owner"]) && $_POST["owner"] == "on" )
   $owner = "checked";
 else
   $owner = "";
 
-if( isset($_POST["usergroup"]) && $_POST["usergroup"] == "on" )
+if(isset($_POST["usergroup"]) && $_POST["usergroup"] == "on" )
   $usergroup = "checked";
 else
   $usergroup = "";
 
 //update config database
-db_query( "UPDATE config SET email_admin='".$email_admin."',
+db_query("UPDATE config SET email_admin='".$email_admin."',
                             reply_to='".$reply_to."',
                             email_from='".$from."',
                             globalaccess='".$access."',

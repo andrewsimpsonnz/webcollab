@@ -64,7 +64,7 @@ $content .=
       "<input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" />\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-      "<input type=\"submit\" value=\"".$lang["add"]."\" />\n".
+      "<input type=\"submit\" value=\"".$lang["add"]."\" />&nbsp;\n".
       "<input type=\"reset\" value=\"".$lang["reset"]."\" />\n".
       "<br /><br />\n".
       "</form>";

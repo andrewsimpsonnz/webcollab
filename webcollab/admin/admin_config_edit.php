@@ -85,7 +85,7 @@ $content .= "<tr><td><label for=\"access\">".$lang["allow_globalaccess"]."</labe
 
 
 $content .=
-          "<input type=\"submit\" value=\"".$lang["update"]."\"> ".
+          "<input type=\"submit\" value=\"".$lang["update"]."\">&nbsp;".
           "<input type=\"reset\" value=\"".$lang["reset"]."\">".
         "</form>\n";
 
