@@ -114,7 +114,7 @@ else
 db_query("UPDATE logins SET lastaccess=now() WHERE session_key='$x' AND user_id=$uid" );
 
 //if cookies are being used we don't need encoded URL
-if($cookie_flag = 1 ) {
+if($cookie_flag == 1 ) {
   $x = 0;
 }
 
