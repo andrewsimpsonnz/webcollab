@@ -124,9 +124,6 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
 
 <body<?php echo $script; ?>>
 
-<?php /* Main table init */ ?>
-<table cellspacing="0" cellpadding="0" border="0" width="100%" align="center">
-
   <?php
 
   //first of all record our loading time
@@ -134,26 +131,26 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
   list($usec, $sec)=explode(" ", microtime());
   $loadtime = ( (float)$usec + (float)$sec );
 
-  //create the info part of the main window
-  echo "<tr>\n<td bgcolor=\"#000000\" colspan=\"2\" align=\"center\" valign=\"top\">\n";
-  echo "<table border=\"0\" width=\"100%\"><tr><td align=\"left\" bgcolor=\"#000000\">\n";
+  //create the main table
+  echo "\n<!-- start main table -->\n";
+  echo "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">";
+  //create the masthead part of the main window
+  echo "<tr>\n<td colspan=\"2\">\n";
+  echo "<div class=\"masthead\">";
 
   //show username if applicable
   if($username != "" )
-    echo "<font color=\"#EEEEEE\"><b><small>".sprintf( $lang["user_homepage_sprt"], $username )."</small></b></font>\n";
+    echo "<small>".sprintf( $lang["user_homepage_sprt"], $username )."</small>\n";
 
-  echo "</td><td bgcolor=\"#000000\" align=\"right\">\n";
-  echo "<font color=\"#FFFFFF\"><SMALL>(c) 2001-2003</small>\n</font>\n</td>\n</tr>";
-
-  echo "</table></td></tr>\n";
+  echo "</td></tr>\n";
 
 
-  //if we choose to have only one space, we center it in stead of pushing it to the left
+  //if we choose to have only one space, we center it instead of pushing it to the left
   if($no_menu == 0 )
     echo "<tr valign=\"top\"><td width=\"175\" align=\"center\">";
   else
     echo "<tr valign=\"top\"><td width=\"100%\" align=\"center\">";
-
+  return;
 }
 
 
@@ -175,11 +172,11 @@ function create_bottom() {
   //shows the time it took to load the page
   list($usec, $sec)=explode(" ", microtime() );
   $finishtime = ( (float)$usec + (float)$sec ) - $loadtime;
-  echo "<div align=\"center\"><font color=\"#1E4B79\">\n<small>".sprintf( $lang["load_time_sprt"], $finishtime, $database_query_time, $database_query_count )."</small></font></div><br />\n";
+  echo "<div class=\"loadtime\">\n<small>".sprintf( $lang["load_time_sprt"], $finishtime, $database_query_time, $database_query_count )."</small></font></div><br />\n";
 
   //end xml parsing
   echo "\n</body>\n</html>\n";
-
+  return;
 }
 
 
@@ -187,23 +184,21 @@ function create_bottom() {
 //
 //  Creates a new menu-window
 //
-function new_box($title, $content, $width="97%" ) {
-
+function new_box($title, $content, $style="boxdata", $size="tablebox" ) {
 
   echo "\n<!-- start of ".$title."-box -->";
   echo "\n<br />";
 
   echo "
-  <table border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"".$width."\">
+  <table class=\"".$size."\">
     <tr>
-      <td bgcolor=\"#1E4B79\" align=\"left\"><FONT color=\"white\"><b>".$title."</b></font></td>
+      <td class=\"boxhead\">".$title."</td>
     </tr>
     <tr>
-      <td bgcolor=\"#FFFFFF\" align=\"left\">\n".$content."\n</td>
+      <td class=\"".$style."\">\n".$content."\n</td>
     </tr>
   </table>\n <!-- end -->\n";
-
-
+  return;
 }
 
 
@@ -213,7 +208,7 @@ function new_box($title, $content, $width="97%" ) {
 //
 function goto_main() {
   echo "</td><td align=\"center\">";
+  return;
 }
-
 
 ?>
