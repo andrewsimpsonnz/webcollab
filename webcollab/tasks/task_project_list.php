@@ -39,9 +39,8 @@ include_once(BASE."includes/time.php" );
 
 function listTasks($projectid ) {
   global $x, $epoch, $now ,$admin, $gid, $lang, $task_state, $tz_offset;
-  global $task_array, $parent_array;
+  global $task_array, $parent_array, $shown_array;
    
-  $content = "";
   $parent_array = "";
     
   $q = db_query("SELECT id,
@@ -52,6 +51,7 @@ function listTasks($projectid ) {
                         usergroupid, 
                         ".$epoch." deadline )
                        FROM ".PRE."tasks WHERE projectid=$projectid 
+                       AND status<>'done'
                        AND parent<>0
                        ORDER BY name" );
   
@@ -61,14 +61,16 @@ function listTasks($projectid ) {
   $content = "<ul>\n";  
     
   for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
+    
+    //check if user can view this task
+    if( ($admin != 1 ) && ($row[4] != "t" ) && ($row[5] != 0 ) ) {
+      if( ! in_array( $row[5], (array)$gid ) )
+        continue;
+    }
   
     //put values into array
     $task_array[$i]["id"] = $row[0];
-    $task_array[$i]["name"] = $row[1];
     $task_array[$i]["parent"] = $row[2];
-    $task_array[$i]["status"] = $row[3];
-    $task_array[$i]["globalaccess"] = $row[4];
-    $task_array[$i]["usergroupid"] = $row[5];
     
     //add suffix information
     switch( $row[3] ) {
@@ -80,9 +82,6 @@ function listTasks($projectid ) {
         $suffix = "</a> &nbsp;<i>".$task_state["task_planned"]."</i><br />\n";
         break;
 
-      case "done":
-        $suffix = "";
-      
       default:
         //check if late
         if( ($now + $tz_offset - $row[6] ) >= 86400 ) {
@@ -92,7 +91,7 @@ function listTasks($projectid ) {
     }
     
     $task_array[$i]["task"] = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_array[$i]["id"]."\">".
-                              $task_array[$i]["name"].$suffix;
+                              $row[1].$suffix;
                                
         
     //if this is a subtask, store the parent id 
@@ -104,7 +103,6 @@ function listTasks($projectid ) {
   if(sizeof($parent_array) > 10 )
     $parent_array = array_unique($parent_array);
   $max = sizeof($task_array);
-  $flag = 1;
   
   //iteration for main tasks
   for($i=0 ; $i < $max ; $i++ ){
@@ -113,17 +111,9 @@ function listTasks($projectid ) {
     if($task_array[$i]["parent"] != $projectid ){
       continue;
     }
-      
-    //check for private usergroups, or completed tasks
-    if( ($admin == 1) || ($task_array[$i]["usergroupid"] == 0 ) ||
-        ($task_array[$i]["globalaccess"] == 't' ) ||
-        ($task_array[$i]["status"] != 'done' ) ||
-        (in_array($task_array[$i]["usergroupid"], (array)$gid ) ) ) {
-      
-      //show line
-      $content .= $task_array[$i]["task"];
-      $flag = 0; 
-    }
+    //show line
+    $content .= $task_array[$i]["task"];
+    $shown_array[]  = $task_array[$i]["id"]; 
     
     //if this task has children (subtasks), iterate recursively to find them 
     if(in_array($task_array[$i]["id"], (array)$parent_array ) ){
@@ -131,10 +121,20 @@ function listTasks($projectid ) {
     }
     $content .= "</li>\n";
   }
+ 
+  //look for any orphaned tasks, and show them too
+  if($max != sizeof($shown_array) ) {
+    for($i=0 ; $i < $max ; $i++ ) {
+      if( ! in_array($task_array[$i]["id"], (array)$shown_array ) ) 
+        $content .= $task_array[$i]["task"]."</li>\n";
+    }
+  } 
   $content .= "</ul>\n";
   
-  if($flag )
-    $content = "";
+  unset($task_array);
+  unset($shown_array);
+  unset($parent_array);
+  
   return $content;   
 }   
 
@@ -143,40 +143,27 @@ function listTasks($projectid ) {
 //
 function find_children($parent ) {
 
-  global $task_array, $parent_array, $x, $admin;
+  global $task_array, $parent_array, $shown_array;
 
   $content = "<ul>\n";
   $max = sizeof($task_array);
-  $flag = 1;
-       
+         
   for($i=0 ; $i < $max ; $i++ ) {
     
     //ignore tasks not directly under this parent
     if($task_array[$i]["parent"] != $parent ){
       continue;
     }
-    
-    //check for private usergroups, or completed tasks
-    if( ($admin == 1) || ($task_array[$i]["usergroupid"] == 0 ) ||
-        ($task_array[$i]["globalaccess"] == 't' ) ||
-        ($task_array[$i]["status"] != 'done' ) ||
-        (in_array($task_array[$i]["usergroupid"], (array)$gid ) ) ) {
-      
-      //show line
-      $content .= $task_array[$i]["task"];
-      $flag = 0;
-    }
-    
+    $content .= $task_array[$i]["task"];
+    $shown_array[] = $task_array[$i]["id"];
+            
     //if this task has children (subtasks), iterate recursively to find them
-    if(in_array($task_array[$i]["id"], $parent_array ) ){
+    if(in_array($task_array[$i]["id"], (array)$parent_array ) ){
       $content .= find_children($task_array[$i]["id"] );
     }
     $content .= "</li>\n";    
   }
   $content .= "</ul>\n";
-  
-  if($flag )
-    $content = ""; 
   return $content;
 }      
 
@@ -188,6 +175,8 @@ function find_children($parent ) {
 $content = "";
 $flag = 0;
 $active_only = 0;
+$condensed = 0;
+$project_print = 0;
 $tz_offset = ($TZ * 3600) - date("Z");
 
 // query to get the projects
@@ -215,20 +204,29 @@ if(db_numrows($q) < 1 ) {
 
 if(isset($_GET["active"] ) )
   $active_only = $_GET["active"];
+    
+if(isset($_GET["condensed"] ) )
+  $condensed = $_GET["condensed"];
 
 //text link for 'active' switch
 $content .= "<table style=\"width : 98%\"><tr><td>\n".
             "<span class=\"textlink\">";
 if($active_only )
-  $content .= "[<a href=\"main.php?x=".$x."&amp;active=0\">".$lang["show_all_projects"]."</a>]";
+  $content .= "[<a href=\"main.php?x=".$x."&amp;active=0&amp;condensed=".$condensed."\">".$lang["show_all_projects"]."</a>]";
 else
-  $content .= "[<a href=\"main.php?x=".$x."&amp;active=1\">".$lang["show_active_projects"]."</a>]";
+  $content .= "[<a href=\"main.php?x=".$x."&amp;active=1&amp;condensed=".$condensed."\">".$lang["show_active_projects"]."</a>]";
+
+//text link for 'condensed' switch
+if($condensed )
+  $content .= "&nbsp;[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=0"."\">"."Full view"."</a>]";
+else
+  $content .= "&nbsp;[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=1"."\">"."Condensed view"."</a>]";
 
 //text link for 'printer friendly' page
-if(isset($_GET["action"]) && $_GET["action"] == "project_print" )
-  $content  .= "\n[<a href=\"main.php?x=".$x."&amp;active=".$active_only."\">".$lang["normal_version"]."</a>]";
+if(isset($_GET["action"]) && $action == "project_print" ) 
+  $content  .= "\n[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."\">".$lang["normal_version"]."</a>]";
 else
-  $content  .= "</span></td>\n<td style=\"text-align : right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;active=".$active_only."&amp;action=project_print\">".$lang["print_version"]."</a>]";
+  $content  .= "</span></td>\n<td style=\"text-align : right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."&amp;action=project_print\">".$lang["print_version"]."</a>]";
 $content .= "</span></td></tr>\n</table>\n";
 
 //setup main table
@@ -273,7 +271,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $flag = 1;
 
   //start list
-  $content .= "<tr><td>";
+  $content .= "<tr><td class=\"projectlist\">\n";
 
   //show name and a link
   $content .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\"><b>".$row["name"]."</b></a>\n";
@@ -335,11 +333,12 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       $now = $row["now"];
       
       //show subtasks that are not complete
-      $content .= listTasks($row["id"] );
+      if(! $condensed )
+        $content .= listTasks($row["id"] );
       break;
     }
   //end list
-  $content .= "</td>\n</tr>\n";
+  $content .= "</td></tr>\n";
 }
 
 $content .= "</table>\n";
