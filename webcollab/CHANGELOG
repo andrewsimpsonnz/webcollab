@@ -1,4 +1,16 @@
 WebCollab CVS
+*** 8 August 2003
+
+- bugfix #783922 (Syntax error in private forum post listings)
+
+- bugfix #784692 (Syntax error in project usergroup pulldown)
+
+WebCollab 1.41
+*** 1 August 2003
+
+- release
+
+WebCollab CVS
 *** 19 July 2003
   Andrew Simpson
 
@@ -64,7 +76,7 @@ WebCollab CVS
 
 - bugfix: path require has never actually worked! Now fixed.
 
-- security:  change 'include security.php' to 'require'.  Missing file will now cause a fatal error. 
+- security:  change 'include security.php' to 'require'.  Missing file will now cause a fatal error.
 
 - change from uppercase HTML to lowercase HTML throughout code (moving towards XHTML compliance)
 
@@ -161,14 +173,14 @@ WebCollab CVS
 WebCollab 1.31
 *** 19 April 2003
   Andrew Simpson
-  
+
 - release
 
 WebCollab CVS
 *** 17 April 2003
   Andrew Simpson
 
-- validate HTML output against HTML 4.01.  Make corrections. 
+- validate HTML output against HTML 4.01.  Make corrections.
 
 - rewrite project_list to be HTML 4.01 compliant
 
@@ -178,7 +190,7 @@ WebCollab CVS
 
 - minor improvements to database creation scripts
 
-- bugfix: Project summary showing projects 'on hold' or 'planned' as 'done' 
+- bugfix: Project summary showing projects 'on hold' or 'planned' as 'done'
 
 
 WebCollab CVS
@@ -193,7 +205,7 @@ WebCollab CVS
 
 - update seen table when updating task
 
-- improve Help files   
+- improve Help files
 
 WebCollab CVS
 *** 6 April 2003
@@ -210,7 +222,7 @@ WebCollab CVS
 WebCollab 1.30
 *** 2 April 2003
   Andrew Simpson
-  
+
 - release
 
 WebCollab CVS
@@ -226,11 +238,11 @@ WebCollab-beta 1.30
   Andrew Simpson
 
 - release
-  
+
 WebCollab CVS
 *** 15 March 2003
   Andrew Simpson
-  
+
 - don't show inactive tasks in calendar
 
 - when project is inactive, set tasks as inactive too
