@@ -1,7 +1,7 @@
 <?php
 /*
   $Id$
- 
+
   WebCollab
   ---------------------------------------
   Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
@@ -51,8 +51,8 @@ if( ! isset($_REQUEST["action"]) )
         include("taskgroups/taskgroup_menubox.php" );
         include("usergroups/usergroup_menubox.php" );
         include("admin/admin_config_menubox.php" );
+        include("files/file_menubox.php" );
       }
-      include("files/file_menubox.php" );
       goto_main();
       include("tasks/task_show.php" );
       include("tasks/task_list.php" );
@@ -109,6 +109,29 @@ if( ! isset($_REQUEST["action"]) )
       create_bottom();
       break;
 
+    //printable task info
+    case "show_print":
+      create_top($lang["task_info"], 2 );
+      include("tasks/task_show.php" );
+      include("tasks/task_list.php" );
+      include("forum/forum_list.php" );
+      include("files/file_list.php" );
+      create_bottom();
+      break;
+
+    //printable summary info
+    case "summary_print":
+      create_top($lang["summary_list"], 2 );
+      include("tasks/task_summary_list.php" );
+      create_bottom();
+      break;
+
+    //printable project info
+    case "project_print":
+      create_top($lang["projects"], 2 );
+      include("tasks/task_project_list.php" );
+      create_bottom();
+      break;
 
     //Error case
     default:
