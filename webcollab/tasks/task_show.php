@@ -89,11 +89,13 @@ if( $row["owner"] == 0 ) {
   $content .= "<tr><td>".$lang["owned_by"].": </td><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["owner"]."\">".$owner."</a></td></tr>\n";
 }
 
-//get creator information
-$content .= "<tr><td>".$lang["created_on"].": </td><td>".nicedate($row["created"]);
+//get creator information (null if creator has been deleted!) 
 $creator = @db_result(db_query("SELECT fullname FROM users WHERE id=".$row["creator"] ), 0, 0  );
-if($creator != NULL )
-  $content .= $lang["by"]."<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["creator"]."\">".$creator."</a>";
+$content .= "<tr><td>".$lang["created_on"].": </td><td>";
+if($creator == NULL )
+  $content .= nicedate($row["created"]);
+else
+  $content .= sprintf($lang["by_sprt"], nicedate($row["created"]), "<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["creator"]."\">".$creator."</a>");
 $content .= "</td></tr>\n";
 
 //get deadline
