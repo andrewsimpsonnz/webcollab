@@ -11,6 +11,7 @@ WebCollab CVS
 
 - bugfix: rewrite task_edit.php & task_menubox.php for better language compatibility
 
+- added 'quoted-printable' and 'base64' encoding to email.php
 
 WebCollab CVS
 *** 12 October 2003
