@@ -100,7 +100,7 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
   echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n".
        "<html>\n\n".
        "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
-       "<!-- (c) 2002 - 2003 Andrew Simpson -->\n\n".
+       "<!-- (c) 2002 - 2004 Andrew Simpson -->\n\n".
        "<head>\n";
 
   if( $title == "" )
