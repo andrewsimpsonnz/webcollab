@@ -424,7 +424,7 @@ ignore_user_abort(TRUE);
                            AND users.deleted='f'");
 
           for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
-            $usergroup .= $s.$row["email"];
+            $usergroup .= $s.$row[0];
             $s = ", ";
           }
         }
