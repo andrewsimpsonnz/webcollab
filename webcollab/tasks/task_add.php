@@ -73,7 +73,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   else
     $project = db_result(db_query("SELECT name FROM tasks WHERE id=".$task_row["projectid"] ), 0, 0 );
 
-  $content .= "<tr><td>".$lang["pproject"].":</td> <td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_row["projectid"]."\">$project</a></td></tr>\n";
+  $content .= "<tr><td>".$lang["project"] .":</td> <td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_row["projectid"]."\">$project</a></td></tr>\n";
 
   //check if task has a parent task
   if( $task_row["parent"] != 0 ) {

@@ -47,7 +47,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
   //get project name (limited to 20 characters)
   $project_name = substr(db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 ), 0, 20);
 
-  $content .= "<small><b>".$lang["pproject"].":</b></small><br />\n";
+  $content .= "<small><b>".$lang["project"].":</b></small><br />\n";
 
   switch( $row["parent"] ) {
 
@@ -60,7 +60,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
       //task under project
       $task_name = substr($row["name"], 0, 20 );
       $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["projectid"]."\">$project_name</a><br />\n".
-                  "<small><b>".$lang["ttask"].":</b></small><br />\n".
+                  "<small><b>".$lang["task"].":</b></small><br />\n".
                   "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />$task_name<br />\n";
       break;
 
@@ -70,7 +70,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
       $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["projectid"]."\">$project_name</a><br />\n".
                   "<small><b>".$lang["parent_task"].":</b></small><br />\n".
                   "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["parent"]."\">$parent_name</a><br />\n".
-                  "<small><b>".$lang["ttask"].":</b></small><br />\n".
+                  "<small><b>".$lang["task"].":</b></small><br />\n".
                   "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".$row["name"]."<br />\n";
       break;
 
@@ -90,14 +90,14 @@ elseif( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ){
   //get project name
   $project_name = substr(db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 ), 0, 20);
 
-  $content .= "<small><b>".$lang["pproject"].":</b></small><br />\n".
+  $content .= "<small><b>".$lang["project"].":</b></small><br />\n".
               "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["projectid"]."\">$project_name</a><br />\n";
 
   switch( $row["parent"] ) {
 
     case "0":
       //new task under project
-      $content .= "<small><b>".$lang["ttask"].":</b></small><br />\n".
+      $content .= "<small><b>".$lang["task"].":</b></small><br />\n".
                   "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>New task</i><br />\n";
       break;
 
@@ -105,7 +105,7 @@ elseif( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ){
       //new task with parent task
       $content .= "<small><b>".$lang["parent_task"].":</b></small><br />\n".
                   "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$parentid\">".$row["name"]."</a><br />\n".
-                  "<small><b>".$lang["ttask"].":</b></small><br />\n".
+                  "<small><b>".$lang["task"].":</b></small><br />\n".
                   "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>New task</i><br />\n";
       break;
 

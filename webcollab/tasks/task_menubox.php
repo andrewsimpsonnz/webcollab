@@ -34,7 +34,7 @@ require_once( BASE."includes/security.php" );
 
 //secure variables
 $content  = "";
-$title = $lang["ttask"];
+$title = $lang["task"];
 $taskid = "";
 
 //the task dependent part
@@ -53,7 +53,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
     $q = db_query("SELECT name, parent FROM tasks WHERE id=$taskid" );
     $row = db_fetch_array($q, 0 );
     if($row["parent"] == 0 )
-      $title = $lang["pproject"];
+      $title = $lang["project"];
 
     $content .= "<small><b>".$lang["admin"].":</b></small><br />\n".
                 "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]." ".strtolower($title)."</a><br />\n".

@@ -30,10 +30,10 @@
 */
 
 require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once(BASE."includes/security.php" );
 
 include_once(BASE."tasks/task_common.php" );
-include_once( BASE."includes/time.php" );
+include_once(BASE."includes/time.php" );
 
 //
 // MAIN FUNCTION
@@ -160,7 +160,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
               $status = $task_state["done"];
             }
             else {
-              $status = $lang["pproject"];
+              $status = $lang["project"] ;
             }
             break;
         }
@@ -335,7 +335,7 @@ switch($sortby ) {
 $content .= "\">";
 $content .= "<b>".$lang["group"]."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=taskname\">";
-$content .= "<b>".$lang["ttask"]."</b></a></small></td></tr>";
+$content .= "<b>".$lang["task"]."</b></a></small></td></tr>";
 $suffix = " (by ".$sortby.")";
 
 // tail end of SQL query

@@ -95,7 +95,7 @@ $content .= "<form method=\"POST\" action=\"tasks/task_submit.php\">\n".
 if($row["parent"] != 0 ) {
 
   $project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
-  $content .= "<tr><td>".$lang["pproject"].":</td><td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["projectid"]."\">$project</a></td></tr>\n";
+  $content .= "<tr><td>".$lang["project"] .":</td><td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["projectid"]."\">$project</a></td></tr>\n";
 
   if( $row["parent"] != $row["projectid"] ) {
     $parent = db_result(db_query( "SELECT name FROM tasks WHERE id=".$row["parent"]), 0, 0);
@@ -295,11 +295,11 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
 
 if($row["parent"] == 0 ) {
   $full_title = $lang["edit_project"];
-  $title = $lang["project"];
+  $title = strtolower($lang["project"] );
 }
 else{
   $full_title = $lang["edit_task"];
-  $title = $lang["task"];
+  $title = strtolower($lang["task"] );
 }
 
 //delete options
