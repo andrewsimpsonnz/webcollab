@@ -30,6 +30,13 @@ LI LI {
   list-style-type: circle;
 }
 
+TABLE {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12px;
+  border-width : 0;
+  padding : 0;
+}
+
 /* Table outline for login screen
   - reduced width
   - aligned centre
@@ -62,8 +69,8 @@ TABLE.celldata {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
   margin-left : 0;
-  margin-top : 20px;
-  margin-bottom : 20 px;
+  margin-top : 5px;
+  margin-bottom : 20px;
   text-align : left;
   border-width: 0;
   padding : 0;
