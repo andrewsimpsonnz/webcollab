@@ -29,7 +29,7 @@
 */
 
 $title_takeover     = $ABBR_MANAGER_NAME.": Your item taken over";
-$email_takeover     = "Hello,\n\nThis is the %s site informing you that a project/task you own has been taken over by an admin on %s.\n\n".
+$email_takeover     = "Hello,\n\nThis is the %s site informing you that a %s you own has been taken over by an admin on %s.\n\n".
 			"Project:  %s\n".
 			"Task:     %s\n".
 			"Owner:    %s ( %s )\n".
