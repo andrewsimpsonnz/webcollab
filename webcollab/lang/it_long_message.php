@@ -34,16 +34,20 @@ $taskgroup_info =   "<ul><li>Se viene cancellato un taskgroup tutte le attivit&a
                       "<li>Due taskgroups non possono avere lo stesso nome.</li></ul>\n";
 
 $usergroup_info =   "<ul><li>Se viene cancellato uno usergroup tutti i relativi messaggi del forum privato saranno cancellati.</li>\n".
+                      //**
+                      "<li>Private usergroups can only be seen by the members of that private usergroup.</li>\n".
                       "<li>E' possibile modificare il nome di uno usergroup senza interferire con gli utenti ad esso associati.</li>\n".
                       "<li>Due usergroups non possono avere lo stesso nome.</li></ul>\n";
 
 $user_info      =   "Seleziona un'azione dal menu di sinistra.<br /><br />".
                       "Alcune informazioni:<br />".
                       "<ul>".
+                      //**
+                      "<li>Private users can only be seen by members of the same usergroup.</li>\n".
                       "<li>Gli utenti hanno due livelli di cancellazione, il secondo &egrave; definitivo.</li>\n".
                       "<li>Un utente cancellato perde tutti i suoi tasks ma non i messaggi del forum.</li>\n".
                       "<li>Un utente cancellato definitivamente perde tutto.</li>\n".
-                      "<li>Non pu&ograve; essere cancellato definitivamente un utente che ha forum items.</li>\n".
+                      //"<li>Non pu&ograve; essere cancellato definitivamente un utente che ha forum items.</li>\n".
                       "<li>A deleted user keeps the record of tasks that they have seen, and will continue with that list upon revival.</li>\n".
                       "<li>Tutte le azioni effettuate dall'utente sono inviate per email all'utente.</li>\n".
                       "<li>Tutte le Passwords sono crittate nel database. E' possibile solo inserirne una nuova.</li>\n".

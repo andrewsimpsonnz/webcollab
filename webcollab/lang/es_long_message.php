@@ -32,6 +32,8 @@
 
 
 $taskgroup_info = "<ul><li>Si elimina un taskgroup todas las tareas de su propiedad seran seteadas como uncategorised.</li>\n".
+  //**
+  "<li>Private usergroups can only be seen by the members of that private usergroup.</li>\n".
   "<li>Puede cambiar el nombre de la categoria sin iinterferir con las tareas.</li>\n".
   "<li>Dos taskgroups no pueden tener el mismo nombre.</li></ul>\n";
 
@@ -42,10 +44,12 @@ $usergroup_info = "<ul><li>Si elimina un usergroup todos los env&iacute;os priva
 $user_info      = "Seleccion su accion desde el menu en la izquierda.<br /><br />".
   "Algunas cosideraciones:<br />".
   "<ul>".
+  //**
+  "<li>Private users can only be seen by members of the same usergroup.</li>\n".
   "<li>Los usuarios se eliminan en dos etapas, la segunda es permanente.</li>\n".
   "<li>Un usuario eliminado pierde todas sus tareas pero no sus mensajes del foro.</li>\n".
   "<li>Un usuario borrado de forma permanente pierde todo.</li>\n".
-  "<li>No puede eliminar un usuario de modo permanente si este tiene itemsm en el foro.</li>\n".
+  //"<li>No puede eliminar un usuario de modo permanente si este tiene itemsm en el foro.</li>\n".
   "<li>Un usuario borrado mantiene los registros de sus tareas que ha revisado, y continuara con estas despues de ser reactivado.</li>\n".
   "<li>TODAS las acciones ejecutadas sobre un usuario seran informadas al usuario por email..</li>\n".
   "<li>Los Paswords son encriptados en la bas de datos. Puede solo setear uno nuevo.</li>\n".

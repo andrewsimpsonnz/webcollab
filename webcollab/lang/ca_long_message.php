@@ -36,16 +36,20 @@ $taskgroup_info = "<ul><li>Si esborra un taskgroup totes les seves tasques passa
   "<li>Dos taskgroups no poden tenir el mateix nom.</li></ul>\n";
 
 $usergroup_info = "<ul><li>Si esborra un usergroup tots els enviaments privats relacionats seran eliminats tamb&eacute;.</li>\n".
+  //**
+  "<li>Private usergroups can only be seen by the members of that private usergroup.</li>\n".
   "<li>Pot modificar el nom del usergroup sense interferir amb els usuaris en ell.</li>\n".
   "<li>Dos usergroups no poden tenir el mateix nombre.</li></ul>\n";
 
 $user_info      = "Seleccioni l'acci&oacute; des del men&uacute; de l'esquerra.<br /><br />".
   "Algunes consideracions:<br />".
   "<ul>".
+  //**
+  "<li>Private users can only be seen by members of the same usergroup.</li>\n".
   "<li>Els usuaris s'eliminen en dues etapes, la segona &eacute;s permanent.</li>\n".
   "<li>Un usuari eliminat perd totes les seves tasques per&ograve; no els seus missatges del f&ograve;rum.</li>\n".
   "<li>Un usuari esborrat de forma permanent ho perd tot.</li>\n".
-  "<li>No es pot eliminar un usuari permanentment si aquest t&eacute; items al f&ograve;rum.</li>\n".
+  //"<li>No es pot eliminar un usuari permanentment si aquest t&eacute; items al f&ograve;rum.</li>\n".
   "<li>Un usuari esborrat mant&eacute; els registres de les seves tasques que ha revisat, i continuar&agrave; amb aquestes despr&eacute;s de ser reactivat.</li>\n".
   "<li>TOTES les accions executades sobre un usuari seran informades a l'usuari per email.</li>\n".
   "<li>Les claus estan encriptades a la base de dades. Nom&eacute;s pot establir un de nou.</li>\n".

@@ -22,7 +22,7 @@
   Function:
   ---------
 
-  Language files (long messages) for 'fr' (French/Français)
+  Language files (long messages) for 'fr' (French/Franï¿½is)
 
   Translation: Olivier Chaussavoine
 
@@ -36,16 +36,20 @@ $taskgroup_info =   "<ul><li>Si vous effa&ccedil;ez votre groupe de t&acirc;che,
                       "<li>Deux groupes de t&acirc;ches ne peuvent avoir le m&ecirc;me nom.</li></ul>\n";
 
 $usergroup_info =   "<ul><li>Si vous effacez un groupe d'utilisateurs, toutes leurs contributions dans le forum vont aussi &ecirc;tre d&eacute;truites.</li>\n".
+                     //**
+                     "<li>Private usergroups can only be seen by the members of that private usergroup.</li>\n".
                       "<li>Vous pouvez changer le nom de groupe d'utilisateurs sans modifier les utilisateurs.</li>\n".
                       "<li>Deux groupe d'utilisateurs ne peuvent avoir le m&ecirc;me nom.</li></ul>\n";
 
 $user_info      =    "Merci de s&eacute;lectionner votre activit&eacute; dans le menu &agrave; gauche.<br /><br />".
                       "Pour informations:<br />".
                       "<ul>".
+                      //**
+                      "<li>Private users can only be seen by members of the same usergroup.</li>\n".
                       "<li>Un utilisateur est effa&ccedil;&eacute; en deux &eacute;tapes, la seconde est permanente.</li>\n".
                       "<li>Un utilisateur effac&eacute; perd toutes ses t&acirc;ches mais ses contributions aux forums sont conserv&eacute;es.</li>\n".
                       "<li>Un utilisateur d&eacute;truit de mani&egrave;re permanente efface tout.</li>\n".
-                      "<li>Vous ne pouvez pas effa&ccedil;er de mani&egrave;re permanente un utilisateur qui dispose de contributions dans les forums.</li>\n".
+                      //"<li>Vous ne pouvez pas effa&ccedil;er de mani&egrave;re permanente un utilisateur qui dispose de contributions dans les forums.</li>\n".
                       "<li>Un utilisateur effac&eacute; conserve une trace de ses t&acirc;ches sous forme de liste et peut les utiliser jusqu'&agrave; ce que cette liste soit vide.</li>\n".
                       "<li>TOUTE les actions effectu&eacute;es sur un utilisateur lui sont confirm&eacute;es par email.</li>\n".
                       "<li>Les mot de passes sont crypt&eacute;s. On ne peut qu'en affecter un nouveau.</li>\n".
