@@ -1,7 +1,7 @@
 <?php
 /*
   $Id$
- 
+
   WebCollab
   ---------------------------------------
   Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
@@ -27,7 +27,7 @@
 
   Create the window'ed interface and define a simple API
 
-  The screen is split in 3 components. the table is called main_table
+  The screen is split in 3 components. The overall table is called main_table
 
   +----------------+
   |  info          |
@@ -48,9 +48,8 @@
   new_box( title, content );
   goto_main();
 
-
   This implicates that all the boxes you create before calling goto_main() will be menu boxes. After
-  the call all boxes are main window boxes. Pretty simple.
+  the calling goto_main() all boxes are main window boxes.
 
 
   the internal functions are:
@@ -58,46 +57,38 @@
 
   create_top();
   create_bottom();
-
-
-  pretty easy huh ;-)
-
 */
 
 require_once("path.php" );
 
-include_once( BASE."config.php" );
-include_once( BASE."lang/lang.php" );
+include_once(BASE."config.php" );
+include_once(BASE."lang/lang.php" );
 
 //
-// Creates the inital window, and sets some vars. This _HAS_ to be the first function because of the header() calls
+// Creates the inital window
 //
 function create_top($title="", $no_menu=0, $cursor="" ) {
 
   global $username, $admin, $topbuild, $MANAGER_NAME, $lang, $web_charset;
 
-  if( $title == "" ) $title=$MANAGER_NAME;
-
-  //javascript to position cursor in the first box
-  if($cursor != "" ) {
-    $position = "<script language=\"JavaScript\" type=\"text/javascript\">\n".
-                "<!-- \n".
-                "function cursor() {document.inputform.".$cursor.".focus();}\n".
-                " // -->\n".
-                "</script>\n";
-
-    $script = " onLoad=cursor()";
-  }
-  else {
-    $position = "";
-    $script = "";
-  }
-
   //don't rebuild the top again if already built
-  if( $topbuild == 1 )
+  if($topbuild == 1 )
     return;
   else
     $topbuild = 1;
+
+  //first of all record our loading time
+  global $loadtime;
+  list($usec, $sec)=explode(" ", microtime());
+  $loadtime = ( (float)$usec + (float)$sec );
+
+  //remove /* and */ in section below to use compressed HTML output:
+  //Note: PHP manual recommends use of zlib.output_compression in php.ini instead of ob_gzhandler in here
+  /*
+  //use compressed output (if web browser supports it) _and_ zlib.output_compression is not already enabled
+  if( ! ini_get('zlib.output_compression') )
+    ob_start("ob_gzhandler" );
+  */
 
   //we don't want any caching of these pages
   header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -106,40 +97,44 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
   header("Cache-Control: post-check=0, pre-check=0", false);
   header("Pragma: no-cache");
 
-  ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+  echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n".
+       "<html>\n\n".
+       "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
+       "<!-- (c) 2002 - 2003 Andrew Simpson -->\n\n".
+       "<head>\n";
 
-<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->
-<!-- (c) 2002 - 2003 Andrew Simpson -->
+  if( $title == "" )
+    $title = $MANAGER_NAME;
 
+  echo "<title>$title</title>\n".
+       "<meta http-equiv=\"Pragma\" content=\"no-cache\">\n".
+       "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$web_charset\">\n".
+       "<link rel=\"StyleSheet\" href=\"".BASE."css.css\" type=\"text/css\">\n";
 
-<head>
-  <title><?php echo $title ?></title>
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $web_charset; ?>">
-  <link rel="StyleSheet" href="<?php echo BASE; ?>css.css" type="text/css">
-  <?php echo $position; ?>
-</head>
-
-<body<?php echo $script; ?>>
-
-  <?php
-
-  //first of all record our loading time
-  global $loadtime;
-  list($usec, $sec)=explode(" ", microtime());
-  $loadtime = ( (float)$usec + (float)$sec );
+  //javascript to position cursor in the first box
+  if($cursor != "" ) {
+    echo "<script language=\"JavaScript\" type=\"text/javascript\">\n".
+         "<!-- \n".
+         "function cursor() {document.inputform.".$cursor.".focus();}\n".
+         " // -->\n".
+         "</script>\n".
+         "</head>\n\n".
+         "<body onLoad=cursor()>\n";
+  }
+  else {
+    echo "</head>\n\n".
+         "<body>\n";
+  }
 
   //create the main table
-  echo "\n<!-- start main table -->\n";
-  echo "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">\n";
+  echo "<!-- start main table -->\n".
+       "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">\n";
 
   //create the masthead part of the main window
   if($no_menu == 0 )
-    echo "<tr>\n<td colspan=\"2\">";
+    echo "<tr><td colspan=\"2\">";
   else
-    echo "<tr>\n<td>";
+    echo "<tr><td>";
   echo "<div class=\"masthead\">";
 
   //show username if applicable
@@ -148,30 +143,51 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
 
   echo "</div></td></tr>\n";
 
-
-  //if we have only one space, we center it as 100% instead of pushing it to the left
+  //if we have only one space, we center the main box as 100% instead of pushing it to the left (as a menu)
   if($no_menu == 0 )
-    echo "<tr valign=\"top\"><td style=\"width: 175px\" align=\"center\">";
+    echo "<tr valign=\"top\"><td style=\"width: 175px\" align=\"center\">\n";
   else
-    echo "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">";
+    echo "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";
   return;
 }
 
+//
+//  Creates a new box
+//
+function new_box($title, $content, $style="boxdata", $size="tablebox" ) {
 
+  echo "\n<!-- start of $title - box -->\n".
+       "<br />\n".
+       "<table class=\"$size\" cellspacing=\"0\">\n".
+       "<tr><td class=\"boxhead\">$title</td></tr>\n".
+       "<tr><td class=\"$style\">\n".
+       "$content</td></tr>\n".
+       "</table>\n".
+       "<!-- end -->\n";
+
+  return;
+}
 
 //
-// Ends the page nicely
+// End the left frame and go the the right one
+//
+function goto_main() {
+  echo "</td><td align=\"center\">";
+  return;
+}
+
+//
+// Finish the page nicely
 //
 function create_bottom() {
 
   global $loadtime, $database_query_time, $database_query_count, $lang;
 
   //clean
-  echo "<br />";
+  echo "<br />\n";
 
   //end the main table
   echo "</td></tr></table>\n";
-
 
   //shows the time it took to load the page
   list($usec, $sec)=explode(" ", microtime() );
@@ -180,38 +196,6 @@ function create_bottom() {
 
   //end xml parsing
   echo "\n</body>\n</html>\n";
-  return;
-}
-
-
-
-//
-//  Creates a new menu-window
-//
-function new_box($title, $content, $style="boxdata", $size="tablebox" ) {
-
-  echo "\n<!-- start of ".$title."-box -->";
-  echo "\n<br />";
-
-  echo "
-  <table class=\"".$size."\" cellspacing=\"0\">
-    <tr>
-      <td class=\"boxhead\">".$title."</td>
-    </tr>
-    <tr>
-      <td class=\"".$style."\">\n".$content."\n</td>
-    </tr>
-  </table>\n <!-- end -->\n";
-  return;
-}
-
-
-
-//
-// End the left frame and go the the right one
-//
-function goto_main() {
-  echo "</td><td align=\"center\">";
   return;
 }
 
