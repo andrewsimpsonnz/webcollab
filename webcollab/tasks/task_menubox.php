@@ -34,9 +34,8 @@ require_once( BASE."includes/security.php" );
 
 //secure variables
 $content  = "";
-$title = $lang["task"];
-$title_lc = $lang["task_lc"];
 $taskid = "";
+$title = $lang["project_options"];
 
 //the task dependent part
 if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
@@ -45,22 +44,34 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
   //find out if the user owns this task
   if(@db_result(db_query("SELECT COUNT(*) FROM tasks WHERE id=$taskid AND owner=$uid" ), 0, 0 ) == 1 )
-    $owner=true;
+    $owner = true;
   else
-    $owner=false;
+    $owner = false;
 
-  if( ($admin==1) || $owner ) {
+  if( ($admin == 1 ) || $owner ) {
 
     $q = db_query("SELECT name, parent FROM tasks WHERE id=$taskid" );
     $row = db_fetch_array($q, 0 );
-    if($row["parent"] == 0 ) {
-      $title = $lang["project"];
-      $title_lc = $lang["project_lc"];
+
+    switch($row["parent"]) {
+      case 0:
+        $title_lc = $lang["project_lc"];
+        $edit = $lang["edit_project"];
+        $delete = $lang["delete_project"];
+        break;
+
+      default:
+        $title = $lang["task_options"];
+        $title_lc = $lang["task_lc"];
+        $edit = $lang["edit_task"];
+        $delete = $lang["delete_task"];
+        break;
     }
 
+
     $content .= "<small><b>".$lang["admin"].":</b></small><br />\n".
-                "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]." ".$title_lc."</a><br />\n".
-                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onClick=\"return confirm( '".sprintf($lang["del_javascript_sprt"], $title_lc, $row["name"] )."')\">".$lang["delete"]." ".$title_lc."</a><br />\n".
+                "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$edit."</a><br />\n".
+                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onClick=\"return confirm( '".sprintf($lang["del_javascript_sprt"], $title_lc, $row["name"] )."')\">".$delete."</a><br />\n".
                 "<br /><small><b>".$lang["global"].":</b></small><br />\n";
   }
   $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang["add_task"]."</a><br />\n";
@@ -69,6 +80,6 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 //the task-independent part
 $content .= "<a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a><br />\n";
 
-new_box( $title.$lang["options"], $content, "boxmenu" );
+new_box( $title, $content, "boxmenu" );
 
 ?>
