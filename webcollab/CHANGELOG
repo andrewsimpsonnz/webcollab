@@ -1,10 +1,16 @@
 WebCollab CVS
+*** 23 December 2004
+  Andrew Simpson
+  
+- bugfix: (Bug #1089722) SQL error in task_delete.php for prefixed database (hs_dino)
+   
+WebCollab CVS
 *** 18 December 2004
   Andrew Simpson 
 
 - improve formatting to language files
 
-- bugfix: FreeBSD (and others?) not compatible with HTTP redirect in setup.php 
+- bugfix: FreeBSD (and others?) not compatible with HTTP redirect in setup.php (fingerso) 
 
 WebCollab CVS
 *** 26 November 2004
