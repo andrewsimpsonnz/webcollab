@@ -69,15 +69,19 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["us
       $login_q = "SELECT id FROM users WHERE name='".safe_data($_SERVER["REMOTE_USER"] )."' AND deleted='f'";
   }
   else {
-     $username = safe_data($_POST["username"]);
-     //encrypt password
+    $username = safe_data($_POST["username"]);
+    //encrypt password
     $md5pass = md5($_POST["password"] );
-        
+
     //count the number of recent login attempts
-    $count_attempts = db_result(@db_query("SELECT COUNT(*) FROM login_attempt 
-                                                  WHERE name='".$username."' 
-                                                  AND last_attempt > (now()-INTERVAL ".$delim."10 MINUTE".$delim.") LIMIT 6" ), 0, 0 );
-    
+    if( ! $q = @db_query("SELECT COUNT(*) FROM login_attempt 
+                               WHERE name='".$username."' 
+                               AND last_attempt > (now()-INTERVAL ".$delim."10 MINUTE".$delim.") LIMIT 6", 0 ) ) {
+    secure_error("Unable to connect to database.  Please try again later." );
+    }
+  
+    $count_attempts = db_result($q, 0, 0 );
+      
     //protect against password guessing attacks 
     if($count_attempts > 4 ) {
       secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
@@ -88,7 +92,8 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["us
                                                                                      
     //construct login query
     $login_q = "SELECT id FROM users WHERE password='".$md5pass."' AND name='".$username."' AND deleted='f'";
-  } 
+  }
+   
   //database query
   if( ! $q = @db_query($login_q, 0 ) ) {
     sleep (2);
@@ -160,7 +165,7 @@ if( $SITE_IMG != "" ) {
   $content .=  "<img src=\"images/".$SITE_IMG."\" /><br />";
 }
 else {
-  $content .=  "<img src=\"images/webcollab.png\" alt=\"WebCollab logo\" /><br />";
+  $content .=  "<img src=\"images/webcollab_logo.jpg\" alt=\"WebCollab logo\" /><br />";
 }
 
 $content .= "<p>".$lang["please_login"].":</p>\n".
