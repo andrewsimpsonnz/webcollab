@@ -30,6 +30,9 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
+//data check
+$taskid = intval($taskid);
+
 //get the tasks' security info
 if( ! ($group_q = db_query("SELECT usergroupid, globalaccess, projectid FROM ".PRE."tasks WHERE id=$taskid" ) ) )
   error("Usergroup security", "There was an error in the data query." );
