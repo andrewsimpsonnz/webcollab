@@ -81,7 +81,7 @@ $content .= nl2br($text);
 $content .= "</TD></TR></TABLE>\n";
 
 //start of info table
-$content .= "<TABLE>\n";
+$content .= "<TABLE border=\"0\">\n";
 
 //get owner information
 if( $row["owner"] == 0 ) {
@@ -197,6 +197,19 @@ if( $row["parent"] != 0 ) {
   }
 }
 
+//set title variables as approriate for task or project
+switch( $row["parent"] ){
+  case "0":
+    $title = $lang["project_details"];
+    $type = $lang["project"];
+    break;
+
+ default:
+    $title = $lang["task_info"];
+    $type = $lang["task"];
+    break;
+}
+
 //show the usergroupid
 if( $row["usergroupid"] != 0 ) {
   $usergroup = db_result( db_query("SELECT name FROM usergroups WHERE id=".$row["usergroupid"] ), 0, 0  );
@@ -204,17 +217,17 @@ if( $row["usergroupid"] != 0 ) {
 
   switch( $row["globalaccess"] ){
     case 't':
-      $content .= $lang["task_accessible"]."</TD></TR>\n";
+      $content .= sprintf($lang["task_accessible_sprt"], $type )."</TD></TR>\n";
       break;
 
     case 'f':
     default:
-      $content .= "<B>".$lang["task_not_accessible"]."</B>.</TD></TR>\n";
+      $content .= "<B>".sprintf($lang["task_not_accessible_sprt"], $type )."</B>.</TD></TR>\n";
       break;
   }
 }
 else {
-  $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </TD><TD>".$lang["task_not_in_usergroup"]."</TD></TR>\n";
+  $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#usergroup\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </TD><TD>".sprintf($lang["task_not_in_usergroup_sprt"], $type )."</TD></TR>\n";
 }
 
 $content .= "</TABLE>\n";
@@ -222,19 +235,14 @@ $content .= "</TABLE>\n";
 //this part shows all the options the users has
 $content .= "<BR><DIV align=\"center\"><SMALL>\n";
 
-//set variables as appropriate for task or project
+//set add function for task or project
 switch( $row["parent"] ){
-
   case "0":
     $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=add&parentid=".$taskid."\">".$lang["add_task"]."</A>] \n";
-    $title = $lang["project_details"];
-    $type = $lang["project"];
     break;
 
  default:
     $content .= "[<A href=\"".$BASE_URL."tasks.php?x=".$x."&action=add&parentid=".$taskid."\">".$lang["add_subtask"]."</A>] \n";
-    $title = $lang["task_info"];
-    $type = $lang["task"];
     break;
 }
   
