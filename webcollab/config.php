@@ -72,7 +72,23 @@
 
   $LOCALE = "en";
 
+// email configuration
 
+  //enable email to send messages? (Values are "Y" or "N").
+  //  default is "Y".
+  $USE_EMAIL = "Y";
+  
+  //mail transport agent. Values are "mail" (local sockets and/or sendmail) or "SMTP" (network mail server).
+  // default is "mail". 
+  $MAIL_METHOD = "mail";
+  
+    //These two variables are only required if "SMTP" is chosen above
+      //location of SMTP server (ip address or FQDN)
+      $SMTP_HOST = "localhost";
+      //domain name to be used in SMTP HELO greeting
+      $DOMAIN = "localhost.localdomain";  
+  
+    
 // minor config parameters
 
   //number of days that new or updated tasks should be highlighted as 'New' or 'Updated'
@@ -83,11 +99,11 @@
 
   // error message config parameters
 
-  //show full debugging messages on the screen when errors occur (values are "0", or "1")
-  $DEBUG = "0";
+  //show full debugging messages on the screen when errors occur (values are "N", or "Y")
+  $DEBUG = "N";
 
-  //Don't show full error message on the screen - just a 'sorry, try again' message (values are "0", or "1")
-  $NO_ERROR = "0";
+  //Don't show full error message on the screen - just a 'sorry, try again' message (values are "N", or "Y")
+  $NO_ERROR = "N";
 
 
 ?>
