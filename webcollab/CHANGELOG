@@ -1,4 +1,14 @@
 WebCollab CVS
+*** 15 May 2004
+  Andrew Simpson
+
+- remove headers_sent() from screen.php (headers_sent() seems to be buggy in PHP5)
+
+- bugfix: prevent 'duplicate pkey' warning on first user add (affects pgsql only) 
+
+- change CSS to give more readable links 
+
+WebCollab CVS
 *** 12 May 2004
   Andrew Simpson
 
@@ -7,7 +17,7 @@ WebCollab CVS
 - user_show optimised
 
 WebCollab CVS
-*** 31 April 2004
+*** 7 May 2004
   Andrew Simpson
 
 - reduce number of database calls in task listing (optimisation)
