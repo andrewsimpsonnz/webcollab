@@ -99,7 +99,7 @@ elseif(! empty($_GET['parentid']) && is_numeric($_GET['parentid']) ){
     case "0":
       //new task under project
       $content .= "<small><b>".$lang['task'].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>New task</i><br />\n";
+                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>".$lang['new _task']."</i><br />\n";
       break;
 
     default:

@@ -139,7 +139,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   }
   if($ADMIN == 1 || $UID == $row['owner'] ){
   
-    $content .= "<span class=\"textlink\">[<a href=\"archive.php?x=$x&amp;action=submit_restore&amp;taskid=".$row['id']."\">".$lang['revive']."</a>]&nbsp;&nbsp;".
+    $content .= "<span class=\"textlink\">[<a href=\"archive.php?x=$x&amp;action=submit_restore&amp;taskid=".$row['id']."\">".$lang['revive']."</a>]&nbsp;&nbsp;&nbsp;&nbsp;".
                 "[<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$row['id']."\" onclick=\"return confirm( '".sprintf($lang["del_javascript_project_sprt"], javascript_escape($row['name'] ) )."')\">".$lang['del']."</a>]</span>\n";
   }            
   //end list
@@ -151,6 +151,6 @@ $content .= "</table>\n";
 if($flag != 1 )
   $content .= "<div style=\"text-align : center\">".$lang['no_allowed_projects']."</div>\n";
 
-new_box("Archived projects - translate", $content );
+new_box($lang['archived_projects'], $content );
 
 ?>

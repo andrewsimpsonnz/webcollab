@@ -99,11 +99,11 @@ switch($row['project_order']){
 }            
 
 //project listing order                                         
-$content .= "<tr><td>"."Project listing order - translate".":</td><td>\n".
+$content .= "<tr><td>".$lang['project_listing_order'].":</td><td>\n".
             "<select name=\"project_order\">\n".
-            "<option value=\"name\"$s1>"."Project name - translate"."</option>\n".
-            "<option value=\"deadline\"$s2>"."Deadline - translate"."</option>\n".
-            "<option value=\"priority\"$s3>"."Priority - translate"."</option>\n".
+            "<option value=\"name\"$s1>".$lang['name']."</option>\n".
+            "<option value=\"deadline\"$s2>".$lang['deadline']."</option>\n".
+            "<option value=\"priority\"$s3>".$lang['priority']."</option>\n".
             "</select></td></tr>\n";
           
 //set default selection for task listing
@@ -123,11 +123,11 @@ switch($row['task_order']){
 }            
 
 //task listing order                                         
-$content .= "<tr><td>"."Task listing order - translate".":</td><td>\n".
+$content .= "<tr><td>".$lang['task_listing_order'].":</td><td>\n".
             "<select name=\"task_order\">\n".
-            "<option value=\"name\"$s1>"."Task name - translate"."</option>\n".
-            "<option value=\"deadline\"$s2>"."Deadline - translate"."</option>\n".
-            "<option value=\"priority\"$s3>"."Priority - translate"."</option>\n".
+            "<option value=\"name\"$s1>".$lang['name']."</option>\n".
+            "<option value=\"deadline\"$s2>".$lang['deadline']."</option>\n".
+            "<option value=\"priority\"$s3>".$lang['priority']."</option>\n".
             "</select></td></tr>\n".
             "</table>\n";
           

@@ -27,29 +27,6 @@
 
 */
 
-/*
-General formatting:
-
-     $lang['xxxx']     == string in title case (eg: 'Project')
-
-     $lang['xxxx_sprt'] == formatted print string (eg: 'Files associated with this %s' - where %s is inserted by the code)
-
-              Formatted strings with %1$s; %2$s; %3$s etc. can have parameters interchanged - as in:
-
-                 'Message from %1$s about %2$s' _could also be_ 'Message about %2$s from %1$s'
-
-              This can be useful for translating to different languages.
-
-    
-    $lang['xxxx_g'] == graphical string
-
-    $lang['xxxx_javascript'] == javascript string 
-    
-    
-    Note: All strings must have single quotes escaped with '\' - as in 'Confirmer l\'effacement!'
-
-*/
-
 //required language encodings
 $web_charset = 'iso-8859-1';
 $email_charset = 'iso-8859-1';
@@ -125,8 +102,14 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['allow_group_edit']           = 'Allow all in usergroup to edit?';
     $lang['set_email_owner']            = 'Always email owner with changes?';
     $lang['set_email_group']            = 'Always email usergroup with changes?';
+//**    
+    $lang['project_listing_order']      = 'Project listing order';
+//**    
+    $lang['task_listing_order']         = 'Task listing order'; 
     $lang['configuration']              = 'Configuration';
 
+//archive
+    $lang['archived_projects']          = 'Archived Projects';    
 
 //contacts
     $lang['firstname']                  = 'Firstname:';
@@ -181,9 +164,9 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['message']                    = 'Message:';
     $lang['post_reply_sprt']            = 'Post a reply to a message from \'%1$s\' about \'%2$s\'';
     $lang['post_message_sprt']          = 'Post message to: \'%s\'';
- //**
+//**
     $lang['forum_email_owner']          = 'Email forum message to the owner?';
- //**
+//**
     $lang['forum_email_usergroup']      = 'Email forum message to the usergroup?';
     $lang['reply']                      = 'Reply';
     $lang['new_post']                   = 'New post';
@@ -192,7 +175,11 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['forum_submit']               = 'Forum submit';
     $lang['no_message']                 = 'No message! Please go back and try again';
     $lang['add_reply']                  = 'Add reply';
-
+//**  
+    $lang['last_post_sprt']             = 'Last post %s'; //Note to translators: context is 'Last post 2004-Dec-22'
+//**   
+    $lang['recent_posts']               = 'Recent forum posts';      
+    
  //includes
     $lang['report']                     = 'Report';
     $lang['warning']                    = '<h1>Sorry!</h1><p>We are unable to process your request right now. Please try again later.</p>';
@@ -202,6 +189,8 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['calendar']                   = 'Calendar';
     $lang['log_out']                    = 'Log out';
     $lang['main_menu']                  = 'Main menu';
+//**
+    $lang['archive']                    = 'Archive';   
     $lang['user_homepage_sprt']         = '%s\'s homepage';
  //**
     $lang['missing_field_javascript']   = 'Please enter a value for the missing field';
@@ -210,7 +199,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
  //**
     $lang['finish_date_javascript']     = 'The entered date occurs after the project finish date!';
     $lang['security_manager']           = 'Security manager';
-    $lang['session_timeout_sprt']       = 'Access denied; last action was %1\$d minutes ago and the timeout is %2\$d minutes; please <a href=\'%3\$sindex.php\'>re-login</a>';
+    $lang['session_timeout_sprt']       = 'Access denied; last action was %1$d minutes ago and the timeout is %2$d minutes; please <a href=\'%3$sindex.php\'>re-login</a>';
     $lang['access_denied']              = 'Access denied';
     $lang['private_usergroup']          = 'Sorry; this area is in a private usergroup and you do not have access rights.';
     $lang['invalid_date']               = 'Invalid date';
@@ -362,6 +351,8 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['project_options']            = 'Project options';
     $lang['task_options']               = 'Task options';
     $lang['task_navigation']            = 'Task navigation';
+//**
+    $lang['new_task']                   = 'New task';    
     $lang['no_projects']                = 'There are no projects to view';
  //**
     $lang['show_all_projects']          = 'Show all projects';
@@ -423,5 +414,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['calendar']                   = 'Calendar';
     $lang['normal_version']             = 'Normal version';
     $lang['print_version']              = 'Print version';
+    $lang['condensed_view']             = 'Condensed view';
+    $lang['full_view']                  = 'Full view';
 
 ?>

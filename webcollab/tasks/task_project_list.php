@@ -234,9 +234,9 @@ else
 
 //text link for 'condensed' switch
 if($condensed )
-  $content .= "&nbsp;[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=0"."\">"."Full view"."</a>]";
+  $content .= "&nbsp;[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=0"."\">".$lang['full_view']."</a>]";
 else
-  $content .= "&nbsp;[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=1"."\">"."Condensed view"."</a>]";
+  $content .= "&nbsp;[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=1"."\">".$lang['condensed_view']."</a>]";
 
 //text link for 'printer friendly' page
 if(isset($_GET['action']) && $action == "project_print" ) 
