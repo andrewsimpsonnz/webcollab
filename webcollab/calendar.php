@@ -35,6 +35,24 @@ create_top( $lang["calendar"], 1 );
 $content = "";
 $usergroup[0] = 0;
 
+//set selection default
+if(isset($_POST["selection"]) && valid_string($_POST["selection"]) )
+  $selection = ($_POST["selection"]);
+else
+  $selection = "user";
+
+//set user default
+if(isset($_POST["userid"]) && is_numeric($_POST["userid"]) )
+  $userid = ($_POST["userid"]);
+else
+  $userid = 0;
+
+//set usergroup default
+if(isset($_POST["groupid"]) && is_numeric($_POST["groupid"]) )
+  $groupid = ($_POST["groupid"]);
+else
+  $groupid = 0;
+
 //set month
 if(isset($_POST["month"]) && is_numeric($_POST["month"]) )
   $month = $_POST["month"];
@@ -53,17 +71,68 @@ if( $month == date("n",time()) && $year == date("Y",time()) )
 else
   $today = 0;
 
-//get usergroups of user, and put them in a simple array for later use
-$usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
-for( $i=0 ; $row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
-  $usergroup[$i] = $row[0];
+//set selection & associated defaults for the text boxes
+switch($selection ) {
+  case "group":
+    $tail = "AND usergroupid=$groupid";
+    $userid = 0; $s1 = ""; $s2 = " SELECTED"; $s3 = " CHECKED"; $s4 = "";
+    break;
+
+  case "user":
+  default:
+    if($userid == 0 )
+      $tail = "";
+    else
+      $tail = "AND owner=$userid";
+    $groupid = 0; $s1 = " CHECKED"; $s2 = ""; $s3 = ""; $s4 = " SELECTED";
+    break;
 }
 
-//set up form for user input
-$content .= "<br /><div align=\"center\">\n";
-$content .= "<form method=\"POST\" action=\"calendar.php\">";
+$content .= "<div align=\"center\">\n".
+            "<form method=\"POST\" action=\"calendar.php\">".
+            "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ".
+            "<table border=\"0\">\n".
+            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\"$s1>".$lang["users"]."</td><td>\n".
+            "<select name=\"userid\">\n".
+            "<option value=\"0\"$s2>All users - translate me</option>\n";
+
+//get all users for option box
+$q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname");
+
+//user input box fields
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+  $content .= "<option value=\"".$row["id"]."\"";
+
+  //highlight current selection
+  if( $row[ "id" ] == $userid )
+    $content .= " SELECTED";
+
+  $content .= ">".$row["fullname"]."</option>\n";
+}
+
+$content .= "</select></td></tr>\n".
+            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\"$s3>".$lang["usergroups"]."</td><td>\n".
+            "<select name=\"groupid\">\n".
+            "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
+
+//get all groups for option box
+$q = db_query("SELECT id, name FROM usergroups ORDER BY name" );
+
+//usergroup input box fields
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+  $content .= "<option value=\"".$row["id"]."\"";
+
+  //highlight current selection
+  if( $row[ "id" ] == $groupid )
+    $content .= " SELECTED";
+
+  $content .= ">".$row["name"]."</option>\n";
+}
+
+$content .= "</select></td></tr>\n";
+
 //month (must be in decimal, 'cause that's what database uses!)
-$content .= "<select name=\"month\">\n";
+$content .= "<tr><td><select name=\"month\">\n";
 for( $i=1; $i<13 ; $i++) {
   $content .= "<option value=\"$i\"";
 
@@ -71,20 +140,25 @@ for( $i=1; $i<13 ; $i++) {
   //use ($i-1) because array starts at zero
   $content .= ">".$month_array[($i-1)]."</option>\n";
   }
-$content .=  "</select>\n";
+$content .=  "</select></td>\n";
 
 //year
-$content .= "<select name=\"year\">\n";
+$content .= "<td><select name=\"year\">\n";
 for( $i=2001; $i<2011 ; $i++) {
   $content .= "<option value=\"$i\"";
 
   if( $year == $i ) $content .= " SELECTED";
   $content .= ">".$i."</option>\n";
   }
-$content .=  "</select>\n".
-             "<input type=\"hidden\" name=\"x\" value=\"".$x."\">\n".
-             "<input type=\"submit\" value=\"".$lang["update"]."\">\n".
-             "</form>\n<br />\n";
+$content .=  "</select></td></tr>\n".
+             "<tr><td><input type=\"submit\" value=\"".$lang["update"]."\"></td></tr>\n".
+             "</table></form><br />\n";
+
+//get usergroups of user, and put them in a simple array for later use
+$usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
+for( $i=0 ; $row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
+  $usergroup[$i] = $row[0];
+}
 
 //number of days in month
 $numdays = date("t", mktime(0, 0, 0, $month, 1, $year ) );
@@ -102,7 +176,7 @@ foreach($week_array as $value) {
 $content .= "</tr>\n";
 
 //show lead in to dates
-$content .= "<tr valign=\"top\" align=\"center\" height=\"60\">\n";
+$content .= "<tr valign=\"top\" align=\"center\">\n";
 for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); $i++ ) {
   $content .= "<td>&nbsp;</td>\n";
 }
@@ -111,7 +185,7 @@ for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); $i++
 for ($num = 1; $num <= $numdays; $num++ ) {
   if ($i >= 7 ) {
     $content .= "</tr>\n".
-                "<tr valign=\"top\" align=\"center\" height=\"60\">\n";
+                "<tr valign=\"top\" align=\"center\">\n";
     $i=0;
   }
   $content .= "<td ";
@@ -121,9 +195,10 @@ for ($num = 1; $num <= $numdays; $num++ ) {
     $content .= "bgcolor=\"#C0C0C0\"";
 
   $content .= ">$num<br />";
+  $pad = 0;
 
   //search for tasks on this date
-  $q = db_query("SELECT id, name, parent, status, usergroupid, globalaccess FROM tasks WHERE deadline='$year-$month-$num'" );
+  $q = db_query("SELECT id, name, parent, status, usergroupid, globalaccess FROM tasks WHERE deadline='$year-$month-$num' $tail" );
 
   if( db_numrows($q) > 0 ) {
     for( $j=0 ; $row = @db_fetch_array($q, $j ) ; $j++) {
@@ -153,7 +228,8 @@ for ($num = 1; $num <= $numdays; $num++ ) {
                  $name = "<font color=\"green\"><u>".$row["name"]."</u>";
                else
                  $name = "<font color=\"blue\">".$row["name"];
-               $content .= "-> <a href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$name."</font></a><br />\n";
+               $content .= "<img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\">".
+                           "<a href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\">".$name."</font></a><br />\n";
              break;
 
              default:
@@ -163,7 +239,8 @@ for ($num = 1; $num <= $numdays; $num++ ) {
               else
                 $name = "<font color=\"red\">".$row["name"];
 
-              $content .= "-> <a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["id"]."\">".$name."</font></a><br />\n";
+              $content .= "<img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\">".
+                          "<a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["id"]."\">".$name."</font></a><br />\n";
             break;
           }
         break;
@@ -171,6 +248,12 @@ for ($num = 1; $num <= $numdays; $num++ ) {
       $pad++;
     }
   }
+  //pad out the cells to the required depth
+  while($pad < 5 ) {
+    $content .= "<br />";
+    $pad++;
+  }
+  
   $content .= "</td>\n";
   $i++;
 }
