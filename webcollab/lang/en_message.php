@@ -84,7 +84,8 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['error']                      = 'Error';
     $lang['no_login']                   = 'Access denied; incorrect login or password';
     $lang['please_login']               = 'Please log in';
-
+    $lang['go']                         = 'Go!';
+    
 //graphic items
     $lang['late_g']                     = '&nbsp;LATE&nbsp;';
     $lang['new_g']                      = '&nbsp;NEW&nbsp;';
@@ -333,6 +334,8 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['add_project']                = 'Add project';
     $lang['clone_project']              = 'Clone project';
     $lang['clone_task']                 = 'Clone task';
+//**
+    $lang['quick_jump']                 = 'Quick Jump';
     $lang['no_edit']                    = 'You do not own this item and therefore you may not edit it';
     $lang['uncategorised']              = 'Uncategorised';
     $lang['admin']                      = 'Admin';
