@@ -1,4 +1,17 @@
 WebCollab CVS
+*** 19 December 2003
+  Andrew Simpson
+
+- bugfix: array error for usergroup emails in task_submit.php
+
+WebCollab CVS
+*** 19 December 2003
+  Andrew Simpson
+
+- setup program checks mysql/pgsql extensions are loaded (sanity check)
+
+
+WebCollab CVS
 *** 9 December 2003
   Andrew Simpson
 
@@ -12,7 +25,7 @@ WebCollab CVS
 
 - failed session defaults to login screen
 
-- make session timeout adjustable in config.php 
+- make session timeout adjustable in config.php
 
 WebCollab CVS
 *** 28 November 2003
@@ -35,8 +48,6 @@ WebCollab CVS
 WebCollab CVS
 *** 22 November 2003
 (Andrew Simpson)
-
-- remove SMTP_AUTH from email
 
 - code optimisation for email.php
 

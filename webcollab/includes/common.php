@@ -82,7 +82,7 @@ return $body;
 //
 function error($box_title, $content ) {
 
-  global $username, $useremail, $MANAGER_NAME, $EMAIL_ERROR, $EMAIL_FROM, $EMAIL_REPLY_TO, $DEBUG, $NO_ERROR, $db_error_message;
+  global $uid_name, $uid_email, $MANAGER_NAME, $EMAIL_ERROR, $EMAIL_FROM, $EMAIL_REPLY_TO, $DEBUG, $NO_ERROR, $db_error_message;
 
   include_once(BASE."includes/screen.php" );
 
@@ -104,7 +104,7 @@ function error($box_title, $content ) {
   //email to the error-catcher
   $message = "Hello,\n This is the $MANAGER_NAME site and I have an error :/  \n".
             "\n\n".
-            "User that created the error: $username ( $useremail )\n".
+            "User that created the error: $uid_name ( $uid_email )\n".
             "The erroneous component: $box_title\n".
             "The error message: $content\n".
             "Database message: $db_error_message\n".
