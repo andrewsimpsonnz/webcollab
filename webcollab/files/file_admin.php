@@ -28,20 +28,15 @@
   Lists files assigned to a task
 
 */
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
+
+include_once(BASE."config.php" );
+include_once(BASE."includes/time.php" );
 
 $content = "";
 
-
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-
-include_once( BASE."includes/security.php" );
-include_once( BASE."config.php" );
-include_once( BASE."includes/time.php" );
-
-if( $admin != 1 )
+if($admin != 1 )
   error("Access denied", "This feature is only for admins" );
 
 

@@ -28,24 +28,21 @@
   Lists all the posts belonging to this task
 
 */
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once( BASE."includes/security.php" );
 include_once( BASE."config.php" );
 include_once( BASE."includes/time.php" );
 
 
-//check the taskid is valid 
+//check the taskid is valid
 if( ! ( isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) )
-  error( "Forum list", "Not a valid taskid" );
+  error("Forum list", "Not a valid taskid" );
 
 $taskid = $_GET["taskid"];
 
 //check usergroup security
-include_once( BASE."includes/usergroup_security.php");
+require_once(BASE."includes/usergroup_security.php" );
 
 //
 // Recursive function for listing all posts of a task
@@ -62,8 +59,8 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
         users.fullname AS fullname,
         tasks.owner AS taskowner
         FROM forum
-        LEFT JOIN users ON ( users.id=forum.userid)
-        LEFT JOIN tasks ON ( tasks.id=forum.taskid )
+        LEFT JOIN users ON (users.id=forum.userid)
+        LEFT JOIN tasks ON (tasks.id=forum.taskid )
         WHERE forum.taskid=$taskid
         AND forum.parent=$parentid
         AND forum.usergroupid=$usergroupid
@@ -73,7 +70,7 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
   $q = db_query($query );
 
   //check for any posts
-  if( db_numrows($q ) < 1 ) {
+  if(db_numrows($q ) < 1 ) {
     return;
   }
 
@@ -86,8 +83,8 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
                      " [<a href=\"".$BASE_URL."forum.php?x=$x&amp;action=add&amp;parentid=".$row["id"]."&amp;taskid=$taskid";
 
     //if this is a post to a private forum then announce it to the poster-engine
-    if( $usergroupid != 0 )
-      $this_content .= "&usergroupid=".$usergroupid;
+    if($usergroupid != 0 )
+      $this_content .= "&amp;usergroupid=$usergroupid";
 
     $this_content .= "\">".$lang["reply"]."</a>]</small>\n";
 
@@ -96,10 +93,10 @@ function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
       $this_content .= " <small>[<a href=\"".$BASE_URL."forum/forum_submit.php?x=$x&amp;action=del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onClick=\"return confirm( '".$lang["confirm_del"]."' )\">".$lang["del"]."</a>]</small>\n";
     }
 
-    $this_content .= "<br />".nl2br( $row["text"] )."\n";
+    $this_content .= "<br />".nl2br($row["text"] )."\n";
 
     //recursive search
-    $this_content .= list_posts_from_task( $row["id"], $taskid, $usergroupid );
+    $this_content .= list_posts_from_task($row["id"], $taskid, $usergroupid );
   }
 
   $this_content .= "</ul>";

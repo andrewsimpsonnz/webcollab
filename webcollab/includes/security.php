@@ -29,21 +29,18 @@
 
 */
 
+require_once("path.php" );
+
+include_once(BASE."config.php" );
+include_once(BASE."lang/language.php" );
+include_once(BASE."includes/database.php" );
+include_once(BASE."includes/common.php" );
 
 //clean up some variables
 $q="";
 $ip="";
 $x="";
 $admin=0;
-
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once(BASE."config.php" );
-include_once(BASE."lang/language.php" );
-include_once(BASE."includes/database.php" );
-include_once(BASE."includes/common.php" );
 
 //check for some values that HAVE to be present to be allowed (ip, session_key (named x))
 if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
@@ -55,7 +52,7 @@ if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
 if( isset($_REQUEST["x"]) && ( strlen($_REQUEST["x"]) == 32 ) ) {
   $x = $_REQUEST["x"];
   } else {
-  error($lang["security_manager"], sprintf($lang["no_key_sprt"], $BASE_URL) );
+  error($lang["security_manager"], sprintf($lang["no_key_sprt"], $BASE_URL ) );
 }
 
 
@@ -70,8 +67,8 @@ if( ! ($q = db_query( "SELECT logins.user_id AS user_id, logins.ip AS ip, logins
   error("Security manager", "Database not able to verify session key");
 }
 
-if( db_numrows($q) != 1 ) {
-  error( $lang["security_manager"], sprintf( $lang["no_session"], $BASE_URL ) );
+if(db_numrows($q) != 1 ) {
+  error($lang["security_manager"], sprintf($lang["no_session"], $BASE_URL ) );
 }
 
 if( ! ( $row = db_fetch_array($q, 0) ) ) {
@@ -79,7 +76,7 @@ if( ! ( $row = db_fetch_array($q, 0) ) ) {
 }
 
 //session does exist, now cross-check with ip address
-if( $ip != $row["ip"] ) {
+if($ip != $row["ip"] ) {
   db_query("DELETE FROM logins WHERE session_key='$x'" );
   warning( $lang["security_manager"], sprintf( $lang["ip_spoof_sprt"], $ip, $BASE_URL) );
 }
@@ -101,9 +98,10 @@ $uid = $row["user_id"];
 $username = $row["fullname"];
 $useremail = $row["email"];
 
-if( $row["admin"] == 't' ) {
+if($row["admin"] == 't' )
   $admin = 1;
-}
+else
+  $admin = 0;
 
 //update the "I was here" time
 db_query("UPDATE logins SET lastaccess=current_timestamp(0) WHERE session_key='$x' AND user_id=$uid" );

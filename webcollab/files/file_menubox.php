@@ -29,24 +29,20 @@
 
 */
 
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
+
+include_once( BASE."config.php" );
+
 //secure values
 $content = "";
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once( BASE."includes/security.php" );
-include_once( BASE."config.php" );
-
-
 //add an option to admin files
-if( $admin == 1 )
+if($admin == 1 )
   $content .= "<a href=\"files.php?x=$x&amp;action=admin\">".$lang["file_admin"]."</a><br />\n";
 
-if( $taskid != -1 )
+if($taskid != -1 )
   $content .= "<a href=\"".$BASE_URL."files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang["add_file"]."</a><br />\n";
-
 
 //show it
 new_box( $lang["files"], $content );

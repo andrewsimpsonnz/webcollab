@@ -29,11 +29,8 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once(BASE."includes/security.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
 //admins only
 if( $admin != 1 )
@@ -54,16 +51,16 @@ if(valid_string($_REQUEST["action"] ) ) {
         db_begin();
 
         //delete the private forum posts for this usergroup
-        db_query("DELETE FROM forum WHERE usergroupid=".$usergroupid );
+        db_query("DELETE FROM forum WHERE usergroupid=$usergroupid" );
 
         //delete the user entries out of usergroups_users
-        db_query("DELETE FROM usergroups_users WHERE usergroupid=".$usergroupid );
+        db_query("DELETE FROM usergroups_users WHERE usergroupid=$usergroupid" );
 
         //delete the group
-        db_query("DELETE FROM usergroups WHERE id=".$usergroupid );
+        db_query("DELETE FROM usergroups WHERE id=$usergroupid" );
 
         //update the tasks table by resetting the deleted usergroup id to zero
-        db_query("UPDATE tasks SET usergroupid=0 WHERE usergroupid=".$usergroupid );
+        db_query("UPDATE tasks SET usergroupid=0 WHERE usergroupid=$usergroupid" );
         db_commit();
       }
       else
@@ -109,7 +106,6 @@ if(valid_string($_REQUEST["action"] ) ) {
         warning($lang["value_missing"], sprintf($lang["field_sprt"], $lang["usergroup_name"] ) );
       break;
 
-
     //edit a usergroup
     case "edit":
 
@@ -148,8 +144,6 @@ if(valid_string($_REQUEST["action"] ) ) {
         warning($lang["value_missing"], sprintf( $lang["field_sprt"], $lang["usergroup_name"] ) );
       break;
 
-
-
     //error case
     default:
       error("Usergroup submit", "Invalid request given" );
@@ -159,6 +153,6 @@ if(valid_string($_REQUEST["action"] ) ) {
 else
   error("Usergroups submit", "No action given" );
 
-header("location: ".BASE."usergroups.php?x=".$x."&action=manage");
+header("location: ".BASE."usergroups.php?x=$x&action=manage");
 
 ?>

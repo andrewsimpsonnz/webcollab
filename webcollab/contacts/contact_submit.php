@@ -29,23 +29,20 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once( BASE."includes/security.php" );
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
 
 if( isset($_POST["contactid"]) )
   $contactid = $_POST["contactid"];
 
 //edit, insert, delete ?
-if( valid_string( $_REQUEST["action"] ) ) {
+if(valid_string( $_REQUEST["action"] ) ) {
 
-  switch( $_REQUEST["action"] ) {
+  switch($_REQUEST["action"] ) {
 
     //insert a new contact
     case "insert":
-          if( valid_string( $_POST["lastname"] ) && valid_string($_POST["firstname"] ) ){
+          if(valid_string( $_POST["lastname"] ) && valid_string($_POST["firstname"] ) ){
 
         db_query( "INSERT INTO contacts(firstname,
                                         lastname,
@@ -78,13 +75,13 @@ if( valid_string( $_REQUEST["action"] ) ) {
                                     $uid,
                                     current_timestamp(0) )" );
       }else
-        warning( $lang["contact_submit"], $lang["contact_warn"] );
+        warning($lang["contact_submit"], $lang["contact_warn"] );
 
       break;
 
     case "edit":
      //edit an existing entry
-         if( valid_string( $_POST["lastname"]) && valid_string( $_POST["firstname"] ) && is_numeric( $contactid ) ) {
+         if(valid_string($_POST["lastname"]) && valid_string($_POST["firstname"] ) && is_numeric($contactid ) ) {
 
         db_query("UPDATE contacts SET
                     firstname='".safe_data($_POST["firstname"])."',
@@ -112,9 +109,9 @@ if( valid_string( $_REQUEST["action"] ) ) {
       if(is_numeric($contactid ) ) {
         //delete the contact
         db_query("DELETE FROM contacts WHERE id=".$contactid );
-        }
-        else {
-        error( "Contact submit", "Invalid value specified for contactid" );
+      }
+      else {
+        error("Contact submit", "Invalid value specified for contactid" );
       }
 
       break;
@@ -131,6 +128,6 @@ else
 
 
 //this is quite crappy but it works ;)
-header("location: ".BASE."main.php?x=".$x );
+header("location: ".BASE."main.php?x=$x" );
 
 ?>

@@ -28,23 +28,21 @@
   Forum specific database options
 
 */
-
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once( BASE."includes/security.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
 //
 // Finds children messages recursively and puts them in an array
 //
-function find_and_report_children( $postid ) {
+function find_and_report_children($postid ) {
 
   global $arrayindex, $ids;
 
   //query for children
-  if( ! ($q = db_query("SELECT id FROM forum WHERE parent=".$postid, 0))) return;
-  if(db_numrows($q ) == 0 ) return;
+  if( ! ($q = db_query("SELECT id FROM forum WHERE parent=$postid", 0) ) )
+    return;
+  if(db_numrows($q ) == 0 )
+    return;
 
   //loop all children and put them in an array
   for($i=0; $row = @db_fetch_num($q, $i ); $i++) {
@@ -72,7 +70,7 @@ function delete_messages($postid ) {
 
   // perform the delete - delete from newest post first to oldest post last to prevent database referential errors
   for($i=0; $i < $arrayindex; $i++ ) {
-    db_query( "DELETE FROM forum WHERE id=".$ids[($arrayindex - 1) - $i] );
+    db_query("DELETE FROM forum WHERE id=".$ids[($arrayindex - 1) - $i] );
   }
   return;
 }
@@ -80,7 +78,7 @@ function delete_messages($postid ) {
 //
 //validate input data as either numeric > 0 or zero
 //
-function check( $var ) {
+function check($var ) {
 
   //validate as numeric
     if(is_numeric($var) )
@@ -90,20 +88,20 @@ function check( $var ) {
 return $var;
 }
 
-if( valid_string($_REQUEST["action"]) ) {
+if(valid_string($_REQUEST["action"]) ) {
 
-  switch( $_REQUEST["action"] ) {
+  switch($_REQUEST["action"] ) {
 
     case "add":
 
       //if all values are filled in correctly we can submit the forum-item
-      if(valid_string($_POST["text"]) ) {
+      if(valid_string($_POST["text"] ) ) {
 
         //check input has been provided
-        $input_array = array("parentid", "taskid");
-        foreach($input_array as $var) {
-          if(! valid_string($_POST[$var]) ) {
-            error( "Forum submit", "Variable ".$var." is not set" );
+        $input_array = array("parentid", "taskid" );
+        foreach($input_array as $var ) {
+          if(! valid_string($_POST[$var] ) ) {
+            error("Forum submit", "Variable ".$var." is not set" );
           }
         }
 
@@ -116,22 +114,22 @@ if( valid_string($_REQUEST["action"]) ) {
         $usergroupid = check($_POST["usergroupid"]);
         $taskid      = check($_POST["taskid"]);
 
-        if( $taskid == 0 )
+        if($taskid == 0 )
           error( "Forum submit", "Taskid not valid");
 
         //do data consistency check on parentid
         if($parentid != 0 ) {
-          if(db_result(db_query( "SELECT COUNT(*) FROM forum WHERE id=".$parentid ), 0, 0 ) == 0 )
+          if(db_result(db_query( "SELECT COUNT(*) FROM forum WHERE id=$parentid" ), 0, 0 ) == 0 )
             error("Forum submit", "Data consistency error - child post has no parent" );
         }
 
         //check usergroup security
-        include_once( BASE."includes/usergroup_security.php" );
+        require_once(BASE."includes/usergroup_security.php" );
         //okay now check if we need to post in the public or the private forums of the task
         if($usergroupid != 0 ) {
 
           //check if the user does belong to that group
-          if( ($admin!=1) && (db_result( db_query( "SELECT COUNT(*) FROM usergroups_users WHERE userid=".$uid." AND usergroupid=".$usergroupid ), 0, 0 ) < 1) )
+          if( ($admin!=1) && (db_result(db_query("SELECT COUNT(*) FROM usergroups_users WHERE userid=$uid AND usergroupid=$usergroupid" ), 0, 0 ) < 1) )
             error("Forum submit", "You do not have enough rights to post in that forum" );
 
           //private post
@@ -148,7 +146,7 @@ if( valid_string($_REQUEST["action"]) ) {
         }
 
         //set when the last forum post to this task was done to the database
-        db_query("UPDATE tasks SET lastforumpost=current_timestamp(0) WHERE id=".$taskid );
+        db_query("UPDATE tasks SET lastforumpost=current_timestamp(0) WHERE id=$taskid" );
         db_commit();
       }
       else
@@ -159,21 +157,21 @@ if( valid_string($_REQUEST["action"]) ) {
 
     //owner of the thread can delete, admin can delete
     case "del":
-      if( isset($_GET["postid"] ) ) {
-        $postid = check($_GET["postid"]);
+      if(isset($_GET["postid"] ) ) {
+        $postid = check($_GET["postid"] );
         if($postid == 0 )
-          error( "Forum submit", "Postid not valid");
+          error("Forum submit", "Postid not valid" );
 
         //admin can delete all
-        if( $admin == 1 ) {
+        if($admin == 1 ) {
           db_begin();
-          delete_messages( $postid );
+          delete_messages($postid );
           db_commit();
         }
         else {
           //check if user is owner of the task or the owner of the post
           if(
-          (db_result( db_query("SELECT COUNT(*) FROM forum LEFT JOIN tasks ON  (forum.taskid=tasks.id) WHERE  tasks.owner=$uid AND forum.id=$postid" ), 0, 0 ) == 1 ) ||
+          (db_result( db_query("SELECT COUNT(*) FROM forum LEFT JOIN tasks ON (forum.taskid=tasks.id) WHERE tasks.owner=$uid AND forum.id=$postid" ), 0, 0 ) == 1 ) ||
           (db_result( db_query("SELECT COUNT(*) FROM forum WHERE forum.userid=$uid AND forum.id=$postid" ), 0, 0 ) == 1 ) ) {
 
             db_begin();

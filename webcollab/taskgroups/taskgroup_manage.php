@@ -29,20 +29,15 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once(BASE."includes/security.php" );
-include_once(BASE."includes/database.php" );
-include_once(BASE."includes/common.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
 //admins only
 if($admin != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 //get the info
-$q = db_query("SELECT * FROM taskgroups ORDER BY name");
+$q = db_query("SELECT * FROM taskgroups ORDER BY name" );
 
 //nothing here yet
 if( db_numrows($q) == 0 ) {
@@ -58,16 +53,14 @@ $content =  "<br />\n".
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= "<tr><td>".$row["name"]." </td><td>".$row["description"]." </td>".
               "<td><a href=\"taskgroups/taskgroup_submit.php?x=$x&amp;action=del&taskgroupid=".$row["id"]."\" onClick=\"return confirm( '".$lang["confirm_del"]."')\">[".$lang["del"]."]</a> ".
-              "<td><A href=\"taskgroups.php?x=$x&amp;action=edit&amp;taskgroupid=".$row["id"]."\">[".$lang["edit"]."]</a></td></tr>";
+              "<td><a href=\"taskgroups.php?x=$x&amp;action=edit&amp;taskgroupid=".$row["id"]."\">[".$lang["edit"]."]</a></td></tr>";
 
 }
 
 $content .=   "</table><br />\n".
-              "[<a href=\"taskgroups.php?x=$x&amp;action=add\">".$lang["add"]."</a>]".
+            "[<a href=\"taskgroups.php?x=$x&amp;action=add\">".$lang["add"]."</a>]".
             "<br /><br />\n";
 
-
 new_box( $lang["manage_taskgroups"], $content );
-
 
 ?>

@@ -31,11 +31,9 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
-include_once(BASE."includes/security.php" );
 include_once(BASE."includes/admin_config.php" );
 
 //
@@ -88,7 +86,7 @@ function email($to, $subject, $message ) {
                             "Content-Transfer-Encoding: 7 bit\r\n";
 
       if( ! mail($to, $subject, $message, $additional_headers ) )
-        debug("Email to ".to." could not be sent" );
+        debug("Email to $to could not be sent" );
       break;
 
     case "SMTP":
@@ -108,61 +106,61 @@ function email($to, $subject, $message ) {
           socket_set_timeout($connection, 1, 0 );
 
         $res = fgets($connection, 256 );
-        if(substr($res,0,3) != "220" )
-          debug("Incorrect handshaking response from SMTP server at ".$host."<br /><br />Response from SMTP server was ".$res );
+        if(substr($res, 0, 3 ) != "220" )
+          debug("Incorrect handshaking response from SMTP server at $host <br /><br />Response from SMTP server was $res" );
 
         //send HELO to server
         fputs($connection, "HELO ".$_SERVER["SERVER_NAME"]."\r\n" );
         $res = fgets($connection, 256 );
-        if(substr($res,0,3) != "250" )
-          debug("Incorrect HELO response from SMTP server at ".$host."<br /><br />Response from SMTP server was ".$res );
+        if(substr($res, 0, 3 ) != "250" )
+          debug("Incorrect HELO response from SMTP server at $host <br /><br />Response from SMTP server was $res" );
 
         //do SMTP AUTH if required
         if($SMTP_AUTH == "Y" ) {
           fputs($connection, "AUTH LOGIN\r\n" );
           $res = fgets($connection, 256 );
-          if(substr($res,0,3) != "334" )
-            debug("AUTH not accepted by SMTP server at ".$host."<br /><br />Response from SMTP server was ".$res );
+          if(substr($res, 0, 3 ) != "334" )
+            debug("AUTH not accepted by SMTP server at $host <br /><br />Response from SMTP server was $res" );
 
           //send username
-          fputs($connection, base64_encode($MAIL_USER)."\r\n" );
+          fputs($connection, base64_encode($MAIL_USER )."\r\n" );
           $res=fgets($connection, 256 );
-          if(substr($res,0,3) != "334" )
-            debug("Username not accepted SMTP server at ".$host."<br /><br />Response from SMTP server was ".$res );
+          if(substr($res, 0, 3 ) != "334" )
+            debug("Username not accepted SMTP server at $host <br /><br />Response from SMTP server was $res" );
 
           //send password
-          fputs($connection, base64_encode($MAIL_PASSWORD)."\r\n" );
+          fputs($connection, base64_encode($MAIL_PASSWORD )."\r\n" );
           $res=fgets($connection, 256 );
-          if(substr($res,0,3) != "334" )
-            debug("Password not accepted SMTP server at ".$host."<br /><br />Response from SMTP server was ".$res );
+          if(substr($res, 0, 3 ) != "334" )
+            debug("Password not accepted SMTP server at $host <br /><br />Response from SMTP server was $res" );
         }
 
         //evelope from
         fputs($connection, "MAIL FROM: $EMAIL_FROM\r\n" );
         $res=fgets($connection, 256 );
-        if(substr($res,0,3) != "250" )
-          debug("Incorrect response to MAIL FROM command from SMTP server at ".$host."<br /><br />Response from SMTP server was ".$res );
+        if(substr($res, 0, 3 ) != "250" )
+          debug("Incorrect response to MAIL FROM command from SMTP server at $host <br /><br />Response from SMTP server was $res" );
 
         //envelope to
         fputs($connection, "RCPT TO: $email_to\r\n" );
         $res=fgets($connection, 256 );
 
-        switch(substr($res,0,3) ) {
+        switch(substr($res, 0, 3 ) ) {
           case "250":
           case "251":
             //acceptable responses
             break;
 
           default:
-            debug("Incorrect response to RCPT TO command from SMTP server at ".$host."<br /><br />Response from SMTP server was ".$res );
+            debug("Incorrect response to RCPT TO command from SMTP server at $host <br /><br />Response from SMTP server was $res" );
             break;
         }
 
         //message
         fputs($connection, "DATA\r\n" );
         $res=fgets($connection, 256 );
-        if(substr($res,0,3) != "354")
-          debug("Incorrect response to DATA command from SMTP server at ".$host."<br /><br />Response from SMTP server was ".$res );
+        if(substr($res, 0, 3 ) != "354")
+          debug("Incorrect response to DATA command from SMTP server at $host <br /><br />Response from SMTP server was $res" );
 
         //generate unique message id
         mt_srand(time());
@@ -186,21 +184,21 @@ function email($to, $subject, $message ) {
         // with a period on its own line.
         fputs($connection, $headers."\r\n".$message."\r\n.\r\n" );
         $res=fgets($connection, 256 );
-        if(substr($res,0,3) != "250" )
-          debug("Error sending data<br /><br />Response from SMTP server  at ".$host."was ".$res );
+        if(substr($res, 0, 3 ) != "250" )
+          debug("Error sending data<br /><br />Response from SMTP server  at $host was $res" );
 
         //say bye bye
         fputs($connection, "QUIT\r\n" );
         $res=fgets($connection, 256 );
-        if(substr($res,0,3) != "221" )
-        debug("Incorrect response to QUIT request from SMTP server at ".$host."<br /><br />Response from SMTP server was ".$res );
+        if(substr($res, 0, 3 ) != "221" )
+        debug("Incorrect response to QUIT request from SMTP server at $host <br /><br />Response from SMTP server was $res" );
 
         fclose ($connection );
       }
       break;
 
     default:
-      warning("Configuration error", "The email transport type ".$MAIL_METHOD." in the configuration file is not a valid type." );
+      warning("Configuration error", "The email transport type $MAIL_METHOD in the configuration file is not a valid type." );
       break;
 
     }
@@ -211,7 +209,7 @@ function email($to, $subject, $message ) {
 
    global $DEBUG;
 
-   if( $DEBUG == "Y" ) {
+   if($DEBUG == "Y" ) {
       //we don't use error() because email may not work!
      warning("Email error debug", $error_msg );
    }

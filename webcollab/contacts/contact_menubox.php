@@ -31,20 +31,14 @@
 
 */
 
-//secure variables
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
+
 $content = "";
-$q = "";
-$row = "";
 $company = "";
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once( BASE."includes/security.php" );
-
 //get all contacts
-$q = db_query("SELECT id,firstname, lastname, company FROM contacts ORDER BY company, lastname");
+$q = db_query("SELECT id, firstname, lastname, company FROM contacts ORDER BY company, lastname" );
 
 //show all contacts
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
@@ -52,14 +46,15 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   if( $row["company"] != "" ) {
      if ($row["company"] != $company){
        $content .= $row["company"]."<br />";
-       }
-     $show = $row["lastname"].", ".strtoupper( Substr( $row["firstname"], 0, 1 ) ).".";
+     }
+     $show = $row["lastname"].", ".strtoupper(substr( $row["firstname"], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row["id"]."\">$show</a><br />";
      $company =  $row["company"];
-   }else {
-    $show = $row["lastname"].", ".strtoupper( Substr( $row["firstname"], 0, 1 ) ).".";
-    $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row["id"]."\">$show</a><br />";
-    }
+   }
+   else{
+     $show = $row["lastname"].", ".strtoupper(substr( $row["firstname"], 0, 1 ) ).".";
+     $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row["id"]."\">$show</a><br />";
+   }
 }
 
 
@@ -67,5 +62,6 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 $content .= "<br />\n[<a href=\"contacts.php?x=$x&amp;action=add\">".$lang["add_contact"]."</a>]";
 
 //show the box
-new_box( $lang["contacts"], $content );
+new_box($lang["contacts"], $content );
+
 ?>

@@ -29,13 +29,8 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once(BASE."includes/security.php" );
-include_once(BASE."includes/database.php" );
-include_once(BASE."includes/common.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
 //admins only
 if( $admin != 1 )
@@ -108,6 +103,6 @@ if(isset($_REQUEST["action"]) ) {
 else
   error("Taskgroups submit", "No action given" );
 
-header("location: ".BASE."taskgroups.php?x=".$x."&action=manage");
+header("location: ".BASE."taskgroups.php?x=$x&action=manage");
 
 ?>

@@ -29,17 +29,15 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
 
-include_once( BASE."includes/security.php" );
 include_once( BASE."config.php" );
 
 //update or insert ?
-if( isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) ) {
+if(isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) ) {
 
-  switch( $_REQUEST["action"] ) {
+  switch($_REQUEST["action"] ) {
 
     //handle a file upload
     case "upload":
@@ -56,19 +54,19 @@ if( isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) ) {
       $description = safe_data($_POST["description"]);
 
       //check usergroup security
-      include_once( BASE."includes/usergroup_security.php" );
+      require_once( BASE."includes/usergroup_security.php" );
 
       //check if there was an upload
       if( is_uploaded_file( $_FILES["userfile"]["tmp_name"] ) ) {
 
         //check the destination directory is writeable by the webserver
         if( ! is_writable( $FILE_BASE."/" ) ) {
-          unlink( $_FILES["userfile"]["tmp_name"] );
+          unlink($_FILES["userfile"]["tmp_name"] );
           error("Configuration error", "The upload directory does not have write permissions set properly.  File upload has not been accepted.");
         }
 
         //check for ridiculous uploads
-        if( $_FILES["userfile"]["size"] > $FILE_MAXSIZE ) {
+        if($_FILES["userfile"]["size"] > $FILE_MAXSIZE ) {
           warning( $lang["file_submit"], sprintf( $lang["file_too_big_sprt"], $FILE_MAXSIZE ) );
           unlink( $_FILES["userfile"]["tmp_name"] );
         }
@@ -86,7 +84,7 @@ if( isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) ) {
         //okay accept file
         db_begin();
         //alter task lastfileupload
-        db_query( "UPDATE tasks SET lastfileupload=current_timestamp(0) WHERE id=".$taskid );
+        db_query("UPDATE tasks SET lastfileupload=current_timestamp(0) WHERE id=$taskid" );
 
         //alter file database administration
         $upload_q = db_query( "INSERT INTO files (filename,
@@ -118,7 +116,7 @@ if( isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) ) {
           db_query( "UPDATE files SET oid=".$last_oid." WHERE id=".$last_oid );
 
         //disarm it
-        chmod( $FILE_BASE."/".$last_oid."__".$_FILES["userfile"]["name"], 0644 );
+        chmod($FILE_BASE."/".$last_oid."__".$_FILES["userfile"]["name"], 0644 );
         db_commit();
 
       }
@@ -135,8 +133,13 @@ if( isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) ) {
         $fileid = $_GET["fileid"];
 
         //get the files from this task
-        $file_q = db_query("SELECT tasks.owner as owner, files.uploader as uploader, files.oid as oid, filename
-                             FROM files LEFT JOIN tasks ON (files.taskid=tasks.id) WHERE files.id=$fileid" );
+        $file_q = db_query("SELECT files.uploader AS uploader,
+                                   files.oid AS oid,
+                                   files.filename AS filename,
+                                   tasks.owner AS owner
+                                   FROM files
+                                   LEFT JOIN tasks ON (files.taskid=tasks.id)
+                                   WHERE files.id=$fileid" );
 
         //show them
         for($i=0 ; $row = @db_fetch_array($file_q, $i) ; $i++) {
@@ -145,11 +148,11 @@ if( isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) ) {
           if( ($admin==1) || ($uid == $row["owner"] ) || ($uid == $row["uploader"] ) ) {
 
             //delete file from disk
-            if(file_exists( $FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
-              unlink( $FILE_BASE."/".$row["oid"]."__".$row["filename"] );
+            if(file_exists($FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
+              unlink($FILE_BASE."/".$row["oid"]."__".$row["filename"] );
             }
             //delete record of file
-            db_query( "DELETE FROM files WHERE oid=".$row["oid"] );
+            db_query("DELETE FROM files WHERE oid=".$row["oid"] );
           }
         }
       }

@@ -29,11 +29,8 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once(BASE."includes/security.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
 //secure values
 $content = "";
@@ -47,6 +44,5 @@ $content .= "<a href=\"main.php?x=$x\">".$lang["home_page"]."</a><br />\n".
 
 //show
 new_box( $lang["main_menu"], $content );
-
 
 ?>

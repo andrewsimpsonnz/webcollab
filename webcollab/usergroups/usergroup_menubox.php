@@ -28,12 +28,8 @@
   This is the administrative interface to the taskgroups.
 
 */
-
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once( BASE."includes/security.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
 //only for admins
 if($admin != 1 )

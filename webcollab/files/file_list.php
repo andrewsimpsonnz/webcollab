@@ -29,12 +29,9 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
 
-
-include_once( BASE."includes/security.php" );
 include_once( BASE."config.php" );
 
 $content = "";
@@ -45,7 +42,7 @@ if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
 $taskid = $_GET["taskid"];
 
 //check usergroup security
-include_once( BASE."includes/usergroup_security.php" );
+require_once( BASE."includes/usergroup_security.php" );
 
 //get the files from this task
 $q = db_query("SELECT files.oid AS oid,
@@ -97,7 +94,7 @@ if(db_numrows($q ) != 0 ) {
 $content .= "<small>\n<br />\n[<a href=\"".$BASE_URL."files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang["add_file"]."</a>]</small>";
 
 $type = $lang["project"];
-if( db_result(db_query( "SELECT COUNT(*) FROM tasks WHERE parent=0 AND id=".$taskid ) ) == 0 )
+if( db_result(db_query( "SELECT COUNT(*) FROM tasks WHERE parent=0 AND id=$taskid" ) ) == 0 )
   $type = $lang["task"];
 
 new_box( sprintf($lang["files_assoc_sprt"], $type ), $content );

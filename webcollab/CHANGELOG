@@ -1,4 +1,22 @@
 WebCollab CVS
+*** 22 June 2003
+  Andrew Simpson
+
+- change from uppercase HTML to lowercase HTML throughout code (moving towards XHTML compliance)
+
+- include variables in quoted strings (for execution efficiency) throughout code
+
+- reformat all code to remove old formatting problems and improve readability
+
+- improve remaining non complying HTML (Now fully HTML 4.01 compliant)
+
+WebCollab 1.40
+*** 15 June 2003
+  Andrew Simpson
+
+- release
+
+WebCollab CVS
 *** 14 June 2003
   Andrew Simpson
 
@@ -20,7 +38,7 @@ WebCollab CVS
 
 - minor changes to security.php
 
-- minor changes to tasks_submit.php 
+- minor changes to tasks_submit.php
 
 - added database creation script for MySQL innodb
 

@@ -29,16 +29,12 @@
 
 */
 
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
+
 //secure variables
 $content = "";
 $row = "";
-
-
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once( BASE."includes/security.php" );
 
 //we need a valid contactid
 if( ! isset($_GET["contactid"]) || ! is_numeric($_GET["contactid"]) )
@@ -47,7 +43,7 @@ if( ! isset($_GET["contactid"]) || ! is_numeric($_GET["contactid"]) )
 $contactid = $_GET["contactid"];
 
 //get contact information
-if( ! ($row = db_fetch_array( db_query( "SELECT * FROM contacts WHERE id=".$contactid ), 0 ) ) )
+if( ! ($row = db_fetch_array( db_query("SELECT * FROM contacts WHERE id=$contactid" ), 0 ) ) )
   error("Database value error", "There is no information for the user that you specified");
 
 
@@ -75,6 +71,6 @@ $content .=
    "</form>";
 
 
-new_box( $lang["contact_info"], $content );
+new_box($lang["contact_info"], $content );
 
 ?>

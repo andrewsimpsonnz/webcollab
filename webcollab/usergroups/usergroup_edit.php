@@ -29,11 +29,8 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not make able to continue" );
-
-include_once( BASE."includes/security.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
 //admins only
 if( $admin != 1 )
@@ -46,7 +43,7 @@ if( ! (isset($_GET["usergroupid"] ) && is_numeric($_GET["usergroupid"] ) ) )
 $usergroupid = $_GET["usergroupid"];
 
 //get taskgroup information
-$q = db_query("SELECT * FROM usergroups WHERE id=".$usergroupid );
+$q = db_query("SELECT * FROM usergroups WHERE id=$usergroupid" );
 $row = db_fetch_array( $q, 0 );
 
 $content = "<br />\n".
@@ -57,8 +54,11 @@ $content = "<br />\n".
 
 //add users
 $user_q = db_query("SELECT fullname, id FROM users ORDER BY fullname" );
-//$member_q = db_query( "SELECT users.id as id FROM users, usergroups_users WHERE usergroupid=".$row["id"]." AND usergroups_users.userid=users.id" );
-$member_q = db_query("SELECT users.id as id FROM users LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id) WHERE usergroupid=".$row["id"] );
+$member_q = db_query("SELECT users.id AS id
+                            FROM users
+                            LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
+                            WHERE usergroupid=".$row["id"] );
+
 $content .=    "<tr><td>".$lang["members"]."</td><td><select name=\"member[]\" multiple size=\"4\">\n";
 
 for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++ ) {
@@ -82,6 +82,5 @@ $content .=    "</select><small><i>".$lang["select_instruct"]."</i></small></td>
            "<br /><br />\n";
 
 new_box( $lang["edit_usergroup"], $content );
-
 
 ?>

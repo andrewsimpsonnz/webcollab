@@ -64,10 +64,7 @@
 
 */
 
-
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
 
 include_once( BASE."config.php" );
 include_once( BASE."lang/language.php" );
@@ -82,7 +79,7 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
   if( $title == "" ) $title=$MANAGER_NAME;
 
   //javascript to position cursor in the first box
-  if( $cursor != "") {
+  if($cursor != "" ) {
     $position = "<script language=\"JavaScript\" type=\"text/javascript\">\n".
                 "<!-- \n".
                 "function cursor() {document.inputform.".$cursor.".focus();}\n".
@@ -90,8 +87,8 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
                 "</script>\n";
 
     $script = " onLoad=cursor()";
-    }
-    else {
+  }
+  else {
     $position = "";
     $script = "";
   }
@@ -141,7 +138,7 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
   echo "<table border=\"0\" width=\"100%\"><tr><td align=\"left\" bgcolor=\"#000000\">\n";
 
   //show username if applicable
-  if( $username != "" )
+  if($username != "" )
     echo "<font color=\"#EEEEEE\"><b><small>".sprintf( $lang["user_homepage_sprt"], $username )."</small></b></font>\n";
 
   echo "</td><td bgcolor=\"#000000\" align=\"right\">\n";
@@ -151,7 +148,7 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
 
 
   //if we choose to have only one space, we center it in stead of pushing it to the left
-  if( $no_menu == 0 )
+  if($no_menu == 0 )
     echo "<tr valign=\"top\"><td width=\"175\" align=\"center\">";
   else
     echo "<tr valign=\"top\"><td width=\"100%\" align=\"center\">";
@@ -175,7 +172,7 @@ function create_bottom() {
 
 
   //shows the time it took to load the page
-  list($usec, $sec)=explode(" ", microtime());
+  list($usec, $sec)=explode(" ", microtime() );
   $finishtime = ( (float)$usec + (float)$sec ) - $loadtime;
   echo "<div align=\"center\"><font color=\"#1E4B79\">\n<small>".sprintf( $lang["load_time_sprt"], $finishtime, $database_query_time, $database_query_count )."</small></font></div><br />\n";
 
@@ -189,14 +186,14 @@ function create_bottom() {
 //
 //  Creates a new menu-window
 //
-function new_box( $title, $content, $width="97%" ) {
+function new_box($title, $content, $width="97%" ) {
 
 
   echo "\n<!-- start of ".$title."-box -->";
   echo "\n<br />";
 
   echo "
-  <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"".$width."\">
+  <table border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"".$width."\">
     <tr>
       <td bgcolor=\"#1E4B79\" align=\"left\"><FONT color=\"white\"><b>".$title."</b></font></td>
     </tr>

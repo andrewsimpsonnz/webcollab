@@ -28,9 +28,7 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
 
 include_once( BASE."config.php" );
 include_once( BASE."includes/common.php");
@@ -42,16 +40,16 @@ if($DATABASE_HOST != "localhost" ){
   $host = "host=".$DATABASE_HOST;
 }
 
-/* NOTE!   
+/* NOTE!
    Standard Postgresql (Version 6.3 and later) setup does NOT support tcp/ip connections.
    To support tcp/ip connections you need to:
     - Edit PostgreSQL config file pg_hba.conf to allow tcp/ip from appropriate hosts
     - Start postmaster with -i option to allow tcp/ip connections
 */
 
-if( ! ( $database_connection = @pg_pconnect($host."user=".$DATABASE_USER." dbname=".$DATABASE_NAME." password=".$DATABASE_PASSWORD) ) ) {
+if( ! ($database_connection = @pg_pconnect("$host user=$DATABASE_USER dbname=$DATABASE_NAME password=$DATABASE_PASSWORD" ) ) ) {
 
-  error( "No database connection",  "Sorry but there seems to be a problem in connecting to the database");
+  error("No database connection",  "Sorry but there seems to be a problem in connecting to the database" );
 }
 
 //set some base variables
@@ -67,7 +65,7 @@ $q = db_query( "SET DATESTYLE TO 'European, ISO' ");
 //
 // Provides a safe way to do a query
 //
-function db_query( $query, $dieonerror=1 ) {
+function db_query($query, $dieonerror=1 ) {
 
   global $database_connection, $database_query_time, $database_query_count;
 
@@ -75,7 +73,7 @@ function db_query( $query, $dieonerror=1 ) {
   $database_query_count++;
 
   //starttime
-  list($usec, $sec)=explode(" ", microtime());
+  list($usec, $sec) = explode(" ", microtime() );
   $starttime = ( (float)$usec + (float)$sec );
 
   //check the query
@@ -89,11 +87,12 @@ function db_query( $query, $dieonerror=1 ) {
   //do it
   if( ! ($result = @pg_query( $database_connection, $query ) ) ) {
 
-    if($dieonerror==1) error("Database Query error", "The following query :<BR><BR><B>".$query."</B><BR><BR>Had the following error:<BR><B>".pg_errormessage($database_connection)."</B>" );
+    if($dieonerror==1)
+      error("Database Query error", "The following query :<BR><BR><B> $query </B><BR><BR>Had the following error:<BR><B>".pg_errormessage($database_connection)."</B>" );
   }
 
   //add query time to global query time
-  list($usec, $sec)=explode(" ", microtime());
+  list($usec, $sec)=explode(" ", microtime() );
   $database_query_time += ( (float)$usec + (float)$sec ) - $starttime;
 
 
@@ -104,57 +103,57 @@ function db_query( $query, $dieonerror=1 ) {
 //
 // number of rows in result set
 //
-function db_numrows( $q ) {
+function db_numrows($q ) {
 
-  $result = pg_num_rows( $q );
+  $result = pg_num_rows($q );
 
-return( $result );
+return($result );
 }
 
 //
 // get a single result set
 //
-function db_result( $q, $row=0, $field=0 ) {
+function db_result($q, $row=0, $field=0 ) {
 
-  $result = pg_fetch_result( $q, $row, $field );
+  $result = pg_fetch_result($q, $row, $field );
 
-return ($result);
+return ($result );
 }
 
 //
 // fetch array result set
 //
-function db_fetch_array( $q, $row=0 ) {
+function db_fetch_array($q, $row=0 ) {
 
   $result_row = pg_fetch_array($q, $row, PGSQL_ASSOC );
 
-return($result_row);
+return($result_row );
 }
 
 //
 // fetch enumerated array result set
 //
-function db_fetch_num( $q, $row=0 ) {
+function db_fetch_num($q, $row=0 ) {
 
   $result_row = pg_fetch_row($q, $row );
 
-return($result_row);
+return($result_row );
 }
 
 //
 // last oid
 //
-function db_lastoid( $q ) {
+function db_lastoid($q ) {
 
-  $lastoid = pg_last_oid( $q );
+  $lastoid = pg_last_oid($q );
 
-return($lastoid);
+return($lastoid );
 }
 
 //
 // dummy function to match mysql
 //
-function db_data_seek( $q ) {
+function db_data_seek($q ) {
   //nothing happens here!
 
 return;
@@ -167,7 +166,7 @@ function db_begin() {
 
   global $database_connection;
 
-  pg_query( $database_connection, "BEGIN WORK" );
+  pg_query($database_connection, "BEGIN WORK" );
 
 return;
 }
@@ -179,7 +178,7 @@ function db_rollback() {
 
   global $database_connection;
 
-  pg_query( $database_connection, "ROLLBACK WORK" );
+  pg_query($database_connection, "ROLLBACK WORK" );
 
 return;
 }
@@ -191,7 +190,7 @@ function db_commit() {
 
   global $database_connection;
 
-  pg_exec( $database_connection, "COMMIT WORK" );
+  pg_exec($database_connection, "COMMIT WORK" );
 
 return;
 }

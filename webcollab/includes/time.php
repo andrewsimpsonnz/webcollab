@@ -36,8 +36,8 @@ function date_to_datetime($day, $month, $year ) {
   global $lang, $month_array;
 
   //check for valid calendar date
-  if( ! checkdate( $month, $day, $year ) ) {
-    warning($lang["invalid_date"], sprintf( $lang["invalid_date_sprt"], $year."-".$month_array[$month - 1 ]."-".$day ) );
+  if( ! checkdate($month, $day, $year ) ) {
+    warning($lang["invalid_date"], sprintf($lang["invalid_date_sprt"], $year."-".$month_array[$month - 1 ]."-".$day ) );
   }
 
   //pad single digits into double digits (that way nicedate() works too...)
@@ -55,7 +55,7 @@ function date_to_datetime($day, $month, $year ) {
 //
 // Strip the UTC offset from a date variable and make it look nice
 //
-function nicedate( $timestamp ) {
+function nicedate($timestamp ) {
   global $month_array;
   if($timestamp == "" ) {
     $nicedate = "";
@@ -100,7 +100,7 @@ function nicetime($timestamp ) {
 function date_select_from_timestamp($timestamp="" ) {
 
   if($timestamp == "" ) {
-    $temp_array[0] = date( "Y-m-d" );
+    $temp_array[0] = date("Y-m-d" );
   }
   else {
 
@@ -120,13 +120,13 @@ function date_select_from_timestamp($timestamp="" ) {
 //
 //show a date-time selection row
 //
-function date_select( $day=-1, $month=-1, $year=-1 ) {
+function date_select($day=-1, $month=-1, $year=-1 ) {
   global $month_array;
 
   //this is quite stupid
-  if( $day   == -1 )   $day = date("d");
-  if( $month == -1 ) $month = date("m");
-  if( $year  == -1 )  $year = date("Y");
+  if($day   == -1 )   $day = date("d");
+  if($month == -1 ) $month = date("m");
+  if($year  == -1 )  $year = date("Y");
 
 
   //day
@@ -134,7 +134,7 @@ function date_select( $day=-1, $month=-1, $year=-1 ) {
   for($i=1 ; $i<32 ; $i++ ) {
     $content .= "<option value=\"$i\"";
 
-    if( $day == $i ) $content .= " SELECTED";
+    if($day == $i ) $content .= " SELECTED";
 
     $content .= ">$i</option>\n";
   }
@@ -146,7 +146,7 @@ function date_select( $day=-1, $month=-1, $year=-1 ) {
   for( $i=1; $i<13 ; $i++) {
     $content .= "<OPTION value=\"$i\"";
 
-    if( $month == $i ) $content .= " SELECTED";
+    if($month == $i ) $content .= " SELECTED";
 
     //use ($i-1) because array starts at zero
     $content .= ">".$month_array[($i-1)]."</option>\n";

@@ -29,11 +29,8 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
 
-include_once(BASE."includes/screen.php" );
 include_once(BASE."config.php" );
 include_once(BASE."lang/language.php" );
 
@@ -75,15 +72,15 @@ function show_percent($percent = 0 ) {
   $height = 4;
   switch($percent) {
     case 100:
-      return "<table width=\"".$width."\"><tr><td height=\"".$height."\" width=\"".$width."\" bgcolor=\"#008B45\" nowrap></td></tr></table>\n";
+      return "<table width=\"$width\"><tr><td height=\"$height\" width=\"$width\" bgcolor=\"#008B45\" nowrap></td></tr></table>\n";
       break;
 
     case 0:
-      return "<table width=\"".$width."\"><tr><td height=\"".$height."\" width=\"".$width."\" bgcolor=\"#FFA500\" nowrap></td></tr></table>\n";
+      return "<table width=\"$width\"><tr><td height=\"$height\" width=\"$width\" bgcolor=\"#FFA500\" nowrap></td></tr></table>\n";
       break;
 
     default:
-      $out .= "<table width=\"".$width."\"><tr><td height=\"".$height."\" width=\"".($percent * ($width/100))."\" bgcolor=\"#008B45\" nowrap>";
+      $out .= "<table width=\"$width\"><tr><td height=\"$height\" width=\"".($percent * ($width/100))."\" bgcolor=\"#008B45\" nowrap>";
       $out .= "</td><td width=\"".($width-($percent*($width/100)))."\" bgcolor=\"#FFA500\" nowrap></td></tr></table>\n";
       return $out;
       break;
@@ -96,7 +93,7 @@ function show_percent($percent = 0 ) {
 // Ensures that all the data is code free so that a malcious user cannot
 // ruin the entire site.
 //
-function safe_data( $body ) {
+function safe_data($body ) {
 
   //protect against database query attack
   if(! get_magic_quotes_gpc() )
@@ -105,7 +102,7 @@ function safe_data( $body ) {
   //$body = strip_tags( $body, '<a><b><i><u>' );
   $body = htmlspecialchars($body, ENT_NOQUOTES );
 
-return( $body );
+return($body );
 }
 
 
@@ -113,7 +110,7 @@ return( $body );
 //
 // Checks if the string exists, has a value and no funny shit in it
 //
-function valid_string( $string ) {
+function valid_string($string ) {
 
   //check variable is set
   if( ! isset($string) )
@@ -129,14 +126,14 @@ function valid_string( $string ) {
 //
 // Builds up an error screen
 //
-function error( $box_title, $content ) {
+function error($box_title, $content ) {
 
   global $username, $useremail, $MANAGER_NAME, $EMAIL_ERROR, $EMAIL_FROM, $EMAIL_REPLY_TO, $DEBUG, $NO_ERROR, $db_error_message;
 
   create_top("ERROR", 1 );
 
   if($NO_ERROR != "Y" )
-    new_box( $box_title, "<CENTER>".$content."</CENTER>" );
+    new_box( $box_title, "<center>".$content."</center>" );
     else
     new_box($lang["report"], "<br />".$lang["warning"]."<br /><br />" );
 
@@ -149,21 +146,21 @@ function error( $box_title, $content ) {
 
 
   //email to the error-catcher
-  $message = "Hello,\n This is the ".$MANAGER_NAME." site and I have an error :/  \n".
+  $message = "Hello,\n This is the $MANAGER_NAME site and I have an error :/  \n".
             "\n\n".
-            "User that created the error: ".$username." ( ".$useremail." )\n".
-            "The erroneous component: ".$box_title."\n".
-            "The error message: ".$content."\n".
-            "Database message: ".$db_error_message."\n".
+            "User that created the error: $username ( $useremail )\n".
+            "The erroneous component: $box_title\n".
+            "The error message: $content\n".
+            "Database message: $db_error_message\n".
             "Page that was called: ".$_SERVER["SCRIPT_NAME"]."\n".
             "Called URL: ".$_SERVER["REQUEST_URI"]."\n".
             "Browser: ".$_SERVER["HTTP_USER_AGENT"]."\n".
             "Time: ".date("F j, Y, H:i")."\n".
             "IP: ".$_SERVER["REMOTE_ADDR"]."\n".
-            "POST vars: ".$post."\n\n";
+            "POST vars: $post\n\n";
 
   mail($EMAIL_ERROR,
-        "ERROR on ".$MANAGER_NAME , $message,
+        "ERROR on $MANAGER_NAME" , $message,
         "From: ".$EMAIL_FROM."\nReply-To: ".$EMAIL_REPLY_TO."\nX-Mailer: PHP/" . phpversion() );
 
   if($DEBUG == "Y" )

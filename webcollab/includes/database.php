@@ -25,16 +25,14 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
 
 include_once(BASE."config.php" );
 
 switch($DATABASE_TYPE ) {
 
   case "mysql":
-    include( BASE."includes/mysql_database.php" );
+    include(BASE."includes/mysql_database.php" );
     break;
 
   case "postgresql":
@@ -56,7 +54,7 @@ switch($DATABASE_TYPE ) {
     break;
 
   default:
-    die( "No database type specified in configuration file" );
+    die("No database type specified in configuration file" );
     break;
 }
 

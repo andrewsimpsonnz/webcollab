@@ -29,11 +29,8 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once( BASE."includes/security.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
 //admins only
 if($admin != 1 )
@@ -53,6 +50,5 @@ $content =  "<br />\n".
             "<br /><br />\n";
 
 new_box( $lang["add_new_taskgroup"], $content );
-
 
 ?>

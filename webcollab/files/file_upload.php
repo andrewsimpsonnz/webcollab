@@ -29,11 +29,9 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
 
-include_once( BASE."includes/security.php" );
 include_once( BASE."config.php" );
 
 if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
@@ -42,7 +40,7 @@ if( ! isset($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
 $taskid = $_GET["taskid"];
 
 //check usergroup security
-include_once( BASE."includes/usergroup_security.php" );
+require_once( BASE."includes/usergroup_security.php" );
 
 $content =  "<center><br />".
             "<form name=\"inputform\" method=\"POST\" enctype=\"multipart/form-data\"  action=\"".$BASE_URL."files/file_submit.php\">\n".

@@ -26,9 +26,7 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
 
 include_once(BASE."config.php" );
 include_once(BASE."includes/common.php" );
@@ -75,7 +73,7 @@ function db_query( $query, $dieonerror=1 ) {
   if( ! ($result = @mysql_query( $query, $database_connection ) ) ) {
 
     $db_error_message = mysql_error($database_connection);
-    if($dieonerror==1 ) error("Database query error", "The following query :<br /><br /><b>".$query."</b><br /><br />Had the following error:<br /><B>".mysql_error($database_connection)."</B>" );
+    if($dieonerror==1 ) error("Database query error", "The following query :<br /><br /><b> $query </b><br /><br />Had the following error:<br /><B>".mysql_error($database_connection)."</B>" );
   }
 
   //add query time to global query time
@@ -136,7 +134,7 @@ function db_lastoid($q ) {
 
   if( ! ( $lastoid = mysql_insert_id($database_connection ) ) ) {
     $db_error_message = mysql_error($database_connection );
-    error("Database error", "Unable to get last insert id.<br /><br />".$db_error_message );
+    error("Database error", "Unable to get last insert id.<br /><br /> $db_error_message" );
   }
 
 return($lastoid );

@@ -21,9 +21,11 @@ Translation files are in /lang and /help.
 
 * Make task_list xhtml compliant with lists
 
-* Testing - usergroup edit, database conversion, database creation, innodb
+* Testing - look for html errors (tidy)
 
-- update spanish language files & move files into lang
+- change require to  require_once throughout
+
+- try and introduce cellpadding
 
 - Update TODO
 

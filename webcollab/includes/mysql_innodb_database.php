@@ -26,9 +26,7 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once("path.php" );
 
 include_once(BASE."config.php" );
 include_once(BASE."includes/common.php");
@@ -50,6 +48,8 @@ if( ! ( $database_connection = mysql_connect($db_host, $db_user, $db_pass ) ) ) 
 $last_insert = "id";
 $delim = "";
 $epoch = "UNIX_TIMESTAMP( ";
+
+//set transaction mode
 mysql_query("SET AUTOCOMMIT = 1" );
 
 //
@@ -76,7 +76,7 @@ function db_query( $query, $dieonerror=1 ) {
   if( ! ($result = @mysql_query($query, $database_connection ) ) ) {
 
     $db_error_message = mysql_error($database_connection );
-    if($dieonerror==1 ) error("Database query error", "The following query :<br /><br /><b>".$query."</b><br /><br />Had the following error:<br /><B>".mysql_error($database_connection)."</B>" );
+    if($dieonerror==1 ) error("Database query error", "The following query :<br /><br /><b> $query </b><br /><br />Had the following error:<br /><B>".mysql_error($database_connection)."</B>" );
   }
 
   //add query time to global query time

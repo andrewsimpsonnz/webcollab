@@ -29,11 +29,8 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once( BASE."includes/security.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
 //admins only
 if($admin != 1 )
@@ -55,7 +52,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
 $content .=     "</select><small><I>".$lang["select_instruct"]."</i></small></td></tr>\n".
               "</table>\n".
-              "<input type=\"hidden\" name=\"x\" value=\"".$x."\"> ".
+              "<input type=\"hidden\" name=\"x\" value=\"$x\"> ".
               "<input type=\"hidden\" name=\"action\" value=\"insert\"> ".
               "<input type=\"submit\" name=\"Add\" value=\"".$lang["add_usergroup"]."\"> ".
               "<input type=\"reset\">".
@@ -63,6 +60,5 @@ $content .=     "</select><small><I>".$lang["select_instruct"]."</i></small></td
               "<br /><br />\n";
 
 new_box($lang["add_new_usergroup"], $content );
-
 
 ?>

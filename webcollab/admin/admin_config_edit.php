@@ -27,11 +27,8 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once( BASE."includes/security.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
 //set variables
 $content = "";
@@ -60,9 +57,9 @@ $row = db_fetch_array( $q, 0 );
 
 //email addresses
 $content .=
-            "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help_admin.php#admin\" target=\"helpwindow\">".$lang["admin_email"]."</a>: </td><td><INPUT type=\"input\" name=\"email_admin\" value=\"".$row["email_admin"]."\" size=\"30\"></td></tr>\n".
-            "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help_admin.php#reply\" target=\"helpwindow\">".$lang["email_reply"]."</a>:</td><td><INPUT type=\"input\" name=\"reply_to\" value=\"".$row["reply_to"]."\" size=\"30\"></td></tr>\n".
-            "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help_admin.php#from\" target=\"helpwindow\">".$lang["email_from"]."</a>:</td><td><INPUT type=\"input\" name=\"from\" value=\"".$row["email_from"]."\" size=\"30\"></td></tr>\n";
+            "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help_admin.php#admin\" target=\"helpwindow\">".$lang["admin_email"]."</a>: </td><td><INPUT type=\"text\" name=\"email_admin\" value=\"".$row["email_admin"]."\" size=\"30\"></td></tr>\n".
+            "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help_admin.php#reply\" target=\"helpwindow\">".$lang["email_reply"]."</a>:</td><td><INPUT type=\"text\" name=\"reply_to\" value=\"".$row["reply_to"]."\" size=\"30\"></td></tr>\n".
+            "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help_admin.php#from\" target=\"helpwindow\">".$lang["email_from"]."</a>:</td><td><INPUT type=\"text\" name=\"from\" value=\"".$row["email_from"]."\" size=\"30\"></td></tr>\n";
 
 //get mailing list
 $q = db_query("SELECT DISTINCT * FROM maillist" );

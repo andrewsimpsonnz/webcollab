@@ -29,14 +29,8 @@
 
 */
 
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once( BASE."includes/security.php" );
-include_once( BASE."config.php" );
-include_once( BASE."includes/database.php" );
-include_once( BASE."includes/common.php" );
+require_once("path.php" );
+require_once(BASE."includes/security.php" );
 
 //admins only
 if( $admin != 1 )
@@ -64,18 +58,15 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   //get users from that group
   $usersq = db_query("SELECT fullname,
                             users.id AS id
-                            FROM users,
-                            usergroups_users
+                            FROM users
+                            LEFT JOIN usergroups_users ON (usergroups_users.userid=users.id)
                             WHERE usergroupid=".$row["id"]."
-                            AND usergroups_users.userid=users.id
-                            ORDER BY fullname");
+                            ORDER BY fullname" );
 
   for($j=0 ; $userrow = @db_fetch_array($usersq, $j ) ; $j++ ) {
     $content .= "<tr><td colspan=\"3\" align=\"left\"><SMALL>(<a href=\"".$BASE_URL."users.php?x=$x&amp;action=show&userid=".$userrow["id"]."\">".$userrow["fullname"]."</a>)</small></td></tr>";
   }
   $content .=   "<tr><td colspan=\"3\" align=\"left\">&nbsp;</td></tr>";
-
-
 
 }
 

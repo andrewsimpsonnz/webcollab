@@ -29,12 +29,8 @@
 
 */
 
-
-//get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
-
-include_once( BASE."includes/security.php" );
+require_once("path.php" );
+require_once( BASE."includes/security.php" );
 
 //secure vars
 $content = "";
@@ -50,15 +46,15 @@ else
   $parentid = $_REQUEST["parentid"];
 
 if( ! isset($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
-  error( "Forum add", "Not a valid value for taskid");
+  error("Forum add", "Not a valid value for taskid");
 
 $taskid = $_REQUEST["taskid"];
 
 //check usergroup security
-include_once( BASE."includes/usergroup_security.php");
+require_once(BASE."includes/usergroup_security.php" );
 
 //find out the tasks' name and error is no name was found (implies database error)
-if( ( $taskname = db_result( db_query("SELECT name FROM tasks WHERE id=".$taskid ), 0, 0) ) == "" )
+if( ($taskname = db_result(db_query("SELECT name FROM tasks WHERE id=$taskid" ), 0, 0) ) == "" )
   error("Forum add", "Taskname is not set." );
 
 $content .= "<br />\n";
@@ -74,7 +70,8 @@ $content .= "<input type=\"hidden\" name=\"action\" value=\"add\">\n".
 if( is_numeric($parentid) && ($parentid != 0) ) {
 
   //get the text from the parent and the username of the person that posted that text
-  $parent_array = db_fetch_array( db_query("SELECT forum.text as text, users.fullname as username
+  $parent_array = db_fetch_array(db_query("SELECT forum.text AS text,
+                                            users.fullname AS username
                                             FROM forum
                                             LEFT JOIN users ON (forum.userid=users.id)
                                             WHERE forum.id=$parentid" ), 0 );
@@ -82,7 +79,7 @@ if( is_numeric($parentid) && ($parentid != 0) ) {
   //show a box with the original post
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\">\n".
               "<table border=\"0\">\n".
-                "<tr><td>".$lang["orig_message"]."</td><td bgcolor=\"#EEEEEE\">".nl2br( $parent_array["text"] )."</td></tr>\n";
+              "<tr><td>".$lang["orig_message"]."</td><td bgcolor=\"#EEEEEE\">".nl2br( $parent_array["text"] )."</td></tr>\n";
 }
 else {
   $parent_array = "";
@@ -93,7 +90,7 @@ else {
 }
 
 //build up the text-entry part
-$content .=     "<tr><td>Message:</td><td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
+$content .=   "<tr><td>Message:</td><td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
               "</table>\n".
               "<input type=\"submit\" name=\"Add\" value=\"".$lang["post"]."\"> ".
               "<input type=\"reset\">".
@@ -101,9 +98,9 @@ $content .=     "<tr><td>Message:</td><td><textarea name=\"text\" rows=\"10\" co
               "<br /><br />\n";
 
 //show a reply or a new-post box
-if( $parentid > 0 )
-  new_box(sprintf( $lang["post_reply_sprt"], $parent_array["username"], $taskname ), $content ); //reply to another users's post
+if($parentid > 0 )
+  new_box(sprintf($lang["post_reply_sprt"], $parent_array["username"], $taskname ), $content ); //reply to another users's post
 else
-  new_box(sprintf( $lang["post_message_sprt"], $taskname ), $content ); //new reply
+  new_box(sprintf($lang["post_message_sprt"], $taskname ), $content ); //new reply
 
 ?>
