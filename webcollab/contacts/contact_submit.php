@@ -58,9 +58,10 @@ if( valid_string( $_REQUEST["action"] ) ) {
 				          postal,
 				          city,
 				          email,
-					  notes,
+						  notes,
 				          added_by,
-					  date )
+						  user_id,
+					      date )
                              values( '".safe_data($_POST["firstname"])."',
 			             '".safe_data($_POST["lastname"])."',
 				     '".safe_data($_POST["company"])."',
@@ -74,6 +75,7 @@ if( valid_string( $_REQUEST["action"] ) ) {
 				     '".safe_data($_POST["email"])."',
 				     '".safe_data($_POST["notes"])."',
 				     ".$uid.",
+					 ".$uid.",
 				     current_timestamp(0) )" );
       }else
         warning( $lang["contact_submit"], $lang["contact_warn"] );
