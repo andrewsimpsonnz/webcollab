@@ -96,8 +96,8 @@ else {
 $content .=   "<tr><td>".$lang["message"]."</td><td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
               "</table><br />\n".
               "<p><table border=\"0\">\n".
-              "<tr><td><label for=\"owner\">"."Send email to owner - translate me"."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" $DEFAULT_OWNER ></td></tr>\n".
-              "<tr><td><label for=\"usergroup\">"."Send email to usergroup - translate me"."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" $DEFAULT_GROUP ></td></tr>\n".
+              "<tr><td><label for=\"owner\">".$lang["forum_email_owner"]."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" $DEFAULT_OWNER ></td></tr>\n".
+              "<tr><td><label for=\"usergroup\">".$lang["forum_email_usergroup"]."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" $DEFAULT_GROUP ></td></tr>\n".
               "</table></p>\n".
               "<p><input type=\"submit\" value=\"".$lang["post"]."\" onclick=\"return fieldCheck()\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".

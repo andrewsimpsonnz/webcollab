@@ -121,7 +121,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
     if($check){
       echo "function fieldCheck(){\n".
                "if(document.inputform.".$cursor.".value==\"\"){\n".
-               "alert('Please enter a value for the missing field');\n".
+               "alert('".$lang["missing_field_javascript"]."');\n".
                "document.inputform.".$cursor.".focus();\n".
                "return false;}\n".
                "return;}\n";
@@ -130,12 +130,12 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
       echo  "function dateCheck() {\n".
                "var daysMonth = new Array(31, 29, 31, 30, 30, 30, 31, 31, 30, 31, 30, 31 );\n". 
                "if(document.inputform.day.value > daysMonth[(document.inputform.month.value-1)] ){\n".
-               "alert('Please choose a valid calendar date');\n".
+               "alert('".$lang["invalid_date_javascript"]."');\n".
                "return false;}\n". 
                "var inputDate = Date.UTC(document.inputform.year.value, (document.inputform.month.value-1), document.inputform.day.value )/1000;\n".
                "var finishDate = document.inputform.projectDate.value;\n".
                "if(finishDate - inputDate < -7200 ){\n".
-               "return confirm('The entered date occurs after the project finish date');}\n".     
+               "return confirm('".$lang["finish_date_javascript"]."');}\n".     
                "return;}\n";
       }
       echo " // -->\n".
