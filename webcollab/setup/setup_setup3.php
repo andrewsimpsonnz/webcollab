@@ -126,8 +126,7 @@ $content .= "<tr><td></td><td><br />An abbreviated name of the site for emails</
             "<tr><th>Abbreviated site name:</th><td><input type=\"text\" name=\"abbr_manager_name\" value=\"$ABBR_MANAGER_NAME\" size=\"30\" /></td></tr>\n";
 
 //database settings
-$content .= "<tr><td></td><td><br /><b><u>Database Settings</u></b></td></tr>\n".
-            "<tr><td>&nbsp;</td></tr>\n".
+$content .= "<tr><td></td><td><br /><br /><b><u>Database Settings</u></b><br /><br /></td></tr>\n".
             "<tr><th>Database name:</th><td><input type=\"text\" name=\"db_name\" value=\"$db_name\" size=\"30\" /></td></tr>\n".
             "<tr><th>Database user:</th><td><input type=\"text\" name=\"db_user\" value=\"$db_user\" size=\"30\" /></td></tr>\n".
             "<tr><th>Database password:</th><td><input type=\"text\" name=\"db_password\" value=\"$db_password\" size=\"30\" /></td></tr>\n";
@@ -135,16 +134,16 @@ $content .= "<tr><td></td><td><br /><b><u>Database Settings</u></b></td></tr>\n"
 switch($db_type){
 
   case "postgresql":
-    $s1 = ""; $s2 = " selected"; $s3 = "";
+    $s1 = ""; $s2 = " selected=\"selected\""; $s3 = "";
     break;
 
   case "mysql_innodb":
-    $s1 = ""; $s2 = ""; $s3 = " selected";
+    $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\"";
     break;
 
   case "mysql":
   default:
-    $s1 = " selected"; $s2 = ""; $s3 = "";
+    $s1 = " selected=\"selected\""; $s2 = ""; $s3 = "";
     break;
 }
 
@@ -159,7 +158,7 @@ $content .= "<tr><th>Database type:</th><td><select name=\"db_type\">\n".
 $content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td></tr>\n";
 
 if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" )
-  $FILE_BASE = realpath(dirname(__FILE__ ) )."/files/filebase";
+  $FILE_BASE = realpath(dirname(__FILE__ )."/.." )."/files/filebase";
 
 if( ! isset($FILE_MAXSIZE) )
   $FILE_MAXSIZE = "2000000";
@@ -178,35 +177,35 @@ if( ! isset($LOCALE) )
 
 switch($LOCALE) {
   case "bg":
-    $s1 = "selected"; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
+    $s1 = "selected=\"selected\""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
     break;
 
   case "ca":
-    $s1 = ""; $s2 = "selected"; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
+    $s1 = ""; $s2 = "selected=\"selected\""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
     break;
 
   case "da":
-    $s1 = ""; $s2 = ""; $s3 = "selected"; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
+    $s1 = ""; $s2 = ""; $s3 = "selected=\"selected\""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
     break;
 
   case "en":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = "selected"; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = "selected=\"selected\""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
     break;
 
   case "fr":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = "selected"; $s6 = ""; $s7 = ""; $s8 = "";
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = "selected=\"selected\""; $s6 = ""; $s7 = ""; $s8 = "";
     break;
 
   case "de":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = "selected"; $s7 = ""; $s8 = "";
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = "selected=\"selected\""; $s7 = ""; $s8 = "";
     break;
   
   case "it":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "selected"; $s8 = "";
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "selected=\"selected\""; $s8 = "";
     break;
 
   case "es":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "selected";
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "selected=\"selected\"";
     break;
 
 }
@@ -241,7 +240,7 @@ $content .= "<tr><td></td><td><br /><br />If an error occurs on the site, who do
 if( ! isset($SMTP_HOST) )
   $SMTP_HOST = "localhost";
 
-$content .= "<tr><td><br /><br /></td><td><i>Items below are required if email is enabled</i></tr>\n".
+$content .= "<tr><td></td><td><br /><br /><i>SMTP host is required if email is enabled</i></tr>\n".
             "<tr><th><i>SMTP Host:</i></th><td><input type=\"text\" name=\"smtp_host\" value=\"$SMTP_HOST\" size=\"50\" /></td></tr>\n";
 
 $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
