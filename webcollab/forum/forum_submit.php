@@ -204,6 +204,8 @@ ignore_user_abort(TRUE);
       //do we need to email?
       if(strlen($mail_list) > 0 ){
         include_once(BASE."includes/email.php" );
+        include_once(BASE."lang/lang_email.php" );
+        include_once(BASE."includes/time.php" );
 
       $message = $_POST["text"];
         
@@ -218,7 +220,7 @@ ignore_user_abort(TRUE);
         switch($parentid ) {
           case 0:
             //this is a new post
-            email($mail_list, $ABBR_MANAGER_NAME." New forum post: ".$task_row["name"], "New forum post by $uid_name:\n$message" );
+            email($mail_list, sprintf($title_forum_post, $task_row["name"]), sprintf($email_forum_post, email_date(time()), $uid_name, $message) );
             break;
 
           default:
@@ -234,7 +236,7 @@ ignore_user_abort(TRUE);
             if($row["username"] == NULL )
               $row["username"] = "----";
 
-            email($mail_list, $ABBR_MANAGER_NAME." Forum post reply: ".$task_row["name"], "Original post by ".$row["username"]." said:\n".$row["text"]."\n\nNew reply by $uid_name is:\n$message" );
+            email($mail_list, sprintf($title_forum_post, $task_row["name"]), sprintf($email_forum_reply, email_date(time()), $uid_name, $row["username"], $row["text"], $message ) );
             break;
         }
       }

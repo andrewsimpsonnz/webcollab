@@ -189,6 +189,8 @@ ignore_user_abort(TRUE);
       //do we need to email?
       if(strlen($mail_list) > 0 ){
         include_once(BASE."includes/email.php" );
+        include_once(BASE."lang/lang_email.php" );
+        include_once(BASE."includes/time.php" );
 
         //get & add the mailing list
         if($EMAIL_MAILINGLIST != "" )
@@ -200,9 +202,7 @@ ignore_user_abort(TRUE);
         if(get_magic_quotes_gpc() )
           $message = stripslashes($message );
  
-        email($mail_list, $ABBR_MANAGER_NAME." New file upload: ".$task_row["name"], "New file upload by $uid_name:\n".
-                          "Filename:    ".$_FILES["userfile"]["name"]."\n".
-                          "Description : $message" );
+        email($mail_list, sprintf($title_file_post, $task_row["name"] ), sprintf($email_file_post, email_date(time()), $uid_name, $_FILES["userfile"]["name"], $message ) );
       }
 
       break;

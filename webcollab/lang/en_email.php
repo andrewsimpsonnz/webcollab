@@ -28,6 +28,21 @@
 
 */
 
+
+$title_file_post        = $ABBR_MANAGER_NAME.": New file upload: %s";
+$email_file_post        = "Hello,\n\nThis is the $MANAGER_NAME site informing you that a new file has been uploaded on %1\$s by %2\$s.\n\n".
+                          "File:        %3\$s\n".
+			  "Description: %4\$s";
+
+
+$title_forum_post        = $ABBR_MANAGER_NAME.": New forum post: %s";
+$email_forum_post        = "Hello,\n\nThis is the $MANAGER_NAME site informing you that a new forum post has been made on %1\$s by %2\$s:\n\n%3\$s"; 
+$email_forum_reply       = "Hello,\n\nThis is the $MANAGER_NAME site informing you that a new forum post has been made on %1\$s by %2\$s.\n\n".
+                           "This post is in reply to an earlier post by %3\$s.\n\n".
+			   "Original post:\n %4\$s\n\n".
+			   "New reply:\n%5\$s\n";
+
+
 $email_list =  "Project:  %s\n".
                "Task:     %s\n".
                "Status:   %s\n".
