@@ -108,7 +108,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   $content .= "<TR> <TD>".$lang["task_owner"].":</TD> <TD><SELECT name=\"owner\">\n";
   $content .= "<OPTION value=\"0\">".$lang["nobody"]."</OPTION>\n";
   for( $i=0 ; $user_row = @db_fetch_array($users_q, $i ) ; $i++) {
-    $content .= "<OPTION value=\"".$row["id"]."\"";
+    $content .= "<OPTION value=\"".$user_row["id"]."\"";
 
     //default owner is present user
     if( $user_row[ "id" ] == $uid )
