@@ -1,4 +1,4 @@
-<Limit GET POST>
+<Limit GET POST PUT DELETE COPY>
  order deny,allow
  deny from all
  allow from localhost
