@@ -14,7 +14,7 @@
 <a href="#postgresql">Manual Setup for PostgreSQL</a><br></p>
 <a name="setup"></a>
 <h3>WEBCOLLAB SETUP PROGRAM</h3>
-<p>Note: To enable the setup program to write to your configuration file, the file 'config.php'
+<p>Note: To enable the setup program to write to your configuration file, the file '/config/config.php'
 <u>must</u> be made writable by the web server.  If the file is not writable, then only the
 databases can be created.</p>
 <h4>1. First Time Setup</h4>
@@ -45,7 +45,7 @@ Version 1.60 contains an automated upgrade script (update.php) to simplify the d
 <li>Login as requested...</li>
 <li>Choose upgrade database.  Database upgrade is done automatically (If database upgrades are in fact not required, no harm will be done).</li>
 <li>For UNIX: Make [webcollab_directory]/config/config.php writable by everyone.</li>
-<li>Run the setup program, but when prompted, choose to use the existing database.</li> 
+<li>Run the setup program, but when prompted, choose to use the existing database without creating a new database.</li> 
 <li>The setup program should auto-detect most parameters from your existing setup.  Fill in the missing values.</li>
 <li>All done!</li>
 <li>For UNIX: Make config.php protected again.</li>

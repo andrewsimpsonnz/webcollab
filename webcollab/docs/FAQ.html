@@ -27,7 +27,7 @@
 <dl>
 <dt>1. Setup program says that database can be created, but cannot write to the config file.</dt>
 <dd>The web server does not/cannot have permissions to write to the config file.  You need to make the
-config file world-writable.  The config file is <i>config.php</i> in the root directory of WebCollab.
+config file world-writable.  The config file is <i>/config/config.php</i> below the root directory of WebCollab.
 <pre class="screen">
 #chmod 666 config.php
 </pre>
@@ -37,7 +37,7 @@ For security, reinstate afterwards with:
 </pre>
 </dd>
 <dt>2. How to upgrade from an earlier version of WebCollab?</dt>
-<dd>Refer to the INSTALLATION file.  Briefly, all versions are upgradable by adding the new files.  Versions pre-1.40 and pre-1.60 need to have the database upgraded with the tools function.</dd>
+<dd>Refer to the INSTALLATION file.  Briefly, all versions are upgradable by adding the new files.  Versions pre-1.40 and pre-1.60 need to have the database upgraded with the by pointing your we browser at /update.php.</dd>
 </dl>
 <a name="startup"></a>
 <h3>START UP PROBLEMS</h3>
@@ -119,9 +119,8 @@ Alternatively, a new customised language file can be set up and defined in
 <dd>Yes, set the $WEB_AUTH parameter to "Y" in /config/config.php.  Username is taken from the REMOTE_USER
 environment variable set by Apache.</dd>
 <dt>5. What web browsers is WebCollab compatible with?</dt>
-<dd>WebCollab is valid HTML 4.01 and uses CSS1 cascading style sheets.  Some Javascript is used, but
-this is not essential.  This means WebCollab is compatible with most contemporary web browsers. 
-To the extent that most common browsers will accept, WebCollab is also valid XHTML 1.0.</dd>
+<dd>WebCollab is valid XHTML 1.0 and uses CSS1 cascading style sheets.  Some Javascript is used, but
+this is not essential.  This means WebCollab is compatible with most contemporary web browsers.</dd>
 </dl>
 <a name="tuning"></a>
 <h3>PERFORMANCE TUNING</h3>
