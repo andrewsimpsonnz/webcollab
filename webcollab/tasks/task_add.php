@@ -36,6 +36,7 @@ include_once(BASE."includes/time.php" );
 
 //secure vars
 $content = "";
+$javascript = "";
 
 //shows a priority-select box
 $priority_select_box = "<tr><td>".$lang["priority"].":</td> <td>\n".
@@ -46,9 +47,12 @@ $priority_select_box = "<tr><td>".$lang["priority"].":</td> <td>\n".
                        "<option value=\"3\">".$task_state["high"]."</option>\n".
                        "<option value=\"4\">".$task_state["yesterday"]."</option>\n".
                        "</select>\n</td></tr>\n";
+                       
+//we can't check the deadline date for a new project!
+if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) )
+  $javascript = "onsubmit=\"return dateCheck()\" ";
 
-
-$content .= "<form name=\"inputform\" method=\"POST\" action=\"tasks/task_submit.php\" onsubmit=\"return fieldCheck()\" >\n";
+$content .= "<form name=\"inputform\" method=\"POST\" action=\"tasks/task_submit.php\" $javascript>\n";
 $content .= "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ";
 $content .= "<input type=\"hidden\" name=\"action\" value=\"insert\" />\n ";
 
@@ -151,7 +155,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
               "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></label></td></tr>\n".
 
               "</table></p>\n".
-              "<p><input type=\"submit\" value=\"".$lang["add_task"]."\" onclick=\"return dateCheck()\" />&nbsp;".
+              "<p><input type=\"submit\" value=\"".$lang["add_task"]."\" onclick=\"return fieldCheck()\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
               "</form>\n";
 
@@ -165,7 +169,7 @@ else {
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"0\" />\n".
               "<input type=\"hidden\" name=\"projectid\" value=\"0\" />\n".
               //taskgroup - we don't have this for projects
-              "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" />\n";
+              "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" />\n".
               "<p><table border=\"0\">\n".
               "<tr><td>".$lang["creation_time"].":</td><td>".date("F j, Y, H:i")."</td></tr>\n".
               "<tr><td>".$lang["project_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".

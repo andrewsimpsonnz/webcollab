@@ -35,6 +35,7 @@ include_once(BASE."includes/admin_config.php" );
 include_once(BASE."includes/time.php" );
 
 $usergroup[0] = 0;
+$javascript = "";
 
 //
 //check user access
@@ -79,21 +80,26 @@ $q = db_query("SELECT * FROM tasks WHERE id=$taskid" );
 if( ($row = db_fetch_array($q, 0 ) ) < 0 )
   error("Database error", "Unable to retrieve the needed information.");
 
+ if($row["parent"] != 0 ) 
+   $javascript = "onsubmit= \"return dateCheck()\" ";
+  
 //all okay show task info
 $content = "";
 
-$content .= "<form method=\"POST\" action=\"tasks/task_submit.php\">\n".
+$content .= "<form method=\"POST\" action=\"tasks/task_submit.php\" $javascript>\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"update\" />\n ".
             "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\" />";
             
-//add project deadline for javascript
-$project_deadline = db_result(db_query("SELECT ".$epoch."deadline) FROM tasks WHERE id=".$row["projectid"] ) ) + (int)date("Z");
-$content .=  "<input type=\"hidden\" name=\"projectDate\" value=\"$project_deadline\" />\n";            
+//add project deadline for javascript where applicable
+if($row["parent"] != 0 ){
+  $project_deadline = db_result(db_query("SELECT ".$epoch."deadline) FROM tasks WHERE id=".$row["projectid"] ) ) + (int)date("Z");
+  $content .=  "<input type=\"hidden\" name=\"projectDate\" value=\"$project_deadline\" />\n";            
+}
               
 $content .=  "<p><table border=\"0\">\n".
             "<tr><td>".$lang["creation_time"]."</td><td>".nicedate($row["created"] )."</td></tr>\n";
-
+           
 //select either project or task for text
 switch($row["parent"] ) {
   case 0:
@@ -319,7 +325,7 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
              "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" $DEFAULT_GROUP /></label></td></tr>\n".
 
              "</table></p>\n".
-             "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" onclick=\"return dateCheck()\" />&nbsp;".
+             "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" onclick=\"return fieldCheck\" />&nbsp;".
              "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
              "</form>\n";
 
