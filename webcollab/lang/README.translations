@@ -100,15 +100,15 @@ String is used in Javascript (No special requirements).
 Special Strings in xx_message.php
 =================================
 
-$month_array = array (NULL, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
-'Oct', 'Nov', 'Dec' );
+    $month_array = array (NULL, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',
+                          'Sep', 'Oct', 'Nov', 'Dec' );
 
 This list contains abbreviated months of the year.  The first item is always NULL (with
 no quotes around).
 
 
 
-$week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
+    $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
 
 This list contains abbreviated days of the week. 
 
@@ -118,20 +118,33 @@ Character Encoding
 
 This code must appear in the xx_message.php file
 
-//required language encodings
-$web_charset = 'iso-8859-1';
-$email_charset = 'iso-8859-1';
+    //required language encodings
+    define('CHARACTER_SET', "ISO-8859-1" );
 
+"ISO-8859-1" is the character encoding that is used in the translation file.  It can be
+any generally accepted IANA character set (e.g. iso-8859-1, cp-1252, koi8-r).  This value
+is passed onto the web browser.
 
-$web_charset is the character encoding that is used in the translation file.  It can be
-any generally accepted character set (e.g. iso-8859-1, cp-1252, koi8-r).  This value is
-passed onto the web browser.
+Please use single-byte character sets with standard WebCollab.  The Unicode version of
+WebCollab will work better with multi-byte character sets (e.g. utf-8, euc_kr, gb2312). 
 
-$email_charset is as above, but used for emails.
+Most West European languages use "ISO-8859-1".  
 
-For most West European languages use iso-8859-1. 
+Validation Regex
+================
 
+Every character set needs a validation filter that WebCollab uses to reject illegal
+characters.  This is the one for ISO-8859-1: 
 
+    //this is the regex for input validation filter used in common.php 
+    $validation_regex = '/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s';
+
+For testing a new character set use:
+
+   //this is the regex for input validation filter that allows all 8 bit bytes to pass! 
+   $validation_regex = '/([^\x00-\xff])/s';
+    
+       
 Making the Translation Active
 =============================
 
