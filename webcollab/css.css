@@ -49,10 +49,12 @@ TABLE.singlebox {
 TABLE.tablebox {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
+  margin-left : auto;
+  margin-right : auto;  
+  width : 97%;
   text-align : left;
   border-width: 0;
   padding : 0;
-  width : 97%;
 }
 
 TD {
