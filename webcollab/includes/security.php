@@ -63,12 +63,11 @@ else{
 
 //seems okay at first, now go cross-checking with the known data from the database
 if( ! ($q = db_query("SELECT ".PRE."logins.user_id AS user_id,
-                             ".PRE."logins.lastaccess AS lastaccess,
                              ".PRE."users.email AS email,
                              ".PRE."users.admin AS admin,
                              ".PRE."users.fullname AS fullname,
                              $epoch now() ) AS now,
-                             $epoch lastaccess) AS sec_lastaccess
+                             $epoch ".PRE."logins.lastaccess) AS sec_lastaccess
                              FROM ".PRE."logins
                              LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."logins.user_id)
                              WHERE ".PRE."logins.session_key='$session_key'", 0 ) ) ) {
