@@ -39,15 +39,17 @@ function safe_data($body ) {
   
   //return null for nothing input
   if(empty($body) )
-    return $body;
+    return '';
   
-  //clean up & remove whitespace      
-  $body = trim(clean_up($body) );
+  //remove whitespace      
+  $body = trim($body);
   
   //limit line length for single line entries
   if(strlen($body ) > 100 ) 
     $body = substr($body, 0, 100 );
   
+  $body = clean_up($body);  
+    
 return $body;
 }
 
@@ -59,21 +61,21 @@ function safe_data_long($body ) {
 
   //return null for nothing input
   if(empty($body) )
-    return $body;
-    
-  $body = clean_up($body);
-  
+    return '';
+      
   //normalise line breaks from Windows & Mac to UNIX style
   $body = str_replace("\r\n", "\n", $body );
   $body = str_replace("\r", "\n", $body );
   //break up long non-wrap words
   $body = preg_replace("/[^\s\n\t]{100}/", "$0\n", $body );
 
+  $body = clean_up($body);
+
 return $body;
 }
 
 function clean_up($body ) {
-   global $validation_regex;
+  global $validation_regex;
 
   //protect against database query attack
   if(! get_magic_quotes_gpc() )
