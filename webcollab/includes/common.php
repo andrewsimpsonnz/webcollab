@@ -75,20 +75,30 @@ return $body;
 function clean_up($body ) {
 
   //protect against database query attack
-  if(! get_magic_quotes_gpc() )
-    $body = addslashes($body );
+  //if(! get_magic_quotes_gpc() )
+  //  $body = addslashes($body );
+  
+  if(get_magic_quotes_gpc() )
+    $body = stripslashes($body );
   
   //allow only defined ISO-8859-1 characters - other weird stuff is replaced with "*"
   $body = preg_replace('/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s', "*", $body );
   
-  //use HTML encoding for characters that could be used for css <script> attacks
-  // and escape (with '\') characters that could be used for SQL injection attacks 
-  //$body = str_replace(array(';', '<', '>', '|','(', ')', '+', '-', '=' ), array('\;', '&lt;', '&gt;', '&#124;', '\(', '\)', '\+', '\-', '\=' ), $body );
-  
+  //use HTML encoding for characters that could be used for css <script> or SQL injection attacks
   $trans = array(';'=>'&#059;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;');
-  $body = strtr($body, $trans ); 
   
-  return $body;
+  return strtr($body, $trans ); 
+  
+}
+
+//
+// single and double quotes in HTML edit fields are changed to HTML encoding (addslashes doesn't help here)
+//
+function html_escape($body ) {
+
+  $trans = array('"'=>'&quot;', "'"=>'&#039' );
+  
+  return strtr($body, $trans );
 }
 
 //

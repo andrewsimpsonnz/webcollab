@@ -108,7 +108,7 @@ switch($taskid_row["parent"] ) {
                 "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n ".
                 "<table class=\"celldata\">\n".
                 "<tr><td>".$lang["creation_time"]."</td><td>".nicedate($taskid_row["created"] )."</td></tr>\n".
-                "<tr><td>".$lang["project_name"].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" value=\"".$taskid_row["name"]."\" /></td></tr>\n";
+                "<tr><td>".$lang["project_name"].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" value=\"".html_escape($taskid_row["name"])."\" /></td></tr>\n";
     break;
 
   default:
@@ -152,7 +152,7 @@ $content .="</select></td></tr>\n";
 
 //show task (if applicable)
 if($taskid_row["parent"] != 0 )
-  $content .= "<tr><td>".$lang["task_name"].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" value=\"".$taskid_row["name"]."\" /></td></tr>\n";
+  $content .= "<tr><td>".$lang["task_name"].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" value=\"".html_escape($taskid_row["name"])."\" /></td></tr>\n";
 
 //deadline
 $content .= "<tr><td>".$lang["deadline"].":</td><td>".date_select_from_timestamp($taskid_row["deadline"])."</td></tr>\n";
