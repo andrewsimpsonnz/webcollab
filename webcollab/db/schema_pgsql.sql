@@ -164,11 +164,8 @@ CREATE TABLE "config" (
 	"usergroup" character varying(200)
 );
 
-COPY "users" FROM stdin;
-1	admin	Administrator	0192023a7bbd73250516f069df18b500	please_edit@my_domain.com	t	f
-\.
-SELECT setval ('"users_id_seq"', 1, true);
+INSERT INTO users ( id, name, fullname, password, email, admin, deleted )
+VALUES( 1, 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );
 
-COPY "config" FROM stdin;
-\N	\N	\N	checked	\N	\N	\N
-\.
+INSERT INTO config ( globalaccess, groupaccess )
+VALUES( 'checked', '' );
