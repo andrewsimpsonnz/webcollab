@@ -81,8 +81,8 @@ return $body;
 function clean_up($body ) {
 
   //allow only properly formed UTF-8 characters
-  preg_match_all('/([\x09\x0a\x0d\x20-\x7e]|[\xc0-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xf7][\x80-\xbf]{3})/s', $body, $ar );
-  $body = join("?", $ar[0] );
+  preg_match_all('/([\x09\x0a\x0d\x20-\x7e]|[\xc0-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xf7][\x80-\xbf]{3})+/s', $body, $ar );
+  $body = join("*", $ar[0] );
 
   //protect against database query attack
   if(! get_magic_quotes_gpc() )
