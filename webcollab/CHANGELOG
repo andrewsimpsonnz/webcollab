@@ -1,4 +1,16 @@
 WebCollab CVS
+*** 24 May 2003
+  Andrew Simpson
+
+- minor changes to SMTP email
+
+- added database creation script for MySQL innodb
+
+- bugfix: MySQL innodb does not unlock tables after use
+
+- add FAQ
+
+WebCollab CVS
 *** 17 May 2003
   Andrew Simpson
 
