@@ -69,13 +69,19 @@ function db_query($query, $dieonerror=1 ) {
     $q = db_query("SET DATESTYLE TO 'European, ISO' ");
 
     //get server encoding
-    $server_encoding = pg_fetch_result(db_query('SHOW SERVER_ENCODING'), 0, 0 );
+    $q = @pg_query('SHOW SERVER_ENCODING');
     
-    //SQL_ASCII is not encoded, other server encodings need to be corrected by the PostgreSQL client encoder
-    if($server_encoding != 'SQL_ASCII' ){    
-      if(pg_set_client_encoding($database_connection, pg_encoding() ) == -1 ){ 
-        error("Database client encoding", "Cannot set PostgreSQL client encoding to ".CHARACTER_SET. "as required. The current server backend encoding is ".$server_encoding );
-      } 
+    //SQL_ASCII is not encoded, other server encodings need to be corrected by the PostgreSQL client
+    if(pg_num_rows($q ) > 0 ){
+      if(pg_fetch_result($q, 0, 0 ) != 'SQL_ASCII' ) { 
+        pg_encoding();
+      }
+    }
+    else {
+      //prior to version 7.4 a 'notice' is used   
+      if(strpos(pg_last_notice($database_connection ).' ', 'SQL_ASCII' ) === false ){
+        pg_encoding();
+      }
     }    
   }
   
@@ -189,6 +195,8 @@ return;
 //
 function pg_encoding() {
 
+  global $database_connection;
+
   switch(strtoupper(CHARACTER_SET ) ) {
 
     case 'KOI8-R':
@@ -204,7 +212,13 @@ function pg_encoding() {
       $pg_encoding = 'LATIN1';
       break;
   }      
-return $pg_encoding;
+          
+  //set client encoding to match character set in use
+  if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
+    error("Database client encoding", "Cannot set PostgreSQL client encoding to the required ".CHARACTER_SET );
+  }  
+  
+return;
 }
 
 
