@@ -104,7 +104,7 @@ function listTasks($task_id ) {
 //some inital values
 $content = "";
 $flag = 0;
-$active_only = false;
+$active_only = 0;
 
 if(isset($_GET["active"] ) )
   $active_only = $_GET["active"];
@@ -136,7 +136,7 @@ if($active_only )
   $content .= "[<a href=\"main.php?x=$x&amp;active=0\">"."Show all projects - translate me"."</a>]";
 else
   $content .= "[<a href=\"main.php?x=$x&amp;active=1\">"."Show only active projects - translate me"."</a>]";
-$content  .= "</font>";
+$content  .= "&nbsp;[<a href=\"tasks.php?x=$x&amp;active=$active_only&amp;action=project_print\">"."Printer friendly page - translate me"."</a>]</font>\n";
 
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
