@@ -8,6 +8,8 @@ WebCollab 1.30
 
 - more detailed licence notes added at request of Free Software Foundation (no effect on licence terms)
 
+- Bugfix:  When deleting uploaded files, delete file database record even if file has already been physically removed
+
 WebCollab 1.30
 *** 2 April 2003
   Andrew Simpson
