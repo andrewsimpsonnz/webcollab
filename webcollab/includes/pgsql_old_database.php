@@ -49,7 +49,7 @@ if($DATABASE_HOST != "localhost" ){
     - Start postmaster with -i option to allow tcp/ip connections
 */
 
-if( ! ($database_connection = @pg_pconnect($host."user=".$DATABASE_USER." dbname=".$DATABASE_NAME." password=".$DATABASE_PASSWORD ) ) ) {
+if( ! ($database_connection = @pg_connect($host."user=".$DATABASE_USER." dbname=".$DATABASE_NAME." password=".$DATABASE_PASSWORD ) ) ) {
 
   error("No database connection",  "Sorry but there seems to be a problem in connecting to the database" );
 }
