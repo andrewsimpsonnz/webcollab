@@ -63,7 +63,7 @@ function listTasks($task_id ) {
 
     //check if user can view this task
     if( ($admin != 1 ) && ($task_row["globalaccess"] != "t" ) && ($task_row["usergroupid"] != 0 ) ) {
-      if( ! in_array( $task_row["usergroupid"], $usergroup ) )
+      if( ! in_array( $task_row["usergroupid"], (array)$usergroup ) )
         continue;
     }
 
@@ -104,10 +104,8 @@ function listTasks($task_id ) {
 //some inital make-nice code
 $content = "";
 $flag = 0;
-$usergroup[0] = 0;
 
 // query to get the projects
-
   $q = db_query("SELECT id,
                         name,
                         finished_time,
@@ -128,18 +126,12 @@ if(db_numrows($q) < 1 ) {
   return;
 }
 
-//get usergroups of user, and put them in a simple array for later use
-$usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$uid" );
-for( $i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
-  $usergroup[$i] = $usergroup_row[0];
-}
-
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //check the user has rights to view this project
   if( ($admin != 1 ) && ($row["globalaccess"] != "t" ) && ( $row["usergroupid"] != 0 ) ) {
-    if( ! in_array( $row["usergroupid"], $usergroup ) )
+    if( ! in_array( $row["usergroupid"], (array)$gid ) )
       continue;
   }
 

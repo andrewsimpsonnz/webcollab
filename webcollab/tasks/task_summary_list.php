@@ -41,10 +41,10 @@ include_once(BASE."includes/time.php" );
 
 
 function project_summary( $tail, $depth=0, $equiv="" ) {
-  global $x, $uid, $admin, $lang, $task_state;
+  global $x, $uid, $gid, $admin, $lang, $task_state;
   global $sortby;
   global $epoch;
-  
+
   $usergroup[0] = 0;
 
   $q = db_query( "SELECT tasks.id AS id,
@@ -70,19 +70,13 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
     return "";
   }
 
-  //get usergroups of user, and put them in a simple array for later use
-  $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$uid" );
-  for( $i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
-    $usergroup[$i] = $usergroup_row[0];
-  }
-
   //reset variables
   $result = "";
 
   //check user permissions
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
-    if( ($admin!=1) && ($row["usergroupid"]!=0 ) && ($row["globalaccess"]=='f' )) {
-      if( ! in_array( $row["usergroupid"], $usergroup ) ) {
+    if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' )) {
+      if( ! in_array( $row["usergroupid"], (array)$gid ) ) {
         continue;
       }
     }

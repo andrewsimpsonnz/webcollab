@@ -34,14 +34,13 @@ require_once( BASE."includes/security.php" );
 
 //init values
 $content = "";
-$usergroup[0] = 0;
 
 //
 // Functionalised recursive query
 //
 function list_tasks($parent ) {
 
-  global $x, $uid, $parent_array, $epoch, $taskgroup_flag, $lang, $task_state, $NEW_TIME, $DATABASE_TYPE, $parentid, $ul_flag, $usergroup, $admin;
+  global $x, $uid, $gid, $admin, $parent_array, $epoch, $taskgroup_flag, $lang, $task_state, $NEW_TIME, $DATABASE_TYPE, $parentid, $ul_flag;
 
   //init values
   $stored_groupname = NULL;
@@ -92,7 +91,7 @@ $q = db_query("SELECT tasks.id AS id,
     //check for private usergroups
     if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
 
-      if( ! in_array( $row["usergroupid"], (array)$usergroup ) )
+      if( ! in_array( $row["usergroupid"], (array)$gid ) )
          continue;
     }
 
@@ -265,12 +264,6 @@ $q = db_query("SELECT tasks.id AS id,
 //is the parentid set in tasks.php ?
 if( ! isset($parentid) || ! is_numeric($parentid) || $parentid == 0 )
   error( "Task list", "Not a valid value for taskid");
-
-//get usergroups of user, and put them in a simple array for later use
-$q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
-  $usergroup[$i] = $row[0];
-}
 
 //find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query
 $projectid = db_result(db_query("SELECT projectid FROM tasks WHERE id=$parentid" ), 0, 0 );

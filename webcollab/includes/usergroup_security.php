@@ -28,9 +28,6 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
-//set default
-$USERGROUP_MEMBER = 0;
-
 //get the tasks' security info
 if( ! ($q = db_query("SELECT usergroupid, globalaccess FROM tasks WHERE id=$taskid" ) ) )
   error("Usergroup security", "There was an error in the data query." );
@@ -40,25 +37,11 @@ if( ! ($row = db_fetch_num($q, 0 ) ) )
   error("Usergroup security", "There was an error in fetching the permission data." );
 
 //admins can go free the rest is checked
-if( ($admin != 1) && ($row[0] != 0 ) && ($row[1]=='f' ) ) {
+if( ($admin != 1) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
 
   //check if the user has a matching group
-  $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$uid" );
-  for($i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++ ) {
-
-    //found it
-    if($row[0] == $usergroup_row[0] ) {
-      $USERGROUP_MEMBER = 1;
-      break;
-    }
-  }
-}
-else{
-  //this case when admin, no usergroup, or globalaccess is allowed
-  $USERGROUP_MEMBER = 1;
-}
-
-if( $USERGROUP_MEMBER == 0 )
+  if( ! in_array($row[0], (array)$gid ) )
     warning($lang["access_denied"], $lang["private_usergroup"] );
+}
 
 ?>

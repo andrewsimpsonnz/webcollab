@@ -35,12 +35,14 @@ require_once(BASE."includes/security.php" );
 include_once(BASE."includes/admin_config.php" );
 include_once(BASE."includes/time.php" );
 
+$usergroup[0] = 0;
+
 //
 //check user access
 //
 function user_access($taskid ) {
 
-  global $uid, $admin;
+  global $uid, $admin, $usergroup;
 
   if($admin == 1)
     return TRUE;
@@ -55,11 +57,8 @@ function user_access($taskid ) {
     return FALSE;
 
   if( $row[2] == "t" ) {
-    $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$uid" );
-    for( $i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
-    if($row[1] == $usergroup_row[0] )
+    if(in_array($row["usergroupid"], (array)$gid ) )
       return TRUE;
-    }
   }
   return FALSE;
 }
@@ -111,7 +110,7 @@ switch($row["parent"] ) {
 
 //reparenting
 $content .= "<tr><td>".$lang["parent_task"].":</td><td><select name=\"parentid\">\n";
-$parentq = db_query("SELECT id, name FROM tasks WHERE id<>$taskid ORDER BY name");
+$parentq = db_query("SELECT id, name, usergroupid, globalaccess FROM tasks WHERE id<>$taskid ORDER BY name");
 $content .= "<option value=\"0\"";
 
 if($row["parent"] == 0 )
@@ -119,6 +118,13 @@ if($row["parent"] == 0 )
 $content .= ">".$lang["no_reparent"]."</option>\n";
 
 for( $i=0; $parent_row = @db_fetch_array($parentq, $i ); $i++) {
+  //check for private usergroups
+  if( ($admin != 1) && ($parent_row["usergroupid"] != 0 ) && ($parent_row["globalaccess"] == 'f' ) ) {
+
+  if( ! in_array($parent_row["usergroupid"], (array)$gid ) )
+    continue;
+  }
+
   $content .= "<option value=\"".$parent_row["id"]."\"";
   if($row["parent"] == $parent_row["id"] )
     $content .= " SELECTED";

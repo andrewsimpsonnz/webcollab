@@ -94,7 +94,7 @@ return $message;
 //
 function user_access($taskid ) {
 
-  global $uid;
+  global $uid, $gid;
 
   $q = db_query("SELECT owner, usergroupid, groupaccess FROM tasks WHERE id=$taskid" );
   $row = db_fetch_num($q, 0 );
@@ -109,11 +109,8 @@ function user_access($taskid ) {
 
   //if groupaccess is set, check user is in usergroup
   if($row[2] == "t" ) {
-    $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=$uid" );
-    for( $i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
-    if($row[1] == $usergroup_row[0] )
+    if(in_array($row["usergroupid"], (array)$gid ) )
       return TRUE;
-    }
   }
   //no access for this user
   return FALSE;

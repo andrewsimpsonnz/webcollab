@@ -121,10 +121,17 @@ if( $numberoftasksowned + $numberofprojectsowned > 0 ) {
   $content = "<ul>";
 
   //Get the number of tasks
-  $q = db_query("SELECT id, name, parent, status, finished_time FROM tasks WHERE owner=$userid" );
+  $q = db_query("SELECT id, name, parent, status, finished_time, usergroupid, globalaccess FROM tasks WHERE owner=$userid" );
 
   //show them
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
+
+    //check for private usergroups
+    if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
+
+      if( ! in_array( $row["usergroupid"], (array)$gid ) )
+        continue;
+    }
 
     $status_content = "";
 

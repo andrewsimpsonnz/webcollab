@@ -36,7 +36,7 @@ require_once( BASE."includes/security.php" );
 //
 
 function listTasks($task_id, $tail ) {
-   global $x, $admin, $usergroup, $userid, $epoch, $lang;
+   global $x, $admin, $gid, $userid, $epoch, $lang;
   // show all subtasks that are not complete
   $q = db_query( "SELECT id, name, owner, deadline, usergroupid, globalaccess,
                         $epoch deadline) AS task_due,
@@ -57,7 +57,7 @@ function listTasks($task_id, $tail ) {
      //check for private usergroups
      if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
 
-       if( ! in_array( $row["usergroupid"], $usergroup ) )
+       if( ! in_array( $row["usergroupid"], (array)$gid ) )
          continue;
      }
 
@@ -128,12 +128,6 @@ switch($selection ) {
     if($userid == 0 )
       $s2 = " SELECTED";
     break;
-}
-
-//get usergroups of user, and put them in a simple array for later use
-$q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
-  $usergroup[$i] = $row[0];
 }
 
 $content .= "<form method=\"POST\" action=\"users.php\">\n".
