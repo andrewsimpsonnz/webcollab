@@ -62,8 +62,8 @@ $content .= "<form name=\"inputform\" method=\"POST\" action=\"forum/forum_submi
 //set some hidden values
 $content .= "<input type=\"hidden\" name=\"action\" value=\"add\">\n".
             "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\">\n".
-            "<input type=\"hidden\" NAME=\"x\" value=\"$x\">".
-            "<input type=\"hidden\" NAME=\"usergroupid\" value=\"$usergroupid\">\n";
+            "<input type=\"hidden\" name=\"x\" value=\"$x\">".
+            "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\">\n";
 
 
 //find out some of the parent's data
@@ -92,8 +92,8 @@ else {
 //build up the text-entry part
 $content .=   "<tr><td>Message:</td><td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
               "</table>\n".
-              "<input type=\"submit\" name=\"Add\" value=\"".$lang["post"]."\"> ".
-              "<input type=\"reset\">".
+              "<input type=\"submit\" value=\"".$lang["post"]."\"> ".
+              "<input type=\"reset\" value=\"".$lang["reset"]."\">".
               "</form>\n".
               "<br /><br />\n";
 

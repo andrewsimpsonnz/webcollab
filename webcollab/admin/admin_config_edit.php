@@ -41,13 +41,13 @@ if( $admin != 1 ) {
 }
 
 //start form data
-$content .=
+$content .= 
         "<form method=\"POST\" action=\"admin/admin_config_submit.php\">\n".
           "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
           "<br />\n".
           "<table border=\"0\">\n";
 
-$content .=
+$content .= 
             "<tr><td nowrap colspan=\"2\"><b>".$lang["email_settings"]."</b></td></tr>\n".
             "<tr><td colspan=\"2\">&nbsp;</td></tr>";
 
@@ -83,8 +83,8 @@ $content .= "<tr><td>".$lang["allow_globalaccess"]."</td><td><INPUT type=\"check
 
 
 $content .=
-          "<input type=\"submit\" name=\"Add\" value=\"".$lang["update"]."\"> ".
-          "<input type=\"reset\">".
+          "<input type=\"submit\" value=\"".$lang["update"]."\"> ".
+          "<input type=\"reset\" value=\"".$lang["reset"]."\">".
         "</form>\n".
         "<br /><br />\n";
 
