@@ -118,7 +118,7 @@ new_box($lang["user_info"], $content );
 //shows quick links to the tasks that the user owns
 
 if( $numberoftasksowned + $numberofprojectsowned > 0 ) {
-  $content = "<ul>";
+  $content = "<br /><ul>";
 
   //Get the number of tasks
   $q = db_query("SELECT id, name, parent, status, finished_time FROM tasks WHERE owner=$userid" );
