@@ -49,12 +49,12 @@ function find_posts( $postid ) {
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
     //put values into array
-    $post_array[$i]["id"] = $row["id"];
-    $post_array[$i]["parent"] = $row["parent"];
+    $post_array[$i]['id'] = $row['id'];
+    $post_array[$i]['parent'] = $row['parent'];
   
     //if this is a subpost, store the parent id 
-    if($row["parent"] != 0 ) {
-      $parent_array[$j] = $row["parent"];
+    if($row['parent'] != 0 ) {
+      $parent_array[$j] = $row['parent'];
       $j++;
     }
   }
@@ -85,15 +85,15 @@ function find_children($parent ) {
        
   for($i=0 ; $i < $max ; $i++ ) {
   
-    if($post_array[$i]["parent"] != $parent ){
+    if($post_array[$i]['parent'] != $parent ){
       continue;
     }
-    $match_array[$index] = $post_array[$i]["id"];
+    $match_array[$index] = $post_array[$i]['id'];
     $index++;
     
     //if this post has children (subposts), iterate recursively to find them
-    if(in_array($post_array[$i]["id"], $parent_array ) ){
-      find_children($post_array[$i]["id"] );
+    if(in_array($post_array[$i]['id'], $parent_array ) ){
+      find_children($post_array[$i]['id'] );
     }
   }
   return;
@@ -115,19 +115,19 @@ function delete_messages($postid ) {
   return;
 }
 
-if( ! isset($_REQUEST["action"]) )
+if( ! isset($_REQUEST['action']) )
   error("Forum submit", "No request given" );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
-  switch($_REQUEST["action"] ) {
+  switch($_REQUEST['action'] ) {
 
     case "submit_add":
 
       //if all values are filled in correctly we can submit the forum-item
-      if(empty($_POST["text"] ) )
-        warning($lang["forum_submit"], $lang["no_message"] );
+      if(empty($_POST['text'] ) )
+        warning($lang['forum_submit'], $lang['no_message'] );
              
       $input_array = array("parentid", "taskid", "usergroupid");
       foreach($input_array as $var ) {   
@@ -136,18 +136,18 @@ ignore_user_abort(TRUE);
         ${$var} = intval($_POST[$var]);
       }
       
-      $text = safe_data_long($_POST["text"] );
+      $text = safe_data_long($_POST['text'] );
       //make email adresses and web links clickable
       $text = preg_replace("/(([a-z0-9\-\.]+)@([a-z0-9\-\.]+)\.([a-z0-9]+))/", "<a href=\"mailto:\\0\">\\0</a>", $text );
       $text = preg_replace("/((http|ftp)+(s)?:\/\/[^\s]+)/i", "\n<a href=\"$0\" target=\"new\">$0</a>\n", $text );
       $text = nl2br($text );
 
-      if(isset($_POST["mail_owner"] ) && ($_POST["mail_owner"] == "on" ) )
+      if(isset($_POST['mail_owner'] ) && ($_POST['mail_owner'] == "on" ) )
         $mail_owner = true;
       else
         $mail_owner = "";
 
-      if(isset($_POST["mail_group"] ) && ($_POST["mail_group"] == "on" ) )
+      if(isset($_POST['mail_group'] ) && ($_POST['mail_group'] == "on" ) )
         $mail_group = true;
       else
         $mail_group = "";
@@ -167,18 +167,18 @@ ignore_user_abort(TRUE);
           //public post
           db_begin();
           db_query ("INSERT INTO ".PRE."forum(parent, taskid, posted, text, userid, usergroupid)
-                                           VALUES ($parentid, $taskid, now(), '$text', $uid, 0)" );
+                                           VALUES ($parentid, $taskid, now(), '$text', $UID, 0)" );
           break;
 
         default:
           //private post
           //check if the user does belong to that group
-          if(($admin!=1 ) && ( ! in_array($usergroupid, (array)$gid ) ) )
+          if(($ADMIN!=1 ) && ( ! in_array($usergroupid, (array)$GID ) ) )
             error("Forum submit", "You do not have enough rights to post in that forum" );
 
           db_begin();
           db_query ("INSERT INTO ".PRE."forum(parent, taskid, posted, text, userid, usergroupid)
-                                            VALUES ($parentid, $taskid, now(), '$text', $uid, $usergroupid)" );
+                                            VALUES ($parentid, $taskid, now(), '$text', $UID, $usergroupid)" );
           break;
 
       }
@@ -200,17 +200,17 @@ ignore_user_abort(TRUE);
       $task_row = db_fetch_array($q, 0 );
 
       //set owner's email
-      if($task_row["email"] && $mail_owner ) {
-        $mail_list .= $task_row["email"];
+      if($task_row['email'] && $mail_owner ) {
+        $mail_list .= $task_row['email'];
         $s = ", ";
       }
 
       //if usergroup set, add the user list
-      if($task_row["usergroupid"] && $mail_group ){
+      if($task_row['usergroupid'] && $mail_group ){
         $q = db_query("SELECT ".PRE."users.email
                               FROM ".PRE."users
                               LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.userid=".PRE."users.id)
-                              WHERE ".PRE."usergroups_users.usergroupid=".$task_row["usergroupid"].
+                              WHERE ".PRE."usergroups_users.usergroupid=".$task_row['usergroupid'].
                               " AND ".PRE."users.deleted='f'" );
 
         for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
@@ -224,7 +224,7 @@ ignore_user_abort(TRUE);
         include_once(BASE."includes/email.php" );
         include_once(BASE."lang/lang_email.php" );
 
-      $message = $_POST["text"];
+      $message = $_POST['text'];
         
       //get rid of magic_quotes - it is not required here
       if(get_magic_quotes_gpc() )
@@ -237,7 +237,7 @@ ignore_user_abort(TRUE);
         switch($parentid ) {
           case 0:
             //this is a new post
-            email($mail_list, sprintf($title_forum_post, $task_row["name"]), sprintf($email_forum_post, $uid_name, $message) );
+            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_post, $UID_NAME, $message) );
             break;
 
           default:
@@ -250,13 +250,13 @@ ignore_user_abort(TRUE);
 
             $row = db_fetch_array($q, 0 );
 
-            if($row["username"] == NULL )
-              $row["username"] = "----";
+            if($row['username'] == NULL )
+              $row['username'] = "----";
               
             //remove any HTML linebreaks that nl2br() has put into the text...
-            $original_message =  str_replace("<br />", "", $row["text"] );
+            $original_message =  str_replace("<br />", "", $row['text'] );
 
-            email($mail_list, sprintf($title_forum_post, $task_row["name"]), sprintf($email_forum_reply, $uid_name, $row["username"], $original_message, $message ) );
+            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_reply, $UID_NAME, $row['username'], $original_message, $message ) );
             break;
         }
       }
@@ -264,11 +264,11 @@ ignore_user_abort(TRUE);
 
     //owner of the thread can delete, admin can delete
     case "submit_del":
-      if(empty($_GET["postid"]) || ! is_numeric($_GET["postid"]) )
+      if(empty($_GET['postid']) || ! is_numeric($_GET['postid']) )
         error("Forum submit", "Postid not valid" );
-      $postid = intval($_GET["postid"] );
+      $postid = intval($_GET['postid'] );
 
-      switch($admin ) {
+      switch($ADMIN ) {
         case 1:
           //admin can delete all
           db_begin();
@@ -280,8 +280,8 @@ ignore_user_abort(TRUE);
         default:
           //check if user is owner of the task or the owner of the post
           if(
-          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum LEFT JOIN ".PRE."tasks ON (".PRE."forum.taskid=".PRE."tasks.id) WHERE ".PRE."tasks.owner=$uid AND ".PRE."forum.id=$postid" ), 0, 0 ) == 1 ) ||
-          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum WHERE userid=$uid AND id=$postid" ), 0, 0 ) == 1 ) ) {
+          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum LEFT JOIN ".PRE."tasks ON (".PRE."forum.taskid=".PRE."tasks.id) WHERE ".PRE."tasks.owner=$UID AND ".PRE."forum.id=$postid" ), 0, 0 ) == 1 ) ||
+          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum WHERE userid=$UID AND id=$postid" ), 0, 0 ) == 1 ) ) {
 
             db_begin();
             delete_messages( $postid );
@@ -300,6 +300,6 @@ ignore_user_abort(TRUE);
   }
 
 //go back to where this request came from
-header("Location: ".BASE_URL."tasks.php?x=$x&action=show&taskid=".$_REQUEST["taskid"] );
+header("Location: ".BASE_URL."tasks.php?x=$x&action=show&taskid=".$_REQUEST['taskid'] );
 
 ?>

@@ -30,13 +30,13 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 //admins only
-if($admin != 1 )
+if($ADMIN != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
-if(empty($_GET["taskid"]) && ! is_numeric($_GET["taskid"]) )
+if(empty($_GET['taskid']) && ! is_numeric($_GET['taskid']) )
   error("Task clone", "Taskid not set" );
 
-$taskid = intval($_GET["taskid"]);
+$taskid = intval($_GET['taskid']);
 
 $content = "";
 
@@ -50,27 +50,27 @@ $q = db_query("SELECT name, parent FROM ".PRE."tasks WHERE id=$taskid" );
 
 $row = db_fetch_array($q, 0 );
 
-if($row["parent"] == 0 ){
-  $content .= "<tr><td>".$lang["project_cloned"]."</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$row["name"]."</a></td></tr>\n".
-              "<tr><td>".$lang["project_name"].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
+if($row['parent'] == 0 ){
+  $content .= "<tr><td>".$lang['project_cloned']."</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$row['name']."</a></td></tr>\n".
+              "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
               "</table>\n".
-              "<p><input type=\"submit\" value=\"".$lang["add_project"]."\" />&nbsp;".
-              "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
+              "<p><input type=\"submit\" value=\"".$lang['add_project']."\" />&nbsp;".
+              "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>".
               "</form>\n";
 
-  new_box( $lang["add_project"], $content );
+  new_box( $lang['add_project'], $content );
 
 }
 else{
-  $content .= "<tr><td>".$lang["task_cloned"]."</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$row["name"]."</a></td></tr>\n".
-              "<tr><td colspan=\"2\"><i>".$lang["note_clone"]."</i></td><tr>\n".
-              "<tr><td>".$lang["project_name"].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
+  $content .= "<tr><td>".$lang['task_cloned']."</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$row['name']."</a></td></tr>\n".
+              "<tr><td colspan=\"2\"><i>".$lang['note_clone']."</i></td><tr>\n".
+              "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
               "</table>\n".
-              "<p><input type=\"submit\" value=\"".$lang["add_project"]."\" onclick=\"return fieldCheck()\" />&nbsp;".
-              "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
+              "<p><input type=\"submit\" value=\"".$lang['add_project']."\" onclick=\"return fieldCheck()\" />&nbsp;".
+              "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>".
               "</form>\n";
 
-  new_box( $lang["add_task"], $content );
+  new_box( $lang['add_task'], $content );
 }
 
 ?>

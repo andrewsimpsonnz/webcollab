@@ -33,19 +33,19 @@ include_once("includes/screen.php" );
 //
 // The action handler
 //
-if( ! isset($_REQUEST["action"]) )
+if( ! isset($_REQUEST['action']) )
   error("Task action handler", "No action given");
 
   //what do you want to task today =]
-  switch($_REQUEST["action"] ) {
+  switch($_REQUEST['action'] ) {
 
     //show a task
     case "show":
-      create_top($lang["task_info"]);
+      create_top($lang['task_info']);
       include("includes/mainmenu.php" );
       include("tasks/task_navigate.php" );
       include("tasks/task_menubox.php" );
-      if( $admin == 1 ) {
+      if( $ADMIN == 1 ) {
         include("taskgroups/taskgroup_menubox.php" );
         include("usergroups/usergroup_menubox.php" );
         //include("admin/admin_config_menubox.php" );
@@ -61,7 +61,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //add a task
     case "add":
-      create_top($lang["add_task"], 0, "name", "name", 1 );
+      create_top($lang['add_task'], 0, "name", "name", 1 );
       include("includes/mainmenu.php" );
       include("tasks/task_navigate.php" );
       include("tasks/task_menubox.php" );
@@ -77,7 +77,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //edit a task
     case "edit":
-      create_top($lang["edit_task"], 0, 0, "name", 1 );
+      create_top($lang['edit_task'], 0, 0, "name", 1 );
       include("includes/mainmenu.php" );
       include("tasks/task_navigate.php" );
       include("tasks/task_menubox.php" );
@@ -88,7 +88,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //show a summary page
     case "summary":
-      create_top($lang["summary_list"] );
+      create_top($lang['summary_list'] );
       include("includes/mainmenu.php" );
       include("tasks/task_menubox.php" );
       goto_main();
@@ -98,7 +98,7 @@ if( ! isset($_REQUEST["action"]) )
     
     //todo list
     case "todo":
-      create_top($lang["todo_list"] );
+      create_top($lang['todo_list'] );
       include("includes/mainmenu.php" );
       include("users/user_menubox.php" );
       include("users/user_existing_menubox.php" );
@@ -109,7 +109,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //clone
     case "clone":
-      create_top($lang["add_task"], 0, "name", "name" );
+      create_top($lang['add_task'], 0, "name", "name" );
       include("includes/mainmenu.php" );
       include("tasks/task_navigate.php" );
       include("tasks/task_menubox.php" );
@@ -142,7 +142,7 @@ if( ! isset($_REQUEST["action"]) )
             
     //printable task info
     case "show_print":
-      create_top($lang["task_info"], 2 );
+      create_top($lang['task_info'], 2 );
       include("tasks/task_show.php" );
       include("tasks/task_list.php" );
       include("forum/forum_list.php" );
@@ -152,14 +152,14 @@ if( ! isset($_REQUEST["action"]) )
 
     //printable summary info
     case "summary_print":
-      create_top($lang["summary_list"], 2 );
+      create_top($lang['summary_list'], 2 );
       include("tasks/task_summary_list.php" );
       create_bottom();
       break;
 
     //printable project info
     case "project_print":
-      create_top($lang["projects"], 2 );
+      create_top($lang['projects'], 2 );
       include("tasks/task_project_list.php" );
       create_bottom();
       break;

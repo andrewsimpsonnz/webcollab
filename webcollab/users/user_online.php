@@ -41,7 +41,7 @@ $q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid,
                       WHERE ".PRE."usergroups.private=1");
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
-  if(in_array($row[0], (array)$gid ) && ! in_array($row[1], (array)$allowed ) ) {
+  if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
    $allowed[] = $row[1];
   }
 }
@@ -58,16 +58,16 @@ $q = db_query("SELECT ".$epoch.PRE."logins.lastaccess) AS last,
             AND ".PRE."users.deleted='f'
             ORDER BY ".PRE."logins.lastaccess DESC" );
 
-$content .= "<tr><td style=\"white-space:nowrap\" colspan=\"2\"><b>".$lang["online"]."</b></td></tr>\n";
+$content .= "<tr><td style=\"white-space:nowrap\" colspan=\"2\"><b>".$lang['online']."</b></td></tr>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
   
   //user test for privacy
-  if($row["private"] && ( ! $admin ) && ( ! in_array($row["id"], (array)$allowed ) ) ){
+  if($row['private'] && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
     continue;
   }
   
   //show output
-  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></td><td>".nicetime($row["last"], 1 )."</td></tr>\n";
+  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
 }
 
 $content .= "<tr><td style=\"white-space:nowrap\"colspan=\"2\">&nbsp;</td></tr>\n";
@@ -82,20 +82,20 @@ $q = db_query("SELECT ".$epoch.PRE."logins.lastaccess) AS last,
             AND ".PRE."users.deleted='f'
             ORDER BY ".PRE."logins.lastaccess DESC" );
 
-$content .= "<tr><td colspan=\"2\"><b>".$lang["not_online"]."</b></td></tr>\n";
+$content .= "<tr><td colspan=\"2\"><b>".$lang['not_online']."</b></td></tr>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
   
   //user test for privacy
-  if($row["private"] && ( ! $admin ) && ( ! in_array($row["id"], (array)$allowed ) ) ){
+  if($row['private'] && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
     continue;
   }
   
   //show output
-  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></td><td>".nicetime($row["last"], 1 )."</td></tr>\n";
+  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
 
 }
 $content .= "</table>\n";
 
-new_box($lang["user_activity"], $content );
+new_box($lang['user_activity'], $content );
 
 ?>

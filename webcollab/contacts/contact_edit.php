@@ -30,10 +30,10 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 //we need a valid contactid
-if(empty( $_POST["contactid"] ) || ! is_numeric( $_POST["contactid"] ) )
+if(empty( $_POST['contactid'] ) || ! is_numeric( $_POST['contactid'] ) )
   error("Contact engine", "Not a valid value for contactid");
 
-$contactid = intval($_POST["contactid"]);
+$contactid = intval($_POST['contactid']);
 
 //get contact information
 if( ! ($row = db_fetch_array( db_query( "SELECT * FROM ".PRE."contacts WHERE id=".$contactid ), 0 ) ) )
@@ -45,24 +45,24 @@ $content =
       "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" />\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\" /></fieldset>\n".
       "<table class=\"celldata\">\n".
-        "<tr><td><i>".$lang["firstname"]."</i></td><td><input type=\"text\" name=\"firstname\" value=\"".html_escape($row["firstname"])."\"size=\"30\" /></td></tr>\n".
-        "<tr><td><i>".$lang["lastname"]."</i></td><td><input type=\"text\" name=\"lastname\" value=\"".html_escape($row["lastname"])."\" size=\"30\" /></td></tr>\n".
-        "<tr><td><i>".$lang["company"]."</i></td><td><input type=\"text\" name=\"company\" value=\"".html_escape($row["company"])."\" size=\"30\" /></td></tr>\n".
-        "<tr><td><i>".$lang["home_phone"]."</i></td><td><input type=\"text\" name=\"tel_home\" value=\"".html_escape($row["tel_home"])."\" size=\"30\" /></td></tr>\n".
-        "<tr><td><i>".$lang["mobile"]."</i></td><td><input type=\"text\" name=\"gsm\" value=\"".html_escape($row["gsm"])."\" size=\"30\" /></td></tr>\n".
-        "<tr><td><i>".$lang["fax"]."</i></td><td><input type=\"text\" name=\"fax\" value=\"".html_escape($row["fax"])."\" size=\"30\" /></td></tr>\n".
-        "<tr><td><i>".$lang["bus_phone"]."</i></td><td><input type=\"text\" name=\"tel_business\" value=\"".html_escape($row["tel_business"])."\" size=\"30\" /></td></tr>\n".
-        "<tr><td><i>".$lang["address"]."</i></td><td><input type=\"text\" name=\"address\" value=\"".html_escape($row["address"])."\" size=\"30\" /></td></tr>\n".
-        "<tr><td><i>".$lang["postal"]."</i></td><td><input type=\"text\" name=\"postal\" value=\"".html_escape($row["postal"])."\" size=\"30\" /></td></tr>\n".
-        "<tr><td><i>".$lang["city"]."</i></td><td><input type=\"text\" name=\"city\" value=\"".html_escape($row["city"])."\" size=\"30\" /></td></tr>\n".
-        "<tr><td><i>".$lang["email"]."</i></td><td><input type=\"text\" name=\"email\" value=\"".html_escape($row["email"])."\" size=\"30\" /></td></tr>\n".
+        "<tr><td><i>".$lang['firstname']."</i></td><td><input type=\"text\" name=\"firstname\" value=\"".html_escape($row['firstname'])."\"size=\"30\" /></td></tr>\n".
+        "<tr><td><i>".$lang['lastname']."</i></td><td><input type=\"text\" name=\"lastname\" value=\"".html_escape($row['lastname'])."\" size=\"30\" /></td></tr>\n".
+        "<tr><td><i>".$lang['company']."</i></td><td><input type=\"text\" name=\"company\" value=\"".html_escape($row['company'])."\" size=\"30\" /></td></tr>\n".
+        "<tr><td><i>".$lang['home_phone']."</i></td><td><input type=\"text\" name=\"tel_home\" value=\"".html_escape($row['tel_home'])."\" size=\"30\" /></td></tr>\n".
+        "<tr><td><i>".$lang['mobile']."</i></td><td><input type=\"text\" name=\"gsm\" value=\"".html_escape($row['gsm'])."\" size=\"30\" /></td></tr>\n".
+        "<tr><td><i>".$lang['fax']."</i></td><td><input type=\"text\" name=\"fax\" value=\"".html_escape($row['fax'])."\" size=\"30\" /></td></tr>\n".
+        "<tr><td><i>".$lang['bus_phone']."</i></td><td><input type=\"text\" name=\"tel_business\" value=\"".html_escape($row['tel_business'])."\" size=\"30\" /></td></tr>\n".
+        "<tr><td><i>".$lang['address']."</i></td><td><input type=\"text\" name=\"address\" value=\"".html_escape($row['address'])."\" size=\"30\" /></td></tr>\n".
+        "<tr><td><i>".$lang['postal']."</i></td><td><input type=\"text\" name=\"postal\" value=\"".html_escape($row['postal'])."\" size=\"30\" /></td></tr>\n".
+        "<tr><td><i>".$lang['city']."</i></td><td><input type=\"text\" name=\"city\" value=\"".html_escape($row['city'])."\" size=\"30\" /></td></tr>\n".
+        "<tr><td><i>".$lang['email']."</i></td><td><input type=\"text\" name=\"email\" value=\"".html_escape($row['email'])."\" size=\"30\" /></td></tr>\n".
     "</table>\n".
-    "<p><i>".$lang["notes"]."</i><br /><textarea  name=\"notes\" rows=\"6\" cols=\"50\">".$row["notes"]."</textarea></p>\n";
+    "<p><i>".$lang['notes']."</i><br /><textarea  name=\"notes\" rows=\"6\" cols=\"50\">".$row['notes']."</textarea></p>\n";
 
 //edit options
 $content .=
-      "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;".
-      "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
+      "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" />&nbsp;".
+      "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>\n".
       "</form>";
 
 //delete options
@@ -71,9 +71,9 @@ $content .=
       "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
       "<input type=\"hidden\" name=\"action\" value=\"submit_delete\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" /></fieldset>\n".
-      "<p><input type=\"submit\" value=\"".$lang["del_contact"]."\" onclick=\"return confirm('".$lang["confirm_del_javascript"]."')\" />\n".
+      "<p><input type=\"submit\" value=\"".$lang['del_contact']."\" onclick=\"return confirm('".$lang['confirm_del_javascript']."')\" />\n".
       "</p></form>";
 
-new_box( $lang["contact_info"], $content );
+new_box( $lang['contact_info'], $content );
 
 ?>

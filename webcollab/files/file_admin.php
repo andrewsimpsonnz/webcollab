@@ -35,7 +35,7 @@ include_once(BASE."includes/time.php" );
 
 $content = "";
 
-if($admin != 1 )
+if($ADMIN != 1 )
   error("Access denied", "This feature is only for admins" );
 
 
@@ -59,9 +59,9 @@ $q = db_query("SELECT ".PRE."files.oid AS oid,
                         ORDER BY task_name" );
 
 if(db_numrows($q) == 0 ) {
- $content = $lang["no_files"]."\n";
+ $content = $lang['no_files']."\n";
 
- new_box($lang["manage_files"], $content );
+ new_box($lang['manage_files'], $content );
   return;
 }
 
@@ -71,16 +71,16 @@ $content .= "<table>\n";
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
   //file part
-  $content .= "<tr><td>".$lang["task"].":</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["task_id"]."\">".$row["task_name"]."</a></td></tr>\n".
-              "<tr><td>".$lang["file"]."</td><td><a href=\"files.php?x=$x&amp;action=download&amp;fileid=".$row["id"]."\" onclick=\"window.open('files.php?x=$x&amp;action=download&amp;fileid=".$row["id"]."'); return false\">".$row["filename"]."</a>&nbsp;<small>(".$row["size"].$lang["bytes"].")&nbsp;</small>".
+  $content .= "<tr><td>".$lang['task'].":</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['task_id']."\">".$row['task_name']."</a></td></tr>\n".
+              "<tr><td>".$lang['file']."</td><td><a href=\"files.php?x=$x&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=$x&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a>&nbsp;<small>(".$row['size'].$lang['bytes'].")&nbsp;</small>".
               //delete option
-              "<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;action=submit_del&amp;fileid=".$row["id"]."&amp;taskid=".$taskid."\" onclick=\"return confirm( '".sprintf( $lang["del_file_javascript_sprt"], javascript_escape($row["filename"]) )."' )\">".$lang["del"]."</a>]</span></td></tr>\n".
+              "<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;action=submit_del&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\" onclick=\"return confirm( '".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename']) )."' )\">".$lang['del']."</a>]</span></td></tr>\n".
               //user part
-              "<tr><td>".$lang["uploader"]." </td><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["username"]."</a> (".nicetime( $row["uploaded"], 1 ).")</td></tr>\n";
+              "<tr><td>".$lang['uploader']." </td><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'], 1 ).")</td></tr>\n";
 
   //show description
-  if( $row["description"] != "" )
-    $content .= "<tr><td>".$lang["description"].":</td><td><small><i>".$row["description"]."</i></small></td></tr>\n";
+  if( $row['description'] != "" )
+    $content .= "<tr><td>".$lang['description'].":</td><td><small><i>".$row['description']."</i></small></td></tr>\n";
 
   //blank line to end
   $content .= "<tr><td>&nbsp;</td></tr>\n";    
@@ -89,6 +89,6 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
 $content .= "</table>\n";
 
-new_box( $lang["manage_files"], $content );
+new_box( $lang['manage_files'], $content );
 
 ?>

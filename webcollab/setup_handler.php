@@ -31,11 +31,11 @@ require_once("setup/security_setup.php" );
 //
 // The action handler
 //
-if( ! isset($_REQUEST["action"]) )
+if( ! isset($_REQUEST['action']) )
   error("Setup action handler", "No request given" );
 
   //what do you want to task today =]
-  switch($_REQUEST["action"] ) {
+  switch($_REQUEST['action'] ) {
 
     case "setup1":
       include("setup/setup_setup1.php" );

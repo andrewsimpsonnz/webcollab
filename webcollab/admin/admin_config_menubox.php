@@ -33,10 +33,10 @@ require_once(BASE."includes/security.php" );
 $content = "";
 
 //add an option to add users
-if( $admin == 1 )
-  $content .= "<a href=\"admin.php?x=$x&amp;action=admin\">".$lang["admin_config"]."</a><br />\n";
+if( $ADMIN == 1 )
+  $content .= "<a href=\"admin.php?x=$x&amp;action=admin\">".$lang['admin_config']."</a><br />\n";
 
 //show it
-new_box( $lang["admin_config"], $content, "boxmenu" );
+new_box( $lang['admin_config'], $content, "boxmenu" );
 
 ?>

@@ -35,28 +35,28 @@ $clone = "";
 $menu_type = "project";
 
 //the task dependent part
-if(! empty($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
+if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ) {
 
-  $taskid = intval($_GET["taskid"]);
+  $taskid = intval($_GET['taskid']);
   
   include_once(BASE."includes/details.php" );
   
-  $menu_type = $type; //$type is set in details.php
+  $menu_type = $TYPE; //$TYPE is set in details.php
   
-  if(($admin == 1 ) || ($taskid_row["owner"] == $uid ) ) {
-    $content .= "<small><b>".$lang["admin"].":</b></small><br />\n".
-                "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_$type"]."</a><br />\n".
-                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang["del_javascript_".$type."_sprt"], javascript_escape($taskid_row["name"] ) )."')\">".$lang["delete_$type"]."</a><br />\n".
-                "<br /><small><b>".$lang["global"].":</b></small><br />\n";
+  if(($ADMIN == 1 ) || ($TASKID_ROW['owner'] == $UID ) ) {
+    $content .= "<small><b>".$lang['admin'].":</b></small><br />\n".
+                "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_$TYPE"]."</a><br />\n".
+                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang["delete_$TYPE"]."</a><br />\n".
+                "<br /><small><b>".$lang['global'].":</b></small><br />\n";
   }
-  $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=$taskid\">".$lang["add_task"]."</a><br />\n";
+  $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=$taskid\">".$lang['add_task']."</a><br />\n";
 
-  if($admin == 1 )
-    $clone = "<a href=\"tasks.php?x=$x&amp;action=clone&amp;taskid=$taskid\">".$lang["clone_$type"]."</a><br />\n";
+  if($ADMIN == 1 )
+    $clone = "<a href=\"tasks.php?x=$x&amp;action=clone&amp;taskid=$taskid\">".$lang["clone_$TYPE"]."</a><br />\n";
 }
 
 //the task-independent part
-$content .= "<a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a><br />\n";
+$content .= "<a href=\"tasks.php?x=$x&amp;action=add\">".$lang['add_project']."</a><br />\n";
 $content .= $clone;
 
 new_box( $lang[$menu_type."_options"], $content, "boxmenu" );

@@ -35,10 +35,10 @@ include_once(BASE."includes/details.php" );
 
 $content = "";
 
-if(empty($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
+if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) )
   error("File list", "The taskid input is not valid" ); 
 
-$taskid = intval($_REQUEST["taskid"]);
+$taskid = intval($_REQUEST['taskid']);
 
 //check usergroup security
 require_once( BASE."includes/usergroup_security.php" );
@@ -67,20 +67,20 @@ if(db_numrows($q ) != 0 ) {
   for($i=0 ; $row = @db_fetch_array($q, $i) ; $i++ ) {
 
     //file part
-    $content .= "<tr><td><a href=\"files.php?x=$x&amp;action=download&amp;fileid=".$row["id"]."\" onclick=\"window.open('files.php?x=$x&amp;action=download&amp;fileid=".$row["id"]."'); return false\">".$row["filename"]."</a> <small>(".$row["size"].$lang["bytes"].") </small>";
+    $content .= "<tr><td><a href=\"files.php?x=$x&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=$x&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a> <small>(".$row['size'].$lang['bytes'].") </small>";
 
     //owners of the file and admins have a "delete" option
-    if( ($admin == 1) || ($uid == $taskid_row["owner"] ) || ($uid == $row["uploader"] ) ) {
-      $content .= "&nbsp;<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;action=submit_del&amp;fileid=".$row["id"]."&amp;taskid=$taskid\" onclick=\"return confirm('".sprintf( $lang["del_file_javascript_sprt"], javascript_escape($row["filename"] ) )."' )\">".$lang["del"]."</a>]</span></td></tr>\n";
+    if( ($ADMIN == 1) || ($UID == $TASKID_ROW['owner'] ) || ($UID == $row['uploader'] ) ) {
+      $content .= "&nbsp;<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;action=submit_del&amp;fileid=".$row['id']."&amp;taskid=$taskid\" onclick=\"return confirm('".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename'] ) )."' )\">".$lang['del']."</a>]</span></td></tr>\n";
     } else
       $content .= "</td></tr>\n";
 
     //user part
-    $content .= "<tr><td>".$lang["uploader"]." <a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["username"]."</a> (".nicetime( $row["uploaded"], 1 ).")</td></tr>\n";
+    $content .= "<tr><td>".$lang['uploader']." <a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'], 1 ).")</td></tr>\n";
 
     //show description
-    if( $row["description"] != "" )
-      $content .= "<tr><td><small><i>".$row["description"]."</i></small></td></tr>\n";
+    if( $row['description'] != "" )
+      $content .= "<tr><td><small><i>".$row['description']."</i></small></td></tr>\n";
 
     //padding for next entry
     $content .= "<tr><td>&nbsp;</td></tr>\n";
@@ -88,8 +88,8 @@ if(db_numrows($q ) != 0 ) {
   $content .= "</table>";
 }
 
-$content .= "<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang["add_file"]."</a>]</span>";
+$content .= "<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang['add_file']."</a>]</span>";
 
-new_box($lang["files_assoc_".$type], $content, "boxdata2" );
+new_box($lang["files_assoc_".$TYPE], $content, "boxdata2" );
 
 ?>

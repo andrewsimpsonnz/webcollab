@@ -31,14 +31,14 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 //admins only
-if($admin != 1 )
+if($ADMIN != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 //secure
-if(empty($_GET["taskgroupid"]) || ! is_numeric($_GET["taskgroupid"]) )
+if(empty($_GET['taskgroupid']) || ! is_numeric($_GET['taskgroupid']) )
   error("Taskgroup edit", "There is no taskgroupid specified." );
 
-$taskgroupid = intval($_GET["taskgroupid"]);
+$taskgroupid = intval($_GET['taskgroupid']);
 
 //get taskgroup information
 $q = db_query("SELECT * FROM ".PRE."taskgroups WHERE id=$taskgroupid" );
@@ -50,13 +50,13 @@ $content =
               "<input type=\"hidden\" name=\"taskgroupid\" value=\"$taskgroupid\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" /></fieldset>\n".
               "<table class=\"celldata\">\n".
-                "<tr><td>".$lang["taskgroup_name"]."</td> <td><input type=\"text\" name=\"name\" value=\"".html_escape($row["name"])." \"size=\"30\" /></td></tr>\n".
-                "<tr><td>".$lang["taskgroup_description"]."</td><td><input type=\"text\" name=\"description\" value=\"".html_escape($row["description"])." \"size=\"30\" /></td></tr>\n".
+                "<tr><td>".$lang['taskgroup_name']."</td> <td><input type=\"text\" name=\"name\" value=\"".html_escape($row['name'])." \"size=\"30\" /></td></tr>\n".
+                "<tr><td>".$lang['taskgroup_description']."</td><td><input type=\"text\" name=\"description\" value=\"".html_escape($row['description'])." \"size=\"30\" /></td></tr>\n".
               "</table>\n".
-              "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;\n".
-              "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
+              "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" />&nbsp;\n".
+              "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>\n".
             "</form>\n";
 
-new_box($lang["edit_taskgroup"], $content );
+new_box($lang['edit_taskgroup'], $content );
 
 ?>

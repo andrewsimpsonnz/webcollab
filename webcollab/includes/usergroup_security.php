@@ -39,22 +39,22 @@ if( ! ($group_row = db_fetch_num($group_q, 0 ) ) )
   error("Usergroup security", "There was an error in fetching the permission data." );
 
 //admins can go free the rest is checked
-if( ($admin != 1) && ($group_row[0] != 0 ) && ($group_row[1] == 'f' ) ) {
+if( ($ADMIN != 1) && ($group_row[0] != 0 ) && ($group_row[1] == 'f' ) ) {
 
   //check if the user has a matching group
-  if( ! in_array($group_row[0], (array)$gid ) )
-    warning($lang["access_denied"], $lang["private_usergroup"] );
+  if( ! in_array($group_row[0], (array)$GID ) )
+    warning($lang['access_denied'], $lang['private_usergroup'] );
 }
 
 //check if project is marked private
 $project_q = db_query("SELECT usergroupid, globalaccess FROM ".PRE."tasks WHERE id=".$group_row[2] );
 $project_row = db_fetch_num($project_q, 0 );
 
-if( ($admin != 1) && ($project_row[0] != 0 ) && ($project_row[1] == 'f' ) ) {
+if( ($ADMIN != 1) && ($project_row[0] != 0 ) && ($project_row[1] == 'f' ) ) {
 
   //check if the user has a matching group
-  if( ! in_array($project_row[0], (array)$gid ) )
-    warning($lang["access_denied"], $lang["private_usergroup"] );
+  if( ! in_array($project_row[0], (array)$GID ) )
+    warning($lang['access_denied'], $lang['private_usergroup'] );
 }
 
 ?>

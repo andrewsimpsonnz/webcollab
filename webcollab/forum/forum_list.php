@@ -34,10 +34,10 @@ include_once(BASE."includes/time.php" );
 
 
 //check the taskid is valid
-if( ! (isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) )
+if( ! (isset($_GET['taskid']) && is_numeric($_GET['taskid']) ) )
   error("Forum list", "Not a valid taskid" );
 
-$taskid = intval($_GET["taskid"]);
+$taskid = intval($_GET['taskid']);
 
 //check usergroup security
 require_once(BASE."includes/usergroup_security.php" );
@@ -47,7 +47,7 @@ require_once(BASE."includes/usergroup_security.php" );
 //
 function list_posts_from_task( $taskid, $usergroupid ) {
 
-  global $admin, $x, $uid, $lang, $taskid_row, $epoch;
+  global $ADMIN, $x, $UID, $lang, $TASKID_ROW, $epoch;
   global $post_array, $parent_array;
 
   $parent_array = "";
@@ -75,35 +75,35 @@ function list_posts_from_task( $taskid, $usergroupid ) {
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
     //put values into array
-    $post_array[$i]["id"] = $row["id"];
-    $post_array[$i]["parent"] = $row["parent"];
+    $post_array[$i]['id'] = $row['id'];
+    $post_array[$i]['parent'] = $row['parent'];
   
     $this_post = "<li><small>";
     
-    if($row["fullname"] == NULL )
+    if($row['fullname'] == NULL )
       $this_post .= "----";
     else
-      $this_post .= "<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["fullname"]."</a>";
+      $this_post .= "<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['userid']."\">".$row['fullname']."</a>";
 
-    $this_post .= "&nbsp;(".nicetime( $row["posted"], 1 ).")</small>".
-                     "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=".$row["id"]."&amp;taskid=$taskid";
+    $this_post .= "&nbsp;(".nicetime( $row['posted'], 1 ).")</small>".
+                     "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=".$row['id']."&amp;taskid=$taskid";
 
     //if this is a post to a private forum then announce it to the poster-engine
     if($usergroupid != 0 )
       $this_post .= "&amp;usergroupid=$usergroupid";
 
-    $this_post .= "\">".$lang["reply"]."</a>]</span>\n";
+    $this_post .= "\">".$lang['reply']."</a>]</span>\n";
 
     //owners of the thread, owners of the post and admins have a "delete" option
-    if( ($admin==1) || ($uid == $taskid_row["owner"] ) || ($uid == $row["postowner"] ) ) {
-      $this_post .= " <span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=submit_del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onclick=\"return confirm( '".$lang["confirm_del_javascript"]."' )\">".$lang["del"]."</a>]</span>";
+    if( ($ADMIN==1) || ($UID == $TASKID_ROW['owner'] ) || ($UID == $row['postowner'] ) ) {
+      $this_post .= " <span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=submit_del&amp;postid=".$row['id']."&amp;taskid=$taskid\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."' )\">".$lang['del']."</a>]</span>";
     }
 
-    $post_array[$i]["post"] = $this_post."<br />\n".$row["text"]."\n";
+    $post_array[$i]['post'] = $this_post."<br />\n".$row['text']."\n";
 
     //if this is a subpost, store the parent id 
-    if($row["parent"] != 0 ) {
-      $parent_array[$j] = $row["parent"];
+    if($row['parent'] != 0 ) {
+      $parent_array[$j] = $row['parent'];
       $j++;
     }
   }
@@ -116,14 +116,14 @@ function list_posts_from_task( $taskid, $usergroupid ) {
   for($i=0 ; $i < $max ; $i++ ){
   
     //ignore subtasks in this iteration
-    if($post_array[$i]["parent"] != 0 ){
+    if($post_array[$i]['parent'] != 0 ){
       continue;
     }
-    $content .= $post_array[$i]["post"];
+    $content .= $post_array[$i]['post'];
     
     //if this post has children (subposts), iterate recursively to find them 
-    if(in_array($post_array[$i]["id"], (array)$parent_array ) ){
-      $content .= find_children($post_array[$i]["id"] );
+    if(in_array($post_array[$i]['id'], (array)$parent_array ) ){
+      $content .= find_children($post_array[$i]['id'] );
     }
     $content .= "</li>\n";
   }
@@ -143,14 +143,14 @@ function find_children($parent ) {
        
   for($i=0 ; $i < $max ; $i++ ) {
   
-    if($post_array[$i]["parent"] != $parent ){
+    if($post_array[$i]['parent'] != $parent ){
       continue;
     }
-    $content .= $post_array[$i]["post"];
+    $content .= $post_array[$i]['post'];
     
     //if this post has children (subposts), iterate recursively to find them
-    if(in_array($post_array[$i]["id"], $parent_array ) ){
-      $content .= find_children($post_array[$i]["id"] );
+    if(in_array($post_array[$i]['id'], $parent_array ) ){
+      $content .= find_children($post_array[$i]['id'] );
     }
     $content .= "</li>\n";    
   }
@@ -168,7 +168,7 @@ function find_children($parent ) {
 //
 
 //don't show public forum if task is set to private usergroup only (and a usergroup is set) 
-if( ! ($taskid_row["globalaccess"] == 'f' && $taskid_row["usergroupid"] != 0 ) ){
+if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) ){
 
   $content = "";
 
@@ -177,9 +177,9 @@ if( ! ($taskid_row["globalaccess"] == 'f' && $taskid_row["usergroupid"] != 0 ) )
   if($ul_flag == 1 )
     $content .= "<br />\n";
   //add an option to add posts
-  $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang["new_post"]."</a>]</span>";
+  $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang['new_post']."</a>]</span>";
   //show it
-  new_box($lang["public_user_forum"], $content, "boxdata2" );
+  new_box($lang['public_user_forum'], $content, "boxdata2" );
 }
 
 //
@@ -189,21 +189,21 @@ if( ! ($taskid_row["globalaccess"] == 'f' && $taskid_row["usergroupid"] != 0 ) )
 //show all posts that are private to that task's user-group if you are within the group (so AND user AND task have to belong to the same group)
 
 //dont show private forums if the task has not yet been assigned to a usergroup
-if($taskid_row["usergroupid"] != 0 ) {
+if($TASKID_ROW['usergroupid'] != 0 ) {
 
   $content = "";
 
-  if(in_array($taskid_row["usergroupid"], (array)$gid ) || $admin == 1 ) {
+  if(in_array($TASKID_ROW['usergroupid'], (array)$GID ) || $ADMIN == 1 ) {
 
-    $content .= list_posts_from_task( $taskid, $taskid_row["usergroupid"] );
+    $content .= list_posts_from_task( $taskid, $TASKID_ROW['usergroupid'] );
     if($ul_flag == 1 )
       $content .= "<br />\n";
     //add an option to add posts
-    $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=".$taskid_row["usergroupid"]."&amp;\">".$lang["new_post"]."</a>]</span>";
+    $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=".$TASKID_ROW['usergroupid']."&amp;\">".$lang['new_post']."</a>]</span>";
     //get usergroup
-    $usergroup_name = db_result(db_query("SELECT name FROM ".PRE."usergroups WHERE id=".$taskid_row["usergroupid"] ), 0, 0 );
+    $usergroup_name = db_result(db_query("SELECT name FROM ".PRE."usergroups WHERE id=".$TASKID_ROW['usergroupid'] ), 0, 0 );
     //show it
-    new_box(sprintf($lang["private_forum_sprt"], $usergroup_name ), $content, "boxdata2" );
+    new_box(sprintf($lang['private_forum_sprt'], $usergroup_name ), $content, "boxdata2" );
   }
 }
 

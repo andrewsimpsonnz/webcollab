@@ -34,27 +34,27 @@ include_once("includes/screen.php" );
 //
 // The action handler
 //
-if( ! isset($_REQUEST["action"] ) )
+if( ! isset($_REQUEST['action'] ) )
   error("Contacts action handler", "No request given" );
 
   //what do you want to contact today =]
-  switch($_REQUEST["action"] ) {
+  switch($_REQUEST['action'] ) {
 
     //gives a window and some options to do to the poor 'old contact manager
     case "add":
-      create_top($lang["add_contact"], 0, "firstname" );
+      create_top($lang['add_contact'], 0, "firstname" );
       include("includes/mainmenu.php" );
       include("contacts/contact_menubox.php" );
       goto_main();
       include("contacts/contact_add.php" );
-      new_box($lang["info"], $lang["contact_add_info"] );
+      new_box($lang['info'], $lang['contact_add_info'] );
       create_bottom();
       break;
 
 
     //gives a window and some options to do to the poor 'old contact manager
     case "show":
-      create_top($lang["show_contact"]);
+      create_top($lang['show_contact']);
       include("includes/mainmenu.php" );
       include("contacts/contact_menubox.php" );
       goto_main();
@@ -63,7 +63,7 @@ if( ! isset($_REQUEST["action"] ) )
       break;
 
     case "edit":
-      create_top($lang["edit_contact"]);
+      create_top($lang['edit_contact']);
       include("includes/mainmenu.php" );
       include("contacts/contact_menubox.php" );
       goto_main();

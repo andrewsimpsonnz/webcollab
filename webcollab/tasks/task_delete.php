@@ -49,12 +49,12 @@ function find_tasks( $taskid, $projectid ) {
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
     //put values into array
-    $task_array[$i]["id"] = $row["id"];
-    $task_array[$i]["parent"] = $row["parent"];
+    $task_array[$i]['id'] = $row['id'];
+    $task_array[$i]['parent'] = $row['parent'];
   
     //if this is a subpost, store the parent id 
-    if($row["parent"] != 0 ) {
-      $parent_array[$j] = $row["parent"];
+    if($row['parent'] != 0 ) {
+      $parent_array[$j] = $row['parent'];
       $j++;
     }
   }
@@ -85,15 +85,15 @@ function find_children($parent ) {
        
   for($i=0 ; $i < $max ; $i++ ) {
   
-    if($task_array[$i]["parent"] != $parent ){
+    if($task_array[$i]['parent'] != $parent ){
       continue;
     }
-    $match_array[$index] = $task_array[$i]["id"];
+    $match_array[$index] = $task_array[$i]['id'];
     $index++;
     
     //if this post has children (subtasks), iterate recursively to find them
-    if(in_array($task_array[$i]["id"], $parent_array ) ){
-      find_children($task_array[$i]["id"] );
+    if(in_array($task_array[$i]['id'], $parent_array ) ){
+      find_children($task_array[$i]['id'] );
     }
   }
   return;
@@ -102,10 +102,10 @@ function find_children($parent ) {
 //
 // advanced database-wide task-delete !!
 //
-if(empty($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
+if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) )
   error("Task details", "The taskid input is not valid" ); 
 
-$taskid = intval($_REQUEST["taskid"]);
+$taskid = intval($_REQUEST['taskid']);
 
 //get task and owner information
 $q = db_query("SELECT ".PRE."tasks.parent AS parent,            
@@ -125,7 +125,7 @@ if( ! $row = db_fetch_array($q, 0) )
   error("Task delete", "The selected task does not exist.");
 
 //can this user delete this task ?
-if( ($admin != 1) && ($uid != $row["owner"]) )
+if( ($ADMIN != 1) && ($UID != $row['owner']) )
   error("Access denied", "You do not own this task and therefore you may not delete it." );
 
 //if user aborts, let the script carry onto the end
@@ -135,7 +135,7 @@ ignore_user_abort(TRUE);
 db_begin();
 
 //find all recursively linked children
-find_tasks( $taskid, $row["projectid"] );
+find_tasks( $taskid, $row['projectid'] );
 
 /* delete:
 - all forum posts linked to it
@@ -156,8 +156,8 @@ for($i=0 ; $i < $index ; $i++ ) {
   $fq = db_query("SELECT oid, filename FROM ".PRE."files WHERE taskid=".$match_array[$i] );
   for($j=0 ; $frow = @db_fetch_array($fq, $j ) ; $j++) {
 
-    if(file_exists(FILE_BASE."/".$row["oid"]."__".$row["filename"] ) ) {
-      unlink( FILE_BASE."/".$row["oid"]."__".$row["filename"] );
+    if(file_exists(FILE_BASE."/".$row['oid']."__".$row['filename'] ) ) {
+      unlink( FILE_BASE."/".$row['oid']."__".$row['filename'] );
     }
   }
 
@@ -169,15 +169,15 @@ for($i=0 ; $i < $index ; $i++ ) {
 
 }
 
-if($row["parent"] != 0 ){    
+if($row['parent'] != 0 ){    
   //set the new completed percentage project record
-  $percent_completed = round(percent_complete($row["projectid"] ) );
-  db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$row["projectid"] );
+  $percent_completed = round(percent_complete($row['projectid'] ) );
+  db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$row['projectid'] );
   
   //for completed project set the completion time
   if($percent_completed == 100 ){
-    $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM ".PRE."tasks WHERE projectid=".$row["projectid"] ), 0, 0 );
-    db_query("UPDATE ".PRE."tasks SET completion_time='".$completion_time."' WHERE id=".$row["projectid"] );
+    $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM ".PRE."tasks WHERE projectid=".$row['projectid'] ), 0, 0 );
+    db_query("UPDATE ".PRE."tasks SET completion_time='".$completion_time."' WHERE id=".$row['projectid'] );
   }
 }
 
@@ -185,62 +185,62 @@ if($row["parent"] != 0 ){
 db_commit();
 
 //inform the user that his task has been deleted by an admin
-if(($row["owner"] != 0 ) && ($uid != $row["owner"]) ) {
+if(($row['owner'] != 0 ) && ($UID != $row['owner']) ) {
   
   include_once(BASE."includes/email.php" );
   include_once(BASE."includes/time.php" );
   include_once(BASE."lang/lang_email.php" );
   
-  switch ($row["parent"]) {
+  switch ($row['parent']) {
     case 0:
-      $name_project = $row["name"];
+      $name_project = $row['name'];
       $name_task = "";
       $title = $title_delete_project;
       $email = $email_delete_project;
       break;
       
     default:
-      $name_project = db_result(db_query("SELECT name FROM ".PRE."tasks WHERE tasks.id=".$row["projectid"] ), 0, 0 );
-      $name_task = $row["name"];
+      $name_project = db_result(db_query("SELECT name FROM ".PRE."tasks WHERE tasks.id=".$row['projectid'] ), 0, 0 );
+      $name_task = $row['name'];
       $title = $title_delete_task;
       $email = $email_delete_task;
       break;
   }
   
-  switch($row["status"] ) {
+  switch($row['status'] ) {
     case "created":
-      $status = $task_state["new"];
+      $status = $task_state['new'];
       break;
 
     case "notactive":
-      $status = $task_state["planned"];
+      $status = $task_state['planned'];
       break;
 
     case "active":
-      $status = $task_state["active"];
+      $status = $task_state['active'];
       break;
 
     case "cantcomplete":
-      $status = $task_state["cantcomplete"];
+      $status = $task_state['cantcomplete'];
       break;
 
     case "done":
-      $status = $task_state["done"];
+      $status = $task_state['done'];
       break;
 
     default:
       $status = "";
       break;
   }
-  $message = $email . sprintf($delete_list, $name_project, $name_task, $status, $row["text"] );
-  email($row["email"], $title, $message );
+  $message = $email . sprintf($delete_list, $name_project, $name_task, $status, $row['text'] );
+  email($row['email'], $title, $message );
 }
 
 //find our return-location
-if($row["parent"] == 0 )
+if($row['parent'] == 0 )
   $returnvalue = BASE_URL."main.php?x=$x";
 else
-  $returnvalue = BASE_URL."tasks.php?x=$x&action=show&taskid=".$row["parent"];
+  $returnvalue = BASE_URL."tasks.php?x=$x&action=show&taskid=".$row['parent'];
 
 header("Location: ".$returnvalue);
 

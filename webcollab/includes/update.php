@@ -69,9 +69,9 @@ function listTasks( $task_id ) {
 
    for( $iter=0 ; $task_row = @pg_fetch_array($q_tasks, $iter, PGSQL_ASSOC) ; $iter++) {
 
-     $q = db_query( "UPDATE tasks SET projectid=".$projectid." WHERE id=".$task_row["id"] );
+     $q = db_query( "UPDATE tasks SET projectid=".$projectid." WHERE id=".$task_row['id'] );
 
-     $content .= "<LI>Updating ".$task_row["name"]."</LI>";
+     $content .= "<LI>Updating ".$task_row['name']."</LI>";
 
      $content .= listTasks( $task_row[ "id" ] );
    }
@@ -85,7 +85,7 @@ return $content;
 //START OF MAIN PROGRAM
 //
 
-if( $admin != 1 ) {
+if( $ADMIN != 1 ) {
   error( "Not permitted", "This function is for admins only" );
   return;
 }
@@ -107,12 +107,12 @@ if( pg_numrows( $query ) < 1 ) {
 
 for( $iter=0 ; $task_row = @pg_fetch_array( $query, $iter, PGSQL_ASSOC ) ; $iter++) {
 
-  $projectid = $task_row["id"];
+  $projectid = $task_row['id'];
 
-  $q = db_query( "UPDATE tasks SET projectid=".$projectid." WHERE id=".$task_row["id"] );
-  $content .= "<UL><B>Project: ".$task_row["name"]." has been updated</B></UL>\n";
+  $q = db_query( "UPDATE tasks SET projectid=".$projectid." WHERE id=".$task_row['id'] );
+  $content .= "<UL><B>Project: ".$task_row['name']." has been updated</B></UL>\n";
 
-  $new_content = listTasks( $task_row["id"] );
+  $new_content = listTasks( $task_row['id'] );
 
   //if no task, don't show project name either
   if( $new_content != "")

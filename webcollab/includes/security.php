@@ -38,21 +38,21 @@ require_once(BASE."includes/common.php" );
 $q = "";
 $ip = "";
 $x = 0;
-$admin = 0;
+$ADMIN = 0;
 $session_key = 0;
-$gid[0] = 0;
+$GID[0] = 0;
 
 //check for some values that HAVE to be present to be allowed (ip, session_key)
-if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
+if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
   error("Security manager", "No ip address found" );
 }
 
 //$session_key can be from either a GET, POST or COOKIE - check for cookie first
-if(isset($_COOKIE["webcollab_session"] ) && (strlen($_COOKIE["webcollab_session"] ) == 32 ) ){
-  $session_key = safe_data($_COOKIE["webcollab_session"] );
+if(isset($_COOKIE['webcollab_session'] ) && (strlen($_COOKIE['webcollab_session'] ) == 32 ) ){
+  $session_key = safe_data($_COOKIE['webcollab_session'] );
 }
-elseif(isset($_REQUEST["x"]) && (strlen($_REQUEST["x"] ) == 32 ) ){
-  $session_key = safe_data($_REQUEST["x"]);
+elseif(isset($_REQUEST['x']) && (strlen($_REQUEST['x'] ) == 32 ) ){
+  $session_key = safe_data($_REQUEST['x']);
   $x = $session_key;
 }
 else{
@@ -85,37 +85,37 @@ if( ! ( $row = db_fetch_array($q, 0) ) ) {
 }
 
 //if database table LEFT JOIN gives no rows will get NULL here
-if($row["user_id"] == NULL ){
+if($row['user_id'] == NULL ){
   error("Security manager", "No valid user-id found");
 }
 
 //check the last login time (there is an inactivity time limit set by SESSION_TIMEOUT)
-if( ($row["now"] - $row["sec_lastaccess"]) > SESSION_TIMEOUT * 3600 ) {
-  db_query("UPDATE ".PRE."logins SET session_key='' WHERE user_id=".$row["user_id"] );
+if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
+  db_query("UPDATE ".PRE."logins SET session_key='' WHERE user_id=".$row['user_id'] );
   setcookie("webcollab_session", "" );
-  warning( $lang["security_manager"], sprintf($lang["session_timeout_sprt"],
-            round(($row["now"] - $row["sec_lastaccess"] )/60), SESSION_TIMEOUT*60, BASE_URL ) );
+  warning( $lang['security_manager'], sprintf($lang['session_timeout_sprt'],
+            round(($row['now'] - $row['sec_lastaccess'] )/60), SESSION_TIMEOUT*60, BASE_URL ) );
 }
 
 //all data seems okay !!
 
-$uid = $row["user_id"];
-$uid_name = $row["fullname"];
-$uid_email = $row["email"];
+$UID = $row['user_id'];
+$UID_NAME = $row['fullname'];
+$UID_EMAIL = $row['email'];
 
-if($row["admin"] == 't' )
-  $admin = 1;
+if($row['admin'] == 't' )
+  $ADMIN = 1;
 else
-  $admin = 0;
+  $ADMIN = 0;
 
 //get usergroups of user
-$q = db_query("SELECT usergroupid FROM ".PRE."usergroups_users WHERE userid=".$uid );
+$q = db_query("SELECT usergroupid FROM ".PRE."usergroups_users WHERE userid=".$UID );
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
-  $gid[$i] = $row[0];
+  $GID[$i] = $row[0];
 }
 
 //update the "I was here" time
-db_query("UPDATE ".PRE."logins SET lastaccess=now() WHERE session_key='$session_key' AND user_id=$uid" );
+db_query("UPDATE ".PRE."logins SET lastaccess=now() WHERE session_key='$session_key' AND user_id=$UID" );
 
 // this gives:
 //

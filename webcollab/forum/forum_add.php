@@ -35,20 +35,20 @@ include_once(BASE."includes/admin_config.php" );
 //secure vars
 $content = "";
 
-if( ! isset($_REQUEST["usergroupid"]) || ! is_numeric($_REQUEST["usergroupid"]) )
+if( ! isset($_REQUEST['usergroupid']) || ! is_numeric($_REQUEST['usergroupid']) )
   $usergroupid = 0;
 else
-  $usergroupid = intval($_REQUEST["usergroupid"]);
+  $usergroupid = intval($_REQUEST['usergroupid']);
 
-if( ! isset($_REQUEST["parentid"]) || ! is_numeric($_REQUEST["parentid"]) )
+if( ! isset($_REQUEST['parentid']) || ! is_numeric($_REQUEST['parentid']) )
   $parentid = 0;
 else
-  $parentid = intval($_REQUEST["parentid"]);
+  $parentid = intval($_REQUEST['parentid']);
 
-if( ! isset($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
+if( ! isset($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) )
   error("Forum add", "Not a valid value for taskid");
 
-$taskid = intval($_REQUEST["taskid"]);
+$taskid = intval($_REQUEST['taskid']);
 
 //check usergroup security
 require_once(BASE."includes/usergroup_security.php" );
@@ -77,13 +77,13 @@ if($parentid != 0 ) {
   if( ! $row = db_fetch_array($q, 0 ) )
     error("Forum add", "Forum post has invalid parent" );
 
-  if($row["username"] == NULL )
-    $row["username"] = "----";
+  if($row['username'] == NULL )
+    $row['username'] = "----";
 
   //show a box with the original post
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" /></fieldset>\n".
               "<table>\n".
-              "<tr><td>".$lang["orig_message"]."</td><td style=\"background:#EEEEEE\">".$row["text"]."</td></tr>\n";
+              "<tr><td>".$lang['orig_message']."</td><td style=\"background:#EEEEEE\">".$row['text']."</td></tr>\n";
 }
 else {
   $row = "";
@@ -94,20 +94,20 @@ else {
 }
 
 //build up the text-entry part
-$content .=   "<tr><td>".$lang["message"]."</td><td><textarea id=\"text\" name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
+$content .=   "<tr><td>".$lang['message']."</td><td><textarea id=\"text\" name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
               "</table>\n".
               "<table class=\"celldata\">\n".
-              "<tr><td><label for=\"owner\">".$lang["forum_email_owner"]."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" $DEFAULT_OWNER /></td></tr>\n".
-              "<tr><td><label for=\"usergroup\">".$lang["forum_email_usergroup"]."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" $DEFAULT_GROUP /></td></tr>\n".
+              "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" $DEFAULT_OWNER /></td></tr>\n".
+              "<tr><td><label for=\"usergroup\">".$lang['forum_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" $DEFAULT_GROUP /></td></tr>\n".
               "</table>\n".
-              "<p><input type=\"submit\" value=\"".$lang["post"]."\" onclick=\"return fieldCheck()\" />&nbsp;".
-              "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
+              "<p><input type=\"submit\" value=\"".$lang['post']."\" onclick=\"return fieldCheck()\" />&nbsp;".
+              "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>".
               "</form>\n";
 
 //show a reply or a new-post box
 if($parentid > 0 )
-  new_box(sprintf($lang["post_reply_sprt"], $row["username"], $taskname ), $content ); //reply to another users's post
+  new_box(sprintf($lang['post_reply_sprt'], $row['username'], $taskname ), $content ); //reply to another users's post
 else
-  new_box(sprintf($lang["post_message_sprt"], $taskname ), $content ); //new post
+  new_box(sprintf($lang['post_message_sprt'], $taskname ), $content ); //new post
 
 ?>

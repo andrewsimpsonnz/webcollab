@@ -60,10 +60,10 @@ function reparent_children($task_id ) {
 return;
 }
 
-if(empty($_POST["name"]) )
-  warning($lang["task_submit"], $lang["missing_values"] );
+if(empty($_POST['name']) )
+  warning($lang['task_submit'], $lang['missing_values'] );
 
-$name = safe_data($_POST["name"]);
+$name = safe_data($_POST['name']);
 
 //mandatory numeric inputs
 $input_array = array("owner", "parentid", "priority", "taskgroupid", "usergroupid" );
@@ -75,21 +75,21 @@ foreach($input_array as $var ) {
 }
 
 //special case: taskid cannot be zero
-if(empty($_POST["taskid"]) || ! is_numeric($_POST["taskid"]) ) 
+if(empty($_POST['taskid']) || ! is_numeric($_POST['taskid']) ) 
   error( "Task submit", "Variable taskid is not correctly set" );
 
-$taskid = intval($_POST["taskid"]);
+$taskid = intval($_POST['taskid']);
 
 //mandatory text inputs
-if(empty($_POST["status"]) )
+if(empty($_POST['status']) )
   error( "Task submit", "Variable status is not correctly set" );
-$status = safe_data($_POST["status"]);
+$status = safe_data($_POST['status']);
 
 //optional text input (can be multiple lines)
-$text = safe_data_long($_POST["text"]);
+$text = safe_data_long($_POST['text']);
 
 //get the submitted date
-$deadline = date_to_datetime($_POST["day"], $_POST["month"], $_POST["year"] );
+$deadline = date_to_datetime($_POST['day'], $_POST['month'], $_POST['year'] );
 
 //boolean for globalaccess, groupaccess
 $input_array = array("globalaccess", "groupaccess" );
@@ -101,8 +101,8 @@ else
 }
 
 //check if the user has enough rights
-if( ($admin != 1 ) && (! user_access($taskid ) ) )
-  warning($lang["task_submit"], $lang["not_owner"] );
+if( ($ADMIN != 1 ) && (! user_access($taskid ) ) )
+  warning($lang['task_submit'], $lang['not_owner'] );
     
 //begin transaction
 db_begin();
@@ -129,11 +129,11 @@ db_query("UPDATE ".PRE."tasks
 //get existing projectid and parent from the database
 $q = db_query("SELECT projectid, parent FROM ".PRE."tasks WHERE id=$taskid" );
 $row = db_fetch_array($q, 0 );
-$projectid = $row["projectid"];
+$projectid = $row['projectid'];
 
 //if the user has chosen to reparent, then do it now
 //(we do this after the main update, then if anything breaks, the database is not corrupted)
-if($row["parent"] != $parentid ) {
+if($row['parent'] != $parentid ) {
   //set new projectid
   if($parentid == 0 )
     $projectid = $taskid;
@@ -141,7 +141,7 @@ if($row["parent"] != $parentid ) {
     $projectid = db_result(db_query("SELECT projectid FROM ".PRE."tasks WHERE id=$parentid" ), 0, 0 );
   
   //can't put a project onto it's own tasks
-  if(($projectid == $row["projectid"] ) && ($row["parent"] == 0 ) ){
+  if(($projectid == $row['projectid'] ) && ($row['parent'] == 0 ) ){
     //do nothing
   }
   else {
@@ -209,7 +209,7 @@ switch($parentid ){
 
 switch($owner ) {
   case 0:
-    $name_owner = $lang["nobody"];
+    $name_owner = $lang['nobody'];
     $email_owner = "";
     break;
 
@@ -226,7 +226,7 @@ switch($owner ) {
     $text = stripslashes($text );
 
 //email owner ?
-if(isset($_POST["mailowner"]) && ($_POST["mailowner"]=="on") && ($owner != 0) ) {
+if(isset($_POST['mailowner']) && ($_POST['mailowner']=="on") && ($owner != 0) ) {
 
   include_once(BASE."includes/email.php" );
 
@@ -238,7 +238,7 @@ if(isset($_POST["mailowner"]) && ($_POST["mailowner"]=="on") && ($owner != 0) ) 
 }
 
 //email the user group ?
-if(isset($_POST["maillist"]) && ($_POST["maillist"]=="on") ) {
+if(isset($_POST['maillist']) && ($_POST['maillist']=="on") ) {
   
   include_once(BASE."includes/email.php" );
 

@@ -32,7 +32,7 @@ require_once(BASE."includes/security.php" );
 include_once(BASE."tasks/task_common.php" );
 
 //admins only
-if($admin != 1 )
+if($ADMIN != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 //
@@ -49,11 +49,11 @@ function add($taskid, $new_parent, $new_name ) {
 
     //clone all the tasks at this level
     for( $i=0; $row = db_fetch_array($q, $i ); $i++ ) {
-      $new_taskid = copy_across($row["id"], $new_parent, NULL );
+      $new_taskid = copy_across($row['id'], $new_parent, NULL );
 
       //recursive function if the subtask is listed in parent_array (it has children then)
-      if(in_array($row["id"], (array)$parent_array ) ) {
-        add($row["id"], $new_taskid, NULL );
+      if(in_array($row['id'], (array)$parent_array ) ) {
+        add($row['id'], $new_taskid, NULL );
       }
     }
   }
@@ -76,7 +76,7 @@ function add($taskid, $new_parent, $new_name ) {
 
 function copy_across($taskid, $new_parent, $name ) {
 
-    global $uid, $last_insert;
+    global $UID, $last_insert;
 
     //get task details
     $q = db_query("SELECT * FROM ".PRE."tasks WHERE id=$taskid" );
@@ -86,7 +86,7 @@ function copy_across($taskid, $new_parent, $name ) {
     if($new_parent != 0 ) {
       //new task
       $new_projectid = db_result(db_query("SELECT projectid FROM ".PRE."tasks WHERE id=$new_parent" ), 0, 0 );
-      $new_name = addslashes($row["name"] );
+      $new_name = addslashes($row['name'] );
     }
     else{
       //new project (adjust projectid later)
@@ -114,23 +114,23 @@ function copy_across($taskid, $new_parent, $name ) {
                     groupaccess,
                     status )
                     values('$new_name',
-                    '".addslashes($row["text"])."',
+                    '".addslashes($row['text'])."',
                     now(),
                     now(),
                     now(),
                     now(),
-                    '".$row["owner"]."',
-                    $uid,
-                    '".$row["deadline"]."',
+                    '".$row['owner']."',
+                    $UID,
+                    '".$row['deadline']."',
                     now(),
-                    ".$row["priority"].",
+                    ".$row['priority'].",
                     $new_parent,
                     $new_projectid,
-                    ".$row["taskgroupid"].",
-                    ".$row["usergroupid"].",
-                    '".$row["globalaccess"]."',
-                    '".$row["groupaccess"]."',
-                    '".addslashes($row["status"])."')" );
+                    ".$row['taskgroupid'].",
+                    ".$row['usergroupid'].",
+                    '".$row['globalaccess']."',
+                    '".$row['groupaccess']."',
+                    '".addslashes($row['status'])."')" );
 
     // get taskid for the new task/project
     $last_oid = db_lastoid($q );
@@ -141,7 +141,7 @@ function copy_across($taskid, $new_parent, $name ) {
       db_query("UPDATE ".PRE."tasks SET projectid=$new_taskid WHERE id=$new_taskid" );
 
     //you have already seen this item, no need to announce it to you
-    db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES($uid, $new_taskid, now() )");
+    db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES($UID, $new_taskid, now() )");
 
   return $new_taskid;
 }
@@ -152,15 +152,15 @@ function copy_across($taskid, $new_parent, $name ) {
 //
 $parent_array = NULL;
 
-if(empty($_POST["taskid"]) || ! is_numeric($_POST["taskid"] ) )
+if(empty($_POST['taskid']) || ! is_numeric($_POST['taskid'] ) )
   error("Project clone", "Not a valid value for taskid");
 
-$taskid = intval($_POST["taskid"]);
+$taskid = intval($_POST['taskid']);
 
-if(empty($_POST["name"]) )
+if(empty($_POST['name']) )
   warning("Project clone", "Project name is not set" );
 
-$name = safe_data($_POST["name"]);
+$name = safe_data($_POST['name']);
 
 //start transaction
 db_begin();

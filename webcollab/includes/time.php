@@ -36,7 +36,7 @@ function date_to_datetime($day, $month, $year ) {
 
   //check for valid calendar date
   if( ! checkdate($month, $day, $year ) ) {
-    warning($lang["invalid_date"], sprintf($lang["invalid_date_sprt"], $year."-".$month_array[$month ]."-".$day ) );
+    warning($lang['invalid_date'], sprintf($lang['invalid_date_sprt'], $year."-".$month_array[$month ]."-".$day ) );
   }
   
   //format is 2004-08-02 00:00:00

@@ -36,14 +36,14 @@ include_once( "includes/time.php" );
 //
 // code to handle an action state
 //
-if( ! isset($_REQUEST["action"]) )
+if( ! isset($_REQUEST['action']) )
   error("Users action handler", "No request given" );
 
-  switch($_REQUEST["action"] ) {
+  switch($_REQUEST['action'] ) {
 
     //give the user-manager screen
     case "manage":
-      create_top($lang["manage_users"] );
+      create_top($lang['manage_users'] );
       include("includes/mainmenu.php" );
       include("users/user_menubox.php" );
       include("users/user_existing_menubox.php" );
@@ -57,7 +57,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //Add a user
     case "add":
-      create_top($lang["add_user"], 0, "name" );
+      create_top($lang['add_user'], 0, "name" );
       include("includes/mainmenu.php" );
       include("users/user_menubox.php" );
       goto_main();
@@ -67,7 +67,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //Edit a user
     case "edit":
-      create_top($lang["edit_user"] );
+      create_top($lang['edit_user'] );
       include("includes/mainmenu.php" );
       include("users/user_menubox.php" );
       goto_main();
@@ -77,7 +77,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //show user's personal details
     case "show":
-      create_top($lang["user_info"] );
+      create_top($lang['user_info'] );
       include("includes/mainmenu.php" );
       include("users/user_menubox.php" );
       include("users/user_existing_menubox.php" );
@@ -88,7 +88,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //who is online ?
     case "showonline":
-      create_top($lang["users_online"] );
+      create_top($lang['users_online'] );
       include("includes/mainmenu.php" );
       include("users/user_menubox.php" );
       include("users/user_existing_menubox.php" );
@@ -99,7 +99,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //admin email
     case "email":
-      create_top($lang["email"] );
+      create_top($lang['email'] );
       include("includes/mainmenu.php" );
       goto_main();
       include("users/user_mail.php" );

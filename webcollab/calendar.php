@@ -32,7 +32,7 @@ include_once("includes/screen.php" );
 // The action handler
 //
 
-create_top( $lang["calendar"], 3 );
+create_top( $lang['calendar'], 3 );
 include("calendar/calendar_show.php" );
 create_bottom();
 

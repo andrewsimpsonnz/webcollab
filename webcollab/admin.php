@@ -28,19 +28,19 @@
 require_once("includes/security.php" );
 include_once("includes/screen.php" );
 
-if($admin != 1 )
+if($ADMIN != 1 )
   return;
 
 //
 // The action handler
 //
-if( ! isset($_REQUEST["action"] ) || strlen($_REQUEST["action"] ) == 0  )
+if( ! isset($_REQUEST['action'] ) || strlen($_REQUEST['action'] ) == 0  )
   error("Admin action handler", "No request given" );
 
-switch ($_REQUEST["action"] ) {
+switch ($_REQUEST['action'] ) {
 
   case "admin":
-    create_top($lang["admin_config"] );
+    create_top($lang['admin_config'] );
     include("includes/mainmenu.php" );
     goto_main();
     include("admin/admin_config_edit.php" );

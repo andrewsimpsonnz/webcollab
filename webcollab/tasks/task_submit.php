@@ -38,23 +38,23 @@ function status($status, $deadline ) {
 
   switch($status) {
     case "created":
-      $message = $task_state["new"]."\n".$lang["deadline"].": ".nicedate($deadline);
+      $message = $task_state['new']."\n".$lang['deadline'].": ".nicedate($deadline);
       break;
 
     case "notactive":
-      $message = $task_state["planned"];
+      $message = $task_state['planned'];
       break;
 
     case "active":
-      $message = $task_state["active"]."\n".$lang["deadline"].": ".nicedate($deadline);
+      $message = $task_state['active']."\n".$lang['deadline'].": ".nicedate($deadline);
       break;
 
     case "cantcomplete":
-      $message = $task_state["cantcomplete"];
+      $message = $task_state['cantcomplete'];
       break;
 
     case "done":
-      $message = $task_state["done"];
+      $message = $task_state['done'];
       break;
 
     case "nolimit":
@@ -71,13 +71,13 @@ return $message;
 //
 function user_access($taskid ) {
 
-  global $uid, $gid;
+  global $UID, $GID;
 
   $q = db_query("SELECT owner, usergroupid, groupaccess FROM ".PRE."tasks WHERE id=$taskid" );
   $row = db_fetch_num($q, 0 );
 
   //user is owner
-  if($row[0] == $uid )
+  if($row[0] == $UID )
     return TRUE;
 
   //no usergroup set
@@ -86,7 +86,7 @@ function user_access($taskid ) {
 
   //if groupaccess is set, check user is in usergroup
   if($row[2] == "t" ) {
-    if(in_array($row[1], (array)$gid ) )
+    if(in_array($row[1], (array)$GID ) )
       return TRUE;
   }
   //no access for this user

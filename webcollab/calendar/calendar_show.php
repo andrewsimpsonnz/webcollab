@@ -30,62 +30,62 @@
 require_once("includes/security.php" );
 
 //secure variables
-$content = "";
+$content = '';
 $no_access_project[0] = 0;
 $no_access_group[0] = 0;
 $allowed[0] = 0;
 $task_dates[0] = 0;
  
 //set selection default
-if(isset($_POST["selection"]) && strlen($_POST["selection"]) > 0 )
-  $selection = ($_POST["selection"]);
+if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 )
+  $selection = ($_POST['selection']);
 else
-  $selection = "user";
+  $selection = 'user';
 
 //set user default
-if(isset($_POST["userid"]) && is_numeric($_POST["userid"]) )
-  $userid = ($_POST["userid"]);
+if(isset($_POST['userid']) && is_numeric($_POST['userid']) )
+  $userid = ($_POST['userid']);
 else
-  $userid = $uid;
+  $userid = $UID;
 
 //set usergroup default
-if(isset($_POST["groupid"]) && is_numeric($_POST["groupid"]) )
-  $groupid = ($_POST["groupid"]);
+if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) )
+  $groupid = ($_POST['groupid']);
 else
   $groupid = 0;
 
 //set dates to match local time 
 //Note: The date() function always _adds_ a time offset(!), so we subtract date("Z") (time offset)  
-$epoch = time() - date("Z") + (TZ * 3600);  
+$epoch = time() - date('Z') + (TZ * 3600);  
     
 //set month
-if(isset($_POST["month"]) && is_numeric($_POST["month"]) )
-  $month = $_POST["month"];
+if(isset($_POST['month']) && is_numeric($_POST['month']) )
+  $month = $_POST['month'];
 else
-  $month = date("n", $epoch);
+  $month = date('n', $epoch);
 
 //set year
-if(isset($_POST["year"]) && is_numeric($_POST["year"]) )
-  $year = $_POST["year"];
+if(isset($_POST['year']) && is_numeric($_POST['year']) )
+  $year = $_POST['year'];
 else
-  $year = date("Y", $epoch);
+  $year = date('Y', $epoch);
 
 //set day, if applicable
-if( $month == date("n", $epoch) && $year == date("Y", $epoch) )
-  $today = date("j", $epoch);
+if( $month == date('n', $epoch) && $year == date('Y', $epoch) )
+  $today = date('j', $epoch);
 else
   $today = 0;
 
 //set selection & associated defaults for the text boxes
 switch($selection ) {
-  case "group":
+  case 'group':
     $userid = 0; $s1 = ""; $s2 = " selected=\"selected\""; $s3 = " checked=\"checked\""; $s4 = "";
     $tail = "AND usergroupid=$groupid";
     if($groupid == 0 )
       $s4 = " selected=\"selected\"";
     break;
 
-  case "user":
+  case 'user':
   default:
     $groupid = 0; $s1 = " checked=\"checked\""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
     $tail = "AND owner=$userid";
@@ -111,7 +111,7 @@ $q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid,
                       WHERE ".PRE."usergroups.private=1");
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
-  if(in_array($row[0], (array)$gid ) && ! in_array($row[1], (array)$allowed ) ) {
+  if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
    $allowed[$i] = $row[1];
   }
 }
@@ -130,9 +130,9 @@ $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" /></fieldset>\n ".
             "<div style=\"text-align: center\">\n".
             "<table style=\"margin-left: auto; margin-right: auto\">\n".
-            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1 /><label for=\"users\">".$lang["users"]."</label></td><td>\n".
+            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1 /><label for=\"users\">".$lang['users']."</label></td><td>\n".
             "<label for=\"users\"><select name=\"userid\">\n".
-            "<option value=\"0\"$s2>".$lang["all_users"]."</option>\n";
+            "<option value=\"0\"$s2>".$lang['all_users']."</option>\n";
 
 //get all users for option box
 $q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' ORDER BY fullname");
@@ -141,23 +141,23 @@ $q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //user test for privacy
-  if($row["private"] && ( ! $admin ) && ( ! in_array($row["id"], (array)$allowed ) ) ){
+  if($row['private'] && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
     continue;
   }
 
-  $content .= "<option value=\"".$row["id"]."\"";
+  $content .= "<option value=\"".$row['id']."\"";
 
   //highlight current selection
-  if( $row[ "id" ] == $userid )
+  if( $row['id'] == $userid )
     $content .= " selected=\"selected\"";
 
-  $content .= ">".$row["fullname"]."</option>\n";
+  $content .= ">".$row['fullname']."</option>\n";
 }
 
 $content .= "</select></label></td></tr>\n".
-            "<tr align=\"left\"><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3 /><label for=\"group\">".$lang["usergroups"]."</label></td>\n".
+            "<tr align=\"left\"><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3 /><label for=\"group\">".$lang['usergroups']."</label></td>\n".
             "<td><label for=\"group\"><select name=\"groupid\">\n".
-            "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
+            "<option value=\"0\"$s4>".$lang['no_group']."</option>\n";
 
 //get all groups for option box
 $q = db_query("SELECT id, name, private FROM ".PRE."usergroups ORDER BY name" );
@@ -166,17 +166,17 @@ $q = db_query("SELECT id, name, private FROM ".PRE."usergroups ORDER BY name" );
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //usergroup test for privacy
-  if( (! $admin ) && ($row["private"] ) && ( ! in_array($row["id"], $gid ) ) ) {
+  if( (! $ADMIN ) && ($row['private'] ) && ( ! in_array($row['id'], $GID ) ) ) {
   continue;
   }
 
-  $content .= "<option value=\"".$row["id"]."\"";
+  $content .= "<option value=\"".$row['id']."\"";
 
   //highlight current selection
   if( $row[ "id" ] == $groupid )
     $content .= " selected=\"selected\"";
 
-  $content .= ">".$row["name"]."</option>\n";
+  $content .= ">".$row['name']."</option>\n";
 }
 
 $content .= "</select></label></td></tr>\n<tr><td>&nbsp;</td></tr></table></div>\n";
@@ -202,7 +202,7 @@ for( $i=2001; $i<2011 ; $i++) {
   $content .= ">".$i."</option>\n";
   }
 $content .=  "</select></td>\n".
-             "<td><input type=\"submit\" value=\"".$lang["update"]."\" /></td></tr>\n".
+             "<td><input type=\"submit\" value=\"".$lang['update']."\" /></td></tr>\n".
              "</table></div></form>\n<br /><br />\n";
 
 //number of days in month
@@ -252,21 +252,21 @@ for ($num = 1; $num <= $numdays; $num++ ) {
     for( $j=0 ; $row = @db_fetch_array($q, $j ) ; $j++) {
 
       //check for private usergroups
-      if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
+      if( ($ADMIN != 1) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
-        if( ! in_array( $row["usergroupid"], (array)$gid ) )
+        if( ! in_array( $row['usergroupid'], (array)$GID ) )
           continue;
       }
 
       //don't show tasks in private usergroup projects
-      if( ($admin != 1 ) && in_array($row["projectid"], (array)$no_access_project) ) {
-        $key = array_search($row["projectid"], $no_access_project );
+      if( ($ADMIN != 1 ) && in_array($row['projectid'], (array)$no_access_project) ) {
+        $key = array_search($row['projectid'], $no_access_project );
 
-        if( ! in_array($no_access_group[$key], (array)$gid ) )
+        if( ! in_array($no_access_group[$key], (array)$GID ) )
           continue;
       }
 
-      switch($row["status"] ) {
+      switch($row['status'] ) {
         case "notactive":
         case "cantcomplete":
         case "nolimit":
@@ -276,27 +276,27 @@ for ($num = 1; $num <= $numdays; $num++ ) {
 
         default:
           //active task or project
-          switch($row["parent"] ) {
+          switch($row['parent'] ) {
              case "0":
                //project
                //check if tasks are all complete
-               if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent>0" ), 0, 0 ) == 0 )
-                 $name = "<span class=\"green\"><span class=\"underline\">".$row["name"]."</span>";
+               if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE projectid=".$row['id']." AND status<>'done' AND parent>0" ), 0, 0 ) == 0 )
+                 $name = "<span class=\"green\"><span class=\"underline\">".$row['name']."</span>";
                else
-                 $name = "<span class=\"blue\">".$row["name"];
+                 $name = "<span class=\"blue\">".$row['name'];
                $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
-                           "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">$name</span></a><br />\n";
+                           "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
              break;
 
              default:
             //task
-              if($row["status"] == "done" )
-                $name = "<span class=\"green\">".$row["name"];
+              if($row['status'] == "done" )
+                $name = "<span class=\"green\">".$row['name'];
               else
-                $name = "<span class=\"red\">".$row["name"];
+                $name = "<span class=\"red\">".$row['name'];
 
               $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
-                          "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">$name</span></a><br />\n";
+                          "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
             break;
           }
         break;
@@ -320,6 +320,6 @@ include_once(BASE."lang/lang_long.php" );
 $content .= "<div style=\"text-align: center; padding-top: 20px\">\n".
             "<b>[<a href=\"main.php?x=".$x."\">".$calendar_key."<br />\n</div>\n";
 
-new_box($lang["calendar"], $content );
+new_box($lang['calendar'], $content );
 
 ?>

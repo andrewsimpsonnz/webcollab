@@ -42,7 +42,7 @@ $q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid,
                       WHERE ".PRE."usergroups.private=1");
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
-  if(in_array($row[0], (array)$gid ) && ! in_array($row[1], (array)$allowed ) ) {
+  if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
    $allowed[] = $row[1];
   }
 }
@@ -52,7 +52,7 @@ $q = db_query("SELECT * FROM ".PRE."users WHERE deleted='f' ORDER by fullname" )
 
 //check for enough users
 if(db_numrows($q) < 1 ) {
-  new_box($lang["users"], "<small>".$lang["no_users"]."</small>" );
+  new_box($lang['users'], "<small>".$lang['no_users']."</small>" );
   return;
 }
 
@@ -62,15 +62,15 @@ $content = "<table style=\"text-align:left\">\n";
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
   //user test for privacy
-  if($row["private"] && ( ! $admin ) && ( ! in_array($row["id"], (array)$allowed ) ) ){
+  if($row['private'] && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
     continue;
   }
 
-  $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></small></td>";
+  $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></small></td>";
 
-  if($admin == 1 ) {
-    $content .= "<td style=\"text-align:right; white-space:nowrap\"><span class=\"textlink\"> [<a href=\"users.php?x=$x&amp;userid=".$row["id"]."&amp;action=del\">".$lang["del"]."</a>]".
-                "[<a href=\"users.php?x=$x&amp;userid=".$row["id"]."&amp;action=edit\">".$lang["edit"]."</a>]</span></td>";
+  if($ADMIN == 1 ) {
+    $content .= "<td style=\"text-align:right; white-space:nowrap\"><span class=\"textlink\"> [<a href=\"users.php?x=$x&amp;userid=".$row['id']."&amp;action=del\">".$lang['del']."</a>]".
+                "[<a href=\"users.php?x=$x&amp;userid=".$row['id']."&amp;action=edit\">".$lang['edit']."</a>]</span></td>";
   }
   $content .= "</tr>\n";
 }
@@ -78,6 +78,6 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 $content .= "</table>";
 
 //show it
-new_box($lang["existing_users"], $content, "boxmenu" );
+new_box($lang['existing_users'], $content, "boxmenu" );
 
 ?>

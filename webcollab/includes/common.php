@@ -114,7 +114,7 @@ function javascript_escape($body ) {
 //
 function error($box_title, $content ) {
 
-  global $uid_name, $uid_email, $db_error_message;
+  global $UID_NAME, $UID_EMAIL, $db_error_message;
   
   include_once(BASE."includes/screen.php" );
   
@@ -123,7 +123,7 @@ function error($box_title, $content ) {
   if(NO_ERROR != "Y" )
     new_box( $box_title, "<div style=\"text-align : center\">".$content."</div>", "boxdata", "singlebox" );
     else
-    new_box($lang["report"], $lang["warning"], "boxdata2", "singlebox" );
+    new_box($lang['report'], $lang['warning'], "boxdata2", "singlebox" );
 
 
   //get the post vars
@@ -136,15 +136,15 @@ function error($box_title, $content ) {
   //email to the error-catcher
   $message = "Hello,\n This is the MANAGER_NAME site and I have an error :/  \n".
             "\n\n".
-            "User that created the error: $uid_name ( $uid_email )\n".
+            "User that created the error: $UID_NAME ( $UID_EMAIL )\n".
             "The erroneous component: $box_title\n".
             "The error message: $content\n".
             "Database message: $db_error_message\n".
-            "Page that was called: ".$_SERVER["SCRIPT_NAME"]."\n".
-            "Called URL: ".$_SERVER["REQUEST_URI"]."\n".
-            "Browser: ".$_SERVER["HTTP_USER_AGENT"]."\n".
+            "Page that was called: ".$_SERVER['SCRIPT_NAME']."\n".
+            "Called URL: ".$_SERVER['REQUEST_URI']."\n".
+            "Browser: ".$_SERVER['HTTP_USER_AGENT']."\n".
             "Time: ".date("F j, Y, H:i")."\n".
-            "IP: ".$_SERVER["REMOTE_ADDR"]."\n".
+            "IP: ".$_SERVER['REMOTE_ADDR']."\n".
             "WebCollab version:".WEBCOLLAB_VERSION."\n".
             "POST vars: $post\n\n";
   
@@ -172,7 +172,7 @@ function warning($box_title, $message ) {
 
   include_once(BASE."includes/screen.php" );
 
-  create_top($lang["error"], 1 );
+  create_top($lang['error'], 1 );
 
   $content = "<div style=\"text-align : center\">$message</div>\n";
 

@@ -36,10 +36,10 @@ $content = "";
 $row = "";
 
 //we need a valid contactid
-if(empty($_GET["contactid"]) || ! is_numeric($_GET["contactid"]) )
+if(empty($_GET['contactid']) || ! is_numeric($_GET['contactid']) )
   error("Contact submission", "Not a valid value for contactid");
 
-$contactid = intval($_GET["contactid"]);
+$contactid = intval($_GET['contactid']);
 
 //get contact information
 if( ! ($row = db_fetch_array( db_query("SELECT * FROM ".PRE."contacts WHERE id=$contactid" ), 0 ) ) )
@@ -48,26 +48,26 @@ if( ! ($row = db_fetch_array( db_query("SELECT * FROM ".PRE."contacts WHERE id=$
 
 $content .=
     "<table class=\"celldata\">\n".
-       "<tr><td><i>".$lang["firstname"]."</i></td><td>".$row["firstname"]."</td></tr>\n".
-       "<tr><td><i>".$lang["lastname"]."</i></td><td>".$row["lastname"]."</td></tr>\n".
-       "<tr><td><i>".$lang["company"]."</i></td><td>".$row["company"]."</td></tr>\n".
-       "<tr><td><i>".$lang["home_phone"]."</i></td><td>".$row["tel_home"]."</td></tr>\n".
-       "<tr><td><i>".$lang["mobile"]."</i></td><td>".$row["gsm"]."</td></tr>\n".
-       "<tr><td><i>".$lang["bus_phone"]."</i></td><td>".$row["tel_business"]."</td></tr>\n".
-       "<tr><td><i>".$lang["fax"]."</i></td><td>".$row["fax"]."</td></tr>\n".
-       "<tr><td><i>".$lang["address"]."</i></td><td>".$row["address"]."</td></tr>\n".
-       "<tr><td><i>".$lang["postal"]."</i></td><td>".$row["postal"]."</td></tr>\n".
-       "<tr><td><i>".$lang["city"]."</i></td><td>".$row["city"]."</td></tr>\n".
-       "<tr><td><i>".$lang["email"]."</i></td><td><a href=\"mailto:".$row["email"]."\">".$row["email"]."</a></td></tr>\n".
+       "<tr><td><i>".$lang['firstname']."</i></td><td>".$row['firstname']."</td></tr>\n".
+       "<tr><td><i>".$lang['lastname']."</i></td><td>".$row['lastname']."</td></tr>\n".
+       "<tr><td><i>".$lang['company']."</i></td><td>".$row['company']."</td></tr>\n".
+       "<tr><td><i>".$lang['home_phone']."</i></td><td>".$row['tel_home']."</td></tr>\n".
+       "<tr><td><i>".$lang['mobile']."</i></td><td>".$row['gsm']."</td></tr>\n".
+       "<tr><td><i>".$lang['bus_phone']."</i></td><td>".$row['tel_business']."</td></tr>\n".
+       "<tr><td><i>".$lang['fax']."</i></td><td>".$row['fax']."</td></tr>\n".
+       "<tr><td><i>".$lang['address']."</i></td><td>".$row['address']."</td></tr>\n".
+       "<tr><td><i>".$lang['postal']."</i></td><td>".$row['postal']."</td></tr>\n".
+       "<tr><td><i>".$lang['city']."</i></td><td>".$row['city']."</td></tr>\n".
+       "<tr><td><i>".$lang['email']."</i></td><td><a href=\"mailto:".$row['email']."\">".$row['email']."</a></td></tr>\n".
     "</table>\n".
-    "<p><i>".$lang["notes"]."</i><br />".nl2br($row["notes"] )."</p>\n".
+    "<p><i>".$lang['notes']."</i><br />".nl2br($row['notes'] )."</p>\n".
     "<form method=\"post\" action=\"contacts.php\" >\n".
       "<fieldset><input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
-      "<input type=\"hidden\" name=\"contactid\" value=\"".$row["id"]."\" />\n".
+      "<input type=\"hidden\" name=\"contactid\" value=\"".$row['id']."\" />\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-      "<input type=\"submit\" value=\"".$lang["edit_contact"]."\" /></fieldset>\n".
+      "<input type=\"submit\" value=\"".$lang['edit_contact']."\" /></fieldset>\n".
    "</form>";
 
-new_box($lang["contact_info"], $content );
+new_box($lang['contact_info'], $content );
 
 ?>

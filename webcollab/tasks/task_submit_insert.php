@@ -39,9 +39,9 @@ include_once(BASE."tasks/task_submit.php" );
 
 
 //check task name is present
-if(empty($_POST["name"]) )
-  warning($lang["task_submit"], $lang["missing_values"] );
-$name = safe_data($_POST["name"]);
+if(empty($_POST['name']) )
+  warning($lang['task_submit'], $lang['missing_values'] );
+$name = safe_data($_POST['name']);
 
 //mandatory numeric inputs
 $input_array = array("owner", "projectid", "parentid", "priority", "taskgroupid", "usergroupid" );
@@ -53,15 +53,15 @@ foreach($input_array as $var ) {
 }
 
 //madatory text inputs
-if(empty($_POST["status"]) )
+if(empty($_POST['status']) )
   error( "Task submit", "Variable status is not correctly set" );
-$status = safe_data($_POST["status"]);
+$status = safe_data($_POST['status']);
 
 //optional text input (can be multiple lines)
-$text = safe_data_long($_POST["text"]);
+$text = safe_data_long($_POST['text']);
 
 //get the submitted date
-$deadline = date_to_datetime($_POST["day"], $_POST["month"], $_POST["year"] );
+$deadline = date_to_datetime($_POST['day'], $_POST['month'], $_POST['year'] );
 
 //boolean for globalaccess, groupaccess
 $input_array = array("globalaccess", "groupaccess" );
@@ -109,7 +109,7 @@ $q = db_query("INSERT INTO ".PRE."tasks(name,
               now(),
               now(),
               $owner,
-              $uid,
+              $UID,
               '$deadline',
               now(),
               $priority,
@@ -142,7 +142,7 @@ if($parentid != 0 ) {
 }
 
 //you have already seen this item, no need to announce it to you
-db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES($uid, $taskid, now() )");
+db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES($UID, $taskid, now() )");
 
 //set completed percentage project record
 $percent_completed = percent_complete($projectid );
@@ -185,7 +185,7 @@ switch($parentid){
 
 switch($owner ) {
   case 0:
-    $name_owner = $lang["nobody"];
+    $name_owner = $lang['nobody'];
     $email_owner = "";
     break;
 
@@ -202,7 +202,7 @@ if(get_magic_quotes_gpc() )
   $text = stripslashes($text );
 
 //email owner ?
-if(isset($_POST["mailowner"]) && ($_POST["mailowner"]=="on") && ($owner != 0) ) {
+if(isset($_POST['mailowner']) && ($_POST['mailowner']=="on") && ($owner != 0) ) {
   
   include_once(BASE."includes/email.php" );
   
@@ -213,7 +213,7 @@ if(isset($_POST["mailowner"]) && ($_POST["mailowner"]=="on") && ($owner != 0) ) 
 }
 
 //do we need to send an email to the user group to announce this message
-if(isset($_POST["maillist"]) && $_POST["maillist"] == "on" ) {
+if(isset($_POST['maillist']) && $_POST['maillist'] == "on" ) {
 
   include_once(BASE."includes/email.php" );
   

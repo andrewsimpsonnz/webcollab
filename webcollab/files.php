@@ -34,11 +34,11 @@ include_once("includes/screen.php" );
 //
 // The action handler
 //
-if( ! isset($_REQUEST["action"]) )
+if( ! isset($_REQUEST['action']) )
   error("Files action handler", "No request given" );
 
   //what do you want to task today =]
-  switch($_REQUEST["action"] ) {
+  switch($_REQUEST['action'] ) {
 
     //create a box with the current files
     case "list":
@@ -47,7 +47,7 @@ if( ! isset($_REQUEST["action"]) )
 
     //admin files
     case "admin":
-      create_top($lang["file_admin"] );
+      create_top($lang['file_admin'] );
       $taskid=-1;
       include("includes/mainmenu.php" );
       include("files/file_menubox.php" );
@@ -58,7 +58,7 @@ if( ! isset($_REQUEST["action"]) )
     
     //upload a file
     case "upload":
-      create_top($lang["file_choose"], 0, "userfile", "userfile" );
+      create_top($lang['file_choose'], 0, "userfile", "userfile" );
       include("includes/mainmenu.php" );
       goto_main();
       include("files/file_upload.php" );

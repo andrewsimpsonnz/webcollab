@@ -38,7 +38,7 @@ include_once(BASE."includes/time.php" );
 //
 
 function listTasks($projectid ) {
-  global $x, $epoch, $now ,$admin, $gid, $lang, $task_state, $tz_offset;
+  global $x, $epoch, $now ,$ADMIN, $GID, $lang, $task_state, $tz_offset;
   global $task_array, $parent_array, $shown_array, $j;
    
   $parent_array = "";
@@ -65,34 +65,34 @@ function listTasks($projectid ) {
   for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
     
     //check if user can view this task
-    if( ($admin != 1 ) && ($row[4] != "t" ) && ($row[5] != 0 ) ) {
-      if( ! in_array( $row[5], (array)$gid ) )
+    if( ($ADMIN != 1 ) && ($row[4] != "t" ) && ($row[5] != 0 ) ) {
+      if( ! in_array( $row[5], (array)$GID ) )
         continue;
     }
   
     //put values into array
-    $task_array[$i]["id"] = $row[0];
-    $task_array[$i]["parent"] = $row[2];
+    $task_array[$i]['id'] = $row[0];
+    $task_array[$i]['parent'] = $row[2];
     
     //add suffix information
     switch( $row[3] ) {
       case "cantcomplete":
-        $suffix = "</a> &nbsp;<b><i>".$task_state["cantcomplete"]."</i></b><br />\n";
+        $suffix = "</a> &nbsp;<b><i>".$task_state['cantcomplete']."</i></b><br />\n";
         break;
 
       case "notactive":
-        $suffix = "</a> &nbsp;<i>".$task_state["task_planned"]."</i><br />\n";
+        $suffix = "</a> &nbsp;<i>".$task_state['task_planned']."</i><br />\n";
         break;
 
       default:
         //check if late
         if( ($now + $tz_offset - $row[6] ) >= 86400 ) {
-          $suffix = "</a> &nbsp;<span class=\"late\">".$lang["late_g"]."</span><br />\n";
+          $suffix = "</a> &nbsp;<span class=\"late\">".$lang['late_g']."</span><br />\n";
         }
         break;
     }
     
-    $task_array[$i]["task"] = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_array[$i]["id"]."\">".
+    $task_array[$i]['task'] = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_array[$i]['id']."\">".
                               $row[1].$suffix;
                                
         
@@ -111,17 +111,17 @@ function listTasks($projectid ) {
   for($i=0 ; $i < $max ; $i++ ){
   
     //ignore subtasks in this iteration
-    if($task_array[$i]["parent"] != $projectid ){
+    if($task_array[$i]['parent'] != $projectid ){
       continue;
     }
     //show line
-    $content .= $task_array[$i]["task"];
-    $shown_array[$j]  = $task_array[$i]["id"];
+    $content .= $task_array[$i]['task'];
+    $shown_array[$j]  = $task_array[$i]['id'];
     $j++; 
     
     //if this task has children (subtasks), iterate recursively to find them 
-    if(in_array($task_array[$i]["id"], (array)$parent_array ) ){
-      $content .= find_children($task_array[$i]["id"] );
+    if(in_array($task_array[$i]['id'], (array)$parent_array ) ){
+      $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";
   }
@@ -129,8 +129,8 @@ function listTasks($projectid ) {
   //look for any orphaned tasks, and show them too
   if($max != sizeof($shown_array) ) {
     for($i=0 ; $i < $max ; $i++ ) {
-      if( ! in_array($task_array[$i]["id"], (array)$shown_array ) ) 
-        $content .= $task_array[$i]["task"]."</li>\n";
+      if( ! in_array($task_array[$i]['id'], (array)$shown_array ) ) 
+        $content .= $task_array[$i]['task']."</li>\n";
     }
   } 
   $content .= "</ul>\n";
@@ -155,16 +155,16 @@ function find_children($parent ) {
   for($i=0 ; $i < $max ; $i++ ) {
     
     //ignore tasks not directly under this parent
-    if($task_array[$i]["parent"] != $parent ){
+    if($task_array[$i]['parent'] != $parent ){
       continue;
     }
-    $content .= $task_array[$i]["task"];
-    $shown_array[$j] = $task_array[$i]["id"];
+    $content .= $task_array[$i]['task'];
+    $shown_array[$j] = $task_array[$i]['id'];
     $j++;
             
     //if this task has children (subtasks), iterate recursively to find them
-    if(in_array($task_array[$i]["id"], (array)$parent_array ) ){
-      $content .= find_children($task_array[$i]["id"] );
+    if(in_array($task_array[$i]['id'], (array)$parent_array ) ){
+      $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";    
   }
@@ -202,24 +202,24 @@ $q = db_query("SELECT id,
 
 //check if there are projects
 if(db_numrows($q) < 1 ) {
-  $content .= "<div style=\"text-align : center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a></div>\n";
-  new_box($lang["no_projects"], $content );
+  $content .= "<div style=\"text-align : center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang['add_project']."</a></div>\n";
+  new_box($lang['no_projects'], $content );
   return;
 }
 
-if(isset($_GET["active"] ) )
-  $active_only = $_GET["active"];
+if(isset($_GET['active'] ) )
+  $active_only = $_GET['active'];
     
-if(isset($_GET["condensed"] ) )
-  $condensed = $_GET["condensed"];
+if(isset($_GET['condensed'] ) )
+  $condensed = $_GET['condensed'];
 
 //text link for 'active' switch
 $content .= "<table style=\"width : 98%\"><tr><td>\n".
             "<span class=\"textlink\">";
 if($active_only )
-  $content .= "[<a href=\"main.php?x=".$x."&amp;active=0&amp;condensed=".$condensed."\">".$lang["show_all_projects"]."</a>]";
+  $content .= "[<a href=\"main.php?x=".$x."&amp;active=0&amp;condensed=".$condensed."\">".$lang['show_all_projects']."</a>]";
 else
-  $content .= "[<a href=\"main.php?x=".$x."&amp;active=1&amp;condensed=".$condensed."\">".$lang["show_active_projects"]."</a>]";
+  $content .= "[<a href=\"main.php?x=".$x."&amp;active=1&amp;condensed=".$condensed."\">".$lang['show_active_projects']."</a>]";
 
 //text link for 'condensed' switch
 if($condensed )
@@ -228,10 +228,10 @@ else
   $content .= "&nbsp;[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=1"."\">"."Condensed view"."</a>]";
 
 //text link for 'printer friendly' page
-if(isset($_GET["action"]) && $action == "project_print" ) 
-  $content  .= "\n[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."\">".$lang["normal_version"]."</a>]";
+if(isset($_GET['action']) && $action == "project_print" ) 
+  $content  .= "\n[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."\">".$lang['normal_version']."</a>]";
 else
-  $content  .= "</span></td>\n<td style=\"text-align : right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."&amp;action=project_print\">".$lang["print_version"]."</a>]";
+  $content  .= "</span></td>\n<td style=\"text-align : right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."&amp;action=project_print\">".$lang['print_version']."</a>]";
 $content .= "</span></td></tr>\n</table>\n";
 
 //setup main table
@@ -241,13 +241,13 @@ $content .= "<table>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   //check the user has rights to view this project
-  if( ($admin != 1 ) && ($row["globalaccess"] != "t" ) && ( $row["usergroupid"] != 0 ) ) {
-    if( ! in_array( $row["usergroupid"], (array)$gid ) )
+  if( ($ADMIN != 1 ) && ($row['globalaccess'] != "t" ) && ( $row['usergroupid'] != 0 ) ) {
+    if( ! in_array( $row['usergroupid'], (array)$GID ) )
       continue;
   }
 
   //set project status
-  $project_status = $row["status"];
+  $project_status = $row['status'];
   
   //make adjustments
   switch( $project_status ) {
@@ -263,7 +263,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     case "nolimit":
     case "done":
     default:
-      if($row["completed"] == 100 )  
+      if($row['completed'] == 100 )  
         $project_status = "done";
         
       //for 'active_only' skip completed project
@@ -279,67 +279,67 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= "<tr><td class=\"projectlist\">\n";
 
   //show name and a link
-  $content .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\"><b>".$row["name"]."</b></a>\n";
+  $content .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['name']."</b></a>\n";
 
   // Show a nice %-of-tasks-completed bar
-  $content .= show_percent($row["completed"] )."\n";
+  $content .= show_percent($row['completed'] )."\n";
 
   //give some details of status
   switch($project_status ) {
 
     case "done":
-      $content .= $task_state["completed"]." (".nicetime( $row["completion_time"] ).")\n";
+      $content .= $task_state['completed']." (".nicetime( $row['completion_time'] ).")\n";
       break;
 
     case "cantcomplete":
-      $content .= "<i>".sprintf($lang["project_hold_sprt"], nicetime($row["finished_time"]) )."</i><br />\n";
-      $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row["deadline"] )."<br />\n";
+      $content .= "<i>".sprintf($lang['project_hold_sprt'], nicetime($row['finished_time']) )."</i><br />\n";
+      $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )."<br />\n";
       break;
 
     case "notactive":
-      $content .= "<i>".$lang["project_planned"]."</i><br />\n";
+      $content .= "<i>".$lang['project_planned']."</i><br />\n";
       break;
 
     case "nolimit":
-      $content .= sprintf($lang["percent_sprt"], $row["completed"])."<br />\n";
-      $content .= "<i>".$lang["project_no_deadline"]."</i><br />\n";
+      $content .= sprintf($lang['percent_sprt'], $row['completed'])."<br />\n";
+      $content .= "<i>".$lang['project_no_deadline']."</i><br />\n";
       //show subtasks that are not complete
-      $content .= listTasks($row["id"] );
+      $content .= listTasks($row['id'] );
       break;
 
     case "active":
     default:
-      $content .= sprintf($lang["percent_sprt"], $row["completed"] )."<br />\n";
-      $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row["deadline"] )." ";
-      $state = ($row["due"] + $tz_offset - $row["now"] )/86400 ;
+      $content .= sprintf($lang['percent_sprt'], $row['completed'] )."<br />\n";
+      $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )." ";
+      $state = ($row['due'] + $tz_offset - $row['now'] )/86400 ;
       if($state > 1 ) {
-        $content .=  "(".sprintf($lang["due_sprt"], ceil($state) ).")\n";
+        $content .=  "(".sprintf($lang['due_sprt'], ceil($state) ).")\n";
       }
       else if($state > 0 ) {
-        $content .=  "(".$lang["tomorrow"].")\n";
+        $content .=  "(".$lang['tomorrow'].")\n";
       }
       else {
         switch( -ceil($state) ) {
           case "0":
-            $content .=  "<span class=\"green\">(".$lang["due_today"].")</span><br />\n";
+            $content .=  "<span class=\"green\">(".$lang['due_today'].")</span><br />\n";
             break;
 
           case "1":
-            $content .= "<span class=\"red\">(".$lang["overdue_1"].")</span><br />\n";
+            $content .= "<span class=\"red\">(".$lang['overdue_1'].")</span><br />\n";
             break;
 
           default:
-            $content .= "<span class=\"red\">(".sprintf($lang["overdue_sprt"], -ceil($state) ).")</span><br />\n";
+            $content .= "<span class=\"red\">(".sprintf($lang['overdue_sprt'], -ceil($state) ).")</span><br />\n";
             break;
         }
       }
       
       //set 'now' time
-      $now = $row["now"];
+      $now = $row['now'];
       
       //show subtasks that are not complete
       if(! $condensed )
-        $content .= listTasks($row["id"] );
+        $content .= listTasks($row['id'] );
       break;
     }
   //end list
@@ -349,8 +349,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 $content .= "</table>\n";
 
 if($flag != 1 )
-  $content .= "<div style=\"text-align : center\">".$lang["no_allowed_projects"]."</div>\n";
+  $content .= "<div style=\"text-align : center\">".$lang['no_allowed_projects']."</div>\n";
 
-new_box($lang["projects"], $content );
+new_box($lang['projects'], $content );
 
 ?>

@@ -34,7 +34,7 @@ include_once(BASE."includes/email.php" );
 include_once(BASE."includes/admin_config.php" );
 
 //only for admins
-if( $admin != 1 ) {
+if( $ADMIN != 1 ) {
   error( "Not permitted", "This function is for admins only" );
   return;
 }
@@ -43,22 +43,22 @@ if( $admin != 1 ) {
 $address_array = "";
 
 // send to users or groups?
-if(empty($_POST["group"]) )
+if(empty($_POST['group']) )
   error("Email action handler", "No request given" );
 
 //check we have a message!
-if(empty($_POST["message"] ) )
-  warning($lang["admin_email"], $lang["no_message"] );
+if(empty($_POST['message'] ) )
+  warning($lang['admin_email'], $lang['no_message'] );
 
 //normalise embedded line breaks to '\n' and then wordwrap
-$message = $_POST["message"];
+$message = $_POST['message'];
 $message = str_replace("\r\n", "\n", $message );
 $message = str_replace("\r", "\n", $message );
 $message = wordwrap($message, 100 );
 
 //subject
-if(isset($_POST["subject"] ) )
-  $subject = $_POST["subject"];
+if(isset($_POST['subject'] ) )
+  $subject = $_POST['subject'];
 else
   $subject = "";
 
@@ -69,7 +69,7 @@ if(get_magic_quotes_gpc() ) {
 }
 
   //what do you want to send today =]
-  switch($_POST["group"] ) {
+  switch($_POST['group'] ) {
 
     case "all":
       //select all users
@@ -82,12 +82,12 @@ if(get_magic_quotes_gpc() ) {
 
     case "group":
       //check if any usergroups have been sent
-      if(! empty($_POST["usergroup"] ) )
-        $max = sizeof($_POST["usergroup"] );
+      if(! empty($_POST['usergroup'] ) )
+        $max = sizeof($_POST['usergroup'] );
       else
-        warning($lang["admin_email"], $lang["no_usergroups"] );
+        warning($lang['admin_email'], $lang['no_usergroups'] );
 
-      (array)$usergroup = $_POST["usergroup"];
+      (array)$usergroup = $_POST['usergroup'];
 
       //initialise address_array counter
       $k = 0;

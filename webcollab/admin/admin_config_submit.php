@@ -34,7 +34,7 @@ require_once(BASE."includes/security.php" );
 $content = "";
 
 //only admin
-if( $admin != 1 ) {
+if( $ADMIN != 1 ) {
   error("Not permitted", "This function is for admins only" );
   return;
 }
@@ -43,15 +43,15 @@ if( $admin != 1 ) {
 ignore_user_abort(TRUE);
 
 
-$input_array = array("email_admin", "reply_to", "from" );
+$input_array = array('email_admin', 'reply_to', 'from' );
 
-if(USE_EMAIL == "Y" ){
+if(USE_EMAIL == 'Y' ){
 
   //check and validate email addresses
   foreach($input_array as $var) {
     if(! empty($_POST[$var]) ) {
       if( ! ereg("^.+@.+\..+$", $_POST[$var] ) )
-        warning( $lang["invalid email"], sprintf( $lang["invalid_email_given_sprt"], $_POST[$var] ) );
+        warning( $lang['invalid email'], sprintf( $lang['invalid_email_given_sprt'], $_POST[$var] ) );
       ${$var} = safe_data($_POST[$var] );
     }
     else
@@ -65,7 +65,7 @@ else{ //no email
 }
 
 //check and validate checkboxes
-$input_array = array("access", "group_edit", "owner", "usergroup" );
+$input_array = array('access', 'group_edit', 'owner', 'usergroup' );
 foreach($input_array as $var ) {
   if(isset($_POST[$var]) && $_POST[$var] == "on" )
     ${$var} = "checked=\"checked\"";
@@ -93,7 +93,7 @@ Because we get the mailing list input from a textarea, it needs thorough filteri
 */
 
 //roughly separate out the email list by newlines, spaces, formfeeds etc...
-$input_list = split("[ \f\r\n\t]+", $_POST["email"] );
+$input_list = split("[ \f\r\n\t]+", $_POST['email'] );
 
 //step through the split input array looking for email addresses
 $max = sizeof($input_list);

@@ -78,11 +78,11 @@ function email($to, $subject, $message ) {
     debug("Incorrect handshaking response from SMTP server at ".$host." <br /><br />Response from SMTP server was ".$res[0] );
 
   //do extended hello (EHLO)
-  fputs($connection, "EHLO ".$_SERVER["SERVER_NAME"]."\r\n" );
+  fputs($connection, "EHLO ".$_SERVER['SERVER_NAME']."\r\n" );
   //if EHLO not working, try the older HELO...
   $res = response();
   if($res[1] != "250" ) {
-    fputs($connection, "HELO ".$_SERVER["SERVER_NAME"]."\r\n" );
+    fputs($connection, "HELO ".$_SERVER['SERVER_NAME']."\r\n" );
     $res = response();
     if($res[1] != "250" )
       debug("Incorrect HELO response from SMTP server at ".$host." <br /><br />Response from SMTP server was ".$res[0] );
@@ -181,7 +181,8 @@ function & clean($encoded ) {
   //reinstate encoded html back to original text
   $trans = array_flip(get_html_translation_table(HTML_ENTITIES, ENT_NOQUOTES ) );
   $text = strtr($encoded, $trans );
-
+  $text = preg_replace('/&#(\d+);/me', "chr('$1')", $text );
+  
   //remove any dangerous tags that exist after decoding
   $text = preg_replace("/(<\/?)(\w+|s+)([^>]*>)/e", "'$1'.ltrim(strtoupper('$2')).'$3'", $text );
   $text = str_replace(array("<APPLET", "<OBJECT", "<SCRIPT", "<EMBED", "<FORM", "<?", "<%" ), "<**** ", $text );
@@ -340,7 +341,7 @@ function headers($to, $subject, $email_encode, $message_charset ) {
 
   $headers = array_merge($headers, subject($subject ) );
 
-  $headers[] = "Message-Id: <".uniqid("")."@".$_SERVER["SERVER_NAME"].">";
+  $headers[] = "Message-Id: <".uniqid("")."@".$_SERVER['SERVER_NAME'].">";
   $headers[] = "X-Mailer: WebCollab (PHP/".phpversion().")";
   $headers[] = "X-Priority: 3";
   $headers[] = "X-Sender: ".EMAIL_REPLY_TO;
@@ -384,7 +385,7 @@ function response() {
    if(DEBUG == "Y" ) {
      $time_out = "";
      $meta = @socket_get_status($connection);
-     if($meta["timed_out"] )
+     if($meta['timed_out'] )
        $time_out = "<br /><br />Socket timeout has occurred";
 
      //we don't use error() because email may not work!

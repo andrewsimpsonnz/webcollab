@@ -32,15 +32,15 @@ require_once("path.php" );
 require_once( BASE."includes/security.php" );
 
 //edit, insert, delete ?
-if( ! isset( $_REQUEST["action"] ) )
+if( ! isset( $_REQUEST['action'] ) )
   error("Contact submit", "No request given" );
 
-switch($_REQUEST["action"] ) {
+switch($_REQUEST['action'] ) {
 
   //insert a new contact
   case "submit_add":
-    if(empty($_POST["lastname"] ) || empty($_POST["firstname"] ) )
-      warning($lang["contact_submit"], $lang["contact_warn"] );
+    if(empty($_POST['lastname'] ) || empty($_POST['firstname'] ) )
+      warning($lang['contact_submit'], $lang['contact_warn'] );
 
     db_query( "INSERT INTO ".PRE."contacts(firstname,
                                       lastname,
@@ -57,47 +57,47 @@ switch($_REQUEST["action"] ) {
                                       added_by,
                                       user_id,
                                       date )
-                                  values('".safe_data($_POST["firstname"])."',
-                                  '".safe_data($_POST["lastname"])."',
-                                  '".safe_data($_POST["company"])."',
-                                  '".safe_data($_POST["tel_home"])."',
-                                  '".safe_data($_POST["gsm"])."',
-                                  '".safe_data($_POST["fax"])."',
-                                  '".safe_data($_POST["tel_business"])."',
-                                  '".safe_data($_POST["address"])."',
-                                  '".safe_data($_POST["postal"])."',
-                                  '".safe_data($_POST["city"])."',
-                                  '".safe_data($_POST["email"])."',
-                                  '".safe_data_long($_POST["notes"])."',
-                                  $uid,
-                                  $uid,
+                                  values('".safe_data($_POST['firstname'])."',
+                                  '".safe_data($_POST['lastname'])."',
+                                  '".safe_data($_POST['company'])."',
+                                  '".safe_data($_POST['tel_home'])."',
+                                  '".safe_data($_POST['gsm'])."',
+                                  '".safe_data($_POST['fax'])."',
+                                  '".safe_data($_POST['tel_business'])."',
+                                  '".safe_data($_POST['address'])."',
+                                  '".safe_data($_POST['postal'])."',
+                                  '".safe_data($_POST['city'])."',
+                                  '".safe_data($_POST['email'])."',
+                                  '".safe_data_long($_POST['notes'])."',
+                                  $UID,
+                                  $UID,
                                   now() )" );
     break;
 
   case "submit_edit":
     //edit an existing entry
-    if(empty($_POST["lastname"] ) || empty($_POST["firstname"] ) )
-      warning($lang["contact_submit"], $lang["contact_warn"] );
+    if(empty($_POST['lastname'] ) || empty($_POST['firstname'] ) )
+      warning($lang['contact_submit'], $lang['contact_warn'] );
 
-    if(empty($_POST["contactid"]) || ! is_numeric($_POST["contactid"] ) )
+    if(empty($_POST['contactid']) || ! is_numeric($_POST['contactid'] ) )
       error("Contact submit", "Not a valid contactid" );    
-    $contactid = intval($_POST["contactid"]);
+    $contactid = intval($_POST['contactid']);
 
       
     db_query("UPDATE ".PRE."contacts SET
-                  firstname='".safe_data($_POST["firstname"])."',
-                  lastname='".safe_data($_POST["lastname"])."',
-                  company='".safe_data($_POST["company"])."',
-                  tel_home='".safe_data($_POST["tel_home"])."',
-                  gsm='".safe_data($_POST["gsm"])."',
-                  fax='".safe_data($_POST["fax"])."',
-                  tel_business='".safe_data($_POST["tel_business"])."',
-                  address='".safe_data($_POST["address"])."',
-                  postal='".safe_data($_POST["postal"])."',
-                  city='".safe_data($_POST["city"])."',
-                  email='".safe_data($_POST["email"])."',
-                  notes='".safe_data_long($_POST["notes"])."',
-                  added_by=$uid,
+                  firstname='".safe_data($_POST['firstname'])."',
+                  lastname='".safe_data($_POST['lastname'])."',
+                  company='".safe_data($_POST['company'])."',
+                  tel_home='".safe_data($_POST['tel_home'])."',
+                  gsm='".safe_data($_POST['gsm'])."',
+                  fax='".safe_data($_POST['fax'])."',
+                  tel_business='".safe_data($_POST['tel_business'])."',
+                  address='".safe_data($_POST['address'])."',
+                  postal='".safe_data($_POST['postal'])."',
+                  city='".safe_data($_POST['city'])."',
+                  email='".safe_data($_POST['email'])."',
+                  notes='".safe_data_long($_POST['notes'])."',
+                  added_by=$UID,
                   date=now()
                   WHERE id = '$contactid'");
 
@@ -105,9 +105,9 @@ switch($_REQUEST["action"] ) {
 
   case "submit_delete":
       
-    if(empty($_POST["contactid"]) || ! is_numeric($_POST["contactid"] ) )
+    if(empty($_POST['contactid']) || ! is_numeric($_POST['contactid'] ) )
       error("Contact submit", "Not a valid contactid" );    
-    $contactid = intval($_POST["contactid"]);
+    $contactid = intval($_POST['contactid']);
 
     //delete the contact 
     @db_query("DELETE FROM ".PRE."contacts WHERE id=".$contactid );

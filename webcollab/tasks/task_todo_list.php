@@ -35,7 +35,7 @@ require_once( BASE."includes/security.php" );
 //
 
 function listTasks($task_id, $tail, $projectid ) {
-  global $x, $admin, $gid, $userid, $epoch, $lang, $tz_offset;
+  global $x, $ADMIN, $GID, $userid, $epoch, $lang, $tz_offset;
   global $task_array, $parent_array, $shown_array;
    
   $parent_array = "";
@@ -59,34 +59,34 @@ function listTasks($task_id, $tail, $projectid ) {
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     
     //check for private usergroups
-    if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] != 't' ) ) {
-      if( ! in_array( $row["usergroupid"], (array)$gid ) )
+    if( ($ADMIN != 1) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] != 't' ) ) {
+      if( ! in_array( $row['usergroupid'], (array)$GID ) )
         continue;
     }
 
     //put values into array
-    $task_array[$i]["id"] = $row["id"];
-    $task_array[$i]["parent"] = $row["parent"];
+    $task_array[$i]['id'] = $row['id'];
+    $task_array[$i]['parent'] = $row['parent'];
          
     $this_task = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
 
     //add highlighting if deadline is due
-    $state = ceil( ($row["task_due"] + $tz_offset - $row["now"] )/86400 );
+    $state = ceil( ($row['task_due'] + $tz_offset - $row['now'] )/86400 );
     if($state > 1) {
-      $this_task .= $row["name"]."</a>".sprintf($lang["due_in_sprt"], $state );
+      $this_task .= $row['name']."</a>".sprintf($lang['due_in_sprt'], $state );
     }
     else if($state > 0) {
-      $this_task .= $row["name"]."</a>".$lang["due_tomorrow"];
+      $this_task .= $row['name']."</a>".$lang['due_tomorrow'];
     }
     else{
-      $this_task .= "<span class=\"red\">".$row["name"]."</span></a>";
+      $this_task .= "<span class=\"red\">".$row['name']."</span></a>";
     }
     
-    $task_array[$i]["task"] = $this_task."\n";
+    $task_array[$i]['task'] = $this_task."\n";
     
     //if this is a subtask, store the parent id 
-    if($row["parent"] != $projectid ) {
-      $parent_array[] = $row["parent"];
+    if($row['parent'] != $projectid ) {
+      $parent_array[] = $row['parent'];
     }
   }   
     
@@ -98,15 +98,15 @@ function listTasks($task_id, $tail, $projectid ) {
   for($i=0 ; $i < $max ; $i++ ){
   
     //ignore subtasks in this iteration
-    if($task_array[$i]["parent"] != $projectid ){
+    if($task_array[$i]['parent'] != $projectid ){
       continue;
     }
-    $content .= $task_array[$i]["task"];
-    $shown_array[] = $task_array[$i]["id"];
+    $content .= $task_array[$i]['task'];
+    $shown_array[] = $task_array[$i]['id'];
     
     //if this task has children (subtasks), iterate recursively to find them 
-    if(in_array($task_array[$i]["id"], (array)$parent_array ) ){
-      $content .= find_children($task_array[$i]["id"] );
+    if(in_array($task_array[$i]['id'], (array)$parent_array ) ){
+      $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";
   }
@@ -114,8 +114,8 @@ function listTasks($task_id, $tail, $projectid ) {
   //look for any orphaned tasks, and show them too
   if($max != sizeof($shown_array) ) {
     for($i=0 ; $i < $max ; $i++ ) {
-      if( ! in_array($task_array[$i]["id"], (array)$shown_array ) ) 
-        $content .= $task_array[$i]["task"]."</li>\n";
+      if( ! in_array($task_array[$i]['id'], (array)$shown_array ) ) 
+        $content .= $task_array[$i]['task']."</li>\n";
     }
   }
   $content .= "</ul>\n";  
@@ -140,15 +140,15 @@ function find_children($parent ) {
   for($i=0 ; $i < $max ; $i++ ) {
     
     //ignore tasks not directly under this parent
-    if($task_array[$i]["parent"] != $parent ){
+    if($task_array[$i]['parent'] != $parent ){
       continue;
     }
-    $content .= $task_array[$i]["task"];
-    $shown_array[] = $task_array[$i]["id"];
+    $content .= $task_array[$i]['task'];
+    $shown_array[] = $task_array[$i]['id'];
     
     //if this task has children (subtasks), iterate recursively to find them
-    if(in_array($task_array[$i]["id"], $parent_array ) ){
-      $content .= find_children($task_array[$i]["id"] );
+    if(in_array($task_array[$i]['id'], $parent_array ) ){
+      $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";    
   }
@@ -175,31 +175,31 @@ $q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid,
                       WHERE ".PRE."usergroups.private=1");
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
-  if(in_array($row[0], (array)$gid ) && ! in_array($row[1], (array)$allowed ) ) {
+  if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
    $allowed[] = $row[1];
   }
 }
 
 //check validity of inputs
-if(isset($_POST["selection"]) && strlen($_POST["selection"]) > 0 )
-  $selection = ($_POST["selection"]);
+if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 )
+  $selection = ($_POST['selection']);
 else
   $selection = "user";
 
-if(isset($_POST["userid"]) && is_numeric($_POST["userid"]) )
-  $userid = intval($_POST["userid"]);
+if(isset($_POST['userid']) && is_numeric($_POST['userid']) )
+  $userid = intval($_POST['userid']);
 else
-  $userid = $uid;
+  $userid = $UID;
 
-if(isset($_POST["groupid"]) && is_numeric($_POST["groupid"]) )
-  $groupid = intval($_POST["groupid"]);
+if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) )
+  $groupid = intval($_POST['groupid']);
 else
   $groupid = 0;
 
 // check if there are projects
 if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE parent=0" ), 0, 0 ) < 1 ) {
-  $content = "<div style=\"text-align : center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add"]."</a></div>\n";
-  new_box( $lang["no_projects"], $content );
+  $content = "<div style=\"text-align : center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang['add']."</a></div>\n";
+  new_box( $lang['no_projects'], $content );
   return;
 }
 
@@ -225,10 +225,10 @@ $content .= "<form method=\"post\" action=\"tasks.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\" /></fieldset>\n ".
             "<table class=\"celldata\">\n".
-            "<tr><td>".$lang["todo_list_for"]."</td></tr>".
-            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"user\"$s1 /><label for=\"user\">".$lang["users"]."</label></td><td>\n".
+            "<tr><td>".$lang['todo_list_for']."</td></tr>".
+            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"user\"$s1 /><label for=\"user\">".$lang['users']."</label></td><td>\n".
             "<label for=\"user\"><select name=\"userid\">\n".
-            "<option value=\"0\"$s2>".$lang["nobody"]."</option>\n";
+            "<option value=\"0\"$s2>".$lang['nobody']."</option>\n";
 
 //get all users for option box
 $q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' ORDER BY fullname");
@@ -237,23 +237,23 @@ $q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       
   //user test for privacy
-  if($row["private"] && ( ! $admin ) && ( ! in_array($row["id"], (array)$allowed ) ) ){
+  if($row['private'] && ( ! $ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
     continue;
   }
     
-  $content .= "<option value=\"".$row["id"]."\"";
+  $content .= "<option value=\"".$row['id']."\"";
 
   //highlight current selection
   if( $row[ "id" ] == $userid )
     $content .= " selected=\"selected\"";
 
-  $content .= ">".$row["fullname"]."</option>\n";
+  $content .= ">".$row['fullname']."</option>\n";
 }
 
 $content .= "</select></label></td></tr>\n".
-            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3 /><label for=\"group\">".$lang["usergroups"]."</label></td><td>\n".
+            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3 /><label for=\"group\">".$lang['usergroups']."</label></td><td>\n".
             "<label for=\"group\"><select name=\"groupid\">\n".
-            "<option value=\"0\"$s4>".$lang["no_group"]."</option>\n";
+            "<option value=\"0\"$s4>".$lang['no_group']."</option>\n";
 
 //get all groups for option box
 $q = db_query("SELECT id, name, private FROM ".PRE."usergroups ORDER BY name" );
@@ -262,21 +262,21 @@ $q = db_query("SELECT id, name, private FROM ".PRE."usergroups ORDER BY name" );
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     
   //usergroup test for privacy
-  if( (! $admin ) && ( ! in_array($row["id"], (array)$gid ) ) ) {
+  if( (! $ADMIN ) && ( ! in_array($row['id'], (array)$GID ) ) ) {
     continue;
   }
     
-  $content .= "<option value=\"".$row["id"]."\"";
+  $content .= "<option value=\"".$row['id']."\"";
 
   //highlight current selection
   if( $row[ "id" ] == $groupid )
     $content .= " selected=\"selected\"";
 
-  $content .= ">".$row["name"]."</option>\n";
+  $content .= ">".$row['name']."</option>\n";
 }
 
 $content .= "</select></label><br /><br /></td></tr>\n".
-            "<tr><td><input type=\"submit\" value=\"".$lang["update"]."\" /></td></tr>\n".
+            "<tr><td><input type=\"submit\" value=\"".$lang['update']."\" /></td></tr>\n".
             "</table>\n".
             "</form>\n";
 
@@ -287,25 +287,25 @@ $q = db_query("SELECT id, name, projectid, usergroupid, globalaccess FROM ".PRE.
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
    //check for private usergroups
-   if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
+   if( ($ADMIN != 1) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
-     if( ! in_array( $row["usergroupid"], (array)$gid ) )
+     if( ! in_array( $row['usergroupid'], (array)$GID ) )
        continue;
    }
 
-  $new_content = listTasks($row["id"], $tail, $row["projectid"] );
+  $new_content = listTasks($row['id'], $tail, $row['projectid'] );
 
   //if no task, don't show project name either
   if($new_content != "" ) {
-    $content .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;<b>".$row["name"]."</b></p>\n".$new_content."\n";
+    $content .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;<b>".$row['name']."</b></p>\n".$new_content."\n";
     //set flag to show there is at least one uncompleted task
     $flag = 1;
   }
 }
 
 if( $flag != 1 )
-  $content .= $lang["no_assigned"]."\n";
+  $content .= $lang['no_assigned']."\n";
 
-new_box( $lang["todo_list"], $content );
+new_box( $lang['todo_list'], $content );
 
 ?>

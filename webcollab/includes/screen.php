@@ -67,7 +67,7 @@ include_once(BASE."lang/lang.php" );
 //
 function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
 
-  global $uid_name, $admin, $lang, $web_charset, $top_done, $bottom_text;
+  global $UID_NAME, $ADMIN, $lang, $web_charset, $top_done, $bottom_text;
   
   //only build top once...
   //  (we don't use headers_sent() 'cause it seems to be buggy in PHP5)
@@ -130,7 +130,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
     if($check){
       $content .= "function fieldCheck(){\n".
                           "if(document.getElementById('".$check."').value==\"\"){\n".
-                          "alert('".$lang["missing_field_javascript"]."');\n".
+                          "alert('".$lang['missing_field_javascript']."');\n".
                           "document.getElementById('".$check."').focus();\n".
                           "return false;}\n".
                           "return;}\n";
@@ -139,13 +139,13 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
       $content .= "function dateCheck() {\n".
                           "var daysMonth = new Array(31, 29, 31, 30, 30, 30, 31, 31, 30, 31, 30, 31 );\n". 
                           "if(document.getElementById('day').value > daysMonth[(document.getElementById('month').value-1)] ){\n".
-                          "alert('".$lang["invalid_date_javascript"]."');\n".
+                          "alert('".$lang['invalid_date_javascript']."');\n".
                           "return false;}\n". 
                           "var finishDate = document.getElementById('projectDate').value;\n".
                           "if(finishDate > 0 ){\n".
                           "var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value )/1000;\n".
                           "if(finishDate - inputDate < -7200 ){\n".
-                          "return confirm('".$lang["finish_date_javascript"]."');} }\n".     
+                          "return confirm('".$lang['finish_date_javascript']."');} }\n".     
                           "return;}\n";
       }
       $content .= " // -->\n".
@@ -174,8 +174,8 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
       //create the masthead part of the main window
       $content .=  "<tr valign=\"top\"><td colspan=\"2\" class=\"masthead\">";
       //show username if applicable
-      if($uid_name != "" )
-        $content .=  sprintf( $lang["user_homepage_sprt"], $uid_name );
+      if($UID_NAME != "" )
+        $content .=  sprintf( $lang['user_homepage_sprt'], $UID_NAME );
       $content .=  "</td></tr>\n";
       //create menu sidebar
       $content .=  "<tr valign=\"top\"><td style=\"width: 175px;\" align=\"center\">\n";
@@ -185,8 +185,8 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
     case 1: //single main window (no menu sidebar)
     case 3: //calendar  
       $content .=  "<tr valign=\"top\"><td class=\"masthead\">";
-      if($uid_name != "" )
-        $content .=  sprintf( $lang["user_homepage_sprt"], $uid_name );
+      if($UID_NAME != "" )
+        $content .=  sprintf( $lang['user_homepage_sprt'], $UID_NAME );
       $content .= "</td></tr>\n";
       //create single window over entire screen
       $content .= "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";

@@ -38,16 +38,16 @@ function secure_error( $reason = "Unauthorised area" ) {
 
   global $lang;
 
-  create_top($lang["login"], 1 );
-  new_box($lang["error"], "<div style=\"text-align : center\"><br />$reason<br /></div>", "boxdata", "singlebox"  );
+  create_top($lang['login'], 1 );
+  new_box($lang['error'], "<div style=\"text-align : center\"><br />$reason<br /></div>", "boxdata", "singlebox"  );
   create_bottom();
   die;
 
 }
 
 //valid login attempt ?
-if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["username"]) > 0 && strlen($_POST["password"]) > 0 )
-    || (isset($_SERVER["REMOTE_USER"])  && (strlen($_SERVER["REMOTE_USER"]) > 0 ) && WEB_AUTH == "Y" ) ) {
+if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['username']) > 0 && strlen($_POST['password']) > 0 )
+    || (isset($_SERVER['REMOTE_USER'])  && (strlen($_SERVER['REMOTE_USER']) > 0 ) && WEB_AUTH == "Y" ) ) {
 
   $q = "";
   $login_q ="";
@@ -59,18 +59,18 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["us
   include_once "includes/common.php";
 
  //no ip (possible?)
-  if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
+  if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
     secure_error("Unable to determine ip address");
   }
  
   if(WEB_AUTH == "Y" ) {
       //construct login query
-      $login_q = "SELECT id FROM ".PRE."users WHERE name='".safe_data($_SERVER["REMOTE_USER"] )."' AND deleted='f'";
+      $login_q = "SELECT id FROM ".PRE."users WHERE name='".safe_data($_SERVER['REMOTE_USER'] )."' AND deleted='f'";
   }
   else {
-    $username = safe_data($_POST["username"]);
+    $username = safe_data($_POST['username']);
     //encrypt password
-    $md5pass = md5($_POST["password"] );
+    $md5pass = md5($_POST['password'] );
 
     //count the number of recent login attempts
     if( ! $q = @db_query("SELECT COUNT(*) FROM ".PRE."login_attempt 
@@ -96,13 +96,13 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["us
   //database query
   if( ! $q = @db_query($login_q, 0 ) ) {
     sleep (2);
-    secure_error($lang["no_login"]);
+    secure_error($lang['no_login']);
   }   
   
   //no such user-password combination
   if( @db_numrows($q) < 1 ) {
       sleep (2);
-      secure_error($lang["no_login"]);
+      secure_error($lang['no_login']);
   }
 
   //no user-id
@@ -138,14 +138,14 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["us
 }
 
 //allow for continuation of session if a valid cookie is already set
-if(isset($_COOKIE["webcollab_session"] ) && strlen($_COOKIE["webcollab_session"] ) == 32 ) {
+if(isset($_COOKIE['webcollab_session'] ) && strlen($_COOKIE['webcollab_session'] ) == 32 ) {
  
   include_once "includes/common.php"; 
   include_once "database/database.php"; 
     
   //check if session is valid and within time limits
   if(db_result(@db_query("SELECT COUNT(*) FROM ".PRE."logins
-                                 WHERE session_key='".safe_data($_COOKIE["webcollab_session"])."'
+                                 WHERE session_key='".safe_data($_COOKIE['webcollab_session'])."'
                                  AND lastaccess > (now()-INTERVAL ".$delim.round(SESSION_TIMEOUT)." HOUR".$delim.")" ) ) == 1 ) {
     //relocate to main screen, and let security.php do further checking on session validity
     header("Location: ".BASE_URL."main.php?x=0");
@@ -153,7 +153,7 @@ if(isset($_COOKIE["webcollab_session"] ) && strlen($_COOKIE["webcollab_session"]
   }
 }
 
-create_top($lang["login"], 1, "username" );
+create_top($lang['login'], 1, "username" );
 
 $content = "<div style=\"text-align:center\">";
 
@@ -164,14 +164,14 @@ else {
   $content .=  "<img src=\"images/webcollab_logo.jpg\" alt=\"WebCollab logo\" /><br />";
 }
 
-$content .= "<p>".$lang["please_login"].":</p>\n".
+$content .= "<p>".$lang['please_login'].":</p>\n".
             "<form method=\"post\" action=\"index.php\">\n".
             "<table style=\"margin-left:auto; margin-right:auto;\">\n".
-            "<tr align=\"left\" ><td>".$lang["login"].": </td><td><input id=\"username\" type=\"text\" name=\"username\" value=\"\" size=\"30\" /></td></tr>\n".
-            "<tr align=\"left\" ><td>".$lang["password"].": </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
+            "<tr align=\"left\" ><td>".$lang['login'].": </td><td><input id=\"username\" type=\"text\" name=\"username\" value=\"\" size=\"30\" /></td></tr>\n".
+            "<tr align=\"left\" ><td>".$lang['password'].": </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
             "</table>\n".
             "<p>&nbsp;</p>\n".
-            "<p><input type=\"submit\" value=\"".$lang["login"]."\" /></p>\n";
+            "<p><input type=\"submit\" value=\"".$lang['login']."\" /></p>\n";
   switch( DATABASE_TYPE ) {
   case "postgresql":
     $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\" /></a></p>";
@@ -191,7 +191,7 @@ $content .= "</form>".
             "</div>";
 
 //set box options
-new_box($lang["login"], $content, "boxdata", "singlebox" );
+new_box($lang['login'], $content, "boxdata", "singlebox" );
 
 create_bottom();
 

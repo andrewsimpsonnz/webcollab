@@ -40,22 +40,22 @@ $content .=
           "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
           "<input type=\"hidden\" name=\"action\" value=\"submit_add\" /></fieldset>\n".
           "<table class=\"celldata\">\n".
-            "<tr><td><i>".$lang["firstname"]."</i></td><td><input id=\"firstname\" type=\"text\" name=\"firstname\" size=\"30\" /></td></tr>\n".
-            "<tr><td><i>".$lang["lastname"]."</i></td><td><input type=\"text\" name=\"lastname\" size=\"30\" /></td></tr>\n".
-            "<tr><td><i>".$lang["company"]."</i></td><td><input type=\"text\" name=\"company\" size=\"30\" /></td></tr>\n".
-            "<tr><td><i>".$lang["home_phone"]."</i></td><td><input type=\"text\" name=\"tel_home\" size=\"30\" /></td></tr>\n".
-            "<tr><td><i>".$lang["mobile"]."</i></td><td><input type=\"text\" name=\"gsm\" size=\"30\" /></td></tr>\n".
-            "<tr><td><i>".$lang["bus_phone"]."</i></td><td><input type=\"text\" name=\"tel_business\" size=\"30\" /></td></tr>\n".
-            "<tr><td><i>".$lang["fax"]."</i></td><td><input type=\"text\" name=\"fax\" size=\"30\" /></td></tr>\n".
-            "<tr><td><i>".$lang["address"]."</i></td><td><input type=\"text\" name=\"address\" size=\"30\" /></td></tr>\n".
-            "<tr><td><i>".$lang["postal"]."</i></td><td><input type=\"text\" name=\"postal\" size=\"30\" /></td></tr>\n".
-            "<tr><td><i>".$lang["city"]."</i></td><td><input type=\"text\" name=\"city\" size=\"30\" /></td></tr>\n".
-            "<tr><td><i>".$lang["email"]."</i></td><td><input type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".
+            "<tr><td><i>".$lang['firstname']."</i></td><td><input id=\"firstname\" type=\"text\" name=\"firstname\" size=\"30\" /></td></tr>\n".
+            "<tr><td><i>".$lang['lastname']."</i></td><td><input type=\"text\" name=\"lastname\" size=\"30\" /></td></tr>\n".
+            "<tr><td><i>".$lang['company']."</i></td><td><input type=\"text\" name=\"company\" size=\"30\" /></td></tr>\n".
+            "<tr><td><i>".$lang['home_phone']."</i></td><td><input type=\"text\" name=\"tel_home\" size=\"30\" /></td></tr>\n".
+            "<tr><td><i>".$lang['mobile']."</i></td><td><input type=\"text\" name=\"gsm\" size=\"30\" /></td></tr>\n".
+            "<tr><td><i>".$lang['bus_phone']."</i></td><td><input type=\"text\" name=\"tel_business\" size=\"30\" /></td></tr>\n".
+            "<tr><td><i>".$lang['fax']."</i></td><td><input type=\"text\" name=\"fax\" size=\"30\" /></td></tr>\n".
+            "<tr><td><i>".$lang['address']."</i></td><td><input type=\"text\" name=\"address\" size=\"30\" /></td></tr>\n".
+            "<tr><td><i>".$lang['postal']."</i></td><td><input type=\"text\" name=\"postal\" size=\"30\" /></td></tr>\n".
+            "<tr><td><i>".$lang['city']."</i></td><td><input type=\"text\" name=\"city\" size=\"30\" /></td></tr>\n".
+            "<tr><td><i>".$lang['email']."</i></td><td><input type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".
           "</table>\n".
-          "<p><i>".$lang["notes"]."</i><br /><textarea name=\"notes\" rows=\"6\" cols=\"50\"></textarea></p>\n".
-          "<p><input type=\"submit\" value=\"".$lang["add_contact"]."\" /></p>\n".
+          "<p><i>".$lang['notes']."</i><br /><textarea name=\"notes\" rows=\"6\" cols=\"50\"></textarea></p>\n".
+          "<p><input type=\"submit\" value=\"".$lang['add_contact']."\" /></p>\n".
           "</form>\n";
 
-new_box( $lang["contact_info"], $content );
+new_box( $lang['contact_info'], $content );
 
 ?>

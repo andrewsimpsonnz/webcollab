@@ -34,23 +34,23 @@ require_once(BASE."includes/security.php" );
 include_once(BASE."includes/email.php" );
 
 //admins only
-if($admin != 1 )
+if($ADMIN != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 
 //get some stupid errors
-if(empty($_GET["userid"]) || ! is_numeric($_GET["userid"]) )
+if(empty($_GET['userid']) || ! is_numeric($_GET['userid']) )
   error("User delete", "No userid specified" );
 
-$userid = intval($_GET["userid"]);
+$userid = intval($_GET['userid']);
 
-if(empty($_GET["action"] ) )
+if(empty($_GET['action'] ) )
   error("User delete", "No action specified" );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
-switch($_GET["action"] ){
+switch($_GET['action'] ){
 
   case "permdel":
 

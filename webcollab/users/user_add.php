@@ -31,7 +31,7 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 //admins only
-if($admin != 1 )
+if($ADMIN != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 
@@ -40,30 +40,30 @@ $content =
              "<fieldset><input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n".
              "<input type=\"hidden\" name=\"x\" value=\"$x\" /></fieldset>\n".
              "<table class=\"celldata\">\n".
-               "<tr><td>".$lang["login_name"].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
-               "<tr><td>".$lang["full_name"].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" /></td></tr>\n".
-               "<tr><td>".$lang["password"].":</td><td><input type=\"password\" name=\"password\" size=\"30\" /></td></tr>\n".
-               "<tr><td>".$lang["email"].":</td><td><input type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".
+               "<tr><td>".$lang['login_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
+               "<tr><td>".$lang['full_name'].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" /></td></tr>\n".
+               "<tr><td>".$lang['password'].":</td><td><input type=\"password\" name=\"password\" size=\"30\" /></td></tr>\n".
+               "<tr><td>".$lang['email'].":</td><td><input type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".
                "<tr><td>&nbsp;</td></tr>\n".
-               "<tr><td><label for=\"private\">".$lang["private_user"].":</label></td><td><input type=\"checkbox\" name=\"private_user\" id=\"private\" /></td></tr>\n".
-               "<tr><td><label for=\"admin\">".$lang["is_admin"].":</label></td><td><input type=\"checkbox\" name=\"admin_rights\" id=\"admin\" /></td></tr>\n".
+               "<tr><td><label for=\"private\">".$lang['private_user'].":</label></td><td><input type=\"checkbox\" name=\"private_user\" id=\"private\" /></td></tr>\n".
+               "<tr><td><label for=\"admin\">".$lang['is_admin'].":</label></td><td><input type=\"checkbox\" name=\"admin_rights\" id=\"admin\" /></td></tr>\n".
                "<tr><td>&nbsp;</td></tr>\n";
 
 //add user-groups
 $q = db_query("SELECT name, id FROM ".PRE."usergroups ORDER BY name" );
 
-$content .=    "<tr><td>".$lang["usergroup"].":</td><td><select name=\"usergroup[]\" multiple=\"multiple\" size=\"4\">\n";
+$content .=    "<tr><td>".$lang['usergroup'].":</td><td><select name=\"usergroup[]\" multiple=\"multiple\" size=\"4\">\n";
 
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
-  $content .=  "<option value=\"".$row["id"]."\">".$row["name"]."</option>";
+  $content .=  "<option value=\"".$row['id']."\">".$row['name']."</option>";
 }
 
-$content .=    "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
+$content .=    "</select><small><i>".$lang['select_instruct']."</i></small></td></tr>\n".
             "</table>\n".
-            "<p><input type=\"submit\" value=\"".$lang["add"]."\" />&nbsp;".
-            "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
+            "<p><input type=\"submit\" value=\"".$lang['add']."\" />&nbsp;".
+            "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>\n".
           "</form>";
 
-new_box($lang["user_info"], $content );
+new_box($lang['user_info'], $content );
 
 ?>

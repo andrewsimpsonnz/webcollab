@@ -30,8 +30,8 @@ require_once("path.php" );
 
 require_once(BASE."config/config.php" );
 
-$help_item = $_GET["item"];
-$help_type = $_GET["type"];
+$help_item = $_GET['item'];
+$help_type = $_GET['type'];
 
 switch(LOCALE ) {
 

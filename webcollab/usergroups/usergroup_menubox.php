@@ -31,12 +31,12 @@ require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
 //only for admins
-if($admin != 1 )
+if($ADMIN != 1 )
   return;
 
-$content = "<a href=\"usergroups.php?x=$x&amp;action=add\">".$lang["add"]."</a><br />\n".
-           "<a href=\"usergroups.php?x=$x&amp;action=manage\">".$lang["manage"]."</a><br />\n";
+$content = "<a href=\"usergroups.php?x=$x&amp;action=add\">".$lang['add']."</a><br />\n".
+           "<a href=\"usergroups.php?x=$x&amp;action=manage\">".$lang['manage']."</a><br />\n";
 
-new_box( $lang["usergroups"], $content, "boxmenu" );
+new_box( $lang['usergroups'], $content, "boxmenu" );
 
 ?>

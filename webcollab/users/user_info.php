@@ -32,15 +32,15 @@ require_once(BASE."includes/security.php" );
 include_once("lang/lang_long.php" );
 
 //admins only
-if($admin != 1 )
+if($ADMIN != 1 )
   error("Unauthorised access", "This function is for admins only." );
 
 $content = $user_info.
            "<div style=\"text-align:center\"><span class=\"textlink\">".
-           "[<a href=\"users.php?x=$x&amp;action=add\">".$lang["add"]."</a>]&nbsp;\n".
-           "[<a href=\"users.php?x=$x&amp;action=showonline\">".$lang["who_online"]."</a>]".
+           "[<a href=\"users.php?x=$x&amp;action=add\">".$lang['add']."</a>]&nbsp;\n".
+           "[<a href=\"users.php?x=$x&amp;action=showonline\">".$lang['who_online']."</a>]".
            "</span></div>\n";
 
-new_box($lang["manage_users"], $content, "boxdata2" );
+new_box($lang['manage_users'], $content, "boxdata2" );
 
 ?>

@@ -33,55 +33,55 @@ require_once( BASE."includes/security.php" );
 $content  = "";
 
 //existing task or project
-if(! empty($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
+if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ) {
 
-  $taskid = intval($_GET["taskid"]);
+  $taskid = intval($_GET['taskid']);
 
   include_once(BASE."includes/details.php" );
   
-  $content .= "<small><b>".$lang["project"].":</b></small><br />\n";
+  $content .= "<small><b>".$lang['project'].":</b></small><br />\n";
 
-  switch($taskid_row["parent"] ) {
+  switch($TASKID_ROW['parent'] ) {
 
     case "0":
       //project
-      $content .= "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".substr($taskid_row["name"], 0, 20 )."<br />\n";
+      $content .= "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".substr($TASKID_ROW['name'], 0, 20 )."<br />\n";
       break;
 
-    case ($taskid_row["projectid"] ):
+    case ($TASKID_ROW['projectid'] ):
       //task under project
       
       //get project name (limited to 20 characters)
-      $project_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$taskid_row["projectid"] ), 0, 0 ), 0, 20);
+      $project_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$TASKID_ROW['projectid'] ), 0, 0 ), 0, 20);
       
-      $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$taskid_row["projectid"]."\">$project_name</a><br />\n".
-                  "<small><b>".$lang["task"].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".substr($taskid_row["name"], 0, 20 )."<br />\n";
+      $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">$project_name</a><br />\n".
+                  "<small><b>".$lang['task'].":</b></small><br />\n".
+                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".substr($TASKID_ROW['name'], 0, 20 )."<br />\n";
       break;
 
     default:
       //task with parent task
       
       //get project name
-      $project_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$taskid_row["projectid"] ), 0, 0 ), 0, 20);
+      $project_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$TASKID_ROW['projectid'] ), 0, 0 ), 0, 20);
       //get parent name
-      $parent_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$taskid_row["parent"] ), 0, 0 ), 0, 20);
+      $parent_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$TASKID_ROW['parent'] ), 0, 0 ), 0, 20);
       
-      $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$taskid_row["projectid"]."\">$project_name</a><br />\n".
-                  "<small><b>".$lang["parent_task"].":</b></small><br />\n".
-                  "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$taskid_row["parent"]."\">$parent_name</a><br />\n".
-                  "<small><b>".$lang["task"].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".$taskid_row["name"]."<br />\n";
+      $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">$project_name</a><br />\n".
+                  "<small><b>".$lang['parent_task'].":</b></small><br />\n".
+                  "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$TASKID_ROW['parent']."\">$parent_name</a><br />\n".
+                  "<small><b>".$lang['task'].":</b></small><br />\n".
+                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".$TASKID_ROW['name']."<br />\n";
       break;
 
   }
 
-  new_box($lang["task_navigation"], $content, "boxmenu" );
+  new_box($lang['task_navigation'], $content, "boxmenu" );
 }
 
 //new task
-elseif(! empty($_GET["parentid"]) && is_numeric($_GET["parentid"]) ){
-  $parentid = $_GET["parentid"];
+elseif(! empty($_GET['parentid']) && is_numeric($_GET['parentid']) ){
+  $parentid = $_GET['parentid'];
 
   //get task parent details
   $q = db_query("SELECT name, parent, projectid FROM ".PRE."tasks WHERE id=".$parentid );
@@ -89,30 +89,30 @@ elseif(! empty($_GET["parentid"]) && is_numeric($_GET["parentid"]) ){
     error("Task navigate", "Parent does not exist" );
 
   //get project name
-  $project_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$row["projectid"] ), 0, 0 ), 0, 20);
+  $project_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$row['projectid'] ), 0, 0 ), 0, 20);
 
-  $content .= "<small><b>".$lang["project"].":</b></small><br />\n".
-              "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["projectid"]."\">$project_name</a><br />\n";
+  $content .= "<small><b>".$lang['project'].":</b></small><br />\n".
+              "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['projectid']."\">$project_name</a><br />\n";
 
-  switch( $row["parent"] ) {
+  switch( $row['parent'] ) {
 
     case "0":
       //new task under project
-      $content .= "<small><b>".$lang["task"].":</b></small><br />\n".
+      $content .= "<small><b>".$lang['task'].":</b></small><br />\n".
                   "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>New task</i><br />\n";
       break;
 
     default:
       //new task with parent task
-      $content .= "<small><b>".$lang["parent_task"].":</b></small><br />\n".
-                  "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$parentid\">".$row["name"]."</a><br />\n".
-                  "<small><b>".$lang["task"].":</b></small><br />\n".
+      $content .= "<small><b>".$lang['parent_task'].":</b></small><br />\n".
+                  "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$parentid\">".$row['name']."</a><br />\n".
+                  "<small><b>".$lang['task'].":</b></small><br />\n".
                   "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>New task</i><br />\n";
       break;
 
   }
 
-  new_box( $lang["task_navigation"], $content, "boxmenu" );
+  new_box( $lang['task_navigation'], $content, "boxmenu" );
 }
 
 ?>

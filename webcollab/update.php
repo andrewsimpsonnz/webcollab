@@ -51,7 +51,7 @@ function secure_error($message ) {
 //
 
 //valid login attempt ?
-if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
+if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
   include_once(BASE."database/database.php" );
   include_once(BASE."includes/common.php" );
@@ -60,12 +60,12 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   $q = "";
   $content = "";
   $flag_attempt = FALSE;
-  $username = safe_data($_POST["username"]);
+  $username = safe_data($_POST['username']);
   //encrypt password
-  $md5pass = md5($_POST["password"] );
+  $md5pass = md5($_POST['password'] );
 
   //no ip (possible?)
-  if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
+  if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
     secure_error("Unable to determine ip address");
   }
 
@@ -197,7 +197,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
     
     for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       
-      $q_complete = db_query("SELECT status FROM ".PRE."tasks WHERE projectid=".$row["id"]." AND parent<>0"  );
+      $q_complete = db_query("SELECT status FROM ".PRE."tasks WHERE projectid=".$row['id']." AND parent<>0"  );
   
       $total_tasks = 0;
       $tasks_completed = 0;
@@ -215,12 +215,12 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
       else
         $percent_completed = ($tasks_completed * 100 / $total_tasks );  
       
-      db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$row["id"] );
+      db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$row['id'] );
 
       //for completed project set the completion time
       if($percent_completed == 100 ){
-        $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM ".PRE."tasks WHERE projectid=".$row["id"] ), 0, 0 );
-        db_query("UPDATE ".PRE."tasks SET completion_time='".$completion_time."' WHERE id=".$row["id"] );
+        $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM ".PRE."tasks WHERE projectid=".$row['id'] ), 0, 0 );
+        db_query("UPDATE ".PRE."tasks SET completion_time='".$completion_time."' WHERE id=".$row['id'] );
       }
     }
     $content .= "<p>Updating from version pre-1.60 database ... success!</p>\n";

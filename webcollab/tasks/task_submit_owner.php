@@ -39,24 +39,24 @@ include_once(BASE."tasks/task_submit.php" );
 
 
 //update or insert ?
-if(empty($_REQUEST["action"]) )
+if(empty($_REQUEST['action']) )
   error("Task submit", "No request given" );
 
-if(empty($_GET["taskid"]) || ! is_numeric($_GET["taskid"]) )
+if(empty($_GET['taskid']) || ! is_numeric($_GET['taskid']) )
   error("Task submit", "No taskid given" );
   
-$taskid = intval($_GET["taskid"]);
+$taskid = intval($_GET['taskid']);
   
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
-  switch($_REQUEST["action"] ) {
+  switch($_REQUEST['action'] ) {
 
     //mark it as completed!
     case "done":
 
       //check if the user has enough rights
-      if( ($admin != 1 ) && (! user_access($taskid) ) )
+      if( ($ADMIN != 1 ) && (! user_access($taskid) ) )
         error("Task submit", "Access denied, you do not have enough rights to do that" );
 
       db_query("UPDATE ".PRE."tasks SET status='done', finished_time=now(), edited=now() WHERE id=$taskid" );
@@ -81,11 +81,11 @@ ignore_user_abort(TRUE);
     case "deown":
 
       //check if the user has enough rights
-      if( ($admin != 1 ) && (db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE id=$taskid AND owner=$uid" ), 0, 0 ) < 1) )
-        warning($lang["task_submit"], $lang["not_owner"] );
+      if( ($ADMIN != 1 ) && (db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE id=$taskid AND owner=$UID" ), 0, 0 ) < 1) )
+        warning($lang['task_submit'], $lang['not_owner'] );
 
       //note: self-securing query
-      db_query("UPDATE ".PRE."tasks SET owner=0 WHERE owner=$uid AND id=$taskid" );
+      db_query("UPDATE ".PRE."tasks SET owner=0 WHERE owner=$UID AND id=$taskid" );
       break;
 
 
@@ -95,9 +95,9 @@ ignore_user_abort(TRUE);
       //admin has no bounds checking
       //non-admins can only take non-owned tasks
       //note: self-securing query
-      if($admin != 1 )
-        db_query("UPDATE ".PRE."tasks SET owner=$uid WHERE id=$taskid AND owner=0" );
-      if($admin == 1 ) {
+      if($ADMIN != 1 )
+        db_query("UPDATE ".PRE."tasks SET owner=$UID WHERE id=$taskid AND owner=0" );
+      if($ADMIN == 1 ) {
         db_begin();
         //get the current owner and task details
         $q = db_query("SELECT ".PRE."users.id AS id,
@@ -113,38 +113,38 @@ ignore_user_abort(TRUE);
 
         $row = db_fetch_array($q, 0 );
         //do the action
-        db_query("UPDATE ".PRE."tasks SET owner=$uid WHERE id=$taskid" );
+        db_query("UPDATE ".PRE."tasks SET owner=$UID WHERE id=$taskid" );
         
         db_commit();
 
         //if there was no previous owner do nothing!
         //there was a previous owner - inform the user that an admin has taken over his task
-        if( ($row["id"] != 0 ) && ($uid != $row["id"] ) ) {
-          $q = db_query("SELECT email FROM ".PRE."users WHERE users.id=".$row["id"], 0 );
+        if( ($row['id'] != 0 ) && ($UID != $row['id'] ) ) {
+          $q = db_query("SELECT email FROM ".PRE."users WHERE users.id=".$row['id'], 0 );
           $email_address_old_owner = db_result( $q, 0, 0 );
 
-          switch($row["parent"] ) {
+          switch($row['parent'] ) {
             case 0:
               $email = $email_takeover_project;
               $title = $title_takeover_project;
-              $name_project = $row["name"];
+              $name_project = $row['name'];
               $name_task = "";
               break;
 
             default:
               $email = $email_takeover_task;
               $title = $title_takeover_task;
-              $name_project = db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$row["projectid"] ), 0, 0 );
-              $name_task = $row["name"];
+              $name_project = db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$row['projectid'] ), 0, 0 );
+              $name_task = $row['name'];
               break;
           }
           
           include_once(BASE."includes/email.php" );
 
           //send email
-          //$uid_name and $uid_email are from security.php
+          //$UID_NAME and $UID_EMAIL are from security.php
           $message = $email .
-                    sprintf($email_list, $name_project, $name_task, status($row["status"], $row["deadline"]), $uid_name, $uid_email, $row["text"] );
+                    sprintf($email_list, $name_project, $name_task, status($row['status'], $row['deadline']), $UID_NAME, $UID_EMAIL, $row['text'] );
           email( $email_address_old_owner, $title, $message );
         }
       }

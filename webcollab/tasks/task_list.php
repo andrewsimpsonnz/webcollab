@@ -40,7 +40,7 @@ $content = "";
 //
 function list_tasks($parent ) {
 
-  global $x, $uid, $gid, $admin, $parentid, $parent_array, $epoch, $lang;
+  global $x, $UID, $GID, $ADMIN, $parentid, $parent_array, $epoch, $lang;
   global $taskgroup_flag, $task_state, $ul_flag, $now, $tz_offset;
 
   //init values
@@ -89,9 +89,9 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
     //check for private usergroups
-    if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
+    if( ($ADMIN != 1) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
-      if( ! in_array( $row["usergroupid"], (array)$gid ) )
+      if( ! in_array( $row['usergroupid'], (array)$GID ) )
          continue;
     }
 
@@ -100,10 +100,10 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
     if( ($taskgroup_flag == 1 ) && ($parent == $parentid ) ) {
 
       //set taskgroup name, or 'Uncategorised' if none
-      if( $row["groupname"] == NULL )
-        $groupname = $lang["uncategorised"];
+      if( $row['groupname'] == NULL )
+        $groupname = $lang['uncategorised'];
       else
-        $groupname = $row["groupname"];
+        $groupname = $row['groupname'];
 
       //check if taskgroup has changed from last iteration
       if($stored_groupname != $groupname ) {
@@ -116,8 +116,8 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
         $this_content .= "<p><b>".$groupname."</b>";
 
         //add taskgroup description
-        if($row["groupdescription"] != NULL )
-          $this_content .=  "&nbsp;<i>( ".$row["groupdescription"]." )</i>";
+        if($row['groupdescription'] != NULL )
+          $this_content .=  "&nbsp;<i>( ".$row['groupdescription']." )</i>";
 
         $this_content .= "</p>\n";
         $this_content .= "<ul>\n";
@@ -135,14 +135,14 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
     $this_content .= "<li>";
 
     //have you seen this task yet ?
-    $seen_test = db_result(db_query("SELECT COUNT(*) FROM ".PRE."seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" ), 0, 0);
+    $seen_test = db_result(db_query("SELECT COUNT(*) FROM ".PRE."seen WHERE taskid=".$row['id']." AND userid=".$UID." LIMIT 1" ), 0, 0);
 
     //don't show alert content for changes more than NEW_TIME (in seconds)
-    if( ($now - max($row["edited"], $row["lastpost"], $row["lastfileupload"] ) ) > 86400*NEW_TIME ) {
+    if( ($now - max($row['edited'], $row['lastpost'], $row['lastfileupload'] ) ) > 86400*NEW_TIME ) {
 
       //task is over limit in NEW_TIME and still not looked at by you, mark it as seen, and move on...
       if( $seen_test < 1 )
-        db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES ($uid, ".$row["id"].", now() ) " );
+        db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES ($UID, ".$row['id'].", now() ) " );
     }
     //task has changed since last seen - show the changes to you
     else {
@@ -151,27 +151,27 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
         case 0:
           //new and never visited by this user
           //$alert_content .= "<img border=\"0\" src=\"images/new.gif\" height=\"12\" width=\"31\" alt =\"new\" />";
-          $alert_content .= "<span class=\"new\">".$lang["new_g"]."</span>&nbsp;";
+          $alert_content .= "<span class=\"new\">".$lang['new_g']."</span>&nbsp;";
           break;
 
         default:
-          $seenq = db_query("SELECT $epoch time) FROM ".PRE."seen WHERE taskid=".$row["id"]." AND userid=".$uid." LIMIT 1" );
+          $seenq = db_query("SELECT $epoch time) FROM ".PRE."seen WHERE taskid=".$row['id']." AND userid=".$UID." LIMIT 1" );
 
           //check if edited since last visit
           $seen = db_result($seenq, 0, 0 );
-          if( ($seen - $row["edited"] ) < 0 ) {
+          if( ($seen - $row['edited'] ) < 0 ) {
             //edited
             //$alert_content .= "<img border=\"0\" src=\"images/updated.gif\" height=\"12\" width=\"60\" alt=\"updated\" /> &nbsp;";
-            $alert_content .= "<span class=\"updated\">".$lang["updated_g"]."</span>&nbsp;";
+            $alert_content .= "<span class=\"updated\">".$lang['updated_g']."</span>&nbsp;";
           }
 
           //are there forum changes ?
-          if($seen - $row["lastpost"] < 0 ) {
+          if($seen - $row['lastpost'] < 0 ) {
             $alert_content .= "<img src=\"images/message.gif\" height=\"10\" width=\"14\" alt=\"message\" /> &nbsp;";
           }
 
           //are there file upload changes ?
-          if($seen - $row["lastfileupload"] < 0 ) {
+          if($seen - $row['lastfileupload'] < 0 ) {
             $alert_content .= "<img src=\"images/file.gif\" height=\"11\" width=\"11\" alt=\"file\" /> &nbsp;";
           }
           break;
@@ -179,39 +179,39 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
     }
 
     //status
-    switch($row["status"] ) {
+    switch($row['status'] ) {
       case "done":
-        $status_content="<span class=\"green\">(".$task_state["completed"]." ".nicetime($row["finished_time"]).")</span>";
+        $status_content="<span class=\"green\">(".$task_state['completed']." ".nicetime($row['finished_time']).")</span>";
         break;
 
       case "active":
-        $status_content="<span class=\"orange\">(".$task_state["active"].")</span>";
+        $status_content="<span class=\"orange\">(".$task_state['active'].")</span>";
         break;
 
       case "notactive":
-        $status_content="<span class=\"grey\">(".$task_state["planned"].")</span>";
+        $status_content="<span class=\"grey\">(".$task_state['planned'].")</span>";
         break;
 
       case "cantcomplete":
-        $status_content="<span class=\"blue\">(".$task_state["cantcomplete"]." ".nicetime($row["finished_time"]).")</>";
+        $status_content="<span class=\"blue\">(".$task_state['cantcomplete']." ".nicetime($row['finished_time']).")</>";
         break;
     }
 
 
     //merge all info about a task
-    $this_content .= $alert_content."<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">".$row["taskname"]."</a>&nbsp;$status_content";
+    $this_content .= $alert_content."<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">".$row['taskname']."</a>&nbsp;$status_content";
     $this_content .= "<small>";
 
     //add username if task is taken
-    if($row["userid"] != 0 ) {
-      $this_content .= "&nbsp;[<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["username"]."</a>]&nbsp;";
+    if($row['userid'] != 0 ) {
+      $this_content .= "&nbsp;[<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a>]&nbsp;";
     }
     else {
       $this_content .= "&nbsp;";
     }
 
     //add number of days to a task over here
-    switch($row["status"] ) {
+    switch($row['status'] ) {
 
       case "done":
       case "notactive":
@@ -219,26 +219,26 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
         break;
 
       default:
-        $state = ($row["due"] + $tz_offset - $now )/86400 ;
+        $state = ($row['due'] + $tz_offset - $now )/86400 ;
         if($state > 1 ) {
-          $this_content .=  "(".sprintf( $lang["due_sprt"], ceil($state) ).")";
+          $this_content .=  "(".sprintf( $lang['due_sprt'], ceil($state) ).")";
         }
         else if($state > 0 ) {
-          $this_content .=  "(".$lang["tomorrow"].")";
+          $this_content .=  "(".$lang['tomorrow'].")";
         }
         else {
           switch( -ceil($state) ) {
 
             case 0:
-              $this_content .=  "<span class=\"green\">(<i>".$lang["due_today"]."</i>)</span>";
+              $this_content .=  "<span class=\"green\">(<i>".$lang['due_today']."</i>)</span>";
               break;
 
             case 1:
-              $this_content .= "<span class=\"red\">(".$lang["overdue_1"].")</span>";
+              $this_content .= "<span class=\"red\">(".$lang['overdue_1'].")</span>";
               break;
 
             default:
-              $this_content .= "<span class=\"red\">(".sprintf($lang["overdue_sprt"], -ceil($state) ).")</span>";
+              $this_content .= "<span class=\"red\">(".sprintf($lang['overdue_sprt'], -ceil($state) ).")</span>";
               break;
           }
         }
@@ -249,8 +249,8 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
     $this_content .= "</small>";
 
     //recursive search if the subtask is listed in parent_array (it has children then)
-    if(in_array( $row["id"], $parent_array, FALSE) ) {
-      $this_content .= list_tasks( $row["id"]);
+    if(in_array( $row['id'], $parent_array, FALSE) ) {
+      $this_content .= list_tasks( $row['id']);
       $this_content .= "\n</ul></li>\n";
     }
     else{
@@ -268,13 +268,13 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
 //
 
 //is the parentid set in tasks.php ?
-if(empty($_REQUEST["taskid"]) || ! is_numeric($_REQUEST["taskid"]) )
+if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) )
   error( "Task list", "Not a valid value for taskid");
 
-$parentid = intval($_REQUEST["taskid"]);
+$parentid = intval($_REQUEST['taskid']);
 
 //check for private usergroup projects
-$q = db_query("SELECT usergroupid, globalaccess, ".$epoch."now()) FROM ".PRE."tasks WHERE id=".$taskid_row["projectid"] );
+$q = db_query("SELECT usergroupid, globalaccess, ".$epoch."now()) FROM ".PRE."tasks WHERE id=".$TASKID_ROW['projectid'] );
 
 $row = db_fetch_num($q, 0 );
 
@@ -282,18 +282,18 @@ $row = db_fetch_num($q, 0 );
 $now = $row[2];
 $tz_offset = (TZ * 3600) - date("Z");
 
-if( ($admin != 1) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
+if( ($ADMIN != 1) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
 
   //check if the user has a matching group
-  if( ! in_array($project_row[0], (array)$gid ) )
+  if( ! in_array($project_row[0], (array)$GID ) )
     return;
 }
 
 //find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query
-$parent_query = db_query("SELECT DISTINCT parent FROM ".PRE."tasks WHERE projectid=".$taskid_row["projectid"] );
+$parent_query = db_query("SELECT DISTINCT parent FROM ".PRE."tasks WHERE projectid=".$TASKID_ROW['projectid'] );
 $parent_array = NULL;
 for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; $i++ ) {
-  $parent_array[$i] = $row["parent"];
+  $parent_array[$i] = $row['parent'];
 }
 
 //check to see if any tasks at this task level have the taskgroup descriptor set.
@@ -310,7 +310,7 @@ $content  = list_tasks($parentid );
 if($ul_flag == 1 ){
   //finish off the closing </ul>
   $content .= "\n</ul>\n";
-  new_box( $lang["tasks"], $content );
+  new_box( $lang['tasks'], $content );
 }
 
 ?>
