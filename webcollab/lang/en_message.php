@@ -161,7 +161,7 @@ $lang = array(
 
  //includes
  "report" => "Report",
- "warning" => "<H1>Sorry!</H1><P>We are unable to process your request right now. Please try again later.</P>",
+ "warning" => "<h1>Sorry!</h1><p>We are unable to process your request right now. Please try again later.</p>",
  "home_page" => "Home page",
  "summary_page" => "Summary page",
  "todo_list" => "ToDo list",
@@ -171,10 +171,10 @@ $lang = array(
  "user_homepage_sprt" => "%s's homepage",
  "load_time_sprt" => "This page took %.3f seconds to load.  Of that %.3f seconds were used for %d transactions with the database",
  "security_manager" => "Security manager",
- "no_key_sprt" => "No valid session key. Please <A href=\"%sindex.php\">login</A>",
- "no_session" => "No such session, please <A href=\"%sindex.php\">log-in</A>",
- "session_timeout_sprt" => "Access denied, last action was %d minutes ago and the timeout is 60 minutes, please <A href=\"%sindex.php\">re-login</A>",
- "ip_spoof_sprt" =>"Spoofed ip address detected from your ip (%s) this session has been deleted as a precaution, please <A href=\"%sindex.php\">re-login</A>",
+ "no_key_sprt" => "No valid session key. Please <a href=\"%sindex.php\">login</a>",
+ "no_session" => "No such session, please <a href=\"%sindex.php\">log-in</a>",
+ "session_timeout_sprt" => "Access denied, last action was %d minutes ago and the timeout is 60 minutes, please <a href=\"%sindex.php\">re-login</a>",
+ "ip_spoof_sprt" =>"Spoofed ip address detected from your ip (%s) this session has been deleted as a precaution, please <a href=\"%sindex.php\">re-login</a>",
  "access_denied" => "Access denied",
  "private_usergroup" => "Sorry, this area is in a private usergroup and you do not have access rights.",
  "invalid_date" => "Invalid date",
