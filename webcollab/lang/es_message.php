@@ -309,7 +309,15 @@ $lang = array(
  "uncategorised" => "No categorizado",
  "admin" => "Admin",
  "global" => "Global",
- "options" => " opciones",
+ //"options" => " opciones",
+ //** 
+ "delete_project" => "Borrar Proyecto",
+ //**
+ "delete_task" => "Borrar Tarea",
+ //**
+ "project_options" => "Project opciones",
+ //**
+ "task_options" => "Tarea opciones",
  "task_navigation" => "Navegar tareas",
  "no_projects" => "No hay proyecto para ver",
  "completed" => "Completado",
