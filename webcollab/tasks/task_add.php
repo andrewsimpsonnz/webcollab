@@ -62,7 +62,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
 
 //get info about the parent of this task
   $q = db_query("SELECT name, deadline, status, owner, parent, projectid FROM tasks WHERE id=$parentid" );
-  $task_row = @db_fetch_array($q, $i );
+  $task_row = @db_fetch_array($q, 0 );
 
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" />\n".
               "<input type=\"hidden\" name=\"projectid\" value=\"".$task_row["projectid"]."\" />\n".
