@@ -74,7 +74,7 @@ if( ! valid_string( $_REQUEST["action"] ) )
                                     '".safe_data($_POST["notes"])."',
                                     $uid,
                                     $uid,
-                                    current_timestamp(0) )" );
+                                    now() )" );
       }else
         warning($lang["contact_submit"], $lang["contact_warn"] );
 
@@ -98,7 +98,7 @@ if( ! valid_string( $_REQUEST["action"] ) )
                     email='".safe_data($_POST["email"])."',
                     notes='".safe_data($_POST["notes"])."',
                     added_by=$uid,
-                    date=current_timestamp(0)
+                    date=now()
                     WHERE id = '$contactid'");
 
      }else

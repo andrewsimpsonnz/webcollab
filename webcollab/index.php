@@ -101,8 +101,8 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && valid_string($_PO
   db_query("INSERT INTO logins( user_id, session_key, ip, lastaccess ) VALUES ('$user_id', '$session_key', '$ip', now() )" );
 
   //try and set a session cookie (if the browser will let us)
-  setcookie("webcollab_session", $session_key, time()+86400, directory(), $_SERVER["SERVER_NAME"], 0  );
-  //(No need to record an error here if unsuccessful: code will revert to URI session keys)
+  setcookie("webcollab_session", $session_key );
+  //(No need to record an error here if unsuccessful: the code will revert to URI session keys)
 
   //relocate the user to the main screen
   //(we use both URI session key and cookies initially - in case cookies don't work)
@@ -113,11 +113,11 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && valid_string($_PO
 //allow for continuation of session if a valid cookie is already set
 if(isset($_COOKIE["webcollab_session"] ) && strlen($_COOKIE["webcollab_session"] ) == 32 ) {
 
-  include_once "includes/database.php";
   include_once "includes/common.php";
+  include_once "includes/database.php";
 
   //check if session is valid and within time limits
-  if(db_result(db_query("SELECT COUNT(*) FROM logins
+  if(db_result(@db_query("SELECT COUNT(*) FROM logins
                                 WHERE session_key='".safe_data($_COOKIE["webcollab_session"])."'
                                 AND lastaccess > (now()-INTERVAL ".$delim."1 HOUR".$delim.")" ) ) == 1 ) {
 

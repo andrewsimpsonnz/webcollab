@@ -53,7 +53,7 @@ if( ! ($row = db_fetch_array($q, 0 ) ) )
 
 //mark this as seen in seen ;)
 @db_query("DELETE FROM seen WHERE userid=$uid AND taskid=$taskid", 0);
-db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, $taskid, current_timestamp(0) ) " );
+db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, $taskid, now() ) " );
 
 //start of header table
 $content = "<br /><table width=\"98%\"><tr><td>\n";

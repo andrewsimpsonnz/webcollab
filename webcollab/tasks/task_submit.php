@@ -139,7 +139,7 @@ if( ! valid_string($_REQUEST["action"]) )
 
         //note: self-securing query
         if( "done" != db_result( db_query("SELECT status FROM tasks WHERE id=$taskid" ),0 ,0 ))
-          db_query( "UPDATE tasks SET status='done', finished_time=current_timestamp(0), edited=current_timestamp(0) WHERE id=$taskid" );
+          db_query( "UPDATE tasks SET status='done', finished_time=now(), edited=now() WHERE id=$taskid" );
 
       }
       else
@@ -296,14 +296,14 @@ if( ! valid_string($_REQUEST["action"]) )
                     status )
                     values('$name',
                     '$text',
-                    current_timestamp(0),
-                    current_timestamp(0),
-                    current_timestamp(0),
-                    current_timestamp(0),
+                    now(),
+                    now(),
+                    now(),
+                    now(),
                     $owner,
                     $uid,
                     '$deadline',
-                    current_timestamp(0),
+                    now(),
                     $priority,
                     $parentid,
                     $projectid,
@@ -332,7 +332,7 @@ if( ! valid_string($_REQUEST["action"]) )
         }
 
         //you have already seen this item, no need to announce it to you
-        db_query("INSERT INTO seen(userid, taskid, time) VALUES($uid, $taskid, current_timestamp(0) )");
+        db_query("INSERT INTO seen(userid, taskid, time) VALUES($uid, $taskid, now() )");
         //transaction complete
         db_commit();
 
@@ -454,10 +454,10 @@ if( ! valid_string($_REQUEST["action"]) )
         db_query( "UPDATE tasks
             SET name='$name',
             text='$text',
-            edited=current_timestamp(0),
+            edited=now(),
             owner=$owner,
             deadline='$deadline',
-            finished_time=current_timestamp(0),
+            finished_time=now(),
             priority=$priority,
             taskgroupid=$taskgroupid,
             usergroupid=$usergroupid,

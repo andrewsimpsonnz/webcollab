@@ -103,6 +103,9 @@
 
 //MINOR CONFIG PARAMETERS
 
+  //allow sessions to persist in browser (up to 1 hour) after moving away from page (values are "N", or "Y")
+  $PERSIST = "Y";
+
   //number of days that new or updated tasks should be highlighted as 'New' or 'Updated'
   $NEW_TIME = 14;
 

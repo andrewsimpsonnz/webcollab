@@ -87,7 +87,7 @@ if( ! isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) )
       //okay accept file
       db_begin();
       //alter task lastfileupload
-      db_query("UPDATE tasks SET lastfileupload=current_timestamp(0) WHERE id=$taskid" );
+      db_query("UPDATE tasks SET lastfileupload=now() WHERE id=$taskid" );
 
       //addslashes to stored filename only if magic quotes is 'off'
       //(prevents database errors)
@@ -107,7 +107,7 @@ if( ! isset($_REQUEST["action"]) && valid_string($_REQUEST["action"]) )
                                     VALUES ('$db_filename',
                                             ".$_FILES["userfile"]["size"].",
                                             '$description',
-                                            current_timestamp(0),
+                                            now(),
                                             $uid,
                                             $taskid,
                                             '".$_FILES["userfile"]["type"]."' ) ");

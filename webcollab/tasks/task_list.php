@@ -130,7 +130,7 @@ $query = "SELECT tasks.id AS id,
 
       //task is over limit in $NEW_TIME and still not looked at by you, mark it as seen, and move on...
       if( (db_numrows( $seenq ) ) < 1 )
-        db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, ".$row["id"].", current_timestamp(0) ) " );
+        db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, ".$row["id"].", now() ) " );
     }
     //task was changed - show the changes to you
     else {

@@ -138,16 +138,16 @@ if( ! valid_string($_REQUEST["action"]) )
         //private post
         db_begin();
         db_query ("INSERT INTO forum(parent, taskid, posted, text, userid, usergroupid)
-                VALUES ($parentid, $taskid, current_timestamp(0), '$text', $uid, $usergroupid)" );
+                VALUES ($parentid, $taskid, now(), '$text', $uid, $usergroupid)" );
       }
       else {
       //public post
       db_begin();
       db_query ("INSERT INTO forum(parent, taskid, posted, text, userid, usergroupid)
-                  VALUES ($parentid, $taskid, current_timestamp(0), '$text', $uid, 0)" );
+                  VALUES ($parentid, $taskid, now(), '$text', $uid, 0)" );
       }
       //set when the last forum post to this task was done to the database
-      db_query("UPDATE tasks SET lastforumpost=current_timestamp(0) WHERE id=$taskid" );
+      db_query("UPDATE tasks SET lastforumpost=now() WHERE id=$taskid" );
       db_commit();
 
       break;
