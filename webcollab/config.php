@@ -32,6 +32,9 @@
 //Database type (valid options are "mysql" and "postgresql")
   //**
   $DATABASE_TYPE="mysql";
+
+//Database host (usually "localhost")
+  //**  
   $DATABASE_HOST="localhost";
 
 /*Note: $DATABASE_HOST is not used for Postgresql. To use remote connections with PostgreSQL:
@@ -48,7 +51,7 @@
 // file uploads
 
   //upload to what directory ?
-  $FILE_BASE = "/files/filebase";
+  $FILE_BASE = "var/www/html/webcollab/files/filebase";
 
   //max file size in bytes ( 2 mb default)
   $FILE_MAXSIZE = 2000000;
@@ -58,7 +61,8 @@
      won't be able to upload any files.
   2. The filebase directory should be outside your webserver root directory to maintain file
      security.  This is important to prevent users navigating to the file directory with
-     their web browsers, and viewing all the files.
+     their web browsers, and viewing all the files.  (The default location given is NOT outside
+     the webserver root, but it makes first-time setup easier). 
 
 */
 
@@ -77,10 +81,7 @@
   //custom image to replace the webcollab banner on splash page (base directory is /images)
   $SITE_IMG = "";
 
-  //sort order on project list & summary (SQL format) (default is "taskname")
-  $PROJECT_ORDERED_BY = "taskname";
-
-// error message config parameters
+  // error message config parameters
 
   //show full debugging messages on the screen when errors occur (values are "0", or "1")
   $DEBUG = "0";
