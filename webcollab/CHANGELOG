@@ -1,4 +1,12 @@
 WebCollab CVS
+*** 5 June 2004
+  Andrew Simpson
+
+- add Bulgarian language (Stoyan Dimitrov)
+
+- set web character set with header() as well as <meta> in HTML  
+
+WebCollab CVS
 *** 29 May 2004
   Andrew Simpson
 
@@ -1007,7 +1015,7 @@ WebCollab CVS
 
 WebCollab forked from Core-lan-org CVS
 *** 14 Jul 2002
-   Andrew Simpson <andrew.simpson@paradise.net.nz>
+   Andrew Simpson <andrew.simpson at paradise.net.nz>
 
 - Summary page (Marshall Rose)
 
@@ -1022,7 +1030,7 @@ WebCollab forked from Core-lan-org CVS
 
 CVS Update to Ver 1.11
 *** 06 Jul 2002
-   Andrew Simpson <andrew.simpson@paradise.net.nz>
+   Andrew Simpson <andrew.simpson at paradise.net.nz>
 
 - Lots of syntax bugfixes from previous work.
 
@@ -1035,7 +1043,7 @@ CVS Update to Ver 1.11
 
 CVS Update to Ver 1.11
 *** 22 Jun 2002
-   Andrew Simpson <andrew.simpson@paradise.net.nz>
+   Andrew Simpson <andrew.simpson at paradise.net.nz>
 
 - Simplify security manager by getting rid of time_diff function.  (Use diff between seconds to epoch instead)
 
@@ -1068,14 +1076,14 @@ CVS Update to Ver 1.11
 CVS Update to Ver 1.11
 Release of Ver 1.11
 *** 1 Jun 2002
-  Dennis Fleurbaaij <dennis@core-lan.nl>
+  Dennis Fleurbaaij <dennis at core-lan.nl>
 - create-database.sql - fixed a show-stopper database creating script bug
 
 
 CVS Update to Ver 1.10
 Release of Ver 1.10
 *** 1 Jun 2002
-  Dennis Fleurbaaij <dennis@core-lan.nl>
+  Dennis Fleurbaaij <dennis at core-lan.nl>
 
 - all - fixed HTML CSS attack
 
@@ -1085,7 +1093,7 @@ Release of Ver 1.10
 
 CVS Update to Ver 1.01
 *** 21 May 2002
-   Andrew Simpson <andrew.simpson@paradise.net.nz>
+   Andrew Simpson <andrew.simpson at paradise.net.nz>
 
 - contacts.php   - remove references to taskgroups (!) (Cut & paste error)
                   - add in 'edit' case
@@ -1112,7 +1120,7 @@ CVS Update to Ver 1.01
 
 
 *** 26 April 2002
-   Andrew Simpson <andrew.simpson@paradise.net.nz>
+   Andrew Simpson <andrew.simpson at paradise.net.nz>
 
 - General sweep through all the scripts cleaning up spelling and grammar.  Used
 my native NZ (British) spelling conventions throughout.  Apologies to US
