@@ -122,6 +122,9 @@
   //Use external webserver authorisation to login (values are "N", or "Y")
   $WEB_AUTH = "N";
 
+  //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match) 
+  define("PRE", "" );
+
   //version info
   $WEBCOLLAB_VERSION = "pre-1.60 - CVS working copy";
 
