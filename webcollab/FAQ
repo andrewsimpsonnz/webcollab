@@ -80,7 +80,12 @@ webserver.  This means the directory should be either owned by the webserver use
 www or www-data) or the directory must be world-writeable.
 
 
-2. File upload security.
+2. File upload gives message about server configuration not allowing uploads.
+
+Check that the PHP configuration file, php.ini, is set to allow file uploads.  Check that 'file_upload = 1'.
+
+
+3. File upload security.
 
 If you use the default /webcollab/files/filebase directory, it is possible for users to navigate to
 the directory with their browsers and view the files present.  WebCollab has the filebase directory

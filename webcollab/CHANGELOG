@@ -4,6 +4,10 @@ WebCollab CVS
 
 - small database performance optimisation in tasks_list.php, tasks_project_list.php and common.php
 
+- small code optimisations in forum_submit.php and files_submit.php
+
+- check that uploads are permitted in PHP before accepting file upload
+
 - order files in list from files_admin.php
 
 WebCollab CVS
@@ -13,6 +17,8 @@ WebCollab CVS
 - added French translation (Pierre Jean)
 
 - make formatting of HTML pages more consistent throughout the code
+
+- small coding optimisations throughout code
 
 - make 'reset' button language specific
 
