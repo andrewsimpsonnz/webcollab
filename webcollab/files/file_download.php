@@ -57,7 +57,9 @@ if($fp == 0 )
 //get rid of some problematic system settings
 @ob_end_clean();
 @ini_set('zlib.output_compression', 'Off');
-@set_time_limit(0);
+
+//uncomment the line below if PHP script timeout occurs before download finishes
+//@set_time_limit(0);
 
 //these headers are for IE 6
 header("Pragma: public");
