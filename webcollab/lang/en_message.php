@@ -147,7 +147,6 @@ $lang = array(
  "post_reply_sprt" => "Post a reply to a message from '%s' about '%s'",
  "post_message_sprt" => "Post message to: '%s'",
  "reply" => "Reply",
-
  "new_post" => "New post",
  "public_user_forum" => "Public user forum",
  "private_forum_sprt" => "Private forum for '%s' usergroup",
@@ -228,7 +227,8 @@ $lang = array(
  "not_usergroup"=> "(Not a member of any usergroup)",
  "no_password_change" => "(Your existing password has not changed)",
  "last_time_here" => "Last time seen here:",
- "number_tasks_created" => "Number of tasks created:",
+ "number_items_created" => "Number of items created:",
+ "number_projects_owned" => "Number of projects owned:",
  "number_tasks_owned" => "Number of tasks owned:",
  "number_tasks_completed" => "Number of tasks completed:",
  "number_forum" => "Number of forum posts:",
