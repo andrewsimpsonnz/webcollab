@@ -152,9 +152,34 @@ if( isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
          $name_task = db_result( db_query("SELECT name FROM tasks WHERE tasks.id=".$row["projectid"] ), 0, 0 );
 	 $type = $lang["task"];
        }
-      include_once( BASE."lang/".$LOCALE."_email.php" );
-      $message = sprintf( $email_delete_task, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_task, $row["name"],$row["status"], quotemeta($row["text"]) );
-      email( $row["email"], sprintf($title_delete_task, ucfirst($type) ), $message );
+       switch($row["status"] ) {
+         case "created":
+           $status = $task_state["new"];
+           break;
+
+         case "notactive":
+           $status = $task_state["planned"];
+           break;
+
+         case "active":
+           $status = $task_state["active"];
+           break;
+
+         case "cantcomplete":
+           $status = $task_state["cantcomplete"];
+           break;
+
+         case "done":
+           $status = $task_state["done"];
+           break;
+
+         default:
+           $status = "";
+           break;
+       }
+       include_once( BASE."lang/".$LOCALE."_email.php" );
+       $message = sprintf( $email_delete_task, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_task, $row["name"],$status, quotemeta($row["text"]) );
+       email( $row["email"], sprintf($title_delete_task, ucfirst($type) ), $message );
     }
   }
 }
