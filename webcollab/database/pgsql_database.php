@@ -67,10 +67,10 @@ function db_query($query, $dieonerror=1 ) {
       error("No database connection",  "Sorry but there seems to be a problem in connecting to the database" );
 
     //make sure dates will be handled properly by internal date routines
-    db_query("SET DATESTYLE TO 'European, ISO'");
+    pg_query($database_connection, "SET DATESTYLE TO 'European, ISO'");
     
     //get server encoding
-    $q = @pg_query('SHOW SERVER_ENCODING');
+    $q = @pg_query($database_connection, 'SHOW SERVER_ENCODING' );
     
     //SQL_ASCII is not encoded, other server encodings need to be corrected by the PostgreSQL client
     if(pg_num_rows($q ) > 0 ){
@@ -79,8 +79,9 @@ function db_query($query, $dieonerror=1 ) {
       }
     }
     else {
-      //prior to version 7.4 a 'notice' is used   
-      if(strpos(pg_last_notice($database_connection ).' ', 'SQL_ASCII' ) === false ){
+      //prior to version 7.4 a 'notice' is used instead of a query result
+      $notice = @pg_last_notice($database_connection );   
+      if(strpos($notice, 'encoding' ) && (strpos($notice, 'SQL_ASCII' ) === false ) ){
         pg_encoding();
       }
     }    
@@ -216,7 +217,7 @@ function pg_encoding() {
           
   //set client encoding to match character set in use
   if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
-    error("Database client encoding", "Cannot set PostgreSQL client encoding to the required ".CHARACTER_SET );
+    error("Database client encoding", "Cannot set PostgreSQL client encoding to the required ".CHARACTER_SET."character set." );
   }  
   
 return;
