@@ -58,7 +58,7 @@ function listTasks( $task_id ) {
   if( !$q_tasks or db_numrows( $q_tasks ) == 0)
     return;
 
-   $content = "<DD><UL>";
+   $content = "<UL>\n";
 
    for( $iter=0 ; $task_row = @db_fetch_array($q_tasks, $iter ) ; $iter++) {
 
@@ -88,10 +88,10 @@ function listTasks( $task_id ) {
       }
       break;
     }
-    $content .= "<A HREF=\"tasks.php?x=".$x."&action=show&taskid=".$task_row["id"]."\">".$task_row["name"]."</A> &nbsp;".$status."\n";
+    $content .= "<A HREF=\"tasks.php?x=".$x."&action=show&taskid=".$task_row["id"]."\">".$task_row["name"]."</A> &nbsp;".$status;
     $content .= "</LI>\n";
   }
-  $content .= "</UL></DD>";
+  $content .= "</UL>";
   return $content;
 }
 
@@ -102,7 +102,7 @@ function listTasks( $task_id ) {
 //
 
 //some inital make-nice code
-$content = "";
+$content = "<BR>\n";
 $flag = 0;
 $usergroup[0] = 0;
 
@@ -146,14 +146,15 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $flag = 1;
 
   //start list
-  $content .= "<BR><DL>";
+  $content .= "<TABLE border=\"0\">";
+  $content .= "<TR>\n<TD width=\"20\">\n<!-- indent for project list -->\n</TD>\n<TD>\n";
   
   //show name and a link
-  $content .= "<DD><A href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\"><B>".$row["name"]."</B></A></DD>\n";
+  $content .= "<A href=\"tasks.php?x=".$x."&action=show&taskid=".$row["id"]."\"><B>".$row["name"]."</B></A>\n";
 
   // Show a nice %-of-tasks-completed bar
   $percent_complete = round(percent_complete($row["id"]));
-  $content .= "<DD>".show_percent( $percent_complete )."</DD>\n";
+  $content .= show_percent( $percent_complete )."\n";
 
   //set project status
   $project_status = $row["status"];
@@ -177,43 +178,43 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
     case "done":
       $finished = db_result( db_query( "SELECT MAX(finished_time) FROM tasks WHERE projectid =".$row["id"]." AND parent>0" ), 0, 0 );
-      $content .= "<DD>".$lang["ccompleted"]." (".nicedate( $finished ).")</DD>\n";
+      $content .= $lang["ccompleted"]." (".nicedate( $finished ).")\n";
       break;
 
     case "cantcomplete":
-      $content .= "<DD><I>".$lang["project_hold"].nicedate( $row["finished_time"])."</I></DD>\n";
-      $content .= "<DD><img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\"> &nbsp; ".nicedate( $row["deadline"] )."</DD>\n";
+      $content .= "<I>".$lang["project_hold"].nicedate( $row["finished_time"])."</I><BR>\n";
+      $content .= "<img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\"> &nbsp; ".nicedate( $row["deadline"] )."<BR>\n";
       break;
 
     case "notactive":
-      $content .= "<DD><I>".$lang["project_planned"]."</I><BR>\n";
+      $content .= "<I>".$lang["project_planned"]."</I><BR>\n";
       break;
 
     case "active":
     default:
-      $content .= "<DD>".$percent_complete.$lang["percent"]."</DD>\n";
-      $content .= "<DD><img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\"> &nbsp; ".nicedate( $row["deadline"] )." ";
+      $content .= $percent_complete.$lang["percent"]."<BR>\n";
+      $content .= "<img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\"> &nbsp; ".nicedate( $row["deadline"] )." ";
       $state = ( $row["due"]-$row["now"] )/86400 ;
       if( $state > 1 ) {        
-	$content .=  "(".sprintf($lang["due_sprt"], ceil($state) ).")</DD>\n";
+	$content .=  "(".sprintf($lang["due_sprt"], ceil($state) ).")\n";
       }
       else if( $state > 0 ) {
-	$content .=  "(".$lang["tomorrow"].")</DD>\n";
+	$content .=  "(".$lang["tomorrow"].")\n";
       }
       else {
 
 	  switch( -ceil($state) ) {
 
 	    case "0":
-              $content .=  "<FONT color=\"green\">(".$lang["due_today"].")</FONT></DD>\n";
+              $content .=  "<FONT color=\"green\">(".$lang["due_today"].")</FONT><BR>\n";
 	      break;
 
 	    case "1":
-              $content .= "<FONT color=\"red\">(".$lang["overdue_1"].")</FONT></DD>\n";
+              $content .= "<FONT color=\"red\">(".$lang["overdue_1"].")</FONT><BR>\n";
 	      break;
 
 	    default:
-              $content .= "<FONT color=\"red\">(".sprintf($lang["overdue_sprt"], -ceil($state) ).")</FONT></DD>\n";
+              $content .= "<FONT color=\"red\">(".sprintf($lang["overdue_sprt"], -ceil($state) ).")</FONT><BR>\n";
 	      break;
             }
       }
@@ -223,9 +224,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       break;
     }
   //end list
-  $content .= "</DL>\n";
+  $content .= "</TD>\n</TR>\n</TABLE>\n<BR><BR>";
 }
-$content .= "<BR><BR>\n";
+$content .= "<BR>\n";
 
 if( $flag != 1 ) $content = $lang["no_allowed_projects"];
 
