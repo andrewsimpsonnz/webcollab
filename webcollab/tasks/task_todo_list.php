@@ -64,7 +64,7 @@ function listTasks($task_id ) {
           $content .= $task_row["name"]."</a>".$lang["due_tomorrow"];
        }
        else {
-         $content .= "<font color=\"#FF0000\">".$task_row["name"]."</a></font>";
+         $content .= "<font color=\"#FF0000\">".$task_row["name"]."</font></a>";
        }
      $content .= "</li>\n";
    }
@@ -94,10 +94,10 @@ if(db_numrows($query ) < 1 ) {
   return;
 }
 
-$content .= "<table border=\"0\">\n".
-            "<form method=\"POST\" action=\"users.php\">\n".
+$content .= "<form method=\"POST\" action=\"users.php\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\">\n ".
+            "<table border=\"0\">\n".
             "<tr><td>".$lang["todo_list_for"]."</td><td><select name=\"userid\">\n".
             "<option value=\"0\">".$lang["nobody"]."</option>\n";
 
@@ -115,9 +115,9 @@ for( $i=0 ; $row = @db_fetch_array($users_q, $i ) ; $i++) {
 }
 
 $content .= "</select></td>\n".
-            "<td><input type=\"submit\" value=\"".$lang["update"]."\"> ".
-            "</form></td></tr>\n".
-            "</table>\n".
+            "<td>\n".
+            "<input type=\"submit\" value=\"".$lang["update"]."\"></td></tr>\n".
+            "</table></form>\n".
             "<br />\n";
 
 // show all uncompleted tasks and projects belonging to this user

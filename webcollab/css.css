@@ -15,7 +15,7 @@ FONT {
 FONT.textlink {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 10px;
-  font-style : bold;
+  font-weight : bold;
 }
 
 LI {
