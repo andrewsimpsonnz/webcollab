@@ -32,6 +32,7 @@
 require_once("path.php" );
 require_once( BASE."includes/security.php" );
 
+include_once(BASE."tasks/task_common.php" );
 include_once( BASE."includes/time.php" );
 
 //
@@ -40,7 +41,7 @@ include_once( BASE."includes/time.php" );
 
 
 function project_summary( $tail, $depth=0, $equiv="" ) {
-  global $x, $uid, $admin, $BASE_URL, $lang, $task_state;
+  global $x, $uid, $admin, $lang, $task_state;
   global $sortby;
   global $epoch;
   
@@ -219,7 +220,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
     }
     else {
       $owner = db_result(db_query("SELECT fullname FROM users WHERE id=".$row["owner"] ), 0, 0  );
-      $owner = "<a href=\"".$BASE_URL."users.php?x=".$x."&action=show&userid=".$row["owner"]."\">".$owner."</a>";
+      $owner = "<a href=\"users.php?x=".$x."&action=show&userid=".$row["owner"]."\">".$owner."</a>";
     }
 
     //group column

@@ -40,7 +40,7 @@ $content = "";
 //
 function list_tasks($parent ) {
 
-  global $x, $uid, $BASE_URL, $parent_array, $epoch, $taskgroup_flag, $lang, $task_state, $NEW_TIME, $DATABASE_TYPE, $parentid;
+  global $x, $uid, $parent_array, $epoch, $taskgroup_flag, $lang, $task_state, $NEW_TIME, $DATABASE_TYPE, $parentid;
 
   //init values
   $stored_groupname = NULL;
@@ -184,17 +184,17 @@ $query = "SELECT tasks.id AS id,
 
     //merge all info about a task
     if($alert_content != "" ) {
-      $this_content .= $alert_content."<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">".$row["taskname"]."</a></font> $status_content";
+      $this_content .= $alert_content."<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">".$row["taskname"]."</a></font> $status_content";
     }
     else{
-      $this_content .= "<a href=\"".$BASE_URL."tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">".$row["taskname"]."</a> $status_content";
+      $this_content .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">".$row["taskname"]."</a> $status_content";
     }
 
     $this_content.= "<small>";
 
     //add username if task is taken
     if($row["userid"] != 0 ) {
-      $this_content .= " [<a href=\"".$BASE_URL."users.php?x=$x&amp;action=show&userid=".$row["userid"]."\">".$row["username"]."</a>] ";
+      $this_content .= " [<a href=\"users.php?x=$x&amp;action=show&userid=".$row["userid"]."\">".$row["username"]."</a>] ";
     }
     else {
       $this_content .= "&nbsp;";

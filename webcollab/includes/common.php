@@ -21,7 +21,7 @@
   You should have received a copy of the GNU General Public License along with this
   program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave,
   Cambridge, MA 02139, USA.
-  
+
   Function:
   ---------
 
@@ -34,65 +34,9 @@ require_once("path.php" );
 include_once(BASE."config.php" );
 include_once(BASE."lang/language.php" );
 
-
 //define domain name for cookies
 $domain_array = explode('/', str_replace('http://', '', $BASE_URL ) );
 $DOMAIN = $domain_array[0];
-
-//
-// Gives back the percentage completed of this tasks's children
-//
-//
-function percent_complete($taskid ) {
-
-  if($taskid == "" )
-    return;
-
-  $tasks_completed = db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent<>0 AND projectid=$taskid AND status='done'" ), 0, 0 );
-  $total_tasks = db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent<>0 AND projectid=$taskid" ), 0, 0 );
-
-  switch($tasks_completed ) {
-    case 0:
-      return 0;
-      break;
-
-    case($total_tasks ):
-      return 100;
-      break;
-
-    default:
-      return($tasks_completed / $total_tasks ) * 100;
-      break;
-  }
-}
-
-
-
-//
-// Show percent
-//
-function show_percent($percent = 0 ) {
-  $out = "";
-  $width = 400;
-  $height = 4;
-  switch($percent) {
-    case 100:
-      return "<table width=\"$width\"><tr><td height=\"$height\" width=\"$width\" bgcolor=\"#008B45\" nowrap></td></tr></table>\n";
-      break;
-
-    case 0:
-      return "<table width=\"$width\"><tr><td height=\"$height\" width=\"$width\" bgcolor=\"#FFA500\" nowrap></td></tr></table>\n";
-      break;
-
-    default:
-      $out .= "<table width=\"$width\"><tr><td height=\"$height\" width=\"".($percent * ($width/100))."\" bgcolor=\"#008B45\" nowrap>";
-      $out .= "</td><td width=\"".($width-($percent*($width/100)))."\" bgcolor=\"#FFA500\" nowrap></td></tr></table>\n";
-      return $out;
-      break;
-  }
-}
-
-
 
 //
 // Ensures that all the data is code free so that a malcious user cannot
