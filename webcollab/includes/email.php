@@ -62,19 +62,6 @@ return $text;
 }
 
 //
-//function to reinstate html only (used for languages with non us-ascii characters)
-//
-
-function trans($encoded ) {
-
-  //reinstate encoded html back to original text
-  $trans = array_flip(get_html_translation_table(HTML_ENTITIES, ENT_NOQUOTES ) );
-  $text = strtr($encoded, $trans );
-
-return $text;
-}
-
-//
 //function to prepare and encode message body for transmission
 //
 
@@ -82,8 +69,9 @@ function message($message ) {
 
   global $email_encode, $email_charset, $message_charset, $bit8, $body;
 
-  //check if message contains high bit ascii characters and set
-  //           encoding to match mailer capabilities
+  //clean up message
+  $message = clean($message );
+  //check if message contains high bit ascii characters and set encoding to match mailer capabilities
   switch(preg_match('/([\177-\377])/', $message ) ) {
     case true:
       //we have special characters
@@ -154,7 +142,7 @@ function subject($subject ) {
   global $email_charset;
 
   //reinstate any HTML in subject back to text
-  $subject = trans($subject );
+  $subject = clean($subject );
   //encode subject with 'printed-quotable' if high ASCII characters are present
   switch(preg_match('/([\177-\377])/', $subject ) ) {
     case false:
@@ -215,7 +203,7 @@ function smtp_auth($connection) {
 
   //send password
   fputs($connection, base64_encode($MAIL_PASSWORD )."\r\n" );
-  if(response($connection) != "334" )
+  if(response($connection) != "235" )
     debug("Password not accepted SMTP server at $host <br /><br />Response from SMTP server was $res" );
 
   return;
