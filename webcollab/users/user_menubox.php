@@ -41,8 +41,8 @@ if($admin == 1 ) {
 }
 
 $content .= "<a href=\"users.php?x=$x&amp;action=showonline\">".$lang["who_online"]."</a><br />\n".
-            "<a href=\"users.php?x=$x&amp;action=edit&userid=$uid\">".$lang["edit_details"]."</a><br />\n".
-            "<a href=\"users.php?x=$x&amp;action=show&userid=$uid\">".$lang["show_details"]."</a><br />\n";
+            "<a href=\"users.php?x=$x&amp;action=edit&amp;userid=$uid\">".$lang["edit_details"]."</a><br />\n".
+            "<a href=\"users.php?x=$x&amp;action=show&amp;userid=$uid\">".$lang["show_details"]."</a><br />\n";
 
 //show it
 new_box($lang["users"], $content );
