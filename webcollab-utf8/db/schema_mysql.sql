@@ -21,6 +21,7 @@ CREATE TABLE tasks (
 	lastfileupload DATETIME NOT NULL,
         completed TINYINT NOT NULL DEFAULT 0,
         completion_time DATETIME NOT NULL,
+        archive VARCHAR(5) NOT NULL DEFAULT 'f',
         INDEX (owner),
         INDEX (parent),
         INDEX (name(10)),
@@ -39,6 +40,7 @@ CREATE TABLE users (
 	email VARCHAR(200) NOT NULL,
 	admin VARCHAR(5) NOT NULL DEFAULT 'f',
 	private TINYINT NOT NULL DEFAULT 0,
+        guest VARCHAR(5) NOT NULL DEFAULT 'f',
 	deleted VARCHAR(5) NOT NULL DEFAULT 'f',
         INDEX (fullname(10))
 )
@@ -150,8 +152,8 @@ CREATE TABLE config (
 	email_from VARCHAR(200),
 	globalaccess VARCHAR(50),
 	groupaccess VARCHAR(50),
-	owner VARCHAR(200),
-	usergroup VARCHAR(200)
+	owner VARCHAR(50),
+	usergroup VARCHAR(50),
 )
 CHARACTER SET = utf8;
 
@@ -165,5 +167,5 @@ CHARACTER SET = utf8;
 INSERT INTO users ( id, name, fullname, password, email, admin, deleted )
 VALUES( 1, 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );
 
-INSERT INTO config ( globalaccess, groupaccess )
-VALUES( 'checked', '' );
+INSERT INTO config ( globalaccess, groupaccess, project_order, task_order )
+VALUES( 'checked', '', 'ORDER BY name', 'ORDER BY name' );

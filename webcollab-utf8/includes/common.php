@@ -85,15 +85,16 @@ function clean_up($body ) {
   //decode hex HTML entities added by web browser
   $body = preg_replace('/&#x([a-fA-F0-7]{2,8});/ue', "utf8_entity_decode('&#'.hexdec('$1').';')", $body );
   
-  //allow only normal byte range of UTF-8 characters upto U+00010000
+  //allow only normal UTF-8 characters up to U+10000, which is up to three bytes per character
+  // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )   
   preg_match_all('/([\x09\x0a\x0d\x20-\x7e]|'.
                    '[\xc0-\xdf][\x80-\xbf]|'.
                    '[\xe0-\xef][\x80-\xbf]{2})+/S', $body, $ar );
 
-/*                 Remainder of range beyond U+00010000 are:   
-                   '[\xf0-\xf7][\x80-\xbf]{3}'    (U-00010000 - U-001FFFFF)
-                   '[\xf8-\xfb][\x80-\xbf]{4}'    (U-00200000 - U-03FFFFFF)
-                   '[\xfc-\xfd][\x80-\xbf]{5}'    (U-04000000 - U-7FFFFFFF)
+/*                 Remainder of range beyond U+10000 are:   
+                   '[\xf0-\xf7][\x80-\xbf]{3}'    (U-10000 - U-1FFFFF)  4 byte character
+                   '[\xf8-\xfb][\x80-\xbf]{4}'    (U-200000 - U-3FFFFFF) 5 byte ""
+                   '[\xfc-\xfd][\x80-\xbf]{5}'    (U-4000000 - U-7FFFFFFF) 6 byte ""
 */    
   $body = join("?", $ar[0] );
   
@@ -104,7 +105,7 @@ function clean_up($body ) {
                          '[\xed][\xa0-\xbf][\x80-\xbf]|'.
                          '[\xef][\xbf][\xbe-\xbf])/S', "?", $body );
   
-/*                      Remainder of overly long UTF8 above U+00010000  
+/*                      Remainder of overly long UTF8 above U+10000  
                          '[\xf8][\x80-\x87][\x80-\xbf]{3}'
                          '[\xfc][\x80-\x83][\x80-\xbf]{4}'
 */
@@ -114,7 +115,7 @@ function clean_up($body ) {
     $body = addslashes($body );
         
   //use HTML encoding for characters that could be used for css <script> or SQL injection attacks
-  $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;');
+  $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;' );
   
   return strtr($body, $trans ); 
   
@@ -125,8 +126,8 @@ function clean_up($body ) {
 //
 function utf8_entity_decode($entity){
 
+ //convert up to U+10000
  $convmap = array(0x0, 0x10000, 0, 0xfffff);
-  
  return mb_decode_numericentity($entity, $convmap, 'UTF-8');
 }
 
@@ -156,17 +157,16 @@ function javascript_escape($body ) {
 //
 function error($box_title, $content ) {
 
-  global $uid_name, $uid_email, $db_error_message, $MANAGER_NAME, $DEBUG, $NO_ERROR, $WEBCOLLAB_VERSION;
-  global $EMAIL_ERROR, $SMTP_AUTH;
+  global $UID_NAME, $UID_EMAIL, $db_error_message;
   
   include_once(BASE."includes/screen.php" );
   
   create_top("ERROR", 1 );
 
-  if($NO_ERROR != "Y" )
+  if(NO_ERROR != "Y" )
     new_box( $box_title, "<div style=\"text-align : center\">".$content."</div>", "boxdata", "singlebox" );
     else
-    new_box($lang["report"], $lang["warning"], "boxdata2", "singlebox" );
+    new_box($lang['report'], $lang['warning'], "boxdata2", "singlebox" );
 
 
   //get the post vars
@@ -177,26 +177,26 @@ function error($box_title, $content ) {
 
 
   //email to the error-catcher
-  $message = "Hello,\n This is the $MANAGER_NAME site and I have an error :/  \n".
+  $message = "Hello,\n This is the ".MANAGER_NAME." site and I have an error :/  \n".
             "\n\n".
-            "User that created the error: $uid_name ( $uid_email )\n".
+            "User that created the error: $UID_NAME ( $UID_EMAIL )\n".
             "The erroneous component: $box_title\n".
             "The error message: $content\n".
             "Database message: $db_error_message\n".
-            "Page that was called: ".$_SERVER["SCRIPT_NAME"]."\n".
-            "Called URL: ".$_SERVER["REQUEST_URI"]."\n".
-            "Browser: ".$_SERVER["HTTP_USER_AGENT"]."\n".
+            "Page that was called: ".$_SERVER['SCRIPT_NAME']."\n".
+            "Called URL: ".$_SERVER['REQUEST_URI']."\n".
+            "Browser: ".$_SERVER['HTTP_USER_AGENT']."\n".
             "Time: ".date("F j, Y, H:i")."\n".
-            "IP: ".$_SERVER["REMOTE_ADDR"]."\n".
-            "WebCollab version: $WEBCOLLAB_VERSION\n".
+            "IP: ".$_SERVER['REMOTE_ADDR']."\n".
+            "WebCollab version:".WEBCOLLAB_VERSION."\n".
             "POST vars: $post\n\n";
   
-  if($EMAIL_ERROR != NULL ){
+  if(EMAIL_ERROR != NULL ){
     include_once(BASE."includes/email.php" );
-    email($EMAIL_ERROR, "ERROR on $MANAGER_NAME", $message );
+    email(EMAIL_ERROR, "ERROR on ".MANAGER_NAME, $message );
   }
         
-  if($DEBUG == "Y" )
+  if(DEBUG == "Y" )
     new_box("Error Debug", nl2br($message) );
 
   create_bottom();
@@ -215,9 +215,9 @@ function warning($box_title, $message ) {
 
   include_once(BASE."includes/screen.php" );
 
-  create_top($lang["error"], 1 );
+  create_top($lang['error'], 1 );
 
-  $content = "<div style=\"text-align: center\">$message</div>\n";
+  $content = "<div style=\"text-align : center\">$message</div>\n";
 
   new_box($box_title, $content, "boxdata", "singlebox" );
 

@@ -39,7 +39,7 @@ require_once(BASE."includes/security.php" );
 
 include_once(BASE."includes/admin_config.php" );
 
-if($SMTP_AUTH == "Y" )
+if( SMTP_AUTH == "Y" )
   include_once(BASE."includes/smtp_auth.php" );
 
 //
@@ -48,24 +48,23 @@ if($SMTP_AUTH == "Y" )
 
 function email($to, $subject, $message ) {
 
-  global $USE_EMAIL, $SMTP_HOST, $SMTP_AUTH, $bit8, $connection;
+  global $bit8, $connection;
 
   $email_encode = "";
   $message_charset = "";
   $body = "";
 
-  if($USE_EMAIL == "N" ) {
+  if(USE_EMAIL == "N" ) {
     //email is turned off in config file
     return;
   }
-
-  if(@strlen($to) == 0 ) {
+  if(strlen($to) == 0  ) {
     //no email address specified - end function
     return;
   }
 
   //open an SMTP connection at the mail host
-  $host = $SMTP_HOST;
+  $host = SMTP_HOST;
   $connection = @fsockopen($host, 25, $errno, $errstr, 10 );
   if (!$connection )
     debug("Unable to open SMTP connection to ".$host."<br /><br />Error ".$errno." ".$errstr );
@@ -79,11 +78,11 @@ function email($to, $subject, $message ) {
     debug("Incorrect handshaking response from SMTP server at ".$host." <br /><br />Response from SMTP server was ".$res[0] );
 
   //do extended hello (EHLO)
-  fputs($connection, "EHLO ".$_SERVER["SERVER_NAME"]."\r\n" );
+  fputs($connection, "EHLO ".$_SERVER['SERVER_NAME']."\r\n" );
   //if EHLO not working, try the older HELO...
   $res = response();
   if($res[1] != "250" ) {
-    fputs($connection, "HELO ".$_SERVER["SERVER_NAME"]."\r\n" );
+    fputs($connection, "HELO ".$_SERVER['SERVER_NAME']."\r\n" );
     $res = response();
     if($res[1] != "250" )
       debug("Incorrect HELO response from SMTP server at ".$host." <br /><br />Response from SMTP server was ".$res[0] );
@@ -95,7 +94,7 @@ function email($to, $subject, $message ) {
     $bit8 = true;
 
    //do SMTP_AUTH if required
-   if($SMTP_AUTH == "Y" )
+   if(SMTP_AUTH == "Y" )
      smtp_auth($connection, $cap );
 
   //arrange message - and set email encoding
@@ -111,7 +110,7 @@ function email($to, $subject, $message ) {
   //envelope to
   $address_list = explode(",", $to );
   foreach($address_list as $email_to ) {
-    fputs($connection, "RCPT TO: <".trim($email_to ).">\r\n" );
+    fputs($connection, "RCPT TO: <".trim(clean($email_to ) ).">\r\n" );
     $res = response();
     switch($res[1] ) {
       case "250":
@@ -327,7 +326,7 @@ function headers($to, $subject, $email_encode, $message_charset ) {
 
   $headers = array_merge($headers, subject($subject ) );
 
-  $headers[] = "Message-Id: <".uniqid("")."@".$_SERVER["SERVER_NAME"].">";
+  $headers[] = "Message-Id: <".uniqid("")."@".$_SERVER['SERVER_NAME'].">";
   $headers[] = "X-Mailer: WebCollab (PHP/".phpversion().")";
   $headers[] = "X-Priority: 3";
   $headers[] = "X-Sender: ".EMAIL_REPLY_TO;
@@ -366,12 +365,12 @@ function response() {
 
  function debug($error ){
 
-   global $DEBUG, $connection;
+   global $connection;
 
-   if($DEBUG == "Y" ) {
+   if(DEBUG == "Y" ) {
      $time_out = "";
      $meta = @socket_get_status($connection);
-     if($meta["timed_out"] )
+     if($meta['timed_out'] )
        $time_out = "<br /><br />Socket timeout has occurred";
 
      //we don't use error() because email may not work!

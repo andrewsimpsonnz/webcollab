@@ -26,7 +26,6 @@
 */
 
 //set initial safe values
-$DATABASE_NAME = "--";
 $WEB_CONFIG = "N";
 
 //read config files
@@ -52,19 +51,19 @@ function secure_error($message ) {
 //
 
 //valid login attempt ?
-if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
+if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
   include_once("database/database.php" );
   include_once("includes/common.php" );
 
   $q = "";
-  $username = safe_data($_POST["username"]);
+  $username = safe_data($_POST['username']);
   //encrypt password
-  $md5pass = md5($_POST["password"] );
+  $md5pass = md5($_POST['password'] );
   $flag_attempt = FALSE;
 
   //no ip (possible?)
-  if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
+  if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
     secure_error("Unable to determine ip address");
   }
   
@@ -159,7 +158,7 @@ if(! mb_internal_encoding("UTF-8") )
   
   
 //check for initial install
-if($DATABASE_NAME == "" ) {
+if(DATABASE_NAME == "" ) {
   //this is an initial install
   $path = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
   header("Location: ".$path."setup_handler.php?action=setup1" );

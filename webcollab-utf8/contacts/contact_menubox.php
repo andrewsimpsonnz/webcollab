@@ -42,25 +42,26 @@ $q = db_query("SELECT id, firstname, lastname, company FROM ".PRE."contacts ORDE
 //show all contacts
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
-  if( $row["company"] != "" ) {
-     if ($row["company"] != $company ){
-       $content .= $row["company"]."<br />";
+  if( $row['company'] != "" ) {
+     if ($row['company'] != $company ){
+       $content .= $row['company']."<br />";
      }
-     $show = $row["lastname"].", ".mb_strtoupper(mb_substr( $row["firstname"], 0, 1 ) ).".";
+     $show = $row['lastname'].", ".mb_strtoupper(mb_substr( $row['firstname'], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row["id"]."\">$show</a><br />";
      $company =  $row["company"];
    }
    else{
-     $show = $row["lastname"].", ".mb_strtoupper(mb_substr( $row["firstname"], 0, 1 ) ).".";
+     $show = $row['lastname'].", ".mb_strtoupper(mb_substr( $row['firstname'], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row["id"]."\">$show</a><br />";
    }
 }
 
 
 //the add button
-$content .= "<br />\n<span class=\"textlink\">[<a href=\"contacts.php?x=$x&amp;action=add\">".$lang["add_contact"]."</a>]</span>\n";
+if($GUEST != 1 )
+  $content .= "<br />\n<span class=\"textlink\">[<a href=\"contacts.php?x=$x&amp;action=add\">".$lang['add_contact']."</a>]</span>\n";
 
 //show the box
-new_box($lang["contacts"], $content, "boxmenu" );
+new_box($lang['contacts'], $content, "boxmenu" );
 
 ?>
