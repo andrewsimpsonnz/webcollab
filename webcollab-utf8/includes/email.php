@@ -181,11 +181,12 @@ function & clean($encoded ) {
 
   //reinstate encoded html back to original text
   $text = @html_entity_decode($encoded, ENT_NOQUOTES, "UTF-8" );
+  
+  //reinstate decimal encoded html that html_entity_decode() can't handle...
   $text = preg_replace('/&#(\d+);/me', "chr('$1')", $text );
   
   //remove any dangerous tags that exist after decoding
-  $text = preg_replace("/(<\/?)(\w+|s+)([^>]*>)/e", "'$1'.ltrim(strtoupper('$2')).'$3'", $text );
-  $text = str_replace(array("<APPLET", "<OBJECT", "<SCRIPT", "<EMBED", "<FORM", "<?", "<%" ), "<**** ", $text );
+  $text = preg_replace("/(<\/?\s*)(APPLET|SCRIPT|EMBED|FORM|\?|%)(\w*|\s*)([^>]*>)/i", "\\1****\\3\\4", $text );
 
   return $text;
 }
@@ -200,7 +201,7 @@ function & message($message, & $email_encode, & $message_charset, & $body ) {
 
   //clean up message
   $message =& clean($message );
-  //check if message contains high bit ascii characters and set encoding to match mailer capabilities
+  //check if message contains multi-byte UTF-8 characters and set encoding to match mailer capabilities
   switch(preg_match('/([\177-\377])/', $message ) ) {
     case true:
       //we have special characters
@@ -273,7 +274,7 @@ function &subject($subject ) {
   //reinstate any HTML in subject back to text
   $subject =& clean($subject );
 
-  //encode subject with 'printed-quotable' if high ASCII characters are present
+  //encode subject with 'printed-quotable' if multi-byte UTF-8 characters are present
   switch(preg_match('/([\177-\377])/', $subject ) ) {
     case false:
       //no encoding required
