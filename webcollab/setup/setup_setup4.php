@@ -5,7 +5,7 @@
   WebCollab
   ---------------------------------------
 
-  This file written in 2003 by Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2003 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -22,7 +22,7 @@
    Function:
   ---------
 
-  Verify setup before writing to file 
+  Verify setup before writing to file
 
 */
 
@@ -93,7 +93,7 @@ switch ($url["scheme"] ){
     break;
 
   case "http":
-    if($fp = fsockopen ($url["host"], 80, $errno, $errstr, 10 ) ) {
+    if($fp = fsockopen ($url["host"], 80, $errno, $errstr, 5 ) ) {
       //this function may not work in Windows (prefix with '@')
       @socket_set_timeout($fp, 1 );
       //socket open - request HEAD
@@ -231,27 +231,17 @@ $status = "<font color=\"green\"><b>OK !</b></font>";
 
 if($data["use_email"] == "Y" && $data["smtp_host"] != "" ) {
 
-  if(function_exists('checkdnsrr') ){
-    //only works for UNIX and other *nix OS
-    if( ! checkdnsrr($data["smtp_host"], "MX" ) ) {
-      $status = "<font color=\"blue\"><b>Cannot locate MX record for ".$data["smtp_host"]."</b></font>";
-      $flag = $flag + 1;
-    }
+  if($fp = fsockopen($data["smtp_host"], 25, $errno, $errstr, 5 ) ) {
+    //this function may not work in Windows (prefix with '@')
+    @socket_set_timeout($fp, 1 );
+    //socket successfully opened - clean up & close
+    fputs($fp, "QUIT" );
+    fclose($fp);
   }
-  else {
-    //work around for Windows - which doesn't support checkdnsrr()
-    $found = false;
-    //prevent silly errors in eregi if nslookup fails
-    $output = "";
-    @exec("nslookup -type=MX ".$data["smtp_host"], $output );
-    while(list(, $line ) = each($output ) ) {
-      if(eregi("^$host", $line ) ) {
-        $found = true;
-        break;
-      }
-    }
-    if($found == false )
-      $status = "<font color=\"blue\"><b>Cannot locate MX record for ".$data["smtp_host"]."</b></font>";
+  else{
+      //could not open socket
+      $status = "<font color=\"blue\"><b>Not able to verify mail server</b></font>";
+      $flag = $flag + 1;
   }
 }
 
@@ -260,7 +250,7 @@ if($data["use_email"] == "Y" && $data["smtp_host"] == "" ) {
   $flag = $flag + 1;
 }
 
-$content .= "<tr><th><i>SMTP Host:</i></th><td>".$data["smtp_host"]."</td><td>$status</td></tr>\n";
+$content .= "<tr><th>SMTP Host:</th><td>".$data["smtp_host"]."</td><td>$status</td></tr>\n";
 
 $status = "<font color=\"green\"><b>OK !</b></font>";
 
@@ -280,6 +270,16 @@ $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
             "<tr><td></td><td><input type=\"submit\" value=\"Write Data to Config File\" /></td></tr>\n".
             "</table></p>\n".
             "</form>\n";
+
+/*
+$content .= "<form method=\"POST\" action=\"setup_setup3.php\">\n".
+            "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
+            "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />".
+            "<p><table border=\"0\">".
+            "<tr><td></td><td><input type=\"submit\" value=\"Re-enter Config Data\" /></td></tr>\n".
+            "</table></p>\n".
+            "</form>\n";
+*/
 
 new_box_setup( "Setup - Stage 4 of 5 : Verifying Data", $content, "boxdata", "tablebox" );
 create_bottom_setup();
