@@ -173,8 +173,14 @@ switch($data["db_type"]) {
       $flag = $flag + 10;
     }
     else {
+      //set initial value
+      $host = "";
+      //now adjust if necessary
+      if($DATABASE_HOST != "localhost" )
+        $host = "host=".$DATABASE_HOST;
+        
       //connect to db
-      if( ! @pg_connect("user=".$data["db_user"]." dbname=".$data["db_name"]." password=".$data["db_password"] ) ) {
+      if( ! @pg_connect($host." user=".$data["db_user"]." dbname=".$data["db_name"]." password=".$data["db_password"] ) ) {
         $status = "<font color=\"red\"><b>Can't connect to specified database!</b></font>";
         $flag = $flag + 10;
       }
