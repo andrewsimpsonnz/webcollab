@@ -35,7 +35,7 @@ include_once("includes/screen.php" );
 // The action handler
 //
 if( ! isset($_REQUEST["action"]) )
-  error("Contacts action handler", "No request given" );
+  error("Files action handler", "No request given" );
 
   //what do you want to task today =]
   switch($_REQUEST["action"] ) {
