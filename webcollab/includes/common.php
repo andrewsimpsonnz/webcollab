@@ -34,6 +34,11 @@ require_once("path.php" );
 include_once(BASE."config.php" );
 include_once(BASE."lang/language.php" );
 
+
+//define domain name for cookies
+$domain_array = explode('/', str_replace('http://', '', $BASE_URL ) );
+$DOMAIN = $domain_array[0];
+
 //
 // Gives back the percentage completed of this tasks's children
 //

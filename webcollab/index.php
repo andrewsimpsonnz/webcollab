@@ -103,10 +103,14 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) && valid_string($_PO
   @db_query("DELETE FROM logins WHERE user_id=$user_id" );
 
   //log the user in
-  db_query("INSERT INTO logins( user_id, session_key, ip, lastaccess )
-                       VALUES('$user_id', '$session_key', '$ip', current_timestamp(0) )" );
+  db_query("INSERT INTO logins( user_id, session_key, ip, lastaccess ) VALUES ('$user_id', '$session_key', '$ip', now() )" );
+
+  //try and set a session cookie (if the browser will let us)
+  setcookie("session_key", $session_key, time()+3600, "/", $DOMAIN, 0  );
+  //(No need to record an error here if unsuccessful: code will revert to URI session keys)
 
   //relocate the user to the main screen
+  //(we use both URI session key and cookies initially - in case cookies don't work)
   header("location: main.php?x=$session_key");
   die;
 }

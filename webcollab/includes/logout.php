@@ -36,6 +36,9 @@ require_once(BASE."includes/security.php" );
 //record preserved to allow time of last login to be recorded
 db_query("UPDATE logins SET session_key='' WHERE user_id=$uid" );
 
+//remove session cookie
+setcookie("session_key", $x, time()-3700, "/", $DOMAIN, 0  );
+
 header("Location: ".BASE."index.php" );
 
 ?>

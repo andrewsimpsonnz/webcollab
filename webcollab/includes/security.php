@@ -42,22 +42,24 @@ $ip="";
 $x="";
 $admin=0;
 
-//check for some values that HAVE to be present to be allowed (ip, session_key (named x))
+//check for some values that HAVE to be present to be allowed (ip, session_key)
 if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
   error("Security manager", "No ip address found" );
 }
 
-
-// $x can be from either a GET or a POST - need to check for both
-if( isset($_REQUEST["x"]) && ( strlen($_REQUEST["x"]) == 32 ) ) {
-  $x = $_REQUEST["x"];
-  } else {
+// $x can be from either a GET, POST or COOKIE - check for cookie first
+if(isset($_COOKIE["session_key"] ) && (strlen($_COOKIE["session_key"] ) == 32 ) ){
+  $x = $_COOKIE["session_key"];
+}
+elseif(isset($_REQUEST["x"]) && (strlen($_REQUEST["x"] ) == 32 ) ){
+  $x = safe_data($_REQUEST["x"]);
+}
+else{
   error($lang["security_manager"], sprintf($lang["no_key_sprt"], $BASE_URL ) );
 }
 
-
 //seems okay at first, now go cross-checking with the known data from the database
-if( ! ($q = db_query( "SELECT logins.user_id AS user_id, logins.ip AS ip, logins.lastaccess AS lastaccess,
+if( ! ($q = db_query("SELECT logins.user_id AS user_id, logins.ip AS ip, logins.lastaccess AS lastaccess,
                              users.email AS email, users.admin AS admin, users.fullname AS fullname,
                              $epoch now() ) AS now,
                              $epoch lastaccess) AS sec_lastaccess
@@ -104,7 +106,15 @@ else
   $admin = 0;
 
 //update the "I was here" time
-db_query("UPDATE logins SET lastaccess=current_timestamp(0) WHERE session_key='$x' AND user_id=$uid" );
+db_query("UPDATE logins SET lastaccess=now() WHERE session_key='$x' AND user_id=$uid" );
+
+//check to see if cookies are being used
+if(isset($_COOKIE["session_key"] ) ) {
+  //cookies in use; update the cookie
+  setcookie("session_key", $x, time()+3600, "/", $DOMAIN, 0  );
+  //and unset the URI encoded session key
+  $x = 0;
+}
 
 // this gives:
 //
