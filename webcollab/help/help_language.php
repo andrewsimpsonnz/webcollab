@@ -48,6 +48,19 @@ switch($LOCALE ) {
     }
     break;
 
+  case "de":
+    switch($help_type ) {
+      case "admin":
+        header("Location: ".$BASE_URL."help/de_help_admin.php#".$help_item );
+        break;
+
+      case "help":
+      default:
+        header("Location: ".$BASE_URL."help/de_help.php#".$help_item );
+        break;
+    }
+    break;
+
   case "en":
   default:
    switch($help_type ) {
