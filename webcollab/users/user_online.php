@@ -48,7 +48,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
 
 $content .= "<table>\n";
 //users online in last hour
-$q = db_query("SELECT ".PRE."logins.lastaccess AS last,
+$q = db_query("SELECT ".$epoch.PRE."logins.lastaccess) AS last,
             ".PRE."users.id AS id,
             ".PRE."users.fullname AS fullname,
             ".PRE."users.private AS private
@@ -67,12 +67,12 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
   }
   
   //show output
-  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></td><td>".nicetime($row["last"])."</td></tr>\n";
+  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></td><td>".nicetime($row["last"], 1 )."</td></tr>\n";
 }
 
 $content .= "<tr><td style=\"white-space:nowrap\"colspan=\"2\">&nbsp;</td></tr>\n";
 //users previously online 
-$q = db_query("SELECT ".PRE."logins.lastaccess AS last,
+$q = db_query("SELECT ".$epoch.PRE."logins.lastaccess) AS last,
             ".PRE."users.id AS id,
             ".PRE."users.fullname AS fullname,
             ".PRE."users.private AS private
@@ -91,7 +91,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
   }
   
   //show output
-  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></td><td>".nicetime($row["last"])."</td></tr>\n";
+  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></td><td>".nicetime($row["last"], 1 )."</td></tr>\n";
 
 }
 $content .= "</table>\n";

@@ -45,15 +45,17 @@ $taskid = intval($_GET["taskid"]);
 //check usergroup security
 require_once(BASE."includes/usergroup_security.php");
 
-$q = db_query("SELECT ".PRE."tasks.id AS id,
+$q = db_query("SELECT ".$epoch.PRE."tasks.created) AS epoch_created,
+                      ".$epoch.PRE."tasks.finished_time) AS epoch_finished,
+                      ".$epoch.PRE."tasks.completion_time) AS epoch_completion,
                       ".PRE."users.fullname AS fullname,
                       ".PRE."taskgroups.name AS taskgroup_name,
                       ".PRE."usergroups.name AS usergroup_name
-                    FROM ".PRE."tasks
-                    LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."tasks.owner)
-                    LEFT JOIN ".PRE."taskgroups ON (".PRE."taskgroups.id=".PRE."tasks.taskgroupid)
-                    LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."tasks.usergroupid)
-                    WHERE ".PRE."tasks.id=$taskid" );
+                      FROM ".PRE."tasks
+                      LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."tasks.owner)
+                      LEFT JOIN ".PRE."taskgroups ON (".PRE."taskgroups.id=".PRE."tasks.taskgroupid)
+                      LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."tasks.usergroupid)
+                      WHERE ".PRE."tasks.id=$taskid" );
 
 
 //get the data
@@ -102,9 +104,9 @@ if( $taskid_row["owner"] == 0 ) {
 $creator = @db_result(db_query("SELECT fullname FROM ".PRE."users WHERE id=".$taskid_row["creator"] ), 0, 0  );
 $content .= "<tr><td>".$lang["created_on"].": </td><td>";
 if($creator == NULL )
-  $content .= nicedate($taskid_row["created"]);
+  $content .= nicetime($taskid_row["epoch_created"]);
 else
-  $content .= sprintf($lang["by_sprt"], nicedate($taskid_row["created"]), "<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$taskid_row["creator"]."\">".$creator."</a>");
+  $content .= sprintf($lang["by_sprt"], nicetime($row["epoch_created"]), "<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$taskid_row["creator"]."\">".$creator."</a>");
 $content .= "</td></tr>\n";
 
 //get deadline
@@ -162,11 +164,11 @@ if($taskid_row["parent"] != 0 ) {
   //is there a finished date ?
   switch($taskid_row["status"] ) {
     case "done":
-      $content .= "<tr><td>".$lang["completed_on"].": </td><td>".nicedate($taskid_row["finished_time"])."</td></tr>\n";
+      $content .= "<tr><td>".$lang["completed_on"].": </td><td>".nicetime($row["epoch_finished"])."</td></tr>\n";
       break;
 
     case "cantcomplete":
-      $content .= "<tr><td>".$lang["modified_on"].": </td><td>".nicedate($taskid_row["finished_time"])."</td></tr>\n";
+      $content .= "<tr><td>".$lang["modified_on"].": </td><td>".nicetime($row["epoch_finished"])."</td></tr>\n";
       break;
 
     default:
@@ -178,7 +180,7 @@ else{
   switch($taskid_row["status"] ) {
     case "cantcomplete":
       $content .= "<tr><td>".$lang["status"].": </td><td><b>".$lang["project_on_hold"]."</b></td></tr>\n";
-      $content .= "<tr><td>".$lang["modified_on"].": </td><td>".nicedate($taskid_row["finished_time"])."</td></tr>\n";
+      $content .= "<tr><td>".$lang["modified_on"].": </td><td>".nicetime($row["epoch_finished"])."</td></tr>\n";
       break;
 
     case "notactive":
@@ -192,7 +194,7 @@ else{
     case "done":
     default:
       if($taskid_row["completed"] == 100 )  
-        $content .= "<tr><td>".$lang["completed_on"].": </td><td>".nicedate($taskid_row["completion_time"] )."</td></tr>\n";
+        $content .= "<tr><td>".$lang["completed_on"].": </td><td>".nicetime($row["epoch_completed"] )."</td></tr>\n";
       break;
   }
 }

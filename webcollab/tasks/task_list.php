@@ -41,7 +41,7 @@ $content = "";
 function list_tasks($parent ) {
 
   global $x, $uid, $gid, $admin, $parentid, $parent_array, $epoch, $lang;
-  global $taskgroup_flag, $task_state, $NEW_TIME, $DATABASE_TYPE, $ul_flag, $now;
+  global $taskgroup_flag, $task_state, $NEW_TIME, $DATABASE_TYPE, $ul_flag, $now, $tz_offset;
 
   //init values
   $stored_groupname = NULL;
@@ -57,7 +57,7 @@ if(substr($DATABASE_TYPE, 0, 5) == "mysql" )
 $q = db_query("SELECT ".PRE."tasks.id AS id,
                 ".PRE."tasks.name AS taskname,
                 ".PRE."tasks.status AS status,
-                ".PRE."tasks.finished_time AS finished_time,
+                $epoch ".PRE."tasks.finished_time) AS finished_time,
                 $epoch ".PRE."tasks.deadline) AS due,
                 $epoch ".PRE."tasks.edited) AS edited,
                 $epoch ".PRE."tasks.lastforumpost) AS lastpost,
@@ -181,7 +181,7 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
     //status
     switch($row["status"] ) {
       case "done":
-        $status_content="<span class=\"green\">(".$task_state["completed"]." ".nicedate($row["finished_time"]).")</span>";
+        $status_content="<span class=\"green\">(".$task_state["completed"]." ".nicetime($row["finished_time"]).")</span>";
         break;
 
       case "active":
@@ -193,7 +193,7 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
         break;
 
       case "cantcomplete":
-        $status_content="<span class=\"blue\">(".$task_state["cantcomplete"]." ".nicedate($row["finished_time"]).")</>";
+        $status_content="<span class=\"blue\">(".$task_state["cantcomplete"]." ".nicetime($row["finished_time"]).")</>";
         break;
     }
 
@@ -219,7 +219,7 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
         break;
 
       default:
-        $state = ($row["due"]-$now )/86400 ;
+        $state = ($row["due"] + $tz_offset - $now )/86400 ;
         if($state > 1 ) {
           $this_content .=  "(".sprintf( $lang["due_sprt"], ceil($state) ).")";
         }
@@ -278,7 +278,9 @@ $q = db_query("SELECT usergroupid, globalaccess, ".$epoch."now()) FROM ".PRE."ta
 
 $row = db_fetch_num($q, 0 );
 
+//set variables
 $now = $row[2];
+$tz_offset = ($TZ * 3600) - date("Z");
 
 if( ($admin != 1) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
 

@@ -87,19 +87,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   $project_deadline = db_result(db_query("SELECT ".$epoch."deadline) FROM ".PRE."tasks WHERE id=".$task_row["projectid"] ) ) + (int)date("Z");
   
   //change $project_deadline to GMT/UTC, plus 1 day for error tolerance
-  switch ($DATABASE_TYPE) {
-    case "postgresql":
-      //date GMT/UTC = date - selected_timezone_offset + 1 day 
-      $project_deadline = $project_deadline - ($TZ * 3600) + 86400;
-      break;
-      
-    case "mysql":
-    case "mysql_innodb":
-    default:
-      //date GMT/UTC = date - database_timezone_offset + 1 day
-      $project_deadline = $project_deadline - date("Z") + 86400;
-      break;
-  }
+  $project_deadline = $project_deadline + 86400;
           
   $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"$project_deadline\" />\n";            
                 

@@ -38,7 +38,7 @@ include_once(BASE."includes/time.php" );
 //
 
 function listTasks($task_id ) {
-   global $x, $epoch, $now ,$admin, $gid, $lang, $task_state;
+   global $x, $epoch, $now ,$admin, $gid, $lang, $task_state, $tz_offset;
 
   // show subtasks that are not complete
   $q = db_query("SELECT id, name, status, globalaccess, usergroupid,
@@ -76,7 +76,7 @@ function listTasks($task_id ) {
 
      default:
       //check if late
-      if( ($now - $row[5] ) >= 86400 ) {
+      if( ($now + $tz_offset - $row[5] ) >= 86400 ) {
         $content .= "<span class=\"late\">".$lang["late_g"]."</span>";
       }
       break;
@@ -95,19 +95,20 @@ function listTasks($task_id ) {
 $content = "";
 $flag = 0;
 $active_only = 0;
+$tz_offset = ($TZ * 3600) - date("Z");
 
 // query to get the projects
   $q = db_query("SELECT id,
                         name,
-                        finished_time,
                         deadline,
                         status,
-                        ".$epoch." deadline ) AS due,
-                        ".$epoch." now() ) AS now,
+                        ".$epoch." deadline) AS due,
+                        ".$epoch." finished_time) AS finished_time,
+                        ".$epoch." completion_time) AS completion_time,
+                        ".$epoch." now()) AS now,
                         usergroupid,
                         globalaccess,
-                        completed,
-                        completion_time
+                        completed
                         FROM ".PRE."tasks
                         WHERE parent=0
                         ORDER BY name" );
@@ -192,11 +193,11 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   switch($project_status ) {
 
     case "done":
-      $content .= $task_state["completed"]." (".nicedate( $row["completion_time"] ).")\n";
+      $content .= $task_state["completed"]." (".nicetime( $row["completion_time"] ).")\n";
       break;
 
     case "cantcomplete":
-      $content .= "<i>".sprintf($lang["project_hold_sprt"], nicedate($row["finished_time"]) )."</i><br />\n";
+      $content .= "<i>".sprintf($lang["project_hold_sprt"], nicetime($row["finished_time"]) )."</i><br />\n";
       $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row["deadline"] )."<br />\n";
       break;
 
@@ -215,7 +216,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     default:
       $content .= sprintf($lang["percent_sprt"], $row["completed"] )."<br />\n";
       $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row["deadline"] )." ";
-      $state = ($row["due"]-$row["now"] )/86400 ;
+      $state = ($row["due"] + $tz_offset - $row["now"] )/86400 ;
       if($state > 1 ) {
         $content .=  "(".sprintf($lang["due_sprt"], ceil($state) ).")\n";
       }

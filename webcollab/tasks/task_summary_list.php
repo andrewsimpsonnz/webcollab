@@ -37,6 +37,7 @@ include_once(BASE."includes/time.php" );
 //initialise variables
 $no_access_project[0] = 0;
 $no_access_group[0] = 0;
+$tz_offset = ($TZ * 3600) - date("Z");
 
 //
 // MAIN FUNCTION
@@ -47,7 +48,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
   global $x, $uid, $gid, $admin, $lang, $task_state;
   global $no_access_project, $no_access_group;
   global $sortby;
-  global $epoch;
+  global $epoch, $tz_offset;
 
   $q = db_query( "SELECT ".PRE."tasks.id AS id,
                          ".PRE."tasks.parent AS parent,
@@ -60,11 +61,11 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
                          ".PRE."tasks.globalaccess AS globalaccess,
                          ".PRE."tasks.projectid AS projectid,
                          ".PRE."tasks.completed AS completed,
-                         $epoch now() ) AS now,
+                         $epoch now()) AS now,
                          $epoch deadline) AS due,
-                         $epoch ".PRE."tasks.edited ) AS edited,
-                         $epoch ".PRE."tasks.lastforumpost ) AS lastpost,
-                         $epoch ".PRE."tasks.lastfileupload ) AS lastfileupload
+                         $epoch ".PRE."tasks.edited) AS edited,
+                         $epoch ".PRE."tasks.lastforumpost) AS lastpost,
+                         $epoch ".PRE."tasks.lastfileupload) AS lastfileupload
                          $equiv
                          FROM ".PRE."tasks
                          $tail" );
@@ -91,7 +92,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
         continue;
     }
 
-    $due = round( ($row["due"] - $row["now"])/86400 );
+    $due = round( ($row["due"] + $tz_offset - $row["now"])/86400 );
 
     $seenq = db_query( "SELECT $epoch time) FROM ".PRE."seen WHERE taskid=".$row["id"]." AND userid=$uid LIMIT 1" );
 
@@ -158,7 +159,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
             break;
 
           default:
-            $date = nicedate($row["deadline"] );
+            $date = nicetime($row["due"] );
             if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent<>0" ), 0, 0 ) == 0 ) {
               $color = "green";
               $status = $task_state["done"];
@@ -174,17 +175,17 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
       switch( $row["status"] ) {
         case "done":
           $color = "";
-          $date = nicedate($row["deadline"] );
+          $date = nicetime($row["due"] );
           $status =  "<span class=\"green\">".$task_state["done"]."</span>";
           break;
 
         case "created":
-          $date = nicedate($row["deadline"] );
+          $date = nicetime($row["due"] );
           $status =  $task_state["new"];
           break;
 
         case "active":
-          $date = nicedate($row["deadline"] );
+          $date = nicetime($row["due"] );
           $color = "orange";
           $status =  $task_state["task_active"];
           break;
@@ -202,7 +203,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
           break;
 
         default:
-          $date = nicedate($row["deadline"] );
+          $date = nicetime($row["due"] );
           $status =  "<span class=\"orange\">".$row["status"]."</span>";
           break;
       }

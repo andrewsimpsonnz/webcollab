@@ -35,7 +35,7 @@ require_once( BASE."includes/security.php" );
 //
 
 function listTasks($task_id, $tail ) {
-   global $x, $admin, $gid, $userid, $epoch, $lang;
+   global $x, $admin, $gid, $userid, $epoch, $lang, $tz_offset;
   // show all subtasks that are not complete
   $q = db_query( "SELECT id, name, owner, deadline, usergroupid, globalaccess,
                         $epoch deadline) AS task_due,
@@ -63,7 +63,7 @@ function listTasks($task_id, $tail ) {
      $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
 
      //add highlighting if deadline is due
-     $state = ceil( ($row["task_due"]-$row["now"] )/86400 );
+     $state = ceil( ($row["task_due"] + $tz_offset - $row["now"] )/86400 );
      if($state > 1) {
        $content .= $row["name"]."</a>".sprintf($lang["due_in_sprt"], $state );
        } else if($state > 0) {
@@ -85,6 +85,7 @@ $flag = 0;
 $content = "";
 $usergroup[0] = 0;
 $allowed[0] = 0; 
+$tz_offset = ($TZ * 3600) - date("Z");
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid,
