@@ -50,13 +50,13 @@ $content = "<TABLE border=\"0\">\n";
 
 //show them
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
-  $content .= "<TR><TD><SMALL><A href=\"users.php?x=".$x."&action=show&userid=".$row["id"]."\">".$row["fullname"]."</A></SMALL></TD>\n";
+  $content .= "<TR><TD><SMALL><A href=\"users.php?x=".$x."&action=show&userid=".$row["id"]."\">".$row["fullname"]."</A></SMALL></TD>";
 
   if( $admin == 1 ) {
     $content .= "<TD align=\"right\" nowrap><SMALL> [<A href=\"users/user_del.php?x=".$x."&userid=".$row["id"]."\">".$lang["del"]."</A>]".
-                "[<A href=\"users.php?x=".$x."&userid=".$row["id"]."&action=edit\">".$lang["edit"]."</A>]</SMALL></TD></TR>";
+                "[<A href=\"users.php?x=".$x."&userid=".$row["id"]."&action=edit\">".$lang["edit"]."</A>]</SMALL></TD>";
   }
-
+  $content .= "</TR>\n";
 }
 
 $content .= "</TABLE>";
