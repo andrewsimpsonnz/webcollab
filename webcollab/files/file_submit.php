@@ -63,7 +63,7 @@ ignore_user_abort(TRUE);
       $taskid = intval($_POST['taskid']);
       $description = safe_data_long($_POST['description'] );
       //make email adresses and web links clickable
-      $description = html_links($description );
+      $description = html_links($description, 1 );
       $description = nl2br($description );
 
       $input_array = array("mail_owner", "mail_group" );

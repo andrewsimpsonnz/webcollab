@@ -112,11 +112,16 @@ function javascript_escape($body ) {
 //
 // make web addresses and email addresses clickable
 //
-function html_links($body) {
+function html_links($body, $database_escape=0 ) {
 
   $body = preg_replace("/(([\w\-\.]+)@([\w\-\.]+)\.([\w]+))/", "<a href=\"mailto:$0\">$0</a>", $body );
-  $body = preg_replace("/((http|ftp)+(s)?:\/\/[^\s]+)/i", "<a href=\"$0\" onclick=\"window.open(\'$0\'); return false\">$0</a>", $body );
-
+  
+  //data being submitted to a database needs ('$0') part escaped
+  if($database_escape )    
+    $body = preg_replace("/((http|ftp)+(s)?:\/\/[^\s]+)/i", "<a href=\"$0\" onclick=\"window.open(\'$0\'); return false\">$0</a>", $body );
+  else
+    $body = preg_replace("/((http|ftp)+(s)?:\/\/[^\s]+)/i", "<a href=\"$0\" onclick=\"window.open('$0'); return false\">$0</a>", $body );
+    
   return $body;
 }
 
