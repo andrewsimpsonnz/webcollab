@@ -46,7 +46,7 @@ function list_tasks( $parent ) {
   global $x, $uid, $BASE_URL, $parent_array, $epoch, $taskgroup_flag, $lang, $task_state, $NEW_TIME, $DATABASE_TYPE, $parentid;
 
   //init values
-  $stored_groupname = "";
+  $stored_groupname = NULL;
   $this_content = "";
   $no_group = "";
 
@@ -104,7 +104,7 @@ if( $DATABASE_TYPE == "mysql")
       if($stored_groupname != $groupname ) {
 
         //don't need </UL> for first line of output (no <UL> is set)
-        if( $stored_groupname != "" )
+        if($stored_groupname != NULL )
           $this_content .= "</UL>\n";
 
         //show taskgroup name
