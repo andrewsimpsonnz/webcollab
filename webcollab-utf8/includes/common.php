@@ -80,29 +80,40 @@ return $body;
 }
 
 function clean_up($body ) {
+  global $validation_regex;
   
   //decode decimal HTML entities added by web browser
   $body = preg_replace('/&#\d{2,5};/e', "utf8_entity_decode('$0')", $body );
   //decode hex HTML entities added by web browser
-  $body = preg_replace('/&#x([a-fA-F0-7]{2,8});/e', "utf8_entity_decode('&#'.hexdec('$1').';')", $body );
+  //$body = preg_replace('/&#x([a-fA-F0-7]{2,8});/e', "utf8_entity_decode('&#'.hexdec('$1').';')", $body );
 
-  switch(CHARACTER_SET ) {
-    case "UTF-8":
-      //allow only normal UTF-8 characters up to U+10000, which is the limit of 3 byte characters
-      // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )   
-      preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                       // ASCII characters
-                    '|[\xc2-\xdf][\x80-\xbf]'.                         // 2-byte UTF-8 (except overly longs)
-                    '|\xe0[\xa0-\xbf][\x80-\xbf]'.                     // 3 byte (except overly longs)
-                    '|[\xe1-\xec\xee\xef][\x80-\xbf]{2}'.              // 3 byte (except overly longs)
-                    '|\xed[\x80-\x9f][\x80-\xbf])+/', $body, $ar );    // 3 byte (except UTF-16 surrogates)
+  switch(strtoupper(CHARACTER_SET) ) {
     
+    case "EUC_KR":
+    case "EUC_CN":
+      $body = preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                 // CS0 ASCII
+                              '|[\xa1-\xfe]{2}/', $body, $ar );           // CS1 GB2312-80 
       $body = join("?", $ar[0] );
       break;
-      
+    
+    case "SHIFT-JIS":
+      $body = preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                 // ASCII
+                              '|[\x81-\x9f\xe0-\xfc][\x40-\x7e\x80-\xfc]'. // JIS X 0208:1997
+                              '|[\xa0-\xdf]/', $body, $ar );              // half width katakana
+      $body = join("?", $ar[0] );
+      break;
+             
+    case "UTF-8":
     default:
-      //allow only normal printing characters - any non-printing control characters are replaced with "*"
-      $body = preg_replace('/([^\x09\x0a\x0d\x20-\xff])/s', "*", $body );
-      //$body = preg_replace('/([\x00-\x08\x0b-\x0c\x0e-\x1f])/', "*", $body );
+      //allow only normal UTF-8 characters up to U+10000, which is the limit of 3 byte characters
+      // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )   
+      preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                         // ASCII characters
+                    '|[\xc2-\xdf][\x80-\xbf]'.                            // 2-byte UTF-8 (except overly longs)
+                    '|\xe0[\xa0-\xbf][\x80-\xbf]'.                        // 3 byte (except overly longs)
+                    '|[\xe1-\xec\xee\xef][\x80-\xbf]{2}'.                 // 3 byte (except overly longs)
+                    '|\xed[\x80-\x9f][\x80-\xbf])+/', $body, $ar );       // 3 byte (except UTF-16 surrogates)
+    
+      $body = join("?", $ar[0] );
       break;
   }    
  
@@ -111,7 +122,7 @@ function clean_up($body ) {
     $body = addslashes($body );
         
   //use HTML encoding for characters that could be used for css <script> or SQL injection attacks
-  $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;' );
+  $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'\|', '('=>'\(', ')'=>'\)', '+'=>'\+', '-'=>'\-', '='=>'\=' );
   
   return strtr($body, $trans ); 
 }
