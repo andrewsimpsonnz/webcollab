@@ -73,14 +73,14 @@ if($USE_EMAIL == "Y" ){
 }
 
 $content .= "<tr><td nowrap colspan=\"2\"><b>".$lang["default_checkbox"]."</b></td></tr>\n".
-            "<tr><td colspan=\"2\">&nbsp;</td></tr>";
+            "<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
 
 //defaults for task checkboxes
-$content .= "<tr><td>".$lang["allow_globalaccess"]."</td><td><INPUT type=\"checkbox\" name=\"access\" ".$row["globalaccess"]."></td></tr>\n".
-            "<tr><td>".$lang["allow_group_edit"]."</td><td><INPUT type=\"checkbox\" name=\"group_edit\" ".$row["groupaccess"]."></td></tr>\n".
-            "<tr><td>".$lang["set_email_owner"]."</td><td><INPUT type=\"checkbox\" name=\"owner\" " .$row["owner"]."></td></tr>\n".
-            "<tr><td>".$lang["set_email_group"]."</td><td><INPUT type=\"checkbox\" name=\"usergroup\"  ".$row["usergroup"]."></td></tr>\n".
-            "<tr><td colspan=\"2\">&nbsp;</td></tr>".
+$content .= "<tr><td><label for=\"user\">".$lang["allow_globalaccess"]."</label></td><td><INPUT type=\"checkbox\" name=\"access\" id=\"access\" ".$row["globalaccess"]."></td></tr>\n".
+            "<tr><td><label for=\"group_edit\">".$lang["allow_group_edit"]."</label></td><td><INPUT type=\"checkbox\" name=\"group_edit\" id=\"group_edit\" ".$row["groupaccess"]."></td></tr>\n".
+            "<tr><td><label for=\"owner\">".$lang["set_email_owner"]."</label></td><td><INPUT type=\"checkbox\" name=\"owner\" id=\"owner\" ".$row["owner"]."></td></tr>\n".
+            "<tr><td><label for=\"usergroup\">".$lang["set_email_group"]."</label></td><td><INPUT type=\"checkbox\" name=\"usergroup\" id=\"usergroup\" ".$row["usergroup"]."></td></tr>\n".
+            "<tr><td>&nbsp;</td></tr>\n".
           "</table>\n";
 
 
