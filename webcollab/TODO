@@ -1,7 +1,32 @@
 TODO
+====
 
-- transaction support in MySQL?
+*MySQL Transaction Support
 
-- support for Borland Interbase?
+Latest version of MySQL can use InnoDB tables with transaction support. In the 
+current stable MySQL 3.x.x versions the InnoDB support defaults(?) to off.  
+Should add an additional abstraction layer file (with transactions) for MySQL
+with InnoDB turned on.
+
+*Borland Interbase
+
+Linux Journal readers survey put Interbase third in popularity behind MySQL and
+PostgreSQL.  Had a quick look at the Borland documentation, looks feasible to
+write an abstraction layer.
+
+*Task Deadlines ahead of Project Deadlines
+
+The code lets you put a task deadline ahead of a project deadline.  In real life 
+this is not possible.  Possibly should error trap this.
+
+*Popup Warnings
+
+Some minor warnings could be popup boxes rather than a new screen.  So far I 
+haven't worked out any practical way to do this without lots of (bloated) code 
+and javascript.  Also want to maintain cross platform browser compatibility.
+
+*Translations
+
+Translation files are in /lang and /help.  
 
 

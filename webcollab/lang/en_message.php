@@ -176,7 +176,7 @@ $lang = array(
 
  //taskgroups
  "taskgroup_name" => "Taskgroup name:",
- "taskgroup_description" => "Taskgroup simple description",
+ "taskgroup_description" => "Taskgroup simple description:",
  "add_taskgroup" => "Add taskgroup",
  "add_new_taskgroup" => "Add a new taskgroup",
  "edit_taskgroup" => "Edit taskgroup",
