@@ -242,7 +242,7 @@ $global = "";
 if( $row["globalaccess"] == 't' )
   $global = "CHECKED";
 
-$content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</TD><TD><INPUT type=\"checkbox\" name=\"globalaccess\" ".$global."></TD></TR>\n";
+$content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</A></TD><TD><INPUT type=\"checkbox\" name=\"globalaccess\" ".$global."></TD></TR>\n";
 
 $content .= "<TR> <TD>".$lang["task_description"]."</TD> <TD><TEXTAREA name=\"text\" rows=\"5\" cols=\"60\">".$row["text"]."</TEXTAREA></TD> </TR>\n";
 

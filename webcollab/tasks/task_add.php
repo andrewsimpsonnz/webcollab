@@ -140,7 +140,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
     $content .= "<OPTION value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</OPTION>\n";
 
   $content .= "</SELECT></TD></TR>\n";
-  $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</TD><TD><INPUT type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS."></TD></TR>\n";
+  $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</A> </TD><TD><INPUT type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS."></TD></TR>\n";
 
   $content .= "<TR> <TD>".$lang["task_description"]."</TD> <TD><TEXTAREA name=\"text\" rows=\"10\" cols=\"60\"></TEXTAREA></TD> </TR>\n";
 
@@ -211,7 +211,7 @@ else {
     $content .= "<OPTION value=\"".$usergroup_row["id"]."\">".$usergroup_row["name"]."</OPTION>\n";
 
   $content .= "</SELECT></TD></TR>\n";
-  $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</TD><TD><INPUT type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS."></TD></TR>\n";
+  $content .= "<TR><TD><A href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalaccess\" target=\"helpwindow\">".$lang["all_users"]."</A> </TD><TD><INPUT type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS."></TD></TR>\n";
 
   $content .= "<TR> <TD>".$lang["project_description"]."</TD> <TD><TEXTAREA name=\"text\" rows=\"10\" cols=\"60\"></TEXTAREA></TD> </TR>\n";
 
