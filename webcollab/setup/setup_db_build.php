@@ -5,7 +5,7 @@
   WebCollab
   ---------------------------------------
 
-  This file written in 2003 by Andrew Simpson <andrew.simpson@paradise.net.nz>
+  (c) 2003 - 2004 Andrew Simpson <andrew.simpson@paradise.net.nz>
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -134,6 +134,21 @@ include_once("./screen_setup.php" );
       error_setup( "Your version of PHP does not have support for PostgreSQL<br /><br />".
                    "Check that PostgreSQL support is compiled in, and enabled in php.ini config file<br />" );
 
+    //tailor database commands to match version of PHP in use (pgsql functions changed in 4.2.0)
+    switch(version_compare(PHP_VERSION, "4.2.0" ) ) {
+      case 0:
+      case 1:
+        $query = "pg_query";
+        $error = "pg_last_error";
+        break;
+
+      case -1:
+      default:
+        $query = "pg_exec";
+        $error = "pg_errormessage";
+        break;
+    }
+
     if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=".$database_name." password=".$database_password ) ) ) {
       //selected database doesn't exist - need to create it
 
@@ -146,8 +161,8 @@ include_once("./screen_setup.php" );
       }
 
       //create new database
-      if( ! ($result = @pg_exec($database_connection, "CREATE DATABASE ".$database_name ) ) ) {
-        error_setup("Connected to database, but the new database creation had the following error:<br />".pg_errormessage($database_connection) );
+      if( ! ($result = @$query($database_connection, "CREATE DATABASE ".$database_name ) ) ) {
+        error_setup("Connected to database, but the new database creation had the following error:<br />".$error($database_connection) );
       }
 
       //close the standard template database
@@ -188,8 +203,8 @@ include_once("./screen_setup.php" );
 
     //create tables from schema
     foreach($table_array as $table ){
-      if( ! ($result = @pg_exec($database_connection, $table ) ) ) {
-        error_setup("The database creation had the following error:<br /> ".pg_errormessage($database_connection) );
+      if( ! ($result = @$query($database_connection, $table ) ) ) {
+        error_setup("The database creation had the following error:<br /> ".$error($database_connection) );
       }
     }
     break;
