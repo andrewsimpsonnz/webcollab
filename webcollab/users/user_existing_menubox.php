@@ -43,11 +43,11 @@ if(db_numrows($q) < 1 ) {
   return;
 }
 
-$content = "<table border=\"0\" align=\"left\"><small>\n";
+$content = "<table border=\"0\" align=\"left\">\n";
 
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
-  $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&userid=".$row["id"]."\">".$row["fullname"]."</a></small></td>";
+  $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></small></td>";
 
   if($admin == 1 ) {
     $content .= "<td align=\"right\" nowrap><small> [<a href=\"users/user_del.php?x=$x&amp;userid=".$row["id"]."\">".$lang["del"]."</a>]".
@@ -56,7 +56,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $content .= "</tr>\n";
 }
 
-$content .= "</small></table>";
+$content .= "</table>";
 
 //show it
 new_box($lang["existing_users"], $content, "boxmenu" );

@@ -21,15 +21,27 @@ Translation files are in /lang and /help.
 
 * Make task_list xhtml compliant with lists
 
-* Testing - look for html errors (tidy)
+- notes on translation for translators
 
-- try and introduce cellpadding
+- when deleting user show remaining owned tasks and posts
+   - creator doesn't need to be checked
+   - funny code in user_deleted_menubox too
 
-- forum add (translate 'message' & add note about html stripping)
+- finish off the setup stuff
 
-- Update TODO
+- change to UTF-8 encoding?
 
+- user/usergroup selection in calendar and todo
 
+*TESTING
+
+- mailer
+
+- delete users with created tasks
+
+- deleted users on user online
+
+- new stylesheet
 
 
 

@@ -102,7 +102,7 @@ foreach($week_array as $value) {
 $content .= "</tr>\n";
 
 //show lead in to dates
-$content .= "<tr valign=\"top\" align=\"center\">\n";
+$content .= "<tr valign=\"top\" align=\"center\" height=\"60\">\n";
 for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); $i++ ) {
   $content .= "<td>&nbsp;</td>\n";
 }
@@ -111,7 +111,7 @@ for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); $i++
 for ($num = 1; $num <= $numdays; $num++ ) {
   if ($i >= 7 ) {
     $content .= "</tr>\n".
-                "<tr valign=\"top\" align=\"center\">\n";
+                "<tr valign=\"top\" align=\"center\" height=\"60\">\n";
     $i=0;
   }
   $content .= "<td ";
@@ -121,7 +121,6 @@ for ($num = 1; $num <= $numdays; $num++ ) {
     $content .= "bgcolor=\"#C0C0C0\"";
 
   $content .= ">$num<br />";
-  $pad = 0;
 
   //search for tasks on this date
   $q = db_query("SELECT id, name, parent, status, usergroupid, globalaccess FROM tasks WHERE deadline='$year-$month-$num'" );
@@ -172,12 +171,6 @@ for ($num = 1; $num <= $numdays; $num++ ) {
       $pad++;
     }
   }
-  //pad out the cells to the required depth
-  while($pad < 5 ) {
-    $content .= "<br />";
-    $pad++;
-  }
-
   $content .= "</td>\n";
   $i++;
 }

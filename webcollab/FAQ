@@ -25,13 +25,22 @@ pgsql
 
 Look for mysql and/or pgsql as required in the modules listing that follows.
 
-Most Linux distributions have separate packages (*.rpm, *.deb, etc) for the main PHP files and the
-MySQL/PostgreSQL PHP support.
+Most likely cause is that the default file for php.ini has the mysql or pgsql module line commented
+out.  Look for lines in php.ini like this:
+
+;extension=mysql.so
+;extension=pgsql.so
+
+Remove the semi-colon ';' from the module you want, and restart Apache. 
+
+Also - many  Linux distributions have separate packages (*.rpm, *.deb, etc) for the main PHP files
+and the MySQL/PostgreSQL PHP support.  You need to install the relevant module package as well.
 
 
-3. "Can login and get main screen, but sometimes pages are not found (404 error)."
+3. "Can login, but the main page is not found (404 error)."
 
-Check that the the parameter $BASE_URL is correctly stated in config.php.
+Check that the the parameter $BASE_URL is correctly stated in config.php.  Have you added the
+trailing slash "/"?
 
 
 4. "Does WebCollab use cookies?"
@@ -125,25 +134,17 @@ normally runs the webserver.
   EMAIL SETUP
   ===========
 
-1. What is the difference between "mail" and "SMTP" in config.php?
+1. How does email work in WebCollab?
 
-The "mail" option uses the mail() function call in PHP.  In most cases this will work fine, and it
-requires minimal set up.
+Early versions of WebCollab used the mail() function call in PHP.  In most cases it worked, but it
+can be difficult, particularly with Windows machines.
 
-On a Windows machine there is a configuration setting in php.ini configuration file that may need to
-be tweaked.  This is the SMTP setting (defaults to 'localhost'), which is the DNS name or IP
-address of the SMTP server PHP should use for mail sent with the mail() function.
+WebCollab now uses the standard SMTP protocol over TCP/IP to 'talk' to a mail server.  The mail
+server can be remote or local.
 
-With the Linux, the mail() function will normally call sendmail on the local machine via local UNIX
-sockets.  The SMTP setting in php.ini will have no effect.
-
-If the mail() function cannot be made to work, WebCollab provides an alternative method of sending
-email.  This is the "SMTP" option in config.php.  With this option the program will contact the
-listed SMTP server by tcp/ip connection, and follow the standard SMTP protocol for connection and
-sending data.  The SMTP server can be remote or local.
+In config.php:
 
 $SMTP_HOST = DNS name or IP address of the SMTP server
-
 
 
   REMOTE DATABASES

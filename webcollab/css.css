@@ -11,6 +11,7 @@ FONT {
   font-size : 12px;
 }
 
+/* Font for text based hyperlinks in [brackets] */
 FONT.textlink {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 10px;
@@ -29,11 +30,10 @@ LI LI {
   list-style-type: disc;
 }
 
-TD {
-  font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
-}
-
+/* Table outline for login screen
+  - reduced width
+  - aligned centre
+*/
 TABLE.loginbox {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
@@ -43,6 +43,7 @@ TABLE.loginbox {
   width : 400px;
 }
 
+/* Standard table box */
 TABLE.tablebox {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
@@ -52,6 +53,12 @@ TABLE.tablebox {
   width : 97%;
 }
 
+TD {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12px;
+}
+
+/* Box masthead styling */
 TD.boxhead {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
@@ -64,6 +71,7 @@ TD.boxhead {
   color : #ffffff;
 }
 
+/* Box content styling for menu list*/
 TD.boxmenu {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
@@ -75,6 +83,7 @@ TD.boxmenu {
   color : #000000;
 }
 
+/* Box content styling for info boxes */
 TD.boxdata {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
@@ -86,6 +95,9 @@ TD.boxdata {
   color : #000000;
 }
 
+/* Variation on 'boxdata'
+  - bottom padding reduced
+*/
 TD.boxdata2 {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
@@ -97,6 +109,7 @@ TD.boxdata2 {
   color : #000000;
 }
 
+/* Masthead band to top of page */
 .masthead {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
@@ -108,9 +121,10 @@ TD.boxdata2 {
   color : #eeeeee;
 }
 
+/* Class for text at page bottom */
 .loadtime {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
+  font-size : 10px;
   text-align : center;
   color : #1e4b79;
 }

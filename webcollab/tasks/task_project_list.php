@@ -146,10 +146,10 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $flag = 1;
 
   //start list
-  $content .= "<table border=\"0\" cellpadding=\"20\">\n<td>";
+  $content .= "<table border=\"0\" cellpadding=\"20\">\n<tr><td>";
 
   //show name and a link
-  $content .= "<a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["id"]."\"><b>".$row["name"]."</b></a>\n";
+  $content .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\"><b>".$row["name"]."</b></a>\n";
 
   // Show a nice %-of-tasks-completed bar
   $percent_complete = round(percent_complete($row["id"] ) );

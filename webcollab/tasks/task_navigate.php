@@ -53,7 +53,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
     case "0":
       //project
-      $content .= "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\">$project_name<br />\n";
+      $content .= "&nbsp; <img border=\"0\" src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\">$project_name<br />\n";
       break;
 
     case ($row["projectid"] ):

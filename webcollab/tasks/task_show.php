@@ -86,7 +86,7 @@ if( $row["owner"] == 0 ) {
   $content .= "<tr><td>".$lang["owned_by"].":</td><td>".$lang["nobody"]."</td></tr>\n";
 } else {
   $owner = db_result(db_query("SELECT fullname FROM users WHERE id=".$row["owner"] ), 0, 0  );
-  $content .= "<tr><td>".$lang["owned_by"].": </td><td><a href=\"users.php?x=$x&amp;action=show&userid=".$row["owner"]."\">".$owner."</a></td></tr>\n";
+  $content .= "<tr><td>".$lang["owned_by"].": </td><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["owner"]."\">".$owner."</a></td></tr>\n";
 }
 
 //get creator information

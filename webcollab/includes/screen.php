@@ -142,7 +142,7 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
   if($username != "" )
     echo "<small>".sprintf( $lang["user_homepage_sprt"], $username )."</small>\n";
 
-  echo "</td></tr>\n";
+  echo "</div></td></tr>\n";
 
 
   //if we choose to have only one space, we center it instead of pushing it to the left
@@ -172,7 +172,7 @@ function create_bottom() {
   //shows the time it took to load the page
   list($usec, $sec)=explode(" ", microtime() );
   $finishtime = ( (float)$usec + (float)$sec ) - $loadtime;
-  echo "<div class=\"loadtime\">\n<small>".sprintf( $lang["load_time_sprt"], $finishtime, $database_query_time, $database_query_count )."</small></font></div><br />\n";
+  echo "<div class=\"loadtime\">\n".sprintf( $lang["load_time_sprt"], $finishtime, $database_query_time, $database_query_count )."</div><br />\n";
 
   //end xml parsing
   echo "\n</body>\n</html>\n";
