@@ -135,17 +135,28 @@ $content .= "<tr><td></td><td><br />Location where uploaded files will be stored
             //language settings
             "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></tr>";
 
-$s1 = "SELECTED"; $s2 = "";
-if(isset($LOCALE) ){
-  if($LOCALE == "es" ) {
-    $s1 = ""; $s2 = "SELECTED";
-  }
+if( ! isset($LOCALE) )
+  $LOCALE = "en";
+
+switch($LOCALE) {
+  case "en":
+    $s1 = "SELECTED"; $s2 = ""; $s3 = "";
+    break;
+
+  case "es":
+    $s1 = ""; $s2 = "SELECTED"; $s3 = "";
+    break;
+
+  case "fr":
+    $s1 = ""; $s2 = ""; $s3 = "SELECTED";
+    break;
 }
 
 $content .= "<tr><td></td><td><br /></td></tr>".
             "<tr><th>Language:</th><td><select name=\"locale\">\n".
             "<option value=\"en\" $s1 >English</option>\n".
             "<option value=\"es\" $s2 >Spanish</option>\n".
+            "<option value=\"fr\" $s3 >French</option>\n".
             "</select></td></tr>\n";
 
 //email settings
