@@ -1,4 +1,12 @@
 WebCollab CVS
+*** 5 July 2003
+  Andrew Simpson
+
+- small database performance optimisation in tasks_list.php, tasks_project_list.php and common.php
+
+- order files in list from files_admin.php
+
+WebCollab CVS
 *** 27 June 2003
   Andrew Simpson
 
