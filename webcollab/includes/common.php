@@ -93,10 +93,11 @@ function clean_up($body ) {
 //
 function error($box_title, $content ) {
 
-  global $uid_name, $uid_email, $MANAGER_NAME, $EMAIL_ERROR, $DEBUG, $NO_ERROR, $WEBCOLLAB_VERSION, $db_error_message;
-
+  global $uid_name, $uid_email, $db_error_message, $MANAGER_NAME, $DEBUG, $NO_ERROR, $WEBCOLLAB_VERSION;
+  global $EMAIL_ERROR, $SMTP_AUTH;
+  
   include_once(BASE."includes/screen.php" );
-
+  
   create_top("ERROR", 1 );
 
   if($NO_ERROR != "Y" )
@@ -126,8 +127,10 @@ function error($box_title, $content ) {
             "IP: ".$_SERVER["REMOTE_ADDR"]."\n".
             "WebCollab version: $WEBCOLLAB_VERSION\n".
             "POST vars: $post\n\n";
-
-  mail($EMAIL_ERROR, "ERROR on $MANAGER_NAME", $message );
+  
+  if($EMAIL_ERROR != NULL )
+    include_once(BASE."includes/email.php" );
+    email($EMAIL_ERROR, "ERROR on $MANAGER_NAME", $message );
         
   if($DEBUG == "Y" )
     new_box("Error Debug", nl2br($message) );
