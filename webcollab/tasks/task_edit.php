@@ -166,7 +166,7 @@ $content .="</select></td></tr>\n";
 
 //show task (if applicable)
 if($taskid_row["parent"] != 0 )
-  $content .= "<tr><td>".$lang["task_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$taskid_row["name"]."\" /></td></tr>\n";
+  $content .= "<tr><td>".$lang["task_name"].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" value=\"".$taskid_row["name"]."\" /></td></tr>\n";
 
 //deadline
 $content .= "<tr><td>".$lang["deadline"].":</td><td>".date_select_from_timestamp($taskid_row["deadline"])."</td></tr>\n";
@@ -358,7 +358,7 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
 
              "</table>\n".
              
-             "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" onclick=\"return fieldCheck\" />&nbsp;".
+             "<p><input type=\"submit\" value=\"".$lang["submit_changes"]."\" onclick=\"return fieldCheck()\" />&nbsp;".
              "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
              "</form>\n";
 
