@@ -42,7 +42,7 @@ function listTasks($task_id ) {
 
   // show subtasks that are not complete
   $q = db_query("SELECT id, name, status, globalaccess, usergroupid,
-                        ".$epoch." deadline ) AS task_due
+                        ".$epoch." deadline )
                         FROM tasks
                         WHERE projectid=".$task_id."
                         AND parent<>0
@@ -54,17 +54,17 @@ function listTasks($task_id ) {
 
    $content = "<ul>\n";
 
-   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
+   for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
 
     //check if user can view this task
-    if( ($admin != 1 ) && ($row["globalaccess"] != "t" ) && ($row["usergroupid"] != 0 ) ) {
-      if( ! in_array( $row["usergroupid"], (array)$gid ) )
+    if( ($admin != 1 ) && ($row[3] != "t" ) && ($row[4] != 0 ) ) {
+      if( ! in_array( $row[4], (array)$gid ) )
         continue;
     }
 
-    $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">".$row["name"]."</a> &nbsp;";
+    $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[0]."\">".$row[1]."</a> &nbsp;";
 
-    switch( $row["status"] ) {
+    switch( $row[2] ) {
 
       case "cantcomplete":
        $content .= "<b><i>".$task_state["cantcomplete"]."</i></b>";
@@ -76,7 +76,7 @@ function listTasks($task_id ) {
 
      default:
       //check if late
-      if( ($now - $row["task_due"] ) >= 86400 ) {
+      if( ($now - $row[5] ) >= 86400 ) {
         //$status = "&nbsp;<img border=\"0\" src=\"images/late.gif\" height=\"9\" width=\"23\" alt=\"late\" />";
         $content .= "<font class=\"late\">".$lang["late_g"]."</font>";
       }
@@ -239,6 +239,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
         }
       }
       
+      //set 'now' time
       $now = $row["now"];
       
       //show subtasks that are not complete
