@@ -78,7 +78,7 @@ function clean_up($body ) {
     $body = addslashes($body );
   
   //allow only defined ISO-8859-1 characters - other weird stuff is replaced with "*"
-  $body = preg_replace('/([^\x09\x0a\x0c\x20-\x7e\xa0-\xff])/s', "*", $body );
+  $body = preg_replace('/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s', "*", $body );
 
     
   //allow only properly formed UTF-8 characters
