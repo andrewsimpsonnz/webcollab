@@ -54,7 +54,7 @@ $interval = "";
 function db_query($query, $dieonerror=1 ) {
 
   global $database_connection;
-  global $DATABASE_HOST, $DATABASE_USER, $DATABASE_NAME, $DATABASE_PASSWORD, $TZ;
+  global $DATABASE_HOST, $DATABASE_USER, $DATABASE_NAME, $DATABASE_PASSWORD;
 
   if( ! $database_connection ) {
     //set initial value
