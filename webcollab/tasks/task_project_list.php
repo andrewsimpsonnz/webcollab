@@ -45,7 +45,7 @@ function listTasks($task_id ) {
    global $x, $epoch, $admin, $gid, $lang, $task_state;
 
   // show subtasks that are not complete
-  $q_tasks = db_query("SELECT id, name, deadline, status, globalaccess, usergroupid,
+  $q = db_query("SELECT id, name, deadline, status, globalaccess, usergroupid,
                         $epoch deadline ) AS task_due,
                         $epoch now() ) AS now
                         FROM tasks
@@ -54,23 +54,23 @@ function listTasks($task_id ) {
                         AND status<>'done'
                         ORDER BY deadline DESC" );
 
-  if(db_numrows($q_tasks ) == 0 )
+  if(db_numrows($q ) == 0 )
     return;
 
    $content = "<ul>\n";
 
-   for( $iter=0 ; $task_row = @db_fetch_array($q_tasks, $iter ) ; $iter++ ) {
+   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 
     //check if user can view this task
-    if( ($admin != 1 ) && ($task_row["globalaccess"] != "t" ) && ($task_row["usergroupid"] != 0 ) ) {
-      if( ! in_array( $task_row["usergroupid"], (array)$gid ) )
+    if( ($admin != 1 ) && ($row["globalaccess"] != "t" ) && ($row["usergroupid"] != 0 ) ) {
+      if( ! in_array( $row["usergroupid"], (array)$gid ) )
         continue;
     }
 
     $content .= "<li>";
     $status = "";
 
-    switch( $task_row["status"] ) {
+    switch( $row["status"] ) {
 
       case "cantcomplete":
        $status = "<b><i>".$task_state["cantcomplete"]."</i></b>";
@@ -82,13 +82,13 @@ function listTasks($task_id ) {
 
      default:
       //check if late
-      if( ($task_row["now"] - $task_row["task_due"] ) >= 86400 ) {
+      if( ($row["now"] - $row["task_due"] ) >= 86400 ) {
         //$status = "&nbsp;<img border=\"0\" src=\"images/late.gif\" height=\"9\" width=\"23\" alt=\"late\" />";
         $status = "<font class=\"late\">".$lang["late_g"]."</font>";
       }
       break;
     }
-    $content .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_row["id"]."\">".$task_row["name"]."</a> &nbsp;".$status;
+    $content .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\">".$row["name"]."</a> &nbsp;".$status;
     $content .= "</li>\n";
   }
   $content .= "</ul>";
@@ -101,9 +101,13 @@ function listTasks($task_id ) {
 //START OF MAIN PROGRAM
 //
 
-//some inital make-nice code
+//some inital values
 $content = "";
 $flag = 0;
+$active_only = false;
+
+if(isset($_GET["active"] ) )
+  $active_only = $_GET["active"];
 
 // query to get the projects
   $q = db_query("SELECT id,
@@ -126,8 +130,34 @@ if(db_numrows($q) < 1 ) {
   return;
 }
 
+//text link for 'active' switch
+$content .= "<font class=\"textlink\">";
+if($active_only )
+  $content .= "[<a href=\"main.php?x=$x&amp;active=0\">"."Show all projects - translate me"."</a>]";
+else
+  $content .= "[<a href=\"main.php?x=$x&amp;active=1\">"."Show only active projects - translate me"."</a>]";
+$content  .= "</font>";
+
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+
+  if($active_only ) {
+    //show only active projects
+    switch($row["status"] ) {
+
+      case "cantcomplete":
+      case "notactive":
+      case "done":
+        //skip this project
+        continue(2);
+        break;
+
+      case "active":
+      default:
+        //carry on & show details
+        break;
+    }
+  }
 
   //check the user has rights to view this project
   if( ($admin != 1 ) && ($row["globalaccess"] != "t" ) && ( $row["usergroupid"] != 0 ) ) {
