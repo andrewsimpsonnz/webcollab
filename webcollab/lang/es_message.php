@@ -201,7 +201,7 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
  //**
     $lang['finish_date_javascript']       = 'The entered date occurs after the project finish date!';
     $lang['security_manager']             = 'Manejo de Seguridad';
-    $lang['session_timeout_sprt']         = 'Acceo denegado, &uacute;ltima acci&oacute;n fue %d minutos atr&aacute;s y el tiempo de expiraci&oacute;n es de %d minutos, por favor <a href=\\"%sindex.php\\">Ingrese</a>';
+    $lang['session_timeout_sprt']         = 'Acceo denegado, &uacute;ltima acci&oacute;n fue %d minutos atr&aacute;s y el tiempo de expiraci&oacute;n es de %d minutos, por favor <a href="%sindex.php">Ingrese</a>';
     $lang['access_denied']                = 'Acceso denegado';
     $lang['private_usergroup']            = 'Disculpe, esta area es privada de un grupo y ud no tiene derecho de acceso.';
     $lang['invalid_date']                 = 'Fecha inv&aacute;lida';
@@ -355,6 +355,10 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['delete_task']                  = 'Borrar Tarea';
     $lang['project_options']              = 'Project opciones';
     $lang['task_options']                 = 'Tarea opciones';
+//**    
+    $lang['javascript_archive_project']   = 'This will archive project %s.  Are you sure?';
+//**    
+    $lang['archive_project']              = 'Archive project';
     $lang['task_navigation']              = 'Navegar tareas';
 //**
     $lang['new_task']                     = 'New task';    

@@ -342,6 +342,10 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['delete_task']                  = 'Detruire t&acirc;che';
     $lang['project_options']              = 'Options Projet';
     $lang['task_options']                 = 'Options t&acirc;che';
+//**    
+    $lang['javascript_archive_project']   = 'This will archive project %s.  Are you sure?';
+//**    
+    $lang['archive_project']              = 'Archive project';
     $lang['task_navigation']              = 'Navigation t&acirc;ches';
 //**
     $lang['new_task']                     = 'New task';    

@@ -353,6 +353,10 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['delete_task']                  = 'Slet opgave';
     $lang['project_options']              = 'Projekt muligheder';
     $lang['task_options']                 = 'Opgave muligheder';
+//**    
+    $lang['javascript_archive_project']   = 'This will archive project %s.  Are you sure?';
+//**    
+    $lang['archive_project']              = 'Archive project';
     $lang['task_navigation']              = 'Opgave navigation';
 //**
     $lang['new_task']                     = 'New task';    

@@ -332,12 +332,16 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['delete_task']                  = 'Изтриване задача';
     $lang['project_options']              = 'Проекти';
     $lang['task_options']                 = 'Настройки на задача';
+//**    
+    $lang['javascript_archive_project']   = 'This will archive project %s.  Are you sure?';
+//**    
+    $lang['archive_project']              = 'Archive project';
     $lang['task_navigation']              = 'Задачи';
     $lang['new_task']                     = 'New task';    
     $lang['no_projects']                  = 'Няма проекти';
     $lang['show_all_projects']            = 'Покажи всички проекти';
     $lang['show_active_projects']         = 'Покажи само активните проекти';
-    $lang['project_hold_sprt']            = 'Проекта е \"В застой\" от %s';
+    $lang['project_hold_sprt']            = 'Проекта е "В застой" от %s';
     $lang['project_planned']              = 'Планиран проект';
     $lang['percent_sprt']                 = '%d%% от задачата е изпълнена';
     $lang['project_no_deadline']          = 'Няма крайни срокове за този проект';

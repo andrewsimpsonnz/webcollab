@@ -357,6 +357,9 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
  //**
     $lang['task_options']                 = 'Tasca opcions';
  //**
+    $lang['javascript_archive_project']   = 'This will archive project %s.  Are you sure?';
+//**    
+    $lang['archive_project']              = 'Archive project';
     $lang['task_navigation']              = 'Navegar tasques';
 //**
     $lang['new_task']                     = 'New task';    

@@ -84,7 +84,7 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['no_login']                     = 'Accesso negato, login o password errati';
     $lang['please_login']                 = 'Identificazione utente';
 //for collaltosabino.net
-//  $lang['please_login']                 = '<span class=\\"navy\\"><b>collaltosabino.net</b><br><span class=\\"darkred\\"><b>*** Sistema di gestione progetti ***<br><br><span class=\\"navy\\">Identificazione utente</b></span>';
+//  $lang['please_login']                 = '<span class="navy"><b>collaltosabino.net</b><br><span class="darkred"><b>*** Sistema di gestione progetti ***<br><br><span class="navy">Identificazione utente</b></span>';
 
 //graphic items
     $lang['late_g']                       = '&nbsp;IN RITARDO&nbsp;';
@@ -346,6 +346,10 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['delete_task']                  = 'Cancella attivit&agrave;';
     $lang['project_options']              = 'Opzioni del progetto';
     $lang['task_options']                 = 'Opzioni dell\'attivit&agrave;';
+//**    
+    $lang['javascript_archive_project']   = 'This will archive project %s.  Are you sure?';
+//**    
+    $lang['archive_project']              = 'Archive project';
     $lang['task_navigation']              = 'Navigazione nelle attivit&agrave;';
 //**
     $lang['new_task']                     = 'New task';    
