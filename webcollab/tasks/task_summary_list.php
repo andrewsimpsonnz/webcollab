@@ -336,20 +336,22 @@ $content .= "\">";
 $content .= "<b>".$lang["group"]."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=taskname\">";
 $content .= "<b>".$lang["task"]."</b></a></small></td></tr>";
-$suffix = " (by ".$sortby.")";
 
 // tail end of SQL query
 switch($sortby ) {
   case "deadline":
     $content .= project_summary("ORDER BY deadline,taskname", -1 );
+    $suffix = $lang["by_deadline"];
     break;
 
   case "status":
     $content .= project_summary("ORDER BY status,deadline,taskname", -1 );
+    $suffix = $lang["by_status"];
     break;
 
   case "owner":
     $content .= project_summary("LEFT JOIN users ON (users.id=tasks.owner) ORDER BY username,deadline,taskname", -1, ", users.fullname AS username" );
+    $suffix = $lang["by_owner"];
     break;
 
   case "usergroupid":
