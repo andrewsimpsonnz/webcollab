@@ -7,6 +7,10 @@ WebCollab CVS
 
 - added language file check to setup
 
+- removed strtolower() for lower case words; altered language files to suit
+
+- bugfix: minor formatting problem in calendar.php
+
 WebCollab 1.49
 *** 7 October 2003
 
