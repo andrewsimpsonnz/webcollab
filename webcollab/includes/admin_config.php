@@ -28,7 +28,7 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
-$maillist = "";
+$EMAIL_MAILINGLIST = "";
 
 //get config data
 $q = db_query("SELECT * FROM config" );
@@ -46,11 +46,10 @@ $DEFAULT_GROUP      = $row["usergroup"];
 //mailing list
 $q = db_query("SELECT DISTINCT * FROM maillist" );
 
+$s ="";
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
-  $maillist .= $row["email"].", ";
+  $EMAIL_MAILINGLIST .= $s.$row["email"].", ";
+  $s = ", ";
 }
-//strip off last ", "
-$len = strlen($maillist );
-$EMAIL_MAILINGLIST = substr($maillist, 0, ($len-2) );
 
 ?>
