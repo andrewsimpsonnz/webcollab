@@ -205,28 +205,29 @@ $content .=  "</select></td>\n".
 $numdays = date("t", mktime(0, 0, 0, $month, 1, $year ) );
 
 //main calendar table
-$content .= "<table class=\"main\" cellspacing=\"0\" border=\"1\">\n<tr>\n";
-$content .= "<td colspan=\"7\" class=\"month\"><b>".$month_array[(int)$month]."</b>\n</td>\n";
-$content .= "</tr>\n";
+$content .= "<div style=\"text-align: center\">\n".
+            "<table class=\"outline\" cellspacing=\"0\" border=\"1px\" width=\"97%\">\n<tr>\n".
+            "<td colspan=\"7\" align=\"center\" valign=\"middle\"><b>".$month_array[(int)$month]."</b>\n</td>\n".
+            "</tr>\n";
 
 //weekdays
-$content .= "<tr class=\"weekrow\">\n";
+$content .= "<tr align=\"center\" valign=\"middle\">\n";
 foreach($week_array as $value) {
   $content .= "<td class=\"weekcell\"><b>$value</b></td>\n";
 }
 $content .= "</tr>\n";
 
 //show lead in to dates
-$content .= "<tr class=\"blankrow\">\n";
+$content .= "<tr align=\"center\" valign=\"middle\">\n";
 for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); $i++ ) {
-  $content .= "<td class=\"blankcell\">&nbsp;</td>\n";
+  $content .= "<td class=\"datecell\">&nbsp;</td>\n";
 }
 
 //show dates
 for ($num = 1; $num <= $numdays; $num++ ) {
   if ($i >= 7 ) {
     $content .= "</tr>\n".
-                "<tr class=\"daterow\" valign=\"top\">\n";
+                "<tr align=\"center\" valign=\"top\">\n";
     $i=0;
   }
   $content .= "<td class=\"datecell\" ";
@@ -309,10 +310,10 @@ for ($num = 1; $num <= $numdays; $num++ ) {
   $i++;
 }
 $content .= "</tr>\n";
-$content .= "</table>\n<br />\n";
+$content .= "</table>\n</div>\n";
 
 include_once(BASE."lang/lang_long.php" );
-$content .= "<div style=\"text-align: center\">\n".
+$content .= "<div style=\"text-align: center; padding-top: 20px\">\n".
             "<b>[<a href=\"main.php?x=".$x."\">".$calendar_key."<br />\n</div>\n";
 
 new_box($lang["calendar"], $content );
