@@ -165,7 +165,6 @@ else {
   $content .= $priority_select_box;
 
   //status
-  // - we don't have status for projects
   $content .= "<TR> <TD>Status:</TD> <TD>\n";
   $content .= "<SELECT name=\"status\">\n";
   $content .=  "<OPTION value=\"notactive\" >".$task_state["planned_project"]."</OPTION>\n";
