@@ -36,7 +36,8 @@ if( ! @require( "path.php" ) )
 include_once( BASE."includes/security.php" );
 
 //log the user out by deleting their session key
-db_query("UPDATE logins SET session_key='' WHERE user_id=".$uid );
+db_query("DELETE FROM logins WHERE session_key='".$x."'" );
+//db_query("UPDATE logins SET session_key='' WHERE user_id=".$uid );
 
 header("Location: ".BASE."index.php");
 
