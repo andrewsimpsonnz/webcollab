@@ -51,7 +51,7 @@ $epoch = "extract( epoch from ";
 //
 function db_query($query, $dieonerror=1 ) {
 
-  global $database_connection, $database_query_time, $database_query_count;
+  global $database_connection;
   global $DATABASE_HOST, $DATABASE_USER, $DATABASE_NAME, $DATABASE_PASSWORD;
 
   if( ! $database_connection ) {
@@ -68,24 +68,12 @@ function db_query($query, $dieonerror=1 ) {
     $q = db_query("SET DATESTYLE TO 'European, ISO' ");
   }
 
-  //count queries
-  $database_query_count++;
-
-  //start time
-  list($usec, $sec) = explode(" ", microtime() );
-  $starttime = ( (float)$usec + (float)$sec );
-
   //do it
   if( ! ($result = @pg_query($database_connection, $query ) ) ) {
 
     if($dieonerror==1)
       error("Database query error", "The following query :<br /><br /><b> $query </b><br /><br />Had the following error:<br /><b>".pg_last_error($database_connection)."</b>" );
   }
-
-  //add query time to global query time
-  list($usec, $sec)=explode(" ", microtime() );
-  $database_query_time += ( (float)$usec + (float)$sec ) - $starttime;
-
 
   //all was okay return resultset
   return $result;
