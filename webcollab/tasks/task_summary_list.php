@@ -126,10 +126,10 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
     }
 
     if( $due < 0 ) {
-      $color = "#FF0000";
+      $color = "red";
     }
     else if( $due == 0 ) {
-      $color = "#006400";
+      $color = "green";
     }
     else {
       $color = "";
@@ -154,13 +154,13 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
           case "cantcomplete":
             $color = "";
             $date = "";
-            $status =  "<font color=\"#0000FF\">".$task_state["cantcomplete"]."</font>";
+            $status =  "<span class=\"blue\">".$task_state["cantcomplete"]."</span>";
             break;
 
           default:
             $date = nicedate($row["deadline"] );
             if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE projectid=".$row["id"]." AND status<>'done' AND parent<>0" ), 0, 0 ) == 0 ) {
-              $color = "#006400";
+              $color = "green";
               $status = $task_state["done"];
             }
             else {
@@ -175,7 +175,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
         case "done":
           $color = "";
           $date = nicedate($row["deadline"] );
-          $status =  "<font color=\"#006400\">".$task_state["done"]."</font>";
+          $status =  "<span class=\"green\">".$task_state["done"]."</span>";
           break;
 
         case "created":
@@ -185,12 +185,12 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
 
         case "active":
           $date = nicedate($row["deadline"] );
-          $color = "#FFA500";
+          $color = "orange";
           $status =  $task_state["task_active"];
           break;
 
         case "notactive":
-          $color = "#BEBEBE";
+          $color = "grey";
           $date = "";
           $status =  $task_state["task_planned"];
           break;
@@ -198,12 +198,12 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
         case "cantcomplete":
           $color = "";
           $date = "";
-          $status =  "<font color=\"#0000FF\">".$task_state["cantcomplete"]."</font>";
+          $status =  "<span class=\"blue\">".$task_state["cantcomplete"]."</span>";
           break;
 
         default:
           $date = nicedate($row["deadline"] );
-          $status =  "<font color=\"#FFA500\">".$row["status"]."</font>";
+          $status =  "<span class=\"orange\">".$row["status"]."</span>";
           break;
       }
   }
@@ -218,7 +218,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
            break;
 
         default:
-           $owner = "<font color=\"#FF0000\">".$lang["nobody"]."</font>";
+           $owner = "<span class=\"red\">".$lang["nobody"]."</span>";
            break;
       }
     }
@@ -258,7 +258,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
     $result .= "<tr><td>$f1</td><td>$f2</td><td>$f3</td><td><small>";
 
     if($color != "" ) {
-      $result .= "<font color=\"".$color."\">";
+      $result .= "<span class=\"".$color."\">";
     }
 
     //Add deadline column
@@ -269,7 +269,7 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
     }
 
     if($color != "" ) {
-      $result .= "</font>";
+      $result .= "</span>";
     }
 
     //Then add the status, owner and group columns
@@ -290,16 +290,20 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
     //show graphical taskbar
     if( ($row["parent"] == 0 ) && ($depth >= 0 ) ) {
       if($row["completed"] > 0 ) {  
-        $result .= "<table width=\"200\"><tr><td height=\"2\"  width=\"".($row["completed"]*2)."\" bgcolor=\"#008B45\" nowrap=\"nowrap\"></td><td width=\"".(200-($row["completed"]*2))."\" bgcolor=\"#FFA500\" nowrap=\"nowrap\"></td></tr></table>\n";
+        //$result .= "<table width=\"200\"><tr><td height=\"2\"  width=\"".($row["completed"]*2)."\" bgcolor=\"#008B45\" nowrap=\"nowrap\"></td><td width=\"".(200-($row["completed"]*2))."\" bgcolor=\"#FFA500\" nowrap=\"nowrap\"></td></tr></table>\n";
+       $result .= "<table width=\"200\"><tr><td class=\"greenbar\" style=\"height: 2px; width :".($row["completed"]*2)."\"></td><td class=\"redbar\" style=\"height: 2px; width :".(200-($row["completed"]*2))."\"></td></tr></table>\n";
+       
       }
       else {
-        $result .= "<table width=\"200\"><tr><td height=\"2\" width=\"200\" bgcolor=\"#FFA500\" nowrap=\"nowrap\"></td></tr></table>\n";
+        //$result .= "<table width=\"200\"><tr><td height=\"2\" width=\"200\" bgcolor=\"#FFA500\" nowrap=\"nowrap\"></td></tr></table>\n";
+        $result .= "<table width=\"200\"><tr><td class=\"redbar\" style=\"height: 2px; width : 200\"></td></tr></table>\n";
+      
       }
     }
 
     $result .= "</td></tr>\n";
     if( $depth >= 0 ) {
-      $result .= project_summary( "WHERE tasks.parent='".$row["id"]."' ORDER BY taskname", $depth+1 );
+      $result .= project_summary( "WHERE ".PRE."tasks.parent='".$row["id"]."' ORDER BY taskname", $depth+1 );
     }
   }
 
@@ -316,12 +320,12 @@ else
 
 //text link for 'printer friendly' page
 if(isset($_GET["action"]) && $_GET["action"] == "summary_print" )
-  $content  = "<p><font class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=".$sortby."\">".$lang["normal_version"]."</a>]</font></p>";
+  $content  = "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=".$sortby."\">".$lang["normal_version"]."</a>]</span></p>";
 else
-  $content  = "<div align=\"right\"><font class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary_print&amp;sortby=".$sortby."\">".$lang["print_version"]."</a>]</font></div>";
+  $content  = "<div class=\"right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary_print&amp;sortby=".$sortby."\">".$lang["print_version"]."</a>]</span></div>";
 
-$content .= "<table border=\"0\">\n";
-$content .= "<tr><td colspan=\"3\"><small><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#summarypage\" target=\"helpwindow\"><b>".$lang["flags"]."</b></a></small></td><td><small>";
+$content .= "<table>\n";
+$content .= "<tr><td colspan=\"3\"><small><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#summarypage\" onclick=\"window.open('".$BASE_URL."help/".$LOCALE."_help.php#summarypage'); return false\"><b>".$lang["flags"]."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=deadline\">";
 $content .= "<b>".$lang["deadline"]."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=status\">";
