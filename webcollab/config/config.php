@@ -85,7 +85,7 @@
   
 //TIMEZONE
   //timezone offset from GMT/UTC (hours)
-  define(TZ, 0 );
+  define('TZ', 0 );
 
 //EMAIL ADDRESS
 
