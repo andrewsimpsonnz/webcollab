@@ -176,10 +176,10 @@ TD.projectlist {
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
-  padding-top : 5px;
-  padding-left : 0px;
+  padding-top : 10px;
+  padding-left : 30px;
   padding-right : 5px;
-  padding-bottom : 10px;
+  padding-bottom : 20px;
   background : #ffffff;
   color : #000000;
 }

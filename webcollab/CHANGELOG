@@ -1,4 +1,18 @@
 WebCollab CVS
+*** 24 October 2004
+  Andrew Simpson 
+
+- change from variables to constants in config file
+
+- refactor setup to match new config file
+
+- improve listing engine for forum delete routine (reduce database calls)
+
+- improve listing engine for task delete routine (reduce database calls)
+
+- improve css for project list
+
+WebCollab CVS
 *** 19 October 2004
   Andrew Simpson 
 

@@ -120,9 +120,9 @@ TD.boxdata {
   border-width : 0;
   border-collapse : collapse;
   padding-top : 10pt;
-  padding-left : 0pt;
+  padding-left : 10pt;
   padding-right : 5pt;
-  padding-bottom : 10pt;
+  padding-bottom : 20pt;
   background : #ffffff;
   color : #000000;
 }

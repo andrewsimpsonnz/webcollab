@@ -129,7 +129,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   //update for version 1.51 -> 1.60
   if(! (db_query("SELECT * FROM ".PRE."login_attempt", 0 ) ) ) {
     
-    switch ($DATABASE_TYPE) {
+    switch (DATABASE_TYPE) {
       case "mysql":
         db_query("CREATE TABLE login_attempt ( name VARCHAR(100) NOT NULL,
                                                ip VARCHAR(100) NOT NULL,
@@ -172,7 +172,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
   if(! (db_query("SELECT completed FROM ".PRE."tasks", 0 ) ) ) {
   
     //set parameters for appropriate for database
-    switch ($DATABASE_TYPE) {
+    switch (DATABASE_TYPE) {
       case "mysql":
       case "mysql_innodb":
         $date_type = "DATETIME";
