@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -54,6 +54,24 @@ if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) )
 else
   $groupid = 0;
 
+//get calendar navigation offsets
+if(isset($_POST['lastyear']) && strlen($_POST['lastyear']) > 0 )
+  $yearoffset = -1;
+else {
+   if(isset($_POST['nextyear']) && strlen($_POST['nextyear']) > 0 )
+     $yearoffset = +1;
+   else
+     $yearoffset = 0;
+}
+if(isset($_POST['lastmonth']) && strlen($_POST['lastmonth']) > 0 )
+  $monthoffset = -1;
+else {
+  if(isset($_POST['nextmonth']) && strlen($_POST['nextmonth']) > 0 )
+    $monthoffset = +1;
+  else
+    $monthoffset = 0;
+}
+
 //set dates to match local time 
 //Note: The date() function always _adds_ a time offset(!), so we subtract date("Z") (time offset)  
 $epoch = time() - date('Z') + (TZ * 3600);  
@@ -69,6 +87,22 @@ if(isset($_POST['year']) && is_numeric($_POST['year']) )
   $year = $_POST['year'];
 else
   $year = date('Y', $epoch);
+
+//Apply any calendar navigation
+$month += $monthoffset;
+
+if($month < 1) {
+  $month = 12;
+  $yearoffset -= 1;
+}
+else {
+  if($month > 12) {
+    $month = 1;
+    $yearoffset += 1;
+  }
+}
+
+$year += $yearoffset;
 
 //set day, if applicable
 if( $month == date('n', $epoch) && $year == date('Y', $epoch) )
@@ -135,7 +169,7 @@ $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<option value=\"0\"$s2>".$lang['all_users']."</option>\n";
 
 //get all users for option box
-$q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest='f' ORDER BY fullname");
+$q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest=0 ORDER BY fullname");
 
 //user input box fields
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
@@ -179,12 +213,16 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= ">".$row['name']."</option>\n";
 }
 
-$content .= "</select></label></td></tr>\n<tr><td>&nbsp;</td></tr></table></div>\n";
+$content .= "</select></label></td></tr>\n".
+            "<tr><td colspan=\"2\" ><input type=\"submit\" value=\"".$lang['update']."\" /></td></tr>\n".
+            "<tr><td>&nbsp;</td></tr></table></div>\n";
 
 //month (must be in decimal, 'cause that's what database uses!)
 $content .= "<div style=\"text-align: center\">\n".
             "<table style=\"margin-left: auto; margin-right: auto\">\n".
-            "<tr><td>\n<select name=\"month\">\n";
+            "<tr><td><input type=\"submit\" alt=\"".$lang['last_year']."\" name=\"lastyear\" value=\"&lt;&lt;\" /></td>\n".
+            "<td><input type=\"submit\" alt=\"".$lang['last_month']."\" name=\"lastmonth\" value=\"&lt;\" /></td>\n".
+            "<td>\n<select name=\"month\">\n";
 for( $i=1; $i<13 ; $i++) {
   $content .= "<option value=\"$i\"";
 
@@ -202,7 +240,8 @@ for( $i=2001; $i<2011 ; $i++) {
   $content .= ">".$i."</option>\n";
   }
 $content .=  "</select></td>\n".
-             "<td><input type=\"submit\" value=\"".$lang['update']."\" /></td></tr>\n".
+             "<td><input type=\"submit\" alt=\"".$lang['next_month']."\" name=\"nextmonth\" value=\"&gt;\" /></td>\n".
+             "<td><input type=\"submit\" alt=\"".$lang['next_year']."\" name=\"nextyear\" value=\"&gt;&gt;\" /></td></tr>\n".
              "</table></div></form>\n<br /><br />\n";
 
 //number of days in month
@@ -247,7 +286,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
   if(in_array($num, (array)$task_dates ) ) {
   
   //rows exist for this date - get them!
-  $q = db_query("SELECT id, name, parent, status, usergroupid, globalaccess, projectid FROM ".PRE."tasks WHERE deadline='$year-$month-$num' AND archive='f' $tail" );
+  $q = db_query("SELECT id, name, parent, status, usergroupid, globalaccess, projectid FROM ".PRE."tasks WHERE deadline='$year-$month-$num' AND archive=0 $tail" );
 
     for( $j=0 ; $row = @db_fetch_array($q, $j ) ; $j++) {
 
