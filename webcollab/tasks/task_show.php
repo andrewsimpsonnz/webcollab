@@ -192,8 +192,8 @@ else{
       break;
 
     default:
-      if($percent_completed == 100 ) {
-        $completed_date = @db_result( db_query( "SELECT MAX(finished_time) FROM tasks WHERE parent<>0 AND projectid=".$taskid ), 0, 0 );
+      if(round($percent_completed == 100 ) ) {
+        $completed_date = @db_result( db_query( "SELECT MAX(finished_time) FROM tasks WHERE projectid=".$taskid ), 0, 0 );
         $content .= "<tr><td>".$lang["completed_on"].": </td><td>".nicedate($completed_date)."</td></tr>\n";
       }
       break;
