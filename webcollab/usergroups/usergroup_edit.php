@@ -76,7 +76,7 @@ $content .=    "</select><small><i>".$lang["select_instruct"]."</i></small></td>
              "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
              "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\" />\n".
              "<input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
-             "<input type=\"submit\" value=\"".$lang["edit_usergroup"]."\" />\n".
+             "<input type=\"submit\" value=\"".$lang["edit_usergroup"]."\" />&nbsp;\n".
              "<input type=\"reset\" value=\"".$lang["reset"]."\" />\n".
            "</form>\n";
 

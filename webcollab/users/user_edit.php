@@ -117,7 +117,7 @@ $content .= "</table><br /><br />".
             "<input type=\"hidden\" name=\"action\" value=\"edit\" />".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
             "<input type=\"hidden\" name=\"userid\" value=\"$userid\" />".
-            "<input type=\"submit\" value=\"".$lang["submit_changes"]."\" />".
+            "<input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;".
             "<input type=\"reset\" value=\"".$lang["reset"]."\" />".
             "</form>";
 

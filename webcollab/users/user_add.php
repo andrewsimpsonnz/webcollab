@@ -56,7 +56,7 @@ $content .=    "</select><small><i>".$lang["select_instruct"]."</i></small></td>
             "</table><br /><br />".
             "<input type=\"hidden\" name=\"action\" value=\"insert\" />".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
-            "<input type=\"submit\" value=\"".$lang["add"]."\" />".
+            "<input type=\"submit\" value=\"".$lang["add"]."\" />&nbsp;".
             "<input type=\"reset\" value=\"".$lang["reset"]."\" />".
           "</form>";
 

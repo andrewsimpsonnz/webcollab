@@ -52,9 +52,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
 $content .=     "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
               "</table><br /><br />\n".
-              "<input type=\"hidden\" name=\"x\" value=\"$x\" /> ".
-              "<input type=\"hidden\" name=\"action\" value=\"insert\" /> ".
-              "<input type=\"submit\" value=\"".$lang["add_usergroup"]."\" /> ".
+              "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
+              "<input type=\"hidden\" name=\"action\" value=\"insert\" />".
+              "<input type=\"submit\" value=\"".$lang["add_usergroup"]."\" />&nbsp;".
               "<input type=\"reset\" value=\"".$lang["reset"]."\" />".
             "</form>\n";
 
