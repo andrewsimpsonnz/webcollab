@@ -67,7 +67,7 @@ include_once(BASE."lang/lang.php" );
 //
 // Creates the inital window
 //
-function create_top($title="", $no_menu=0, $cursor="" ) {
+function create_top($title="", $page_type=0, $cursor="" ) {
 
   global $uid_name, $admin, $topbuild, $MANAGER_NAME, $lang, $web_charset;
 
@@ -108,8 +108,12 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
 
   echo "<title>$title</title>\n".
        "<meta http-equiv=\"Pragma\" content=\"no-cache\">\n".
-       "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$web_charset\">\n".
-       "<link rel=\"StyleSheet\" href=\"".BASE."css.css\" type=\"text/css\">\n";
+       "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$web_charset\">\n";
+
+  if($page_type == 2 )
+    echo  "<link rel=\"StyleSheet\" href=\"".BASE."print.css\" type=\"text/css\">\n";
+  else
+    echo  "<link rel=\"StyleSheet\" href=\"".BASE."css.css\" type=\"text/css\">\n";
 
   //javascript to position cursor in the first box
   if($cursor != "" ) {
@@ -130,24 +134,36 @@ function create_top($title="", $no_menu=0, $cursor="" ) {
   echo "<!-- start main table -->\n".
        "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">\n";
 
-  //create the masthead part of the main window
-  if($no_menu == 0 )
-    echo "<tr><td colspan=\"2\">";
-  else
-    echo "<tr><td>";
-  echo "<div class=\"masthead\">";
 
-  //show username if applicable
-  if($uid_name != "" )
-    echo sprintf( $lang["user_homepage_sprt"], $uid_name );
+  switch ($page_type ) {
 
-  echo "</div></td></tr>\n";
+    case 0: //window + menu sidebar
+      //create the masthead part of the main window
+      echo  "<tr><td colspan=\"2\">";
+      echo "<div class=\"masthead\">";
+      //show username if applicable
+      if($uid_name != "" )
+        echo sprintf( $lang["user_homepage_sprt"], $uid_name );
+      echo "</div></td></tr>\n";
+      //create menu sidebar
+      echo "<tr valign=\"top\"><td style=\"width: 175px\" align=\"center\">\n";
+      break;
 
-  //if we have only one space, we center the main box as 100% instead of pushing it to the left (as a menu)
-  if($no_menu == 0 )
-    echo "<tr valign=\"top\"><td style=\"width: 175px\" align=\"center\">\n";
-  else
+    case 1: //single window
+      echo "<tr><td>";
+      echo "<div class=\"masthead\">";
+      if($uid_name != "" )
+        echo sprintf( $lang["user_homepage_sprt"], $uid_name );
+      echo "</div></td></tr>\n";
+      //create single window over entire screen
+      echo "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";
+      break;
+
+    case 2: //printable screen
+    //create single window over entire screen
     echo "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";
+  }
+
   return;
 }
 
