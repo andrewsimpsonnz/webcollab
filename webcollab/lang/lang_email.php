@@ -36,6 +36,10 @@ switch($LOCALE ) {
     include(BASE."lang/ca_email.php" );
     break;
 
+  case "de":
+    include(BASE."lang/de_email.php" );
+    break;
+
   case "es":
     include(BASE."lang/es_email.php" );
     break;
