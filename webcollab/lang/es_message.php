@@ -54,6 +54,8 @@ $task_state = array(
  "task_active" => " Activa",
  //project states
  "planned_project" => "Proyecto planeado (no activo)",
+//**
+ "no_deadline_project" => "No deadline set",
  "active_project" => "Proyecto activo" );
 
 //common items
@@ -63,6 +65,8 @@ $lang = array(
  "add" => "Agregar",
  "update" => "Actualizar",
  "submit_changes" => "Enviar cambios",
+//**
+ "reset" => "Reset",
  "manage" => "Administrar",
  "edit" => "Editar",
  "delete" => "Borrar",
@@ -94,6 +98,8 @@ $lang = array(
  "mailing_list" => "Mailing list",
  "default_checkbox" => "Seteo Default checkbox para Proyectos/Tareas",
  "allow_globalaccess" => "Permite acceso global?",
+//**
+ "allow_group_edit" => "Allow all in usergroup to edit?",
  "set_email_owner" => "Siempre email al propietario con los cambios?",
  "set_email_group" => "Siempre email al Grupo-usuarios con cambios?",
  "configuration" => "Configuracion",
@@ -208,6 +214,8 @@ $lang = array(
  "login_name" => "Login name",
  "full_name" => "Nombre completo",
  "password" => "Password",
+ //**
+ "blank_for_current_password" => "(Leave blank for current password)",
  "email" => "E-mail",
  "admin" => "Admin",
  "is_admin" => "Es admin?",
@@ -270,6 +278,8 @@ $lang = array(
  "no_group" => "No group",
  "all_groups" => "All groups",
  "all_users" => "Todos los usuarios puedn ver esta tarea?",
+ //**
+ "group_edit" => "Anyone in the usergroup can edit?",
  "project_description" => "Descripcion del proyecto",
  "task_description" => "Descripcion de la tarea",
  "email_owner" => "Enviar un email al propietario con los cambios?",
@@ -299,6 +309,8 @@ $lang = array(
  "project_hold" => "Proyecto suspendido desde ",
  "project_planned" => "Proyecto planeado",
  "percent" => "% de tareas hechas",
+//**
+ "project_no_deadline" => "No deadline set for this project",
  "no_allowed_projects" => "No hay proyecto que le esten permitidos ver",
  "projects" => "Proyectos",
  "percent_project_sprt" => "Este proyecto esta %d%% completado",
@@ -310,6 +322,8 @@ $lang = array(
  "task_accessible_sprt" => "(Este %s es accesible por todos los usuarios)",
  "task_not_accessible_sprt" => "(Este %s es accesible por los miembro del usergroup)",
  "task_not_in_usergroup_sprt" => "Este %s no es parte de un usergroup y no accesible para todos los usuarios.",
+//**
+ "usergroup_can_edit_sprt" => "This %s can also be edited by members of the usergroup.",
  "i_take_it" => "I'll take it :)",
  "i_finished" => "Lo finalize!",
  "i_dont_want" => "No lo quiero mas",

@@ -65,6 +65,8 @@ $lang = array(
  "add" => "Ajout",
  "update" => "MaJ",
  "submit_changes" => "Modifier",
+//**
+ "reset" => "Reset",
  "manage" => "Gérer",
  "edit" => "Editer",
  "delete" => "Effacer",
@@ -211,6 +213,8 @@ $lang = array(
  "login_name" => "Nom utilisateur",
  "full_name" => "Nom complet",
  "password" => "Mot de passe",
+ //**
+ "blank_for_current_password" => "(Leave blank for current password)",
  "email" => "E-mail",
  "admin" => "Admin",
  "is_admin" => "Est-il admin?",
