@@ -40,7 +40,7 @@ include_once( BASE."includes/common.php");
     $db_name = $DATABASE_NAME;
 
 
-if( ! ( $database_connection = mysql_pconnect( $db_host, $db_user, $db_pass ) ) ) {
+if( ! ( $database_connection = mysql_connect( $db_host, $db_user, $db_pass ) ) ) {
   $db_error_message = mysql_error($database_connection);
   error( "No database connection",  "Sorry but there seems to be a problem in connecting to the database");
 }
@@ -50,6 +50,7 @@ if( ! ( $database_connection = mysql_pconnect( $db_host, $db_user, $db_pass ) ) 
 $last_insert = "id";
 $delim = "";
 $epoch = "UNIX_TIMESTAMP( ";
+mysql_query("SET AUTOCOMMIT = 1" );
 
 //
 // Provides a safe way to do a query
@@ -162,7 +163,7 @@ function db_begin() {
 
   global $database_connection;
 
-  mysql_query( "SET AUTOCOMMIT=0" );
+  mysql_query("BEGIN" );
 
 return;
 }
@@ -174,8 +175,7 @@ function db_rollback() {
 
   global $database_connection;
 
-  mysql_query( "ROLLBACK" );
-  mysql_query( "SET AUTOCOMMIT=1" );
+  mysql_query("ROLLBACK" );
 
 return;
 }
@@ -187,8 +187,7 @@ function db_commit() {
 
   global $database_connection;
 
-  mysql_query( "COMMIT" );
-  mysql_query( "SET AUTOCOMMIT=1" );
+  mysql_query("COMMIT" );
 
 return;
 }
