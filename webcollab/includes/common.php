@@ -82,7 +82,7 @@ function clean_up($body ) {
   $body = preg_replace('/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s', "*", $body );
   
   //use HTML encoding for characters that could be used for css <script> or SQL injection attacks
-  $trans = array(';'=>'&#059;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;');
+  $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;' );
   
   return strtr($body, $trans ); 
   
