@@ -24,8 +24,14 @@ TD.weekcell {
 }
 
 TD.datecell {
+  height: 50px;
   border-width: 1px; 
   border-style: solid;
+}
+
+TD span.daynum {
+  display: block;
+  text-align: center;
 }
 
 /* Class for underlined text */

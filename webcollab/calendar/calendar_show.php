@@ -168,8 +168,8 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ){
 $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" /></fieldset>\n ".
             "<div style=\"text-align: center\">\n".
-            "<table style=\"margin-left: auto; margin-right: auto\">\n".
-            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1 /><label for=\"users\">".$lang['users']."</label></td><td>\n".
+            "<table style=\"margin-left: auto; margin-right: auto; background-color: #ddd; border: solid black 1px;\" cellpadding=\"5px\">\n".
+            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1 /><label for=\"users\">".$lang['users']."</label>\n".
             "<label for=\"users\"><select name=\"userid\">\n".
             "<option value=\"0\"$s2>".$lang['all_users']."</option>\n";
 
@@ -193,9 +193,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= ">".$row['fullname']."</option>\n";
 }
 
-$content .= "</select></label></td></tr>\n".
-            "<tr align=\"left\"><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3 /><label for=\"group\">".$lang['usergroups']."</label></td>\n".
-            "<td><label for=\"group\"><select name=\"groupid\">\n".
+$content .= "</select></label></td>\n".
+            "<td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3 /><label for=\"group\">".$lang['usergroups']."</label>\n".
+            "<label for=\"group\"><select name=\"groupid\">\n".
             "<option value=\"0\"$s4>".$lang['no_group']."</option>\n";
 
 //get all groups for option box
@@ -218,9 +218,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= ">".$row['name']."</option>\n";
 }
 
-$content .= "</select></label></td></tr>\n".
-            "<tr><td colspan=\"2\" ><input type=\"submit\" value=\"".$lang['update']."\" /></td></tr>\n".
-            "<tr><td>&nbsp;</td></tr></table></div>\n";
+$content .= "</select></label></td>\n".
+            "<td colspan=\"2\" ><input type=\"submit\" value=\"".$lang['update']."\" /></td></tr>\n".
+            "</table></div>\n";
 
 //month (must be in decimal, 'cause that's what database uses!)
 $content .= "<div style=\"text-align: center\">\n".
@@ -247,7 +247,7 @@ for( $i=2001; $i<2011 ; $i++) {
 $content .=  "</select></td>\n".
              "<td><input type=\"submit\" name=\"nextmonth\" value=\"&gt;\" /></td>\n".
              "<td><input type=\"submit\" name=\"nextyear\" value=\"&gt;&gt;\" /></td></tr>\n".
-             "</table></div></form>\n<br /><br />\n";
+             "</table></div></form>\n<br />\n";
 
 //number of days in month
 $numdays = date("t", mktime(0, 0, 0, $month, 1, $year ) );
@@ -266,16 +266,17 @@ foreach($week_array as $value) {
 $content .= "</tr>\n";
 
 //show lead in to dates
-$content .= "<tr align=\"center\" valign=\"middle\">\n";
+$content .= "<tr align=\"left\" valign=\"top\">\n";
 for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); $i++ ) {
   $content .= "<td class=\"datecell\">&nbsp;</td>\n";
 }
+$leadin_length = $i;
 
 //show dates
 for ($num = 1; $num <= $numdays; $num++ ) {
   if ($i >= 7 ) {
     $content .= "</tr>\n".
-                "<tr align=\"center\" valign=\"top\">\n";
+                "<tr align=\"left\" valign=\"top\">\n";
     $i=0;
   }
   $content .= "<td class=\"datecell\" ";
@@ -284,7 +285,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
   if($num == $today)
     $content .= "style=\"background : #C0C0C0\"";
 
-  $content .= ">$num<br />";
+  $content .= "><span class=\"daynum\">$num</span>";
   $pad = 0;
 
   //check if this date has projects/tasks
@@ -349,14 +350,24 @@ for ($num = 1; $num <= $numdays; $num++ ) {
     }
   }
   //pad out the cells to the required depth
+  //not used now - cell height is defined in calendar.css
+  /*
   while($pad < 5 ) {
     $content .= "<br />";
     $pad++;
   }
+  */
 
   $content .= "</td>\n";
   $i++;
 }
+
+//show lead out to dates
+$leadout_length = (7-($numdays+$leadin_length)%7)%7;
+for ($i = 0; $i < $leadout_length; $i++ ) {
+  $content .= "<td class=\"datecell\">&nbsp;</td>\n";
+}
+
 $content .= "</tr>\n";
 $content .= "</table>\n</div>\n";
 
