@@ -188,12 +188,12 @@ else
   $LOCALE = LOCALE;
 
 //initialise array with null values
-for( $i=0 ; $i < 12 ; $i++ ) {
+for( $i=0 ; $i < 14 ; $i++ ) {
   $s[$i] = "";
 }
 
 //select current value
-$option_array = array('bg', 'ca', 'da', 'en', 'fr', 'de', 'hu', 'it', 'ko', 'pt-br', 'es' );
+$option_array = array('bg', 'ca', 'da', 'en', 'fr', 'de', 'hu', 'it', 'ja', 'ko', 'pt-br', 'ru', 'es' );
 $selected = array_search($LOCALE, $option_array );  
 $s[$selected] = " selected=\"selected\"";  
   
@@ -207,9 +207,11 @@ $content .= "<tr><td></td><td><br /></td></tr>\n".
             "<option value=\"de\" $s[5]>German</option>\n".
             "<option value=\"hu\" $s[6]>Hungarian</option>\n".            
             "<option value=\"it\" $s[7]>Italian</option>\n".
-            "<option value=\"ko\" $s[8]>Korean</option>\n".
-            "<option value=\"pt-br\" $s[9]>Portuguese (Brazilian)</option>\n". 
-            "<option value=\"es\" $s[10]>Spanish</option>\n".
+            "<option value=\"ja\" $s[8]>Japanese</option>\n".
+            "<option value=\"ko\" $s[9]>Korean</option>\n".
+            "<option value=\"pt-br\" $s[10]>Portuguese (Brazilian)</option>\n".
+            "<option value=\"ru\" $s[11]>Russian</option>\n". 
+            "<option value=\"es\" $s[12]>Spanish</option>\n".
             "</select></td></tr>\n";
              
 //timezone setting
