@@ -193,7 +193,7 @@ $q = db_query("SELECT ".PRE."tasks.id AS id,
         break;
 
       case "cantcomplete":
-        $status_content="<span class=\"blue\">(".$task_state['cantcomplete']." ".nicetime($row['finished_time']).")</>";
+        $status_content="<span class=\"blue\">(".$task_state['cantcomplete']." ".nicetime($row['finished_time']).")</span>";
         break;
     }
 
