@@ -30,7 +30,9 @@
 */
 
 require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once(BASE."includes/security.php" );
+
+include_once(BASE."includes/admin_config.php" );
 
 //secure vars
 $content = "";
@@ -95,8 +97,12 @@ else {
 //build up the text-entry part
 $content .=   "<tr><td>".$lang["message"]."</td><td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
               "</table><br />\n".
-              "<input type=\"submit\" value=\"".$lang["post"]."\" />&nbsp;".
-              "<input type=\"reset\" value=\"".$lang["reset"]."\" />".
+              "<p><table border=\"0\">\n".
+              "<tr><td><label for=\"owner\">"."Send email to owner - translate me"."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" $DEFAULT_OWNER ></td></tr>\n".
+              "<tr><td><label for=\"usergroup\">"."Send email to usergroup - translate me"."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" $DEFAULT_GROUP ></td></tr>\n".
+              "</table></p>\n".
+              "<p><input type=\"submit\" value=\"".$lang["post"]."\" />&nbsp;".
+              "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>".
               "</form>\n";
 
 //show a reply or a new-post box
