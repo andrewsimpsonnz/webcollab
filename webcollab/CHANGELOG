@@ -1,4 +1,17 @@
 WebCollab CVS
+*** 30 March 2003
+  Andrew Simpson
+
+- Database query & structure optimisations using MySQL slow_query_log
+
+- Minor bugfixes and clarity improvements
+
+WebCollab-beta 1.30 Release
+*** 22 March 2003
+  Andrew Simpson
+
+
+WebCollab CVS
 *** 15 March 2003
   Andrew Simpson
   
