@@ -43,7 +43,7 @@ function error_setup( $reason ) {
 }
 
 //security check
-if( ( !isset($CONFIG_STATE ) ) || $CONFIG_STATE != "first install" ) {
+if( ( !isset($DATABASE_NAME ) ) || $DATABASE_NAME != "" ) {
   include_once('../includes/security.php' );
 
   if($admin != 1 ) {
@@ -182,7 +182,7 @@ $content = "<center>\n".
 "<p>Setup is complete.</p>\n".
 "<p>Please press the button to login...</p>\n";
 
-if(isset($CONFIG_STATE ) && $CONFIG_STATE == "first install" )
+if(isset($DATABASE_NAME ) && $DATABASE_NAME == "" )
   $content .= "<p>Your login and password are 'admin' and 'admin123'</p>\n";
 
 $content .= "<p>Enjoy!</p>\n".

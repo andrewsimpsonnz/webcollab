@@ -27,29 +27,31 @@
 */
 
 include_once( "./screen_setup.php" );
-include_once('../config.php' );
 
 //
 //Error trap function
 //
 
-function error_setup( $reason ) {
+function error_setup($reason ) {
 
   create_top_setup("Setup", 1 );
-  new_box_setup("Setup error", "<center><br />".$reason."<br /></center>" );
+  new_box_setup("Setup error", "<center><br />$reason<br /></center>" );
   create_bottom_setup();
   die;
 
 }
 
+if(is_readable('../config.php' ) ){
+  include_once('../config.php' );
+}
+
 //security check
-if( ( !isset($CONFIG_STATE ) ) || $CONFIG_STATE != "first install" ) {
+if( ! isset($DATABASE_NAME ) || $DATABASE_NAME != "" ) {
   //this is not an initial install, log in before proceeding
   include_once('../includes/security.php' );
 
   if($admin != 1 ) {
     error_setup("You are not authorised to do this");
-    exit;
   }
 
   //read existing configuration
@@ -58,6 +60,12 @@ if( ( !isset($CONFIG_STATE ) ) || $CONFIG_STATE != "first install" ) {
   $db_password = $DATABASE_PASSWORD;
   $db_type     = $DATABASE_TYPE;
   $db_host     = $DATABASE_HOST;
+
+  //check config can be written
+  if( ! is_writeable("../config.php" ) ){
+    error_setup("Configuration file needs to be made writeable by the webserver to proceed");
+  }
+
 }
 else {
   //first time install, get parameters
@@ -69,28 +77,24 @@ else {
   $db_host     = $_GET["db_host"];
 }
 
-//check config can be written
-if( ! is_writeable("../config.php" ) )
-  error_setup("Configuration file needs to be made writeable by the webserver to proceed");
-
 create_top_setup("Setup Screen", 1);
 
 $content  = "";
 
 $content .= "<form method=\"POST\" action=\"setup3.php\">".
             "<table border=\"0\">".
-            "<input type=\"hidden\" name=\"x\" value=\"".$x."\">\n".
-            "<input type=\"hidden\" name=\"db_name\" value=\"".$db_name."\">\n".
-            "<input type=\"hidden\" name=\"db_user\" value=\"".$db_user."\">\n".
-            "<input type=\"hidden\" name=\"db_password\" value=\"".$db_password."\">\n".
-            "<input type=\"hidden\" name=\"db_type\" value=\"".$db_type."\">\n".
-            "<input type=\"hidden\" name=\"db_host\" value=\"".$db_host."\">\n";
+            "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
+            "<input type=\"hidden\" name=\"db_name\" value=\"$db_name\">\n".
+            "<input type=\"hidden\" name=\"db_user\" value=\"$db_user\">\n".
+            "<input type=\"hidden\" name=\"db_password\" value=\"$db_password\">\n".
+            "<input type=\"hidden\" name=\"db_type\" value=\"$db_type\">\n".
+            "<input type=\"hidden\" name=\"db_host\" value=\"$db_host\">\n";
 
-if(isset($CONFIG_STATE ) && $CONFIG_STATE == "first install" ){
+if(isset($DATABASE_NAME ) && $DATABASE_NAME == "" ){
   $file_path = realpath(dirname(__FILE__ ).'/..' ).'/';
   $file_root = $_SERVER["DOCUMENT_ROOT"];
   $server    = $_SERVER["HTTP_HOST"];
-  $BASE_URL  = str_replace( $file_root, "http://".$server, $file_path );
+  $BASE_URL  = str_replace( $file_root, "http://$server", $file_path );
 }
 
 //basic settings
@@ -98,13 +102,13 @@ $content .= "<tr><td></td><td><br /><B><U>Basic Settings</U></B></td></tr>";
 $content .= "<tr><td></td><td><br />Base URL address of site. (Don't forget the trailing slash).</td></tr>";
 $content .= "<tr><th>Site address:</th><td><input type=\"text\" name=\"base_url\" value=\"$BASE_URL\" size=\"50\"></td></tr>\n";
 
-if($MANAGER_NAME == "" )
+if( ! isset($MANAGER_NAME) || $MANAGER_NAME == "" )
   $MANAGER_NAME = "WebCollab Project Management";
 
 $content .= "<tr><td></td><td><br />The name of the site</td></tr>";
 $content .= "<tr><th>Site name:</th><td><input type=\"text\" name=\"manager_name\" value=\"$MANAGER_NAME\" size=\"50\"></td></tr>\n";
 
-if($ABBR_MANAGER_NAME == "" )
+if( ! isset($ABBR_MANAGER_NAME) || $ABBR_MANAGER_NAME == "" )
   $ABBR_MANAGER_NAME = "WebCollab";
 
 $content .= "<tr><td></td><td><br />An abbreviated name of the site for emails</td></tr>";
@@ -116,7 +120,7 @@ $content .= "<tr><th>Splash image:</th><td><input type=\"text\" name=\"site_img\
 //file settings
 $content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td></tr>";
 
-if(isset($CONFIG_STATE ) && $CONFIG_STATE == "first install" )
+if(isset($DATABASE_NAME ) && $DATABASE_NAME == "" )
   $FILE_BASE = realpath(dirname(__FILE__ ).'/..' )."/files/filebase";
 
 $content .= "<tr><td></td><td><br />Location where uploaded files will be stored</td></tr>";
@@ -136,14 +140,14 @@ if(isset($LOCALE) ){
 }
 
 $content .= "<tr><td></td><td><br /></td></tr>";
-$content .= "<tr><th>Language:</th><td><SELECT name=\"locale\">\n".
-            "<OPTION value=\"en\" $s1 >English</OPTION>\n".
-            "<OPTION value=\"es\" $s2 >Spanish</OPTION>\n".
-            "</SELECT></td></tr>\n";
+$content .= "<tr><th>Language:</th><td><select name=\"locale\">\n".
+            "<option value=\"en\" $s1 >English</option>\n".
+            "<option value=\"es\" $s2 >Spanish</option>\n".
+            "</select></td></tr>\n";
 
 //email settings
 $setting = "CHECKED";
-if($USE_EMAIL == "N" )
+if(isset($USE_EMAIL) && $USE_EMAIL == "N" )
   $setting = "";
 
 $content .= "<tr><td></td><td><br /><br /><B><U>Email Settings</U></B></td></tr>";
@@ -157,32 +161,32 @@ if(isset($MAIL_METHOD) ){
   }
 }
 
-$content .= "<tr><td><br /></td><td><SELECT name=\"mail_method\">\n".
-            "<OPTION value=\"mail\" ".$s1." >Use standard PHP mail() function</OPTION>\n".
-            "<OPTION value=\"SMTP\" ".$s2." >Use external SMTP Server</OPTION>\n".
-            "</SELECT></td></tr>\n";
+$content .= "<tr><td><br /></td><td><select name=\"mail_method\">\n".
+            "<option value=\"mail\" $s1 >Use standard PHP mail() function</option>\n".
+            "<option value=\"SMTP\" $s2 >Use external SMTP Server</option>\n".
+            "</select></td></tr>\n";
 
 $content .= "<tr><td></td><td><br /><br />If an error occurs on the site, who do we email?</td></tr>";
 $content .= "<tr><th>Error emails sent to:</th><td><input type=\"text\" name=\"email_error\" value=\"$EMAIL_ERROR\" size=\"30\"></td></tr>\n";
 
-$content .= "<tr><td><br /><br /></td><td><I>Items below are only required if SMTP server is chosen</I></tr>";
-$content .= "<tr><th><I>SMTP Host:</I></th><td><input type=\"text\" name=\"smtp_host\" value=\"$SMTP_HOST\" size=\"50\"></td></tr>\n";
+$content .= "<tr><td><br /><br /></td><td><i>Items below are only required if SMTP server is chosen</i></tr>";
+$content .= "<tr><th><i>SMTP Host:</i></th><td><input type=\"text\" name=\"smtp_host\" value=\"$SMTP_HOST\" size=\"50\"></td></tr>\n";
 
 $setting = "";
-if($SMTP_AUTH == "Y" )
+if(isset($SMTP_AUTH) && $SMTP_AUTH == "Y" )
   $setting = "CHECKED";
 
 $content .= "<tr><td></td><td><br /></td></tr>";
-$content .= "<tr><th><I>Use SMTP AUTH?</I></th><td><input type=\"checkbox\" name=\"smtp_auth\" $setting ></td></tr>\n";
+$content .= "<tr><th><i>Use SMTP AUTH?</i></th><td><input type=\"checkbox\" name=\"smtp_auth\" $setting ></td></tr>\n";
 
-$content .= "<tr><td></td><td><br /><I>Below is only required if SMTP AUTH is selected</I></td></tr>";
-$content .= "<tr><th><I>SMTP AUTH username:</I></th><td><input type=\"text\" name=\"mail_user\" value=\"$MAIL_USER\" size=\"30\"></td></tr>\n";
-$content .= "<tr><th><I>SMTP AUTH password:</I></th><td><input type=\"text\" name=\"mail_password\" value=\"$MAIL_PASSWORD\" size=\"30\"></td></tr>\n";
+$content .= "<tr><td></td><td><br /><i>Below is only required if SMTP AUTH is selected</i></td></tr>";
+$content .= "<tr><th><i>SMTP AUTH username:</i></th><td><input type=\"text\" name=\"mail_user\" value=\"$MAIL_USER\" size=\"30\"></td></tr>\n";
+$content .= "<tr><th><i>SMTP AUTH password:</i></th><td><input type=\"text\" name=\"mail_password\" value=\"$MAIL_PASSWORD\" size=\"30\"></td></tr>\n";
 
 $content .= "</table><br /><br />\n".
         "<input type=\"hidden\" name=\"action\" value=\"insert\">\n".
-	    "<input type=\"submit\" value=\"Submit\">\n".
-	    "</form><br /><br />\n";
+        "<input type=\"submit\" value=\"Submit\">\n".
+        "</form><br /><br />\n";
 
 new_box_setup( "Setup - Stage 2 of 3 : Configuration", $content );
 create_bottom_setup();

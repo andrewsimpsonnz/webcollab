@@ -26,8 +26,7 @@
 
 */
 
-include_once( "./screen_setup.php" );
-include_once( "../config.php" );
+include( "./screen_setup.php" );
 
 //
 //Error trap function
@@ -73,7 +72,7 @@ if(isset($_POST["database_name"]) ) {
 
   //skip making database
   if(! isset($_POST["make_database"]) || ! $_POST["make_database"] == "on" ){
-    header("location: setup2.php?db_host=".$database_host."&db_user=".$database_user."&db_pass=".$database_password."&db_name=".$database_name."&db_type=".$database_type );
+    header("location: setup2.php?db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
   }
 
   switch ($database_type) {
@@ -82,9 +81,9 @@ if(isset($_POST["database_name"]) ) {
   case "mysql_innodb":
     //connect to database server
     if( ! ( $database_connection = mysql_connect( $database_host, $database_user, $database_password ) ) ) {
-      error_setup( "Sorry but there seems to be a problem in connecting to the database server at ".$database_host."<br />".
+      error_setup( "Sorry but there seems to be a problem in connecting to the database server at $database_host<br />".
                     "Check that your user and password is correct.  Also check that the database is running.<br /><br />".
-                    "User:     ".$database_user."<br />Password: ".$database_password."<br />" );
+                    "User:     $database_user<br />Password: $database_password<br />" );
     }
 
     //try and select the database
@@ -108,7 +107,7 @@ if(isset($_POST["database_name"]) ) {
 
     //sanity check
     if( ! is_readable($db_schema ) ) {
-      error_setup("Database schema is missing.  Check that the file /db/schema_mysql.sql exists and is readable by the webserver." );
+      error_setup("Database schema is missing.  Check that the file $db_schema exists and is readable by the webserver." );
     }
 
     //open schema file
@@ -123,7 +122,7 @@ if(isset($_POST["database_name"]) ) {
     //roughly separate schema into individual table setups
     $schema_array = explode(";", $schema );
 
-    //clean up the trailing and ending whitespaces and remove any null strings
+    //clean up the leading & trailing whitespaces, and remove any null strings
     $max = sizeof($schema_array );
     $j = 0;
     for($i=0 ; $i < $max ; $i++) {
@@ -147,9 +146,9 @@ if(isset($_POST["database_name"]) ) {
 
       //connect to database server with standard 'template1' database
       if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=template1 password=".$database_password ) ) ) {
-        error_setup( "Sorry but there seems to be a problem in connecting to the database server at ".$database_host."<br />".
+        error_setup( "Sorry but there seems to be a problem in connecting to the database server at $database_host<br />".
                     "No existing database, and cannot connect to PostgreSQL to create a new database.<br /><br />".
-                    "User:     ".$database_user."<br />Password: ".$database_password."<br /><br />".
+                    "User:     $database_user<br />Password: $database_password<br /><br />".
                     "Check user and password, then try creating the database manually and running setup again." );
       }
 
@@ -184,13 +183,12 @@ if(isset($_POST["database_name"]) ) {
     //roughly separate schema into individual table setups
     $schema_array = explode(";", $schema );
 
-    //clean up the trailing and ending whitespaces and remove any null strings
+    //clean up the leading & trailing whitespaces, and remove any null strings
     $max = sizeof($schema_array );
     $j = 0;
     for($i=0 ; $i < $max ; $i++) {
       if(strlen($input = trim($schema_array[$i] ) ) > 0 ) {
         $table_array[$j] = $input;
-        echo "value is:".$input."<BR>";
         $j++;
       }
     }
@@ -208,15 +206,31 @@ if(isset($_POST["database_name"]) ) {
     break;
   }
 
-  header("location: setup2.php?db_host=".$database_host."&db_user=".$database_user."&db_pass=".$database_password."&db_name=".$database_name."&db_type=".$database_type );
+  header("location: setup2.php?db_host=$database_host&db_user=$database_user&db_pass=$database_password&db_name=$database_name&db_type=$database_type" );
 }
 
 //
 //Main input screen
 //
 
+
+//check if config file exists and can be written to
+if(is_readable("../config.php" ) ) {
+  //this 'if' statement must have { } - see PHP notes for 'include'
+  if(is_writable("../config.php" ) ) {
+    include("../config.php" );
+  }
+  else{
+    error_setup("The config file (config.php) exists, but the webserver does not have permissions to write to it.<br />\n".
+                 "You can either:<ul>\n<li>Change the permissions to allow the webserver to write to the file 'config.php'</li>\n".
+                 "<li>Delete the file, and the setup program will create a new file with appropriate permissions.</li>\n".
+                 "<li>Do a manual configuration.</li>\n" );
+  }
+}
+
+
 //check if already setup previously
-if( ( !isset($CONFIG_STATE ) ) || $CONFIG_STATE != "first install" )
+if( ( ! isset($DATABASE_NAME ) ) || $DATABASE_NAME != "" )
   header("location: login.php" );
 
 create_top_setup("Setup Screen", 1);
