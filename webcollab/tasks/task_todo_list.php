@@ -36,9 +36,9 @@ require_once( BASE."includes/security.php" );
 //
 
 function listTasks($task_id, $tail ) {
-   global $x, $userid, $epoch, $lang;
+   global $x, $admin, $usergroup, $userid, $epoch, $lang;
   // show all subtasks that are not complete
-  $q_tasks = db_query( "SELECT id, name, owner, deadline,
+  $q_tasks = db_query( "SELECT id, name, owner, deadline, usergroupid, globalaccess,
                         $epoch deadline) AS task_due,
                         $epoch now() ) AS now
                         FROM tasks
@@ -53,6 +53,13 @@ function listTasks($task_id, $tail ) {
    $content = "";
 
    for( $iter=0 ; $task_row = @db_fetch_array($q_tasks, $iter ) ; $iter++) {
+
+     //check for private usergroups
+     if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
+
+       if( ! in_array( $row["usergroupid"], $usergroup ) )
+         continue;
+     }
 
      $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$task_row[ "id" ]."\">";
 
@@ -77,6 +84,7 @@ return $content;
 
 $flag = 0;
 $content = "";
+$usergroup[0] = 0;
 
 //check validity of inputs
 if(isset($_POST["selection"]) && valid_string($_POST["selection"]) )
@@ -107,15 +115,27 @@ if(db_numrows($query ) < 1 ) {
 //set selection & associated defaults for the text boxes
 switch($selection ) {
   case "group":
-    $tail = "AND usergroupid=$groupid";
     $userid = 0; $s1 = ""; $s2 = " SELECTED"; $s3 = " CHECKED"; $s4 = "";
+    if($groupid == 0 )
+      $s4 = " CHECKED";
+    $tail = "AND usergroupid=$groupid";
     break;
 
   case "user":
   default:
     $tail = "AND owner=$userid";
     $groupid = 0; $s1 = " CHECKED"; $s2 = ""; $s3 = ""; $s4 = " SELECTED";
+    if($userid == 0 ){
+      $s2 = " SELECTED";
+      $tail = "";
+    }
     break;
+}
+
+//get usergroups of user, and put them in a simple array for later use
+$q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
+  $usergroup[$i] = $row[0];
 }
 
 $content .= "<form method=\"POST\" action=\"users.php\">\n".
