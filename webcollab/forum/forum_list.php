@@ -150,8 +150,8 @@ if( $task_usergroup != 0 ) {
   //give access if there was a match
   if($found == 1 ) {
 
-    $content = list_posts_from_task(0, $taskid, $task_usergroup);
-    $content = "<br />\n";
+    $content .= list_posts_from_task(0, $taskid, $task_usergroup);
+    $content .= "<br />\n";
     //add an option to add posts
     $usergroup_name = db_result( db_query("SELECT name FROM usergroups WHERE id=$task_usergroup" ), 0, 0 );
     $content .= "<small>[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=$task_usergroup&amp;\">".$lang["new_post"]."</a>]</small>";
