@@ -41,11 +41,11 @@ $content =  "<br />\n".
               "<table border=\"0\">\n".
                 "<tr><td>".$lang["taskgroup_name"]."</td><td><input type=\"input\" name=\"name\" size=\"30\"></td></tr>\n".
                 "<tr><td>".$lang["taskgroup_description"]."</td><td><input type=\"input\"name=\"description\"size=\"30\"></td></tr>\n".
-              "</table>\n".
+              "</table><br /><br />\n".
               "<input type=\"hidden\" name=\"x\" value=\"$x\"> ".
               "<input type=\"hidden\" name=\"action\" value=\"insert\"> ".
-              "<input type=\"submit\" name=\"Add\" value=\"".$lang["add_taskgroup"]."\">".
-              "<input type=\"reset\">".
+              "<input type=\"submit\" value=\"".$lang["add_taskgroup"]."\">".
+              "<input type=\"reset\"  value=\"".$lang["reset"]."\">".
             "</form>\n".
             "<br /><br />\n";
 

@@ -88,9 +88,9 @@ else
 $query = db_query("SELECT id, name FROM tasks WHERE parent = 0 ORDER BY name" );
 
 // check if there are projects
-if( db_numrows( $query ) < 1 ) {
-  new_box( $lang["no_projects"],
-           "<br /><center><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add"]."</a></center><br />");
+if(db_numrows($query ) < 1 ) {
+  $content = "<br /><center><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add"]."</a></center><br /><br />\n";
+  new_box( $lang["no_projects"], $content );
   return;
 }
 
@@ -98,7 +98,7 @@ $content .= "<br /><table border=\"0\">\n".
             "<form method=\"POST\" action=\"users.php\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\">\n ".
-            "<tr> <td>".$lang["todo_list_for"]."</td><td><select name=\"userid\">\n".
+            "<tr><td>".$lang["todo_list_for"]."</td><td><select name=\"userid\">\n".
             "<option value=\"0\">".$lang["nobody"]."</option>\n";
 
 //get all users for option box
@@ -115,7 +115,7 @@ for( $i=0 ; $row = @db_fetch_array($users_q, $i ) ; $i++) {
 }
 
 $content .= "</select></td>\n".
-            "<td><input type=\"submit\" name=\"Add\" value=\"Submit\"> ".
+            "<td><input type=\"submit\" value=\"".$lang["update"]."\"> ".
             "</form></td></tr>\n".
             "</table>\n".
             "<br />\n";
@@ -123,7 +123,7 @@ $content .= "</select></td>\n".
 // show all uncompleted tasks and projects belonging to this user
 for( $iter=0 ; $task_row = @db_fetch_array( $query, $iter ) ; $iter++) {
 
-  $new_content = listTasks( $task_row["id"] );
+  $new_content = listTasks($task_row["id"] );
 
   //if no task, don't show project name either
   if( $new_content != "" ) {
@@ -135,7 +135,7 @@ for( $iter=0 ; $task_row = @db_fetch_array( $query, $iter ) ; $iter++) {
 }
 
 if( $flag != 1 )
-  $content .= "<ul>".$lang["no_assigned"]."</ul>\n";
+  $content .= "<br />".$lang["no_assigned"]."<br />\n";
 
 $content .= "<br />\n";
 

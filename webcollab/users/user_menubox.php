@@ -32,10 +32,12 @@
 require_once("path.php" );
 require_once(BASE."includes/security.php" );
 
+$content = "";
+
 //add an option to add users
 if($admin == 1 ) {
-  $content .= "<a href=\"users.php?x=$x&amp;action=manage\">".$lang["manage"]."</a><br />\n".
-              "<a href=\"users.php?x=$x&amp;action=add\">".$lang["add"]."</a><br />\n";
+  $content .= "<a href=\"users.php?x=$x&amp;action=add\">".$lang["add"]."</a><br />\n".
+              "<a href=\"users.php?x=$x&amp;action=manage\">".$lang["manage"]."</a><br />\n";
 }
 
 $content .= "<a href=\"users.php?x=$x&amp;action=showonline\">".$lang["who_online"]."</a><br />\n".

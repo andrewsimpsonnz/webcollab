@@ -63,7 +63,7 @@ $q = db_query("SELECT files.oid AS oid,
 
 if(db_numrows($q ) != 0 ) {
 
-  $content .= "<table border=\"0\">";
+  $content .= "<br /><table border=\"0\">";
 
   //show them
   for($i=0 ; $row = @db_fetch_array($q, $i) ; $i++ ) {
@@ -87,14 +87,13 @@ if(db_numrows($q ) != 0 ) {
     //padding for next entry
     $content .= "<tr><td>&nbsp;</tr></td>\n";
   }
-
   $content .= "</table>";
 }
 
-$content .= "<small>\n<br />\n[<a href=\"".$BASE_URL."files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang["add_file"]."</a>]</small>";
+$content .= "<small>[<a href=\"".$BASE_URL."files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang["add_file"]."</a>]</small>";
 
 $type = $lang["project"];
-if( db_result(db_query( "SELECT COUNT(*) FROM tasks WHERE parent=0 AND id=$taskid" ) ) == 0 )
+if(db_result(db_query("SELECT COUNT(*) FROM tasks WHERE parent=0 AND id=$taskid" ) ) == 0 )
   $type = $lang["task"];
 
 new_box( sprintf($lang["files_assoc_sprt"], $type ), $content );

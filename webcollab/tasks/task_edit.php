@@ -78,37 +78,38 @@ if( ! user_access($taskid ) )
 $q = db_query("SELECT * FROM tasks WHERE id=$taskid" );
 
 //get info
-if( ($row = db_fetch_array( $q, 0 ) ) < 0 )
+if( ($row = db_fetch_array($q, 0 ) ) < 0 )
   error("Database error", "Unable to retrieve the needed information.");
 
 //all okay show task info
 $content = "<br />\n";
 
 $content .= "<form method=\"POST\" action=\"tasks/task_submit.php\">\n".
-            "<input type=\"hidden\" name=\"x\" value=\"".$x."\">\n ".
+            "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ".
             "<input type=\"hidden\" name=\"action\" value=\"update\">\n ".
+            "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\">".
             "<table border=\"0\">\n".
-            "<tr> <td>".$lang["creation_time"]."</td> <td>".nicedate($row["created"] )."</td> </tr>\n";
+            "<tr><td>".$lang["creation_time"]."</td> <td>".nicedate($row["created"] )."</td></tr>\n";
 
 // find parent for task and show it.
 if($row["parent"] != 0 ) {
 
   $project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
-  $content .= "<tr> <td>".$lang["pproject"].":</td> <td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["projectid"]."\">$project</a></td></tr>\n";
+  $content .= "<tr><td>".$lang["pproject"].":</td><td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["projectid"]."\">$project</a></td></tr>\n";
 
   if( $row["parent"] != $row["projectid"] ) {
     $parent = db_result(db_query( "SELECT name FROM tasks WHERE id=".$row["parent"]), 0, 0);
-    $content .= "<tr> <td>".$lang["parent_task"]."</td> <td><a href=\"tasks.php?x=".$x."&action=show&taskid=".$row["parent"]."\">".$parent."</a></td></tr>\n";
+    $content .= "<tr><td>".$lang["parent_task"]."</td><td><a href=\"tasks.php?x=".$x."&action=show&taskid=".$row["parent"]."\">".$parent."</a></td></tr>\n";
   }
-  $content .= "<tr> <td>".$lang["task_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></td> </tr>\n";
+  $content .= "<tr><td>".$lang["task_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></td></tr>\n";
 }
 else {
   //project
-  $content .= "<tr> <td>".$lang["project_name"].":</td> <td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></td> </tr>\n";
+  $content .= "<tr><td>".$lang["project_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></td></tr>\n";
 }
 
 //deadline
-$content .= "<tr> <td>".$lang["deadline"].":</td> <td>".date_select_from_timestamp($row["deadline"])."</td> </tr>\n";
+$content .= "<tr><td>".$lang["deadline"].":</td><td>".date_select_from_timestamp($row["deadline"])."</td></tr>\n";
 
 //priority
 
@@ -136,7 +137,7 @@ $content .= "<tr> <td>".$lang["deadline"].":</td> <td>".date_select_from_timesta
   }
 
 
-$content .= "<tr> <td>".$lang["priority"].":</td> <td>\n".
+$content .= "<tr><td>".$lang["priority"].":</td><td>\n".
             "<select name=\"priority\">\n".
             "<option value=\"0\"$s1>".$task_state["dontdo"]."</option>\n".
             "<option value=\"1\"$s2>".$task_state["low"]."</option>\n".
@@ -287,10 +288,9 @@ $content .= "<tr><td><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#globalacce
             "<tr><td>".$lang["email_new_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" $DEFAULT_OWNER></td></tr>\n".
             "<tr><td>".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" $DEFAULT_GROUP></td></tr>\n".
 
-            "</table>\n".
-            "<input type=\"submit\" name=\"Add\" value=\"Submit\"> ".
-            "<input type=\"reset\">".
-            "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\">".
+            "</table><br /><br />\n".
+            "<input type=\"submit\" value=\"".$lang["edit"]."\"> ".
+            "<input type=\"reset\" value=\"".$lang["reset"]."\">".
             "</form>\n";
 
 if($row["parent"] == 0 ) {
@@ -304,10 +304,10 @@ else{
 
 //delete options
 $content .= "<form method=\"POST\" action=\"tasks.php\">\n".
-            "<input type=\"hidden\" name=\"x\" value=\"".$x."\">".
+            "<input type=\"hidden\" name=\"x\" value=\"$x\">".
             "<input type=\"hidden\" name=\"action\" value=\"delete\">\n".
             "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\">\n".
-            "<input type=\"submit\" name=\"Delete\" value=\"".$lang["delete"]." ".$title."\" onClick=\"return confirm( '".sprintf($lang["del_javascript_sprt"], $title, $row["name"] )."')\">\n".
+            "<input type=\"submit\" value=\"".$lang["delete"]." ".$title."\" onClick=\"return confirm('".sprintf($lang["del_javascript_sprt"], $title, $row["name"] )."')\">\n".
             "</form>\n".
 
             "<br /><br />\n";

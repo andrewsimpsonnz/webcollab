@@ -44,19 +44,19 @@ require_once( BASE."includes/usergroup_security.php" );
 
 $content =  "<center><br />".
             "<form name=\"inputform\" method=\"POST\" enctype=\"multipart/form-data\"  action=\"".$BASE_URL."files/file_submit.php\">\n".
+              "<input type=\"hidden\" name=\"action\" value=\"upload\">\n".
+              "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
+              "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\">\n".
               "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"$FILE_MAXSIZE\">\n".
               "<table border=\"0\">\n".
                 "<tr><td>".$lang["file_choose"]."</td><td><input type=\"file\" name=\"userfile\"></td></tr>\n".
                 "<tr><td>".$lang["description"].":</td> <td><textarea name=\"description\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
-                "<tr><td nowrap colspan=\"2\">".sprintf( $lang["max_file_sprt"], $FILE_MAXSIZE/1000 )."</td></tr>\n".
-              "</table>\n".
-              "<input type=\"submit\" name=\"Upload\" value=\"".$lang["upload"]."\">\n".
-              "<input type=\"reset\">\n".
-              "<input type=\"hidden\" name=\"action\" value=\"upload\">\n".
-              "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
-              "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\">\n".
+                "<tr><td></td><td>".sprintf( $lang["max_file_sprt"], $FILE_MAXSIZE/1000 )."</td></tr>\n".
+              "</table><br /><br />\n".
+              "<input type=\"submit\" value=\"".$lang["upload"]."\">\n".
+              "<input type=\"reset\" value=\"".$lang["reset"]."\">\n".
             "</form>\n".
-            "</center>";
+            "<br /><br /></center>";
 
 new_box($lang["add_file"], $content );
 

@@ -56,10 +56,13 @@ $file_q = db_query("SELECT files.oid AS oid,
                         users.fullname AS username
                         FROM files
                         LEFT JOIN tasks ON (files.taskid=tasks.id)
-                        LEFT JOIN users ON (users.id=files.uploader)" );
+                        LEFT JOIN users ON (users.id=files.uploader)
+                        ORDER BY task_name" );
 
 if(db_numrows($file_q) == 0 ) {
- new_box($lang["manage_files"], $lang["no_files"] );
+ $content = "<br />".$lang["no_files"]."<br /><br />\n";
+
+ new_box($lang["manage_files"], $content );
   return;
 }
 

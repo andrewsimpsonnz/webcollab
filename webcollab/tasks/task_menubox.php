@@ -56,15 +56,12 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
       $title = $lang["pproject"];
 
     $content .= "<small><b>".$lang["admin"].":</b></small><br />\n".
-                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onClick=\"return confirm( '".sprintf($lang["del_javascript_sprt"], strtolower($title), $row["name"] )."')\">".$lang["delete"]." ".strtolower($title)."</a><br />\n".
                 "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit"]." ".strtolower($title)."</a><br />\n".
+                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onClick=\"return confirm( '".sprintf($lang["del_javascript_sprt"], strtolower($title), $row["name"] )."')\">".$lang["delete"]." ".strtolower($title)."</a><br />\n".
                 "<br /><small><b>".$lang["global"].":</b></small><br />\n";
   }
-
   $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang["add_task"]."</a><br />\n";
-
 }
-
 
 //the task-independent part
 $content .= "<a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a><br />\n";

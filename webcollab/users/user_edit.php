@@ -63,11 +63,11 @@ if( ! ($row = db_fetch_array($q , 0 ) ) )
 
 
 //show data
-$content =  "<center><br /><form method=\"POST\" action=\"users/user_submit.php\">".
+$content =  "<br /><form method=\"POST\" action=\"users/user_submit.php\">".
             "<table border=\"0\">".
               "<tr><td>".$lang["login_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\"></td></tr>\n".
               "<tr><td>".$lang["full_name"].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" value=\"".$row["fullname"]."\"></td></tr>\n".
-              "<tr><td>".$lang["password"].":</td><td><input type=\"password\" name=\"password\" size=\"30\" value=\"\"><small><I>(Leave blank for current password)</I></small></td></tr>\n".
+              "<tr><td>".$lang["password"].":</td><td><input type=\"password\" name=\"password\" size=\"30\" value=\"\"></td><td><small><i>".$lang["blank_for_current_password"]."</i></small></td></tr>\n".
               "<tr><td>".$lang["email"].":</td><td><input type=\"text\" name=\"email\" size=\"30\" value=\"".$row["email"]."\"></td></tr>\n";
 
 //dangerous action!
@@ -84,8 +84,10 @@ if( $admin == 1 ) {
 
   //add user-groups
   $usergroup_q = db_query( "SELECT name, id FROM usergroups ORDER BY name" );
-  $content .= "<tr><td></td><td><small><i>".$lang["member_groups"]."</i></small></td></tr>\n";
-  $content .= "<tr> <td>".$lang["usergroups"].":</td> <td><select name=\"usergroup[]\" MULTIPLE size=\"4\">\n";
+  $content .= "<tr><td></td><td colspan=\"2\"><small><i>".$lang["member_groups"]."</i></small></td></tr>\n".
+              "<tr><td>".$lang["usergroups"].":</td>".
+              "<td colspan=\"2\"><select name=\"usergroup[]\" MULTIPLE size=\"4\">\n";
+
   for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++) {
 
     $found=0;
@@ -111,14 +113,14 @@ if( $admin == 1 ) {
   $content .= "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n";
 }
 
-$content .= "</table>".
-            "<input type=\"submit\" NAME=\"Add\" value=\"".$lang["submit_changes"]."\">".
-            "<input type=\"reset\">".
-            "<input type=\"hidden\" NAME=\"action\" value=\"edit\">".
-            "<input type=\"hidden\" NAME=\"x\" value=\"$x\">".
-            "<input type=\"hidden\" NAME=\"userid\" value=\"$userid\">".
+$content .= "</table><br /><br />".
+            "<input type=\"hidden\" name=\"action\" value=\"edit\">".
+            "<input type=\"hidden\" name=\"x\" value=\"$x\">".
+            "<input type=\"hidden\" name=\"userid\" value=\"$userid\">".
+            "<input type=\"submit\" value=\"".$lang["submit_changes"]."\">".
+            "<input type=\"reset\" value=\"".$lang["reset"]."\">".
             "</form>".
-            "</center><br /><br />";
+            "<br /><br />";
 
 new_box($lang["edit_user"], $content );
 

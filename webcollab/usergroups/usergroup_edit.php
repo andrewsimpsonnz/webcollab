@@ -72,12 +72,12 @@ for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++ ) {
 }
 
 $content .=    "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
-             "</table>\n".
+             "</table><br /><br />\n".
              "<input type=\"hidden\" name=\"x\" value=\"$x\"> ".
              "<input type=\"hidden\" name=\"usergroupid\" value=\"$usergroupid\"> ".
              "<input type=\"hidden\" name=\"action\" value=\"edit\"> ".
-             "<input type=\"submit\" name=\"Add\" value=\"".$lang["edit_usergroup"]."\"> ".
-             "<input type=\"reset\">".
+             "<input type=\"submit\" value=\"".$lang["edit_usergroup"]."\"> ".
+             "<input type=\"reset\" value=\"".$lang["reset"]."\">".
            "</form>\n".
            "<br /><br />\n";
 

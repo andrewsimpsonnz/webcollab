@@ -55,7 +55,7 @@ if( ! ($row = db_fetch_array($q, 0 ) ) )
 db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, $taskid, current_timestamp(0) ) " );
 
 //start of header table
-$content = "<table width=\"98%\"><tr><td>\n";
+$content = "<br /><table width=\"98%\"><tr><td>\n";
 
 //percentage_completed gauge if this is a project
 if( $row["parent"] == 0 ) {

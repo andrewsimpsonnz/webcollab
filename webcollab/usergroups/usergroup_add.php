@@ -39,8 +39,8 @@ if($admin != 1 )
 $content =  "<br />\n".
             "<form name=\"inputform\" method=\"POST\" action=\"usergroups/usergroup_submit.php\">\n".
               "<table border=\"0\">\n".
-                "<tr><td>".$lang["usergroup_name"]."</td> <td><input type=\"input\" name=\"name\" size=\"30\"></td></tr>\n".
-                "<tr> <td>".$lang["usergroup_description"]."</td> <td><input type=\"input\" name=\"description\" size=\"30\"></td></tr>\n";
+                "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"input\" name=\"name\" size=\"30\"></td></tr>\n".
+                "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" size=\"30\"></td></tr>\n";
 
 //add users
 $q = db_query("SELECT fullname, id FROM users ORDER BY fullname" );
@@ -50,14 +50,14 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .=   "<option value=\"".$row["id"]."\">".$row["fullname"]."</option>";
 }
 
-$content .=     "</select><small><I>".$lang["select_instruct"]."</i></small></td></tr>\n".
-              "</table>\n".
+$content .=     "</select><small><i>".$lang["select_instruct"]."</i></small></td></tr>\n".
+              "</table><br /><br />\n".
               "<input type=\"hidden\" name=\"x\" value=\"$x\"> ".
               "<input type=\"hidden\" name=\"action\" value=\"insert\"> ".
-              "<input type=\"submit\" name=\"Add\" value=\"".$lang["add_usergroup"]."\"> ".
-              "<input type=\"reset\">".
-              "</form>\n".
-              "<br /><br />\n";
+              "<input type=\"submit\" value=\"".$lang["add_usergroup"]."\"> ".
+              "<input type=\"reset\" value=\"".$lang["reset"]."\">".
+            "</form>\n".
+            "<br /><br />\n";
 
 new_box($lang["add_new_usergroup"], $content );
 

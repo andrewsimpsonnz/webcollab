@@ -30,10 +30,10 @@
 */
 
 require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once(BASE."includes/security.php" );
 
-include_once( BASE."includes/admin_config.php" );
-include_once( BASE."includes/time.php" );
+include_once(BASE."includes/admin_config.php" );
+include_once(BASE."includes/time.php" );
 
 //shows a priority-select box
 $priority_select_box = "<tr><td>Priority:</td> <td>\n".
@@ -48,7 +48,7 @@ $priority_select_box = "<tr><td>Priority:</td> <td>\n".
 
 $content = "<br />\n";
 $content .= "<form name=\"inputform\" method=\"POST\" action=\"tasks/task_submit.php\">\n";
-$content .= "<input type=\"hidden\" name=\"x\" value=\"".$x."\">\n ";
+$content .= "<input type=\"hidden\" name=\"x\" value=\"$x\">\n ";
 $content .= "<input type=\"hidden\" name=\"action\" value=\"insert\">\n ";
 
 //this is split up in 2 parts for readabilities' sake
@@ -62,10 +62,8 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
   $q = db_query("SELECT name, deadline, status, owner, parent, projectid FROM tasks WHERE id=$parentid" );
   $task_row = @db_fetch_array($q, $i );
 
-  $content .= $lang["add_task"]."<br /><br />\n";
-  $content .= "<table border=\"0\">\n";
-
-  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\">\n".
+  $content .= "<table border=\"0\">\n".
+              "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\">\n".
               "<input type=\"hidden\" name=\"projectid\" value=\"".$task_row["projectid"]."\">\n";
 
   //show project name
@@ -146,9 +144,9 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
               "<tr><td>".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" ".$DEFAULT_OWNER."></td></tr>\n".
               "<tr><td>".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" ".$DEFAULT_GROUP."></td></tr>\n".
 
-              "</table>\n".
-              "<input type=\"submit\" name=\"Add\" value=\"Add task\"> ".
-              "<input type=\"reset\">".
+              "</table><br /><br />\n".
+              "<input type=\"submit\" value=\"Add task\"> ".
+              "<input type=\"reset\" value=\"".$lang["reset"]."\">".
               "</form>\n".
               "<br /><br />\n";
 
@@ -159,8 +157,7 @@ if( isset($_GET["parentid"]) && is_numeric($_GET["parentid"]) ) {
 // ADD A NEW PROJECT
 else {
 
-  $content .= "Add a new project<br /><br />\n".
-              "<table border=\"0\">\n".
+  $content .= "<table border=\"0\">\n".
               "<input type=\"hidden\" name=\"parentid\" value=\"0\">\n".
               "<input type=\"hidden\" name=\"projectid\" value=\"0\">\n".
 
@@ -174,7 +171,7 @@ else {
   $content .= $priority_select_box;
 
   //status
-  $content .= "<tr> <td>Status:</td> <td>\n".
+  $content .= "<tr> <td>".$lang["status"].":</td> <td>\n".
               "<select name=\"status\">\n".
               "<option value=\"notactive\" >".$task_state["planned_project"]."</option>\n".
               "<option value=\"nolimit\" >".$task_state["no_deadline_project"]."</option>\n".
@@ -219,9 +216,9 @@ else {
               "<tr><td>".$lang["email_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" ".$DEFAULT_OWNER."></td></tr>\n".
               "<tr><td>".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" ".$DEFAULT_GROUP."></td></tr>\n".
 
-              "</table>\n".
-              "<input type=\"submit\" name=\"Add\" value=\"".$lang["add_project"]."\">\n ".
-              "<input type=\"reset\">\n".
+              "</table><br /><br />\n".
+              "<input type=\"submit\" value=\"".$lang["add_project"]."\">\n ".
+              "<input type=\"reset\" value=\"".$lang["reset"]."\">\n".
               "</form>\n".
               "<br /><br />\n";
 

@@ -40,14 +40,17 @@ if($admin != 1 )
 $q = db_query("SELECT * FROM taskgroups ORDER BY name" );
 
 //nothing here yet
-if( db_numrows($q) == 0 ) {
-  new_box($lang["taskgroup_manage"], $lang["no_taskgroups"]."<br /><a href=\"taskgroups.php?x=$x&amp;action=add\">[".$lang["add"]."]</a>");
+if(db_numrows($q) == 0 ) {
+  $content = "<br />".$lang["no_taskgroups"]."<br /><br />\n".
+             "<a href=\"taskgroups.php?x=$x&amp;action=add\">[".$lang["add"]."]</a><br /><br />\n";
+
+  new_box($lang["taskgroup_manage"], $content );
   return;
 }
 
 $content =  "<br />\n".
             "<table border=\"0\">\n".
-              "<tr><th>".$lang["name"]."</th><th>".$lang["description"]."</th><th>".$lang["action"]."</TH></tr>\n";
+              "<tr><th>".$lang["name"]."</th><th>".$lang["description"]."</th><th>".$lang["action"]."</th></tr>\n";
 
 //show all taskgroups
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
