@@ -31,6 +31,7 @@ require_once("path.php" );
 require_once( BASE."includes/security.php" );
 
 include_once(BASE."includes/admin_config.php" );
+include_once(BASE."tasks/task_common.php" );
 
 //
 // Finds children recursively and puts them in an array
@@ -132,6 +133,19 @@ for($i=0 ; $i < $arrayindex ; $i++ ) {
   db_query("DELETE FROM tasks WHERE id=".$ids[$i] );
 
 }
+
+//if remaining tasks are completed, then mark the project as 'done'
+if($row["parent"] != 0 ){ 
+  if(round(percent_complete($projectid ) ) == 100 ){
+    db_query("UPDATE tasks SET status='done', finished_time=now() WHERE id=".$row["projectid"] );
+  }
+  else{
+    if(db_result(db_query("SELECT status FROM tasks WHERE id=".$row["projectid"] ), 0, 0 ) == 'done' ) {
+    db_query("UPDATE tasks SET status='active', finished_time=now() WHERE id=".$row["projectid"] );
+    }
+  }  
+}
+
 //transaction complete
 db_commit();
 

@@ -37,7 +37,7 @@ function percent_complete($taskid ) {
   $tasks_completed = 0;
   $total_tasks = 0;
   
-  $q = db_query("SELECT status FROM tasks WHERE projectid=".$taskid );
+  $q = db_query("SELECT status FROM tasks WHERE projectid=".$taskid." AND parent<>0"  );
   
   for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) { 
   
@@ -49,10 +49,10 @@ function percent_complete($taskid ) {
   }
   
   //project with no tasks is complete
-  if($total_tasks - 1 == 0 )
+  if($total_tasks == 0 )
     return 100;
   
-  return($tasks_completed / ($total_tasks - 1 ) ) * 100;  
+  return($tasks_completed / ($total_tasks ) ) * 100;  
 }
 
 //
@@ -60,21 +60,16 @@ function percent_complete($taskid ) {
 //
 function show_percent($percent = 0 ) {
   $width = 400;
-  $height = 4;
   switch($percent) {
     case 100:
-      //return "<table width=\"$width\"><tr><td height=\"$height\" width=\"$width\" bgcolor=\"#008B45\" nowrap></td></tr></table>\n";
       return "<table width=\"$width\"><tr><td width=\"$width\" class=\"greenbar\"></td></tr></table>\n";
       break;
 
     case 0:
-      //return "<table width=\"$width\"><tr><td height=\"$height\" width=\"$width\" bgcolor=\"#FFA500\" nowrap></td></tr></table>\n";
       return "<table width=\"$width\"><tr><td width=\"$width\" class=\"redbar\"></td></tr></table>\n";
       break;
 
     default:
-      //$out  = "<table width=\"$width\"><tr><td height=\"$height\" width=\"".($percent * ($width/100))."\" bgcolor=\"#008B45\" nowrap>";
-      //$out .= "</td><td width=\"".($width-($percent*($width/100)))."\" bgcolor=\"#FFA500\" nowrap></td></tr></table>\n";
       $out  = "<table width=\"$width\"><tr><td width=\"".($percent * ($width/100))."\" class=\"greenbar\">";
       $out .= "</td><td width=\"".($width-($percent*($width/100)))."\" class=\"redbar\"></td></tr></table>\n";
       return $out;

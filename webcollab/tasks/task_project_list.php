@@ -149,7 +149,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   }
 
   //get percentage complete
-  $percent_complete = round(percent_complete($row["id"] ) );
+  //$percent_complete = round(percent_complete($row["id"] ) );
   
   //set project status
   $project_status = $row["status"];
@@ -162,15 +162,25 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     //for 'active_only' skip this project
       if($active_only )
         continue(2);
+      $percent_complete = round(percent_complete($row["id"] ) );
       break;
 
+    case "done":
+      if($active_only )
+        continue (2);
+      $percent_complete = 100;
+      break;
+        
     case "active":
     case "nolimit":
-    case "done":
     default:
+      //calculate percent complete
+      $percent_complete = round(percent_complete($row["id"] ) );
+      
       if($percent_complete == 100 )
         $project_status = "done";
-      //for 'active_only' skip this project
+        
+      //for 'active_only' skip completed project
       if($active_only && $project_status == "done" )
         continue(2); 
       break;
