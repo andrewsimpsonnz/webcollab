@@ -40,9 +40,8 @@ if( ! @require( "path.php" ) )
 
 include_once( BASE."includes/security.php" );
 
-$content .= "<TABLE border=\"0\">".
-            "<FORM name=\"inputform\" method=\"POST\" action=\"contacts/contact_submit.php\">".
-
+$content .= "<FORM name=\"inputform\" method=\"POST\" action=\"contacts/contact_submit.php\">".
+	    "<TABLE border=\"0\">".
 	    "<TR><TD><I>".$lang["firstname"]."</I> </TD><TD><INPUT type=\"text\" name=\"firstname\" size=\"30\"></TD></TR>\n".
 	    "<TR><TD><I>".$lang["lastname"]."</I> </TD><TD><INPUT type=\"text\" name=\"lastname\" size=\"30\"></TD></TR>\n".
 	    "<TR><TD><I>".$lang["company"]."</I> </TD><TD><INPUT type=\"text\" name=\"company\" size=\"30\"></TD></TR>\n".
