@@ -132,7 +132,7 @@ TD.boxdata2 {
 }
 
 /* Class for text at page bottom */
-.loadtime {
+.bottomtext {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 10px;
   text-align : center;
