@@ -48,7 +48,7 @@ if( ! ($row = db_fetch_array($q, 0 ) ) )
   error("Database error", "Error in fetching result" );
 
 if($row["deleted"] == 't' )
-  $content .= "<br /><b><centrt><font color=\"red\">".$lang["user_deleted"]."</font></center></b><br />";
+  $content .= "<br /><b><div align=\"center\"><font color=\"red\">".$lang["user_deleted"]."</font></div></b><br />";
 
 $content .= "<br /><table border=\"0\">".
               "<tr><td>".$lang["login"].":</td><td>".$row["name"]."</td></tr>\n".

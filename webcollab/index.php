@@ -38,7 +38,7 @@ function secure_error( $reason = "Unauthorised area" ) {
   global $lang;
 
   create_top($lang["login"], 1 );
-  new_box($lang["error"], "<center><br />$reason<br /></center>" );
+  new_box($lang["error"], "<div align=\"center\"><br />$reason<br /></div>" );
   create_bottom();
   die;
 
@@ -129,7 +129,7 @@ if(isset($_COOKIE["webcollab_session"] ) && strlen($_COOKIE["webcollab_session"]
 
 create_top($lang["login"], 1, "username" );
 
-$content = "<center>";
+$content = "<div align=\"center\">";
 
 if( $SITE_IMG != "" ) {
   $content .=  "<img src=\"images/".$SITE_IMG."\"><br />";
@@ -158,7 +158,7 @@ $content .= "<br />".$lang["please_login"].":<br /><br />\n".
            "</div>".
            "</form>".
 
-           "</center>".
+           "</div>".
            "<br />";
 
 //set box options

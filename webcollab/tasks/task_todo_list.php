@@ -89,7 +89,7 @@ $query = db_query("SELECT id, name FROM tasks WHERE parent=0 ORDER BY name" );
 
 // check if there are projects
 if(db_numrows($query ) < 1 ) {
-  $content = "<br /><center><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add"]."</a></center><br /><br />\n";
+  $content = "<br /><div align=\"center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add"]."</a></div><br /><br />\n";
   new_box( $lang["no_projects"], $content );
   return;
 }

@@ -129,7 +129,7 @@ function warning($box_title, $content ) {
 
   create_top("Warning", 1 );
 
-  new_box($box_title, "<br /><center>".$content."</center><br />", "500" );
+  new_box($box_title, "<br /><div align=\"center\">".$content."</div><br />", "500" );
 
   create_bottom();
 

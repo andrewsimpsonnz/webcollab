@@ -122,7 +122,7 @@ $usergroup[0] = 0;
 
 //check if there are projects
 if(db_numrows($q) < 1 ) {
-  $content = "<br /><center><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a></center><br /><br />\n";
+  $content = "<br /><div align=\"center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a></div><br /><br />\n";
   new_box($lang["no_projects"], $content );
   return;
 }
