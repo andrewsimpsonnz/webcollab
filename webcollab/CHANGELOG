@@ -4,6 +4,8 @@ WebCollab CVS
 
 - allow for projects with no deadline
 
+- allow for external authorisation by webserver (Andy Harrison)
+
 WebCollab CVS
 *** 11 May 2003
   Andrew Simpson
