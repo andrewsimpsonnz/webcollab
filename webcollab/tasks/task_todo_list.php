@@ -36,8 +36,11 @@ require_once( BASE."includes/security.php" );
 
 function listTasks($task_id, $tail, $projectid ) {
   global $x, $ADMIN, $GID, $userid, $epoch, $lang, $tz_offset;
-  global $task_array, $parent_array, $shown_array;
+  global $task_array, $parent_array, $shown_array, $j;
    
+  $j = 0;
+  $k = 0;
+  $l = 0;
   $parent_array = "";
    
   // show all subtasks that are not complete
@@ -65,8 +68,8 @@ function listTasks($task_id, $tail, $projectid ) {
     }
 
     //put values into array
-    $task_array[$i]['id'] = $row['id'];
-    $task_array[$i]['parent'] = $row['parent'];
+    $task_array[$l]['id'] = $row['id'];
+    $task_array[$l]['parent'] = $row['parent'];
          
     $this_task = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
 
@@ -82,12 +85,14 @@ function listTasks($task_id, $tail, $projectid ) {
       $this_task .= "<span class=\"red\">".$row['name']."</span></a>";
     }
     
-    $task_array[$i]['task'] = $this_task."\n";
+    $task_array[$l]['task'] = $this_task."\n";
     
     //if this is a subtask, store the parent id 
     if($row['parent'] != $projectid ) {
-      $parent_array[] = $row['parent'];
+      $parent_array[$k] = $row['parent'];
+      $k++;
     }
+  $l++;
   }   
     
   if(sizeof($parent_array) > 10 )
@@ -102,7 +107,8 @@ function listTasks($task_id, $tail, $projectid ) {
       continue;
     }
     $content .= $task_array[$i]['task'];
-    $shown_array[] = $task_array[$i]['id'];
+    $shown_array[$j] = $task_array[$i]['id'];
+    $j++;
     
     //if this task has children (subtasks), iterate recursively to find them 
     if(in_array($task_array[$i]['id'], (array)$parent_array ) ){
@@ -132,7 +138,7 @@ function listTasks($task_id, $tail, $projectid ) {
 //
 function find_children($parent ) {
 
-  global $task_array, $parent_array, $shown_array;
+  global $task_array, $parent_array, $shown_array, $j;
 
   $content = "<ul>\n";
   $max = sizeof($task_array);
@@ -144,7 +150,7 @@ function find_children($parent ) {
       continue;
     }
     $content .= $task_array[$i]['task'];
-    $shown_array[] = $task_array[$i]['id'];
+    $shown_array[$j] = $task_array[$i]['id'];
     
     //if this task has children (subtasks), iterate recursively to find them
     if(in_array($task_array[$i]['id'], $parent_array ) ){
@@ -281,7 +287,7 @@ $content .= "</select></label><br /><br /></td></tr>\n".
             "</form>\n";
 
 //query to get the all the projects
-$q = db_query("SELECT id, name, projectid, usergroupid, globalaccess FROM ".PRE."tasks WHERE parent=0 ORDER BY name" );
+$q = db_query("SELECT id, name, projectid, usergroupid, globalaccess FROM ".PRE."tasks WHERE parent=0 AND archive='f' ORDER BY name" );
 
 // show all uncompleted tasks and projects belonging to this user or group
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
