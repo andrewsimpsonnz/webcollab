@@ -79,7 +79,12 @@ return $body;
 }
 
 function clean_up($body ) {
-
+  
+  //decode decimal HTML entities added by web browser
+  $body = preg_replace('/&#\d{2,5};/ue', "utf8_entity_decode('$0')", $body );
+  //decode hex HTML entities added by web browser
+  $body = preg_replace('/&#x([a-fA-F0-7]{2,8});/ue', "utf8_entity_decode('&#'.hexdec('$1').';')", $body );
+  
   //allow only normal byte range of UTF-8 characters upto U+00010000
   preg_match_all('/([\x09\x0a\x0d\x20-\x7e]|'.
                    '[\xc0-\xdf][\x80-\xbf]|'.
@@ -113,6 +118,16 @@ function clean_up($body ) {
   
   return strtr($body, $trans ); 
   
+}
+
+//
+// decode html entities into UTF-8
+//
+function utf8_entity_decode($entity){
+
+ $convmap = array(0x0, 0x10000, 0, 0xfffff);
+  
+ return mb_decode_numericentity($entity, $convmap, 'UTF-8');
 }
 
 //
