@@ -49,10 +49,10 @@ function date_to_datetime($day, $month, $year ) {
 //
 function nicedate($timestamp ) {
   global $month_array;
-  if(empty($timestamp) ) {
-    $nicedate = "";
-    return $nicedate;
-  }
+  
+  if(empty($timestamp) )
+    return "";
+  
   $date_array = explode("-", substr($timestamp, 0, 10) );
   
   //format is 2004-Aug-02
@@ -65,6 +65,9 @@ function nicedate($timestamp ) {
 function nicetime($timestamp, $addtime=0 ) {
   global $month_array, $TZ;
 
+  if(empty($timestamp) )
+    return "";
+  
   //server timezone offset is subtracted because date() automatically adds it on!!        
   $local = $timestamp - date("Z") + ($TZ * 3600);
   
