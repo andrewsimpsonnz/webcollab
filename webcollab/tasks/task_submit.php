@@ -1,7 +1,7 @@
 <?php
 /*
   $Id$
-  
+
   WebCollab
   ---------------------------------------
   Created as CoreAPM 2001/2002 by Dennis Fleurbaaij
@@ -82,6 +82,7 @@ function status($status, $deadline ) {
       $message = $task_state["done"];
       break;
 
+    case "nolimit":
     default:
       $message = "";
       break;
@@ -100,12 +101,15 @@ function user_access($taskid ) {
   $q = db_query("SELECT owner, usergroupid, groupaccess FROM tasks WHERE id=".$taskid);
   $row = db_fetch_num($q, 0 );
 
+  //user is owner
   if($row[0] == $uid )
     return TRUE;
 
+  //no usergroup set
   if($row[1] == 0 )
     return FALSE;
 
+  //if groupaccess is set, check user is in usergroup
   if($row[2] == "t" ) {
     $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
     for( $i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
@@ -113,6 +117,7 @@ function user_access($taskid ) {
       return TRUE;
     }
   }
+  //no access for this user
   return FALSE;
 }
 
@@ -163,69 +168,66 @@ if( valid_string($_REQUEST["action"]) ) {
       else
         error("Task submit", "You did not specify which task to disown" );
 
-      break;
+    break;
 
 
     //take owership of a task
     case "meown":
 
       if( isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
-
         $taskid = $_GET["taskid"];
 
         //admin has no bounds checking
         //non-admins can only take non-owned tasks
         //note: self-securing query
         if( $admin == 1 ) {
-
-	  db_begin();
-	  //get the current owner and task details
-	  $q = db_query("SELECT users.id as id, tasks.projectid as projectid, tasks.parent as parent, tasks.name as name ,tasks.text as text, tasks.status as status
+          db_begin();
+          //get the current owner and task details
+          $q = db_query("SELECT users.id as id, tasks.projectid as projectid, tasks.parent as parent, tasks.name as name ,tasks.text as text, tasks.status as status
                                               FROM tasks LEFT JOIN users ON (users.id=tasks.owner)
                                               WHERE  tasks.id=".$taskid );
 
           $row = db_fetch_array($q, 0 );
 
-	  //do the action
+          //do the action
           db_query( "UPDATE tasks SET owner=".$uid." WHERE id=".$taskid );
-	  db_commit();
+          db_commit();
 
           //if there was no previous owner do nothing!
-	  //there was a previous owner - inform the user that an admin has taken over his task
+          //there was a previous owner - inform the user that an admin has taken over his task
           if( ($row["id"] != 0 ) && ( $uid != $row["id"] ) ) {
             $q = db_query("SELECT email FROM users WHERE users.id=".$row["id"], 0 );
-	    $email_address_old_owner = db_result( $q, 0, 0 );
+            $email_address_old_owner = db_result( $q, 0, 0 );
 
             if($row["parent"] == 0 ) {
-	      //project
-	      $type = $lang["project"];
-	      $name_project = $row["name"];
-	      $name_task = "";
-	    }
-	    else{    
-	      $type = $lang["task"];
-	      $name_project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
-	      $name_task = $row["name"];
-	    }
-	    
-            //send email
-	    //$username and $useremail are from security.php
-            $message = sprintf( $email_takeover, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name_task, $username, $useremail, clean($row["text"]), $BASE_URL );
-	    email( $email_address_old_owner, $title_takeover, $message );
+              //project
+              $type = $lang["project"];
+              $name_project = $row["name"];
+              $name_task = "";
+            }
+            else{
+              $type = $lang["task"];
+              $name_project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
+              $name_task = $row["name"];
+            }
+
+          //send email
+          //$username and $useremail are from security.php
+          $message = sprintf( $email_takeover, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name_task, $username, $useremail, clean($row["text"]), $BASE_URL );
+          email( $email_address_old_owner, $title_takeover, $message );
           }
 
-	}else
+        }else
           db_query( "UPDATE tasks SET owner=".$uid." WHERE id=".$taskid." AND owner=0" );
-        }
+      }
       else
         error("Task submit", "You did not specify which task to take/own" );
-    break;
 
+    break;
 
     //insert a new task
     case "insert":
       if( valid_string($_POST["name"]) ) {
-
         //check input has been provided
         $input_array = array("parentid", "projectid", "owner", "priority", "status", "taskgroupid", "usergroupid");
         foreach( $input_array as $var) {
@@ -245,19 +247,20 @@ if( valid_string($_REQUEST["action"]) ) {
         $taskgroupid = check($_POST["taskgroupid"]);
         $usergroupid = check($_POST["usergroupid"]);
 
-	//get the submitted date
+        //get the submitted date
         $deadline = date_to_datetime( $_POST["day"], $_POST["month"], $_POST["year"] );
 
-        //boolean hack
-	if( isset($_POST["globalaccess"]) && $_POST["globalaccess"]=="on" )
-	  $globalaccess="t";
-	else
-	  $globalaccess="f";
+        //boolean for globalaccess
+        if( isset($_POST["globalaccess"]) && $_POST["globalaccess"]=="on" )
+          $globalaccess="t";
+        else
+          $globalaccess="f";
 
-	if( isset($_POST["groupaccess"]) && $_POST["groupaccess"]=="on" )
-	  $groupaccess="t";
-	else
-	  $groupaccess="f";
+        //and for groupaccess
+        if( isset($_POST["groupaccess"]) && $_POST["groupaccess"]=="on" )
+          $groupaccess="t";
+        else
+          $groupaccess="f";
 
         //carry out some data consistency checking
         if( $parentid != 0 ) {
@@ -268,10 +271,10 @@ if( valid_string($_REQUEST["action"]) ) {
           if( db_result(db_query( "SELECT COUNT(*) FROM tasks WHERE id=".$projectid ), 0, 0 ) < 1 )
             error( "Database integrity check", "Input data does not match - no project for task" );
         }
-	//start transaction
+        //start transaction
         db_begin();
         $q = db_query( "INSERT INTO tasks(  name,
-                                      text,
+					  text,
 	  			      created,
 				      lastforumpost,
 				      lastfileupload,
@@ -307,62 +310,65 @@ if( valid_string($_REQUEST["action"]) ) {
 					  '".$groupaccess."',
 				      '".$status."')" );
 
-
         // get taskid for the new task/project
         $last_oid = db_lastoid( $q );
         $taskid = db_result( db_query( "SELECT id FROM tasks WHERE ".$last_insert."=".$last_oid ), 0, 0 );
 
-	//for a new project set the projectid variable reset correctly
+        //for a new project set the projectid variable reset correctly
         if( $parentid == 0 || $projectid == 0 )  {
           db_query("UPDATE tasks SET projectid=".$taskid." WHERE id=".$taskid );
           $projectid = $taskid;
         }
 
-	//if inactive parent project, then set this task to inactive too
-	if( $parentid != 0 ) {
-	$project_status = db_result(db_query( "SELECT status FROM tasks WHERE id=".$projectid ), 0, 0 );
+        //if inactive parent project, then set this task to inactive too
+        if( $parentid != 0 ) {
+          $project_status = db_result(db_query( "SELECT status FROM tasks WHERE id=".$projectid ), 0, 0 );
 
-	  if( $project_status == "cantcomplete" || $project_status == "notactive" )
-	    db_query( "UPDATE tasks SET status='".$project_status."' WHERE id=".$taskid );
-	}
+          if( $project_status == "cantcomplete" || $project_status == "notactive" )
+            db_query( "UPDATE tasks SET status='".$project_status."' WHERE id=".$taskid );
+        }
 
         //you have already seen this item, no need to announce it to you
-        db_query("INSERT INTO seen(userid, taskid, time)
-                   VALUES(".$uid.",".$taskid.",current_timestamp(0) )");
+        db_query("INSERT INTO seen(userid, taskid, time) VALUES(".$uid.",".$taskid.",current_timestamp(0) )");
         //transaction complete
-	db_commit();
+        db_commit();
 
-	//get name of project for emails
+        //get name of project for emails
         $name_project = db_result(db_query("SELECT name FROM tasks WHERE id=".$projectid ), 0, 0 );
 
-	//set project/task type for emails
-	$type = $lang["task"];
-	if( $parentid == 0 )
-	  $type = $lang["project"];
+        //set project/task type for emails
+        $type = $lang["task"];
+        $name_task = $name;
+
+        if( $parentid == 0 ){
+          $type = $lang["project"];
+          $name_task = "";
+        }
 
         //email owner ?
-	if( isset($_POST["mailowner"]) && ($_POST["mailowner"]=="on") && ($owner != "") ) {
-
+        if( isset($_POST["mailowner"]) && ($_POST["mailowner"]=="on") && ($owner != "") ) {
           //no point in mailing if there is no address
           $email_address_owner = db_result( db_query("SELECT email FROM users WHERE id=".$owner, 0), 0, 0 );
 
           if( $email_address_owner != "" ) {
-	    $message= sprintf( $email_new_owner, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name,
-	                       status($status, $deadline), clean($text), $BASE_URL );
-	    email( $email_address_owner, sprintf($title_new_owner, $type ), $message );
-	  }
-	}
+            $message = sprintf( $email_new_owner, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name_task,
+                       status($status, $deadline), clean($text), $BASE_URL );
+            email( $email_address_owner, sprintf($title_new_owner, $type ), $message );
+          }
+        }
 
         //do we need to send an email to the user group to announce this message
         if( isset($_POST["maillist"]) && $_POST["maillist"] == "on" ) {
 
-	  //if there is an owner find it
-	  if( $owner != "" ){
+          //if there is an owner find it
+          if( $owner != "" ){
             $name_owner = db_result( db_query("SELECT fullname FROM users WHERE id=".$owner ), 0, 0 );
-	    }else  $name_owner = "Nobody";
+          }
+          else
+            $name_owner = "Nobody";
 
-          $message = sprintf( $email_new_group, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name, $name_owner,
-	                      status($status, $deadline), clean($text), $BASE_URL );
+          $message = sprintf( $email_new_group, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name_task, $name_owner,
+                      status($status, $deadline), clean($text), $BASE_URL );
           email( $EMAIL_MAILINGLIST, sprintf($title_new_group, $type).$name, $message );
 
           if( $usergroupid != 0 ) {
@@ -375,13 +381,11 @@ if( valid_string($_REQUEST["action"]) ) {
             }
             email( $usergroup, sprintf($title_new_group, $type).$name, $message );
           }
-
         }
 
       }
       else
         warning($lang["task_submit"], $lang["missing_values"] );
-
 
       //don't use the default break-out sequence but go to or the parent's page of the project
       if ( $parentid != 0 )
@@ -389,14 +393,12 @@ if( valid_string($_REQUEST["action"]) ) {
       else
         header("location: ".BASE."main.php?x=".$x );
       die;
-      break;
-
+    break;
 
     //update a task
     case "update":
 
       if( valid_string($_POST["name"]) ) {
-
         //check input has been provided
         $input_array = array("taskid", "owner", "priority", "status", "taskgroupid", "usergroupid");
         foreach( $input_array as $var) {
@@ -421,26 +423,27 @@ if( valid_string($_REQUEST["action"]) ) {
         //get the submitted date
         $deadline = date_to_datetime( $_POST["day"], $_POST["month"], $_POST["year"] );
 
-        //boolean hack
-	if( isset($_POST["globalaccess"]) && $_POST["globalaccess"] == "on" )
-	  $globalaccess="t";
-	else
-	  $globalaccess="f";
+        //boolean for globalaccess
+        if( isset($_POST["globalaccess"]) && $_POST["globalaccess"] == "on" )
+          $globalaccess = "t";
+        else
+          $globalaccess = "f";
 
-	if( isset($_POST["groupaccess"]) && $_POST["groupaccess"] == "on" )
-	  $groupaccess="t";
-	else
-	  $groupaccess="f";
+        //and for groupaccess
+        if( isset($_POST["groupaccess"]) && $_POST["groupaccess"] == "on" )
+          $groupaccess = "t";
+        else
+          $groupaccess = "f";
 
-	//check if the user has enough rights
+        //check if the user has enough rights
         if( ($admin != 1 ) && (! user_access($taskid ) ) )
           warning($lang["task_submit"], $lang["not_owner"] );
 
-	//begin transaction
-	db_begin();
+        //begin transaction
+        db_begin();
 
         //get existing status
-	$previous_status = db_result(db_query( "SELECT status FROM tasks WHERE id=".$taskid ), 0, 0 );
+        $previous_status = db_result(db_query( "SELECT status FROM tasks WHERE id=".$taskid ), 0, 0 );
 
         //change the info
         db_query( "UPDATE tasks
@@ -461,79 +464,81 @@ if( valid_string($_REQUEST["action"]) ) {
 
         //get projectid and parent from the database
         $q = db_query("SELECT projectid, parent FROM tasks WHERE id=".$taskid );
-	$row = db_fetch_array($q, 0 );
+        $row = db_fetch_array($q, 0 );
 
-	//make adjustments for child tasks
-	if( $row["parent"] == 0 ) {
-	  switch( $status ) {
-	    case "cantcomplete":
-	    case "notactive":
-	      //inactive project, then set the uncompleted child tasks to inactive too
-	      db_query( "UPDATE tasks SET status='".$status."' WHERE projectid=".$row["projectid"]." AND (status='active' OR status='created')" );
-	      break;
+        //make adjustments for child tasks
+        if( $row["parent"] == 0 ) {
+          switch( $status ) {
+            case "cantcomplete":
+            case "notactive":
+              //inactive project, then set the uncompleted child tasks to inactive too
+              db_query( "UPDATE tasks SET status='".$status."' WHERE projectid=".$row["projectid"]." AND (status='active' OR status='created')" );
+            break;
 
-	    case "new":
-	    case "active":
-	      //if reinstated project, set inactive child tasks to new
-	      if($previous_status == "cantcomplete" || $previous_status == "notactive" )
+            case "new":
+            case "active":
+              //if reinstated project, set inactive child tasks to new
+              if($previous_status == "cantcomplete" || $previous_status == "notactive" )
                 db_query( "UPDATE tasks SET status='created' WHERE projectid=".$row["projectid"]." AND parent<>0 AND status='".$previous_status."'" );
-	      break;
+            break;
           }
-	}
+        }
 
-	//transaction complete
-	db_commit();
+        //transaction complete
+        db_commit();
 
-	//get name of project for emails
+        //get name of project for emails
         $name_project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
 
-	//set project/task type for emails
-	$type = $lang["task"];
-	if( $row["parent"]== 0 )
-	  $type = $lang["project"];
+        //set project/task type for emails
+        $type = $lang["task"];
+        $name_task = $name;
+        if( $row["parent"]== 0 ){
+          $type = $lang["project"];
+          $name_task = "";
+        }
 
         //email owner ?
-	if( isset($_POST["mailowner"]) && ($_POST["mailowner"]=="on") && ($owner != "") ) {
-
+        if( isset($_POST["mailowner"]) && ($_POST["mailowner"]=="on") && ($owner != "") ) {
           //no point in mailing if there is no address
-	  $email_address_owner = db_result( db_query("SELECT email FROM users WHERE id=".$owner, 0), 0, 0 );
+          $email_address_owner = db_result( db_query("SELECT email FROM users WHERE id=".$owner, 0), 0, 0 );
 
           if( $email_address_owner != "" ) {
-	    $message= sprintf( $email_edit_owner, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name,
-	               status($status, $deadline), clean($text), $BASE_URL );
-	    email( $email_address_owner, sprintf($title_edit_owner, $type ), $message );
-	  }
-	}
+            $message= sprintf( $email_edit_owner, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name_task,
+                 status($status, $deadline), clean($text), $BASE_URL );
+            email( $email_address_owner, sprintf($title_edit_owner, $type ), $message );
+          }
+        }
 
         //email the user group ?
-	if( isset($_POST["maillist"]) && ($_POST["maillist"]=="on") ) {
+        if( isset($_POST["maillist"]) && ($_POST["maillist"]=="on") ) {
 
           if( $owner!="" ){
             $name_owner = db_result( db_query("SELECT fullname FROM users WHERE id=".$owner ), 0, 0 );
-            }else $name_owner = "Nobody";
+          }
+          else
+            $name_owner = "Nobody";
 
-          $message = sprintf( $email_edit_group, $MANAGER_NAME,$type, $name_owner, date("F j, Y, H:i"), $name_project, $name,
-	               status($status, $deadline), clean($text), $BASE_URL );
+          $message = sprintf( $email_edit_group, $MANAGER_NAME,$type, $name_owner, date("F j, Y, H:i"), $name_project, $name_task,
+                 status($status, $deadline), clean($text), $BASE_URL );
           email( $EMAIL_MAILINGLIST, sprintf($title_edit_group, ucfirst($type ) ), $message );
 
           if( $usergroupid != 0 ) {
             $usergroup = "";
             $usersq = db_query("SELECT email, users.id as id FROM users, usergroups_users WHERE usergroupid=".$usergroupid." AND usergroups_users.userid=users.id");
             $s = "";
+
             for( $j=0 ; $userrow = @db_fetch_array($usersq, $j ) ; $j++) {
               $usergroup .= $s.$userrow["email"];
               $s = ", ";
-
             }
             email( $usergroup, sprintf($title_edit_group, ucfirst($type ) ), $message );
           }
-
-	}
-
+        }
       }
       else
         warning($lang["task_submit"], $lang["missing_values"] );
-      break;
+    break;
 
     //default error
     default:
