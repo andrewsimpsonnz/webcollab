@@ -1,0 +1,69 @@
+Unicode Add-ons for WebCollab
+=============================
+
+Introduction
+------------
+
+The standard WebCollab package uses the ISO-8859-1 character set for the Western
+European languages, and the ISO-8859-5 character set for Bulgarian language.  This
+parameter is set in the xx-message.php language files in the /lang directory. 
+
+This Unicode version of WebCollab converts the localisation to Unicode (UTF-8),
+which natively supports over 650 languages.  Note that you will need to choose appropriate
+fonts in your web browser - many fonts will only display basic Latin and selected other
+characters.
+
+Note:
+- This code is written for PHP versions 4.3.0, and higher.  
+- The optional multibyte strings library (mb_library) in PHP *must* be installed and
+enabled.
+
+
+Important Notes about MySQL
+---------------------------
+
+MySQL does not fully support Unicode before version 4.1. 
+This code will work with most versions MySQL, but table indexing will be
+incorrect.
+
+The MySQL manual recommends adding the run time parameter of
+'--default-character-set=UTF-8', and either dumping and restoring
+existing databases, or rebuilding the indexes. The latter requirement is
+apparently because mixed character set indexes do not work well with MySQL.
+
+PostgreSQL fully supports Unicode and is recommended.
+
+
+Changes to Standard WebCollab
+-----------------------------
+
+* contact_menubox.php
+
+  - change initial letter to uppercase (UTF-8 uppercase sorting rules apply)
+
+* common.php
+
+  - input validation changed to UTF-8
+
+* screen.php
+
+  - header character set now set to UTF-8
+
+* email.php
+
+  - for 8 bit mime capable servers the message is sent as UTF-8
+
+  - for 7 bit servers the message is sent as base64 encoded
+
+* pgsql_database.php
+
+  - pg_set_client_encoding() added and set to UTF-8
+
+* task_navigate.php 
+  
+  - truncate task names to 20 characters (allowing for UTF-8 multi-byte
+     characters)
+    
+* /lang and /help
+
+  - change from ISO-8859-x to UTF-8       

@@ -1,0 +1,44 @@
+WebCollab Unicode Add-ons
+*** 10 October 2004
+Andrew Simpson
+
+- merge to WebCollab 1.62
+
+WebCollab Unicode Add-ons
+*** 23 July 2004
+Andrew Simpson
+
+- change to XHTML Strict DTD
+
+WebCollab Unicode Add-ons
+*** 14 July 2004
+Andrew Simpson
+
+- release (1.60)
+
+WebCollab Unicode Add-ons
+*** 14 July 2004
+Andrew Simpson
+
+- change to mb_string library
+
+- set internal encoding to UTF-8
+
+- add mb_string functions to task_navigate.php and contact_menubox.php
+
+WebCollab Unicode Add-ons
+*** 23 May 2004
+  Andrew Simpson
+
+- bugfix release (1.59a)
+
+- fix typo in clean() function of email.php
+
+- set character set of base64 emails to be UTF-8
+
+
+WebCollab Unicode Add-ons
+*** 15 May 2004
+  Andrew Simpson
+
+- initial release (1.59)
