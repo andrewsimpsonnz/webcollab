@@ -48,7 +48,7 @@ if($SMTP_AUTH == "Y" )
 
 function email($to, $subject, $message ) {
 
-  global $EMAIL_FROM, $EMAIL_REPLY_TO, $USE_EMAIL, $SMTP_HOST, $SMTP_AUTH, $bit8, $connection;
+  global $USE_EMAIL, $SMTP_HOST, $SMTP_AUTH, $bit8, $connection;
 
   $email_encode = "";
   $message_charset = "";
@@ -76,7 +76,7 @@ function email($to, $subject, $message ) {
     @socket_set_timeout($connection, 10, 0 );
   $res = response();
   if($res[1] != "220" )
-    debug("Incorrect handshaking response from SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
+    debug("Incorrect handshaking response from SMTP server at ".$host." <br /><br />Response from SMTP server was ".$res[0] );
 
   //do extended hello (EHLO)
   fputs($connection, "EHLO ".$_SERVER["SERVER_NAME"]."\r\n" );
@@ -86,7 +86,7 @@ function email($to, $subject, $message ) {
     fputs($connection, "HELO ".$_SERVER["SERVER_NAME"]."\r\n" );
     $res = response();
     if($res[1] != "250" )
-      debug("Incorrect HELO response from SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
+      debug("Incorrect HELO response from SMTP server at ".$host." <br /><br />Response from SMTP server was ".$res[0] );
   }
   //see if server is offering 8bit mime capability
   $bit8 = false;
@@ -103,10 +103,10 @@ function email($to, $subject, $message ) {
   $message_lines =& message($message, $email_encode, $message_charset, $body );
 
   //envelope from
-  fputs($connection, "MAIL FROM: <$EMAIL_FROM>$body\r\n" );
+  fputs($connection, "MAIL FROM: <".EMAIL_FROM.">".$body."\r\n" );
   $res = response();
   if($res[1] != "250" )
-    debug("Incorrect response to MAIL FROM command from SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
+    debug("Incorrect response to MAIL FROM command from SMTP server at ".$host." <br /><br />Response from SMTP server was ".$res[0] );
 
   //envelope to
   $address_list = explode(",", $to );
@@ -127,7 +127,7 @@ function email($to, $subject, $message ) {
 
       default:
         //anything else is no good
-        debug("Incorrect response to RCPT TO: $email_to from SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
+        debug("Incorrect response to RCPT TO: ".$email_to." from SMTP server at ".$host." <br /><br />Response from SMTP server was ".$res[0] );
         break;
     }
   }
@@ -136,7 +136,7 @@ function email($to, $subject, $message ) {
   fputs($connection, "DATA\r\n" );
   $res = response();
   if($res[1] != "354" )
-    debug("Incorrect response to DATA command from SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
+    debug("Incorrect response to DATA command from SMTP server at ".$host." <br /><br />Response from SMTP server was ".$res[0] );
 
   //assemble the headers and message for transmission
   $message_lines = array_merge(headers($to, $subject, $email_encode, $message_charset ), $message_lines );
@@ -149,13 +149,13 @@ function email($to, $subject, $message ) {
   fputs($connection, ".\r\n" );
   $res = response();
   if($res[1] != "250" )
-    debug("Error sending data<br /><br />Response from SMTP server  at $host was ".$res[0] );
+    debug("Error sending data<br /><br />Response from SMTP server  at ".$host." was ".$res[0] );
 
   //say bye bye
   fputs($connection, "QUIT\r\n" );
   $res = response();
   if($res[1] != "221" )
-    debug("Incorrect response to QUIT request from SMTP server at $host <br /><br />Response from SMTP server was ".$res[0] );
+    debug("Incorrect response to QUIT request from SMTP server at ".$host." <br /><br />Response from SMTP server was ".$res[0] );
 
   fclose($connection );
 
@@ -321,8 +321,6 @@ return $subject_lines;
 
 function headers($to, $subject, $email_encode, $message_charset ) {
 
-  global $EMAIL_FROM, $EMAIL_REPLY_TO;
-
   //set the date - in RFC 822 format
   $headers = array("Date: ".date("r") );
 
@@ -337,19 +335,19 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   }
   $headers[] = $line;
   //assemble remaining message headers (RFC 821 / RFC 2045)
-  $headers[] = "From: $EMAIL_FROM";
-  $headers[] = "Reply-To: $EMAIL_REPLY_TO";
+  $headers[] = "From: ".EMAIL_FROM;
+  $headers[] = "Reply-To: ".EMAIL_REPLY_TO;
 
   $headers = array_merge($headers, subject($subject ) );
 
   $headers[] = "Message-Id: <".uniqid("")."@".$_SERVER["SERVER_NAME"].">";
   $headers[] = "X-Mailer: WebCollab (PHP/".phpversion().")";
   $headers[] = "X-Priority: 3";
-  $headers[] = "X-Sender: $EMAIL_REPLY_TO";
-  $headers[] = "Return-Path: <$EMAIL_REPLY_TO>";
+  $headers[] = "X-Sender: ".EMAIL_REPLY_TO;
+  $headers[] = "Return-Path: <".EMAIL_REPLY_TO.">";
   $headers[] = "Mime-Version: 1.0";
-  $headers[] = "Content-Type: text/plain; $message_charset";
-  $headers[] = "Content-Transfer-Encoding: $email_encode";
+  $headers[] = "Content-Type: text/plain; ".$message_charset;
+  $headers[] = "Content-Transfer-Encoding: ".$email_encode;
   $headers[] = "";
 
 return $headers;

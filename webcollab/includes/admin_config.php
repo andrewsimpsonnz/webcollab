@@ -35,9 +35,10 @@ $q = db_query("SELECT * FROM config" );
 $row = @db_fetch_array($q, 0 );
 
 //set variables
+define("EMAIL_REPLY_TO", $row["reply_to"]);
+define("EMAIL_FROM", $row["email_from"]);
+
 $EMAIL_ADMIN        = $row["email_admin"];
-$EMAIL_REPLY_TO     = $row["reply_to"];
-$EMAIL_FROM         = $row["email_from"];
 $DEFAULT_ACCESS     = $row["globalaccess"];
 $DEFAULT_EDIT       = $row["groupaccess"];
 $DEFAULT_OWNER      = $row["owner"];
