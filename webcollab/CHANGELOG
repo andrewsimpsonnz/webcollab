@@ -2,6 +2,10 @@ WebCollab CVS
 *** 22 June 2003
   Andrew Simpson
 
+- bugfix: path require has never actually worked! Now fixed.
+
+- security:  change 'include security.php' to 'require'.  Missing file will now cause a fatal error. 
+
 - change from uppercase HTML to lowercase HTML throughout code (moving towards XHTML compliance)
 
 - include variables in quoted strings (for execution efficiency) throughout code
