@@ -1,4 +1,9 @@
 WebCollab CVS
+*** 29 August 2004
+
+- bugfix: change single and double quotes in edit fields to HTML entities (holstead)
+
+WebCollab CVS
 *** 20 August 2004
 
 - refactoring of input validation for speed/efficiency
