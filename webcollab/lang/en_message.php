@@ -161,6 +161,9 @@ $lang = array(
  "files" => "Files",
  "file_choose" => "File to upload:",
  "upload" => "Upload",
+ //**
+ "file_email_owner" => "Email notification of new file to the owner?",
+ "file_email_usergroup" => "Email notification of new file to the usergroup?",
  "max_file_sprt" => "File to upload must be less than %s kb.",
  "file_submit" => "File submit",
  "no_upload" => "No file was uploaded.  Please go back and try again.",
@@ -174,6 +177,9 @@ $lang = array(
  "message" => "Message:",
  "post_reply_sprt" => "Post a reply to a message from '%1\$s' about '%2\$s'",
  "post_message_sprt" => "Post message to: '%s'",
+ //**
+ "forum_email_owner" => "Email forum message to the owner?",
+ "forum_email_usergroup" => "Email forum message to the usergroup?",
  "reply" => "Reply",
  "new_post" => "New post",
  "public_user_forum" => "Public user forum",
@@ -193,6 +199,10 @@ $lang = array(
  "main_menu" => "Main menu",
  "user_homepage_sprt" => "%s's homepage",
  "load_time_sprt" => "This page took %1\$.3f seconds to load.  Of that %2\$.3f seconds were used for %3\$d transactions with the database",
+ //**
+ "missing_field_javascript" => "Please enter a value for the missing field",
+ "invalid_date_javascript" => "Please choose a valid calendar date",
+ "finish_date_javascript" => "The entered date occurs after the project finish date!",
  "security_manager" => "Security manager",
  "no_key_sprt" => "No valid session key. Please <a href=\"%sindex.php\">login</a>",
  "no_session" => "No such session, please <a href=\"%sindex.php\">log-in</a>",
