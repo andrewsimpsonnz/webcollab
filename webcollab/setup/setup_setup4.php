@@ -141,7 +141,7 @@ switch($data["db_type"]) {
     break;
 
   case "postgresql":
-    if( ! @pg_connect("user=".$data["db_user"]." dbname=".$db_name." password=".$data["db_password"] ) ) {
+    if( ! @pg_connect("user=".$data["db_user"]." dbname=".$data["db_name"]." password=".$data["db_password"] ) ) {
       $status = "<font color=\"red\"><b>Can't connect to specified database!</b></font>";
       $flag = $flag + 10;
     }
