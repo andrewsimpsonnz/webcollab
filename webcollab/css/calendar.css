@@ -1,0 +1,54 @@
+TABLE.main {
+  margin-left: auto;
+  margin-right: auto;
+  border-width: 1px;
+  border-style: solid; 
+  border-collapse: collapse; 
+  width: 97%;
+}
+
+TD.month {
+  vertical-align: middle; 
+  text-align: center;
+}
+
+TR.weekrow {
+  vertical-align: middle; 
+  text-align: center;
+}
+
+TD.weekcell {
+  border-width: 1px; 
+  border-style: solid; 
+  width:13.86%;
+}
+
+TR.blankrow {  
+  vertical-align: top;
+  text-align: center;
+}
+
+TD.blankcell {
+  border-width: 1px;
+  border-style: solid;
+}
+
+TR.daterow {
+  vertical-align: top;
+  text-align: center;
+}
+
+TD.datecell {
+  border-width: 1px; 
+  border-style: solid;
+}
+
+/* Class for underlined text */
+.underline {
+  text-decoration: underline;
+}
+
+
+
+
+
