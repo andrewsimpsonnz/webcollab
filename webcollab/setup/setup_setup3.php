@@ -160,7 +160,7 @@ $content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td
 if( ! isset($DATABASE_NAME ) || $DATABASE_NAME == "" )
   $FILE_BASE = realpath(dirname(__FILE__ )."/.." )."/files/filebase";
 
-if( ! isset($FILE_MAXSIZE) )
+if( ! isset($FILE_MAXSIZE) || $FILE_MAXSIZE == NULL )
   $FILE_MAXSIZE = "2000000";
 
 $content .= "<tr><td></td><td><br />Location where uploaded files will be stored</td></tr>\n".
@@ -172,56 +172,74 @@ $content .= "<tr><td></td><td><br />Location where uploaded files will be stored
 //language settings
 $content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></tr>\n";
 
-if( ! isset($LOCALE) )
+if( ! isset($LOCALE) || $LOCALE == NULL )
   $LOCALE = "en";
 
-switch($LOCALE) {
-  case "bg":
-    $s1 = "selected=\"selected\""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
-    break;
-
-  case "ca":
-    $s1 = ""; $s2 = "selected=\"selected\""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
-    break;
-
-  case "da":
-    $s1 = ""; $s2 = ""; $s3 = "selected=\"selected\""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
-    break;
-
-  case "en":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = "selected=\"selected\""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "";
-    break;
-
-  case "fr":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = "selected=\"selected\""; $s6 = ""; $s7 = ""; $s8 = "";
-    break;
-
-  case "de":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = "selected=\"selected\""; $s7 = ""; $s8 = "";
-    break;
-  
-  case "it":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = "selected=\"selected\""; $s8 = "";
-    break;
-
-  case "es":
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = ""; $s5 = ""; $s6 = ""; $s7 = ""; $s8 = "selected=\"selected\"";
-    break;
-
+//initialise array with null values
+for( $i=0 ; $i < 8 ; $i++ ) {
+  $s[] = "";
 }
 
+//select current value
+$option_array = array("bg", "ca", "da", "en", "fr", "de", "it", "es" );
+$selected = array_search($LOCALE, $option_array );  
+$s[$selected] = "selected=\"selected\"";  
+  
 $content .= "<tr><td></td><td><br /></td></tr>\n".
             "<tr><th>Language:</th><td><select name=\"locale\">\n".
-            "<option value=\"bg\" $s1 >Bulgarian</option>\n".
-            "<option value=\"ca\" $s2 >Catalan</option>\n".
-            "<option value=\"da\" $s3 >Danish</option>\n".
-            "<option value=\"en\" $s4 >English</option>\n".
-            "<option value=\"fr\" $s5 >French</option>\n".
-            "<option value=\"de\" $s6 >German</option>\n".
-            "<option value=\"it\" $s7 >Italian</option>\n".
-            "<option value=\"es\" $s8 >Spanish</option>\n".
+            "<option value=\"bg\" $s[0]>Bulgarian</option>\n".
+            "<option value=\"ca\" $s[1]>Catalan</option>\n".
+            "<option value=\"da\" $s[2]>Danish</option>\n".
+            "<option value=\"en\" $s[3]>English</option>\n".
+            "<option value=\"fr\" $s[4]>French</option>\n".
+            "<option value=\"de\" $s[5]>German</option>\n".
+            "<option value=\"it\" $s[6]>Italian</option>\n".
+            "<option value=\"es\" $s[7]>Spanish</option>\n".
             "</select></td></tr>\n";
+             
+//timezone setting
+$content .= "<tr><td></td><td><br /><br /><b><u>Timezone Setting</u></b></td></tr>\n";
 
+if( ! isset($TZ) || $TZ == NULL )
+  $TZ = (int)date("O");
+
+//initialise array with null values  
+for( $i=1 ; $i < 26 ; $i++ ) {
+  $s[] = "";
+}
+
+//select current value
+$s[(13 + $TZ)] = "selected=\"selected\"";
+
+$content .=  "<tr><td></td><td><br /></td></tr>\n".
+             "<tr><th>Timezone:</th><td><select name=\"timezone\">\n".
+             "<option value=\"-12\"$s[1]>GMT -1200</option>\n".
+             "<option value=\"-11\"$s[2]>GMT -1100</option>\n".
+             "<option value=\"-10\"$s[3]>GMT -1000</option>\n".
+             "<option value=\"-9\"$s[4]>GMT -0900</option>\n".
+             "<option value=\"-8\"$s[5]>GMT -0800</option>\n".
+             "<option value=\"-7\"$s[6]>GMT -0700</option>\n".
+             "<option value=\"-6\"$s[7]>GMT -0600</option>\n".
+             "<option value=\"-5\"$s[8]>GMT -0500</option>\n".
+             "<option value=\"-4\"$s[9]>GMT -0400</option>\n".
+             "<option value=\"-3\"$s[10]>GMT -0300</option>\n".
+             "<option value=\"-2\"$s[11]>GMT -0200</option>\n".
+             "<option value=\"-1\"$s[12]>GMT -0100</option>\n".
+             "<option value=\"0\"$s[13]>GMT</option>\n".
+             "<option value=\"1\"$s[14]>GMT +0100</option>\n".
+             "<option value=\"2\"$s[15]>GMT +0200</option>\n".
+             "<option value=\"3\"$s[16]>GMT +0300</option>\n".
+             "<option value=\"4\"$s[17]>GMT +0400</option>\n".
+             "<option value=\"5\"$s[18]>GMT +0500</option>\n".
+             "<option value=\"6\"$s[19]>GMT +0600</option>\n".
+             "<option value=\"7\"$s[20]>GMT +0700</option>\n".
+             "<option value=\"8\"$s[21]>GMT +0800</option>\n".
+             "<option value=\"9\"$s[22]>GMT +0900</option>\n".
+             "<option value=\"10\"$s[23]>GMT +1000</option>\n".
+             "<option value=\"11\"$s[24]>GMT +1100</option>\n".
+             "<option value=\"12\"$s[25]>GMT +1200</option>\n".
+             "</select></td></tr>\n".
+                        
 //email settings
 $setting = "checked";
 if(isset($USE_EMAIL) && $USE_EMAIL == "N" )
@@ -230,13 +248,7 @@ if(isset($USE_EMAIL) && $USE_EMAIL == "N" )
 $content .= "<tr><td></td><td><br /><br /><b><u>Email Settings</u></b></td></tr>\n".
             "<tr><td></td><td><br /></td></tr>\n".
             "<tr><th>Use email?</th><td><input type=\"checkbox\" name=\"use_email\" $setting  /></td></tr>\n";
-
-if( ! isset($EMAIL_ERROR) )
-  $EMAIL_ERROR = "";
-
-$content .= "<tr><td></td><td><br /><br />If an error occurs on the site, who do we email?</td></tr>\n".
-            "<tr><th>Error emails sent to:</th><td><input type=\"text\" name=\"email_error\" value=\"$EMAIL_ERROR\" size=\"30\" /></td></tr>\n";
-
+            
 if( ! isset($SMTP_HOST) )
   $SMTP_HOST = "localhost";
 

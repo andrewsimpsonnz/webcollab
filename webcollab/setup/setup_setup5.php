@@ -31,7 +31,7 @@ require_once(BASE."setup/security_setup.php" );
 include_once(BASE."setup/screen_setup.php" );
 
 //essential values - must be present
-$array = array("db_name", "db_user", "db_password", "db_type", "db_host", "base_url", "locale" );
+$array = array("db_name", "db_user", "db_password", "db_type", "db_host", "base_url", "locale", "timezone" );
 foreach($array as $var ) {
   if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
     error_setup("Variable ".$var." is not set");
@@ -41,8 +41,7 @@ foreach($array as $var ) {
 
 
 //non-essential values
-$array = array("manager_name", "abbr_manager_name", "file_base", "file_maxsize", "email_error", "use_email",
-                "smtp_host", "new_db" );
+$array = array("manager_name", "abbr_manager_name", "file_base", "file_maxsize", "use_email", "smtp_host", "new_db" );
 
 foreach($array as $var ) {
   if(! isset($_POST[$var]) )
@@ -108,9 +107,12 @@ $content = "<?php\n".
 '  // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan)'."\n".
 '  //                       "de" (German), "it" (Italian), "bg" (Bulgarian), "da" (Danish)'."\n".
 '  $LOCALE = "'.$data["locale"].'";'."\n\n".
+'//-- Timezone --'."\n\n".
+'  //timezone offset from GMT/UTC (hours)'."\n".
+'  $TZ = "'.$data["timezone"].'";'."\n\n".
 '//-- Email --'."\n\n".
 '  //If an error occurs, who do you want the error to be mailed to ?'."\n".
-'  $EMAIL_ERROR= "'.$data["email_error"].'";'."\n\n".
+'  $EMAIL_ERROR= "";'."\n\n".
 '  //enable email to send messages? (Values are "Y" or "N")'."\n".
 '  $USE_EMAIL = "'.$data["use_email"].'";'."\n\n".
 '    //location of SMTP server (IP address or FQDN)'."\n".

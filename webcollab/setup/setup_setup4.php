@@ -32,7 +32,7 @@ require_once(BASE."setup/security_setup.php" );
 include_once(BASE."setup/screen_setup.php" );
 
 //essential values - must be present
-$array_essential = array("db_name", "db_user", "db_password", "db_type", "db_host", "base_url", "locale" );
+$array_essential = array("db_name", "db_user", "db_password", "db_type", "db_host", "base_url", "locale", "timezone" );
 foreach($array_essential as $var ) {
   if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
     error_setup("Variable ".$var." is not set");
@@ -42,8 +42,7 @@ foreach($array_essential as $var ) {
 
 
 //non-essential values
-$array_optional = array("manager_name", "abbr_manager_name", "file_base", "file_maxsize", "email_error", "use_email",
-                "smtp_host", "new_db" );
+$array_optional = array("manager_name", "abbr_manager_name", "file_base", "file_maxsize", "use_email", "smtp_host", "new_db" );
 
 foreach($array_optional as $var ) {
   if(! isset($_POST[$var]) )
@@ -228,10 +227,12 @@ if( (! is_readable(BASE."lang/".$data["locale"]."_message.php" ) )
 //language settings
 $content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></tr>\n".
             "<tr><th>Language:</th><td>".$data["locale"]."</td><td>$status</td></tr>\n".
+            "<tr><td></td><td><br /><br /><b><u>Timezone Settings</u></b></td></tr>\n".
+            "<tr><th>Timezone:</th><td>".$data["timezone"]."</td></tr>\n".
             "<tr><td></td><td><br /><br /><b><u>Email Settings</u></b><br /></td></tr>\n".
             "<tr><th>Use email?</th><td>".$data["use_email"]."</td></tr>\n";
-            "<tr><td></td><td><br /><br />If an error occurs on the site, who do we email?</td></tr>\n".
-            "<tr><th>Error emails sent to:</th><td>".$data["email_error"]."</td></tr>\n";
+            //"<tr><td></td><td><br /><br />If an error occurs on the site, who do we email?</td></tr>\n".
+            //"<tr><th>Error emails sent to:</th><td>".$data["email_error"]."</td></tr>\n";
 
 $status = "<font color=\"green\"><b>OK !</b></font>";
 
