@@ -76,7 +76,7 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
   }
 
-  new_box("Task navigation", $content, "boxmenu" );
+  new_box($lang["task_navigation"], $content, "boxmenu" );
 }
 
 //new task
