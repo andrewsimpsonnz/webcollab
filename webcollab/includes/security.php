@@ -55,7 +55,7 @@ if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
 if( isset($_REQUEST["x"]) && ( strlen($_REQUEST["x"]) == 32 ) ) {
   $x = $_REQUEST["x"];
   } else {
-  error($lang["security_manager"], sprintf($lang["no_key"], $BASE_URL) );
+  error($lang["security_manager"], sprintf($lang["no_key_sprt"], $BASE_URL) );
 }
 
 
