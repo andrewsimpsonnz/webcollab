@@ -27,7 +27,7 @@
   ---------
 
   Language files for 'de' (German)
-  
+
   Translation: Sebastian Knapp, Michael Bunk
 
   Maintainer:
@@ -235,10 +235,8 @@ $lang = array(
  "existing_users" => "Vorhandene Nutzer",
  "email_users" => "Email an Nutzer",
  "select_usergroup" => "Folgende Nutzergruppe:",
-//**
  "subject" => "Betreff:",
-//** ?? does it mean, in any case the mailinglist gets an email???
- "message_sent_maillist" => "For all selections the message is also sent to the mailing list.",
+ "message_sent_maillist" => "In jedem Falle wird eine Nachricht an die Mailingliste gesendet.",
  "who_online" => "Wer ist online?",
  "edit_details" => "Nutzerdetails bearbeiten",
  "show_details" => "Nutzerdetails anzeigen",

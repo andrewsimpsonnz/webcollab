@@ -46,7 +46,7 @@ $email_new_owner    = "Hallo,\n\nIhre %s-Seite informiert Sie, dass ein(e) %s di
 			"Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n%s\n";
 
 $title_new_group    = $ABBR_MANAGER_NAME.": Neue Gruppe %s: ";
-$email_new_group    = "Hallo,\n\nIhre %s-Seite informiert sie, dass eine neue Gruppe %s erstellt worden ist auf %s\n\nDetails:\n\n".
+$email_new_group    = "Hallo,\n\nIhre %s-Seite informiert sie, dass eine neue Gruppe %s erstellt worden ist am %s\n\nDetails:\n\n".
 			"Projekt:  %s\n".
 			"Aufgabe:  %s\n".
 			"Owner:    %s\n".
@@ -55,7 +55,7 @@ $email_new_group    = "Hallo,\n\nIhre %s-Seite informiert sie, dass eine neue Gr
 			"Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n%s\n";
 
 $title_edit_owner   = $ABBR_MANAGER_NAME.": Ihr Projekt %s wurde bearbeitet";
-$email_edit_owner   ="Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Projekt %s auf %s bearbeitet wurde.\n\nDetails:\n\n".
+$email_edit_owner   ="Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Projekt %s am %s bearbeitet wurde.\n\nDetails:\n\n".
 			"Projekt:  %s\n".
 			"Aufgabe:  %s\n".
 			"Status:   %s\n\n".
@@ -64,7 +64,7 @@ $email_edit_owner   ="Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Projekt %
 
 
 $title_edit_group   = $ABBR_MANAGER_NAME.": %s aktualisiert";
-$email_edit_group   = "Hallo,\n\nIhre %s-Seite informiert sie, dass ein(e) %s, die %s geh&uuml;rt auf %s bearbeitet wurde.\n\nDetails:\n\n".
+$email_edit_group   = "Hallo,\n\nIhre %s-Seite informiert sie, dass ein(e) %s, die %s geh&ouml;rt am %s bearbeitet wurde.\n\nDetails:\n\n".
 			"Projekt:  %s\n".
 			"Aufgabe:  %s\n".
 			"Status:   %s\n\n".
@@ -74,7 +74,7 @@ $email_edit_group   = "Hallo,\n\nIhre %s-Seite informiert sie, dass ein(e) %s, d
 
 $title_delete_task  = $ABBR_MANAGER_NAME.": %s gel&ouml;scht";
 $email_delete_task  = "Hallo,\n\n".
-			"Ihre %s-Seite informiert sie, dass ein(e) %s, das/die ihnen geh&ouml;rte, gel&ouml;scht worden ist auf %s\n\n".
+			"Ihre %s-Seite informiert sie, dass ein(e) %s, das/die ihnen geh&ouml;rte, gel&ouml;scht worden ist am %s\n\n".
 			"Projekt:  %s\n".
 			"Aufgabe:  %s\n".
 			"Status:   %s\n\n".
@@ -100,7 +100,7 @@ $email_welcome      = "Hallo,\n\nEs begr&uuml;&szlig;t sie die %s-Seite auf %s.\
 			"%s";
 
 $title_user_change1 = $ABBR_MANAGER_NAME.": Ihr Konto wurde von einem Administrator bearbeitet";
-$email_user_change1 = "Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Konto auf %s bearbeitet worden ist von %s ( %s ) \n\n".
+$email_user_change1 = "Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Konto am %s bearbeitet worden ist von %s ( %s ) \n\n".
 			"Login:           %s\n".
 			"Passwort:        %s\n\n".
 			"Benutzergruppen: %s".
@@ -108,29 +108,29 @@ $email_user_change1 = "Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Konto au
 			"%s";
 
 $title_user_change2 = $ABBR_MANAGER_NAME.": Bearbeitung ihres Kontos";
-$email_user_change2 = "Hello,\n\nIhre %s-Seite best&auml;tigt, dass sie erfolgreich ihr Konto auf %s bearbeitet haben\n\n".
+$email_user_change2 = "Hello,\n\nIhre %s-Seite best&auml;tigt, dass sie erfolgreich ihr Konto am %s bearbeitet haben\n\n".
 			"Login:    %s\n".
 			"Passwort: %s\n\n".
 			"Name:     %s\n";
 
 $title_user_change3 = $ABBR_MANAGER_NAME.": Bearbeitung ihres Kontos";
-$email_user_change3 = "Hallo,\n\nIhre %s-Seite best&auml;tigt, dass sie erfolgreich ihr Konto auf %s bearbeitet haben\n\n".
+$email_user_change3 = "Hallo,\n\nIhre %s-Seite best&auml;tigt, dass sie erfolgreich ihr Konto am %s bearbeitet haben\n\n".
 			"Login:    %s\n".
 			"Ihr bestehendes Passwort wurde nicht ver&auml;ndert.\n\n".
 			"Name:     %s\n";
 
 
 $title_revive       = $ABBR_MANAGER_NAME.": Konto wieder aktiviert";
-$email_revive       = "Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Konto auf %s wieder freigeschalten wurde.\n\n".
+$email_revive       = "Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Konto am %s wieder freigeschalten wurde.\n\n".
 			"Loginname:     %s\n".
 			"Benutzername:  %s\n\n".
 			"Aus Sicherheitsgr&uuml;nden kann ihr Passwort ihnen nicht gesendet werden.\n\n".
-			"Falls sie ihr Passwort vergessen haben, senden sie eien E-Mail an %s mit ihrem Anliegen.";
+			"Falls sie ihr Passwort vergessen haben, senden sie eine E-Mail an %s mit ihrem Anliegen.";
 
 
 
 $title_delete_user  = $ABBR_MANAGER_NAME.": Konto deaktiviert.";
-$email_delete_user  = "Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Konto auf %s gesperrt worden ist.\n\n".
+$email_delete_user  = "Hallo,\n\nIhre %s-Seite informiert sie, dass ihr Konto am %s gesperrt worden ist.\n\n".
 			"Es tut uns leid, dass sie uns verlassen haben. Wir bedanken uns f&uuml;r die geleistete Arbeit!\n\n".
 			"Wenn sie geben die Sperrung Einspruch erheben wollen oder denken, dass dies ein Irrtum ist, senden sie bitte eine E-Mail an %s.";
 
