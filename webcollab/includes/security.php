@@ -82,8 +82,10 @@ if( ! ( $row = db_fetch_array($q, 0) ) ) {
 
 //session does exist, now cross-check with ip address
 if($ip != $row["ip"] ) {
-  db_query("DELETE FROM logins WHERE session_key='$x'" );
-  warning( $lang["security_manager"], sprintf( $lang["ip_spoof_sprt"], $ip, $BASE_URL) );
+  if( ! isset($NO_IP_CHECK ) || $NO_IP_CHECK != "Y" ) {
+    db_query("DELETE FROM logins WHERE session_key='$x'" );
+    warning( $lang["security_manager"], sprintf( $lang["ip_spoof_sprt"], $ip, $BASE_URL) );
+  }
 }
 
 //if database table LEFT JOIN gives no rows will get NULL here

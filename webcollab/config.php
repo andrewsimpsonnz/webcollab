@@ -120,5 +120,7 @@
   //Use external webserver authorisation to login (values are "N", or "Y")
   $WEB_AUTH = "N";
 
+  //Disable check for ip spoofing during sessions (values are "N", or "Y" - default is "N" for security)
+  $NO_IP_CHECK = "N";
 
 ?>
