@@ -32,7 +32,7 @@
 */
 
 require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once(BASE."includes/security.php" );
 
 $content = "";
 $company = "";
@@ -44,7 +44,7 @@ $q = db_query("SELECT id, firstname, lastname, company FROM contacts ORDER BY co
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
   if( $row["company"] != "" ) {
-     if ($row["company"] != $company){
+     if ($row["company"] != $company ){
        $content .= $row["company"]."<br />";
      }
      $show = $row["lastname"].", ".strtoupper(substr( $row["firstname"], 0, 1 ) ).".";

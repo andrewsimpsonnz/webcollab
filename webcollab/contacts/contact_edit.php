@@ -57,15 +57,15 @@ $content = "<br />\n".
         "<tr><td><i>".$lang["city"]."</i> </td><td><input type=\"input\" name=\"city\" value=\"".$row["city"]."\" size=\"30\"></td></tr>\n".
         "<tr><td><i>".$lang["email"]."</i> </td><td><input type=\"input\" name=\"email\" value=\"".$row["email"]."\" size=\"30\"></td></tr>\n".
     "</table><br />\n".
-    "<i>".$lang["notes"]."</i><br /><textarea  name=\"notes\" rows=\"6\" cols=\"50\">".$row["notes"]."</textarea><br /><br />";
+    "<i>".$lang["notes"]."</i><br /><textarea  name=\"notes\" rows=\"6\" cols=\"50\">".$row["notes"]."</textarea><br /><br />\n";
 
 //edit options
 $content .=
       "<input type=\"hidden\" name=\"action\" value=\"edit\">\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\">\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
-      "<input type=\"submit\" name=\"".$lang["add"]."\" value=\"Submit\">\n".
-      "<input type=\"reset\">\n".
+      "<input type=\"submit\" value=\"".$lang["add"]."\">\n".
+      "<input type=\"reset\" value=\"".$lang["reset"]."\">\n".
       "<br /><br />\n".
       "</form>";
 
@@ -76,7 +76,7 @@ $content .=
       "<input type=\"hidden\" name=\"action\" value=\"delete\">\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\">\n".
       "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
-      "<input type=\"submit\" name=\"Add\" value=\"".$lang["del_contact"]."\" onClick=\"return confirm('".$lang["del_javascript"]."')\">\n".
+      "<input type=\"submit\" value=\"".$lang["del_contact"]."\" onClick=\"return confirm('".$lang["del_javascript"]."')\">\n".
       "<br /><br />\n".
       "</form>";
 
