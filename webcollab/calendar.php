@@ -85,6 +85,7 @@ switch($selection ) {
     $groupid = 0; $s1 = " CHECKED"; $s2 = ""; $s3 = ""; $s4 = " SELECTED";
     $tail = "AND owner=$userid";
     if($userid == 0 )
+      $tail = "";
       $s2 = " SELECTED";
     break;
 }
@@ -155,12 +156,6 @@ $content .=  "</select></td>\n".
              "<td><input type=\"submit\" value=\"".$lang["update"]."\" /></td></tr>\n".
              "</table></form></p>\n";
 
-//get usergroups of user, and put them in a simple array for later use
-$usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
-for( $i=0 ; $row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
-  $usergroup[$i] = $row[0];
-}
-
 //number of days in month
 $numdays = date("t", mktime(0, 0, 0, $month, 1, $year ) );
 
@@ -210,7 +205,7 @@ for ($num = 1; $num <= $numdays; $num++ ) {
       //check for private usergroups
       if( ($admin != 1) && ($row["usergroupid"] != 0 ) && ($row["globalaccess"] == 'f' ) ) {
 
-        if( ! in_array( $row["usergroupid"], $usergroup ) )
+        if( ! in_array( $row["usergroupid"], (array)$gid ) )
           continue;
       }
 
