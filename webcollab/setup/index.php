@@ -80,19 +80,21 @@ if(isset($_POST["database_name"]) ) {
                     "User:     ".$database_user."<BR>Password: ".$database_password."<BR>" );
     }
 
-    //create new database
-    if( ! ($result = @mysql_query( "CREATE DATABASE ".$database_name, $database_connection ) ) ) {
-      error_setup("The database creation had the following error: ".mysql_error($database_connection) );
-    }
-
-    //select the created database
+    //try and select the database
     if( ! @mysql_select_db( $database_name, $database_connection ) ) {
-      error_setup("Not able to select database. Error message was: ".mysql_error($database_connection) );
+
+      //no database exists yet - try and create it...
+      if( ! ($result = @mysql_query( "CREATE DATABASE ".$database_name, $database_connection ) ) )
+        error_setup("The database creation had the following error: <BR>".mysql_error($database_connection) );
+
+      //select the newly created database
+      if( ! @mysql_select_db( $database_name, $database_connection ) )
+        error_setup("Not able to select database. Error message was: <BR>".mysql_error($database_connection) );
     }
 
     //sanity check
     if( ! is_readable("../db/schema_mysql.sql" ) ) {
-      error_setup("Database schema is missing.  Check that the file /db/schema_mysql.sql exists." );
+      error_setup("Database schema is missing.  Check that the file /db/schema_mysql.sql exists and is readable by the webserver." );
     }
 
     //open schema file
@@ -104,23 +106,48 @@ if(isset($_POST["database_name"]) ) {
     $schema = fread($handle, filesize("../db/schema_mysql.sql") );
     fclose($handle );
 
-    //create tables from schema
-    if( ! ($result = @mysql_query( $schema, $database_connection ) ) ) {
-      error_setup("The database creation had the following error ".mysql_error($database_connection) );
+    //separate schema into individual table setups
+    $table_array = explode(";", $schema );
+
+    //create each table
+    foreach($table_array as $table ){
+      if($table != "" ) {
+        if( ! ($result = @mysql_query( $table, $database_connection ) ) ) {
+          error_setup("The database creation had the following error:<BR> ".mysql_error($database_connection) );
+        }
+      }
     }
     break;
 
   case "postgresql":
-    //connect to database server
-    if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=" .$database_name." password=".$database_password ) ) ) {
-      error_setup( "Sorry but there seems to be a problem in connecting to the database server at ".$database_host."<BR>".
-                    "Check that your user and password is correct, and that the database ".$database_name." exists on localhost.<BR><BR>".
-                    "User:     ".$database_user."<BR>Password: ".$database_password."<BR>" );
+    if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=".$database_name." password=".$database_password ) ) ) {
+      //selected database doesn't exist - need to create it
+
+      //connect to database server with standard 'template1' database
+      if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=template1 password=".$database_password ) ) ) {
+        error_setup( "Sorry but there seems to be a problem in connecting to the database server at ".$database_host."<BR>".
+                    "No existing database, and cannot connect to PostgreSQL to create a new database.<BR><BR>".
+                    "User:     ".$database_user."<BR>Password: ".$database_password."<BR><BR>".
+                    "Check user and password, then try creating the database manually and running setup again." );
+      }
+
+      //create new database
+      if( ! ($result = @pg_exec($database_connection, "CREATE DATABASE ".$database_name ) ) ) {
+        error_setup("Connected to database, but the new database creation had the following error:<BR>".pg_errormessage($database_connection) );
+      }
+
+      //close the standard template database
+      pg_close($database_connection );
+
+      //open the new database
+      if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=".$database_name." password=".$database_password ) ) ) {
+        error_setup( "New database was created successfully, but cannot re-connect to the database server.");
+      }
     }
 
     //sanity check
     if( ! is_readable("../db/schema_pgsql.sql" ) ) {
-      error_setup("Database schema is missing.  Check that the file /db/schema_pgsql.sql exists." );
+      error_setup("Database schema is missing.  Check that the file /db/schema_pgsql.sql exists and is readable by the webserver." );
     }
 
     //open schema file
@@ -132,9 +159,16 @@ if(isset($_POST["database_name"]) ) {
     $schema = fread($handle, filesize("../db/schema_pgsql.sql") );
     fclose($handle );
 
+    //separate schema into individual table setups
+    $table_array = explode(";", $schema );
+
     //create tables from schema
-    if( ! ($result = @pg_exec($database_connection, $schema ) ) ) {
-      error_setup("The database creation had the following error ".pg_errormessage($database_connection) );
+    foreach($table_array as $table ){
+      if($table != "" ) {
+        if( ! ($result = @pg_exec($database_connection, $table ) ) ) {
+          error_setup("The database creation had the following error:<BR> ".pg_errormessage($database_connection) );
+        }
+      }
     }
     break;
 
@@ -143,7 +177,7 @@ if(isset($_POST["database_name"]) ) {
     break;
   }
 
-  header("location: setup2.php?db_host=".$database_host."&db_user=".$database_user."&db_pass=".$database_password."&db_name=".$database_name."db_type=".$database_type );
+  header("location: setup2.php?db_host=".$database_host."&db_user=".$database_user."&db_pass=".$database_password."&db_name=".$database_name."&db_type=".$database_type );
 }
 
 //
@@ -157,7 +191,7 @@ $content = "<CENTER>\n".
 "<BR><BR>\n".
 "<IMG src=\"../images/webcollab.png\" alt=\"WebCollab logo\"><BR><BR>\n".
 "<P><B>Setup - Stage 1 of 3 : Database Creation</B></P>\n".
-"<FORM name=\"inputform\" method=\"POST\" action=\"setup1.php\">\n".
+"<FORM name=\"inputform\" method=\"POST\" action=\"index.php\">\n".
   "<TABLE border=\"0\">\n".
     "<TR align=\"left\"><TD>Your database name: </TD><TD><INPUT type=\"text\" name=\"database_name\" size=\"30\"></TD></TR>\n".
     "<TR align=\"left\"><TD>Database user: </TD><TD><INPUT type=\"text\" name=\"database_user\" size=\"30\"></TD></TR>\n".
