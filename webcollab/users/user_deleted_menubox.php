@@ -49,7 +49,7 @@ $content = "<table border=\"0\">\n";
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["id"]."\">".$row["fullname"]."</a></small></td>\n";
-  $content .= "<td align=\"right\" nowrap=\"nowrap\"><font class=\"textlink\">&nbsp;[<a href=\"users/user_submit.php?x=$x&amp;action=revive&amp;userid=".$row["id"]."\">".$lang["revive"]."</a>]";
+  $content .= "<td align=\"right\" nowrap=\"nowrap\"><font class=\"textlink\">&nbsp;[<a href=\"users.php?x=$x&amp;action=revive&amp;userid=".$row["id"]."\">".$lang["revive"]."</a>]";
 
   //if this user has NO tasks owned then we can delete him forever :)
   if( ! db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE owner=".$row["id"] ), 0, 0 ) ) {
