@@ -53,13 +53,13 @@ $content =
 //show all taskgroups
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $content .= "<tr><td>".$row["name"]."</td><td>".$row["description"]." </td>".
-              "<td><font class=\"textlink\"><a href=\"taskgroups.php?x=$x&amp;action=submit_del&taskgroupid=".$row["id"]."\" onclick=\"return confirm( '".$lang["confirm_del_javascript"]."')\">[".$lang["del"]."]</a></font>&nbsp;".
+              "<td><font class=\"textlink\"><a href=\"taskgroups.php?x=$x&amp;action=submit_del&amp;taskgroupid=".$row["id"]."\" onclick=\"return confirm( '".$lang["confirm_del_javascript"]."')\">[".$lang["del"]."]</a></font>&nbsp;".
               "<font class=\"textlink\"><a href=\"taskgroups.php?x=$x&amp;action=edit&amp;taskgroupid=".$row["id"]."\">[".$lang["edit"]."]</a></font></td></tr>";
 
 }
 
 $content .=   "</table>\n".
-            "<font class=\"textlink\">[<a href=\"taskgroups.php?x=$x&amp;action=add\">".$lang["add"]."</a>]</font>";
+            "<p><font class=\"textlink\">[<a href=\"taskgroups.php?x=$x&amp;action=add\">".$lang["add"]."</a>]</font></p>\n";
 
 new_box( $lang["manage_taskgroups"], $content, "boxdata2" );
 

@@ -40,8 +40,8 @@ $content =
               "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
               "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />".
               "<table class=\"celldata\">\n".
-                "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"input\" name=\"name\" size=\"30\" /></td></tr>\n".
-                "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"input\" name=\"description\" size=\"30\" /></td></tr>\n".
+                "<tr><td>".$lang["usergroup_name"]."</td><td><input type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
+                "<tr><td>".$lang["usergroup_description"]."</td><td><input type=\"text\" name=\"description\" size=\"30\" /></td></tr>\n".
                 "<tr><td>&nbsp;</td></tr>\n".
                 "<tr><td><label for=\"private\">".$lang["private_usergroup"].":</label></td><td><input type=\"checkbox\" name=\"private_group\" id=\"private\" /></td></tr>\n".
                 "<tr><td>&nbsp;</td></tr>\n";

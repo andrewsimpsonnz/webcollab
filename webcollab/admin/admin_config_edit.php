@@ -43,9 +43,9 @@ if( $admin != 1 ) {
 //start form data
 $content .=
         "<form method=\"post\" action=\"admin.php\">\n".
-          "<input type=\"hidden\" name=\"x\" value=\"$x\">\n".
-          "<input type=\"hidden\" name=\"action\" value=\"submit\">\n".
-                    "<table class=\"celldata\" >\n";
+          "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+          "<input type=\"hidden\" name=\"action\" value=\"submit\" />\n".
+          "<table class=\"celldata\" >\n";
 
 //get config data
 $q = db_query("SELECT * FROM config" );
@@ -59,9 +59,9 @@ if($USE_EMAIL == "Y" ){
 
   //email addresses
   $content .=
-            "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin\" target=\"helpwindow\">".$lang["admin_email"]."</a>: </td><td><input type=\"text\" name=\"email_admin\" value=\"".$row["email_admin"]."\" size=\"30\"></td></tr>\n".
-            "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin\" target=\"helpwindow\">".$lang["email_reply"]."</a>:</td><td><input type=\"text\" name=\"reply_to\" value=\"".$row["reply_to"]."\" size=\"30\"></td></tr>\n".
-            "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin\" target=\"helpwindow\">".$lang["email_from"]."</a>:</td><td><input type=\"text\" name=\"from\" value=\"".$row["email_from"]."\" size=\"30\"></td></tr>\n";
+            "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin\" target=\"helpwindow\">".$lang["admin_email"]."</a>: </td><td><input type=\"text\" name=\"email_admin\" value=\"".$row["email_admin"]."\" size=\"30\" /></td></tr>\n".
+            "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin\" target=\"helpwindow\">".$lang["email_reply"]."</a>:</td><td><input type=\"text\" name=\"reply_to\" value=\"".$row["reply_to"]."\" size=\"30\" /></td></tr>\n".
+            "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin\" target=\"helpwindow\">".$lang["email_from"]."</a>:</td><td><input type=\"text\" name=\"from\" value=\"".$row["email_from"]."\" size=\"30\" /></td></tr>\n";
 
   //get mailing list
   $q = db_query("SELECT DISTINCT * FROM maillist" );
@@ -79,17 +79,17 @@ $content .= "<tr><td nowrap colspan=\"2\"><b>".$lang["default_checkbox"]."</b></
             "<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
 
 //defaults for task checkboxes
-$content .= "<tr><td><label for=\"access\">".$lang["allow_globalaccess"]."</label></td><td><input type=\"checkbox\" name=\"access\" id=\"access\" ".$row["globalaccess"]."></td></tr>\n".
-            "<tr><td><label for=\"group_edit\">".$lang["allow_group_edit"]."</label></td><td><input type=\"checkbox\" name=\"group_edit\" id=\"group_edit\" ".$row["groupaccess"]."></td></tr>\n".
-            "<tr><td><label for=\"owner\">".$lang["set_email_owner"]."</label></td><td><input type=\"checkbox\" name=\"owner\" id=\"owner\" ".$row["owner"]."></td></tr>\n".
-            "<tr><td><label for=\"usergroup\">".$lang["set_email_group"]."</label></td><td><input type=\"checkbox\" name=\"usergroup\" id=\"usergroup\" ".$row["usergroup"]."></td></tr>\n".
+$content .= "<tr><td><label for=\"access\">".$lang["allow_globalaccess"]."</label></td><td><input type=\"checkbox\" name=\"access\" id=\"access\" ".$row["globalaccess"]." /></td></tr>\n".
+            "<tr><td><label for=\"group_edit\">".$lang["allow_group_edit"]."</label></td><td><input type=\"checkbox\" name=\"group_edit\" id=\"group_edit\" ".$row["groupaccess"]." /></td></tr>\n".
+            "<tr><td><label for=\"owner\">".$lang["set_email_owner"]."</label></td><td><input type=\"checkbox\" name=\"owner\" id=\"owner\" ".$row["owner"]." /></td></tr>\n".
+            "<tr><td><label for=\"usergroup\">".$lang["set_email_group"]."</label></td><td><input type=\"checkbox\" name=\"usergroup\" id=\"usergroup\" ".$row["usergroup"]." /></td></tr>\n".
             "<tr><td>&nbsp;</td></tr>\n".
           "</table>\n";
 
 
 $content .=
-          "<p><input type=\"submit\" value=\"".$lang["update"]."\">&nbsp;".
-          "<input type=\"reset\" value=\"".$lang["reset"]."\"></p>\n".
+          "<p><input type=\"submit\" value=\"".$lang["update"]."\" />&nbsp;".
+          "<input type=\"reset\" value=\"".$lang["reset"]."\" /></p>\n".
         "</form>\n";
 
 new_box( $lang["configuration"], $content );

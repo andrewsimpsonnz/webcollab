@@ -39,8 +39,8 @@ $content =
               "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n".
               "<table class=\"celldata\">\n".
-                "<tr><td>".$lang["taskgroup_name"]."</td><td><input type=\"input\" name=\"name\" size=\"30\" /></td></tr>\n".
-                "<tr><td>".$lang["taskgroup_description"]."</td><td><input type=\"input\"name=\"description\"size=\"30\" /></td></tr>\n".
+                "<tr><td>".$lang["taskgroup_name"]."</td><td><input type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
+                "<tr><td>".$lang["taskgroup_description"]."</td><td><input type=\"text\"name=\"description\"size=\"30\" /></td></tr>\n".
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang["add_taskgroup"]."\" onclick=\"return fieldCheck()\" />&nbsp;\n".
               "<input type=\"reset\"  value=\"".$lang["reset"]."\" /></p>\n".
