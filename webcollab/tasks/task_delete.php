@@ -145,13 +145,16 @@ if(isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
   //inform the user that his task has been deleted by an admin
   if(db_numrows($q) > 0 ) {
     if($uid != $row["id"] ) {
+       include_once(BASE."lang/lang_email.php" );
        if($row["parent"] == 0 ) {
          $name_task = $row["name"];
-         $type = $lang["project_lc"];
+         $title = $title_delete_project;
+         $email = $email_delete_project;
        }
        else {
          $name_task = db_result(db_query("SELECT name FROM tasks WHERE tasks.id=".$row["projectid"] ), 0, 0 );
-         $type = $lang["task_lc"];
+         $title = $title_delete_task;
+         $email = $email_delete_task;
        }
        switch($row["status"] ) {
          case "created":
@@ -178,9 +181,8 @@ if(isset($_REQUEST["taskid"]) && is_numeric($_REQUEST["taskid"]) ) {
            $status = "";
            break;
        }
-       include_once(BASE."lang/lang_email.php" );
-       $message = trans(sprintf( $email_delete_task, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_task, $row["name"],$status, clean($row["text"]) ) );
-       email($row["email"], sprintf($title_delete_task, ucfirst($type) ), $message );
+       $message = trans(sprintf( $email, $MANAGER_NAME, date("F j, Y, H:i"), $name_task, $row["name"],$status, clean($row["text"]) ) );
+       email($row["email"], $title, $message );
     }
   }
 }

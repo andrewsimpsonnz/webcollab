@@ -95,22 +95,14 @@ $content .= "<form method=\"POST\" action=\"tasks/task_submit.php\">\n".
 switch($row["parent"] ) {
   case 0:
     //project
-    $title = $lang["edit_project"];
-    $delete = $lang["delete_project"];
-    $title_lc = $lang["project_lc"];
-    $owner = $lang["project_owner"];
-    $description = $lang["project_description"];
+    $type = "project";
     //project input box
     $content .= "<tr><td>".$lang["project_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\" /></td></tr>\n";
     break;
 
   default:
     //task
-    $title = $lang["edit_task"];
-    $delete = $lang["delete_task"];
-    $title_lc = $lang["task_lc"];
-    $owner = $lang["task_owner"];
-    $description = $lang["task_description"];
+    $type = "task";
     //show project name
     $project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
     $content .= "<tr><td>".$lang["project"] .":</td><td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["projectid"]."\">$project</a></td></tr>\n";
@@ -242,7 +234,7 @@ switch($row["parent"] ){
 
 //task owner
 $user_q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname" );
-$content .= "<tr> <td>$owner:</td> <td><SELECT name=\"owner\">\n".
+$content .= "<tr> <td>".$lang[$type."_owner"].":</td> <td><SELECT name=\"owner\">\n".
             "<option value=\"0\">".$lang["nobody"]."</option>\n";
 
 //select the user first
@@ -310,7 +302,7 @@ if($row["groupaccess"] == 't' )
 $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users_view"]."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" $global /></td></tr>\n".
              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" $group /></td></tr>\n".
 
-             "<tr> <td>$description</td> <td><TEXTAREA name=\"text\" rows=\"5\" cols=\"60\">".$row["text"]."</TEXTAREA></td> </tr>\n".
+             "<tr> <td>".$lang[$type."_description"]."</td> <td><TEXTAREA name=\"text\" rows=\"5\" cols=\"60\">".$row["text"]."</TEXTAREA></td> </tr>\n".
 
              //do we need to email ?
              "<tr><td><label for=\"mailowner\">".$lang["email_new_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" $DEFAULT_OWNER /></label></td></tr>\n".
@@ -326,9 +318,9 @@ $content .= "<br /><br />\n<form method=\"POST\" action=\"tasks.php\">\n".
              "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
              "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
              "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\" />\n".
-             "<input type=\"submit\" value=\"".$delete."\" onClick=\"return confirm('".sprintf($lang["del_javascript_sprt"], $title_lc, $row["name"] )."')\" />\n".
+             "<input type=\"submit\" value=\"".$lang["delete_$type"]."\" onClick=\"return confirm('".sprintf($lang["del_javascript_".$type."_sprt"], $row["name"] )."')\" />\n".
              "</form>\n";
 
-new_box($title, $content );
+new_box($lang["edit_$type"], $content );
 
 ?>

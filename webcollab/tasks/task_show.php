@@ -206,12 +206,12 @@ if($row["parent"] != 0 ) {
 switch($row["parent"] ){
   case "0":
     $title = $lang["project_details"];
-    $type = $lang["project_lc"];
+    $type = "project";
     break;
 
  default:
     $title = $lang["task_info"];
-    $type = $lang["task_lc"];
+    $type = "task";
     break;
 }
 
@@ -222,21 +222,21 @@ if( $row["usergroupid"] != 0 ) {
 
   switch($row["globalaccess"] ){
     case 't':
-      $content .= sprintf($lang["task_accessible_sprt"], $type )."</td></tr>\n";
+      $content .= $lang[$type."_accessible"]."</td></tr>\n";
       break;
 
     case 'f':
     default:
-      $content .= "<b>".sprintf($lang["task_not_accessible_sprt"], $type )."</b></td></tr>\n";
+      $content .= "<b>".$lang[$type."_not_accessible_"]."</b></td></tr>\n";
       break;
   }
 
   if($row["groupaccess"] == 't' )
-      $content .= "<tr><td>&nbsp;</td><td><I>".sprintf($lang["usergroup_can_edit_sprt"], $type )."</I></td></tr>\n";
+      $content .= "<tr><td>&nbsp;</td><td><i>".$lang["usergroup_can_edit_$type"]."</i></td></tr>\n";
 
 }
 else {
-  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td><td>".sprintf($lang["task_not_in_usergroup_sprt"], $type )."</td></tr>\n";
+  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</a>: </td><td>".$lang[$type."_not_in_usergroup"]."</td></tr>\n";
 }
 
 $content .= "</table></p>\n";
@@ -299,7 +299,7 @@ switch( $row["owner"] ){
       //edit
       $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&taskid=".$taskid."\">".$lang["edit"]."</a>]&nbsp;\n";
       //take over
-      $content .= "[<a href=\"tasks/task_submit.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_sprt"], $type)."</a>]&nbsp;\n";
+      $content .= "[<a href=\"tasks/task_submit.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_$type"] )."</a>]&nbsp;\n";
     }
     if($group )
       //if user is in the usergroup & groupaccess is set

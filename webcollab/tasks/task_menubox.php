@@ -34,8 +34,7 @@ require_once( BASE."includes/security.php" );
 
 //secure variables
 $content  = "";
-$taskid = "";
-$title = $lang["project_options"];
+$type = "project";
 
 //the task dependent part
 if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
@@ -55,23 +54,18 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 
     switch($row["parent"]) {
       case 0:
-        $title_lc = $lang["project_lc"];
-        $edit = $lang["edit_project"];
-        $delete = $lang["delete_project"];
+        $type = "project";
         break;
 
       default:
-        $title = $lang["task_options"];
-        $title_lc = $lang["task_lc"];
-        $edit = $lang["edit_task"];
-        $delete = $lang["delete_task"];
+        $type = "task";
         break;
     }
 
 
     $content .= "<small><b>".$lang["admin"].":</b></small><br />\n".
-                "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$edit."</a><br />\n".
-                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onClick=\"return confirm( '".sprintf($lang["del_javascript_sprt"], $title_lc, $row["name"] )."')\">".$delete."</a><br />\n".
+                "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_$type"]."</a><br />\n".
+                "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onClick=\"return confirm( '".sprintf($lang["del_javascript_".$type."_sprt"], $row["name"] )."')\">".$lang["delete_$type"]."</a><br />\n".
                 "<br /><small><b>".$lang["global"].":</b></small><br />\n";
   }
   $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang["add_task"]."</a><br />\n";
@@ -80,6 +74,6 @@ if(isset($_GET["taskid"]) && is_numeric($_GET["taskid"]) ) {
 //the task-independent part
 $content .= "<a href=\"tasks.php?x=$x&amp;action=add\">".$lang["add_project"]."</a><br />\n";
 
-new_box( $title, $content, "boxmenu" );
+new_box( $lang[$type."_options"], $content, "boxmenu" );
 
 ?>

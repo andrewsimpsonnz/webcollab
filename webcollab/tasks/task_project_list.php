@@ -191,7 +191,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       break;
 
     case "nolimit":
-      $content .= $percent_complete.$lang["percent"]."<br />\n";
+      $content .= sprintf($lang["percent_sprt"], $percent_complete)."<br />\n";
       $content .= "<i>".$lang["project_no_deadline"]."</i><br />\n";
       //show subtasks that are not complete
       $content .= listTasks($row["id"] );
@@ -199,7 +199,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
     case "active":
     default:
-      $content .= $percent_complete.$lang["percent"]."<br />\n";
+      $content .= sprintf($lang["percent_sprt"], $percent_complete )."<br />\n";
       $content .= "<img border=\"0\" src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row["deadline"] )." ";
       $state = ($row["due"]-$row["now"] )/86400 ;
       if($state > 1 ) {
