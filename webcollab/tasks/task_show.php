@@ -55,15 +55,24 @@ if( ! ($row = db_fetch_array($q, 0 ) ) )
 @db_query("DELETE FROM seen WHERE userid=$uid AND taskid=$taskid", 0);
 db_query("INSERT INTO seen(userid, taskid, time) VALUES ($uid, $taskid, now() ) " );
 
-//start of header table
-$content = "<p><table width=\"98%\"><tr><td>\n";
+//text link for 'printer friendly' page
+$content = "<font class=\"textlink\">";
+if(isset($_GET["action"]) && $_GET["action"] == "show_print" )
+  $content  .= "[<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">"."Normal page - translate me"."</a>]<br />";
+else
+  $content  .= "<div align=\"right\">[<a href=\"tasks.php?x=$x&amp;action=show_print&amp;taskid=$taskid\">"."Print version - translate me"."</a>]</div>";
+$content .= "</font>\n";
 
 //percentage_completed gauge if this is a project
 if( $row["parent"] == 0 ) {
   $percent_completed = round(percent_complete( $taskid));
-  $content .= sprintf( $lang["percent_project_sprt"], $percent_completed )."<br />\n";
-  $content .= show_percent( $percent_completed )."<br />";
+  $content .= sprintf( $lang["percent_project_sprt"], $percent_completed )."\n";
+  $content .= show_percent( $percent_completed );
 }
+
+//start of header table
+$content .= "<table width=\"98%\"><tr><td>\n";
+
 //project/task name
 $content .= "<b>".$row["name"]."</b><br /><br /></td></tr>\n";
 
@@ -71,7 +80,7 @@ $content .= "<b>".$row["name"]."</b><br /><br /></td></tr>\n";
 $content .= "<tr><td bgcolor=\"#EEEEEE\" width=\"95%\">\n";
 
 $content .= nl2br($row["text"] );
-$content .= "</td></tr></table></p>\n";
+$content .= "</td></tr></table>\n";
 
 //start of info table
 $content .= "<p><table border=\"0\">\n";

@@ -129,14 +129,23 @@ if(db_numrows($q) < 1 ) {
   new_box($lang["no_projects"], $content );
   return;
 }
-
 //text link for 'active' switch
-$content .= "<font class=\"textlink\">";
+$content .= "<table border=\"0\" width=\"98%\"><tr><td>\n".
+            "<font class=\"textlink\">";
 if($active_only )
   $content .= "[<a href=\"main.php?x=$x&amp;active=0\">"."Show all projects - translate me"."</a>]";
 else
   $content .= "[<a href=\"main.php?x=$x&amp;active=1\">"."Show only active projects - translate me"."</a>]";
-$content  .= "&nbsp;[<a href=\"tasks.php?x=$x&amp;active=$active_only&amp;action=project_print\">"."Printer friendly page - translate me"."</a>]</font>\n";
+
+//text link for 'printer friendly' page
+if(isset($_GET["action"]) && $_GET["action"] == "project_print" )
+  $content  .= "\n[<a href=\"main.php?x=$x&amp;active=$active_only\">"."Normal page - translate me"."</a>]";
+else
+  $content  .= "</font></td>\n<td align=\"right\"><font class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;active=$active_only&amp;action=project_print\">"."Print version - translate me"."</a>]";
+$content .= "<font></td></tr>\n</table>\n";
+
+//setup main table
+$content .= "<table border=\"0\" cellpadding=\"20\">\n";
 
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
@@ -169,7 +178,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $flag = 1;
 
   //start list
-  $content .= "<table border=\"0\" cellpadding=\"20\">\n<tr><td>";
+  $content .= "<tr><td>";
 
   //show name and a link
   $content .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row["id"]."\"><b>".$row["name"]."</b></a>\n";
@@ -251,9 +260,10 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
       break;
     }
   //end list
-  $content .= "</td>\n</tr>\n</table>\n";
+  $content .= "</td>\n</tr>\n";
 }
-//$content .= "<br />\n";
+
+$content .= "</table>\n";
 
 if($flag != 1 ) $content = $lang["no_allowed_projects"];
 

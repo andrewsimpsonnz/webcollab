@@ -50,8 +50,6 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
   global $sortby;
   global $epoch;
 
-  $usergroup[0] = 0;
-
   $q = db_query( "SELECT tasks.id AS id,
                          tasks.parent AS parent,
                          tasks.name AS taskname,
@@ -78,7 +76,6 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
 
   //reset variables
   $result = "";
-
 
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
     //check usergroup permissions
@@ -312,8 +309,19 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
 //
 // MAIN PROGRAM starts here
 //
+if(isset($_GET["sortby"]) )
+  $sortby = $_GET["sortby"];
+else
+  $sortby = "";
 
-$content  = "<br /><table border=\"0\">\n";
+//text link for 'printer friendly' page
+$content = "<font class=\"textlink\">";
+if(isset($_GET["action"]) && $_GET["action"] == "summary_print" )
+  $content  .= "<p>[<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=$sortby\">"."Normal page - translate me"."</a>]</p>";
+else
+  $content  .= "<div align=\"right\">[<a href=\"tasks.php?x=$x&amp;action=summary_print&amp;sortby=$sortby\">"."Print version - translate me"."</a>]</div>";
+
+$content .= "<table border=\"0\">\n";
 $content .= "<tr><td colspan=\"3\"><small><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#summarypage\" target=\"helpwindow\"><b>".$lang["flags"]."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=deadline\">";
 $content .= "<b>".$lang["deadline"]."</b></a></small></td><td><small>";
@@ -322,11 +330,6 @@ $content .= "<b>".$lang["status"]."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=owner\">";
 $content .= "<b>".$lang["owner"]."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=";
-
-if(isset($_GET["sortby"]) )
-  $sortby = $_GET["sortby"];
-else
-  $sortby = "";
 
 switch($sortby ) {
   case "taskgroupid":
