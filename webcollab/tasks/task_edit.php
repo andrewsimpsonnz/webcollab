@@ -30,10 +30,10 @@
 */
 
 require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once(BASE."includes/security.php" );
 
-include_once( BASE."includes/admin_config.php" );
-include_once( BASE."includes/time.php" );
+include_once(BASE."includes/admin_config.php" );
+include_once(BASE."includes/time.php" );
 
 //
 //check user access
@@ -89,16 +89,32 @@ $content .= "<form method=\"POST\" action=\"tasks/task_submit.php\">\n".
             "<input type=\"hidden\" name=\"action\" value=\"update\" />\n ".
             "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\" />".
             "<p><table border=\"0\">\n".
-            "<tr><td>".$lang["creation_time"]."</td> <td>".nicedate($row["created"] )."</td></tr>\n";
+            "<tr><td>".$lang["creation_time"]."</td><td>".nicedate($row["created"] )."</td></tr>\n";
 
-if($row["parent"] == 0 ) {
-  //project input box
-  $content .= "<tr><td>".$lang["project_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\" /></td></tr>\n";
-}
-else{
-  //show project name
-  $project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
-  $content .= "<tr><td>".$lang["project"] .":</td><td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["projectid"]."\">$project</a></td></tr>\n";
+//select either project or task for text
+switch($row["parent"] ) {
+  case 0:
+    //project
+    $title = $lang["edit_project"];
+    $delete = $lang["delete_project"];
+    $title_lc = $lang["project_lc"];
+    $owner = $lang["project_owner"];
+    $description = $lang["project_description"];
+    //project input box
+    $content .= "<tr><td>".$lang["project_name"].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row["name"]."\" /></td></tr>\n";
+    break;
+
+  default:
+    //task
+    $title = $lang["edit_task"];
+    $delete = $lang["delete_task"];
+    $title_lc = $lang["task_lc"];
+    $owner = $lang["task_owner"];
+    $description = $lang["task_description"];
+    //show project name
+    $project = db_result(db_query("SELECT name FROM tasks WHERE id=".$row["projectid"] ), 0, 0 );
+    $content .= "<tr><td>".$lang["project"] .":</td><td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$row["projectid"]."\">$project</a></td></tr>\n";
+    break;
 }
 
 //reparenting
@@ -160,74 +176,73 @@ $content .= "<tr><td>".$lang["priority"].":</td><td>\n".
             "<option value=\"4\"$s5>".$task_state["yesterday"]."</option>\n".
             "</select></td></tr>\n";
 
-// status
-if($row["parent"] != 0 ) {
+switch($row["parent"] ){
+  case 0:
+    //status for projects - 'done' is calculated from tasks
+    switch($row["status"] ) {
+      case "notactive":
+        $s1 = " SELECTED"; $s2 = ""; $s3 = ""; $s4 = "";
+        break;
 
-//status for tasks
-  switch($row["status"] ) {
-    case "notactive":
-      $s1 = ""; $s2 = " SELECTED"; $s3 = ""; $s4 =""; $s5 = "";
-      break;
+      case "nolimit":
+        $s1 = ""; $s2 = " SELECTED"; $s3 = ""; $s4 ="";
+        break;
 
-    case "active":
-      $s1 = ""; $s2 = ""; $s3 = " SELECTED"; $s4 =""; $s5 = "";
-      break;
+      case "cantcomplete":
+        $s1 = ""; $s2 = ""; $s3 = ""; $s4 =" SELECTED";
+        break;
 
-    case "cantcomplete":
-      $s1 = ""; $s2 = ""; $s3 = ""; $s4 =" SELECTED"; $s5 = "";
-      break;
+      case "active":
+      default:
+        $s1 = ""; $s2 = ""; $s3 = " SELECTED"; $s4 ="";
+        break;
+    }
+    $content .= "<tr><td>".$lang["status"].":</td><td>\n".
+                 "<select name=\"status\">\n".
+                 "<option value=\"notactive\"$s1>".$task_state["planned_project"]."</option>\n".
+                 "<option value=\"nolimit\"$s2>".$task_state["no_deadline_project"]."</option>\n".
+                 "<option value=\"active\"$s3>".$task_state["active_project"]."</option>\n".
+                 "<option value=\"cantcomplete\"$s4>".$task_state["cantcomplete"]."</option>\n".
+                 "</select></td></tr>";
+    break;
 
-   case "done":
-      $s1 = ""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = " SELECTED";
-      break;
-
-    case "created":
     default:
-      $s1 = " SELECTED"; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
-      break;
-  }
-  $content .= "<tr> <td>".$lang["status"].":</td> <td>\n".
-              "<select name=\"status\">\n".
-              "<option value=\"created\"$s1>".$task_state["new"]."</option>\n".
-              "<option value=\"notactive\"$s2>".$task_state["planned"]."</option>\n".
-              "<option value=\"active\"$s3>".$task_state["active"]."</option>\n".
-              "<option value=\"cantcomplete\"$s4>".$task_state["cantcomplete"]."</option>\n".
-              "<option value=\"done\"$s5>".$task_state["completed"]."</option>\n".
-              "</select></td></tr>";
+      //status for tasks
+      switch($row["status"] ) {
+        case "notactive":
+          $s1 = ""; $s2 = " SELECTED"; $s3 = ""; $s4 =""; $s5 = "";
+          break;
 
-}
-else{
-  //status for projects - 'done' is calculated from tasks
-  switch($row["status"] ) {
-    case "notactive":
-      $s1 = " SELECTED"; $s2 = ""; $s3 = ""; $s4 = "";
-      break;
+        case "active":
+          $s1 = ""; $s2 = ""; $s3 = " SELECTED"; $s4 =""; $s5 = "";
+          break;
 
-    case "nolimit":
-      $s1 = ""; $s2 = " SELECTED"; $s3 = ""; $s4 ="";
-      break;
+        case "cantcomplete":
+          $s1 = ""; $s2 = ""; $s3 = ""; $s4 =" SELECTED"; $s5 = "";
+          break;
 
-    case "cantcomplete":
-      $s1 = ""; $s2 = ""; $s3 = ""; $s4 =" SELECTED";
-      break;
+        case "done":
+          $s1 = ""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = " SELECTED";
+          break;
 
-    case "active":
-    default:
-      $s1 = ""; $s2 = ""; $s3 = " SELECTED"; $s4 ="";
-      break;
-  }
-  $content .= "<tr> <td>".$lang["status"].":</td> <td>\n".
-              "<select name=\"status\">\n".
-              "<option value=\"notactive\"$s1>".$task_state["planned_project"]."</option>\n".
-              "<option value=\"nolimit\"$s2>".$task_state["no_deadline_project"]."</option>\n".
-              "<option value=\"active\"$s3>".$task_state["active_project"]."</option>\n".
-              "<option value=\"cantcomplete\"$s4>".$task_state["cantcomplete"]."</option>\n".
-              "</select></td></tr>";
+        case "created":
+        default:
+          $s1 = " SELECTED"; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
+          break;
+      }
+      $content .= "<tr> <td>".$lang["status"].":</td> <td>\n".
+                   "<select name=\"status\">\n".
+                   "<option value=\"created\"$s1>".$task_state["new"]."</option>\n".
+                   "<option value=\"notactive\"$s2>".$task_state["planned"]."</option>\n".
+                   "<option value=\"active\"$s3>".$task_state["active"]."</option>\n".
+                   "<option value=\"cantcomplete\"$s4>".$task_state["cantcomplete"]."</option>\n".
+                   "<option value=\"done\"$s5>".$task_state["completed"]."</option>\n".
+                   "</select></td></tr>";
 }
 
 //task owner
 $user_q = db_query("SELECT id, fullname FROM users WHERE deleted='f' ORDER BY fullname" );
-$content .= "<tr> <td>".$lang["task_owner"].":</td> <td><SELECT name=\"owner\">\n".
+$content .= "<tr> <td>$owner:</td> <td><SELECT name=\"owner\">\n".
             "<option value=\"0\">".$lang["nobody"]."</option>\n";
 
 //select the user first
@@ -265,7 +280,6 @@ if($row["parent"] != 0 ){
 } else
   $content .= "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" />\n ";
 
-
 //show all user-groups
 $usergroup_q = db_query("SELECT name, id FROM usergroups ORDER BY name" );
 $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" target=\"helpwindow\">".$lang["usergroup"]."</A>: </td> <td><select name=\"usergroupid\">\n";
@@ -294,36 +308,27 @@ if($row["groupaccess"] == 't' )
   $group = "CHECKED";
 
 $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" target=\"helpwindow\">".$lang["all_users_view"]."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" $global /></td></tr>\n".
-            "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" $group /></td></tr>\n".
+             "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" target=\"helpwindow\">".$lang["group_edit"]."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" $group /></td></tr>\n".
 
-            "<tr> <td>".$lang["task_description"]."</td> <td><TEXTAREA name=\"text\" rows=\"5\" cols=\"60\">".$row["text"]."</TEXTAREA></td> </tr>\n".
+             "<tr> <td>$description</td> <td><TEXTAREA name=\"text\" rows=\"5\" cols=\"60\">".$row["text"]."</TEXTAREA></td> </tr>\n".
 
-            //do we need to email ?
-            "<tr><td><label for=\"mailowner\">".$lang["email_new_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" $DEFAULT_OWNER /></label></td></tr>\n".
-            "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" $DEFAULT_GROUP /></label></td></tr>\n".
+             //do we need to email ?
+             "<tr><td><label for=\"mailowner\">".$lang["email_new_owner"]."</td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" $DEFAULT_OWNER /></label></td></tr>\n".
+             "<tr><td><label for=\"maillist\">".$lang["email_group"]."</td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" $DEFAULT_GROUP /></label></td></tr>\n".
 
-            "</table></p>\n".
-            "<input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;".
-            "<input type=\"reset\" value=\"".$lang["reset"]."\" />".
-            "</form>\n";
-
-if($row["parent"] == 0 ) {
-  $full_title = $lang["edit_project"];
-  $title = $lang["project_lc"];
-}
-else{
-  $full_title = $lang["edit_task"];
-  $title = $lang["task_lc"];
-}
+             "</table></p>\n".
+             "<input type=\"submit\" value=\"".$lang["submit_changes"]."\" />&nbsp;".
+             "<input type=\"reset\" value=\"".$lang["reset"]."\" />".
+             "</form>\n";
 
 //delete options
 $content .= "<br /><br />\n<form method=\"POST\" action=\"tasks.php\">\n".
-            "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
-            "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
-            "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\" />\n".
-            "<input type=\"submit\" value=\"".$lang["delete"]." ".$title."\" onClick=\"return confirm('".sprintf($lang["del_javascript_sprt"], $title, $row["name"] )."')\" />\n".
-            "</form>\n";
+             "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
+             "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
+             "<input type=\"hidden\" name=\"taskid\" value=\"".$row["id"]."\" />\n".
+             "<input type=\"submit\" value=\"".$delete."\" onClick=\"return confirm('".sprintf($lang["del_javascript_sprt"], $title_lc, $row["name"] )."')\" />\n".
+             "</form>\n";
 
-new_box( $full_title, $content );
+new_box($title, $content );
 
 ?>
