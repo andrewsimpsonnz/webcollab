@@ -45,83 +45,121 @@ require_once(BASE."includes/usergroup_security.php" );
 //
 // Recursive function for listing all posts of a task
 //
-function list_posts_from_task( $parentid, $taskid, $usergroupid ) {
+function list_posts_from_task( $taskid, $usergroupid ) {
 
-  global $parent_array, $ul_flag, $admin, $x, $uid, $lang, $taskid_row, $epoch;
+  global $admin, $x, $uid, $lang, $taskid_row, $epoch;
+  global $post_array, $parent_array;
 
-  $ul_flag = 0;
+  $parent_array = "";
 
   $q = db_query("SELECT ".PRE."forum.text AS text,
                         ".PRE."forum.id AS id,
                         ".$epoch.PRE."forum.posted) AS posted,
                         ".PRE."forum.userid AS postowner,
                         ".PRE."users.id AS userid,
-                        ".PRE."users.fullname AS fullname
+                        ".PRE."users.fullname As fullname,
+                        ".PRE."forum.parent AS parent
                         FROM ".PRE."forum
                         LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."forum.userid)
                         WHERE ".PRE."forum.taskid=$taskid
-                        AND ".PRE."forum.parent=$parentid
                         AND ".PRE."forum.usergroupid=$usergroupid
                         ORDER BY ".PRE."forum.posted" );
 
   //check for any posts
-  if(db_numrows($q ) < 1 ) {
+  if(db_numrows($q ) < 1 )
     return;
-  }
 
-  $this_content = "<ul>";
-  $ul_flag = 1;
+  $content = "<ul>\n";  
+    
+  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
-  //show all forum posts on this level
-  for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
-
+    //put values into array
+    $post_array[$i]["id"] = $row["id"];
+    $post_array[$i]["parent"] = $row["parent"];
+  
+    $this_post = "<li><small>";
+    
     if($row["fullname"] == NULL )
-      $this_content .= "<li><small>----";
+      $this_post .= "----";
     else
-      $this_content .= "<li><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["fullname"]."</a>";
+      $this_post .= "<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row["userid"]."\">".$row["fullname"]."</a>";
 
-    $this_content .= "&nbsp;(".nicetime( $row["posted"], 1 ).")</small>".
+    $this_post .= "&nbsp;(".nicetime( $row["posted"], 1 ).")</small>".
                      "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=".$row["id"]."&amp;taskid=$taskid";
 
     //if this is a post to a private forum then announce it to the poster-engine
     if($usergroupid != 0 )
-      $this_content .= "&amp;usergroupid=$usergroupid";
+      $this_post .= "&amp;usergroupid=$usergroupid";
 
-    $this_content .= "\">".$lang["reply"]."</a>]</span>\n";
+    $this_post .= "\">".$lang["reply"]."</a>]</span>\n";
 
     //owners of the thread, owners of the post and admins have a "delete" option
     if( ($admin==1) || ($uid == $taskid_row["owner"] ) || ($uid == $row["postowner"] ) ) {
-      $this_content .= " <span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=submit_del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onclick=\"return confirm( '".$lang["confirm_del_javascript"]."' )\">".$lang["del"]."</a>]</span>";
+      $this_post .= " <span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=submit_del&amp;postid=".$row["id"]."&amp;taskid=$taskid\" onclick=\"return confirm( '".$lang["confirm_del_javascript"]."' )\">".$lang["del"]."</a>]</span>";
     }
 
-    $this_content .= "<br />\n".$row["text"]."\n";
+    $post_array[$i]["post"] = $this_post."<br />\n".$row["text"]."\n";
 
-    //recursive search
-    if(in_array($row["id"], $parent_array, FALSE ) ) {
-      $this_content .= list_posts_from_task($row["id"], $taskid, $usergroupid );
-      $this_content .= "\n</ul>\n</li>";
-    }
-    else{
-      $this_content .= "</li>\n";
+    //if this is a subpost, store the parent id 
+    if($row["parent"] != 0 ) {
+      $parent_array[] = $row["parent"];
     }
   }
+  
+  if(sizeof($parent_array) > 10 )
+    $parent_array = array_unique($parent_array);
+  $max = sizeof($post_array);
 
-  return $this_content;
+  //iteration for first level posts
+  for($i=0 ; $i < $max ; $i++ ){
+  
+    //ignore subtasks in this iteration
+    if($post_array[$i]["parent"] != 0 ){
+      continue;
+    }
+    $content .= $post_array[$i]["post"];
+    
+    //if this post has children (subposts), iterate recursively to find them 
+    if(in_array($post_array[$i]["id"], (array)$parent_array ) ){
+      $content .= find_children($post_array[$i]["id"] );
+    }
+    $content .= "</li>\n";
+  }
+  $content .= "</ul>\n";  
+  return $content;
 }
+
+//
+// List subposts (recursive function)
+//
+function find_children($parent ) {
+
+  global $post_array, $parent_array;
+
+  $content = "<ul>\n";
+  $max = sizeof($post_array);
+       
+  for($i=0 ; $i < $max ; $i++ ) {
+  
+    if($post_array[$i]["parent"] != $parent ){
+      continue;
+    }
+    $content .= $post_array[$i]["post"];
+    
+    //if this post has children (subposts), iterate recursively to find them
+    if(in_array($post_array[$i]["id"], $parent_array ) ){
+      $content .= find_children($post_array[$i]["id"] );
+    }
+    $content .= "</li>\n";    
+  }
+  $content .= "</ul>\n"; 
+  return $content;
+}      
+
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
 //MAIN PROGRAM
-
-//get number of posts for this taskid
-$q = db_query("SELECT DISTINCT parent FROM ".PRE."forum WHERE taskid=$taskid" );
-
-//put parent id's in an array
-$parent_array = NULL;
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
-  $parent_array[$i] = $row["parent"];
-}
-
 
 //
 //public forums
@@ -132,10 +170,10 @@ if( ! ($taskid_row["globalaccess"] == 'f' && $taskid_row["usergroupid"] != 0 ) )
 
   $content = "";
 
-  //all the posts that have parentid 0 (the taskid is included in the query itself so this will _not_ show all results)
-  $content .= list_posts_from_task( 0, $taskid, 0 );
+  //get all posts
+  $content .= list_posts_from_task( $taskid, 0 );
   if($ul_flag == 1 )
-    $content .= "</ul>\n<br />\n";
+    $content .= "<br />\n";
   //add an option to add posts
   $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">".$lang["new_post"]."</a>]</span>";
   //show it
@@ -155,9 +193,9 @@ if($taskid_row["usergroupid"] != 0 ) {
 
   if(in_array($taskid_row["usergroupid"], (array)$gid ) || $admin == 1 ) {
 
-    $content .= list_posts_from_task(0, $taskid, $taskid_row["usergroupid"] );
+    $content .= list_posts_from_task( $taskid, $taskid_row["usergroupid"] );
     if($ul_flag == 1 )
-      $content .= "</ul>\n<br />\n";
+      $content .= "<br />\n";
     //add an option to add posts
     $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid=".$taskid_row["usergroupid"]."&amp;\">".$lang["new_post"]."</a>]</span>";
     //get usergroup
