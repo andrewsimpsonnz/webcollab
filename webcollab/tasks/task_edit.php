@@ -113,9 +113,8 @@ switch($TYPE) {
     break;
 
   case 'task':
-    //show project finish date for javascript (projectDate is GMT/UTC because Javascript uses this)
-    //date GMT/UTC plus one day for tolerance
-    $project_deadline = $project_row['deadline'] + 86400;
+    //show project finish date for javascript (plus GMT offset)
+    $project_deadline = $project_row['deadline'] + date('Z');
     
     $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" /></fieldset>\n".          
                  "<table class=\"celldata\">\n".

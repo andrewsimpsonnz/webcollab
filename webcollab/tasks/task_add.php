@@ -87,8 +87,8 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
   if( ! $task_row = db_fetch_array($q, 0 ) )
     error("Task add", "No parent for taskid" );
   
-  //add the project deadline (in GMT/UTC plus one day for tolerance) for the javascript
-  $project_deadline = db_result(db_query("SELECT ".$epoch."deadline) FROM ".PRE."tasks WHERE id=".$task_row['projectid'] ) ) + 86400;
+  //add the project deadline (plus GMT offset) for the javascript
+  $project_deadline = db_result(db_query("SELECT ".$epoch."deadline) FROM ".PRE."tasks WHERE id=".$task_row['projectid'] ) ) + date('Z');
   
   $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"$project_deadline\" />\n";            
                 
