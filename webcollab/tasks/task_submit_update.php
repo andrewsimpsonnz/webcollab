@@ -101,7 +101,7 @@ else
 }
 
 //check if the user has enough rights
-if( ($ADMIN != 1 ) && (! user_access($taskid ) ) )
+if(! user_access($taskid ) )
   warning($lang['task_submit'], $lang['not_owner'] );
     
 //begin transaction
