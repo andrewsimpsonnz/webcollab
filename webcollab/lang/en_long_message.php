@@ -29,33 +29,33 @@
 */
 
 
-$taskgroup_info = "<BR><UL><LI>If you delete a taskgroup all tasks belonging to it will be set to uncategorised.</LI>\n".
-                      "<LI>You can change the name of a category without interfering with the tasks.</LI>\n".
-                      "<LI>Two taskgroups cannot have the same name.</LI></UL><BR>\n";
+$taskgroup_info = "<br /><ul><li>If you delete a taskgroup all tasks belonging to it will be set to uncategorised.</li>\n".
+                      "<li>You can change the name of a category without interfering with the tasks.</li>\n".
+                      "<li>Two taskgroups cannot have the same name.</li></ul><br />\n";
 
-$usergroup_info = "<BR><UL><LI>If you delete a usergroup all the related private forum posts will be deleted too.</LI>\n".
-                      "<LI>You can change the name of a usergroup without interfering with the users in it.</LI>\n".
-                      "<LI>Two usergroups cannot have the same name.</LI></UL><BR><BR>\n";
+$usergroup_info = "<br /><ul><li>If you delete a usergroup all the related private forum posts will be deleted too.</li>\n".
+                      "<li>You can change the name of a usergroup without interfering with the users in it.</li>\n".
+                      "<li>Two usergroups cannot have the same name.</li></ul><br /><br />\n";
 
-$user_info      = "<BR>Please select your action from the menu on the left.<BR><BR>".
-                      "Some quick hints:<BR>".
-                      "<UL>".
-                      "<LI>Users have two stages of deleting, the second one is permanent.</LI>\n".
-                      "<LI>A deleted user loses all his tasks but not his forum messages.</LI>\n".
-                      "<LI>A permanently deleted user loses all.</LI>\n".
-                      "<LI>You cannot permanently delete a user that still has forum items.</LI>\n".
-                      "<LI>A deleted user keeps the record of tasks that they have seen, and will continue with that list upon revival.</LI>\n".
-                      "<LI>ALL actions performed on a user will be emailed to the user.</LI>\n".
-                      "<LI>Passwords are encrypted in the database. You can only set a new one.</LI>\n".
-                      "<LI>Passwords are mailed only once to the user when set, so be careful where you mail them!</LI>\n".
-                      "<LI>Users can edit themselves without admins knowing - this will save you time (and spam)</LI>\n".
-                      "</UL><BR>\n";
+$user_info      = "<br />Please select your action from the menu on the left.<br /><br />".
+                      "Some quick hints:<br />".
+                      "<ul>".
+                      "<li>Users have two stages of deleting, the second one is permanent.</li>\n".
+                      "<li>A deleted user loses all his tasks but not his forum messages.</li>\n".
+                      "<li>A permanently deleted user loses all.</li>\n".
+                      "<li>You cannot permanently delete a user that still has forum items.</li>\n".
+                      "<li>A deleted user keeps the record of tasks that they have seen, and will continue with that list upon revival.</li>\n".
+                      "<li>ALL actions performed on a user will be emailed to the user.</li>\n".
+                      "<li>Passwords are encrypted in the database. You can only set a new one.</li>\n".
+                      "<li>Passwords are mailed only once to the user when set, so be careful where you mail them!</li>\n".
+                      "<li>Users can edit themselves without admins knowing - this will save you time (and spam)</li>\n".
+                      "</ul><br />\n";
 
-$calendar_key    = "<I>Return to Main Menu</I></A>]</B><BR>\n".
-                      "<P><B><U>Key to Calendar</U></B><BR><BR>\n".
-	              "<FONT color=\"blue\">Project (with uncompleted tasks)</FONT><BR>\n".
-                      "<FONT color=\"green\"><U>Project </U>(all tasks completed)</FONT><BR>\n".
-                      "<FONT color=\"red\">Task (not completed)</FONT><BR>\n".
-	              "<FONT color=\"green\">Task (completed)</FONT><BR>\n";
+$calendar_key    = "<i>Return to Main Menu</i></a>]</b><br />\n".
+                      "<p><b><u>Key to Calendar</u></b><br /><br />\n".
+                      "<font color=\"blue\">Project (with uncompleted tasks)</font><br />\n".
+                      "<font color=\"green\"><u>Project </u>(all tasks completed)</font><br />\n".
+                      "<font color=\"red\">Task (not completed)</font><br />\n".
+                      "<font color=\"green\">Task (completed)</font><br />\n";
 
 ?>
