@@ -219,41 +219,52 @@ else
   $TZ = TZ;
 
 //initialise array with null values  
-for( $i=1 ; $i < 27 ; $i++ ) {
+for( $i=0 ; $i < 35 ; $i++ ) {
   $s[$i] = "";
 }
 
-//select current value
-$s[(13 + $TZ)] = " selected=\"selected\"";
+$time = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 8, 9, 9.5, 10, 10.5, 11, 11.5, 12, 13 );
 
+//select current value
+$s[(array_search(TZ, $time) )] = " selected=\"selected\"";
+  
 $content .=  "<tr><td></td><td><br /></td></tr>\n".
              "<tr><th>Timezone:</th><td><select name=\"timezone\">\n".
-             "<option value=\"-12\"$s[1]>GMT -1200</option>\n".
-             "<option value=\"-11\"$s[2]>GMT -1100</option>\n".
-             "<option value=\"-10\"$s[3]>GMT -1000</option>\n".
+             "<option value=\"-12\"$s[0]>GMT -1200</option>\n".
+             "<option value=\"-11\"$s[1]>GMT -1100</option>\n".
+             "<option value=\"-10\"$s[2]>GMT -1000</option>\n".
+             "<option value=\"-9.5\"$s[3]>GMT -0930</option>\n".
              "<option value=\"-9\"$s[4]>GMT -0900</option>\n".
              "<option value=\"-8\"$s[5]>GMT -0800</option>\n".
              "<option value=\"-7\"$s[6]>GMT -0700</option>\n".
              "<option value=\"-6\"$s[7]>GMT -0600</option>\n".
              "<option value=\"-5\"$s[8]>GMT -0500</option>\n".
              "<option value=\"-4\"$s[9]>GMT -0400</option>\n".
-             "<option value=\"-3\"$s[10]>GMT -0300</option>\n".
-             "<option value=\"-2\"$s[11]>GMT -0200</option>\n".
-             "<option value=\"-1\"$s[12]>GMT -0100</option>\n".
-             "<option value=\"0\"$s[13]>GMT</option>\n".
-             "<option value=\"1\"$s[14]>GMT +0100</option>\n".
-             "<option value=\"2\"$s[15]>GMT +0200</option>\n".
-             "<option value=\"3\"$s[16]>GMT +0300</option>\n".
-             "<option value=\"4\"$s[17]>GMT +0400</option>\n".
-             "<option value=\"5\"$s[18]>GMT +0500</option>\n".
-             "<option value=\"6\"$s[19]>GMT +0600</option>\n".
-             "<option value=\"7\"$s[20]>GMT +0700</option>\n".
-             "<option value=\"8\"$s[21]>GMT +0800</option>\n".
-             "<option value=\"9\"$s[22]>GMT +0900</option>\n".
-             "<option value=\"10\"$s[23]>GMT +1000</option>\n".
-             "<option value=\"11\"$s[24]>GMT +1100</option>\n".
-             "<option value=\"12\"$s[25]>GMT +1200</option>\n".
-             "<option value=\"13\"$s[26]>GMT +1300</option>\n".
+             "<option value=\"-3.5\"$s[10]>GMT -0330</option>\n".
+             "<option value=\"-3\"$s[11]>GMT -0300</option>\n".
+             "<option value=\"-2\"$s[12]>GMT -0200</option>\n".
+             "<option value=\"-1\"$s[13]>GMT -0100</option>\n".
+             "<option value=\"0\"$s[14]>GMT</option>\n".
+             "<option value=\"1\"$s[15]>GMT +0100</option>\n".
+             "<option value=\"2\"$s[16]>GMT +0200</option>\n".
+             "<option value=\"3\"$s[17]>GMT +0300</option>\n".
+             "<option value=\"3.5\"$s[18]>GMT +0330</option>\n".
+             "<option value=\"4\"$s[19]>GMT +0400</option>\n".
+             "<option value=\"4.5\"$s[20]>GMT +0430</option>\n".
+             "<option value=\"5\"$s[21]>GMT +0500</option>\n".
+             "<option value=\"5.5\"$s[22]>GMT +0530</option>\n".
+             "<option value=\"6\"$s[23]>GMT +0600</option>\n".
+             "<option value=\"6.5\"$s[24]>GMT +0630</option>\n".
+             "<option value=\"7\"$s[25]>GMT +0700</option>\n".
+             "<option value=\"8\"$s[26]>GMT +0800</option>\n".
+             "<option value=\"9\"$s[27]>GMT +0900</option>\n".
+             "<option value=\"9.5\"$s[28]>GMT +0930</option>\n".
+             "<option value=\"10\"$s[29]>GMT +1000</option>\n".
+             "<option value=\"10.5\"$s[30]>GMT +1030</option>\n".
+             "<option value=\"11\"$s[31]>GMT +1100</option>\n".
+             "<option value=\"11.5\"$s[32]>GMT +1130</option>\n".
+             "<option value=\"12\"$s[33]>GMT +1200</option>\n".
+             "<option value=\"13\"$s[34]>GMT +1300</option>\n".
              "</select></td></tr>\n";
                         
 //email settings

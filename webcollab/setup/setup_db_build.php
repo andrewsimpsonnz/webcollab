@@ -36,8 +36,8 @@ include_once(BASE."setup/screen_setup.php" );
 //
 
   //check the required variables were input
-  $input_array = array("database_name", "database_user", "database_password", "database_type" );
-  $message_array =array("'Your database name'", "'Database user'", "'Database password'", "'Database type'" );
+  $input_array = array("database_name", "database_user", "database_type" );
+  $message_array =array("'Your database name'", "'Database user'", "'Database type'" );
   $i = 0;
   foreach( $input_array as $var) {
     if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
@@ -49,9 +49,13 @@ include_once(BASE."setup/screen_setup.php" );
 
   $database_name     = $_POST["database_name"];
   $database_user     = $_POST["database_user"];
-  $database_password = $_POST["database_password"];
   $database_type     = $_POST["database_type"];
 
+  if(isset($_POST["database_password"] ) ) {
+    $database_password = $_POST["database_password"];
+  else
+    $database_password = "";
+  
   if( isset($_POST["database_host"] ) ) {
     $database_host = $_POST["database_host"];
   }
