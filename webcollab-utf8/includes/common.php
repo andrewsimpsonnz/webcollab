@@ -80,14 +80,24 @@ return $body;
 
 function clean_up($body ) {
 
-  //allow only properly formed UTF-8 characters
-  preg_match_all('/([\x09\x0a\x0d\x20-\x7e]|[\xc0-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xf7][\x80-\xbf]{3})+/s', $body, $ar );
+  //remove HTML entities for UTF8 added by web browser
+  $convmap = array(0x0, 0x2ffff, 0, 0xffff);
+  $body = preg_replace('/(&#\d{2,4};)/e', "mb_decode_numericentity('$1', $convmap, 'UTF-8')", $body );
+  
+  //allow only normal range of UTF-8 characters
+  preg_match_all('/([\x09\x0a\x0d\x20-\x7e]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xf4][\x80-\xbf]{3})+/S', $body, $ar );
   $body = join("*", $ar[0] );
+  
+  //reject overly long UTF8 forms
+  $body = preg_replace('/([\xe0][\x80-\x9f][\x80-\xbf]|[\xf0][\x80-\xbf]{3})/', "*", $body );
+  
+  //reject illegal UTF16 surrogates
+  $body = preg_replace('/([\xed][\xa0-\xbf][\x80-\xbf]|[\xef][\xbf][\xbe-\xbf])/', "*", $body );
 
   //protect against database query attack
   if(! get_magic_quotes_gpc() )
     $body = addslashes($body );
-    
+        
   //use HTML encoding for characters that could be used for css <script> or SQL injection attacks
   $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;');
   
