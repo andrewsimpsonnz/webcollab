@@ -46,10 +46,8 @@ function secure_error( $reason = "Unauthorised area" ) {
 
 
 //valid login attempt ?
-if( (isset($_POST["username"]) && isset($_POST["password"])
-                               && strlen($_POST["username"]) > 0
-                               && strlen($_POST["password"]) > 0 )
-                               || (isset($_SERVER["REMOTE_USER"]) ) ) {
+if( (isset($_POST["username"]) && isset($_POST["password"]) && strlen($_POST["username"]) > 0 && strlen($_POST["password"]) > 0 )
+    || (isset($_SERVER["REMOTE_USER"]) && $WEB_AUTH == "Y" ) ) {
 
   $q = "";
   $login_q ="";
