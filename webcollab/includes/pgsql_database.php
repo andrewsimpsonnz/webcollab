@@ -23,7 +23,7 @@
   ---------
 
   Creates a singular interface for database access.
-  
+
   This file is for PostgreSQL with PHP versions greater than (and including) 4.2.0
 
 */
@@ -33,12 +33,6 @@ require_once("path.php" );
 include_once( BASE."config.php" );
 include_once( BASE."includes/common.php");
 
-//set initial value
-$host = "";
-//now adjust if necessary
-if($DATABASE_HOST != "localhost" ){
-  $host = "host=".$DATABASE_HOST;
-}
 
 /* NOTE!
    Standard Postgresql (Version 6.3 and later) setup does NOT support tcp/ip connections.
@@ -47,20 +41,11 @@ if($DATABASE_HOST != "localhost" ){
     - Start postmaster with -i option to allow tcp/ip connections
 */
 
-if( ! ($database_connection = @pg_connect("$host user=$DATABASE_USER dbname=$DATABASE_NAME password=$DATABASE_PASSWORD" ) ) ) {
-
-  error("No database connection",  "Sorry but there seems to be a problem in connecting to the database" );
-}
-
 //set some base variables
+$database_connection = "";
 $last_insert = "oid";
 $delim = "'";
 $epoch = "extract( epoch from ";
-
-
-//make sure dates will be handled properly by internal date routines
-$q = db_query( "SET DATESTYLE TO 'European, ISO' ");
-
 
 //
 // Provides a safe way to do a query
@@ -68,23 +53,34 @@ $q = db_query( "SET DATESTYLE TO 'European, ISO' ");
 function db_query($query, $dieonerror=1 ) {
 
   global $database_connection, $database_query_time, $database_query_count;
+  global $DATABASE_HOST, $DATABASE_USER, $DATABASE_NAME, $DATABASE_PASSWORD;
+
+  if( ! $database_connection ) {
+    //set initial value
+    $host = "";
+    //now adjust if necessary
+    if($DATABASE_HOST != "localhost" )
+      $host = "host=".$DATABASE_HOST;
+
+    if( ! ($database_connection = @pg_connect("$host user=$DATABASE_USER dbname=$DATABASE_NAME password=$DATABASE_PASSWORD" ) ) )
+      error("No database connection",  "Sorry but there seems to be a problem in connecting to the database" );
+
+    //make sure dates will be handled properly by internal date routines
+    $q = db_query("SET DATESTYLE TO 'European, ISO' ");
+  }
 
   //count queries
   $database_query_count++;
 
-  //starttime
+  //start time
   list($usec, $sec) = explode(" ", microtime() );
   $starttime = ( (float)$usec + (float)$sec );
-
-  //check for a database connection
-  if( ! $database_connection )
-    error("Database query error", "Connection to database has been unexpectedly lost" );
 
   //do it
   if( ! ($result = @pg_query($database_connection, $query ) ) ) {
 
     if($dieonerror==1)
-      error("Database query error", "The following query :<br /><br /><b> $query </b><br /><br />Had the following error:<br /><b>".pg_errormessage($database_connection)."</b>" );
+      error("Database query error", "The following query :<br /><br /><b> $query </b><br /><br />Had the following error:<br /><b>".pg_last_error($database_connection)."</b>" );
   }
 
   //add query time to global query time
@@ -103,7 +99,7 @@ function db_numrows($q ) {
 
   $result = pg_num_rows($q );
 
-return($result );
+return $result;
 }
 
 //
@@ -113,7 +109,7 @@ function db_result($q, $row=0, $field=0 ) {
 
   $result = pg_fetch_result($q, $row, $field );
 
-return ($result );
+return $result;
 }
 
 //
@@ -123,7 +119,7 @@ function db_fetch_array($q, $row=0 ) {
 
   $result_row = pg_fetch_array($q, $row, PGSQL_ASSOC );
 
-return($result_row );
+return $result_row;
 }
 
 //
@@ -133,7 +129,7 @@ function db_fetch_num($q, $row=0 ) {
 
   $result_row = pg_fetch_row($q, $row );
 
-return($result_row );
+return $result_row;
 }
 
 //
@@ -143,7 +139,7 @@ function db_lastoid($q ) {
 
   $lastoid = pg_last_oid($q );
 
-return($lastoid );
+return $lastoid;
 }
 
 //
@@ -186,7 +182,7 @@ function db_commit() {
 
   global $database_connection;
 
-  pg_exec($database_connection, "COMMIT WORK" );
+  pg_query($database_connection, "COMMIT WORK" );
 
 return;
 }

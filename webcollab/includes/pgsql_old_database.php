@@ -35,34 +35,17 @@ if( ! @require( "path.php" ) )
 include_once( BASE."config.php" );
 include_once( BASE."includes/common.php");
 
-//set initial value
-$host = "";
-//now adjust if necessary
-if($DATABASE_HOST != "localhost" ){
-  $host = "host=".$DATABASE_HOST;
-}
-
-/* NOTE!   
+/* NOTE!
    Standard Postgresql (Version 6.3 and later) setup does NOT support tcp/ip connections.
    To support tcp/ip connections you need to:
     - Edit PostgreSQL config file pg_hba.conf to allow tcp/ip from appropriate hosts
     - Start postmaster with -i option to allow tcp/ip connections
 */
 
-if( ! ($database_connection = @pg_connect($host."user=".$DATABASE_USER." dbname=".$DATABASE_NAME." password=".$DATABASE_PASSWORD ) ) ) {
-
-  error("No database connection",  "Sorry but there seems to be a problem in connecting to the database" );
-}
-
 //set some base variables
 $last_insert = "oid";
 $delim = "'";
 $epoch = "extract( epoch from ";
-
-
-//make sure dates will be handled properly by internal date routines
-$q = db_query("SET DATESTYLE TO 'European, ISO' " );
-
 
 //
 // Provides a safe way to do a query
@@ -70,6 +53,21 @@ $q = db_query("SET DATESTYLE TO 'European, ISO' " );
 function db_query($query, $dieonerror=1 ) {
 
   global $database_connection, $database_query_time, $database_query_count;
+  global $DATABASE_HOST, $DATABASE_USER, $DATABASE_NAME, $DATABASE_PASSWORD;
+
+  if( ! $database_connection ) {
+    //set initial value
+    $host = "";
+    //now adjust if necessary
+    if($DATABASE_HOST != "localhost" )
+      $host = "host=".$DATABASE_HOST;
+
+    if( ! ($database_connection = @pg_connect("$host user=$DATABASE_USER dbname=$DATABASE_NAME password=$DATABASE_PASSWORD" ) ) )
+      error("No database connection",  "Sorry but there seems to be a problem in connecting to the database" );
+
+    //make sure dates will be handled properly by internal date routines
+    $q = db_query("SET DATESTYLE TO 'European, ISO' ");
+  }
 
   //count queries
   $database_query_count++;
@@ -104,7 +102,7 @@ function db_numrows($q ) {
 
   $result = pg_numrows($q );
 
-return($result );
+return $result;
 }
 
 //
@@ -114,7 +112,7 @@ function db_result($q, $row=0, $field=0 ) {
 
   $result = pg_result($q, $row, $field );
 
-return($result );
+return $result;
 }
 
 //
@@ -124,7 +122,7 @@ function db_fetch_array($q, $row=0 ) {
 
   $result_row = pg_fetch_array($q, $row, PGSQL_ASSOC );
 
-return($result_row );
+return $result_row;
 }
 
 //

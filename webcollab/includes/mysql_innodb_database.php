@@ -62,7 +62,7 @@ function db_query( $query, $dieonerror=1 ) {
       error("Database error", "No connection to database tables" );
 
     //set transaction mode
-    mysql_query("SET AUTOCOMMIT = 1" );
+    db_query("SET AUTOCOMMIT = 1" );
   }
 
   //count queries

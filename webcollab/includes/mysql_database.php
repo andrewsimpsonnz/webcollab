@@ -31,19 +31,8 @@ require_once("path.php" );
 include_once(BASE."config.php" );
 include_once(BASE."includes/common.php" );
 
-//global variables don't seem to work within mysql functions
-    $db_host = $DATABASE_HOST;
-    $db_user = $DATABASE_USER;
-    $db_pass = $DATABASE_PASSWORD;
-    $db_name = $DATABASE_NAME;
-
-
-if( ! ($database_connection = @mysql_pconnect( $db_host, $db_user, $db_pass ) ) ) {
-  error( "No database connection",  "Sorry but there seems to be a problem in connecting to the database");
-}
-
 //set some base variables
-
+$database_connection = "";
 $last_insert = "id";
 $delim = "";
 $epoch = "UNIX_TIMESTAMP( ";
@@ -54,25 +43,37 @@ $epoch = "UNIX_TIMESTAMP( ";
 function db_query( $query, $dieonerror=1 ) {
 
   global $database_connection, $database_query_time, $database_query_count, $db_name, $db_error_message ;
+  global $DATABASE_HOST, $DATABASE_USER, $DATABASE_PASSWORD, $DATABASE_NAME;
+
+  if( ! $database_connection ) {
+
+    //global variables don't seem to work within mysql functions
+    $db_host = $DATABASE_HOST;
+    $db_user = $DATABASE_USER;
+    $db_pass = $DATABASE_PASSWORD;
+    $db_name = $DATABASE_NAME;
+
+    //make connection
+    if( ! ($database_connection = @mysql_pconnect($db_host, $db_user, $db_pass ) ) )
+      error("No database connection",  "Sorry but there seems to be a problem in connecting to the database server");
+
+    //select database
+    if( ! @mysql_select_db($db_name, $database_connection ) )
+      error("Database error", "No connection to database tables" );
+  }
 
   //count queries
   $database_query_count++;
 
-  //starttime
+  //start time
   list($usec, $sec) = explode(" ", microtime() );
   $starttime = ((float)$usec + (float)$sec );
-
-  //check for a database connection
-  if( ! @mysql_select_db( $db_name, $database_connection ) ) {
-    $db_error_message = mysql_error($database_connection );
-    error("Database error", "No connection to a database" );
-  }
 
   //do it
   if( ! ($result = @mysql_query( $query, $database_connection ) ) ) {
 
     $db_error_message = mysql_error($database_connection);
-    if($dieonerror==1 ) error("Database query error", "The following query :<br /><br /><b> $query </b><br /><br />Had the following error:<br /><B>".mysql_error($database_connection)."</B>" );
+    if($dieonerror==1 ) error("Database query error", "The following query :<br /><br /><b> $query </b><br /><br />Had the following error:<br /><b>".mysql_error($database_connection)."</b>" );
   }
 
   //add query time to global query time
@@ -84,6 +85,7 @@ function db_query( $query, $dieonerror=1 ) {
   return $result;
 }
 
+
 //
 // number of rows in result
 //
@@ -91,7 +93,7 @@ function db_numrows($q ) {
 
   $result = mysql_num_rows($q );
 
-return($result );
+return $result;
 }
 
 //
@@ -101,7 +103,7 @@ function db_result($q, $row=0, $field=0 ) {
 
   $result = mysql_result($q, $row, $field );
 
-return ($result );
+return $result;
 }
 
 //
@@ -111,7 +113,7 @@ function db_fetch_array($q, $row=0 ) {
 
   $result_row = mysql_fetch_array($q, MYSQL_ASSOC );
 
-return($result_row );
+return $result_row;
 }
 
 //
@@ -121,7 +123,7 @@ function db_fetch_num($q, $row=0 ) {
 
   $result_row = mysql_fetch_row($q );
 
-return($result_row );
+return $result_row;
 }
 
 //
@@ -136,7 +138,7 @@ function db_lastoid($q ) {
     error("Database error", "Unable to get last insert id.<br /><br /> $db_error_message" );
   }
 
-return($lastoid );
+return $lastoid;
 }
 
 //
