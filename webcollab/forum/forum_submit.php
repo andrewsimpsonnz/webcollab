@@ -96,7 +96,7 @@ ignore_user_abort(TRUE);
 
   switch($_REQUEST["action"] ) {
 
-    case "add":
+    case "submit_add":
 
       //if all values are filled in correctly we can submit the forum-item
       if( ! isset($_POST["text"] ) || strlen($_POST["text"] ) == 0 )
@@ -124,12 +124,12 @@ ignore_user_abort(TRUE);
       if($taskid == 0 )
         error("Forum submit", "Taskid not valid");
 
-      if($_POST["mail_owner"] == "on")
+      if(isset($_POST["mail_owner"] ) && ($_POST["mail_owner"] == "on" ) )
         $mail_owner = true;
       else
         $mail_owner = "";
 
-      if($_POST["mail_group"] == "on")
+      if(isset($_POST["mail_group"] ) && ($_POST["mail_group"] == "on" ) )
         $mail_group = true;
       else
         $mail_group = "";
@@ -205,6 +205,12 @@ ignore_user_abort(TRUE);
       if(strlen($mail_list) > 0 ){
         include_once(BASE."includes/email.php" );
 
+      $message = $_POST["text"];
+        
+      //get rid of magic_quotes - it is not required here
+      if(get_magic_quotes_gpc() )
+        $message = stripslashes($message );  
+        
         //get & add the mailing list
         if($EMAIL_MAILINGLIST != "" )
           $mail_list .= $s.$EMAIL_MAILINGLIST;
@@ -212,7 +218,7 @@ ignore_user_abort(TRUE);
         switch($parentid ) {
           case 0:
             //this is a new post
-            email($mail_list, $ABBR_MANAGER_NAME." New forum post: ".$task_row["name"], "New forum post by $uid_name:\n".$_POST["text"] );
+            email($mail_list, $ABBR_MANAGER_NAME." New forum post: ".$task_row["name"], "New forum post by $uid_name:\n$message" );
             break;
 
           default:
@@ -228,14 +234,14 @@ ignore_user_abort(TRUE);
             if($row["username"] == NULL )
               $row["username"] = "----";
 
-            email($mail_list, $ABBR_MANAGER_NAME." Forum post reply: ".$task_row["name"], "Original post by ".$row["username"]." said:\n".$row["text"]."\n\nNew reply by $uid_name is:\n".$_POST["text"] );
+            email($mail_list, $ABBR_MANAGER_NAME." Forum post reply: ".$task_row["name"], "Original post by ".$row["username"]." said:\n".$row["text"]."\n\nNew reply by $uid_name is:\n$message" );
             break;
         }
       }
       break;
 
     //owner of the thread can delete, admin can delete
-    case "del":
+    case "submit_del":
       if(isset($_GET["postid"] ) ) {
         $postid = check($_GET["postid"] );
         if($postid == 0 )

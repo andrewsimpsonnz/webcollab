@@ -43,7 +43,7 @@ ignore_user_abort(TRUE);
   switch($_REQUEST["action"] ) {
 
     //handle a file upload
-    case "upload":
+    case "submit_upload":
 
       //check if there was an upload
       if( ! is_uploaded_file($_FILES["userfile"]["tmp_name"] ) ) {
@@ -65,12 +65,12 @@ ignore_user_abort(TRUE);
       $description = preg_replace("/((http|ftp)+(s)?:\/\/[^\s]+)/i", "\n<a href=\"$0\" target=\"new\">$0</a>\n", $description );
       $description = nl2br($description );
 
-      if($_POST["mail_owner"] == "on")
+      if(isset($_POST["mail_owner"] ) &&  ($_POST["mail_owner"] == "on" ) )
         $mail_owner = true;
       else
         $mail_owner = "";
 
-      if($_POST["mail_group"] == "on")
+      if(isset($_POST["mail_group"] ) && ($_POST["mail_group"] == "on" ) )
         $mail_group = true;
       else
         $mail_group = "";
@@ -193,15 +193,21 @@ ignore_user_abort(TRUE);
         //get & add the mailing list
         if($EMAIL_MAILINGLIST != "" )
           $mail_list .= $s.$EMAIL_MAILINGLIST;
-
+        
+        $message = $_POST["description"];
+        
+        //get rid of magic_quotes - it is not required here
+        if(get_magic_quotes_gpc() )
+          $message = stripslashes($message );
+ 
         email($mail_list, $ABBR_MANAGER_NAME." New file upload: ".$task_row["name"], "New file upload by $uid_name:\n".
                           "Filename:    ".$_FILES["userfile"]["name"]."\n".
-                          "Description :".$_POST["description"] );
+                          "Description : $message" );
       }
 
       break;
 
-    case "del":
+    case "submit_del":
 
       if( ! isset($_GET["fileid"] ) || ! is_numeric($_GET["fileid"] ) )
         error("File submit", "Not a valid fileid" );
