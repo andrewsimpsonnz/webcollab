@@ -1,8 +1,20 @@
 WebCollab CVS
+*** 13 June 2004
+  Andrew Simpson
+
+- calendar_show.php rewritten to optimise database calls (major improvement)
+
+- tasks_project_list.php rewritten to optimise database calls (major improvement)
+
+- task delete and submit code rewritten to suit new tasks_project_list.php
+
+- task submit files renamed in more logical fashion
+
+WebCollab CVS
 *** 7 June 2004
   Andrew Simpson
 
-- numerous small changes and bugfixes.  Moving towards XHTML 1.0 compliance.  
+- numerous small changes and bugfixes to (X)HTML.  Code is now XHTML 1.0 compliant.  
 
 WebCollab CVS
 *** 5 June 2004
