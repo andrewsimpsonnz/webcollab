@@ -64,8 +64,7 @@ $lang = array(
  "add" => "Afegir",
  "update" => "Actualitzar",
  "submit_changes" => "Enviar canvis",
-//**
- "continue" => "Continue",
+ "continue" => "Continuar",
  "reset" => "Reset",
  "manage" => "Administrar",
  "edit" => "Editar",
@@ -84,7 +83,7 @@ $lang = array(
  "bytes" => " bytes",
  "select_instruct" => "(Usar ctrl per a seleccionar m&eacute;s, o per a cap)",
  "member_groups" => "L'usuari &eacute;s membre dels grups resaltats a sota (si &eacute;s d'algun)",
- "login" => "Usuari",
+ "login" => "Login",
  "error" => "Error",
  "no_login" => "Acc&egrave;s denegat, identificador o contrasenya incorrectes",
  "please_login" => "Benvingut, per favor identifiqui's",
@@ -96,7 +95,7 @@ $lang = array(
  "email_reply" => "Email 'reply to'",
  "email_from" => "Email 'from'",
  "mailing_list" => "Llista de correu",
- "default_checkbox" => "Set Default checkbox per a Projectes/Tasques",
+ "default_checkbox" => "Marcar la opci&oacute; Default per a Projectes/Tasques",
  "allow_globalaccess" => "Permet acc&egrave;s global?",
  "allow_group_edit" => "Permetre a tothom del grup editar?",
  "set_email_owner" => "Sempre correu al propietari amb els canvis?",
@@ -131,8 +130,7 @@ $lang = array(
  //files
  "manage_files" => "Manipular arxius",
  "no_files" => "No hi ha arxius enviats per manegar.",
- //**
- "no_file_uploads" => "The server configuration for this site does not allow file uploads to be made",
+ "no_file_uploads" => "La configuraci&oacute; del servidor per aquest lloc web no permet poder pujar fitxers",
  "file" => "Arxiu:",
  "uploader" => "Uploader:",
  "files_assoc_sprt" => "Arxius associats amb %s",
@@ -230,14 +228,10 @@ $lang = array(
  "no_users" => "No hi ha usuaris coneguts del sistema",
  "users" => "Usuaris",
  "existing_users" => "Usuaris existents",
- //**
- "email_users" => "Email users",
-//**
- "select_usergroup" => "Usergroup selected from below:",
-//**
+ "email_users" => "Usuaris de correu",
+ "select_usergroup" => "Usergroup seleccionat de sota:",
  "subject" => "Subject:",
-//**
- "message_sent_maillist" => "For all selections the message is also sent to the mailing list.",
+ "message_sent_maillist" => "Per totes les seleccions el missatge &eacute;s tamb&eacute; &eacute;s enviat a la llista de correu.",
  "who_online" => "Qui est&agrave; connectat?",
  "edit_details" => "Editar detalls de l'usuari",
  "show_details" => "Mostrar detalls del usuari",
@@ -273,8 +267,7 @@ $lang = array(
  "parent_task" => "Tasca mare",
  "creation_time" => "Creada a la data",
  "project_name" => "Nomb del projecte",
-  //**
- "by" => " by ", //Note to translators: context is 'Creation time: <date> by <user>'
+ "by" => " per ", //Note to translators: context is 'Creation time: <date> by <user>'
  "task_name" => "Nom de la tasca",
  "deadline" => "Data l&iacute;mit",
  "taken_from_parent" => "(Presa des de la mare)",
@@ -303,8 +296,7 @@ $lang = array(
  "overdue_sprt" => "Expirat fa %d dies",
  "edit_task" => "Editar la tasca",
  "edit_project" => "Editar el projecte",
-//**
- "no_reparent" => "None (a top-level project)",
+ "no_reparent" => "Cap (&eacute;s un projecte de nivell superior)",
  "del_javascript_sprt" => "S\'eliminar&agrave; %s %s. Esteu segurs?",
  "add_task" => "Afegir tasca",
  "add_subtask" => "Afegir sub-tasca",
@@ -332,7 +324,6 @@ $lang = array(
  "task_accessible_sprt" => "(Aquest %s &eacute;s accessible per tots els usuaris)",
  "task_not_accessible_sprt" => "(Aquest %s &eacute;s accessible pels membres del usergroup)",
  "task_not_in_usergroup_sprt" => "Aquesta %s no es part d'un usergroup y no &eacute;s accessible per tots els usuaris.",
-//**
  "usergroup_can_edit_sprt" => "Aquest %s també pot ser editat pels membres del usergroup.",
  "i_take_it" => "L'agafo jo :)",
  "i_finished" => "L'he acabat!",
