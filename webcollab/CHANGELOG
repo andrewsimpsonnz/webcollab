@@ -1,4 +1,18 @@
 WebCollab CVS
+*** 12 October 2003
+
+- German translation added (Michael Bunk)
+
+- added SSL check to setup
+
+- added language file check to setup
+
+WebCollab 1.49
+*** 7 October 2003
+
+- development release
+
+WebCollab CVS
 *** 4 October 2003
   Andrew Simpson
 
@@ -7,6 +21,8 @@ WebCollab CVS
 - add ignore_user_abort to database writing files
 
 - add style css to calendar.php and screen.php for better formatting control
+
+- remove <br> to control paragraphing in HTML and add <p>...</p>
 
 WebCollab CVS
 *** 27 September 2003
