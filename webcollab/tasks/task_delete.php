@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 -2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
   
   WebCollab
   ---------------------------------------
@@ -114,6 +114,7 @@ $q = db_query("SELECT ".PRE."tasks.parent AS parent,
                       ".PRE."tasks.owner AS owner,
                       ".PRE."tasks.status AS status,
                       ".PRE."tasks.projectid AS projectid,
+                      ".PRE."tasks.archive AS archive,
                       ".PRE."users.id AS id,
                       ".PRE."users.email AS email
                       FROM ".PRE."tasks
@@ -236,12 +237,19 @@ if(($row['owner'] != 0 ) && ($UID != $row['owner']) ) {
   email($row['email'], $title, $message );
 }
 
-//find our return-location
-if($row['parent'] == 0 )
-  $returnvalue = BASE_URL."main.php?x=$x";
-else
-  $returnvalue = BASE_URL."tasks.php?x=$x&action=show&taskid=".$row['parent'];
+//return to appropriate location
+if($row['archive'] == 1 ){
+  header("Location: ".BASE_URL."archive.php?x=$x&action=list" );
+  die;
+}
 
-header("Location: ".$returnvalue);
+if($row['parent'] == 0 ) {
+  header("Location: ".BASE_URL."main.php?x=$x" );
+  die;
+}
+else{
+  header("Location: ".BASE_URL."tasks.php?x=$x&action=show&taskid=".$row['parent'] );
+  die;
+}
 
 ?>
