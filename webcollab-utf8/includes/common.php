@@ -122,12 +122,12 @@ function clean_up($body ) {
   
   }    
  
-  //protect against database query attack
-  if(! get_magic_quotes_gpc() )
-    $body = addslashes($body );
+  //remove any addslashes done before decimal HTML entity decoding was done
+  if(get_magic_quotes_gpc() )
+    $body = stripslashes($body );
         
   //use HTML encoding for characters that could be used for css <script> or SQL injection attacks
-  $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'\|', '('=>'\(', ')'=>'\)', '+'=>'\+', '-'=>'\-', '='=>'\=' );
+  $trans = array("'"=>"\'", '"'=>'\"', ';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'\|', '('=>'\(', ')'=>'\)', '+'=>'\+', '-'=>'\-', '='=>'\=' );
   
   return strtr($body, $trans ); 
 }
