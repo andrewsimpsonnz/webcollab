@@ -1,4 +1,12 @@
 WebCollab CVS
+*** 9 March 2005
+
+- refactor task_todo_list.php to have minimal database calls (significant efficiency improvement) 
+
+- added Russian translation (Credit: Eugene N. Shilaev)
+
+
+WebCollab CVS
 *** 6 March 2005
 
 - refactor task_project_list.php to have minimal database calls (significant efficiency improvement) 
