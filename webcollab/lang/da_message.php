@@ -127,7 +127,7 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
 
 //archive
 //**
-    $lang['archived_projects']            = 'Archived Projects';    
+    $lang['archived_projects']            = 'Arkiverede projekter';    
 
 //contacts
     $lang['firstname']                    = 'Fornavn:';
@@ -189,9 +189,9 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['no_message']                   = 'Ingen meddelelse! Gå venligst tilbage og prøv igen';
     $lang['add_reply']                    = 'Tilføj svar';
 //**  
-    $lang['last_post_sprt']               = 'Last post %s'; //Note to translators: context is 'Last post 2004-Dec-22'
+    $lang['last_post_sprt']               = 'Sidste indlæg %s'; //Note to translators: context is 'Last post 2004-Dec-22'
 //**   
-    $lang['recent_posts']                 = 'Recent forum posts';      
+    $lang['recent_posts']                 = 'Nyeste indlæg til forum';      
 
  //includes
     $lang['report']                       = 'Rapport';
@@ -203,7 +203,7 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['log_out']                      = 'Log out';
     $lang['main_menu']                    = 'Hovedmenu';
 //**
-    $lang['archive']                      = 'Archive';   
+    $lang['archive']                      = 'Arkiv';   
     $lang['user_homepage_sprt']           = '%s\'s hjemmeside';
     $lang['missing_field_javascript']     = 'Vær så venlig at tilføje en værdi til det manglende felt';
     $lang['invalid_date_javascript']      = 'Vær så venlig at vælge en gyldig kalenderdato';
@@ -251,15 +251,15 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['email']                        = 'E-mail';
     $lang['admin']                        = 'Admin';
   //**
-    $lang['private_user']                 = 'Private user';
+    $lang['private_user']                 = 'Privat bruger';
  //**
-    $lang['normal_user']                  = 'Normal user'; 
+    $lang['normal_user']                  = 'Normal bruger'; 
     $lang['private_user']                 = 'Privat bruger';
     $lang['is_admin']                     = 'Er en admin?';
  //**
-    $lang['is_guest']                     = 'Is a guest?';
+    $lang['is_guest']                     = 'Er gæst?';
  //**
-    $lang['guest']                        = 'Guest user';
+    $lang['guest']                        = 'Gæstebruger';
     $lang['user_info']                    = 'Brugerinformation';
     $lang['deleted_users']                = 'Slettede brugere';
     $lang['no_deleted_users']             = 'Der er ingen slettede brugere.';
@@ -290,7 +290,7 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['number_tasks_owned']           = 'Antal opgaver ejet:';
     $lang['number_tasks_completed']       = 'Antal opgaver afsluttet:';
     $lang['number_forum']                 = 'Antal forum posts:';
-    $lang['number_files']                 = 'Antal indlæste filer filer:';
+    $lang['number_files']                 = 'Antal indlæste filer:';
     $lang['size_all_files']               = 'Total størrelse af alle ejede filer:';
     $lang['owned_tasks']                  = 'Ejede opgaver';
     $lang['invalid_email']                = 'Ugyldig emailadresse';
@@ -349,11 +349,11 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['add_subtask']                  = 'Tilføj underopgave';
     $lang['add_project']                  = 'Tilføj projekt';
  //**
-    $lang['clone_project']                = 'Clone project';
+    $lang['clone_project']                = 'Klonprojekt';
  //**
-    $lang['clone_task']                   = 'Clone task';
+    $lang['clone_task']                   = 'Klonopgave';
 //**
-    $lang['quick_jump']                   = 'Quick Jump';
+    $lang['quick_jump']                   = 'Hurtig flytning';
     $lang['no_edit']                      = 'Du ejer ikke dette emne og derfor kan du ikke redigere det';
     $lang['uncategorised']                = 'Ikke-kategoriseret';
     $lang['admin']                        = 'Admin';
@@ -363,17 +363,17 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['project_options']              = 'Projekt muligheder';
     $lang['task_options']                 = 'Opgave muligheder';
 //**    
-    $lang['javascript_archive_project']   = 'This will archive project %s.  Are you sure?';
+    $lang['javascript_archive_project']   = 'Dette vil arkivere projekt %s.  Er du sikker?';
 //**    
-    $lang['archive_project']              = 'Archive project';
+    $lang['archive_project']              = 'Arkivprojekt';
     $lang['task_navigation']              = 'Opgave navigation';
 //**
-    $lang['new_task']                     = 'New task';    
+    $lang['new_task']                     = 'Ny opgave';    
     $lang['no_projects']                  = 'Der er ingen projekter at vise';
  //**
-    $lang['show_all_projects']            = 'Show all projects';
+    $lang['show_all_projects']            = 'Vis alle projekter';
  //**
-    $lang['show_active_projects']         = 'Show only active projects';
+    $lang['show_active_projects']         = 'Vis kun aktive projekter';
     $lang['project_hold_sprt']            = 'Projekt afventer siden %s';
     $lang['project_planned']              = 'Planlagt projekt';
     $lang['percent_sprt']                 = '%d%% af opgaverne er udført';
@@ -420,11 +420,11 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['by_status']                    = ' (ved status)';
     $lang['by_owner']                     = ' (ved ejer)';
   //**
-    $lang['project_cloned']               = 'Project to be cloned :';
+    $lang['project_cloned']               = 'Projekt skal klones :';
  //**
-    $lang['task_cloned']                  = 'Task to be cloned :';
+    $lang['task_cloned']                  = 'Opgave skal klones:';
  //**
-    $lang['note_clone']                   = 'Note: The task will be cloned as a new project';
+    $lang['note_clone']                   = 'Bemærk: Opgaven vil blive klonet som et nyt projekt';
 
 //bits 'n' pieces
     $lang['calendar']                     = 'Kalender';
@@ -433,9 +433,9 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     //**
     $lang['print_version']                = 'Print version';
 //**    
-    $lang['condensed_view']               = 'Condensed view';
+    $lang['condensed_view']               = 'Koncentreret visning';
 //**    
-    $lang['full_view']                    = 'Full view';
+    $lang['full_view']                    = 'Fuld visning';
 
 
 ?>
