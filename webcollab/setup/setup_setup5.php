@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -106,6 +106,7 @@ $content = "<?php\n".
 "//-- Language --\n\n".
 "  // available locales are \"en\" (English), \"es\" (Spanish), \"fr\" (French), \"ca\" (Catalan)\n".
 "  //                       \"de\" (German), \"it\" (Italian), \"bg\" (Bulgarian), \"da\" (Danish)\n".
+"  //                       \"ko\" (Korean),\n".
 "  define('LOCALE', \"".$data["locale"]."\" );\n\n".
 "//-- Timezone --\n\n".
 "  //timezone offset from GMT/UTC (hours)\n".
@@ -141,7 +142,7 @@ $content = "<?php\n".
 "  //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match)\n".  
 "  define('PRE', \"\" );\n".
 "  //WebCollab version string\n".
-"  define('WEBCOLLAB_VERSION', \"pre-1.60 - CVS working copy\");\n".
+"  define('WEBCOLLAB_VERSION', \"1.70\");\n".
 "?>\n";
 
 //open file for writing
@@ -160,13 +161,13 @@ create_top_setup("Setup Screen" );
 
 $content = "<div align=\"center\">\n".
             "<p>Setup is complete!</p>\n".
-            "<p>The configuration information has been saved to 'config.php'. ".
+            "<p>The configuration information has been saved to '[webcollab]/config/config.php'. ".
             "This file can edited with a text editor to make further changes to configuration.</p>\n".
             "<p>For best security on *nix operating systems, remember to remove the world writeable permissions from 'config.php'.</p>\n".
             "<p>Please press the button to finish configuration, and login to WebCollab...</p>\n";
 
 if($data["new_db"] == "Y" )
-  $content .= "<p>You have a new database. Your default login and password are 'admin' and 'admin123'</p>\n";
+  $content .= "<p><b>You have a new database. Your default login and password are 'admin' and 'admin123'</b></p>\n";
 
 $content .=  "<p><form name=\"inputform\" method=\"post\" action=\"index.php\">\n".
              "<input type=\"submit\" value=\"Finish\" />\n".
