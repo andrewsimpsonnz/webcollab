@@ -53,10 +53,10 @@ $user_info      =    "Bitte w&auml;hlen sie ihre Aktion aus dem Men&uuml; links.
                       "</ul>\n";
 
 $calendar_key    =  "<i>Zur&uuml;ck zum Hauptmen&uuml;</i></a>]</b><br />\n".
-                      "<p><b><u>Hinweise zum Kalender</u></b><br /><br />\n".
-                      "<font color=\"blue\">Projekt (mit offenen Aufgaben)</font><br />\n".
-                      "<font color=\"green\"><u>Projekt </u>(alle Aufgaben fertiggestellt)</font><br />\n".
-                      "<font color=\"red\">Aufgabe (offen)</font><br />\n".
-                      "<font color=\"green\">Aufgabe (fertiggestellt)</font><br />\n";
+                      "<p><b><span class=\"underline\">Hinweise zum Kalender</span></b><br /><br />\n".
+                      "<span class=\"blue\">Projekt (mit offenen Aufgaben)</span><br />\n".
+                      "<span class=\"green\"><span class=\"underline\">Projekt </span>(alle Aufgaben fertiggestellt)</span><br />\n".
+                      "<span class=\"red\">Aufgabe (offen)</span><br />\n".
+                      "<span class=\"green\">Aufgabe (fertiggestellt)</span><br />\n";
 
 ?>

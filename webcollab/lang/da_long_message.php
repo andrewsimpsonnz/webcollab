@@ -58,10 +58,10 @@ $user_info      =    "Vælg handling i menuen til venstre.<br /><br />".
                       "</ul>\n";
 
 $calendar_key    =  "<i>Tilbage til hovedmenu</i></a>]</b><br />\n".
-                      "<p><b><u>Knap til kalender</u></b><br /><br />\n".
-                      "<font color=\"blue\">Projekter (med uafsluttede opgaver).</font><br />\n".
-                      "<font color=\"green\"><u>Projekt </u>(alle opgaver afsluttet.)</font><br />\n".
-                      "<font color=\"red\">Opgave (ikke afsluttet)</font><br />\n".
-                      "<font color=\"green\">Opgave (afsluttet)</font><br /></p>\n";
+                      "<p><b><span class=\"underline\">Knap til kalender</span></b><br /><br />\n".
+                      "<span class=\"blue\">Projekter (med uafsluttede opgaver).</span><br />\n".
+                      "<span class=\"green\"><span class=\"underline\">Projekt </span>(alle opgaver afsluttet.)</span><br />\n".
+                      "<span class=\"red\">Opgave (ikke afsluttet)</span><br />\n".
+                      "<span class=\"green\">Opgave (afsluttet)</span><br /></p>\n";
 
 ?>

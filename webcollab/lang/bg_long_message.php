@@ -63,9 +63,9 @@ $user_info          =    "Моля изберете действие от менюто вляво.<br /><br />".
 
 $calendar_key       =  "<i>Към Меню</i></a>]</b><br />\n".
                           "<p><b>Легенда:</b><br /><br />\n".
-                          "<font color=\"blue\">Проект (с незавършени задачи)</font><br />\n".
-                          "<font color=\"green\"><u>Проект </u>(напълно завършен)</font><br />\n".
-                          "<font color=\"red\">Задача (незавършена)</font><br />\n".
-                          "<font color=\"green\">Задача (завършена)</font><br /></p>\n";
+                          "<span class=\"blue\">Проект (с незавършени задачи)</span><br />\n".
+                          "<span class=\"green\"><span class=\"underline\">Проект </span>(напълно завършен)</span><br />\n".
+                          "<span class=\"red\">Задача (незавършена)</span><br />\n".
+                          "<span class=\"green\">Задача (завършена)</span><br /></p>\n";
 
 ?>

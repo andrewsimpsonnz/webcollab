@@ -55,10 +55,10 @@ $user_info      =    "Please select your action from the menu on the left.<br />
                       "</ul>\n";
 
 $calendar_key    =  "<i>Return to Main Menu</i></a>]</b><br />\n".
-                      "<p><b><u>Key to Calendar</u></b><br /><br />\n".
-                      "<font color=\"blue\">Project (with uncompleted tasks)</font><br />\n".
-                      "<font color=\"green\"><u>Project </u>(all tasks completed)</font><br />\n".
-                      "<font color=\"red\">Task (not completed)</font><br />\n".
-                      "<font color=\"green\">Task (completed)</font><br />\n";
+                      "<p><b><span class=\"underline\">Key to Calendar</span></b><br /><br />\n".
+                      "<span class=\"blue\">Project (with uncompleted tasks)</span><br />\n".
+                      "<span class=\"green\"><span class=\"underline\">Project </span>(all tasks completed)</span><br />\n".
+                      "<span class=\"red\">Task (not completed)</span><br />\n".
+                      "<span class=\"green\">Task (completed)</span><br /></p>\n";
 
 ?>

@@ -110,10 +110,10 @@ then you can click on it in order to show the associated task.</li>
 <br />
 <li><b>Deadline</b>:
 indicates when the task is due.
-If the date appears in <font color=\"red\">red</font>,
+If the date appears in <span class=\"red\">red</span>,
 then the task is overdue;
 otherwise,
-If the date appears in <font color=\"green\">green</font>,
+If the date appears in <span class=\"green\">green</span>,
 then the task is due today</li>
 <br />
 <li><b>Status</b>:
@@ -125,12 +125,12 @@ but (purposefully) hasn't been scheduled yet</li>
 <li><b>New</b>:
 indicates that the task was recently created,
 and is waiting for resources to start it</li>
-<li><font color=\"blue\">On Hold</font>:
+<li><span class=\"blue\">On Hold</span>:
 indicates that work on the task is halted,
 awaiting some external event</li>
-<li><font color=\"orange\">Active</font>:
+<li><span class=\"orange\">Active</span>:
 indicates that the task is being worked on</li>
-<li><font color=\"darkgreen\">Done</font>:
+<li><span class=\"green\">Done</span>:
 indicates that the task is completed</li>
 </ul>
 </li>

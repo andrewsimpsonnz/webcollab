@@ -99,10 +99,10 @@ entonces puede haceer click en ella para mostrar la tarea asociada.</li>
 <br />
 <li><b>Deadline</b>:
 indica cuando la tarea esta vencida.
-Si la fecha aparece en <font color=\"red\">rojo</font>,
+Si la fecha aparece en <span class=\"red\">rojo</span>,
 entonces la tarea ya ha vencido;
 de otro modo,
-si la fecha aparece en <font color=\"green\">verde</font>,
+si la fecha aparece en <span class=\"green\">verde</span>,
 entonces la fecha de vencimiento es hoy</li>
 <br />
 <li><b>Estado</b>:
@@ -114,12 +114,12 @@ pero (intencionalmente) no ha sido todavia programada</li>
 <li><b>Nueva</b>:
 indica que la tarea fue recientemente creada,
 y esta esperando recursos para ser comenzada</li>
-<li><font color=\"blue\">En suspenso</font>:
+<li><span class=\"blue\">En suspenso</span>:
 indica que los trabajos sobre la tarea han ido detenidos,
 esperando algun evento externo</li>
-<li><font color=\"orange\">Activa</font>:
+<li><span class=\"orange\">Activa</span>:
 indica que la tarea esta en proceso de ejecucion</li>
-<li><font color=\"darkgreen\">Hecha</font>:
+<li><span class=\"green\">Hecha</span>:
 indica que la tarea ha sido completada</li>
 </ul>
 </li>

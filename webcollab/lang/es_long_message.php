@@ -58,10 +58,10 @@ $user_info      = "Seleccion su accion desde el menu en la izquierda.<br /><br /
   "</ul>\n";
 
 $calendar_key    = "<i>Retornar al Menu Principal</i></a>]</b><br />\n".
-	"<p><b><u>Claves (colores) para Calendario</u></b><br /><br />\n".
-	"<font color=\"blue\">Proyecto (con tareas incompletas)</font><br />\n".
-	"<font color=\"green\"><u>Proyecto </u>(todas las tareas completas)</font><br />\n".
-	"<font color=\"red\">Tarea (no completada)</font><br />\n".
-	"<font color=\"green\">Tarea (completada)</font><br />\n";
+	"<p><b><span class=\"underline\">Claves (colores) para Calendario</span></b><br /><br />\n".
+	"<span class=\"blue\">Proyecto (con tareas incompletas)</span><br />\n".
+	"<span class=\"green\"><span class=\"underline\">Proyecto </span>(todas las tareas completas)</span><br />\n".
+	"<span class=\"red\">Tarea (no completada)</span><br />\n".
+	"<span class=\"green\">Tarea (completada)</span><br />\n";
 
 ?>

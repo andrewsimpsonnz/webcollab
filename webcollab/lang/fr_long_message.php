@@ -58,10 +58,10 @@ $user_info      =    "Merci de s&eacute;lectionner votre activit&eacute; dans le
                       "</ul>\n";
 
 $calendar_key    = "<i>Retour au menu principal</i></a>]</b><br />\n".
-                      "<p><b><u>L&eacute;gende du Calendrier</u></b><br /><br />\n".
-	              "<font color=\"blue\">Projet (avec t&acirc;ches en cours)</font><br />\n".
-                      "<font color=\"green\"><u>Projet </u>(toutes les t&acirc;ches sont finies)</font><br />\n".
-                      "<font color=\"red\">t&acirc;che (en cours)</font><br />\n".
-	              "<font color=\"green\">t&acirc;che (finie)</font></p>\n";
+                      "<p><b><span class=\"underline\">L&eacute;gende du Calendrier</span></b><br /><br />\n".
+	              "<span class=\"blue\">Projet (avec t&acirc;ches en cours)</span><br />\n".
+                      "<span class=\"green\"><span class=\"underline\">Projet </span>(toutes les t&acirc;ches sont finies)</span><br />\n".
+                      "<span class=\"red\">t&acirc;che (en cours)</span><br />\n".
+	              "<span class=\"green\">t&acirc;che (finie)</span></p>\n";
 
 ?>

@@ -114,8 +114,8 @@ Durch Klicken auf die Zeichen, gelangt man zur dazugeh&ouml;rigen Aufgabe.</li>
 <br />
 <li><b>Fertigstellungszeitpunkt</b>:
 Zeigt an, wann eine Aufgabe fertiggestellt sein mu&szlig;.
-Wenn das Datum in <font color=\"red\">rot</font> erscheint,
-ist die Aufgabe &uuml;berf&auml;llig; wenn die Aufgabe <font color=\"green\">gr&uuml;n</font> erscheint,
+Wenn das Datum in <span class=\"red\">rot</span> erscheint,
+ist die Aufgabe &uuml;berf&auml;llig; wenn die Aufgabe <span class=\"green\">gr&uuml;n</span> erscheint,
 ist die Aufgabe heute f&auml;llig</li>
 <br />
 <li><b>Zustand</b>:
@@ -127,12 +127,12 @@ aber (absichtlich) ohne Fertigstellungszeitpunkt</li>
 <li><b>Neu</b>:
 Die Aufgabe wurde neu erstellt und
 wartet auf Ressourcen, um zu beginnen</li>
-<li><font color=\"blue\">Warten</font>:
+<li><span class=\"blue\">Warten</span>:
 Die Arbeit an der Aufgabe ist angehalten, weil auf ein externes Ereignis
 gewartet wird</li>
-<li><font color=\"orange\">Aktiv</font>:
+<li><span class=\"orange\">Aktiv</span>:
 an der Aufgabe wird gearbeitet</li>
-<li><font color=\"darkgreen\">Abgeschlossen</font>:
+<li><span class=\"green\">Abgeschlossen</span>:
 Die Aufgabe wurde fertiggestellt.</li>
 </ul>
 </li>

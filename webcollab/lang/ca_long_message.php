@@ -58,10 +58,10 @@ $user_info      = "Seleccioni l'acci&oacute; des del men&uacute; de l'esquerra.<
   "</ul>\n";
 
 $calendar_key    = "<i>Retornar al Men&uacute; Principal</i></a>]</b><br />\n".
-        "<P><b><u>Claus (colors) per al Calendari</u></b><br /><br />\n".
-        "<font color=\"blue\">Projecte (amb tasques incomplertes)</font><br />\n".
-        "<font color=\"green\"><u>Projecte </u>(totes les tasques complertes)</font><br />\n".
-        "<font color=\"red\">Tasca (no completada)</font><br />\n".
-        "<font color=\"green\">Tasca (completada)</font><br />\n";
+        "<p><b><span class=\"underline\">Claus (colors) per al Calendari</span></b><br /><br />\n".
+        "<span class=\"blue\">Projecte (amb tasques incomplertes)</span><br />\n".
+        "<span class=\"green\"><span class=\"underline\">Projecte </span>(totes les tasques complertes)</span><br />\n".
+        "<span class=\"red\">Tasca (no completada)</span><br />\n".
+        "<span class=\"green\">Tasca (completada)</span><br /></p>\n";
 
 ?>
