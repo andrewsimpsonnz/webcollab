@@ -230,7 +230,7 @@ if( (isset($_POST["username"]) && isset($_POST["password"]) ) ) {
       //for completed project set the completion time
       if($percent_completed == 100 ){
         $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM tasks WHERE projectid=".$row["id"] ), 0, 0 );
-        db_query("UPDATE tasks SET completion_time=".$completion_time." WHERE id=".$row["id"] );
+        db_query("UPDATE tasks SET completion_time='".$completion_time."' WHERE id=".$row["id"] );
       }
     }
     $content .= "<p>Updating from version pre-1.60 database ... success!</p>\n";
