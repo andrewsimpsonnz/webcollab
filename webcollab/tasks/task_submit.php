@@ -43,7 +43,7 @@ include_once( BASE."lang/".$LOCALE."_email.php" );
 //
 //validate input data as either numeric > 0 or zero
 //
-function check( $var ) {
+function check($var ) {
 
   //validate as numeric
     if( is_numeric($var) )
@@ -90,6 +90,32 @@ function status($status, $deadline ) {
 return $message;
 }
 
+//
+//function to verify user access
+//
+function user_access($taskid ) {
+
+  global $uid;
+
+  $q = db_query("SELECT owner, usergroupid, groupaccess FROM tasks WHERE id=".$taskid);
+  $row = db_fetch_num($q, 0 );
+
+  if($row[0] == $uid )
+    return TRUE;
+
+  if($row[1] == 0 )
+    return FALSE;
+
+  if($row[2] == "t" ) {
+    $usergroup_q = db_query("SELECT usergroupid FROM usergroups_users WHERE userid=".$uid );
+    for( $i=0 ; $usergroup_row = @db_fetch_num($usergroup_q, $i ) ; $i++) {
+    if($row[1] == $usergroup_row[0] )
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
 //MAIN PROGRAM
 //update or insert ?
 if( valid_string($_REQUEST["action"]) ) {
@@ -104,7 +130,7 @@ if( valid_string($_REQUEST["action"]) ) {
         $taskid = $_GET["taskid"];
 
         //check if the user has enough rights
-        if( ($admin != 1 ) && (db_result( db_query("SELECT COUNT(*) FROM tasks WHERE id=".$taskid." AND owner=".$uid ), 0, 0 ) < 1) )
+        if( ($admin != 1 ) && (! user_access($taskid) ) )
           error( "Task submit", "Access denied, you do not have enough rights to do that" );
 
         //note: self-securing query
@@ -184,7 +210,7 @@ if( valid_string($_REQUEST["action"]) ) {
 	    
             //send email
 	    //$username and $useremail are from security.php
-            $message = sprintf( $email_takeover, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name_task, $username, $useremail, quotemeta($row["text"]), $BASE_URL );
+            $message = sprintf( $email_takeover, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name_task, $username, $useremail, clean($row["text"]), $BASE_URL );
 	    email( $email_address_old_owner, $title_takeover, $message );
           }
 
@@ -247,31 +273,32 @@ if( valid_string($_REQUEST["action"]) ) {
 				      edited,
 				      owner,
 				      creator,
-                                      deadline,
+				      deadline,
 				      finished_time,
 				      priority,
 				      parent,
-                                      projectid,
+				      projectid,
 				      taskgroupid,
 				      usergroupid,
 				      globalaccess,
 				      status )
-                             values( '".$name."',
-			             '".$text."',
+				      values( '".$name."',
+				      '".$text."',
 				      current_timestamp(0),
 				      current_timestamp(0),
 				      current_timestamp(0),
 				      current_timestamp(0),
 				      ".$owner.",
 				      ".$uid.",
-                      '".$deadline."',
+				      '".$deadline."',
 				      current_timestamp(0),
 				      ".$priority.",
 				      ".$parentid.",
-                                      ".$projectid.",
+				      ".$projectid.",
 				      ".$taskgroupid.",
 				      ".$usergroupid.",
 				      '".$globalaccess."',
+					  '".$groupaccess."',
 				      '".$status."')" );
 
 
@@ -288,7 +315,7 @@ if( valid_string($_REQUEST["action"]) ) {
 	//if inactive parent project, then set this task to inactive too
 	if( $parentid != 0 ) {
 	$project_status = db_result(db_query( "SELECT status FROM tasks WHERE id=".$projectid ), 0, 0 );
-	  
+
 	  if( $project_status == "cantcomplete" || $project_status == "notactive" )
 	    db_query( "UPDATE tasks SET status='".$project_status."' WHERE id=".$taskid );
 	}
@@ -315,7 +342,7 @@ if( valid_string($_REQUEST["action"]) ) {
 
           if( $email_address_owner != "" ) {
 	    $message= sprintf( $email_new_owner, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name,
-	                       status($status, $deadline), quotemeta($text), $BASE_URL );
+	                       status($status, $deadline), clean($text), $BASE_URL );
 	    email( $email_address_owner, sprintf($title_new_owner, $type ), $message );
 	  }
 	}
@@ -329,7 +356,7 @@ if( valid_string($_REQUEST["action"]) ) {
 	    }else  $name_owner = "Nobody";
 
           $message = sprintf( $email_new_group, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name, $name_owner,
-	                      status($status, $deadline), quotemeta($text), $BASE_URL );
+	                      status($status, $deadline), clean($text), $BASE_URL );
           email( $EMAIL_MAILINGLIST, sprintf($title_new_group, $type).$name, $message );
 
           if( $usergroupid != 0 ) {
@@ -394,8 +421,13 @@ if( valid_string($_REQUEST["action"]) ) {
 	else
 	  $globalaccess="f";
 
+	if( isset($_POST["groupaccess"]) && $_POST["groupaccess"] == "on" )
+	  $groupaccess="t";
+	else
+	  $groupaccess="f";
+
 	//check if the user has enough rights
-        if( ($admin != 1 ) && (db_result( db_query("SELECT COUNT(*) FROM tasks WHERE id=".$taskid." AND owner=".$uid ), 0, 0 ) < 1) )
+        if( ($admin != 1 ) && (! user_access($taskid ) ) )
           warning($lang["task_submit"], $lang["not_owner"] );
 
 	//begin transaction
@@ -416,7 +448,8 @@ if( valid_string($_REQUEST["action"]) ) {
                taskgroupid=".$taskgroupid.",
 		       usergroupid=".$usergroupid.",
                status='".$status."',
-		       globalaccess='".$globalaccess."'
+		       globalaccess='".$globalaccess."',
+			   groupaccess='".$groupaccess."'
 		   WHERE id=".$taskid );
 
 
@@ -441,7 +474,7 @@ if( valid_string($_REQUEST["action"]) ) {
 	      break;
           }
 	}
-		
+
 	//transaction complete
 	db_commit();
 
@@ -461,7 +494,7 @@ if( valid_string($_REQUEST["action"]) ) {
 
           if( $email_address_owner != "" ) {
 	    $message= sprintf( $email_edit_owner, $MANAGER_NAME, $type, date("F j, Y, H:i"), $name_project, $name,
-	               status($status, $deadline), quotemeta($text), $BASE_URL );
+	               status($status, $deadline), clean($text), $BASE_URL );
 	    email( $email_address_owner, sprintf($title_edit_owner, $type ), $message );
 	  }
 	}
@@ -474,7 +507,7 @@ if( valid_string($_REQUEST["action"]) ) {
             }else $name_owner = "Nobody";
 
           $message = sprintf( $email_edit_group, $MANAGER_NAME,$type, $name_owner, date("F j, Y, H:i"), $name_project, $name,
-	               status($status, $deadline), quotemeta($text), $BASE_URL );
+	               status($status, $deadline), clean($text), $BASE_URL );
           email( $EMAIL_MAILINGLIST, sprintf($title_edit_group, ucfirst($type ) ), $message );
 
           if( $usergroupid != 0 ) {
