@@ -1,3 +1,22 @@
+WebCollabCVS
+*** 12 November 2003
+
+- update German translation and add German help files (Michael Bunk)
+
+- update some error messages
+
+- bugfix: Some language strings not translated in task_summary_list.php
+
+WebCollab CVS
+*** 8 November 2003
+(Andrew Simpson)
+
+- added new French translation (Olivier Chaussavoine)
+
+- add IP checking to setup_security.php
+
+- add socket timeouts to URL checking in setup
+
 WebCollab CVS
 *** 3 November 2003
 (Andrew Simpson)
