@@ -256,7 +256,7 @@ function & message($message, & $email_encode, & $message_charset, & $body ) {
   }
 
   //lines starting with "." get an additional "." added. (RFC 2821 - 4.5.2)
-  $message = preg_replace("/^[\.]/", "..", $message );
+  $message = preg_replace("/^[\.]/m", "..", $message );
   //explode message body into separate lines
   $message_lines = explode("\n", $message );
 
