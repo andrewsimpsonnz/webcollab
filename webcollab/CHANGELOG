@@ -1,5 +1,29 @@
 WebCollab CVS
-*** 23 February 2003
+*** 15 March 2003
+  Andrew Simpson
+  
+- don't show inactive tasks in calendar
+
+- when project is inactive, set tasks as inactive too
+
+- when inactive project becomes active, set tasks to new
+
+- improve information format in user_show.php
+
+- show correct date colours in task_summary_list.php for inactive projects
+
+- show inactive projects in task_summary_list.php as inactive
+
+- minor bugfix to task_show.php
+
+WebCollab CVS
+*** 12 March 2003
+   Andrew Simpson
+
+- upload to Sourceforge CVS
+
+WebCollab CVS
+*** 9 March 2003
    Andrew Simpson
 
 - show deadline date in emails from task_submit.php
