@@ -52,24 +52,27 @@ $epoch = "extract( epoch from ";
 function db_query($query, $dieonerror=1 ) {
 
   global $database_connection;
-  global $DATABASE_HOST, $DATABASE_USER, $DATABASE_NAME, $DATABASE_PASSWORD;
 
   if( ! $database_connection ) {
     //set initial value
     $host = "";
     //now adjust if necessary
-    if($DATABASE_HOST != "localhost" )
-      $host = "host=".$DATABASE_HOST;
+    if(DATABASE_HOST != "localhost" )
+      $host = "host=".DATABASE_HOST;
 
-    if( ! ($database_connection = @pg_connect("$host user=$DATABASE_USER dbname=$DATABASE_NAME password=$DATABASE_PASSWORD" ) ) )
+    if( ! ($database_connection = @pg_connect("$host user=".DATABASE_USER." dbname=".DATABASE_NAME." password=".DATABASE_PASSWORD ) ) )
       error("No database connection",  "Sorry but there seems to be a problem in connecting to the database" );
 
     //make sure dates will be handled properly by internal date routines
     $q = db_query("SET DATESTYLE TO 'European, ISO' ");
     
-    //set client encoding to UTF-8
-    if(pg_set_client_encoding($database_connection, 'UNICODE' ) == -1 ) 
-      error("Database client encoding", "Cannot set PostgreSQL client to UTF-8 character encoding" ); 
+    //set client encoding to required character set 
+    $pg_encoding = pg_encoding();
+    
+    if($pg_encoding){
+      if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ) 
+        error("Database client encoding", "Cannot set PostgreSQL client to ".CHARACTER_SET." character encoding" ); 
+    }
   }
 
   //do it
@@ -176,6 +179,37 @@ function db_commit() {
   pg_query($database_connection, "COMMIT WORK" );
 
 return;
+}
+
+//
+//sets the required client encoding to the pgsql client
+//
+
+function pg_encoding() {
+
+  switch(strtoupper(CHARACTER_SET ) ) {
+
+    case 'UTF-8':
+      $pg_encoding = 'UNICODE';
+      break; 
+
+    case 'EUC_JP':
+    case 'EUC_CN':
+    case 'EUC_KR':
+    case 'EUC_TW':
+    case 'KOI8':
+      $pg_encoding = strtoupper(CHARACTER_SET );
+      break;
+       
+    case 'WINDOWS-1256':
+      $pg_encoding = 'WIN1256';
+      break;
+
+    default:
+      $pg_encoding = NULL;
+      break;
+  }      
+return $pg_encoding;
 }
 
 ?>
