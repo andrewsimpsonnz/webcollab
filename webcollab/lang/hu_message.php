@@ -21,9 +21,11 @@
   Function:
   ---------
 
-  Language files for 'en' (English)
+  Language files for 'hu' (Hungarian)
 
-  Maintainer: Andrew Simpson <andrew.simpson at paradise.net.nz>
+  Translation: Széll Tamás
+  
+  Maintainer: Széll Tamás
 
 */
 
