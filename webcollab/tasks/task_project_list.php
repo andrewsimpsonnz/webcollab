@@ -42,7 +42,7 @@ include_once(BASE."config.php" );
 //
 
 function listTasks($task_id ) {
-   global $x, $epoch, $admin, $usergroup, $lang, $task_state;
+   global $x, $epoch, $admin, $gid, $lang, $task_state;
 
   // show subtasks that are not complete
   $q_tasks = db_query("SELECT id, name, deadline, status, globalaccess, usergroupid,
@@ -63,7 +63,7 @@ function listTasks($task_id ) {
 
     //check if user can view this task
     if( ($admin != 1 ) && ($task_row["globalaccess"] != "t" ) && ($task_row["usergroupid"] != 0 ) ) {
-      if( ! in_array( $task_row["usergroupid"], (array)$usergroup ) )
+      if( ! in_array( $task_row["usergroupid"], (array)$gid ) )
         continue;
     }
 

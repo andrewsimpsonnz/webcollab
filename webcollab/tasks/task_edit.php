@@ -42,7 +42,7 @@ $usergroup[0] = 0;
 //
 function user_access($taskid ) {
 
-  global $uid, $admin, $usergroup;
+  global $uid, $gid, $admin;
 
   if($admin == 1)
     return TRUE;
