@@ -183,7 +183,7 @@ function & clean($encoded ) {
   $text = @html_entity_decode($encoded, ENT_NOQUOTES, "UTF-8" );
   
   //reinstate decimal encoded html that html_entity_decode() can't handle...
-  $text = preg_replace('/&#(\d+);/me', "chr('$1')", $text );
+  $text = preg_replace('/&#(\d+);/ue', "chr('$1')", $text );
   
   //remove any dangerous tags that exist after decoding
   $text = preg_replace("/(<\/?\s*)(APPLET|SCRIPT|EMBED|FORM|\?|%)(\w*|\s*)([^>]*>)/i", "\\1****\\3\\4", $text );
