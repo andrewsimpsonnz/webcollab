@@ -192,8 +192,7 @@ include_once("./screen_setup.php" );
 
   //check if config file can be written to
   if( ! is_writable("../config.php" ) ) {
-    error_setup($status.
-                 "Your database has been successfully setup.<br \><br \>\n".
+    error_setup( "Your database has been successfully setup.<br \><br \>\n".
                  "The config file (config.php) exists, but the webserver does not have permissions to write to it.<br /><br />\n".
                  "You can either:<ul>\n<li>Change the file permissions to allow the webserver to write to the file 'config.php'</li>\n".
                  "<li>Continue with a manual configuration by editing the file directly.</li>\n" );
@@ -209,7 +208,6 @@ $content =  "<form method=\"POST\" action=\"setup_setup3.php\">\n".
             "<input type=\"hidden\" name=\"db_name\" value=\"$database_name\" />\n".
             "<input type=\"hidden\" name=\"db_type\" value=\"$database_type\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n".
-            $status.
             "<div align=\"center\">Your database has been successfully created.<br /><br />\n".
             "<input type=\"submit\" value=\"Continue\" /></div>\n".
             "</form>\n";
