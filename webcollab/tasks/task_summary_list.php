@@ -290,13 +290,11 @@ function project_summary( $tail, $depth=0, $equiv="" ) {
     //show graphical taskbar
     if( ($row["parent"] == 0 ) && ($depth >= 0 ) ) {
       if($row["completed"] > 0 ) {  
-        //$result .= "<table width=\"200\"><tr><td height=\"2\"  width=\"".($row["completed"]*2)."\" bgcolor=\"#008B45\" nowrap=\"nowrap\"></td><td width=\"".(200-($row["completed"]*2))."\" bgcolor=\"#FFA500\" nowrap=\"nowrap\"></td></tr></table>\n";
-       $result .= "<table width=\"200\"><tr><td class=\"greenbar\" style=\"height: 2px; width :".($row["completed"]*2)."\"></td><td class=\"redbar\" style=\"height: 2px; width :".(200-($row["completed"]*2))."\"></td></tr></table>\n";
+       $result .= "<table width=\"200px\"><tr><td class=\"greenbar\" style=\"height: 2px; width :".($row["completed"]*2)."px\"></td><td class=\"redbar\" style=\"height: 2px; width :".(200-($row["completed"]*2))."px\"></td></tr></table>\n";
        
       }
       else {
-        //$result .= "<table width=\"200\"><tr><td height=\"2\" width=\"200\" bgcolor=\"#FFA500\" nowrap=\"nowrap\"></td></tr></table>\n";
-        $result .= "<table width=\"200\"><tr><td class=\"redbar\" style=\"height: 2px; width : 200\"></td></tr></table>\n";
+        $result .= "<table width=\"200px\"><tr><td class=\"redbar\" style=\"height: 2px; width : 200px\"></td></tr></table>\n";
       
       }
     }
@@ -322,7 +320,7 @@ else
 if(isset($_GET["action"]) && $_GET["action"] == "summary_print" )
   $content  = "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=".$sortby."\">".$lang["normal_version"]."</a>]</span></p>";
 else
-  $content  = "<div class=\"right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary_print&amp;sortby=".$sortby."\">".$lang["print_version"]."</a>]</span></div>";
+  $content  = "<div style=\"text-align: right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary_print&amp;sortby=".$sortby."\">".$lang["print_version"]."</a>]</span></div>";
 
 $content .= "<table>\n";
 $content .= "<tr><td colspan=\"3\"><small><a href=\"".$BASE_URL."help/".$LOCALE."_help.php#summarypage\" onclick=\"window.open('".$BASE_URL."help/".$LOCALE."_help.php#summarypage'); return false\"><b>".$lang["flags"]."</b></a></small></td><td><small>";
