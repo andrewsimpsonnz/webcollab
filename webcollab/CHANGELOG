@@ -1,12 +1,18 @@
 WebCollab CVS
+*** 28 February 2004
+  Andrew Simpson
+
+- add javascript date checking and missing field validation 
+
+WebCollab CVS
 *** 1 February 2004
   Andrew Simpson
 
 - add better HTML labels to calendar, admin email & todo
 
-- pgsql database build can now autodetect & use post-version 4.2.0 pgsql commands
+- pgsql database build can now autodetect & use post-PHP version 4.2.0 pgsql commands
 
-- better detection of pre-4.1.0 versions in setup
+- better detection of pre-PHP 4.1.0 versions in setup
 
 - setup now checks SMTP port instead of MX record
 
