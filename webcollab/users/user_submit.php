@@ -175,6 +175,11 @@ ignore_user_abort(TRUE);
         ${$var} = safe_data($_POST[$var]);
       }
 
+      if(empty($_POST['password']) )
+        $password = "";
+      else
+        $password = safe_data($_POST['password']);  
+      
       //check email address
       if(! ereg("^.+@.+\..+$", $email ) )
         warning($lang['invalid_email'], sprintf($lang['invalid_email_given_sprt'], safe_data($_POST['email']) ) );
