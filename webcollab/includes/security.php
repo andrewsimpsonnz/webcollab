@@ -96,6 +96,7 @@ if( ! isset($SESSION_TIMEOUT ) )
 //check the last login time (there is an inactivity time limit set by $SESSION_TIMEOUT)
 if( ($row["now"] - $row["sec_lastaccess"]) > $SESSION_TIMEOUT * 3600 ) {
   db_query("UPDATE ".PRE."logins SET session_key='' WHERE user_id=".$row["user_id"] );
+  setcookie("webcollab_session", "" );
   warning( $lang["security_manager"], sprintf($lang["session_timeout_sprt"],
             round(($row["now"] - $row["sec_lastaccess"] )/60), $SESSION_TIMEOUT*60, $BASE_URL ) );
 }
