@@ -4,6 +4,8 @@ WebCollab CVS
 
 - input validation much improved
 
+- bugfix: Email dot stuffing on newlines not working
+
 WebCollab CVS
 *** 24 April 2004
   Andrew Simpson
