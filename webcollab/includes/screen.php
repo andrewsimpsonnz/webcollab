@@ -92,12 +92,14 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
   header("Pragma: no-cache");
   header("Content-Type: text/html; charset=".$web_charset."");
 
-  $content =  "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n".
-                    "<html>\n\n".
-                    "<!-- WebCollab ".$WEBCOLLAB_VERSION." -->\n".
-                    "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
-                    "<!-- (c) 2002 - 2004 Andrew Simpson -->\n\n".
-                    "<head>\n";
+  $content = "<!DOCTYPE html PUBLIC\n".
+             "\"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n".
+             "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n".
+             "<html>\n\n".
+             "<!-- WebCollab ".$WEBCOLLAB_VERSION." -->\n".
+             "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
+             "<!-- (c) 2002 - 2004 Andrew Simpson -->\n\n".
+             "<head>\n";
 
   //flush buffer
   echo $content;                  
@@ -106,22 +108,22 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
     $title = $MANAGER_NAME;
 
   $content  =  "<title>".$title."</title>\n".
-                      "<meta http-equiv=\"Pragma\" content=\"no-cache\">\n".
-                      "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".$web_charset."\">\n";
+               "<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".
+               "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".$web_charset."\" />\n";
 
   if($page_type == 2 )
-    $content .=  "<link rel=\"StyleSheet\" href=\"".BASE."css/print.css\" type=\"text/css\">\n";
+    $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/print.css\" type=\"text/css\" />\n";
   else
-    $content .=  "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\">\n";
+    $content .= "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\" />\n";
 
   //javascript to position cursor in the first box
   if($cursor || $date) {
     $content .=  "<script language=\"JavaScript\" type=\"text/javascript\">\n".
-                        "<!-- \n";
+                 "<!-- \n";
     if($cursor)
-      $content .=   "function placeCursor() {document.inputform.".$cursor.".focus();}\n";
+      $content .= "function placeCursor() {document.inputform.".$cursor.".focus();}\n";
     if($check){
-      $content .=  "function fieldCheck(){\n".
+      $content .= "function fieldCheck(){\n".
                           "if(document.inputform.".$cursor.".value==\"\"){\n".
                           "alert('".$lang["missing_field_javascript"]."');\n".
                           "document.inputform.".$cursor.".focus();\n".
@@ -129,7 +131,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
                           "return;}\n";
      }
     if($date) {
-      $content .=  "function dateCheck() {\n".
+      $content .= "function dateCheck() {\n".
                           "var daysMonth = new Array(31, 29, 31, 30, 30, 30, 31, 31, 30, 31, 30, 31 );\n". 
                           "if(document.inputform.day.value > daysMonth[(document.inputform.month.value-1)] ){\n".
                           "alert('".$lang["invalid_date_javascript"]."');\n".
@@ -140,11 +142,11 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="" ) {
                           "return confirm('".$lang["finish_date_javascript"]."');}\n".     
                           "return;}\n";
       }
-      $content .=  " // -->\n".
+      $content .= " // -->\n".
                          "</script>\n".
                          "</head>\n\n";
       if($cursor)
-        $content .=  "<body onLoad=\"placeCursor()\">\n";
+        $content .= "<body onLoad=\"placeCursor()\">\n";
       else
         $content .= "<body>\n";
   }
