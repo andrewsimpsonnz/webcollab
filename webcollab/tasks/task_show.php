@@ -70,8 +70,7 @@ $content .= "<b>".$row["name"]."</b><br /><br /></td></tr>\n";
 //show text
 $content .= "<tr><td bgcolor=\"#EEEEEE\" width=\"95%\">\n";
 
-$text = $row["text"];
-$content .= nl2br($text );
+$content .= nl2br($row["text"] );
 $content .= "</td></tr></table></p>\n";
 
 //start of info table
