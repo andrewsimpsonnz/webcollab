@@ -1,4 +1,14 @@
 WebCollab CVS
+*** 21 February 2005
+
+- fix HTML syntax error in task_list (Bug #1144512)  (Credit: hs_dino)
+ 
+WebCollab 1.70
+*** 15 February 2005
+
+- release
+
+WebCollab CVS
 *** 12 February 2005
 
 - add Brazilian Portuguese translation (Credit: Eduardo Alvim)
