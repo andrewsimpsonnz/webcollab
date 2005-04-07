@@ -41,15 +41,19 @@ function safe_data($body ) {
   if(empty($body) )
     return '';
   
-  //remove whitespace      
-  $body = trim($body);
+  //we don't use magic_quotes
+  if(get_magic_quotes_gpc() )
+    $body = stripslashes($body );
   
+  //remove whitespace      
+  $body = trim($body );  
+
   //limit line length for single line entries
-  if(strlen($body ) > 100 ) 
+  if(strlen($body ) > 100 )
     $body = substr($body, 0, 100 );
   
-  $body = clean_up($body);  
-    
+  $body = clean_up($body);
+   
 return $body;
 }
 
@@ -62,6 +66,10 @@ function safe_data_long($body ) {
   //return null for nothing input
   if(empty($body) )
     return '';
+  
+  //we don't use magic_quotes
+  if(get_magic_quotes_gpc() )
+    $body = stripslashes($body );
       
   //normalise line breaks from Windows & Mac to UNIX style
   $body = str_replace("\r\n", "\n", $body );
@@ -75,16 +83,13 @@ return $body;
 }
 
 function clean_up($body ) {
+  
   global $validation_regex;
-
-  //protect against database query attack
-  if(! get_magic_quotes_gpc() )
-    $body = addslashes($body );
   
   //allow only normal printing characters valid for the character set in use
   $body = preg_replace($validation_regex, '?', $body );
   //use HTML encoding, or add escapes '\' for characters that could be used for css <script> or SQL injection attacks
-  $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'\(', ')'=>'\)', '+'=>'\+', '-'=>'\-', '='=>'\=' );
+  $trans = array('\\'=>'\\\\', "'"=>"\'", '"'=>'\"', ';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'\(', ')'=>'\)', '+'=>'\+', '-'=>'\-', '='=>'\=' );
   
   return strtr($body, $trans ); 
   
