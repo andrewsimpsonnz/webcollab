@@ -25,7 +25,7 @@
 
   ** Parts of this code inspired by phpmailer (Chris Ryan) and from contributed notes in PHP Manual under fsockopen.
 
-  Refer to RFC 821 (RFC 2821), RFC 822 for basic SMTP.
+  Refer to RFC 821 (RFC 2821), RFC 822 (RFC 2822) for basic SMTP.
   Refer to RFC 1652 for 8BITMIME
   Refer to RFC 1869 for extended hello (EHLO)
   Refer to RFC 2045 for mime types
@@ -39,7 +39,11 @@ require_once(BASE.'includes/security.php' );
 
 include_once(BASE.'includes/admin_config.php' );
 
-if( SMTP_AUTH == 'Y' )
+//** hooks for future development
+define('SMTP_PORT', 25 );
+define('TLS', 'N' );
+
+if( (SMTP_AUTH == 'Y') || (TLS == 'Y') )
   include_once(BASE.'includes/smtp_auth.php' );
 
 //
@@ -66,9 +70,8 @@ function email($to, $subject, $message ) {
   }
 
   //open an SMTP connection at the mail host
-  $host = SMTP_HOST;
-  $connection = @fsockopen($host, 25, $errno, $errstr, 10 );
-  $log = "Opening connection to ".$host."\n";
+  $connection = @fsockopen(SMTP_HOST, SMTP_PORT, $errno, $errstr, 10 );
+  $log = "Opening connection to ".SMTP_HOST." on port ".SMTP_PORT."\n";
   if (!$connection )
     debug("Unable to open TCP/IP connection.\n\nReported socket error: ".$errno." ".$errstr."\n");
 
@@ -82,31 +85,38 @@ function email($to, $subject, $message ) {
 
   //do extended hello (EHLO)
   fputs($connection, 'EHLO '.$_SERVER['SERVER_NAME']."\r\n" );
-  $log .= "C: EHLO ".$_SERVER['SERVER_NAME']."\n";
+  $log .= "C: EHLO".$_SERVER['SERVER_NAME']."\n";
   $res = response();
+  $capability = $res[1];
   
   //if EHLO (RFC 1869) not working, try the older HELO (RFC 821)...
   if($res[0] != '250' ) {
     fputs($connection, "HELO ".$_SERVER['SERVER_NAME']."\r\n" );
     $log .= "C: HELO ".$_SERVER['SERVER_NAME']."\n";
     $res = response();
+    $capability = '';
     if($res[0] != '250' )
       debug();
   }
-  else {
-    //EHLO accepted ==> this server can do ESMTP commands 
-      //see if server is offering 8bit mime capability & pipelining    
-    if( ! strpos($res[1], '8BITMIME' ) === false )
+  
+  //SMTP server capabilities
+  $capability = $res[1];
+          
+  //do TLS if required (This is EXPERIMENTAL!!)
+  if(TLS == 'Y' )
+    $capability = starttls($connection, $capability );
+    
+  //do SMTP_AUTH if required
+  if(SMTP_AUTH == 'Y' )
+    smtp_auth($connection, $capability );
+
+  //see if server is offering 8bit mime capability & pipelining    
+  if( ! strpos($capability, '8BITMIME' ) === false )
       $bit8 = true;
       
-    if( ! strpos($res[1], 'PIPELINING' ) === false )    
+  if( ! strpos($capability, 'PIPELINING' ) === false )    
       $pipelining = true;
-   }        
-   
-   //do SMTP_AUTH if required
-   if(SMTP_AUTH == 'Y' )
-     smtp_auth($connection, $res[1] );
-
+      
   //arrange message - and set email encoding to 8BITMIME if we need to
   //(we *must* do this before 'MAIL FROM:' in case we need to set encoding to suit the message body)
   $message_lines  =& message($message, $email_encode, $message_charset, $body );
@@ -174,19 +184,15 @@ function email($to, $subject, $message ) {
       }
     }
   }
-      
-  //send headers to server (with correct end-of-line \r\n)
-  $log .= "C: Sending headers...\n";    
-  while(list(,$line_out) = @each($header_lines ) ) {
-    fputs($connection, "$line_out\r\n" );
+  
+  //send headers & message to server (with correct end-of-line \r\n)
+  foreach(array('header_lines', 'message_lines' ) as $var ) {
+    $log .= "C: Sending $var...\n";    
+    foreach(${$var} as $line_out ) {
+      fputs($connection, "$line_out\r\n" );
+    }
   }
   
-  //send message to server (with correct end-of-line \r\n)
-  $log .= "C: Sending message...\n";
-  while(list(,$line_out) = @each($message_lines ) ) {
-    fputs($connection, "$line_out\r\n" );
-  }
-
   //ok all the message data has been sent - finish with a period on it's own line
   fputs($connection, ".\r\n" );
   $log .= "C: End of message\n";
@@ -208,11 +214,11 @@ function email($to, $subject, $message ) {
   }
   else {
     $res = response();
-    if($res[0] != "250" )
+    if($res[0] != '250' )
       debug('Pipelining: Bad response to end of message');
     
     $res = response();    
-    if($res[0] != "221" )
+    if($res[0] != '221' )
       debug('Pipelining: Bad response to QUIT');
   }
 
@@ -245,8 +251,8 @@ function & clean($encoded ) {
   $text = preg_replace('/&#(\d{2,3});/e', "chr('$1')", $text );
     
   //characters previously escaped/encoded to avoid SQL injection/CSS attacks are reinstated. 
-  $trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=' );  
-  $text = strtr($text, $trans );
+  //$trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=' );  
+  //$text = strtr($text, $trans );
   
   //remove any dangerous tags that exist after decoding
   $text = preg_replace("/(<\/?\s*)(APPLET|SCRIPT|EMBED|FORM|\?|%)(\w*|\s*)([^>]*>)/i", "\\1****\\3\\4", $text );
@@ -275,6 +281,7 @@ function & message($message, & $email_encode, & $message_charset, & $body ) {
           $body = ' BODY=8BITMIME';
           $message_charset = CHARACTER_SET;
           break;
+        
         case false:
           //old mail server - can only do 7bit mail
           $email_encode = 'quoted-printable';
@@ -311,10 +318,10 @@ function & message($message, & $email_encode, & $message_charset, & $body ) {
       //replace high ascii, control and = characters (RFC 2045)
       $message = preg_replace('/([\000-\010\013\014\016-\037\075\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $message);
       //replace spaces and tabs when it's the last character on a line (RFC 2045)
-      $message = preg_replace("/([\011\040])\n/e", "'='.sprintf('%02X', ord('\\1')).'\n'", $message);
+      $message = preg_replace('/([\011\040])\n/e', "'='.sprintf('%02X', ord('\\1')).'\n'", $message);
       //break up any lines longer than 76 characters with soft line breaks " =\r\n" (RFC 2045)
       //(end of line \n gets changed to \r\n after explode)
-      $message = wordwrap($message, 74, " =\n", 1 );
+      $message = wordwrap($message, 73, " =\n", 1 );
       break;
 
   }
@@ -401,7 +408,7 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   }
   $headers[] = $line;
   //assemble remaining message headers (RFC 821 / RFC 2045)
-  $headers[] = 'From: WebCollab <'.$from.'>';
+  $headers[] = 'From:' .ABBR_MANAGER_NAME. '<'.$from.'>';
   $headers[] = 'Reply-To: '.$reply_to;
 
   $headers = array_merge($headers, subject($subject ) );
@@ -429,9 +436,9 @@ function response() {
 
   $res[1] = '';
   while($str = fgets($connection, 256 ) ) {
-    $res[1] .= $str;
+    $res[1] .= $str;    
+    $log .= 'S : '.$str;
     
-    $log .= 'S :'.$str;
     //<space> after three digit code indicates this is last line of data ("-" for more lines)
     if(substr($str, 3, 1) == ' ' )
       break;
