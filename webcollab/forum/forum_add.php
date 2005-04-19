@@ -27,13 +27,13 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-include_once(BASE."includes/admin_config.php" );
+include_once(BASE.'includes/admin_config.php' );
 
 //secure vars
-$content = "";
+$content = '';
 
 if( ! isset($_REQUEST['usergroupid']) || ! is_numeric($_REQUEST['usergroupid']) )
   $usergroupid = 0;
@@ -46,15 +46,15 @@ else
   $parentid = intval($_REQUEST['parentid']);
 
 if( ! isset($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) )
-  error("Forum add", "Not a valid value for taskid");
+  error('Forum add', 'Not a valid value for taskid');
 
 $taskid = intval($_REQUEST['taskid']);
 
 //check usergroup security
-require_once(BASE."includes/usergroup_security.php" );
+require_once(BASE.'includes/usergroup_security.php' );
 
 //find out the tasks' name
-$taskname = db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=$taskid" ), 0, 0 );
+$taskname = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$taskid ), 0, 0 );
 
 $content .= "<form method=\"post\" action=\"forum.php\">\n";
 //set some hidden values
@@ -68,17 +68,17 @@ $content .=  "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />".
 if($parentid != 0 ) {
 
   //get the text from the parent and the username of the person that posted that text
-  $q = db_query("SELECT ".PRE."forum.text AS text,
-                         ".PRE."users.fullname AS username
-                         FROM ".PRE."forum
-                         LEFT JOIN ".PRE."users ON (".PRE."forum.userid=".PRE."users.id)
-                         WHERE ".PRE."forum.id=$parentid" );
+  $q = db_query('SELECT '.PRE.'forum.text AS text,
+                         '.PRE.'users.fullname AS username
+                         FROM '.PRE.'forum
+                         LEFT JOIN '.PRE.'users ON ('.PRE.'forum.userid='.PRE.'users.id)
+                         WHERE '.PRE.'forum.id='.$parentid );
 
   if( ! $row = db_fetch_array($q, 0 ) )
     error("Forum add", "Forum post has invalid parent" );
 
   if($row['username'] == NULL )
-    $row['username'] = "----";
+    $row['username'] = '----';
 
   //show a box with the original post
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" /></fieldset>\n".
@@ -86,7 +86,7 @@ if($parentid != 0 ) {
               "<tr><td>".$lang['orig_message']."</td><td style=\"background:#EEEEEE\">".$row['text']."</td></tr>\n";
 }
 else {
-  $row = "";
+  $row = '';
 
   //This is a new thread so we don't have a valid parent
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"0\" /></fieldset>\n".

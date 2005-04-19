@@ -28,15 +28,15 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //admins only
 if( ! ADMIN )
-  error("Unauthorised access", "This function is for admins only." );
+  error('Unauthorised access', 'This function is for admins only.' );
 
 //get the info
-$q = db_query("SELECT * FROM ".PRE."usergroups ORDER BY name" );
+$q = db_query('SELECT * FROM '.PRE.'usergroups ORDER BY name' );
 
 //nothing here yet
 if(db_numrows($q) == 0 ) {
@@ -52,7 +52,7 @@ $content =
                "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th><th>".$lang['private_usergroup']."</th><th>".$lang['action']."</th></tr>\n";
 
 //show all usergroups
-for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
+for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   
   if($row['private'] )
     $private = $lang['yes'];
@@ -64,15 +64,15 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
               "<span class=\"textlink\"><a href=\"usergroups.php?x=".$x."&amp;action=edit&amp;usergroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td></tr>";
 
   //get users from that group
-  $usersq = db_query("SELECT fullname,
-                            ".PRE."users.id AS id
-                            FROM ".PRE."users
-                            LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.userid=".PRE."users.id)
-                            WHERE usergroupid=".$row['id']."
-                            AND ".PRE."users.deleted='f'
-                            ORDER BY ".PRE."users.fullname" );
+  $usersq = db_query('SELECT fullname,
+                            '.PRE.'users.id AS id
+                            FROM '.PRE.'users
+                            LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
+                            WHERE usergroupid='.$row['id'].'
+                            AND '.PRE.'users.deleted=\'f\'
+                            ORDER BY '.PRE.'users.fullname' );
 
-  for($j=0 ; $userrow = @db_fetch_array($usersq, $j ) ; $j++ ) {
+  for($j=0 ; $userrow = @db_fetch_array($usersq, $j ) ; ++$j ) {
     $content .= "<tr><td style=\"text-align:left\" colspan=\"4\"><small>(<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$userrow['id']."\">".$userrow['fullname']."</a>)</small></td></tr>";
   }
   $content .=   "<tr><td style=\"text-align:left\" colspan=\"3\">&nbsp;</td></tr>";

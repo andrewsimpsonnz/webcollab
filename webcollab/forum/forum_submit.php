@@ -26,10 +26,10 @@
   Forum specific database options
 
 */
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-include_once(BASE."includes/admin_config.php");
+include_once(BASE.'includes/admin_config.php');
 
 //
 // Function for listing all posts of a task
@@ -38,15 +38,15 @@ function find_posts( $postid ) {
 
   global $post_array, $parent_array, $match_array, $index, $post_count;
 
-  $parent_array = "";
+  $parent_array = '';
   $index = 0; 
   $parent_count = 0;
   
-  $taskid = db_result(db_query("SELECT taskid FROM ".PRE."forum WHERE id=$postid" ), 0, 0 );
+  $taskid = db_result(db_query('SELECT taskid FROM '.PRE.'forum WHERE id='.$postid ), 0, 0 );
 
-  $q = db_query("SELECT id, parent FROM ".PRE."forum WHERE taskid=$taskid" );
+  $q = db_query('SELECT id, parent FROM '.PRE.'forum WHERE taskid='.$taskid );
 
-  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
     //put values into array
     $post_array[$i]['id'] = $row['id'];
@@ -78,7 +78,7 @@ function find_children($parent ) {
 
   global $post_array, $parent_array, $match_array, $index, $post_count;
 
-  for($i=0 ; $i < $post_count ; $i++ ) {
+  for($i=0 ; $i < $post_count ; ++$i ) {
   
     if($post_array[$i]['parent'] != $parent ){
       continue;
@@ -104,30 +104,30 @@ function delete_messages($postid ) {
   find_posts($postid );
     
   // perform the delete - delete from newest post first to oldest post last to prevent database referential errors
-  for($i=0; $i < $index; $i++ ) {
-    db_query("DELETE FROM ".PRE."forum WHERE id=".$match_array[($index - 1) - $i] );
+  for($i=0; $i < $index; ++$i ) {
+    db_query('DELETE FROM '.PRE.'forum WHERE id='.$match_array[($index - 1) - $i] );
   }
   return;
 }
 
 if( ! isset($_REQUEST['action']) )
-  error("Forum submit", "No request given" );
+  error('Forum submit', 'No request given' );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
   switch($_REQUEST['action'] ) {
 
-    case "submit_add":
+    case 'submit_add':
 
       //if all values are filled in correctly we can submit the forum-item
       if(empty($_POST['text'] ) )
         warning($lang['forum_submit'], $lang['no_message'] );
              
-      $input_array = array("parentid", "taskid", "usergroupid");
+      $input_array = array('parentid', 'taskid', 'usergroupid');
       foreach($input_array as $var ) {   
         if(! isset($_POST[$var]) || ! is_numeric($_POST[$var]) )
-          error("Forum submit", "Variable $var is not set" );
+          error('Forum submit', "Variable $var is not set" );
         ${$var} = intval($_POST[$var]);
       }
       
@@ -137,61 +137,61 @@ ignore_user_abort(TRUE);
       $text = html_links($text, 1 );
       $text = nl2br($text );
 
-      if(isset($_POST['mail_owner'] ) && ($_POST['mail_owner'] == "on" ) )
+      if(isset($_POST['mail_owner'] ) && ($_POST['mail_owner'] == 'on' ) )
         $mail_owner = true;
       else
-        $mail_owner = "";
+        $mail_owner = '';
 
-      if(isset($_POST['mail_group'] ) && ($_POST['mail_group'] == "on" ) )
+      if(isset($_POST['mail_group'] ) && ($_POST['mail_group'] == 'on' ) )
         $mail_group = true;
       else
-        $mail_group = "";
+        $mail_group = '';
 
       //do data consistency check on parentid
       if($parentid != 0 ) {
-        if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum WHERE id=$parentid" ), 0, 0 ) == 0 )
-          error("Forum submit", "Data consistency error - child post has no parent" );
+        if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'forum WHERE id='.$parentid ), 0, 0 ) == 0 )
+          error('Forum submit', 'Data consistency error - child post has no parent' );
       }
 
       //check usergroup security
-      require_once(BASE."includes/usergroup_security.php" );
+      require_once(BASE.'includes/usergroup_security.php' );
 
       //okay now check if we need to post in the public or the private forums of the task
       switch($usergroupid ) {
         case 0:
           //public post
           db_begin();
-          db_query ("INSERT INTO ".PRE."forum(parent, taskid, posted, text, userid, usergroupid)
-                                           VALUES ($parentid, $taskid, now(), '$text', ".UID.", 0)" );
+          db_query ('INSERT INTO '.PRE.'forum(parent, taskid, posted, text, userid, usergroupid)
+                                           VALUES ('.$parentid.', '.$taskid.', now(), \''.$text.'\', '.UID.', 0)' );
           break;
 
         default:
           //private post
           //check if the user does belong to that group
           if((! ADMIN ) && ( ! in_array($usergroupid, (array)$GID ) ) )
-            error("Forum submit", "You do not have enough rights to post in that forum" );
+            error('Forum submit', 'You do not have enough rights to post in that forum' );
 
           db_begin();
-          db_query ("INSERT INTO ".PRE."forum(parent, taskid, posted, text, userid, usergroupid)
-                                            VALUES ($parentid, $taskid, now(), '$text', ".UID.", $usergroupid)" );
+          db_query ('INSERT INTO '.PRE.'forum(parent, taskid, posted, text, userid, usergroupid)
+                                            VALUES ('.$parentid.', '.$taskid.', now(), \''.$text.'\', '.UID.', '.$usergroupid.')' );
           break;
 
       }
       //set time of last forum post to this task
-      db_query("UPDATE ".PRE."tasks SET lastforumpost=now() WHERE id=$taskid" );
+      db_query('UPDATE '.PRE.'tasks SET lastforumpost=now() WHERE id='.$taskid );
       db_commit();
 
       //set up emails
-      $mail_list = "";
-      $s = "";
+      $mail_list = '';
+      $s = '';
 
       //get task data
-      $q = db_query("SELECT ".PRE."tasks.name AS name,
-                            ".PRE."tasks.usergroupid AS usergroupid,
-                            ".PRE."users.email AS email
-                            FROM ".PRE."tasks
-                            LEFT JOIN ".PRE."users ON (".PRE."tasks.owner=".PRE."users.id)
-                            WHERE ".PRE."tasks.id=$taskid" );
+      $q = db_query('SELECT '.PRE.'tasks.name AS name,
+                            '.PRE.'tasks.usergroupid AS usergroupid,
+                            '.PRE.'users.email AS email
+                            FROM '.PRE.'tasks
+                            LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.owner='.PRE.'users.id)
+                            WHERE '.PRE.'tasks.id='.$taskid );
       $task_row = db_fetch_array($q, 0 );
 
       //set owner's email
@@ -202,13 +202,13 @@ ignore_user_abort(TRUE);
 
       //if usergroup set, add the user list
       if($task_row['usergroupid'] && $mail_group ){
-        $q = db_query("SELECT ".PRE."users.email
-                              FROM ".PRE."users
-                              LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.userid=".PRE."users.id)
-                              WHERE ".PRE."usergroups_users.usergroupid=".$task_row['usergroupid'].
-                              " AND ".PRE."users.deleted='f'" );
+        $q = db_query('SELECT '.PRE.'users.email
+                              FROM '.PRE.'users
+                              LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
+                              WHERE '.PRE.'usergroups_users.usergroupid='.$task_row['usergroupid'].
+                              ' AND '.PRE.'users.deleted=\'f\'' );
 
-        for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+        for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
           $mail_list .= $s.$row[0];
           $s = ", ";
         }
@@ -216,8 +216,8 @@ ignore_user_abort(TRUE);
 
       //do we need to email?
       if(strlen($mail_list) > 0 ){
-        include_once(BASE."includes/email.php" );
-        include_once(BASE."lang/lang_email.php" );
+        include_once(BASE.'includes/email.php' );
+        include_once(BASE.'lang/lang_email.php' );
 
       $message = $_POST['text'];
         
@@ -226,7 +226,7 @@ ignore_user_abort(TRUE);
         $message = stripslashes($message );  
         
         //get & add the mailing list
-        if($EMAIL_MAILINGLIST != "" )
+        if($EMAIL_MAILINGLIST != '' )
           $mail_list .= $s.$EMAIL_MAILINGLIST;
 
         switch($parentid ) {
@@ -237,11 +237,11 @@ ignore_user_abort(TRUE);
 
           default:
             //this is a reply to an earlier post
-            $q = db_query("SELECT ".PRE."forum.text AS text,
-                           ".PRE."users.fullname AS username
-                           FROM ".PRE."forum
-                           LEFT JOIN ".PRE."users ON (".PRE."forum.userid=".PRE."users.id)
-                           WHERE ".PRE."forum.id=$parentid" );
+            $q = db_query('SELECT '.PRE.'forum.text AS text,
+                           '.PRE.'users.fullname AS username
+                           FROM '.PRE.'forum
+                           LEFT JOIN '.PRE.'users ON ('.PRE.'forum.userid='.PRE.'users.id)
+                           WHERE '.PRE.'forum.id='.$parentid );
 
             $row = db_fetch_array($q, 0 );
 
@@ -258,9 +258,9 @@ ignore_user_abort(TRUE);
       break;
 
     //owner of the thread can delete, admin can delete
-    case "submit_del":
+    case 'submit_del':
       if(empty($_GET['postid']) || ! is_numeric($_GET['postid']) )
-        error("Forum submit", "Postid not valid" );
+        error('Forum submit', 'Postid not valid' );
       $postid = intval($_GET['postid'] );
 
       switch(ADMIN ) {
@@ -278,26 +278,26 @@ ignore_user_abort(TRUE);
         default:
           //check if user is owner of the task or the owner of the post
           if(
-          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum LEFT JOIN ".PRE."tasks ON (".PRE."forum.taskid=".PRE."tasks.id) WHERE ".PRE."tasks.owner=".UID." AND ".PRE."forum.id=$postid" ), 0, 0 ) == 1 ) ||
-          (db_result(db_query("SELECT COUNT(*) FROM ".PRE."forum WHERE userid=".UID." AND id=$postid" ), 0, 0 ) == 1 ) ) {
+          (db_result(db_query('SELECT COUNT(*) FROM '.PRE.'forum LEFT JOIN '.PRE.'tasks ON ('.PRE.'forum.taskid='.PRE.'tasks.id) WHERE '.PRE.'tasks.owner='.UID.' AND '.PRE.'forum.id='.$postid ), 0, 0 ) == 1 ) ||
+          (db_result(db_query('SELECT COUNT(*) FROM '.PRE.'forum WHERE userid='.UID.' AND id='.$postid ), 0, 0 ) == 1 ) ) {
 
             db_begin();
             delete_messages( $postid );
             db_commit();
           }
           else
-            error("Forum submit", "You are not authorised to delete that post." );
+            error('Forum submit', 'You are not authorised to delete that post.' );
           break;
       }
       break;
 
     //default error case
     default:
-      error("Forum submit", "Invalid request specified");
+      error('Forum submit', 'Invalid request specified');
       break;
   }
 
 //go back to where this request came from
-header("Location: ".BASE_URL."tasks.php?x=$x&action=show&taskid=".$_REQUEST['taskid'] );
+header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$_REQUEST['taskid'] );
 
 ?>

@@ -31,60 +31,60 @@
 
 */
 
-require_once("includes/security.php" );
-include_once("includes/screen.php" );
+require_once('includes/security.php' );
+include_once('includes/screen.php' );
 
 //
 // The action handler
 //
 if( ! isset($_REQUEST['action']) )
- error("Taskgroup action handler", "No request given");
+ error('Taskgroup action handler', 'No request given');
 
   //what do you want to taskgroup today =]
   switch( $_REQUEST['action'] ) {
 
     //gives a window and some options to do to the poor 'old taskgroup
-    case "manage":
+    case 'manage':
       create_top($lang['manage_taskgroups']);
-      include("includes/mainmenu.php" );
-      include("taskgroups/taskgroup_menubox.php" );
+      include('includes/mainmenu.php' );
+      include('taskgroups/taskgroup_menubox.php' );
       goto_main();
-      include("taskgroups/taskgroup_manage.php" );
-      include_once("lang/lang_long.php" ); //get message
+      include('taskgroups/taskgroup_manage.php' );
+      include_once('lang/lang_long.php' ); //get message
       new_box( $lang['info_taskgroup_manage'], $taskgroup_info );
       create_bottom();
       break;
 
     //show a taskgroup
-    case "add":
-      create_top($lang['add_taskgroup'], 0, "name", "name" );
-      include("includes/mainmenu.php" );
-      include("taskgroups/taskgroup_menubox.php" );
+    case 'add':
+      create_top($lang['add_taskgroup'], 0, 'name', 'name' );
+      include('includes/mainmenu.php' );
+      include('taskgroups/taskgroup_menubox.php' );
       goto_main();
-      include("taskgroups/taskgroup_add.php" );
+      include('taskgroups/taskgroup_add.php' );
       create_bottom();
       break;
 
     //show a taskgroup
-    case "edit":
+    case 'edit':
       create_top($lang['edit_taskgroup']);
-      include("includes/mainmenu.php");
-      include("taskgroups/taskgroup_menubox.php" );
+      include('includes/mainmenu.php');
+      include('taskgroups/taskgroup_menubox.php' );
       goto_main();
-      include("taskgroups/taskgroup_edit.php" );
+      include('taskgroups/taskgroup_edit.php' );
       create_bottom();
       break;
 
     //submit
-    case "submit_edit":
-    case "submit_insert":
-    case "submit_del":
-    include("taskgroups/taskgroup_submit.php" );
+    case 'submit_edit':
+    case 'submit_insert':
+    case 'submit_del':
+    include('taskgroups/taskgroup_submit.php' );
     break;
          
     //Error case
     default:
-      error("Taskgroup action handler", "Invalid request given");
+      error('Taskgroup action handler', 'Invalid request given');
       break;
   }
 

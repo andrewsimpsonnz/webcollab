@@ -27,16 +27,16 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //set variables
-$content = "";
-$maillist = "";
+$content = '';
+$maillist = '';
 
 //only for admins
 if( ! ADMIN )
-  error( "Not permitted", "This function is for admins only" );
+  error( 'Not permitted', 'This function is for admins only' );
 
 //start form data
 $content .=
@@ -46,10 +46,10 @@ $content .=
           "<table class=\"celldata\" >\n";
 
 //get config data
-$q = db_query("SELECT * FROM ".PRE."config" );
+$q = db_query('SELECT * FROM '.PRE.'config' );
 $row = db_fetch_array( $q, 0 );
 
-if(USE_EMAIL == "Y" ){
+if(USE_EMAIL == 'Y' ){
 
   $content .=
             "<tr><td style=\"white-space : nowrap\" colspan=\"2\"><b>".$lang['email_settings']."</b><br /><br /></td></tr>\n";
@@ -61,9 +61,9 @@ if(USE_EMAIL == "Y" ){
             "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin\" onclick=\"window.open('help/help_language.php?item=from&amp;type=admin'); return false\">".$lang['email_from']."</a>:</td><td><input type=\"text\" name=\"from\" value=\"".$row['email_from']."\" size=\"30\" /></td></tr>\n";
 
   //get mailing list
-  $q = db_query("SELECT DISTINCT * FROM ".PRE."maillist" );
+  $q = db_query('SELECT DISTINCT * FROM '.PRE.'maillist' );
 
-  for( $i=0 ; $row_mail = @db_fetch_array($q, $i ) ; $i++) {
+  for( $i=0 ; $row_mail = @db_fetch_array($q, $i ) ; ++$i) {
     $maillist .= $row_mail['email']."\n";
   }
 
@@ -82,15 +82,15 @@ $content .= "<tr><td><label for=\"access\">".$lang['allow_globalaccess']."</labe
 
 //set default selection for project listing
 switch($row['project_order']){
-  case "ORDER BY due ASC, name":
+  case 'ORDER BY due ASC, name':
     $s1 = ""; $s2 = " selected=\"selected\""; $s3 = "";
     break;
       
-  case "ORDER BY priority DESC, name":
+  case 'ORDER BY priority DESC, name':
     $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\"";
     break;
   
-  case "ORDER BY name":
+  case 'ORDER BY name':
   default:
     $s1 = " selected=\"selected\""; $s2 = ""; $s3 = "";
     break;
@@ -106,15 +106,15 @@ $content .= "<tr><td>".$lang['project_listing_order'].":</td><td>\n".
           
 //set default selection for task listing
 switch($row['task_order']){
-  case "ORDER BY due ASC, name":
+  case 'ORDER BY due ASC, name':
     $s1 = ""; $s2 = " selected=\"selected\""; $s3 = "";
     break;
       
-  case "ORDER BY priority DESC, name":
+  case 'ORDER BY priority DESC, name':
     $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\"";
     break;
   
-  case "ORDER BY name":
+  case 'ORDER BY name':
   default:
     $s1 = " selected=\"selected\""; $s2 = ""; $s3 = "";
     break;

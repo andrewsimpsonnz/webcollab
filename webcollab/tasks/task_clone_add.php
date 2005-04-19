@@ -26,19 +26,19 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //admins only
 if(! ADMIN )
-  error("Unauthorised access", "This function is for admins only." );
+  error('Unauthorised access', 'This function is for admins only' );
 
 if(empty($_GET['taskid']) && ! is_numeric($_GET['taskid']) )
-  error("Task clone", "Taskid not set" );
+  error('Task clone', 'Taskid not set' );
 
 $taskid = intval($_GET['taskid']);
 
-$content = "";
+$content = '';
 
 $content .= "<form method=\"post\" action=\"tasks.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
@@ -46,7 +46,7 @@ $content .= "<form method=\"post\" action=\"tasks.php\">\n".
             "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\" /></fieldset>\n".
             "<table class=\"celldata\">\n";
 
-$q = db_query("SELECT name, parent FROM ".PRE."tasks WHERE id=$taskid" );
+$q = db_query('SELECT name, parent FROM '.PRE.'tasks WHERE id='.$taskid );
 
 $row = db_fetch_array($q, 0 );
 

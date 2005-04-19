@@ -28,12 +28,12 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //admins only
 if(! ADMIN )
-  error("Unauthorised access", "This function is for admins only." );
+  error('Unauthorised access', 'This function is for admins only.' );
 
 $content =
             "<form method=\"post\" action=\"usergroups.php\">\n".
@@ -47,10 +47,10 @@ $content =
                 "<tr><td>&nbsp;</td></tr>\n";
 
 //add users
-$q = db_query("SELECT fullname, id FROM ".PRE."users WHERE deleted='f' ORDER BY fullname" );
+$q = db_query('SELECT fullname, id FROM '.PRE.'users WHERE deleted=\'f\' ORDER BY fullname' );
 $content .=     "<tr><td>".$lang['members']."</td><td><select name=\"member[]\" multiple=\"multiple\" size=\"4\">\n";
 
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .=   "<option value=\"".$row['id']."\">".$row['fullname']."</option>\n";
 }
 

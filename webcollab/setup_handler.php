@@ -26,44 +26,44 @@
 
 */
 
-require_once("setup/security_setup.php" );
+require_once('setup/security_setup.php' );
 
 //
 // The action handler
 //
 if( ! isset($_REQUEST['action']) )
-  error("Setup action handler", "No request given" );
+  error('Setup action handler', 'No request given' );
 
   //what do you want to task today =]
   switch($_REQUEST['action'] ) {
 
-    //case "setup1":
-    //  include("setup/setup_setup1.php" );
+    //case 'setup1':
+    //  include('setup/setup_setup1.php' );
     //  break;
 
-    case "setup2":
-      include("setup/setup_setup2.php" );
+    case 'setup2':
+      include('setup/setup_setup2.php' );
       break;
 
-    case "setup3":
-      include("setup/setup_setup3.php" );
+    case 'setup3':
+      include('setup/setup_setup3.php' );
       break;
 
-    case "setup4":
-      include("setup/setup_setup4.php" );
+    case 'setup4':
+      include('setup/setup_setup4.php' );
       break;
 
-    case "setup5":
-      include("setup/setup_setup5.php" );
+    case 'setup5':
+      include('setup/setup_setup5.php' );
       break;
 
-    case "build":
-      include("setup/setup_db_build.php" );
+    case 'build':
+      include('setup/setup_db_build.php' );
       break;
 
     //Error case
     default:
-      error("File action handler", "Invalid request given" );
+      error('File action handler', 'Invalid request given' );
       break;
   }
 

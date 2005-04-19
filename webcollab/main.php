@@ -28,30 +28,30 @@
 
 */
 
-require_once("includes/security.php" );
-include_once("includes/screen.php" );
+require_once('includes/security.php' );
+include_once('includes/screen.php' );
 
 //start of page
 create_top();
 
-  include("includes/mainmenu.php" );
-  include("forum/forum_menubox.php" );
+  include('includes/mainmenu.php' );
+  include('forum/forum_menubox.php' );
   if(! GUEST)
-    include("tasks/task_menubox.php" );
-  include("users/user_menubox.php" );
+    include('tasks/task_menubox.php' );
+  include('users/user_menubox.php' );
 
   if(ADMIN ) {
-    include("taskgroups/taskgroup_menubox.php" );
-    include("usergroups/usergroup_menubox.php" );
-    include("admin/admin_config_menubox.php" );
+    include('taskgroups/taskgroup_menubox.php' );
+    include('usergroups/usergroup_menubox.php' );
+    include('admin/admin_config_menubox.php' );
     $taskid = -1;
-    include("files/file_menubox.php" );
+    include('files/file_menubox.php' );
   }
-  include("contacts/contact_menubox.php" );
+  include('contacts/contact_menubox.php' );
 
 //flip over to other frame
 goto_main();
-  include("tasks/task_project_list.php" );
+  include('tasks/task_project_list.php' );
 
 //finish page
 create_bottom();

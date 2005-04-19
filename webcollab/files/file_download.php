@@ -26,8 +26,8 @@
 
 */
 
-require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once('path.php' );
+require_once( BASE.'includes/security.php' );
 
 if(empty($_GET['fileid']) || ! is_numeric($_GET['fileid']) )
   return;
@@ -35,24 +35,24 @@ if(empty($_GET['fileid']) || ! is_numeric($_GET['fileid']) )
 $fileid = intval($_GET['fileid']);
 
 //get the files info
-if( ! ($q = db_query("SELECT fileid, filename, size, mime, taskid FROM ".PRE."files WHERE id=$fileid" ) ) )
-  error("Download file", "There was an error in the data query");
+if( ! ($q = db_query('SELECT fileid, filename, size, mime, taskid FROM '.PRE.'files WHERE id='.$fileid ) ) )
+  error('Download file', 'There was an error in the data query');
 
 if( ! $row = db_fetch_array( $q, 0) )
-  error("Download file", "Invalid fileid given" );   
+  error('Download file', 'Invalid fileid given' );   
 
 //check usergroup security
 $taskid = $row['taskid'];
-require_once(BASE."includes/usergroup_security.php" );
+require_once(BASE.'includes/usergroup_security.php' );
 
 //check the file exists
-if( ! ( file_exists( FILE_BASE."/".$row['fileid']."__".($row['filename'] ) ) ) )
-  error("Download file", "The file ".$row['filename']." is missing from the server" );
+if( ! ( file_exists( FILE_BASE.'/'.$row['fileid'].'__'.($row['filename'] ) ) ) )
+  error('Download file', 'The file '.$row['filename'].' is missing from the server' );
 
 //open the file
-$fp = fopen( FILE_BASE."/".$row['fileid']."__".($row['filename']), "rb" );
+$fp = fopen( FILE_BASE.'/'.$row['fileid'].'__'.($row['filename']), 'rb' );
 if($fp == 0 )
-  error("Download file", "File handle for ".$row['filename']." cannot be opened" );
+  error('Download file', 'File handle for '.$row['filename'].' cannot be opened' );
 
 //get rid of some problematic system settings
 @ob_end_clean();
@@ -62,15 +62,15 @@ if($fp == 0 )
 //@set_time_limit(0);
 
 //these headers are for IE 6
-header("Pragma: public");
-header("Cache-Control: no-store, max-age=0, no-cache, must-revalidate");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Cache-control: private");
+header('Pragma: public');
+header('Cache-Control: no-store, max-age=0, no-cache, must-revalidate');
+header('Cache-Control: post-check=0, pre-check=0', false);
+header('Cache-control: private');
 
 //send the headers describing the file type
-header("Content-Type: ".$row['mime']);
-header("Content-Disposition: inline; filename=".$row['filename']);
-header("Content_Length: ".$row['size'] );
+header('Content-Type: '.$row['mime']);
+header('Content-Disposition: inline; filename='.$row['filename']);
+header('Content_Length: '.$row['size'] );
 
 //send it
 fpassthru($fp);

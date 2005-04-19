@@ -27,35 +27,35 @@
   Lists files assigned to a task
 
 */
-require_once("path.php" );
+require_once('path.php' );
 
-require_once(BASE."includes/security.php" );
+require_once(BASE.'includes/security.php' );
 
-include_once(BASE."includes/time.php" );
+include_once(BASE.'includes/time.php' );
 
-$content = "";
+$content = '';
 
 if(! ADMIN )
-  error("Access denied", "This feature is only for admins" );
+  error('Access denied', 'This feature is only for admins' );
 
 
 //get the files from this task
-$q = db_query("SELECT ".PRE."files.id AS id,
-                        ".PRE."files.filename AS filename,
-                        ".$epoch.PRE."files.uploaded) AS uploaded,
-                        ".PRE."files.size AS size,
-                        ".PRE."files.mime AS mime,
-                        ".PRE."files.description AS description,
-                        ".PRE."files.uploader AS uploader,
-                        ".PRE."tasks.owner AS owner,
-                        ".PRE."tasks.id AS task_id,
-                        ".PRE."tasks.name AS task_name,
-                        ".PRE."users.id AS userid,
-                        ".PRE."users.fullname AS username
-                        FROM ".PRE."files
-                        LEFT JOIN ".PRE."tasks ON (".PRE."files.taskid=".PRE."tasks.id)
-                        LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."files.uploader)
-                        ORDER BY task_name" );
+$q = db_query('SELECT '.PRE.'files.id AS id,
+                        '.PRE.'files.filename AS filename,
+                        '.$epoch.PRE.'files.uploaded) AS uploaded,
+                        '.PRE.'files.size AS size,
+                        '.PRE.'files.mime AS mime,
+                        '.PRE.'files.description AS description,
+                        '.PRE.'files.uploader AS uploader,
+                        '.PRE.'tasks.owner AS owner,
+                        '.PRE.'tasks.id AS task_id,
+                        '.PRE.'tasks.name AS task_name,
+                        '.PRE.'users.id AS userid,
+                        '.PRE.'users.fullname AS username
+                        FROM '.PRE.'files
+                        LEFT JOIN '.PRE.'tasks ON ('.PRE.'files.taskid='.PRE.'tasks.id)
+                        LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'files.uploader)
+                        ORDER BY task_name' );
 
 if(db_numrows($q) == 0 ) {
  $content = $lang['no_files']."\n";
@@ -67,7 +67,7 @@ if(db_numrows($q) == 0 ) {
 $content .= "<table>\n";
 
 //show them
-for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
+for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //file part
   $content .= "<tr><td>".$lang['task'].":</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['task_id']."\">".$row['task_name']."</a></td></tr>\n".
@@ -78,7 +78,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
               "<tr><td>".$lang['uploader']." </td><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'], 1 ).")</td></tr>\n";
 
   //show description
-  if( $row['description'] != "" )
+  if( $row['description'] != '' )
     $content .= "<tr><td>".$lang['description'].":</td><td><small><i>".$row['description']."</i></small></td></tr>\n";
 
   //blank line to end

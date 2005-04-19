@@ -1,4 +1,14 @@
 WebCollab CVS
+*** 13 April 2005
+
+- add PIPELINING (RFC 2920) to email.php 
+
+WebCollab 1.71 - Karekare
+*** 5 April 2005
+
+- release
+
+WebCollab CVS
 *** 5 April 2005
 
 - Swedish translation added (Credit: Göran Källqvist )

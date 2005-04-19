@@ -26,8 +26,8 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //secure variables
 $content   = '';
@@ -45,7 +45,7 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ){
   
   $taskid = intval($_GET['taskid']);  
 
-  include_once(BASE."includes/details.php" );
+  include_once(BASE.'includes/details.php' );
   
   //don't show options for archived projects
   if($TASKID_ROW['archive'] == 0 ){
@@ -58,7 +58,7 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ){
                   "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang["delete_$TYPE"]."</a><br />\n".
                   "<br /><small><b>".$lang['global'].":</b></small><br />\n";
       
-      if(($TYPE == "project" ) && ($TASKID_ROW['archive'] == 0 ) ){
+      if(($TYPE == 'project' ) && ($TASKID_ROW['archive'] == 0 ) ){
         $archive = "<a href=\"archive.php?x=$x&amp;action=submit_archive&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang['javascript_archive_project'], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang['archive_project']."</a><br />\n";
       }
     }
@@ -73,6 +73,6 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ){
 $content .= "<a href=\"tasks.php?x=$x&amp;action=add\">".$lang['add_project']."</a><br />\n";
 $content .= $archive.$clone;
 
-new_box( $lang[$menu_type."_options"], $content, "boxmenu" );
+new_box( $lang[$menu_type."_options"], $content, 'boxmenu' );
 
 ?>

@@ -27,14 +27,14 @@
   
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //log the user out by nulling their session key
 //record preserved to allow time of last login to be recorded
-db_query("UPDATE ".PRE."logins SET session_key='' WHERE user_id=".UID );
-setcookie("webcollab_session", "" );
+db_query('UPDATE '.PRE.'logins SET session_key=\'\' WHERE user_id='.UID );
+setcookie('webcollab_session', '' );
 
-header("Location: ".BASE_URL."index.php" );
+header('Location: '.BASE_URL.'index.php' );
 
 ?>

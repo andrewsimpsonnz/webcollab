@@ -28,25 +28,21 @@
 
 */
 
-require_once("path.php" );
-require_once( BASE."includes/security.php" );
-
-//secure variables
-$content = "";
-$row = "";
+require_once('path.php' );
+require_once( BASE.'includes/security.php' );
 
 //we need a valid contactid
 if(empty($_GET['contactid']) || ! is_numeric($_GET['contactid']) )
-  error("Contact submission", "Not a valid value for contactid");
+  error('Contact submission', 'Not a valid value for contactid');
 
 $contactid = intval($_GET['contactid']);
 
 //get contact information
-if( ! ($row = db_fetch_array( db_query("SELECT * FROM ".PRE."contacts WHERE id=$contactid" ), 0 ) ) )
-  error("Database value error", "There is no information for the user that you specified");
+if( ! ($row = db_fetch_array( db_query('SELECT * FROM '.PRE.'contacts WHERE id='.$contactid ), 0 ) ) )
+  error('Database value error', 'There is no information for the user that you specified');
 
 
-$content .=
+$content =
     "<table class=\"celldata\">\n".
        "<tr><td><i>".$lang['firstname']."</i></td><td>".$row['firstname']."</td></tr>\n".
        "<tr><td><i>".$lang['lastname']."</i></td><td>".$row['lastname']."</td></tr>\n".

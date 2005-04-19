@@ -26,24 +26,24 @@
 
 */
 
-require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once('path.php' );
+require_once( BASE.'includes/security.php' );
 
 //secure variables
-$content  = "";
+$content  = '';
 
 //existing task or project
 if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ) {
 
   $taskid = intval($_GET['taskid']);
 
-  include_once(BASE."includes/details.php" );
+  include_once(BASE.'includes/details.php' );
   
   $content .= "<small><b>".$lang['project'].":</b></small><br />\n";
 
   switch($TASKID_ROW['parent'] ) {
 
-    case "0":
+    case '0':
       //project
       $content .= "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".substr($TASKID_ROW['name'], 0, 20 )."<br />\n";
       break;
@@ -52,7 +52,7 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ) {
       //task under project
       
       //get project name (limited to 20 characters)
-      $project_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$TASKID_ROW['projectid'] ), 0, 0 ), 0, 20);
+      $project_name = substr(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] ), 0, 0 ), 0, 20);
       
       $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">$project_name</a><br />\n".
                   "<small><b>".$lang['task'].":</b></small><br />\n".
@@ -63,9 +63,9 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ) {
       //task with parent task
       
       //get project name
-      $project_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$TASKID_ROW['projectid'] ), 0, 0 ), 0, 20);
+      $project_name = substr(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] ), 0, 0 ), 0, 20);
       //get parent name
-      $parent_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$TASKID_ROW['parent'] ), 0, 0 ), 0, 20);
+      $parent_name = substr(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['parent'] ), 0, 0 ), 0, 20);
       
       $content .= "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">$project_name</a><br />\n".
                   "<small><b>".$lang['parent_task'].":</b></small><br />\n".
@@ -84,19 +84,19 @@ elseif(! empty($_GET['parentid']) && is_numeric($_GET['parentid']) ){
   $parentid = $_GET['parentid'];
 
   //get task parent details
-  $q = db_query("SELECT name, parent, projectid FROM ".PRE."tasks WHERE id=".$parentid );
+  $q = db_query('SELECT name, parent, projectid FROM '.PRE.'tasks WHERE id='.$parentid );
   if( ! $row = db_fetch_array( $q, 0) )
-    error("Task navigate", "Parent does not exist" );
+    error('Task navigate', 'Parent does not exist' );
 
   //get project name
-  $project_name = substr(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$row['projectid'] ), 0, 0 ), 0, 20);
+  $project_name = substr(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$row['projectid'] ), 0, 0 ), 0, 20);
 
   $content .= "<small><b>".$lang['project'].":</b></small><br />\n".
               "&nbsp; <a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['projectid']."\">$project_name</a><br />\n";
 
   switch( $row['parent'] ) {
 
-    case "0":
+    case '0':
       //new task under project
       $content .= "<small><b>".$lang['task'].":</b></small><br />\n".
                   "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>".$lang['new_task']."</i><br />\n";
@@ -112,7 +112,7 @@ elseif(! empty($_GET['parentid']) && is_numeric($_GET['parentid']) ){
 
   }
 
-  new_box( $lang['task_navigation'], $content, "boxmenu" );
+  new_box( $lang['task_navigation'], $content, 'boxmenu' );
 }
 
 ?>

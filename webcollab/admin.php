@@ -25,8 +25,8 @@
 
 */
 
-require_once("includes/security.php" );
-include_once("includes/screen.php" );
+require_once('includes/security.php' );
+include_once('includes/screen.php' );
 
 if(! ADMIN )
   return;
@@ -35,25 +35,25 @@ if(! ADMIN )
 // The action handler
 //
 if( ! isset($_REQUEST['action'] ) || strlen($_REQUEST['action'] ) == 0  )
-  error("Admin action handler", "No request given" );
+  error('Admin action handler', 'No request given' );
 
 switch ($_REQUEST['action'] ) {
 
-  case "admin":
+  case 'admin':
     create_top($lang['admin_config'] );
-    include("includes/mainmenu.php" );
+    include('includes/mainmenu.php' );
     goto_main();
-    include("admin/admin_config_edit.php" );
+    include('admin/admin_config_edit.php' );
     create_bottom();
     break;
     
-  case "submit":
-    include("admin/admin_config_submit.php" );
+  case 'submit':
+    include('admin/admin_config_submit.php' );
     break;  
 
   //error case
   default:
-    error("Admin action handler", "Invalid request given") ;
+    error('Admin action handler', 'Invalid request given') ;
     break;
 
 }

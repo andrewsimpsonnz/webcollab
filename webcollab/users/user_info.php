@@ -26,14 +26,14 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-include_once("lang/lang_long.php" );
+include_once('lang/lang_long.php' );
 
 //admins only
 if(! ADMIN )
-  error("Unauthorised access", "This function is for admins only." );
+  error('Unauthorised access', 'This function is for admins only.' );
 
 $content = $user_info.
            "<div style=\"text-align:center\"><span class=\"textlink\">".
@@ -41,6 +41,6 @@ $content = $user_info.
            "[<a href=\"users.php?x=$x&amp;action=showonline\">".$lang['who_online']."</a>]".
            "</span></div>\n";
 
-new_box($lang['manage_users'], $content, "boxdata2" );
+new_box($lang['manage_users'], $content, 'boxdata2' );
 
 ?>

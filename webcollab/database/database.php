@@ -25,36 +25,36 @@
 
 */
 
-require_once("path.php" );
+require_once('path.php' );
 
-include_once(BASE."config/config.php" );
+include_once(BASE.'config/config.php' );
 
 switch(DATABASE_TYPE ) {
 
-  case "mysql":
-    include(BASE."database/mysql_database.php" );
+  case 'mysql':
+    include(BASE.'database/mysql_database.php' );
     break;
 
-  case "postgresql":
-    switch(version_compare(PHP_VERSION, "4.2.0" ) ) {
+  case 'postgresql':
+    switch(version_compare(PHP_VERSION, '4.2.0' ) ) {
       case 0:
       case 1:
-        include(BASE."database/pgsql_database.php" );
+        include(BASE.'database/pgsql_database.php' );
         break;
 
       case -1:
       default:    
-        include(BASE."database/pgsql_old_database.php" );
+        include(BASE.'database/pgsql_old_database.php' );
         break;
     }
     break;
 
-  case "mysql_innodb":
-    include(BASE."database/mysql_innodb_database.php" );
+  case 'mysql_innodb':
+    include(BASE.'database/mysql_innodb_database.php' );
     break;
 
   default:
-    die("No database type specified in configuration file" );
+    die('No database type specified in configuration file' );
     break;
 }
 

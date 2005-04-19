@@ -28,14 +28,14 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-include_once(BASE."includes/admin_config.php" );
-include_once(BASE."includes/time.php" );
-include_once(BASE."lang/lang_email.php" );
-include_once(BASE."tasks/task_common.php" );
-include_once(BASE."tasks/task_submit.php" );
+include_once(BASE.'includes/admin_config.php' );
+include_once(BASE.'includes/time.php' );
+include_once(BASE.'lang/lang_email.php' );
+include_once(BASE.'tasks/task_common.php' );
+include_once(BASE.'tasks/task_submit.php' );
 
 //deny guest users
 if(GUEST )
@@ -47,17 +47,17 @@ if(empty($_POST['name']) )
 $name = safe_data($_POST['name']);
 
 //mandatory numeric inputs
-$input_array = array("owner", "projectid", "parentid", "priority", "taskgroupid", "usergroupid" );
+$input_array = array('owner', 'projectid', 'parentid', 'priority', 'taskgroupid', 'usergroupid' );
 foreach($input_array as $var ) {
   if(! isset($_POST[$var]) || ! is_numeric($_POST[$var]) ) {
-    error( "Task submit", "Variable ".$var." is not correctly set" );
+    error( 'Task submit', 'Variable '.$var.' is not correctly set' );
   }
   ${$var} = intval($_POST[$var]);
 }
 
 //mandatory text inputs
 if(empty($_POST['status']) )
-  error( "Task submit", "Variable status is not correctly set" );
+  error( 'Task submit', 'Variable status is not correctly set' );
 $status = safe_data($_POST['status']);
 
 //optional text input (can be multiple lines)
@@ -67,22 +67,22 @@ $text = safe_data_long($_POST['text']);
 $deadline = date_to_datetime($_POST['day'], $_POST['month'], $_POST['year'] );
 
 //boolean for globalaccess, groupaccess
-$input_array = array("globalaccess", "groupaccess" );
+$input_array = array('globalaccess', 'groupaccess' );
 foreach($input_array as $var ) {
-if(isset($_POST[$var]) && $_POST[$var] == "on" )
-  ${$var} = "t";
+if(isset($_POST[$var]) && $_POST[$var] == 'on' )
+  ${$var} = 't';
 else
-  ${$var} = "f";
+  ${$var} = 'f';
 }
 
 //carry out some data consistency checking
 if( $parentid != 0 ) {
 
-  if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE id=$parentid" ), 0, 0 ) < 1 )
-    error("Database integrity check", "Input data does not match - no parent for task" );
+  if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$parentid ), 0, 0 ) < 1 )
+    error('Database integrity check', 'Input data does not match - no parent for task' );
 
-  if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE id=$projectid" ), 0, 0 ) < 1 )
-    error("Database integrity check", "Input data does not match - no project for task" );
+  if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 ) < 1 )
+    error('Database integrity check', 'Input data does not match - no project for task' );
 }
 //start transaction
 db_begin();
@@ -130,37 +130,37 @@ $taskid = db_lastoid('tasks_id_seq' );
 
 //for a new project set the projectid variable reset correctly
 if($parentid == 0 || $projectid == 0 )  {
-  db_query("UPDATE ".PRE."tasks SET projectid=$taskid WHERE id=$taskid" );
+  db_query('UPDATE '.PRE.'tasks SET projectid='.$taskid.' WHERE id='.$taskid );
   $projectid = $taskid;
 }
 
 //if inactive parent project, then set this task to inactive too
 $project_status = $status;
 if($parentid != 0 ) {
-  $project_status = db_result(db_query("SELECT status FROM ".PRE."tasks WHERE id=$projectid" ), 0, 0 );
+  $project_status = db_result(db_query('SELECT status FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 );
 
-  if($project_status == "cantcomplete" || $project_status == "notactive" )
+  if($project_status == 'cantcomplete' || $project_status == 'notactive' )
     db_query("UPDATE ".PRE."tasks SET status='$project_status' WHERE id=$taskid" );
 }
 
 //you have already seen this item, no need to announce it to you
-db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES(".UID.", $taskid, now() )");
+db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES('.UID.', '.$taskid.', now() )');
 
 //set completed percentage project record
 $percent_completed = percent_complete($projectid );
-db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$projectid );
+db_query('UPDATE '.PRE.'tasks SET completed='.$percent_completed.' WHERE id='.$projectid );
 
 //for completed project set the completion time
 if($percent_completed == 100 ){
-  $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM ".PRE."tasks WHERE projectid=$projectid" ), 0, 0 );
-  db_query("UPDATE ".PRE."tasks SET completion_time='".$completion_time."' WHERE id=".$projectid );
+  $completion_time = db_result(db_query('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid='.$projectid ), 0, 0 );
+  db_query('UPDATE '.PRE.'tasks SET completion_time=\''.$completion_time.'\' WHERE id='.$projectid );
 }
 
 //transaction complete
 db_commit();
 
 //get name of project for emails
-$name_project = db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=$projectid" ), 0, 0 );
+$name_project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 );
 
 //set project/task type for emails
 switch($parentid){
@@ -169,7 +169,7 @@ switch($parentid){
     $email2 = $email_new_group_project;
     $title1 = $title_new_owner_project;
     $title2 = $title_new_group_project;
-    $name_task = "";
+    $name_task = '';
     break;
 
   default:
@@ -188,11 +188,11 @@ switch($parentid){
 switch($owner ) {
   case 0:
     $name_owner = $lang['nobody'];
-    $email_owner = "";
+    $email_owner = '';
     break;
 
   default:
-    $q = db_query("SELECT fullname, email FROM ".PRE."users WHERE id=$owner" );
+    $q = db_query('SELECT fullname, email FROM '.PRE.'users WHERE id='.$owner );
     $row = db_fetch_num($q, 0 );
     $name_owner = $row[0];
     $email_owner = $row[1];
@@ -204,41 +204,41 @@ if(get_magic_quotes_gpc() )
   $text = stripslashes($text );
 
 //email owner ?
-if(isset($_POST['mailowner']) && ($_POST['mailowner']=="on") && ($owner != 0) ) {
+if(isset($_POST['mailowner']) && ($_POST['mailowner'] == 'on') && ($owner != 0) ) {
   
-  include_once(BASE."includes/email.php" );
+  include_once(BASE.'includes/email.php' );
   
-  $email_address_owner = db_result( db_query("SELECT email FROM ".PRE."users WHERE id=".$owner, 0), 0, 0 );
+  $email_address_owner = db_result( db_query('SELECT email FROM '.PRE.'users WHERE id='.$owner, 0), 0, 0 );
   $message = $email1 .
               sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text );
   email($email_address_owner, $title1, $message );
 }
 
 //do we need to send an email to the user group to announce this message
-if(isset($_POST['maillist']) && $_POST['maillist'] == "on" ) {
+if(isset($_POST['maillist']) && $_POST['maillist'] == 'on' ) {
 
-  include_once(BASE."includes/email.php" );
+  include_once(BASE.'includes/email.php' );
   
   $message = $email2 .
               sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text );
 
-  $usergroup = "";
-  $s = "";
-  if($EMAIL_MAILINGLIST != "" ) {
+  $usergroup = '';
+  $s = '';
+  if($EMAIL_MAILINGLIST != '' ) {
     $usergroup = $EMAIL_MAILINGLIST;
-    $s = ", ";
+    $s = ', ';
   }
 
   if($usergroupid != 0 ) {
-    $q = db_query("SELECT ".PRE."users.email
-                      FROM ".PRE."users
-                      LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.userid=".PRE."users.id)
-                      WHERE ".PRE."usergroups_users.usergroupid=$usergroupid
-                      AND ".PRE."users.deleted='f'");
+    $q = db_query('SELECT '.PRE.'users.email
+                      FROM '.PRE.'users
+                      LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
+                      WHERE '.PRE.'usergroups_users.usergroupid='.$usergroupid.'
+                      AND '.PRE.'users.deleted=\'f\'');
 
-    for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
+    for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
       $usergroup .= $s.$row[0];
-      $s = ", ";
+      $s = ', ';
     }
   }
 email($usergroup, sprintf($title2, $name), $message );
@@ -246,11 +246,11 @@ email($usergroup, sprintf($title2, $name), $message );
 
 //don't use the default break-out sequence but go to or the parent's page of the project
 if($parentid != 0 ) {
-  header("Location: ".BASE_URL."tasks.php?x=$x&action=show&taskid=$parentid" );
+  header('Location: '.BASE_URL.'tasks.php?x=$x&action=show&taskid='.$parentid );
   die;
 }
 else {
-  header("Location: ".BASE_URL."main.php?x=$x" );
+  header('Location: '.BASE_URL.'main.php?x='.$x );
   die;
 }
 ?>

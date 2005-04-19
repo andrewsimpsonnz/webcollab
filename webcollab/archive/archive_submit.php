@@ -25,37 +25,37 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
   
 $taskid = intval($_GET['taskid']);
   
 //check if the user has enough rights
-if( ( ! ADMIN ) && (db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE id=$taskid AND owner=".UID ), 0, 0 ) < 1) )
+if( ( ! ADMIN ) && (db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$taskid.' AND owner='.UID ), 0, 0 ) < 1) )
   warning($lang['task_submit'], $lang['not_owner'] );
 
-$projectid = db_result(db_query("SELECT projectid FROM ".PRE."tasks WHERE id=$taskid" ), 0, 0 );  
+$projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$taskid ), 0, 0 );  
   
 switch($_REQUEST['action'] ) {
 
-  case "submit_archive":
+  case 'submit_archive':
     //do the archiving
-    db_query("UPDATE ".PRE."tasks SET archive=1 WHERE projectid=$projectid" );
+    db_query('UPDATE '.PRE.'tasks SET archive=1 WHERE projectid='.$projectid );
         
-    header("Location: ".BASE_URL."main.php?x=$x" );
+    header('Location: '.BASE_URL.'main.php?x='.$x );
     die;
     break;
     
-  case "submit_restore":
+  case 'submit_restore':
     //do the restore
-    db_query("UPDATE ".PRE."tasks SET archive=0 WHERE projectid=$projectid" );
+    db_query('UPDATE '.PRE.'tasks SET archive=0 WHERE projectid='.$projectid );
         
-    header("Location: ".BASE_URL."archive.php?x=$x&action=list" );
+    header('Location: '.BASE_URL.'archive.php?x='.$x.'&action=list' );
     die;
     break;
 
     default:
-      error("Archive submit", "Invalid request given");
+      error('Archive submit', 'Invalid request given');
     break;
 }
 

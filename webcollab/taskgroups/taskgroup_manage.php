@@ -27,15 +27,15 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //admins only
 if( ! ADMIN )
-  error("Unauthorised access", "This function is for admins only." );
+  error('Unauthorised access', 'This function is for admins only.' );
 
 //get the info
-$q = db_query("SELECT * FROM ".PRE."taskgroups ORDER BY name" );
+$q = db_query('SELECT * FROM '.PRE.'taskgroups ORDER BY name' );
 
 //nothing here yet
 if(db_numrows($q) == 0 ) {
@@ -61,6 +61,6 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 $content .=   "</table>\n".
             "<p><span class=\"textlink\">[<a href=\"taskgroups.php?x=$x&amp;action=add\">".$lang['add']."</a>]</span></p>\n";
 
-new_box( $lang['manage_taskgroups'], $content, "boxdata2" );
+new_box( $lang['manage_taskgroups'], $content, 'boxdata2' );
 
 ?>

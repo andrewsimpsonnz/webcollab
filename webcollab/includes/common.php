@@ -27,10 +27,10 @@
 
 */
 
-require_once("path.php" );
+require_once('path.php' );
 
-include_once(BASE."config/config.php" );
-include_once(BASE."lang/lang.php" );
+include_once(BASE.'config/config.php' );
+include_once(BASE.'lang/lang.php' );
 
 //
 // Input validation (single line input)
@@ -71,7 +71,7 @@ function safe_data_long($body ) {
   if(get_magic_quotes_gpc() )
     $body = stripslashes($body );
       
-  //normalise line breaks from Windows & Mac to UNIX style
+  //normalise line breaks from Windows & Mac to UNIX style '\n' 
   $body = str_replace("\r\n", "\n", $body );
   $body = str_replace("\r", "\n", $body );
   //break up long non-wrap words
@@ -89,7 +89,7 @@ function clean_up($body ) {
   //allow only normal printing characters valid for the character set in use
   $body = preg_replace($validation_regex, '?', $body );
   //use HTML encoding, or add escapes '\' for characters that could be used for css <script> or SQL injection attacks
-  $trans = array('\\'=>'\\\\', "'"=>"\'", '"'=>'\"', ';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'\(', ')'=>'\)', '+'=>'\+', '-'=>'\-', '='=>'\=' );
+  $trans = array('\\'=>'\\\\', "'"=>"\'", '"'=>'\"', ';'=>'&#059;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;' );
   
   return strtr($body, $trans ); 
   
@@ -121,13 +121,13 @@ function javascript_escape($body ) {
 //
 function html_links($body, $database_escape=0 ) {
 
-  $body = preg_replace("/(([\w\-\.]+)@([\w\-\.]+)\.([\w]+))/", "<a href=\"mailto:$0\">$0</a>", $body );
+  $body = preg_replace('/(([\w\-\.]+)@([\w\-\.]+)\.([\w]+))/', "<a href=\"mailto:$0\">$0</a>", $body );
   
   //data being submitted to a database needs ('$0') part escaped
   if($database_escape )    
-    $body = preg_replace("/((http|ftp)+(s)?:\/\/[^\s]+)/i", "<a href=\"$0\" onclick=\"window.open(\'$0\'); return false\">$0</a>", $body );
+    $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s]+)/i', "<a href=\"$0\" onclick=\"window.open(\'$0\'); return false\">$0</a>", $body );
   else
-    $body = preg_replace("/((http|ftp)+(s)?:\/\/[^\s]+)/i", "<a href=\"$0\" onclick=\"window.open('$0'); return false\">$0</a>", $body );
+    $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s]+)/i', "<a href=\"$0\" onclick=\"window.open('$0'); return false\">$0</a>", $body );
     
   return $body;
 }
@@ -139,14 +139,14 @@ function error($box_title, $content ) {
 
   global $db_error_message;
   
-  include_once(BASE."includes/screen.php" );
+  include_once(BASE.'includes/screen.php' );
   
-  create_top("ERROR", 1 );
+  create_top('ERROR', 1 );
 
-  if(NO_ERROR != "Y" )
-    new_box( $box_title, "<div style=\"text-align : center\">".$content."</div>", "boxdata", "singlebox" );
+  if(NO_ERROR != 'Y' )
+    new_box( $box_title, "<div style=\"text-align : center\">".$content."</div>", 'boxdata', 'singlebox' );
     else
-    new_box($lang['report'], $lang['warning'], "boxdata2", "singlebox" );
+    new_box($lang['report'], $lang['warning'], 'boxdata2', 'singlebox' );
 
 
   //get the post vars
@@ -165,6 +165,7 @@ function error($box_title, $content ) {
             "Database message: $db_error_message\n".
             "Page that was called: ".$_SERVER['SCRIPT_NAME']."\n".
             "Called URL: ".$_SERVER['REQUEST_URI']."\n".
+            "URL string: ".$_SERVER['QUERY_STRING']."\n".
             "Browser: ".$_SERVER['HTTP_USER_AGENT']."\n".
             "Time: ".date("F j, Y, H:i")."\n".
             "IP: ".$_SERVER['REMOTE_ADDR']."\n".
@@ -172,11 +173,11 @@ function error($box_title, $content ) {
             "POST vars: $post\n\n";
   
   if(EMAIL_ERROR != NULL ){
-    include_once(BASE."includes/email.php" );
+    include_once(BASE.'includes/email.php' );
     email(EMAIL_ERROR, "ERROR on ".MANAGER_NAME, $message );
   }
         
-  if(DEBUG == "Y" )
+  if(DEBUG == 'Y' )
     new_box("Error Debug", nl2br($message) );
 
   create_bottom();
@@ -193,13 +194,13 @@ function warning($box_title, $message ) {
 
   global $lang;
 
-  include_once(BASE."includes/screen.php" );
+  include_once(BASE.'includes/screen.php' );
 
   create_top($lang['error'], 1 );
 
   $content = "<div style=\"text-align : center\">$message</div>\n";
 
-  new_box($box_title, $content, "boxdata", "singlebox" );
+  new_box($box_title, $content, 'boxdata', 'singlebox' );
 
   create_bottom();
 

@@ -30,19 +30,19 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 $content = '';
 $company = '';
 
 //get all contacts
-$q = db_query("SELECT id, firstname, lastname, company FROM ".PRE."contacts ORDER BY company, lastname" );
+$q = db_query('SELECT id, firstname, lastname, company FROM '.PRE.'contacts ORDER BY company, lastname' );
 
 //show all contacts
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
-  if( $row['company'] != "" ) {
+  if( $row['company'] != '' ) {
      if ($row['company'] != $company ){
        $content .= $row['company']."<br />";
      }
@@ -63,6 +63,6 @@ if(! GUEST )
   $content .= "<span class=\"textlink\">[<a href=\"contacts.php?x=$x&amp;action=add\">".$lang['add_contact']."</a>]</span>\n";
 
 //show the box
-new_box($lang['contacts'], $content, "boxmenu" );
+new_box($lang['contacts'], $content, 'boxmenu' );
 
 ?>

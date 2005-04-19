@@ -25,50 +25,50 @@
 
 */
 
-require_once("includes/security.php" );
-include_once("includes/screen.php" );
+require_once('includes/security.php' );
+include_once('includes/screen.php' );
 
 //
 // The action handler
 //
 if( ! isset($_REQUEST['action'] ) )
-  error("Archive action handler", "No request given" );
+  error('Archive action handler', 'No request given' );
 
   //what do you want to archive today =]
   switch($_REQUEST['action'] ) {
 
     //list archived projects
-    case "list":
+    case 'list':
       create_top($lang['projects'] );
-      include("includes/mainmenu.php" );
+      include('includes/mainmenu.php' );
       if(! GUEST )
-        include("tasks/task_menubox.php" );
-      include("users/user_menubox.php" );
+        include('tasks/task_menubox.php' );
+      include('users/user_menubox.php' );
       goto_main();
-      include("archive/archive_list.php" );
+      include('archive/archive_list.php' );
       create_bottom();
       break;
 
     //printable archive info
-    case "archive_print":
+    case 'archive_print':
       create_top($lang['projects'], 2 );
-      include("archive/archive_list.php" );
+      include('archive/archive_list.php' );
       create_bottom();
       break;
     
     //archive project
-    case "submit_archive":
-      include("archive/archive_submit.php" );
+    case 'submit_archive':
+      include('archive/archive_submit.php' );
       break;
 
     //restore archived project
-    case "submit_restore":
-      include("archive/archive_submit.php" );
+    case 'submit_restore':
+      include('archive/archive_submit.php' );
       break;
     
     //Error case
     default:
-      error("Archive action handler", "Invalid request given") ;
+      error('Archive action handler', 'Invalid request given') ;
       break;
   }
 

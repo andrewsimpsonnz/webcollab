@@ -27,21 +27,21 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //admins only
 if(! ADMIN )
-  error("Unauthorised access", "This function is for admins only." );
+  error('Unauthorised access', 'This function is for admins only.' );
 
 //secure
 if(empty($_GET['taskgroupid']) || ! is_numeric($_GET['taskgroupid']) )
-  error("Taskgroup edit", "There is no taskgroupid specified." );
+  error('Taskgroup edit', 'There is no taskgroupid specified.' );
 
 $taskgroupid = intval($_GET['taskgroupid']);
 
 //get taskgroup information
-$q = db_query("SELECT * FROM ".PRE."taskgroups WHERE id=$taskgroupid" );
+$q = db_query('SELECT * FROM '.PRE.'taskgroups WHERE id='.$taskgroupid );
 $row = db_fetch_array( $q, 0 );
 
 $content =

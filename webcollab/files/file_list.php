@@ -28,42 +28,42 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-include_once(BASE."includes/details.php" );
+include_once(BASE.'includes/details.php' );
 
-$content = "";
+$content = '';
 
 if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) )
-  error("File list", "The taskid input is not valid" ); 
+  error('File list', 'The taskid input is not valid' ); 
 
 $taskid = intval($_REQUEST['taskid']);
 
 //check usergroup security
-require_once( BASE."includes/usergroup_security.php" );
+require_once( BASE.'includes/usergroup_security.php' );
 
 //get the files from this task
-$q = db_query("SELECT ".PRE."files.id AS id,
-                        ".PRE."files.filename AS filename,
-                        ".$epoch.PRE."files.uploaded) AS uploaded,
-                        ".PRE."files.size AS size,
-                        ".PRE."files.mime AS mime,
-                        ".PRE."files.description AS description,
-                        ".PRE."files.uploader AS uploader,
-                        ".PRE."users.id AS userid,
-                        ".PRE."users.fullname AS username
-                        FROM ".PRE."files
-                        LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."files.uploader)
-                        WHERE ".PRE."files.taskid=$taskid
-                        ORDER BY uploaded" );
+$q = db_query('SELECT '.PRE.'files.id AS id,
+                        '.PRE.'files.filename AS filename,
+                        '.$epoch.PRE.'files.uploaded) AS uploaded,
+                        '.PRE.'files.size AS size,
+                        '.PRE.'files.mime AS mime,
+                        '.PRE.'files.description AS description,
+                        '.PRE.'files.uploader AS uploader,
+                        '.PRE.'users.id AS userid,
+                        '.PRE.'users.fullname AS username
+                        FROM '.PRE.'files
+                        LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'files.uploader)
+                        WHERE '.PRE.'files.taskid='.$taskid.'
+                        ORDER BY uploaded' );
 
 if(db_numrows($q ) != 0 ) {
 
   $content .= "<table>\n";
 
   //show them
-  for($i=0 ; $row = @db_fetch_array($q, $i) ; $i++ ) {
+  for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
     //file part
     $content .= "<tr><td><a href=\"files.php?x=$x&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=$x&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a> <small>(".$row['size'].$lang['bytes'].") </small>";
@@ -78,7 +78,7 @@ if(db_numrows($q ) != 0 ) {
     $content .= "<tr><td>".$lang['uploader']." <a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'], 1 ).")</td></tr>\n";
 
     //show description
-    if( $row['description'] != "" )
+    if( $row['description'] != '' )
       $content .= "<tr><td><small><i>".$row['description']."</i></small></td></tr>\n";
 
     //padding for next entry
@@ -91,6 +91,6 @@ if(db_numrows($q ) != 0 ) {
 if((! GUEST ) && ($TASKID_ROW['archive'] == 0) )
   $content .= "<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang['add_file']."</a>]</span>";
 
-new_box($lang["files_assoc_".$TYPE], $content, "boxdata2" );
+new_box($lang['files_assoc_'.$TYPE], $content, 'boxdata2' );
 
 ?>

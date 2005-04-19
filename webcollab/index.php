@@ -28,13 +28,13 @@
 */
 
 //secure variables
-$content = "";
+$content = '';
 
-include( "includes/screen.php" );
-include( "includes/common.php" );
+include( 'includes/screen.php' );
+include( 'includes/common.php' );
 
 //error condition
-function secure_error( $reason = "Unauthorised area", $redirect = 0 ) {
+function secure_error( $reason = 'Unauthorised area', $redirect = 0 ) {
 
   global $lang;
 
@@ -44,13 +44,13 @@ function secure_error( $reason = "Unauthorised area", $redirect = 0 ) {
   else {
     $redirect_time = 0;
   }
-  create_top($lang['login'], 1, "", "", "", $redirect_time );
-  new_box($lang['error'], "<div style=\"text-align : center\"><br />$reason<br /></div>", "boxdata", "singlebox" );
+  create_top($lang['login'], 1, '', '', '', $redirect_time );
+  new_box($lang['error'], "<div style=\"text-align : center\"><br />$reason<br /></div>", 'boxdata', 'singlebox' );
   
   if($redirect_time != 0) {
     new_box(sprintf($lang['redirect_sprt'], $redirect_time ),
             "<div style=\"text-align : center\"><a href=\"".BASE_URL."index.php\">".$lang['login_now']."</a></div>",
-            "boxdata", "singlebox" );
+            'boxdata', 'singlebox' );
   }
   
   create_bottom();
@@ -59,25 +59,25 @@ function secure_error( $reason = "Unauthorised area", $redirect = 0 ) {
 
 //valid login attempt ?
 if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['username']) > 0 && strlen($_POST['password']) > 0 )
-    || (isset($_SERVER['REMOTE_USER'])  && (strlen($_SERVER['REMOTE_USER']) > 0 ) && WEB_AUTH == "Y" ) ) {
+    || (isset($_SERVER['REMOTE_USER'])  && (strlen($_SERVER['REMOTE_USER']) > 0 ) && WEB_AUTH == 'Y' ) ) {
 
-  $q = "";
-  $login_q ="";
-  $username = "0";
-  $md5pass = "0";
-  $session_key = "";
+  $q = '';
+  $login_q ='';
+  $username = '0';
+  $md5pass = '0';
+  $session_key = '';
   
-  include_once "database/database.php";
-  include_once "includes/common.php";
+  include_once 'database/database.php';
+  include_once 'includes/common.php';
 
  //no ip (possible?)
   if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
-    secure_error("Unable to determine ip address");
+    secure_error('Unable to determine ip address');
   }
  
-  if(WEB_AUTH == "Y" ) {
+  if(WEB_AUTH == 'Y' ) {
       //construct login query
-      $login_q = "SELECT id FROM ".PRE."users WHERE name='".safe_data($_SERVER['REMOTE_USER'] )."' AND deleted='f'";
+      $login_q = 'SELECT id FROM '.PRE.'users WHERE name=\''.safe_data($_SERVER['REMOTE_USER'] ).'\' AND deleted=\'f\'';
   }
   else {
     $username = safe_data($_POST['username']);
@@ -85,10 +85,10 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
     $md5pass = md5($_POST['password'] );
 
     //count the number of recent login attempts
-    if( ! $q = @db_query("SELECT COUNT(*) FROM ".PRE."login_attempt 
-                               WHERE name='".$username."' 
-                               AND last_attempt > (now()-INTERVAL ".$delim."10 MINUTE".$delim.") LIMIT 6", 0 ) ) {
-    secure_error("Unable to connect to database.  Please try again later." );
+    if( ! $q = @db_query('SELECT COUNT(*) FROM '.PRE.'login_attempt 
+                               WHERE name=\''.$username.'\' 
+                               AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 6', 0 ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
     }
   
     $count_attempts = db_result($q, 0, 0 );
@@ -99,10 +99,10 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
     }                                                                              
     
     //record this login attempt
-    db_query("INSERT INTO ".PRE."login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
+    db_query('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (\''.$username.'\', \''.$ip.'\', now() )' );
                                                                                      
     //construct login query
-    $login_q = "SELECT id FROM ".PRE."users WHERE password='".$md5pass."' AND name='".$username."' AND deleted='f'";
+    $login_q = 'SELECT id FROM '.PRE.'users WHERE password=\''.$md5pass.'\' AND name=\''.$username.'\' AND deleted=\'f\'';
   }
    
   //database query
@@ -119,7 +119,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
 
   //no user-id
   if( ! ($user_id = @db_result($q, 0, 0) ) ) {
-    secure_error("Unknown user id", 1 );
+    secure_error('Unknown user id', 1 );
   }
 
 
@@ -127,49 +127,49 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
 
   //create session key
   // seed number is required for early versions of PHP
-  if(version_compare(PHP_VERSION, "4.2.0" ) == -1 )
+  if(version_compare(PHP_VERSION, '4.2.0' ) == -1 )
     mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );
   //use Mersenne Twister algorithm (random number), then one-way hash to give session key  
   $session_key = md5(mt_rand() );
 
   //remove the old login information
-  @db_query("DELETE FROM ".PRE."logins WHERE user_id=$user_id" );
-  @db_query("DELETE FROM ".PRE."login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
+  @db_query('DELETE FROM '.PRE.'logins WHERE user_id='.$user_id );
+  @db_query('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.$delim.'20 MINUTE'.$delim.') OR name=\''.$username.'\'' );
    
   //log the user in
-  db_query("INSERT INTO ".PRE."logins( user_id, session_key, ip, lastaccess ) VALUES ('$user_id', '$session_key', '$ip', now() )" );
+  db_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES (\''.$user_id.'\', \''.$session_key.'\', \''.$ip.'\', now() )' );
 
   //try and set a session cookie (if the browser will let us)
-  setcookie("webcollab_session", $session_key );
+  setcookie('webcollab_session', $session_key );
   //(No need to record an error here if unsuccessful: the code will revert to URI session keys)
 
   //relocate the user to the main screen
   //(we use both URI session key and cookies initially - in case cookies don't work)
-  header("Location: ".BASE_URL."main.php?x=$session_key");
+  header('Location: '.BASE_URL.'main.php?x='.$session_key );
   die;
 }
 
 //allow for continuation of session if a valid cookie is already set
 if(isset($_COOKIE['webcollab_session'] ) && strlen($_COOKIE['webcollab_session'] ) == 32 ) {
  
-  include_once "includes/common.php"; 
-  include_once "database/database.php"; 
+  include_once 'includes/common.php'; 
+  include_once 'database/database.php'; 
     
   //check if session is valid and within time limits
-  if(db_result(@db_query("SELECT COUNT(*) FROM ".PRE."logins
-                                 WHERE session_key='".safe_data($_COOKIE['webcollab_session'])."'
-                                 AND lastaccess > (now()-INTERVAL ".$delim.round(SESSION_TIMEOUT)." HOUR".$delim.")" ) ) == 1 ) {
+  if(db_result(@db_query('SELECT COUNT(*) FROM '.PRE.'logins
+                                 WHERE session_key=\''.safe_data($_COOKIE['webcollab_session']).'\'
+                                 AND lastaccess > (now()-INTERVAL '.$delim.round(SESSION_TIMEOUT).' HOUR'.$delim.')' ) ) == 1 ) {
     //relocate to main screen, and let security.php do further checking on session validity
-    header("Location: ".BASE_URL."main.php?x=0");
+    header('Location: '.BASE_URL.'main.php?x=0');
     die;
   }
 }
 
-create_top($lang['login'], 1, "username" );
+create_top($lang['login'], 1, 'username' );
 
 $content = "<div style=\"text-align:center\">";
 
-if( SITE_IMG != "" ) {
+if( SITE_IMG != '' ) {
   $content .=  "<img src=\"images/".SITE_IMG."\" /><br />";
 }
 else {
@@ -185,12 +185,12 @@ $content .= "<p>".$lang['please_login'].":</p>\n".
             "<p>&nbsp;</p>\n".
             "<p><input type=\"submit\" value=\"".$lang['login']."\" /></p>\n";
   switch( DATABASE_TYPE ) {
-  case "postgresql":
+  case 'postgresql':
     $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\" /></a></p>";
     break; 
   
-  case "mysql":
-  case "mysql_innodb":
+  case 'mysql':
+  case 'mysql_innodb':
     $content .= "<p><a href=\"http://www.mysql.com\"><img src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\" /></a></p>\n";
     break;
     
@@ -203,7 +203,7 @@ $content .= "</form>".
             "</div>";
 
 //set box options
-new_box($lang['login'], $content, "boxdata", "singlebox" );
+new_box($lang['login'], $content, 'boxdata', 'singlebox' );
 
 create_bottom();
 

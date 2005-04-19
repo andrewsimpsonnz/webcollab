@@ -28,14 +28,14 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-include_once(BASE."includes/admin_config.php" );
-include_once(BASE."includes/time.php" );
-include_once(BASE."lang/lang_email.php" );
-include_once(BASE."tasks/task_common.php" );
-include_once(BASE."tasks/task_submit.php" );
+include_once(BASE.'includes/admin_config.php' );
+include_once(BASE.'includes/time.php' );
+include_once(BASE.'lang/lang_email.php' );
+include_once(BASE.'tasks/task_common.php' );
+include_once(BASE.'tasks/task_submit.php' );
 
 //
 // Recursive function to find chldren tasks and reset their projectid's
@@ -46,13 +46,13 @@ function reparent_children($task_id ) {
    global $projectid;
 
   //find the children tasks - if any
-  $q = db_query("SELECT id FROM ".PRE."tasks WHERE parent=$task_id" );
+  $q = db_query('SELECT id FROM '.PRE.'tasks WHERE parent='.$task_id );
 
   if(db_numrows($q ) == 0)
     return;
 
-   for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
-     db_query("UPDATE ".PRE."tasks SET projectid=$projectid WHERE id=".$row[0] );
+   for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+     db_query('UPDATE '.PRE.'tasks SET projectid=$projectid WHERE id='.$row[0] );
      //recursion to find anymore children
      reparent_children($row[0] );
    }
@@ -68,12 +68,12 @@ function adjust_completion($projectid ) {
 
   //set completed percentage project record
   $percent_completed = percent_complete($projectid );
-  db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$projectid );
+  db_query('UPDATE '.PRE.'tasks SET completed='.$percent_completed.' WHERE id='.$projectid );
   
   //for completed project set the completion time
   if($percent_completed == 100 ){
-    $completion_time = db_result(db_query("SELECT MAX(finished_time) FROM ".PRE."tasks WHERE projectid=$projectid" ), 0, 0 );
-    db_query("UPDATE ".PRE."tasks SET completion_time='".$completion_time."' WHERE id=".$projectid );
+    $completion_time = db_result(db_query('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid='.$projectid ), 0, 0 );
+    db_query('UPDATE '.PRE.'tasks SET completion_time=\''.$completion_time.'\' WHERE id='.$projectid );
   }
   return;
 }
@@ -85,23 +85,23 @@ if(empty($_POST['name']) )
 $name = safe_data($_POST['name']);
 
 //mandatory numeric inputs
-$input_array = array("owner", "parentid", "priority", "taskgroupid", "usergroupid" );
+$input_array = array('owner', 'parentid', 'priority', 'taskgroupid', 'usergroupid' );
 foreach($input_array as $var ) {
   if(! isset($_POST[$var]) || ! is_numeric($_POST[$var]) ) {
-    error( "Task submit", "Variable ".$var." is not correctly set" );
+    error( 'Task submit', 'Variable '.$var.' is not correctly set' );
   }
   ${$var} = intval($_POST[$var]);
 }
 
 //special case: taskid cannot be zero
 if(empty($_POST['taskid']) || ! is_numeric($_POST['taskid']) ) 
-  error( "Task submit", "Variable taskid is not correctly set" );
+  error( 'Task submit', 'Variable taskid is not correctly set' );
 
 $taskid = intval($_POST['taskid']);
 
 //mandatory text inputs
 if(empty($_POST['status']) )
-  error( "Task submit", "Variable status is not correctly set" );
+  error( 'Task submit', 'Variable status is not correctly set' );
 $status = safe_data($_POST['status']);
 
 //optional text input (can be multiple lines)
@@ -111,12 +111,12 @@ $text = safe_data_long($_POST['text']);
 $deadline = date_to_datetime($_POST['day'], $_POST['month'], $_POST['year'] );
 
 //boolean for globalaccess, groupaccess
-$input_array = array("globalaccess", "groupaccess" );
+$input_array = array('globalaccess', 'groupaccess' );
 foreach($input_array as $var ) {
-if(isset($_POST[$var]) && $_POST[$var] == "on" )
-  ${$var} = "t";
+if(isset($_POST[$var]) && $_POST[$var] == 'on' )
+  ${$var} = 't';
 else
-  ${$var} = "f";
+  ${$var} = 'f';
 }
 
 //check if the user has enough rights
@@ -127,7 +127,7 @@ if(! user_access($taskid ) )
 db_begin();
 
 //get existing status
-$previous_status = db_result(db_query("SELECT status FROM ".PRE."tasks WHERE id=$taskid" ), 0, 0 );
+$previous_status = db_result(db_query('SELECT status FROM '.PRE.'tasks WHERE id='.$taskid ), 0, 0 );
 
 //change the info
 db_query("UPDATE ".PRE."tasks
@@ -146,7 +146,7 @@ db_query("UPDATE ".PRE."tasks
       WHERE id=$taskid" );
 
 //get existing projectid and parent from the database
-$q = db_query("SELECT projectid, parent FROM ".PRE."tasks WHERE id=$taskid" );
+$q = db_query('SELECT projectid, parent FROM '.PRE.'tasks WHERE id='.$taskid );
 $row = db_fetch_array($q, 0 );
 $projectid = $row['projectid'];
 
@@ -159,7 +159,7 @@ if($row['parent'] != $parentid ) {
   if($parentid == 0 )
     $projectid = $taskid;
   else
-    $projectid = db_result(db_query("SELECT projectid FROM ".PRE."tasks WHERE id=$parentid" ), 0, 0 );
+    $projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$parentid ), 0, 0 );
   
   //can't put a project onto it's own tasks
   if(($projectid == $row['projectid'] ) && ($row['parent'] == 0 ) ){
@@ -167,7 +167,7 @@ if($row['parent'] != $parentid ) {
   }
   else {
     //update this task, then recursively search for children tasks and reparent them too.
-    db_query("UPDATE ".PRE."tasks SET projectid=$projectid, parent=$parentid WHERE id=$taskid" );
+    db_query('UPDATE '.PRE.'tasks SET projectid='.$projectid.', parent='.$parentid.' WHERE id='.$taskid );
     reparent_children($taskid );
   }
   
@@ -178,17 +178,17 @@ if($row['parent'] != $parentid ) {
 //make adjustments for child tasks
 if($parentid == 0 ) {
   switch($status ) {
-    case "cantcomplete":
-    case "notactive":
+    case 'cantcomplete':
+    case 'notactive':
       //inactive project, then set the uncompleted child tasks to inactive too
-      db_query("UPDATE ".PRE."tasks SET status='$status' WHERE projectid=$projectid AND (status='active' OR status='created')" );
+      db_query('UPDATE '.PRE.'tasks SET status=\''.$status.'\' WHERE projectid='.$projectid.' AND (status=\'active\' OR status=\'created\')' );
       break;
 
-    case "new":
-    case "active":
+    case 'new':
+    case 'active':
       //if reinstated project, set inactive child tasks to new
-      if($previous_status == "cantcomplete" || $previous_status == "notactive" )
-        db_query("UPDATE ".PRE."tasks SET status='created' WHERE projectid=$projectid AND parent<>0 AND status='".$previous_status."'" );
+      if($previous_status == 'cantcomplete' || $previous_status == 'notactive' )
+        db_query('UPDATE '.PRE.'tasks SET status=\'created\' WHERE projectid='.$projectid.' AND parent<>0 AND status=\''.$previous_status.'\'' );
       break;
   }
 }
@@ -200,7 +200,7 @@ adjust_completion($projectid );
 db_commit();
 
 //get name of project and owner for emails
-$name_project = db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=$projectid" ), 0, 0 );
+$name_project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 );
 
 switch($parentid ){
   case 0:
@@ -208,7 +208,7 @@ switch($parentid ){
     $title1 = $title_edit_owner_project;
     $email2 = $email_edit_group_project;
     $title2 = $title_edit_group_project;
-    $name_task = "";
+    $name_task = '';
     break;
 
   default:
@@ -227,11 +227,11 @@ switch($parentid ){
 switch($owner ) {
   case 0:
     $name_owner = $lang['nobody'];
-    $email_owner = "";
+    $email_owner = '';
     break;
 
   default:
-    $q = db_query("SELECT fullname, email FROM ".PRE."users WHERE id=$owner" );
+    $q = db_query('SELECT fullname, email FROM '.PRE.'users WHERE id='.$owner );
     $row = db_fetch_num($q, 0 );
     $name_owner = $row[0];
     $email_owner = $row[1];
@@ -243,11 +243,11 @@ switch($owner ) {
     $text = stripslashes($text );
 
 //email owner ?
-if(isset($_POST['mailowner']) && ($_POST['mailowner']=="on") && ($owner != 0) ) {
+if(isset($_POST['mailowner']) && ($_POST['mailowner']=='on') && ($owner != 0) ) {
 
-  include_once(BASE."includes/email.php" );
+  include_once(BASE.'includes/email.php' );
 
-  $email_address_owner = db_result(db_query("SELECT email FROM ".PRE."users WHERE id=$owner", 0), 0, 0 );
+  $email_address_owner = db_result(db_query('SELECT email FROM '.PRE.'users WHERE id='.$owner, 0), 0, 0 );
 
   $message = $email1 .
               sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text );
@@ -255,35 +255,35 @@ if(isset($_POST['mailowner']) && ($_POST['mailowner']=="on") && ($owner != 0) ) 
 }
 
 //email the user group ?
-if(isset($_POST['maillist']) && ($_POST['maillist']=="on") ) {
+if(isset($_POST['maillist']) && ($_POST['maillist']=='on') ) {
   
-  include_once(BASE."includes/email.php" );
+  include_once(BASE.'includes/email.php' );
 
   $message = sprintf($email2, $name_owner ).
               sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text );
 
-  $usergroup = "";
-  $s = "";
-  if($EMAIL_MAILINGLIST != "" ) {
+  $usergroup = '';
+  $s = '';
+  if($EMAIL_MAILINGLIST != '' ) {
     $usergroup = $EMAIL_MAILINGLIST;
-    $s = ", ";
+    $s = ', ';
   }
 
   if($usergroupid != 0 ) {
-    $q = db_query("SELECT ".PRE."users.email
-                      FROM ".PRE."users
-                      LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.userid=".PRE."users.id)
-                      WHERE ".PRE."usergroups_users.usergroupid=$usergroupid
-                      AND ".PRE."users.deleted='f'");
+    $q = db_query('SELECT '.PRE.'users.email
+                      FROM '.PRE.'users
+                      LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
+                      WHERE '.PRE.'usergroups_users.usergroupid=$usergroupid
+                      AND '.PRE.'users.deleted=\'f\'');
 
-    for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
+    for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
       $usergroup .= $s.$row[0];
-      $s = ", ";
+      $s = ', ';
     }
   }
 email($usergroup, $title2, $message );
 }
 
-header("Location: ".BASE_URL."tasks.php?x=$x&action=show&taskid=$taskid" );
+header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$taskid );
 
 ?>

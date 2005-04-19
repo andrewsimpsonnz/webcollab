@@ -27,24 +27,22 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-include_once(BASE."includes/email.php" );
-include_once(BASE."includes/admin_config.php" );
+include_once(BASE.'includes/email.php' );
+include_once(BASE.'includes/admin_config.php' );
 
 //only for admins
-if( ! ADMIN ) {
-  error( "Not permitted", "This function is for admins only" );
-  return;
-}
-
+if( ! ADMIN )
+  error( 'Not permitted', 'This function is for admins only' );
+ 
 //initialise variables
-$address_array = "";
+$address_array = '';
 
 // send to users or groups?
 if(empty($_POST['group']) )
-  error("Email action handler", "No request given" );
+  error('Email action handler', 'No request given' );
 
 //check we have a message!
 if(empty($_POST['message'] ) )
@@ -71,16 +69,16 @@ if(get_magic_quotes_gpc() ) {
   //what do you want to send today =]
   switch($_POST['group'] ) {
 
-    case "all":
+    case 'all':
       //select all users
-      $q = db_query("SELECT email FROM ".PRE."users WHERE deleted='f'" );
+      $q = db_query('SELECT email FROM '.PRE.'users WHERE deleted=\'f\'' );
 
-      for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
+      for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
         $address_array[$i] = $row[0];
       }
       break;
 
-    case "group":
+    case 'group':
       //check if any usergroups have been sent
       if(! empty($_POST['usergroup'] ) )
         $max = sizeof($_POST['usergroup'] );
@@ -93,17 +91,17 @@ if(get_magic_quotes_gpc() ) {
       $k = 0;
 
       //loop through chosen usergroups
-      for($i=0 ; $i < $max ; $i++ ){
+      for($i=0 ; $i < $max ; ++$i ){
         //check for security, then get users for each usergroup
         if(isset($usergroup[$i] ) && is_numeric($usergroup[$i] ) ){
-          $q = db_query("SELECT ".PRE."users.email
-                          FROM ".PRE."usergroups_users
-                          LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."usergroups_users.userid)
-                          WHERE ".PRE."usergroups_users.usergroupid=".$usergroup[$i]."
-                          AND ".PRE."users.deleted='f'" );
+          $q = db_query('SELECT '.PRE.'users.email
+                          FROM '.PRE.'usergroups_users
+                          LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'usergroups_users.userid)
+                          WHERE '.PRE.'usergroups_users.usergroupid='.$usergroup[$i].'
+                          AND '.PRE.'users.deleted=\'f\'' );
 
           //loop through result rows and add users to the list
-          for($j = 0 ; $row = @db_fetch_num($q, $j ) ; $j++){
+          for($j = 0 ; $row = @db_fetch_num($q, $j ) ; ++$j ){
             $address_array[$k] = $row[0];
             $k++;
           }
@@ -111,21 +109,21 @@ if(get_magic_quotes_gpc() ) {
       }
       break;
 
-    case "maillist":
+    case 'maillist':
       //mailing list is added in below for every case - we don't specifically add it in here
       break;
 
     default:
-      error("Admin email", "No group or user descriptor is set" );
+      error('Admin email', 'No group or user descriptor is set' );
       break;
 }
 
 //get the mailing list
-$q = db_query("SELECT DISTINCT email FROM ".PRE."maillist" );
+$q = db_query('SELECT DISTINCT email FROM '.PRE.'maillist' );
 
 //merge the mailing list in too
 $size = sizeof($address_array);
-for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   $address_array[($size + $i)] = $row[0];
 }
 
@@ -146,5 +144,5 @@ if(strlen($to ) != 0 ) {
 }
 
 //all done: warp back to main screen (Aye, aye captain).
-header("Location: ".BASE_URL."main.php?x=$x" );
+header('Location: '.BASE_URL.'main.php?x='.$x );
 ?>

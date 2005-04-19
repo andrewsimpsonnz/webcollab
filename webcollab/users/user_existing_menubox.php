@@ -27,28 +27,28 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 $content    = '';
 $allowed[0] = 0;
 
 
 //get list of common users in private usergroups that this user can view 
-$q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid,
-                      ".PRE."usergroups_users.userid AS userid 
-                      FROM ".PRE."usergroups_users 
-                      LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."usergroups_users.usergroupid)
-                      WHERE ".PRE."usergroups.private=1");
+$q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
+                      '.PRE.'usergroups_users.userid AS userid 
+                      FROM '.PRE.'usergroups_users 
+                      LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
+                      WHERE '.PRE.'usergroups.private=1');
 
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
    $allowed[] = $row[1];
   }
 }
 
 //query
-$q = db_query("SELECT * FROM ".PRE."users WHERE deleted='f' ORDER by fullname" );
+$q = db_query('SELECT * FROM '.PRE.'users WHERE deleted=\'f\' ORDER by fullname' );
 
 //check for enough users
 if(db_numrows($q) < 1 ) {
@@ -59,7 +59,7 @@ if(db_numrows($q) < 1 ) {
 $content = "<table style=\"text-align:left\">\n";
 
 //show them
-for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
+for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //user test for privacy
   if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
@@ -78,6 +78,6 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
 $content .= "</table>";
 
 //show it
-new_box($lang['existing_users'], $content, "boxmenu" );
+new_box($lang['existing_users'], $content, 'boxmenu' );
 
 ?>

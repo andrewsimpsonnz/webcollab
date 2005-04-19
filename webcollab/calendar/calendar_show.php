@@ -27,7 +27,7 @@
 
 */
 
-require_once("includes/security.php" );
+require_once('includes/security.php' );
 
 //secure variables
 $content = '';
@@ -135,33 +135,33 @@ switch($selection ) {
 }
 
 //get list of private projects and put them in an array for later use
-$q = db_query("SELECT id, usergroupid FROM ".PRE."tasks WHERE parent=0 AND globalaccess='f'" );
+$q = db_query('SELECT id, usergroupid FROM '.PRE.'tasks WHERE parent=0 AND globalaccess=\'f\'' );
 
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
   $no_access_project[$i] = $row[0];
   $no_access_group[$i] = $row[1];
 }
 
 //get list of common users in private usergroups that this user can view 
-$q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid,
-                      ".PRE."usergroups_users.userid AS userid
-                      FROM ".PRE."usergroups_users 
-                      LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."usergroups_users.usergroupid)
-                      WHERE ".PRE."usergroups.private=1");
+$q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
+                      '.PRE.'usergroups_users.userid AS userid
+                      FROM '.PRE.'usergroups_users 
+                      LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
+                      WHERE '.PRE.'usergroups.private=1');
 
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
    $allowed[$i] = $row[1];
   }
 }
 
 //get all the days with projects/tasks due in selected month and year
-$q = db_query("SELECT DISTINCT ".$day_part."deadline) FROM ".PRE."tasks 
-                      WHERE deadline >= '".$year."-".$month."-01' 
-                      AND deadline <= ('".$year."-".$month."-01'+".$interval.$delim."1 MONTH".$delim.") ".
+$q = db_query('SELECT DISTINCT '.$day_part.'deadline) FROM '.PRE.'tasks 
+                      WHERE deadline >= \''.$year.'-'.$month.'-01\' 
+                      AND deadline <= (\''.$year.'-'.$month.'-01\'+'.$interval.$delim.'1 MONTH'.$delim.') '.
                       $tail );
                       
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ){
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ){
   $task_dates[$i] = (int)$row[0];
 }
 
@@ -174,10 +174,10 @@ $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<option value=\"0\"$s2>".$lang['all_users']."</option>\n";
 
 //get all users for option box
-$q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest=0 ORDER BY fullname");
+$q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname');
 
 //user input box fields
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   //user test for privacy
   if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ) {
@@ -199,10 +199,10 @@ $content .= "</select></label></td>\n".
             "<option value=\"0\"$s4>".$lang['no_group']."</option>\n";
 
 //get all groups for option box
-$q = db_query("SELECT id, name, private FROM ".PRE."usergroups ORDER BY name" );
+$q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
 
 //usergroup input box fields
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   //usergroup test for privacy
   if( (! ADMIN ) && ($row['private'] ) && ( ! in_array($row['id'], (array)$GID ) ) ) {
@@ -228,7 +228,7 @@ $content .= "<div style=\"text-align: center\">\n".
             "<tr><td><input type=\"submit\" name=\"lastyear\" value=\"&lt;&lt;\" /></td>\n".
             "<td><input type=\"submit\" name=\"lastmonth\" value=\"&lt;\" /></td>\n".
             "<td>\n<select name=\"month\">\n";
-for( $i=1; $i<13 ; $i++) {
+for( $i=1; $i<13 ; ++$i) {
   $content .= "<option value=\"$i\"";
 
   if( $month == $i ) $content .= " selected=\"selected\"";
@@ -238,7 +238,7 @@ $content .=  "</select></td>\n";
 
 //year
 $content .= "<td><select name=\"year\">\n";
-for( $i=2001; $i<2011 ; $i++) {
+for( $i=2001; $i<2011 ; ++$i) {
   $content .= "<option value=\"$i\"";
 
   if( $year == $i ) $content .= " selected=\"selected\"";
@@ -250,7 +250,7 @@ $content .=  "</select></td>\n".
              "</table></div></form>\n<br />\n";
 
 //number of days in month
-$numdays = date("t", mktime(0, 0, 0, $month, 1, $year ) );
+$numdays = date('t', mktime(0, 0, 0, $month, 1, $year ) );
 
 //main calendar table
 $content .= "<div style=\"text-align: center\">\n".
@@ -267,13 +267,13 @@ $content .= "</tr>\n";
 
 //show lead in to dates
 $content .= "<tr align=\"left\" valign=\"top\">\n";
-for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); $i++ ) {
+for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); ++$i ) {
   $content .= "<td class=\"datecell\">&nbsp;</td>\n";
 }
 $leadin_length = $i;
 
 //show dates
-for ($num = 1; $num <= $numdays; $num++ ) {
+for ($num = 1; $num <= $numdays; ++$num ) {
   if ($i >= 7 ) {
     $content .= "</tr>\n".
                 "<tr align=\"left\" valign=\"top\">\n";
@@ -286,15 +286,14 @@ for ($num = 1; $num <= $numdays; $num++ ) {
     $content .= "style=\"background : #C0C0C0\"";
 
   $content .= "><span class=\"daynum\">$num</span>";
-  $pad = 0;
 
   //check if this date has projects/tasks
   if(in_array($num, (array)$task_dates ) ) {
   
   //rows exist for this date - get them!
-  $q = db_query("SELECT id, name, parent, status, usergroupid, globalaccess, projectid FROM ".PRE."tasks WHERE deadline='$year-$month-$num' AND archive=0 $tail" );
+  $q = db_query('SELECT id, name, parent, status, usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE deadline=\''.$year.'-'.$month.'-'.$num.'\' AND archive=0 '.$tail );
 
-    for( $j=0 ; $row = @db_fetch_array($q, $j ) ; $j++) {
+    for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j) {
 
       //check for private usergroups
       if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
@@ -312,9 +311,9 @@ for ($num = 1; $num <= $numdays; $num++ ) {
       }
 
       switch($row['status'] ) {
-        case "notactive":
-        case "cantcomplete":
-        case "nolimit":
+        case 'notactive':
+        case 'cantcomplete':
+        case 'nolimit':
           //don't show if not active
           continue 2;
         break;
@@ -322,10 +321,10 @@ for ($num = 1; $num <= $numdays; $num++ ) {
         default:
           //active task or project
           switch($row['parent'] ) {
-             case "0":
+             case '0':
                //project
                //check if tasks are all complete
-               if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."tasks WHERE projectid=".$row['id']." AND status<>'done' AND parent>0" ), 0, 0 ) == 0 )
+               if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND status<>\'done\' AND parent>0' ), 0, 0 ) == 0 )
                  $name = "<span class=\"green\"><span class=\"underline\">".$row['name']."</span>";
                else
                  $name = "<span class=\"blue\">".$row['name'];
@@ -346,32 +345,22 @@ for ($num = 1; $num <= $numdays; $num++ ) {
           }
         break;
       }
-      $pad++;
     }
   }
-  //pad out the cells to the required depth
-  //not used now - cell height is defined in calendar.css
-  /*
-  while($pad < 5 ) {
-    $content .= "<br />";
-    $pad++;
-  }
-  */
-
   $content .= "</td>\n";
-  $i++;
+  ++$i;
 }
 
 //show lead out to dates
 $leadout_length = (7-($numdays+$leadin_length)%7)%7;
-for ($i = 0; $i < $leadout_length; $i++ ) {
+for ($i = 0; $i < $leadout_length; ++$i ) {
   $content .= "<td class=\"datecell\">&nbsp;</td>\n";
 }
 
 $content .= "</tr>\n";
 $content .= "</table>\n</div>\n";
 
-include_once(BASE."lang/lang_long.php" );
+include_once(BASE.'lang/lang_long.php' );
 $content .= "<div style=\"text-align: center; padding-top: 20px\">\n".
             "<b>[<a href=\"main.php?x=".$x."\">".$calendar_key."<br />\n</div>\n";
 

@@ -28,12 +28,12 @@
 
 */
 
-require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once('path.php' );
+require_once( BASE.'includes/security.php' );
 
 //update or insert ?
 if(empty($_REQUEST['action']))
-  error("File submit", "No action given" );
+  error('File submit', 'No action given' );
 
 //deny guest users
 if(GUEST )
@@ -45,7 +45,7 @@ ignore_user_abort(TRUE);
   switch($_REQUEST['action'] ) {
 
     //handle a file upload
-    case "submit_upload":
+    case 'submit_upload':
 
       //check if there was an upload
       if( ! is_uploaded_file($_FILES['userfile']['tmp_name'] ) ) {
@@ -57,7 +57,7 @@ ignore_user_abort(TRUE);
         //delete any upload before invoking the error function
         if(is_uploaded_file( $_FILES['userfile']['tmp_name'] ) )
           unlink( $_FILES['userfile']['tmp_name'] );
-        error("File submit", "Not a valid taskid");
+        error('File submit', 'Not a valid taskid');
       }
 
       $taskid = intval($_POST['taskid']);
@@ -66,21 +66,21 @@ ignore_user_abort(TRUE);
       $description = html_links($description, 1 );
       $description = nl2br($description );
 
-      $input_array = array("mail_owner", "mail_group" );
+      $input_array = array('mail_owner', 'mail_group' );
       foreach($input_array as $var ) {
-        if(isset($_POST[$var] ) &&  ($_POST[$var] == "on" ) )
+        if(isset($_POST[$var] ) &&  ($_POST[$var] == 'on' ) )
           ${$var} = true;
         else
           ${$var} = false;
       }
             
       //check usergroup security
-      require_once(BASE."includes/usergroup_security.php" );
+      require_once(BASE.'includes/usergroup_security.php' );
 
       //check the destination directory is writeable by the webserver
-      if( ! is_writable(FILE_BASE."/" ) ) {
+      if( ! is_writable(FILE_BASE.'/' ) ) {
         unlink($_FILES['userfile']['tmp_name'] );
-        error("Configuration error", "The upload directory does not have write permissions set properly.  File upload has not been accepted.");
+        error('Configuration error', 'The upload directory does not have write permissions set properly.  File upload has not been accepted.');
       }
 
       //check for ridiculous uploads
@@ -92,13 +92,13 @@ ignore_user_abort(TRUE);
       //check for dangerous file uploads
      if(preg_match('/(\.php|\.php3|\.php4|\.js|\.asp)$/', $_FILES['userfile']['name'] ) ) {
             unlink($_FILES['userfile']['tmp_name'] );
-            error("File submit", "The file types .php, .php3, .php4, .js and .asp are not acceptable for security reasons. You must either rename or compress the file.");
+            error('File submit', 'The file types .php, .php3, .php4, .js and .asp are not acceptable for security reasons. You must either rename or compress the file.');
       }
 
       //okay accept file
       db_begin();
       //alter task lastfileupload
-      db_query("UPDATE ".PRE."tasks SET lastfileupload=now() WHERE id=$taskid" );
+      db_query('UPDATE '.PRE.'tasks SET lastfileupload=now() WHERE id='.$taskid );
 
       //addslashes to stored filename only if magic quotes is 'off'
       //(prevents database errors)
@@ -108,20 +108,20 @@ ignore_user_abort(TRUE);
         $db_filename = $_FILES['userfile']['name'];
 
       //alter file database administration
-      $q = db_query( "INSERT INTO ".PRE."files (filename,
+      $q = db_query( 'INSERT INTO '.PRE.'files (filename,
                                             size,
                                             description,
                                             uploaded,
                                             uploader,
                                             taskid,
                                             mime )
-                                    VALUES ('$db_filename',
-                                            ".$_FILES['userfile']['size'].",
+                                    VALUES (\''.$db_filename.'\',
+                                            '.$_FILES['userfile']['size'].',
                                             '$description',
                                             now(),
-                                            ".UID.",
-                                            $taskid,
-                                            '".$_FILES['userfile']['type']."' ) ");
+                                            '.UID.',
+                                            '.$taskid.',
+                                            \''.$_FILES['userfile']['type'].'\' ) ');
 
       //get last insert id 
       $fileid = db_lastoid('files_id_seq' );
@@ -134,60 +134,60 @@ ignore_user_abort(TRUE);
         $filename = $_FILES['userfile']['name'];
 
       //copy it
-      if( ! move_uploaded_file( $_FILES['userfile']['tmp_name'], FILE_BASE."/".$fileid."__".$filename ) ) {
-        db_query("DELETE FROM ".PRE."files WHERE id=".$fileid );
+      if( ! move_uploaded_file( $_FILES['userfile']['tmp_name'], FILE_BASE.'/'.$fileid.'__'.$filename ) ) {
+        db_query('DELETE FROM '.PRE.'files WHERE id='.$fileid );
         unlink($_FILES['userfile']['tmp_name'] );
         db_rollback();
-        error("File submit", "Internal error: The file cannot be moved to filebase directory, deleting upload" );
+        error('File submit', 'Internal error: The file cannot be moved to filebase directory, deleting upload' );
       }
 
       //set the fileid in the database
-      db_query("UPDATE ".PRE."files SET fileid=".$fileid." WHERE id=".$fileid );
+      db_query('UPDATE '.PRE.'files SET fileid='.$fileid.' WHERE id='.$fileid );
       
       //disarm it
-      chmod(FILE_BASE."/".$fileid."__".$filename, 0644 );
+      chmod(FILE_BASE.'/'.$fileid.'__'.$filename, 0644 );
       db_commit();
 
       //set up emails
-      $mail_list = "";
-      $s = "";
+      $mail_list = '';
+      $s = '';
 
       //get task data
-      $q = db_query("SELECT ".PRE."tasks.name AS name,
-                            ".PRE."tasks.usergroupid AS usergroupid,
-                            ".PRE."users.email AS email
-                            FROM ".PRE."tasks
-                            LEFT JOIN ".PRE."users ON (".PRE."tasks.owner=".PRE."users.id)
-                            WHERE ".PRE."tasks.id=$taskid" );
+      $q = db_query('SELECT '.PRE.'tasks.name AS name,
+                            '.PRE.'tasks.usergroupid AS usergroupid,
+                            '.PRE.'users.email AS email
+                            FROM '.PRE.'tasks
+                            LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.owner='.PRE.'users.id)
+                            WHERE '.PRE.'tasks.id='.$taskid );
       $task_row = db_fetch_array($q, 0 );
 
       //set owner's email
       if($task_row['email'] && $mail_owner ) {
         $mail_list .= $task_row['email'];
-        $s = ", ";
+        $s = ', ';
       }
 
       //if usergroup set, add the user list
       if($task_row['usergroupid'] && $mail_group ){
-        $q = db_query("SELECT ".PRE."users.email
-                              FROM ".PRE."users
-                              LEFT JOIN ".PRE."usergroups_users ON (".PRE."usergroups_users.userid=".PRE."users.id)
-                              WHERE ".PRE."usergroups_users.usergroupid=".$task_row['usergroupid'].
-                              " AND ".PRE."users.deleted='f'" );
+        $q = db_query('SELECT '.PRE.'users.email
+                              FROM '.PRE.'users
+                              LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
+                              WHERE '.PRE.'usergroups_users.usergroupid='.$task_row['usergroupid'].
+                              ' AND '.PRE.'users.deleted=\'f\'' );
 
         for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
           $mail_list .= $s.$row[0];
-          $s = ", ";
+          $s = ', ';
         }
       }
 
       //do we need to email?
       if(strlen($mail_list) > 0 ){
-        include_once(BASE."includes/email.php" );
-        include_once(BASE."lang/lang_email.php" );
+        include_once(BASE.'includes/email.php' );
+        include_once(BASE.'lang/lang_email.php' );
 
         //get & add the mailing list
-        if($EMAIL_MAILINGLIST != "" )
+        if($EMAIL_MAILINGLIST != '' )
           $mail_list .= $s.$EMAIL_MAILINGLIST;
         
         $message = $_POST['description'];
@@ -201,21 +201,21 @@ ignore_user_abort(TRUE);
 
       break;
 
-    case "submit_del":
+    case 'submit_del':
 
       if(empty($_GET['fileid'] ) || ! is_numeric($_GET['fileid'] ) )
-        error("File submit", "Not a valid fileid" );
+        error('File submit', 'Not a valid fileid' );
 
       $fileid = intval($_GET['fileid']);
 
       //get the files from this task
-      $q = db_query("SELECT ".PRE."files.uploader AS uploader,
-                                   ".PRE."files.fileid AS fileid,
-                                   ".PRE."files.filename AS filename,
-                                   ".PRE."tasks.owner AS owner
-                                   FROM ".PRE."files
-                                   LEFT JOIN ".PRE."tasks ON (".PRE."files.taskid=".PRE."tasks.id)
-                                   WHERE ".PRE."files.id=$fileid" );
+      $q = db_query('SELECT '.PRE.'files.uploader AS uploader,
+                                   '.PRE.'files.fileid AS fileid,
+                                   '.PRE.'files.filename AS filename,
+                                   '.PRE.'tasks.owner AS owner
+                                   FROM '.PRE.'files
+                                   LEFT JOIN '.PRE.'tasks ON ('.PRE.'files.taskid='.PRE.'tasks.id)
+                                   WHERE '.PRE.'files.id='.$fileid );
 
       if(db_numrows($q ) != 0 ) {
          //show it
@@ -224,26 +224,26 @@ ignore_user_abort(TRUE);
         if( (ADMIN ) || (UID == $row['owner'] ) || (UID == $row['uploader'] ) ) {
 
           //delete file from disk
-          if(file_exists(FILE_BASE."/".$row['fileid']."__".$row['filename'] ) ) {
-            unlink(FILE_BASE."/".$row['fileid']."__".$row['filename'] );
+          if(file_exists(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] ) ) {
+            unlink(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] );
           }
           //delete record of file
-          db_query("DELETE FROM ".PRE."files WHERE fileid=".$row['fileid'] );
+          db_query('DELETE FROM '.PRE.'files WHERE fileid='.$row['fileid'] );
         }
       }
     break;
 
     default:
-      error("File submit", "Invalid request given");
+      error('File submit', 'Invalid request given');
     break;
   }
 
 if(isset($_GET['taskid']) && $_GET['taskid'] == -1 ) { //can only occur from files.php --> file_admin.php --> delete
-  header("Location: ".BASE_URL."files.php?x=$x&action=admin" );
+  header('Location: '.BASE_URL.'files.php?x='.$x.'&action=admin' );
   die;
 }
 else {
-  header("Location: ".BASE_URL."tasks.php?x=$x&action=show&taskid=".$_REQUEST['taskid'] );
+  header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$_REQUEST['taskid'] );
 }
 
 ?>

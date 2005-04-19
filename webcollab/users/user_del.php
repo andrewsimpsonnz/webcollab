@@ -28,88 +28,88 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-include_once(BASE."includes/email.php" );
+include_once(BASE.'includes/email.php' );
 
 //admins only
 if(! ADMIN )
-  error("Unauthorised access", "This function is for admins only." );
+  error('Unauthorised access', 'This function is for admins only.' );
 
 
 //get some stupid errors
 if(empty($_GET['userid']) || ! is_numeric($_GET['userid']) )
-  error("User delete", "No userid specified" );
+  error('User delete', 'No userid specified' );
 
 $userid = intval($_GET['userid']);
 
 if(empty($_GET['action'] ) )
-  error("User delete", "No action specified" );
+  error('User delete', 'No action specified' );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
 switch($_GET['action'] ){
 
-  case "permdel":
+  case 'permdel':
 
-    if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE id=$userid AND deleted='t'" ), 0, 0 ) == 1 ) {
+    if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE id=$userid AND deleted=\'t\'' ), 0, 0 ) == 1 ) {
 
       //kiss your ass goodbye :)
       db_begin();
 
       //free up any tasks owned (should be none)
-      @db_query("UPDATE ".PRE."tasks SET owner=0 WHERE owner=$userid" );
+      @db_query('UPDATE '.PRE.'tasks SET owner=0 WHERE owner='.$userid );
 
       //remove user from forum messages
-      db_query("UPDATE ".PRE."forum SET userid=0 WHERE userid=$userid" );
+      db_query('UPDATE '.PRE.'forum SET userid=0 WHERE userid='.$userid );
 
       //delete user FROM login tables
-      db_query("DELETE FROM ".PRE."logins WHERE user_id=$userid" );
+      db_query('DELETE FROM '.PRE.'logins WHERE user_id='.$userid );
 
       //delete from seen table
-      db_query("DELETE FROM ".PRE."seen WHERE userid=$userid" );
+      db_query('DELETE FROM '.PRE.'seen WHERE userid='.$userid );
 
       //delete from usergroups_users
-      db_query("DELETE FROM ".PRE."usergroups_users WHERE userid=$userid" );
+      db_query('DELETE FROM '.PRE.'usergroups_users WHERE userid='.$userid );
 
       //delete from users table
-      db_query("DELETE FROM ".PRE."users WHERE id=$userid" );
+      db_query('DELETE FROM '.PRE.'users WHERE id='.$userid );
 
       db_commit();
     }
 
     break;
 
-  case "del":
+  case 'del':
      
      //if user exists we can delete them
-     if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE id=$userid" ), 0, 0 ) ) {
+     if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE id='.$userid ), 0, 0 ) ) {
        //mark user as deleted
        db_begin();
-       db_query("UPDATE ".PRE."users SET deleted='t' WHERE id=$userid" );
+       db_query('UPDATE '.PRE.'users SET deleted=\'t\' WHERE id='.$userid );
 
        //free all tasks that that user has done
-       @db_query("UPDATE ".PRE."tasks SET owner=0 WHERE owner=$userid" );
+       @db_query('UPDATE '.PRE.'tasks SET owner=0 WHERE owner='.$userid );
        db_commit();
 
        //get the users' info
-       $q = db_query("SELECT email FROM ".PRE."users WHERE id=$userid" );
+       $q = db_query('SELECT email FROM '.PRE.'users WHERE id='.$userid );
        $email = db_result($q, 0, 0 );
 
        //mail the user that he/she had been deleted
-       include_once(BASE."lang/lang_email.php" );
+       include_once(BASE.'lang/lang_email.php' );
        email($email, $title_delete_user, $email_delete_user );
      }      
     break;
 
   default:
-    error("User delete action handler", "Invalid request given");
+    error('User delete action handler', 'Invalid request given');
     break;
 
 }
 
-header("Location: ".BASE_URL."users.php?x=$x&action=manage");
+header('Location: '.BASE_URL.'users.php?x='.$x.'&action=manage');
 
 ?>

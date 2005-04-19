@@ -36,12 +36,12 @@ function date_to_datetime($day, $month, $year ) {
 
   //check for valid calendar date
   if( ! checkdate($month, $day, $year ) ) {
-    warning($lang['invalid_date'], sprintf($lang['invalid_date_sprt'], $year."-".$month_array[$month ]."-".$day ) );
+    warning($lang['invalid_date'], sprintf($lang['invalid_date_sprt'], $year.'-'.$month_array[$month ].'-'.$day ) );
   }
   
   //format is 2004-08-02 00:00:00
   //(security note: formatted string here prevents SQL injection attacks)
-  return sprintf("%04d-%02d-%02d 00:00:00", $year, $month, $day );
+  return sprintf('%04d-%02d-%02d 00:00:00', $year, $month, $day );
 }
 
 //
@@ -51,12 +51,12 @@ function nicedate($timestamp ) {
   global $month_array;
   
   if(empty($timestamp) )
-    return "";
+    return '';
   
-  $date_array = explode("-", substr($timestamp, 0, 10) );
+  $date_array = explode('-', substr($timestamp, 0, 10) );
   
   //format is 2004-Aug-02
-  return sprintf("%s-%s-%02d", $date_array[0], $month_array[(int)($date_array[1])], (int)$date_array[2]);
+  return sprintf('%s-%s-%02d', $date_array[0], $month_array[(int)($date_array[1])], (int)$date_array[2]);
 }
 
 //
@@ -66,7 +66,7 @@ function nicetime($timestamp, $addtime=0 ) {
   global $month_array;
 
   if(empty($timestamp) )
-    return "";
+    return '';
   
   //get timestamp into the chosen timezone 
   //  we use date('Z') for server timezone (assumes the webserver and database server share the same timezone)      
@@ -74,30 +74,30 @@ function nicetime($timestamp, $addtime=0 ) {
   
   //format is 2004-Aug-02  
   if(! $addtime)
-    return date("Y-", $local).$month_array[(date("n", $local))].date("-d", $local);
+    return date('Y-', $local).$month_array[(date('n', $local))].date('-d', $local);
   
   $minutes = abs(TZ - floor(TZ)) * 60;
   
   if(TZ >= 0 )
-    $offset = sprintf("+%02d%02d", floor(TZ), $minutes );
+    $offset = sprintf('+%02d%02d', floor(TZ), $minutes );
   else
-    $offset = sprintf("%03d%02d", floor(TZ), $minutes );
+    $offset = sprintf('%03d%02d', floor(TZ), $minutes );
   
   //format is 2004-Aug-02 18:06 +1200 
-  return date("Y-", $local).$month_array[(date("n", $local))].date("-d H:i ", $local).$offset;
+  return date('Y-', $local).$month_array[(date('n', $local))].date('-d H:i ', $local).$offset;
 
 }
   
 //
 // Give back a row that holds the date which comes from a pg/my timestamp
 //
-function date_select_from_timestamp($timestamp="" ) {
+function date_select_from_timestamp($timestamp='' ) {
 
-  if($timestamp == "" )
+  if($timestamp == '' )
     return date_select(-1, -1, -1 );
     
   //deparse the line
-  $date_array = explode("-", substr($timestamp, 0, 10 ) );
+  $date_array = explode('-', substr($timestamp, 0, 10 ) );
   
   //show line
   return date_select($date_array[2], $date_array[1], $date_array[0] );
@@ -111,10 +111,10 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
 
   //filter for no date set
   if($day == -1 || $month == -1 || $year == -1 ) {
-    $local = time() - date("Z") + (TZ * 3600);
-    $day   = date("d", $local );
-    $month = date("m", $local );
-    $year  = date("Y", $local );
+    $local = time() - date('Z') + (TZ * 3600);
+    $day   = date('d', $local );
+    $month = date('m', $local );
+    $year  = date('Y', $local );
   }
 
   //day

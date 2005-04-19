@@ -24,32 +24,32 @@
   Lists all the recent forum posts
 
 */
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-include_once(BASE."includes/time.php" );
+include_once(BASE.'includes/time.php' );
 
 //initialise variables            
-$list = "";
+$list = '';
 unset($lastpost);
 $j = 0;
                   
-$q = db_query("SELECT ".PRE."forum.taskid AS taskid, 
-                      MAX(".PRE."forum.posted) AS recentpost,
-                      ".PRE."tasks.name AS taskname,
-                      ".PRE."tasks.globalaccess AS globalaccess,
-                      ".PRE."tasks.usergroupid AS usergroupid
-                    FROM ".PRE."forum 
-                    LEFT JOIN ".PRE."tasks ON (".PRE."tasks.id=".PRE."forum.taskid)
-                    WHERE ".PRE."forum.posted > ( now()-INTERVAL ".$delim.NEW_TIME." DAY".$delim.")
-                    GROUP BY taskid, taskname, globalaccess, ".PRE."tasks.usergroupid
-                    ORDER BY recentpost DESC" );
+$q = db_query('SELECT '.PRE.'forum.taskid AS taskid, 
+                      MAX('.PRE.'forum.posted) AS recentpost,
+                      '.PRE.'tasks.name AS taskname,
+                      '.PRE.'tasks.globalaccess AS globalaccess,
+                      '.PRE.'tasks.usergroupid AS usergroupid
+                    FROM '.PRE.'forum 
+                    LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
+                    WHERE '.PRE.'forum.posted > ( now()-INTERVAL '.$delim.NEW_TIME.' DAY'.$delim.')
+                    GROUP BY taskid, taskname, globalaccess, '.PRE.'tasks.usergroupid
+                    ORDER BY recentpost DESC' );
 
 //iterate for posts                            
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //check if user can view this task
-  if( (! ADMIN ) && ($row['globalaccess'] != "t" ) && ($row['usergroupid'] != 0 ) ) {
+  if( (! ADMIN ) && ($row['globalaccess'] != 't' ) && ($row['usergroupid'] != 0 ) ) {
     if( ! in_array( $row['usergroupid'], (array)$GID ) )
         continue;
   }
@@ -60,16 +60,16 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   
   //show it
   $list .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['taskid']."\">".substr($row['taskname'], 0, 25 )."</a><br />\n";
-  $j++;
+  ++$j;
   
   //show max of 10 posts
   if($j > 10 )
     break;
 }
 
-if($list != "") {
+if($list != '') {
   $content = "<small>".$list.sprintf($lang['last_post_sprt'], nicedate($lastpost) )."</small>\n";
-  new_box($lang['recent_posts'], $content, "boxmenu" ); 
+  new_box($lang['recent_posts'], $content, 'boxmenu' ); 
 }
 
 ?>

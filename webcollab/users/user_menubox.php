@@ -27,16 +27,16 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-$content = "";
+$content = '';
 
 //add an option to add users
 if(ADMIN ) {
   $content .= "<a href=\"users.php?x=$x&amp;action=add\">".$lang['add']."</a><br />\n".
               "<a href=\"users.php?x=$x&amp;action=manage\">".$lang['manage']."</a><br />\n";
- if(USE_EMAIL != "N")
+ if(USE_EMAIL != 'N')
    $content .= "<a href=\"users.php?x=$x&amp;action=email\">".$lang['email_users']."</a><br />\n";
 }
 
@@ -45,6 +45,6 @@ $content .= "<a href=\"users.php?x=$x&amp;action=showonline\">".$lang['who_onlin
             "<a href=\"users.php?x=$x&amp;action=show&amp;userid=".UID."\">".$lang['show_details']."</a><br />\n";
 
 //show it
-new_box($lang['users'], $content, "boxmenu" );
+new_box($lang['users'], $content, 'boxmenu' );
 
 ?>

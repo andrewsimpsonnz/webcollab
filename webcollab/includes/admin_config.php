@@ -25,18 +25,18 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-$EMAIL_MAILINGLIST = "";
+$EMAIL_MAILINGLIST = '';
 
 //get config data
-$q = db_query("SELECT * FROM ".PRE."config" );
+$q = db_query('SELECT * FROM '.PRE.'config' );
 $row = @db_fetch_array($q, 0 );
 
 //set variables
-define("EMAIL_REPLY_TO", $row['reply_to']);
-define("EMAIL_FROM", $row['email_from']);
+define('EMAIL_REPLY_TO', $row['reply_to']);
+define('EMAIL_FROM', $row['email_from']);
 
 $EMAIL_ADMIN        = $row['email_admin'];
 $DEFAULT_ACCESS     = $row['globalaccess'];
@@ -45,12 +45,12 @@ $DEFAULT_OWNER      = $row['owner'];
 $DEFAULT_GROUP      = $row['usergroup'];
 
 //mailing list
-$q = db_query("SELECT DISTINCT email FROM ".PRE."maillist" );
+$q = db_query('SELECT DISTINCT email FROM '.PRE.'maillist' );
 
-$s = "";
-for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+$s = '';
+for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   $EMAIL_MAILINGLIST .= $s.$row[0];
-  $s = ", ";
+  $s = ', ';
 }
 
 ?>

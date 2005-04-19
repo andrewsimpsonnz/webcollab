@@ -27,15 +27,15 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //set variables
-$content = "";
+$content = '';
 
 //only admin
 if( ! ADMIN )
-  error("Not permitted", "This function is for admins only" );
+  error('Not permitted', 'This function is for admins only' );
 
   
 //if user aborts, let the script carry onto the end
@@ -66,66 +66,66 @@ else{ //no email
 //check and validate checkboxes
 $input_array = array('access', 'group_edit', 'owner', 'usergroup' );
 foreach($input_array as $var ) {
-  if(isset($_POST[$var]) && $_POST[$var] == "on" )
+  if(isset($_POST[$var]) && $_POST[$var] == 'on' )
     ${$var} = "checked=\"checked\"";
   else
-    ${$var} = "";
+    ${$var} = '';
 }
 
 if(isset($_POST['project_order'] ) )
   $project_order = $_POST['project_order'];
 else
-  $project_order = "";
+  $project_order = '';
 
 switch($project_order) {  
-  case "deadline":
-    $project_list = "ORDER BY due ASC, name";
+  case 'deadline':
+    $project_list = 'ORDER BY due ASC, name';
     break;
     
-  case "priority":
-    $project_list = "ORDER BY priority DESC, name";
+  case 'priority':
+    $project_list = 'ORDER BY priority DESC, name';
     break;
   
   default:  
-  case "name":
-    $project_list = "ORDER BY name";
+  case 'name':
+    $project_list = 'ORDER BY name';
     break;
 }
     
 if(isset($_POST['task_order'] ) )
   $task_order = $_POST['task_order'];
 else 
-  $task_order = "";
+  $task_order = '';
   
 switch($task_order) {  
-  case "deadline":
-    $task_list = "ORDER BY due ASC, name";
+  case 'deadline':
+    $task_list = 'ORDER BY due ASC, name';
     break;
     
-  case "priority":
-    $task_list = "ORDER BY priority DESC, name";
+  case 'priority':
+    $task_list = 'ORDER BY priority DESC, name';
     break;
   
   default:  
-  case "name":
-    $task_list = "ORDER BY name";
+  case 'name':
+    $task_list = 'ORDER BY name';
     break;
 }
 
 //update config database
-db_query("UPDATE ".PRE."config SET email_admin='".$email_admin."',
-                            reply_to='".$reply_to."',
-                            email_from='".$from."',
-                            globalaccess='".$access."',
-                            groupaccess='".$group_edit."',
-                            owner='".$owner."',
-                            usergroup='".$usergroup."',
-                            project_order='".$project_list."',
-                            task_order='".$task_list."'" );
+db_query('UPDATE '.PRE.'config SET email_admin=\''.$email_admin.'\',
+                            reply_to=\''.$reply_to.'\',
+                            email_from=\''.$from.'\',
+                            globalaccess=\''.$access.'\',
+                            groupaccess=\''.$group_edit.'\',
+                            owner=\''.$owner.'\',
+                            usergroup=\''.$usergroup.'\',
+                            project_order=\''.$project_list.'\',
+                            task_order=\''.$task_list.'\'' );
 
 //if no email end here
-if(USE_EMAIL != "Y" )
-  header("Location: ".BASE_URL."main.php?x=$x" );
+if(USE_EMAIL != 'Y' )
+  header('Location: '.BASE_URL.'main.php?x='.$x );
 
 /*
 Begin mailing list clean up
@@ -140,27 +140,28 @@ $input_list = split("[ \f\r\n\t]+", $_POST['email'] );
 $max = sizeof($input_list);
 //initialise secondary counter
 $j = 0;
-for( $i=0 ; $i < $max ; $i++) {
+
+for( $i=0 ; $i < $max ; ++$i) {
   //check for valid address anywhere this data string
   if(ereg("[a-z0-9\-\.]+@[a-z0-9\-\.]+\.[a-z0-9]+", $input_list[$i], $value ) ) {
     //found one - remove any whitespace at each end, then save it
     $email_list[$j] = trim($value[0]);
-    $j++;
+    ++$j;
   }
 }
 
 //drop old list
 //can't use a transaction here - postgres' does not like it!
-db_query("TRUNCATE TABLE ".PRE."maillist");
+db_query('TRUNCATE TABLE '.PRE.'maillist');
 
 //add new list
 if( isset($email_list ) ) {
   $max = sizeof($email_list);
-  for( $i=0 ; $i < $max ; $i++ ) {
-    db_query("INSERT INTO ".PRE."maillist (email) VALUES ('".$email_list[$i]."')" );
+  for( $i=0 ; $i < $max ; ++$i ) {
+    db_query('INSERT INTO '.PRE.'maillist (email) VALUES (\''.$email_list[$i].'\')' );
   }
 }
 //all done!
 
-header("Location: ".BASE_URL."main.php?x=$x" );
+header('Location: '.BASE_URL.'main.php?x='.$x );
 ?>

@@ -27,24 +27,24 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) )
-  error("Task details", "The taskid input is not valid" ); 
+  error('Task details', 'The taskid input is not valid' ); 
 
 $taskid = intval($_REQUEST['taskid']);
 
 //get task details
-$q = @db_query("SELECT * FROM ".PRE."tasks WHERE id=$taskid" );
+$q = @db_query('SELECT * FROM '.PRE.'tasks WHERE id='.$taskid );
 
 //get the data
 if( ! $TASKID_ROW = @db_fetch_array($q, 0) )
-  error("Task details", "The requested item has either been deleted, or is now invalid.");
+  error('Task details', 'The requested item has either been deleted, or is now invalid.');
 
-$TYPE = "task";
+$TYPE = 'task';
 if($TASKID_ROW['parent'] == 0 )
-  $TYPE = "project";
+  $TYPE = 'project';
   
   
 ?>

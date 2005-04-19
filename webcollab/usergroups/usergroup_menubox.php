@@ -27,8 +27,8 @@
   This is the administrative interface to the usergroups.
 
 */
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //only for admins
 if(! ADMIN )
@@ -37,6 +37,6 @@ if(! ADMIN )
 $content = "<a href=\"usergroups.php?x=$x&amp;action=add\">".$lang['add']."</a><br />\n".
            "<a href=\"usergroups.php?x=$x&amp;action=manage\">".$lang['manage']."</a><br />\n";
 
-new_box( $lang['usergroups'], $content, "boxmenu" );
+new_box( $lang['usergroups'], $content, 'boxmenu' );
 
 ?>

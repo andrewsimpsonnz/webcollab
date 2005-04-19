@@ -27,8 +27,8 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //data check
 $taskid = intval($taskid);
@@ -38,12 +38,12 @@ if(ADMIN )
   return;
 
 //get the tasks' security info
-if( ! ($group_q = db_query("SELECT usergroupid, globalaccess, projectid FROM ".PRE."tasks WHERE id=$taskid" ) ) )
-  error("Usergroup security", "There was an error in the data query." );
+if( ! ($group_q = db_query('SELECT usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE id='.$taskid ) ) )
+  error('Usergroup security', 'There was an error in the data query.' );
 
 //get the data
 if( ! ($group_row = db_fetch_num($group_q, 0 ) ) )
-  error("Usergroup security", "There was an error in fetching the permission data." );
+  error('Usergroup security', 'There was an error in fetching the permission data.' );
 
 //check usergroup rights
 if( ($group_row[0] != 0 ) && ($group_row[1] == 'f' ) ) {
@@ -55,7 +55,7 @@ if( ($group_row[0] != 0 ) && ($group_row[1] == 'f' ) ) {
 
 //if this is a task, then get project data  
 if($group_row[2] != $taskid ) {
-  $project_q = db_query("SELECT usergroupid, globalaccess FROM ".PRE."tasks WHERE id=".$group_row[2] );
+  $project_q = db_query('SELECT usergroupid, globalaccess FROM '.PRE.'tasks WHERE id='.$group_row[2] );
   $project_row = db_fetch_num($project_q, 0 );
 
   //check if project is marked private 

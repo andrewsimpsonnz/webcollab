@@ -27,12 +27,12 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //admins only
 if(! ADMIN )
-  error("Unauthorised access", "This function is for admins only." );
+  error('Unauthorised access', 'This function is for admins only.' );
 
 
 $content =
@@ -53,11 +53,11 @@ $content =
                "<tr><td>&nbsp;</td></tr>\n";
                
 //add user-groups
-$q = db_query("SELECT name, id FROM ".PRE."usergroups ORDER BY name" );
+$q = db_query('SELECT name, id FROM '.PRE.'usergroups ORDER BY name' );
 
 $content .=    "<tr><td>".$lang['usergroup'].":</td><td><select name=\"usergroup[]\" multiple=\"multiple\" size=\"4\">\n";
 
-for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
+for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .=  "<option value=\"".$row['id']."\">".$row['name']."</option>";
 }
 

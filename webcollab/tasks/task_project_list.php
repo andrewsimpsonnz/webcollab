@@ -26,11 +26,11 @@
 
 */
 
-require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once('path.php' );
+require_once( BASE.'includes/security.php' );
 
-include_once(BASE."tasks/task_common.php" );
-include_once(BASE."includes/time.php" );
+include_once(BASE.'tasks/task_common.php' );
+include_once(BASE.'includes/time.php' );
 
 //
 // List tasks
@@ -156,7 +156,7 @@ else
   $condensed = 0;
   
 //get config order for sorting
-$q = db_query("SELECT project_order, task_order FROM ".PRE."config" );
+$q = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
 $row = db_fetch_num($q, 0 );
 $project_order = $row[0];
 $task_order    = $row[1];
@@ -165,18 +165,18 @@ $task_order    = $row[1];
 if(! $condensed) {
 
   //query to get uncompleted tasks
-  $q = db_query("SELECT id,
+  $q = db_query('SELECT id,
                         name,
                         parent,
                         projectid,
                         status, 
                         globalaccess, 
                         usergroupid, 
-                        ".$epoch." now() ) AS now,
-                        ".$epoch." deadline ) AS due
-                        FROM ".PRE."tasks 
-                        WHERE status<>'done'
-                        AND parent<>0 "
+                        '.$epoch.' now() ) AS now,
+                        '.$epoch.' deadline ) AS due
+                        FROM '.PRE.'tasks 
+                        WHERE status<>\'done\'
+                        AND parent<>0 '
                         .$task_order );
   
   for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
@@ -219,20 +219,20 @@ if(! $condensed) {
 }
 
 // query to get the projects
-$q = db_query("SELECT id,
+$q = db_query('SELECT id,
                       name,
                       deadline,
                       status,
-                      ".$epoch." deadline) AS due,
-                      ".$epoch." finished_time) AS finished_time,
-                      ".$epoch." completion_time) AS completion_time,
-                      ".$epoch." now()) AS now,
+                      '.$epoch.' deadline) AS due,
+                      '.$epoch.' finished_time) AS finished_time,
+                      '.$epoch.' completion_time) AS completion_time,
+                      '.$epoch.' now()) AS now,
                       usergroupid,
                       globalaccess,
                       completed
-                      FROM ".PRE."tasks
+                      FROM '.PRE.'tasks
                       WHERE parent=0
-                      AND archive=0 "
+                      AND archive=0 '
                       .$project_order );
 
 //check if there are projects
@@ -274,7 +274,7 @@ if(! isset($action) || $action != 'project_print')
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   //check the user has rights to view this project
-  if( (! ADMIN ) && ($row['globalaccess'] != "t" ) && ( $row['usergroupid'] != 0 ) ) {
+  if( (! ADMIN ) && ($row['globalaccess'] != 't' ) && ( $row['usergroupid'] != 0 ) ) {
     if( ! in_array( $row['usergroupid'], (array)$GID ) )
       continue;
   }

@@ -27,19 +27,19 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-include_once(BASE."includes/email.php" );
-include_once(BASE."lang/lang_email.php" );
-include_once(BASE."includes/time.php" );
+include_once(BASE.'includes/email.php' );
+include_once(BASE.'lang/lang_email.php' );
+include_once(BASE.'includes/time.php' );
 
 $usergroup_names = '';
 $admin_state = '';
 
 //update or insert ?
 if(empty($_REQUEST['action']) )
-  error("User submit", "No request given" );
+  error('User submit', 'No request given' );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);  
@@ -47,23 +47,23 @@ ignore_user_abort(TRUE);
   switch($_REQUEST['action'] ) {
 
     //revive a user
-    case "revive":
+    case 'revive':
 
       //only for the admins
       if(! ADMIN )
-        error("Authorisation failed", "You have to be admin to do this" );
+        error('Authorisation failed', 'You have to be admin to do this' );
 
       if(empty($_GET['userid']) && ! is_numeric($_GET['userid']) )
-        error("User submit", "No userid was specified." );
+        error('User submit', 'No userid was specified.' );
 
       $userid = intval($_GET['userid']);
 
-      if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE deleted='t' AND id=$userid" ), 0, 0 ) ) {
+      if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE deleted=\'t\' AND id='.$userid ), 0, 0 ) ) {
         //undelete
-        db_query("UPDATE ".PRE."users SET deleted='f' WHERE id=$userid" );
+        db_query('UPDATE '.PRE.'users SET deleted=\'f\' WHERE id='.$userid );
 
         //get the users' info
-        $q = db_query("SELECT name, fullname, email FROM ".PRE."users where id=$userid" );
+        $q = db_query('SELECT name, fullname, email FROM '.PRE.'users where id='.$userid );
         $row = db_fetch_array($q, 0 );
 
         //mail the user the happy news :)
@@ -74,14 +74,14 @@ ignore_user_abort(TRUE);
 
 
     //add a user
-    case "submit_insert":
+    case 'submit_insert':
 
       //only for the l33t
       if( ! ADMIN )
-        error("Authorisation failed", "You have to be admin to do this" );
+        error('Authorisation failed', 'You have to be admin to do this' );
 
       //check input has been provided
-      $input_array = array("name", "fullname", "email" );
+      $input_array = array('name', 'fullname', 'email' );
       foreach( $input_array as $var ) {
         if(empty($_POST[$var])) {
           warning( $lang['value_missing'], sprintf( $lang['field_sprt'], $var ) );
@@ -104,31 +104,31 @@ ignore_user_abort(TRUE);
         $private_user = 0;
       
       switch($_POST['user_type'] ) {
-        case "normal":
+        case 'normal':
           $admin_user = 'f';
           $guest_user = 0;
           break;
         
-        case "admin":
+        case 'admin':
           $admin_user = 't';
           $guest_user = 0;
           break;
         
-        case "guest":
+        case 'guest':
         default:
           $admin_user = 'f';
           $guest_user = 1;        
           break;
       }     
       //prohibit 2 people from choosing the same username
-      if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE name='$name'", 0 ), 0, 0 ) > 0 )
+      if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE name=\''.$name.'\'', 0 ), 0, 0 ) > 0 )
         warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
 
       //begin transaction
       db_begin();
       //insert into the users table
       $q = db_query("INSERT INTO ".PRE."users(name, fullname, password, email, private, admin, guest, deleted)
-                     VALUES('$name', '$fullname', '".md5($password)."', '$email', '$private_user', '$admin_user',  '$guest_user', 'f')" );
+                     VALUES('$name', '$fullname', '".md5($password)."', '$email', '$private_user', '$admin_user',  '$guest_user', 'f')'" );
 
       //if the user is assigned to any groups execute the following code to add him/her
       if( isset($_POST['usergroup']) ) {
@@ -143,9 +143,9 @@ ignore_user_abort(TRUE);
 
           //check for security
           if(isset( $usergroup[$i] ) && is_numeric( $usergroup[$i] ) ) {
-            db_query("INSERT INTO ".PRE."usergroups_users(userid, usergroupid) VALUES($user_id, ".$usergroup[$i].")" );
+            db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES($user_id, '.$usergroup[$i].')' );
             //get the usergroup name for the email
-            $q = db_query("SELECT name FROM ".PRE."usergroups WHERE id=".$usergroup[$i] );
+            $q = db_query('SELECT name FROM '.PRE.'usergroups WHERE id='.$usergroup[$i] );
             $usergroup_names .= db_result($q, 0, 0 )."\n";
           }
         }
@@ -154,9 +154,9 @@ ignore_user_abort(TRUE);
       db_commit();
 
       //email the user all data
-      if($usergroup_names == "" )
+      if($usergroup_names == '' )
         $usergroup_names = $lang['not_usergroup']."\n";
-      if($admin_user == "t" )
+      if($admin_user == 't' )
         $admin_state = $lang['admin_priv']."\n";
       $message = sprintf($email_welcome, $name, $password,$usergroup_names,
                   $fullname, $admin_state );
@@ -166,10 +166,10 @@ ignore_user_abort(TRUE);
 
 
    //edit a user
-   case "submit_edit":
+   case 'submit_edit':
 
       //check input has been provided
-      $input_array = array("name", "fullname", "email" );
+      $input_array = array('name', 'fullname', 'email' );
       foreach($input_array as $var ) {
         if(empty($_POST[$var]) ) {
           warning($lang['value_missing'], sprintf($lang['field_sprt'], $var ) );
@@ -178,7 +178,7 @@ ignore_user_abort(TRUE);
       }
 
       if(empty($_POST['password']) )
-        $password = "";
+        $password = '';
       else
         $password = $_POST['password'];  
       
@@ -190,27 +190,27 @@ ignore_user_abort(TRUE);
 
         //check for a userid
         if(empty($_POST['userid']) || ! is_numeric($_POST['userid']) )
-          error("User submit", "No userid specified");
+          error('User submit', 'No userid specified');
 
         $userid = intval($_POST['userid']);
 
-        if( isset($_POST['private_user']) && ( $_POST['private_user'] == "on" ) )
+        if( isset($_POST['private_user']) && ( $_POST['private_user'] == 'on' ) )
           $private_user = 1;
         else
           $private_user = 0;
         
         switch($_POST['user_type'] ) {
-          case "normal":
+          case 'normal':
             $admin_user = 'f';
             $guest_user = 0;
             break;
           
-          case "admin":
+          case 'admin':
             $admin_user = 't';
             $guest_user = 0;
             break;
           
-          case "guest":
+          case 'guest':
           default:
             $admin_user = 'f';
             $guest_user = 1;        
@@ -218,13 +218,13 @@ ignore_user_abort(TRUE);
         }
         
         //prohibit 2 people from choosing the same username
-        if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE name='$name' AND NOT id=$userid", 0 ), 0, 0 ) > 0 )
+        if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE name=\''.$name.'\' AND NOT id='.$userid, 0 ), 0, 0 ) > 0 )
           warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
 
         //begin transaction
         db_begin();
         //was a password provided or not ?
-        if($password != "" ) {
+        if($password != '' ) {
 
           //update data and the password
           $q = db_query("UPDATE ".PRE."users
@@ -250,7 +250,7 @@ ignore_user_abort(TRUE);
         }
 
         //delete the user from all groups
-        db_query("DELETE FROM ".PRE."usergroups_users WHERE userid=$userid" );
+        db_query('DELETE FROM '.PRE.'usergroups_users WHERE userid='.$userid );
 
         //if the user is assigned to any groups execute the following code to add him/her
         if(isset($_POST['usergroup']) ) {
@@ -261,9 +261,9 @@ ignore_user_abort(TRUE);
 
             //check for security
             if(is_numeric( $usergroup[$i] ) ) {
-              db_query("INSERT INTO ".PRE."usergroups_users(userid, usergroupid) VALUES($userid, ".$usergroup[$i].")" );
+              db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES($userid, '.$usergroup[$i].')' );
               //get the usergroup name for the email
-              $q = db_query("SELECT name FROM ".PRE."usergroups WHERE id=".$usergroup[$i] );
+              $q = db_query('SELECT name FROM '.PRE.'usergroups WHERE id='.$usergroup[$i] );
               $usergroup_names .= db_result( $q, 0, 0 )."\n";
             }
           }
@@ -271,11 +271,11 @@ ignore_user_abort(TRUE);
         //transaction complete
         db_commit();
 
-        if($usergroup_names == "" )
+        if($usergroup_names == '' )
           $usergroup_names = $lang['not_usergroup']."\n";
-        if($password == "" )
+        if($password == '' )
           $password = $lang['no_password_change'];
-        if($admin_user == "t" )
+        if($admin_user == 't' )
           $admin_state = $lang['admin_priv']."\n";
         //email the changes to the user
         $message = sprintf($email_user_change1, UID_NAME, UID_EMAIL, $name,
@@ -287,11 +287,11 @@ ignore_user_abort(TRUE);
         //this is secure option where the user cannot change important values
 
         //prohibit 2 people from choosing the same username
-        if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."users WHERE name='$name' AND NOT id=".UID, 0 ), 0, 0 ) > 0 )
+        if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE name=\''.$name.'\' AND NOT id='.UID, 0 ), 0, 0 ) > 0 )
           warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
 
         //did the user change his/her password ?
-        if($password != "" ) {
+        if($password != '' ) {
 
           db_query("UPDATE ".PRE."users
                             SET name='$name',
@@ -322,7 +322,7 @@ ignore_user_abort(TRUE);
 
     //default error
     default:
-      error("User submit", "Invalid request given");
+      error('User submit', 'Invalid request given');
       break;
   }
 

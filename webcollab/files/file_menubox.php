@@ -28,20 +28,20 @@
 
 */
 
-require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once('path.php' );
+require_once( BASE.'includes/security.php' );
 
 //admins only
 if(! ADMIN )
-  error("Unauthorised access", "This function is for admins only." );
+  error('Unauthorised access', 'This function is for admins only' );
 
 //secure values
-$content = "";
+$content = '';
 
 //add an option to admin files
 $content .= "<a href=\"files.php?x=$x&amp;action=admin\">".$lang['file_admin']."</a><br />\n";
 
 //show it
-new_box( $lang['files'], $content, "boxmenu" );
+new_box( $lang['files'], $content, 'boxmenu' );
 
 ?>

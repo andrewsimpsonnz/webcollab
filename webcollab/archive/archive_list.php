@@ -25,11 +25,11 @@
 
 */
 
-require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once('path.php' );
+require_once( BASE.'includes/security.php' );
 
-include_once(BASE."tasks/task_common.php" );
-include_once(BASE."includes/time.php" );
+include_once(BASE.'tasks/task_common.php' );
+include_once(BASE.'includes/time.php' );
 
 //some inital values
 $content = '';
@@ -37,20 +37,20 @@ $flag = 0;
 $archive_print = 0;
 
 // query to get the projects
-$q = db_query("SELECT id,
+$q = db_query('SELECT id,
                       name,
                       deadline,
                       status,
-                      ".$epoch." finished_time) AS finished_time,
-                      ".$epoch." completion_time) AS completion_time,
+                      '.$epoch.' finished_time) AS finished_time,
+                      '.$epoch.' completion_time) AS completion_time,
                       owner,
                       usergroupid,
                       globalaccess,
                       completed
-                      FROM ".PRE."tasks
+                      FROM '.PRE.'tasks
                       WHERE parent=0
                       AND archive=1
-                      ORDER BY name" );
+                      ORDER BY name' );
 
 //check if there are projects
 if(db_numrows($q) < 1 ) {
@@ -72,10 +72,10 @@ else {
 $content .= "<table>\n";
 
 //show all projects
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //check the user has rights to view this project
-  if( (! ADMIN ) && ($row['globalaccess'] != "t" ) && ( $row['usergroupid'] != 0 ) ) {
+  if( (! ADMIN ) && ($row['globalaccess'] != 't' ) && ( $row['usergroupid'] != 0 ) ) {
     if( ! in_array( $row['usergroupid'], (array)$GID ) )
       continue;
   }
@@ -86,16 +86,16 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   //make adjustments
   switch( $project_status ) {
 
-    case "cantcomplete":
-    case "notactive":
+    case 'cantcomplete':
+    case 'notactive':
       break;
 
-    case "active":
-    case "nolimit":
-    case "done":
+    case 'active':
+    case 'nolimit':
+    case 'done':
     default:
       if($row['completed'] == 100 )  
-        $project_status = "done";
+        $project_status = 'done';
       break;
   }
   
@@ -111,25 +111,25 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   //give some details of status
   switch($project_status ) {
 
-    case "done":
+    case 'done':
       $content .= $task_state['completed']." (".nicetime( $row['completion_time'] ).")\n";
       break;
 
-    case "cantcomplete":
+    case 'cantcomplete':
       $content .= "<i>".sprintf($lang['project_hold_sprt'], nicetime($row['finished_time']) )."</i><br />\n";
       $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )."<br />\n";
       break;
 
-    case "notactive":
+    case 'notactive':
       $content .= "<i>".$lang['project_planned']."</i><br />\n";
       break;
 
-    case "nolimit":
+    case 'nolimit':
       $content .= sprintf($lang['percent_sprt'], $row['completed'])."<br />\n";
       $content .= "<i>".$lang['project_no_deadline']."</i><br />\n";
       break;
 
-    case "active":
+    case 'active':
     default:
       $content .= sprintf($lang['percent_sprt'], $row['completed'] )."<br />\n";
       $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )."<br />";

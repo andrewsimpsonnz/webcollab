@@ -27,15 +27,15 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //set variables
-$content = "";
+$content = '';
 
 //only for admins
 if( ! ADMIN ) {
-  error( "Not permitted", "This function is for admins only" );
+  error( 'Not permitted', 'This function is for admins only' );
   return;
 }
 
@@ -50,7 +50,7 @@ $content .=
           "<tr><td><input type=\"radio\" value=\"group\" name=\"group\" id=\"group\" /><label for=\"group\">".$lang['select_usergroup']."</label></td></tr>\n";
 
 //add user-groups
-$q = db_query("SELECT name, id FROM ".PRE."usergroups ORDER BY name" );
+$q = db_query('SELECT name, id FROM '.PRE.'usergroups ORDER BY name' );
 $content .=  "<tr><td>".$lang['usergroup'].":</td><td><label for=\"group\"><select name=\"usergroup[]\" multiple=\"multiple\" size=\"4\">\n";
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++ ) {
   $content .= "<option value=\"".$row['id']."\">".$row['name']."</option>";

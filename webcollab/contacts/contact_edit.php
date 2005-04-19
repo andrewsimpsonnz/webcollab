@@ -26,21 +26,21 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 if(GUEST )
-  error("Contact edit", "Guest not authorised" );
+  error('Contact edit', 'Guest not authorised' );
 
 //we need a valid contactid
 if(empty( $_POST['contactid'] ) || ! is_numeric( $_POST['contactid'] ) )
-  error("Contact engine", "Not a valid value for contactid");
+  error('Contact engine', 'Not a valid value for contactid');
 
 $contactid = intval($_POST['contactid']);
 
 //get contact information
-if( ! ($row = db_fetch_array( db_query( "SELECT * FROM ".PRE."contacts WHERE id=".$contactid ), 0 ) ) )
-  error("Database value error", "There is no information for the contact that you specified");
+if( ! ($row = db_fetch_array( db_query( 'SELECT * FROM '.PRE.'contacts WHERE id='.$contactid ), 0 ) ) )
+  error('Database value error', 'There is no information for the contact that you specified');
 
 $content =
     "<form method=\"post\" action=\"contacts.php\">\n".

@@ -57,15 +57,15 @@
   create_bottom();
 */
 
-require_once("path.php" );
+require_once('path.php' );
 
-include_once(BASE."config/config.php" );
-include_once(BASE."lang/lang.php" );
+include_once(BASE.'config/config.php' );
+include_once(BASE.'lang/lang.php' );
 
 //
 // Creates the initial window
 //
-function create_top($title="", $page_type=0, $cursor="", $check="", $date="", $redirect_time=0 ) {
+function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $redirect_time=0 ) {
 
   global $lang, $top_done, $bottom_text;
   
@@ -85,16 +85,16 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="", $r
   */
 
   //we don't want any caching of these pages
-  header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-  header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-  header("Cache-Control: no-store, no-cache, must-revalidate");
-  header("Cache-Control: post-check=0, pre-check=0", false);
-  header("Pragma: no-cache");
-  header("Content-Type: text/html; charset=".CHARACTER_SET );
+  header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+  header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+  header('Cache-Control: no-store, no-cache, must-revalidate');
+  header('Cache-Control: post-check=0, pre-check=0', false);
+  header('Pragma: no-cache');
+  header('Content-Type: text/html; charset='.CHARACTER_SET );
   
   //do a refresh if required
   if($redirect_time != 0) {
-    header("Refresh: $redirect_time; url=".BASE_URL."index.php" );
+    header('Refresh: $redirect_time; url='.BASE_URL.'index.php' );
   }
   
   $content = "<!DOCTYPE html PUBLIC\n".
@@ -109,7 +109,7 @@ function create_top($title="", $page_type=0, $cursor="", $check="", $date="", $r
   //flush buffer
   echo $content;                  
                     
-  if( $title == "" )
+  if( $title == '' )
     $title = MANAGER_NAME;
 
   $content  =  "<title>".$title."</title>\n".
@@ -267,7 +267,7 @@ function create_bottom() {
 
   switch($bottom_text) {
     case 0: //no bottom text
-      $align = "";
+      $align = '';
       break;
       
     case 1:

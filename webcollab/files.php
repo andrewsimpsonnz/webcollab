@@ -28,55 +28,55 @@
 
 */
 
-require_once("includes/security.php" );
-include_once("includes/screen.php" );
+require_once('includes/security.php' );
+include_once('includes/screen.php' );
 
 //
 // The action handler
 //
 if( ! isset($_REQUEST['action']) )
-  error("Files action handler", "No request given" );
+  error('Files action handler', 'No request given' );
 
   //what do you want to task today =]
   switch($_REQUEST['action'] ) {
 
     //create a box with the current files
-    case "list":
-      include("files/file_list.php" );
+    case 'list':
+      include('files/file_list.php' );
       break;
 
     //admin files
-    case "admin":
+    case 'admin':
       create_top($lang['file_admin'] );
-      include("includes/mainmenu.php" );
-      include("files/file_menubox.php" );
+      include('includes/mainmenu.php' );
+      include('files/file_menubox.php' );
       goto_main();
-      include("files/file_admin.php" );
+      include('files/file_admin.php' );
       create_bottom();
       break;
     
     //upload a file
-    case "upload":
-      create_top($lang['file_choose'], 0, "userfile", "userfile" );
-      include("includes/mainmenu.php" );
+    case 'upload':
+      create_top($lang['file_choose'], 0, 'userfile', 'userfile' );
+      include('includes/mainmenu.php' );
       goto_main();
-      include("files/file_upload.php" );
+      include('files/file_upload.php' );
       create_bottom();
       break;
 
     //download a file
-    case "download":
-      include("files/file_download.php" );
+    case 'download':
+      include('files/file_download.php' );
       break;
       
-    case "submit_del":
-    case "submit_upload":
-      include("files/file_submit.php" );
+    case 'submit_del':
+    case 'submit_upload':
+      include('files/file_submit.php' );
       break;  
       
     //Error case
     default:
-      error("File action handler", "Invalid request given" );
+      error('File action handler', 'Invalid request given' );
       break;
   }
 

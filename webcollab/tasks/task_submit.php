@@ -26,8 +26,8 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //
 //generate status message for emails
@@ -37,29 +37,29 @@ function status($status, $deadline ) {
   global $task_state, $lang;
 
   switch($status) {
-    case "created":
-      $message = $task_state['new']."\n".$lang['deadline'].": ".nicedate($deadline);
+    case 'created':
+      $message = $task_state['new']."\n".$lang['deadline'].': '.nicedate($deadline);
       break;
 
-    case "notactive":
+    case 'notactive':
       $message = $task_state['planned'];
       break;
 
-    case "active":
-      $message = $task_state['active']."\n".$lang['deadline'].": ".nicedate($deadline);
+    case 'active':
+      $message = $task_state['active']."\n".$lang['deadline'].': '.nicedate($deadline);
       break;
 
-    case "cantcomplete":
+    case 'cantcomplete':
       $message = $task_state['cantcomplete'];
       break;
 
-    case "done":
+    case 'done':
       $message = $task_state['done'];
       break;
 
-    case "nolimit":
+    case 'nolimit':
     default:
-      $message = "";
+      $message = '';
       break;
   }
 
@@ -81,7 +81,7 @@ function user_access($taskid ) {
   if(ADMIN )
     return TRUE;  
 
-  $q = db_query("SELECT owner, usergroupid, groupaccess FROM ".PRE."tasks WHERE id=$taskid" );
+  $q = db_query('SELECT owner, usergroupid, groupaccess FROM '.PRE.'tasks WHERE id='.$taskid );
   $row = db_fetch_num($q, 0 );
 
   //user is owner
@@ -93,7 +93,7 @@ function user_access($taskid ) {
     return FALSE;
 
   //if groupaccess is set, check user is in usergroup
-  if($row[2] == "t" ) {
+  if($row[2] == 't' ) {
     if(in_array($row[1], (array)$GID ) )
       return TRUE;
   }

@@ -27,8 +27,8 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //secure vars
 $userid = '';
@@ -38,26 +38,26 @@ if(ADMIN == 1 ) {
 
   //is there a uid ?
   if(empty($_REQUEST['userid']) || ! is_numeric($_REQUEST['userid']) )
-    error("User edit", "No userid was specified" );
+    error('User edit', 'No userid was specified' );
 
   $userid = intval($_REQUEST['userid']);
 
   //query for user
-  $q = db_query("SELECT * FROM ".PRE."users WHERE id=$userid" );
+  $q = db_query('SELECT * FROM '.PRE.'users WHERE id='.$userid );
 
   //also query for the groups that this user is in
-  $usergroups_users_q = db_query("SELECT usergroupid FROM ".PRE."usergroups_users WHERE userid=$userid" );
+  $usergroups_users_q = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$userid );
 
 }
 else {
 
   //user
-  $q = db_query("SELECT * FROM ".PRE."users WHERE id=".UID );
+  $q = db_query('SELECT * FROM '.PRE.'users WHERE id='.UID );
 }
 
 //fetch data
 if( ! ($row = db_fetch_array($q , 0 ) ) )
-  error("Database result", "Error in retrieving user-data from database" );
+  error('Database result', 'Error in retrieving user-data from database' );
 
 
 //show data

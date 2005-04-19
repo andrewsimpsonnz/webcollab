@@ -27,16 +27,16 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //admins only
 if(! ADMIN)
-  error("Unauthorised access", "This function is for admins only." );
+  error('Unauthorised access', 'This function is for admins only.' );
 
 
 if(empty($_REQUEST['action']) )
-  error("Taskgroups submit", "No action given" );
+  error('Taskgroups submit', 'No action given' );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);  
@@ -44,26 +44,26 @@ ignore_user_abort(TRUE);
   switch($_REQUEST['action'] ) {
 
     //delete a taskgroup
-    case "submit_del":
+    case 'submit_del':
 
       if(empty($_GET['taskgroupid'] ) || ! is_numeric($_GET['taskgroupid']) )
-        error("Taskgroup submit", "Not a valid value for taskgroupid" );
+        error('Taskgroup submit', 'Not a valid value for taskgroupid' );
 
       $taskgroupid = intval($_GET['taskgroupid']);
 
       //if taskgroup exists we can delete it :)
-      if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."taskgroups WHERE id='$taskgroupid'" ) ) ) {
+      if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'taskgroups WHERE id='.$taskgroupid ) ) ) {
         db_begin();
         //set the affected tasks to have no taskgroup
-        @db_query("UPDATE ".PRE."tasks SET taskgroupid=0 WHERE taskgroupid='$taskgroupid'" );
+        @db_query('UPDATE '.PRE.'tasks SET taskgroupid=0 WHERE taskgroupid='.$taskgroupid );
         //delete the group
-        db_query("DELETE FROM ".PRE."taskgroups WHERE id=$taskgroupid" );
+        db_query('DELETE FROM '.PRE.'taskgroups WHERE id='.$taskgroupid );
         db_commit();
       }
       break;
 
     //insert a new taskgroup
-    case "submit_insert":
+    case 'submit_insert':
 
       if(empty($_POST['name'] ) )
         warning($lang['value_missing'], sprintf($lang['field_sprt'], $lang['taskgroup_name'] ) );
@@ -72,19 +72,19 @@ ignore_user_abort(TRUE);
       $description = safe_data($_POST['description']);
       
       //check for duplicates
-      if(db_result(db_query("SELECT COUNT(*) FROM ".PRE."taskgroups WHERE name='$name'"), 0, 0 ) > 0 )
+      if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'taskgroups WHERE name=\''.$name.'\'' ), 0, 0 ) > 0 )
         warning($lang['add_taskgroup'], sprintf($lang['taskgroup_dup_sprt'], $name ) );
 
-      db_query("INSERT INTO ".PRE."taskgroups(name, description) VALUES ('$name', '$description')" );
+      db_query('INSERT INTO '.PRE.'taskgroups(name, description) VALUES (\''.$name.'\', \''.$description.'\')' );
       
       break;
 
 
     //edit an existing taskgroup
-    case "submit_edit":
+    case 'submit_edit':
 
       if(empty($_POST['taskgroupid'] ) || ! is_numeric($_POST['taskgroupid'] ) )
-        error("Taskgroup submit", "Not a valid value for taskgroupid" );
+        error('Taskgroup submit', 'Not a valid value for taskgroupid' );
 
       if(empty($_POST['name'] ) )
         warning($lang['value_missing'], sprintf($lang['field_sprt'], $lang['taskgroup_name'] ) );
@@ -93,16 +93,16 @@ ignore_user_abort(TRUE);
       $description = safe_data($_POST['description'] );
       $taskgroupid = intval($_POST['taskgroupid'] );
 
-      db_query("UPDATE ".PRE."taskgroups SET name='$name', description='$description' WHERE id=$taskgroupid" );
+      db_query('UPDATE '.PRE.'taskgroups SET name=\''.$name.'\', description=\''.$description.'\' WHERE id='.$taskgroupid );
       
       break;
 
     //error case
     default:
-      error("Taskgroup submit", "Invalid request given" );
+      error('Taskgroup submit', 'Invalid request given' );
       break;
   }
 
-header("Location: ".BASE_URL."taskgroups.php?x=$x&action=manage");
+header('Location: '.BASE_URL.'taskgroups.php?x='.$x.'&action=manage');
 
 ?>

@@ -27,11 +27,11 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //secure values
-$content = "";
+$content = '';
 
 //create content
 $content .= "<a href=\"main.php?x=$x\">".$lang['home_page']."</a><br />\n".
@@ -42,6 +42,6 @@ $content .= "<a href=\"main.php?x=$x\">".$lang['home_page']."</a><br />\n".
             "<a href=\"logout.php?x=$x\">".$lang['log_out']."</a><br />\n";
 
 //show
-new_box( $lang['main_menu'], $content, "boxmenu" );
+new_box( $lang['main_menu'], $content, 'boxmenu' );
 
 ?>

@@ -28,17 +28,17 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-include_once(BASE."includes/admin_config.php" );
+include_once(BASE.'includes/admin_config.php' );
 
 //check if file uploads are allowed in php.ini file
-if( ! (bool)ini_get("file_uploads" ) )
+if( ! (bool)ini_get('file_uploads' ) )
   warning($lang['error'], $lang['no_file_uploads'] );
 
 if(empty($_GET['taskid']) || ! is_numeric($_GET['taskid']) )
-  error("File upload", "Not a valid taskid");
+  error('File upload', 'Not a valid taskid');
 
 $taskid = $_GET['taskid'];
 
@@ -47,7 +47,7 @@ if(GUEST )
  warning($lang['access_denied'], $lang['not_owner'] );  
 
 //check usergroup security
-require_once(BASE."includes/usergroup_security.php" );
+require_once(BASE.'includes/usergroup_security.php' );
 
 $content =  "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"files.php\">\n".
               "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".

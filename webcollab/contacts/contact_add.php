@@ -28,17 +28,13 @@
 
 */
 
-require_once("path.php" );
-require_once( BASE."includes/security.php" );
-
-//secure variables
-$content = "";
-$q = "";
+require_once('path.php' );
+require_once( BASE.'includes/security.php' );
 
 if(GUEST )
-  error("Contact add", "Guest not authorised" );
+  error('Contact add', 'Guest not authorised' );
 
-$content .=
+$content =
         "<form method=\"post\" action=\"contacts.php\">\n".
           "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
           "<input type=\"hidden\" name=\"action\" value=\"submit_add\" /></fieldset>\n".

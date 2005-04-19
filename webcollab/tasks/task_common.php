@@ -25,8 +25,8 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 //
 // Gives back the percentage completed of this tasks's children
@@ -37,14 +37,14 @@ function percent_complete($taskid ) {
   $tasks_completed = 0;
   $total_tasks = 0;
   
-  $q = db_query("SELECT status FROM ".PRE."tasks WHERE projectid=".$taskid." AND parent<>0"  );
+  $q = db_query('SELECT status FROM '.PRE.'tasks WHERE projectid='.$taskid.' AND parent<>0'  );
   
-  for($i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) { 
+  for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) { 
     
-    $total_tasks++;
+    ++$total_tasks;
       
     if($row[0] == 'done')
-      $tasks_completed++;
+      ++$tasks_completed;
     }
   
   //project with no tasks is complete
@@ -82,15 +82,15 @@ function project_jump($taskid=0) {
   global $x, $lang, $GID;
   
   // query to get the non-completed projects
-  $q = db_query("SELECT id,
+  $q = db_query('SELECT id,
                         name,
                         globalaccess,
                         usergroupid
-                        FROM ".PRE."tasks
+                        FROM '.PRE.'tasks
                         WHERE parent=0
                         AND completed<>100
                         AND archive=0
-                        ORDER BY name" );
+                        ORDER BY name' );
   
   //check if there are projects
   if(db_numrows($q) > 0 ){
@@ -103,19 +103,19 @@ function project_jump($taskid=0) {
                 "<option value=\"-1\">".$lang['quick_jump']."</option>\n";
   
     // loop through the data
-    for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
+    for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i){
     
       //check if user can view this project
-      if( (! ADMIN ) && ($row['globalaccess'] != "t" ) && ($row['usergroupid'] != 0 ) ) {
+      if( (! ADMIN ) && ($row['globalaccess'] != 't' ) && ($row['usergroupid'] != 0 ) ) {
         if( ! in_array( $row['usergroupid'], (array)$GID ) )
           continue;
       }
           
       $content .= "<option value=\"".$row["id"]."\"";
-      if($taskid == $row["id"]) {
+      if($taskid == $row['id']) {
         $content .= " selected=\"selected\"";
       }
-      $content .= ">".$row["name"]."</option>\n";
+      $content .= ">".$row['name']."</option>\n";
     }
   
   // wrap up the select and the submit

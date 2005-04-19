@@ -27,12 +27,12 @@
 
 */
 
-require_once("path.php" );
+require_once('path.php' );
 
-require_once(BASE."config/config.php" );
-require_once(BASE."lang/lang.php" );
-require_once(BASE."database/database.php" );
-require_once(BASE."includes/common.php" );
+require_once(BASE.'config/config.php' );
+require_once(BASE.'lang/lang.php' );
+require_once(BASE.'database/database.php' );
+require_once(BASE.'includes/common.php' );
 
 //clean up some variables
 $q   = '';
@@ -42,7 +42,7 @@ $session_key = 0;
 
 //check for some values that HAVE to be present to be allowed (ip, session_key)
 if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
-  error("Security manager", "No ip address found" );
+  error('Security manager', 'No ip address found' );
 }
 
 //$session_key can be from either a GET, POST or COOKIE - check for cookie first
@@ -55,43 +55,43 @@ elseif(isset($_REQUEST['x']) && (strlen($_REQUEST['x'] ) == 32 ) ){
 }
 else{
   //return to login screen
-  header("Location: ".BASE_URL."index.php");
+  header('Location: '.BASE_URL.'index.php');
   die;
 }
 
 //seems okay at first, now go cross-checking with the known data from the database
-if( ! ($q = db_query("SELECT ".PRE."logins.user_id AS user_id,
-                             ".PRE."users.email AS email,
-                             ".PRE."users.admin AS admin,
-                             ".PRE."users.fullname AS fullname,
-                             ".PRE."users.guest AS guest,
-                             $epoch now() ) AS now,
-                             $epoch ".PRE."logins.lastaccess) AS sec_lastaccess
-                             FROM ".PRE."logins
-                             LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."logins.user_id)
-                             WHERE ".PRE."logins.session_key='$session_key'", 0 ) ) ) {
-  error("Security manager", "Database not able to verify session key");
+if( ! ($q = db_query('SELECT '.PRE.'logins.user_id AS user_id,
+                             '.PRE.'users.email AS email,
+                             '.PRE.'users.admin AS admin,
+                             '.PRE.'users.fullname AS fullname,
+                             '.PRE.'users.guest AS guest,
+                             '.$epoch.' now() ) AS now,
+                             '.$epoch.' '.PRE.'logins.lastaccess) AS sec_lastaccess
+                             FROM '.PRE.'logins
+                             LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
+                             WHERE '.PRE.'logins.session_key=\''.$session_key.'\'', 0 ) ) ) {
+  error('Security manager', 'Database not able to verify session key');
 }
 
 if(db_numrows($q) != 1 ) {
   //return to login screen
-  header("Location: ".BASE_URL."index.php");
+  header('Location: '.BASE_URL.'index.php');
   die;
 }
 
 if( ! ( $row = db_fetch_array($q, 0) ) ) {
-  error("Security manager", "Error while fetching users' data");
+  error('Security manager', 'Error while fetching user data');
 }
 
 //if database table LEFT JOIN gives no rows will get NULL here
 if($row['user_id'] == NULL ){
-  error("Security manager", "No valid user-id found");
+  error('Security manager', 'No valid user-id found');
 }
 
 //check the last login time (there is an inactivity time limit set by SESSION_TIMEOUT)
 if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
-  db_query("UPDATE ".PRE."logins SET session_key='' WHERE user_id=".$row['user_id'] );
-  setcookie("webcollab_session", "" );
+  db_query('UPDATE '.PRE.'logins SET session_key=\'\' WHERE user_id='.$row['user_id'] );
+  setcookie('webcollab_session', '' );
   warning( $lang['security_manager'], sprintf($lang['session_timeout_sprt'],
             round(($row['now'] - $row['sec_lastaccess'] )/60), SESSION_TIMEOUT*60, BASE_URL ) );
 }
@@ -112,7 +112,7 @@ define('UID_EMAIL', $row['email'] );
 
 
 //get usergroups of user
-$q = db_query("SELECT usergroupid FROM ".PRE."usergroups_users WHERE userid=".UID );
+$q = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID );
 
 //prevent hacking with register globals turned on
 if(isset($GID) )
@@ -125,7 +125,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
 }
 
 //update the "I was here" time
-db_query("UPDATE ".PRE."logins SET lastaccess=now() WHERE session_key='$session_key' AND user_id=".UID );
+db_query('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.$session_key.'\' AND user_id='.UID );
 
 // this gives:
 //
