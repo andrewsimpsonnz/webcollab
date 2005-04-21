@@ -128,7 +128,7 @@ ignore_user_abort(TRUE);
       db_begin();
       //insert into the users table
       $q = db_query("INSERT INTO ".PRE."users(name, fullname, password, email, private, admin, guest, deleted)
-                     VALUES('$name', '$fullname', '".md5($password)."', '$email', '$private_user', '$admin_user',  '$guest_user', 'f')'" );
+                     VALUES('$name', '$fullname', '".md5($password)."', '$email', '$private_user', '$admin_user',  '$guest_user', 'f')" );
 
       //if the user is assigned to any groups execute the following code to add him/her
       if( isset($_POST['usergroup']) ) {
@@ -143,7 +143,7 @@ ignore_user_abort(TRUE);
 
           //check for security
           if(isset( $usergroup[$i] ) && is_numeric( $usergroup[$i] ) ) {
-            db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES($user_id, '.$usergroup[$i].')' );
+            db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.$user_id.', '.$usergroup[$i].')' );
             //get the usergroup name for the email
             $q = db_query('SELECT name FROM '.PRE.'usergroups WHERE id='.$usergroup[$i] );
             $usergroup_names .= db_result($q, 0, 0 )."\n";
@@ -261,7 +261,7 @@ ignore_user_abort(TRUE);
 
             //check for security
             if(is_numeric( $usergroup[$i] ) ) {
-              db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES($userid, '.$usergroup[$i].')' );
+              db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.$userid.', '.$usergroup[$i].')' );
               //get the usergroup name for the email
               $q = db_query('SELECT name FROM '.PRE.'usergroups WHERE id='.$usergroup[$i] );
               $usergroup_names .= db_result( $q, 0, 0 )."\n";

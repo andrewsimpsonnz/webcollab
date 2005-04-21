@@ -140,7 +140,7 @@ if($parentid != 0 ) {
   $project_status = db_result(db_query('SELECT status FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 );
 
   if($project_status == 'cantcomplete' || $project_status == 'notactive' )
-    db_query("UPDATE ".PRE."tasks SET status='$project_status' WHERE id=$taskid" );
+    db_query('UPDATE '.PRE.'tasks SET status=\''.$project_status.'\' WHERE id='.$taskid );
 }
 
 //you have already seen this item, no need to announce it to you
@@ -246,7 +246,7 @@ email($usergroup, sprintf($title2, $name), $message );
 
 //don't use the default break-out sequence but go to or the parent's page of the project
 if($parentid != 0 ) {
-  header('Location: '.BASE_URL.'tasks.php?x=$x&action=show&taskid='.$parentid );
+  header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$parentid );
   die;
 }
 else {

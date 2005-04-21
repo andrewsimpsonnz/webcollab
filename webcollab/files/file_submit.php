@@ -108,20 +108,20 @@ ignore_user_abort(TRUE);
         $db_filename = $_FILES['userfile']['name'];
 
       //alter file database administration
-      $q = db_query( 'INSERT INTO '.PRE.'files (filename,
+      $q = db_query( "INSERT INTO ".PRE."files (filename,
                                             size,
                                             description,
                                             uploaded,
                                             uploader,
                                             taskid,
                                             mime )
-                                    VALUES (\''.$db_filename.'\',
-                                            '.$_FILES['userfile']['size'].',
+                                    VALUES ('$db_filename',
+                                            ".$_FILES['userfile']['size'].",
                                             '$description',
                                             now(),
-                                            '.UID.',
-                                            '.$taskid.',
-                                            \''.$_FILES['userfile']['type'].'\' ) ');
+                                            ".UID.",
+                                            $taskid,
+                                            '".$_FILES['userfile']['type']."' )" );
 
       //get last insert id 
       $fileid = db_lastoid('files_id_seq' );

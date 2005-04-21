@@ -93,7 +93,7 @@ function copy_across($taskid, $new_parent, $name ) {
     }
 
     //insert data
-    $q = db_query('INSERT INTO '.PRE.'tasks(name,
+    $q = db_query("INSERT INTO ".PRE."tasks(name,
                     text,
                     created,
                     lastforumpost,
@@ -111,24 +111,24 @@ function copy_across($taskid, $new_parent, $name ) {
                     globalaccess,
                     groupaccess,
                     status )
-                    values(\''.$new_name.'\',
-                    ''.addslashes($row['text']).'',
+                    values('$new_name',
+                    '".addslashes($row['text'])."',
                     now(),
                     now(),
                     now(),
                     now(),
-                    ''.$row['owner'].'',
-                    '.UID.',
-                    ''.$row['deadline'].'',
+                    ".$row['owner'].",
+                    ".UID.",
+                    '".$row['deadline']."',
                     now(),
-                    '.$row['priority'].',
-                    '.$new_parent.',
-                    '.$new_projectid.',
-                    '.$row['taskgroupid'].',
-                    '.$row['usergroupid'].',
-                    \''.$row['globalaccess'].'\',
-                    \''.$row['groupaccess'].'\',
-                    \''.addslashes($row['status']).'\')' );
+                    ".$row['priority'].",
+                    $new_parent,
+                    $new_projectid,
+                    ".$row['taskgroupid'].",
+                    ".$row['usergroupid'].",
+                    '".$row['globalaccess']."',
+                    '".$row['groupaccess']."',
+                    '".addslashes($row['status'])."')" );
 
     // get taskid for the new task/project
     $new_taskid = db_lastoid('tasks_id_seq' );

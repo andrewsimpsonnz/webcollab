@@ -52,7 +52,7 @@ function reparent_children($task_id ) {
     return;
 
    for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-     db_query('UPDATE '.PRE.'tasks SET projectid=$projectid WHERE id='.$row[0] );
+     db_query('UPDATE '.PRE.'tasks SET projectid='.$projectid.' WHERE id='.$row[0] );
      //recursion to find anymore children
      reparent_children($row[0] );
    }
@@ -273,7 +273,7 @@ if(isset($_POST['maillist']) && ($_POST['maillist']=='on') ) {
     $q = db_query('SELECT '.PRE.'users.email
                       FROM '.PRE.'users
                       LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
-                      WHERE '.PRE.'usergroups_users.usergroupid=$usergroupid
+                      WHERE '.PRE.'usergroups_users.usergroupid='.$usergroupid.'
                       AND '.PRE.'users.deleted=\'f\'');
 
     for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {

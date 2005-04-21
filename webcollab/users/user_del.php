@@ -54,7 +54,7 @@ switch($_GET['action'] ){
 
   case 'permdel':
 
-    if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE id=$userid AND deleted=\'t\'' ), 0, 0 ) == 1 ) {
+    if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE id='.$userid.' AND deleted=\'t\'' ), 0, 0 ) == 1 ) {
 
       //kiss your ass goodbye :)
       db_begin();
