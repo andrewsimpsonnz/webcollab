@@ -30,11 +30,14 @@
   Refer to RFC 2195 for CRAM-MD5
   Refer to RFC 2554 for SMTP AUTH
   Refer to RFC 2595 for auth plain
+  Refer to RFC 3207 for STARTTLS
 
 */
 
 
 function smtp_auth($connection, $cap) {
+
+   global $log; 
 
    if(strpos($cap, 'AUTH' ) === false )
         debug('This SMTP server cannot do SMTP AUTH' );
@@ -50,10 +53,10 @@ function smtp_auth($connection, $cap) {
        fputs($connection, base64_encode(MAIL_USER."\0".MAIL_USER."\0".MAIL_PASSWORD )."\r\n" );
        $log .= 'C: Authenticating...'."\n";
        $res = response();
-       if($res[0] != '235' )
-         debug();
-
-       return;
+       if($res[0] == '235' )
+         return;
+       
+       $log .= 'C: Authentication failure'."\n";         
      }
    }
 
@@ -75,10 +78,10 @@ function smtp_auth($connection, $cap) {
        fputs($connection, base64_encode(MAIL_PASSWORD )."\r\n" );
        $log .= 'C: Sending password...'."\n";
        $res = response();
-       if($res[0] != '235' )
-         debug();
-
-       return;
+       if($res[0] == '235' )
+         return;  
+         
+       $log .= 'C: Authentication failure'."\n";
        }
    }
 
@@ -94,7 +97,7 @@ function smtp_auth($connection, $cap) {
        $key = MAIL_PASSWORD;
 
        if(function_exists('mhash' ) ) {
-         $mhash = bin2hex(mhash(MHASH_MD5, $data, $key) );
+         $mhash = bin2hex(mhash(MHASH_MD5, $data, $key ) );
        }  
        else {       
          //the algorithm below does mhash() without needing the external mhash library to be installed on PHP
@@ -113,14 +116,14 @@ function smtp_auth($connection, $cap) {
        fputs($connection, base64_encode(MAIL_USER." ".$mhash )."\r\n" );
        $log .= 'C: Authenticating...'."\n";
        $res = response();
-       if($res[0] != '235' )
-         debug();
-
-       return;
+       if($res[0] == '235' )
+         return;
+       
+       $log .= 'C: Authentication failure'."\n";
      }
    }
 
-   debug('WebCollab does not recognise any SMTP AUTH methods being offered by the server' );
+   debug('WebCollab not able to authenticate with SMTP server' );
 
    return;
 }
