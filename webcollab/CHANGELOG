@@ -1,7 +1,16 @@
 WebCollab CVS
+*** 21 April 2005
+
+- try all options in SMTP AUTH before rejecting emails (Patch #1184635) (Credit: Craig Hoover - crh3675)
+
+- change from double quoting throughout to single quotes 
+
+WebCollab CVS
 *** 13 April 2005
 
-- add PIPELINING (RFC 2920) to email.php 
+- implement SMTP PIPELINING (RFC 2920) in email.php
+
+- make allowance for SMTP STARTTLS in PHP 5.1+ (Experimental) 
 
 WebCollab 1.71 - Karekare
 *** 5 April 2005
