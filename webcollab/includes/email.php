@@ -85,7 +85,7 @@ function email($to, $subject, $message ) {
 
   //do extended hello (EHLO)
   fputs($connection, 'EHLO '.$_SERVER['SERVER_NAME']."\r\n" );
-  $log .= "C: EHLO".$_SERVER['SERVER_NAME']."\n";
+  $log .= "C: EHLO ".$_SERVER['SERVER_NAME']."\n";
   $res = response();
   $capability = $res[1];
   
