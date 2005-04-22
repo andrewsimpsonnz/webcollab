@@ -43,15 +43,22 @@ function safe_data($body ) {
   
   //return null for nothing input
   if(empty($body) )
-    return $body;
+    return '';
   
-  //clean up & remove whitespace      
-  $body = trim(clean_up($body) );
+  //we don't use magic_quotes
+  if(get_magic_quotes_gpc() )
+    $body = stripslashes($body );
+          
+  //validate characters & remove whitespace      
+  $body = trim(validate($body) );
   
   //limit line length for single line entries
   //  strlen() is _much_ faster than mb_strlen() or mb_substr()  
   if(strlen($body) > 100 )
     $body = mb_substr($body, 0, 100 );
+    
+  //clean up for database
+  $body = clean_up($body );  
     
 return $body;
 }
@@ -64,23 +71,27 @@ function safe_data_long($body ) {
 
   //return null for nothing input
   if(empty($body) )
-    return $body;
+    return '';
     
-  //clean up
-  $body = clean_up($body);
+  //we don't use magic_quotes
+  if(get_magic_quotes_gpc() )
+    $body = stripslashes($body );
+        
+  //validate characters
+  $body = validate($body);
     
   //normalise line breaks from Windows & Mac to UNIX style
   $body = str_replace("\r\n", "\n", $body );
   $body = str_replace("\r", "\n", $body );
   //break up long non-wrap words
-  //$body = preg_replace("/[^\s\n\t]{100}/u", "$0\n", $body );
-  $body = mb_ereg_replace("/[^[:space:]]{100}/", "\\0\n", $body );
+  $body = mb_ereg_replace("[^[:space:]]{100}", "\\0\n", $body );
+  //clean up for database
+  $body = clean_up($body );  
 
 return $body;
 }
 
-function clean_up($body ) {
-  global $validation_regex;
+function validate($body ) {
   
   //decode decimal HTML entities added by web browser
   $body = preg_replace('/&#\d{2,5};/e', "utf8_entity_decode('$0')", $body );
@@ -121,13 +132,14 @@ function clean_up($body ) {
       break;
   
   }    
- 
-  //remove any addslashes done before decimal HTML entity decoding was done
-  if(get_magic_quotes_gpc() )
-    $body = stripslashes($body );
-        
+
+  return $body;   
+}
+    
+function clean_up($body) {  
+  
   //use HTML encoding for characters that could be used for css <script> or SQL injection attacks
-  $trans = array("'"=>"\'", '"'=>'\"', ';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'\|', '('=>'\(', ')'=>'\)', '+'=>'\+', '-'=>'\-', '='=>'\=' );
+  $trans = array('\\'=>'\\\\', "'"=>"\'", '"'=>'\"', ';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'\|', '('=>'\(', ')'=>'\)', '+'=>'\+', '-'=>'\-', '='=>'\=' );
   
   return strtr($body, $trans ); 
 }
