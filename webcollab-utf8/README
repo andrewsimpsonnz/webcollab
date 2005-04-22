@@ -4,9 +4,13 @@ Unicode Add-ons for WebCollab
 Introduction
 ------------
 
-The standard WebCollab package uses the ISO-8859-1 character set for the Western
-European languages, and the ISO-8859-5 character set for Bulgarian language.  This
-parameter is set in the xx-message.php language files in the /lang directory. 
+The standard WebCollab package uses a single byte character set specific to the
+language being used. This parameter is set in the xx-message.php language files
+in the /lang directory.
+
+This method has two major disadvantages: Because it is single byte, only 255
+different characters are possible (this is a problem with Chinese, Japanese for
+instance).  Secondly, character sets cannot be mixed in a single application. 
 
 This Unicode version of WebCollab converts the localisation to Unicode (UTF-8),
 which natively supports over 650 languages.  Note that you will need to choose appropriate
@@ -16,7 +20,7 @@ characters.
 Note:
 - This code is written for PHP versions 4.3.0, and higher.  
 - The optional multibyte strings library (mb_library) in PHP *must* be installed and
-enabled.
+  enabled.
 
 
 Important Notes about MySQL
@@ -37,9 +41,39 @@ PostgreSQL fully supports Unicode and is recommended.
 Changes to Standard WebCollab
 -----------------------------
 
+**/contacts
+- - - - - -
+
 * contact_menubox.php
 
   - change initial letter to uppercase (UTF-8 uppercase sorting rules apply)
+
+
+**/database
+- - - - - -
+
+* pgsql_database.php
+
+  - pg_set_client_encoding() added and set to UTF-8
+  
+  - timezones set by database
+  
+* mysql_database.php
+* mysql_innodb_database.php 
+
+  - client_encoding added and set to UTF-8
+  
+  - timezones set by database
+    
+   
+**/help
+- - - - - -
+
+  - change from ISO-8859-x to UTF-8 
+  
+  
+**/includes
+- - - - - -
 
 * common.php
 
@@ -54,16 +88,26 @@ Changes to Standard WebCollab
   - for 8 bit mime capable servers the message is sent as UTF-8
 
   - for 7 bit servers the message is sent as base64 encoded
+  
+* time.php
 
-* pgsql_database.php
+ - timezones are now handled by database
 
-  - pg_set_client_encoding() added and set to UTF-8
 
+**/lang
+- - - - - -
+
+  - change from ISO-8859-x to UTF-8 
+  
+  
+**/tasks  
+- - - - - -
+  
 * task_navigate.php 
   
   - truncate task names to 20 characters (allowing for UTF-8 multi-byte
      characters)
     
-* /lang and /help
-
-  - change from ISO-8859-x to UTF-8       
+ 
+Other files are changed to reflect the changes in /includes/time.php and that
+the database now handles timesaones   
