@@ -126,12 +126,16 @@ ignore_user_abort(TRUE);
       //get last insert id 
       $fileid = db_lastoid('files_id_seq' );
       
-      //stripslashes from filename if magic quotes is 'on'
-      //(prevents slash being read as a directory in Windows!!)
+      //stripslashes from file name if magic quotes is 'on'
       if(get_magic_quotes_gpc() )
         $filename = stripslashes($_FILES['userfile']['name'] );
       else
-        $filename = $_FILES['userfile']['name'];
+        $filename = $_FILES['userfile']['name']; 
+
+      //limit file name to 200 characters - should be enough for any sensible(!) file name :-) 
+      $filename = substr($filename, 0, 200 );
+      //strip illegal characters  
+      $filename = preg_replace('/[^a-zA-Z0-9\-\_\.]|[\.]{2}/', '_', $filename );
 
       //copy it
       if( ! move_uploaded_file( $_FILES['userfile']['tmp_name'], FILE_BASE.'/'.$fileid.'__'.$filename ) ) {
