@@ -38,7 +38,7 @@ require_once(BASE.'includes/common.php' );
 $q   = '';
 $ip  = '';
 $x   = 0;
-$session_key = 0;
+$session_key = 'ZZZZ';
 
 //check for some values that HAVE to be present to be allowed (ip, session_key)
 if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
@@ -46,27 +46,35 @@ if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
 }
 
 //$session_key can be from either a GET, POST or COOKIE - check for cookie first
-if(isset($_COOKIE['webcollab_session'] ) && (strlen($_COOKIE['webcollab_session'] ) == 32 ) ){
+if(isset($_COOKIE['webcollab_session'] ) ){
   $session_key = safe_data($_COOKIE['webcollab_session'] );
 }
-elseif(isset($_REQUEST['x']) && (strlen($_REQUEST['x'] ) == 32 ) ){
+elseif(isset($_REQUEST['x']) ){
   $session_key = safe_data($_REQUEST['x']);
   $x = $session_key;
 }
 else{
   //return to login screen
-  header('Location: '.BASE_URL.'index.php');
+  header("Location: ".BASE_URL."index.php");
   die;
 }
 
+//reject non-hexadecimal data or incorrect length keys 
+if((! ctype_xdigit($session_key ) ) || (! strlen($session_key ) == 32 ) ){
+  //return to login screen
+  header("Location: ".BASE_URL."index.php");
+  die;
+}
+    
 //seems okay at first, now go cross-checking with the known data from the database
 if( ! ($q = db_query('SELECT '.PRE.'logins.user_id AS user_id,
+                             '.$epoch.' '.PRE.'logins.lastaccess) AS sec_lastaccess,
                              '.PRE.'users.email AS email,
                              '.PRE.'users.admin AS admin,
                              '.PRE.'users.fullname AS fullname,
                              '.PRE.'users.guest AS guest,
-                             '.$epoch.' now() ) AS now,
-                             '.$epoch.' '.PRE.'logins.lastaccess) AS sec_lastaccess
+                             '.PRE.'users.deleted AS deleted,
+                             '.$epoch.' now() ) AS now
                              FROM '.PRE.'logins
                              LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
                              WHERE '.PRE.'logins.session_key=\''.$session_key.'\'', 0 ) ) ) {
@@ -84,7 +92,8 @@ if( ! ( $row = db_fetch_array($q, 0) ) ) {
 }
 
 //if database table LEFT JOIN gives no rows will get NULL here
-if($row['user_id'] == NULL ){
+//  also check for deleted users
+if(($row['user_id'] == NULL ) || ($row['deleted'] == 't' ) ){
   error('Security manager', 'No valid user-id found');
 }
 
@@ -109,8 +118,6 @@ else
 define('UID_NAME', $row['fullname'] );
 define('UID_EMAIL', $row['email'] );
     
-
-
 //get usergroups of user
 $q = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID );
 
