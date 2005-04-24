@@ -218,6 +218,9 @@ if(! $condensed) {
   }
 }
 
+//free memory
+db_free_result($q);
+
 // query to get the projects
 $q = db_query('SELECT id,
                       name,

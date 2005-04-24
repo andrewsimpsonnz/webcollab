@@ -123,7 +123,10 @@ function project_jump($taskid=0) {
               "<a href=\"javascript:document.getElementById('ProjectQuickJump').submit();\"><small>".$lang['go']."</small></a></div>\n".
               "</form>\n";
   }
-return $content;
+  
+  db_free_result($q );
+  
+  return $content;
 }  
 
 ?>

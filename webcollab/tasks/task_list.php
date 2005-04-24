@@ -262,7 +262,9 @@ function list_tasks($parent ) {
       $this_content .= "</li>\n";
     }
   }
-
+  //free memory
+  db_free_result($q);
+  
   return $this_content;
 }
 

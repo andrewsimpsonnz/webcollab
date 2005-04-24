@@ -56,6 +56,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
    }
 }
 
+db_free_result($q );
+
 $content .= "<br />\n";
 
 //the add button

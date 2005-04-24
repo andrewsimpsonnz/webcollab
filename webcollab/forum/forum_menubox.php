@@ -67,6 +67,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
     break;
 }
 
+db_free_result($q );
+
 if($list != '') {
   $content = "<small>".$list.sprintf($lang['last_post_sprt'], nicedate($lastpost) )."</small>\n";
   new_box($lang['recent_posts'], $content, 'boxmenu' ); 

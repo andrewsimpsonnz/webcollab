@@ -45,6 +45,8 @@ if( ! $TASKID_ROW = @db_fetch_array($q, 0) )
 $TYPE = 'task';
 if($TASKID_ROW['parent'] == 0 )
   $TYPE = 'project';
-  
-  
+
+//free memory  
+db_free_result($q );  
+    
 ?>

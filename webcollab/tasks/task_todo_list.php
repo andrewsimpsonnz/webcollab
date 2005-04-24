@@ -309,6 +309,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 }
 
+db_free_result($q);
+
 //query to get the all the projects
 $q = db_query('SELECT id, name, usergroupid, globalaccess FROM '.PRE.'tasks WHERE parent=0 AND archive=0 ORDER BY name' );
 
