@@ -31,7 +31,7 @@
 //
 // Create a pgsql/mysql datetime stamp
 //
-function date_to_datetime($day, $month, $year ) {
+function date_to_datetime($day, $month, $year ) {  
   global $lang, $month_array;
 
   //check for valid calendar date
@@ -40,7 +40,6 @@ function date_to_datetime($day, $month, $year ) {
   }
   
   //format is 2004-08-02 00:00:00
-  //(security note: formatted string here prevents SQL injection attacks)
   return sprintf('%04d-%02d-%02d 00:00:00', $year, $month, $day );
 }
 

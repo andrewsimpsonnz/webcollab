@@ -445,7 +445,7 @@ function response() {
   }
   $res[0] = substr($res[1], 0, 3 );
 
-  //$res[1,2,3...] is a response string line from SMTP server
+  //$res[1] is the aggregated response string line(s) from SMTP server
   //$res[0] is the 3 digit numeric code of the first line from SMTP server
 
   return $res;
