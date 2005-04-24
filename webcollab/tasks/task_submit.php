@@ -101,4 +101,28 @@ function user_access($taskid ) {
   return FALSE;
 }
 
+//
+//function to verify status input variable
+//
+function status_check($status ) {
+
+  switch($status) {
+    case 'notactive':
+    case 'active':
+    case 'cantcomplete':
+    case 'done':
+    case 'created':
+      //all valid values 
+      break;
+        
+    default:
+      //invalid value selected
+      error('Task submit', 'Invalid value for status' ); 
+      break; 
+  }
+  return $status;
+}
+
+
+
 ?>

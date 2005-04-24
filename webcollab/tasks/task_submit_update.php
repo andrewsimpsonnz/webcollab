@@ -85,7 +85,7 @@ if(empty($_POST['name']) )
 $name = safe_data($_POST['name']);
 
 //mandatory numeric inputs
-$input_array = array('owner', 'parentid', 'priority', 'taskgroupid', 'usergroupid' );
+$input_array = array('owner', 'parentid', 'priority', 'taskgroupid', 'usergroupid', 'day', 'month', 'year' );
 foreach($input_array as $var ) {
   if(! isset($_POST[$var]) || ! is_numeric($_POST[$var]) ) {
     error( 'Task submit', 'Variable '.$var.' is not correctly set' );
@@ -102,13 +102,13 @@ $taskid = intval($_POST['taskid']);
 //mandatory text inputs
 if(empty($_POST['status']) )
   error( 'Task submit', 'Variable status is not correctly set' );
-$status = safe_data($_POST['status']);
+$status = status_check(safe_data($_POST['status']) );
 
 //optional text input (can be multiple lines)
 $text = safe_data_long($_POST['text']);
 
 //get the submitted date
-$deadline = date_to_datetime($_POST['day'], $_POST['month'], $_POST['year'] );
+$deadline = date_to_datetime($day, $month, $year );
 
 //boolean for globalaccess, groupaccess
 $input_array = array('globalaccess', 'groupaccess' );
