@@ -5,6 +5,20 @@ WebCollab CVS
 
 - change from double quoting throughout to single quotes 
 
+- add check for illegal file names in uploaded files in file_submit
+
+- add check for malformed status strings in task_submit
+
+- add better check for malformed date strings in task_submit
+
+- specifically free result memory after (potentially) large database calls
+
+- reject valid cookies from deleted users in security.php 
+
+- after logout change any existing session key to an illegal value (previously set to 'null')
+
+- speed up character validation by using ctype function calls in first pass
+
 WebCollab CVS
 *** 13 April 2005
 
