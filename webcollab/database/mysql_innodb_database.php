@@ -125,11 +125,21 @@ return $lastoid;
 function db_data_seek($q ) {
 
   if(mysql_num_rows($q ) == 0 )
-    return;
+    return TRUE;
 
-  mysql_data_seek($q, 0 );
+  $reulst = mysql_data_seek($q, 0 );
 
-return;
+return $result;
+}
+
+//
+//free memory
+//
+function db_free_result($q ) {
+
+  $result = mysql_free_result($q );
+
+return $result;
 }
 
 //
@@ -139,9 +149,9 @@ function db_begin() {
 
   global $database_connection;
 
-  mysql_query('BEGIN' );
+  $result = mysql_query('BEGIN' );
 
-return;
+return $result;
 }
 
 //
@@ -151,9 +161,9 @@ function db_rollback() {
 
   global $database_connection;
 
-  mysql_query('ROLLBACK' );
+  $result = mysql_query('ROLLBACK' );
 
-return;
+return $result;
 }
 
 //
@@ -163,9 +173,9 @@ function db_commit() {
 
   global $database_connection;
 
-  mysql_query('COMMIT' );
+  $result = mysql_query('COMMIT' );
 
-return;
+return $result;
 }
 
 ?>

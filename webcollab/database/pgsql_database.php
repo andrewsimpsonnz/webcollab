@@ -150,8 +150,20 @@ return $lastoid;
 function db_data_seek($q ) {
   //nothing happens here!
 
-return;
+return TRUE;
 }
+
+//
+//free memory
+//
+function db_free_result($q ){
+
+  global $database_connection;
+  
+  $result = pg_free_result($q );
+  
+return $result;
+}  
 
 //
 //begin transaction
@@ -160,9 +172,9 @@ function db_begin() {
 
   global $database_connection;
 
-  pg_query($database_connection, 'BEGIN WORK' );
+  $result = pg_query($database_connection, 'BEGIN WORK' );
 
-return;
+return $result;
 }
 
 //
@@ -172,9 +184,9 @@ function db_rollback() {
 
   global $database_connection;
 
-  pg_query($database_connection, 'ROLLBACK WORK' );
+  $result = pg_query($database_connection, 'ROLLBACK WORK' );
 
-return;
+return $result;
 }
 
 //
@@ -184,9 +196,9 @@ function db_commit() {
 
   global $database_connection;
 
-  pg_query($database_connection, 'COMMIT WORK' );
+  $result = pg_query($database_connection, 'COMMIT WORK' );
 
-return;
+return $result;
 }
 
 //

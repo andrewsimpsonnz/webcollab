@@ -125,11 +125,21 @@ return $lastoid;
 function db_data_seek($q ) {
 
   if(mysql_num_rows($q ) == 0 )
-    return;
+    return TRUE;
 
-  mysql_data_seek($q, 0 );
+  $result = mysql_data_seek($q, 0 );
 
-return;
+return $result;
+}
+
+//
+//free memory
+//
+function db_free_result($q ) {
+
+  $result = mysql_free_result($q );
+
+return $result;
 }
 
 //
@@ -139,7 +149,7 @@ function db_begin() {
 
   //not implemented with ISAM tables
 
-return;
+return TRUE;
 }
 
 //
@@ -149,7 +159,7 @@ function db_rollback() {
 
   //not implemented with ISAM tables
 
-return;
+return TRUE;
 }
 
 //
@@ -159,7 +169,7 @@ function db_commit() {
 
   //not implemented with ISAM tables
 
-return;
+return TRUE;
 }
 
 ?>
