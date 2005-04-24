@@ -38,7 +38,7 @@ include_once(BASE.'lang/lang.php' );
 function safe_data($body ) {
   
   //return null for nothing input
-  if(empty($body) )
+  if(ctype_space($body) )
     return '';
   
   //we don't use magic_quotes
@@ -64,7 +64,7 @@ return $body;
 function safe_data_long($body ) {
 
   //return null for nothing input
-  if(empty($body) )
+  if(ctype_space($body) )
     return '';
   
   //we don't use magic_quotes
@@ -87,9 +87,12 @@ function clean_up($body ) {
   global $validation_regex;
   
   //allow only normal printing characters valid for the character set in use
-  $body = preg_replace($validation_regex, '?', $body );
+  if(! ctype_print($body) )
+    $body = preg_replace($validation_regex, '?', $body );
+  
   //use HTML encoding, or add escapes '\' for characters that could be used for css <script> or SQL injection attacks
-  $trans = array('\\'=>'\\\\', "'"=>"\'", '"'=>'\"', ';'=>'&#059;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;' );
+  //$trans = array('\\'=>'\\\\', "'"=>"\'", '"'=>'\"', ';'=>'&#059;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;' );
+  $trans = array('\\'=>'\\\\', "'"=>"&apos;", '"'=>'&quot;', ';'=>'&#059;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;' );
   
   return strtr($body, $trans ); 
   
