@@ -52,18 +52,18 @@ function find_tasks( $taskid, $projectid ) {
     //put values into array
     $task_array[$i]['id'] = $row['id'];
     $task_array[$i]['parent'] = $row['parent'];
-    $task_count++;
+    ++$task_count;
   
     //if this is a subtask, store the parent id 
     if($row['parent'] != 0 ) {
       $parent_array[$parent_count] = $row['parent'];
-      $parent_count++;
+      ++$parent_count;
     }
   }
     
   //record first match
   $match_array[$index] = $taskid;
-  $index++;
+  ++$index;
   
   //if selected task has children (subtasks), iterate recursively to find them 
   if(in_array($taskid, (array)$parent_array ) ){
@@ -86,7 +86,7 @@ function find_children($parent ) {
       continue;
     }
     $match_array[$index] = $task_array[$i]['id'];
-    $index++;
+    ++$index;
     
     //if this post has children (subtasks), iterate recursively to find them
     if(in_array($task_array[$i]['id'], $parent_array ) ){
