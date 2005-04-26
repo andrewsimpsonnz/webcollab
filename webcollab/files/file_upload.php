@@ -32,6 +32,7 @@ require_once('path.php' );
 require_once(BASE.'includes/security.php' );
 
 include_once(BASE.'includes/admin_config.php' );
+include_once(BASE.'includes/usergroup_security.php' );
 
 //check if file uploads are allowed in php.ini file
 if( ! (bool)ini_get('file_uploads' ) )
@@ -47,7 +48,7 @@ if(GUEST )
  warning($lang['access_denied'], $lang['not_owner'] );  
 
 //check usergroup security
-require_once(BASE.'includes/usergroup_security.php' );
+$taskid = usergroup_check($taskid );
 
 $content =  "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"files.php\">\n".
               "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".

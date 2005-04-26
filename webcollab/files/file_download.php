@@ -29,6 +29,8 @@
 require_once('path.php' );
 require_once( BASE.'includes/security.php' );
 
+include_once(BASE.'includes/usergroup_security.php' );
+
 if(empty($_GET['fileid']) || ! is_numeric($_GET['fileid']) )
   return;
 
@@ -42,8 +44,7 @@ if( ! $row = db_fetch_array( $q, 0) )
   error('Download file', 'Invalid fileid given' );   
 
 //check usergroup security
-$taskid = $row['taskid'];
-require_once(BASE.'includes/usergroup_security.php' );
+$taskid = usergroup_check($row['taskid'] );
 
 //check the file exists
 if( ! ( file_exists( FILE_BASE.'/'.$row['fileid'].'__'.($row['filename'] ) ) ) )

@@ -31,6 +31,7 @@ require_once('path.php' );
 require_once(BASE.'includes/security.php' );
 
 include_once(BASE.'includes/admin_config.php' );
+include_once(BASE.'includes/usergroup_security.php' );
 
 //secure vars
 $content = '';
@@ -49,9 +50,8 @@ if( ! isset($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) )
   error('Forum add', 'Not a valid value for taskid');
 
 $taskid = intval($_REQUEST['taskid']);
-
 //check usergroup security
-require_once(BASE.'includes/usergroup_security.php' );
+$taskid = usergroup_check($taskid );
 
 //find out the tasks' name
 $taskname = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$taskid ), 0, 0 );

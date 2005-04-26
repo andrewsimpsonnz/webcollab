@@ -34,6 +34,7 @@ require_once( BASE.'includes/security.php' );
 include_once(BASE.'tasks/task_common.php' );
 include_once(BASE.'includes/details.php' );
 include_once(BASE.'includes/time.php' );
+include_once(BASE.'includes/usergroup_security.php');
 
 //secure variables
 $content = '';
@@ -45,7 +46,7 @@ if( ! isset( $_GET['taskid']) || ! is_numeric($_GET['taskid']) || $_GET['taskid'
 $taskid = intval($_GET['taskid']);
 
 //check usergroup security
-require_once(BASE.'includes/usergroup_security.php');
+$taskid = usergroup_check($taskid );
 
 $q = db_query('SELECT '.$epoch.PRE.'tasks.created) AS epoch_created,
                       '.$epoch.PRE.'tasks.finished_time) AS epoch_finished,

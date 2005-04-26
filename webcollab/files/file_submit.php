@@ -31,6 +31,8 @@
 require_once('path.php' );
 require_once( BASE.'includes/security.php' );
 
+include_once(BASE.'includes/usergroup_security.php' );
+
 //update or insert ?
 if(empty($_REQUEST['action']))
   error('File submit', 'No action given' );
@@ -75,8 +77,8 @@ ignore_user_abort(TRUE);
       }
             
       //check usergroup security
-      require_once(BASE.'includes/usergroup_security.php' );
-
+      $taskid = usergroup_check($taskid );
+      
       //check the destination directory is writeable by the webserver
       if( ! is_writable(FILE_BASE.'/' ) ) {
         unlink($_FILES['userfile']['tmp_name'] );
@@ -151,11 +153,7 @@ ignore_user_abort(TRUE);
       //disarm it
       chmod(FILE_BASE.'/'.$fileid.'__'.$filename, 0644 );
       db_commit();
-
-      //set up emails
-      $mail_list = '';
-      $s = '';
-
+      
       //get task data
       $q = db_query('SELECT '.PRE.'tasks.name AS name,
                             '.PRE.'tasks.usergroupid AS usergroupid,
@@ -167,8 +165,7 @@ ignore_user_abort(TRUE);
 
       //set owner's email
       if($task_row['email'] && $mail_owner ) {
-        $mail_list .= $task_row['email'];
-        $s = ', ';
+        $mail_list[] = $task_row['email'];
       }
 
       //if usergroup set, add the user list
@@ -179,27 +176,26 @@ ignore_user_abort(TRUE);
                               WHERE '.PRE.'usergroups_users.usergroupid='.$task_row['usergroupid'].
                               ' AND '.PRE.'users.deleted=\'f\'' );
 
-        for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
-          $mail_list .= $s.$row[0];
-          $s = ', ';
+        for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+          $mail_list[] = $row[0];
         }
       }
 
       //do we need to email?
-      if(strlen($mail_list) > 0 ){
+      if(isset($mail_list) ){
         include_once(BASE.'includes/email.php' );
         include_once(BASE.'lang/lang_email.php' );
 
-        //get & add the mailing list
-        if($EMAIL_MAILINGLIST != '' )
-          $mail_list .= $s.$EMAIL_MAILINGLIST;
-        
         $message = $_POST['description'];
         
         //get rid of magic_quotes - it is not required here
         if(get_magic_quotes_gpc() )
           $message = stripslashes($message );
- 
+
+        //get & add the mailing list
+        if(isset($EMAIL_MAILINGLIST ) )
+          $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
+     
         email($mail_list, sprintf($title_file_post, $task_row['name'] ), sprintf($email_file_post, UID_NAME, $_FILES['userfile']['name'], $message ) );
       }
 

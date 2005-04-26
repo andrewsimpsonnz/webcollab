@@ -31,6 +31,7 @@ require_once(BASE.'includes/security.php' );
 
 include_once(BASE.'includes/details.php' );
 include_once(BASE.'includes/time.php' );
+include_once(BASE.'includes/usergroup_security.php' );
 
 
 //check the taskid is valid
@@ -38,9 +39,9 @@ if( ! (isset($_GET['taskid']) && is_numeric($_GET['taskid']) ) )
   error('Forum list', 'Not a valid taskid' );
 
 $taskid = intval($_GET['taskid']);
-  
-//check usergroup security
-require_once(BASE.'includes/usergroup_security.php' );
+
+//check usergroup security  
+$taskid = usergroup_check($taskid );
 
 //
 // Recursive function for listing all posts of a task

@@ -30,41 +30,41 @@
 require_once('path.php' );
 require_once(BASE.'includes/security.php' );
 
-//data check
-$taskid = intval($taskid);
+function usergroup_check($taskid ) {
 
-//admins can go free, the rest are checked
-if(ADMIN )
-  return;
-
-//get the tasks' security info
-if( ! ($group_q = db_query('SELECT usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE id='.$taskid ) ) )
-  error('Usergroup security', 'There was an error in the data query.' );
-
-//get the data
-if( ! ($group_row = db_fetch_num($group_q, 0 ) ) )
-  error('Usergroup security', 'There was an error in fetching the permission data.' );
-
-//check usergroup rights
-if( ($group_row[0] != 0 ) && ($group_row[1] == 'f' ) ) {
-
-  //check if the user has a matching group
-  if(! in_array($group_row[0], (array)$GID, TRUE ) )
-    warning($lang['access_denied'], $lang['private_usergroup'] );
-}
-
-//if this is a task, then get project data  
-if($group_row[2] != $taskid ) {
-  $project_q = db_query('SELECT usergroupid, globalaccess FROM '.PRE.'tasks WHERE id='.$group_row[2] );
-  $project_row = db_fetch_num($project_q, 0 );
-
-  //check if project is marked private 
-  if(($project_row[0] != 0 ) && ($project_row[1] == 'f' ) ) {
-
+  //admins can go free, the rest are checked
+  if(ADMIN )
+    return $taskid;
+  
+  //get the tasks' security info
+  if( ! ($group_q = db_query('SELECT usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE id='.$taskid ) ) )
+    error('Usergroup security', 'There was an error in the data query.' );
+  
+  //get the data
+  if( ! ($group_row = db_fetch_num($group_q, 0 ) ) )
+    error('Usergroup security', 'There was an error in fetching the permission data.' );
+  
+  //check usergroup rights
+  if( ($group_row[0] != 0 ) && ($group_row[1] == 'f' ) ) {
+  
     //check if the user has a matching group
-    if(! in_array($project_row[0], (array)$GID ) )
+    if(! in_array($group_row[0], (array)$GID, TRUE ) )
       warning($lang['access_denied'], $lang['private_usergroup'] );
   }
+  
+  //if this is a task, then get project data  
+  if($group_row[2] != $taskid ) {
+    $project_q = db_query('SELECT usergroupid, globalaccess FROM '.PRE.'tasks WHERE id='.$group_row[2] );
+    $project_row = db_fetch_num($project_q, 0 );
+  
+    //check if project is marked private 
+    if(($project_row[0] != 0 ) && ($project_row[1] == 'f' ) ) {
+  
+      //check if the user has a matching group
+      if(! in_array($project_row[0], (array)$GID ) )
+        warning($lang['access_denied'], $lang['private_usergroup'] );
+    }
+  }
+  return $taskid;
 }
-
 ?>
