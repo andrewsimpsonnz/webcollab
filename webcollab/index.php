@@ -34,7 +34,7 @@ include( 'includes/screen.php' );
 include( 'includes/common.php' );
 
 //error condition
-function secure_error( $reason = 'Unauthorised area', $redirect = 0 ) {
+function secure_error( $error = 'Login error', $redirect = 0 ) {
 
   global $lang;
 
@@ -44,13 +44,13 @@ function secure_error( $reason = 'Unauthorised area', $redirect = 0 ) {
   else {
     $redirect_time = 0;
   }
+  $content = "<div style=\"text-align : center\"><br />$error<br /></div>";
   create_top($lang['login'], 1, '', '', '', $redirect_time );
-  new_box($lang['error'], "<div style=\"text-align : center\"><br />$reason<br /></div>", 'boxdata', 'singlebox' );
+  new_box($lang['error'], $content, 'boxdata', 'singlebox' );
   
   if($redirect_time != 0) {
-    new_box(sprintf($lang['redirect_sprt'], $redirect_time ),
-            "<div style=\"text-align : center\"><a href=\"".BASE_URL."index.php\">".$lang['login_now']."</a></div>",
-            'boxdata', 'singlebox' );
+    $content = "<div style=\"text-align : center\"><a href=\"".BASE_URL."index.php\">".$lang['login_now']."</a></div>\n";
+    new_box(sprintf($lang['redirect_sprt'], $redirect_time ), $content, 'boxdata', 'singlebox' );
   }
   
   create_bottom();

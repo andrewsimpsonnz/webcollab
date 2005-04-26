@@ -52,7 +52,8 @@ $q = db_query('SELECT * FROM '.PRE.'users WHERE deleted=\'f\' ORDER by fullname'
 
 //check for enough users
 if(db_numrows($q) < 1 ) {
-  new_box($lang['users'], "<small>".$lang['no_users']."</small>" );
+  $content = "<small>".$lang['no_users']."</small>";
+  new_box($lang['users'], $content );
   return;
 }
 

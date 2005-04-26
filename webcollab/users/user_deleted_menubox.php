@@ -37,7 +37,8 @@ if(! ADMIN )
 
 //check for deleted users
 if( ! db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE deleted=\'t\'' ), 0, 0 ) ) {
-  new_box($lang['deleted_users'], "<small>".$lang['no_deleted_users']."</small>", "boxmenu" );
+  $content = "<small>".$lang['no_deleted_users']."</small>";
+  new_box($lang['deleted_users'], $content, "boxmenu" );
   return;
 }
 

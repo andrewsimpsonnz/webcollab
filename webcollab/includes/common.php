@@ -138,7 +138,7 @@ function html_links($body, $database_escape=0 ) {
 //
 // Builds up an error screen
 //
-function error($box_title, $content ) {
+function error($box_title, $error ) {
 
   global $db_error_message;
   
@@ -146,11 +146,13 @@ function error($box_title, $content ) {
   
   create_top('ERROR', 1 );
 
-  if(NO_ERROR != 'Y' )
-    new_box( $box_title, "<div style=\"text-align : center\">".$content."</div>", 'boxdata', 'singlebox' );
-    else
+  if(NO_ERROR != 'Y' ) {
+    $content = "<div style=\"text-align : center\">".$error."</div>";
+    new_box( $box_title, $content, 'boxdata', 'singlebox' );
+  }
+  else {
     new_box($lang['report'], $lang['warning'], 'boxdata2', 'singlebox' );
-
+  }
 
   //get the post vars
   ob_start();
@@ -158,13 +160,12 @@ function error($box_title, $content ) {
   $post = ob_get_contents();
   ob_end_clean();
 
-
   //email to the error-catcher
   $message = "Hello,\n This is the ".MANAGER_NAME." site and I have an error :/  \n".
             "\n\n".
             "User that created the error: ".UID_NAME." (".UID_EMAIL.")\n".
             "The erroneous component: $box_title\n".
-            "The error message: $content\n".
+            "The error message: $error\n".
             "Database message: $db_error_message\n".
             "Page that was called: ".$_SERVER['SCRIPT_NAME']."\n".
             "Called URL: ".$_SERVER['REQUEST_URI']."\n".
@@ -181,7 +182,8 @@ function error($box_title, $content ) {
   }
         
   if(DEBUG == 'Y' )
-    new_box("Error Debug", nl2br($message) );
+    $content = nl2br($message);
+    new_box("Error Debug", $content );
 
   create_bottom();
 
@@ -200,11 +202,10 @@ function warning($box_title, $message ) {
   include_once(BASE.'includes/screen.php' );
 
   create_top($lang['error'], 1 );
-
+  
   $content = "<div style=\"text-align : center\">$message</div>\n";
-
   new_box($box_title, $content, 'boxdata', 'singlebox' );
-
+  
   create_bottom();
 
   //do not return as that would be futile
