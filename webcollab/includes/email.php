@@ -64,10 +64,13 @@ function email($to, $subject, $message ) {
     //email is turned off in config file
     return;
   }
-  if(strlen($to) == 0  ) {
+  if(sizeof($to) == 0  ) {
     //no email address specified - end function
     return;
   }
+
+  //remove duplicate addresses
+  $to = array_unique((array)$to );
 
   //open an SMTP connection at the mail host
   $connection = @fsockopen(SMTP_HOST, SMTP_PORT, $errno, $errstr, 10 );
@@ -78,29 +81,24 @@ function email($to, $subject, $message ) {
   //sometimes the SMTP server takes a little longer to respond
   // Windows does not have support for this timeout function before PHP ver 4.3.0
   if(function_exists('socket_set_timeout') )
-    @socket_set_timeout($connection, 10, 0 );
-  $res = response();
-  if($res[0] != '220' )
+    @socket_set_timeout($connection, 10, 0 );  
+  
+  if(strncmp('220', response(), 3 ) )
     debug();
 
   //do extended hello (EHLO)
   fputs($connection, 'EHLO '.$_SERVER['SERVER_NAME']."\r\n" );
   $log .= "C: EHLO ".$_SERVER['SERVER_NAME']."\n";
-  $res = response();
-  $capability = $res[1];
+  $capability = response();
   
   //if EHLO (RFC 1869) not working, try the older HELO (RFC 821)...
-  if($res[0] != '250' ) {
+  if(strncmp('250', $capability, 3 ) ) {
     fputs($connection, "HELO ".$_SERVER['SERVER_NAME']."\r\n" );
     $log .= "C: HELO ".$_SERVER['SERVER_NAME']."\n";
-    $res = response();
     $capability = '';
-    if($res[0] != '250' )
+    if(strncmp('250', response(), 3 ) )
       debug();
   }
-  
-  //SMTP server capabilities
-  $capability = $res[1];
           
   //do TLS if required (This is EXPERIMENTAL!!)
   if(TLS == 'Y' )
@@ -126,24 +124,21 @@ function email($to, $subject, $message ) {
   //envelope from  
   fputs($connection, 'MAIL FROM: <'.clean(EMAIL_FROM).'>'.$body."\r\n" );
   $log .= 'C: MAIL FROM: '.EMAIL_FROM." $body \n"; 
-  $count_commands++;
+  ++$count_commands;
   
   if(! $pipelining ) {
-    $res = response();
-    if($res[0] != '250' )
+    if(strncmp('250', response(), 3 ) )
       debug();
    }
-      
+  
   //envelope to
-  $address_list = explode(',', $to );
-  foreach($address_list as $email_to ) {
-    fputs($connection, 'RCPT TO: <'.trim(clean($email_to ) ).">\r\n" );
-    $log .= 'C: RCPT TO: '.$email_to."\n";
-    $count_commands++;
+  foreach((array)$to as $address ) {
+    fputs($connection, 'RCPT TO: <'.trim(clean($address ) ).">\r\n" );
+    $log .= 'C: RCPT TO: '.$address."\n";
+    ++$count_commands;
     
     if(! $pipelining ) {
-      $res = response();
-      if(($res[0] != '250' ) && ($res[0] != '251' ) )
+      if(strncmp('25', response(), 2 ) )
         debug();
     }
   }
@@ -151,20 +146,22 @@ function email($to, $subject, $message ) {
   //start data transmission
   fputs($connection, "DATA\r\n" );
   $log .= "C: DATA\n";
-  $count_commands++;
+  ++$count_commands;
 
   if(! $pipelining ) {
-    $res = response();
-    if($res[0] != '354' )
+    if(strncmp('354', response(), 3 ) )
       debug();
   }
   else {
     //we have been pipelining ==> roll back & check the server responses
-    for($i=0 ; $i<$count_commands ; $i++ ) {      
+    for($i=0 ; $i<$count_commands ; ++$i ) {      
       
-      $res = response();
-            
-      switch($res[0] ) {
+      switch(substr(response(), 0, 3 ) ) {
+        case '250':
+        case '251':
+          //correct response for most commands
+          break;
+          
         case '354':
           //correct response for final DATA command
           if($i == ($count_commands - 1 ) )
@@ -173,11 +170,6 @@ function email($to, $subject, $message ) {
             debug('Pipelining: Bad response to DATA' );
           break;
             
-        case '250':
-        case '251':
-          //correct response for most commands
-          break;
-          
         default:
           //anything else is no good
           debug('Pipelining: Bad response to MAIL FROM or RCPT TO');
@@ -198,8 +190,7 @@ function email($to, $subject, $message ) {
   $log .= "C: End of message\n";
   
   if(! $pipelining) {
-    $res = response();
-    if($res[0] != '250' )
+    if(strncmp('250', response(), 3 ) )
       debug();
   }
   
@@ -208,17 +199,14 @@ function email($to, $subject, $message ) {
   $log .= "C: QUIT\n";
   
   if(! $pipelining) {
-    $res = response();
-    if($res[0] != '221' )
+    if(strncmp('221', response(), 3 ) )
       debug();
   }
   else {
-    $res = response();
-    if($res[0] != '250' )
+    if(strncmp('250', response(), 3 ) )
       debug('Pipelining: Bad response to end of message');
     
-    $res = response();    
-    if($res[0] != '221' )
+    if(strncmp('221', response(), 3 ) )
       debug('Pipelining: Bad response to QUIT');
   }
 
@@ -398,7 +386,7 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   $reply_to = clean(EMAIL_REPLY_TO);
   
   //now the prepare the 'to' header
-  $line = 'To: '.$to;
+  $line   = 'To:'.join(', ', (array)$to );
   //lines longer than 998 characters are broken up to separate lines (RFC 821)
   // (end long line with \r\n, and begin new line with \t)
   while(strlen($line ) > 998 ) {
@@ -413,7 +401,7 @@ function headers($to, $subject, $email_encode, $message_charset ) {
 
   $headers = array_merge($headers, subject($subject ) );
 
-  $headers[] = 'Message-Id: <'.uniqid('').'@'.$_SERVER['SERVER_NAME'].'>';
+  $headers[] = 'Message-Id: <'.md5(mt_rand()).'@'.$_SERVER['SERVER_NAME'].'>';
   $headers[] = 'X-Mailer: WebCollab (PHP/'.phpversion().')';
   $headers[] = 'X-Priority: 3';
   $headers[] = 'X-Sender: '.$reply_to;
@@ -434,20 +422,17 @@ function response() {
 
   global $connection, $log;
 
-  $res[1] = '';
+  $res = '';
+  
   while($str = fgets($connection, 256 ) ) {
-    $res[1] .= $str;    
+    $res .= $str;    
     $log .= 'S : '.$str;
     
     //<space> after three digit code indicates this is last line of data ("-" for more lines)
-    if(substr($str, 3, 1) == ' ' )
+    if(strpos($str, ' ' ) == 3  )
       break;
   }
-  $res[0] = substr($res[1], 0, 3 );
-
-  //$res[1] is the aggregated response string line(s) from SMTP server
-  //$res[0] is the 3 digit numeric code of the first line from SMTP server
-
+  
   return $res;
 }
 
