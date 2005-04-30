@@ -38,7 +38,8 @@ require_once(BASE.'includes/common.php' );
 $q   = '';
 $ip  = '';
 $x   = 0;
-$session_key = 'ZZZZ';
+$session_key = 'xxxx';
+$content = '';
 
 //check for some values that HAVE to be present to be allowed (ip, session_key)
 if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
@@ -46,10 +47,10 @@ if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
 }
 
 //$session_key can be from either a GET, POST or COOKIE - check for cookie first
-if(isset($_COOKIE['webcollab_session'] ) ){
+if(isset($_COOKIE['webcollab_session'])  && (strlen($_COOKIE['webcollab_session'] ) == 32 ) ) {
   $session_key = safe_data($_COOKIE['webcollab_session'] );
 }
-elseif(isset($_REQUEST['x']) ){
+elseif(isset($_REQUEST['x'] ) && (strlen($_REQUEST['x'] ) == 32 ) ) {
   $session_key = safe_data($_REQUEST['x']);
   $x = $session_key;
 }
