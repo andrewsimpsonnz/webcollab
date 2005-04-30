@@ -32,6 +32,7 @@ require_once('path.php' );
 require_once(BASE.'includes/security.php' );
 
 include_once(BASE.'includes/details.php' );
+include_once( BASE.'includes/usergroup_security.php' );
 
 $content = '';
 
@@ -39,9 +40,8 @@ if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) )
   error('File list', 'The taskid input is not valid' ); 
 
 $taskid = intval($_REQUEST['taskid']);
-
 //check usergroup security
-require_once( BASE.'includes/usergroup_security.php' );
+$taskid = usergroup_check($taskid );
 
 //get the files from this task
 $q = db_query('SELECT '.PRE.'files.id AS id,
