@@ -46,14 +46,12 @@ function smtp_auth($connection, $cap) {
    if( ! strpos($cap, 'PLAIN' ) === false ) {
      fputs($connection, "AUTH PLAIN\r\n" );
      $log .= 'C: AUTH PLAIN'."\n";
-     $res = response();
-
-     if($res[0] == '334' ) {
+     
+     if(! strncmp('334', response(), 3 ) {
        //send username/password
        fputs($connection, base64_encode(MAIL_USER."\0".MAIL_USER."\0".MAIL_PASSWORD )."\r\n" );
        $log .= 'C: Authenticating...'."\n";
-       $res = response();
-       if($res[0] == '235' )
+       if(strncmp('235', response(), 3) )
          return;
        
        $log .= 'C: Authentication failure'."\n";         
@@ -64,21 +62,18 @@ function smtp_auth($connection, $cap) {
    if( ! strpos($cap, 'LOGIN' ) === false ) {
      fputs($connection, "AUTH LOGIN\r\n" );
      $log .= 'C: AUTH LOGIN'."\n";
-     $res = response();
 
-     if($res[0] == "334" ) {
+     if(! strncmp('334', response(), 3 ) ) {
        //send username
        fputs($connection, base64_encode(MAIL_USER )."\r\n" );
        $log .= 'C: Sending username...'."\n";
-       $res = response();
-       if($res[0] != '334' )
+       if(strncmp('334', response(), 3 ) )
          debug();
 
        //send password
        fputs($connection, base64_encode(MAIL_PASSWORD )."\r\n" );
        $log .= 'C: Sending password...'."\n";
-       $res = response();
-       if($res[0] == '235' )
+       if(! strncmp('235', response(), 3 ) )
          return;  
          
        $log .= 'C: Authentication failure'."\n";
@@ -91,9 +86,9 @@ function smtp_auth($connection, $cap) {
      $log .= 'C: AUTH CRAM-MD5'."\n";
      $res = response();
 
-     if($res[0] == '334' ) {
+     if(! strncmp('334', $res, 3 ) ) {
        //$data is 'shared secret' sent by server
-       $data = base64_decode(substr($res[1], 4 ) );
+       $data = base64_decode(substr($res, 4 ) );
        $key = MAIL_PASSWORD;
 
        if(function_exists('mhash' ) ) {
@@ -115,8 +110,7 @@ function smtp_auth($connection, $cap) {
          
        fputs($connection, base64_encode(MAIL_USER." ".$mhash )."\r\n" );
        $log .= 'C: Authenticating...'."\n";
-       $res = response();
-       if($res[0] == '235' )
+       if(! strncmp('235', response(), 3 ) )
          return;
        
        $log .= 'C: Authentication failure'."\n";
@@ -128,11 +122,11 @@ function smtp_auth($connection, $cap) {
    return;
 }
 
-function starttls($connection) {
+function starttls($connection, $cap ) {
    
   //check if crypto function exists...
   if(! function_exists('stream_socket_enable_crypto' ) )
-    debug('This version of PHP cannot do TLS negotiation' ); 
+    debug('This version of PHP cannot do STARTTLS negotiation' ); 
 
   //check if server can do TLS...
   if(strpos($cap, 'STARTTLS' ) === false )
@@ -141,24 +135,24 @@ function starttls($connection) {
   //issue STARTTLS verb...
   fputs($connection, "STARTTLS\r\n" );
   $log .= 'C: STARTTLS'."\n";
-  $res = response();
 
-  if($res[0] != '220' )
-    debug();
+  if(strncmp('220', response(), 3 ) )
+    debug('Starting TLS...' );
     
-  //TLS negotiation
+  //start TLS negotiation
   if(! @stream_socket_enable_crypto($connection, TRUE, STREAM_CRYPTO_METHOD_TLS_CLIENT ) )
     debug('TLS negotiation failed' );
     
-  //do a new extended hello (EHLO) after successful negotiation
+  $log .= 'C: TLS success' ); 
+  //do a new extended hello (EHLO) after successful negotiation (RFC 3207)
   fputs($connection, 'EHLO '.$_SERVER['SERVER_NAME']."\r\n" );
   $log .= 'C: EHLO'.$_SERVER['SERVER_NAME']."\n";
-  $res = response();
+  $new_capability = response();
   
-  if($res[0] != '250' ) 
+  if(strncmp('250', $res, 3 ) ) 
     debug();
   
-  return $res[1];
+  return $new_capability;
 }
 
 ?>
