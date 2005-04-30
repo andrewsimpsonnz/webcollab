@@ -28,8 +28,6 @@
 require_once('path.php' );
 require_once(BASE.'includes/security.php' );
 
-$EMAIL_MAILINGLIST = '';
-
 //get config data
 $q = db_query('SELECT * FROM '.PRE.'config' );
 $row = @db_fetch_array($q, 0 );
@@ -47,10 +45,8 @@ $DEFAULT_GROUP      = $row['usergroup'];
 //mailing list
 $q = db_query('SELECT DISTINCT email FROM '.PRE.'maillist' );
 
-$s = '';
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-  $EMAIL_MAILINGLIST .= $s.$row[0];
-  $s = ', ';
+  $EMAIL_MAILINGLIST[] = $row[0];
 }
 
 ?>

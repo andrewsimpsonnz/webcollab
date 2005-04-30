@@ -118,29 +118,13 @@ if(get_magic_quotes_gpc() ) {
       break;
 }
 
-//get the mailing list
-$q = db_query('SELECT DISTINCT email FROM '.PRE.'maillist' );
-
-//merge the mailing list in too
-$size = sizeof($address_array);
-for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-  $address_array[($size + $i)] = $row[0];
-}
-
-//remove duplicate addresses, and put into a comma separated list
-$to = "";
-$s = "";
-while(list(,$address) = @each($address_array ) ) {
-  if(strpos($to, $address ) === FALSE ) {
-    $to .= $s.$address;
-    $s = ", ";
-  }
-}
+if(isset($EMAIL_MAILINGLIST ) )
+  $address_array = array_merge((array)$address_array, (array)$EMAIL_MAILINGLIST );
 
 //silly error check
-if(strlen($to ) != 0 ) {
+if(sizeof($address_array ) != 0 ) {
   //send it
-  email($to, $subject, $message );
+  email($address_array, $subject, $message );
 }
 
 //all done: warp back to main screen (Aye, aye captain).

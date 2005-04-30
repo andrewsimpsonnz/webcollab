@@ -30,6 +30,7 @@ require_once('path.php' );
 require_once(BASE.'includes/security.php' );
 
 include_once(BASE.'includes/admin_config.php');
+include_once(BASE.'includes/usergroup_security.php' );
 
 //
 // Function for listing all posts of a task
@@ -154,8 +155,8 @@ ignore_user_abort(TRUE);
       }
 
       //check usergroup security
-      require_once(BASE.'includes/usergroup_security.php' );
-
+      $taskid = usergroup_check($taskid );
+       
       //okay now check if we need to post in the public or the private forums of the task
       switch($usergroupid ) {
         case 0:
@@ -181,10 +182,6 @@ ignore_user_abort(TRUE);
       db_query('UPDATE '.PRE.'tasks SET lastforumpost=now() WHERE id='.$taskid );
       db_commit();
 
-      //set up emails
-      $mail_list = '';
-      $s = '';
-
       //get task data
       $q = db_query('SELECT '.PRE.'tasks.name AS name,
                             '.PRE.'tasks.usergroupid AS usergroupid,
@@ -196,8 +193,7 @@ ignore_user_abort(TRUE);
 
       //set owner's email
       if($task_row['email'] && $mail_owner ) {
-        $mail_list .= $task_row['email'];
-        $s = ", ";
+        $mail_list[] = $task_row['email'];
       }
 
       //if usergroup set, add the user list
@@ -209,26 +205,25 @@ ignore_user_abort(TRUE);
                               ' AND '.PRE.'users.deleted=\'f\'' );
 
         for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-          $mail_list .= $s.$row[0];
-          $s = ", ";
+          $mail_list[] = $row[0];
         }
       }
 
       //do we need to email?
-      if(strlen($mail_list) > 0 ){
+      if(isset($mail_list) ){
         include_once(BASE.'includes/email.php' );
         include_once(BASE.'lang/lang_email.php' );
 
-      $message = $_POST['text'];
-        
-      //get rid of magic_quotes - it is not required here
-      if(get_magic_quotes_gpc() )
-        $message = stripslashes($message );  
-        
+        $message = $_POST['text'];
+          
+        //get rid of magic_quotes - it is not required here
+        if(get_magic_quotes_gpc() )
+          $message = stripslashes($message );  
+          
         //get & add the mailing list
-        if($EMAIL_MAILINGLIST != '' )
-          $mail_list .= $s.$EMAIL_MAILINGLIST;
-
+        if(isset($EMAIL_MAILINGLIST ) )
+          $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
+        
         switch($parentid ) {
           case 0:
             //this is a new post
@@ -238,10 +233,10 @@ ignore_user_abort(TRUE);
           default:
             //this is a reply to an earlier post
             $q = db_query('SELECT '.PRE.'forum.text AS text,
-                           '.PRE.'users.fullname AS username
-                           FROM '.PRE.'forum
-                           LEFT JOIN '.PRE.'users ON ('.PRE.'forum.userid='.PRE.'users.id)
-                           WHERE '.PRE.'forum.id='.$parentid );
+                          '.PRE.'users.fullname AS username
+                          FROM '.PRE.'forum
+                          LEFT JOIN '.PRE.'users ON ('.PRE.'forum.userid='.PRE.'users.id)
+                          WHERE '.PRE.'forum.id='.$parentid );
 
             $row = db_fetch_array($q, 0 );
 

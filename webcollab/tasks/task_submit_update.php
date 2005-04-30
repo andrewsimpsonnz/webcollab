@@ -261,14 +261,7 @@ if(isset($_POST['maillist']) && ($_POST['maillist']=='on') ) {
 
   $message = sprintf($email2, $name_owner ).
               sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text );
-
-  $usergroup = '';
-  $s = '';
-  if($EMAIL_MAILINGLIST != '' ) {
-    $usergroup = $EMAIL_MAILINGLIST;
-    $s = ', ';
-  }
-
+                
   if($usergroupid != 0 ) {
     $q = db_query('SELECT '.PRE.'users.email
                       FROM '.PRE.'users
@@ -277,11 +270,17 @@ if(isset($_POST['maillist']) && ($_POST['maillist']=='on') ) {
                       AND '.PRE.'users.deleted=\'f\'');
 
     for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
-      $usergroup .= $s.$row[0];
-      $s = ', ';
+      $usergroup_mail[] = $row[0];
     }
   }
-email($usergroup, $title2, $message );
+  if(isset($usergroup_mail) ) {    
+    
+    //get & add the mailing list
+    if(isset($EMAIL_MAILINGLIST ) )
+      $usergroup_mail = array_merge((array)$usergroup_mail, (array)$EMAIL_MAILINGLIST );
+
+    email($usergroup_mail, $title2, $message );
+  }
 }
 
 header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$taskid );
