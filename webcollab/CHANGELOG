@@ -1,4 +1,15 @@
 WebCollab CVS
+*** 30 April 2005
+
+- profiled email.php with APD profiler
+
+- change substr() to strpos() and strncmp() in email.php
+
+- change uniquid() to md5(mt_rand()) in email.php
+
+- change from comma separated address lists to array() in email.php
+
+WebCollab CVS
 *** 21 April 2005
 
 - try all options in SMTP AUTH before rejecting emails (Patch #1184635) (Credit: Craig Hoover - crh3675)
