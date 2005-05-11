@@ -219,7 +219,7 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
 //
 //  Creates a new box
 //
-function new_box($title, &$content, $style='boxdata', $size='tablebox' ) {
+function new_box($title, $content, $style='boxdata', $size='tablebox' ) {
 
   echo      "\n<!-- start of ".$title." - box -->\n".
             "<br />\n".
@@ -229,7 +229,7 @@ function new_box($title, &$content, $style='boxdata', $size='tablebox' ) {
             $content."</td></tr>\n".
             "</table>\n".
             "<!-- end -->\n";
-
+  
   return;
 }
 
@@ -249,10 +249,10 @@ function create_bottom() {
   global $bottom_text;
 
   //clean
-  echo      "<br />\n";
+  $content =  "<br />\n";
 
   //end the main table row
-  echo      "</td></tr>\n</table>";
+  $content .= "</td></tr>\n</table>";
 
   switch($bottom_text) {
     case 0: //no bottom text
@@ -271,10 +271,11 @@ function create_bottom() {
  
  //shows the logo
  if($bottom_text) {
-   echo     "<div class=\"bottomtext\" $align>Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2005</div>\n";
+   $content .= "<div class=\"bottomtext\" $align>Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2005</div>\n";
  }     
   //end xml parsing
-  echo      "</body>\n</html>\n";
+  $content .= "</body>\n</html>\n";
+  echo $content;
   return;
 }
 
