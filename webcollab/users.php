@@ -41,6 +41,28 @@ if( ! isset($_REQUEST['action']) )
 
   switch($_REQUEST['action'] ) {
 
+    //show user's personal details
+    case 'show':
+      create_top($lang['user_info'] );
+      include('includes/mainmenu.php' );
+      include('users/user_menubox.php' );
+      include('users/user_existing_menubox.php' );
+      goto_main();
+      include('users/user_show.php' );
+      create_bottom();
+      break;
+
+    //who is online ?
+    case 'showonline':
+      create_top($lang['users_online'] );
+      include('includes/mainmenu.php' );
+      include('users/user_menubox.php' );
+      include('users/user_existing_menubox.php' );
+      goto_main();
+      include('users/user_online.php' );
+      create_bottom();
+      break;
+
     //give the user-manager screen
     case 'manage':
       create_top($lang['manage_users'] );
@@ -72,28 +94,6 @@ if( ! isset($_REQUEST['action']) )
       include('users/user_menubox.php' );
       goto_main();
       include('users/user_edit.php' );
-      create_bottom();
-      break;
-
-    //show user's personal details
-    case 'show':
-      create_top($lang['user_info'] );
-      include('includes/mainmenu.php' );
-      include('users/user_menubox.php' );
-      include('users/user_existing_menubox.php' );
-      goto_main();
-      include('users/user_show.php' );
-      create_bottom();
-      break;
-
-    //who is online ?
-    case 'showonline':
-      create_top($lang['users_online'] );
-      include('includes/mainmenu.php' );
-      include('users/user_menubox.php' );
-      include('users/user_existing_menubox.php' );
-      goto_main();
-      include('users/user_online.php' );
       create_bottom();
       break;
 

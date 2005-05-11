@@ -35,6 +35,10 @@ switch(DATABASE_TYPE ) {
     include(BASE.'database/mysql_database.php' );
     break;
 
+  case 'mysql_innodb':
+    include(BASE.'database/mysql_innodb_database.php' );
+    break;
+
   case 'postgresql':
     switch(version_compare(PHP_VERSION, '4.2.0' ) ) {
       case 0:
@@ -47,10 +51,6 @@ switch(DATABASE_TYPE ) {
         include(BASE.'database/pgsql_old_database.php' );
         break;
     }
-    break;
-
-  case 'mysql_innodb':
-    include(BASE.'database/mysql_innodb_database.php' );
     break;
 
   default:

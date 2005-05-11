@@ -41,6 +41,16 @@ if( ! isset($_REQUEST['action'] ) )
   switch($_REQUEST['action'] ) {
 
     //gives a window and some options to do to the poor 'old contact manager
+    case 'show':
+      create_top($lang['show_contact']);
+      include('includes/mainmenu.php' );
+      include('contacts/contact_menubox.php' );
+      goto_main();
+      include('contacts/contact_show.php' );
+      create_bottom();
+      break;
+
+    //gives a window and some options to do to the poor 'old contact manager
     case 'add':
       create_top($lang['add_contact'], 0, 'firstname' );
       include('includes/mainmenu.php' );
@@ -48,17 +58,6 @@ if( ! isset($_REQUEST['action'] ) )
       goto_main();
       include('contacts/contact_add.php' );
       new_box($lang['info'], $lang['contact_add_info'] );
-      create_bottom();
-      break;
-
-
-    //gives a window and some options to do to the poor 'old contact manager
-    case 'show':
-      create_top($lang['show_contact']);
-      include('includes/mainmenu.php' );
-      include('contacts/contact_menubox.php' );
-      goto_main();
-      include('contacts/contact_show.php' );
       create_bottom();
       break;
 

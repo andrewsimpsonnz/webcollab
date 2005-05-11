@@ -32,6 +32,10 @@ include_once(BASE.'config/config.php' );
 
 switch(LOCALE ) {
 
+  case 'en':
+    include(BASE.'lang/en_long_message.php' );
+    break;
+  
   case 'bg':
     include(BASE.'lang/bg_long_message.php' );
     break;
@@ -84,7 +88,6 @@ switch(LOCALE ) {
     include(BASE.'lang/se_long_message.php' );
     break;
 
-  case 'en':
   default:
     include(BASE.'lang/en_long_message.php' );
     break;
