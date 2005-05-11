@@ -1,4 +1,15 @@
 WebCollab CVS
+*** 11 May 2005
+
+- rearrange some switch statements for better optimisation
+
+- optimise graphical bar function
+
+- change SQL in forum_menubox.php (problems with PostgeSQL 7.3.2) (Credit: Vajkó Péter)
+
+- provide better echo chunking in screen.php
+
+WebCollab CVS
 *** 30 April 2005
 
 - profiled email.php with APD profiler
@@ -8,6 +19,8 @@ WebCollab CVS
 - change uniquid() to md5(mt_rand()) in email.php
 
 - change from comma separated address lists to array() in email.php
+
+- removed persistent database connections for ISAM MySQL tables 
 
 WebCollab CVS
 *** 21 April 2005
