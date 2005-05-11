@@ -42,7 +42,7 @@ $q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
                     FROM '.PRE.'forum 
                     LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
                     WHERE '.PRE.'forum.posted > ( now()-INTERVAL '.$delim.NEW_TIME.' DAY'.$delim.')
-                    GROUP BY taskid, taskname, globalaccess, '.PRE.'tasks.usergroupid
+                    GROUP BY '.PRE.'forum.taskid, taskname, globalaccess, '.PRE.'tasks.usergroupid
                     ORDER BY recentpost DESC' );
 
 //iterate for posts                            
