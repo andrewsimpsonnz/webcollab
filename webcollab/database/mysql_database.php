@@ -47,7 +47,7 @@ function db_query( $query, $dieonerror=1 ) {
   if( ! $database_connection ) {
 
     //make connection
-    if( ! ($database_connection = @mysql_pconnect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD ) ) )
+    if( ! ($database_connection = @mysql_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD ) ) )
       error('No database connection',  'Sorry but there seems to be a problem in connecting to the database server');
 
     //select database
