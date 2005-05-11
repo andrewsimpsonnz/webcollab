@@ -40,18 +40,18 @@ $company = '';
 $q = db_query('SELECT id, firstname, lastname, company FROM '.PRE.'contacts ORDER BY company, lastname' );
 
 //show all contacts
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   if( $row['company'] != '' ) {
      if ($row['company'] != $company ){
-       $content .= $row['company']."<br />";
+       $content .= substr($row['company'], 0, 30 )."<br />";
      }
-     $show = $row['lastname'].", ".strtoupper(substr( $row['firstname'], 0, 1 ) ).".";
+     $show = substr($row['lastname'], 0, 30 ).", ".strtoupper(substr( $row['firstname'], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row['id']."\">$show</a><br />";
      $company =  $row['company'];
    }
    else{
-     $show = $row['lastname'].", ".strtoupper(substr( $row['firstname'], 0, 1 ) ).".";
+     $show = substr($row['lastname'], 0, 30 ).", ".strtoupper(substr( $row['firstname'], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row['id']."\">$show</a><br />";
    }
 }
