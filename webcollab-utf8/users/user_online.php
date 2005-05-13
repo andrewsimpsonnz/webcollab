@@ -27,20 +27,20 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 $content    = '';
 $allowed[0] = 0;
 
 //get list of common users in private usergroups that this user can view 
-$q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid, 
-                      ".PRE."usergroups_users.userid AS userid 
-                      FROM ".PRE."usergroups_users 
-                      LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."usergroups_users.usergroupid)
-                      WHERE ".PRE."usergroups.private=1");
+$q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid, 
+                      '.PRE.'usergroups_users.userid AS userid 
+                      FROM '.PRE.'usergroups_users 
+                      LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
+                      WHERE '.PRE.'usergroups.private=1');
 
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
    $allowed[] = $row[1];
   }
@@ -48,18 +48,18 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
 
 $content .= "<table>\n";
 //users online in last hour
-$q = db_query("SELECT ".PRE."logins.lastaccess AS last,
-            ".PRE."users.id AS id,
-            ".PRE."users.fullname AS fullname,
-            ".PRE."users.private AS private
-            FROM ".PRE."logins
-            LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."logins.user_id)
-            WHERE ".PRE."logins.lastaccess > ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
-            AND ".PRE."users.deleted='f'
-            ORDER BY ".PRE."logins.lastaccess DESC" );
+$q = db_query('SELECT '.PRE.'logins.lastaccess AS last,
+            '.PRE.'users.id AS id,
+            '.PRE.'users.fullname AS fullname,
+            '.PRE.'users.private AS private
+            FROM '.PRE.'logins
+            LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
+            WHERE '.PRE.'logins.lastaccess > ( now()-INTERVAL '.$delim.'1 HOUR'.$delim.')
+            AND '.PRE.'users.deleted=\'f\'
+            ORDER BY '.PRE.'logins.lastaccess DESC' );
 
 $content .= "<tr><td style=\"white-space:nowrap\" colspan=\"2\"><b>".$lang['online']."</b></td></tr>\n";
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i){
   
   //user test for privacy
   if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
@@ -67,23 +67,23 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
   }
   
   //show output
-  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'] )."</td></tr>\n";
+  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
 }
 
 $content .= "<tr><td style=\"white-space:nowrap\"colspan=\"2\">&nbsp;</td></tr>\n";
 //users previously online 
-$q = db_query("SELECT ".PRE."logins.lastaccess AS last,
-            ".PRE."users.id AS id,
-            ".PRE."users.fullname AS fullname,
-            ".PRE."users.private AS private
-            FROM ".PRE."logins
-            LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."logins.user_id)
-            WHERE ".PRE."logins.lastaccess < ( now()-INTERVAL ".$delim."1 HOUR".$delim.")
-            AND ".PRE."users.deleted='f'
-            ORDER BY ".PRE."logins.lastaccess DESC" );
+$q = db_query('SELECT '.PRE.'logins.lastaccess AS last,
+            '.PRE.'users.id AS id,
+            '.PRE.'users.fullname AS fullname,
+            '.PRE.'users.private AS private
+            FROM '.PRE.'logins
+            LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
+            WHERE '.PRE.'logins.lastaccess < ( now()-INTERVAL '.$delim.'1 HOUR'.$delim.')
+            AND '.PRE.'users.deleted=\'f\'
+            ORDER BY '.PRE.'logins.lastaccess DESC' );
 
 $content .= "<tr><td colspan=\"2\"><b>".$lang['not_online']."</b></td></tr>\n";
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i){
   
   //user test for privacy
   if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
@@ -91,7 +91,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++){
   }
   
   //show output
-  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'] )."</td></tr>\n";
+  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
 
 }
 $content .= "</table>\n";

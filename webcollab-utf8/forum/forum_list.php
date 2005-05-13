@@ -26,46 +26,47 @@
   Lists all the posts belonging to this task
 
 */
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-include_once(BASE."includes/details.php" );
-include_once(BASE."includes/time.php" );
+include_once(BASE.'includes/details.php' );
+include_once(BASE.'includes/time.php' );
+include_once(BASE.'includes/usergroup_security.php' );
 
 
 //check the taskid is valid
 if( ! (isset($_GET['taskid']) && is_numeric($_GET['taskid']) ) )
-  error("Forum list", "Not a valid taskid" );
+  error('Forum list', 'Not a valid taskid' );
 
 $taskid = intval($_GET['taskid']);
-  
-//check usergroup security
-require_once(BASE."includes/usergroup_security.php" );
+
+//check usergroup security  
+$taskid = usergroup_check($taskid );
 
 //
 // Recursive function for listing all posts of a task
 //
 function list_posts_from_task( $taskid, $usergroupid ) {
 
-  global $x, $lang, $TASKID_ROW;
+  global $x, $lang, $TASKID_ROW, $epoch;
   global $post_array, $parent_array, $post_count;
 
-  $parent_array = "";
+  $parent_array = '';
   $parent_count = 0;
   $post_count   = 0;
   
-  $q = db_query("SELECT ".PRE."forum.text AS text,
-                        ".PRE."forum.id AS id,
-                        ".PRE."forum.posted AS posted,
-                        ".PRE."forum.userid AS postowner,
-                        ".PRE."users.id AS userid,
-                        ".PRE."users.fullname AS fullname,
-                        ".PRE."forum.parent AS parent
-                        FROM ".PRE."forum
-                        LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."forum.userid)
-                        WHERE ".PRE."forum.taskid=$taskid
-                        AND ".PRE."forum.usergroupid=$usergroupid
-                        ORDER BY ".PRE."forum.posted" );
+  $q = db_query('SELECT '.PRE.'forum.text AS text,
+                        '.PRE.'forum.id AS id,
+                        '.PRE.'forum.posted AS posted,
+                        '.PRE.'forum.userid AS postowner,
+                        '.PRE.'users.id AS userid,
+                        '.PRE.'users.fullname AS fullname,
+                        '.PRE.'forum.parent AS parent
+                        FROM '.PRE.'forum
+                        LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
+                        WHERE '.PRE.'forum.taskid='.$taskid.'
+                        AND '.PRE.'forum.usergroupid='.$usergroupid.'
+                        ORDER BY '.PRE.'forum.posted' );
 
   //check for any posts
   if(db_numrows($q ) < 1 )
@@ -104,17 +105,17 @@ function list_posts_from_task( $taskid, $usergroupid ) {
     }
 
     $post_array[$i]['post'] = $this_post."<br />\n".$row['text']."\n";
-    $post_count++;
+    ++$post_count;
     
     //if this is a subpost, store the parent id 
     if($row['parent'] != 0 ) {
       $parent_array[$parent_count] = $row['parent'];
-      $parent_count++;
+      ++$parent_count;
     }
   }
   
   //iteration for first level posts
-  for($i=0 ; $i < $post_count ; $i++ ){
+  for($i=0 ; $i < $post_count ; ++$i ){
   
     //ignore subtasks in this iteration
     if($post_array[$i]['parent'] != 0 ){
@@ -141,7 +142,7 @@ function find_children($parent ) {
 
   $content = "<ul>\n";
        
-  for($i=0 ; $i < $post_count ; $i++ ) {
+  for($i=0 ; $i < $post_count ; ++$i ) {
   
     if($post_array[$i]['parent'] != $parent ){
       continue;
@@ -170,7 +171,7 @@ function find_children($parent ) {
 //don't show public forum if task is set to private usergroup only (and a usergroup is set) 
 if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) ){
 
-  $content = "";
+  $content = '';
 
   //get all posts
   $content .= list_posts_from_task( $taskid, 0 );
@@ -180,7 +181,7 @@ if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) )
   if($TASKID_ROW['archive'] == 0 )
     $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">{$lang['new_post']}</a>]</span>";
   //show it
-  new_box($lang['public_user_forum'], $content, "boxdata2" );
+  new_box($lang['public_user_forum'], $content, 'boxdata2' );
 }
 
 //
@@ -192,7 +193,7 @@ if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) )
 //dont show private forums if the task has not yet been assigned to a usergroup
 if($TASKID_ROW['usergroupid'] != 0 ) {
 
-  $content = "";
+  $content = '';
 
   if(in_array($TASKID_ROW['usergroupid'], (array)$GID ) || ADMIN ) {
 

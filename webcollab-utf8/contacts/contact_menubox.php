@@ -30,31 +30,33 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
 $content = '';
 $company = '';
 
 //get all contacts
-$q = db_query("SELECT id, firstname, lastname, company FROM ".PRE."contacts ORDER BY company, lastname" );
+$q = db_query('SELECT id, firstname, lastname, company FROM '.PRE.'contacts ORDER BY company, lastname' );
 
 //show all contacts
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
-  if( $row['company'] != "" ) {
+  if( $row['company'] != '' ) {
      if ($row['company'] != $company ){
-       $content .= $row['company']."<br />";
+       $content .= mb_substr($row['company'], 0, 30 )."<br />";
      }
-     $show = $row['lastname'].", ".mb_strtoupper(mb_substr( $row['firstname'], 0, 1 ) ).".";
+     $show = mb_substr($row['lastname'], 0, 30 ).", ".mb_strtoupper(mb_substr( $row['firstname'], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row["id"]."\">$show</a><br />";
      $company =  $row['company'];
    }
    else{
-     $show = $row['lastname'].", ".mb_strtoupper(mb_substr( $row['firstname'], 0, 1 ) ).".";
+     $show = mb_substr($row['lastname'], 0, 30 ).", ".mb_strtoupper(mb_substr( $row['firstname'], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row['id']."\">$show</a><br />";
    }
 }
+
+db_free_result($q );
 
 $content .= "<br />\n";
 
@@ -63,6 +65,6 @@ if(! GUEST )
   $content .= "<span class=\"textlink\">[<a href=\"contacts.php?x=$x&amp;action=add\">".$lang['add_contact']."</a>]</span>\n";
 
 //show the box
-new_box($lang['contacts'], $content, "boxmenu" );
+new_box($lang['contacts'], $content, 'boxmenu' );
 
 ?>

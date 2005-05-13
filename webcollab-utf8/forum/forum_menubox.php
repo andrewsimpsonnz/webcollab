@@ -24,31 +24,31 @@
   Lists all the recent forum posts
 
 */
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-include_once(BASE."includes/time.php" );
+include_once(BASE.'includes/time.php' );
 
 //initialise variables            
-$list = "";
+$list = '';
      
 //set the usergroup permissions on queries (Admin can see all)
 if(ADMIN == 1 )
-  $tail = " ";  
+  $tail = ' ';  
 else
-  $tail = " AND (".PRE."tasks.globalaccess='f' AND ".PRE."tasks.usergroupid IN (SELECT usergroupid FROM ".PRE."usergroups_users WHERE userid=".UID.")
-           OR ".PRE."tasks.globalaccess='t'   
-           OR ".PRE."tasks.usergroupid=0) ";                      
+  $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+           OR '.PRE.'tasks.globalaccess=\'t\'   
+           OR '.PRE.'tasks.usergroupid=0) ';                      
              
-$q = db_query("SELECT ".PRE."forum.taskid AS taskid, 
-                      MAX(".PRE."forum.posted) AS recentpost,
-                      ".PRE."tasks.name AS taskname
-                    FROM ".PRE."forum 
-                    LEFT JOIN ".PRE."tasks ON (".PRE."tasks.id=".PRE."forum.taskid)
-                    WHERE ".PRE."forum.posted > ( now()-INTERVAL ".$delim.NEW_TIME." DAY".$delim.")
-                    ".$tail."
-                    GROUP BY taskid, taskname
-                    ORDER BY recentpost DESC LIMIT 10" );
+$q = db_query('SELECT '.PRE.'forum.taskid AS taskid, 
+                      MAX('.PRE.'forum.posted) AS recentpost,
+                      '.PRE.'tasks.name AS taskname
+                    FROM '.PRE.'forum 
+                    LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
+                    WHERE '.PRE.'forum.posted > ( now()-INTERVAL '.$delim.NEW_TIME.' DAY'.$delim.')
+                    '.$tail.'
+                    GROUP BY '.PRE.'forum.taskid, taskname
+                    ORDER BY recentpost DESC LIMIT 10' );
 
 //iterate for posts                            
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
@@ -60,9 +60,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   $list .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['taskid']."\">".mb_strimwidth($row['taskname'], 0, 25 )."</a><br />\n";
 }
 
-if($list != "") {
+if($list != '') {
   $content = "<small>".$list.sprintf($lang['last_post_sprt'], nicedate($lastpost) )."</small>\n";
-  new_box($lang['recent_posts'], $content, "boxmenu" ); 
+  new_box($lang['recent_posts'], $content, 'boxmenu' ); 
 }
 
 ?>
