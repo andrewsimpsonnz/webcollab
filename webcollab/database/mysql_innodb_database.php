@@ -127,7 +127,7 @@ function db_data_seek($q ) {
   if(mysql_num_rows($q ) == 0 )
     return TRUE;
 
-  $reulst = mysql_data_seek($q, 0 );
+  $result = mysql_data_seek($q, 0 );
 
 return $result;
 }
