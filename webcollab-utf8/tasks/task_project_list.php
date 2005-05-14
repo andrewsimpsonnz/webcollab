@@ -26,11 +26,11 @@
 
 */
 
-require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once('path.php' );
+require_once( BASE.'includes/security.php' );
 
-include_once(BASE."tasks/task_common.php" );
-include_once(BASE."includes/time.php" );
+include_once(BASE.'tasks/task_common.php' );
+include_once(BASE.'includes/time.php' );
 
 //
 // List tasks
@@ -155,33 +155,33 @@ else
   $condensed = 0;
   
 //get config order for sorting
-$q = db_query("SELECT project_order, task_order FROM ".PRE."config" );
+$q = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
 $row = db_fetch_num($q, 0 );
 $project_order = $row[0];
 $task_order    = $row[1];
 
 //set the usergroup permissions on queries (Admin can see all)
 if(ADMIN == 1 )
-  $tail = " ";  
+  $tail = ' ';  
 else
-  $tail = "AND (globalaccess='f' AND usergroupid IN (SELECT usergroupid FROM ".PRE."usergroups_users WHERE userid=".UID.")
-           OR globalaccess='t'   
-           OR usergroupid=0) ";                      
+  $tail = 'AND (globalaccess=\'f\' AND usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+           OR globalaccess=\'t\'   
+           OR usergroupid=0) ';                      
 
 //don't get tasks if we aren't going to view them
 if(! $condensed) {
 
   //query to get uncompleted tasks
-  $q = db_query("SELECT id,
+  $q = db_query('SELECT id,
                         name,
                         parent,
                         projectid,
                         status, 
-                        ".$epoch." now() ) AS now,
-                        ".$epoch." deadline ) AS due
-                        FROM ".PRE."tasks 
-                        WHERE status<>'done'
-                        AND parent<>0 "
+                        '.$epoch.' now() ) AS now,
+                        '.$epoch.' deadline ) AS due
+                        FROM '.PRE.'tasks 
+                        WHERE status<>\'done\'
+                        AND parent<>0 '
                         .$tail
                         .$task_order );
   
@@ -209,8 +209,7 @@ if(! $condensed) {
         }
         break;
     }
-
-  
+ 
   //task details
   $task_uncompleted[$i]['task'] = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[0]."\">".$row[1].$suffix;
 
@@ -219,20 +218,22 @@ if(! $condensed) {
   }
 }
 
+//free memory
+db_free_result($q);
+
 // query to get the projects
-$q = db_query("SELECT id,
+$q = db_query('SELECT id,
                       name,
                       deadline,
                       status,
-                      ".$epoch." deadline) AS due,
+                      '.$epoch.' deadline) AS due,
                       finished_time,
                       completion_time,
-                      ".$epoch." now()) AS now,
+                      '.$epoch.' now()) AS now,
                       completed
-                      FROM ".PRE."tasks
+                      FROM '.PRE.'tasks
                       WHERE parent=0
-                      AND archive=0 "
-                      .$tail
+                      AND archive=0 '
                       .$project_order );
 
 //check if there are projects
@@ -340,13 +341,13 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
       $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )." ";
       $state = ($row['due'] - $row['now'] )/86400 ;
       if($state > 1 ) {
-        $content .=  "(".sprintf($lang['due_sprt'], ceil($state) ).")\n";
+        $content .=  "(".sprintf($lang['due_sprt'], ceil((real)$state) ).")\n";
       }
       else if($state > 0 ) {
         $content .=  "(".$lang['tomorrow'].")\n";
       }
       else {
-        switch( -ceil($state) ) {
+        switch( -ceil((real)$state) ) {
           case 0:
             $content .=  "<span class=\"green\">(".$lang['due_today'].")</span><br />\n";
             break;
@@ -356,7 +357,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
             break;
 
           default:
-            $content .= "<span class=\"red\">(".sprintf($lang['overdue_sprt'], -ceil($state) ).")</span><br />\n";
+            $content .= "<span class=\"red\">(".sprintf($lang['overdue_sprt'], -ceil((real)$state) ).")</span><br />\n";
             break;
         }
       }

@@ -26,24 +26,24 @@
 
 */
 
-require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once('path.php' );
+require_once( BASE.'includes/security.php' );
 
 //secure variables
-$content  = "";
+$content  = '';
 
 //existing task or project
 if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ) {
 
   $taskid = intval($_GET['taskid']);
 
-  include_once(BASE."includes/details.php" );
+  include_once(BASE.'includes/details.php' );
   
   $content .= "<small><b>".$lang['project'].":</b></small><br />\n";
 
   switch($TASKID_ROW['parent'] ) {
 
-    case "0":
+    case '0':
       //project
       $content .= "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".mb_strimwidth($TASKID_ROW["name"], 0, 20 )."<br />\n";
       break;
@@ -84,9 +84,9 @@ elseif(! empty($_GET['parentid']) && is_numeric($_GET['parentid']) ){
   $parentid = $_GET['parentid'];
 
   //get task parent details
-  $q = db_query("SELECT name, parent, projectid FROM ".PRE."tasks WHERE id=".$parentid );
+  $q = db_query('SELECT name, parent, projectid FROM '.PRE.'tasks WHERE id='.$parentid );
   if( ! $row = db_fetch_array( $q, 0) )
-    error("Task navigate", "Parent does not exist" );
+    error('Task navigate', 'Parent does not exist' );
 
   //get project name
   $project_name = mb_strimwidth(db_result(db_query("SELECT name FROM ".PRE."tasks WHERE id=".$row["projectid"] ), 0, 0 ), 0, 20);
@@ -96,7 +96,7 @@ elseif(! empty($_GET['parentid']) && is_numeric($_GET['parentid']) ){
 
   switch( $row['parent'] ) {
 
-    case "0":
+    case '0':
       //new task under project
       $content .= "<small><b>".$lang['task'].":</b></small><br />\n".
                   "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>".$lang['new_task']."</i><br />\n";
@@ -112,7 +112,7 @@ elseif(! empty($_GET['parentid']) && is_numeric($_GET['parentid']) ){
 
   }
 
-  new_box( $lang['task_navigation'], $content, "boxmenu" );
+  new_box( $lang['task_navigation'], $content, 'boxmenu' );
 }
 
 ?>

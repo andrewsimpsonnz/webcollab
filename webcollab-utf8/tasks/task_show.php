@@ -28,44 +28,45 @@
 
 */
 
-require_once("path.php" );
-require_once( BASE."includes/security.php" );
+require_once('path.php' );
+require_once( BASE.'includes/security.php' );
 
-include_once(BASE."tasks/task_common.php" );
-include_once(BASE."includes/details.php" );
-include_once(BASE."includes/time.php" );
+include_once(BASE.'tasks/task_common.php' );
+include_once(BASE.'includes/details.php' );
+include_once(BASE.'includes/time.php' );
+include_once(BASE.'includes/usergroup_security.php');
 
 //secure variables
-$content = "";
+$content = '';
 
 //is there an id ?
 if( ! isset( $_GET['taskid']) || ! is_numeric($_GET['taskid']) || $_GET['taskid'] == 0 )
-  error("Task show", "Not a valid value for taskid" );
+  error('Task show', 'Not a valid value for taskid' );
 
 $taskid = intval($_GET['taskid']);
 
 //check usergroup security
-require_once(BASE."includes/usergroup_security.php");
+$taskid = usergroup_check($taskid );
 
-$q = db_query("SELECT ".PRE."tasks.created AS created,
-                      ".PRE."tasks.finished_time AS finished,
-                      ".PRE."tasks.completion_time AS completion,
-                      ".PRE."users.fullname AS fullname,
-                      ".PRE."taskgroups.name AS taskgroup_name,
-                      ".PRE."usergroups.name AS usergroup_name
-                      FROM ".PRE."tasks
-                      LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."tasks.owner)
-                      LEFT JOIN ".PRE."taskgroups ON (".PRE."taskgroups.id=".PRE."tasks.taskgroupid)
-                      LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."tasks.usergroupid)
-                      WHERE ".PRE."tasks.id=$taskid" );
+$q = db_query('SELECT '.PRE.'tasks.created AS created,
+                      '.PRE.'tasks.finished_time AS finished,
+                      '.PRE.'tasks.completion_time AS completion,
+                      '.PRE.'users.fullname AS fullname,
+                      '.PRE.'taskgroups.name AS taskgroup_name,
+                      '.PRE.'usergroups.name AS usergroup_name
+                      FROM '.PRE.'tasks
+                      LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
+                      LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid)
+                      LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'tasks.usergroupid)
+                      WHERE '.PRE.'tasks.id='.$taskid );
 
 //get the data
 if( ! ($row = db_fetch_array($q, 0 ) ) )
-  error("Task show", "The requested item has either been deleted, or is now invalid.");
+  error('Task show', 'The requested item has either been deleted, or is now invalid.');
 
 //mark this as seen in seen ;)
-@db_query("DELETE FROM ".PRE."seen WHERE userid=".UID." AND taskid=$taskid", 0);
-db_query("INSERT INTO ".PRE."seen(userid, taskid, time) VALUES (".UID.", $taskid, now() ) " );
+@db_query('DELETE FROM '.PRE.'seen WHERE userid='.UID.' AND taskid='.$taskid, 0);
+db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$taskid.', now() )' );
 
 
 //text link for 'printer friendly' page
@@ -147,20 +148,20 @@ switch($TASKID_ROW['parent'] ) {
     //project - show the finish date and status
     $title = $lang['project_details'];
     switch($TASKID_ROW['status'] ) {
-      case "cantcomplete":
+      case 'cantcomplete':
         $content .= "<tr><td>".$lang['status'].": </td><td><b>".$lang['project_on_hold']."</b></td></tr>\n";
         $content .= "<tr><td>".$lang['modified_on'].": </td><td>".nicedate($row['finished'])."</td></tr>\n";
         break;
   
-      case "notactive":
+      case 'notactive':
         $content .= "<tr><td>".$lang['status'].": </td><td>".$lang['project_planned']."</td></tr>\n";
         break;
   
-      case "nolimit":
+      case 'nolimit':
         $content .= "<tr><td>".$lang['status'].": </td><td>".$lang['project_no_deadline']."</td></tr>\n";
         break;
   
-      case "done":
+      case 'done':
       default:
         if($TASKID_ROW['completed'] == 100 )  
           $content .= "<tr><td>".$lang['completed_on'].": </td><td>".nicedate($row['completion'] )."</td></tr>\n";
@@ -173,19 +174,19 @@ switch($TASKID_ROW['parent'] ) {
     $title = $lang['task_info'];
     $content .= "<tr><td>".$lang['status'].": </td><td>";
     switch($TASKID_ROW['status'] ) {
-      case "created":
+      case 'created':
         $content .=  $task_state['new'];
         break;
-      case "notactive":
+      case 'notactive':
         $content .=  $task_state['planned'];
         break;
-      case "active":
+      case 'active':
         $content .=  $task_state['active'];
         break;
-      case "cantcomplete":
+      case 'cantcomplete':
         $content .=  "<b>".$task_state['cantcomplete']."</b>";
         break;
-      case "done":
+      case 'done':
         $content .=  $task_state['done'];
         break;
       default:
@@ -196,11 +197,11 @@ switch($TASKID_ROW['parent'] ) {
   
     //is there a finished date ?
     switch($TASKID_ROW['status'] ) {
-      case "done":
+      case 'done':
         $content .= "<tr><td>".$lang['completed_on'].": </td><td>".nicedate($row['finished'])."</td></tr>\n";
         break;
   
-      case "cantcomplete":
+      case 'cantcomplete':
         $content .= "<tr><td>".$lang['modified_on'].": </td><td>".nicedate($row['finished'])."</td></tr>\n";
         break;
   
@@ -214,7 +215,7 @@ switch($TASKID_ROW['parent'] ) {
 if($TASKID_ROW['parent'] != 0 ) {
 
   switch($TASKID_ROW['taskgroupid'] ){
-    case "0":
+    case 0:
       $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help'); return false\">".$lang['taskgroup']."</a>: </td><td>".$lang['none']."</td></tr>\n";
       break;
 
@@ -310,6 +311,6 @@ if($TASKID_ROW['archive'] == 0 ) {
 
 $content .= "</span></div>\n";
 
-new_box( $title, $content, "boxdata2" );
+new_box( $title, $content, 'boxdata2' );
 
 ?>

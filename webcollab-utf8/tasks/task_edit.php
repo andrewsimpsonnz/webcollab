@@ -28,25 +28,25 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
+require_once('path.php' );
+require_once(BASE.'includes/security.php' );
 
-include_once(BASE."includes/details.php" );
-include_once(BASE."includes/admin_config.php" );
-include_once(BASE."includes/time.php" );
+include_once(BASE.'includes/details.php' );
+include_once(BASE.'includes/admin_config.php' );
+include_once(BASE.'includes/time.php' );
 
 $usergroup[0] = 0;
-$javascript = "";
+$javascript = '';
 $allowed[0] = 0; 
 
 //get list of common users in private usergroups that this user can view 
-$q = db_query("SELECT ".PRE."usergroups_users.usergroupid AS usergroupid,
-                      ".PRE."usergroups_users.userid AS userid 
-                      FROM ".PRE."usergroups_users 
-                      LEFT JOIN ".PRE."usergroups ON (".PRE."usergroups.id=".PRE."usergroups_users.usergroupid)
-                      WHERE ".PRE."usergroups.private=1");
+$q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
+                      '.PRE.'usergroups_users.userid AS userid 
+                      FROM '.PRE.'usergroups_users 
+                      LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
+                      WHERE '.PRE.'usergroups.private=1');
 
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++ ) {
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
    $allowed[] = $row[1];
   }
@@ -71,7 +71,7 @@ function user_access($owner, $usergroupid, $groupaccess ) {
   if($usergroupid == 0 )
     return FALSE;
 
-  if( $groupaccess == "t" ) {
+  if( $groupaccess == 't' ) {
     if(in_array($usergroupid, (array)$GID ) )
       return TRUE;
   }
@@ -79,10 +79,10 @@ function user_access($owner, $usergroupid, $groupaccess ) {
 }
 
 //set variable
-$content = "";
+$content = '';
 
 if(empty($_GET['taskid']) || ! is_numeric($_GET['taskid']) )
-  error("Task edit", "The taskid input is not valid" ); 
+  error('Task edit', 'The taskid input is not valid' ); 
 
 $taskid = intval($_GET['taskid']);
 
@@ -92,7 +92,7 @@ if( ! user_access($TASKID_ROW['owner'], $TASKID_ROW['usergroupid'], $TASKID_ROW[
   
   
 //get project details - if any
-$q = db_query("SELECT name, ".$epoch."deadline) AS deadline FROM ".PRE."tasks WHERE id=".$TASKID_ROW['projectid'] );
+$q = db_query('SELECT name, '.$epoch.'deadline) AS deadline FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] );
 $project_row = db_fetch_array($q, 0 );
 
 //all okay show task info
@@ -125,14 +125,14 @@ switch($TYPE) {
 
 //reparenting
 $content .= "<tr><td>".$lang['parent_task'].":</td><td><select name=\"parentid\">\n";
-$parentq = db_query("SELECT id, name, usergroupid, globalaccess FROM ".PRE."tasks WHERE id<>$taskid AND archive=0 ORDER BY name");
+$parentq = db_query('SELECT id, name, usergroupid, globalaccess FROM '.PRE.'tasks WHERE id<>'.$taskid.' AND archive=0 ORDER BY name');
 $content .= "<option value=\"0\"";
 
 if($TASKID_ROW['parent'] == 0 )
   $content .= " selected=\"selected\"";
 $content .= ">".$lang['no_reparent']."</option>\n";
 
-for( $i=0; $parent_row = @db_fetch_array($parentq, $i ); $i++) {
+for( $i=0; $parent_row = @db_fetch_array($parentq, $i ); ++$i) {
   //check for private usergroups
   if( (! ADMIN ) && ($parent_row['usergroupid'] != 0 ) && ($parent_row['globalaccess'] == 'f' ) ) {
 
@@ -157,24 +157,24 @@ $content .= "<tr><td>".$lang['deadline'].":</td><td>".date_select_from_timestamp
 //priority
 
   switch($TASKID_ROW['priority'] ) {
-      case "0":
+      case 0:
       $s1 = "selected=\"selected\""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
       break;
 
-    case "1":
+    case 1:
       $s1 = ""; $s2 = " selected=\"selected\""; $s3 = ""; $s4 =""; $s5 = "";
       break;
 
-    case "2":
+    case 2:
     default:
       $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\""; $s4 =""; $s5 = "";
       break;
 
-   case "3":
+   case 3:
       $s1 = ""; $s2 = ""; $s3 = ""; $s4 =" selected=\"selected\""; $s5 = "";
       break;
 
-    case "4":
+    case 4:
       $s1 = ""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = " selected=\"selected\"";
       break;
   }
@@ -193,19 +193,19 @@ switch($TASKID_ROW['parent'] ){
   case 0:
     //status for projects - 'done' is calculated from tasks
     switch($TASKID_ROW['status'] ) {
-      case "notactive":
+      case 'notactive':
         $s1 = " selected=\"selected\""; $s2 = ""; $s3 = ""; $s4 = "";
         break;
 
-      case "nolimit":
+      case 'nolimit':
         $s1 = ""; $s2 = " selected=\"selected\""; $s3 = ""; $s4 ="";
         break;
 
-      case "cantcomplete":
+      case 'cantcomplete':
         $s1 = ""; $s2 = ""; $s3 = ""; $s4 =" selected=\"selected\"";
         break;
 
-      case "active":
+      case 'active':
       default:
         $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\""; $s4 ="";
         break;
@@ -222,23 +222,23 @@ switch($TASKID_ROW['parent'] ){
     default:
       //status for tasks
       switch($TASKID_ROW['status'] ) {
-        case "notactive":
+        case 'notactive':
           $s1 = ""; $s2 = " selected=\"selected\""; $s3 = ""; $s4 =""; $s5 = "";
           break;
 
-        case "active":
+        case 'active':
           $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\""; $s4 =""; $s5 = "";
           break;
 
-        case "cantcomplete":
+        case 'cantcomplete':
           $s1 = ""; $s2 = ""; $s3 = ""; $s4 =" selected=\"selected\""; $s5 = "";
           break;
 
-        case "done":
+        case 'done':
           $s1 = ""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = " selected=\"selected\"";
           break;
 
-        case "created":
+        case 'created':
         default:
           $s1 = " selected=\"selected\""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
           break;
@@ -254,12 +254,12 @@ switch($TASKID_ROW['parent'] ){
 }
 
 //task owner
-$user_q = db_query("SELECT id, fullname, private FROM ".PRE."users WHERE deleted='f' AND guest=0 ORDER BY fullname" );
+$user_q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname' );
 $content .= "<tr> <td>".$lang[$TYPE."_owner"].":</td> <td><select name=\"owner\">\n".
             "<option value=\"0\">".$lang['nobody']."</option>\n";
 
 //select the user first
-for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; $i++) {
+for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; ++$i) {
       
   //user test for privacy
   if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
@@ -281,11 +281,11 @@ $content .= "</select></td></tr>\n";
 if($TASKID_ROW['parent'] != 0 ){
 
   //get all users in order to show a task owner
-  $taskgroup_q = db_query("SELECT id, name FROM ".PRE."taskgroups ORDER BY name" );
+  $taskgroup_q = db_query('SELECT id, name FROM '.PRE.'taskgroups ORDER BY name' );
   $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help'); return false\">".$lang['taskgroup']."</a>: </td> <td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
-  for( $i=0 ; $user_row = @db_fetch_array($taskgroup_q, $i ) ; $i++) {
+  for( $i=0 ; $user_row = @db_fetch_array($taskgroup_q, $i ) ; ++$i) {
 
     $content .= "<option value=\"".$user_row['id']."\"";
 
@@ -299,11 +299,11 @@ if($TASKID_ROW['parent'] != 0 ){
 }
 
 //show all user-groups
-$usergroup_q = db_query("SELECT id, name, private FROM ".PRE."usergroups ORDER BY name" );
+$usergroup_q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
 $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help'); return false\">".$lang['usergroup']."</a>: </td> <td><select name=\"usergroupid\">\n";
 $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
-for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++ ) {
+for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; ++$i ) {
      
   //usergroup test for privacy
   if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
