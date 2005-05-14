@@ -55,7 +55,8 @@ function nicedate($timestamp ) {
   $date_array = explode('-', substr($timestamp, 0, 10) );
   
   //format is 2004-Aug-02
-  return sprintf('%s-%s-%02d', $date_array[0], $month_array[(int)($date_array[1])], (int)$date_array[2]);
+  //return sprintf('%s-%s-%02d', $date_array[0], $month_array[(int)($date_array[1])], (int)$date_array[2]);
+  return $date_array[0].'-'.$month_array[(int)($date_array[1])].'-'.$date_array[2];
 }
 
 //
@@ -118,7 +119,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
 
   //day
   $content = "<select id=\"day\" name=\"day\">\n";
-  for($i=1 ; $i<32 ; $i++ ) {
+  for($i=1 ; $i<32 ; ++$i ) {
     $content .= "<option value=\"$i\"";
 
     if($day == $i )
@@ -130,7 +131,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
 
   //month (must be in decimal, 'cause that's what postgres uses!)
   $content .= "<select id=\"month\" name=\"month\">\n";
-  for( $i=1; $i<13 ; $i++) {
+  for( $i=1; $i<13 ; ++$i) {
     $content .= "<option value=\"$i\"";
 
     if($month == $i )
@@ -142,7 +143,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
 
   //year
   $content .= "<select id=\"year\" name=\"year\">\n";
-  for($i=2001; $i<2015 ; $i++ ) {
+  for($i=2001; $i<2015 ; ++$i ) {
     $content .= "<option value=\"$i\"";
 
     if($year == $i )
