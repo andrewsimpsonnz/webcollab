@@ -74,7 +74,10 @@ function show_percent($percent=0 ) {
 // Project Jump function
 //
 function project_jump($taskid=0) {
+  
   global $x, $lang, $GID;
+  
+  $content = '';
   
   // query to get the non-completed projects
   $q = db_query('SELECT id,
@@ -91,7 +94,7 @@ function project_jump($taskid=0) {
   if(db_numrows($q) > 0 ){
       
     // Prepare the form
-    $content  = "<form id=\"ProjectQuickJump\" method=\"get\" action=\"tasks.php\">\n".
+    $content .= "<form id=\"ProjectQuickJump\" method=\"get\" action=\"tasks.php\">\n".
                 "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
                 "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n".
                 "<div><select name=\"taskid\">\n".
