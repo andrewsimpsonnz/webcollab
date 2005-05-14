@@ -97,139 +97,142 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
     header('Refresh: $redirect_time; url='.BASE_URL.'index.php' );
   }
   
-  echo      "<!DOCTYPE html PUBLIC\n".
-            "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
-            "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n".
-            "<html>\n\n".
-            "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
-            "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
-            "<!-- (c) 2002-2005 Andrew Simpson -->\n\n".
-            "<head>\n";
-                    
+  $content =        "<!DOCTYPE html PUBLIC\n".
+                    "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
+                    "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n".
+                    "<html>\n\n".
+                    "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
+                    "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
+                    "<!-- (c) 2002-2005 Andrew Simpson -->\n\n".
+                    "<head>\n";
+
   if( $title == '' )
     $title = MANAGER_NAME;
 
-  echo      "<title>".$title."</title>\n".
-            "<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".
-            "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".CHARACTER_SET."\" />\n";
+  $content .=       "<title>".$title."</title>\n".
+                    "<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".
+                    "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".CHARACTER_SET."\" />\n";
   
   //do a refresh if required
   if($redirect_time != 0) {
-    echo    "<meta http-equiv=\"Refresh\" content=\"$redirect_time;url=".BASE_URL."index.php\" />\n";
+    $content .=     "<meta http-equiv=\"Refresh\" content=\"$redirect_time;url=".BASE_URL."index.php\" />\n";
   }
 
   switch($page_type) {
     case 2: //print
-      echo  "<link rel=\"StyleSheet\" href=\"".BASE."css/print.css\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE."css/print.css\" type=\"text/css\" />\n";
       break;
     
     case 3: //calendar
-      echo  "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\" />\n";
-      echo  "<link rel=\"StyleSheet\" href=\"".BASE."css/calendar.css\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE."css/calendar.css\" type=\"text/css\" />\n";
       break;
        
     case 0: //main window + menu sidebar
     case 1: //single main window (no menu sidebar)
     default:            
-      echo  "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\" />\n";
       break;         
   }
   
   //javascript to position cursor in the first box
   if($cursor || $check || $date) {
-    echo    "<script type=\"text/javascript\">\n".
-            "<!-- \n";
+    $content .=     "<script type=\"text/javascript\">\n".
+                    "<!-- \n";
     if($cursor){
-      echo  "function placeCursor() {document.getElementById('".$cursor."').focus();}\n";
+      $content .=   "function placeCursor() {document.getElementById('".$cursor."').focus();}\n";
     }
        
     if($check){
-      echo  "function fieldCheck(){\n".
-            "if(document.getElementById('".$check."').value==\"\"){\n".
-            "alert('".$lang['missing_field_javascript']."');\n".
-            "document.getElementById('".$check."').focus();\n".
-            "return false;}\n".
-            "return;}\n";
+      $content .=   "function fieldCheck(){\n".
+                    "if(document.getElementById('".$check."').value==\"\"){\n".
+                    "alert('".$lang['missing_field_javascript']."');\n".
+                    "document.getElementById('".$check."').focus();\n".
+                    "return false;}\n".
+                    "return;}\n";
      }
     if($date) {
-      echo  "function dateCheck() {\n".
-            "var daysMonth = new Array(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 );\n". 
-            "if(document.getElementById('day').value > daysMonth[(document.getElementById('month').value-1)] ){\n".
-            "alert('".$lang['invalid_date_javascript']."');\n".
-            "return false;}\n". 
-            "var finishDate = document.getElementById('projectDate').value;\n".
-            "if(finishDate > 0 ){\n".
-            "var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value )/1000;\n".
-            "if(inputDate - finishDate > 7200 ){\n".
-            "return confirm('".$lang['finish_date_javascript']."');} }\n".     
-            "return;}\n";
+      $content .=   "function dateCheck() {\n".
+                    "var daysMonth = new Array(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 );\n". 
+                    "if(document.getElementById('day').value > daysMonth[(document.getElementById('month').value-1)] ){\n".
+                    "alert('".$lang['invalid_date_javascript']."');\n".
+                    "return false;}\n". 
+                    "var finishDate = document.getElementById('projectDate').value;\n".
+                    "if(finishDate > 0 ){\n".
+                    "var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value )/1000;\n".
+                    "if(inputDate - finishDate > 7200 ){\n".
+                    "return confirm('".$lang['finish_date_javascript']."');} }\n".     
+                    "return;}\n";
       }
-      echo  " // -->\n".
-            "</script>\n".
-            "</head>\n\n";
+      $content .=   " // -->\n".
+                    "</script>\n".
+                    "</head>\n\n";
       if($cursor)
-        echo "<body onload=\"placeCursor()\">\n";
+        $content .= "<body onload=\"placeCursor()\">\n";
       else
-        echo "<body>\n";
+        $content .= "<body>\n";
   }
   else {
-    echo     "</head>\n\n".
-             "<body>\n";
+    $content .=     "</head>\n\n".
+                    "<body>\n";
   }
-    
+
   //create the main table
-  echo      "<!-- start main table -->\n".
-            "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n";
+  $content .=       "<!-- start main table -->\n".
+                    "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n";
 
   switch ($page_type ) {
 
     case 0: //main window + menu sidebar
       //create the masthead part of the main window
-      echo "<tr valign=\"top\"><td colspan=\"2\" class=\"masthead\">";
+      $content .=   "<tr valign=\"top\"><td colspan=\"2\" class=\"masthead\">";
       //show username if applicable
       if(defined('UID_NAME') )
-        echo  sprintf( $lang['user_homepage_sprt'], UID_NAME );
-      echo  "</td></tr>\n";
+        $content .=  sprintf( $lang['user_homepage_sprt'], UID_NAME );
+      $content .=   "</td></tr>\n";
       //create menu sidebar
-      echo  "<tr valign=\"top\"><td style=\"width: 175px;\" align=\"center\">\n";
+      $content .=   "<tr valign=\"top\"><td style=\"width: 175px;\" align=\"center\">\n";
       $bottom_text = 1;
       break;
 
     case 1: //single main window (no menu sidebar)
     case 3: //calendar  
-      echo  "<tr valign=\"top\"><td class=\"masthead\">";
+      $content .=   "<tr valign=\"top\"><td class=\"masthead\">";
       if(defined('UID_NAME' ) )
-        echo  sprintf( $lang['user_homepage_sprt'], UID_NAME );
-      echo  "</td></tr>\n";
+        $content .=  sprintf( $lang['user_homepage_sprt'], UID_NAME );
+      $content .=   "</td></tr>\n";
       //create single window over entire screen
-      echo  "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";
+      $content .=   "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";
       $bottom_text = 2;
       break;
 
     case 2: //printable screen
       //create single window over paper width
-      echo  "<tr valign=\"top\"><td style=\"width: 576pt\" align=\"center\">\n";
+      $content .=   "<tr valign=\"top\"><td style=\"width: 576pt\" align=\"center\">\n";
       //don't want bottom text
       $bottom_text = 0;
   }
 
+  //flush buffer
+  echo $content; 
+  
   return;
 }
 
 //
 //  Creates a new box
 //
-function new_box($title, $content, $style='boxdata', $size='tablebox' ) {
+function new_box($title, $content, $style="boxdata", $size="tablebox" ) {
 
-  echo      "\n<!-- start of ".$title." - box -->\n".
-            "<br />\n".
-            "<table class=\"".$size."\" cellspacing=\"0\">\n".
-            "<tr><td class=\"boxhead\">".$title."</td></tr>\n".
-            "<tr><td class=\"".$style."\">\n".
-            $content."</td></tr>\n".
-            "</table>\n".
-            "<!-- end -->\n";
-  
+  echo  "\n<!-- start of ".$title." - box -->\n".
+        "<br />\n".
+        "<table class=\"".$size."\" cellspacing=\"0\">\n".
+        "<tr><td class=\"boxhead\">".$title."</td></tr>\n".
+        "<tr><td class=\"".$style."\">\n".
+        $content."</td></tr>\n".
+        "</table>\n".
+        "<!-- end -->\n";
+                    
   return;
 }
 
@@ -237,7 +240,8 @@ function new_box($title, $content, $style='boxdata', $size='tablebox' ) {
 // End the left frame and go the the right one
 //
 function goto_main() {
-  echo      "</td><td align=\"center\">";
+  
+  echo "</td><td align=\"center\">";
   return;
 }
 
