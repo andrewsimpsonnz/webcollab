@@ -38,19 +38,22 @@ include_once(BASE.'lang/lang.php' );
 function safe_data($body ) {
   
   //return null for nothing input
-  if(ctype_space($body) )
+  if(ctype_space($body) ) {
     return '';
+  }
   
   //we don't use magic_quotes
-  if(get_magic_quotes_gpc() )
+  if(get_magic_quotes_gpc() ) {
     $body = stripslashes($body );
+  }
   
   //remove whitespace      
   $body = trim($body );  
 
   //limit line length for single line entries
-  if(strlen($body ) > 100 )
+  if(strlen($body ) > 100 ) {
     $body = substr($body, 0, 100 );
+  }
   
   $body = clean_up($body);
    
@@ -64,12 +67,14 @@ return $body;
 function safe_data_long($body ) {
 
   //return null for nothing input
-  if(ctype_space($body) )
+  if(ctype_space($body) ) {
     return '';
+  }
   
   //we don't use magic_quotes
-  if(get_magic_quotes_gpc() )
+  if(get_magic_quotes_gpc() ) {
     $body = stripslashes($body );
+  }
       
   //normalise line breaks from Windows & Mac to UNIX style '\n' 
   $body = str_replace("\r\n", "\n", $body );
@@ -87,12 +92,12 @@ function clean_up($body ) {
   global $validation_regex;
   
   //allow only normal printing characters valid for the character set in use
-  if(! ctype_print($body) )
+  if(! ctype_print($body) ) {
     $body = preg_replace($validation_regex, '?', $body );
+  }
   
   //use HTML encoding, or add escapes '\' for characters that could be used for css <script> or SQL injection attacks
-  //$trans = array('\\'=>'\\\\', "'"=>"\'", '"'=>'\"', ';'=>'&#059;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;' );
-  $trans = array('\\'=>'\\\\', "'"=>"&apos;", '"'=>'&quot;', ';'=>'&#059;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;' );
+  $trans = array('\\'=>'\\\\', "'"=>"\'", '"'=>'\"', ';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'\(', ')'=>'\)', '+'=>'\+', '-'=>'\-', '='=>'\=' );
   
   return strtr($body, $trans ); 
   
@@ -127,11 +132,12 @@ function html_links($body, $database_escape=0 ) {
   $body = preg_replace('/(([\w\-\.]+)@([\w\-\.]+)\.([\w]+))/', "<a href=\"mailto:$0\">$0</a>", $body );
   
   //data being submitted to a database needs ('$0') part escaped
-  if($database_escape )    
+  if($database_escape ) {    
     $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s]+)/i', "<a href=\"$0\" onclick=\"window.open(\'$0\'); return false\">$0</a>", $body );
-  else
+  }  
+  else {
     $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s]+)/i', "<a href=\"$0\" onclick=\"window.open('$0'); return false\">$0</a>", $body );
-    
+  }  
   return $body;
 }
 
@@ -176,15 +182,16 @@ function error($box_title, $error ) {
             "WebCollab version:".WEBCOLLAB_VERSION."\n".
             "POST vars: $post\n\n";
   
-  if(EMAIL_ERROR != NULL ){
+  if(EMAIL_ERROR != NULL ) {
     include_once(BASE.'includes/email.php' );
     email(EMAIL_ERROR, "ERROR on ".MANAGER_NAME, $message );
   }
         
-  if(DEBUG == 'Y' )
+  if(DEBUG == 'Y' ) {
     $content = nl2br($message);
     new_box("Error Debug", $content );
-
+  }
+  
   create_bottom();
 
   //do not return as that would be futile
