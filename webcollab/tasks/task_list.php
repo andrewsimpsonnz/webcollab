@@ -50,8 +50,9 @@ function list_tasks($parent ) {
   $ul_flag = 0;
 
   //force mysql to put 'uncategorised' items at the bottom
-  if(substr(DATABASE_TYPE, 0, 5) == 'mysql' )
+  if(substr(DATABASE_TYPE, 0, 5) == 'mysql' ) {
     $no_group = 'IF('.PRE.'taskgroups.name IS NULL, 1, 0), ';
+  }
   
   //query to get the children for this taskid
   $q = db_query('SELECT '.PRE.'tasks.id AS id,
@@ -75,8 +76,9 @@ function list_tasks($parent ) {
                   ORDER by '.$no_group.' groupname, taskname' );
 
   //check for any tasks.  If no tasks end recursive function
-  if(db_numrows($q) < 1 )
+  if(db_numrows($q) < 1 ) {
     return;
+  }
 
   //determine if the first line will be a task listing or a taskgroup name
   //if it's a taskgroup name we don't need to set the leading <ul>
@@ -91,13 +93,14 @@ function list_tasks($parent ) {
     //check for private usergroups
     if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
-      if( ! in_array( $row['usergroupid'], (array)$GID ) )
+      if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
         //recursive search if the subtask is listed in parent_array (it has children then)
         if(in_array( $row['id'], $parent_array, FALSE) ) {
           $this_content .= list_tasks( $row['id']);
           $this_content .= "\n</ul></li>\n";
         }
         continue;
+      }
     }
 
 
@@ -114,16 +117,18 @@ function list_tasks($parent ) {
       if($stored_groupname != $groupname ) {
 
         //don't need </ul> before first taskgroup heading (no <ul> is set)
-        if($stored_groupname != NULL )
+        if($stored_groupname != NULL ) {
           $this_content .= "</ul>\n";
+        }
 
         //show taskgroup name
         $this_content .= "<p><b>".$groupname."</b>";
 
         //add taskgroup description
-        if($row['groupdescription'] != NULL )
+        if($row['groupdescription'] != NULL ) {
           $this_content .=  "&nbsp;<i>( ".$row['groupdescription']." )</i>";
-
+        }
+        
         $this_content .= "</p>\n";
         $this_content .= "<ul>\n";
 
@@ -146,8 +151,9 @@ function list_tasks($parent ) {
     if( ($now - max($row['edited'], $row['lastpost'], $row['lastfileupload'] ) ) > 86400*NEW_TIME ) {
 
       //task is over limit in NEW_TIME and still not looked at by you, mark it as seen, and move on...
-      if( $seen_test < 1 )
+      if( $seen_test < 1 ) {
         db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$row['id'].', now() ) ' );
+      }
     }
     //task has changed since last seen - show the changes to you
     else {
@@ -226,7 +232,7 @@ function list_tasks($parent ) {
       default:
         $state = ($row['due'] + $tz_offset - $now )/86400 ;
         if($state > 1 ) {
-          $this_content .=  "(".sprintf( $lang['due_sprt'], ceil($state) ).")";
+          $this_content .=  "(".sprintf( $lang['due_sprt'], ceil((real)$state) ).")";
         }
         else if($state > 0 ) {
           $this_content .=  "(".$lang['tomorrow'].")";
@@ -243,7 +249,7 @@ function list_tasks($parent ) {
               break;
 
             default:
-              $this_content .= "<span class=\"red\">(".sprintf($lang['overdue_sprt'], -ceil($state) ).")</span>";
+              $this_content .= "<span class=\"red\">(".sprintf($lang['overdue_sprt'], -ceil((real)$state) ).")</span>";
               break;
           }
         }
@@ -275,8 +281,9 @@ function list_tasks($parent ) {
 //
 
 //is the parentid set in tasks.php ?
-if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) )
+if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) ) {
   error( 'Task list', 'Not a valid value for taskid');
+}
 
 $parentid = intval($_REQUEST['taskid']);
 
@@ -292,8 +299,9 @@ $tz_offset = (TZ * 3600) - date('Z');
 if( (! ADMIN ) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
 
   //check if the user has a matching group
-  if( ! in_array($row[0], (array)$GID ) )
+  if( ! in_array($row[0], (array)$GID ) ) {
     return;
+  }
 }
 
 //find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query

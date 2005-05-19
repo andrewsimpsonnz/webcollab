@@ -51,8 +51,9 @@ function listTasks($projectid ) {
   //search for uncompleted tasks by projectid
   $task_key = array_keys((array)$task_projectid, $projectid );
   
-  if(sizeof($task_key) < 1 )
+  if(sizeof($task_key) < 1 ) {
     return;
+  }
   
   //cycle through relevant tasks
   foreach((array)$task_key as $key ) {  
@@ -87,7 +88,7 @@ function listTasks($projectid ) {
     ++$shown_count; 
     
     //if this task has children (subtasks), iterate recursively to find them 
-    if(in_array($task_array[$i]['id'], (array)$parent_array, TRUE ) ) {
+    if(in_array($task_array[$i]['id'], (array)$parent_array ) ) {
       $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";
@@ -96,8 +97,9 @@ function listTasks($projectid ) {
   //look for any orphaned tasks, and show them too
   if($task_count != $shown_count ) {
     for($i=0 ; $i < $task_count ; ++$i ) {
-      if(! in_array($task_array[$i]['id'], (array)$shown_array, TRUE ) )
+      if(! in_array($task_array[$i]['id'], (array)$shown_array ) ) {
         $content .= $task_array[$i]['task']."</li>\n";
+      }
     }
   } 
   $content .= "</ul>\n";
@@ -125,7 +127,7 @@ function find_children($parent ) {
     ++$shown_count;
             
     //if this task has children (subtasks), iterate recursively to find them
-    if(in_array($task_array[$i]['id'], (array)$parent_array, TRUE ) ) {
+    if(in_array($task_array[$i]['id'], (array)$parent_array ) ) {
       $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";    
@@ -183,8 +185,9 @@ if(! $condensed) {
     
     //check if user can view this task
     if( (! ADMIN ) && ($row[5] != 't' ) && ($row[6] != 0 ) ) {
-      if(! in_array( $row[6], (array)$GID, TRUE ) );
+      if(! in_array( $row[6], (array)$GID ) ) {
         continue;
+      }
     }
   
     //put values into array
@@ -270,16 +273,18 @@ $content .= "</span></td></tr>\n</table>\n";
 $content .= "<table>\n";
 
 //show 'project jump' select box
-if(! isset($action) || $action != 'project_print')
+if(! isset($action) || $action != 'project_print') {
   $content .= "<tr><td class=\"projectlist\" style=\"padding-bottom : 0px\">\n".project_jump(0)."</td></tr>\n";
+}
   
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   //check the user has rights to view this project
   if( (! ADMIN ) && ($row['globalaccess'] != 't' ) && ( $row['usergroupid'] != 0 ) ) {
-    if( ! in_array( $row['usergroupid'], (array)$GID ) )
+    if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
       continue;
+    }
   }
 
   //set project status
@@ -291,20 +296,23 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
     case 'cantcomplete':
     case 'notactive':
     //for 'active_only' skip this project
-      if($active_only )
+      if($active_only ) {
         continue(2);
+      }
       break;
 
     case 'active':
     case 'nolimit':
     case 'done':
     default:
-      if($row['completed'] == 100 )  
+      if($row['completed'] == 100 ) {  
         $project_status = 'done';
+      }
         
       //for 'active_only' skip completed project
-      if($active_only && $project_status == 'done' )
-        continue(2); 
+      if($active_only && $project_status == 'done' ) {
+        continue(2);
+      }
       break;
   }
   
@@ -339,8 +347,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
       $content .= sprintf($lang['percent_sprt'], $row['completed'])."<br />\n";
       $content .= "<i>".$lang['project_no_deadline']."</i><br />\n";
       //show subtasks that are not complete
-      if(! $condensed )
+      if(! $condensed ) {
         $content .= listTasks($row['id'] );
+      }
       break;
 
     case 'active':
@@ -349,13 +358,13 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
       $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )." ";
       $state = ($row['due'] + $tz_offset - $row['now'] )/86400 ;
       if($state > 1 ) {
-        $content .=  "(".sprintf($lang['due_sprt'], ceil($state) ).")\n";
+        $content .=  "(".sprintf($lang['due_sprt'], ceil((real)$state) ).")\n";
       }
       else if($state > 0 ) {
         $content .=  "(".$lang['tomorrow'].")\n";
       }
       else {
-        switch( -ceil($state) ) {
+        switch( -ceil((real)$state) ) {
           case 0:
             $content .=  "<span class=\"green\">(".$lang['due_today'].")</span><br />\n";
             break;
@@ -365,14 +374,15 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
             break;
 
           default:
-            $content .= "<span class=\"red\">(".sprintf($lang['overdue_sprt'], -ceil($state) ).")</span><br />\n";
+            $content .= "<span class=\"red\">(".sprintf($lang['overdue_sprt'], -ceil((real)$state) ).")</span><br />\n";
             break;
         }
       }
       
       //show subtasks that are not complete
-      if(! $condensed )
+      if(! $condensed ) {
         $content .= listTasks($row['id'] );
+      }
       break;
     }
   //end list
@@ -381,9 +391,10 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
 $content .= "</table>\n";
 
-if($flag != 1 )
+if($flag != 1 ) {
   $content .= "<div style=\"text-align : center\">".$lang['no_allowed_projects']."</div>\n";
-
+}
+  
 new_box($lang['projects'], $content );
 
 ?>
