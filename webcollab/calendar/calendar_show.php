@@ -54,27 +54,34 @@ else{
 }
 
 //set usergroup default
-if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) )
+if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) ){
   $groupid = ($_POST['groupid']);
-else
+}  
+else {
   $groupid = 0;
-
-//get calendar navigation offsets
-if(isset($_POST['lastyear']) && strlen($_POST['lastyear']) > 0 )
-  $yearoffset = -1;
-else {
-   if(isset($_POST['nextyear']) && strlen($_POST['nextyear']) > 0 )
-     $yearoffset = +1;
-   else
-     $yearoffset = 0;
 }
-if(isset($_POST['lastmonth']) && strlen($_POST['lastmonth']) > 0 )
-  $monthoffset = -1;
+//get calendar navigation offsets
+if(isset($_POST['lastyear']) && strlen($_POST['lastyear']) > 0 ){
+  $yearoffset = -1;
+}
 else {
-  if(isset($_POST['nextmonth']) && strlen($_POST['nextmonth']) > 0 )
+   if(isset($_POST['nextyear']) && strlen($_POST['nextyear']) > 0 ){
+     $yearoffset = +1;
+   }
+   else {
+     $yearoffset = 0;
+   }
+}
+if(isset($_POST['lastmonth']) && strlen($_POST['lastmonth']) > 0 ){
+  $monthoffset = -1;
+}  
+else {
+  if(isset($_POST['nextmonth']) && strlen($_POST['nextmonth']) > 0 ){
     $monthoffset = +1;
-  else
+  }  
+  else{
     $monthoffset = 0;
+  }
 }
 
 //set dates to match local time 
@@ -82,17 +89,19 @@ else {
 $epoch = time() - date('Z') + (TZ * 3600);  
     
 //set month
-if(isset($_POST['month']) && is_numeric($_POST['month']) )
+if(isset($_POST['month']) && is_numeric($_POST['month']) ){
   $month = $_POST['month'];
-else
+}
+else {
   $month = date('n', $epoch);
-
+}
 //set year
-if(isset($_POST['year']) && is_numeric($_POST['year']) )
+if(isset($_POST['year']) && is_numeric($_POST['year']) ){
   $year = $_POST['year'];
-else
+}
+else{
   $year = date('Y', $epoch);
-
+}
 //Apply any calendar navigation
 $month += $monthoffset;
 
@@ -110,27 +119,31 @@ else {
 $year += $yearoffset;
 
 //set day, if applicable
-if( $month == date('n', $epoch) && $year == date('Y', $epoch) )
+if( $month == date('n', $epoch) && $year == date('Y', $epoch) ){
   $today = date('j', $epoch);
-else
+}
+else {
   $today = 0;
+}
 
 //set selection & associated defaults for the text boxes
 switch($selection ) {
   case 'group':
     $userid = 0; $s1 = ""; $s2 = " selected=\"selected\""; $s3 = " checked=\"checked\""; $s4 = "";
     $tail = "AND usergroupid=$groupid";
-    if($groupid == 0 )
+    if($groupid == 0 ){
       $s4 = " selected=\"selected\"";
+    }
     break;
 
   case 'user':
   default:
     $groupid = 0; $s1 = " checked=\"checked\""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
     $tail = "AND owner=$userid";
-    if($userid == 0 )
+    if($userid == 0 ){
       $tail = "";
       $s2 = " selected=\"selected\"";
+    }
     break;
 }
 
@@ -177,7 +190,7 @@ $content .= "<form method=\"post\" action=\"calendar.php\">\n".
 $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname');
 
 //user input box fields
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //user test for privacy
   if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ) {
@@ -187,9 +200,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   $content .= "<option value=\"".$row['id']."\"";
 
   //highlight current selection
-  if( $row['id'] == $userid )
+  if( $row['id'] == $userid ){
     $content .= " selected=\"selected\"";
-
+  }
   $content .= ">".$row['fullname']."</option>\n";
 }
 
@@ -202,7 +215,7 @@ $content .= "</select></label></td>\n".
 $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
 
 //usergroup input box fields
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //usergroup test for privacy
   if( (! ADMIN ) && ($row['private'] ) && ( ! in_array($row['id'], (array)$GID ) ) ) {
@@ -212,9 +225,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   $content .= "<option value=\"".$row['id']."\"";
 
   //highlight current selection
-  if( $row[ "id" ] == $groupid )
+  if( $row[ "id" ] == $groupid ){
     $content .= " selected=\"selected\"";
-
+  }
   $content .= ">".$row['name']."</option>\n";
 }
 
@@ -228,22 +241,26 @@ $content .= "<div style=\"text-align: center\">\n".
             "<tr><td><input type=\"submit\" name=\"lastyear\" value=\"&lt;&lt;\" /></td>\n".
             "<td><input type=\"submit\" name=\"lastmonth\" value=\"&lt;\" /></td>\n".
             "<td>\n<select name=\"month\">\n";
-for( $i=1; $i<13 ; ++$i) {
+for( $i=1; $i<13 ; ++$i ) {
   $content .= "<option value=\"$i\"";
 
-  if( $month == $i ) $content .= " selected=\"selected\"";
+  if( $month == $i ){ 
+    $content .= " selected=\"selected\"";
+  }
   $content .= ">".$month_array[($i)]."</option>\n";
   }
 $content .=  "</select></td>\n";
 
 //year
 $content .= "<td><select name=\"year\">\n";
-for( $i=2001; $i<2011 ; ++$i) {
+for( $i=2001; $i<2011 ; ++$i ) {
   $content .= "<option value=\"$i\"";
 
-  if( $year == $i ) $content .= " selected=\"selected\"";
-  $content .= ">".$i."</option>\n";
+  if( $year == $i ) {
+    $content .= " selected=\"selected\"";
   }
+  $content .= ">".$i."</option>\n";
+}
 $content .=  "</select></td>\n".
              "<td><input type=\"submit\" name=\"nextmonth\" value=\"&gt;\" /></td>\n".
              "<td><input type=\"submit\" name=\"nextyear\" value=\"&gt;&gt;\" /></td></tr>\n".
@@ -273,8 +290,8 @@ for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); ++$i
 $leadin_length = $i;
 
 //show dates
-for ($num = 1; $num <= $numdays; ++$num ) {
-  if ($i >= 7 ) {
+for($num = 1; $num <= $numdays; ++$num ) {
+  if($i >= 7 ) {
     $content .= "</tr>\n".
                 "<tr align=\"left\" valign=\"top\">\n";
     $i=0;
@@ -282,68 +299,74 @@ for ($num = 1; $num <= $numdays; ++$num ) {
   $content .= "<td class=\"datecell\" ";
 
   //highlight today
-  if($num == $today)
+  if($num == $today) {
     $content .= "style=\"background : #C0C0C0\"";
-
+  }
+  
   $content .= "><span class=\"daynum\">$num</span>";
 
   //check if this date has projects/tasks
   if(in_array($num, (array)$task_dates ) ) {
   
-  //rows exist for this date - get them!
-  $q = db_query('SELECT id, name, parent, status, usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE deadline=\''.$year.'-'.$month.'-'.$num.'\' AND archive=0 '.$tail );
+    //rows exist for this date - get them!
+    $q = db_query('SELECT id, name, parent, status, usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE deadline=\''.$year.'-'.$month.'-'.$num.'\' AND archive=0 '.$tail.' ORDER BY NAME' );
 
-    for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j) {
+      for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
 
-      //check for private usergroups
-      if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
+        //check for private usergroups
+        if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
-        if( ! in_array( $row['usergroupid'], (array)$GID ) )
-          continue;
-      }
-
-      //don't show tasks in private usergroup projects
-      if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project) ) {
-        $key = array_search($row['projectid'], $no_access_project );
-
-        if( ! in_array($no_access_group[$key], (array)$GID ) )
-          continue;
-      }
-
-      switch($row['status'] ) {
-        case 'notactive':
-        case 'cantcomplete':
-        case 'nolimit':
-          //don't show if not active
-          continue 2;
-        break;
-
-        default:
-          //active task or project
-          switch($row['parent'] ) {
-             case '0':
-               //project
-               //check if tasks are all complete
-               if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND status<>\'done\' AND parent>0' ), 0, 0 ) == 0 )
-                 $name = "<span class=\"green\"><span class=\"underline\">".$row['name']."</span>";
-               else
-                 $name = "<span class=\"blue\">".$row['name'];
-               $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
-                           "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
-             break;
-
-             default:
-            //task
-              if($row['status'] == "done" )
-                $name = "<span class=\"green\">".$row['name'];
-              else
-                $name = "<span class=\"red\">".$row['name'];
-
-              $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
-                          "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
-            break;
+          if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
+            continue;
           }
-        break;
+        }
+
+        //don't show tasks in private usergroup projects
+        if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project) ) {
+          $key = array_search($row['projectid'], $no_access_project );
+
+          if( ! in_array($no_access_group[$key], (array)$GID ) ) {
+            continue;
+          }
+        }
+
+        switch($row['status'] ) {
+          case 'notactive':
+          case 'cantcomplete':
+          case 'nolimit':
+            //don't show if not active
+            continue 2;
+            break;
+
+          default:
+            //active task or project
+            switch($row['parent'] ) {
+              case '0':
+                //project
+                //check if tasks are all complete
+                if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND status<>\'done\' AND parent>0' ), 0, 0 ) == 0 ){
+                  $name = "<span class=\"green\"><span class=\"underline\">".$row['name']."</span>";
+                }
+                else {
+                  $name = "<span class=\"blue\">".$row['name'];
+                }
+                $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
+                           "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
+                break;
+
+              default:
+                //task
+                if($row['status'] == "done" ) {
+                  $name = "<span class=\"green\">".$row['name'];
+                }
+                else {
+                  $name = "<span class=\"red\">".$row['name'];
+                }
+                $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
+                          "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
+                break;
+            }
+          break;
       }
     }
   }
