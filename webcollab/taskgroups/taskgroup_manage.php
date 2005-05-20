@@ -31,9 +31,9 @@ require_once('path.php' );
 require_once(BASE.'includes/security.php' );
 
 //admins only
-if( ! ADMIN )
+if( ! ADMIN ){
   error('Unauthorised access', 'This function is for admins only.' );
-
+}
 //get the info
 $q = db_query('SELECT * FROM '.PRE.'taskgroups ORDER BY name' );
 
@@ -51,7 +51,7 @@ $content =
               "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th><th>".$lang['action']."</th></tr>\n";
 
 //show all taskgroups
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<tr><td>".$row['name']."</td><td>".$row['description']." </td>".
               "<td><span class=\"textlink\"><a href=\"taskgroups.php?x=$x&amp;action=submit_del&amp;taskgroupid=".$row['id']."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">[".$lang['del']."]</a></span>&nbsp;".
               "<span class=\"textlink\"><a href=\"taskgroups.php?x=$x&amp;action=edit&amp;taskgroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td></tr>";

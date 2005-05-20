@@ -30,8 +30,9 @@
 require_once('path.php' );
 require_once(BASE.'includes/security.php' );
 
-if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) )
+if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) ) {
   error('Task details', 'The taskid input is not valid' ); 
+}
 
 $taskid = intval($_REQUEST['taskid']);
 
@@ -39,12 +40,13 @@ $taskid = intval($_REQUEST['taskid']);
 $q = @db_query('SELECT * FROM '.PRE.'tasks WHERE id='.$taskid );
 
 //get the data
-if( ! $TASKID_ROW = @db_fetch_array($q, 0) )
+if( ! $TASKID_ROW = @db_fetch_array($q, 0) ) {
   error('Task details', 'The requested item has either been deleted, or is now invalid.');
-
+}
 $TYPE = 'task';
-if($TASKID_ROW['parent'] == 0 )
+if($TASKID_ROW['parent'] == 0 ){
   $TYPE = 'project';
+}
 
 //free memory  
 db_free_result($q );  

@@ -35,9 +35,9 @@ include_once(BASE.'includes/time.php' );
 
 $content = '';
 
-if(! ADMIN )
+if(! ADMIN ){
   error('Access denied', 'This feature is only for admins' );
-
+}
 
 //get the files from this task
 $q = db_query('SELECT '.PRE.'files.id AS id,
@@ -78,9 +78,9 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
               "<tr><td>".$lang['uploader']." </td><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'], 1 ).")</td></tr>\n";
 
   //show description
-  if( $row['description'] != '' )
+  if( $row['description'] != '' ) {
     $content .= "<tr><td>".$lang['description'].":</td><td><small><i>".$row['description']."</i></small></td></tr>\n";
-
+  }
   //blank line to end
   $content .= "<tr><td>&nbsp;</td></tr>\n";    
     

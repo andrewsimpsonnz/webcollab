@@ -28,14 +28,16 @@
 require_once('includes/security.php' );
 include_once('includes/screen.php' );
 
-if(! ADMIN )
+if(! ADMIN ){
   return;
+}
 
 //
 // The action handler
 //
-if( ! isset($_REQUEST['action'] ) || strlen($_REQUEST['action'] ) == 0  )
+if( ! isset($_REQUEST['action'] ) ) {
   error('Admin action handler', 'No request given' );
+}
 
 switch ($_REQUEST['action'] ) {
 

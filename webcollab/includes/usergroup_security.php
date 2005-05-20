@@ -35,23 +35,27 @@ function usergroup_check($taskid ) {
   global $GID, $lang;
 
   //admins can go free, the rest are checked
-  if(ADMIN )
+  if(ADMIN ) {
     return $taskid;
+  }
   
   //get the tasks' security info
-  if( ! ($q = db_query('SELECT usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE id='.$taskid ) ) )
+  if( ! ($q = db_query('SELECT usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE id='.$taskid ) ) ) {
     error('Usergroup security', 'There was an error in the data query.' );
+  }
   
   //get the data
-  if( ! ($row = db_fetch_num($q, 0 ) ) )
+  if( ! ($row = db_fetch_num($q, 0 ) ) ) {
     error('Usergroup security', 'There was an error in fetching the permission data.' );
+  }
   
   //check usergroup rights
   if( ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
   
     //check if the user has a matching group
-    if(! in_array($row[0], (array)$GID, TRUE ) )
+    if(! in_array($row[0], (array)$GID ) ) {
       warning($lang['access_denied'], $lang['private_usergroup'] );
+    }
   }
   
   //if this is a task, then get project data  
@@ -63,8 +67,9 @@ function usergroup_check($taskid ) {
     if(($row[0] != 0 ) && ($row[1] == 'f' ) ) {
   
       //check if the user has a matching group
-      if(! in_array($row[0], (array)$GID ) )
+      if(! in_array($row[0], (array)$GID ) ) {
         warning($lang['access_denied'], $lang['private_usergroup'] );
+      }
     }
   }
   return $taskid;

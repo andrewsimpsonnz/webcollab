@@ -37,8 +37,9 @@ $menu_type = 'project';
 $taskid    = -1;
 
 //guests shouldn't get here
-if(GUEST )
+if(GUEST ){
   return;  
+}
 
 //get taskid (if any)
 if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ){
@@ -64,8 +65,9 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ){
     }
     $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=$taskid\">".$lang['add_task']."</a><br />\n";
   
-    if(ADMIN )
+    if(ADMIN ){
       $clone = "<a href=\"tasks.php?x=$x&amp;action=clone&amp;taskid=$taskid\">".$lang["clone_$TYPE"]."</a><br />\n";
+    }
   }
 }
 

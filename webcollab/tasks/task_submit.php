@@ -74,31 +74,32 @@ function user_access($taskid ) {
   global $GID;
   
   //guest has no access rights
-  if(GUEST )
-    return FALSE;
-    
+  if(GUEST ){
+    return false;
+  } 
   //admin always has rights
-  if(ADMIN )
-    return TRUE;  
-
+  if(ADMIN ) {
+    return true;  
+  }
   $q = db_query('SELECT owner, usergroupid, groupaccess FROM '.PRE.'tasks WHERE id='.$taskid );
   $row = db_fetch_num($q, 0 );
 
   //user is owner
-  if($row[0] == UID )
-    return TRUE;
-
+  if($row[0] == UID ) {
+    return true;
+  }
   //no usergroup set
-  if($row[1] == 0 )
-    return FALSE;
-
+  if($row[1] == 0 ) {
+    return false;
+  }
   //if groupaccess is set, check user is in usergroup
   if($row[2] == 't' ) {
-    if(in_array($row[1], (array)$GID ) )
-      return TRUE;
+    if(in_array($row[1], (array)$GID ) ) {
+      return true;
+    }
   }
   //no access for this user
-  return FALSE;
+  return false;
 }
 
 //

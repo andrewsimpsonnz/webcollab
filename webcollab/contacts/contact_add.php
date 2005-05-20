@@ -31,8 +31,9 @@
 require_once('path.php' );
 require_once( BASE.'includes/security.php' );
 
-if(GUEST )
+if(GUEST ){
   error('Contact add', 'Guest not authorised' );
+}
 
 $content =
         "<form method=\"post\" action=\"contacts.php\">\n".
@@ -56,5 +57,7 @@ $content =
           "</form>\n";
 
 new_box( $lang['contact_info'], $content );
+
+new_box($lang['info'], $lang['contact_add_info'] );
 
 ?>

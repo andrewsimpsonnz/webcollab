@@ -38,12 +38,14 @@ include_once(BASE.'tasks/task_common.php' );
 include_once(BASE.'tasks/task_submit.php' );
 
 //deny guest users
-if(GUEST )
+if(GUEST ) {
  warning($lang['access_denied'], $lang['not_owner'] );  
+}
 
 //check task name is present
-if(empty($_POST['name']) )
+if(empty($_POST['name']) ){
   warning($lang['task_submit'], $lang['missing_values'] );
+}
 $name = safe_data($_POST['name']);
 
 //mandatory numeric inputs
@@ -56,8 +58,9 @@ foreach($input_array as $var ) {
 }
 
 //mandatory text inputs
-if(empty($_POST['status']) )
+if(empty($_POST['status']) ){
   error( 'Task submit', 'Variable status is not correctly set' );
+}
 $status = status_check(safe_data($_POST['status']) );
 
 //optional text input (can be multiple lines)
@@ -69,20 +72,23 @@ $deadline = date_to_datetime($day, $month, $year );
 //boolean for globalaccess, groupaccess
 $input_array = array('globalaccess', 'groupaccess' );
 foreach($input_array as $var ) {
-if(isset($_POST[$var]) && $_POST[$var] == 'on' )
-  ${$var} = 't';
-else
-  ${$var} = 'f';
+  if(isset($_POST[$var]) && $_POST[$var] == 'on' ) {
+    ${$var} = 't';
+  }
+  else {
+    ${$var} = 'f';
+  }
 }
 
 //carry out some data consistency checking
 if( $parentid != 0 ) {
 
-  if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$parentid ), 0, 0 ) < 1 )
+  if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$parentid ), 0, 0 ) < 1 ) {
     error('Database integrity check', 'Input data does not match - no parent for task' );
-
-  if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 ) < 1 )
+  }
+  if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 ) < 1 ) {
     error('Database integrity check', 'Input data does not match - no project for task' );
+  }
 }
 //start transaction
 db_begin();
@@ -129,7 +135,7 @@ $q = db_query("INSERT INTO ".PRE."tasks(name,
 $taskid = db_lastoid('tasks_id_seq' );
 
 //for a new project set the projectid variable reset correctly
-if($parentid == 0 || $projectid == 0 )  {
+if($parentid == 0 || $projectid == 0 ) {
   db_query('UPDATE '.PRE.'tasks SET projectid='.$taskid.' WHERE id='.$taskid );
   $projectid = $taskid;
 }
@@ -139,8 +145,9 @@ $project_status = $status;
 if($parentid != 0 ) {
   $project_status = db_result(db_query('SELECT status FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 );
 
-  if($project_status == 'cantcomplete' || $project_status == 'notactive' )
+  if($project_status == 'cantcomplete' || $project_status == 'notactive' ){
     db_query('UPDATE '.PRE.'tasks SET status=\''.$project_status.'\' WHERE id='.$taskid );
+  }
 }
 
 //you have already seen this item, no need to announce it to you
@@ -178,10 +185,12 @@ switch($parentid){
     $title1 = $title_new_owner_task;
     $title2 = $title_new_group_task;
     //get rid of magic_quotes - it is not required here
-    if(get_magic_quotes_gpc() )
+    if(get_magic_quotes_gpc() ) {
       $name_task = stripslashes($name );
-    else
+    }
+    else {
       $name_task = $name;
+    }
     break;
 }
 
@@ -200,8 +209,9 @@ switch($owner ) {
 }
     
 //get rid of magic_quotes - it is not required here
-if(get_magic_quotes_gpc() )
+if(get_magic_quotes_gpc() ){
   $text = stripslashes($text );
+}
 
 //email owner ?
 if(isset($_POST['mailowner']) && ($_POST['mailowner'] == 'on') && ($owner != 0) ) {
@@ -234,12 +244,12 @@ if(isset($_POST['maillist']) && $_POST['maillist'] == 'on' ) {
     }
   }
   
-  if(isset($usergroup_mail) ) { 
+  if(isset($usergroup_mail) ) {
     
     //get & add the mailing list
-    if(isset($EMAIL_MAILINGLIST ) )
+    if(isset($EMAIL_MAILINGLIST ) ){
       $usergroup_mail = array_merge((array)$usergroup_mail, (array)$EMAIL_MAILINGLIST );
-      
+    }
     email($usergroup_mail, sprintf($title2, $name), $message );
   }
 }

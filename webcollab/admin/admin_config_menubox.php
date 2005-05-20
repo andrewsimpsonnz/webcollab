@@ -33,9 +33,9 @@ require_once(BASE.'includes/security.php' );
 $content = '';
 
 //admin only
-if( ! ADMIN )
+if( ! ADMIN ){
   return;
-
+}
 
 $content .= "<a href=\"admin.php?x=$x&amp;action=admin\">".$lang['admin_config']."</a><br />\n";
 

@@ -50,21 +50,23 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //check if user can view this task
   if( (! ADMIN ) && ($row['globalaccess'] != 't' ) && ($row['usergroupid'] != 0 ) ) {
-    if( ! in_array( $row['usergroupid'], (array)$GID ) )
-        continue;
+    if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
+      continue;
+    }
   }
   
   //date of latest post
-  if(! isset($lastpost) )
+  if(! isset($lastpost) ) {
     $lastpost = $row['recentpost'];
-  
+  }
   //show it
   $list .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['taskid']."\">".substr($row['taskname'], 0, 25 )."</a><br />\n";
   ++$j;
   
   //show max of 10 posts
-  if($j > 10 )
+  if($j > 10 ){
     break;
+  }
 }
 
 db_free_result($q );

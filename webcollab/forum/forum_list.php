@@ -35,9 +35,9 @@ include_once(BASE.'includes/usergroup_security.php' );
 
 
 //check the taskid is valid
-if( ! (isset($_GET['taskid']) && is_numeric($_GET['taskid']) ) )
+if( ! (isset($_GET['taskid']) && is_numeric($_GET['taskid']) ) ){
   error('Forum list', 'Not a valid taskid' );
-
+}
 $taskid = intval($_GET['taskid']);
 
 //check usergroup security  
@@ -69,8 +69,9 @@ function list_posts_from_task( $taskid, $usergroupid ) {
                         ORDER BY '.PRE.'forum.posted' );
 
   //check for any posts
-  if(db_numrows($q ) < 1 )
+  if(db_numrows($q ) < 1 ){
     return;
+  }
 
   $content = "<ul>\n";  
     
@@ -81,11 +82,12 @@ function list_posts_from_task( $taskid, $usergroupid ) {
     $post_array[$i]['parent'] = $row['parent'];
   
     //name of poster (NULL if poster's id has been deleted)
-    if($row['fullname'] == NULL )
+    if($row['fullname'] == NULL ) {
       $this_post = "<li><small>----";
-    else
+    }
+    else {
       $this_post = "<li><small><a href=\"users.php?x=$x&amp;action=show&amp;userid={$row['userid']}\">{$row['fullname']}</a>";
-                  
+    }              
     $this_post .= "&nbsp;(".nicetime( $row['posted'], 1 ).")</small>";
                      
     //add reply button
@@ -93,9 +95,9 @@ function list_posts_from_task( $taskid, $usergroupid ) {
       $this_post .= "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid={$row['id']}&amp;taskid=$taskid";
 
       //if this is a post to a private forum then announce it to the poster-engine
-      if($usergroupid != 0 )
+      if($usergroupid != 0 ) {
         $this_post .= "&amp;usergroupid=$usergroupid";
-
+      }
       $this_post .= "\">".$lang['reply']."</a>]</span>\n";
     }
 
@@ -175,11 +177,13 @@ if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) )
 
   //get all posts
   $content .= list_posts_from_task( $taskid, 0 );
-  if($ul_flag == 1 )
+  if($ul_flag == 1 ){
     $content .= "<br />\n";
+  }
   //add an option to add posts
-  if($TASKID_ROW['archive'] == 0 )
+  if($TASKID_ROW['archive'] == 0 ) {
     $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">{$lang['new_post']}</a>]</span>";
+  }
   //show it
   new_box($lang['public_user_forum'], $content, 'boxdata2' );
 }
@@ -198,11 +202,13 @@ if($TASKID_ROW['usergroupid'] != 0 ) {
   if(in_array($TASKID_ROW['usergroupid'], (array)$GID ) || ADMIN ) {
 
     $content .= list_posts_from_task( $taskid, $TASKID_ROW['usergroupid'] );
-    if($ul_flag == 1 )
+    if($ul_flag == 1 ){
       $content .= "<br />\n";
+    }
     //add an option to add posts
-    if($TASKID_ROW['archive'] == 0 )
+    if($TASKID_ROW['archive'] == 0 ){
       $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid={$TASKID_ROW['usergroupid']}&amp;\">{$lang['new_post']}</a>]</span>";
+    }
     //get usergroup
     $usergroup_name = db_result(db_query("SELECT name FROM ".PRE."usergroups WHERE id={$TASKID_ROW['usergroupid']}" ), 0, 0 );
     //show it

@@ -43,13 +43,15 @@ function percent_complete($taskid ) {
     
     ++$total_tasks;
       
-    if($row[0] == 'done')
+    if($row[0] == 'done'){
       ++$tasks_completed;
     }
+  }
   
   //project with no tasks is complete
-  if($total_tasks == 0 )
+  if($total_tasks == 0 ){
     return 0;
+  }
   
   return round(($tasks_completed / ($total_tasks ) ) * 100 );  
 }
@@ -59,12 +61,12 @@ function percent_complete($taskid ) {
 //
 function show_percent($percent=0 ) {
   
-  if($percent == 0 )
+  if($percent == 0 ){
     return "<table width=\"400px\"><tr><td style=\"width : 400px\" class=\"redbar\"></td></tr></table>\n";
-
-  if($percent == 100 )
+  }
+  if($percent == 100 ){
     return "<table width=\"400px\"><tr><td style=\"width : 400px\" class=\"redbar\"></td></tr></table>\n";
-      
+  }    
   return "<table width=\"400px\"><tr><td style=\"width\" :".($percent * (400/100))."px class=\"greenbar\">".
            "</td><td style=\"width :".(400-($percent*(400/100)))."px\" class=\"redbar\"></td></tr></table>\n"; 
       
@@ -101,12 +103,13 @@ function project_jump($taskid=0) {
                 "<option value=\"-1\">".$lang['quick_jump']."</option>\n";
   
     // loop through the data
-    for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i){
+    for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ){
     
       //check if user can view this project
       if( (! ADMIN ) && ($row['globalaccess'] != 't' ) && ($row['usergroupid'] != 0 ) ) {
-        if( ! in_array( $row['usergroupid'], (array)$GID ) )
+        if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
           continue;
+        }
       }
           
       $content .= "<option value=\"".$row["id"]."\"";

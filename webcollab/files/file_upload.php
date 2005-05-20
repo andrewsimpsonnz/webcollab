@@ -35,18 +35,18 @@ include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/usergroup_security.php' );
 
 //check if file uploads are allowed in php.ini file
-if( ! (bool)ini_get('file_uploads' ) )
+if( ! (bool)ini_get('file_uploads' ) ){
   warning($lang['error'], $lang['no_file_uploads'] );
-
-if(empty($_GET['taskid']) || ! is_numeric($_GET['taskid']) )
+}
+if(empty($_GET['taskid']) || ! is_numeric($_GET['taskid']) ){
   error('File upload', 'Not a valid taskid');
-
+}
 $taskid = $_GET['taskid'];
 
 //deny guest users
-if(GUEST )
+if(GUEST ){
  warning($lang['access_denied'], $lang['not_owner'] );  
-
+}
 //check usergroup security
 $taskid = usergroup_check($taskid );
 

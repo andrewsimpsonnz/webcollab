@@ -61,8 +61,9 @@ db_free_result($q );
 $content .= "<br />\n";
 
 //the add button
-if(! GUEST )
+if(! GUEST ){
   $content .= "<span class=\"textlink\">[<a href=\"contacts.php?x=$x&amp;action=add\">".$lang['add_contact']."</a>]</span>\n";
+}
 
 //show the box
 new_box($lang['contacts'], $content, 'boxmenu' );

@@ -32,8 +32,9 @@ require_once(BASE.'includes/security.php' );
 include_once('lang/lang_long.php' );
 
 //admins only
-if(! ADMIN )
+if(! ADMIN ){
   error('Unauthorised access', 'This function is for admins only.' );
+}
 
 $content = $user_info.
            "<div style=\"text-align:center\"><span class=\"textlink\">".

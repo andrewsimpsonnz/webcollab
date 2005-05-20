@@ -59,37 +59,39 @@ function user_access($owner, $usergroupid, $groupaccess ) {
 
   global $GID, $TASKID_ROW;
 
-  if(ADMIN )  
-    return TRUE;
-    
-  if(GUEST )
-    return FALSE;   
-
-  if($owner == UID )
-    return TRUE;
-
-  if($usergroupid == 0 )
-    return FALSE;
-
-  if( $groupaccess == 't' ) {
-    if(in_array($usergroupid, (array)$GID ) )
-      return TRUE;
+  if(ADMIN ){  
+    return true;
+  }  
+  if(GUEST ){
+    return false;   
   }
-  return FALSE;
+  if($owner == UID ){
+    return true;
+  }
+  if($usergroupid == 0 ) {
+    return false;
+  }
+  if( $groupaccess == 't' ) {
+    if(in_array($usergroupid, (array)$GID ) ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 //set variable
 $content = '';
 
-if(empty($_GET['taskid']) || ! is_numeric($_GET['taskid']) )
-  error('Task edit', 'The taskid input is not valid' ); 
+if(empty($_GET['taskid']) || ! is_numeric($_GET['taskid']) ){
+  error('Task edit', 'The taskid input is not valid' );
+}
 
 $taskid = intval($_GET['taskid']);
 
 //can this user edit this task ?
-if( ! user_access($TASKID_ROW['owner'], $TASKID_ROW['usergroupid'], $TASKID_ROW['groupaccess'] ) )
+if( ! user_access($TASKID_ROW['owner'], $TASKID_ROW['usergroupid'], $TASKID_ROW['groupaccess'] ) ) {
   warning($lang['access_denied'], $lang['no_edit'] );
-  
+}  
   
 //get project details - if any
 $q = db_query('SELECT name, '.$epoch.'deadline) AS deadline FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] );
@@ -128,29 +130,32 @@ $content .= "<tr><td>".$lang['parent_task'].":</td><td><select name=\"parentid\"
 $parentq = db_query('SELECT id, name, usergroupid, globalaccess FROM '.PRE.'tasks WHERE id<>'.$taskid.' AND archive=0 ORDER BY name');
 $content .= "<option value=\"0\"";
 
-if($TASKID_ROW['parent'] == 0 )
+if($TASKID_ROW['parent'] == 0 ){
   $content .= " selected=\"selected\"";
+}
 $content .= ">".$lang['no_reparent']."</option>\n";
 
 for( $i=0; $parent_row = @db_fetch_array($parentq, $i ); ++$i) {
   //check for private usergroups
   if( (! ADMIN ) && ($parent_row['usergroupid'] != 0 ) && ($parent_row['globalaccess'] == 'f' ) ) {
 
-  if( ! in_array($parent_row['usergroupid'], (array)$GID ) )
-    continue;
+    if( ! in_array($parent_row['usergroupid'], (array)$GID ) ) {
+      continue;
+    }
   }
 
   $content .= "<option value=\"".$parent_row['id']."\"";
-  if($TASKID_ROW['parent'] == $parent_row['id'] )
+  if($TASKID_ROW['parent'] == $parent_row['id'] ) {
     $content .= " selected=\"selected\"";
-  $content .= ">".$parent_row['name']."</option>\n";
   }
+  $content .= ">".$parent_row['name']."</option>\n";
+}
 $content .="</select></td></tr>\n";
 
 //show task (if applicable)
-if($TASKID_ROW['parent'] != 0 )
+if($TASKID_ROW['parent'] != 0 ){
   $content .= "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" value=\"".html_escape($TASKID_ROW['name'])."\" /></td></tr>\n";
-
+}
 //deadline
 $content .= "<tr><td>".$lang['deadline'].":</td><td>".date_select_from_timestamp($TASKID_ROW['deadline'])."</td></tr>\n";
 
@@ -268,9 +273,9 @@ for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; ++$i) {
     
   $content .= "<option value=\"".$user_row['id']."\"";
 
-  if( $TASKID_ROW['owner'] == $user_row['id'] )
+  if( $TASKID_ROW['owner'] == $user_row['id'] ){
     $content .= " selected=\"selected\"";
-
+  }
   $content .= ">".$user_row['fullname']."</option>\n";
 }
 
@@ -289,9 +294,10 @@ if($TASKID_ROW['parent'] != 0 ){
 
     $content .= "<option value=\"".$user_row['id']."\"";
 
-    if($TASKID_ROW['taskgroupid'] == $user_row['id'] )
+    if($TASKID_ROW['taskgroupid'] == $user_row['id'] ) {
       $content .= " selected=\"selected\"";
-
+    }
+    
     $content .= ">".$user_row['name']."</option>\n";
 
   }
@@ -312,10 +318,12 @@ for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; ++$i ) {
 
   $content .= "<option value=\"".$usergroup_row['id']."\"";
 
-    if( $TASKID_ROW['usergroupid'] == $usergroup_row['id'] )
+    if( $TASKID_ROW['usergroupid'] == $usergroup_row['id'] ) {
       $content .= " selected=\"selected\" >\n";
-    else
+    }
+    else {
       $content .= ">\n";
+    }
 
     $content .= $usergroup_row['name']."</option>\n";
 
@@ -323,12 +331,14 @@ for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; ++$i ) {
 $content .= "</select></td></tr>\n";
 
 $global = "";
-if($TASKID_ROW['globalaccess'] == 't' )
+if($TASKID_ROW['globalaccess'] == 't' ) {
   $global = "checked=\"checked\"";
+}
 
 $group = "";
-if($TASKID_ROW['groupaccess'] == 't' )
+if($TASKID_ROW['groupaccess'] == 't' ) {
   $group = "checked=\"checked\"";
+}
 
 $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help'); return false\">".$lang['all_users_view']."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" $global /></td></tr>\n".
              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" $group /></td></tr>\n".

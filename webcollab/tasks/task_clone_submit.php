@@ -32,9 +32,10 @@ require_once(BASE.'includes/security.php' );
 include_once(BASE.'tasks/task_common.php' );
 
 //admins only
-if(! ADMIN )
+if(! ADMIN ) {
   error('Unauthorised access', 'This function is for admins only' );
-
+}
+  
 //
 // Recursive function to create new project structure
 //
@@ -62,8 +63,9 @@ function add($taskid, $new_parent, $new_name ) {
     $new_taskid = copy_across($taskid, 0, $new_name );
 
     //recursive function if the subtask is listed in parent_array (it has children then)
-    if(in_array($taskid, (array)$parent_array ) )
+    if(in_array($taskid, (array)$parent_array ) ) {
       add($taskid, $new_taskid, NULL );
+    }
   }
 
   return $new_taskid;
@@ -134,9 +136,10 @@ function copy_across($taskid, $new_parent, $name ) {
     $new_taskid = db_lastoid('tasks_id_seq' );
 
     //for a new project set the projectid variable reset correctly
-    if($new_parent == 0 )
+    if($new_parent == 0 ) {
       db_query('UPDATE '.PRE.'tasks SET projectid='.$new_taskid.' WHERE id='.$new_taskid );
-
+    }
+    
     //you have already seen this item, no need to announce it to you
     db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES('.UID.', '.$new_taskid.', now() )');
 
@@ -149,14 +152,16 @@ function copy_across($taskid, $new_parent, $name ) {
 //
 $parent_array = NULL;
 
-if(empty($_POST['taskid']) || ! is_numeric($_POST['taskid'] ) )
+if(empty($_POST['taskid']) || ! is_numeric($_POST['taskid'] ) ) {
   error('Project clone', 'Not a valid value for taskid');
+}
 
 $taskid = intval($_POST['taskid']);
 
-if(empty($_POST['name']) )
+if(empty($_POST['name']) ) {
   warning('Project clone', 'Project name is not set' );
-
+}
+  
 $name = safe_data($_POST['name']);
 
 //start transaction

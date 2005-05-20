@@ -47,8 +47,9 @@ function listTasks($projectid ) {
   //search for uncompleted tasks by projectid
   $task_key = array_keys((array)$task_projectid, $projectid );
   
-  if(sizeof($task_key) < 1 )
+  if(sizeof($task_key) < 1 ){
     return;
+  }
   
   //cycle through relevant tasks
   foreach((array)$task_key as $key ) {  
@@ -92,8 +93,9 @@ function listTasks($projectid ) {
   //look for any orphaned tasks, and show them too
   if($task_count != $shown_count ) {
     for($i=0 ; $i < $task_count ; ++$i ) {
-      if( ! in_array($task_array[$i]['id'], (array)$shown_array ) ) 
+      if( ! in_array($task_array[$i]['id'], (array)$shown_array ) ) {
         $content .= $task_array[$i]['task']."</li>\n";
+      }
     }
   }
   $content .= "</ul>\n";  
@@ -159,26 +161,31 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 }
 
 //check validity of inputs
-if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 )
+if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 ) {
   $selection = ($_POST['selection']);
-else
+}
+else {
   $selection = 'user';
+}
 
 if(isset($_POST['userid']) && is_numeric($_POST['userid']) ){
   $userid = intval($_POST['userid']);
 }
-else{
-  
-  if(! GUEST )
+else {
+  if(! GUEST ){
     $userid = UID;
-  else
+  }
+  else {
     $userid = 0;
+  }
 }
 
-if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) )
+if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) ) {
   $groupid = intval($_POST['groupid']);
-else
+}
+else {
   $groupid = 0;
+}
 
 // check if there are projects
 if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent=0' ), 0, 0 ) < 1 ) {
@@ -192,16 +199,18 @@ switch($selection ) {
   case 'group':
     $userid = 0; $s1 = ""; $s2 = " selected=\"selected\""; $s3 = " checked=\"checked\""; $s4 = "";
     $tail = "AND usergroupid=$groupid";
-    if($groupid == 0 )
+    if($groupid == 0 ){
       $s4 = " selected=\"selected\"";
+    }
     break;
 
   case 'user':
   default:
     $groupid = 0; $s1 = " checked=\"checked\""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
     $tail = "AND owner=$userid";
-    if($userid == 0 )
+    if($userid == 0 ){
       $s2 = " selected=\"selected\"";
+    }
     break;
 }
 
@@ -228,9 +237,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   $content .= "<option value=\"".$row['id']."\"";
 
   //highlight current selection
-  if( $row['id'] == $userid )
+  if( $row['id'] == $userid ){
     $content .= " selected=\"selected\"";
-
+  }
   $content .= ">".$row['fullname']."</option>\n";
 }
 
@@ -253,9 +262,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   $content .= "<option value=\"".$row['id']."\"";
 
   //highlight current selection
-  if( $row['id'] == $groupid )
+  if( $row['id'] == $groupid ){
     $content .= " selected=\"selected\"";
-
+  }
   $content .= ">".$row['name']."</option>\n";
 }
 
@@ -279,8 +288,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //check for private usergroups
   if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] != 't' ) ) {
-    if( ! in_array( $row['usergroupid'], (array)$GID ) )
+    if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
       continue;
+    }
   }
   
   //put values into array
@@ -290,7 +300,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $this_task = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
   
   //add highlighting if deadline is due
-  $state = ceil( ($row['task_due'] + $tz_offset - $row['now'] )/86400 );
+  $state = ceil((real)($row['task_due'] + $tz_offset - $row['now'] )/86400 );
   
   if($state > 1) {
     $this_task .= $row['name']."</a>".sprintf($lang['due_in_sprt'], $state );
@@ -320,8 +330,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
    //check for private usergroups
    if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
-     if( ! in_array( $row['usergroupid'], (array)$GID ) )
+     if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
        continue;
+     }
    }
 
   $new_content = listTasks($row['id'], $tail );
@@ -334,8 +345,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 }
 
-if( $flag != 1 )
+if( $flag != 1 ) {
   $content .= $lang['no_assigned']."\n";
+}
 
 new_box( $lang['todo_list'], $content );
 

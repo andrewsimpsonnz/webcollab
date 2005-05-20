@@ -32,8 +32,9 @@ require_once('path.php' );
 require_once( BASE.'includes/security.php' );
 
 //admins only
-if(! ADMIN )
+if(! ADMIN ){
   error('Unauthorised access', 'This function is for admins only' );
+}
 
 //secure values
 $content = '';

@@ -111,9 +111,9 @@ function delete_messages($postid ) {
   return;
 }
 
-if( ! isset($_REQUEST['action']) )
+if( ! isset($_REQUEST['action']) ){
   error('Forum submit', 'No request given' );
-
+}
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
@@ -122,13 +122,14 @@ ignore_user_abort(TRUE);
     case 'submit_add':
 
       //if all values are filled in correctly we can submit the forum-item
-      if(empty($_POST['text'] ) )
+      if(empty($_POST['text'] ) ) {
         warning($lang['forum_submit'], $lang['no_message'] );
-             
+      }       
       $input_array = array('parentid', 'taskid', 'usergroupid');
       foreach($input_array as $var ) {   
-        if(! isset($_POST[$var]) || ! is_numeric($_POST[$var]) )
+        if(! isset($_POST[$var]) || ! is_numeric($_POST[$var]) ){
           error('Forum submit', "Variable $var is not set" );
+        }
         ${$var} = intval($_POST[$var]);
       }
       
@@ -138,20 +139,25 @@ ignore_user_abort(TRUE);
       $text = html_links($text, 1 );
       $text = nl2br($text );
 
-      if(isset($_POST['mail_owner'] ) && ($_POST['mail_owner'] == 'on' ) )
+      if(isset($_POST['mail_owner'] ) && ($_POST['mail_owner'] == 'on' ) ) {
         $mail_owner = true;
-      else
+      }
+      else {
         $mail_owner = '';
+      }
 
-      if(isset($_POST['mail_group'] ) && ($_POST['mail_group'] == 'on' ) )
+      if(isset($_POST['mail_group'] ) && ($_POST['mail_group'] == 'on' ) ) {
         $mail_group = true;
-      else
+      }
+      else {
         $mail_group = '';
+      }
 
       //do data consistency check on parentid
       if($parentid != 0 ) {
-        if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'forum WHERE id='.$parentid ), 0, 0 ) == 0 )
+        if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'forum WHERE id='.$parentid ), 0, 0 ) == 0 ){
           error('Forum submit', 'Data consistency error - child post has no parent' );
+        }
       }
 
       //check usergroup security
@@ -169,9 +175,10 @@ ignore_user_abort(TRUE);
         default:
           //private post
           //check if the user does belong to that group
-          if((! ADMIN ) && ( ! in_array($usergroupid, (array)$GID ) ) )
+          if((! ADMIN ) && ( ! in_array($usergroupid, (array)$GID ) ) ) {
             error('Forum submit', 'You do not have enough rights to post in that forum' );
-
+          }
+          
           db_begin();
           db_query ('INSERT INTO '.PRE.'forum(parent, taskid, posted, text, userid, usergroupid)
                                             VALUES ('.$parentid.', '.$taskid.', now(), \''.$text.'\', '.UID.', '.$usergroupid.')' );
@@ -217,12 +224,13 @@ ignore_user_abort(TRUE);
         $message = $_POST['text'];
           
         //get rid of magic_quotes - it is not required here
-        if(get_magic_quotes_gpc() )
+        if(get_magic_quotes_gpc() ){
           $message = stripslashes($message );  
-          
+        }  
         //get & add the mailing list
-        if(isset($EMAIL_MAILINGLIST ) )
+        if(isset($EMAIL_MAILINGLIST ) ){
           $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
+        }
         
         switch($parentid ) {
           case 0:
@@ -240,8 +248,9 @@ ignore_user_abort(TRUE);
 
             $row = db_fetch_array($q, 0 );
 
-            if($row['username'] == NULL )
+            if($row['username'] == NULL ){
               $row['username'] = "----";
+            }
               
             //remove any HTML linebreaks that nl2br() has put into the text...
             $original_message =  str_replace("<br />", "", $row['text'] );
@@ -254,8 +263,9 @@ ignore_user_abort(TRUE);
 
     //owner of the thread can delete, admin can delete
     case 'submit_del':
-      if(empty($_GET['postid']) || ! is_numeric($_GET['postid']) )
+      if(empty($_GET['postid']) || ! is_numeric($_GET['postid']) ) {
         error('Forum submit', 'Postid not valid' );
+      }
       $postid = intval($_GET['postid'] );
 
       switch(ADMIN ) {

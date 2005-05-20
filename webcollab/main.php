@@ -36,8 +36,9 @@ create_top();
 
   include('includes/mainmenu.php' );
   include('forum/forum_menubox.php' );
-  if(! GUEST)
+  if(! GUEST){
     include('tasks/task_menubox.php' );
+  }
   include('users/user_menubox.php' );
 
   if(ADMIN ) {

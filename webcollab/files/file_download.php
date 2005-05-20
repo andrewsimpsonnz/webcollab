@@ -31,29 +31,34 @@ require_once( BASE.'includes/security.php' );
 
 include_once(BASE.'includes/usergroup_security.php' );
 
-if(empty($_GET['fileid']) || ! is_numeric($_GET['fileid']) )
+if(empty($_GET['fileid']) || ! is_numeric($_GET['fileid']) ){
   return;
+}
 
 $fileid = intval($_GET['fileid']);
 
 //get the files info
-if( ! ($q = db_query('SELECT fileid, filename, size, mime, taskid FROM '.PRE.'files WHERE id='.$fileid ) ) )
+if( ! ($q = db_query('SELECT fileid, filename, size, mime, taskid FROM '.PRE.'files WHERE id='.$fileid ) ) ) {
   error('Download file', 'There was an error in the data query');
+}
 
-if( ! $row = db_fetch_array( $q, 0) )
+if( ! $row = db_fetch_array( $q, 0) ) {
   error('Download file', 'Invalid fileid given' );   
+}
 
 //check usergroup security
 $taskid = usergroup_check($row['taskid'] );
 
 //check the file exists
-if( ! ( file_exists( FILE_BASE.'/'.$row['fileid'].'__'.($row['filename'] ) ) ) )
+if( ! ( file_exists( FILE_BASE.'/'.$row['fileid'].'__'.($row['filename'] ) ) ) ) {
   error('Download file', 'The file '.$row['filename'].' is missing from the server' );
+}
 
 //open the file
 $fp = fopen( FILE_BASE.'/'.$row['fileid'].'__'.($row['filename']), 'rb' );
-if($fp == 0 )
+if($fp == 0 ) {
   error('Download file', 'File handle for '.$row['filename'].' cannot be opened' );
+}
 
 //get rid of some problematic system settings
 @ob_end_clean();

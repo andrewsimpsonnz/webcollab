@@ -34,57 +34,58 @@ include_once('includes/screen.php' );
 //
 // The action handler
 //
-if( ! isset($_REQUEST['action']) ) 
+if( ! isset($_REQUEST['action']) ){
   error('Usergroup action handler', 'No action given');
+}
+  
+//what do you want to usergroup today =]
+switch( $_REQUEST['action'] ) {
 
-  //what do you want to usergroup today =]
-  switch( $_REQUEST['action'] ) {
+  //gives a window and some options to do to the poor 'old usergroup
+  case 'manage':
+    create_top($lang['manage_usergroups']);
+    include('includes/mainmenu.php' );
+    include('usergroups/usergroup_menubox.php' );
+    include('users/user_menubox.php' );
+    goto_main();
+    include('usergroups/usergroup_manage.php' );
+    include_once('lang/lang_long.php' );
+    $content = $usergroup_info;
+    new_box($lang['info_usergroup_manage'], $content );
+    create_bottom();
+    break;
 
-    //gives a window and some options to do to the poor 'old usergroup
-    case 'manage':
-      create_top($lang['manage_usergroups']);
-      include('includes/mainmenu.php' );
-      include('usergroups/usergroup_menubox.php' );
-      include('users/user_menubox.php' );
-      goto_main();
-      include('usergroups/usergroup_manage.php' );
-      include_once('lang/lang_long.php' );
-      $content = $usergroup_info;
-      new_box($lang['info_usergroup_manage'], $content );
-      create_bottom();
-      break;
+  //add a usergroup
+  case 'add':
+    create_top($lang['add_new_usergroup'], 0, 'name', 'name' );
+    include('includes/mainmenu.php' );
+    include('usergroups/usergroup_menubox.php' );
+    goto_main();
+    include('usergroups/usergroup_add.php' );
+    create_bottom();
+    break;
 
-    //add a usergroup
-    case 'add':
-      create_top($lang['add_new_usergroup'], 0, 'name', 'name' );
-      include('includes/mainmenu.php' );
-      include('usergroups/usergroup_menubox.php' );
-      goto_main();
-      include('usergroups/usergroup_add.php' );
-      create_bottom();
-      break;
+  //edit a usergroup
+  case 'edit':
+    create_top($lang['edit_usergroup'] );
+    include('includes/mainmenu.php' );
+    include('usergroups/usergroup_menubox.php' );
+    goto_main();
+    include('usergroups/usergroup_edit.php' );
+    create_bottom();
+    break;
 
-    //edit a usergroup
-    case 'edit':
-      create_top($lang['edit_usergroup'] );
-      include('includes/mainmenu.php' );
-      include('usergroups/usergroup_menubox.php' );
-      goto_main();
-      include('usergroups/usergroup_edit.php' );
-      create_bottom();
-      break;
+  //submit
+  case 'submit_edit':
+  case 'submit_insert':
+  case 'submit_del':
+    include('usergroups/usergroup_submit.php' );
+    break;
 
-    //submit
-    case 'submit_edit':
-    case 'submit_insert':
-    case 'submit_del':
-      include('usergroups/usergroup_submit.php' );
-      break;
-
-    //Error case
-    default:
-      error('Usergroup action handler', 'Invalid request given');
-      break;
-  }
+  //Error case
+  default:
+    error('Usergroup action handler', 'Invalid request given');
+    break;
+}
 
 ?>

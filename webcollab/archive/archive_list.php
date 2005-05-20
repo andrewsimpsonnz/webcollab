@@ -60,7 +60,7 @@ if(db_numrows($q) < 1 ) {
 }
 
 //text link for 'printer friendly' page
-if(isset($_GET['action']) && $action == "archive_print" ) { 
+if(isset($_GET['action']) && $action == "archive_print" ) {
   $content  .= "[<a href=\"archive.php?x=".$x."&amp;action=list\">".$lang['normal_version']."</a>]\n";
 }
 else {
@@ -76,8 +76,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //check the user has rights to view this project
   if( (! ADMIN ) && ($row['globalaccess'] != 't' ) && ( $row['usergroupid'] != 0 ) ) {
-    if( ! in_array( $row['usergroupid'], (array)$GID ) )
+    if( ! in_array( $row['usergroupid'], (array)$GID ) ){
       continue;
+    }
   }
 
   //set project status
@@ -94,8 +95,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
     case 'nolimit':
     case 'done':
     default:
-      if($row['completed'] == 100 )  
+      if($row['completed'] == 100 ){ 
         $project_status = 'done';
+      }
       break;
   }
   
@@ -146,8 +148,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 $content .= "</table>\n";
 
-if($flag != 1 )
+if($flag != 1 ){
   $content .= "<div style=\"text-align : center\">".$lang['no_allowed_projects']."</div>\n";
+}
 
 new_box($lang['archived_projects'], $content );
 

@@ -31,20 +31,23 @@
 require_once('path.php' );
 require_once( BASE.'includes/security.php' );
 
-if(GUEST )
+if(GUEST ){
   error('Contact submit', 'Guest not authorised' );
+}
 
 //edit, insert, delete ?
-if( ! isset( $_REQUEST['action'] ) )
+if( ! isset( $_REQUEST['action'] ) ){
   error('Contact submit', 'No request given' );
+}
 
 switch($_REQUEST['action'] ) {
 
   //insert a new contact
   case 'submit_add':
-    if(empty($_POST['lastname'] ) || empty($_POST['firstname'] ) )
+    if(empty($_POST['lastname'] ) || empty($_POST['firstname'] ) ) {
       warning($lang['contact_submit'], $lang['contact_warn'] );
-
+    }
+    
     db_query( 'INSERT INTO '.PRE.'contacts(firstname,
                                       lastname,
                                       company,
@@ -79,14 +82,14 @@ switch($_REQUEST['action'] ) {
 
   case 'submit_edit':
     //edit an existing entry
-    if(empty($_POST['lastname'] ) || empty($_POST['firstname'] ) )
+    if(empty($_POST['lastname'] ) || empty($_POST['firstname'] ) ) {
       warning($lang['contact_submit'], $lang['contact_warn'] );
-
-    if(empty($_POST['contactid']) || ! is_numeric($_POST['contactid'] ) )
-      error('Contact submit', 'Not a valid contactid' );    
+    }
+    if(empty($_POST['contactid']) || ! is_numeric($_POST['contactid'] ) ) {
+      error('Contact submit', 'Not a valid contactid' );
+    }
     $contactid = intval($_POST['contactid']);
-
-      
+ 
     db_query('UPDATE '.PRE.'contacts SET
                   firstname=\''.safe_data($_POST['firstname']).'\',
                   lastname=\''.safe_data($_POST['lastname']).'\',
@@ -108,8 +111,9 @@ switch($_REQUEST['action'] ) {
 
   case 'submit_delete':
       
-    if(empty($_POST['contactid']) || ! is_numeric($_POST['contactid'] ) )
-      error('Contact submit', 'Not a valid contactid' );    
+    if(empty($_POST['contactid']) || ! is_numeric($_POST['contactid'] ) ) {
+      error('Contact submit', 'Not a valid contactid' );
+    }
     $contactid = intval($_POST['contactid']);
 
     //delete the contact 

@@ -81,26 +81,30 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
     //check usergroup permissions
     if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' )) {
-      if( ! in_array( $row['usergroupid'], (array)$GID ) )
+      if( ! in_array( $row['usergroupid'], (array)$GID ) ){
         continue;
+      }
     }
 
     //don't show tasks in private usergroup projects
     if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project) ) {
       $key = array_search($row['projectid'], $no_access_project );
-      if( ! in_array($no_access_group[$key], (array)$GID ) )
+      if( ! in_array($no_access_group[$key], (array)$GID ) ) {
         continue;
+      }
     }
 
     $due = round( ($row['due'] + $tz_offset - $row['now'])/86400 );
 
     $seenq = db_query( 'SELECT '.$epoch.' time) FROM '.PRE.'seen WHERE taskid='.$row['id'].' AND userid='.UID.' LIMIT 1' );
 
-    if(db_numrows($seenq ) > 0 )
+    if(db_numrows($seenq ) > 0 ) {
       $seen = db_result($seenq, 0, 0 );
-    else
+    }
+    else {
       $seen = 0;
-
+    }
+    
     //flags column
     $alink = "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">";
 
@@ -265,7 +269,8 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
     //Add deadline column
     if ($due <= 360) {
       $result .= $date;
-    } else {
+    }
+    else {
       $result .= $lang['future'];
     }
 
@@ -283,14 +288,15 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
     $result .= $alink;
     if( $row['parent'] == 0) {
       $result .= "<b>".$row['taskname']."</b>";
-      }else {
+    }
+    else {
       $result .= $row['taskname'];
     }
     $result .= "</a>";
 
     //show graphical taskbar
     if( ($row['parent'] == 0 ) && ($depth >= 0 ) ) {
-      if($row['completed'] > 0 ) {  
+      if($row['completed'] > 0 ) {
        $result .= "<table width=\"200px\"><tr><td class=\"greenbar\" style=\"height: 2px; width :".($row['completed']*2)."px\"></td><td class=\"redbar\" style=\"height: 2px; width :".(200-($row['completed']*2))."px\"></td></tr></table>\n";
        
       }
@@ -312,16 +318,20 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
 //
 // MAIN PROGRAM starts here
 //
-if(isset($_GET['sortby']) )
+if(isset($_GET['sortby']) ) {
   $sortby = $_GET['sortby'];
-else
+}
+else {
   $sortby = '';
+}
 
 //text link for 'printer friendly' page
-if(isset($_GET['action']) && $_GET['action'] == 'summary_print' )
+if(isset($_GET['action']) && $_GET['action'] == 'summary_print' ) {
   $content  = "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=".$sortby."\">".$lang['normal_version']."</a>]</span></p>";
-else
+}
+else {
   $content  = "<div style=\"text-align: right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary_print&amp;sortby=".$sortby."\">".$lang['print_version']."</a>]</span></div>";
+}
 
 $content .= "<table>\n";
 $content .= "<tr><td colspan=\"3\"><small><a href=\"help/help_language.php?item=summarypage&amp;type=help\" onclick=\"window.open('help/help_language.php?item=summarypage&amp;type=help'); return false\"><b>".$lang['flags']."</b></a></small></td><td><small>";

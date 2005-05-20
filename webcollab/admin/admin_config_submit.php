@@ -34,9 +34,9 @@ require_once(BASE.'includes/security.php' );
 $content = '';
 
 //only admin
-if( ! ADMIN )
+if( ! ADMIN ){
   error('Not permitted', 'This function is for admins only' );
-
+}
   
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
@@ -66,16 +66,20 @@ else{ //no email
 //check and validate checkboxes
 $input_array = array('access', 'group_edit', 'owner', 'usergroup' );
 foreach($input_array as $var ) {
-  if(isset($_POST[$var]) && $_POST[$var] == 'on' )
+  if(isset($_POST[$var]) && $_POST[$var] == 'on' ) {
     ${$var} = "checked=\"checked\"";
-  else
+  }
+  else {
     ${$var} = '';
+  }
 }
 
-if(isset($_POST['project_order'] ) )
+if(isset($_POST['project_order'] ) ){
   $project_order = $_POST['project_order'];
-else
+}
+else {
   $project_order = '';
+}
 
 switch($project_order) {  
   case 'deadline':
@@ -92,11 +96,13 @@ switch($project_order) {
     break;
 }
     
-if(isset($_POST['task_order'] ) )
+if(isset($_POST['task_order'] ) ){
   $task_order = $_POST['task_order'];
-else 
+}
+else { 
   $task_order = '';
-  
+}
+
 switch($task_order) {  
   case 'deadline':
     $task_list = 'ORDER BY due ASC, name';
@@ -124,8 +130,9 @@ db_query('UPDATE '.PRE.'config SET email_admin=\''.$email_admin.'\',
                             task_order=\''.$task_list.'\'' );
 
 //if no email end here
-if(USE_EMAIL != 'Y' )
+if(USE_EMAIL != 'Y' ){
   header('Location: '.BASE_URL.'main.php?x='.$x );
+}
 
 /*
 Begin mailing list clean up

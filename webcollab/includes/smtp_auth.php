@@ -39,9 +39,10 @@ function smtp_auth($connection, $cap) {
 
    global $log; 
 
-   if(strpos($cap, 'AUTH' ) === false )
+   if(strpos($cap, 'AUTH' ) === false ) {
         debug('This SMTP server cannot do SMTP AUTH' );
-
+   }
+   
    //try plain auth
    if( ! strpos($cap, 'PLAIN' ) === false ) {
      fputs($connection, "AUTH PLAIN\r\n" );
@@ -51,8 +52,9 @@ function smtp_auth($connection, $cap) {
        //send username/password
        fputs($connection, base64_encode(MAIL_USER."\0".MAIL_USER."\0".MAIL_PASSWORD )."\r\n" );
        $log .= 'C: Authenticating...'."\n";
-       if(strncmp('235', response(), 3) )
+       if(strncmp('235', response(), 3) ) {
          return;
+       }
        
        $log .= 'C: Authentication failure'."\n";         
      }
@@ -67,14 +69,16 @@ function smtp_auth($connection, $cap) {
        //send username
        fputs($connection, base64_encode(MAIL_USER )."\r\n" );
        $log .= 'C: Sending username...'."\n";
-       if(strncmp('334', response(), 3 ) )
+       if(strncmp('334', response(), 3 ) ) {
          debug();
+       }
 
        //send password
        fputs($connection, base64_encode(MAIL_PASSWORD )."\r\n" );
        $log .= 'C: Sending password...'."\n";
-       if(! strncmp('235', response(), 3 ) )
+       if(! strncmp('235', response(), 3 ) ) {
          return;  
+       }
          
        $log .= 'C: Authentication failure'."\n";
        }
@@ -110,8 +114,9 @@ function smtp_auth($connection, $cap) {
          
        fputs($connection, base64_encode(MAIL_USER." ".$mhash )."\r\n" );
        $log .= 'C: Authenticating...'."\n";
-       if(! strncmp('235', response(), 3 ) )
+       if(! strncmp('235', response(), 3 ) ) {
          return;
+       }
        
        $log .= 'C: Authentication failure'."\n";
      }
@@ -125,23 +130,27 @@ function smtp_auth($connection, $cap) {
 function starttls($connection, $cap ) {
    
   //check if crypto function exists...
-  if(! function_exists('stream_socket_enable_crypto' ) )
-    debug('This version of PHP cannot do STARTTLS negotiation' ); 
+  if(! function_exists('stream_socket_enable_crypto' ) ) {
+    debug('This version of PHP cannot do STARTTLS negotiation' );
+  } 
 
   //check if server can do TLS...
-  if(strpos($cap, 'STARTTLS' ) === false )
-      debug('This SMTP server cannot do STARTTLS' );
+  if(strpos($cap, 'STARTTLS' ) === false ) {
+    debug('This SMTP server cannot do STARTTLS' );
+  }
   
   //issue STARTTLS verb...
   fputs($connection, "STARTTLS\r\n" );
   $log .= 'C: STARTTLS'."\n";
 
-  if(strncmp('220', response(), 3 ) )
+  if(strncmp('220', response(), 3 ) ) {
     debug('Starting TLS...' );
+  }
     
   //start TLS negotiation
-  if(! @stream_socket_enable_crypto($connection, TRUE, STREAM_CRYPTO_METHOD_TLS_CLIENT ) )
+  if(! @stream_socket_enable_crypto($connection, TRUE, STREAM_CRYPTO_METHOD_TLS_CLIENT ) ) {
     debug('TLS negotiation failed' );
+  }
     
   $log .= 'C: TLS success' ); 
   //do a new extended hello (EHLO) after successful negotiation (RFC 3207)
@@ -149,8 +158,9 @@ function starttls($connection, $cap ) {
   $log .= 'C: EHLO'.$_SERVER['SERVER_NAME']."\n";
   $new_capability = response();
   
-  if(strncmp('250', $res, 3 ) ) 
+  if(strncmp('250', $res, 3 ) ) { 
     debug();
+  }
   
   return $new_capability;
 }

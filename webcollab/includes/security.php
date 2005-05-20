@@ -111,11 +111,12 @@ if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
 define('UID', $row['user_id'] );
 define('GUEST', $row['guest'] );
 
-if($row['admin'] == 't' )
+if($row['admin'] == 't' ) {
   define('ADMIN', 1 );
-else
+}
+else {
   define('ADMIN', 0 );
-
+}
 define('UID_NAME', $row['fullname'] );
 define('UID_EMAIL', $row['email'] );
     
@@ -123,8 +124,9 @@ define('UID_EMAIL', $row['email'] );
 $q = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID );
 
 //prevent hacking with register globals turned on
-if(isset($GID) )
+if(isset($GID) ){
   unset($GID);
+}
 $GID[0] = 0;
 
 //list usergroups

@@ -80,8 +80,9 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
   //Note: PHP manual recommends use of zlib.output_compression in php.ini instead of ob_gzhandler in here
   /*
   //use compressed output (if web browser supports it) _and_ zlib.output_compression is not already enabled
-  if( ! ini_get('zlib.output_compression') )
+  if( ! ini_get('zlib.output_compression') ) {
     ob_start("ob_gzhandler" );
+  }
   */
 
   //we don't want any caching of these pages
@@ -106,9 +107,10 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
                     "<!-- (c) 2002-2005 Andrew Simpson -->\n\n".
                     "<head>\n";
 
-  if( $title == '' )
+  if( $title == '' ) {
     $title = MANAGER_NAME;
-
+  }
+  
   $content .=       "<title>".$title."</title>\n".
                     "<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".
                     "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".CHARACTER_SET."\" />\n";
@@ -145,7 +147,7 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
        
     if($check){
       $content .=   "function fieldCheck(){\n".
-                    "if(document.getElementById('".$check."').value==\"\"){\n".
+                    "if(document.getElementById('".$check."').value===\"\"){\n".
                     "alert('".$lang['missing_field_javascript']."');\n".
                     "document.getElementById('".$check."').focus();\n".
                     "return false;}\n".
@@ -167,10 +169,12 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
       $content .=   " // -->\n".
                     "</script>\n".
                     "</head>\n\n";
-      if($cursor)
+      if($cursor) {
         $content .= "<body onload=\"placeCursor()\">\n";
-      else
+      }
+      else {
         $content .= "<body>\n";
+      }
   }
   else {
     $content .=     "</head>\n\n".
@@ -187,8 +191,9 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
       //create the masthead part of the main window
       $content .=   "<tr valign=\"top\"><td colspan=\"2\" class=\"masthead\">";
       //show username if applicable
-      if(defined('UID_NAME') )
+      if(defined('UID_NAME') ) {
         $content .=  sprintf( $lang['user_homepage_sprt'], UID_NAME );
+      }
       $content .=   "</td></tr>\n";
       //create menu sidebar
       $content .=   "<tr valign=\"top\"><td style=\"width: 175px;\" align=\"center\">\n";
@@ -198,8 +203,9 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
     case 1: //single main window (no menu sidebar)
     case 3: //calendar  
       $content .=   "<tr valign=\"top\"><td class=\"masthead\">";
-      if(defined('UID_NAME' ) )
+      if(defined('UID_NAME' ) ) {
         $content .=  sprintf( $lang['user_homepage_sprt'], UID_NAME );
+      }
       $content .=   "</td></tr>\n";
       //create single window over entire screen
       $content .=   "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";

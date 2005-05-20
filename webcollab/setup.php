@@ -67,13 +67,13 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     secure_error("Unable to determine ip address");
   }
   
-  if(! defined('PRE') )
+  if(! defined('PRE') ){
     define('PRE', "" );
+  }
   
   //limit login attempts if post-1.60 database is being used 
   if(@db_query("SELECT * FROM ".PRE."login_attempt LIMIT 1", 0 ) ) {
         
-  
     //count the number of recent login attempts
     $count_attempts = db_result(@db_query("SELECT COUNT(*) FROM ".PRE."login_attempt 
                                                   WHERE name='".$username."' 
@@ -113,16 +113,17 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
   //create session key
   // seed number is not required for PHP 4.2.0, and higher
-  if(version_compare(PHP_VERSION, "4.2.0" ) == -1 )
-    mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );  
+  if(version_compare(PHP_VERSION, "4.2.0" ) == -1 ) {
+    mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );
+  }  
   $session_key = md5(mt_rand() );
 
   //remove the old login information
   @db_query("DELETE FROM ".PRE."logins WHERE user_id=".$user_id );
   //remove the old login information for post 1.60 database
-  if($flag_attempt )
+  if($flag_attempt ) {
     @db_query("DELETE FROM ".PRE."login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
-   
+  } 
   //log the user in
   db_query("INSERT INTO ".PRE."logins( user_id, session_key, ip, lastaccess )
                        VALUES('".$user_id."', '".$session_key."', '".$ip."', now() )" );
@@ -152,8 +153,9 @@ if( ! isset($WEB_CONFIG ) || $WEB_CONFIG != "Y" ) {
 
 //version check
 //version_compare() is only in PHP 4.1.0, and above.
-if(strcmp('4.1.0', PHP_VERSION ) > 0 )
+if(strcmp('4.1.0', PHP_VERSION ) > 0 ) {
   secure_error("WebCollab needs PHP version 4.1.0, or higher.  This version is ".PHP_VERSION );
+}
 
 //check for initial install
 if(DATABASE_NAME == "" ) {

@@ -34,13 +34,15 @@ require_once( BASE.'includes/security.php' );
 include_once(BASE.'includes/usergroup_security.php' );
 
 //update or insert ?
-if(empty($_REQUEST['action']))
+if(empty($_REQUEST['action']) ){
   error('File submit', 'No action given' );
+}
 
 //deny guest users
-if(GUEST )
+if(GUEST ){
  warning($lang['access_denied'], $lang['not_owner'] );  
-  
+}
+ 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
@@ -57,8 +59,9 @@ ignore_user_abort(TRUE);
 
       if(empty($_POST['taskid']) || ! is_numeric($_POST['taskid']) ) {
         //delete any upload before invoking the error function
-        if(is_uploaded_file( $_FILES['userfile']['tmp_name'] ) )
+        if(is_uploaded_file( $_FILES['userfile']['tmp_name'] ) ) {
           unlink( $_FILES['userfile']['tmp_name'] );
+        }
         error('File submit', 'Not a valid taskid');
       }
 
@@ -189,13 +192,14 @@ ignore_user_abort(TRUE);
         $message = $_POST['description'];
         
         //get rid of magic_quotes - it is not required here
-        if(get_magic_quotes_gpc() )
+        if(get_magic_quotes_gpc() ) {
           $message = stripslashes($message );
-
+        }
+        
         //get & add the mailing list
-        if(isset($EMAIL_MAILINGLIST ) )
+        if(isset($EMAIL_MAILINGLIST ) ){
           $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
-     
+        }
         email($mail_list, sprintf($title_file_post, $task_row['name'] ), sprintf($email_file_post, UID_NAME, $_FILES['userfile']['name'], $message ) );
       }
 
@@ -203,8 +207,9 @@ ignore_user_abort(TRUE);
 
     case 'submit_del':
 
-      if(empty($_GET['fileid'] ) || ! is_numeric($_GET['fileid'] ) )
+      if(empty($_GET['fileid'] ) || ! is_numeric($_GET['fileid'] ) ) {
         error('File submit', 'Not a valid fileid' );
+      }
 
       $fileid = intval($_GET['fileid']);
 

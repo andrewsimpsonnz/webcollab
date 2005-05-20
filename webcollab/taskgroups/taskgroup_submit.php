@@ -31,12 +31,13 @@ require_once('path.php' );
 require_once(BASE.'includes/security.php' );
 
 //admins only
-if(! ADMIN)
+if(! ADMIN) {
   error('Unauthorised access', 'This function is for admins only.' );
+}
 
-
-if(empty($_REQUEST['action']) )
+if(empty($_REQUEST['action']) ) {
   error('Taskgroups submit', 'No action given' );
+}
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);  
@@ -46,9 +47,9 @@ ignore_user_abort(TRUE);
     //delete a taskgroup
     case 'submit_del':
 
-      if(empty($_GET['taskgroupid'] ) || ! is_numeric($_GET['taskgroupid']) )
+      if(empty($_GET['taskgroupid'] ) || ! is_numeric($_GET['taskgroupid']) ) {
         error('Taskgroup submit', 'Not a valid value for taskgroupid' );
-
+      }
       $taskgroupid = intval($_GET['taskgroupid']);
 
       //if taskgroup exists we can delete it :)
@@ -65,8 +66,9 @@ ignore_user_abort(TRUE);
     //insert a new taskgroup
     case 'submit_insert':
 
-      if(empty($_POST['name'] ) )
+      if(empty($_POST['name'] ) ){
         warning($lang['value_missing'], sprintf($lang['field_sprt'], $lang['taskgroup_name'] ) );
+      }
       
       $name        = safe_data($_POST['name']);
       $description = safe_data($_POST['description']);
@@ -83,12 +85,14 @@ ignore_user_abort(TRUE);
     //edit an existing taskgroup
     case 'submit_edit':
 
-      if(empty($_POST['taskgroupid'] ) || ! is_numeric($_POST['taskgroupid'] ) )
+      if(empty($_POST['taskgroupid'] ) || ! is_numeric($_POST['taskgroupid'] ) ){
         error('Taskgroup submit', 'Not a valid value for taskgroupid' );
-
-      if(empty($_POST['name'] ) )
+      }
+      
+      if(empty($_POST['name'] ) ){
         warning($lang['value_missing'], sprintf($lang['field_sprt'], $lang['taskgroup_name'] ) );
-
+      }
+      
       $name        = safe_data($_POST['name'] );
       $description = safe_data($_POST['description'] );
       $taskgroupid = intval($_POST['taskgroupid'] );

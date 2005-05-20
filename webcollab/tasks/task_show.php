@@ -40,8 +40,9 @@ include_once(BASE.'includes/usergroup_security.php');
 $content = '';
 
 //is there an id ?
-if( ! isset( $_GET['taskid']) || ! is_numeric($_GET['taskid']) || $_GET['taskid'] == 0 )
+if( ! isset( $_GET['taskid']) || ! is_numeric($_GET['taskid']) || $_GET['taskid'] == 0 ) {
   error('Task show', 'Not a valid value for taskid' );
+}
 
 $taskid = intval($_GET['taskid']);
 
@@ -61,13 +62,13 @@ $q = db_query('SELECT '.$epoch.PRE.'tasks.created) AS epoch_created,
                       WHERE '.PRE.'tasks.id='.$taskid );
 
 //get the data
-if( ! ($row = db_fetch_array($q, 0 ) ) )
+if( ! ($row = db_fetch_array($q, 0 ) ) ) {
   error('Task show', 'The requested item has either been deleted, or is now invalid.');
+}
 
 //mark this as seen in seen ;)
 @db_query('DELETE FROM '.PRE.'seen WHERE userid='.UID.' AND taskid='.$taskid, 0);
 db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$taskid.', now() )' );
-
 
 //text link for 'printer friendly' page
 if(isset($_GET['action']) && $_GET['action'] == "show_print" ) {
@@ -111,11 +112,13 @@ if( $TASKID_ROW['owner'] == 0 ) {
 //get creator information (null if creator has been deleted!)
 $creator = @db_result(db_query("SELECT fullname FROM ".PRE."users WHERE id=".$TASKID_ROW['creator'] ), 0, 0  );
 $content .= "<tr><td>".$lang['created_on'].": </td><td>";
-if($creator == NULL )
+if($creator == NULL ) {
   $content .= nicetime($TASKID_ROW['epoch_created']);
-else
+}
+else {
   $content .= sprintf($lang['by_sprt'], nicetime($row['epoch_created']), "<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$TASKID_ROW['creator']."\">".$creator."</a>");
 $content .= "</td></tr>\n";
+}
 
 //get deadline
 $content .= "<tr><td>".$lang['deadline'].": </td><td>".nicedate($TASKID_ROW['deadline'])."</td></tr>\n";
@@ -163,8 +166,9 @@ switch($TASKID_ROW['parent'] ) {
   
       case 'done':
       default:
-        if($TASKID_ROW['completed'] == 100 )  
+        if($TASKID_ROW['completed'] == 100 ) {  
           $content .= "<tr><td>".$lang['completed_on'].": </td><td>".nicetime($row['epoch_completion'] )."</td></tr>\n";
+        }
         break;
     }
     break;
@@ -240,9 +244,9 @@ if( $TASKID_ROW['usergroupid'] != 0 ) {
       break;
   }
 
-  if($TASKID_ROW['groupaccess'] == 't' )
+  if($TASKID_ROW['groupaccess'] == 't' ) {
       $content .= "<tr><td>&nbsp;</td><td><i>".$lang["usergroup_can_edit_".$TYPE]."</i></td></tr>\n";
-
+  }
 }
 else {
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help'); return false\">".$lang['usergroup']."</a>: </td><td>".$lang[$TYPE."_not_in_usergroup"]."</td></tr>\n";
@@ -258,13 +262,15 @@ if($TASKID_ROW['archive'] == 0 ) {
   //set add function and title for task or project
   switch($TYPE){
     case 'project':
-      if(! GUEST )
+      if(! GUEST ) {
         $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a>]&nbsp;\n";
+      }
       break;
   
     case 'task':
-      if(! GUEST ) 
+      if(! GUEST ) { 
         $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_subtask']."</a>]&nbsp;\n";
+      }
       break;
   }
   
@@ -275,8 +281,9 @@ if($TASKID_ROW['archive'] == 0 ) {
         $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
       }
       //I'll take it!
-      if(! GUEST )
+      if(! GUEST ) {
         $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang['i_take_it']."</a>]&nbsp;\n";
+      }
       break;
   
     case (UID):

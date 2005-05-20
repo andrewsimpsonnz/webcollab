@@ -82,11 +82,13 @@ function list_tasks($parent ) {
 
   //determine if the first line will be a task listing or a taskgroup name
   //if it's a taskgroup name we don't need to set the leading <ul>
-  if( ($taskgroup_flag == 1 ) && ($parent == $parentid ) )
+  if( ($taskgroup_flag == 1 ) && ($parent == $parentid ) ) {
     $this_content .= '';
-  else
+  }
+  else {
     $this_content .= "<ul>";
-
+  }
+  
   //show all tasks
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
@@ -108,11 +110,13 @@ function list_tasks($parent ) {
     if( ($taskgroup_flag == 1 ) && ($parent == $parentid ) ) {
 
       //set taskgroup name, or 'Uncategorised' if none
-      if( $row['groupname'] == NULL )
+      if( $row['groupname'] == NULL ) {
         $groupname = $lang['uncategorised'];
-      else
+      }
+      else {
         $groupname = $row['groupname'];
-
+      }
+      
       //check if taskgroup has changed from last iteration
       if($stored_groupname != $groupname ) {
 
@@ -313,11 +317,12 @@ for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; ++$i ) {
 
 //check to see if any tasks at this task level have the taskgroup descriptor set.
 //Use this later to toggle the taskgroup headings.
-if( db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent='.$parentid.' AND taskgroupid<>0' ), 0, 0 ) > 0 )
+if( db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent='.$parentid.' AND taskgroupid<>0' ), 0, 0 ) > 0 ) {
   $taskgroup_flag = 1;
-else
+}
+else {
   $taskgroup_flag = 0;
-
+}
 
 $content  = list_tasks($parentid );
 

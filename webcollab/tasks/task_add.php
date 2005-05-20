@@ -39,9 +39,9 @@ $content = '';
 $javascript = '';
 $allowed[0] = 0; 
 
-if(GUEST )
+if(GUEST ) {
  warning($lang['access_denied'], $lang['not_owner'] );  
-
+}
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
@@ -67,8 +67,9 @@ $priority_select_box = "<tr><td>".$lang['priority'].":</td> <td>\n".
                        "</select>\n</td></tr>\n";
                        
 //we can't check the deadline date for a new project!
-if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) )
+if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
   $javascript = "onsubmit=\"return dateCheck()\" ";
+}
 
 $content .= "<form method=\"post\" action=\"tasks.php\" $javascript>\n";
 $content .= "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n ";
@@ -85,8 +86,9 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
   $q = db_query('SELECT name, deadline, status, owner, parent, projectid, usergroupid, globalaccess, taskgroupid 
                        FROM '.PRE.'tasks WHERE id='.$parentid );
   
-  if( ! $parent_row = db_fetch_array($q, 0 ) )
+  if( ! $parent_row = db_fetch_array($q, 0 ) ) {
     error('Task add', 'No parent for taskid' );
+  }
   
   //add the project deadline (plus GMT offset) for the javascript
   $project_deadline = db_result(db_query('SELECT '.$epoch.'deadline) FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ) ) + date('Z');
@@ -98,11 +100,13 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
               "<table class=\"celldata\">\n";
   
   //show project name
-  if( $parent_row['projectid'] == $parentid)
+  if( $parent_row['projectid'] == $parentid) {
     $project = $parent_row['name'];
-  else
+  }
+  else {
     $project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ), 0, 0 );
-
+  }
+  
   $content .= "<tr><td>".$lang['project'] .":</td> <td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$parent_row['projectid']."\">$project</a></td></tr>\n";
 
   //check if task has a parent task

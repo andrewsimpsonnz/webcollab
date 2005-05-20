@@ -36,8 +36,9 @@ include_once( BASE.'includes/usergroup_security.php' );
 
 $content = '';
 
-if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) )
+if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) ){
   error('File list', 'The taskid input is not valid' ); 
+}
 
 $taskid = intval($_REQUEST['taskid']);
 //check usergroup security
@@ -78,9 +79,9 @@ if(db_numrows($q ) != 0 ) {
     $content .= "<tr><td>".$lang['uploader']." <a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'], 1 ).")</td></tr>\n";
 
     //show description
-    if( $row['description'] != '' )
+    if( $row['description'] != '' ) {
       $content .= "<tr><td><small><i>".$row['description']."</i></small></td></tr>\n";
-
+    }
     //padding for next entry
     $content .= "<tr><td>&nbsp;</td></tr>\n";
   }
@@ -88,8 +89,9 @@ if(db_numrows($q ) != 0 ) {
 }
 
 
-if((! GUEST ) && ($TASKID_ROW['archive'] == 0) )
+if((! GUEST ) && ($TASKID_ROW['archive'] == 0) ){
   $content .= "<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;taskid=$taskid&amp;action=upload\">".$lang['add_file']."</a>]</span>";
+}
 
 new_box($lang['files_assoc_'.$TYPE], $content, 'boxdata2' );
 

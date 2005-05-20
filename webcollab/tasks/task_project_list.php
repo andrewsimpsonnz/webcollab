@@ -147,16 +147,19 @@ $project_print = 0;
 $task_projectid = '';
 $tz_offset = (TZ * 3600) - date('Z');
 
-if(isset($_GET['active'] ) )
+if(isset($_GET['active'] ) ) {
   $active_only = $_GET['active'];
-else
+}
+else {
   $active_only = 0;
-      
-if(isset($_GET['condensed'] ) )
+}      
+if(isset($_GET['condensed'] ) ) {
   $condensed = $_GET['condensed'];
-else
+}
+else {
   $condensed = 0;
-  
+}
+
 //get config order for sorting
 $q = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
 $row = db_fetch_num($q, 0 );
@@ -251,22 +254,28 @@ if(db_numrows($q) < 1 ) {
 //text link for 'active' switch
 $content .= "<table style=\"width : 98%\"><tr><td>\n".
             "<span class=\"textlink\">";
-if($active_only )
+if($active_only ) {
   $content .= "[<a href=\"main.php?x=".$x."&amp;active=0&amp;condensed=".$condensed."\">".$lang['show_all_projects']."</a>]";
-else
+}
+else {
   $content .= "[<a href=\"main.php?x=".$x."&amp;active=1&amp;condensed=".$condensed."\">".$lang['show_active_projects']."</a>]";
+}
 
 //text link for 'condensed' switch
-if($condensed )
+if($condensed ) {
   $content .= "&nbsp;[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=0"."\">".$lang['full_view']."</a>]";
-else
+}
+else {
   $content .= "&nbsp;[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=1"."\">".$lang['condensed_view']."</a>]";
+}
 
 //text link for 'printer friendly' page
-if(isset($_GET['action']) && $action == "project_print" ) 
+if(isset($_GET['action']) && $action == "project_print" ) {
   $content  .= "\n[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."\">".$lang['normal_version']."</a>]";
-else
+}
+else {
   $content  .= "</span></td>\n<td style=\"text-align : right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."&amp;action=project_print\">".$lang['print_version']."</a>]";
+}
 $content .= "</span></td></tr>\n</table>\n";
 
 //setup main table
@@ -305,7 +314,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
     case 'nolimit':
     case 'done':
     default:
-      if($row['completed'] == 100 ) {  
+      if($row['completed'] == 100 ) {
         $project_status = 'done';
       }
         

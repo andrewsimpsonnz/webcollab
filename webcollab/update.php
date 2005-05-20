@@ -114,10 +114,10 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   //user is okay log him/her in
 
   //remove the old login information for post 1.60 database
-  if($flag_attempt )
+  if($flag_attempt ) {
     @db_query("DELETE FROM ".PRE."login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
-
-    
+  }
+ 
   //update for version 1.32 -> 1.40
   if(! (db_query("SELECT groupaccess FROM ".PRE."config", 0 ) ) ) {
      db_query("ALTER TABLE ".PRE."tasks ADD COLUMN groupaccess VARCHAR(5)" );
@@ -205,15 +205,18 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
       for($j=0 ; $row_complete = @db_fetch_num($q_complete, $j ) ; $j++ ) { 
         $total_tasks++;
           
-        if($row_complete[0] == 'done')
+        if($row_complete[0] == 'done') {
           $tasks_completed++;
         }
+      }
       
       //project with no tasks is complete
-      if($total_tasks == 0 )
+      if($total_tasks == 0 ){
         $percent_completed = 0;
-      else
+      }
+      else{
         $percent_completed = ($tasks_completed * 100 / $total_tasks );  
+      }
       
       db_query("UPDATE ".PRE."tasks SET completed=".$percent_completed." WHERE id=".$row['id'] );
 
@@ -288,10 +291,10 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     }
     $content .= "<p>Updating from version pre-1.70 database ... success!</p>\n";  
   }
-  
-  
-  if( ! $content )
+    
+  if( ! $content ) {
     $content .= "<p>No database updates were required.</p>\n";
+  }
   
   $content .= "<p>Database update action has been completed.</p>\n";
   

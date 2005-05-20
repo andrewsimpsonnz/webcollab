@@ -39,12 +39,13 @@ include_once(BASE.'tasks/task_submit.php' );
 
 
 //update or insert ?
-if(empty($_REQUEST['action']) )
+if(empty($_REQUEST['action']) ){
   error('Task submit', 'No request given' );
+}
 
-if(empty($_GET['taskid']) || ! is_numeric($_GET['taskid']) )
+if(empty($_GET['taskid']) || ! is_numeric($_GET['taskid']) ){
   error('Task submit', 'No taskid given' );
-  
+} 
 $taskid = intval($_GET['taskid']);
   
 //if user aborts, let the script carry onto the end
@@ -56,9 +57,9 @@ ignore_user_abort(TRUE);
     case 'done':
 
       //check if the user has enough rights
-      if( ! user_access($taskid) )
+      if( ! user_access($taskid) ){
         error('Task submit', 'Access denied, you do not have enough rights to do that' );
-
+      }
       db_query('UPDATE '.PRE.'tasks SET status=\'done\', finished_time=now(), edited=now() WHERE id='.$taskid );
         
       //if all tasks are completed, then mark the project as 'done'
@@ -81,8 +82,9 @@ ignore_user_abort(TRUE);
     case 'deown':
 
       //check if the user has enough rights
-      if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$taskid.' AND owner='.UID ), 0, 0 ) < 1 )
+      if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$taskid.' AND owner='.UID ), 0, 0 ) < 1 ) {
         warning($lang['task_submit'], $lang['not_owner'] );
+      }
 
       //note: self-securing query
       db_query('UPDATE '.PRE.'tasks SET owner=0 WHERE owner='.UID.' AND id='.$taskid );
@@ -95,8 +97,9 @@ ignore_user_abort(TRUE);
       //admin has no bounds checking
       //non-admins can only take non-owned tasks
       //note: self-securing query
-      if(! ADMIN )
+      if(! ADMIN ){
         db_query('UPDATE '.PRE.'tasks SET owner='.UID.' WHERE id='.$taskid.' AND owner=0' );
+      }
       if(ADMIN ) {
         db_begin();
         //get the current owner and task details

@@ -32,13 +32,14 @@ require_once('path.php' );
 require_once(BASE.'includes/security.php' );
 
 //admins only
-if( ! ADMIN )
+if( ! ADMIN ) {
   error('Unauthorised access', 'This function is for admins only.' );
+}
 
 //secure
-if(empty($_GET['usergroupid'] ) || ! is_numeric($_GET['usergroupid'] ) )
+if(empty($_GET['usergroupid'] ) || ! is_numeric($_GET['usergroupid'] ) ) {
   error('Usergroup edit', 'Not a valid value for usergroupid.' );
-
+}
 $usergroupid = intval($_GET['usergroupid']);
 
 //get taskgroup information
@@ -46,10 +47,12 @@ $q = db_query('SELECT * FROM '.PRE.'usergroups WHERE id='.$usergroupid );
 $row = db_fetch_array( $q, 0 );
 
 //set private usergroup checkbox
-if($row['private'] )
+if($row['private'] ){
   $private = "checked=\"checked\"";
-else
+}
+else {
   $private = "";
+}
 
 $content = "<form method=\"post\" action=\"usergroups.php\">\n".
            "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
@@ -77,8 +80,9 @@ for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; ++$i ) {
 
   @db_data_seek($member_q ); //reset mysql internal pointer each cycle
   for($j=0 ; $member_row = @db_fetch_array($member_q, $j ) ; ++$j )
-    if ($member_row['id'] == $user_row['id'] )
+    if ($member_row['id'] == $user_row['id'] ){
       $content .= " selected=\"selected\"";
+    }
   $content .= ">".$user_row['fullname']."</option>\n";
 }
 

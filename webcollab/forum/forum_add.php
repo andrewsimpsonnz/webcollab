@@ -36,19 +36,22 @@ include_once(BASE.'includes/usergroup_security.php' );
 //secure vars
 $content = '';
 
-if( ! isset($_REQUEST['usergroupid']) || ! is_numeric($_REQUEST['usergroupid']) )
+if( ! isset($_REQUEST['usergroupid']) || ! is_numeric($_REQUEST['usergroupid']) ){
   $usergroupid = 0;
-else
+}
+else {
   $usergroupid = intval($_REQUEST['usergroupid']);
-
-if( ! isset($_REQUEST['parentid']) || ! is_numeric($_REQUEST['parentid']) )
+}
+if( ! isset($_REQUEST['parentid']) || ! is_numeric($_REQUEST['parentid']) ){
   $parentid = 0;
-else
+}
+else{
   $parentid = intval($_REQUEST['parentid']);
-
-if( ! isset($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) )
+}
+if( ! isset($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) ) {
   error('Forum add', 'Not a valid value for taskid');
-
+}
+  
 $taskid = intval($_REQUEST['taskid']);
 //check usergroup security
 $taskid = usergroup_check($taskid );
@@ -74,11 +77,12 @@ if($parentid != 0 ) {
                          LEFT JOIN '.PRE.'users ON ('.PRE.'forum.userid='.PRE.'users.id)
                          WHERE '.PRE.'forum.id='.$parentid );
 
-  if( ! $row = db_fetch_array($q, 0 ) )
+  if( ! $row = db_fetch_array($q, 0 ) ){
     error("Forum add", "Forum post has invalid parent" );
-
-  if($row['username'] == NULL )
+  }
+  if($row['username'] == NULL ){
     $row['username'] = '----';
+  }
 
   //show a box with the original post
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" /></fieldset>\n".
@@ -105,9 +109,11 @@ $content .=   "<tr><td>".$lang['message']."</td><td><textarea id=\"text\" name=\
               "</form>\n";
 
 //show a reply or a new-post box
-if($parentid > 0 )
+if($parentid > 0 ){
   new_box(sprintf($lang['post_reply_sprt'], $row['username'], $taskname ), $content ); //reply to another users's post
-else
+}
+else {
   new_box(sprintf($lang['post_message_sprt'], $taskname ), $content ); //new post
+}
 
 ?>

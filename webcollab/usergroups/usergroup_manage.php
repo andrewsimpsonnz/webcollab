@@ -32,8 +32,9 @@ require_once('path.php' );
 require_once(BASE.'includes/security.php' );
 
 //admins only
-if( ! ADMIN )
+if( ! ADMIN ) {
   error('Unauthorised access', 'This function is for admins only.' );
+}
 
 //get the info
 $q = db_query('SELECT * FROM '.PRE.'usergroups ORDER BY name' );
@@ -54,10 +55,12 @@ $content =
 //show all usergroups
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   
-  if($row['private'] )
+  if($row['private'] ) {
     $private = $lang['yes'];
-  else
-    $private = $lang['no']; 
+  }
+  else{
+    $private = $lang['no'];
+  } 
   
   $content .= "<tr><td>".$row['name']."</td><td>".$row['description']."</td><td>".$private."</td>".
               "<td><span class=\"textlink\"><a href=\"usergroups.php?x=$x&amp;action=submit_del&amp;usergroupid=".$row['id']."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">[".$lang['del']."]</a></span>&nbsp;".

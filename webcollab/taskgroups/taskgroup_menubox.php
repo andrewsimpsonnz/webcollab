@@ -31,8 +31,9 @@ require_once('path.php' );
 require_once(BASE.'includes/security.php' );
 
 //only for admins
-if(! ADMIN )
+if(! ADMIN ){
   return;
+}
 
 $content = "<a href=\"taskgroups.php?x=$x&amp;action=add\">".$lang['add']."</a><br />\n".
            "<a href=\"taskgroups.php?x=$x&amp;action=manage\">".$lang['manage']."</a><br />\n";

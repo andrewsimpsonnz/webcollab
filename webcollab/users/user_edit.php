@@ -37,9 +37,9 @@ $userid = '';
 if(ADMIN == 1 ) {
 
   //is there a uid ?
-  if(empty($_REQUEST['userid']) || ! is_numeric($_REQUEST['userid']) )
+  if(empty($_REQUEST['userid']) || ! is_numeric($_REQUEST['userid']) ){
     error('User edit', 'No userid was specified' );
-
+  }
   $userid = intval($_REQUEST['userid']);
 
   //query for user
@@ -47,18 +47,16 @@ if(ADMIN == 1 ) {
 
   //also query for the groups that this user is in
   $usergroups_users_q = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$userid );
-
 }
 else {
-
   //user
   $q = db_query('SELECT * FROM '.PRE.'users WHERE id='.UID );
 }
 
 //fetch data
-if( ! ($row = db_fetch_array($q , 0 ) ) )
+if( ! ($row = db_fetch_array($q , 0 ) ) ) {
   error('Database result', 'Error in retrieving user-data from database' );
-
+}
 
 //show data
 $content =  "<form method=\"post\" action=\"users.php\">\n".
@@ -78,12 +76,14 @@ if( ADMIN == 1 ) {
   $content .= "<tr><td>&nbsp;</td></tr>\n";
   
   //private user
-  if( $row['private'] == 1 )
+  if( $row['private'] == 1 ){
     $content .= "<tr><td><label for=\"private\">".$lang['private_user'].":</label></td><td><input type=\"checkbox\" name=\"private_user\" checked=\"checked\" id=\"private\" /></td></tr>\n";
-  else  
+  }
+  else{  
     $content .= "<tr><td><label for=\"private\">".$lang['private_user'].":</label></td><td><input type=\"checkbox\" name=\"private_user\" id=\"private\" /></td></tr>\n".
                 "<tr><td>&nbsp;</td></tr>\n";
-
+  }
+  
   //normal user
   $s1 = "checked=\"checked\""; $s2 = ""; $s3 = "";
 
@@ -127,8 +127,9 @@ if( ADMIN == 1 ) {
     }
 
     //if not found then end the option tag normally
-    if($found == 0 )
+    if($found == 0 ){
       $content .= " >";
+    }
 
     $content .= $usergroup_row['name']."</option>";
   }

@@ -32,12 +32,13 @@ require_once('path.php' );
 require_once(BASE.'includes/security.php' );
 
 //admins only
-if( ! ADMIN )
+if( ! ADMIN ) {
   error('Unauthorised access', 'This function is for admins only.' );
+}
 
-
-if(empty($_REQUEST['action'] ) )
+if(empty($_REQUEST['action'] ) ) {
   error('Usergroups submit', 'No action given' );
+}
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
@@ -47,9 +48,10 @@ ignore_user_abort(TRUE);
     //delete a usergroup
     case 'submit_del':
 
-      if(empty($_GET['usergroupid']) || ! is_numeric($_GET['usergroupid']) )
+      if(empty($_GET['usergroupid']) || ! is_numeric($_GET['usergroupid']) ) {
         error('Usergroup submit', 'Not a valid value for usergroupid' );
-
+      }
+      
       $usergroupid = intval($_GET['usergroupid'] );
 
       db_begin();
@@ -72,36 +74,37 @@ ignore_user_abort(TRUE);
     //insert a new usergroup
     case 'submit_insert':
 
-      if(empty($_POST['name'] ) )
+      if(empty($_POST['name'] ) ) {
         warning($lang['value_missing'], sprintf($lang['field_sprt'], $lang['usergroup_name'] ) );
-
+      } 
       $name        = safe_data($_POST['name']);
       $description = safe_data($_POST['description']);
       
-      if( isset($_POST['private_group']) && ( $_POST['private_group'] == 'on' ) )
+      if( isset($_POST['private_group']) && ( $_POST['private_group'] == 'on' ) ) {
         $private_group = 1;
-      else
+      }
+      else {
         $private_group = 0;
-
+      }
       //check for duplicates
-      if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'usergroups WHERE name=\''.$name.'\''), 0, 0 ) > 0 )
+      if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'usergroups WHERE name=\''.$name.'\''), 0, 0 ) > 0 ) {
         warning($lang['add_usergroup'], sprintf($lang['usergroup_dup_sprt'], $name ) );
+      }
+      //begin transaction
+      db_begin();
+      $q = db_query('INSERT INTO '.PRE.'usergroups(name, description, private ) VALUES (\''.$name.'\', \''.$description.'\', \''.$private_group.'\')' );
 
-        //begin transaction
-        db_begin();
-        $q = db_query('INSERT INTO '.PRE.'usergroups(name, description, private ) VALUES (\''.$name.'\', \''.$description.'\', \''.$private_group.'\')' );
+      if(isset($_POST['member'] ) ) {
 
-        if(isset($_POST['member'] ) ) {
+        // get the usergroupid
+        $usergroupid = db_lastoid('usergroups_id_seq' );
 
-          // get the usergroupid
-          $usergroupid = db_lastoid('usergroups_id_seq' );
-
-          (array)$member = $_POST['member'];
-          $max = sizeof($member);
-          for($i=0 ; $i < $max ; ++$i ) {
-            if(isset($member[$i]) && is_numeric($member[$i] ) ) {
-              db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.intval($member[$i]).', '.$usergroupid.')' );
-            }
+        (array)$member = $_POST['member'];
+        $max = sizeof($member);
+        for($i=0 ; $i < $max ; ++$i ) {
+          if(isset($member[$i]) && is_numeric($member[$i] ) ) {
+            db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.intval($member[$i]).', '.$usergroupid.')' );
+          }
         }
       }
       //transaction complete
@@ -111,21 +114,22 @@ ignore_user_abort(TRUE);
     //edit a usergroup
     case 'submit_edit':
 
-      if(empty($_POST['usergroupid'] ) || ! is_numeric($_POST['usergroupid'] ) )
+      if(empty($_POST['usergroupid'] ) || ! is_numeric($_POST['usergroupid'] ) ){
         error('Usergroup submit', 'Not a valid value for usergroupid' );
-
-      if(empty($_POST['name'] ) )
+      }
+      if(empty($_POST['name'] ) ){
         warning($lang['value_missing'], sprintf( $lang['field_sprt'], $lang['usergroup_name'] ) );
-
+      }
       $name        = safe_data($_POST['name'] );
       $description = safe_data($_POST['description'] );
       $usergroupid = intval($_POST['usergroupid'] );
       
-      if( isset($_POST['private_group']) && ( $_POST['private_group'] == 'on' ) )
+      if( isset($_POST['private_group']) && ( $_POST['private_group'] == 'on' ) ){
         $private_group = 1;
-      else
+      }
+      else {
         $private_group = 0;
-
+      }
       //begin transaction
       db_begin();
 

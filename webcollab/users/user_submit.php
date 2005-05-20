@@ -38,8 +38,9 @@ $usergroup_names = '';
 $admin_state = '';
 
 //update or insert ?
-if(empty($_REQUEST['action']) )
+if(empty($_REQUEST['action']) ){
   error('User submit', 'No request given' );
+}
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);  
@@ -50,11 +51,12 @@ ignore_user_abort(TRUE);
     case 'revive':
 
       //only for the admins
-      if(! ADMIN )
+      if(! ADMIN ){
         error('Authorisation failed', 'You have to be admin to do this' );
-
-      if(empty($_GET['userid']) && ! is_numeric($_GET['userid']) )
+      }
+      if(empty($_GET['userid']) && ! is_numeric($_GET['userid']) ){
         error('User submit', 'No userid was specified.' );
+      }
 
       $userid = intval($_GET['userid']);
 
@@ -77,9 +79,9 @@ ignore_user_abort(TRUE);
     case 'submit_insert':
 
       //only for the l33t
-      if( ! ADMIN )
+      if( ! ADMIN ){
         error('Authorisation failed', 'You have to be admin to do this' );
-
+      }
       //check input has been provided
       $input_array = array('name', 'fullname', 'email' );
       foreach( $input_array as $var ) {
@@ -89,19 +91,21 @@ ignore_user_abort(TRUE);
         ${$var} = safe_data($_POST[$var]);
       }
 
-      if(empty($_POST['password']))
+      if(empty($_POST['password'])){
         warning( $lang['value_missing'], sprintf( $lang['field_sprt'], 'password' ) );
-      
+      }
       $password = $_POST['password'];
       
       //do basic check on email address
-      if(! ereg("^.+@.+\..+$", $email ) )
+      if(! ereg("^.+@.+\..+$", $email ) ){
         warning($lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $email ) );
-
-      if( isset($_POST['private_user']) && ( $_POST['private_user'] == "on" ) )
+      }
+      if( isset($_POST['private_user']) && ( $_POST['private_user'] == "on" ) ) {
         $private_user = 1;
-      else
+      }  
+      else {
         $private_user = 0;
+      }
       
       switch($_POST['user_type'] ) {
         case 'normal':
@@ -121,8 +125,9 @@ ignore_user_abort(TRUE);
           break;
       }     
       //prohibit 2 people from choosing the same username
-      if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE name=\''.$name.'\'', 0 ), 0, 0 ) > 0 )
+      if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE name=\''.$name.'\'', 0 ), 0, 0 ) > 0 ){
         warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
+      }
 
       //begin transaction
       db_begin();
@@ -154,10 +159,12 @@ ignore_user_abort(TRUE);
       db_commit();
 
       //email the user all data
-      if($usergroup_names == '' )
+      if($usergroup_names == '' ){
         $usergroup_names = $lang['not_usergroup']."\n";
-      if($admin_user == 't' )
+      }
+      if($admin_user == 't' ){
         $admin_state = $lang['admin_priv']."\n";
+      }
       $message = sprintf($email_welcome, $name, $password,$usergroup_names,
                   $fullname, $admin_state );
       email($email, $title_welcome, $message );
@@ -177,27 +184,31 @@ ignore_user_abort(TRUE);
         ${$var} = safe_data($_POST[$var]);
       }
 
-      if(empty($_POST['password']) )
+      if(empty($_POST['password']) ){
         $password = '';
-      else
+      }
+      else {
         $password = $_POST['password'];  
+      }
       
       //check email address
-      if(! ereg("^.+@.+\..+$", $email ) )
+      if(! ereg("^.+@.+\..+$", $email ) ){
         warning($lang['invalid_email'], sprintf($lang['invalid_email_given_sprt'], $email ) );
-      
+      }
       if(ADMIN ) {
 
         //check for a userid
-        if(empty($_POST['userid']) || ! is_numeric($_POST['userid']) )
+        if(empty($_POST['userid']) || ! is_numeric($_POST['userid']) ){
           error('User submit', 'No userid specified');
-
+        }
         $userid = intval($_POST['userid']);
 
-        if( isset($_POST['private_user']) && ( $_POST['private_user'] == 'on' ) )
+        if( isset($_POST['private_user']) && ( $_POST['private_user'] == 'on' ) ){
           $private_user = 1;
-        else
+        }
+        else {
           $private_user = 0;
+        }
         
         switch($_POST['user_type'] ) {
           case 'normal':
@@ -218,9 +229,9 @@ ignore_user_abort(TRUE);
         }
         
         //prohibit 2 people from choosing the same username
-        if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE name=\''.$name.'\' AND NOT id='.$userid, 0 ), 0, 0 ) > 0 )
+        if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE name=\''.$name.'\' AND NOT id='.$userid, 0 ), 0, 0 ) > 0 ){
           warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
-
+        }
         //begin transaction
         db_begin();
         //was a password provided or not ?
@@ -271,12 +282,15 @@ ignore_user_abort(TRUE);
         //transaction complete
         db_commit();
 
-        if($usergroup_names == '' )
+        if($usergroup_names == '' ){
           $usergroup_names = $lang['not_usergroup']."\n";
-        if($password == '' )
+        }
+        if($password == '' ){
           $password = $lang['no_password_change'];
-        if($admin_user == 't' )
+        }
+        if($admin_user == 't' ){
           $admin_state = $lang['admin_priv']."\n";
+        }
         //email the changes to the user
         $message = sprintf($email_user_change1, UID_NAME, UID_EMAIL, $name,
                 $password, $usergroup_names, $fullname, $admin_state );
@@ -287,9 +301,10 @@ ignore_user_abort(TRUE);
         //this is secure option where the user cannot change important values
 
         //prohibit 2 people from choosing the same username
-        if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE name=\''.$name.'\' AND NOT id='.UID, 0 ), 0, 0 ) > 0 )
+        if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE name=\''.$name.'\' AND NOT id='.UID, 0 ), 0, 0 ) > 0 ){
           warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
-
+        }
+        
         //did the user change his/her password ?
         if($password != '' ) {
 

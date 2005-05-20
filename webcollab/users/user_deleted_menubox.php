@@ -31,9 +31,9 @@ require_once('path.php' );
 require_once(BASE.'includes/security.php' );
 
 //first check if we are admin
-if(! ADMIN )
+if(! ADMIN ){
   return;
-
+}
 
 //check for deleted users
 if( ! db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE deleted=\'t\'' ), 0, 0 ) ) {

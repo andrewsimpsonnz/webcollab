@@ -99,9 +99,9 @@ function find_children($parent ) {
 //
 // advanced database-wide task-delete !!
 //
-if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) )
+if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) ) {
   error('Task details', 'The taskid input is not valid' ); 
-
+}
 $taskid = intval($_REQUEST['taskid']);
 
 //get task and owner information
@@ -119,13 +119,13 @@ $q = db_query('SELECT '.PRE.'tasks.parent AS parent,
                       WHERE '.PRE.'tasks.id='.$taskid );
 
 //get the data
-if( ! $row = db_fetch_array($q, 0) )
+if( ! $row = db_fetch_array($q, 0) ){
   error('Task delete', 'The selected task does not exist.');
-
+}
 //can this user delete this task ?
-if( (! ADMIN ) && (UID != $row['owner']) )
+if( (! ADMIN ) && (UID != $row['owner']) ){
   error('Access denied', 'You do not own this task and therefore you may not delete it.' );
-
+}
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
@@ -164,10 +164,9 @@ for($i=0 ; $i < $index ; ++$i ) {
 
   //delete item
   db_query('DELETE FROM '.PRE.'tasks WHERE id='.$match_array[$i] );
-
 }
 
-if($row['parent'] != 0 ){    
+if($row['parent'] != 0 ){
   //set the new completed percentage project record
   $percent_completed = round(percent_complete($row['projectid'] ) );
   db_query('UPDATE '.PRE.'tasks SET completed='.$percent_completed.' WHERE id='.$row['projectid'] );

@@ -34,19 +34,22 @@ include_once(BASE.'includes/email.php' );
 include_once(BASE.'includes/admin_config.php' );
 
 //only for admins
-if( ! ADMIN )
+if( ! ADMIN ) {
   error( 'Not permitted', 'This function is for admins only' );
- 
+}
+
 //initialise variables
 $address_array = '';
 
 // send to users or groups?
-if(empty($_POST['group']) )
+if(empty($_POST['group']) ){
   error('Email action handler', 'No request given' );
+}
 
 //check we have a message!
-if(empty($_POST['message'] ) )
+if(empty($_POST['message'] ) ){
   warning($lang['admin_email'], $lang['no_message'] );
+}
 
 //normalise embedded line breaks to '\n' and then wordwrap
 $message = $_POST['message'];
@@ -55,10 +58,12 @@ $message = str_replace("\r", "\n", $message );
 $message = wordwrap($message, 100 );
 
 //subject
-if(isset($_POST['subject'] ) )
+if(isset($_POST['subject'] ) ) {
   $subject = $_POST['subject'];
-else
+}
+else {
   $subject = "";
+}
 
 //get rid of magic_quotes - it is not required here
 if(get_magic_quotes_gpc() ) {
@@ -80,11 +85,12 @@ if(get_magic_quotes_gpc() ) {
 
     case 'group':
       //check if any usergroups have been sent
-      if(! empty($_POST['usergroup'] ) )
+      if(! empty($_POST['usergroup'] ) ){
         $max = sizeof($_POST['usergroup'] );
-      else
+      }
+      else {
         warning($lang['admin_email'], $lang['no_usergroups'] );
-
+      }
       (array)$usergroup = $_POST['usergroup'];
 
       //initialise address_array counter
@@ -118,9 +124,9 @@ if(get_magic_quotes_gpc() ) {
       break;
 }
 
-if(isset($EMAIL_MAILINGLIST ) )
+if(isset($EMAIL_MAILINGLIST ) ){
   $address_array = array_merge((array)$address_array, (array)$EMAIL_MAILINGLIST );
-
+}
 //silly error check
 if(sizeof($address_array ) != 0 ) {
   //send it

@@ -36,8 +36,9 @@ $no_access_group[0]   = 0;
 $user_gid = '';
 
 //get some stupid errors
-if(empty($_GET['userid']) || ! is_numeric($_GET['userid']) )
+if(empty($_GET['userid']) || ! is_numeric($_GET['userid']) ){
   error('User show', 'No userid was given' );
+}
 
 $userid = intval($_GET['userid']);
 
@@ -45,9 +46,9 @@ $userid = intval($_GET['userid']);
 $q = db_query('SELECT id, name, fullname, email, admin, private, guest, deleted FROM '.PRE.'users WHERE id='.$userid );
 
 //get info
-if( ! ($row = @db_fetch_array($q, 0 ) ) )
+if( ! ($row = @db_fetch_array($q, 0 ) ) ){
   error('User error', 'User information is not available' );
-  
+}
 //test if user is private
 if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) ) {
   //get usergroups of user
@@ -61,28 +62,32 @@ if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) ) {
   }
 }
 
-if($row['deleted'] == 't' )
+if($row['deleted'] == 't' ){
   $content .= "<b><div style=\"text-align:center\"><span class=\"red\">".$lang['user_deleted']."</span></div></b><br />";
-
+}
 $content .= "<table>".
               "<tr><td>".$lang['login'].":</td><td>".$row['name']."</td></tr>\n".
               "<tr><td>".$lang['full_name'].":</td><td>".$row['fullname']."</td></tr>\n".
               "<tr><td>".$lang['email'].":</td><td><a href=\"mailto:".$row['email']."\">".$row['email']."</a></td></tr>\n";
 
-if($row['admin'] == "t" )
+if($row['admin'] == "t" ){
   $content .= "<tr><td>".$lang['admin'].":</td><td>".$lang['yes']."</td></tr>\n";
-else
+}
+else {
   $content .= "<tr><td>".$lang['admin'].":</td><td>".$lang['no']."</td></tr>\n";
-
-if($row['private'] == 1 )
+}
+if($row['private'] == 1 ) {
   $content .= "<tr><td>".$lang['private_user'].":</td><td>".$lang['yes']."</td></tr>\n";
-else
+}
+else {
   $content .= "<tr><td>".$lang['private_user'].":</td><td>".$lang['no']."</td></tr>\n";
-
-if($row['guest'] == 1 )
+}
+if($row['guest'] == 1 ) {
   $content .= "<tr><td>".$lang['guest'].":</td><td>".$lang['yes']."</td></tr>\n";
-else
+}
+else{
   $content .= "<tr><td>".$lang['guest'].":</td><td>".$lang['no']."</td></tr>\n";
+}
 
 //create a list of all the groups the user is in
 $q = db_query('SELECT '.PRE.'usergroups.id AS id,
@@ -172,16 +177,18 @@ if( $tasks_owned + $projects_owned > 0 ) {
     //check for private usergroups
     if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
-      if( ! in_array( $row['usergroupid'], (array)$GID ) )
+      if( ! in_array( $row['usergroupid'], (array)$GID ) ){
         continue;
+      }
     }
 
     //don't show tasks in private usergroup projects
     if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project ) ) {
       $key = array_search($row['projectid'], $no_access_project );
 
-        if( ! in_array($no_access_group[$key], (array)$GID ) )
+        if( ! in_array($no_access_group[$key], (array)$GID ) ){
           continue;
+        }
     }
 
     $status_content = '';
@@ -205,9 +212,10 @@ if( $tasks_owned + $projects_owned > 0 ) {
         break;
     }
 
-    if($row['parent'] == 0 )
+    if($row['parent'] == 0 ){
       //project
       $status_content ="(".$lang['project'].")";
+    }
 
     //show the task
     $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a> ".$status_content."</li>\n";
