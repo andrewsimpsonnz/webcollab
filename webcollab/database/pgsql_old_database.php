@@ -28,8 +28,7 @@
 */
 
 //get our location
-if( ! @require( "path.php" ) )
-  die( "No valid path found, not able to continue" );
+require_once( "path.php" );
 
 include_once( BASE."config/config.php" );
 include_once( BASE."includes/common.php");
