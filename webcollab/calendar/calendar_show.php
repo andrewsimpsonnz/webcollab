@@ -37,22 +37,25 @@ $allowed[0] = 0;
 $task_dates[0] = 0;
  
 //set selection default
-if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 )
+if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 ){
   $selection = ($_POST['selection']);
-else
+}
+else {
   $selection = 'user';
+}
 
 //set user default
 if(isset($_POST['userid']) && is_numeric($_POST['userid']) ){
   $userid = ($_POST['userid']);
 }
-else{
-  if(! GUEST )
+else {
+  if(! GUEST ){
     $userid = UID;
-  else
+  }
+  else {
     $userid = 0;
+  }
 }
-
 //set usergroup default
 if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) ){
   $groupid = ($_POST['groupid']);
@@ -244,11 +247,11 @@ $content .= "<div style=\"text-align: center\">\n".
 for( $i=1; $i<13 ; ++$i ) {
   $content .= "<option value=\"$i\"";
 
-  if( $month == $i ){ 
+  if( $month == $i ){
     $content .= " selected=\"selected\"";
   }
   $content .= ">".$month_array[($i)]."</option>\n";
-  }
+}
 $content .=  "</select></td>\n";
 
 //year

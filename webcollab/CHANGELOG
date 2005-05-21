@@ -1,4 +1,11 @@
 WebCollab CVS
+*** 21 May 2005
+
+- bugfix: fix usergroup visibility in project list and task list (Mark Nienberg - mnienberg)
+
+- improve code format in conditionals to prevent coding errors (fixed two minor bugs in process)
+
+WebCollab CVS
 *** 11 May 2005
 
 - rearrange some switch statements for better optimisation
