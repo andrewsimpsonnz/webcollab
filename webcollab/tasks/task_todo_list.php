@@ -300,7 +300,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $this_task = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
   
   //add highlighting if deadline is due
-  $state = ceil((real)($row['task_due'] + $tz_offset - $row['now'] )/86400 );
+  $state = ceil((real)($row['task_due'] - ($row['now'] + $tz_offset ) )/86400 );
   
   if($state > 1) {
     $this_task .= $row['name']."</a>".sprintf($lang['due_in_sprt'], $state );

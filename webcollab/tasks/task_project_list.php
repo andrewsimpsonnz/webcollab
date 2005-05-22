@@ -365,7 +365,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
     default:
       $content .= sprintf($lang['percent_sprt'], $row['completed'] )."<br />\n";
       $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )." ";
-      $state = ($row['due'] + $tz_offset - $row['now'] )/86400 ;
+      $state = ($row['due'] - ($row['now'] + $tz_offset ) )/86400 ;
       if($state > 1 ) {
         $content .=  "(".sprintf($lang['due_sprt'], ceil((real)$state) ).")\n";
       }

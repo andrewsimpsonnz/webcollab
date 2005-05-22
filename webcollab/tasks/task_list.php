@@ -234,7 +234,7 @@ function list_tasks($parent ) {
         break;
 
       default:
-        $state = ($row['due'] + $tz_offset - $now )/86400 ;
+        $state = ($row['due'] - ($now + $tz_offset ) )/86400 ;
         if($state > 1 ) {
           $this_content .=  "(".sprintf( $lang['due_sprt'], ceil((real)$state) ).")";
         }
