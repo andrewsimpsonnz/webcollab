@@ -105,7 +105,7 @@ switch($_REQUEST['action'] ) {
                   notes=\''.safe_data_long($_POST['notes']).'\',
                   added_by='.UID.',
                   date=now()
-                  WHERE id = \''.$contactid.'\')';
+                  WHERE id = \''.$contactid.'\'' );
 
   break;
 
