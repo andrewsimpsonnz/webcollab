@@ -65,7 +65,7 @@ function show_percent($percent=0 ) {
     return "<table width=\"400px\"><tr><td style=\"width : 400px\" class=\"redbar\"></td></tr></table>\n";
   }
   if($percent == 100 ){
-    return "<table width=\"400px\"><tr><td style=\"width : 400px\" class=\"redbar\"></td></tr></table>\n";
+    return "<table width=\"400px\"><tr><td style=\"width : 400px\" class=\"greenbar\"></td></tr></table>\n";
   }    
   return "<table width=\"400px\"><tr><td style=\"width\" :".($percent * (400/100))."px class=\"greenbar\">".
            "</td><td style=\"width :".(400-($percent*(400/100)))."px\" class=\"redbar\"></td></tr></table>\n"; 
