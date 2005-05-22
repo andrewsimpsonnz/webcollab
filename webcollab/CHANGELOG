@@ -5,6 +5,10 @@ WebCollab CVS
 
 - improve code format in conditionals to prevent coding errors (fixed two minor bugs in process)
 
+- fix radio boxes in user_add
+
+- fix timezone calculations in project_list and task_list (David Basell - dbasell)
+
 WebCollab CVS
 *** 11 May 2005
 
