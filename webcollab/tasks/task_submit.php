@@ -113,6 +113,7 @@ function status_check($status ) {
     case 'cantcomplete':
     case 'done':
     case 'created':
+    case 'nolimit':
       //all valid values 
       break;
         
