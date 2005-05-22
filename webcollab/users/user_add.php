@@ -49,7 +49,7 @@ $content =
                "<tr><td>&nbsp;</td></tr>\n".
                "<tr><td><label for=\"normal\">".$lang['normal_user'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"normal\" id=\"normal\" checked=\"checked\" /></td></tr>\n".
                "<tr><td><label for=\"admin\">".$lang['is_admin'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"admin\" id=\"admin\" /></td></tr>\n".
-               "<tr><td><label for=\"guest\">".$lang['is_guest'].":</label></td><td><input type=\"radio\" name=\user_type\" value=\"guest\" id=\"guest\" /></td></tr>\n".
+               "<tr><td><label for=\"guest\">".$lang['is_guest'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"guest\" id=\"guest\" /></td></tr>\n".
                "<tr><td>&nbsp;</td></tr>\n";
                
 //add user-groups
