@@ -65,18 +65,20 @@ include_once(BASE."setup/screen_setup.php" );
     $database_host = "localhost";
   }
 
-  if(preg_match('/[^A-Z0-9_$]/i', $database_name ) )
+  if(preg_match('/[^A-Z0-9_$]/i', $database_name ) ){
     error_setup("Database names can only consist of alphanumeric characters, '_' (underscore), and '$'."); 
+  }
   
   switch ($database_type) {
 
   case "mysql":
   case "mysql_innodb":
     //check we can do mysql functions!!
-    if( ! function_exists('mysql_connect' ) )
+    if( ! extension_loaded('mysql' ) ){
       error_setup( "Your version of PHP does not have support for MySQL<br /><br />".
                    "Check that MySQL support is installed, and the MySQL extension is enabled in the 'php.ini' configuration file<br /><br />".
                    "Refer to the FAQ document for more information." );
+    }
     //connect to database server
     if( ! ( $database_connection = @mysql_connect( $database_host, $database_user, $database_password ) ) ) {
       error_setup( "Cannot connect to a database server at $database_host<br /><br />".
@@ -88,15 +90,17 @@ include_once(BASE."setup/screen_setup.php" );
     if( ! @mysql_select_db( $database_name, $database_connection ) ) {
 
       //no database exists yet - try and create it...
-      if( ! ($result = @mysql_query( "CREATE DATABASE ".$database_name, $database_connection ) ) )
+      if( ! ($result = @mysql_query( "CREATE DATABASE ".$database_name, $database_connection ) ) ){
         error_setup("Connected successfully to the database server, but database creation had the following error: <br />".
                              "<b>".mysql_error($database_connection)."</b><br /><br />".
                              "The error message was created by the MySQL database server." );
-
+      }
+      
       //select the newly created database
-      if( ! @mysql_select_db( $database_name, $database_connection ) )
+      if( ! @mysql_select_db( $database_name, $database_connection ) ){
         error_setup("Created a new database, but not able to select the new database. Error message was: <br />".mysql_error($database_connection) );
-
+      }
+      
     }
 
     if($database_type == "mysql") {
@@ -145,10 +149,11 @@ include_once(BASE."setup/screen_setup.php" );
 
   case "postgresql":
     //check we can do pgsql functions!!
-    if( ! function_exists('pg_connect' ) )
+    if( ! extension_loaded('pgsql' ) ) {
       error_setup( "Your version of PHP does not have support for PostgreSQL<br /><br />".
                    "Check that PostgreSQL support is compiled in, and enabled in php.ini config file<br />" );
-
+    }
+    
     //tailor database commands to match version of PHP in use (pgsql functions changed in 4.2.0)
     switch(version_compare(PHP_VERSION, "4.2.0" ) ) {
       case 0:

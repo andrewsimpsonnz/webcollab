@@ -35,11 +35,13 @@ function create_top_setup($title="" ) {
   global $topbuild;
 
   //don't rebuild the top again if already built
-  if( $topbuild == 1 )
+  if( $topbuild == 1 ) {
     return;
-  else
+  }
+  else {
     $topbuild = 1;
-
+  }
+  
   //we don't want any caching of these pages
   header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
   header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");

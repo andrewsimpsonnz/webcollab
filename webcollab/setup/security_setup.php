@@ -26,8 +26,9 @@
 */
 
 //set initial safe values
-if( ! isset($WEB_CONFIG ) )
+if( ! isset($WEB_CONFIG ) ) {
   $WEB_CONFIG = "N";
+}
 
 require_once("path.php" );
 
@@ -84,8 +85,9 @@ else{
     error_setup("Server not able to detect your IP address. Session aborted as a security precaution." );
   }
 
-  if(! defined('PRE' ) )
+  if(! defined('PRE' ) ) {
     define('PRE', "" );
+  }
   
   //seems okay at first, now go cross-checking with the known data from the database
   if( ! ($q = db_query("SELECT ".PRE."logins.user_id AS user_id, 
@@ -116,8 +118,9 @@ else{
   }
 
   //check rights
-  if($row["admin"] != 't' )
+  if($row["admin"] != 't' ) {
     error_setup("You need to be an administrator to use this function" );
+  }
   
   //check the last logintime (there is a 10 min limit)
   if( ($row["now"]-$row["sec_lastaccess"]) > 600 ) {

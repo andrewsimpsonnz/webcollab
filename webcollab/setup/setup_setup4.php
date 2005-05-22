@@ -45,19 +45,23 @@ foreach($array_essential as $var ) {
 $array_optional = array("manager_name", "abbr_manager_name", "db_password", "file_base", "file_maxsize", "use_email", "smtp_host", "new_db" );
 
 foreach($array_optional as $var ) {
-  if(! isset($_POST[$var]) )
+  if(! isset($_POST[$var]) ) {
     $data[$var] = "";
-  else
+  }
+  else {
     $data[$var] = $_POST[$var];
+  }
 }
 
 //convert checkboxes to 'Y' or 'N'
 $array = array("use_email" );
 foreach($array as $var ) {
-  if($data[$var] == "on" )
+  if($data[$var] == "on" ) {
     $data[$var] = "Y";
-  else
+  }
+  else {
     $data[$var] = "N";
+  }
 }
 
 $content  = "";
@@ -123,10 +127,12 @@ switch ($url["scheme"] ){
     else{
       //could not open socket
       $meta = @socket_get_status($fp);
-      if($meta['timed_out'] )
+      if($meta['timed_out'] ) {
         $status = "<font color=\"blue\"><b>Connection timeout: Not able to verify URL</b></font>";
-      else
+      }
+      else {
         $status = "<font color=\"blue\"><b>No connection: Not able to verify URL</b></font>";
+      }  
       $flag = $flag + 1;
     }
     break;
@@ -180,9 +186,9 @@ switch($data["db_type"]) {
       //set initial value
       $host = "";
       //now adjust if necessary
-      if($data["db_host"] != "localhost" )
+      if($data["db_host"] != "localhost" ) {
         $host = "host=".$data["db_host"];
-        
+      }
       //connect to db
       if( ! @pg_connect($host." user=".$data["db_user"]." dbname=".$data["db_name"]." password=".$data["db_password"] ) ) {
         $status = "<font color=\"red\"><b>Can't connect to specified database!</b></font>";
@@ -265,13 +271,14 @@ $content .= "<tr><th>SMTP Host:</th><td>".$data["smtp_host"]."</td><td>$status</
 
 $status = "<font color=\"green\"><b>OK !</b></font>";
 
-if($flag > 9 )
+if($flag > 9 ) {
   $status = "<font color=\"red\"><b>Fatal errors detected in configuration!</b></font>";
+}
 else {
   if($flag > 0 ){
     $status = "<font color=\"blue\"><b>Warning errors in configuration.  Proceed with caution!</b></font>";
   }
-  else{
+  else {
     $status = "<font color=\"green\"><b>No errors detected in the input configuration. Press 'Write to Config' button to proceed.</b></font>";
   }
 }

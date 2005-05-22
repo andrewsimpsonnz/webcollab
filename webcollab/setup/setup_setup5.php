@@ -44,10 +44,12 @@ foreach($array as $var ) {
 $array = array("manager_name", "abbr_manager_name", "db_password", "file_base", "file_maxsize", "use_email", "smtp_host", "new_db" );
 
 foreach($array as $var ) {
-  if(! isset($_POST[$var]) )
+  if(! isset($_POST[$var]) ) {
     $data[$var] = "";
-  else
+  }
+  else {
     $data[$var] = $_POST[$var];
+  }
 }
 
 //if user aborts, let the script carry onto the end
@@ -168,9 +170,9 @@ $content = "<div align='center'>\n".
 'config.php'.</p>\n".
             "<p>Please press the button to finish configuration, and login to WebCollab...</p>\n";
 
-if($data["new_db"] == "Y" )
+if($data["new_db"] == "Y" ) {
   $content .= "<p><b>You have a new database. Your default login and password are 'admin' and 'admin123'</b></p>\n";
-
+}
 $content .=  "<p><form name='inputform' method='post' action='index.php'>\n".
              "<input type='submit' value='Finish' />\n".
              "</form></p>\n".

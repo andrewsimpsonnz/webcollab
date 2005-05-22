@@ -37,10 +37,12 @@ if( ! is_writeable(BASE."config/config.php" ) ){
 }
 
 $flag = 1;
-if(isset($_POST["new_db"]) && $_POST["new_db"] == "N" )
+if(isset($_POST["new_db"]) && $_POST["new_db"] == "N" ) {
   $new_db = "N";
-else
+}
+else {
   $new_db = "Y";
+}
 
 if(defined('DATABASE_NAME' ) && DATABASE_NAME != "" ) {
 
@@ -70,26 +72,36 @@ else {
 //this is TRUE if nothing above was matched
 if($flag ){
   //new database has been created, get parameters...
-  if(isset($_POST["db_name"]) )
+  if(isset($_POST["db_name"]) ) {
     $db_name = $_POST["db_name"];
-  else
+  }
+  else {
     $db_name = "";
-  if(isset($_POST["db_user"]) )
+  }
+  if(isset($_POST["db_user"]) ) {
     $db_user = $_POST["db_user"];
-  else
+  }
+  else {
     $db_user = "";
-  if(isset($_POST["db_password"]) )
+  }
+  if(isset($_POST["db_password"]) ) {
     $db_password = $_POST["db_password"];
-  else
+  }
+  else {
     $db_password = "";
-  if(isset($_POST["db_type"]) )
+  }
+  if(isset($_POST["db_type"]) ) {
     $db_type = $_POST["db_type"];
-  else
+  }
+  else {
     $db_type = "mysql";
-  if(isset($_POST["db_host"]) )
+  }
+  if(isset($_POST["db_host"]) ) {
     $db_host = $_POST["db_host"];
-  else
+  }
+  else {
     $db_host = "localhost";
+  }
 }
 
 
@@ -115,18 +127,22 @@ $content .= "<tr><td></td><td><br /><b><u>Basic Settings</u></b></td></tr>\n".
             "<tr><td></td><td><br />Base URL address of site. (Don't forget the trailing slash - e.g. http://mydomain.com/webcollab/).</td></tr>\n".
             "<tr><th>Site address:</th><td><input type=\"text\" name=\"base_url\" value=\"".$BASE_URL."\" size=\"50\" /></td></tr>\n";
 
-if( ! defined('MANAGER_NAME') || MANAGER_NAME == "" )
+if( ! defined('MANAGER_NAME') || MANAGER_NAME == "" ) {
   $MANAGER_NAME = "WebCollab Project Management";
-else
+}
+else {
   $MANAGER_NAME = MANAGER_NAME;
+}
 
 $content .= "<tr><td></td><td><br />The name of the site</td></tr>\n".
             "<tr><th>Site name:</th><td><input type=\"text\" name=\"manager_name\" value=\"".$MANAGER_NAME."\" size=\"50\" /></td></tr>\n";
 
-if( ! defined('ABBR_MANAGER_NAME') || ABBR_MANAGER_NAME == "" )
+if( ! defined('ABBR_MANAGER_NAME') || ABBR_MANAGER_NAME == "" ) {
   $ABBR_MANAGER_NAME = "WebCollab";
-else
+}
+else {
   $ABBR_MANAGER_NAME = ABBR_MANAGER_NAME;
+}
 
 $content .= "<tr><td></td><td><br />An abbreviated name of the site for emails</td></tr>\n".
             "<tr><th>Abbreviated site name:</th><td><input type=\"text\" name=\"abbr_manager_name\" value=\"".$ABBR_MANAGER_NAME."\" size=\"30\" /></td></tr>\n";
@@ -163,15 +179,19 @@ $content .= "<tr><th>Database type:</th><td><select name=\"db_type\">\n".
 //file settings
 $content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td></tr>\n";
 
-if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == "" )
+if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == "" ) {
   $FILE_BASE = realpath(dirname(__FILE__ )."/.." )."/files/filebase";
-else 
+}
+else { 
   $FILE_BASE = FILE_BASE;
+}
 
-if( ! defined('FILE_MAXSIZE') || FILE_MAXSIZE == "" )
+if( ! defined('FILE_MAXSIZE') || FILE_MAXSIZE == "" ) {
   $FILE_MAXSIZE = "2000000";
-else
+}
+else {
   $FILE_MAXSIZE = FILE_MAXSIZE;
+}
 
 $content .= "<tr><td></td><td><br />Location where uploaded files will be stored</td></tr>\n".
             "<tr><th>File location:</th><td><input type=\"text\" name=\"file_base\" value=\"".$FILE_BASE."\" size=\"50\" /></td></tr>\n".
@@ -182,10 +202,12 @@ $content .= "<tr><td></td><td><br />Location where uploaded files will be stored
 //language settings
 $content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></tr>\n";
 
-if( ! defined('LOCALE') || LOCALE == NULL )
+if( ! defined('LOCALE') || LOCALE == NULL ) {
   $LOCALE = "en";
-else
+}
+else {
   $LOCALE = LOCALE;
+}
 
 //initialise array with null values
 for( $i=0 ; $i < 15 ; $i++ ) {
@@ -218,10 +240,12 @@ $content .= "<tr><td></td><td><br /></td></tr>\n".
 //timezone setting
 $content .= "<tr><td></td><td><br /><br /><b><u>Timezone Setting</u></b></td></tr>\n";
 
-if( ! defined(TZ) || TZ == NULL )
+if( ! defined(TZ) || TZ == NULL ) {
   $TZ = (int)date("Z")/3600;
-else
+}
+else {
   $TZ = TZ;
+}
 
 //initialise array with null values  
 for( $i=0 ; $i < 35 ; $i++ ) {
@@ -273,19 +297,23 @@ $content .=  "<tr><td></td><td><br /></td></tr>\n".
              "</select></td></tr>\n";
                         
 //email settings
-if(defined('USE_EMAIL') && USE_EMAIL == "N" )
+if(defined('USE_EMAIL') && USE_EMAIL == "N" ) {
   $setting = "";
-else
+}
+else {
   $setting = "checked";
+}
 
 $content .= "<tr><td></td><td><br /><br /><b><u>Email Settings</u></b></td></tr>\n".
             "<tr><td></td><td><br /></td></tr>\n".
             "<tr><th>Use email?</th><td><input type=\"checkbox\" name=\"use_email\" $setting  /></td></tr>\n";
             
-if(defined('SMTP_HOST') )
+if(defined('SMTP_HOST') ) {
   $SMTP_HOST = SMTP_HOST;
-else
+}
+else {
   $SMTP_HOST = "localhost";
+}
 
 $content .= "<tr><td></td><td><br /><br /><i>SMTP host is required if email is enabled</i></tr>\n".
             "<tr><th><i>SMTP Host:</i></th><td><input type=\"text\" name=\"smtp_host\" value=\"".$SMTP_HOST."\" size=\"50\" /></td></tr>\n";
