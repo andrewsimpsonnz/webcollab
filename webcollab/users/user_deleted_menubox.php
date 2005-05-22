@@ -49,7 +49,7 @@ $content = "<table>\n";
 
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
-  $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></small></td>\n";
+  $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".wordwrap($row['fullname'], 15, "<br />", 1 )."</a></small></td>\n";
   $content .= "<td style=\"text-align:right; white-space:nowrap\"><span class=\"textlink\">&nbsp;[<a href=\"users.php?x=$x&amp;action=revive&amp;userid=".$row['id']."\">".$lang['revive']."</a>]";
   
   //if this user has NO tasks owned then we can delete him forever :)

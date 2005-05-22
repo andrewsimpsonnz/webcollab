@@ -67,7 +67,9 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
     continue;
   }
 
-  $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></small></td>";
+  $max = (ADMIN ) ? 20 : 30;
+  
+  $content .= "<tr><td><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".wordwrap($row['fullname'], $max,  "<br />", 1 )."</a></small></td>";
 
   if(ADMIN ) {
     $content .= "<td style=\"text-align:right; white-space:nowrap\"><span class=\"textlink\"> [<a href=\"users.php?x=$x&amp;userid=".$row['id']."&amp;action=del\">".$lang['del']."</a>]".
