@@ -94,7 +94,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
       }
     }
 
-    $due = round( ($row['due'] + $tz_offset - $row['now'])/86400 );
+    $due = round( ($row['due'] - ($row['now'] + $tz_offset ) )/86400 );
 
     $seenq = db_query( 'SELECT '.$epoch.' time) FROM '.PRE.'seen WHERE taskid='.$row['id'].' AND userid='.UID.' LIMIT 1' );
 
@@ -141,55 +141,55 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
     }
 
     //status column
-      if( ($row['parent'] == 0 ) ) {
+    if( ($row['parent'] == 0 ) ) {
 
-        switch($row['status'] ) {
-          case 'notactive':
-            $color = '';
-            $date = '';
-            $status =  $task_state['task_planned'];
-            break;
+      switch($row['status'] ) {
+        case 'notactive':
+          $color = '';
+          $date = '';
+          $status =  $task_state['task_planned'];
+          break;
 
-          case 'nolimit':
-            $color = '';
-            $date = '';
-            $status = '';
-            break;
+        case 'nolimit':
+          $color = '';
+          $date = '';
+          $status = '';
+          break;
 
-          case 'cantcomplete':
-            $color = '';
-            $date = '';
-            $status =  "<span class=\"blue\">".$task_state['cantcomplete']."</span>";
-            break;
+        case 'cantcomplete':
+          $color = '';
+          $date = '';
+          $status =  "<span class=\"blue\">".$task_state['cantcomplete']."</span>";
+          break;
 
-          default:
-            $date = nicetime($row['due'] );
-            if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND status<>\'done\' AND parent<>0' ), 0, 0 ) == 0 ) {
-              $color = 'green';
-              $status = $task_state['done'];
-            }
-            else {
-              $status = $lang['project'] ;
-            }
-            break;
-        }
+        default:
+          $date = nicedate($row['deadline']);
+          if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND status<>\'done\' AND parent<>0' ), 0, 0 ) == 0 ) {
+            $color = 'green';
+            $status = $task_state['done'];
+          }
+          else {
+            $status = $lang['project'] ;
+          }
+          break;
       }
-      else {
+    }
+    else {
 
       switch( $row['status'] ) {
         case 'done':
           $color = '';
-          $date = nicetime($row['due'] );
+          $date = nicedate($row['deadline']);
           $status =  "<span class=\"green\">".$task_state['done']."</span>";
           break;
 
         case 'created':
-          $date = nicetime($row['due'] );
+          $date = nicedate($row['deadline']);
           $status =  $task_state['new'];
           break;
 
         case 'active':
-          $date = nicetime($row['due'] );
+          $date = nicedate($row['deadline']);
           $color = 'orange';
           $status =  $task_state['task_active'];
           break;
@@ -207,11 +207,11 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
           break;
 
         default:
-          $date = nicetime($row['due'] );
+          $date = nicedate($row['deadline']);
           $status =  "<span class=\"orange\">".$row['status']."</span>";
           break;
       }
-  }
+    }
 
     //owner column
     if( $row['owner'] == 0 ) {
