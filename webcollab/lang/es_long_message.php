@@ -24,40 +24,40 @@
 
   Language files (long messages) for 'es' (Spanish)
 
-  Trnaslation: Daniel Lujan
+  Trnaslation: Daniel Lujan editado por Alberto Vizcaíno
 
   Maintainer: 
 
 */
 
 
-$taskgroup_info = "<ul><li>Si elimina un taskgroup todas las tareas de su propiedad seran seteadas como uncategorised.</li>\n".
+$taskgroup_info = "<ul><li>Si elimina un grupo de tareas todas las tareas de su propiedad quedaran sin clasificar.</li>\n".
   //**
-  "<li>Private usergroups can only be seen by the members of that private usergroup.</li>\n".
-  "<li>Puede cambiar el nombre de la categoria sin iinterferir con las tareas.</li>\n".
-  "<li>Dos taskgroups no pueden tener el mismo nombre.</li></ul>\n";
+  "<li>Grupos de usuarios privados solo pueden ser vistos por miembros de esos grupos privados.</li>\n".
+  "<li>Puede cambiar el nombre de la categoria sin interferir con las tareas.</li>\n".
+  "<li>Dos grupos de tareas no pueden tener el mismo nombre.</li></ul>\n";
 
-$usergroup_info = "<ul><li>Si elimina un usergroup todos los env&iacute;os privado de for relacionados seran eliminados tambien.</li>\n".
-  "<li>Puede modificar el nombre del usergroup sin interferir con los usuarios en el.</li>\n".
-  "<li>Dos usergroups no pueden tener el mismo nombre.</li></ul>\n";
+$usergroup_info = "<ul><li>Si elimina un grupo de usuarios todos los env&iacute;os privados al foro relacionados seran eliminados tambien.</li>\n".
+  "<li>Puede modificar el nombre del grupo de usuario sin que afecte a sus usuarios.</li>\n".
+  "<li>Dos grupos de usuarios no pueden tener el mismo nombre.</li></ul>\n";
 
-$user_info      = "Seleccion su accion desde el menu en la izquierda.<br /><br />".
+$user_info      = "Seleccione su accion desde el menu de la izquierda.<br /><br />".
   "Algunas cosideraciones:<br />".
   "<ul>".
   //**
-  "<li>Private users can only be seen by members of the same usergroup.</li>\n".
+  "<li>Los usuarios privados solo pueden ser vistos por los usuarios de su grupo.</li>\n".
   "<li>Los usuarios se eliminan en dos etapas, la segunda es permanente.</li>\n".
-  "<li>Un usuario eliminado pierde todas sus tareas pero no sus mensajes del foro.</li>\n".
+  "<li>Un usuario eliminado pierde todas sus tareas pero no sus mensajes en el foro.</li>\n".
   "<li>Un usuario borrado de forma permanente pierde todo.</li>\n".
   //"<li>No puede eliminar un usuario de modo permanente si este tiene itemsm en el foro.</li>\n".
   "<li>Un usuario borrado mantiene los registros de sus tareas que ha revisado, y continuara con estas despues de ser reactivado.</li>\n".
-  "<li>TODAS las acciones ejecutadas sobre un usuario seran informadas al usuario por email..</li>\n".
-  "<li>Los Paswords son encriptados en la bas de datos. Puede solo setear uno nuevo.</li>\n".
-  "<li>Los Passwords son enviados por email al usuario solo una vez cuando el usuario lo registra, sea cuidados cuando envia estos mails!</li>\n".
-  "<li>Los usuarios pueden editar su cuenta sin conocimiento del administrador,, esto salvara su tiempo de administracion</li>\n".
+  "<li>TODAS las acciones ejecutadas sobre un usuario seran informadas al usuario por email.</li>\n".
+  "<li>Los Passwords son encriptados en la base de datos. Solo se pueden asignar nuevos Passwords.</li>\n".
+  "<li>Los Passwords son enviados por email al usuario solo una vez cuando se registra, sea cuidadoso cuando envia estos mails!</li>\n".
+  "<li>Los usuarios pueden editar su cuenta sin conocimiento del administrador, esto ayuda a la gestion</li>\n".
   "</ul>\n";
 
-$calendar_key    = "<i>Retornar al Menu Principal</i></a>]</b><br />\n".
+$calendar_key    = "<i>Volver al Menu Principal</i></a>]</b><br />\n".
 	"<p><b><span class=\"underline\">Claves (colores) para Calendario</span></b><br /><br />\n".
 	"<span class=\"blue\">Proyecto (con tareas incompletas)</span><br />\n".
 	"<span class=\"green\"><span class=\"underline\">Proyecto </span>(todas las tareas completas)</span><br />\n".

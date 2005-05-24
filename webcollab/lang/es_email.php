@@ -24,25 +24,25 @@
 
   Email text language files for 'es' (Spanish)
 
-  Translation: Daniel Lujan
+  Translation: Daniel Lujan editado por Alberto Vizcaíno
 
   Maintainer:
 
 */
 $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y g:i' );
 
-$title_file_post        = ABBR_MANAGER_NAME.": New file upload: %s";
-$email_file_post        = "Hello,\n\nThis is the ".MANAGER_NAME." site informing you that a new file has been uploaded on ".$email_date." by %1\$s.\n\n".
-                          "File:        %2\$s\n".
-                          "Description: %3\$s";
+$title_file_post        = ABBR_MANAGER_NAME.": Nuevo archivo disponible: %s";
+$email_file_post        = "Hola,\n\nEl sitio ".MANAGER_NAME." un nuevo archivo cargado el ".$email_date." por %1\$s.\n\n".
+                          "Archivo:        %2\$s\n".
+                          "Descripcion: %3\$s";
 
 
 $title_forum_post        = ABBR_MANAGER_NAME.": New forum post: %s";
-$email_forum_post        = "Hello,\n\nThis is the ".MANAGER_NAME." site informing you that a new forum post has been made on ".$email_date." by %1\$s:\n\n%2\$s"; 
-$email_forum_reply       = "Hello,\n\nThis is the ".MANAGER_NAME." site informing you that a new forum post has been made on ".$email_date." by %1\$s.\n\n".
-                           "This post is in reply to an earlier post by %2\$s.\n\n".
-                           "Original post:\n %3\$s\n\n".
-                           "New reply:\n%4\$s\n";
+$email_forum_post        = "Hola,\n\nEl sitio ".MANAGER_NAME." le informa de un nuevo mensaje en el foro ".$email_date." por %1\$s:\n\n%2\$s"; 
+$email_forum_reply       = "Hola,\n\nEl sitio ".MANAGER_NAME." le informa de un nuevo mensaje en el foro ".$email_date." por %1\$s.\n\n".
+                           "Este mensaje es una respuesta a %2\$s.\n\n".
+                           "Mensaje original:\n %3\$s\n\n".
+                           "Nueva respuesta:\n%4\$s\n";
 
 
 $email_list = "Proyecto: %1\$s\n".
@@ -55,35 +55,35 @@ $email_list = "Proyecto: %1\$s\n".
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Su item ha sido reasignado";
 $title_takeover_task      = ABBR_MANAGER_NAME.": Su item ha sido reasignado";
-$email_takeover_project   = "Hola,\n\nEste es ".MANAGER_NAME." sitio informandole que un proyecto a su cargo a sido reasignada por el administrador el ".$email_date.".\n\n";
-$email_takeover_task      = "Hola,\n\nEste es ".MANAGER_NAME." sitio informandole que un tarea a su cargo a sido reasignada por el administrador el ".$email_date.".\n\n";
+$email_takeover_project   = "Hola,\n\nEl sitio ".MANAGER_NAME." informandole que un proyecto a su cargo a sido reasignada por el administrador el ".$email_date.".\n\n";
+$email_takeover_task      = "Hola,\n\nEl sitio ".MANAGER_NAME." informandole que una tarea a su cargo a sido reasignada por el administrador el ".$email_date.".\n\n";
 
 $title_new_owner_project  = ABBR_MANAGER_NAME.": Nuevo proyecto para ud";
 $title_new_owner_task     = ABBR_MANAGER_NAME.": Nuevo tarea para ud";
-$email_new_owner_project  = "Hola,\n\nEste es el ".MANAGER_NAME." sitio informandole que un proyecto suyo (ahora a su cargo) fue cambiado el ".$email_date.".\n\nAqui los detalles:\n\n";
-$email_new_owner_task     = "Hola,\n\nEste es el ".MANAGER_NAME." sitio informandole que un tarea suyo (ahora a su cargo) fue cambiado el ".$email_date.".\n\nAqui los detalles:\n\n";
+$email_new_owner_project  = "Hola,\n\nEste es el sitio ".MANAGER_NAME." informandole que un proyecto suyo (ahora a su cargo) fue cambiado el ".$email_date.".\n\nAqui los detalles:\n\n";
+$email_new_owner_task     = "Hola,\n\nEste es el sitio ".MANAGER_NAME." informandole que una tarea suya (ahora a su cargo) fue cambiado el ".$email_date.".\n\nAqui los detalles:\n\n";
 
 
 $title_new_group_project  = ABBR_MANAGER_NAME.": Nuevo proyecto: %s";
 $title_new_group_task     = ABBR_MANAGER_NAME.": Nuevo tarea: %s";
-$email_new_group_project  = "Hola,\n\nEste es el ".MANAGER_NAME." sitio informandole que un nuevo proyecto ha sido creado el ".$email_date."\n\nAqui los detalles:\n\n";
-$email_new_group_task     = "Hola,\n\nEste es el ".MANAGER_NAME." sitio informandole que un nuevo tarea ha sido creado el ".$email_date."\n\nAqui los detalles:\n\n";
+$email_new_group_project  = "Hola,\n\nEste es el sitio ".MANAGER_NAME." informandole que un nuevo proyecto ha sido creado el ".$email_date."\n\nAqui los detalles:\n\n";
+$email_new_group_task     = "Hola,\n\nEste es el sitio ".MANAGER_NAME." informandole que una nueva tarea ha sido creado el ".$email_date."\n\nAqui los detalles:\n\n";
 
-$title_edit_owner_project = ABBR_MANAGER_NAME.": Su proyecto actualizada";
+$title_edit_owner_project = ABBR_MANAGER_NAME.": Su proyecto actualizado";
 $title_edit_owner_task    = ABBR_MANAGER_NAME.": Su tarea actualizada";
-$email_edit_owner_project ="Hola,\n\nEste es el ".MANAGER_NAME." sitio informandole que un proyecto a su cargo cambio el ".$email_date.".\n\nAqui los detalles:\n\n";
-$email_edit_owner_task    ="Hola,\n\nEste es el ".MANAGER_NAME." sitio informandole que un tarea a su cargo cambio el ".$email_date.".\n\nAqui los detalles:\n\n";
+$email_edit_owner_project ="Hola,\n\nEste es el sitio ".MANAGER_NAME." informandole que un proyecto a su cargo cambio el ".$email_date.".\n\nAqui los detalles:\n\n";
+$email_edit_owner_task    ="Hola,\n\nEste es el sitio ".MANAGER_NAME." informandole que una tarea a su cargo cambio el ".$email_date.".\n\nAqui los detalles:\n\n";
 
 $title_edit_group_project = ABBR_MANAGER_NAME.": Proyecto actualizada";
 $title_edit_group_task    = ABBR_MANAGER_NAME.": Tarea actualizada";
-$email_edit_group_project = "Hola,\n\nEste es el ".MANAGER_NAME." sitio informandole que un proyecto a cargo de %s ha cambiado el ".$email_date.".\n\nAqui los detalles:\n\n";
-$email_edit_group_task    = "Hola,\n\nEste es el ".MANAGER_NAME." sitio informandole que un tarea a cargo de %s ha cambiado el ".$email_date.".\n\nAqui los detalles:\n\n";
+$email_edit_group_project = "Hola,\n\nEste es el sitio".MANAGER_NAME." informandole que un proyecto a cargo de %s ha cambiado el ".$email_date.".\n\nAqui los detalles:\n\n";
+$email_edit_group_task    = "Hola,\n\nEste es el sitio".MANAGER_NAME." informandole que una tarea a cargo de %s ha cambiado el ".$email_date.".\n\nAqui los detalles:\n\n";
 
 $title_delete_project     = ABBR_MANAGER_NAME.": Proyecto eliminada";
 $title_delete_task        = ABBR_MANAGER_NAME.": Tarea eliminada";
-$email_delete_project     = "Hola,\n\nEste es el ".MANAGER_NAME." sitio informandole que un proyecto a su cargo fue eliminado el ".$email_date."\n\n".
+$email_delete_project     = "Hola,\n\nEste es el sitio ".MANAGER_NAME." informandole que un proyecto a su cargo fue eliminado el ".$email_date."\n\n".
                             "Gracias por dirigir la proyecto en su momento.\n\n";
-$email_delete_task        = "Hola,\n\nEste es el ".MANAGER_NAME." sitio informandole que un tarea a su cargo fue eliminado el ".$email_date."\n\n".
+$email_delete_task        = "Hola,\n\nEste es el sitio".MANAGER_NAME." informandole que una tarea a su cargo fue eliminado el ".$email_date."\n\n".
                             "Gracias por dirigir la tarea en su momento.\n\n";
 
 $delete_list =  "Proyecto: %1\$s\n".
@@ -92,45 +92,45 @@ $delete_list =  "Proyecto: %1\$s\n".
                 "Texto:\n%4\$s\n\n";
 
 $title_welcome      = "Bievenido a ".ABBR_MANAGER_NAME;
-$email_welcome      = "Hola,\n\nEste es el sitio ".MANAGER_NAME." dandole la bienvenida ;) el  ".$email_date.".\n\n".
-			"Como ud es nuevo aqui le explicare un par de cosas para que rapidamente pueda comenzar u trabajo\n\n".
-			"Primero de todo est&aacute; es una herramienta de manejo de proyectos, la pantalla principal le mostrara los proyectos actualmente disponibles.. ".
-			"Si hace click en uno de los nombres se encontrara ud mismo en la paprte de tareas. Aqui es donde el trabajo comienza..\n\n".
+$email_welcome      = "Hola,\n\nBienvenido a: ".MANAGER_NAME." el  ".$email_date.".\n\n".
+			"Estas son unas notas para usuarios nuevos, la aplicacion todavia no esta bien traducida.\n\n".
+			"Antes de nada, est&aacute; es una herramienta de gestion de proyectos, la pantalla principal le mostrara los proyectos actualmente disponibles. ".
+			"Si hace click en uno de los proyectos se encontrara ud mismo en la parte de tareas. Aqui es donde el trabajo comienza..\n\n".
 			"Cada item que ud envia o tarea que edita sera mostrada los otros usuarios como 'nueva' o 'actualizada'. Esto tambien funciona en viceversa y ".
-			"lo habilita para rapidamente enfocar donde est&aacute; la actividad.\n\n".
-			"Ud puede tambien hacerse cargo o tomar propiedad de tareas y se encontrara habilitado de editar y todo los envio del foro seran recibidos. ".
+			"lo habilita para enfocar rapidamente donde est&aacute; la actividad.\n\n".
+			"Ud tambien puede hacerse cargo o tomar propiedad de tareas y se encontrara habilitado para editar. Tambien recibira los envios al foro. ".
 			"Con el avance se su trabajo por favor edite el texto de sus tareas y el estado de tal manera que todos puedan mantener un seguimiento de su progreso. ".
-			"\n\nSolo puedo desearle exitos y envie email a ".$EMAIL_ADMIN." si ud se encuentra en dificultad.\n\n --Buena suerte !\n\n".
+			"\n\nEspero que la herramienta sea de su agrado. Envie email a ".$EMAIL_ADMIN." si tiene alguna duda.\n\n --Buena suerte!\n\n".
 			"Login:      %1\$s\n".
 			"Password:   %2\$s\n\n".
-			"Usergroups: %3\$s".
+			"Grupos de usuarios: %3\$s".
 			"Nombre:     %4\$s\n".
-			"Website:    ".BASE_URL."\n\n".
+			"Pagina web:    ".BASE_URL."\n\n".
 			"%5\$s";
 
-$title_user_change1 = ABBR_MANAGER_NAME.": Edicion de su cuenta por un administrador";
-$email_user_change1 = "Hola,\n\nEste es el ".MANAGER_NAME." sitio informandole que su cuenta ha sido modificada el ".$email_date." por %1\$s ( %2\$s ) \n\n".
+$title_user_change1 = ABBR_MANAGER_NAME.": Modificacion de su cuenta por un administrador";
+$email_user_change1 = "Hola,\n\n ".MANAGER_NAME." le informa que su cuenta ha sido modificada el ".$email_date." por %1\$s ( %2\$s ) \n\n".
 			"Login:      %3\$s\n".
 			"Password:   %4\$s\n\n".
-			"Usergroups: %5\$s".
+			"Grupos de usuarios: %5\$s".
 			"Nombre:     %6\$s\n\n".
 			"%7\$s";
 
-$title_user_change2 = ABBR_MANAGER_NAME.": Edicion de su cuenta";
-$email_user_change2 = "Hola,\n\nEste es el ".MANAGER_NAME." sitio confirmando que ud ha modificado exitosamente su cuenta el ".$email_date."\n\n".
+$title_user_change2 = ABBR_MANAGER_NAME.": Modificacion de su cuenta";
+$email_user_change2 = "Hola,\n\n ".MANAGER_NAME." confirma que ud ha modificado exitosamente su cuenta el ".$email_date."\n\n".
 			"Login:    %1\$s\n".
 			"Password: %2\$s\n\n".
 			"Nombre:   %3\$s\n";
 
-$title_user_change3 = ABBR_MANAGER_NAME.": Edicion de su cuenta";
-$email_user_change3 = "Hola,\n\nEste es el ".MANAGER_NAME." sitio confirmandole que ha modificado exitosamente su cuenta el ".$email_date."\n\n".
+$title_user_change3 = ABBR_MANAGER_NAME.": Modificacion de su cuenta";
+$email_user_change3 = "Hola,\n\n ".MANAGER_NAME." confirma que ha modificado exitosamente su cuenta el ".$email_date."\n\n".
 			"Login:    %1\$s\n".
 			"Su pasword NO ha sido modificada.\n\n".
 			"Nombre:   %2\$s\n";
 
 
 $title_revive       = ABBR_MANAGER_NAME.": Cuenta reactivada";
-$email_revive       = "Hola,\n\nEste e el ".MANAGER_NAME." sitio informandole que su cuenta ha sido reactivada el  ".$email_date.".\n\n".
+$email_revive       = "Hola,\n\n ".MANAGER_NAME." le informa que su cuenta ha sido reactivada el  ".$email_date.".\n\n".
 			"Loginname: %1\$s\n".
 			"Username:  %2\$s\n\n".
 			"No podemos enviarle su clave porque est&aacute; encriptada. \n\n".
@@ -139,8 +139,8 @@ $email_revive       = "Hola,\n\nEste e el ".MANAGER_NAME." sitio informandole qu
 
 
 $title_delete_user  = ABBR_MANAGER_NAME.": Cuenta desactivada.";
-$email_delete_user  = "Hola,\n\nEste es el ".MANAGER_NAME." sitio informandole que su cuenta ha sido desactivada el ".$email_date.".\n\n".
-			"Lamentamos su desactivacion y agrradecemos por su trabajo!\n\n".
+$email_delete_user  = "Hola,\n\n ".MANAGER_NAME." le informa que su cuenta ha sido desactivada el ".$email_date.".\n\n".
+			"Lamentamos su desactivacion y agradecemos su trabajo!\n\n".
 			"Si desea objetar su desactivacion, o piensa que ha sido un error, envie un email a ".$EMAIL_ADMIN.".";
 
 ?>
