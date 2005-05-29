@@ -132,6 +132,7 @@ db_query('UPDATE '.PRE.'config SET email_admin=\''.$email_admin.'\',
 //if no email end here
 if(USE_EMAIL != 'Y' ){
   header('Location: '.BASE_URL.'main.php?x='.$x );
+  die;
 }
 
 /*
@@ -171,4 +172,5 @@ if( isset($email_list ) ) {
 //all done!
 
 header('Location: '.BASE_URL.'main.php?x='.$x );
+
 ?>
