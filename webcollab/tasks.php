@@ -43,8 +43,9 @@ switch($_REQUEST['action'] ) {
   case 'show':      
     
     //catch & redirect hack for invalid entry from ProjectJump
-    if(isset($_REQUEST['taskid']) && $_REQUEST['taskid'] == -1 ){
+    if(isset($_REQUEST['taskid']) && ($_REQUEST['taskid'] == -1 ) ){
       header('Location: '.BASE_URL.'main.php?x='.$x );
+      die;
     }
     
     create_top($lang['task_info']);
@@ -146,8 +147,8 @@ switch($_REQUEST['action'] ) {
           
   //submit clone
   case 'submit_clone':
-      include('tasks/task_clone_submit.php' );
-      break;   
+    include('tasks/task_clone_submit.php' );
+    break;   
           
   //printable task info
   case 'show_print':
