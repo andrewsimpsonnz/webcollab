@@ -147,18 +147,8 @@ $project_print = 0;
 $task_projectid = '';
 $tz_offset = (TZ * 3600) - date('Z');
 
-if(isset($_GET['active'] ) ) {
-  $active_only = $_GET['active'];
-}
-else {
-  $active_only = 0;
-}      
-if(isset($_GET['condensed'] ) ) {
-  $condensed = $_GET['condensed'];
-}
-else {
-  $condensed = 0;
-}
+$active_only = (isset($_GET['active']) )    ? $_GET['active']    : 0;
+$condensed   = (isset($_GET['condensed']) ) ? $_GET['condensed'] : 0;
 
 //get config order for sorting
 $q = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
