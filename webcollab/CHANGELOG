@@ -1,4 +1,10 @@
 WebCollab CVS
+*** 28 May 2005
+
+- bugfix: ProjectJump HTTP redirect not working on some webservers (Bug #1209798) (Thomas Briggs)
+
+
+WebCollab CVS
 *** 24 May 2005
 
 - Spanish language update (Credit: Alberto Vizcaíno López) 
