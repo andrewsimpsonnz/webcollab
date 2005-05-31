@@ -27,9 +27,7 @@
 
 require_once("path.php" );
 
-require_once(BASE."config/config.php" );
 require_once(BASE."setup/security_setup.php" );
-include_once(BASE."setup/screen_setup.php" );
 
 //essential values - must be present
 $array_essential = array("db_name", "db_user", "db_type", "db_host", "base_url", "locale", "timezone" );
@@ -39,7 +37,6 @@ foreach($array_essential as $var ) {
   }
   $data[$var] = $_POST[$var];
 }
-
 
 //non-essential values
 $array_optional = array("manager_name", "abbr_manager_name", "db_password", "file_base", "file_maxsize", "use_email", "smtp_host", "new_db" );

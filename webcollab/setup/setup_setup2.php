@@ -27,10 +27,7 @@
 
 require_once("path.php" );
 
-require_once(BASE."config/config.php" );
 require_once(BASE."setup/security_setup.php" );
-include_once(BASE."setup/screen_setup.php" );
-
 
 create_top_setup("Setup Screen" );
 

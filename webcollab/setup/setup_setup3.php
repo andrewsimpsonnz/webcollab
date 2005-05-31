@@ -27,9 +27,7 @@
 
 require_once("path.php" );
 
-require_once(BASE."config/config.php" );
 require_once(BASE."setup/security_setup.php" );
-include_once(BASE."setup/screen_setup.php" );
 
 //check config can be written
 if( ! is_writeable(BASE."config/config.php" ) ){
