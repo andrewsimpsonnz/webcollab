@@ -27,8 +27,8 @@
 
 
 require_once("path.php" );
+require_once(BASE."config/config_path.php" );
 
-require_once(BASE."config/config.php" );
 include_once(BASE."setup/screen_setup.php" );
 
 
