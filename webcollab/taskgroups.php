@@ -51,8 +51,6 @@ switch( $_REQUEST['action'] ) {
     include('taskgroups/taskgroup_menubox.php' );
     goto_main();
     include('taskgroups/taskgroup_manage.php' );
-    include_once('lang/lang_long.php' ); //get message
-    new_box( $lang['info_taskgroup_manage'], $taskgroup_info );
     create_bottom();
     break;
 

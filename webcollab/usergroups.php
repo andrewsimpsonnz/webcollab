@@ -49,9 +49,6 @@ switch( $_REQUEST['action'] ) {
     include('users/user_menubox.php' );
     goto_main();
     include('usergroups/usergroup_manage.php' );
-    include_once('lang/lang_long.php' );
-    $content = $usergroup_info;
-    new_box($lang['info_usergroup_manage'], $content );
     create_bottom();
     break;
 
