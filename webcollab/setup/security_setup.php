@@ -33,7 +33,7 @@ if( ! isset($WEB_CONFIG ) ) {
 require_once("path.php" );
 
 //read config files
-require_once(BASE."config/config.php" );
+require_once(BASE."config/config_path.php" );
 include_once(BASE."database/database.php" );
 include_once(BASE."setup/screen_setup.php" );
 
