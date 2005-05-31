@@ -69,11 +69,11 @@ switch($_REQUEST['action'] ) {
     create_top($lang['manage_users'] );
     include('includes/mainmenu.php' );
     include('users/user_menubox.php' );
-    include('users/user_existing_menubox.php' );
-    include('users/user_deleted_menubox.php' );
     include('usergroups/usergroup_menubox.php' );
 
     goto_main();
+    include('users/user_existing_list.php' );
+    include('users/user_deleted_list.php' );
     include('users/user_info.php' );
     create_bottom();
     break;
