@@ -3,6 +3,15 @@ WebCollab CVS
 
 - bugfix: ProjectJump HTTP redirect not working on some webservers (Bug #1209798) (Thomas Briggs)
 
+- alter manage_usergroup.php to allow users to view usergroup members (Feature Request #1183256) 
+
+- improve styling on manage usergroup and manage taskgroup
+
+- make allowance for config.php to be moved away from under the server root directory 
+
+- shift existing_user and deleted_user boxes to main screen
+
+- project/task sorting order in calendar, todo and task list now follows admin_config settings (David Basell - dbasell) 
 
 WebCollab CVS
 *** 24 May 2005
