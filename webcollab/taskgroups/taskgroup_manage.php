@@ -47,12 +47,12 @@ if(db_numrows($q) == 0 ) {
 }
 
 $content =
-            "<table class=\"celldata\">\n".
-              "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th><th>".$lang['action']."</th></tr>\n";
+            "<table>\n".
+              "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th></tr>\n";
 
 //show all taskgroups
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
-  $content .= "<tr><td>".$row['name']."</td><td>".$row['description']." </td>".
+  $content .= "<tr><td style=\"padding-right: 5px\"><b>".$row['name']."</b></td><td style=\"padding-right: 5px\"><i>".$row['description']."</i></td>".
               "<td><span class=\"textlink\"><a href=\"taskgroups.php?x=$x&amp;action=submit_del&amp;taskgroupid=".$row['id']."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">[".$lang['del']."]</a></span>&nbsp;".
               "<span class=\"textlink\"><a href=\"taskgroups.php?x=$x&amp;action=edit&amp;taskgroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td></tr>";
 
@@ -62,5 +62,11 @@ $content .=   "</table>\n".
             "<p><span class=\"textlink\">[<a href=\"taskgroups.php?x=$x&amp;action=add\">".$lang['add']."</a>]</span></p>\n";
 
 new_box( $lang['manage_taskgroups'], $content, 'boxdata2' );
+
+//admin gets some user notes
+include_once(BASE.'lang/lang_long.php' );
+$content = $taskgroup_info;
+new_box( $lang['info_taskgroup_manage'], $content );
+
 
 ?>
