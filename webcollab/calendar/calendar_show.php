@@ -26,8 +26,8 @@
   Lists a calendar
 
 */
-
-require_once('includes/security.php' );
+require_once('path.php');
+require_once(BASE.'includes/security.php' );
 
 //secure variables
 $content = '';
@@ -49,16 +49,11 @@ if(isset($_POST['userid']) && is_numeric($_POST['userid']) ){
   $userid = ($_POST['userid']);
 }
 else {
-  if(! GUEST ){
-    $userid = UID;
-  }
-  else {
-    $userid = 0;
-  }
+  $userid = (GUEST ) ? 0 : UID;
 }
 //set usergroup default
 if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) ){
-  $groupid = ($_POST['groupid']);
+  $groupid = $_POST['groupid'];
 }  
 else {
   $groupid = 0;
@@ -68,21 +63,21 @@ if(isset($_POST['lastyear']) && strlen($_POST['lastyear']) > 0 ){
   $yearoffset = -1;
 }
 else {
-   if(isset($_POST['nextyear']) && strlen($_POST['nextyear']) > 0 ){
-     $yearoffset = +1;
-   }
-   else {
-     $yearoffset = 0;
-   }
+  if(isset($_POST['nextyear']) && strlen($_POST['nextyear']) > 0 ) {
+    $yearoffset = +1;
+  }
+  else {
+    $yearoffset = 0;
+  }
 }
 if(isset($_POST['lastmonth']) && strlen($_POST['lastmonth']) > 0 ){
   $monthoffset = -1;
 }  
 else {
-  if(isset($_POST['nextmonth']) && strlen($_POST['nextmonth']) > 0 ){
+  if(isset($_POST['nextmonth']) && strlen($_POST['nextmonth']) > 0 ) {
     $monthoffset = +1;
-  }  
-  else{
+  }
+  else {
     $monthoffset = 0;
   }
 }
@@ -102,7 +97,7 @@ else {
 if(isset($_POST['year']) && is_numeric($_POST['year']) ){
   $year = $_POST['year'];
 }
-else{
+else {
   $year = date('Y', $epoch);
 }
 //Apply any calendar navigation
@@ -180,6 +175,11 @@ $q = db_query('SELECT DISTINCT '.$day_part.'deadline) FROM '.PRE.'tasks
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ){
   $task_dates[$i] = (int)$row[0];
 }
+
+//get the sort order for projects/tasks
+$q   = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
+$row = db_fetch_num($q, $i );
+$order = array($tail.' AND parent=0 '.$row[0], $tail.' AND parent<>0 '.$row[1] );
 
 $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" /></fieldset>\n ".
@@ -310,66 +310,71 @@ for($num = 1; $num <= $numdays; ++$num ) {
 
   //check if this date has projects/tasks
   if(in_array($num, (array)$task_dates ) ) {
-  
     //rows exist for this date - get them!
-    $q = db_query('SELECT id, name, parent, status, usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE deadline=\''.$year.'-'.$month.'-'.$num.'\' AND archive=0 '.$tail.' ORDER BY NAME' );
-
-      for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
-
-        //check for private usergroups
-        if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
-
-          if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
-            continue;
-          }
-        }
-
-        //don't show tasks in private usergroup projects
-        if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project) ) {
-          $key = array_search($row['projectid'], $no_access_project );
-
-          if( ! in_array($no_access_group[$key], (array)$GID ) ) {
-            continue;
-          }
-        }
-
-        switch($row['status'] ) {
-          case 'notactive':
-          case 'cantcomplete':
-          case 'nolimit':
-            //don't show if not active
-            continue 2;
-            break;
-
-          default:
-            //active task or project
-            switch($row['parent'] ) {
-              case '0':
-                //project
-                //check if tasks are all complete
-                if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND status<>\'done\' AND parent>0' ), 0, 0 ) == 0 ){
-                  $name = "<span class=\"green\"><span class=\"underline\">".$row['name']."</span>";
-                }
-                else {
-                  $name = "<span class=\"blue\">".$row['name'];
-                }
-                $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
-                           "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
-                break;
-
-              default:
-                //task
-                if($row['status'] == "done" ) {
-                  $name = "<span class=\"green\">".$row['name'];
-                }
-                else {
-                  $name = "<span class=\"red\">".$row['name'];
-                }
-                $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
-                          "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
-                break;
+    //projects first, then tasks in order set by admin  
+    foreach($order as $suffix ) { 
+      $q = db_query('SELECT id, name, parent, status, usergroupid, globalaccess, projectid, deadline AS due
+                            FROM '.PRE.'tasks 
+                            WHERE deadline=\''.$year.'-'.$month.'-'.$num.'\' 
+                            AND archive=0 '.$suffix );
+  
+        for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
+  
+          //check for private usergroups
+          if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
+  
+            if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
+              continue;
             }
-          break;
+          }
+  
+          //don't show tasks in private usergroup projects
+          if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project) ) {
+            $key = array_search($row['projectid'], $no_access_project );
+  
+            if( ! in_array($no_access_group[$key], (array)$GID ) ) {
+              continue;
+            }
+          }
+  
+          switch($row['status'] ) {
+            case 'notactive':
+            case 'cantcomplete':
+            case 'nolimit':
+              //don't show if not active
+              continue 2;
+              break;
+  
+            default:
+              //active task or project
+              switch($row['parent'] ) {
+                case '0':
+                  //project
+                  //check if tasks are all complete
+                  if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND status<>\'done\' AND parent>0' ), 0, 0 ) == 0 ){
+                    $name = "<span class=\"green\"><span class=\"underline\">".$row['name']."</span>";
+                  }
+                  else {
+                    $name = "<span class=\"blue\">".$row['name'];
+                  }
+                  $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
+                            "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
+                  break;
+  
+                default:
+                  //task
+                  if($row['status'] == "done" ) {
+                    $name = "<span class=\"green\">".$row['name'];
+                  }
+                  else {
+                    $name = "<span class=\"red\">".$row['name'];
+                  }
+                  $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
+                            "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
+                  break;
+              }
+            break;
+        }
       }
     }
   }
