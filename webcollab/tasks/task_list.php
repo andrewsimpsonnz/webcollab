@@ -42,21 +42,16 @@ function list_tasks($parent ) {
 
   global $x, $GID, $parentid, $parent_array, $epoch, $lang;
   global $taskgroup_flag, $task_state, $ul_flag, $now, $tz_offset;
+  global $no_group, $task_order;
 
   //init values
   $stored_groupname = NULL;
   $this_content = '';
-  $no_group = '';
   $ul_flag = 0;
-
-  //force mysql to put 'uncategorised' items at the bottom
-  if(substr(DATABASE_TYPE, 0, 5) == 'mysql' ) {
-    $no_group = 'IF('.PRE.'taskgroups.name IS NULL, 1, 0), ';
-  }
   
   //query to get the children for this taskid
   $q = db_query('SELECT '.PRE.'tasks.id AS id,
-                  '.PRE.'tasks.name AS taskname,
+                  '.PRE.'tasks.name AS name,
                   '.PRE.'tasks.status AS status,
                   '.$epoch.' '.PRE.'tasks.finished_time) AS finished_time,
                   '.$epoch.' '.PRE.'tasks.deadline) AS due,
@@ -73,7 +68,7 @@ function list_tasks($parent ) {
                   LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
                   LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid)
                   WHERE '.PRE.'tasks.parent='.$parent.'
-                  ORDER by '.$no_group.' groupname, taskname' );
+                  ORDER BY '.$no_group.' groupname, '.$task_order );
 
   //check for any tasks.  If no tasks end recursive function
   if(db_numrows($q) < 1 ) {
@@ -214,7 +209,7 @@ function list_tasks($parent ) {
 
 
     //merge all info about a task
-    $this_content .= $alert_content."<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">".$row['taskname']."</a>&nbsp;$status_content";
+    $this_content .= $alert_content."<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a>&nbsp;$status_content";
     $this_content .= "<small>";
 
     //add username if task is taken
@@ -323,6 +318,16 @@ if( db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent='.$parent
 else {
   $taskgroup_flag = 0;
 }
+
+//force mysql to put 'uncategorised' items at the bottom of the listing
+$no_group = '';
+if(substr(DATABASE_TYPE, 0, 5) == 'mysql' ) {
+  $no_group = 'IF('.PRE.'taskgroups.name IS NULL, 1, 0), ';
+}
+
+//get the task sort order (strip off the 'ORDER BY' in this case)
+$task_order = db_result(db_query('SELECT task_order FROM '.PRE.'config' ), 0, 0 );
+$task_order = str_replace('ORDER BY', '', $task_order );
 
 $content  = list_tasks($parentid );
 
