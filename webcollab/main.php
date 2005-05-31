@@ -48,6 +48,9 @@ create_top();
     $taskid = -1;
     include('files/file_menubox.php' );
   }
+  else {
+    include('usergroups/usergroup_menubox.php' );
+  }
   include('contacts/contact_menubox.php' );
 
 //flip over to other frame
