@@ -60,7 +60,7 @@ if(db_numrows($q) < 1 ) {
 }
 
 //text link for 'printer friendly' page
-if(isset($_GET['action']) && $action == "archive_print" ) {
+if(isset($_GET['action']) && $_GET['action'] == "archive_print" ) {
   $content  .= "[<a href=\"archive.php?x=".$x."&amp;action=list\">".$lang['normal_version']."</a>]\n";
 }
 else {
