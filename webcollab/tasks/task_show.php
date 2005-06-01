@@ -254,23 +254,19 @@ else {
 
 $content .= "</table>\n";
 
-//this part shows all the options the users has
-$content .= "<div style=\"text-align : center\"><span class=\"textlink\">\n";
-
-//if archived we allow no adjustments
-if($TASKID_ROW['archive'] == 0 ) {
-  //set add function and title for task or project
+//if this is an archived task, or you are a GUEST user, then no user functions are available 
+if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
+  
+  $content .= "<div style=\"text-align : center\"><span class=\"textlink\">\n";
+    
+  //set add function
   switch($TYPE){
     case 'project':
-      if(! GUEST ) {
-        $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a>]&nbsp;\n";
-      }
+      $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a>]&nbsp;\n";
       break;
   
     case 'task':
-      if(! GUEST ) { 
-        $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_subtask']."</a>]&nbsp;\n";
-      }
+      $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_subtask']."</a>]&nbsp;\n";
       break;
   }
   
@@ -281,9 +277,7 @@ if($TASKID_ROW['archive'] == 0 ) {
         $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
       }
       //I'll take it!
-      if(! GUEST ) {
-        $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang['i_take_it']."</a>]&nbsp;\n";
-      }
+      $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang['i_take_it']."</a>]&nbsp;\n";
       break;
   
     case (UID):
@@ -305,8 +299,10 @@ if($TASKID_ROW['archive'] == 0 ) {
       }
       if(($TASKID_ROW['groupaccess'] == "t") && (in_array($TASKID_ROW['usergroupid'], (array)$GID ) ) ){
         //user is in the usergroup & groupaccess is set
-        $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
-          
+        if(! ADMIN ) {
+          //edit
+          $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
+        }
         //if not finished and not a project; then [I finished it!] button
         if( ($TASKID_ROW['status'] != "done" ) && ($TASKID_ROW['parent'] != 0 ) ) {
           $content .= "[<a href=\"tasks.php?x=$x&amp;action=done&amp;taskid=".$taskid."\">".$lang['i_finished']."</a>]\n";
@@ -314,9 +310,9 @@ if($TASKID_ROW['archive'] == 0 ) {
       }
       break;
   }
+  $content .= "</span></div>\n";
 }
 
-$content .= "</span></div>\n";
 
 new_box( $title, $content, 'boxdata2' );
 
