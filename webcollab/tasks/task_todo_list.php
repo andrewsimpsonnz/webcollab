@@ -172,12 +172,7 @@ if(isset($_POST['userid']) && is_numeric($_POST['userid']) ){
   $userid = intval($_POST['userid']);
 }
 else {
-  if(! GUEST ){
-    $userid = UID;
-  }
-  else {
-    $userid = 0;
-  }
+  $userid = (GUEST ) ? 0 : UID;
 }
 
 if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) ) {
@@ -273,16 +268,21 @@ $content .= "</select></label><br /><br /></td></tr>\n".
             "</table>\n".
             "</form>\n";
 
+//get the sort order for projects/tasks
+$q   = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
+$row = db_fetch_num($q, $i );
+$project_order = $row[0];
+$task_order    = $row[1];
 
 // show all subtasks that are not complete
 $q = db_query('SELECT id, name, owner, deadline, parent, usergroupid, globalaccess, projectid,
-                        '.$epoch.' deadline) AS task_due,
+                        '.$epoch.' deadline) AS due,
                         '.$epoch.' now() ) AS now
                         FROM '.PRE.'tasks
                         WHERE parent<>0
                         AND (status=\'created\' OR status=\'active\')
-                        '.$tail.'
-                        ORDER BY name' );
+                        '.$tail.' '.
+                        $task_order );
 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
@@ -300,7 +300,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $this_task = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
   
   //add highlighting if deadline is due
-  $state = ceil((real)($row['task_due'] - ($row['now'] + $tz_offset ) )/86400 );
+  $state = ceil((real)($row['due'] - ($row['now'] + $tz_offset ) )/86400 );
   
   if($state > 1) {
     $this_task .= $row['name']."</a>".sprintf($lang['due_in_sprt'], $state );
@@ -308,7 +308,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   else if($state > 0) {
     $this_task .= $row['name']."</a>".$lang['due_tomorrow'];
   }
-  else{
+  else {
     $this_task .= "<span class=\"red\">".$row['name']."</span></a>";
   }
   
@@ -322,7 +322,10 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 db_free_result($q);
 
 //query to get the all the projects
-$q = db_query('SELECT id, name, usergroupid, globalaccess FROM '.PRE.'tasks WHERE parent=0 AND archive=0 ORDER BY name' );
+$q = db_query('SELECT id, name, usergroupid, globalaccess, deadline AS due 
+                      FROM '.PRE.'tasks 
+                      WHERE parent=0
+                      AND archive=0 '.$project_order );
 
 // show all uncompleted tasks and projects belonging to this user or group
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
