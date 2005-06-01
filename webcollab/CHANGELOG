@@ -3,6 +3,10 @@ WebCollab CVS
 
 - bugfix: ProjectJump HTTP redirect not working on some webservers (Bug #1209798) (Thomas Briggs)
 
+- bugfix: Remove double [edit] button (Bug #1212253) (Credit: Alfred Ellis - alfredellis)
+
+- bugfix: Syntax error in archive_list.php
+
 - alter manage_usergroup.php to allow users to view usergroup members (Feature Request #1183256) 
 
 - improve styling on manage usergroup and manage taskgroup
