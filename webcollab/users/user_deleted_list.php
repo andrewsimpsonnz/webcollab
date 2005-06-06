@@ -50,13 +50,15 @@ $content = "<table>\n";
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<tr><td style=\"padding-right: 5px\"><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>\n".
-              "<td style=\"text-align:right; white-space:nowrap\"><span class=\"textlink\">[<a href=\"users.php?x=$x&amp;action=revive&amp;userid=".$row['id']."\">".$lang['revive']."</a>]&nbsp;";
-  
+              "<td><span class=\"textlink\">";
+              
   //if this user has NO tasks owned then we can delete him forever :)
   if( ! db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner='.$row['id'] ), 0, 0 ) ) {
-    $content .= "&nbsp;[<a href=\"users.php?x=$x&amp;action=permdel&amp;userid=".$row['id']."\" onclick=\"return confirm( '".sprintf($lang['permdel_javascript_sprt'], javascript_escape($row['fullname'] ) )."' )\">".$lang['permdel']." </a>]";
+    $content .= "[<a href=\"users.php?x=$x&amp;action=permdel&amp;userid=".$row['id']."\" onclick=\"return confirm( '".sprintf($lang['permdel_javascript_sprt'], javascript_escape($row['fullname'] ) )."' )\">".$lang['permdel']." </a>]&nbsp;";
   }
-  $content.="</span></td></tr>\n";
+  
+  $content .= "[<a href=\"users.php?x=$x&amp;action=revive&amp;userid=".$row['id']."\">".$lang['revive']."</a>]".
+              "</span></td></tr>\n";
 }
 
 $content .= "</table>";

@@ -87,7 +87,7 @@ if($parentid != 0 ) {
   //show a box with the original post
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" /></fieldset>\n".
               "<table>\n".
-              "<tr><td>".$lang['orig_message']."</td><td style=\"background:#EEEEEE\">".$row['text']."</td></tr>\n";
+              "<tr><td>".$lang['orig_message']."</td><td style=\"background:#EEEEEE\">".nl2br($row['text'])."</td></tr>\n";
 }
 else {
   $row = '';
@@ -104,8 +104,7 @@ $content .=   "<tr><td>".$lang['message']."</td><td><textarea id=\"text\" name=\
               "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" $DEFAULT_OWNER /></td></tr>\n".
               "<tr><td><label for=\"usergroup\">".$lang['forum_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" $DEFAULT_GROUP /></td></tr>\n".
               "</table>\n".
-              "<p><input type=\"submit\" value=\"".$lang['post']."\" onclick=\"return fieldCheck()\" />&nbsp;".
-              "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>".
+              "<p><input type=\"submit\" value=\"".$lang['post']."\" onclick=\"return fieldCheck()\" /></p>".
               "</form>\n";
 
 //show a reply or a new-post box

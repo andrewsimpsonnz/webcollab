@@ -131,8 +131,7 @@ $content .= "<tr><td>".$lang['task_listing_order'].":</td><td>\n".
             "</table>\n";
           
 $content .=
-          "<p><input type=\"submit\" value=\"".$lang['update']."\" />&nbsp;".
-          "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>\n".
+          "<p><input type=\"submit\" value=\"".$lang['update']."\" /></p>\n".
         "</form>\n";
 
 new_box( $lang['configuration'], $content );
