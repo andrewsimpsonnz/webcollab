@@ -90,6 +90,11 @@ function list_posts_from_task( $taskid, $usergroupid ) {
     }              
     $this_post .= "&nbsp;(".nicetime( $row['posted'], 1 ).")</small>";
                      
+    //owners of the thread, owners of the post and admins have a "delete" option
+    if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['postowner'] ) ) {
+      $this_post .= " <span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=submit_del&amp;postid=".$row['id']."&amp;taskid=$taskid\" onclick=\"return confirm( '{$lang['confirm_del_javascript']}' )\">{$lang['del']}</a>]</span>";
+    }
+
     //add reply button
     if($TASKID_ROW['archive'] == 0 ){
       $this_post .= "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid={$row['id']}&amp;taskid=$taskid";
@@ -101,12 +106,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
       $this_post .= "\">".$lang['reply']."</a>]</span>\n";
     }
 
-    //owners of the thread, owners of the post and admins have a "delete" option
-    if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['postowner'] ) ) {
-      $this_post .= " <span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=submit_del&amp;postid=".$row['id']."&amp;taskid=$taskid\" onclick=\"return confirm( '{$lang['confirm_del_javascript']}' )\">{$lang['del']}</a>]</span>";
-    }
-
-    $post_array[$i]['post'] = $this_post."<br />\n".$row['text']."\n";
+    $post_array[$i]['post'] = $this_post."<br />\n".nl2br($row['text'] )."\n";
     ++$post_count;
     
     //if this is a subpost, store the parent id 
