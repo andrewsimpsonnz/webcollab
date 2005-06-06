@@ -270,49 +270,42 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
       break;
   }
   
-  switch( $TASKID_ROW['owner'] ){
-    case 0:
-      if(ADMIN ){
-        //admin edit
-        $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
-      }
-      //I'll take it!
-      $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang['i_take_it']."</a>]&nbsp;\n";
-      break;
-  
-    case (UID):
-      $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
-      //if not finished and not a project; then [I finished it!] button
-      if( ($TASKID_ROW['status'] != "done" ) && ($TASKID_ROW['parent'] != 0 ) ) {
-        $content .= "[<a href=\"tasks.php?x=$x&amp;action=done&amp;taskid=".$taskid."\">".$lang['i_finished']."</a>]&nbsp;\n";
-      }
-      // deown the task
-      $content .= "[<a href=\"tasks.php?x=$x&amp;action=deown&amp;taskid=".$taskid."\">".$lang['i_dont_want']."</a>]&nbsp;\n";
-      break;
-  
-    default:
-      if(ADMIN ){
-        //edit
-        $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
-        //take over
-        $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_".$TYPE] )."</a>]&nbsp;\n";
-      }
-      if(($TASKID_ROW['groupaccess'] == "t") && (in_array($TASKID_ROW['usergroupid'], (array)$GID ) ) ){
-        //user is in the usergroup & groupaccess is set
-        if(! ADMIN ) {
-          //edit
-          $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
-        }
-        //if not finished and not a project; then [I finished it!] button
-        if( ($TASKID_ROW['status'] != "done" ) && ($TASKID_ROW['parent'] != 0 ) ) {
-          $content .= "[<a href=\"tasks.php?x=$x&amp;action=done&amp;taskid=".$taskid."\">".$lang['i_finished']."</a>]\n";
-        }
-      }
-      break;
+  //unowned task ==> [I'll take it!] button
+  if($TASKID_ROW['owner'] == 0 ) {
+    $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang['i_take_it']."</a>]&nbsp;\n";
   }
+
+  //check for owner or group access
+  if((UID == $TASKID_ROW['owner'] ) || 
+     ($TASKID_ROW['groupaccess'] == "t") && (in_array($TASKID_ROW['usergroupid'], (array)$GID ) ) ) {
+    $access = true;
+  }
+  else {
+    $access = false;
+  }    
+  
+  //admin - owner - groupaccess  ==> [edit] button
+  if((ADMIN ) || ($access ) ) {
+    $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
+  }
+  
+  //(owner - groupaccess) & (uncompleted task)  ==> [I finished it] button
+  if(($access ) && ($TASKID_ROW['status'] != "done" ) && ($TASKID_ROW['parent'] != 0 ) ) {
+    $content .= "[<a href=\"tasks.php?x=$x&amp;action=done&amp;taskid=".$taskid."\">".$lang['i_finished']."</a>]&nbsp;\n";
+  }
+    
+  //owner ==> [I don't want it anymore] button
+  if(UID == $TASKID_ROW['owner'] ) {
+    $content .= "[<a href=\"tasks.php?x=$x&amp;action=deown&amp;taskid=".$taskid."\">".$lang['i_dont_want']."</a>]&nbsp;\n";
+  }
+  
+  //(admin) & (not owner) & (has owner) ==> [Take over task] button
+  if((ADMIN ) && (UID != $TASKID_ROW['owner'] ) && ($TASKID_ROW['owner'] != 0 ) ) {
+    $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_".$TYPE] )."</a>]\n";
+  }
+  
   $content .= "</span></div>\n";
 }
-
 
 new_box( $title, $content, 'boxdata2' );
 
