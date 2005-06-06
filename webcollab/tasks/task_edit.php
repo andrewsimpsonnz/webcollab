@@ -351,8 +351,7 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
 
              "</table>\n".
              
-             "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" onclick=\"return fieldCheck()\" />&nbsp;".
-             "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>".
+             "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" onclick=\"return fieldCheck()\" /></p>".
              "</form>\n";
 
 //delete options

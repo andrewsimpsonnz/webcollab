@@ -216,8 +216,7 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
               "<tr><td><label for=\"maillist\">".$lang['email_group']."</label></td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></td></tr>\n".
 
               "</table>\n".
-              "<p><input type=\"submit\" value=\"".$lang['add_task']."\" onclick=\"return fieldCheck()\" />&nbsp;".
-              "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>".
+              "<p><input type=\"submit\" value=\"".$lang['add_task']."\" onclick=\"return fieldCheck()\" /></p>".
               "</form>\n";
 
   new_box( $lang['add_task'], $content );
@@ -298,8 +297,7 @@ else {
               "<tr><td><label for=\"maillist\">".$lang['email_group']."</label></td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></td></tr>\n".
 
               "</table>\n".
-              "<p><input type=\"submit\" value=\"".$lang['add_project']."\"  onclick=\"return fieldCheck()\" />&nbsp;".
-              "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>\n".
+              "<p><input type=\"submit\" value=\"".$lang['add_project']."\"  onclick=\"return fieldCheck()\" /></p>".
               "</form>\n";
 
   new_box( $lang['add_new_project'], $content );
