@@ -1,4 +1,17 @@
 WebCollab CVS
+*** 5 June 2005
+
+- remove reset buttons from submit forms
+
+- re-arrange text links in some submit forms for consistency across program
+
+- refactor text link code for better maintainability in task_show.php
+
+- refactor variable names to make unfiltered input variables more obvious in code
+
+- change to database specific escaping (pg_escape_string() and mysql_real_escape_string())    
+
+WebCollab CVS
 *** 28 May 2005
 
 - bugfix: ProjectJump HTTP redirect not working on some webservers (Bug #1209798) (Thomas Briggs)
