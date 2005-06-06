@@ -40,16 +40,11 @@ switch(DATABASE_TYPE ) {
     break;
 
   case 'postgresql':
-    switch(version_compare(PHP_VERSION, '4.2.0' ) ) {
-      case 0:
-      case 1:
-        include(BASE.'database/pgsql_database.php' );
-        break;
-
-      case -1:
-      default:    
-        include(BASE.'database/pgsql_old_database.php' );
-        break;
+    if(version_compare(PHP_VERSION, '4.2.0' ) == -1 ) {
+      include(BASE.'database/pgsql_old_database.php' );
+    }
+    else {
+      include(BASE.'database/pgsql_database.php' );
     }
     break;
 
