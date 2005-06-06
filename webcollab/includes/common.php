@@ -96,11 +96,14 @@ function clean_up($body ) {
     $body = preg_replace($validation_regex, '?', $body );
   }
   
-  //use HTML encoding, or add escapes '\' for characters that could be used for css <script> or SQL injection attacks
-  $trans = array('\\'=>'\\\\', "'"=>"\'", '"'=>'\"', ';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'\(', ')'=>'\)', '+'=>'\+', '-'=>'\-', '='=>'\=' );
+  //prevent SQL injection
+  $body = db_escape_string($body );
+  //use HTML encoding, or add escapes '\' for characters that could be used for xss <script> or SQL injection attacks
+      //for better xss protection (at the expense of ability to upload non-ASCII characters) add to $trans array '&'=>'&amp;'    
+  $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '+'=>'\+', '-'=>'\-', '='=>'\=' );
+  $body  = strtr($body, $trans );
   
-  return strtr($body, $trans ); 
-  
+  return $body;
 }
 
 //
@@ -114,7 +117,7 @@ function html_escape($body ) {
 }
 
 //
-// single quotes in javascript fields are double escaped (PHP removes one of the escape characters)
+// single quotes in javascript fields are escaped
 // double quotes are changed to HTML (escaping won't work) 
 // 
 function javascript_escape($body ) {
@@ -129,15 +132,16 @@ function javascript_escape($body ) {
 //
 function html_links($body, $database_escape=0 ) {
 
+  if(ctype_space($body) ) {
+    return '';
+  }
+  
   $body = preg_replace('/(([\w\-\.]+)@([\w\-\.]+)\.([\w]+))/', "<a href=\"mailto:$0\">$0</a>", $body );
   
   //data being submitted to a database needs ('$0') part escaped
-  if($database_escape ) {    
-    $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s]+)/i', "<a href=\"$0\" onclick=\"window.open(\'$0\'); return false\">$0</a>", $body );
-  }  
-  else {
-    $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s]+)/i', "<a href=\"$0\" onclick=\"window.open('$0'); return false\">$0</a>", $body );
-  }  
+  $escape = ($database_escape ) ? '\\' : '';  
+      
+  $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s]+)/i', "<a href=\"$0\" onclick=\"window.open(".$escape."'$0".$escape."'); return false\">$0</a>", $body );
   return $body;
 }
 
