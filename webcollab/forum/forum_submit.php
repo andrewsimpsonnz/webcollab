@@ -137,7 +137,6 @@ ignore_user_abort(TRUE);
       
       //make email adresses and web links clickable
       $text = html_links($text, 1 );
-      $text = nl2br($text );
 
       if(isset($_POST['mail_owner'] ) && ($_POST['mail_owner'] == 'on' ) ) {
         $mail_owner = true;
@@ -221,11 +220,11 @@ ignore_user_abort(TRUE);
         include_once(BASE.'includes/email.php' );
         include_once(BASE.'lang/lang_email.php' );
 
-        $message = $_POST['text'];
+        $message_unclean = $_POST['text'];
           
         //get rid of magic_quotes - it is not required here
         if(get_magic_quotes_gpc() ){
-          $message = stripslashes($message );  
+          $message_unclean = stripslashes($message_unclean );  
         }  
         //get & add the mailing list
         if(isset($EMAIL_MAILINGLIST ) ){
@@ -235,7 +234,7 @@ ignore_user_abort(TRUE);
         switch($parentid ) {
           case 0:
             //this is a new post
-            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_post, UID_NAME, $message) );
+            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_post, UID_NAME, $message_unclean) );
             break;
 
           default:
@@ -252,10 +251,7 @@ ignore_user_abort(TRUE);
               $row['username'] = "----";
             }
               
-            //remove any HTML linebreaks that nl2br() has put into the text...
-            $original_message =  str_replace("<br />", "", $row['text'] );
-
-            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_reply, UID_NAME, $row['username'], $original_message, $message ) );
+            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_reply, UID_NAME, $row['username'], $original_message, $message_unclean ) );
             break;
         }
       }

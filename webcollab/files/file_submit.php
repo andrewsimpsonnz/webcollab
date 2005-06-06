@@ -69,7 +69,6 @@ ignore_user_abort(TRUE);
       $description = safe_data_long($_POST['description'] );
       //make email adresses and web links clickable
       $description = html_links($description, 1 );
-      $description = nl2br($description );
 
       $input_array = array('mail_owner', 'mail_group' );
       foreach($input_array as $var ) {
@@ -189,18 +188,18 @@ ignore_user_abort(TRUE);
         include_once(BASE.'includes/email.php' );
         include_once(BASE.'lang/lang_email.php' );
 
-        $message = $_POST['description'];
+        $message_unclean = $_POST['description'];
         
         //get rid of magic_quotes - it is not required here
         if(get_magic_quotes_gpc() ) {
-          $message = stripslashes($message );
+          $message_unclean = stripslashes($message_unclean );
         }
         
         //get & add the mailing list
         if(isset($EMAIL_MAILINGLIST ) ){
           $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
         }
-        email($mail_list, sprintf($title_file_post, $task_row['name'] ), sprintf($email_file_post, UID_NAME, $_FILES['userfile']['name'], $message ) );
+        email($mail_list, sprintf($title_file_post, $task_row['name'] ), sprintf($email_file_post, UID_NAME, $_FILES['userfile']['name'], $message_unclean ) );
       }
 
       break;
@@ -249,6 +248,7 @@ if(isset($_GET['taskid']) && $_GET['taskid'] == -1 ) { //can only occur from fil
 }
 else {
   header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$_REQUEST['taskid'] );
+  die;
 }
 
 ?>
