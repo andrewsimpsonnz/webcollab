@@ -93,6 +93,14 @@ function db_query($query, $dieonerror=1 ) {
 }
 
 //
+// escapes special characters in a string for use in a SQL statement
+//
+function db_escape_string($string ) {
+  
+  return pg_escape_string($string);
+}
+
+//
 // number of rows in result set
 //
 function db_numrows($q ) {

@@ -95,6 +95,14 @@ return $result;
 }
 
 //
+// escapes special characters in a string for use in a SQL statement
+//
+function db_escape_string($string ) {
+  
+  return addslashes($string);
+}
+
+//
 // number of rows in result set
 //
 function db_numrows($q ) {

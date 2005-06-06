@@ -36,6 +36,25 @@ $delim = '';
 $epoch = 'UNIX_TIMESTAMP( ';
 $day_part = 'DAYOFMONTH( ';
 $interval = 'INTERVAL ';
+$escape_new = (version_compare(PHP_VERSION, '4.3.0' ) == '-1' ) ? false : true;
+
+//
+// connect to database
+//
+function db_connection() {
+
+  global $database_connection;
+
+  //make connection
+  if( ! ($database_connection = @mysql_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD ) ) )
+    error('No database connection',  'Sorry but there seems to be a problem in connecting to the database server');
+  
+  //select database
+  if( ! @mysql_select_db(DATABASE_NAME, $database_connection ) )
+    error('Database error', 'No connection to database tables' );
+
+return;   
+}
 
 //
 // Provides a safe way to do a query
@@ -44,17 +63,8 @@ function db_query( $query, $dieonerror=1 ) {
 
   global $database_connection, $db_error_message ;
 
-  if( ! $database_connection ) {
-
-    //make connection
-    if( ! ($database_connection = @mysql_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD ) ) )
-      error('No database connection',  'Sorry but there seems to be a problem in connecting to the database server');
-
-    //select database
-    if( ! @mysql_select_db(DATABASE_NAME, $database_connection ) )
-      error('Database error', 'No connection to database tables' );
-  }
-
+  if(! $database_connection ) db_connection();
+  
   //do it
   if( ! ($result = @mysql_query( $query, $database_connection ) ) ) {
 
@@ -66,6 +76,25 @@ function db_query( $query, $dieonerror=1 ) {
   return $result;
 }
 
+//
+// escapes special characters in a string for use in a SQL statement
+//
+function db_escape_string($string ) {
+  
+  global $database_connection, $escape_new;
+   
+  if($escape_new ) {
+    if(! $database_connection ) {
+      db_connection();
+    }
+    $result = mysql_real_escape_string($string, $database_connection );
+  }
+  else {
+    $result = mysql_escape_string($string );
+  }  
+    
+  return $result;
+}
 
 //
 // number of rows in result
