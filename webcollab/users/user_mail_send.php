@@ -52,23 +52,23 @@ if(empty($_POST['message'] ) ){
 }
 
 //normalise embedded line breaks to '\n' and then wordwrap
-$message = $_POST['message'];
-$message = str_replace("\r\n", "\n", $message );
-$message = str_replace("\r", "\n", $message );
-$message = wordwrap($message, 100 );
+$message_unclean = $_POST['message'];
+$message_unclean = str_replace("\r\n", "\n", $message_unclean );
+$message_unclean = str_replace("\r", "\n", $message_unclean );
+$message_unclean = wordwrap($message_unclean, 100 );
 
 //subject
 if(isset($_POST['subject'] ) ) {
-  $subject = $_POST['subject'];
+  $subject_unclean = $_POST['subject'];
 }
 else {
-  $subject = "";
+  $subject_unclean = '';
 }
 
 //get rid of magic_quotes - it is not required here
 if(get_magic_quotes_gpc() ) {
-  $message = stripslashes($message );
-  $subject = stripslashes($subject );
+  $message_unclean = stripslashes($message_unclean );
+  $subject_unclean = stripslashes($subject_unclean );
 }
 
   //what do you want to send today =]
@@ -130,7 +130,7 @@ if(isset($EMAIL_MAILINGLIST ) ){
 //silly error check
 if(sizeof($address_array ) != 0 ) {
   //send it
-  email($address_array, $subject, $message );
+  email($address_array, $subject_unclean, $message_unclean );
 }
 
 //all done: warp back to main screen (Aye, aye captain).

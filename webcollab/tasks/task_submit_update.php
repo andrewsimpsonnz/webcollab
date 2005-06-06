@@ -215,7 +215,7 @@ switch($parentid ){
     $title1 = $title_edit_owner_project;
     $email2 = $email_edit_group_project;
     $title2 = $title_edit_group_project;
-    $name_task = '';
+    $name_task_unclean = '';
     break;
 
   default:
@@ -224,12 +224,7 @@ switch($parentid ){
     $email2 = $email_edit_group_task;
     $title2 = $title_edit_group_task;
     //get rid of magic_quotes - it is not required here
-    if(get_magic_quotes_gpc() ) {
-      $name_task = stripslashes($name );
-    }
-    else {
-      $name_task = $name;
-    }
+    $name_task_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'] ) : $_POST['name'];
     break;
 }
 
@@ -248,10 +243,8 @@ switch($owner ) {
   }
 
   //get rid of magic_quotes - it is not required here
-  if(get_magic_quotes_gpc() ) {
-    $text = stripslashes($text );
-  }
-
+  $text_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['text'] ) : $_POST['text'];
+  
 //email owner ?
 if(isset($_POST['mailowner']) && ($_POST['mailowner']=='on') && ($owner != 0) ) {
 
@@ -260,7 +253,7 @@ if(isset($_POST['mailowner']) && ($_POST['mailowner']=='on') && ($owner != 0) ) 
   $email_address_owner = db_result(db_query('SELECT email FROM '.PRE.'users WHERE id='.$owner, 0), 0, 0 );
 
   $message = $email1 .
-              sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text );
+              sprintf($email_list, $name_project, $name_task_unclean, status($status, $deadline), $name_owner, $email_owner, $text_unclean );
   email($email_address_owner, $title1, $message );
 }
 
@@ -270,7 +263,7 @@ if(isset($_POST['maillist']) && ($_POST['maillist']=='on') ) {
   include_once(BASE.'includes/email.php' );
 
   $message = sprintf($email2, $name_owner ).
-              sprintf($email_list, $name_project, $name_task, status($status, $deadline), $name_owner, $email_owner, $text );
+              sprintf($email_list, $name_project, $name_task_unclean, status($status, $deadline), $name_owner, $email_owner, $text_unclean );
                 
   if($usergroupid != 0 ) {
     $q = db_query('SELECT '.PRE.'users.email

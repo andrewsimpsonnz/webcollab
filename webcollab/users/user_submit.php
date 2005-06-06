@@ -94,7 +94,7 @@ switch($_REQUEST['action'] ) {
     if(empty($_POST['password'])){
       warning( $lang['value_missing'], sprintf( $lang['field_sprt'], 'password' ) );
     }
-    $password = $_POST['password'];
+    $password_unclean = $_POST['password'];
     
     //do basic check on email address
     if(! ereg("^.+@.+\..+$", $email ) ){
@@ -133,7 +133,7 @@ switch($_REQUEST['action'] ) {
     db_begin();
     //insert into the users table
     $q = db_query("INSERT INTO ".PRE."users(name, fullname, password, email, private, admin, guest, deleted)
-                    VALUES('$name', '$fullname', '".md5($password)."', '$email', '$private_user', '$admin_user',  '$guest_user', 'f')" );
+                    VALUES('$name', '$fullname', '".md5($password_unclean)."', '$email', '$private_user', '$admin_user',  '$guest_user', 'f')" );
 
     //if the user is assigned to any groups execute the following code to add him/her
     if( isset($_POST['usergroup']) ) {
@@ -165,8 +165,12 @@ switch($_REQUEST['action'] ) {
     if($admin_user == 't' ){
       $admin_state = $lang['admin_priv']."\n";
     }
-    $message = sprintf($email_welcome, $name, $password,$usergroup_names,
-                $fullname, $admin_state );
+    
+    $name_unclean     = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'])     : $_POST['name'];
+    $fullname_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['fullname']) : $_POST['fullname'];
+      
+    $message = sprintf($email_welcome, $name_unclean, $password_unclean, $usergroup_names,
+                $fullname_unclean, $admin_state );
     email($email, $title_welcome, $message );
 
     break;
@@ -185,10 +189,10 @@ switch($_REQUEST['action'] ) {
     }
 
     if(empty($_POST['password']) ){
-      $password = '';
+      $password_unclean = '';
     }
     else {
-      $password = $_POST['password'];  
+      $password_unclean = $_POST['password'];  
     }
     
     //check email address
@@ -235,14 +239,14 @@ switch($_REQUEST['action'] ) {
       //begin transaction
       db_begin();
       //was a password provided or not ?
-      if($password != '' ) {
+      if($password_unclean != '' ) {
 
         //update data and the password
         $q = db_query("UPDATE ".PRE."users
                               SET name='$name',
                               fullname='$fullname',
                               email='$email',
-                              password='".md5($password)."',
+                              password='".md5($password_unclean)."',
                               private='$private_user',
                               admin='$admin_user',
                               guest='$guest_user'
@@ -285,19 +289,28 @@ switch($_REQUEST['action'] ) {
       if($usergroup_names == '' ){
         $usergroup_names = $lang['not_usergroup']."\n";
       }
-      if($password == '' ){
-        $password = $lang['no_password_change'];
+      
+      if($password_unclean == '' ){
+        $password_unclean = $lang['no_password_change'];
+      }  
+      else {
+        $password_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['password']) : $_POST['password'];      
       }
+      
       if($admin_user == 't' ){
         $admin_state = $lang['admin_priv']."\n";
       }
+      
+      $name_unclean     = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'])     : $_POST['name'];
+      $fullname_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['fullname']) : $_POST['fullname'];
+      
       //email the changes to the user
-      $message = sprintf($email_user_change1, UID_NAME, UID_EMAIL, $name,
-              $password, $usergroup_names, $fullname, $admin_state );
+      $message = sprintf($email_user_change1, UID_NAME, UID_EMAIL, $name_unclean,
+              $password_unclean, $usergroup_names, $fullname_unclean, $admin_state );
       email($email, $title_user_change1, $message );
 
     }
-    else{
+    else {
       //this is secure option where the user cannot change important values
 
       //prohibit 2 people from choosing the same username
@@ -306,17 +319,20 @@ switch($_REQUEST['action'] ) {
       }
       
       //did the user change his/her password ?
-      if($password != '' ) {
+      if($password_unclean != '' ) {
 
         db_query("UPDATE ".PRE."users
                           SET name='$name',
                           fullname='$fullname',
-                          password='".md5($password)."',
+                          password='".md5($password_unclean)."',
                           email='$email'
                           WHERE id=".UID );
 
         //email the changes to the user
-        $message = sprintf($email_user_change2, $name, $password, $fullname );
+        $name_unclean     = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'])     : $_POST['name'];
+        $fullname_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['fullname']) : $_POST['fullname'];
+        
+        $message = sprintf($email_user_change2, $name_unclean, $password_unclean, $fullname_unclean );
         email($email, $title_user_change2, $message );
       }
       else {
@@ -328,7 +344,10 @@ switch($_REQUEST['action'] ) {
                           WHERE id=".UID );
 
         //email the changes to the user
-        $message = sprintf( $email_user_change3, $name, $fullname );
+        $name_unclean     = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'])     : $_POST['name'];
+        $fullname_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['fullname']) : $_POST['fullname'];
+        
+        $message = sprintf($email_user_change3, $name_unclean, $fullname_unclean );
         email( $email, $title_user_change3, $message );
       }
     }
