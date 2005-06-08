@@ -86,7 +86,7 @@ function copy_across($taskid, $new_parent, $name ) {
     if($new_parent != 0 ) {
       //new task
       $new_projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$new_parent ), 0, 0 );
-      $new_name = addslashes($row['name'] );
+      $new_name = db_escape_string($row['name'] );
     }
     else{
       //new project (adjust projectid later)
@@ -114,7 +114,7 @@ function copy_across($taskid, $new_parent, $name ) {
                     groupaccess,
                     status )
                     values('$new_name',
-                    '".addslashes($row['text'])."',
+                    '".db_escape_string($row['text'])."',
                     now(),
                     now(),
                     now(),
@@ -130,7 +130,7 @@ function copy_across($taskid, $new_parent, $name ) {
                     ".$row['usergroupid'].",
                     '".$row['globalaccess']."',
                     '".$row['groupaccess']."',
-                    '".addslashes($row['status'])."')" );
+                    '".db_escape_string($row['status'])."')" );
 
     // get taskid for the new task/project
     $new_taskid = db_lastoid('tasks_id_seq' );
