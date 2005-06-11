@@ -41,14 +41,15 @@ $content = '';
 function list_tasks($parent ) {
 
   global $x, $GID, $parentid, $parent_array, $epoch, $lang;
-  global $taskgroup_flag, $task_state, $ul_flag, $now, $tz_offset;
+  global $taskgroup_flag, $task_state, $ul_flag;
   global $no_group, $task_order;
 
   //init values
   $stored_groupname = NULL;
   $this_content = '';
   $ul_flag = 0;
-  
+  $tz_offset = (TZ * 3600) - TZ_OFFSET;
+    
   //query to get the children for this taskid
   $q = db_query('SELECT '.PRE.'tasks.id AS id,
                   '.PRE.'tasks.name AS name,
@@ -147,7 +148,7 @@ function list_tasks($parent ) {
     $seen_test = db_result(db_query('SELECT COUNT(*) FROM '.PRE.'seen WHERE taskid='.$row['id'].' AND userid='.UID.' LIMIT 1' ), 0, 0);
 
     //don't show alert content for changes more than NEW_TIME (in seconds)
-    if( ($now - max($row['edited'], $row['lastpost'], $row['lastfileupload'] ) ) > 86400*NEW_TIME ) {
+    if( (TIME_NOW - max($row['edited'], $row['lastpost'], $row['lastfileupload'] ) ) > 86400*NEW_TIME ) {
 
       //task is over limit in NEW_TIME and still not looked at by you, mark it as seen, and move on...
       if( $seen_test < 1 ) {
@@ -229,7 +230,7 @@ function list_tasks($parent ) {
         break;
 
       default:
-        $state = ($row['due'] - ($now + $tz_offset ) )/86400 ;
+        $state = ($row['due'] - (TIME_NOW + $tz_offset ) )/86400 ;
         if($state > 1 ) {
           $this_content .=  "(".sprintf( $lang['due_sprt'], ceil((real)$state) ).")";
         }
@@ -287,13 +288,9 @@ if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) ) {
 $parentid = intval($_REQUEST['taskid']);
 
 //check for private usergroup projects
-$q = db_query('SELECT usergroupid, globalaccess, '.$epoch.'now()) FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] );
+$q = db_query('SELECT usergroupid, globalaccess FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] );
 
 $row = db_fetch_num($q, 0 );
-
-//set variables
-$now = $row[2];
-$tz_offset = (TZ * 3600) - date('Z');
 
 if( (! ADMIN ) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
 

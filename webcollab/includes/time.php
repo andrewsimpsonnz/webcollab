@@ -69,8 +69,7 @@ function nicetime($timestamp, $addtime=0 ) {
     return '';
   
   //get timestamp into the chosen timezone 
-  //  we use date('Z') for server timezone (assumes the webserver and database server share the same timezone)      
-  $local = $timestamp - date('Z') + (TZ * 3600);
+  $local = $timestamp - TZ_OFFSET + (TZ * 3600);
   
   //format is 2004-Aug-02  
   if(! $addtime)
@@ -111,7 +110,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
 
   //filter for no date set
   if($day == -1 || $month == -1 || $year == -1 ) {
-    $local = time() - date('Z') + (TZ * 3600);
+    $local = TIME_NOW - TZ_OFFSET + (TZ * 3600);
     $day   = date('d', $local );
     $month = date('m', $local );
     $year  = date('Y', $local );

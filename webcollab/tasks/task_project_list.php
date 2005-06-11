@@ -145,7 +145,7 @@ $content = '';
 $flag = 0;
 $project_print = 0;
 $task_projectid = '';
-$tz_offset = (TZ * 3600) - date('Z');
+$tz_offset = (TZ * 3600) - TZ_OFFSET;
 
 $active_only = (isset($_GET['active']) )    ? $_GET['active']    : 0;
 $condensed   = (isset($_GET['condensed']) ) ? $_GET['condensed'] : 0;
@@ -167,7 +167,6 @@ if(! $condensed) {
                         status, 
                         globalaccess, 
                         usergroupid, 
-                        '.$epoch.' now() ) AS now,
                         '.$epoch.' deadline ) AS due
                         FROM '.PRE.'tasks 
                         WHERE status<>\'done\'
@@ -200,7 +199,7 @@ if(! $condensed) {
       default:
         $suffix = '';
         //check if late
-        if( ($row[7] + $tz_offset - $row[8] ) >= 86400 ) {
+        if( (TIME_NOW + $tz_offset - $row[7] ) >= 86400 ) {
           $suffix = "</a> &nbsp;<span class=\"late\">".$lang['late_g']."</span><br />\n";
         }
         break;
@@ -225,7 +224,6 @@ $q = db_query('SELECT id,
                       '.$epoch.' deadline) AS due,
                       '.$epoch.' finished_time) AS finished_time,
                       '.$epoch.' completion_time) AS completion_time,
-                      '.$epoch.' now()) AS now,
                       usergroupid,
                       globalaccess,
                       completed
@@ -260,7 +258,7 @@ else {
 }
 
 //text link for 'printer friendly' page
-if(isset($_GET['action']) && $action == "project_print" ) {
+if(isset($_GET['action']) && ($_GET['action'] == "project_print" ) ) {
   $content  .= "\n[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."\">".$lang['normal_version']."</a>]";
 }
 else {
@@ -272,7 +270,7 @@ $content .= "</span></td></tr>\n</table>\n";
 $content .= "<table>\n";
 
 //show 'project jump' select box
-if(! isset($action) || $action != 'project_print') {
+if(isset($_GET['action']) && $_GET['action'] != 'project_print') {
   $content .= "<tr><td class=\"projectlist\" style=\"padding-bottom : 0px\">\n".project_jump(0)."</td></tr>\n";
 }
   
@@ -355,7 +353,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
     default:
       $content .= sprintf($lang['percent_sprt'], $row['completed'] )."<br />\n";
       $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )." ";
-      $state = ($row['due'] - ($row['now'] + $tz_offset ) )/86400 ;
+      $state = ($row['due'] - (TIME_NOW + $tz_offset ) )/86400 ;
       if($state > 1 ) {
         $content .=  "(".sprintf($lang['due_sprt'], ceil((real)$state) ).")\n";
       }

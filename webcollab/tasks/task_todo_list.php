@@ -145,7 +145,7 @@ $flag = 0;
 $content = '';
 $usergroup[0] = 0;
 $allowed[0] = 0; 
-$tz_offset = (TZ * 3600) - date('Z');
+$tz_offset = (TZ * 3600) - TZ_OFFSET;
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
@@ -276,8 +276,7 @@ $task_order    = $row[1];
 
 // show all subtasks that are not complete
 $q = db_query('SELECT id, name, owner, deadline, parent, usergroupid, globalaccess, projectid,
-                        '.$epoch.' deadline) AS due,
-                        '.$epoch.' now() ) AS now
+                        '.$epoch.' deadline) AS due
                         FROM '.PRE.'tasks
                         WHERE parent<>0
                         AND (status=\'created\' OR status=\'active\')
@@ -300,7 +299,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $this_task = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
   
   //add highlighting if deadline is due
-  $state = ceil((real)($row['due'] - ($row['now'] + $tz_offset ) )/86400 );
+  $state = ceil((real)($row['due'] - (TIME_NOW + $tz_offset ) )/86400 );
   
   if($state > 1) {
     $this_task .= $row['name']."</a>".sprintf($lang['due_in_sprt'], $state );

@@ -83,8 +83,7 @@ else {
 }
 
 //set dates to match local time 
-//Note: The date() function always _adds_ a time offset(!), so we subtract date("Z") (time offset)  
-$epoch = time() - date('Z') + (TZ * 3600);  
+$epoch = TIME_NOW + (TZ * 3600) - TZ_OFFSET;
     
 //set month
 if(isset($_POST['month']) && is_numeric($_POST['month']) ){

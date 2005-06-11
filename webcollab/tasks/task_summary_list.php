@@ -37,7 +37,7 @@ include_once(BASE.'includes/time.php' );
 //initialise variables
 $no_access_project[0] = 0;
 $no_access_group[0] = 0;
-$tz_offset = (TZ * 3600) - date('Z');
+$tz_offset = (TZ * 3600) - TZ_OFFSET;
 
 //
 // MAIN FUNCTION
@@ -61,7 +61,6 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
                          '.PRE.'tasks.globalaccess AS globalaccess,
                          '.PRE.'tasks.projectid AS projectid,
                          '.PRE.'tasks.completed AS completed,
-                         '.$epoch.' now()) AS now,
                          '.$epoch.' deadline) AS due,
                          '.$epoch.' '.PRE.'tasks.edited) AS edited,
                          '.$epoch.' '.PRE.'tasks.lastforumpost) AS lastpost,
@@ -94,7 +93,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
       }
     }
 
-    $due = round( ($row['due'] - ($row['now'] + $tz_offset ) )/86400 );
+    $due = round( ($row['due'] - (TIME_NOW + $tz_offset ) )/86400 );
 
     $seenq = db_query( 'SELECT '.$epoch.' time) FROM '.PRE.'seen WHERE taskid='.$row['id'].' AND userid='.UID.' LIMIT 1' );
 
