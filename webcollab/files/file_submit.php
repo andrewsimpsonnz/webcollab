@@ -101,16 +101,17 @@ ignore_user_abort(TRUE);
 
       //okay accept file
       db_begin();
-      //alter task lastfileupload
-      db_query('UPDATE '.PRE.'tasks SET lastfileupload=now() WHERE id='.$taskid );
 
-      //addslashes to stored filename only if magic quotes is 'off'
-      //(prevents database errors)
-      if( ! get_magic_quotes_gpc() )
-        $db_filename = addslashes($_FILES['userfile']['name'] );
-      else
-        $db_filename = $_FILES['userfile']['name'];
+      //stripslashes from file name if magic quotes is 'on'
+      $filename = (get_magic_quotes_gpc() ) ? stripslashes($_FILES['userfile']['name'] ) : $_FILES['userfile']['name']; 
 
+      //limit file name to 200 characters - should be enough for any sensible(!) file name :-) 
+      $filename = substr($filename, 0, 200 );
+      //strip illegal characters  
+      $filename = preg_replace('/[^a-zA-Z0-9\-\_\.]|[\.]{2}/', '_', $filename );
+      //escape for database
+      $db_filename = db_escape_string($filename );
+        
       //alter file database administration
       $q = db_query( "INSERT INTO ".PRE."files (filename,
                                             size,
@@ -130,17 +131,6 @@ ignore_user_abort(TRUE);
       //get last insert id 
       $fileid = db_lastoid('files_id_seq' );
       
-      //stripslashes from file name if magic quotes is 'on'
-      if(get_magic_quotes_gpc() )
-        $filename = stripslashes($_FILES['userfile']['name'] );
-      else
-        $filename = $_FILES['userfile']['name']; 
-
-      //limit file name to 200 characters - should be enough for any sensible(!) file name :-) 
-      $filename = substr($filename, 0, 200 );
-      //strip illegal characters  
-      $filename = preg_replace('/[^a-zA-Z0-9\-\_\.]|[\.]{2}/', '_', $filename );
-
       //copy it
       if( ! move_uploaded_file( $_FILES['userfile']['tmp_name'], FILE_BASE.'/'.$fileid.'__'.$filename ) ) {
         db_query('DELETE FROM '.PRE.'files WHERE id='.$fileid );
@@ -152,8 +142,13 @@ ignore_user_abort(TRUE);
       //set the fileid in the database
       db_query('UPDATE '.PRE.'files SET fileid='.$fileid.' WHERE id='.$fileid );
       
+      //alter task lastfileupload
+      db_query('UPDATE '.PRE.'tasks SET lastfileupload=now() WHERE id='.$taskid );
+      
       //disarm it
       chmod(FILE_BASE.'/'.$fileid.'__'.$filename, 0644 );
+      
+      //success!
       db_commit();
       
       //get task data
