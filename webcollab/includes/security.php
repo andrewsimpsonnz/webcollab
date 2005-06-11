@@ -46,21 +46,14 @@ if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
 }
 
 //$session_key can be from either a GET, POST or COOKIE - check for cookie first
-if(isset($_COOKIE['webcollab_session'])  && (strlen($_COOKIE['webcollab_session'] ) == 32 ) ) {
-  $session_key = safe_data($_COOKIE['webcollab_session'] );
+if(isset($_COOKIE['webcollab_session'])  && (strlen($_COOKIE['webcollab_session'] ) == 32 ) && (ctype_xdigit($_COOKIE['webcollab_session'] ) ) ) {
+  $session_key = db_escape_string($_COOKIE['webcollab_session'] );
 }
-elseif(isset($_REQUEST['x'] ) && (strlen($_REQUEST['x'] ) == 32 ) ) {
-  $session_key = safe_data($_REQUEST['x']);
-  $x = $session_key;
+elseif(isset($_REQUEST['x'] ) && (strlen($_REQUEST['x'] ) == 32 ) && (ctype_xdigit($_REQUEST['x'] ) ) ) {
+  $session_key = db_escape_string($_REQUEST['x']);
+  $x = $_REQUEST['x'];
 }
-else{
-  //return to login screen
-  header("Location: ".BASE_URL."index.php");
-  die;
-}
-
-//reject non-hexadecimal data or incorrect length keys 
-if((! ctype_xdigit($session_key ) ) || (! strlen($session_key ) == 32 ) ){
+else {
   //return to login screen
   header("Location: ".BASE_URL."index.php");
   die;
@@ -74,7 +67,8 @@ if( ! ($q = db_query('SELECT '.PRE.'logins.user_id AS user_id,
                              '.PRE.'users.fullname AS fullname,
                              '.PRE.'users.guest AS guest,
                              '.PRE.'users.deleted AS deleted,
-                             '.$epoch.' now() ) AS now
+                             '.$epoch.' now() ) AS now,
+                             '.$epoch.'DATE \'1970-01-02 00:00:00\') AS tz
                              FROM '.PRE.'logins
                              LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
                              WHERE '.PRE.'logins.session_key=\''.$session_key.'\'', 0 ) ) ) {
@@ -107,7 +101,7 @@ if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
 
 //all data seems okay !!
 
-define('UID', $row['user_id'] );
+define('UID',   $row['user_id'] );
 define('GUEST', $row['guest'] );
 
 if($row['admin'] == 't' ) {
@@ -116,8 +110,11 @@ if($row['admin'] == 't' ) {
 else {
   define('ADMIN', 0 );
 }
-define('UID_NAME', $row['fullname'] );
+define('UID_NAME',  $row['fullname'] );
 define('UID_EMAIL', $row['email'] );
+
+define('TIME_NOW',  $row['now'] );
+define('TZ_OFFSET', (86400 - $row['tz'] ) );
     
 //get usergroups of user
 $q = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID );
@@ -138,12 +135,14 @@ db_query('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.$sessi
 
 // this gives:
 //
-// uid_name = users's full name
-// uid_email = user's email address
-// uid = user's id
-// admin [0,1] = is the user an admin ?
-// guest [0,1] = is the user a guest?
-// gid[] = array of user's groups
+// UID_NAME    = users's full name
+// UID_EMAIL   = user's email address
+// UID         = user's id
+// ADMIN [0,1] = is the user an admin ?
+// GUEST [0,1] = is the user a guest?
+// GID[]       = array of user's groups
+// TIME_NOW    = UNIX epoch time now (seconds since 1 Jan 1970) 
+// TZ_OFFSET   = database timezone offset relative to GMT/UTC in seconds 
 //
 // and of course, access !!
 
