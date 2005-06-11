@@ -57,7 +57,7 @@ if(db_numrows($q) < 1 ) {
   return;
 }
 
-$content = "<table class>\n";
+$content = "<table class=\"celldata\">\n";
 
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -67,7 +67,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
     continue;
   }
 
-  $content .= "<tr><td style=\"padding-right: 5px\"><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>";
+  $content .= "<tr><td class=\"grouplist\"><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>";
 
   if(ADMIN ) {
     $content .= "<td><span class=\"textlink\"> [<a href=\"users.php?x=$x&amp;userid=".$row['id']."&amp;action=del\">".$lang['del']."</a>]&nbsp;".

@@ -63,7 +63,7 @@ if(db_numrows($q) == 0 ) {
   return;
 }
 
-$content =  "<table>\n".
+$content =  "<table class=\"celldata\">\n".
             "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th><th>".$lang['private_usergroup']."</th></tr>\n";
 
 //show all usergroups
@@ -78,7 +78,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   $private = ($row['private'] ) ? $lang['yes'] : $lang['no']; 
   
-  $content .= "<tr><td style=\"padding-right: 5px\"><b>".$row['name']."</b></td><td style=\"padding-right: 5px\"><i>".$row['description']."</i></td><td style=\"text-align: center\">".$private."</td>";
+  $content .= "<tr><td class=\"grouplist\"><b>".$row['name']."</b></td><td class=\"grouplist\"><i>".$row['description']."</i></td><td style=\"text-align: center\">".$private."</td>";
   
   if(ADMIN) {
     $content .= "<td><span class=\"textlink\"><a href=\"usergroups.php?x=$x&amp;action=submit_del&amp;usergroupid=".$row['id']."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">[".$lang['del']."]</a></span>&nbsp;".

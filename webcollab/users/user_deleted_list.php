@@ -45,11 +45,11 @@ if( ! db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE deleted=\'t\''
 //query
 $q = db_query('SELECT id, fullname FROM '.PRE.'users WHERE deleted=\'t\' ORDER BY fullname' );
 
-$content = "<table>\n";
+$content = "<table class=\"celldata\">\n";
 
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
-  $content .= "<tr><td style=\"padding-right: 5px\"><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>\n".
+  $content .= "<tr><td class=\"grouplist\"><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>\n".
               "<td><span class=\"textlink\">";
               
   //if this user has NO tasks owned then we can delete him forever :)
