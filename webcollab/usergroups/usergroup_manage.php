@@ -28,8 +28,10 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //set variables
 $allowed[0] = 0;
@@ -56,7 +58,7 @@ if(db_numrows($q) == 0 ) {
   $content = "<p>".$lang['no_usergroups']."</p>\n";
   
   if($ADMIN) {
-    "<span class=\"textlink\"><a href=\"usergroups.php?x=$x&amp;action=add\">[".$lang['add']."]</a></span>\n";
+    "<span class=\"textlink\"><a href=\"usergroups.php?x=".$x."&amp;action=add\">[".$lang['add']."]</a></span>\n";
   }
   
   new_box($lang['usergroup_manage'], $content );
@@ -81,7 +83,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<tr><td class=\"grouplist\"><b>".$row['name']."</b></td><td class=\"grouplist\"><i>".$row['description']."</i></td><td style=\"text-align: center\">".$private."</td>";
   
   if(ADMIN) {
-    $content .= "<td><span class=\"textlink\"><a href=\"usergroups.php?x=$x&amp;action=submit_del&amp;usergroupid=".$row['id']."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">[".$lang['del']."]</a></span>&nbsp;".
+    $content .= "<td><span class=\"textlink\"><a href=\"usergroups.php?x=".$x."&amp;action=submit_del&amp;usergroupid=".$row['id']."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">[".$lang['del']."]</a></span>&nbsp;".
                 "<span class=\"textlink\"><a href=\"usergroups.php?x=".$x."&amp;action=edit&amp;usergroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td>";
   }
   
@@ -104,7 +106,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
       continue;
     }
     
-    $content .= "<tr><td style=\"text-align:left\" colspan=\"3\"><small><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$user_row['id']."\">".$user_row['fullname']."</a></small></td></tr>";
+    $content .= "<tr><td style=\"text-align:left\" colspan=\"3\"><small><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$user_row['id']."\">".$user_row['fullname']."</a></small></td></tr>";
   }
   
   $content .=   "<tr><td colspan=\"3\">&nbsp;</td></tr>";

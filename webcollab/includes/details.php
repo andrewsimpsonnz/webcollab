@@ -27,8 +27,10 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) ) {
   error('Task details', 'The taskid input is not valid' ); 

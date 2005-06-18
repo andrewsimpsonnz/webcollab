@@ -28,21 +28,24 @@
 
 */
 
-require_once('path.php' );
-require_once( BASE.'includes/security.php' );
-
-include_once(BASE.'includes/usergroup_security.php' );
-
-//update or insert ?
-if(empty($_REQUEST['action']) ){
-  error('File submit', 'No action given' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
 }
+
+//includes
+include_once(BASE.'includes/usergroup_security.php' );
 
 //deny guest users
 if(GUEST ){
  warning($lang['access_denied'], $lang['not_owner'] );  
 }
  
+//update or insert ?
+if(empty($_REQUEST['action']) ){
+  error('File submit', 'No action given' );
+}
+
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 

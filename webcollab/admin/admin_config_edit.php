@@ -27,22 +27,24 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
-
-//set variables
-$content = '';
-$maillist = '';
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //only for admins
 if( ! ADMIN ) {
   error( 'Not permitted', 'This function is for admins only' );
 }
 
+//set variables
+$content = '';
+$maillist = '';
+
 //start form data
 $content .=
           "<form method=\"post\" action=\"admin.php\">\n".
-          "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+          "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
           "<input type=\"hidden\" name=\"action\" value=\"submit\" /></fieldset>\n".
           "<table class=\"celldata\" >\n";
 
@@ -100,8 +102,8 @@ switch($row['project_order']){
 //project listing order                                         
 $content .= "<tr><td>".$lang['project_listing_order'].":</td><td>\n".
             "<select name=\"project_order\">\n".
-            "<option value=\"name\"$s1>".$lang['name']."</option>\n".
-            "<option value=\"deadline\"$s2>".$lang['deadline']."</option>\n".
+            "<option value=\"name\"".$s1.">".$lang['name']."</option>\n".
+            "<option value=\"deadline\"".$s2.">".$lang['deadline']."</option>\n".
             "<option value=\"priority\"$s3>".$lang['priority']."</option>\n".
             "</select></td></tr>\n";
           
@@ -124,9 +126,9 @@ switch($row['task_order']){
 //task listing order                                         
 $content .= "<tr><td>".$lang['task_listing_order'].":</td><td>\n".
             "<select name=\"task_order\">\n".
-            "<option value=\"name\"$s1>".$lang['name']."</option>\n".
-            "<option value=\"deadline\"$s2>".$lang['deadline']."</option>\n".
-            "<option value=\"priority\"$s3>".$lang['priority']."</option>\n".
+            "<option value=\"name\"".$s1.">".$lang['name']."</option>\n".
+            "<option value=\"deadline\"".$s2.">".$lang['deadline']."</option>\n".
+            "<option value=\"priority\"".$s3.">".$lang['priority']."</option>\n".
             "</select></td></tr>\n".
             "</table>\n";
           

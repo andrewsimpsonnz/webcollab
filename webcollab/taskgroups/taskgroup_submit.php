@@ -27,8 +27,10 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //admins only
 if(! ADMIN) {
@@ -53,7 +55,7 @@ switch($_REQUEST['action'] ) {
     $taskgroupid = intval($_GET['taskgroupid']);
 
     //if taskgroup exists we can delete it :)
-    if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'taskgroups WHERE id='.$taskgroupid ) ) ) {
+    if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'taskgroups WHERE id='.$taskgroupid ), 0, 0 ) ) {
       db_begin();
       //set the affected tasks to have no taskgroup
       @db_query('UPDATE '.PRE.'tasks SET taskgroupid=0 WHERE taskgroupid='.$taskgroupid );

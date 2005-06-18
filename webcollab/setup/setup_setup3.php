@@ -25,27 +25,27 @@
 
 */
 
-require_once("path.php" );
+require_once('path.php' );
 
-require_once(BASE."setup/security_setup.php" );
+require_once(BASE.'setup/security_setup.php' );
 
 //check config can be written
-if( ! is_writeable(BASE."config/config.php" ) ){
-  error_setup("Configuration file needs to be made writeable by the webserver to proceed.");
+if( ! is_writeable(CONFIG.'config.php' ) ){
+  error_setup('Configuration file needs to be made writeable by the webserver to proceed.');
 }
 
 $flag = 1;
-if(isset($_POST["new_db"]) && $_POST["new_db"] == "N" ) {
-  $new_db = "N";
+if(isset($_POST['new_db']) && $_POST['new_db'] == 'N' ) {
+  $new_db = 'N';
 }
 else {
-  $new_db = "Y";
+  $new_db = 'Y';
 }
 
-if(defined('DATABASE_NAME' ) && DATABASE_NAME != "" ) {
+if(defined('DATABASE_NAME' ) && DATABASE_NAME != '' ) {
 
   //this is not an initial install
-  if($new_db == "N" ){
+  if($new_db == 'N' ){
     //existing configuration being reused
     $db_name     = DATABASE_NAME;
     $db_user     = DATABASE_USER;
@@ -57,55 +57,32 @@ if(defined('DATABASE_NAME' ) && DATABASE_NAME != "" ) {
 }
 else {
   //first time install, database creation was skipped
-  if($new_db == "N" ){
-    $db_name     = "";
-    $db_user     = "";
-    $db_password = "";
-    $db_type     = "mysql";
-    $db_host     = "localhost";
+  if($new_db == 'N' ){
+    $db_name     = '';
+    $db_user     = '';
+    $db_password = '';
+    $db_type     = 'mysql';
+    $db_host     = 'localhost';
     $flag = 0;
   }
 }
 
 //this is TRUE if nothing above was matched
 if($flag ){
+  
   //new database has been created, get parameters...
-  if(isset($_POST["db_name"]) ) {
-    $db_name = $_POST["db_name"];
-  }
-  else {
-    $db_name = "";
-  }
-  if(isset($_POST["db_user"]) ) {
-    $db_user = $_POST["db_user"];
-  }
-  else {
-    $db_user = "";
-  }
-  if(isset($_POST["db_password"]) ) {
-    $db_password = $_POST["db_password"];
-  }
-  else {
-    $db_password = "";
-  }
-  if(isset($_POST["db_type"]) ) {
-    $db_type = $_POST["db_type"];
-  }
-  else {
-    $db_type = "mysql";
-  }
-  if(isset($_POST["db_host"]) ) {
-    $db_host = $_POST["db_host"];
-  }
-  else {
-    $db_host = "localhost";
-  }
+  $db_name     = (isset($_POST['db_name']) )     ? $_POST['db_name']     : '';
+  $db_user     = (isset($_POST['db_user']) )     ? $_POST['db_user']     : '';  
+  $db_password = (isset($_POST['db_password']) ) ? $_POST['db_password'] : '';
+  $db_type     = (isset($_POST['db_type']) )     ? $_POST['db_type']     : 'mysql';
+  $db_host     = (isset($_POST['db_host']) )     ? $_POST['db_host']     : 'localhost';
+
 }
 
 
-create_top_setup("Setup Screen" );
+create_top_setup('Setup Screen' );
 
-$content  = "";
+$content  = '';
 
 $content .= "<form method=\"post\" action=\"setup_handler.php\">".
             "<input type=\"hidden\" name=\"action\" value=\"setup4\" />\n".
@@ -113,7 +90,7 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\">".
             "<input type=\"hidden\" name=\"new_db\" value=\"$new_db\" />\n".
             "<table border=\"0\">";
 
-if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == "" ){
+if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == '' ){
   $file_path = realpath(dirname(__FILE__ ).'/..' ).'/';
   $BASE_URL = str_replace( $_SERVER["DOCUMENT_ROOT"], "http://".$_SERVER["HTTP_HOST"], $file_path );
 }
@@ -135,7 +112,7 @@ else {
 $content .= "<tr><td></td><td><br />The name of the site</td></tr>\n".
             "<tr><th>Site name:</th><td><input type=\"text\" name=\"manager_name\" value=\"".$MANAGER_NAME."\" size=\"50\" /></td></tr>\n";
 
-if( ! defined('ABBR_MANAGER_NAME') || ABBR_MANAGER_NAME == "" ) {
+if( ! defined('ABBR_MANAGER_NAME') || ABBR_MANAGER_NAME == '' ) {
   $ABBR_MANAGER_NAME = "WebCollab";
 }
 else {
@@ -153,15 +130,15 @@ $content .= "<tr><td></td><td><br /><br /><b><u>Database Settings</u></b><br /><
 
 switch($db_type){
 
-  case "postgresql":
+  case 'postgresql':
     $s1 = ""; $s2 = " selected=\"selected\""; $s3 = "";
     break;
 
-  case "mysql_innodb":
+  case 'mysql_innodb':
     $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\"";
     break;
 
-  case "mysql":
+  case 'mysql':
   default:
     $s1 = " selected=\"selected\""; $s2 = ""; $s3 = "";
     break;
@@ -177,14 +154,14 @@ $content .= "<tr><th>Database type:</th><td><select name=\"db_type\">\n".
 //file settings
 $content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td></tr>\n";
 
-if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == "" ) {
+if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == '' ) {
   $FILE_BASE = realpath(dirname(__FILE__ )."/.." )."/files/filebase";
 }
 else { 
   $FILE_BASE = FILE_BASE;
 }
 
-if( ! defined('FILE_MAXSIZE') || FILE_MAXSIZE == "" ) {
+if( ! defined('FILE_MAXSIZE') || FILE_MAXSIZE == '' ) {
   $FILE_MAXSIZE = "2000000";
 }
 else {
@@ -239,7 +216,7 @@ $content .= "<tr><td></td><td><br /></td></tr>\n".
 $content .= "<tr><td></td><td><br /><br /><b><u>Timezone Setting</u></b></td></tr>\n";
 
 if( ! defined(TZ) || TZ == NULL ) {
-  $TZ = (int)date("Z")/3600;
+  $TZ = (int)date('Z')/3600;
 }
 else {
   $TZ = TZ;
@@ -247,7 +224,7 @@ else {
 
 //initialise array with null values  
 for( $i=0 ; $i < 35 ; $i++ ) {
-  $s[$i] = "";
+  $s[$i] = '';
 }
 
 $time = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 8, 9, 9.5, 10, 10.5, 11, 11.5, 12, 13 );
@@ -295,8 +272,8 @@ $content .=  "<tr><td></td><td><br /></td></tr>\n".
              "</select></td></tr>\n";
                         
 //email settings
-if(defined('USE_EMAIL') && USE_EMAIL == "N" ) {
-  $setting = "";
+if(defined('USE_EMAIL') && USE_EMAIL == 'N' ) {
+  $setting = '';
 }
 else {
   $setting = "checked";
@@ -321,7 +298,7 @@ $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
              "</table>\n".
              "</form>\n";
 
-new_box_setup( "Setup - Stage 3 of 5 : Configuration", $content, "boxdata", "tablebox" );
+new_box_setup( "Setup - Stage 3 of 5 : Configuration", $content, 'boxdata', 'tablebox' );
 create_bottom_setup();
 
 ?>

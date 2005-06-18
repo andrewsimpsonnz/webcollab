@@ -25,9 +25,9 @@
 
 */
 
-require_once('includes/security.php' );
-include_once('includes/screen.php' );
-
+require_once('path.php');
+require_once(BASE.'includes/security.php' );
+include_once(BASE.'includes/screen.php' );
 
 //
 // The action handler
@@ -49,128 +49,128 @@ switch($_REQUEST['action'] ) {
     }
     
     create_top($lang['task_info']);
-    include('includes/mainmenu.php' );
-    include('tasks/task_navigate.php' );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'tasks/task_navigate.php' );
     if(! GUEST )
-      include('tasks/task_menubox.php' );
+      include(BASE.'tasks/task_menubox.php' );
     if(ADMIN ) {
-      include('taskgroups/taskgroup_menubox.php' );
-      include('usergroups/usergroup_menubox.php' );
-      //include('admin/admin_config_menubox.php' );
-      include('files/file_menubox.php' );
+      include(BASE.'taskgroups/taskgroup_menubox.php' );
+      include(BASE.'usergroups/usergroup_menubox.php' );
+      //include(BASE.'admin/admin_config_menubox.php' );
+      include(BASE.'files/file_menubox.php' );
     }
     goto_main();
-    include('tasks/task_show.php' );
-    include('tasks/task_list.php' );
-    include('forum/forum_list.php' );
-    include('files/file_list.php' );
+    include(BASE.'tasks/task_show.php' );
+    include(BASE.'tasks/task_list.php' );
+    include(BASE.'forum/forum_list.php' );
+    include(BASE.'files/file_list.php' );
     create_bottom();
     break;
 
   //add a task
   case 'add':
     create_top($lang['add_task'], 0, 'name', 'name', 1 );
-    include('includes/mainmenu.php' );
-    include('tasks/task_navigate.php' );
-    include('tasks/task_menubox.php' );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'tasks/task_navigate.php' );
+    include(BASE.'tasks/task_menubox.php' );
     goto_main();
-    include('tasks/task_add.php' );
+    include(BASE.'tasks/task_add.php' );
     create_bottom();
     break;
 
   //delete a task
   case 'delete':
-    include('tasks/task_delete.php' );
+    include(BASE.'tasks/task_delete.php' );
     break;
 
   //edit a task
   case 'edit':
     create_top($lang['edit_task'], 0, 0, 'name', 1 );
-    include('includes/mainmenu.php' );
-    include('tasks/task_navigate.php' );
-    include('tasks/task_menubox.php' );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'tasks/task_navigate.php' );
+    include(BASE.'tasks/task_menubox.php' );
     goto_main();
-    include('tasks/task_edit.php' );
+    include(BASE.'tasks/task_edit.php' );
     create_bottom();
     break;
 
   //show a summary page
   case 'summary':
     create_top($lang['summary_list'] );
-    include('includes/mainmenu.php' );
+    include(BASE.'includes/mainmenu.php' );
     if(! GUEST ){
-      include('tasks/task_menubox.php' );
+      include(BASE.'tasks/task_menubox.php' );
     }
     goto_main();
-    include('tasks/task_summary_list.php' );
+    include(BASE.'tasks/task_summary_list.php' );
     create_bottom();
     break;
   
   //todo list
   case 'todo':
     create_top($lang['todo_list'] );
-    include('includes/mainmenu.php' );
-    include('users/user_menubox.php' );
-    include('users/user_existing_menubox.php' );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'users/user_menubox.php' );
+    include(BASE.'users/user_existing_menubox.php' );
     goto_main();
-    include('tasks/task_todo_list.php' );
+    include(BASE.'tasks/task_todo_list.php' );
     create_bottom();
     break;
 
   //clone
   case 'clone':
     create_top($lang['add_task'], 0, 'name', 'name' );
-    include('includes/mainmenu.php' );
-    include('tasks/task_navigate.php' );
-    include('tasks/task_menubox.php' );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'tasks/task_navigate.php' );
+    include(BASE.'tasks/task_menubox.php' );
     goto_main();
-    include('tasks/task_clone_add.php' );
+    include(BASE.'tasks/task_clone_add.php' );
     create_bottom();
     break;
   
   //insert new task
   case 'submit_insert':
-    include('tasks/task_submit_insert.php' );
+    include(BASE.'tasks/task_submit_insert.php' );
     break;   
   
   //update task   
   case 'submit_update':
-    include('tasks/task_submit_update.php' );
+    include(BASE.'tasks/task_submit_update.php' );
     break;   
   
   //misc. update items
   case 'meown':
   case 'deown':
   case 'done':
-    include('tasks/task_submit_owner.php' );
+    include(BASE.'tasks/task_submit_owner.php' );
     break;   
           
   //submit clone
   case 'submit_clone':
-    include('tasks/task_clone_submit.php' );
+    include(BASE.'tasks/task_clone_submit.php' );
     break;   
           
   //printable task info
   case 'show_print':
     create_top($lang['task_info'], 2 );
-    include('tasks/task_show.php' );
-    include('tasks/task_list.php' );
-    include('forum/forum_list.php' );
-    include('files/file_list.php' );
+    include(BASE.'tasks/task_show.php' );
+    include(BASE.'tasks/task_list.php' );
+    include(BASE.'forum/forum_list.php' );
+    include(BASE.'files/file_list.php' );
     create_bottom();
     break;
 
   //printable summary info
   case 'summary_print':
     create_top($lang['summary_list'], 2 );
-    include('tasks/task_summary_list.php' );
+    include(BASE.'tasks/task_summary_list.php' );
     create_bottom();
     break;
 
   //printable project info
   case 'project_print':
     create_top($lang['projects'], 2 );
-    include('tasks/task_project_list.php' );
+    include(BASE.'tasks/task_project_list.php' );
     create_bottom();
     break;
 

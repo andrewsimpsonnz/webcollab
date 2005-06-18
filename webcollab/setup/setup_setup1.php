@@ -25,16 +25,16 @@
 
 */
 
-require_once("path.php" );
+require_once('path.php' );
 
-require_once(BASE."setup/security_setup.php" );
+require_once(BASE.'setup/security_setup.php' );
 
-$content = "";
+$content = '';
 
-create_top_setup("Setup Screen" );
+create_top_setup('Setup Screen' );
 
 //warn if config file cannot be written
-if( ! is_writable("config/config.php" ) ) {
+if( ! is_writable(CONFIG.'config.php' ) ) {
   $content .=  "<p><b>The webserver does not have permissions to write to the config file (/config/config.php).</p>".
                 "<p>You can make a new database, but setup will not be able proceed and write to the config file.</p>\n".
                 "<p>To allow setup to alter the config file you can either:<ul>\n".
@@ -48,7 +48,7 @@ $content .=    "<form method=\"post\" action=\"setup_handler.php\">\n".
                 "<input type=\"hidden\" name=\"action\" value=\"setup2\" />\n".
                 "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n";
 
-if(defined('DATABASE_NAME') && DATABASE_NAME != "" ) {
+if(defined('DATABASE_NAME') && DATABASE_NAME != '' ) {
   $content .= "<p>A database is already specified in the configuration file.  Do you wish to create a new database?</p>\n";
 }
 else{
@@ -64,7 +64,7 @@ $content .=   "<div align=\"center\"><input type=\"submit\" value=\"Yes\" /></di
                "<br /><div align=\"center\"><input type=\"submit\" value=\"No\" /></div>\n".
                "</form>\n";
 
-new_box_setup( "Setup - Stage 1 of 5 : Database Configuration Option", $content, "boxdata", "singlebox" );
+new_box_setup( "Setup - Stage 1 of 5 : Database Configuration Option", $content, 'boxdata', 'singlebox' );
 create_bottom_setup();
 
 ?>

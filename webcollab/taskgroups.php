@@ -31,8 +31,9 @@
 
 */
 
-require_once('includes/security.php' );
-include_once('includes/screen.php' );
+require_once('path.php');
+require_once(BASE.'includes/security.php' );
+include_once(BASE.'includes/screen.php' );
 
 //
 // The action handler
@@ -47,30 +48,30 @@ switch( $_REQUEST['action'] ) {
   //gives a window and some options to do to the poor 'old taskgroup
   case 'manage':
     create_top($lang['manage_taskgroups']);
-    include('includes/mainmenu.php' );
-    include('taskgroups/taskgroup_menubox.php' );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'taskgroups/taskgroup_menubox.php' );
     goto_main();
-    include('taskgroups/taskgroup_manage.php' );
+    include(BASE.'taskgroups/taskgroup_manage.php' );
     create_bottom();
     break;
 
   //show a taskgroup
   case 'add':
     create_top($lang['add_taskgroup'], 0, 'name', 'name' );
-    include('includes/mainmenu.php' );
-    include('taskgroups/taskgroup_menubox.php' );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'taskgroups/taskgroup_menubox.php' );
     goto_main();
-    include('taskgroups/taskgroup_add.php' );
+    include(BASE.'taskgroups/taskgroup_add.php' );
     create_bottom();
     break;
 
   //show a taskgroup
   case 'edit':
     create_top($lang['edit_taskgroup']);
-    include('includes/mainmenu.php');
-    include('taskgroups/taskgroup_menubox.php' );
+    include(BASE.'includes/mainmenu.php');
+    include(BASE.'taskgroups/taskgroup_menubox.php' );
     goto_main();
-    include('taskgroups/taskgroup_edit.php' );
+    include(BASE.'taskgroups/taskgroup_edit.php' );
     create_bottom();
     break;
 
@@ -78,7 +79,7 @@ switch( $_REQUEST['action'] ) {
   case 'submit_edit':
   case 'submit_insert':
   case 'submit_del':
-  include('taskgroups/taskgroup_submit.php' );
+  include(BASE.'taskgroups/taskgroup_submit.php' );
   break;
         
   //Error case

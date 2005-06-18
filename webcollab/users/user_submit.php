@@ -27,9 +27,12 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
+//includes
 include_once(BASE.'includes/email.php' );
 include_once(BASE.'lang/lang_email.php' );
 include_once(BASE.'includes/time.php' );
@@ -361,11 +364,11 @@ switch($_REQUEST['action'] ) {
 }
 
 if(ADMIN ) {
-  header("Location: ".BASE_URL."users.php?x=$x&action=manage" );
+  header("Location: ".BASE_URL."users.php?x=".$x."&action=manage" );
   die;
 }
 else {
-  header( "location: ".BASE_URL."users.php?x=$x&action=show&userid=".UID );
+  header( "location: ".BASE_URL."users.php?x=".$x."&action=show&userid=".UID );
   die;
 }
       

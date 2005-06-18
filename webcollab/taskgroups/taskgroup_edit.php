@@ -27,8 +27,10 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //admins only
 if(! ADMIN ){
@@ -47,7 +49,7 @@ $row = db_fetch_array( $q, 0 );
 
 $content =
             "<form method=\"post\" action=\"taskgroups.php\">\n".
-              "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
               "<input type=\"hidden\" name=\"taskgroupid\" value=\"$taskgroupid\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" /></fieldset>\n".
               "<table class=\"celldata\">\n".

@@ -28,16 +28,18 @@
 
 */
 
-require_once('path.php' );
-require_once( BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
-if(GUEST ){
+if(GUEST ) {
   error('Contact add', 'Guest not authorised' );
 }
 
 $content =
         "<form method=\"post\" action=\"contacts.php\">\n".
-          "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+          "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
           "<input type=\"hidden\" name=\"action\" value=\"submit_add\" /></fieldset>\n".
           "<table class=\"celldata\">\n".
             "<tr><td><i>".$lang['firstname']."</i></td><td><input id=\"firstname\" type=\"text\" name=\"firstname\" size=\"30\" /></td></tr>\n".

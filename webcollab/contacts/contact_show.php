@@ -28,8 +28,10 @@
 
 */
 
-require_once('path.php' );
-require_once( BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //we need a valid contactid
 if(empty($_GET['contactid']) || ! is_numeric($_GET['contactid']) ){
@@ -63,7 +65,7 @@ if(! GUEST ){
     "<form method=\"post\" action=\"contacts.php\" >\n".
       "<fieldset><input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"".$row['id']."\" />\n".
-      "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+      "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
       "<input type=\"submit\" value=\"".$lang['edit_contact']."\" /></fieldset>\n".
    "</form>";
   }

@@ -28,8 +28,10 @@
 
 */
 
-require_once('path.php' );
-require_once( BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //admins only
 if(! ADMIN ){
@@ -40,7 +42,7 @@ if(! ADMIN ){
 $content = '';
 
 //add an option to admin files
-$content .= "<a href=\"files.php?x=$x&amp;action=admin\">".$lang['file_admin']."</a><br />\n";
+$content .= "<a href=\"files.php?x=".$x."&amp;action=admin\">".$lang['file_admin']."</a><br />\n";
 
 //show it
 new_box( $lang['files'], $content, 'boxmenu' );

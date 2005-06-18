@@ -25,9 +25,12 @@
 
 */
 
-require_once('path.php' );
-require_once( BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
+//includes
 include_once(BASE.'tasks/task_common.php' );
 include_once(BASE.'includes/time.php' );
 
@@ -108,7 +111,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<tr><td class=\"projectlist\">\n";
 
   //show name and a link
-  $content .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['name']."</b></a><br />\n";
+  $content .= "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['name']."</b></a><br />\n";
 
   //give some details of status
   switch($project_status ) {
@@ -140,8 +143,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   if(ADMIN || UID == $row['owner'] ){
   
     $content .= "<span class=\"textlink\">".
-                "[<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$row['id']."\" onclick=\"return confirm( '".sprintf($lang["del_javascript_project_sprt"], javascript_escape($row['name'] ) )."')\">".$lang['del']."</a>]&nbsp;&nbsp;&nbsp;&nbsp;\n".
-                "[<a href=\"archive.php?x=$x&amp;action=submit_restore&amp;taskid=".$row['id']."\">".$lang['revive']."</a>]</span>\n";
+                "[<a href=\"tasks.php?x=".$x."&amp;action=delete&amp;taskid=".$row['id']."\" onclick=\"return confirm( '".sprintf($lang["del_javascript_project_sprt"], javascript_escape($row['name'] ) )."')\">".$lang['del']."</a>]&nbsp;&nbsp;&nbsp;&nbsp;\n".
+                "[<a href=\"archive.php?x=".$x."&amp;action=submit_restore&amp;taskid=".$row['id']."\">".$lang['revive']."</a>]</span>\n";
   }            
   //end list
   $content .= "</td></tr>\n";

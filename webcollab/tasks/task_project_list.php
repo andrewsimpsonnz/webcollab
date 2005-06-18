@@ -26,8 +26,10 @@
 
 */
 
-require_once('path.php' );
-require_once( BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 include_once(BASE.'tasks/task_common.php' );
 include_once(BASE.'includes/time.php' );
@@ -206,7 +208,7 @@ if(! $condensed) {
     }
  
   //task details
-  $task_uncompleted[$i]['task'] = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[0]."\">".$row[1].$suffix;
+  $task_uncompleted[$i]['task'] = "<li><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row[0]."\">".$row[1].$suffix;
 
   //record projectid
   $task_projectid[$i] = $row[3];
@@ -234,7 +236,7 @@ $q = db_query('SELECT id,
 
 //check if there are projects
 if(db_numrows($q) < 1 ) {
-  $content .= "<div style=\"text-align : center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang['add_project']."</a></div>\n";
+  $content .= "<div style=\"text-align : center\"><a href=\"tasks.php?x=".$x."&amp;action=add\">".$lang['add_project']."</a></div>\n";
   new_box($lang['no_projects'], $content );
   return;
 }
@@ -319,7 +321,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   $content .= "<tr><td class=\"projectlist\">\n";
 
   //show name and a link
-  $content .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['name']."</b></a>\n";
+  $content .= "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['name']."</b></a>\n";
 
   // Show a nice %-of-tasks-completed bar
   $content .= show_percent($row['completed'] )."\n";

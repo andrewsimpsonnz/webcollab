@@ -27,22 +27,24 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 $content = '';
 
 //add an option to add users
 if(ADMIN ) {
-  $content .= "<a href=\"users.php?x=$x&amp;action=add\">".$lang['add']."</a><br />\n".
-              "<a href=\"users.php?x=$x&amp;action=manage\">".$lang['manage']."</a><br />\n";
+  $content .= "<a href=\"users.php?x=".$x."&amp;action=add\">".$lang['add']."</a><br />\n".
+              "<a href=\"users.php?x=".$x."&amp;action=manage\">".$lang['manage']."</a><br />\n";
  if(USE_EMAIL != 'N')
-   $content .= "<a href=\"users.php?x=$x&amp;action=email\">".$lang['email_users']."</a><br />\n";
+   $content .= "<a href=\"users.php?x=".$x."&amp;action=email\">".$lang['email_users']."</a><br />\n";
 }
 
-$content .= "<a href=\"users.php?x=$x&amp;action=showonline\">".$lang['who_online']."</a><br />\n".
-            "<a href=\"users.php?x=$x&amp;action=edit&amp;userid=".UID."\">".$lang['edit_details']."</a><br />\n".
-            "<a href=\"users.php?x=$x&amp;action=show&amp;userid=".UID."\">".$lang['show_details']."</a><br />\n";
+$content .= "<a href=\"users.php?x=".$x."&amp;action=showonline\">".$lang['who_online']."</a><br />\n".
+            "<a href=\"users.php?x=".$x."&amp;action=edit&amp;userid=".UID."\">".$lang['edit_details']."</a><br />\n".
+            "<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".UID."\">".$lang['show_details']."</a><br />\n";
 
 //show it
 new_box($lang['users'], $content, 'boxmenu' );

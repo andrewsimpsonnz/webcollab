@@ -26,8 +26,11 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //admins only
 if(! ADMIN ) {
@@ -43,9 +46,9 @@ $taskid = intval($_GET['taskid']);
 $content = '';
 
 $content .= "<form method=\"post\" action=\"tasks.php\">\n".
-            "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"submit_clone\" />\n ".
-            "<input type=\"hidden\" name=\"taskid\" value=\"$taskid\" /></fieldset>\n".
+            "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" /></fieldset>\n".
             "<table class=\"celldata\">\n";
 
 $q = db_query('SELECT name, parent FROM '.PRE.'tasks WHERE id='.$taskid );
@@ -53,7 +56,7 @@ $q = db_query('SELECT name, parent FROM '.PRE.'tasks WHERE id='.$taskid );
 $row = db_fetch_array($q, 0 );
 
 if($row['parent'] == 0 ){
-  $content .= "<tr><td>".$lang['project_cloned']."</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$row['name']."</a></td></tr>\n".
+  $content .= "<tr><td>".$lang['project_cloned']."</td><td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$taskid."\">".$row['name']."</a></td></tr>\n".
               "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang['add_project']."\" />&nbsp;".
@@ -64,7 +67,7 @@ if($row['parent'] == 0 ){
 
 }
 else{
-  $content .= "<tr><td>".$lang['task_cloned']."</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$row['name']."</a></td></tr>\n".
+  $content .= "<tr><td>".$lang['task_cloned']."</td><td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$taskid."\">".$row['name']."</a></td></tr>\n".
               "<tr><td colspan=\"2\"><i>".$lang['note_clone']."</i></td><tr>\n".
               "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
               "</table>\n".

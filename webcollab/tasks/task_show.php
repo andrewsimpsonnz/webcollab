@@ -28,9 +28,12 @@
 
 */
 
-require_once('path.php' );
-require_once( BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
+//includes
 include_once(BASE.'tasks/task_common.php' );
 include_once(BASE.'includes/details.php' );
 include_once(BASE.'includes/time.php' );
@@ -72,13 +75,13 @@ db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$task
 
 //text link for 'printer friendly' page
 if(isset($_GET['action']) && $_GET['action'] == "show_print" ) {
-  $content  .= "<p><span class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=$taskid\">".$lang['normal_version']."</a>]</span></p>";
+  $content  .= "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=$taskid\">".$lang['normal_version']."</a>]</span></p>";
 }
 else{
   //show 'project jump' select box
   $content .= project_jump($taskid);
   //show print tag
-  $content .= "<div style=\"text-align : right\"><span class=\"textlink\">[<a href=\"tasks.php?x=$x&amp;action=show_print&amp;taskid=$taskid\">".$lang['print_version']."</a>]</span></div>\n";
+  $content .= "<div style=\"text-align : right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=show_print&amp;taskid=$taskid\">".$lang['print_version']."</a>]</span></div>\n";
 }  
     
 //percentage_completed gauge if this is a project
@@ -106,7 +109,7 @@ $content .= "<table class=\"celldata\">\n";
 if( $TASKID_ROW['owner'] == 0 ) {
   $content .= "<tr><td>".$lang['owned_by'].":</td><td>".$lang['nobody']."</td></tr>\n";
 } else {
-  $content .= "<tr><td>".$lang['owned_by'].": </td><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$TASKID_ROW['owner']."\">".$row['fullname']."</a></td></tr>\n";
+  $content .= "<tr><td>".$lang['owned_by'].": </td><td><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$TASKID_ROW['owner']."\">".$row['fullname']."</a></td></tr>\n";
 }
 
 //get creator information (null if creator has been deleted!)
@@ -116,7 +119,7 @@ if($creator == NULL ) {
   $content .= nicetime($TASKID_ROW['epoch_created']);
 }
 else {
-  $content .= sprintf($lang['by_sprt'], nicetime($row['epoch_created']), "<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$TASKID_ROW['creator']."\">".$creator."</a>");
+  $content .= sprintf($lang['by_sprt'], nicetime($row['epoch_created']), "<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$TASKID_ROW['creator']."\">".$creator."</a>");
 $content .= "</td></tr>\n";
 }
 
@@ -262,17 +265,17 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
   //set add function
   switch($TYPE){
     case 'project':
-      $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a>]&nbsp;\n";
+      $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a>]&nbsp;\n";
       break;
   
     case 'task':
-      $content .= "[<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_subtask']."</a>]&nbsp;\n";
+      $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_subtask']."</a>]&nbsp;\n";
       break;
   }
   
   //unowned task ==> [I'll take it!] button
   if($TASKID_ROW['owner'] == 0 ) {
-    $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".$lang['i_take_it']."</a>]&nbsp;\n";
+    $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=meown&amp;taskid=".$taskid."\">".$lang['i_take_it']."</a>]&nbsp;\n";
   }
 
   //check for owner or group access
@@ -286,22 +289,22 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
   
   //admin - owner - groupaccess  ==> [edit] button
   if((ADMIN ) || ($access ) ) {
-    $content .= "[<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
+    $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
   }
   
   //(owner - groupaccess) & (uncompleted task)  ==> [I finished it] button
   if(($access ) && ($TASKID_ROW['status'] != "done" ) && ($TASKID_ROW['parent'] != 0 ) ) {
-    $content .= "[<a href=\"tasks.php?x=$x&amp;action=done&amp;taskid=".$taskid."\">".$lang['i_finished']."</a>]&nbsp;\n";
+    $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=done&amp;taskid=".$taskid."\">".$lang['i_finished']."</a>]&nbsp;\n";
   }
     
   //owner ==> [I don't want it anymore] button
   if(UID == $TASKID_ROW['owner'] ) {
-    $content .= "[<a href=\"tasks.php?x=$x&amp;action=deown&amp;taskid=".$taskid."\">".$lang['i_dont_want']."</a>]&nbsp;\n";
+    $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=deown&amp;taskid=".$taskid."\">".$lang['i_dont_want']."</a>]&nbsp;\n";
   }
   
   //(admin) & (not owner) & (has owner) ==> [Take over task] button
   if((ADMIN ) && (UID != $TASKID_ROW['owner'] ) && ($TASKID_ROW['owner'] != 0 ) ) {
-    $content .= "[<a href=\"tasks.php?x=$x&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_".$TYPE] )."</a>]\n";
+    $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_".$TYPE] )."</a>]\n";
   }
   
   $content .= "</span></div>\n";

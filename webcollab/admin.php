@@ -25,8 +25,9 @@
 
 */
 
-require_once('includes/security.php' );
-include_once('includes/screen.php' );
+require_once('path.php');
+require_once(BASE.'includes/security.php' );
+include_once(BASE.'includes/screen.php' );
 
 if(! ADMIN ){
   return;
@@ -43,14 +44,14 @@ switch ($_REQUEST['action'] ) {
 
   case 'admin':
     create_top($lang['admin_config'] );
-    include('includes/mainmenu.php' );
+    include(BASE.'includes/mainmenu.php' );
     goto_main();
-    include('admin/admin_config_edit.php' );
+    include(BASE.'admin/admin_config_edit.php' );
     create_bottom();
     break;
     
   case 'submit':
-    include('admin/admin_config_submit.php' );
+    include(BASE.'admin/admin_config_submit.php' );
     break;  
 
   //error case

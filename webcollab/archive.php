@@ -25,8 +25,9 @@
 
 */
 
-require_once('includes/security.php' );
-include_once('includes/screen.php' );
+require_once('path.php');
+require_once(BASE.'includes/security.php' );
+include_once(BASE.'includes/screen.php' );
 
 //
 // The action handler
@@ -41,31 +42,31 @@ switch($_REQUEST['action'] ) {
   //list archived projects
   case 'list':
     create_top($lang['projects'] );
-    include('includes/mainmenu.php' );
+    include(BASE.'includes/mainmenu.php' );
     if(! GUEST ){
-      include('tasks/task_menubox.php' );
+      include(BASE.'tasks/task_menubox.php' );
     }
-    include('users/user_menubox.php' );
+    include(BASE.'users/user_menubox.php' );
     goto_main();
-    include('archive/archive_list.php' );
+    include(BASE.'archive/archive_list.php' );
     create_bottom();
     break;
 
   //printable archive info
   case 'archive_print':
     create_top($lang['projects'], 2 );
-    include('archive/archive_list.php' );
+    include(BASE.'archive/archive_list.php' );
     create_bottom();
     break;
   
   //archive project
   case 'submit_archive':
-    include('archive/archive_submit.php' );
+    include(BASE.'archive/archive_submit.php' );
     break;
 
   //restore archived project
   case 'submit_restore':
-    include('archive/archive_submit.php' );
+    include(BASE.'archive/archive_submit.php' );
     break;
   
   //Error case

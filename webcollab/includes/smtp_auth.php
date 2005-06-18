@@ -34,6 +34,10 @@
 
 */
 
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 function smtp_auth($connection, $cap) {
 

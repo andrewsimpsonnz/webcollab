@@ -27,9 +27,12 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
+//includes
 include_once(BASE.'includes/details.php' );
 
 //init values
@@ -210,12 +213,12 @@ function list_tasks($parent ) {
 
 
     //merge all info about a task
-    $this_content .= $alert_content."<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a>&nbsp;$status_content";
+    $this_content .= $alert_content."<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a>&nbsp;$status_content";
     $this_content .= "<small>";
 
     //add username if task is taken
     if($row['userid'] != 0 ) {
-      $this_content .= "&nbsp;[<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a>]&nbsp;";
+      $this_content .= "&nbsp;[<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a>]&nbsp;";
     }
     else {
       $this_content .= "&nbsp;";

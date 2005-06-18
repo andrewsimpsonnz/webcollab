@@ -25,9 +25,9 @@
 
 */
 
-require_once('path.php' );
-
-include_once(BASE.'config/config.php' );
+if(! defined('DATABASE_TYPE' ) ) {
+  die('Config file not loaded properly for database' );
+}
 
 switch(DATABASE_TYPE ) {
 
@@ -40,12 +40,7 @@ switch(DATABASE_TYPE ) {
     break;
 
   case 'postgresql':
-    if(version_compare(PHP_VERSION, '4.2.0' ) == -1 ) {
-      include(BASE.'database/pgsql_old_database.php' );
-    }
-    else {
-      include(BASE.'database/pgsql_database.php' );
-    }
+    include(BASE.'database/pgsql_database.php' );
     break;
 
   default:

@@ -25,8 +25,10 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //get config data
 $q = db_query('SELECT * FROM '.PRE.'config' );

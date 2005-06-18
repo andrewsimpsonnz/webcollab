@@ -25,16 +25,16 @@
 
 */
 
-require_once("path.php" );
+require_once('path.php' );
 
-require_once(BASE."setup/security_setup.php" );
+require_once(BASE.'setup/security_setup.php' );
 
 //
 //Database build
 //
 
   //check the required variables were input
-  $input_array = array("database_name", "database_user", "database_type" );
+  $input_array = array('database_name', 'database_user', 'database_type' );
   $message_array =array("'Your database name'", "'Database user'", "'Database type'" );
   $i = 0;
   foreach( $input_array as $var) {
@@ -45,22 +45,22 @@ require_once(BASE."setup/security_setup.php" );
   $i++;
   }
 
-  $database_name     = $_POST["database_name"];
-  $database_user     = $_POST["database_user"];
-  $database_type     = $_POST["database_type"];
+  $database_name     = $_POST['database_name'];
+  $database_user     = $_POST['database_user'];
+  $database_type     = $_POST['database_type'];
 
-  if(isset($_POST["database_password"] ) ) {
-    $database_password = $_POST["database_password"];
+  if(isset($_POST['database_password'] ) ) {
+    $database_password = $_POST['database_password'];
   }
   else {
-    $database_password = "";
+    $database_password = '';
   }
     
-  if( isset($_POST["database_host"] ) ) {
-    $database_host = $_POST["database_host"];
+  if( isset($_POST['database_host'] ) ) {
+    $database_host = $_POST['database_host'];
   }
   else {
-    $database_host = "localhost";
+    $database_host = 'localhost';
   }
 
   if(preg_match('/[^A-Z0-9_$]/i', $database_name ) ){
@@ -69,8 +69,8 @@ require_once(BASE."setup/security_setup.php" );
   
   switch ($database_type) {
 
-  case "mysql":
-  case "mysql_innodb":
+  case 'mysql':
+  case 'mysql_innodb':
     //check we can do mysql functions!!
     if( ! extension_loaded('mysql' ) ){
       error_setup( "Your version of PHP does not have support for MySQL<br /><br />".
@@ -88,7 +88,7 @@ require_once(BASE."setup/security_setup.php" );
     if( ! @mysql_select_db( $database_name, $database_connection ) ) {
 
       //no database exists yet - try and create it...
-      if( ! ($result = @mysql_query( "CREATE DATABASE ".$database_name, $database_connection ) ) ){
+      if( ! ($result = @mysql_query( 'CREATE DATABASE '.$database_name, $database_connection ) ) ){
         error_setup("Connected successfully to the database server, but database creation had the following error: <br />".
                              "<b>".mysql_error($database_connection)."</b><br /><br />".
                              "The error message was created by the MySQL database server." );
@@ -101,11 +101,11 @@ require_once(BASE."setup/security_setup.php" );
       
     }
 
-    if($database_type == "mysql") {
-      $db_schema = "db/schema_mysql.sql";
+    if($database_type == 'mysql') {
+      $db_schema = 'db/schema_mysql.sql';
     }
     else {
-      $db_schema = "db/schema_mysql_innodb.sql";
+      $db_schema = 'db/schema_mysql_innodb.sql';
     }
 
     //sanity check
@@ -114,7 +114,7 @@ require_once(BASE."setup/security_setup.php" );
     }
 
     //open schema file
-    if( ! $handle = fopen($db_schema, "r" ) ) {
+    if( ! $handle = fopen($db_schema, 'r' ) ) {
       error_setup("Not able to read database schema file." );
     }
 
@@ -123,7 +123,7 @@ require_once(BASE."setup/security_setup.php" );
     fclose($handle );
 
     //roughly separate schema into individual table setups
-    $schema_array = explode(";", $schema );
+    $schema_array = explode(';', $schema );
 
     //clean up the leading & trailing whitespaces, and remove any null strings
     $max = sizeof($schema_array );
@@ -145,33 +145,18 @@ require_once(BASE."setup/security_setup.php" );
     }
     break;
 
-  case "postgresql":
+  case 'postgresql':
     //check we can do pgsql functions!!
     if( ! extension_loaded('pgsql' ) ) {
       error_setup( "Your version of PHP does not have support for PostgreSQL<br /><br />".
                    "Check that PostgreSQL support is compiled in, and enabled in php.ini config file<br />" );
     }
     
-    //tailor database commands to match version of PHP in use (pgsql functions changed in 4.2.0)
-    switch(version_compare(PHP_VERSION, "4.2.0" ) ) {
-      case 0:
-      case 1:
-        $query = "pg_query";
-        $error = "pg_last_error";
-        break;
-
-      case -1:
-      default:
-        $query = "pg_exec";
-        $error = "pg_errormessage";
-        break;
-    }
-
-    if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=".$database_name." password=".$database_password ) ) ) {
+    if( ! ( $database_connection = @pg_connect( 'user='.$database_user.' dbname='.$database_name.' password='.$database_password ) ) ) {
       //selected database doesn't exist - need to create it
 
       //connect to database server with standard 'template1' database
-      if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=template1 password=".$database_password ) ) ) {
+      if( ! ( $database_connection = @pg_connect( 'user='.$database_user.' dbname=template1 password='.$database_password ) ) ) {
         error_setup("Cannot connect to the database server at $database_host<br />".
                     "No existing database, and cannot connect to PostgreSQL with template1 to create a new database.<br /><br />".
                     "User:     $database_user<br />Password: $database_password<br /><br />".
@@ -179,35 +164,35 @@ require_once(BASE."setup/security_setup.php" );
       }
 
       //create new database
-      if( ! ($result = @$query($database_connection, "CREATE DATABASE ".$database_name ) ) ) {
-        error_setup("Connected to database, but the new database creation had the following error:<br />".$error($database_connection) );
+      if( ! ($result = @pg_query($database_connection, 'CREATE DATABASE '.$database_name ) ) ) {
+        error_setup("Connected to database, but the new database creation had the following error:<br />".pg_last_error($database_connection) );
       }
 
       //close the standard template database
       pg_close($database_connection );
 
       //open the new database
-      if( ! ( $database_connection = @pg_connect( "user=".$database_user." dbname=".$database_name." password=".$database_password ) ) ) {
+      if( ! ( $database_connection = @pg_connect( 'user='.$database_user.' dbname='.$database_name.' password='.$database_password ) ) ) {
         error_setup("New database was created successfully, but cannot re-connect to the database server." );
       }
     }
 
     //sanity check
-    if( ! is_readable("db/schema_pgsql.sql" ) ) {
+    if( ! is_readable('db/schema_pgsql.sql' ) ) {
       error_setup("Database schema is missing.  Check that the file /db/schema_pgsql.sql exists and is readable by the webserver." );
     }
 
     //open schema file
-    if( ! $handle = fopen("db/schema_pgsql.sql", "r" ) ) {
-      error_setup("Not able to read database schema file" );
+    if( ! $handle = fopen('db/schema_pgsql.sql', 'r' ) ) {
+      error_setup('Not able to read database schema file' );
     }
 
     //input the file
-    $schema = fread($handle, filesize("db/schema_pgsql.sql" ) );
+    $schema = fread($handle, filesize('db/schema_pgsql.sql' ) );
     fclose($handle );
 
     //roughly separate schema into individual table setups
-    $schema_array = explode(";", $schema );
+    $schema_array = explode(';', $schema );
 
     //clean up the leading & trailing whitespaces, and remove any null strings
     $max = sizeof($schema_array );
@@ -221,8 +206,8 @@ require_once(BASE."setup/security_setup.php" );
 
     //create tables from schema
     foreach($table_array as $table ){
-      if( ! ($result = @$query($database_connection, $table ) ) ) {
-        error_setup("The database creation had the following error:<br /> ".$error($database_connection) );
+      if( ! ($result = @pg_query($database_connection, $table ) ) ) {
+        error_setup("The database creation had the following error:<br /> ".pg_last_error($database_connection) );
       }
     }
     break;
@@ -233,7 +218,7 @@ require_once(BASE."setup/security_setup.php" );
   }
 
   //check if config file can be written to
-  if( ! is_writable("config/config.php" ) ) {
+  if( ! is_writable(CONFIG.'config.php' ) ) {
     error_setup( "<p>Creating a new database for WebCollab ... success!</p>\n".
                  "<p>Your database has been successfully setup.</p>\n".
                  "<p>The config file (config.php) exists, but the webserver does not have permissions to write to it.<br /><br />\n".
@@ -257,7 +242,7 @@ $content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
             "<input type=\"submit\" value=\"Continue to configuration\" /></div>\n".
             "</form>\n";
 
-new_box_setup( "Setup - Stage 3 of 5 : Database Creation", $content, "boxdata", "singlebox" );
+new_box_setup( "Setup - Stage 3 of 5 : Database Creation", $content, 'boxdata', 'singlebox' );
 create_bottom_setup();
 
 ?>

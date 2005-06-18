@@ -25,12 +25,11 @@
 
 */
 
+require_once('path.php');
 
-require_once("path.php" );
-require_once(BASE."config/config_path.php" );
-
+//includes
+require_once(BASE.'path.php' );
 include_once(BASE."setup/screen_setup.php" );
-
 
 //
 // ERROR FUNCTION
@@ -53,8 +52,8 @@ function secure_error($message ) {
 //valid login attempt ?
 if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
-  include_once(BASE."database/database.php" );
   include_once(BASE."includes/common.php" );
+  include_once(BASE."database/database.php" );
   
   //set variables
   $q = "";

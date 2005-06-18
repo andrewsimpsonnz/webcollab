@@ -28,9 +28,12 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
+//includes
 include_once(BASE.'includes/details.php' );
 include_once( BASE.'includes/usergroup_security.php' );
 

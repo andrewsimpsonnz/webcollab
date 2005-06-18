@@ -27,11 +27,13 @@
 
 */
 
+require_once('path.php' );
+
+include_once(BASE.'includes/screen.php' );
+include_once(BASE.'includes/common.php' );
+
 //secure variables
 $content = '';
-
-include( 'includes/screen.php' );
-include( 'includes/common.php' );
 
 //error condition
 function secure_error( $error = 'Login error', $redirect = 0 ) {
@@ -67,8 +69,8 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
   $md5pass = '0';
   $session_key = '';
   
-  include_once 'database/database.php';
-  include_once 'includes/common.php';
+  include_once(BASE.'includes/common.php');
+  include_once(BASE.'database/database.php');
 
  //no ip (possible?)
   if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
@@ -122,15 +124,11 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
     secure_error('Unknown user id', 1 );
   }
 
-
   //user is okay log him/her in
 
   //create session key
-  // seed number is required for early versions of PHP
-  if(version_compare(PHP_VERSION, '4.2.0' ) == -1 )
-    mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );
-  //use Mersenne Twister algorithm (random number), then one-way hash to give session key  
-  $session_key = md5(mt_rand() );
+  //use Mersenne Twister algorithm (random number) + user's IP address, then one-way hash to give session key  
+  $session_key = md5(mt_rand().$ip );
 
   //remove the old login information
   @db_query('DELETE FROM '.PRE.'logins WHERE user_id='.$user_id );

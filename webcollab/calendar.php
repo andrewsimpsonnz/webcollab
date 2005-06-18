@@ -25,15 +25,16 @@
 
 */
 
-require_once('includes/security.php' );
-include_once('includes/screen.php' );
+require_once('path.php');
+require_once(BASE.'includes/security.php' );
+include_once(BASE.'includes/screen.php' );
 
 //
 // The action handler
 //
 
 create_top( $lang['calendar'], 3 );
-include('calendar/calendar_show.php' );
+include(BASE.'calendar/calendar_show.php' );
 create_bottom();
 
 ?>

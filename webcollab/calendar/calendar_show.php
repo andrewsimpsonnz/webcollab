@@ -26,8 +26,11 @@
   Lists a calendar
 
 */
-require_once('path.php');
-require_once(BASE.'includes/security.php' );
+
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //secure variables
 $content = '';
@@ -181,12 +184,12 @@ $row = db_fetch_num($q, $i );
 $order = array($tail.' AND parent=0 '.$row[0], $tail.' AND parent<>0 '.$row[1] );
 
 $content .= "<form method=\"post\" action=\"calendar.php\">\n".
-            "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" /></fieldset>\n ".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" /></fieldset>\n ".
             "<div style=\"text-align: center\">\n".
             "<table style=\"margin-left: auto; margin-right: auto; background-color: #ddd; border: solid black 1px;\" cellpadding=\"5px\">\n".
-            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"$s1 /><label for=\"users\">".$lang['users']."</label>\n".
+            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"".$s1." /><label for=\"users\">".$lang['users']."</label>\n".
             "<label for=\"users\"><select name=\"userid\">\n".
-            "<option value=\"0\"$s2>".$lang['all_users']."</option>\n";
+            "<option value=\"0\"".$s2.">".$lang['all_users']."</option>\n";
 
 //get all users for option box
 $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname');
@@ -209,7 +212,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 }
 
 $content .= "</select></label></td>\n".
-            "<td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3 /><label for=\"group\">".$lang['usergroups']."</label>\n".
+            "<td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"".$s3." /><label for=\"group\">".$lang['usergroups']."</label>\n".
             "<label for=\"group\"><select name=\"groupid\">\n".
             "<option value=\"0\"$s4>".$lang['no_group']."</option>\n";
 
@@ -357,7 +360,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
                     $name = "<span class=\"blue\">".$row['name'];
                   }
                   $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
-                            "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
+                            "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
                   break;
   
                 default:
@@ -369,7 +372,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
                     $name = "<span class=\"red\">".$row['name'];
                   }
                   $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
-                            "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
+                            "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
                   break;
               }
             break;

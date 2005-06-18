@@ -107,13 +107,13 @@ switch ($url["scheme"] ){
       while (trim($line) != "") {
         if( ! strpos($line, "404" ) === FALSE ){
           //404 - not found
-          $status = "<font color=\"red\"><b>URL gives '404' page not found!</b></font>";
-          $flag = $flag + 10;
+          $status = "<font color=\"blue\"><b>Self testing gives '404 page not found' message (Note: This test can give false warnings with some servers)</b></font>";
+          $flag = $flag + 1;
           break;
         }
         if( ! strpos($line, "301" ) === FALSE ){
           //301 - moved permanently
-          $status = "<font color=\"blue\"><b>Need to add trailing slash ( e.g. ".$url["path"]."/ )</b></font>";
+          $status = "<font color=\"blue\"><b>Have you added the trailing slash ( e.g. ".$url["path"]."/ )?</b></font>";
           $flag = $flag + 1;
           break;
         }

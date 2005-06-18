@@ -26,13 +26,16 @@
   Lists all the posts belonging to this task
 
 */
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
 
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
+
+//includes
 include_once(BASE.'includes/details.php' );
 include_once(BASE.'includes/time.php' );
 include_once(BASE.'includes/usergroup_security.php' );
-
 
 //check the taskid is valid
 if( ! (isset($_GET['taskid']) && is_numeric($_GET['taskid']) ) ){
@@ -86,18 +89,18 @@ function list_posts_from_task( $taskid, $usergroupid ) {
       $this_post = "<li><small>----";
     }
     else {
-      $this_post = "<li><small><a href=\"users.php?x=$x&amp;action=show&amp;userid={$row['userid']}\">{$row['fullname']}</a>";
+      $this_post = "<li><small><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".$row['fullname']."</a>";
     }              
     $this_post .= "&nbsp;(".nicetime( $row['posted'], 1 ).")</small>";
                      
     //owners of the thread, owners of the post and admins have a "delete" option
     if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['postowner'] ) ) {
-      $this_post .= " <span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=submit_del&amp;postid=".$row['id']."&amp;taskid=$taskid\" onclick=\"return confirm( '{$lang['confirm_del_javascript']}' )\">{$lang['del']}</a>]</span>";
+      $this_post .= " <span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=submit_del&amp;postid=".$row['id']."&amp;taskid=".$taskid."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."' )\">".$lang['del']."</a>]</span>";
     }
 
     //add reply button
     if($TASKID_ROW['archive'] == 0 ){
-      $this_post .= "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid={$row['id']}&amp;taskid=$taskid";
+      $this_post .= "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=".$row['id']."&amp;taskid=".$taskid;
 
       //if this is a post to a private forum then announce it to the poster-engine
       if($usergroupid != 0 ) {
@@ -182,7 +185,7 @@ if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) )
   }
   //add an option to add posts
   if($TASKID_ROW['archive'] == 0 ) {
-    $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid\">{$lang['new_post']}</a>]</span>";
+    $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."\">".$lang['new_post']."</a>]</span>";
   }
   //show it
   new_box($lang['public_user_forum'], $content, 'boxdata2' );
@@ -207,10 +210,10 @@ if($TASKID_ROW['usergroupid'] != 0 ) {
     }
     //add an option to add posts
     if($TASKID_ROW['archive'] == 0 ){
-      $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=$x&amp;action=add&amp;parentid=0&amp;taskid=$taskid&amp;usergroupid={$TASKID_ROW['usergroupid']}&amp;\">{$lang['new_post']}</a>]</span>";
+      $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."&amp;usergroupid=".$TASKID_ROW['usergroupid']."&amp;\">".$lang['new_post']."</a>]</span>";
     }
     //get usergroup
-    $usergroup_name = db_result(db_query("SELECT name FROM ".PRE."usergroups WHERE id={$TASKID_ROW['usergroupid']}" ), 0, 0 );
+    $usergroup_name = db_result(db_query("SELECT name FROM ".PRE."usergroups WHERE id=".$TASKID_ROW['usergroupid'] ), 0, 0 );
     //show it
     new_box(sprintf($lang['private_forum_sprt'], $usergroup_name ), $content, "boxdata2" );
   }

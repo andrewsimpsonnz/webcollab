@@ -24,9 +24,13 @@
   Lists all the recent forum posts
 
 */
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
 
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
+
+//includes
 include_once(BASE.'includes/time.php' );
 
 //initialise variables            
@@ -60,7 +64,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
     $lastpost = $row['recentpost'];
   }
   //show it
-  $list .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['taskid']."\">".substr($row['taskname'], 0, 25 )."</a><br />\n";
+  $list .= "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['taskid']."\">".substr($row['taskname'], 0, 25 )."</a><br />\n";
   ++$j;
   
   //show max of 10 posts

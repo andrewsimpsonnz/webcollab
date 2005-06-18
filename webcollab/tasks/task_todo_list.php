@@ -27,8 +27,10 @@
 
 */
 
-require_once('path.php' );
-require_once( BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //
 // List tasks
@@ -184,7 +186,7 @@ else {
 
 // check if there are projects
 if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent=0' ), 0, 0 ) < 1 ) {
-  $content = "<div style=\"text-align : center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang['add']."</a></div>\n";
+  $content = "<div style=\"text-align : center\"><a href=\"tasks.php?x=".$x."&amp;action=add\">".$lang['add']."</a></div>\n";
   new_box( $lang['no_projects'], $content );
   return;
 }
@@ -210,13 +212,13 @@ switch($selection ) {
 }
 
 $content .= "<form method=\"post\" action=\"tasks.php\">\n".
-            "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\" /></fieldset>\n ".
             "<table class=\"celldata\">\n".
             "<tr><td>".$lang['todo_list_for']."</td></tr>".
-            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"user\"$s1 /><label for=\"user\">".$lang['users']."</label></td><td>\n".
+            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"user\"".$s1." /><label for=\"user\">".$lang['users']."</label></td><td>\n".
             "<label for=\"user\"><select name=\"userid\">\n".
-            "<option value=\"0\"$s2>".$lang['nobody']."</option>\n";
+            "<option value=\"0\"".$s2.">".$lang['nobody']."</option>\n";
 
 //get all users for option box
 $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname');
@@ -239,9 +241,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 }
 
 $content .= "</select></label></td></tr>\n".
-            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3 /><label for=\"group\">".$lang['usergroups']."</label></td><td>\n".
+            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"".$s3." /><label for=\"group\">".$lang['usergroups']."</label></td><td>\n".
             "<label for=\"group\"><select name=\"groupid\">\n".
-            "<option value=\"0\"$s4>".$lang['no_group']."</option>\n";
+            "<option value=\"0\"".$s4.">".$lang['no_group']."</option>\n";
 
 //get all groups for option box
 $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
@@ -296,7 +298,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $task_uncompleted[$i]['id'] = $row['id'];
   $task_uncompleted[$i]['parent'] = $row['parent'];
   
-  $this_task = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
+  $this_task = "<li><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
   
   //add highlighting if deadline is due
   $state = ceil((real)($row['due'] - (TIME_NOW + $tz_offset ) )/86400 );

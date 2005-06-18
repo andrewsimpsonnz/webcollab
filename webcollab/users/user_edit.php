@@ -27,14 +27,16 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //secure vars
 $userid = '';
 
 //is an admin everything can be queried otherwise only yourself can be queried
-if(ADMIN == 1 ) {
+if(ADMIN ) {
 
   //is there a uid ?
   if(empty($_REQUEST['userid']) || ! is_numeric($_REQUEST['userid']) ){
@@ -61,7 +63,7 @@ if( ! ($row = db_fetch_array($q , 0 ) ) ) {
 //show data
 $content =  "<form method=\"post\" action=\"users.php\">\n".
               "<fieldset><input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
-              "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+              "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
               "<input type=\"hidden\" name=\"userid\" value=\"$userid\" /></fieldset>\n".
               "<table class=\"celldata\">".
               "<tr><td>".$lang['login_name'].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".html_escape($row['name'])."\" /></td></tr>\n".
@@ -70,7 +72,7 @@ $content =  "<form method=\"post\" action=\"users.php\">\n".
               "<tr><td>".$lang['email'].":</td><td><input type=\"text\" name=\"email\" size=\"30\" value=\"".$row['email']."\" /></td></tr>\n";
 
 //dangerous action!
-if( ADMIN == 1 ) {
+if(ADMIN ) {
 
   //add blank line
   $content .= "<tr><td>&nbsp;</td></tr>\n";

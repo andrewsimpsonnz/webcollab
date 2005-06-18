@@ -27,12 +27,13 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 $content    = '';
 $allowed[0] = 0;
-
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
@@ -67,11 +68,11 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
     continue;
   }
 
-  $content .= "<tr><td class=\"grouplist\"><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>";
+  $content .= "<tr><td class=\"grouplist\"><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>";
 
   if(ADMIN ) {
-    $content .= "<td><span class=\"textlink\"> [<a href=\"users.php?x=$x&amp;userid=".$row['id']."&amp;action=del\">".$lang['del']."</a>]&nbsp;".
-                "[<a href=\"users.php?x=$x&amp;userid=".$row['id']."&amp;action=edit\">".$lang['edit']."</a>]</span></td>";
+    $content .= "<td><span class=\"textlink\"> [<a href=\"users.php?x=".$x."&amp;userid=".$row['id']."&amp;action=del\">".$lang['del']."</a>]&nbsp;".
+                "[<a href=\"users.php?x=".$x."&amp;userid=".$row['id']."&amp;action=edit\">".$lang['edit']."</a>]</span></td>";
   }
   $content .= "</tr>\n";
 }

@@ -27,8 +27,8 @@
 
 //get our location
 require_once('path.php' );
-
-require_once(BASE.'config/config_path.php' );
+require_once(BASE.'path_config.php' );
+require_once(CONFIG.'config.php' );
 
 $help_item = $_GET['item'];
 $help_type = $_GET['type'];

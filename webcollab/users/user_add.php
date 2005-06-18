@@ -27,8 +27,10 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //admins only
 if(! ADMIN ){
@@ -38,7 +40,7 @@ if(! ADMIN ){
 $content =
            "<form method=\"post\" action=\"users.php\">\n".
              "<fieldset><input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n".
-             "<input type=\"hidden\" name=\"x\" value=\"$x\" /></fieldset>\n".
+             "<input type=\"hidden\" name=\"x\" value=\"".$x."\" /></fieldset>\n".
              "<table class=\"celldata\">\n".
                "<tr><td>".$lang['login_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
                "<tr><td>".$lang['full_name'].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" /></td></tr>\n".

@@ -58,8 +58,9 @@
 */
 
 require_once('path.php' );
+require_once(BASE.'path_config.php' );
 
-include_once(BASE.'config/config.php' );
+include_once(CONFIG.'config.php' );
 include_once(BASE.'lang/lang.php' );
 
 //
@@ -122,18 +123,18 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
 
   switch($page_type) {
     case 2: //print
-      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE."css/print.css\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".CSS."print.css\" type=\"text/css\" />\n";
       break;
     
     case 3: //calendar
-      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\" />\n";
-      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE."css/calendar.css\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".CSS."default.css\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".CSS."calendar.css\" type=\"text/css\" />\n";
       break;
        
     case 0: //main window + menu sidebar
     case 1: //single main window (no menu sidebar)
     default:            
-      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".CSS."default.css\" type=\"text/css\" />\n";
       break;         
   }
   

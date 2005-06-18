@@ -28,8 +28,9 @@
 
 */
 
-require_once('includes/security.php' );
-include_once('includes/screen.php' );
+require_once('path.php');
+require_once(BASE.'includes/security.php' );
+include_once(BASE.'includes/screen.php' );
 
 //
 // The action handler
@@ -43,22 +44,22 @@ switch($_REQUEST['action'] ) {
 
   //list forum posts
   case 'list':
-    include('forum/forum_list.php' );
+    include(BASE.'forum/forum_list.php' );
     break;
 
   //add a forum post/reply
   case 'add':
     create_top($lang['add_reply'], 0, 'text', 'text' );
-    include('includes/mainmenu.php');
+    include(BASE.'includes/mainmenu.php');
     goto_main();
-    include('forum/forum_add.php');
+    include(BASE.'forum/forum_add.php');
     create_bottom();
     break;
 
   //submit to poster engine   
   case 'submit_del':
   case 'submit_add':
-    include('forum/forum_submit.php');
+    include(BASE.'forum/forum_submit.php');
     break;
     
   //Error case

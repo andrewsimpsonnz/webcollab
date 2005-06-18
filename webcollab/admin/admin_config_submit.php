@@ -27,11 +27,10 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
-
-//set variables
-$content = '';
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //only admin
 if( ! ADMIN ){
@@ -40,6 +39,9 @@ if( ! ADMIN ){
   
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
+
+//set variables
+$content = '';
 
 
 $input_array = array('email_admin', 'reply_to', 'from' );

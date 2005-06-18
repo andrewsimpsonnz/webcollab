@@ -28,8 +28,9 @@
 
 */
 
-require_once('includes/security.php' );
-include_once('includes/screen.php' );
+require_once('path.php');
+require_once(BASE.'includes/security.php' );
+include_once(BASE.'includes/screen.php' );
 
 //
 // The action handler
@@ -44,37 +45,37 @@ switch($_REQUEST['action'] ) {
   //gives a window and some options to do to the poor 'old contact manager
   case 'show':
     create_top($lang['show_contact']);
-    include('includes/mainmenu.php' );
-    include('contacts/contact_menubox.php' );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'contacts/contact_menubox.php' );
     goto_main();
-    include('contacts/contact_show.php' );
+    include(BASE.'contacts/contact_show.php' );
     create_bottom();
     break;
 
   //gives a window and some options to do to the poor 'old contact manager
   case 'add':
     create_top($lang['add_contact'], 0, 'firstname' );
-    include('includes/mainmenu.php' );
-    include('contacts/contact_menubox.php' );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'contacts/contact_menubox.php' );
     goto_main();
-    include('contacts/contact_add.php' );
+    include(BASE.'contacts/contact_add.php' );
     new_box($lang['info'], $lang['contact_add_info'] );
     create_bottom();
     break;
 
   case 'edit':
     create_top($lang['edit_contact']);
-    include('includes/mainmenu.php' );
-    include('contacts/contact_menubox.php' );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'contacts/contact_menubox.php' );
     goto_main();
-    include('contacts/contact_edit.php' );
+    include(BASE.'contacts/contact_edit.php' );
     create_bottom();
     break;
 
   case 'submit_add':
   case 'submit_edit':
   case 'submit_delete':
-    include('contacts/contact_submit.php' );
+    include(BASE.'contacts/contact_submit.php' );
     break;    
 
   //Error case

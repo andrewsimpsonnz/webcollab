@@ -27,8 +27,10 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 $content = '';
 $no_access_project[0] = 0;
@@ -218,7 +220,7 @@ if( $tasks_owned + $projects_owned > 0 ) {
     }
 
     //show the task
-    $content .= "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a> ".$status_content."</li>\n";
+    $content .= "<li><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a> ".$status_content."</li>\n";
   }
   $content .= "</ul>";
   new_box($lang['owned_tasks'], $content );

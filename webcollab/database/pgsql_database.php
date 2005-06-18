@@ -30,10 +30,6 @@
 
 require_once('path.php' );
 
-include_once( BASE.'config/config.php' );
-include_once( BASE.'includes/common.php');
-
-
 /* NOTE!
    Standard Postgresql (Version 6.3 and later) setup does NOT support tcp/ip connections.
    To support tcp/ip connections you need to:

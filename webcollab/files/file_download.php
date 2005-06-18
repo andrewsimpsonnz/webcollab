@@ -26,10 +26,16 @@
 
 */
 
-require_once('path.php' );
-require_once( BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
+//includes
 include_once(BASE.'includes/usergroup_security.php' );
+
+//set variables
+$fp = '';
 
 if(empty($_GET['fileid']) || ! is_numeric($_GET['fileid']) ){
   return;
@@ -38,7 +44,7 @@ if(empty($_GET['fileid']) || ! is_numeric($_GET['fileid']) ){
 $fileid = intval($_GET['fileid']);
 
 //get the files info
-if( ! ($q = db_query('SELECT fileid, filename, size, mime, taskid FROM '.PRE.'files WHERE id='.$fileid ) ) ) {
+if( ! ($q = db_query('SELECT fileid, filename, size, mime, taskid FROM '.PRE.'files WHERE id='.$fileid, 0 ) ) ) {
   error('Download file', 'There was an error in the data query');
 }
 

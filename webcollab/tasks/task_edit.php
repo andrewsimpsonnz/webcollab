@@ -28,8 +28,11 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 include_once(BASE.'includes/details.php' );
 include_once(BASE.'includes/admin_config.php' );
@@ -99,7 +102,7 @@ $project_row = db_fetch_array($q, 0 );
 
 //all okay show task info
 $content .= "<form method=\"post\" action=\"tasks.php\" onsubmit= \"return dateCheck()\">\n".
-            "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"submit_update\" />\n ".
             "<input type=\"hidden\" name=\"taskid\" value=\"".$TASKID_ROW['id']."\" />\n";
                                       
@@ -121,7 +124,7 @@ switch($TYPE) {
     $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" /></fieldset>\n".          
                  "<table class=\"celldata\">\n".
                  "<tr><td>".$lang['creation_time']."</td><td>".nicedate($TASKID_ROW['created'] )."</td></tr>\n".
-                 "<tr><td>".$lang['project'] .":</td><td><a href=\"tasks.php?x=$x&amp;action=show&taskid=".$TASKID_ROW['projectid']."\">".$project_row['name']."</a></td></tr>\n";
+                 "<tr><td>".$lang['project'] .":</td><td><a href=\"tasks.php?x=".$x."&amp;action=show&taskid=".$TASKID_ROW['projectid']."\">".$project_row['name']."</a></td></tr>\n";
     break;
 }
 
@@ -187,11 +190,11 @@ $content .= "<tr><td>".$lang['deadline'].":</td><td>".date_select_from_timestamp
 
 $content .= "<tr><td>".$lang['priority'].":</td><td>\n".
             "<select name=\"priority\">\n".
-            "<option value=\"0\"$s1>".$task_state['dontdo']."</option>\n".
-            "<option value=\"1\"$s2>".$task_state['low']."</option>\n".
-            "<option value=\"2\"$s3>".$task_state['normal']."</option>\n".
-            "<option value=\"3\"$s4>".$task_state['high']."</option>\n".
-            "<option value=\"4\"$s5>".$task_state['yesterday']."</option>\n".
+            "<option value=\"0\"".$s1.">".$task_state['dontdo']."</option>\n".
+            "<option value=\"1\"".$s2.">".$task_state['low']."</option>\n".
+            "<option value=\"2\"".$s3.">".$task_state['normal']."</option>\n".
+            "<option value=\"3\"".$s4.">".$task_state['high']."</option>\n".
+            "<option value=\"4\"".$s5.">".$task_state['yesterday']."</option>\n".
             "</select></td></tr>\n";
 
 switch($TASKID_ROW['parent'] ){
@@ -217,10 +220,10 @@ switch($TASKID_ROW['parent'] ){
     }
     $content .= "<tr><td>".$lang['status'].":</td><td>\n".
                  "<select name=\"status\">\n".
-                 "<option value=\"notactive\"$s1>".$task_state['planned_project']."</option>\n".
-                 "<option value=\"nolimit\"$s2>".$task_state['no_deadline_project']."</option>\n".
-                 "<option value=\"active\"$s3>".$task_state['active_project']."</option>\n".
-                 "<option value=\"cantcomplete\"$s4>".$task_state['cantcomplete']."</option>\n".
+                 "<option value=\"notactive\"".$s1.">".$task_state['planned_project']."</option>\n".
+                 "<option value=\"nolimit\"".$s2.">".$task_state['no_deadline_project']."</option>\n".
+                 "<option value=\"active\"".$s3.">".$task_state['active_project']."</option>\n".
+                 "<option value=\"cantcomplete\"".$s4.">".$task_state['cantcomplete']."</option>\n".
                  "</select></td></tr>";
     break;
 
@@ -250,11 +253,11 @@ switch($TASKID_ROW['parent'] ){
       }
       $content .= "<tr> <td>".$lang['status'].":</td> <td>\n".
                    "<select name=\"status\">\n".
-                   "<option value=\"created\"$s1>".$task_state['new']."</option>\n".
-                   "<option value=\"notactive\"$s2>".$task_state['planned']."</option>\n".
-                   "<option value=\"active\"$s3>".$task_state['active']."</option>\n".
-                   "<option value=\"cantcomplete\"$s4>".$task_state['cantcomplete']."</option>\n".
-                   "<option value=\"done\"$s5>".$task_state['completed']."</option>\n".
+                   "<option value=\"created\"".$s1.">".$task_state['new']."</option>\n".
+                   "<option value=\"notactive\"".$s2.">".$task_state['planned']."</option>\n".
+                   "<option value=\"active\"".$s3.">".$task_state['active']."</option>\n".
+                   "<option value=\"cantcomplete\"".$s4.">".$task_state['cantcomplete']."</option>\n".
+                   "<option value=\"done\"".$s5.">".$task_state['completed']."</option>\n".
                    "</select></td></tr>";
 }
 
@@ -340,8 +343,8 @@ if($TASKID_ROW['groupaccess'] == 't' ) {
   $group = "checked=\"checked\"";
 }
 
-$content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help'); return false\">".$lang['all_users_view']."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" $global /></td></tr>\n".
-             "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" $group /></td></tr>\n".
+$content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help'); return false\">".$lang['all_users_view']."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" ".$global." /></td></tr>\n".
+             "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$group." /></td></tr>\n".
 
              "<tr><td>".$lang[$TYPE."_description"]."</td> <td><textarea name=\"text\" rows=\"5\" cols=\"60\">".$TASKID_ROW['text']."</textarea></td> </tr>\n".
 
@@ -356,7 +359,7 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
 
 //delete options
 $content .= "<br /><br />\n<form method=\"post\" action=\"tasks.php\">\n".
-             "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />".
+             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />".
              "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
              "<input type=\"hidden\" name=\"taskid\" value=\"".$TASKID_ROW['id']."\" />\n".
              "<input type=\"submit\" value=\"".$lang["delete_".$TYPE]."\" onclick=\"return confirm('".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\" /></fieldset>\n".

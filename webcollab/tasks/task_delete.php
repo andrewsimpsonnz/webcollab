@@ -27,9 +27,13 @@
   Deletes a task
 
 */
-require_once('path.php' );
-require_once( BASE.'includes/security.php' );
 
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
+
+//includes
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'tasks/task_common.php' );
 

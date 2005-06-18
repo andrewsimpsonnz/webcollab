@@ -28,8 +28,9 @@
 */
 
 require_once('path.php' );
+require_once(BASE.'path_config.php' );
+require_once(CONFIG.'config.php' );
 
-include_once(BASE.'config/config.php' );
 include_once(BASE.'lang/lang.php' );
 
 //
@@ -48,7 +49,7 @@ function safe_data($body ) {
   }
   
   //remove whitespace      
-  $body = trim($body );  
+  $body = trim($body );
 
   //limit line length for single line entries
   if(strlen($body ) > 100 ) {

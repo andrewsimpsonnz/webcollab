@@ -26,18 +26,20 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
-
-//secure values
-$content = '';
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //admin only
 if( ! ADMIN ){
   return;
 }
 
-$content .= "<a href=\"admin.php?x=$x&amp;action=admin\">".$lang['admin_config']."</a><br />\n";
+//secure values
+$content = '';
+
+$content .= "<a href=\"admin.php?x=".$x."&amp;action=admin\">".$lang['admin_config']."</a><br />\n";
 
 //show it
 new_box( $lang['admin_config'], $content, 'boxmenu' );

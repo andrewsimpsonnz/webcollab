@@ -27,8 +27,10 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //set variables
 $content = '';
@@ -42,7 +44,7 @@ if( ! ADMIN ) {
 //start form data
 $content .=
         "<form method=\"post\" action=\"users.php\">\n".
-          "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+          "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
           "<input type=\"hidden\" name=\"action\" value=\"submit_email\" /></fieldset>\n".
           "<table class=\"celldata\">\n".
           "<tr><td><input type=\"radio\" value=\"all\" name=\"group\" id=\"all\" checked=\"checked\" /><label for=\"all\">".$lang['all_users']."</label></td></tr>\n".

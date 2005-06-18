@@ -28,10 +28,9 @@
 //set initial safe values
 $WEB_CONFIG = "N";
 
-//read config files
-require_once('config/config_path.php' );
-
-include_once('setup/screen_setup.php' );
+//includes
+require_once('path.php' );
+include_once(BASE.'setup/screen_setup.php' );
 
 //
 // ERROR FUNCTION
@@ -53,8 +52,8 @@ function secure_error($message ) {
 //valid login attempt ?
 if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
-  include_once('database/database.php' );
-  include_once('includes/common.php' );
+  include_once(BASE.'includes/common.php' );
+  include_once(BASE.'database/database.php' );
 
   $q = '';
   $username = safe_data($_POST['username']);
@@ -112,10 +111,6 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   //user is okay log him/her in
 
   //create session key
-  // seed number is not required for PHP 4.2.0, and higher
-  if(version_compare(PHP_VERSION, '4.2.0' ) == -1 ) {
-    mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );
-  }  
   $session_key = md5(mt_rand() );
 
   //remove the old login information
@@ -128,7 +123,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   db_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess )
                        VALUES(\''.$user_id.'\', \''.$session_key.'\', \''.$ip.'\', now() )' );
 
-  include_once('setup/setup_setup1.php' );
+  include_once(BASE.'setup/setup_setup1.php' );
   die;
 }
 
@@ -143,15 +138,14 @@ if( ! isset($WEB_CONFIG ) || $WEB_CONFIG != 'Y' ) {
 }
 
 //version check
-//version_compare() is only in PHP 4.1.0, and above.
-if(strcmp('4.1.0', PHP_VERSION ) > 0 ) {
-  secure_error("WebCollab needs PHP version 4.1.0, or higher.  This version is ".PHP_VERSION );
+if(version_compare(PHP_VERSION, '4.2.0' ) == -1 ) {
+  secure_error("WebCollab needs PHP version 4.2.0, or higher.  This version is ".PHP_VERSION );
 }
 
 //check for initial install
 if(DATABASE_NAME == '' ) {
   //this is an initial install 
- include('setup/setup_setup1.php' );
+ include(BASE.'setup/setup_setup1.php' );
  die;
 }
 

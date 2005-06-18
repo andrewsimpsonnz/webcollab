@@ -25,11 +25,10 @@
 
 */
 
-//get our location
-require_once('path.php' );
-
-include_once(BASE.'config/config.php' );
-
+if(! defined('LOCALE' ) ) {
+  die('Config file not loaded properly for languages' );
+}
+ 
 switch(LOCALE ) {
 
   case 'en':

@@ -28,8 +28,9 @@
 
 */
 
-require_once('includes/security.php' );
-include_once('includes/screen.php' );
+require_once('path.php');
+require_once(BASE.'includes/security.php' );
+include_once(BASE.'includes/screen.php' );
 
 //
 // The action handler
@@ -43,35 +44,35 @@ switch($_REQUEST['action'] ) {
 
   //create a box with the current files
   case 'list':
-    include('files/file_list.php' );
+    include(BASE.'files/file_list.php' );
     break;
 
   //download a file
   case 'download':
-    include('files/file_download.php' );
+    include(BASE.'files/file_download.php' );
     break;
     
   //upload a file
   case 'upload':
     create_top($lang['file_choose'], 0, 'userfile', 'userfile' );
-    include('includes/mainmenu.php' );
+    include(BASE.'includes/mainmenu.php' );
     goto_main();
-    include('files/file_upload.php' );
+    include(BASE.'files/file_upload.php' );
     create_bottom();
     break;
 
   case 'submit_del':
   case 'submit_upload':
-    include('files/file_submit.php' );
+    include(BASE.'files/file_submit.php' );
     break;  
   
   //admin files
   case 'admin':
     create_top($lang['file_admin'] );
-    include('includes/mainmenu.php' );
-    include('files/file_menubox.php' );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'files/file_menubox.php' );
     goto_main();
-    include('files/file_admin.php' );
+    include(BASE.'files/file_admin.php' );
     create_bottom();
     break;
         

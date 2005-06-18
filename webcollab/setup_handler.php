@@ -26,7 +26,8 @@
 
 */
 
-require_once('setup/security_setup.php' );
+require_once('path.php');
+require_once(BASE.'setup/security_setup.php' );
 
 //
 // The action handler
@@ -39,23 +40,23 @@ if( ! isset($_REQUEST['action']) ){
 switch($_REQUEST['action'] ) {
 
   case 'setup2':
-    include('setup/setup_setup2.php' );
+    include(BASE.'setup/setup_setup2.php' );
     break;
 
   case 'setup3':
-    include('setup/setup_setup3.php' );
+    include(BASE.'setup/setup_setup3.php' );
     break;
 
   case 'setup4':
-    include('setup/setup_setup4.php' );
+    include(BASE.'setup/setup_setup4.php' );
     break;
 
   case 'setup5':
-    include('setup/setup_setup5.php' );
+    include(BASE.'setup/setup_setup5.php' );
     break;
 
   case 'build':
-    include('setup/setup_db_build.php' );
+    include(BASE.'setup/setup_db_build.php' );
     break;
 
   //Error case

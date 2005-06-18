@@ -34,9 +34,12 @@
   Refer to RFC 2920 for command pipelining
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
+//includes
 include_once(BASE.'includes/admin_config.php' );
 
 //** hooks for future development
@@ -253,8 +256,8 @@ function & clean($encoded ) {
   $text = preg_replace('/&#(\d{2,3});/e', "chr('$1')", $text );
     
   //characters previously escaped/encoded to avoid SQL injection/CSS attacks are reinstated. 
-  $trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=' );  
-  $text = strtr($text, $trans );
+  //$trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=' );  
+  //$text = strtr($text, $trans );
   
   //remove any dangerous tags that exist after decoding
   $text = preg_replace("/(<\/?\s*)(APPLET|SCRIPT|EMBED|FORM|\?|%)(\w*|\s*)([^>]*>)/i", "\\1****\\3\\4", $text );

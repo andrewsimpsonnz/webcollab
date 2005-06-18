@@ -27,16 +27,19 @@
   This is the administrative interface to the usergroups.
 
 */
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 $content = '';
 
 if(ADMIN ) {
-  $content .= "<a href=\"usergroups.php?x=$x&amp;action=add\">".$lang['add']."</a><br />\n";
+  $content .= "<a href=\"usergroups.php?x=".$x."&amp;action=add\">".$lang['add']."</a><br />\n";
 }
 
-$content .= "<a href=\"usergroups.php?x=$x&amp;action=manage\">".$lang['manage']."</a><br />\n";
+$content .= "<a href=\"usergroups.php?x=".$x."&amp;action=manage\">".$lang['manage']."</a><br />\n";
 
 new_box( $lang['usergroups'], $content, 'boxmenu' );
 

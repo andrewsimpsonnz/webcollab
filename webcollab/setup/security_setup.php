@@ -27,15 +27,16 @@
 
 //set initial safe values
 if( ! isset($WEB_CONFIG ) ) {
-  $WEB_CONFIG = "N";
+  $WEB_CONFIG = 'N';
 }
 
-require_once("path.php" );
+require_once('path.php' );
+require_once(BASE.'path_config.php' );
+require_once(BASE.CONFIG.'config.php' );
 
-//read config files
-require_once(BASE."config/config_path.php" );
-include_once(BASE."database/database.php" );
-include_once(BASE."setup/screen_setup.php" );
+include_once(BASE.'setup/screen_setup.php' );
+include_once(BASE.'includes/common.php' );
+include_once(BASE.'database/database.php' );
 
 //
 //Error trap function
@@ -43,92 +44,94 @@ include_once(BASE."setup/screen_setup.php" );
 
 function error_setup($message ) {
 
-  create_top_setup("Setup" );
-  new_box_setup("Setup error", $message, "boxdata", "singlebox" );
+  create_top_setup('Setup' );
+  new_box_setup('Setup error', $message, 'boxdata', 'singlebox' );
   create_bottom_setup();
   die;
 
 }
 
 //clean up some variables
-$q = "";
-$ip = "";
+$q = '';
+$ip = '';
 $x = 0;
 $admin = 0;
 
 //security checks
-if($WEB_CONFIG != "Y" ) {
-  error_setup("Current configuration file does not allow web-based setup" );
+if($WEB_CONFIG != 'Y' ) {
+  error_setup('Current configuration file does not allow web-based setup' );
   die;
 }
 
-if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == "" ) {
+if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == '' ) {
   //this is a first install
-  $x = "";
+  $x = '';
 }
-else{
+else {
   //get session key from either a GET or POST
-  if(isset($_REQUEST["x"]) && (strlen($_REQUEST["x"] ) == 32 ) ){
-    $x = safe_data($_REQUEST["x"]);
+  if(isset($_REQUEST['x']) && (strlen($_REQUEST['x'] ) == 32 ) ) {
+    $x = safe_data($_REQUEST['x']);
   }
   //check for existing variable
-  elseif(isset($session_key) && (strlen($session_key) == 32 ) ){
+  elseif(isset($session_key) && (strlen($session_key) == 32 ) ) {
     $x = safe_data($session_key);
   }
   //nothing
-  else{   
-    error_setup("No session key." );  
+  else {   
+    error_setup('No session key' );  
   }
 
   //check for ip address
-  if( ! ($ip = $_SERVER["REMOTE_ADDR"] ) ) {
-    error_setup("Server not able to detect your IP address. Session aborted as a security precaution." );
+  if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
+    error_setup('Server not able to detect your IP address. Session aborted as a security precaution.' );
   }
 
   if(! defined('PRE' ) ) {
-    define('PRE', "" );
+    define('PRE', '' );
   }
   
   //seems okay at first, now go cross-checking with the known data from the database
-  if( ! ($q = db_query("SELECT ".PRE."logins.user_id AS user_id, 
-                               ".PRE."logins.ip AS ip, 
-                               ".PRE."logins.lastaccess AS lastaccess,
-                               ".PRE."users.email AS email, 
-                               ".PRE."users.admin AS admin, 
-                               ".PRE."users.fullname AS fullname,
-                               $epoch now() ) AS now,
-                               $epoch lastaccess) AS sec_lastaccess
-                               FROM ".PRE."logins
-                               LEFT JOIN ".PRE."users ON (".PRE."users.id=".PRE."logins.user_id)
-                               WHERE ".PRE."logins.session_key='$x'", 0 ) ) ) {
-    error_setup("Database not able to verify session key");
+  if( ! ($q = db_query('SELECT '.PRE.'logins.user_id AS user_id, 
+                               '.PRE.'logins.lastaccess AS lastaccess,
+                               '.PRE.'users.admin AS admin, 
+                               '.$epoch.' now() ) AS now,
+                               '.$epoch.' lastaccess) AS sec_lastaccess
+                               FROM '.PRE.'logins
+                               LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
+                               WHERE '.PRE.'logins.session_key=\''.$x.'\'', 0 ) ) ) {
+    error_setup('Database not able to verify session key');
   }
 
   if(db_numrows($q) != 1 ) {
-    error_setup("No valid session exists." );
+    error_setup('No valid session exists' );
   }
 
-  if( ! ( $row = db_fetch_array($q, 0) ) ) {
-    error_setup("Error while fetching users' data");
+  if(! ( $row = db_fetch_array($q, 0) ) ) {
+    error_setup('Error while fetching users data');
   }
 
   //if database table LEFT JOIN gives no rows will get NULL here
-  if($row["user_id"] == NULL ){
-    error_setup("No valid user-id found");
+  if($row['user_id'] == NULL ){
+    error_setup('No valid user-id found');
   }
 
   //check rights
-  if($row["admin"] != 't' ) {
-    error_setup("You need to be an administrator to use this function" );
+  if($row['admin'] != 't' ) {
+    error_setup('You need to be an administrator to use this function' );
   }
   
   //check the last logintime (there is a 10 min limit)
-  if( ($row["now"]-$row["sec_lastaccess"]) > 600 ) {
-    db_query("UPDATE ".PRE."logins SET session_key='' WHERE user_id=".$row["user_id"] );
-    error_setup("Security timeout of 10 minutes has occurred on this session." );
+  if( ($row['now'] - $row['sec_lastaccess']) > 600 ) {
+    db_query('UPDATE '.PRE.'logins SET session_key=\'xxxx\' WHERE user_id='.$row['user_id'] );
+    error_setup('Security timeout of 10 minutes has occurred on this session.' );
   }
 
-  //update the "I was here" time
-  db_query("UPDATE ".PRE."logins SET lastaccess=now() WHERE session_key='".$x."' AND user_id=".$row["user_id"] );
-}  
+  //update the 'I was here' time
+  db_query('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.$x.'\' AND user_id='.$row['user_id'] );
+} 
+
+//for compatability in common.php
+define('UID_NAME', '' );
+define('UID_EMAIL', '' );
+
 ?>

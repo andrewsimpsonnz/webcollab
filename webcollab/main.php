@@ -28,34 +28,35 @@
 
 */
 
-require_once('includes/security.php' );
-include_once('includes/screen.php' );
+require_once('path.php');
+require_once(BASE.'includes/security.php' );
+include_once(BASE.'includes/screen.php' );
 
 //start of page
 create_top();
 
-  include('includes/mainmenu.php' );
-  include('forum/forum_menubox.php' );
+  include(BASE.'includes/mainmenu.php' );
+  include(BASE.'forum/forum_menubox.php' );
   if(! GUEST){
-    include('tasks/task_menubox.php' );
+    include(BASE.'tasks/task_menubox.php' );
   }
-  include('users/user_menubox.php' );
+  include(BASE.'users/user_menubox.php' );
 
   if(ADMIN ) {
-    include('taskgroups/taskgroup_menubox.php' );
-    include('usergroups/usergroup_menubox.php' );
-    include('admin/admin_config_menubox.php' );
+    include(BASE.'taskgroups/taskgroup_menubox.php' );
+    include(BASE.'usergroups/usergroup_menubox.php' );
+    include(BASE.'admin/admin_config_menubox.php' );
     $taskid = -1;
-    include('files/file_menubox.php' );
+    include(BASE.'files/file_menubox.php' );
   }
   else {
-    include('usergroups/usergroup_menubox.php' );
+    include(BASE.'usergroups/usergroup_menubox.php' );
   }
-  include('contacts/contact_menubox.php' );
+  include(BASE.'contacts/contact_menubox.php' );
 
 //flip over to other frame
 goto_main();
-  include('tasks/task_project_list.php' );
+  include(BASE.'tasks/task_project_list.php' );
 
 //finish page
 create_bottom();

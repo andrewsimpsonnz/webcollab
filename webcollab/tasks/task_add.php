@@ -28,8 +28,10 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/time.php' );
@@ -72,7 +74,7 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
 }
 
 $content .= "<form method=\"post\" action=\"tasks.php\" $javascript>\n";
-$content .= "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n ";
+$content .= "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ";
 $content .= "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n ";
 
 //this is split up in 2 parts for readabilities' sake
@@ -93,9 +95,9 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
   //add the project deadline (plus GMT offset) for the javascript
   $project_deadline = db_result(db_query('SELECT '.$epoch.'deadline) FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ) ) + TZ_OFFSET;
   
-  $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"$project_deadline\" />\n";            
+  $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" />\n";            
                 
-  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"$parentid\" />\n".
+  $content .= "<input type=\"hidden\" name=\"parentid\" value=\"".$parentid."\" />\n".
               "<input type=\"hidden\" name=\"projectid\" value=\"".$parent_row['projectid']."\" /></fieldset>\n".
               "<table class=\"celldata\">\n";
   
@@ -107,11 +109,11 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
     $project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ), 0, 0 );
   }
   
-  $content .= "<tr><td>".$lang['project'] .":</td> <td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$parent_row['projectid']."\">$project</a></td></tr>\n";
+  $content .= "<tr><td>".$lang['project'] .":</td> <td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$parent_row['projectid']."\">".$project."</a></td></tr>\n";
 
   //check if task has a parent task
   if( $parent_row['parent'] != 0 ) {
-    $content .= "<tr><td>".$lang['parent_task'].":</td> <td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$parent_row['parent']."\">".$parent_row['name']."</a></td> </tr>\n";
+    $content .= "<tr><td>".$lang['parent_task'].":</td> <td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$parent_row['parent']."\">".$parent_row['name']."</a></td> </tr>\n";
   }
   $content .= "<tr><td>".$lang['creation_time'].":</td> <td>".nicetime(time(), 1 )."</td> </tr>\n".
               "<tr><td>".$lang['task_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".

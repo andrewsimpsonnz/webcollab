@@ -26,8 +26,10 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //secure variables
 $content   = '';
@@ -37,7 +39,7 @@ $menu_type = 'project';
 $taskid    = -1;
 
 //guests shouldn't get here
-if(GUEST ){
+if(GUEST ) {
   return;  
 }
 
@@ -55,24 +57,24 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ){
     
     if((ADMIN ) || ($TASKID_ROW['owner'] == UID )  ) {
       $content .= "<small><b>".$lang['admin'].":</b></small><br />\n".
-                  "<a href=\"tasks.php?x=$x&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_$TYPE"]."</a><br />\n".
-                  "<a href=\"tasks.php?x=$x&amp;action=delete&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang["delete_$TYPE"]."</a><br />\n".
+                  "<a href=\"tasks.php?x=".$x."&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_$TYPE"]."</a><br />\n".
+                  "<a href=\"tasks.php?x=".$x."&amp;action=delete&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang["delete_$TYPE"]."</a><br />\n".
                   "<br /><small><b>".$lang['global'].":</b></small><br />\n";
       
       if(($TYPE == 'project' ) && ($TASKID_ROW['archive'] == 0 ) ){
-        $archive = "<a href=\"archive.php?x=$x&amp;action=submit_archive&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang['javascript_archive_project'], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang['archive_project']."</a><br />\n";
+        $archive = "<a href=\"archive.php?x=".$x."&amp;action=submit_archive&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang['javascript_archive_project'], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang['archive_project']."</a><br />\n";
       }
     }
-    $content .= "<a href=\"tasks.php?x=$x&amp;action=add&amp;parentid=$taskid\">".$lang['add_task']."</a><br />\n";
+    $content .= "<a href=\"tasks.php?x=".$x."&amp;action=add&amp;parentid=$taskid\">".$lang['add_task']."</a><br />\n";
   
     if(ADMIN ){
-      $clone = "<a href=\"tasks.php?x=$x&amp;action=clone&amp;taskid=$taskid\">".$lang["clone_$TYPE"]."</a><br />\n";
+      $clone = "<a href=\"tasks.php?x=".$x."&amp;action=clone&amp;taskid=$taskid\">".$lang["clone_$TYPE"]."</a><br />\n";
     }
   }
 }
 
 //the task-independent part
-$content .= "<a href=\"tasks.php?x=$x&amp;action=add\">".$lang['add_project']."</a><br />\n";
+$content .= "<a href=\"tasks.php?x=".$x."&amp;action=add\">".$lang['add_project']."</a><br />\n";
 $content .= $archive.$clone;
 
 new_box( $lang[$menu_type."_options"], $content, 'boxmenu' );

@@ -28,10 +28,11 @@
 */
 
 require_once('path.php' );
-require_once(BASE.'config/config_path.php' );
+require_once(BASE.'path_config.php' );
+require_once(CONFIG.'config.php' );
 require_once(BASE.'lang/lang.php' );
-require_once(BASE.'database/database.php' );
 require_once(BASE.'includes/common.php' );
+require_once(BASE.'database/database.php' );
 
 //clean up some variables
 $q   = '';
@@ -93,7 +94,7 @@ if(($row['user_id'] == NULL ) || ($row['deleted'] == 't' ) ){
 
 //check the last login time (there is an inactivity time limit set by SESSION_TIMEOUT)
 if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
-  db_query('UPDATE '.PRE.'logins SET session_key=\'\' WHERE user_id='.$row['user_id'] );
+  db_query('UPDATE '.PRE.'logins SET session_key=\'xxxx\' WHERE user_id='.$row['user_id'] );
   setcookie('webcollab_session', '' );
   warning( $lang['security_manager'], sprintf($lang['session_timeout_sprt'],
             round(($row['now'] - $row['sec_lastaccess'] )/60), SESSION_TIMEOUT*60, BASE_URL ) );

@@ -27,8 +27,10 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 $content    = '';
 $allowed[0] = 0;
@@ -67,7 +69,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i){
   }
   
   //show output
-  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
+  $content .= "<tr><td><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
 }
 
 $content .= "<tr><td style=\"white-space:nowrap\"colspan=\"2\">&nbsp;</td></tr>\n";
@@ -91,7 +93,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i){
   }
   
   //show output
-  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
+  $content .= "<tr><td><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
 
 }
 $content .= "</table>\n";

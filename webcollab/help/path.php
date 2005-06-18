@@ -1,3 +1,5 @@
 <?php
-  define( "BASE", "../" );
+
+define('BASE', '../' );
+
 ?>

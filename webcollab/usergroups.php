@@ -27,9 +27,9 @@
 
 */
 
-require_once('includes/security.php' );
-include_once('includes/screen.php' );
-
+require_once('path.php');
+require_once(BASE.'includes/security.php' );
+include_once(BASE.'includes/screen.php' );
 
 //
 // The action handler
@@ -44,31 +44,31 @@ switch( $_REQUEST['action'] ) {
   //gives a window and some options to do to the poor 'old usergroup
   case 'manage':
     create_top($lang['manage_usergroups']);
-    include('includes/mainmenu.php' );
-    include('usergroups/usergroup_menubox.php' );
-    include('users/user_menubox.php' );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'usergroups/usergroup_menubox.php' );
+    include(BASE.'users/user_menubox.php' );
     goto_main();
-    include('usergroups/usergroup_manage.php' );
+    include(BASE.'usergroups/usergroup_manage.php' );
     create_bottom();
     break;
 
   //add a usergroup
   case 'add':
     create_top($lang['add_new_usergroup'], 0, 'name', 'name' );
-    include('includes/mainmenu.php' );
-    include('usergroups/usergroup_menubox.php' );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'usergroups/usergroup_menubox.php' );
     goto_main();
-    include('usergroups/usergroup_add.php' );
+    include(BASE.'usergroups/usergroup_add.php' );
     create_bottom();
     break;
 
   //edit a usergroup
   case 'edit':
     create_top($lang['edit_usergroup'] );
-    include('includes/mainmenu.php' );
-    include('usergroups/usergroup_menubox.php' );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'usergroups/usergroup_menubox.php' );
     goto_main();
-    include('usergroups/usergroup_edit.php' );
+    include(BASE.'usergroups/usergroup_edit.php' );
     create_bottom();
     break;
 
@@ -76,7 +76,7 @@ switch( $_REQUEST['action'] ) {
   case 'submit_edit':
   case 'submit_insert':
   case 'submit_del':
-    include('usergroups/usergroup_submit.php' );
+    include(BASE.'usergroups/usergroup_submit.php' );
     break;
 
   //Error case

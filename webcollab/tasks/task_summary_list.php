@@ -28,9 +28,12 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
+//includes
 include_once(BASE.'tasks/task_common.php' );
 include_once(BASE.'includes/time.php' );
 
@@ -334,13 +337,13 @@ else {
 
 $content .= "<table>\n";
 $content .= "<tr><td colspan=\"3\"><small><a href=\"help/help_language.php?item=summarypage&amp;type=help\" onclick=\"window.open('help/help_language.php?item=summarypage&amp;type=help'); return false\"><b>".$lang['flags']."</b></a></small></td><td><small>";
-$content .= "<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=deadline\">";
+$content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=deadline\">";
 $content .= "<b>".$lang['deadline']."</b></a></small></td><td><small>";
-$content .= "<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=status\">";
+$content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=status\">";
 $content .= "<b>".$lang['status']."</b></a></small></td><td><small>";
-$content .= "<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=owner\">";
+$content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=owner\">";
 $content .= "<b>".$lang['owner']."</b></a></small></td><td><small>";
-$content .= "<a href=\"tasks.php?x=$x&amp;action=summary&amp;sortby=";
+$content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=";
 
 switch($sortby ) {
   case 'taskgroupid':

@@ -28,6 +28,11 @@
 
 */
 
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
+
 //
 // Create a pgsql/mysql datetime stamp
 //

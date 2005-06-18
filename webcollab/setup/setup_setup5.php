@@ -146,8 +146,8 @@ $content = "<?php\n".
 "?>\n";
 
 //open file for writing
-if(! $handle = @fopen('config/config.php', 'w' ) ) {
-  error_setup("Cannot open config file for writing");
+if(! $handle = @fopen(CONFIG.'config.php', 'w' ) ) {
+  error_setup("Cannot open ".CONFIG."config file for writing");
 }
 
 //write to file
