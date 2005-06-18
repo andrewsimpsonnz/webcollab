@@ -1,6 +1,23 @@
 WebCollab CVS
-*** 5 June 2005
+*** 18 June 2005
+  Andrew Simpson
 
+- upgrade/rearrange security system to subdirectory files
+
+- subdirectories can now be remote from web server root if desired
+
+- upgrade to PHP 4.2.0 minimum requirement 
+
+WebCollab CVS
+*** 11 June 2005
+  Andrew Simpson
+  
+- determine server timezone offset from database
+
+WebCollab CVS
+*** 5 June 2005
+  Andrew Simpson
+  
 - remove reset buttons from submit forms
 
 - re-arrange text links in some submit forms for consistency across program
@@ -13,7 +30,8 @@ WebCollab CVS
 
 WebCollab CVS
 *** 28 May 2005
-
+  Andrew Simpson
+  
 - bugfix: ProjectJump HTTP redirect not working on some webservers (Bug #1209798) (Thomas Briggs)
 
 - bugfix: Remove double [edit] button (Bug #1212253) (Credit: Alfred Ellis - alfredellis)
@@ -32,12 +50,14 @@ WebCollab CVS
 
 WebCollab CVS
 *** 24 May 2005
-
+  Andrew Simpson
+  
 - Spanish language update (Credit: Alberto Vizcaíno López) 
 
 WebCollab CVS
 *** 21 May 2005
-
+  Andrew Simpson
+  
 - bugfix: fix usergroup visibility in project list and task list (Mark Nienberg - mnienberg)
 
 - improve code format in conditionals to prevent coding errors (fixed two minor bugs in process)
@@ -48,7 +68,8 @@ WebCollab CVS
 
 WebCollab CVS
 *** 11 May 2005
-
+  Andrew Simpson
+  
 - rearrange some switch statements for better optimisation
 
 - optimise graphical bar function
@@ -59,7 +80,8 @@ WebCollab CVS
 
 WebCollab CVS
 *** 30 April 2005
-
+  Andrew Simpson
+  
 - profiled email.php with APD profiler
 
 - change substr() to strpos() and strncmp() in email.php
@@ -72,7 +94,8 @@ WebCollab CVS
 
 WebCollab CVS
 *** 21 April 2005
-
+  Andrew Simpson
+  
 - try all options in SMTP AUTH before rejecting emails (Patch #1184635) (Credit: Craig Hoover - crh3675)
 
 - change from double quoting throughout to single quotes 
@@ -93,26 +116,30 @@ WebCollab CVS
 
 WebCollab CVS
 *** 13 April 2005
-
+  Andrew Simpson
+  
 - implement SMTP PIPELINING (RFC 2920) in email.php
 
 - make allowance for SMTP STARTTLS in PHP 5.1+ (Experimental) 
 
 WebCollab 1.71 - Karekare
 *** 5 April 2005
-
+  Andrew Simpson
+  
 - release
 
 WebCollab CVS
 *** 5 April 2005
-
+  Andrew Simpson
+  
 - Swedish translation added (Credit: Göran Källqvist )
 
 - bugfix: Data validation could corrupt SQL strings (Bug #1176733) (Credit: Thomas Briggs)
 
 WebCollab CVS
 *** 24 March 2005
-
+  Andrew Simpson
+  
 - bugfix: After reparenting update completion status of former project (Bug #1168886) (Joel W. - wampl3r)
 
 - bugfix: Private users not in a usergroup can't see themselves (Bug #1169390) (Paul Whittington - pwhittin)
@@ -123,7 +150,8 @@ WebCollab CVS
 
 WebCollab CVS
 *** 9 March 2005
-
+  Andrew Simpson
+  
 - refactor task_todo_list.php to have minimal database calls (significant efficiency improvement) 
 
 - added Russian translation (Credit: Eugene N. Shilaev)
@@ -148,24 +176,28 @@ WebCollab CVS
 
 WebCollab CVS
 *** 28 February 2005
-
+  Andrew Simpson
+  
 - added Hungarian translation (Credit: Széll Tamás)
 
 WebCollab CVS
 *** 21 February 2005
-
+  Andrew Simpson
+  
 - fix HTML syntax error in task_list (Bug #1144512)  (Credit: hs_dino)
 
 - fix escapes on javascript (Bug #1147634)  (Joann Zimmerman)
 
 WebCollab 1.70 - Angelus
 *** 15 February 2005
-
+  Andrew Simpson
+  
 - release
 
 WebCollab CVS
 *** 12 February 2005
-
+  Andrew Simpson
+  
 - add Brazilian Portuguese translation (Credit: Eduardo Alvim)
 
 - bugfix: remove input validation from paswords to allow all characters to be used (Tom Dickson)
@@ -174,7 +206,8 @@ WebCollab CVS
 
 WebCollab CVS
 *** 4 February 2005
-
+  Andrew Simpson
+  
 - update German language (Credit: Michael Bunk)
 
 - make warning messages more friendly in setup check (Bug #1115931)
@@ -187,7 +220,8 @@ WebCollab CVS
 
 WebCollab CVS
 *** 25 January 2005
-
+  Andrew Simpson
+  
 - remove OID column usuage in Postgresql (OID was depreciated after PostgreSQL 7.2, and will be partially removed after 8.0)
 
 - change file upload in PostgreSQL to be not reliant on OID columns
