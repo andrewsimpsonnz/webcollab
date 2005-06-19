@@ -43,7 +43,6 @@ ignore_user_abort(TRUE);
 //set variables
 $content = '';
 
-
 $input_array = array('email_admin', 'reply_to', 'from' );
 
 if(USE_EMAIL == 'Y' ){
@@ -51,15 +50,17 @@ if(USE_EMAIL == 'Y' ){
   //check and validate email addresses
   foreach($input_array as $var) {
     if(! empty($_POST[$var]) ) {
-      if( ! ereg("^.+@.+\..+$", $_POST[$var] ) )
-        warning( $lang['invalid email'], sprintf( $lang['invalid_email_given_sprt'], $_POST[$var] ) );
-      ${$var} = safe_data($_POST[$var] );
+      $input = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ): $_POST[$var];
+      if((! preg_match('/\b[a-z0-9._-]+@[a-z0-9][a-z0-9._-]+\.[a-z.]+\b/i', $input, $match ) ) || (strlen(trim($input) ) > 255 ) ) {
+        warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST[$var] ) );
+      }
+      ${$var} = db_escape_string($match[0] );
     }
     else
       ${$var} = NULL;
   }
 }
-else{ //no email
+else { //no email
   foreach($input_array as $var) {
     ${$var} = NULL;
   }
@@ -137,38 +138,22 @@ if(USE_EMAIL != 'Y' ){
   die;
 }
 
-/*
-Begin mailing list clean up
+//begin mailing list clean up
+$input = (get_magic_quotes_gpc() ) ? stripslashes($_POST['email'] ): $_POST['email'];
 
-Because we get the mailing list input from a textarea, it needs thorough filtering to remove weird browser formatting
-*/
-
-//roughly separate out the email list by newlines, spaces, formfeeds etc...
-$input_list = split("[ \f\r\n\t]+", $_POST['email'] );
-
-//step through the split input array looking for email addresses
-$max = sizeof($input_list);
-//initialise secondary counter
-$j = 0;
-
-for( $i=0 ; $i < $max ; ++$i) {
-  //check for valid address anywhere this data string
-  if(ereg("[a-z0-9\-\.]+@[a-z0-9\-\.]+\.[a-z0-9]+", $input_list[$i], $value ) ) {
-    //found one - remove any whitespace at each end, then save it
-    $email_list[$j] = trim($value[0]);
-    ++$j;
-  }
-}
-
-//drop old list
-//can't use a transaction here - postgres' does not like it!
-db_query('TRUNCATE TABLE '.PRE.'maillist');
-
-//add new list
-if( isset($email_list ) ) {
-  $max = sizeof($email_list);
-  for( $i=0 ; $i < $max ; ++$i ) {
-    db_query('INSERT INTO '.PRE.'maillist (email) VALUES (\''.$email_list[$i].'\')' );
+//use regex to get addresses - and strip any other stuff
+if((preg_match_all('/\b[a-z0-9._-]+@[a-z0-9][a-z0-9._-]+\.[a-z.]+\b/i', $input, $match, PREG_PATTERN_ORDER ) ) ) {
+  //drop old list
+  //can't use a transaction here - postgres' does not like it!
+  db_query('TRUNCATE TABLE '.PRE.'maillist');
+  
+  //cycle through addresses and store in database
+  foreach($match[0] as $address ) {
+    //remove excessively long addresses
+    if(strlen($address ) > 255 ) {
+      continue;
+    }
+    db_query('INSERT INTO '.PRE.'maillist (email) VALUES (\''.db_escape_string($address ).'\')' );
   }
 }
 //all done!
