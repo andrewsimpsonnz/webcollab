@@ -32,7 +32,7 @@ if( ! isset($WEB_CONFIG ) ) {
 
 require_once('path.php' );
 require_once(BASE.'path_config.php' );
-require_once(BASE.CONFIG.'config.php' );
+require_once(CONFIG.'config.php' );
 
 include_once(BASE.'setup/screen_setup.php' );
 include_once(BASE.'includes/common.php' );
