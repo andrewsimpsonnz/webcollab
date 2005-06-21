@@ -67,7 +67,7 @@ if(isset($_GET['action']) && $_GET['action'] == "archive_print" ) {
   $content  .= "[<a href=\"archive.php?x=".$x."&amp;action=list\">".$lang['normal_version']."</a>]\n";
 }
 else {
-  $content  .= "<table><td style=\"text-align : right\"><span class=\"textlink\">[<a href=\"archive.php?x=".$x."&amp;action=archive_print\">".$lang['print_version']."</a>]";
+  $content  .= "<table><tr><td style=\"text-align : right\"><span class=\"textlink\">[<a href=\"archive.php?x=".$x."&amp;action=archive_print\">".$lang['print_version']."</a>]";
   $content .= "</span></td></tr>\n</table>\n";
 }
 

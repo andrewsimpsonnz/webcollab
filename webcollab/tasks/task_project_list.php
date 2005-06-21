@@ -199,7 +199,7 @@ if(! $condensed) {
         break;
   
       default:
-        $suffix = '';
+        $suffix = '</a>';
         //check if late
         if( (TIME_NOW + $tz_offset - $row[7] ) >= 86400 ) {
           $suffix = "</a> &nbsp;<span class=\"late\">".$lang['late_g']."</span><br />\n";
