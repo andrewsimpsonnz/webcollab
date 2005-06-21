@@ -59,7 +59,6 @@ switch($_REQUEST['action'] ) {
     include(BASE.'contacts/contact_menubox.php' );
     goto_main();
     include(BASE.'contacts/contact_add.php' );
-    new_box($lang['info'], $lang['contact_add_info'] );
     create_bottom();
     break;
 
