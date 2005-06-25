@@ -28,6 +28,10 @@
 if(! defined('LOCALE' ) ) {
   die('Config file not loaded properly for languages' );
 }
+
+if(isset($lang) ) {
+  unset($lang);
+}
  
 switch(LOCALE ) {
 
