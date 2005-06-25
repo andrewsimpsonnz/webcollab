@@ -100,7 +100,7 @@ switch($_REQUEST['action'] ) {
     $password_unclean = trim($_POST['password'] );
     
     $email_raw = (get_magic_quotes_gpc() ) ? stripslashes($_POST['email'] ): $_POST['email'];
-    if((! preg_match('/\b[a-z0-9._-]+@[a-z0-9][a-z0-9._-]+\.[a-z.]+\b/i', $email_raw, $match ) ) || (strlen(trim($email_raw) ) > 255 ) ) {
+    if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $email_raw, $match ) ) || (strlen(trim($email_raw) ) > 200 ) ) {
       warning($lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST['email'] ) );
     }
     $email_unclean = $match[0];
@@ -193,7 +193,7 @@ switch($_REQUEST['action'] ) {
     //magic quotes is not required
     $email_raw = (get_magic_quotes_gpc() ) ? stripslashes($_POST['email'] ) : $_POST['email'];
     
-    if((! preg_match('/\b[a-z0-9._-]+@[a-z0-9][a-z0-9._-]+\.[a-z.]+\b/i', $email_raw, $match ) ) || (strlen(trim($email_raw) ) > 255 ) ) {
+    if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $email_raw, $match ) ) || (strlen(trim($email_raw) ) > 200 ) ) {
       warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST['email'] ) );
     }
     $email_unclean = $match[0];
