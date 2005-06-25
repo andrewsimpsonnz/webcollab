@@ -39,7 +39,7 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ) {
 
   $taskid = intval($_GET['taskid']);
 
-  include_once(BASE.'includes/details.php' );
+  require_once(BASE.'includes/details.php' );
   
   $content .= "<small><b>".$lang['project'].":</b></small><br />\n";
 

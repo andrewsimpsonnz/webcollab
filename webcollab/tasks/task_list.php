@@ -33,7 +33,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
-include_once(BASE.'includes/details.php' );
+require_once(BASE.'includes/details.php' );
 
 //init values
 $content = '';

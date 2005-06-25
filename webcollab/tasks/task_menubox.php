@@ -48,7 +48,7 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ){
   
   $taskid = intval($_GET['taskid']);  
 
-  include_once(BASE.'includes/details.php' );
+  require_once(BASE.'includes/details.php' );
   
   //don't show options for archived projects
   if($TASKID_ROW['archive'] == 0 ){

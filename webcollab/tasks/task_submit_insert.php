@@ -34,7 +34,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
-include_once(BASE.'includes/admin_config.php' );
+require_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/time.php' );
 include_once(BASE.'lang/lang_email.php' );
 include_once(BASE.'tasks/task_common.php' );
