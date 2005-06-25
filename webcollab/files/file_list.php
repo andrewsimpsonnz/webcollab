@@ -34,7 +34,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
-include_once(BASE.'includes/details.php' );
+require_once(BASE.'includes/details.php' );
 include_once( BASE.'includes/usergroup_security.php' );
 
 $content = '';

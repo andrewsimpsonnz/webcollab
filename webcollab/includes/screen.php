@@ -60,7 +60,7 @@
 require_once('path.php' );
 require_once(BASE.'path_config.php' );
 
-include_once(CONFIG.'config.php' );
+require_once(CONFIG.'config.php' );
 include_once(BASE.'lang/lang.php' );
 
 //

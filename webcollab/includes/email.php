@@ -40,7 +40,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
-include_once(BASE.'includes/admin_config.php' );
+require_once(BASE.'includes/admin_config.php' );
 
 //** hooks for future development
 define('SMTP_PORT', 25 );
