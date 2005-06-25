@@ -30,6 +30,10 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+if(isset($EMAIL_MAILINGLIST ) ) {
+  unset($EMAIL_MAILINGLIST );
+}
+
 //get config data
 $q = db_query('SELECT * FROM '.PRE.'config' );
 $row = @db_fetch_array($q, 0 );
