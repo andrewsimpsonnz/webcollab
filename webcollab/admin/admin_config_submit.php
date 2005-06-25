@@ -51,7 +51,7 @@ if(USE_EMAIL == 'Y' ){
   foreach($input_array as $var) {
     if(! empty($_POST[$var]) ) {
       $input = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ): $_POST[$var];
-      if((! preg_match('/\b[a-z0-9._-]+@[a-z0-9][a-z0-9._-]+\.[a-z.]+\b/i', $input, $match ) ) || (strlen(trim($input) ) > 255 ) ) {
+      if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $input, $match ) ) || (strlen(trim($input) ) > 200 ) ) {
         warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST[$var] ) );
       }
       ${$var} = db_escape_string($match[0] );
@@ -142,7 +142,7 @@ if(USE_EMAIL != 'Y' ){
 $input = (get_magic_quotes_gpc() ) ? stripslashes($_POST['email'] ): $_POST['email'];
 
 //use regex to get addresses - and strip any other stuff
-if((preg_match_all('/\b[a-z0-9._-]+@[a-z0-9][a-z0-9._-]+\.[a-z.]+\b/i', $input, $match, PREG_PATTERN_ORDER ) ) ) {
+if((preg_match_all('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $input, $match, PREG_PATTERN_ORDER ) ) ) {
   //drop old list
   //can't use a transaction here - postgres' does not like it!
   db_query('TRUNCATE TABLE '.PRE.'maillist');
@@ -150,7 +150,7 @@ if((preg_match_all('/\b[a-z0-9._-]+@[a-z0-9][a-z0-9._-]+\.[a-z.]+\b/i', $input, 
   //cycle through addresses and store in database
   foreach($match[0] as $address ) {
     //remove excessively long addresses
-    if(strlen($address ) > 255 ) {
+    if(strlen($address ) > 200 ) {
       continue;
     }
     db_query('INSERT INTO '.PRE.'maillist (email) VALUES (\''.db_escape_string($address ).'\')' );
