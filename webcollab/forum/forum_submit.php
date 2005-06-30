@@ -42,10 +42,13 @@ require_once(BASE.'includes/usergroup_security.php' );
 function find_posts( $postid ) {
 
   global $post_array, $parent_array, $match_array, $index, $post_count;
-
-  $parent_array = '';
-  $index = 0; 
+  
+  $post_array   = array();
+  $parent_array = array();
+  $match_array  = array();
   $parent_count = 0;
+  $post_count   = 0;
+  $index = 0; 
   
   $taskid = db_result(db_query('SELECT taskid FROM '.PRE.'forum WHERE id='.$postid ), 0, 0 );
 
@@ -56,17 +59,18 @@ function find_posts( $postid ) {
     //put values into array
     $post_array[$i]['id'] = $row['id'];
     $post_array[$i]['parent'] = $row['parent'];
+    ++$post_count;
   
     //if this is a subpost, store the parent id 
     if($row['parent'] != 0 ) {
       $parent_array[$parent_count] = $row['parent'];
-      $parent_count++;
+      ++$parent_count;
     }
   }
   
   //record first match
   $match_array[$index] = $postid;
-  $index++;
+  ++$index;
   
   //if selected post has children (subposts), iterate recursively to find them 
   if(in_array($postid, (array)$parent_array ) ){
@@ -82,17 +86,17 @@ function find_posts( $postid ) {
 function find_children($parent ) {
 
   global $post_array, $parent_array, $match_array, $index, $post_count;
-
-  for($i=0 ; $i < $post_count ; ++$i ) {
   
+  for($i=0 ; $i < $post_count ; ++$i ) {
+    
     if($post_array[$i]['parent'] != $parent ){
       continue;
     }
     $match_array[$index] = $post_array[$i]['id'];
-    $index++;
+    ++$index;
     
     //if this post has children (subposts), iterate recursively to find them
-    if(in_array($post_array[$i]['id'], $parent_array ) ){
+    if(in_array($post_array[$i]['id'], (array)$parent_array ) ){
       find_children($post_array[$i]['id'] );
     }
   }
@@ -111,6 +115,7 @@ function delete_messages($postid ) {
   // perform the delete - delete from newest post first to oldest post last to prevent database referential errors
   for($i=0; $i < $index; ++$i ) {
     db_query('DELETE FROM '.PRE.'forum WHERE id='.$match_array[($index - 1) - $i] );
+    
   }
   return;
 }
@@ -118,6 +123,10 @@ function delete_messages($postid ) {
 if( ! isset($_REQUEST['action']) ){
   error('Forum submit', 'No request given' );
 }
+
+//secure variables
+$mail_list = array();
+
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
@@ -191,7 +200,7 @@ ignore_user_abort(TRUE);
       //set time of last forum post to this task
       db_query('UPDATE '.PRE.'tasks SET lastforumpost=now() WHERE id='.$taskid );
       db_commit();
-
+      
       //get task data
       $q = db_query('SELECT '.PRE.'tasks.name AS name,
                             '.PRE.'tasks.usergroupid AS usergroupid,
@@ -220,7 +229,7 @@ ignore_user_abort(TRUE);
       }
 
       //do we need to email?
-      if(isset($mail_list) ){
+      if(sizeof($mail_list) > 0 ){
         include_once(BASE.'includes/email.php' );
         include_once(BASE.'lang/lang_email.php' );
 
@@ -231,7 +240,7 @@ ignore_user_abort(TRUE);
           $message_unclean = stripslashes($message_unclean );  
         }  
         //get & add the mailing list
-        if(isset($EMAIL_MAILINGLIST ) ){
+        if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
           $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
         }
         
