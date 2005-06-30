@@ -37,15 +37,6 @@ require_once(BASE.'includes/details.php' );
 include_once(BASE.'includes/time.php' );
 include_once(BASE.'includes/usergroup_security.php' );
 
-//check the taskid is valid
-if( ! (isset($_GET['taskid']) && is_numeric($_GET['taskid']) ) ){
-  error('Forum list', 'Not a valid taskid' );
-}
-$taskid = intval($_GET['taskid']);
-
-//check usergroup security  
-$taskid = usergroup_check($taskid );
-
 //
 // Recursive function for listing all posts of a task
 //
@@ -54,7 +45,8 @@ function list_posts_from_task( $taskid, $usergroupid ) {
   global $x, $lang, $TASKID_ROW, $epoch;
   global $post_array, $parent_array, $post_count;
 
-  $parent_array = '';
+  $post_array   = array();
+  $parent_array = array();
   $parent_count = 0;
   $post_count   = 0;
   
@@ -168,6 +160,15 @@ function find_children($parent ) {
 //--------------------------------------------------------------------------------------------------------------------------------
 
 //MAIN PROGRAM
+
+//check the taskid is valid
+if( ! (isset($_GET['taskid']) && is_numeric($_GET['taskid']) ) ){
+  error('Forum list', 'Not a valid taskid' );
+}
+$taskid = intval($_GET['taskid']);
+
+//check usergroup security  
+$taskid = usergroup_check($taskid );
 
 //
 //public forums

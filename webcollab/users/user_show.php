@@ -33,9 +33,9 @@ if(! defined('UID' ) ) {
 }
 
 $content = '';
-$no_access_project[0] = 0;
-$no_access_group[0]   = 0;
-$user_gid = '';
+$no_access_project = array();
+$no_access_group   = array();
+$user_gid = array();
 
 //get some stupid errors
 if(empty($_GET['userid']) || ! is_numeric($_GET['userid']) ){

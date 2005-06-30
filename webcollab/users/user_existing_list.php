@@ -32,8 +32,8 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
-$content    = '';
-$allowed[0] = 0;
+$content = '';
+$allowed = array();
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,

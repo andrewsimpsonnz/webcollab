@@ -32,12 +32,14 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+include_once(BASE.'lang/lang_long.php' );
+
 //secure variables
 $content = '';
-$no_access_project[0] = 0;
-$no_access_group[0] = 0;
-$allowed[0] = 0;
-$task_dates[0] = 0;
+$no_access_project = array();
+$no_access_group   = array();
+$allowed    = array();
+$task_dates = array();
  
 //set selection default
 if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 ){
@@ -392,8 +394,6 @@ for ($i = 0; $i < $leadout_length; ++$i ) {
 
 $content .= "</tr>\n";
 $content .= "</table>\n</div>\n";
-
-include_once(BASE.'lang/lang_long.php' );
 $content .= "<div style=\"text-align: center; padding-top: 20px\">\n".
             "<b>[<a href=\"main.php?x=".$x."\">".$calendar_key."<br />\n</div>\n";
 

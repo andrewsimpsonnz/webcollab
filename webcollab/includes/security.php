@@ -27,19 +27,22 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'path_config.php' );
-require_once(CONFIG.'config.php' );
-require_once(BASE.'lang/lang.php' );
-require_once(BASE.'includes/common.php' );
-require_once(BASE.'database/database.php' );
-
 //clean up some variables
 $q   = '';
 $ip  = '';
 $x   = 0;
 $session_key = 'xxxx';
 $content = '';
+$row = array();
+$GID = array();
+
+//get includes
+require_once('path.php' );
+require_once(BASE.'path_config.php' );
+require_once(CONFIG.'config.php' );
+require_once(BASE.'lang/lang.php' );
+require_once(BASE.'includes/common.php' );
+require_once(BASE.'database/database.php' );
 
 //check for some values that HAVE to be present to be allowed (ip, session_key)
 if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
@@ -120,12 +123,6 @@ define('TZ_OFFSET', (86400 - $row['tz'] ) );
 //get usergroups of user
 $q = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID );
 
-//prevent hacking with register globals turned on
-if(isset($GID) ){
-  unset($GID);
-}
-$GID[0] = 0;
-
 //list usergroups
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
   $GID[$i] = $row[0];
@@ -141,7 +138,7 @@ db_query('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.$sessi
 // UID         = user's id
 // ADMIN [0,1] = is the user an admin ?
 // GUEST [0,1] = is the user a guest?
-// GID[]       = array of user's groups
+// $GID[]       = array of user's groups
 // TIME_NOW    = UNIX epoch time now (seconds since 1 Jan 1970) 
 // TZ_OFFSET   = database timezone offset relative to GMT/UTC in seconds 
 //

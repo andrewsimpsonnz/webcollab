@@ -41,6 +41,9 @@ if(GUEST ){
  warning($lang['access_denied'], $lang['not_owner'] );  
 }
  
+//secure variables
+$mail_list = array();
+
 //update or insert ?
 if(empty($_REQUEST['action']) ){
   error('File submit', 'No action given' );
@@ -182,7 +185,7 @@ ignore_user_abort(TRUE);
       }
 
       //do we need to email?
-      if(isset($mail_list) ){
+      if(sizeof($mail_list) > 0 ){
         include_once(BASE.'includes/email.php' );
         include_once(BASE.'lang/lang_email.php' );
 
@@ -194,7 +197,7 @@ ignore_user_abort(TRUE);
         }
         
         //get & add the mailing list
-        if(isset($EMAIL_MAILINGLIST ) ){
+        if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
           $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
         }
         email($mail_list, sprintf($title_file_post, $task_row['name'] ), sprintf($email_file_post, UID_NAME, $_FILES['userfile']['name'], $message_unclean ) );
