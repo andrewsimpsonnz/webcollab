@@ -38,9 +38,9 @@ require_once(BASE.'includes/details.php' );
 require_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/time.php' );
 
-$usergroup[0] = 0;
+$content = '';
 $javascript = '';
-$allowed[0] = 0; 
+$allowed = array(); 
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
@@ -81,9 +81,6 @@ function user_access($owner, $usergroupid, $groupaccess ) {
   }
   return false;
 }
-
-//set variable
-$content = '';
 
 if(empty($_GET['taskid']) || ! is_numeric($_GET['taskid']) ){
   error('Task edit', 'The taskid input is not valid' );

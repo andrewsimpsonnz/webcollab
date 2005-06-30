@@ -40,6 +40,9 @@ include_once(BASE.'lang/lang_email.php' );
 include_once(BASE.'tasks/task_common.php' );
 include_once(BASE.'tasks/task_submit.php' );
 
+//secure variables
+$usergroup_mail = array();
+
 //deny guest users
 if(GUEST ) {
  warning($lang['access_denied'], $lang['not_owner'] );  
@@ -240,10 +243,10 @@ if(isset($_POST['maillist']) && $_POST['maillist'] == 'on' ) {
     }
   }
   
-  if(isset($usergroup_mail) ) {
+  if(sizeof($usergroup_mail) > 0 ) {
     
     //get & add the mailing list
-    if(isset($EMAIL_MAILINGLIST ) ){
+    if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
       $usergroup_mail = array_merge((array)$usergroup_mail, (array)$EMAIL_MAILINGLIST );
     }
     email($usergroup_mail, sprintf($title2, $name), $message );

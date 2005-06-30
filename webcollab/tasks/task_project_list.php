@@ -44,8 +44,9 @@ function listTasks($projectid ) {
   global $task_array, $parent_array, $shown_array, $shown_count, $task_count;
    
   //initialise variables
-  $parent_array = '';
-  $shown_array  = '';
+  $task_array   = array();
+  $parent_array = array();
+  $shown_array  = array();
   $shown_count  = 0;  //counter for $shown_array
   $parent_count = 0;  //counter for $parent_array
   $task_count   = 0;  //counter for $task_array
@@ -146,7 +147,8 @@ function find_children($parent ) {
 $content = '';
 $flag = 0;
 $project_print = 0;
-$task_projectid = '';
+$task_uncompleted = array();
+$task_projectid   = array();
 $tz_offset = (TZ * 3600) - TZ_OFFSET;
 
 $active_only = (isset($_GET['active']) )    ? $_GET['active']    : 0;

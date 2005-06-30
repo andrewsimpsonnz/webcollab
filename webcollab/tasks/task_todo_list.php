@@ -40,8 +40,9 @@ function listTasks($projectid ) {
   global $task_uncompleted, $task_projectid;
   global $task_array, $parent_array, $shown_array, $shown_count, $task_count;
    
-  $parent_array = '';
-  $shown_array  = '';
+  $task_array   = array();
+  $parent_array = array();
+  $shown_array  = array();
   $shown_count  = 0;  //counter for $shown_array
   $parent_count = 0;  //counter for $parent_array
   $task_count   = 0;  //counter for $task_array
@@ -145,8 +146,9 @@ function find_children($parent ) {
 
 $flag = 0;
 $content = '';
-$usergroup[0] = 0;
-$allowed[0] = 0; 
+$allowed = array();
+$task_uncompleted = array();  
+$task_projectid   = array();
 $tz_offset = (TZ * 3600) - TZ_OFFSET;
 
 //get list of common users in private usergroups that this user can view 

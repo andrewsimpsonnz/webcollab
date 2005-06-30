@@ -305,7 +305,7 @@ if( (! ADMIN ) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
 
 //find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query
 $parent_query = db_query('SELECT DISTINCT parent FROM '.PRE.'tasks WHERE projectid='.$TASKID_ROW['projectid'] );
-$parent_array = NULL;
+$parent_array = array();
 for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; ++$i ) {
   $parent_array[$i] = $row['parent'];
 }

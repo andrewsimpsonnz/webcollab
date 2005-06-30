@@ -44,10 +44,12 @@ function find_tasks( $taskid, $projectid ) {
 
   global $task_array, $parent_array, $match_array, $index, $task_count;
 
-  $parent_array = '';
-  $index = 0; 
+  $task_array   = array();
+  $parent_array = array();
+  $match_array  = array();
   $parent_count = 0;
   $task_count = 0;
+  $index = 0; 
     
   $q = db_query('SELECT id, parent FROM '.PRE.'tasks WHERE projectid='.$projectid );
 
@@ -93,7 +95,7 @@ function find_children($parent ) {
     ++$index;
     
     //if this post has children (subtasks), iterate recursively to find them
-    if(in_array($task_array[$i]['id'], $parent_array ) ){
+    if(in_array($task_array[$i]['id'], (array)$parent_array ) ){
       find_children($task_array[$i]['id'] );
     }
   }

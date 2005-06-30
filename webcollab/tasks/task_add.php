@@ -39,7 +39,7 @@ include_once(BASE.'includes/time.php' );
 //secure vars
 $content = '';
 $javascript = '';
-$allowed[0] = 0; 
+$allowed = array(); 
 
 if(GUEST ) {
  warning($lang['access_denied'], $lang['not_owner'] );  
