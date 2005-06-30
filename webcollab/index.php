@@ -86,22 +86,6 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
     //encrypt password
     $md5pass = md5($_POST['password'] );
 
-    //count the number of recent login attempts
-    if( ! $q = @db_query('SELECT COUNT(*) FROM '.PRE.'login_attempt 
-                               WHERE name=\''.$username.'\' 
-                               AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 6', 0 ) ) {
-    secure_error('Unable to connect to database.  Please try again later.' );
-    }
-  
-    $count_attempts = db_result($q, 0, 0 );
-      
-    //protect against password guessing attacks 
-    if($count_attempts > 4 ) {
-      secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
-    }                                                                              
-    
-    //record this login attempt
-    db_query('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (\''.$username.'\', \''.$ip.'\', now() )' );
                                                                                      
     //construct login query
     $login_q = 'SELECT id FROM '.PRE.'users WHERE password=\''.$md5pass.'\' AND name=\''.$username.'\' AND deleted=\'f\'';
@@ -115,8 +99,27 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
   
   //no such user-password combination
   if( @db_numrows($q) < 1 ) {
-      sleep (2);
-      secure_error($lang['no_login'], 1 );
+      
+    //count the number of recent failed login attempts
+    if( ! $q = @db_query('SELECT COUNT(*) FROM '.PRE.'login_attempt 
+                               WHERE name=\''.$username.'\' 
+                               AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 6', 0 ) ) {
+      secure_error('Unable to connect to database.  Please try again later.' );
+    }
+  
+    $count_attempts = db_result($q, 0, 0 );
+      
+    //protect against password guessing attacks 
+    if($count_attempts > 4 ) {
+      secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+    }                                                                              
+    
+    //record this login attempt
+    db_query('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (\''.$username.'\', \''.$ip.'\', now() )' );
+  
+    //wait 2 seconds then record an error
+    sleep (2);
+    secure_error($lang['no_login'], 1 );
   }
 
   //no user-id
