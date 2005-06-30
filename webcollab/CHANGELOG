@@ -1,4 +1,14 @@
 WebCollab CVS
+*** 30 June 2005
+  Andrew Simpson
+
+- initialise array variables better for security
+
+- bugfix: child forum posts not being deleted when parent is deleted (coding error)
+
+- for login page only count login attempts when login fails 
+
+WebCollab CVS
 *** 18 June 2005
   Andrew Simpson
 
@@ -41,8 +51,6 @@ WebCollab CVS
 - alter manage_usergroup.php to allow users to view usergroup members (Feature Request #1183256) 
 
 - improve styling on manage usergroup and manage taskgroup
-
-- make allowance for config.php to be moved away from under the server root directory 
 
 - shift existing_user and deleted_user boxes to main screen
 
