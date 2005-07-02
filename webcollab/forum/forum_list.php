@@ -70,7 +70,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 
   $content = "<ul>\n";  
     
-  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
     //put values into array
     $post_array[$i]['id'] = $row['id'];
@@ -96,7 +96,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 
       //if this is a post to a private forum then announce it to the poster-engine
       if($usergroupid != 0 ) {
-        $this_post .= "&amp;usergroupid=$usergroupid";
+        $this_post .= "&amp;usergroupid=".$usergroupid;
       }
       $this_post .= "\">".$lang['reply']."</a>]</span>\n";
     }
@@ -153,6 +153,7 @@ function find_children($parent ) {
     $content .= "</li>\n";    
   }
   $content .= "</ul>\n"; 
+  
   return $content;
 }      
 

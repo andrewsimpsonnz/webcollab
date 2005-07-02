@@ -78,10 +78,12 @@ ignore_user_abort(TRUE);
 
       $input_array = array('mail_owner', 'mail_group' );
       foreach($input_array as $var ) {
-        if(isset($_POST[$var] ) &&  ($_POST[$var] == 'on' ) )
+        if(isset($_POST[$var] ) &&  ($_POST[$var] == 'on' ) ) {
           ${$var} = true;
-        else
+        }
+        else {
           ${$var} = false;
+        }
       }
             
       //check usergroup security
@@ -164,6 +166,7 @@ ignore_user_abort(TRUE);
                             FROM '.PRE.'tasks
                             LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.owner='.PRE.'users.id)
                             WHERE '.PRE.'tasks.id='.$taskid );
+      
       $task_row = db_fetch_array($q, 0 );
 
       //set owner's email

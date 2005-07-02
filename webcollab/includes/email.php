@@ -252,8 +252,8 @@ function & clean($encoded ) {
   
   //reinstate htmlentities back to ordinary text
   $trans = array_flip(get_html_translation_table(HTML_ENTITIES, ENT_NOQUOTES ) );
-  $text = strtr($encoded, $trans );
-  $text = preg_replace('/&#(\d{2,3});/e', "chr('$1')", $text );
+  $text  = strtr($encoded, $trans );
+  $text  = preg_replace('/&#(\d{2,3});/e', "chr('$1')", $text );
     
   //characters previously escaped/encoded to avoid SQL injection/CSS attacks are reinstated. 
   //$trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=' );  
@@ -373,7 +373,7 @@ function &subject($subject ) {
           $subject_lines[] = $s.'=?'.CHARACTER_SET.'?Q?'.substr($line, 0, $len ).'?=';
           $line = substr($line, $len );
         }
-        else{
+        else {
           //coded characters within split zone - adjust to avoid splitting encoded word
           $split = ($len - 3 ) + $pos;
           $subject_lines[] = $s.'=?'.CHARACTER_SET.'?Q?'.substr($line, 0, $split).'?=';

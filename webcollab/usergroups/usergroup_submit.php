@@ -88,13 +88,15 @@ switch($_REQUEST['action'] ) {
     else {
       $private_group = 0;
     }
+    
     //check for duplicates
     if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'usergroups WHERE name=\''.$name.'\''), 0, 0 ) > 0 ) {
       warning($lang['add_usergroup'], sprintf($lang['usergroup_dup_sprt'], $name ) );
     }
     //begin transaction
     db_begin();
-    $q = db_query('INSERT INTO '.PRE.'usergroups(name, description, private ) VALUES (\''.$name.'\', \''.$description.'\', \''.$private_group.'\')' );
+    
+    db_query('INSERT INTO '.PRE.'usergroups(name, description, private ) VALUES (\''.$name.'\', \''.$description.'\', \''.$private_group.'\')' );
 
     if(isset($_POST['member'] ) ) {
 
@@ -126,7 +128,7 @@ switch($_REQUEST['action'] ) {
     $description = safe_data($_POST['description'] );
     $usergroupid = intval($_POST['usergroupid'] );
     
-    if( isset($_POST['private_group']) && ( $_POST['private_group'] == 'on' ) ){
+    if( isset($_POST['private_group']) && ( $_POST['private_group'] == 'on' ) ) {
       $private_group = 1;
     }
     else {

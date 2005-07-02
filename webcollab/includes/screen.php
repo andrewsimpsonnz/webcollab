@@ -118,7 +118,7 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
   
   //do a refresh if required
   if($redirect_time != 0) {
-    $content .=     "<meta http-equiv=\"Refresh\" content=\"$redirect_time;url=".BASE_URL."index.php\" />\n";
+    $content .=     "<meta http-equiv=\"Refresh\" content=\"".$redirect_time.";url=".BASE_URL."index.php\" />\n";
   }
 
   switch($page_type) {
@@ -282,7 +282,7 @@ function create_bottom() {
  
  //shows the logo
  if($bottom_text) {
-   $content .= "<div class=\"bottomtext\" $align>Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2005</div>\n";
+   $content .= "<div class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2005</div>\n";
  }     
   //end xml parsing
   $content .= "</body>\n</html>\n";

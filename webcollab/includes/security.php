@@ -64,7 +64,7 @@ else {
 }
     
 //seems okay at first, now go cross-checking with the known data from the database
-if( ! ($q = db_query('SELECT '.PRE.'logins.user_id AS user_id,
+if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS user_id,
                              '.$epoch.' '.PRE.'logins.lastaccess) AS sec_lastaccess,
                              '.PRE.'users.email AS email,
                              '.PRE.'users.admin AS admin,
@@ -124,7 +124,7 @@ define('TZ_OFFSET', (86400 - $row['tz'] ) );
 $q = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID );
 
 //list usergroups
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; $i++) {
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
   $GID[$i] = $row[0];
 }
 
