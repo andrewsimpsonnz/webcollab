@@ -129,5 +129,6 @@ switch($_REQUEST['action'] ) {
 }
 
 header('Location: '.BASE_URL.'main.php?x='.$x );
+die;
 
 ?>

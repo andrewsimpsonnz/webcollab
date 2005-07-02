@@ -77,7 +77,7 @@ $content .=
       "<form method=\"post\" action=\"contacts.php\">\n".
       "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
       "<input type=\"hidden\" name=\"action\" value=\"submit_delete\" />\n".
-      "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" /></fieldset>\n".
+      "<input type=\"hidden\" name=\"contactid\" value=\"".$contactid."\" /></fieldset>\n".
       "<p><input type=\"submit\" value=\"".$lang['del_contact']."\" onclick=\"return confirm('".$lang['confirm_del_javascript']."')\" />\n".
       "</p></form>";
 

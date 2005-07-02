@@ -104,7 +104,7 @@ $content .= "<tr><td>".$lang['project_listing_order'].":</td><td>\n".
             "<select name=\"project_order\">\n".
             "<option value=\"name\"".$s1.">".$lang['name']."</option>\n".
             "<option value=\"deadline\"".$s2.">".$lang['deadline']."</option>\n".
-            "<option value=\"priority\"$s3>".$lang['priority']."</option>\n".
+            "<option value=\"priority\"".$s3.">".$lang['priority']."</option>\n".
             "</select></td></tr>\n";
           
 //set default selection for task listing
