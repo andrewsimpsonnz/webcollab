@@ -100,7 +100,7 @@ $email_welcome      = "Hallo,\n\nEs begr&uuml;&szlig;t sie die ".MANAGER_NAME."-
 			"erlaubt ihnen schnell zu erkennen, wo gerade etwas passiert.\n\n".
 			"Sie k&ouml;nnen ebenso den Besitz von Aufgaben &uuml;bernehmen und sie dann bearbeiten. Auch die Nachrichten im zugeh&ouml;rigen Forum lassen sich dann bearbeiten. ".
 			"Sowie ihre Arbeit voranschreitet, aktualisieren sie bitte Aufgabentext und Status, damit jeder verfolgen kann, wie sie voranschreiten. ".
-			"\n\nIch kann ihnen nun noch viel Erfolg w&uuml;nschen. Sie k&ouml;nnen ".$EMAIL_ADMIN." mailen, wenn sie festh&auml;ngen.\n\n --Viel Gl&uuml;ck!\n\n".
+			"\n\nIch kann ihnen nun noch viel Erfolg w&uuml;nschen. Sie k&ouml;nnen ".EMAIL_ADMIN." mailen, wenn sie festh&auml;ngen.\n\n --Viel Gl&uuml;ck!\n\n".
 			"Login:           %1\$s\n".
 			"Passwort:        %2\$s\n\n".
 			"Nutzergruppen: %3\$s".
@@ -134,13 +134,13 @@ $email_revive       = "Hallo,\n\nIhre ".MANAGER_NAME."-Seite informiert sie, das
 			"Loginname:     %1\$s\n".
 			"Benutzername:  %2\$s\n\n".
 			"Aus Sicherheitsgr&uuml;nden kann ihr Passwort ihnen nicht gesendet werden.\n\n".
-			"Falls sie ihr Passwort vergessen haben, senden sie eine E-Mail an ".$EMAIL_ADMIN." mit ihrem Anliegen.";
+			"Falls sie ihr Passwort vergessen haben, senden sie eine E-Mail an ".EMAIL_ADMIN." mit ihrem Anliegen.";
 
 
 
 $title_delete_user  = ABBR_MANAGER_NAME.": Konto deaktiviert.";
 $email_delete_user  = "Hallo,\n\nIhre ".MANAGER_NAME."-Seite informiert sie, dass ihr Konto am ".$email_date." gesperrt worden ist.\n\n".
 			"Es tut uns leid, dass sie uns verlassen haben. Wir bedanken uns f&uuml;r die geleistete Arbeit!\n\n".
-			"Wenn sie gegen die Sperrung Einspruch erheben wollen oder denken, dass dies ein Irrtum ist, senden sie bitte eine E-Mail an ".$EMAIL_ADMIN.".";
+			"Wenn sie gegen die Sperrung Einspruch erheben wollen oder denken, dass dies ein Irrtum ist, senden sie bitte eine E-Mail an ".EMAIL_ADMIN.".";
 
 ?>

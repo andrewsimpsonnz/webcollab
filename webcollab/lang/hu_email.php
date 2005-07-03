@@ -117,7 +117,7 @@ $email_welcome      = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap üdvözlete közt
 			"lehetõvé teszi, hogy könnyen megtaláljuk hol folyik aktívan a munka.\n\n".
 			"Ezek mellett átvehetsz, vagy szerezhetsz tulajdonosi jogot a feladatokhoz és így szerkesztheted õket, illetve a hozzájuk tartozó fórum üzeneteket. ".
 			"Ahogy halad a munkában, kérjük szerkessze a feladat szövegét és állapotát, így mindenki nyomon követheti a fejlõdést. ".
-			"\n\nCsak sok sikert tudunk kívánni, és írjon ide: ".$EMAIL_ADMIN.", ha elakadna.\n\n --Sok szerencsét !\n\n".
+			"\n\nCsak sok sikert tudunk kívánni, és írjon ide: ".EMAIL_ADMIN.", ha elakadna.\n\n --Sok szerencsét !\n\n".
 			"Felhasználó:  %1\$s\n".
 			"Jelszó:       %2\$s\n\n".
 			"Csoportok:    %3\$s".
@@ -151,13 +151,13 @@ $email_revive       = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsola
 			"Bejelntkezési név:  %1\$s\n".
 			"Felhasználói név:   %2\$s\n\n".
 			"Nem tudjuk a jelszavát elküldeni, mert titkosítva van. \n\n".
-			"Ha elfelejtette a jelszavát, küldjön emailt ide: ".$EMAIL_ADMIN." egy új jelszóért.";
+			"Ha elfelejtette a jelszavát, küldjön emailt ide: ".EMAIL_ADMIN." egy új jelszóért.";
 
 
 
 $title_delete_user  = ABBR_MANAGER_NAME.": Fiók felfüggesztve";
 $email_delete_user  = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy az Ön fiókját felfüggesztették ".$email_date." dátummal.\n".
 			"Sajnáljuk, hogy elhagyott minket és szertnénk megköszönni eddigi munkáját!\n\n".
-			"Ha kifogásolja a felfüggesztést, vagy hibára gyanakszik, küldjön egy emailt ide: ".$EMAIL_ADMIN.".";
+			"Ha kifogásolja a felfüggesztést, vagy hibára gyanakszik, küldjön egy emailt ide: ".EMAIL_ADMIN.".";
 
 ?>

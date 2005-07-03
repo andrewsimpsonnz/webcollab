@@ -110,7 +110,7 @@ $email_welcome      = "Salve,\n\nIl sito ".MANAGER_NAME." ti d&agrave; il benven
 			"ti permetter&agrave; di capire a che punto si trova il progetto.\n\n".
 			"Puoi anche acquisire o cedere la propriet&agrave; di un'operazione ed inserire messaggi nel forum collegato ad essa. ".
 			"Nell'avanzamento del tuo lavoro, aggiorna scrupolosamente lo stato delle attivit&agrave; da te svolte in modo che chiunque sia in grado di conoscere a che punto si trovano. ".
-			"\n\nSe hai dubbi contatta ".$EMAIL_ADMIN.".\n\n--Buona fortuna!\n\n".
+			"\n\nSe hai dubbi contatta ".EMAIL_ADMIN.".\n\n--Buona fortuna!\n\n".
 			"Login:      %1\$s\n".
 			"Password:   %2\$s\n\n".
 			"Usergroups: %3\$s".
@@ -144,13 +144,13 @@ $email_revive       = "Salve,\n\nIl sito ".MANAGER_NAME." ti informa che il tuo 
 			"Login: %1\$s\n".
 			"Username:  %2\$s\n\n".
 			"Non possiamo inviarti la tua password perch&eacute; crittata. \n\n".
-			"Se hai dimenticato la tua password invia una e-mail a ".$EMAIL_ADMIN." per riceverne una nuova.";
+			"Se hai dimenticato la tua password invia una e-mail a ".EMAIL_ADMIN." per riceverne una nuova.";
 
 
 
 $title_delete_user  = ABBR_MANAGER_NAME.": Account disattivato.";
 $email_delete_user  = "Salve,\n\nIl sito ".MANAGER_NAME." ti informa che il tuo account &egrave; stato disattivato il ".$email_date."\n\n".
 			"Siamo dispiaciuti per questo e desideriamo ringraziarti per il lavoro cha hai svolto sin qui!\n\n".
-			"Se ritieni che la disattivazione del tuo account sia frutto di un errore, invia una e-mail a ".$EMAIL_ADMIN.".";
+			"Se ritieni che la disattivazione del tuo account sia frutto di un errore, invia una e-mail a ".EMAIL_ADMIN.".";
 
 ?>

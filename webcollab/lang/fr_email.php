@@ -104,7 +104,7 @@ $email_welcome      = "Bonjour,\n\nC'est le site ".MANAGER_NAME." qui vous acceu
 			"Cela vous permet de savoir constamment o&ugrave; l'activit&eacute; se situe.\n\n".
 			"Vous pouvez aussi devenir propri&eacute;taire d'une t&acirc;che, ce qui vous permet d'&eacute;diter cette t&acirc;che et toutes contributions qui y sont rattach&eacute;es. ".
 			"Pendant l'utilisation de l'outil, veuillez &eacute;diter la partie texte et le statut des t&acirc;ches pour que tout le monde puisse conna&icirc;tre leurs progressions. ".
-			"\n\nJe ne peux que vous souhaiter bonne route et vous confier mon email ".$EMAIL_ADMIN."s en cas de probl&egrave;me.\n\n --Bonne chance!\n\n".
+			"\n\nJe ne peux que vous souhaiter bonne route et vous confier mon email ".EMAIL_ADMIN."s en cas de probl&egrave;me.\n\n --Bonne chance!\n\n".
 			"Profil:       %1\$s\n".
 			"Mot de passe: %2\$s\n\n".
 			"Groupe:       %3\$s".
@@ -138,13 +138,13 @@ $email_revive       = "Bonjour,\n\nC'est le site ".MANAGER_NAME." qui vous infor
 			"Profil: %1\$s\n".
 			"Nom de l'utilisateur: %2\$s\n\n".
 			"Par mesure de s&eacute;curit&eacute;, nous n'envoyons pas votre mot de passe. \n\n".
-			"Si vous l'avez oubli&eacute; , envoyez un email &agrave; ".$EMAIL_ADMIN." pour en recevoir un nouveau.";
+			"Si vous l'avez oubli&eacute; , envoyez un email &agrave; ".EMAIL_ADMIN." pour en recevoir un nouveau.";
 
 
 
 $title_delete_user  = ABBR_MANAGER_NAME.": Profil d&eacute;sactiv&eacute;.";
 $email_delete_user  = "Bonjour,\n\nC'est le site ".MANAGER_NAME." vous informe que votre profil a &eacute;t&eacute; d&eacute;sactiv&eacute; le ".$email_date."\n\n".
 			"Nous somme d&eacute;sol&eacute; que vous nous quittiez et vous remercions pour votre participation! \n\n".
-			"Si votre profil a &eacute;t&eacute; d&eacute;sactiv&eacute; par erreur, merci d'envoyer un email &agrave; ".$EMAIL_ADMIN.".";
+			"Si votre profil a &eacute;t&eacute; d&eacute;sactiv&eacute; par erreur, merci d'envoyer un email &agrave; ".EMAIL_ADMIN.".";
 
 ?>

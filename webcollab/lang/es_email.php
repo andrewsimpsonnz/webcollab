@@ -100,7 +100,7 @@ $email_welcome      = "Hola,\n\nBienvenido a: ".MANAGER_NAME." el  ".$email_date
 			"lo habilita para enfocar rapidamente donde est&aacute; la actividad.\n\n".
 			"Ud tambien puede hacerse cargo o tomar propiedad de tareas y se encontrara habilitado para editar. Tambien recibira los envios al foro. ".
 			"Con el avance se su trabajo por favor edite el texto de sus tareas y el estado de tal manera que todos puedan mantener un seguimiento de su progreso. ".
-			"\n\nEspero que la herramienta sea de su agrado. Envie email a ".$EMAIL_ADMIN." si tiene alguna duda.\n\n --Buena suerte!\n\n".
+			"\n\nEspero que la herramienta sea de su agrado. Envie email a ".EMAIL_ADMIN." si tiene alguna duda.\n\n --Buena suerte!\n\n".
 			"Login:      %1\$s\n".
 			"Password:   %2\$s\n\n".
 			"Grupos de usuarios: %3\$s".
@@ -134,13 +134,13 @@ $email_revive       = "Hola,\n\n ".MANAGER_NAME." le informa que su cuenta ha si
 			"Loginname: %1\$s\n".
 			"Username:  %2\$s\n\n".
 			"No podemos enviarle su clave porque est&aacute; encriptada. \n\n".
-			"Si olvido su password envie un email ".$EMAIL_ADMIN." para solicitar un nuevo password.";
+			"Si olvido su password envie un email ".EMAIL_ADMIN." para solicitar un nuevo password.";
 
 
 
 $title_delete_user  = ABBR_MANAGER_NAME.": Cuenta desactivada.";
 $email_delete_user  = "Hola,\n\n ".MANAGER_NAME." le informa que su cuenta ha sido desactivada el ".$email_date.".\n\n".
 			"Lamentamos su desactivacion y agradecemos su trabajo!\n\n".
-			"Si desea objetar su desactivacion, o piensa que ha sido un error, envie un email a ".$EMAIL_ADMIN.".";
+			"Si desea objetar su desactivacion, o piensa que ha sido un error, envie un email a ".EMAIL_ADMIN.".";
 
 ?>

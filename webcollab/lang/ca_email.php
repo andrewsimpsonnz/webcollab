@@ -141,6 +141,6 @@ $email_revive       = "Hola,\n\nAquest &eacute;s el ".MANAGER_NAME." lloc inform
 $title_delete_user  = ABBR_MANAGER_NAME.": Compte desactivat.";
 $email_delete_user  = "Hola,\n\nAquest &eacute;s el ".MANAGER_NAME." lloc informant-li que el seu compte ha estat desactivat el ".$email_date."\n\n".
 			"Ens sap greu la seva desactivaci&oacute; i li estem agraits per la seva feina!\n\n".
-			"Si desitja objectar la seva desactivaci&oacute;, o pensa que ha estat un error, envii un correu a ".$EMAIL_ADMIN.".";
+			"Si desitja objectar la seva desactivaci&oacute;, o pensa que ha estat un error, envii un correu a ".EMAIL_ADMIN.".";
 
 ?>

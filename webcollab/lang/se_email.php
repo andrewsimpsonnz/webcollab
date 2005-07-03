@@ -115,7 +115,7 @@ $email_welcome      = "Hej!\n\nVälkommen till ".MANAGER_NAME." sajten ".$email_d
 			"gör att man snabbt kan se var det händer något.\n\n".
 			"Du kan också ta eller få ansvar för en uppgift och kan då redigera den och alla foruminlägg som tillhör den. ".
 			"Allteftersom du arbetar var god och redigera texten och status för din uppgift så att alla kan se hur arbetet går framåt. ".
-			"\n\nJag önskar dig all lycka. Mejla ".$EMAIL_ADMIN." om du kör fast.\n\n --Lycka till!\n\n".
+			"\n\nJag önskar dig all lycka. Mejla ".EMAIL_ADMIN." om du kör fast.\n\n --Lycka till!\n\n".
 			"Användarnamn:      %1\$s\n".
 			"Lösenord:          %2\$s\n\n".
 			"Användargrupper:   %3\$s".
@@ -149,13 +149,13 @@ $email_revive       = "Hej!\n\nDet är ".MANAGER_NAME." sajten som meddelar att d
 			"Login-namn: %1\$s\n".
 			"Användarnamn:  %2\$s\n\n".
 			"Vi kan inte skicka ditt lösenord eftersom det är krypterat. \n\n".
-			"Om du har glömt ditt lösenord mejla ".$EMAIL_ADMIN." för att få ett nytt lösenord.";
+			"Om du har glömt ditt lösenord mejla ".EMAIL_ADMIN." för att få ett nytt lösenord.";
 
 
 
 $title_delete_user  = ABBR_MANAGER_NAME.": Kontot avaktiverat.";
 $email_delete_user  = "Hej!\n\nDet är ".MANAGER_NAME." sajten som meddelar att ditt konto har avaktiverats ".$email_date.".\n".
 			"Vi är ledsna att du har slutat och vill tacka dig för ditt arbete!\n\n".
-			"Om du inte vill bli avaktiverad eller tror att det är ett misstag, skicka ett mejl till ".$EMAIL_ADMIN.".";
+			"Om du inte vill bli avaktiverad eller tror att det är ett misstag, skicka ett mejl till ".EMAIL_ADMIN.".";
 
 ?>

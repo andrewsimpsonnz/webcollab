@@ -66,8 +66,8 @@ $content =  "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"fil
               "<tr><td></td><td>".sprintf( $lang['max_file_sprt'], FILE_MAXSIZE/1000 )."</td></tr>\n".
               "</table>\n".
               "<table class=\"celldata\">\n".
-              "<tr><td><label for=\"owner\">".$lang['file_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".$DEFAULT_OWNER." /></td></tr>\n".
-              "<tr><td><label for=\"usergroup\">".$lang['file_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".$DEFAULT_GROUP." /></td></tr>\n".
+              "<tr><td><label for=\"owner\">".$lang['file_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER." /></td></tr>\n".
+              "<tr><td><label for=\"usergroup\">".$lang['file_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP." /></td></tr>\n".
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang['upload']."\" onclick=\"return fieldCheck()\" /></p>\n".
             "</form>\n";

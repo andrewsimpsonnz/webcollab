@@ -116,7 +116,7 @@ $email_welcome      = "Hallo,\n\nDette er ".MANAGER_NAME." site som byder dig ve
 			"det hjælper dig til hurtigt at finde ud af hvor der noget i gang.\n\n".
 			"Du kan også tage eller få ejerskab til opgaver, og du vil finde dig selv i stand til at redigere dem og alle poster i forum, som tilhører opgaven. ".
 			"NÅr du arbejder dig fremad, vær så så venlig at redigere dine opgavers tekst og status, så alle kan følge med og blive på sporet mens du arbejder videre. ".
-			"\n\nJeg kan kun ønske dig succes og email ".$EMAIL_ADMIN." hvis du er kørt fast\n\n --Held og lykke !\n\n".
+			"\n\nJeg kan kun ønske dig succes og email ".EMAIL_ADMIN." hvis du er kørt fast\n\n --Held og lykke !\n\n".
 			"Login:      %1\$s\n".
 			"Password:   %2\$s\n\n".
 			"Brugergrupper: %3\$s".
@@ -150,13 +150,13 @@ $email_revive       = "Hallo,\n\nDette er ".MANAGER_NAME." som underretter dig o
 			"Loginname: %1\$s\n".
 			"Username:  %2\$s\n\n".
 			"Vi kan ikke sende dig dit password fordi det er kodet. \n\n".
-			"Hvis du har glemdt dit password email ".$EMAIL_ADMIN." for at få et nyt password.";
+			"Hvis du har glemdt dit password email ".EMAIL_ADMIN." for at få et nyt password.";
 
 
 
 $title_delete_user  = ABBR_MANAGER_NAME.": Konto deaktiveret.";
 $email_delete_user  = "Hallo,\n\nDette er ".MANAGER_NAME." som underettet dig om, at din konto er blevet deaktiveret ".$email_date."\n\n".
 			"Vi beklager, at du er udtrådt men vil takke dig for dit arbejde!\n\n".
-			"Hvis du vil protestere mod at blive deaktiveret, send en email til ".$EMAIL_ADMIN."\$s.";
+			"Hvis du vil protestere mod at blive deaktiveret, send en email til ".EMAIL_ADMIN."\$s.";
 
 ?>

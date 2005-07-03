@@ -115,7 +115,7 @@ $email_welcome      = "Ol&aacute;,\n\nAqui &eacute; o site ".MANAGER_NAME." dand
 			"permitindo a voc&ecirc; rapidamente detectar onde existe atividade.\n\n".
 			"Voc&ecirc; pode tamb&eacute;m assumir a execu&ccedil;&atilde;o ou desistir de tarefas, bem como edit&aacute;-las ou alterar as mensagens do f&oacute;rum relativas &agrave; ela. ".
 			"&Agrave; medida em que o trabalho for evoluindo por favor edite os textos e status relativos ao mesmo, permitindo a todos acompanhar o seu progresso. ".
-			"\n\nDesejo-lhe sucesso. Se estiver em apuros envie um e-mail para ".$EMAIL_ADMIN." .\n\n --Boa sorte !\n\n".
+			"\n\nDesejo-lhe sucesso. Se estiver em apuros envie um e-mail para ".EMAIL_ADMIN." .\n\n --Boa sorte !\n\n".
 			"Login:      %1\$s\n".
 			"Senha:   %2\$s\n\n".
 			"Equipe: %3\$s".
@@ -149,13 +149,13 @@ $email_revive       = "Ol&aacute;,\n\nAqui &eacute; o site ".MANAGER_NAME." info
 			"Login: %1\$s\n".
 			"Nome de usu&aacute;rio:  %2\$s\n\n".
 			"N&oacute;s n&atilde;o podemos envi&aacute;-lo sua senha pois a mesma encontra-se criptografada. \n\n".
-			"Se voc&ecirc; esqueceu sua senha, consiga uma nova enviando um e-mail para ".$EMAIL_ADMIN." .";
+			"Se voc&ecirc; esqueceu sua senha, consiga uma nova enviando um e-mail para ".EMAIL_ADMIN." .";
 
 
 
 $title_delete_user  = ABBR_MANAGER_NAME.": Desativa&ccedil;&atilde;o de conta.";
 $email_delete_user  = "Ol&aacute;,\n\nAqui &eacute; o site ".MANAGER_NAME." informando-lhe que sua conta foi desativada em ".$email_date.".\n".
 			"Sentimos muito por sua sa&iacute;da e gostar&iacute;amos de agradec&ecirc;-lo por seu trabalho!\n\n".
-			"Se voc&ecirc; n&atilde;o concorda, ou acha que seja um erro, envie um e-mail para ".$EMAIL_ADMIN.".";
+			"Se voc&ecirc; n&atilde;o concorda, ou acha que seja um erro, envie um e-mail para ".EMAIL_ADMIN.".";
 
 ?>

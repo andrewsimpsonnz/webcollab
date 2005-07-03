@@ -38,14 +38,13 @@ $q = db_query('SELECT * FROM '.PRE.'config' );
 $row = @db_fetch_array($q, 0 );
 
 //set variables
-define('EMAIL_REPLY_TO', $row['reply_to']);
-define('EMAIL_FROM', $row['email_from']);
-
-$EMAIL_ADMIN        = $row['email_admin'];
-$DEFAULT_ACCESS     = $row['globalaccess'];
-$DEFAULT_EDIT       = $row['groupaccess'];
-$DEFAULT_OWNER      = $row['owner'];
-$DEFAULT_GROUP      = $row['usergroup'];
+define('EMAIL_REPLY_TO', $row['reply_to'] );
+define('EMAIL_FROM',     $row['email_from'] );
+define('EMAIL_ADMIN',    $row['email_admin'] );
+define('DEFAULT_ACCESS', $row['globalaccess'] );
+define('DEFAULT_EDIT',   $row['groupaccess'] );
+define('DEFAULT_OWNER',  $row['owner'] );
+define('DEFAULT_GROUP',  $row['usergroup'] );
 
 //mailing list
 $q = db_query('SELECT DISTINCT email FROM '.PRE.'maillist' );

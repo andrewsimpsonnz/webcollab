@@ -105,8 +105,8 @@ else {
 $content .=   "<tr><td>".$lang['message']."</td><td><textarea id=\"text\" name=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
               "</table>\n".
               "<table class=\"celldata\">\n".
-              "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".$DEFAULT_OWNER." /></td></tr>\n".
-              "<tr><td><label for=\"usergroup\">".$lang['forum_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".$DEFAULT_GROUP." /></td></tr>\n".
+              "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER." /></td></tr>\n".
+              "<tr><td><label for=\"usergroup\">".$lang['forum_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP." /></td></tr>\n".
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang['post']."\" onclick=\"return fieldCheck()\" /></p>".
               "</form>\n";
