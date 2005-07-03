@@ -99,9 +99,9 @@ if(ADMIN ) {
     $s1 = ""; $s2 = ""; $s3 = "checked=\"checked\"";
   }
                
-   $content .= "<tr><td><label for=\"normal\">".$lang['normal_user'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"normal\" id=\"normal\" $s1 /></td></tr>\n".
-               "<tr><td><label for=\"admin\">".$lang['is_admin'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"admin\" id=\"admin\" $s2 /></td></tr>\n".
-               "<tr><td><label for=\"guest\">".$lang['is_guest'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"guest\" id=\"guest\" $s3 /></td></tr>\n";
+   $content .= "<tr><td><label for=\"normal\">".$lang['normal_user'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"normal\" id=\"normal\" ".$s1." /></td></tr>\n".
+               "<tr><td><label for=\"admin\">".$lang['is_admin'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"admin\" id=\"admin\" ".$s2." /></td></tr>\n".
+               "<tr><td><label for=\"guest\">".$lang['is_guest'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"guest\" id=\"guest\" ".$s3." /></td></tr>\n";
     
   //add blank line
   $content .= "<tr><td>&nbsp;</td></tr>\n";
@@ -112,24 +112,24 @@ if(ADMIN ) {
               "<tr><td>".$lang['usergroups'].":</td>".
               "<td colspan=\"2\"><select name=\"usergroup[]\" multiple=\"multiple\" size=\"4\">\n";
 
-  for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; $i++) {
+  for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; ++$i) {
 
-    $found=0;
+    $found = 0;
     $content .= "<option value=\"".$usergroup_row['id']."\"";
 
     //loop all groups the user is in and tag the ones he is in
     @db_data_seek( $usergroups_users_q ); //reset mysql internal pointer each cycle
-    for($j=0 ; $usergroups_users_row = @db_fetch_array($usergroups_users_q, $j ) ; $j++) {
+    for($j=0 ; $usergroups_users_row = @db_fetch_array($usergroups_users_q, $j ) ; ++$j) {
 
       if($usergroups_users_row['usergroupid'] == $usergroup_row['id'] ) {
         $content .= " selected=\"selected\">";
-    $found=1;
-    break;
+        $found = 1;
+        break;
       }
     }
 
     //if not found then end the option tag normally
-    if($found == 0 ){
+    if($found == 0 ) {
       $content .= " >";
     }
 

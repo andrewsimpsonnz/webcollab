@@ -262,7 +262,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
     }
 
     //Build up the page columns for display.  Starting with the flags
-    $result .= "<tr><td>$f1</td><td>$f2</td><td>$f3</td><td><small>";
+    $result .= "<tr><td>".$f1."</td><td>".$f2."</td><td>".$f3."</td><td><small>";
 
     if($color != '' ) {
       $result .= "<span class=\"".$color."\">";
@@ -281,10 +281,10 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
     }
 
     //Then add the status, owner and group columns
-    $result .= "</small></td><td>$status</td><td>$owner</td><td>$group</td><td>";
+    $result .= "</small></td><td>".$status."</td><td>".$owner."</td><td>".$group."</td><td>";
 
     //Tab out children tasks
-    for($j=1; $j < $depth; $j++ ) $result .= "&nbsp;&nbsp;&nbsp;";
+    for($j=1; $j < $depth; ++$j ) $result .= "&nbsp;&nbsp;&nbsp;";
 
     //task column
     $result .= $alink;
@@ -366,7 +366,7 @@ $q = db_query('SELECT id, usergroupid FROM '.PRE.'tasks WHERE parent=0 AND globa
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
   $no_access_project[$i] = $row[0];
-  $no_access_group[$i] = $row[1];
+  $no_access_group[$i]   = $row[1];
 }
 
 // tail end of SQL query

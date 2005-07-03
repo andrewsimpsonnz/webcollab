@@ -172,7 +172,16 @@ $name = safe_data($_POST['name']);
 db_begin();
 
 //find all parent-tasks in this project and add them to an array for later use
-$projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$taskid ), 0, 0 );
+if(! $q = @db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$taskid, 0 ) ) {
+  error('Task clone', 'There was an error in the data query.' );
+}
+
+//get the projectid
+if( ! $projectid = @db_result($q, 0, 0) ) {
+  error('Task clone', 'The project to be cloned has either been deleted, or is now invalid.');
+}  
+
+//get details
 $q = db_query('SELECT DISTINCT parent FROM '.PRE.'tasks WHERE projectid='.$projectid );
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {

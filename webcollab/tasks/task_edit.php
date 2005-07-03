@@ -127,7 +127,6 @@ switch($TYPE) {
 
 //reparenting
 $content .= "<tr><td>".$lang['parent_task'].":</td><td><select name=\"parentid\">\n";
-$parentq = db_query('SELECT id, name, usergroupid, globalaccess FROM '.PRE.'tasks WHERE id<>'.$taskid.' AND archive=0 ORDER BY name');
 $content .= "<option value=\"0\"";
 
 if($TASKID_ROW['parent'] == 0 ){
@@ -135,7 +134,9 @@ if($TASKID_ROW['parent'] == 0 ){
 }
 $content .= ">".$lang['no_reparent']."</option>\n";
 
-for( $i=0; $parent_row = @db_fetch_array($parentq, $i ); ++$i) {
+$q = db_query('SELECT id, name, usergroupid, globalaccess FROM '.PRE.'tasks WHERE id<>'.$taskid.' AND archive=0 ORDER BY name');
+
+for( $i=0; $parent_row = @db_fetch_array($q, $i ); ++$i ) {
   //check for private usergroups
   if( (! ADMIN ) && ($parent_row['usergroupid'] != 0 ) && ($parent_row['globalaccess'] == 'f' ) ) {
 
@@ -143,8 +144,8 @@ for( $i=0; $parent_row = @db_fetch_array($parentq, $i ); ++$i) {
       continue;
     }
   }
-
   $content .= "<option value=\"".$parent_row['id']."\"";
+  
   if($TASKID_ROW['parent'] == $parent_row['id'] ) {
     $content .= " selected=\"selected\"";
   }
@@ -160,30 +161,28 @@ if($TASKID_ROW['parent'] != 0 ){
 $content .= "<tr><td>".$lang['deadline'].":</td><td>".date_select_from_timestamp($TASKID_ROW['deadline'])."</td></tr>\n";
 
 //priority
+switch($TASKID_ROW['priority'] ) {
+    case 0:
+    $s1 = "selected=\"selected\""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
+    break;
 
-  switch($TASKID_ROW['priority'] ) {
-      case 0:
-      $s1 = "selected=\"selected\""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
-      break;
+  case 1:
+    $s1 = ""; $s2 = " selected=\"selected\""; $s3 = ""; $s4 =""; $s5 = "";
+    break;
 
-    case 1:
-      $s1 = ""; $s2 = " selected=\"selected\""; $s3 = ""; $s4 =""; $s5 = "";
-      break;
+  case 2:
+  default:
+    $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\""; $s4 =""; $s5 = "";
+    break;
 
-    case 2:
-    default:
-      $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\""; $s4 =""; $s5 = "";
-      break;
+  case 3:
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 =" selected=\"selected\""; $s5 = "";
+    break;
 
-   case 3:
-      $s1 = ""; $s2 = ""; $s3 = ""; $s4 =" selected=\"selected\""; $s5 = "";
-      break;
-
-    case 4:
-      $s1 = ""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = " selected=\"selected\"";
-      break;
-  }
-
+  case 4:
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = " selected=\"selected\"";
+    break;
+}
 
 $content .= "<tr><td>".$lang['priority'].":</td><td>\n".
             "<select name=\"priority\">\n".
@@ -259,12 +258,13 @@ switch($TASKID_ROW['parent'] ){
 }
 
 //task owner
-$user_q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname' );
 $content .= "<tr> <td>".$lang[$TYPE."_owner"].":</td> <td><select name=\"owner\">\n".
             "<option value=\"0\">".$lang['nobody']."</option>\n";
 
 //select the user first
-for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; ++$i) {
+$q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname' );
+
+for( $i=0 ; $user_row = @db_fetch_array($q, $i ) ; ++$i ) {
       
   //user test for privacy
   if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
@@ -283,33 +283,33 @@ $content .= "</select></td></tr>\n";
 
 
 //show a selection box with the taskgroups
+//  (projects don't have taskgroups)
 if($TASKID_ROW['parent'] != 0 ){
 
-  //get all users in order to show a task owner
-  $taskgroup_q = db_query('SELECT id, name FROM '.PRE.'taskgroups ORDER BY name' );
   $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help'); return false\">".$lang['taskgroup']."</a>: </td> <td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
-  for( $i=0 ; $user_row = @db_fetch_array($taskgroup_q, $i ) ; ++$i) {
+  $q = db_query('SELECT id, name FROM '.PRE.'taskgroups ORDER BY name' );
+  
+  for( $i=0 ; $taskgroup_row = @db_fetch_array($q, $i ) ; ++$i) {
 
-    $content .= "<option value=\"".$user_row['id']."\"";
+    $content .= "<option value=\"".$taskgroup_row['id']."\"";
 
-    if($TASKID_ROW['taskgroupid'] == $user_row['id'] ) {
+    if($TASKID_ROW['taskgroupid'] == $taskgroup_row['id'] ) {
       $content .= " selected=\"selected\"";
-    }
-    
-    $content .= ">".$user_row['name']."</option>\n";
-
+    }    
+    $content .= ">".$taskgroup_row['name']."</option>\n";
   }
   $content .= "</select></td></tr>\n";
 }
 
 //show all user-groups
-$usergroup_q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
 $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help'); return false\">".$lang['usergroup']."</a>: </td> <td><select name=\"usergroupid\">\n";
 $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
-for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; ++$i ) {
+$q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
+
+for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
      
   //usergroup test for privacy
   if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
@@ -324,21 +324,13 @@ for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; ++$i ) {
     else {
       $content .= ">\n";
     }
-
     $content .= $usergroup_row['name']."</option>\n";
-
 }
 $content .= "</select></td></tr>\n";
 
-$global = "";
-if($TASKID_ROW['globalaccess'] == 't' ) {
-  $global = "checked=\"checked\"";
-}
-
-$group = "";
-if($TASKID_ROW['groupaccess'] == 't' ) {
-  $group = "checked=\"checked\"";
-}
+//check box defaults
+$global = ($TASKID_ROW['globalaccess'] == 't' ) ? "checked=\"checked\"" : '';
+$group  = ($TASKID_ROW['groupaccess']  == 't' ) ? "checked=\"checked\"" : '';
 
 $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help'); return false\">".$lang['all_users_view']."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" ".$global." /></td></tr>\n".
              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$group." /></td></tr>\n".
@@ -346,8 +338,8 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
              "<tr><td>".$lang[$TYPE."_description"]."</td> <td><textarea name=\"text\" rows=\"5\" cols=\"60\">".$TASKID_ROW['text']."</textarea></td> </tr>\n".
 
              //do we need to email ?
-             "<tr><td><label for=\"mailowner\">".$lang['email_new_owner']."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" $DEFAULT_OWNER /></td></tr>\n".
-             "<tr><td><label for=\"maillist\">".$lang['email_group']."</label></td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" $DEFAULT_GROUP /></td></tr>\n".
+             "<tr><td><label for=\"mailowner\">".$lang['email_new_owner']."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".DEFAULT_OWNER." /></td></tr>\n".
+             "<tr><td><label for=\"maillist\">".$lang['email_group']."</label></td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".DEFAULT_GROUP." /></td></tr>\n".
 
              "</table>\n".
              

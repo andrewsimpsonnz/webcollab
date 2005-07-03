@@ -157,8 +157,9 @@ for($i=0 ; $i < $index ; ++$i ) {
   db_query('DELETE FROM '.PRE.'forum WHERE taskid='.$match_array[$i] );
 
   //delete all files physically
-  $fq = db_query('SELECT fileid, filename FROM '.PRE.'files WHERE taskid='.$match_array[$i] );
-  for($j=0 ; $frow = @db_fetch_array($fq, $j ) ; $j++) {
+  $q = db_query('SELECT fileid, filename FROM '.PRE.'files WHERE taskid='.$match_array[$i] );
+  
+  for($j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
 
     if(file_exists(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] ) ) {
       unlink( FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] );

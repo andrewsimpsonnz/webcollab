@@ -73,7 +73,7 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
   $javascript = "onsubmit=\"return dateCheck()\" ";
 }
 
-$content .= "<form method=\"post\" action=\"tasks.php\" $javascript>\n";
+$content .= "<form method=\"post\" action=\"tasks.php\" ".$javascript.">\n";
 $content .= "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ";
 $content .= "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n ";
 
@@ -134,15 +134,15 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
 
 
   //get all users in order to show a task owner
-  $users_q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname');
+  $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname');
 
   //owner box
   $content .= "<tr><td>".$lang['task_owner'].":</td><td><select name=\"owner\">\n".
               "<option value=\"0\">".$lang['nobody']."</option>\n";
-  for( $i=0 ; $user_row = @db_fetch_array($users_q, $i ) ; ++$i) {
+  for( $i=0 ; $user_row = @db_fetch_array($q, $i ) ; ++$i) {
       
     //user test for privacy
-    if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
+    if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ) {
       continue;
     }
     
@@ -176,12 +176,12 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
   $content .= "</select></td></tr>\n";
 
   //show all the groups
-  $usergroup_q = db_query( 'SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
+  $q = db_query( 'SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
 
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help'); return false\">".$lang['usergroup']."</a>: </td> <td><select name=\"usergroupid\">\n";
   $content .= "<option value=\"0\">".$lang['all_groups']."</option>\n";
 
-  for( $i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; ++$i ) {
+  for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
     
     //usergroup test for privacy
     if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
@@ -204,18 +204,18 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
   }
   else {
     //use defaults 
-    $globalaccess = $DEFAULT_ACCESS;
+    $globalaccess = DEFAULT_ACCESS;
   }
   
   $content .= "</select></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help'); return false\">".$lang['all_users_view']."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$globalaccess." /></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT." /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".DEFAULT_EDIT." /></td></tr>\n".
 
               "<tr> <td>".$lang['task_description']."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
 
               //do we need to email ?
-              "<tr><td><label for=\"mailowner\">".$lang['email_owner']."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER." /></td></tr>\n".
-              "<tr><td><label for=\"maillist\">".$lang['email_group']."</label></td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></td></tr>\n".
+              "<tr><td><label for=\"mailowner\">".$lang['email_owner']."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".DEFAULT_OWNER." /></td></tr>\n".
+              "<tr><td><label for=\"maillist\">".$lang['email_group']."</label></td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".DEFAULT_GROUP." /></td></tr>\n".
 
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang['add_task']."\" onclick=\"return fieldCheck()\" /></p>".
@@ -253,11 +253,11 @@ else {
               "</select></td></tr>";
 
   //get all users in order to show a task owner
-  $user_q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname');
+  $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname');
 
   //owner
   $content .= "<tr><td>".$lang['project_owner'].":</td><td><select name=\"owner\">\n";
-  for( $i=0 ; $user_row = @db_fetch_array($user_q, $i) ; ++$i) {
+  for( $i=0 ; $user_row = @db_fetch_array($q, $i) ; ++$i) {
     
     //user test for privacy
     if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
@@ -275,28 +275,28 @@ else {
   $content .= "</select></td></tr>\n";
 
   //show all the groups
-  $group_q = db_query( 'SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
+  $q = db_query( 'SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
   $content .= "<tr> <td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help'); return false\">".$lang['usergroup']."</a>: </td> <td><select name=\"usergroupid\">\n".
               "<option value=\"0\">".$lang['all_groups']."</option>\n";
 
-  for( $i=0 ; $group_row = @db_fetch_array($group_q, $i ) ; ++$i) {
+  for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
     
     //usergroup test for privacy
-    if( (! ADMIN ) && ($group_row['private'] ) && ( ! in_array($group_row['id'], (array)$GID ) ) ) {
+    if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
       continue;
     }
 
-    $content .= "<option value=\"".$group_row['id']."\">".$group_row['name']."</option>\n";
+    $content .= "<option value=\"".$usergroup_row['id']."\">".$usergroup_row['name']."</option>\n";
   }
   $content .= "</select></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help'); return false\">".$lang['all_users_view']."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$DEFAULT_ACCESS." /></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$DEFAULT_EDIT." /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help'); return false\">".$lang['all_users_view']."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".DEFAULT_ACCESS." /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".DEFAULT_EDIT." /></td></tr>\n".
 
               "<tr> <td>".$lang['project_description']."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
 
               //do we need to email ?
-              "<tr><td><label for=\"mailowner\">".$lang['email_owner']."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".$DEFAULT_OWNER." /></td></tr>\n".
-              "<tr><td><label for=\"maillist\">".$lang['email_group']."</label></td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".$DEFAULT_GROUP." /></td></tr>\n".
+              "<tr><td><label for=\"mailowner\">".$lang['email_owner']."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".DEFAULT_OWNER." /></td></tr>\n".
+              "<tr><td><label for=\"maillist\">".$lang['email_group']."</label></td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".DEFAULT_GROUP." /></td></tr>\n".
 
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang['add_project']."\"  onclick=\"return fieldCheck()\" /></p>".

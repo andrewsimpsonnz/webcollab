@@ -42,7 +42,7 @@ function usergroup_check($taskid ) {
   }
   
   //get the tasks' security info
-  if( ! ($q = db_query('SELECT usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE id='.$taskid ) ) ) {
+  if( ! ($q = @db_query('SELECT usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE id='.$taskid, 0 ) ) ) {
     error('Usergroup security', 'There was an error in the data query.' );
   }
   

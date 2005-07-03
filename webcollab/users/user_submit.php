@@ -144,7 +144,7 @@ switch($_REQUEST['action'] ) {
       //insert all selected usergroups in the usergroups_users table
       (array)$usergroup = $_POST['usergroup'];
       $max = sizeof($usergroup);
-      for( $i=0 ; $i < $max ; $i++ ) {
+      for( $i=0 ; $i < $max ; ++$i ) {
 
         //check for security
         if(isset( $usergroup[$i] ) && is_numeric( $usergroup[$i] ) ) {
@@ -266,7 +266,7 @@ switch($_REQUEST['action'] ) {
 
         //insert all selected usergroups in the usergroups_users table
         (array)$usergroup = $_POST['usergroup'];
-        for($i=0 ; $i < sizeof($usergroup) ; $i++ ) {
+        for($i=0 ; $i < sizeof($usergroup) ; ++$i) {
 
           //check for security
           if(is_numeric( $usergroup[$i] ) ) {

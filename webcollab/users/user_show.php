@@ -48,7 +48,7 @@ $userid = intval($_GET['userid']);
 $q = db_query('SELECT id, name, fullname, email, admin, private, guest, deleted FROM '.PRE.'users WHERE id='.$userid );
 
 //get info
-if( ! ($row = @db_fetch_array($q, 0 ) ) ){
+if( ! ($row = @db_fetch_array($q, 0 ) ) ) {
   error('User error', 'User information is not available' );
 }
 //test if user is private
@@ -102,7 +102,7 @@ $q = db_query('SELECT '.PRE.'usergroups.id AS id,
 if(db_numrows($q) < 1 ) {
   $content .= "<tr><td>".$lang['usergroups'].":</td><td>".$lang['no_usergroup']."</td></tr>\n";
 }
-else{
+else {
   $content .= "<tr><td>".$lang['usergroups'].": </td><td>";
   $alert = "";
   $usergroups = "";
@@ -112,7 +112,7 @@ else{
       $alert = "<br />".$lang['private_usergroup_profile'];
       continue;
     }
-    $usergroups .= ($usergroups != "") ? ",&nbsp;".$row['name'] : $row['name'];
+    $usergroups .= ($usergroups != '' ) ? ",&nbsp;".$row['name'] : $row['name'];
   }
   $content .= $usergroups.$alert;
   $content .= "</td></tr>\n";

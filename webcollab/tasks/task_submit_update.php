@@ -140,20 +140,20 @@ db_begin();
 $previous_status = db_result(db_query('SELECT status FROM '.PRE.'tasks WHERE id='.$taskid ), 0, 0 );
 
 //change the info
-db_query("UPDATE ".PRE."tasks
-      SET name='$name',
-      text='$text',
+db_query('UPDATE '.PRE.'tasks
+      SET name=\''.$name.'\',
+      text=\''.$text.'\',
       edited=now(),
-      owner=$owner,
-      deadline='$deadline',
+      owner='.$owner.',
+      deadline=\''.$deadline.'\',
       finished_time=now(),
-      priority=$priority,
-      taskgroupid=$taskgroupid,
-      usergroupid=$usergroupid,
-      status='$status',
-      globalaccess='$globalaccess',
-      groupaccess='$groupaccess'
-      WHERE id=$taskid" );
+      priority='.$priority.',
+      taskgroupid='.$taskgroupid.',
+      usergroupid='.$usergroupid.',
+      status=\''.$status.'\',
+      globalaccess=\''.$globalaccess.'\',
+      groupaccess=\''.$groupaccess.'\'
+      WHERE id='.$taskid );
 
 //get existing projectid and parent from the database
 $q = db_query('SELECT projectid, parent FROM '.PRE.'tasks WHERE id='.$taskid );
@@ -252,7 +252,7 @@ switch($owner ) {
   $text_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['text'] ) : $_POST['text'];
   
 //email owner ?
-if(isset($_POST['mailowner']) && ($_POST['mailowner']=='on') && ($owner != 0) ) {
+if(isset($_POST['mailowner']) && ($_POST['mailowner'] == 'on') && ($owner != 0) ) {
 
   include_once(BASE.'includes/email.php' );
 
@@ -264,7 +264,7 @@ if(isset($_POST['mailowner']) && ($_POST['mailowner']=='on') && ($owner != 0) ) 
 }
 
 //email the user group ?
-if(isset($_POST['maillist']) && ($_POST['maillist']=='on') ) {
+if(isset($_POST['maillist']) && ($_POST['maillist'] == 'on') ) {
   
   include_once(BASE.'includes/email.php' );
 

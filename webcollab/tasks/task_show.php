@@ -81,7 +81,7 @@ else{
   //show 'project jump' select box
   $content .= project_jump($taskid);
   //show print tag
-  $content .= "<div style=\"text-align : right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=show_print&amp;taskid=$taskid\">".$lang['print_version']."</a>]</span></div>\n";
+  $content .= "<div style=\"text-align : right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=show_print&amp;taskid=".$taskid."\">".$lang['print_version']."</a>]</span></div>\n";
 }  
     
 //percentage_completed gauge if this is a project

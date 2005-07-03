@@ -42,7 +42,7 @@ if( ! ADMIN ) {
 }
 
 //initialise variables
-$address_array = '';
+$address_array = array();
 
 // send to users or groups?
 if(empty($_POST['group']) ){
@@ -112,7 +112,7 @@ if(get_magic_quotes_gpc() ) {
           //loop through result rows and add users to the list
           for($j = 0 ; $row = @db_fetch_num($q, $j ) ; ++$j ){
             $address_array[$k] = $row[0];
-            $k++;
+            ++$k;
           }
         }
       }
@@ -127,7 +127,7 @@ if(get_magic_quotes_gpc() ) {
       break;
 }
 
-if(isset($EMAIL_MAILINGLIST ) ){
+if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
   $address_array = array_merge((array)$address_array, (array)$EMAIL_MAILINGLIST );
 }
 //silly error check
