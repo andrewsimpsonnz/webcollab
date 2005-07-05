@@ -326,7 +326,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   $content .= "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['name']."</b></a>\n";
 
   // Show a nice %-of-tasks-completed bar
-  $content .= show_percent($row['completed'] )."\n";
+  $content .= show_percent($row['completed'] );
 
   //give some details of status
   switch($project_status ) {

@@ -248,7 +248,7 @@ function new_box($title, $content, $style="boxdata", $size="tablebox" ) {
 //
 function goto_main() {
   
-  echo "</td><td align=\"center\">";
+  echo "\n</td><td align=\"center\">\n";
   return;
 }
 
@@ -260,7 +260,7 @@ function create_bottom() {
   global $bottom_text;
 
   //clean
-  $content =  "<br />\n";
+  $content =  "\n<br />\n";
 
   //end the main table row
   $content .= "</td></tr>\n</table>";
