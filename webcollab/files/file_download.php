@@ -44,7 +44,7 @@ if(empty($_GET['fileid']) || ! is_numeric($_GET['fileid']) ){
 $fileid = intval($_GET['fileid']);
 
 //get the files info
-if( ! ($q = db_query('SELECT fileid, filename, size, mime, taskid FROM '.PRE.'files WHERE id='.$fileid, 0 ) ) ) {
+if( ! ($q = db_query('SELECT fileid, filename, size, mime, taskid FROM '.PRE.'files WHERE id='.$fileid, 0 ) ) )  {
   error('Download file', 'There was an error in the data query');
 }
 

@@ -216,7 +216,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 $content .= "</select></label></td>\n".
             "<td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"".$s3." /><label for=\"group\">".$lang['usergroups']."</label>\n".
             "<label for=\"group\"><select name=\"groupid\">\n".
-            "<option value=\"0\"$s4>".$lang['no_group']."</option>\n";
+            "<option value=\"0\"".$s4.">".$lang['no_group']."</option>\n";
 
 //get all groups for option box
 $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
@@ -248,8 +248,9 @@ $content .= "<div style=\"text-align: center\">\n".
             "<tr><td><input type=\"submit\" name=\"lastyear\" value=\"&lt;&lt;\" /></td>\n".
             "<td><input type=\"submit\" name=\"lastmonth\" value=\"&lt;\" /></td>\n".
             "<td>\n<select name=\"month\">\n";
+
 for( $i=1; $i<13 ; ++$i ) {
-  $content .= "<option value=\"$i\"";
+  $content .= "<option value=\"".$i."\"";
 
   if( $month == $i ){
     $content .= " selected=\"selected\"";
@@ -261,7 +262,7 @@ $content .=  "</select></td>\n";
 //year
 $content .= "<td><select name=\"year\">\n";
 for( $i=2001; $i<2011 ; ++$i ) {
-  $content .= "<option value=\"$i\"";
+  $content .= "<option value=\"".$i."\"";
 
   if( $year == $i ) {
     $content .= " selected=\"selected\"";
@@ -291,7 +292,10 @@ $content .= "</tr>\n";
 
 //show lead in to dates
 $content .= "<tr align=\"left\" valign=\"top\">\n";
-for ($i = 0; $i < $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ); ++$i ) {
+
+$dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) );
+
+for ($i = 0; $i < $dayone; ++$i ) {
   $content .= "<td class=\"datecell\">&nbsp;</td>\n";
 }
 $leadin_length = $i;
@@ -310,7 +314,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
     $content .= "style=\"background : #C0C0C0\"";
   }
   
-  $content .= "><span class=\"daynum\">$num</span>";
+  $content .= "><span class=\"daynum\">".$num."</span>";
 
   //check if this date has projects/tasks
   if(in_array($num, (array)$task_dates ) ) {
@@ -362,7 +366,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
                     $name = "<span class=\"blue\">".$row['name'];
                   }
                   $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
-                            "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
+                            "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</span></a><br />\n";
                   break;
   
                 default:
@@ -374,7 +378,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
                     $name = "<span class=\"red\">".$row['name'];
                   }
                   $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
-                            "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">$name</span></a><br />\n";
+                            "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</span></a><br />\n";
                   break;
               }
             break;
@@ -387,8 +391,8 @@ for($num = 1; $num <= $numdays; ++$num ) {
 }
 
 //show lead out to dates
-$leadout_length = (7-($numdays+$leadin_length)%7)%7;
-for ($i = 0; $i < $leadout_length; ++$i ) {
+$leadout_length = (7 - ($numdays + $leadin_length ) % 7 ) % 7;
+for($i = 0; $i < $leadout_length; ++$i ) {
   $content .= "<td class=\"datecell\">&nbsp;</td>\n";
 }
 
