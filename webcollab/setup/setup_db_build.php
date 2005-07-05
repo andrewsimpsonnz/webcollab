@@ -42,7 +42,7 @@ require_once(BASE.'setup/security_setup.php' );
       error_setup("The field for ".$message_array[$i]." was not entered.<br /><br />".
                    "Please go back and enter all the required data fields." );
     }
-  $i++;
+  ++$i;
   }
 
   $database_name     = $_POST['database_name'];
@@ -97,8 +97,7 @@ require_once(BASE.'setup/security_setup.php' );
       //select the newly created database
       if( ! @mysql_select_db( $database_name, $database_connection ) ){
         error_setup("Created a new database, but not able to select the new database. Error message was: <br />".mysql_error($database_connection) );
-      }
-      
+      }      
     }
 
     if($database_type == 'mysql') {
@@ -128,10 +127,10 @@ require_once(BASE.'setup/security_setup.php' );
     //clean up the leading & trailing whitespaces, and remove any null strings
     $max = sizeof($schema_array );
     $j = 0;
-    for($i=0 ; $i < $max ; $i++) {
+    for($i=0 ; $i < $max ; ++$i ) {
       if(strlen($input = trim($schema_array[$i] ) ) > 0 ) {
         $table_array[$j] = $input;
-        $j++;
+        ++$j;
       }
     }
 
@@ -197,10 +196,10 @@ require_once(BASE.'setup/security_setup.php' );
     //clean up the leading & trailing whitespaces, and remove any null strings
     $max = sizeof($schema_array );
     $j = 0;
-    for($i=0 ; $i < $max ; $i++) {
+    for($i=0 ; $i < $max ; ++$i ) {
       if(strlen($input = trim($schema_array[$i] ) ) > 0 ) {
         $table_array[$j] = $input;
-        $j++;
+        ++$j;
       }
     }
 
@@ -229,13 +228,13 @@ require_once(BASE.'setup/security_setup.php' );
 create_top_setup("Database Setup" );
 
 $content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
-            "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+            "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
-            "<input type=\"hidden\" name=\"db_host\" value=\"$database_host\" />\n".
-            "<input type=\"hidden\" name=\"db_user\" value=\"$database_user\" />\n".
-            "<input type=\"hidden\" name=\"db_password\" value=\"$database_password\" />\n".
-            "<input type=\"hidden\" name=\"db_name\" value=\"$database_name\" />\n".
-            "<input type=\"hidden\" name=\"db_type\" value=\"$database_type\" />\n".
+            "<input type=\"hidden\" name=\"db_host\" value=\"".$database_host."\" />\n".
+            "<input type=\"hidden\" name=\"db_user\" value=\"".$database_user."\" />\n".
+            "<input type=\"hidden\" name=\"db_password\" value=\"".$database_password."\" />\n".
+            "<input type=\"hidden\" name=\"db_name\" value=\"".$database_name."\" />\n".
+            "<input type=\"hidden\" name=\"db_type\" value=\"".$database_type."\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n".
             "<div align=\"center\"><p>Creating a new database for WebCollab ... success!</p>\n".
             "<p>Your new database has been successfully created.</p><br />\n".

@@ -25,12 +25,12 @@
 
 */
 
-require_once("path.php" );
+require_once('path.php' );
 
-require_once(BASE."setup/security_setup.php" );
+require_once(BASE.'setup/security_setup.php' );
 
 //essential values - must be present
-$array_essential = array("db_name", "db_user", "db_type", "db_host", "base_url", "locale", "timezone" );
+$array_essential = array('db_name', 'db_user', 'db_type', 'db_host', 'base_url', 'locale', 'timezone' );
 foreach($array_essential as $var ) {
   if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
     error_setup("Variable ".$var." is not set");
@@ -39,11 +39,11 @@ foreach($array_essential as $var ) {
 }
 
 //non-essential values
-$array_optional = array("manager_name", "abbr_manager_name", "db_password", "file_base", "file_maxsize", "use_email", "smtp_host", "new_db" );
+$array_optional = array('manager_name', 'abbr_manager_name', 'db_password', 'file_base', 'file_maxsize', 'use_email', 'smtp_host', 'new_db' );
 
 foreach($array_optional as $var ) {
   if(! isset($_POST[$var]) ) {
-    $data[$var] = "";
+    $data[$var] = '';
   }
   else {
     $data[$var] = $_POST[$var];
@@ -51,20 +51,20 @@ foreach($array_optional as $var ) {
 }
 
 //convert checkboxes to 'Y' or 'N'
-$array = array("use_email" );
+$array = array('use_email' );
 foreach($array as $var ) {
-  if($data[$var] == "on" ) {
-    $data[$var] = "Y";
+  if($data[$var] == 'on' ) {
+    $data[$var] = 'Y';
   }
   else {
-    $data[$var] = "N";
+    $data[$var] = 'N';
   }
 }
 
-$content  = "";
+$content  = '';
 $flag = 0;
 
-create_top_setup("Setup Screen" );
+create_top_setup('Setup Screen' );
 
 $content .= "<table border=\"0\">\n".
             "<tr><td>\n".
@@ -73,15 +73,15 @@ $content .= "<table border=\"0\">\n".
 
 //output essential values for POST
 foreach($array_essential as $var ) {
-$content .= "<input type=\"hidden\" name=\"$var\" value=\"".$data[$var]."\" />\n";
+$content .= "<input type=\"hidden\" name=\"".$var."\" value=\"".$data[$var]."\" />\n";
 }
 
 //output optional values for POST
 foreach($array_optional as $var ) {
-$content .= "<input type=\"hidden\" name=\"$var\" value=\"".$data[$var]."\" />\n";
+$content .= "<input type=\"hidden\" name=\"".$var."\" value=\"".$data[$var]."\" />\n";
 }
 
-$content .= "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+$content .= "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"setup5\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />\n";
             
@@ -105,13 +105,13 @@ switch ($url["scheme"] ){
       fputs($fp,"HEAD ".$url["path"]." HTTP/1.0\n\n");
       $line = fgets($fp, 2048 );
       while (trim($line) != "") {
-        if( ! strpos($line, "404" ) === FALSE ){
+        if( ! strpos($line, "404" ) === FALSE ) {
           //404 - not found
           $status = "<font color=\"blue\"><b>Self testing gives '404 page not found' message (Note: This test can give false warnings with some servers)</b></font>";
           $flag = $flag + 1;
           break;
         }
-        if( ! strpos($line, "301" ) === FALSE ){
+        if( ! strpos($line, "301" ) === FALSE ) {
           //301 - moved permanently
           $status = "<font color=\"blue\"><b>Have you added the trailing slash ( e.g. ".$url["path"]."/ )?</b></font>";
           $flag = $flag + 1;
@@ -121,7 +121,7 @@ switch ($url["scheme"] ){
       }
     fclose($fp);
     }
-    else{
+    else {
       //could not open socket
       $meta = @socket_get_status($fp);
       if($meta['timed_out'] ) {
@@ -142,7 +142,7 @@ switch ($url["scheme"] ){
 
 //basic settings
 $content .= "</td><td><br /><b><u>Basic Settings</u></b></tr>\n".
-            "<tr><th>Site address:</th><td>".$data["base_url"]."</td><td>$status</td></tr>\n".
+            "<tr><th>Site address:</th><td>".$data["base_url"]."</td><td>".$status."</td></tr>\n".
             "<tr><th>Site name:</th><td>".$data["manager_name"]."</td></tr>\n".
             "<tr><th>Abbreviated site name:</th><td>".$data["abbr_manager_name"]."</td></tr>\n";
 
@@ -202,7 +202,7 @@ switch($data["db_type"]) {
 
 //database settings
 $content .= "<tr><td></td><td><br /><br /><b><u>Database Settings</u></b></td></tr>".
-            "<tr><th>Database name:</th><td>".$data["db_name"]."</td><td>$status</td></tr>\n".
+            "<tr><th>Database name:</th><td>".$data["db_name"]."</td><td>".$status."</td></tr>\n".
             "<tr><th>Database user:</th><td>".$data["db_user"]."</td></tr>\n".
             "<tr><th>Database password:</th><td>".$data["db_password"]."</td></tr>\n".
             "<tr><th>Database type:</th><td>".$data["db_type"]."</td></tr>\n".
@@ -218,7 +218,7 @@ if( ! is_writable($data["file_base"]) ) {
 
 //file settings
 $content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td></tr>\n".
-            "<tr><th>File location:</th><td>".$data["file_base"]."</td><td>$status</td></tr>\n".
+            "<tr><th>File location:</th><td>".$data["file_base"]."</td><td>".$status."</td></tr>\n".
             "<tr><th>File size:</th><td>".$data["file_maxsize"]."</td></tr>\n";
 
 $status = "<font color=\"green\"><b>OK !</b></font>";
@@ -233,7 +233,7 @@ if( (! is_readable(BASE."lang/".$data["locale"]."_message.php" ) )
 
 //language settings
 $content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></tr>\n".
-            "<tr><th>Language:</th><td>".$data["locale"]."</td><td>$status</td></tr>\n".
+            "<tr><th>Language:</th><td>".$data["locale"]."</td><td>".$status."</td></tr>\n".
             "<tr><td></td><td><br /><br /><b><u>Timezone Settings</u></b></td></tr>\n".
             "<tr><th>Timezone:</th><td>".$data["timezone"]."</td></tr>\n".
             "<tr><td></td><td><br /><br /><b><u>Email Settings</u></b><br /></td></tr>\n".
@@ -264,7 +264,7 @@ if($data["use_email"] == "Y" && $data["smtp_host"] == "" ) {
   $flag = $flag + 1;
 }
 
-$content .= "<tr><th>SMTP Host:</th><td>".$data["smtp_host"]."</td><td>$status</td></tr>\n";
+$content .= "<tr><th>SMTP Host:</th><td>".$data["smtp_host"]."</td><td>".$status."</td></tr>\n";
 
 $status = "<font color=\"green\"><b>OK !</b></font>";
 
@@ -282,7 +282,7 @@ else {
 
 //show 'write to file' button
 $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
-            "<tr><td></td><td colspan=\"2\">$status<br /><br /></td></tr>\n".
+            "<tr><td></td><td colspan=\"2\">".$status."<br /><br /></td></tr>\n".
             "<tr><td></td><td><input type=\"submit\" value=\"Write Data to Config File\" /></td></tr>\n".
             "</form>\n".
             "<tr><td></td><td>&nbsp;</td></tr>\n";
@@ -291,17 +291,17 @@ $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
 $content .= "<tr><td></td><td>\n".
             "<form method=\"post\" action=\"setup_handler.php\">\n".            
             "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
-            "<input type=\"hidden\" name=\"x\" value=\"$x\" />".
+            "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />";
             
 //output essential values for POST
 foreach($array_essential as $var ) {
-$content .= "<input type=\"hidden\" name=\"$var\" value=\"".$data[$var]."\" />\n";
+$content .= "<input type=\"hidden\" name=\"".$var."\" value=\"".$data[$var]."\" />\n";
 }
 
 //output optional values for POST
 foreach($array_optional as $var ) {
-$content .= "<input type=\"hidden\" name=\"$var\" value=\"".$data[$var]."\" />\n";
+$content .= "<input type=\"hidden\" name=\"".$var."\" value=\"".$data[$var]."\" />\n";
 }
 
 //show 'try again' button

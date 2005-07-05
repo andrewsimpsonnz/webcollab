@@ -30,7 +30,7 @@ require_once('path.php' );
 require_once(BASE.'setup/security_setup.php' );
 
 //check config can be written
-if( ! is_writeable(CONFIG.'config.php' ) ){
+if( ! is_writeable(CONFIG.'config.php' ) ) {
   error_setup('Configuration file needs to be made writeable by the webserver to proceed.');
 }
 
@@ -90,7 +90,7 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\">".
             "<input type=\"hidden\" name=\"new_db\" value=\"$new_db\" />\n".
             "<table border=\"0\">";
 
-if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == '' ){
+if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == '' ) {
   $file_path = realpath(dirname(__FILE__ ).'/..' ).'/';
   $BASE_URL = str_replace( $_SERVER["DOCUMENT_ROOT"], "http://".$_SERVER["HTTP_HOST"], $file_path );
 }
@@ -124,9 +124,9 @@ $content .= "<tr><td></td><td><br />An abbreviated name of the site for emails</
 
 //database settings
 $content .= "<tr><td></td><td><br /><br /><b><u>Database Settings</u></b><br /><br /></td></tr>\n".
-            "<tr><th>Database name:</th><td><input type=\"text\" name=\"db_name\" value=\"$db_name\" size=\"30\" /></td></tr>\n".
-            "<tr><th>Database user:</th><td><input type=\"text\" name=\"db_user\" value=\"$db_user\" size=\"30\" /></td></tr>\n".
-            "<tr><th>Database password:</th><td><input type=\"text\" name=\"db_password\" value=\"$db_password\" size=\"30\" /></td></tr>\n";
+            "<tr><th>Database name:</th><td><input type=\"text\" name=\"db_name\" value=\"".$db_name."\" size=\"30\" /></td></tr>\n".
+            "<tr><th>Database user:</th><td><input type=\"text\" name=\"db_user\" value=\"".$db_user."\" size=\"30\" /></td></tr>\n".
+            "<tr><th>Database password:</th><td><input type=\"text\" name=\"db_password\" value=\"".$db_password."\" size=\"30\" /></td></tr>\n";
 
 switch($db_type){
 
@@ -145,11 +145,11 @@ switch($db_type){
 }
 
 $content .= "<tr><th>Database type:</th><td><select name=\"db_type\">\n".
-             "<option value=\"mysql\"$s1>mysql</option>\n".
-             "<option value=\"postgresql\"$s2>postgresql</option>\n".
-             "<option value=\"mysql_innodb\"$s3>mysql with innodb</option>\n".
+             "<option value=\"mysql\"".$s1.">mysql</option>\n".
+             "<option value=\"postgresql\"".$s2.">postgresql</option>\n".
+             "<option value=\"mysql_innodb\"".$s3.">mysql with innodb</option>\n".
              "</select></td></tr>\n".
-             "<tr><th>Database host:</th><td><input type=\"text\" name=\"db_host\" value=\"$db_host\" size=\"30\" /></td></tr>\n";
+             "<tr><th>Database host:</th><td><input type=\"text\" name=\"db_host\" value=\"".$db_host."\" size=\"30\" /></td></tr>\n";
 
 //file settings
 $content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td></tr>\n";
@@ -185,7 +185,7 @@ else {
 }
 
 //initialise array with null values
-for( $i=0 ; $i < 15 ; $i++ ) {
+for( $i=0 ; $i < 15 ; ++$i ) {
   $s[$i] = "";
 }
 
@@ -196,20 +196,20 @@ $s[$selected] = " selected=\"selected\"";
   
 $content .= "<tr><td></td><td><br /></td></tr>\n".
             "<tr><th>Language:</th><td><select name=\"locale\">\n".
-            "<option value=\"bg\" $s[0]>Bulgarian</option>\n".
-            "<option value=\"ca\" $s[1]>Catalan</option>\n".
-            "<option value=\"da\" $s[2]>Danish</option>\n".
-            "<option value=\"en\" $s[3]>English</option>\n".
-            "<option value=\"fr\" $s[4]>French</option>\n".
-            "<option value=\"de\" $s[5]>German</option>\n".
-            "<option value=\"hu\" $s[6]>Hungarian</option>\n".            
-            "<option value=\"it\" $s[7]>Italian</option>\n".
-            "<option value=\"ja\" $s[8]>Japanese</option>\n".
-            "<option value=\"ko\" $s[9]>Korean</option>\n".
-            "<option value=\"pt-br\" $s[10]>Portuguese (Brazilian)</option>\n".
-            "<option value=\"ru\" $s[11]>Russian</option>\n". 
-            "<option value=\"es\" $s[12]>Spanish</option>\n". 
-            "<option value=\"se\" $s[13]>Swedish</option>\n".
+            "<option value=\"bg\" ".$s[0].">Bulgarian</option>\n".
+            "<option value=\"ca\" ".$s[1].">Catalan</option>\n".
+            "<option value=\"da\" ".$s[2].">Danish</option>\n".
+            "<option value=\"en\" ".$s[3].">English</option>\n".
+            "<option value=\"fr\" ".$s[4].">French</option>\n".
+            "<option value=\"de\" ".$s[5].">German</option>\n".
+            "<option value=\"hu\" ".$s[6].">Hungarian</option>\n".            
+            "<option value=\"it\" ".$s[7].">Italian</option>\n".
+            "<option value=\"ja\" ".$s[8].">Japanese</option>\n".
+            "<option value=\"ko\" ".$s[9].">Korean</option>\n".
+            "<option value=\"pt-br\" ".$s[10].">Portuguese (Brazilian)</option>\n".
+            "<option value=\"ru\" ".$s[11].">Russian</option>\n". 
+            "<option value=\"es\" ".$s[12].">Spanish</option>\n". 
+            "<option value=\"se\" ".$s[13].">Swedish</option>\n".
             "</select></td></tr>\n";
              
 //timezone setting
@@ -234,41 +234,41 @@ $s[(array_search(TZ, $time) )] = " selected=\"selected\"";
   
 $content .=  "<tr><td></td><td><br /></td></tr>\n".
              "<tr><th>Timezone:</th><td><select name=\"timezone\">\n".
-             "<option value=\"-12\"$s[0]>GMT -1200</option>\n".
-             "<option value=\"-11\"$s[1]>GMT -1100</option>\n".
-             "<option value=\"-10\"$s[2]>GMT -1000</option>\n".
-             "<option value=\"-9.5\"$s[3]>GMT -0930</option>\n".
-             "<option value=\"-9\"$s[4]>GMT -0900</option>\n".
-             "<option value=\"-8\"$s[5]>GMT -0800</option>\n".
-             "<option value=\"-7\"$s[6]>GMT -0700</option>\n".
-             "<option value=\"-6\"$s[7]>GMT -0600</option>\n".
-             "<option value=\"-5\"$s[8]>GMT -0500</option>\n".
-             "<option value=\"-4\"$s[9]>GMT -0400</option>\n".
-             "<option value=\"-3.5\"$s[10]>GMT -0330</option>\n".
-             "<option value=\"-3\"$s[11]>GMT -0300</option>\n".
-             "<option value=\"-2\"$s[12]>GMT -0200</option>\n".
-             "<option value=\"-1\"$s[13]>GMT -0100</option>\n".
-             "<option value=\"0\"$s[14]>GMT</option>\n".
-             "<option value=\"1\"$s[15]>GMT +0100</option>\n".
-             "<option value=\"2\"$s[16]>GMT +0200</option>\n".
-             "<option value=\"3\"$s[17]>GMT +0300</option>\n".
-             "<option value=\"3.5\"$s[18]>GMT +0330</option>\n".
-             "<option value=\"4\"$s[19]>GMT +0400</option>\n".
-             "<option value=\"4.5\"$s[20]>GMT +0430</option>\n".
-             "<option value=\"5\"$s[21]>GMT +0500</option>\n".
-             "<option value=\"5.5\"$s[22]>GMT +0530</option>\n".
-             "<option value=\"6\"$s[23]>GMT +0600</option>\n".
-             "<option value=\"6.5\"$s[24]>GMT +0630</option>\n".
-             "<option value=\"7\"$s[25]>GMT +0700</option>\n".
-             "<option value=\"8\"$s[26]>GMT +0800</option>\n".
-             "<option value=\"9\"$s[27]>GMT +0900</option>\n".
-             "<option value=\"9.5\"$s[28]>GMT +0930</option>\n".
-             "<option value=\"10\"$s[29]>GMT +1000</option>\n".
-             "<option value=\"10.5\"$s[30]>GMT +1030</option>\n".
-             "<option value=\"11\"$s[31]>GMT +1100</option>\n".
-             "<option value=\"11.5\"$s[32]>GMT +1130</option>\n".
-             "<option value=\"12\"$s[33]>GMT +1200</option>\n".
-             "<option value=\"13\"$s[34]>GMT +1300</option>\n".
+             "<option value=\"-12\"".$s[0].">GMT -1200</option>\n".
+             "<option value=\"-11\"".$s[1].">GMT -1100</option>\n".
+             "<option value=\"-10\"".$s[2].">GMT -1000</option>\n".
+             "<option value=\"-9.5\"".$s[3].">GMT -0930</option>\n".
+             "<option value=\"-9\"".$s[4].">GMT -0900</option>\n".
+             "<option value=\"-8\"".$s[5].">GMT -0800</option>\n".
+             "<option value=\"-7\"".$s[6].">GMT -0700</option>\n".
+             "<option value=\"-6\"".$s[7].">GMT -0600</option>\n".
+             "<option value=\"-5\"".$s[8].">GMT -0500</option>\n".
+             "<option value=\"-4\"".$s[9].">GMT -0400</option>\n".
+             "<option value=\"-3.5\"".$s[10].">GMT -0330</option>\n".
+             "<option value=\"-3\"".$s[11].">GMT -0300</option>\n".
+             "<option value=\"-2\"".$s[12].">GMT -0200</option>\n".
+             "<option value=\"-1\"".$s[13].">GMT -0100</option>\n".
+             "<option value=\"0\"".$s[14].">GMT</option>\n".
+             "<option value=\"1\"".$s[15].">GMT +0100</option>\n".
+             "<option value=\"2\"".$s[16].">GMT +0200</option>\n".
+             "<option value=\"3\"".$s[17].">GMT +0300</option>\n".
+             "<option value=\"3.5\"".$s[18].">GMT +0330</option>\n".
+             "<option value=\"4\"".$s[19].">GMT +0400</option>\n".
+             "<option value=\"4.5\"".$s[20].">GMT +0430</option>\n".
+             "<option value=\"5\"".$s[21].">GMT +0500</option>\n".
+             "<option value=\"5.5\"".$s[22].">GMT +0530</option>\n".
+             "<option value=\"6\"".$s[23].">GMT +0600</option>\n".
+             "<option value=\"6.5\"".$s[24].">GMT +0630</option>\n".
+             "<option value=\"7\"".$s[25].">GMT +0700</option>\n".
+             "<option value=\"8\"".$s[26].">GMT +0800</option>\n".
+             "<option value=\"9\"".$s[27].">GMT +0900</option>\n".
+             "<option value=\"9.5\"".$s[28].">GMT +0930</option>\n".
+             "<option value=\"10\"".$s[29].">GMT +1000</option>\n".
+             "<option value=\"10.5\"".$s[30].">GMT +1030</option>\n".
+             "<option value=\"11\"".$s[31].">GMT +1100</option>\n".
+             "<option value=\"11.5\"".$s[32].">GMT +1130</option>\n".
+             "<option value=\"12\"".$s[33].">GMT +1200</option>\n".
+             "<option value=\"13\"".$s[34].">GMT +1300</option>\n".
              "</select></td></tr>\n";
                         
 //email settings
@@ -281,7 +281,7 @@ else {
 
 $content .= "<tr><td></td><td><br /><br /><b><u>Email Settings</u></b></td></tr>\n".
             "<tr><td></td><td><br /></td></tr>\n".
-            "<tr><th>Use email?</th><td><input type=\"checkbox\" name=\"use_email\" $setting  /></td></tr>\n";
+            "<tr><th>Use email?</th><td><input type=\"checkbox\" name=\"use_email\" ".$setting."  /></td></tr>\n";
             
 if(defined('SMTP_HOST') ) {
   $SMTP_HOST = SMTP_HOST;

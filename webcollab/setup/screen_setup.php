@@ -56,7 +56,7 @@ function create_top_setup($title="" ) {
        "<html>\n\n".
        "<!-- (c) 2002 - 2005 Andrew Simpson -->\n\n".
        "<head>\n".
-       "<title>$title</title>\n".
+       "<title>".$title."</title>\n".
        "<meta http-equiv=\"Pragma\" content=\"no-cache\">".
        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n".
        "<link rel=\"StyleSheet\" href=\"".CSS."default.css\" type=\"text/css\">\n".
@@ -95,7 +95,7 @@ function create_bottom_setup() {
 //
 //  Creates a new menu-window
 //
-function new_box_setup($title, $content, $style="boxdata", $size="tablebox" ) {
+function new_box_setup($title, $content, $style='boxdata', $size='tablebox' ) {
 
   echo "\n<!-- start of ".$title."-box -->";
   echo "\n<br />";

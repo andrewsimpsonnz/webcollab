@@ -25,17 +25,17 @@
 
 */
 
-require_once("path.php" );
+require_once('path.php' );
 
-require_once(BASE."setup/security_setup.php" );
+require_once(BASE.'setup/security_setup.php' );
 
 create_top_setup("Setup Screen" );
 
-$content ="<p><b>Setup - Stage 2 of 5 : Database Setup</b></p>\n";
+$content = "<p><b>Setup - Stage 2 of 5 : Database Setup</b></p>\n";
 
 $content .=
 "<form method=\"post\" action=\"setup_handler.php\">\n".
-  "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
+  "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
   "<input type=\"hidden\" name=\"action\" value=\"build\" />\n".
   "<p>Please enter database details.  The database user given here must be able to create databases.<br />\n".
   "(If desired, you can change the database user to a less privileged user in the next screen entry).</p>\n".
@@ -57,7 +57,7 @@ $content .=
   "<input type=\"submit\" value=\"Submit\" />\n".
 "</form>\n";
 
-new_box_setup("Setup - Stage 2 of 5", $content, "boxdata", "tablebox" );
+new_box_setup("Setup - Stage 2 of 5", $content, 'boxdata', 'tablebox' );
 
 create_bottom_setup();
 ?>

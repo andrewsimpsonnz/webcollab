@@ -24,12 +24,12 @@
   Write setup to config
 
 */
-require_once("path.php" );
+require_once('path.php' );
 
-require_once(BASE."setup/security_setup.php" );
+require_once(BASE.'setup/security_setup.php' );
 
 //essential values - must be present
-$array = array("db_name", "db_user", "db_type", "db_host", "base_url", "locale", "timezone" );
+$array = array('db_name', 'db_user', 'db_type', 'db_host', 'base_url', 'locale', 'timezone' );
 foreach($array as $var ) {
   if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
     error_setup("Variable ".$var." is not set");
@@ -38,11 +38,11 @@ foreach($array as $var ) {
 }
 
 //non-essential values
-$array = array("manager_name", "abbr_manager_name", "db_password", "file_base", "file_maxsize", "use_email", "smtp_host", "new_db" );
+$array = array('manager_name', 'abbr_manager_name', 'db_password', 'file_base', 'file_maxsize', 'use_email', 'smtp_host', 'new_db' );
 
 foreach($array as $var ) {
   if(! isset($_POST[$var]) ) {
-    $data[$var] = "";
+    $data[$var] = '';
   }
   else {
     $data[$var] = $_POST[$var];
@@ -175,7 +175,7 @@ $content .=  "<p><form name='inputform' method='post' action='index.php'>\n".
              "</form></p>\n".
              "</div>\n";
 
-new_box_setup("Setup - Stage 5 of 5", $content, "boxdata", "singlebox" );
+new_box_setup("Setup - Stage 5 of 5", $content, 'boxdata', 'singlebox' );
 
 create_bottom_setup();
 ?>
