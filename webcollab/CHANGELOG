@@ -6,6 +6,8 @@ WebCollab CVS
 
 - bugfix: child forum posts not being deleted when parent is deleted (coding error)
 
+- bugfix: uploaded files not physically deleted when associated task deleted (coding error)
+
 - for login page only count login attempts when login fails 
 
 WebCollab CVS
