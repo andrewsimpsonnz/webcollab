@@ -34,17 +34,21 @@
   Refer to RFC 2920 for command pipelining
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
-include_once(BASE.'includes/admin_config.php' );
+//includes
+require_once(BASE.'includes/admin_config.php' );
 
 //** hooks for future development
 define('SMTP_PORT', 25 );
 define('TLS', 'N' );
 
-if( (SMTP_AUTH == 'Y') || (TLS == 'Y') )
+if( (SMTP_AUTH == 'Y') || (TLS == 'Y') ){
   include_once(BASE.'includes/smtp_auth.php' );
+}
 
 //
 // Email sending function
@@ -83,9 +87,10 @@ function email($to, $subject, $message ) {
   if(function_exists('socket_set_timeout') )
     @socket_set_timeout($connection, 10, 0 );  
   
-  if(strncmp('220', response(), 3 ) )
+  if(strncmp('220', response(), 3 ) ) {
     debug();
-
+  } 
+    
   //do extended hello (EHLO)
   fputs($connection, 'EHLO '.$_SERVER['SERVER_NAME']."\r\n" );
   $log .= "C: EHLO ".$_SERVER['SERVER_NAME']."\n";
@@ -101,19 +106,23 @@ function email($to, $subject, $message ) {
   }
           
   //do TLS if required (This is EXPERIMENTAL!!)
-  if(TLS == 'Y' )
+  if(TLS == 'Y' ) {
     $capability = starttls($connection, $capability );
+  }  
     
   //do SMTP_AUTH if required
-  if(SMTP_AUTH == 'Y' )
+  if(SMTP_AUTH == 'Y' ) {
     smtp_auth($connection, $capability );
-
+  }
+  
   //see if server is offering 8bit mime capability & pipelining    
-  if( ! strpos($capability, '8BITMIME' ) === false )
-      $bit8 = true;
+  if( ! strpos($capability, '8BITMIME' ) === false ) {
+    $bit8 = true;
+  }
       
-  if( ! strpos($capability, 'PIPELINING' ) === false )    
-      $pipelining = true;
+  if( ! strpos($capability, 'PIPELINING' ) === false ) {    
+    $pipelining = true;
+  }
       
   //arrange message - and set email encoding to 8BITMIME if we need to
   //(we *must* do this before 'MAIL FROM:' in case we need to set encoding to suit the message body)
@@ -127,9 +136,10 @@ function email($to, $subject, $message ) {
   ++$count_commands;
   
   if(! $pipelining ) {
-    if(strncmp('250', response(), 3 ) )
+    if(strncmp('250', response(), 3 ) ) {
       debug();
-   }
+    }
+  }
   
   //envelope to
   foreach((array)$to as $address ) {
@@ -138,8 +148,9 @@ function email($to, $subject, $message ) {
     ++$count_commands;
     
     if(! $pipelining ) {
-      if(strncmp('25', response(), 2 ) )
+      if(strncmp('25', response(), 2 ) ){
         debug();
+      }
     }
   }
 
@@ -149,8 +160,9 @@ function email($to, $subject, $message ) {
   ++$count_commands;
 
   if(! $pipelining ) {
-    if(strncmp('354', response(), 3 ) )
+    if(strncmp('354', response(), 3 ) ) {
       debug();
+    }
   }
   else {
     //we have been pipelining ==> roll back & check the server responses
@@ -164,10 +176,12 @@ function email($to, $subject, $message ) {
           
         case '354':
           //correct response for final DATA command
-          if($i == ($count_commands - 1 ) )
+          if($i == ($count_commands - 1 ) ){
             break(2);
-          else 
+          }  
+          else { 
             debug('Pipelining: Bad response to DATA' );
+          }
           break;
             
         default:
@@ -190,8 +204,9 @@ function email($to, $subject, $message ) {
   $log .= "C: End of message\n";
   
   if(! $pipelining) {
-    if(strncmp('250', response(), 3 ) )
+    if(strncmp('250', response(), 3 ) ) {
       debug();
+    }
   }
   
   //say bye bye
@@ -199,15 +214,17 @@ function email($to, $subject, $message ) {
   $log .= "C: QUIT\n";
   
   if(! $pipelining) {
-    if(strncmp('221', response(), 3 ) )
+    if(strncmp('221', response(), 3 ) ) {
       debug();
+    }
   }
   else {
-    if(strncmp('250', response(), 3 ) )
+    if(strncmp('250', response(), 3 ) ) {
       debug('Pipelining: Bad response to end of message');
-    
-    if(strncmp('221', response(), 3 ) )
+    }
+    if(strncmp('221', response(), 3 ) ) {
       debug('Pipelining: Bad response to QUIT');
+    }
   }
 
   fclose($connection );
@@ -414,8 +431,9 @@ function response() {
     $log .= 'S : '.$str;
     
     //<space> after three digit code indicates this is last line of data ("-" for more lines)
-    if(strpos($str, ' ' ) == 3  )
+    if(strpos($str, ' ' ) == 3 ) {
       break;
+    }
   }
   
   return $res;
@@ -429,9 +447,9 @@ function response() {
    if(DEBUG == 'Y' ) {
      $time_out = '';
      $meta = @socket_get_status($connection);
-     if($meta['timed_out'] )
+     if($meta['timed_out'] ) {
        $time_out = '<br /><br />Socket timeout has occurred';
-
+     }
      //we don't use error() because email may not work!
      warning('Email error debug', nl2br($log).$message.$time_out );
    }

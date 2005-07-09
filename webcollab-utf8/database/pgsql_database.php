@@ -30,10 +30,6 @@
 
 require_once('path.php' );
 
-include_once( BASE.'config/config.php' );
-include_once( BASE.'includes/common.php');
-
-
 /* NOTE!
    Standard Postgresql (Version 6.3 and later) setup does NOT support tcp/ip connections.
    To support tcp/ip connections you need to:
@@ -84,12 +80,20 @@ function db_query($query, $dieonerror=1 ) {
   //do it
   if( ! ($result = @pg_query($database_connection, $query ) ) ) {
 
-    if($dieonerror==1)
+    if($dieonerror == 1 ) {
       error('Database query error', 'The following query :<br /><br /><b>'.$query.'</b><br /><br />Had the following error:<br /><b>'.pg_last_error($database_connection).'</b>' );
   }
 
   //all was okay return resultset
   return $result;
+}
+
+//
+// escapes special characters in a string for use in a SQL statement
+//
+function db_escape_string($string ) {
+  
+  return pg_escape_string($string);
 }
 
 //

@@ -25,7 +25,9 @@
 
 */
 
-require_once("path.php" );
+require_once('path.php' );
+require_once(BASE.'path_config.php' );
+require_once(CONFIG.'config.php' );
 
 //
 // Creates the inital window, and sets some vars. This _HAS_ to be the first function because of the header() calls
@@ -35,11 +37,13 @@ function create_top_setup($title="" ) {
   global $topbuild;
 
   //don't rebuild the top again if already built
-  if( $topbuild == 1 )
+  if( $topbuild == 1 ) {
     return;
-  else
+  }
+  else {
     $topbuild = 1;
-
+  }
+  
   //we don't want any caching of these pages
   header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
   header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -52,10 +56,10 @@ function create_top_setup($title="" ) {
        "<html>\n\n".
        "<!-- (c) 2002 - 2005 Andrew Simpson -->\n\n".
        "<head>\n".
-       "<title>$title</title>\n".
+       "<title>".$title."</title>\n".
        "<meta http-equiv=\"Pragma\" content=\"no-cache\">".
        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n".
-       "<link rel=\"StyleSheet\" href=\"".BASE."css/default.css\" type=\"text/css\">\n".
+       "<link rel=\"StyleSheet\" href=\"".CSS."default.css\" type=\"text/css\">\n".
        "</head>\n\n".
        "<body>\n";
   
@@ -91,7 +95,7 @@ function create_bottom_setup() {
 //
 //  Creates a new menu-window
 //
-function new_box_setup($title, $content, $style="boxdata", $size="tablebox" ) {
+function new_box_setup($title, $content, $style='boxdata', $size='tablebox' ) {
 
   echo "\n<!-- start of ".$title."-box -->";
   echo "\n<br />";

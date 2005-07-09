@@ -28,10 +28,9 @@
 //set initial safe values
 $WEB_CONFIG = "N";
 
-//read config files
-require_once("config/config.php" );
-include_once("setup/screen_setup.php" );
-
+//includes
+require_once('path.php' );
+include_once(BASE.'setup/screen_setup.php' );
 
 //
 // ERROR FUNCTION
@@ -53,10 +52,10 @@ function secure_error($message ) {
 //valid login attempt ?
 if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
-  include_once("database/database.php" );
-  include_once("includes/common.php" );
+  include_once(BASE.'includes/common.php' );
+  include_once(BASE.'database/database.php' );
 
-  $q = "";
+  $q = '';
   $username = safe_data($_POST['username']);
   //encrypt password
   $md5pass = md5($_POST['password'] );
@@ -67,17 +66,17 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     secure_error("Unable to determine ip address");
   }
   
-  if(! defined('PRE') )
-    define('PRE', "" );
+  if(! defined('PRE') ){
+    define('PRE', '' );
+  }
   
   //limit login attempts if post-1.60 database is being used 
-  if(@db_query("SELECT * FROM ".PRE."login_attempt LIMIT 1", 0 ) ) {
+  if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {
         
-  
     //count the number of recent login attempts
-    $count_attempts = db_result(@db_query("SELECT COUNT(*) FROM ".PRE."login_attempt 
-                                                  WHERE name='".$username."' 
-                                                  AND last_attempt > (now()-INTERVAL ".$delim."10 MINUTE".$delim.") LIMIT 6" ), 0, 0 );
+    $count_attempts = db_result(@db_query('SELECT COUNT(*) FROM '.PRE.'login_attempt 
+                                                  WHERE name=\''.$username.'\' 
+                                                  AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 6' ), 0, 0 );
       
     //protect against password guessing attacks 
     if($count_attempts > 3 ) {
@@ -86,15 +85,15 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     $flag_attempt = TRUE; 
     
     //record this login attempt
-    db_query("INSERT INTO ".PRE."login_attempt(name, ip, last_attempt ) VALUES ('$username', '$ip', now() )" );
+    db_query('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (\''.$username.'\', \''.$ip.'\', now() )' );
   }
                                                                                      
   //do query and check database connection
-  if( ! $q = db_query("SELECT id FROM ".PRE."users
-                             WHERE deleted='f'
-                             AND admin='t'
-                             AND name='".$username."'
-                             AND password='".$md5pass."'", 0 ) ){
+  if( ! $q = db_query('SELECT id FROM '.PRE.'users
+                             WHERE deleted=\'f\'
+                             AND admin=\'t\'
+                             AND name=\''.$username.'\'
+                             AND password=\''.$md5pass.'\'', 0 ) ){
     secure_error("Not a valid username, or password" );
   }
 
@@ -112,23 +111,19 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   //user is okay log him/her in
 
   //create session key
-  // seed number is not required for PHP 4.2.0, and higher
-  if(version_compare(PHP_VERSION, "4.2.0" ) == -1 )
-    mt_srand(hexdec(substr(md5(microtime() ), -8 ) ) & 0x7fffffff );  
   $session_key = md5(mt_rand() );
 
   //remove the old login information
-  @db_query("DELETE FROM ".PRE."logins WHERE user_id=".$user_id );
+  @db_query('DELETE FROM '.PRE.'logins WHERE user_id='.$user_id );
   //remove the old login information for post 1.60 database
-  if($flag_attempt )
-    @db_query("DELETE FROM ".PRE."login_attempt WHERE last_attempt < (now()-INTERVAL ".$delim."20 MINUTE".$delim.") OR name='".$username."'" );
-   
+  if($flag_attempt ) {
+    @db_query('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.$delim.'20 MINUTE'.$delim.') OR name=\''.$username.'\'' );
+  } 
   //log the user in
-  db_query("INSERT INTO ".PRE."logins( user_id, session_key, ip, lastaccess )
-                       VALUES('".$user_id."', '".$session_key."', '".$ip."', now() )" );
-  
-  //go to the next stage
-  include_once("setup/setup_setup1.php" );
+  db_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess )
+                       VALUES(\''.$user_id.'\', \''.$session_key.'\', \''.$ip.'\', now() )' );
+
+  include_once(BASE.'setup/setup_setup1.php' );
   die;
 }
 
@@ -137,32 +132,32 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 //
 
 //security checks
-if( ! isset($WEB_CONFIG ) || $WEB_CONFIG != "Y" ) {
+if( ! isset($WEB_CONFIG ) || $WEB_CONFIG != 'Y' ) {
   secure_error("Current configuration file does not allow web-based setup." );
   die;
 }
 
 //version check
-//version_compare() is only in PHP 4.1.0, and above.
-if(strcmp('4.3.0', PHP_VERSION ) > 0 )
-  secure_error("WebCollab with UTF8 support needs PHP version 4.3.0, or higher.  This version is ".PHP_VERSION );
+if(version_compare(PHP_VERSION, '4.3.0' ) == -1 ) {
+  secure_error("WebCollab with UTF-8 support needs PHP version 4.2.0, or higher.  This version is ".PHP_VERSION );
+}
 
 //check that UTF-8 character encoding can be used
-if(! function_exists('mb_internal_encoding') )
+if(! function_exists('mb_internal_encoding') ) {
   error("Unable to set UTF-8 encoding in PHP.<br \>\n".  
          "The PHP installed on this server does not appear to have the multi-byte string (mb_string) library enabled.<br />\n".
-        "This library is essential for using UTF8 with WebCollab" );  
-  
+        "This library is essential for using UTF-8 with WebCollab" );  
+}
   
 //check for initial install
-if(DATABASE_NAME == "" ) {
-  //this is an initial install
-  include("setup/setup_setup1.php" );
-  die;
+if(DATABASE_NAME == '' ) {
+  //this is an initial install 
+ include(BASE.'setup/setup_setup1.php' );
+ die;
 }
 
 //login box screen code 
-create_top_setup("Login" );
+create_top_setup('Login' );
 
 $content = "<p>Admin login is required for setup:</p>\n".
            "<form name=\"inputform\" method=\"post\" action=\"setup.php\">\n".
@@ -175,7 +170,7 @@ $content = "<p>Admin login is required for setup:</p>\n".
              "</div></form>\n";
 
 //set box options
-new_box_setup("Login", $content, "boxdata", "singlebox" );
+new_box_setup('Login', $content, 'boxdata', 'singlebox' );
 
 create_bottom_setup();
 

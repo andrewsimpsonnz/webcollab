@@ -28,6 +28,11 @@
 
 */
 
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
+
 //
 // Create a pgsql/mysql datetime stamp
 //
@@ -97,10 +102,9 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
 
   //filter for no date set
   if($day == -1 || $month == -1 || $year == -1 ) {
-    $local = time() - date('Z') + (TZ * 3600);
-    $day   = date('d', $local );
-    $month = date('m', $local );
-    $year  = date('Y', $local );
+    $day   = date('d', TIME_NOW );
+    $month = date('m', TIME_NOW );
+    $year  = date('Y', TIME_NOW );
   }
 
   //day
@@ -111,14 +115,14 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
     if($day == $i )
       $content .= " selected=\"selected\"";
 
-    $content .= ">$i</option>\n";
+    $content .= ">".$i."</option>\n";
   }
   $content .=  "</select>\n";
 
   //month (must be in decimal, 'cause that's what postgres uses!)
   $content .= "<select id=\"month\" name=\"month\">\n";
   for( $i=1; $i<13 ; ++$i) {
-    $content .= "<option value=\"$i\"";
+    $content .= "<option value=\"".$i."\"";
 
     if($month == $i )
       $content .= " selected=\"selected\"";
@@ -130,7 +134,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   //year
   $content .= "<select id=\"year\" name=\"year\">\n";
   for($i=2001; $i<2015 ; ++$i ) {
-    $content .= "<option value=\"$i\"";
+    $content .= "<option value=\"".$i."\"";
 
     if($year == $i )
       $content .= " selected=\"selected\"";

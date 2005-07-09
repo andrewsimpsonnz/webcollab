@@ -27,11 +27,13 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
-$content    = '';
-$allowed[0] = 0;
+$content = '';
+$allowed = array();
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid, 
@@ -59,7 +61,7 @@ $q = db_query('SELECT '.PRE.'logins.lastaccess AS last,
             ORDER BY '.PRE.'logins.lastaccess DESC' );
 
 $content .= "<tr><td style=\"white-space:nowrap\" colspan=\"2\"><b>".$lang['online']."</b></td></tr>\n";
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i){
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   
   //user test for privacy
   if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
@@ -67,7 +69,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i){
   }
   
   //show output
-  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
+  $content .= "<tr><td><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
 }
 
 $content .= "<tr><td style=\"white-space:nowrap\"colspan=\"2\">&nbsp;</td></tr>\n";
@@ -83,7 +85,7 @@ $q = db_query('SELECT '.PRE.'logins.lastaccess AS last,
             ORDER BY '.PRE.'logins.lastaccess DESC' );
 
 $content .= "<tr><td colspan=\"2\"><b>".$lang['not_online']."</b></td></tr>\n";
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i){
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   
   //user test for privacy
   if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
@@ -91,7 +93,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i){
   }
   
   //show output
-  $content .= "<tr><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
+  $content .= "<tr><td><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
 
 }
 $content .= "</table>\n";

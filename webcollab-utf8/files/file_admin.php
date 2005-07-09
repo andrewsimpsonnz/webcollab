@@ -27,17 +27,19 @@
   Lists files assigned to a task
 
 */
-require_once('path.php' );
 
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 include_once(BASE.'includes/time.php' );
 
 $content = '';
 
-if(! ADMIN )
+if(! ADMIN ) {
   error('Access denied', 'This feature is only for admins' );
-
+}
 
 //get the files from this task
 $q = db_query('SELECT '.PRE.'files.id AS id,
@@ -70,17 +72,17 @@ $content .= "<table>\n";
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //file part
-  $content .= "<tr><td>".$lang['task'].":</td><td><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['task_id']."\">".$row['task_name']."</a></td></tr>\n".
-              "<tr><td>".$lang['file']."</td><td><a href=\"files.php?x=$x&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=$x&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a>&nbsp;<small>(".$row['size'].$lang['bytes'].")&nbsp;</small>".
+  $content .= "<tr><td>".$lang['task'].":</td><td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['task_id']."\">".$row['task_name']."</a></td></tr>\n".
+              "<tr><td>".$lang['file']."</td><td><a href=\"files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a>&nbsp;<small>(".$row['size'].$lang['bytes'].")&nbsp;</small>".
               //delete option
-              "<span class=\"textlink\">[<a href=\"files.php?x=$x&amp;action=submit_del&amp;fileid=".$row['id']."&amp;taskid=-1\" onclick=\"return confirm( '".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename']) )."' )\">".$lang['del']."</a>]</span></td></tr>\n".
+              "<span class=\"textlink\">[<a href=\"files.php?x=".$x."&amp;action=submit_del&amp;fileid=".$row['id']."&amp;taskid=-1\" onclick=\"return confirm( '".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename']) )."' )\">".$lang['del']."</a>]</span></td></tr>\n".
               //user part
-              "<tr><td>".$lang['uploader']." </td><td><a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")</td></tr>\n";
+              "<tr><td>".$lang['uploader']." </td><td><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")</td></tr>\n";
 
   //show description
-  if( $row['description'] != '' )
-    $content .= "<tr><td>".$lang['description'].":</td><td><small><i>".$row['description']."</i></small></td></tr>\n";
-
+  if( $row['description'] != '' ) {
+    $content .= "<tr><td>".$lang['description'].":</td><td><small><i>".nl2br($row['description'])."</i></small></td></tr>\n";
+  }
   //blank line to end
   $content .= "<tr><td>&nbsp;</td></tr>\n";    
     

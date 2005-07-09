@@ -30,8 +30,10 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 $content = '';
 $company = '';
@@ -47,12 +49,12 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
        $content .= mb_substr($row['company'], 0, 30 )."<br />";
      }
      $show = mb_substr($row['lastname'], 0, 30 ).", ".mb_strtoupper(mb_substr( $row['firstname'], 0, 1 ) ).".";
-     $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row["id"]."\">$show</a><br />";
+     $content .= "<a href=\"contacts.php?x=".$x."&amp;action=show&amp;contactid=".$row["id"]."\">".$show."</a><br />";
      $company =  $row['company'];
    }
    else{
      $show = mb_substr($row['lastname'], 0, 30 ).", ".mb_strtoupper(mb_substr( $row['firstname'], 0, 1 ) ).".";
-     $content .= "<a href=\"contacts.php?x=$x&amp;action=show&amp;contactid=".$row['id']."\">$show</a><br />";
+     $content .= "<a href=\"contacts.php?x=".$x."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
    }
 }
 
@@ -61,8 +63,9 @@ db_free_result($q );
 $content .= "<br />\n";
 
 //the add button
-if(! GUEST )
-  $content .= "<span class=\"textlink\">[<a href=\"contacts.php?x=$x&amp;action=add\">".$lang['add_contact']."</a>]</span>\n";
+if(! GUEST ){
+  $content .= "<span class=\"textlink\">[<a href=\"contacts.php?x=".$x."&amp;action=add\">".$lang['add_contact']."</a>]</span>\n";
+}
 
 //show the box
 new_box($lang['contacts'], $content, 'boxmenu' );

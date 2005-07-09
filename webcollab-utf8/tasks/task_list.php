@@ -27,10 +27,13 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
-include_once(BASE.'includes/details.php' );
+//includes
+require_once(BASE.'includes/details.php' );
 
 //init values
 $content = '';
@@ -41,21 +44,17 @@ $content = '';
 function list_tasks($parent ) {
 
   global $x, $GID, $parentid, $parent_array, $epoch, $lang;
-  global $taskgroup_flag, $task_state, $ul_flag, $now;
+  global $taskgroup_flag, $task_state, $ul_flag;
+  global $no_group, $task_order;
 
   //init values
   $stored_groupname = NULL;
   $this_content = '';
-  $no_group = '';
   $ul_flag = 0;
-
-  //force mysql to put 'uncategorised' items at the bottom
-  if(substr(DATABASE_TYPE, 0, 5) == 'mysql' )
-    $no_group = 'IF('.PRE.'taskgroups.name IS NULL, 1, 0), ';
-  
+    
   //query to get the children for this taskid
   $q = db_query('SELECT '.PRE.'tasks.id AS id,
-                  '.PRE.'tasks.name AS taskname,
+                  '.PRE.'tasks.name AS name,
                   '.PRE.'tasks.status AS status,
                 '.PRE.'tasks.finished_time AS finished_time,
                   '.$epoch.' '.PRE.'tasks.deadline) AS due,
@@ -72,32 +71,36 @@ function list_tasks($parent ) {
                   LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
                   LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid)
                   WHERE '.PRE.'tasks.parent='.$parent.'
-                  ORDER by '.$no_group.' groupname, taskname' );
+                  ORDER BY '.$no_group.' groupname, '.$task_order );
 
   //check for any tasks.  If no tasks end recursive function
-  if(db_numrows($q) < 1 )
+  if(db_numrows($q) < 1 ) {
     return;
+  }
 
   //determine if the first line will be a task listing or a taskgroup name
   //if it's a taskgroup name we don't need to set the leading <ul>
-  if( ($taskgroup_flag == 1 ) && ($parent == $parentid ) )
+  if( ($taskgroup_flag == 1 ) && ($parent == $parentid ) ) {
     $this_content .= '';
-  else
+  }
+  else {
     $this_content .= "<ul>";
-
+  }
+  
   //show all tasks
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
     //check for private usergroups
     if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
-      if( ! in_array( $row['usergroupid'], (array)$GID ) )
+      if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
         //recursive search if the subtask is listed in parent_array (it has children then)
         if(in_array( $row['id'], $parent_array, FALSE) ) {
           $this_content .= list_tasks( $row['id']);
           $this_content .= "\n</ul></li>\n";
         }
         continue;
+      }
     }
 
 
@@ -105,25 +108,29 @@ function list_tasks($parent ) {
     if( ($taskgroup_flag == 1 ) && ($parent == $parentid ) ) {
 
       //set taskgroup name, or 'Uncategorised' if none
-      if( $row['groupname'] == NULL )
+      if( $row['groupname'] == NULL ) {
         $groupname = $lang['uncategorised'];
-      else
+      }
+      else {
         $groupname = $row['groupname'];
-
+      }
+      
       //check if taskgroup has changed from last iteration
       if($stored_groupname != $groupname ) {
 
         //don't need </ul> before first taskgroup heading (no <ul> is set)
-        if($stored_groupname != NULL )
+        if($stored_groupname != NULL ) {
           $this_content .= "</ul>\n";
+        }
 
         //show taskgroup name
         $this_content .= "<p><b>".$groupname."</b>";
 
         //add taskgroup description
-        if($row['groupdescription'] != NULL )
+        if($row['groupdescription'] != NULL ) {
           $this_content .=  "&nbsp;<i>( ".$row['groupdescription']." )</i>";
-
+        }
+        
         $this_content .= "</p>\n";
         $this_content .= "<ul>\n";
 
@@ -143,11 +150,12 @@ function list_tasks($parent ) {
     $seen_test = db_result(db_query('SELECT COUNT(*) FROM '.PRE.'seen WHERE taskid='.$row['id'].' AND userid='.UID.' LIMIT 1' ), 0, 0);
 
     //don't show alert content for changes more than NEW_TIME (in seconds)
-    if( ($now - max($row['edited'], $row['lastpost'], $row['lastfileupload'] ) ) > 86400*NEW_TIME ) {
+    if( (TIME_NOW - max($row['edited'], $row['lastpost'], $row['lastfileupload'] ) ) > 86400*NEW_TIME ) {
 
       //task is over limit in NEW_TIME and still not looked at by you, mark it as seen, and move on...
-      if( $seen_test < 1 )
+      if( $seen_test < 1 ) {
         db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$row['id'].', now() ) ' );
+      }
     }
     //task has changed since last seen - show the changes to you
     else {
@@ -204,12 +212,12 @@ function list_tasks($parent ) {
 
 
     //merge all info about a task
-    $this_content .= $alert_content."<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['id']."\">".$row['taskname']."</a>&nbsp;$status_content";
+    $this_content .= $alert_content."<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a>&nbsp;$status_content";
     $this_content .= "<small>";
 
     //add username if task is taken
     if($row['userid'] != 0 ) {
-      $this_content .= "&nbsp;[<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a>]&nbsp;";
+      $this_content .= "&nbsp;[<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a>]&nbsp;";
     }
     else {
       $this_content .= "&nbsp;";
@@ -224,7 +232,7 @@ function list_tasks($parent ) {
         break;
 
       default:
-        $state = ($row['due'] - $now )/86400 ;
+        $state = ($row['due'] - (TIME_NOW)/86400 );
         if($state > 1 ) {
           $this_content .=  "(".sprintf( $lang['due_sprt'], ceil((real)$state) ).")";
         }
@@ -254,7 +262,7 @@ function list_tasks($parent ) {
     $this_content .= "</small>";
 
     //recursive search if the subtask is listed in parent_array (it has children then)
-    if(in_array( $row['id'], $parent_array ) ) {
+    if(in_array( $row['id'], $parent_array, FALSE) ) {
       $this_content .= list_tasks( $row['id']);
       $this_content .= "\n</ul></li>\n";
     }
@@ -275,40 +283,50 @@ function list_tasks($parent ) {
 //
 
 //is the parentid set in tasks.php ?
-if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) )
+if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) ) {
   error( 'Task list', 'Not a valid value for taskid');
+}
 
 $parentid = intval($_REQUEST['taskid']);
 
 //check for private usergroup projects
-$q = db_query("SELECT usergroupid, globalaccess, ".$epoch."now()) FROM ".PRE."tasks WHERE id=".$TASKID_ROW['projectid'] );
+$q = db_query('SELECT usergroupid, globalaccess FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] );
 
 $row = db_fetch_num($q, 0 );
-
-//set variables
-$now = $row[2];
 
 if( (! ADMIN ) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
 
   //check if the user has a matching group
-  if( ! in_array($row[0], (array)$GID ) )
+  if( ! in_array($row[0], (array)$GID ) ) {
     return;
+  }
 }
 
 //find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query
 $parent_query = db_query('SELECT DISTINCT parent FROM '.PRE.'tasks WHERE projectid='.$TASKID_ROW['projectid'] );
-$parent_array = NULL;
+$parent_array = array();
 for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; ++$i ) {
   $parent_array[$i] = $row['parent'];
 }
 
 //check to see if any tasks at this task level have the taskgroup descriptor set.
 //Use this later to toggle the taskgroup headings.
-if( db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent='.$parentid.' AND taskgroupid<>0' ), 0, 0 ) > 0 )
+if( db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent='.$parentid.' AND taskgroupid<>0' ), 0, 0 ) > 0 ) {
   $taskgroup_flag = 1;
-else
+}
+else {
   $taskgroup_flag = 0;
+}
 
+//force mysql to put 'uncategorised' items at the bottom of the listing
+$no_group = '';
+if(substr(DATABASE_TYPE, 0, 5) == 'mysql' ) {
+  $no_group = 'IF('.PRE.'taskgroups.name IS NULL, 1, 0), ';
+}
+
+//get the task sort order (strip off the 'ORDER BY' in this case)
+$task_order = db_result(db_query('SELECT task_order FROM '.PRE.'config' ), 0, 0 );
+$task_order = str_replace('ORDER BY', '', $task_order );
 
 $content  = list_tasks($parentid );
 

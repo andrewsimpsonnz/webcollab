@@ -24,21 +24,27 @@
   Lists all the recent forum posts
 
 */
-require_once('path.php' );
-require_once(BASE.'includes/security.php' );
 
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
+
+//includes
 include_once(BASE.'includes/time.php' );
 
 //initialise variables            
 $list = '';
      
 //set the usergroup permissions on queries (Admin can see all)
-if(ADMIN == 1 )
+if(ADMIN == 1 ) {
   $tail = ' ';  
-else
+}
+else {
   $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
            OR '.PRE.'tasks.globalaccess=\'t\'   
            OR '.PRE.'tasks.usergroupid=0) ';                      
+}
              
 $q = db_query('SELECT '.PRE.'forum.taskid AS taskid, 
                       MAX('.PRE.'forum.posted) AS recentpost,
@@ -51,7 +57,7 @@ $q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
                     ORDER BY recentpost DESC LIMIT 10' );
 
 //iterate for posts                            
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   
   //date of latest post
   $lastpost = $row['recentpost'];
@@ -59,6 +65,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
   //show it
   $list .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['taskid']."\">".mb_strimwidth($row['taskname'], 0, 25 )."</a><br />\n";
 }
+
+db_free_result($q );
 
 if($list != '') {
   $content = "<small>".$list.sprintf($lang['last_post_sprt'], nicedate($lastpost) )."</small>\n";

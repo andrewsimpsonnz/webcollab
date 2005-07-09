@@ -27,8 +27,10 @@
 
 */
 
-require_once('path.php' );
-require_once( BASE.'includes/security.php' );
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //
 // List tasks
@@ -38,8 +40,9 @@ function listTasks($projectid ) {
   global $task_uncompleted, $task_projectid;
   global $task_array, $parent_array, $shown_array, $shown_count, $task_count;
    
-  $parent_array = '';
-  $shown_array  = '';
+  $task_array   = array();
+  $parent_array = array();
+  $shown_array  = array();
   $shown_count  = 0;  //counter for $shown_array
   $parent_count = 0;  //counter for $parent_array
   $task_count   = 0;  //counter for $task_array
@@ -47,8 +50,9 @@ function listTasks($projectid ) {
   //search for uncompleted tasks by projectid
   $task_key = array_keys((array)$task_projectid, $projectid );
   
-  if(sizeof($task_key) < 1 )
+  if(sizeof($task_key) < 1 ){
     return;
+  }
   
   //cycle through relevant tasks
   foreach((array)$task_key as $key ) {  
@@ -92,8 +96,9 @@ function listTasks($projectid ) {
   //look for any orphaned tasks, and show them too
   if($task_count != $shown_count ) {
     for($i=0 ; $i < $task_count ; ++$i ) {
-      if( ! in_array($task_array[$i]['id'], (array)$shown_array ) ) 
+      if( ! in_array($task_array[$i]['id'], (array)$shown_array ) ) {
         $content .= $task_array[$i]['task']."</li>\n";
+      }
     }
   }
   $content .= "</ul>\n";  
@@ -141,8 +146,9 @@ function find_children($parent ) {
 
 $flag = 0;
 $content = '';
-$usergroup[0] = 0;
-$allowed[0] = 0; 
+$allowed = array();
+$task_uncompleted = array();  
+$task_projectid   = array();
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
@@ -158,30 +164,30 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 }
 
 //check validity of inputs
-if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 )
+if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 ) {
   $selection = ($_POST['selection']);
-else
+}
+else {
   $selection = 'user';
+}
 
 if(isset($_POST['userid']) && is_numeric($_POST['userid']) ){
   $userid = intval($_POST['userid']);
 }
-else{
-  
-  if(! GUEST )
-    $userid = UID;
-  else
-    $userid = 0;
+else {
+  $userid = (GUEST ) ? 0 : UID;
 }
 
-if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) )
+if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) ) {
   $groupid = intval($_POST['groupid']);
-else
+}
+else {
   $groupid = 0;
+}
 
 // check if there are projects
 if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent=0' ), 0, 0 ) < 1 ) {
-  $content = "<div style=\"text-align : center\"><a href=\"tasks.php?x=$x&amp;action=add\">".$lang['add']."</a></div>\n";
+  $content = "<div style=\"text-align : center\"><a href=\"tasks.php?x=".$x."&amp;action=add\">".$lang['add']."</a></div>\n";
   new_box( $lang['no_projects'], $content );
   return;
 }
@@ -191,27 +197,29 @@ switch($selection ) {
   case 'group':
     $userid = 0; $s1 = ""; $s2 = " selected=\"selected\""; $s3 = " checked=\"checked\""; $s4 = "";
     $tail = "AND usergroupid=$groupid";
-    if($groupid == 0 )
+    if($groupid == 0 ){
       $s4 = " selected=\"selected\"";
+    }
     break;
 
   case 'user':
   default:
     $groupid = 0; $s1 = " checked=\"checked\""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
     $tail = "AND owner=$userid";
-    if($userid == 0 )
+    if($userid == 0 ){
       $s2 = " selected=\"selected\"";
+    }
     break;
 }
 
 $content .= "<form method=\"post\" action=\"tasks.php\">\n".
-            "<fieldset><input type=\"hidden\" name=\"x\" value=\"$x\" />\n ".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\" /></fieldset>\n ".
             "<table class=\"celldata\">\n".
             "<tr><td>".$lang['todo_list_for']."</td></tr>".
-            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"user\"$s1 /><label for=\"user\">".$lang['users']."</label></td><td>\n".
+            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"user\"".$s1." /><label for=\"user\">".$lang['users']."</label></td><td>\n".
             "<label for=\"user\"><select name=\"userid\">\n".
-            "<option value=\"0\"$s2>".$lang['nobody']."</option>\n";
+            "<option value=\"0\"".$s2.">".$lang['nobody']."</option>\n";
 
 //get all users for option box
 $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname');
@@ -227,16 +235,16 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   $content .= "<option value=\"".$row['id']."\"";
 
   //highlight current selection
-  if( $row['id'] == $userid )
+  if( $row['id'] == $userid ){
     $content .= " selected=\"selected\"";
-
+  }
   $content .= ">".$row['fullname']."</option>\n";
 }
 
 $content .= "</select></label></td></tr>\n".
-            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"$s3 /><label for=\"group\">".$lang['usergroups']."</label></td><td>\n".
+            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"".$s3." /><label for=\"group\">".$lang['usergroups']."</label></td><td>\n".
             "<label for=\"group\"><select name=\"groupid\">\n".
-            "<option value=\"0\"$s4>".$lang['no_group']."</option>\n";
+            "<option value=\"0\"".$s4.">".$lang['no_group']."</option>\n";
 
 //get all groups for option box
 $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
@@ -252,9 +260,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   $content .= "<option value=\"".$row['id']."\"";
 
   //highlight current selection
-  if( $row['id'] == $groupid )
+  if( $row['id'] == $groupid ){
     $content .= " selected=\"selected\"";
-
+  }
   $content .= ">".$row['name']."</option>\n";
 }
 
@@ -263,33 +271,38 @@ $content .= "</select></label><br /><br /></td></tr>\n".
             "</table>\n".
             "</form>\n";
 
+//get the sort order for projects/tasks
+$q   = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
+$row = db_fetch_num($q, $i );
+$project_order = $row[0];
+$task_order    = $row[1];
 
 // show all subtasks that are not complete
 $q = db_query('SELECT id, name, owner, deadline, parent, usergroupid, globalaccess, projectid,
-                        '.$epoch.' deadline) AS task_due,
-                        '.$epoch.' now() ) AS now
+                        '.$epoch.' deadline) AS due
                         FROM '.PRE.'tasks
                         WHERE parent<>0
                         AND (status=\'created\' OR status=\'active\')
-                        '.$tail.'
-                        ORDER BY name' );
+                        '.$tail.' '.
+                        $task_order );
 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //check for private usergroups
   if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] != 't' ) ) {
-    if( ! in_array( $row['usergroupid'], (array)$GID ) )
+    if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
       continue;
+    }
   }
   
   //put values into array
   $task_uncompleted[$i]['id'] = $row['id'];
   $task_uncompleted[$i]['parent'] = $row['parent'];
   
-  $this_task = "<li><a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
+  $this_task = "<li><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
   
   //add highlighting if deadline is due
-  $state = ceil( ($row['task_due'] - $row['now'] )/86400 );
+  $state = ceil( ($row['task_due'] - TIME_NOW )/86400 );
   
   if($state > 1) {
     $this_task .= $row['name']."</a>".sprintf($lang['due_in_sprt'], $state );
@@ -297,7 +310,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   else if($state > 0) {
     $this_task .= $row['name']."</a>".$lang['due_tomorrow'];
   }
-  else{
+  else {
     $this_task .= "<span class=\"red\">".$row['name']."</span></a>";
   }
   
@@ -311,7 +324,10 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 db_free_result($q);
 
 //query to get the all the projects
-$q = db_query('SELECT id, name, usergroupid, globalaccess FROM '.PRE.'tasks WHERE parent=0 AND archive=0 ORDER BY name' );
+$q = db_query('SELECT id, name, usergroupid, globalaccess, deadline AS due 
+                      FROM '.PRE.'tasks 
+                      WHERE parent=0
+                      AND archive=0 '.$project_order );
 
 // show all uncompleted tasks and projects belonging to this user or group
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -319,8 +335,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
    //check for private usergroups
    if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
-     if( ! in_array( $row['usergroupid'], (array)$GID ) )
+     if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
        continue;
+     }
    }
 
   $new_content = listTasks($row['id'], $tail );
@@ -333,8 +350,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 }
 
-if( $flag != 1 )
+if( $flag != 1 ) {
   $content .= $lang['no_assigned']."\n";
+}
 
 new_box( $lang['todo_list'], $content );
 
