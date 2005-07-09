@@ -1,3 +1,21 @@
+WebCollab CVS
+*** 14 June 2005
+Andrew Simpson
+
+- merge to WebCollab CVS
+
+WebCollab 1.71a
+*** 14 June 2005
+Andrew Simpson
+
+- release
+
+WebCollab CVS
+*** 14 June 2005
+Andrew Simpson
+
+- bugfix: Update MySQL database schema (File table structure incorrect for version 1.71+)
+
 WebCollab Unicode 1.71
 *** 6 April 2005
 Andrew Simpson
