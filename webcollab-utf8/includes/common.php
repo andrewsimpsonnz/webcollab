@@ -28,8 +28,9 @@
 */
 
 require_once('path.php' );
+require_once(BASE.'path_config.php' );
+require_once(CONFIG.'config.php' );
 
-include_once(BASE.'config/config.php' );
 include_once(BASE.'lang/lang.php' );
 
 //
@@ -38,13 +39,14 @@ include_once(BASE.'lang/lang.php' );
 function safe_data($body ) {
   
   //return null for nothing input
-  if(ctype_space($body) )
+  if(ctype_space($body) ) {
     return '';
+  }
   
   //we don't use magic_quotes
-  if(get_magic_quotes_gpc() )
+  if(get_magic_quotes_gpc() ) {
     $body = stripslashes($body );
-          
+  }
   //validate characters & remove whitespace      
   $body = trim(validate($body) );
   
@@ -66,13 +68,14 @@ return $body;
 function safe_data_long($body ) {
 
   //return null for nothing input
-  if(ctype_space($body) )
+  if(ctype_space($body) ) {
     return '';
+  }
   
   //we don't use magic_quotes
-  if(get_magic_quotes_gpc() )
+  if(get_magic_quotes_gpc() ) {
     $body = stripslashes($body );
-        
+  }
   //validate characters
   $body = validate($body);
     
@@ -92,53 +95,60 @@ function validate($body ) {
   //decode decimal HTML entities added by web browser
   $body = preg_replace('/&#\d{2,5};/e', "utf8_entity_decode('$0')", $body );
   //decode hex HTML entities added by web browser
-  //$body = preg_replace('/&#x([a-fA-F0-7]{2,8});/e', "utf8_entity_decode('&#'.hexdec('$1').';')", $body );
-
-  switch(strtoupper(CHARACTER_SET) ) {
-    
-    case 'EUC_KR':
-    case 'EUC_CN':
-      $body = preg_match_all('/([\x09\x0a\x0d\x20-\x7f]'.                   // CS0  ASCII
-                              '|[\xa1-\xfe]{2})+/', $body, $ar );           // CS1  GB2312-80 
-      $body = join('?', $ar[0] );
-      break;
-    
-    case 'EUC-JP':
-      $body = preg_match_all('/([\x09\x0a\x0d\x20-\x7f]'.                   // CS0  ASCII
-                              '|[\xa1-\xfe]{2}'.                            // CS1  JIS X 0208:1997
-                              '|\x8e[\xa0-\xdf]'.                           // CS2  half width katakana
-                              '|\x8f[\xa1-\xfe]{2})+/', $body, $ar );       // CS3  JIS X 0212-1990   
-      $body = join('?', $ar[0] );
-      break;
-             
-    case 'UTF-8':
-      //allow only normal UTF-8 characters up to U+10000, which is the limit of 3 byte characters
-      // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )   
-      preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                         // ASCII characters
-                    '|[\xc2-\xdf][\x80-\xbf]'.                            // 2-byte UTF-8 (except overly longs)
-                    '|\xe0[\xa0-\xbf][\x80-\xbf]'.                        // 3 byte (except overly longs)
-                    '|[\xe1-\xec\xee\xef][\x80-\xbf]{2}'.                 // 3 byte (except overly longs)
-                    '|\xed[\x80-\x9f][\x80-\xbf])+/', $body, $ar );       // 3 byte (except UTF-16 surrogates)
-    
-      $body = join('?', $ar[0] );
-      break;
+  $body = preg_replace('/&#x([a-fA-F0-7]{2,8});/e', "utf8_entity_decode('&#'.hexdec('$1').';')", $body );
   
-    default:
-      error("Input validation", "The selected ".CHARACTER_SET." does not have a valid input validation filter" ); 
-      break;
-  
-  }    
-
+  if(! ctype_print($body) ) {
+    
+    switch(strtoupper(CHARACTER_SET) ) {
+      
+      case 'EUC_KR':
+      case 'EUC_CN':
+        $body = preg_match_all('/([\x09\x0a\x0d\x20-\x7f]'.                   // CS0  ASCII
+                                '|[\xa1-\xfe]{2})+/', $body, $ar );           // CS1  GB2312-80 
+        $body = join('?', $ar[0] );
+        break;
+      
+      case 'EUC-JP':
+        $body = preg_match_all('/([\x09\x0a\x0d\x20-\x7f]'.                   // CS0  ASCII
+                                '|[\xa1-\xfe]{2}'.                            // CS1  JIS X 0208:1997
+                                '|\x8e[\xa0-\xdf]'.                           // CS2  half width katakana
+                                '|\x8f[\xa1-\xfe]{2})+/', $body, $ar );       // CS3  JIS X 0212-1990   
+        $body = join('?', $ar[0] );
+        break;
+              
+      case 'UTF-8':
+        //allow only normal UTF-8 characters up to U+10000, which is the limit of 3 byte characters
+        // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )   
+        preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                         // ASCII characters
+                      '|[\xc2-\xdf][\x80-\xbf]'.                            // 2-byte UTF-8 (except overly longs)
+                      '|\xe0[\xa0-\xbf][\x80-\xbf]'.                        // 3 byte (except overly longs)
+                      '|[\xe1-\xec\xee\xef][\x80-\xbf]{2}'.                 // 3 byte (except overly longs)
+                      '|\xed[\x80-\x9f][\x80-\xbf])+/', $body, $ar );       // 3 byte (except UTF-16 surrogates)
+      
+        $body = join('?', $ar[0] );
+        break;
+    
+      default:
+        error("Input validation", "The selected ".CHARACTER_SET." does not have a valid input validation filter" ); 
+        break;
+    
+    }    
+  }  
   return $body;   
 }
     
 function clean_up($body) {  
   
-  //use HTML encoding for characters that could be used for css <script> or SQL injection attacks
-  //$trans = array('\\'=>'\\\\', "'"=>"\'", '"'=>'\"', ';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'\|', '('=>'\(', ')'=>'\)', '+'=>'\+', '-'=>'\-', '='=>'\=' );
-  $trans = array('\\'=>'\\\\', "'"=>"&apos;", '"'=>'&quot;', ';'=>'&#059;', '<'=>'&lt;', '>'=>'&gt;', '|'=>'&#124;', '('=>'&#040;', ')'=>'&#041;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;' );
-
-  return strtr($body, $trans ); 
+  //decode URL entities
+  $body = urldecode($body );
+  //prevent SQL injection
+  $body = db_escape_string($body );
+  //use HTML encoding, or add escapes '\' for characters that could be used for xss <script> or SQL injection attacks
+      //for better xss protection (at the expense of ability to upload non-ASCII characters) add to $trans array '&'=>'&amp;'    
+  $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '+'=>'\+', '-'=>'\-', '='=>'\=' );
+  $body  = strtr($body, $trans );
+  
+  return $body; 
 }
 
 //
@@ -162,7 +172,7 @@ function html_escape($body ) {
 }
 
 //
-// single quotes in javascript fields are double escaped (PHP removes one of the escape characters)
+// single quotes in javascript fields are escaped
 // double quotes are changed to HTML (escaping won't work) 
 // 
 function javascript_escape($body ) {
@@ -177,14 +187,16 @@ function javascript_escape($body ) {
 //
 function html_links($body, $database_escape=0 ) {
 
-  $body = preg_replace('/(([\w\-\.]+)@([\w\-\.]+)\.([\w]+))/', "<a href=\"mailto:$0\">$0</a>", $body );
+  if(ctype_space($body) ) {
+    return '';
+  }
+  $body = preg_replace('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', "<a href=\"mailto:$0\">$0</a>", $body );
+  //$body = preg_replace('/(([\w\-\.]+)@([\w\-\.]+)\.([\w]+))/', "<a href=\"mailto:$0\">$0</a>", $body );
   
   //data being submitted to a database needs ('$0') part escaped
-  if($database_escape )    
-    $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s]+)/i', "<a href=\"$0\" onclick=\"window.open(\'$0\'); return false\">$0</a>", $body );
-  else
-    $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s]+)/i', "<a href=\"$0\" onclick=\"window.open('$0'); return false\">$0</a>", $body );
-    
+  $escape = ($database_escape ) ? '\\' : '';  
+      
+  $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s]+)/i', "<a href=\"$0\" onclick=\"window.open(".$escape."'$0".$escape."'); return false\">$0</a>", $body );
   return $body;
 }
 
@@ -229,15 +241,16 @@ function error($box_title, $error ) {
             "WebCollab version:".WEBCOLLAB_VERSION."\n".
             "POST vars: $post\n\n";
   
-  if(EMAIL_ERROR != NULL ){
+  if(EMAIL_ERROR != NULL ) {
     include_once(BASE.'includes/email.php' );
     email(EMAIL_ERROR, "ERROR on ".MANAGER_NAME, $message );
   }
         
-  if(DEBUG == 'Y' )
+  if(DEBUG == 'Y' ) {
     $content = nl2br($message);
     new_box("Error Debug", $content );
-
+  }
+  
   create_bottom();
 
   //do not return as that would be futile
