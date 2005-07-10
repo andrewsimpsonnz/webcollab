@@ -64,7 +64,7 @@ if(USE_EMAIL == 'Y' ){
             "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin\" onclick=\"window.open('help/help_language.php?item=from&amp;type=admin'); return false\">".$lang['email_from']."</a>:</td><td><input type=\"text\" name=\"from\" value=\"".$row['email_from']."\" size=\"30\" /></td></tr>\n";
 
   //get mailing list
-  $q = db_query('SELECT DISTINCT * FROM '.PRE.'maillist' );
+  $q = db_query('SELECT DISTINCT email FROM '.PRE.'maillist' );
 
   for( $i=0 ; $row_mail = @db_fetch_array($q, $i ) ; ++$i) {
     $maillist .= $row_mail['email']."\n";
