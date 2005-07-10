@@ -120,8 +120,8 @@ if($creator == NULL ) {
 }
 else {
   $content .= sprintf($lang['by_sprt'], nicetime($row['epoch_created']), "<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$TASKID_ROW['creator']."\">".$creator."</a>");
-$content .= "</td></tr>\n";
 }
+$content .= "</td></tr>\n";
 
 //get deadline
 $content .= "<tr><td>".$lang['deadline'].": </td><td>".nicedate($TASKID_ROW['deadline'])."</td></tr>\n";

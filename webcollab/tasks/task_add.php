@@ -149,7 +149,7 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
     $content .= "<option value=\"".$user_row['id']."\"";
 
     //default owner is present user
-    if( $user_row[ "id" ] == UID )
+    if($user_row['id'] == UID )
       $content .= " selected=\"selected\"";
 
     $content .= ">".$user_row['fullname']."</option>\n";
