@@ -164,7 +164,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
           break;
 
         default:
-          $date = nicedate(date('Y-m-d H:i:s', $row['deadline'] ) );
+          $date = nicedate(date('Y-m-d H:i:s', $row['due'] ) );
           if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND status<>\'done\' AND parent<>0' ), 0, 0 ) == 0 ) {
             $color = 'green';
             $status = $task_state['done'];
@@ -180,17 +180,17 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
       switch( $row['status'] ) {
         case 'done':
           $color = '';
-          $date = nicedate(date('Y-m-d H:i:s', $row['deadline'] ) );
+          $date = nicedate(date('Y-m-d H:i:s', $row['due'] ) );
           $status =  "<span class=\"green\">".$task_state['done']."</span>";
           break;
 
         case 'created':
-          $date = nicedate(date('Y-m-d H:i:s', $row['deadline'] ) );
+          $date = nicedate(date('Y-m-d H:i:s', $row['due'] ) );
           $status =  $task_state['new'];
           break;
 
         case 'active':
-          $date = nicedate(date('Y-m-d H:i:s', $row['deadline'] ) );
+          $date = nicedate(date('Y-m-d H:i:s', $row['due'] ) );
           $color = 'orange';
           $status =  $task_state['task_active'];
           break;
@@ -208,7 +208,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
           break;
 
         default:
-          $date = nicedate(date('Y-m-d H:i:s', $row['deadline'] ) );
+          $date = nicedate(date('Y-m-d H:i:s', $row['due'] ) );
           $status =  "<span class=\"orange\">".$row['status']."</span>";
           break;
       }

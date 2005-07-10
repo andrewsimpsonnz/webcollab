@@ -205,11 +205,11 @@ switch($TASKID_ROW['parent'] ) {
     //is there a finished date ?
     switch($TASKID_ROW['status'] ) {
       case 'done':
-        $content .= "<tr><td>".$lang['completed_on'].": </td><td>".nicetime($row['finished'])."</td></tr>\n";
+        $content .= "<tr><td>".$lang['completed_on'].": </td><td>".nicedate($row['finished'])."</td></tr>\n";
         break;
   
       case 'cantcomplete':
-        $content .= "<tr><td>".$lang['modified_on'].": </td><td>".nicetime($row['finished'])."</td></tr>\n";
+        $content .= "<tr><td>".$lang['modified_on'].": </td><td>".nicedate($row['finished'])."</td></tr>\n";
         break;
   
       default:
