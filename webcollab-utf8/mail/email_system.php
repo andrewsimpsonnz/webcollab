@@ -35,25 +35,58 @@
 
 */
 
-$WEBCOLLAB_PATH = '/var/www/webcollab-unicode-devel';
-$SERVER_NAME    = '';
+// start of configuration
+//-------------------------------------------
 
-require_once($WEBCOLLAB_PATH."/config/config.php" );
+define('DATABASE_TYPE', 'mysql' );
+define('DATABASE_NAME', 'test_utf8' );
+define('DATABASE_USER', '-----' );
+define('DATABASE_PASSWORD', '------' );
+define('DATABASE_HOST', 'localhost' );
+define('PRE', '' );
 
-$q = db_query("SELECT COUNT(id) AS count FROM ".PRE."mail_spool" );
+define('ABBR_MANAGER_NAME', 'WebCollab' );
+
+define('SMTP_HOST', '' );
+define('SERVER_NAME', '' );
+
+define('CHARACTER_SET', 'iso-8859-1' );
+define('MYSQL_41', false );
+
+define('DEBUG', false );
+
+// end of configuration
+//-------------------------------------------
+
+//check for mail
+$q = db_query('SELECT COUNT(id) AS count FROM '.PRE.'mail_spool' );
 $row = fetch_row($q, 0 );
 
-if($row['count'] < 1 )
-  exit; 
-
-$q = db_query("SELECT id, mail_to, subject, message, character_set FROM ".PRE."mail_spool" );
-
-for($i=0 ; $row = @fetch_row($q, $i ) ; $i++ ){
-  $mailid  = $row['id'];
-  $charset = $row['character_set'];
-  email($row['id'], $row['mail_to'], $row['subject'], $row['message'] );
+//exit for no mail in spool
+if($row['count'] < 1 ) {
+  exit(0); 
 }
 
+//get mail parameters
+$q   = db_query('SELECT email_from, reply_to FROM config' );
+$row = @fetch_row($q, 0 );
+define('EMAIL_FROM',     $row['email_from'] );
+define('EMAIL_REPLY_TO', $row['reply_to'] );
+
+//send mail
+$q = db_query('SELECT id, mail_to, subject, message FROM '.PRE.'mail_spool' );
+
+for($i=0 ; $row = @fetch_row($q, $i ) ; ++$i ) {
+  $mailid  = $row['id'];
+  //send email
+  email(unserialize($row['mail_to']), $row['subject'], $row['message'] );
+  //remove sent email from database spool
+  db_query('DELETE FROM '.PRE.'mail_spool WHERE id = '.$row['id'] );
+}
+
+exit(0);
+
+//-------------------------------------------
 
 /*
 Function List
@@ -75,153 +108,230 @@ debug		Debug logger
 //
 // Email sending function
 //
-function email($mailid, $to, $subject, $message ){
-  
-  global $bit8, $connection, $SERVER_NAME;
-  
-  $bit8 = "";
-  $connection = "";
-  $email_encode = "";
-  $message_charset = "";
-  $body = "";
-    
-  if(strlen($to) == 0  ) {
+function email($to, $subject, $message ) {
+
+  global $bit8, $connection, $log;
+
+  $email_encode = '';
+  $message_charset = '';
+  $body = '';
+  $bit8 = false;
+  $pipelining = false;
+
+  if(sizeof($to) == 0  ) {
     //no email address specified - end function
     return;
   }
+
+  //remove duplicate addresses
+  $to = array_unique((array)$to );
   
-  //open an SMTP connection at the mail host
-  $connection = @fsockopen(SMTP_HOST, 25, $errno, $errstr, 10 );
-  if (!$connection )
-    debug("Unable to open TCP/IP connection to ".SMTP_HOST."\nReported socket error: ".$errno." ".$errstr );
-  
-  //sometimes the SMTP server takes a little longer to respond
-  // Windows does not have support for this timeout function before PHP ver 4.3.0
-  if(function_exists('socket_set_timeout') )
-    @socket_set_timeout($connection, 10, 0 );
-  $res = response();
-  if($res[1] != "220" )
-    debug("Incorrect handshaking response from SMTP server at ".SMTP_HOST."\nResponse from SMTP server was ".$res[0] );
-  
-  //do extended hello (EHLO)
-  fputs($connection, "EHLO ".$SERVER_NAME."\r\n" );
-  //if EHLO not working, try the older HELO...
-  $res = response();
-  if($res[1] != "250" ) {
-    fputs($connection, "HELO ".$SERVER_NAME."\r\n" );
-    $res = response();
-    if($res[1] != "250" )
-      debug("Incorrect HELO response from SMTP server at ".SMTP_HOST."\nResponse from SMTP server was ".$res[0] );
+  if(getmxrr(SMTP_HOST, $mx_array, $weight_array ) ) {
+    //sort MX hosts by weighting
+    array_multisort($weight_array, SORT_NUMERIC, SORT_ASC, $mx_array );
+    $log = "Obtained MX records for ".SMTP_HOST;
   }
-  //see if server is offering 8bit mime capability
-  $bit8 = false;
-  $cap = $res[0];
-  if( ! strpos($cap, "8BITMIME" ) === false )
-    $bit8 = true;
+  else {
+    //windows does not suport getmxrr()
+    $mx_array = array(SMTP_HOST );
+  }  
   
-    //do SMTP_AUTH if required
-    if(SMTP_AUTH == "Y" )
-      smtp_auth($connection, $cap );
-  
-  $q = db_query("SELECT email_from, reply_to FROM ".PRE."config", 1 );
-  $from = fetch_row($q, 0 );
-  
-  $email_from     = clean($from['email_from'] );
-  $email_reply_to = clean($from['reply_to'] );
-    
-  //arrange message - and set email encoding
-  //(we *must* do this before 'MAIL FROM:'  to get the email encoding correct)
-  $message_lines =& message($message, $email_encode, $message_charset, $body, $email_from, $email_reply_to );
-  
-  //envelope from
-  fputs($connection, "MAIL FROM: <".$email_from.">".$body."\r\n" );
-  $res = response();
-  if($res[1] != "250" )
-    debug("Incorrect response to MAIL FROM command from SMTP server at ".SMTP_HOST."\nResponse from SMTP server was ".$res[0] );
-  
-  //envelope to
-  $address_list = explode(",", $to );
-  foreach($address_list as $email_to ) {
-    fputs($connection, "RCPT TO: <".trim(clean($email_to ) ).">\r\n" );
-    $res = response();
-    switch($res[1] ) {
-      case "250":
-      case "251":
-        //acceptable responses
-        break;
-  
-      case "450":
-      case "550":
-        //mail box error
-        debug("Mailbox error for $email_to <br /><br />Response from SMTP server was ".$res[0] );
-        break;
-  
-      default:
-        //anything else is no good
-        debug("Incorrect response to RCPT TO: ".$email_to." from SMTP server at ".SMTP_HOST."\nResponse from SMTP server was ".$res[0] );
-        break;
+  foreach($mx_array as $host) {
+    //open an SMTP connection at the mail host
+    $connection = @fsockopen($host, 25, $errno, $errstr, 10 );
+    $log = "Opening connection to ".$host."\n";
+    if($connection ) {
+     //we have a connection
+     break; 
+    }
+    else {
+      //no connection - log result
+      $log =  "Unable to open TCP/IP connection to ".$host.".\n\nReported socket error: ".$errno." ".$errstr."\n";
     }
   }
   
+  if(! $connection ) {
+    //exhausted list of MX hosts with no connection made
+    debug("Unable to open TCP/IP connections" );
+  }
+     
+  //sometimes the SMTP server takes a little longer to respond
+  // Windows does not have support for this timeout function before PHP ver 4.3.0
+  if(function_exists('socket_set_timeout') )
+    @socket_set_timeout($connection, 10, 0 );  
+  
+  if(strncmp('220', response(), 3 ) ) {
+    debug();
+  } 
+    
+  //do extended hello (EHLO)
+  fputs($connection, 'EHLO '.SERVER_NAME."\r\n" );
+  $log .= "C: EHLO ".SERVER_NAME."\n";
+  $capability = response();
+  
+  //if EHLO (RFC 1869) not working, try the older HELO (RFC 821)...
+  if(strncmp('250', $capability, 3 ) ) {
+    fputs($connection, "HELO ".SERVER_NAME."\r\n" );
+    $log .= "C: HELO ".SERVER_NAME."\n";
+    $capability = '';
+    if(strncmp('250', response(), 3 ) )
+      debug();
+  }
+          
+  /*
+  //do TLS if required (This is EXPERIMENTAL!!)
+  if(TLS == 'Y' ) {
+    $capability = starttls($connection, $capability );
+  }  
+    
+  //do SMTP_AUTH if required
+  if(SMTP_AUTH == 'Y' ) {
+    smtp_auth($connection, $capability );
+  }
+  */
+  
+  //see if server is offering 8bit mime capability & pipelining    
+  if( ! strpos($capability, '8BITMIME' ) === false ) {
+    $bit8 = true;
+  }
+      
+  if( ! strpos($capability, 'PIPELINING' ) === false ) {    
+    $pipelining = true;
+  }
+      
+  //arrange message - and set email encoding to 8BITMIME if we need to
+  //(we *must* do this before 'MAIL FROM:' in case we need to set encoding to suit the message body)
+  $message_lines  =& message($message, $email_encode, $message_charset, $body );
+  $header_lines   = headers($to, $subject, $email_encode, $message_charset );
+  $count_commands = 0;
+     
+  //envelope from  
+  fputs($connection, 'MAIL FROM: <'.clean(EMAIL_FROM).'>'.$body."\r\n" );
+  $log .= 'C: MAIL FROM: '.EMAIL_FROM." $body \n"; 
+  ++$count_commands;
+  
+  if(! $pipelining ) {
+    if(strncmp('250', response(), 3 ) ) {
+      debug();
+    }
+  }
+  
+  //envelope to
+  foreach((array)$to as $address ) {
+    fputs($connection, 'RCPT TO: <'.trim(clean($address ) ).">\r\n" );
+    $log .= 'C: RCPT TO: '.$address."\n";
+    ++$count_commands;
+    
+    if(! $pipelining ) {
+      if(strncmp('25', response(), 2 ) ){
+        debug();
+      }
+    }
+  }
+
   //start data transmission
   fputs($connection, "DATA\r\n" );
-  $res = response();
-  if($res[1] != "354" )
-    debug("Incorrect response to DATA command from SMTP server at ".SMTP_HOST."\nResponse from SMTP server was ".$res[0] );
+  $log .= "C: DATA\n";
+  ++$count_commands;
+
+  if(! $pipelining ) {
+    if(strncmp('354', response(), 3 ) ) {
+      debug();
+    }
+  }
+  else {
+    //we have been pipelining ==> roll back & check the server responses
+    for($i=0 ; $i<$count_commands ; ++$i ) {      
+      
+      switch(substr(response(), 0, 3 ) ) {
+        case '250':
+        case '251':
+          //correct response for most commands
+          break;
+          
+        case '354':
+          //correct response for final DATA command
+          if($i == ($count_commands - 1 ) ){
+            break(2);
+          }  
+          else { 
+            debug('Pipelining: Bad response to DATA' );
+          }
+          break;
+            
+        default:
+          //anything else is no good
+          debug('Pipelining: Bad response to MAIL FROM or RCPT TO');
+      }
+    }
+  }
   
-  //assemble the headers and message for transmission
-  $message_lines = array_merge(headers($to, $subject, $email_encode, $message_charset, $email_from, $email_reply_to ), $message_lines );
-  //send message to server (with correct end-of-line \r\n)
-  while(list(,$line_out) = @each($message_lines ) ) {
-    fputs($connection, "$line_out\r\n" );
+  //send headers & message to server (with correct end-of-line \r\n)
+  foreach(array('header_lines', 'message_lines' ) as $var ) {
+    $log .= "C: Sending $var...\n";    
+    foreach(${$var} as $line_out ) {
+      fputs($connection, "$line_out\r\n" );
+    }
   }
   
   //ok all the message data has been sent - finish with a period on it's own line
   fputs($connection, ".\r\n" );
-  $res = response();
-  if($res[1] != "250" )
-    debug("Error sending data<br /><br />Response from SMTP server  at ".SMTP_HOST." was ".$res[0] );
+  $log .= "C: End of message\n";
+  
+  if(! $pipelining) {
+    if(strncmp('250', response(), 3 ) ) {
+      debug();
+    }
+  }
   
   //say bye bye
   fputs($connection, "QUIT\r\n" );
-  $res = response();
-  if($res[1] != "221" )
-    debug("Incorrect response to QUIT request from SMTP server at ".SMTP_HOST."\nResponse from SMTP server was ".$res[0] );
+  $log .= "C: QUIT\n";
   
+  if(! $pipelining) {
+    if(strncmp('221', response(), 3 ) ) {
+      debug();
+    }
+  }
+  else {
+    if(strncmp('250', response(), 3 ) ) {
+      debug('Pipelining: Bad response to end of message');
+    }
+    if(strncmp('221', response(), 3 ) ) {
+      debug('Pipelining: Bad response to QUIT');
+    }
+  }
+
   fclose($connection );
-  
-  //remove sent email from database spool
-  db_query("DELETE FROM ".PRE."mail_spool WHERE id = ".$mailid );
+
+  return;
 }
 
-
-//
-//function to reinstate html in text and remove any dangerous html scripting tags
-//
 function & clean($encoded ) {
-
-  global $charset;
   
   //reinstate encoded html back to original text
-  $text = @html_entity_decode($encoded, ENT_NOQUOTES, $charset );
+  $text = @html_entity_decode($encoded, ENT_NOQUOTES, CHARACTER_SET );
   
   //reinstate decimal encoded html that html_entity_decode() can't handle...
   $text = preg_replace('/&#\d{2,5};/e', "utf8_entity_decode('$0')", $text );
   
+  //characters previously escaped/encoded to avoid SQL injection/CSS attacks are reinstated. 
+  //$trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=' );  
+  //$text = strtr($text, $trans );
+  
   //remove any dangerous tags that exist after decoding
-  $text = preg_replace("/(<\/?\s*)(APPLET|SCRIPT|EMBED|FORM|\?|%)(\w*|\s*)([^>]*>)/i", "\\1****\\3\\4", $text );
-
+  $text = preg_replace('/(<\/?\s*)(APPLET|SCRIPT|EMBED|FORM|\?|%)(\w*|\s*)([^>]*>)/i', "\\1****\\3\\4", $text );
+  
   return $text;
 }
-
-
 
 //
 //function to prepare and encode message body for transmission
 //
+
 function & message($message, & $email_encode, & $message_charset, & $body ) {
 
-  global $bit8, $charset;
+  global $bit8;
 
   //clean up message
   $message =& clean($message );
@@ -229,26 +339,27 @@ function & message($message, & $email_encode, & $message_charset, & $body ) {
   switch(preg_match('/([\177-\377])/', $message ) ) {
     case true:
       //we have special characters
-      $message_charset = $charset;
       switch($bit8 ) {
         case true:
           //mail server has said it can do 8bit
-          $email_encode = "8bit";
-          $body = " BODY=8BITMIME";
+          $email_encode = '8bit';
+          $body = ' BODY=8BITMIME';
+          $message_charset = CHARACTER_SET;
           break;
         case false:
           //old mail server - can only do 7bit mail
-          $email_encode = "base64";
-          $body = "";
+          $email_encode = 'base64';
+          $body = '';
+          $message_charset = CHARACTER_SET;
           break;
       }
       break;
 
     case false:
       //no special characters ==> use 7bit
-      $email_encode = "7bit";
-      $message_charset = "us-ascii";
-      $body = "";
+      $email_encode = '7bit';
+      $message_charset = 'us-ascii';
+      $body = '';
       break;
   }
 
@@ -260,13 +371,13 @@ function & message($message, & $email_encode, & $message_charset, & $body ) {
 
   //encode message body
   switch(strtolower($email_encode ) ){
-    case "7bit":
-    case "8bit":
+    case '7bit':
+    case '8bit':
       //break up any lines longer than 998 bytes (RFC 821)
       $message = wordwrap($message, 998, "\n", 1 );
       break;
 
-    case "base64":
+    case 'base64':
     default:
       $message = base64_encode($message );
       //break into chunks of 76 characters per line (RFC 2045)
@@ -276,7 +387,7 @@ function & message($message, & $email_encode, & $message_charset, & $body ) {
   }
 
   //lines starting with "." get an additional "." added. (RFC 2821 - 4.5.2)
-  $message = preg_replace("/^[\.]/m", "..", $message );
+  $message = preg_replace('/^[\.]/m', '..', $message );
   //explode message body into separate lines
   $message_lines = explode("\n", $message );
 
@@ -287,12 +398,11 @@ return $message_lines;
 //
 //function to prepare and encode the 'subject' line for transmission
 //
+
 function &subject($subject ) {
 
-  global $email_charset;
-
   //get rid of any line breaks (\r\n, \n, \r) in subject line
-  $subject = str_replace(array("\r\n", "\r", "\n"), " ", $subject );
+  $subject = str_replace(array("\r\n", "\r", "\n"), ' ', $subject );
   //reinstate any HTML in subject back to text
   $subject =& clean($subject );
 
@@ -300,176 +410,94 @@ function &subject($subject ) {
   switch(preg_match('/([\177-\377])/', $subject ) ) {
     case false:
       //no encoding required
-      $subject_lines[] = ("Subject: ".substr($subject, 0, 985 ) );
+      $subject_lines = array('Subject: '.substr($subject, 0, 985 ) );
       break;
 
     case true:
       //base64 encoding
       $line = base64_encode($subject );
       //format follows RFC 2047
-      $s = "Subject: ";
+      $s = 'Subject: ';
       //lines are no longer than 76 characters including '?' and '=' 
       //  76 - 10[=?UTF-8?B?] - 2[?=] = 64 encoded characters per line 
-      //  any additional new lines start with <space>   
-      while(strlen($line) > 64 ) {
-        $subject_lines[] = $s."=?".$charset."?B?".substr($line, 0, 64 )."?="; 
-        $line = substr($line, 64 );
-        $s = " ";
+      //  any additional new lines start with <space>  
+      $max_len = 76 - (strlen(CHARACTER_SET) - 5 ) - 2;
+      while(strlen($line) > $max_len ) {
+        $subject_lines[] = $s."=?".CHARACTER_SET."?B?".substr($line, 0, $max_len )."?="; 
+        $line = substr($line, $max_len );
+        $s = ' ';
       }
-      //output any remaining line (will be less than 64 characters long)
-      $subject_lines[] = $s."=?".$charset."?B?".$line."?=";
+      //output any remaining line (will be less than $max_len characters long)
+      $subject_lines[] = $s."=?".CHARACTER_SET."?B?".$line."?=";
       break;
   }
 
 return $subject_lines;
 }
 
-
 //
 //function to assemble mail headers
 //
-function headers($to, $subject, $email_encode, $message_charset, $email_from, $email_reply_to ) {
-  
-  global $SERVER_NAME;  
-  
-  //set the date - in RFC 822 format
-  $headers = array("Date: ".date("r") );
 
+function headers($to, $subject, $email_encode, $message_charset ) {
+
+  //set the date - in RFC 822 format
+  $headers  = array('Date: '.date('r') );
+  //clean return addresses
+  $from     = clean(EMAIL_FROM);
+  $reply_to = clean(EMAIL_REPLY_TO);
+  
   //now the prepare the 'to' header
-  $line = "To: ".$to;
+  $line   = 'To:'.join(', ', (array)$to );
   //lines longer than 998 characters are broken up to separate lines (RFC 821)
   // (end long line with \r\n, and begin new line with \t)
   while(strlen($line ) > 998 ) {
-    $pos = strrpos(substr($line, 0, 998 ), " " );
+    $pos = strrpos(substr($line, 0, 998 ), ' ' );
     $headers[] = substr($line, 0, $pos );
     $line = "\t".substr($line, $pos + 1 );
   }
   $headers[] = $line;
   //assemble remaining message headers (RFC 821 / RFC 2045)
-  $headers[] = "From: WebCollab <".$email_from.">";
-  $headers[] = "Reply-To: ".$email_reply_to;
+  $headers[] = 'From:' .ABBR_MANAGER_NAME. '<'.$from.'>';
+  $headers[] = 'Reply-To: '.$reply_to;
 
   $headers = array_merge($headers, subject($subject ) );
 
-  $headers[] = "Message-Id: <".uniqid("")."@".$SERVER_NAME.">";
-  $headers[] = "X-Mailer: WebCollab (PHP/".phpversion().")";
-  $headers[] = "X-Priority: 3";
-  $headers[] = "X-Sender: ".$email_reply_to;
-  $headers[] = "Return-Path: <".$email_reply_to.">";
-  $headers[] = "Mime-Version: 1.0";
-  $headers[] = "Content-Type: text/plain; charset=".$message_charset;
-  $headers[] = "Content-Transfer-Encoding: ".$email_encode;
-  $headers[] = "";
+  $headers[] = 'Message-Id: <'.md5(mt_rand()).'@'.SERVER_NAME.'>';
+  $headers[] = 'X-Mailer: WebCollab (PHP/'.phpversion().')';
+  $headers[] = 'X-Priority: 3';
+  $headers[] = 'X-Sender: '.$reply_to;
+  $headers[] = 'Return-Path: <'.$reply_to.'>';
+  $headers[] = 'Mime-Version: 1.0';
+  $headers[] = 'Content-Type: text/plain; charset='.$message_charset;
+  $headers[] = 'Content-Transfer-Encoding: '.$email_encode;
+  $headers[] = '';
 
 return $headers;
 }
 
-
 //
 //function to get a response from a SMTP command to the server
 //
+
 function response() {
 
-  global $connection;
+  global $connection, $log;
 
-  $res[0] = "";
+  $res = '';
+  
   while($str = fgets($connection, 256 ) ) {
-    $res[0] .= $str;
+    $res .= $str;    
+    $log .= 'S : '.$str;
+    
     //<space> after three digit code indicates this is last line of data ("-" for more lines)
-    if(substr($str, 3, 1) == " " )
+    if(strpos($str, ' ' ) == 3 ) {
       break;
+    }
   }
-  $res[1] = substr($res[0], 0, 3 );
-
-  //$res[0] is full response string from SMTP server
-  //$res[1] is the 3 digit numeric code from the SMTP server
-
+  
   return $res;
 }
-
-
-//
-//smtp_auth
-//
-function smtp_auth($connection, $cap) {
-
-   if(strpos($cap, "AUTH" ) === false )
-        debug("SMTP server cannot do SMTP AUTH\nCapability response from SMTP server was ".nl2br($cap ) );
-
-   //try plain auth
-   if( ! strpos($cap, "PLAIN" ) === false ) {
-     fputs($connection, "AUTH PLAIN\r\n" );
-     $res = response();
-
-     if($res[1] == "334" ) {
-       //send username/password
-       fputs($connection, base64_encode(MAIL_USER."\0".MAIL_USER."\0".MAIL_PASSWORD )."\r\n" );
-       $res = response();
-       if($res[1] != "235" )
-         debug("Username/password not accepted SMTP server at ".SMTP_HOST." for AUTH PLAIN\nResponse from SMTP server was ".$res[0] );
-
-     return;
-     }
-   }
-
-   //try auth login
-   if( ! strpos($cap, "LOGIN" ) === false ) {
-     fputs($connection, "AUTH LOGIN\r\n" );
-     $res = response();
-
-     if($res[1] == "334" ) {
-       //send username
-       fputs($connection, base64_encode(MAIL_USER )."\r\n" );
-       $res = response();
-       if($res[1] != "334" )
-         debug("Username not accepted SMTP server at ".SMTP_HOST." for AUTH LOGIN\nResponse from SMTP server was ".$res[0] );
-
-       //send password
-       fputs($connection, base64_encode(MAIL_PASSWORD )."\r\n" );
-       $res = response();
-       if($res[1] != "235" )
-         debug("Password not accepted SMTP server at ".SMTP_HOST." for AUTH LOGIN\nResponse from SMTP server was ".$res[0] );
-
-       return;
-       }
-   }
-
-   //try CRAM-MD5
-   if( ! strpos($cap, "CRAM-MD5" ) === false ) {
-     fputs($connection, "AUTH CRAM-MD5\r\n" );
-     $res = response();
-
-     if($res[1] == "334" ) {
-       //$data is 'shared secret' sent by server
-       $data = base64_decode(substr($res[0], 4 ) );
-       $key = MAIL_PASSWORD;
-
-       //the algorithm below does mhash() without needing the external mhash library to be installed on PHP
-       if(strlen($key) > 64 ){
-         $key = pack("H*", md5($key) );
-       }
-       $key  = str_pad($key, 64, chr(0x00) );
-       $ipad = str_pad('', 64, chr(0x36) );
-       $opad = str_pad('', 64, chr(0x5c) );
-       $k_ipad = $key ^ $ipad ;
-       $k_opad = $key ^ $opad;
-
-       $mhash = md5($k_opad.pack("H*",md5($k_ipad.$data ) ) );
-
-       fputs($connection, base64_encode(MAIL_USER." ".$mhash )."\r\n" );
-       $res = response();
-       if($res[1] != "235" )
-         debug("CRAM-MD5 mhash not accepted SMTP server at ".SMTP_HOST."\nResponse from SMTP server was ".$res[0] );
-
-       return;
-     }
-   }
-
-   debug("AUTH not accepted by SMTP server at ".SMTP_HOST."\nCapability response from SMTP server was ".nl2br($cap) );
-
-   return;
-}
-
 
 //
 //Database query
@@ -491,15 +519,17 @@ function db_query($query ) {
         die;
       }
   
+      //set character set if MySQL > 4.1
+      if(MYSQL_41 ) {
+        db_encoding();
+      }
+      
       //select database
       if( ! @mysql_select_db(DATABASE_NAME, $database_connection ) ) {
         fwrite(STDERR, "No connection to database tables\n");
         //echo "No connection to database tables\n";
         die;
       }
-      
-      //set the client encoding  
-      db_encoding();
     }
       
     //do it
@@ -524,9 +554,6 @@ function db_query($query ) {
         die;
       }
   
-      //make sure dates will be handled properly by internal date routines
-      pg_query($database_connection, "SET DATESTYLE TO 'European, ISO'");
-      
       //get server encoding
       $q = @pg_query($database_connection, 'SHOW SERVER_ENCODING' );
       
@@ -584,13 +611,13 @@ function fetch_row($q, $row ){
 
 
 //
-//sets the required client encoding to the mysql client
+//sets the required client encoding to the mysql/pgsql client
 //
 function db_encoding() {
 
-  global $database_connection, $charset;
+  global $database_connection;
 
-  switch(strtoupper($charset ) ) {
+  switch(strtoupper(CHARACTER_SET ) ) {
 
     case 'EUC_JP':
       $my_encoding = 'ujis';
@@ -606,32 +633,42 @@ function db_encoding() {
       $my_encoding = 'euckr';
       $pg_encoding = 'EUC_KR';
       break;
-                     
+                            
     case 'UTF-8':
-    default:  
       $my_encoding = 'utf8';
       $pg_encoding = 'UNICODE';
       break; 
+  
+    case 'KOI8-R':
+      $my_encoding = 'koi8r';
+      $pg_encoding = 'KOI8';
+      break;
+       
+    case 'WINDOWS-1251':
+      $my_encoding = 'cp1251';
+      $pg_encoding = 'WIN';
+      break;
+
+    default: 
+    case 'ISO-8859-1':
+      $my_encoding = 'latin1';
+      $pg_encoding = 'LATIN1';
+      break;
+   
   }      
 
   //set character set
-  switch(DATABASE_TYPE) {
-    case 'mysql':
-    case 'mysql-innodb':
-      if(! mysql_query("SET NAMES '".$my_encoding."'", $database_connection ) ){
-        fwrite(STDERR, "Database error with character encoding: ".mysql_error($database_connection)."\n" );
-        //echo "Database error with character encoding: ".mysql_error($database_connection)."\n";
-        die;
-      }
-      break; 
-    
-    case 'postgresql':  
-      if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
-        fwrite(STDERR, "Database error with character encoding: ".pg_last_error($database_connection)."\n" );
-        //echo "Database error with character encoding: ".pg_last_error($database_connection)."\n";
-        die;
-      }  
-      break;
+  if(DATABASE_TYPE == 'postgresql') {
+    if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
+      fwrite(STDERR, "Database error with character encoding: ".pg_last_error($database_connection)."\n" );
+      //echo "Database error with character encoding: ".pg_last_error($database_connection)."\n";
+      die;
+    }  
+  }
+  else {   
+    if(! mysql_query('SET NAMES \''.$my_encoding.'\'', $database_connection ) ) {
+      fwrite(STDERR, "Database error - unable to set ".CHARACTER_SET." client encoding" );
+    }
   }
 return;
 }
@@ -639,17 +676,23 @@ return;
 //
 //Debug logger
 //
- function debug($error ){
+function debug($error="Bad response from SMTP server\n" ){
 
-  global $connection, $mailid;
+  global $connection, $mailid, $log;
 
   //check if socket timeout occurred 
   $meta = @socket_get_status($connection);
-  if($meta['timed_out'] )
+  if($meta['timed_out'] ) {
     $error .= "\nSocket timeout has occurred";
+  }
   
-  fwrite(STDERR, "Database error with character encoding: ".pg_last_error($database_connection)."\n" );
-    
+  if(DEBUG ) {
+    fwrite(STDERR, $log );
+  }   
+  
+  //show error
+  fwrite(STDERR, $error."\n" );
+  
   $q = db_query("SELECT send_attempts FROM ".PRE."mail_spool WHERE mailid=".$mailid );
   $result = fetch_row($q, 0 );
  
@@ -659,8 +702,8 @@ return;
   else {
   //log the attempt
   db_query("UPDATE ".PRE."mail_spool SET send_attempts=".($result['send_attempts'] + 1 ) );
-  }                    
-  exit;
+  }
+  exit(1);
 }
  
 ?>

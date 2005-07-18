@@ -26,11 +26,10 @@
 
 */
 
-require_once("path.php" );
-require_once(BASE."includes/security.php" );
-
-include_once(BASE."includes/admin_config.php" );
-
+//security check
+if(! defined('UID' ) ) {
+  die('Direct file access not permitted' );
+}
 
 //
 // Email spooling function
@@ -38,17 +37,25 @@ include_once(BASE."includes/admin_config.php" );
 
 function email($to, $subject, $message ) {
 
-  if(USE_EMAIL == "N" ) {
+  if(USE_EMAIL == 'N' ) {
     //email is turned off in config file
     return;
   }
-  if(strlen($to) == 0  ) {
+  if(sizeof($to) == 0  ) {
     //no email address specified - end function
     return;
   }
   
+  //serialize array for storage
+  $to_serial = serialize($to );
+  
+  //database escaping
+  foreach(array('to_serial', 'subject', 'message' ) as $var ) {
+    ${$var} = db_escape_string($var );
+  }
+  
   //spool message
-  db_query("INSERT INTO ".PRE."mail_spool(mail_to, subject, message, character_set ) VALUES('".$to."', '".addslashes($subject)."', '".addslashes($message)."', '".CHARACTER_SET."')" ); 
+  db_query('INSERT INTO '.PRE.'mail_spool(mail_to, subject, message ) VALUES(\''.$to_serial.'\', \''.$subject.'\', \''.$message.'\')' ); 
   
   return;
 }
