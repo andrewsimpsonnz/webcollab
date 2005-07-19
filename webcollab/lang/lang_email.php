@@ -86,6 +86,10 @@ switch(LOCALE ) {
   case 'se':
     include(BASE.'lang/se_email.php' );
     break;
+  
+  case 'sr':
+    include(BASE.'lang/sr_email.php' );
+    break;
       
   default:
     include(BASE.'lang/en_email.php' );
