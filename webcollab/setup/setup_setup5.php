@@ -106,7 +106,7 @@ $content = "<?php\n".
 "  // available locales are 'en' (English), 'es' (Spanish), 'fr' (French), 'ca' (Catalan)\n".
 "  //                       'de' (German), 'it' (Italian), 'bg' (Bulgarian), 'da' (Danish)\n".
 "  //                       'ko' (Korean), 'pt-br' (Brazilian Portuguese), 'hu' (Hungarian)\n".
-"  //                       'ru' (Russian), 'ja' (Japanese),  'se' (Swedish)\n".
+"  //                       'ru' (Russian), 'ja' (Japanese),  'se' (Swedish) 'sr' (Serbian (Latin))\n".
 "  define('LOCALE', '".$data["locale"]."' );\n\n".
 "//-- Timezone --\n\n".
 "  //timezone offset from GMT/UTC (hours)\n".
@@ -118,6 +118,8 @@ $content = "<?php\n".
 "  define('USE_EMAIL', '".$data["use_email"]."' );\n\n".
 "    //location of SMTP server (IP address or FQDN)\n".
 "    define('SMTP_HOST', '".$data["smtp_host"]."' );\n\n".
+"    //mail transport (leave as SMTP for standard WebCollab)\n".
+"    define('MAIL_TRANSPORT', "SMTP" );\n\n".  
 "    //use smtp auth? ('Y' or 'N')\n".
 "    define('SMTP_AUTH', 'N' );\n".
 "      //if using SMTP_AUTH give username & password\n".

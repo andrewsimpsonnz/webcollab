@@ -80,7 +80,7 @@
   // available locales are "en" (English), "es" (Spanish), "fr" (French), "ca" (Catalan),
   //                       "de" (German), "it" (Italian), "bg" (Bulgarian), "da" (Danish),
   //                       "ko" (Korean), "pt-br" (Brazilian Portuguese), "hu" (Hungarian),
-  //                       "ru" (Russian), "ja" (Japanese), "se" (Swedish)
+  //                       "ru" (Russian), "ja" (Japanese), "se" (Swedish) "sr" (Serbian (Latin))
   
   define('LOCALE', "en" );
   
@@ -104,6 +104,9 @@
       //location of SMTP server (ip address or FQDN)
       define('SMTP_HOST', "localhost" );
 
+      //mail transport (leave as SMTP for standard WebCollab)
+      define('MAIL_TRANSPORT', "SMTP" );
+      
       //use smtp auth? ('Y' or 'N')
       define('SMTP_AUTH', "N" );
         //if using SMTP_AUTH give username & password
