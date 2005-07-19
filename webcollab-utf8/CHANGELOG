@@ -1,4 +1,10 @@
 WebCollab CVS
+*** 19 July 2005
+Andrew Simpson
+
+- add backward compatibility for single byte encoding 
+
+WebCollab CVS
 *** 14 June 2005
 Andrew Simpson
 
