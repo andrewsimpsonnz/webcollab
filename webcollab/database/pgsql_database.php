@@ -82,6 +82,7 @@ function db_query($query, $dieonerror=1 ) {
 
     if($dieonerror == 1 ) {
       error('Database query error', 'The following query :<br /><br /><b>'.$query.'</b><br /><br />Had the following error:<br /><b>'.pg_last_error($database_connection).'</b>' );
+    }
   }
 
   //all was okay return resultset
