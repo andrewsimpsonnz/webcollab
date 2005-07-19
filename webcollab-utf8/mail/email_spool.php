@@ -51,7 +51,7 @@ function email($to, $subject, $message ) {
   
   //database escaping
   foreach(array('to_serial', 'subject', 'message' ) as $var ) {
-    ${$var} = db_escape_string($var );
+    ${$var} = db_escape_string(${$var} );
   }
   
   //spool message
