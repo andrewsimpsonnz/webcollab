@@ -222,6 +222,10 @@ function pg_encoding() {
       $pg_encoding = 'WIN';
       break;
 
+    case 'ISO-8859-2':
+      $pg_encoding = 'LATIN2';
+      break;
+    
     default: 
     case 'ISO-8859-1':
       $pg_encoding = 'LATIN1';
