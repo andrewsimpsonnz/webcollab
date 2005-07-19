@@ -126,35 +126,12 @@ function email($to, $subject, $message ) {
   //remove duplicate addresses
   $to = array_unique((array)$to );
   
-  if(getmxrr(SMTP_HOST, $mx_array, $weight_array ) ) {
-    //sort MX hosts by weighting
-    array_multisort($weight_array, SORT_NUMERIC, SORT_ASC, $mx_array );
-    $log = "Obtained MX records for ".SMTP_HOST;
-  }
-  else {
-    //windows does not suport getmxrr()
-    $mx_array = array(SMTP_HOST );
-  }  
-  
-  foreach($mx_array as $host) {
-    //open an SMTP connection at the mail host
-    $connection = @fsockopen($host, 25, $errno, $errstr, 10 );
-    $log = "Opening connection to ".$host."\n";
-    if($connection ) {
-     //we have a connection
-     break; 
-    }
-    else {
-      //no connection - log result
-      $log =  "Unable to open TCP/IP connection to ".$host.".\n\nReported socket error: ".$errno." ".$errstr."\n";
-    }
-  }
-  
-  if(! $connection ) {
-    //exhausted list of MX hosts with no connection made
-    debug("Unable to open TCP/IP connections" );
-  }
-     
+  //open an SMTP connection at the mail host
+  $connection = @fsockopen(SMTP_HOST, 25, $errno, $errstr, 10 );
+  $log = "Opening connection to ".SMTP_HOST." on port ".SMTP_PORT."\n";
+  if (!$connection )
+    debug("Unable to open TCP/IP connection.\n\nReported socket error: ".$errno." ".$errstr."\n");
+    
   //sometimes the SMTP server takes a little longer to respond
   // Windows does not have support for this timeout function before PHP ver 4.3.0
   if(function_exists('socket_set_timeout') )
