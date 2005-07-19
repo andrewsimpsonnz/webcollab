@@ -223,6 +223,10 @@ function mysql_encoding() {
 
   switch(strtoupper(CHARACTER_SET ) ) {
 
+    case 'UTF-8':
+      $my_encoding = 'utf8';
+      break; 
+    
     case 'EUC_JP':
       $my_encoding = 'ujis';
       break;
@@ -235,7 +239,23 @@ function mysql_encoding() {
       $my_encoding = 'euckr';
       break;
                      
-    case 'UTF-8':
+     //below are single byte encodings for compatibility
+     case 'KOI8-R':
+      $my_encoding = 'koi8r';
+      break;
+       
+    case 'WINDOWS-1251':
+      $my_encoding = 'cp1251';
+      break;
+
+    case 'ISO-8859-1':
+      $my_encoding = 'latin1';
+      break;
+   
+    case 'ISO-8859-2':
+      $my_encoding = 'latin2';
+      break;
+    
     default:  
       $my_encoding = 'utf8';
       break; 

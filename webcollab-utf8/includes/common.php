@@ -33,6 +33,11 @@ require_once(CONFIG.'config.php' );
 
 include_once(BASE.'lang/lang.php' );
 
+//set character set encoding to be used
+if(! mb_internal_encoding(CHARACTER_SET ) ) {
+  error("Internal encoding", "Unable to set ".CHARACTER_SET." encoding in PHP" );
+}
+
 //
 // Input validation (single line input)
 //
@@ -92,10 +97,6 @@ return $body;
 
 function validate($body ) {
   
-  //decode decimal HTML entities added by web browser
-  $body = preg_replace('/&#\d{2,5};/e', "utf8_entity_decode('$0')", $body );
-  //decode hex HTML entities added by web browser
-  $body = preg_replace('/&#x([a-fA-F0-7]{2,8});/e', "utf8_entity_decode('&#'.hexdec('$1').';')", $body );
   
   if(! ctype_print($body) ) {
     
@@ -117,6 +118,11 @@ function validate($body ) {
         break;
               
       case 'UTF-8':
+        //decode decimal HTML entities added by web browser
+        $body = preg_replace('/&#\d{2,5};/e', "utf8_entity_decode('$0')", $body );
+        //decode hex HTML entities added by web browser
+        $body = preg_replace('/&#x([a-fA-F0-7]{2,8});/e', "utf8_entity_decode('&#'.hexdec('$1').';')", $body );
+
         //allow only normal UTF-8 characters up to U+10000, which is the limit of 3 byte characters
         // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )   
         preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                         // ASCII characters
@@ -129,7 +135,11 @@ function validate($body ) {
         break;
     
       default:
-        error("Input validation", "The selected ".CHARACTER_SET." does not have a valid input validation filter" ); 
+        //backward compatibility for standard WebCollab here...
+        if(! isset($validation_regex ) ) {
+          error("Input validation", "The selected ".CHARACTER_SET." does not have a valid input validation filter" ); 
+        }
+        $body = preg_replace($validation_regex, '?', $body );
         break;
     
     }    

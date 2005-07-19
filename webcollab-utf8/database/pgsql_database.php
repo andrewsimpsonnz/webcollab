@@ -214,16 +214,36 @@ function pg_encoding() {
 
   switch(strtoupper(CHARACTER_SET ) ) {
 
+    case 'UTF-8':
+      $pg_encoding = 'UNICODE';
+      break; 
+
     case 'EUC_JP':
     case 'EUC_CN':
     case 'EUC_KR':
       $pg_encoding = strtoupper(CHARACTER_SET );
       break;
-                     
-    case 'UTF-8':
-    default:  
+                         
+    //below are single byte encodings for compatibility
+    case 'KOI8-R':
+      $pg_encoding = 'KOI8';
+      break;
+       
+    case 'WINDOWS-1251':
+      $pg_encoding = 'WIN';
+      break;
+
+    case 'ISO-8859-1':
+      $pg_encoding = 'LATIN1';
+      break;
+    
+    case 'ISO-8859-2':
+      $pg_encoding = 'LATIN2';
+      break;
+    
+    default:
       $pg_encoding = 'UNICODE';
-      break; 
+      break;
   }      
           
   //set client encoding to match character set in use
