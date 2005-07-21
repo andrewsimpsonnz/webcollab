@@ -47,7 +47,7 @@ function usergroup_check($taskid ) {
   }
   
   //get the data
-  if( ! ($row = db_fetch_num($q, 0 ) ) ) {
+  if( ! ($row = @db_fetch_num($q, 0 ) ) ) {
     error('Usergroup security', 'There was an error in fetching the permission data.' );
   }
   
@@ -62,7 +62,7 @@ function usergroup_check($taskid ) {
   
   //if this is a task, then get project data  
   if($row[2] != $taskid ) {
-    $q = db_query('SELECT usergroupid, globalaccess FROM '.PRE.'tasks WHERE id='.$row[2] );
+    $q   = db_query('SELECT usergroupid, globalaccess FROM '.PRE.'tasks WHERE id='.$row[2] );
     $row = db_fetch_num($q, 0 );
   
     //check if project is marked private 

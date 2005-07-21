@@ -182,7 +182,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ){
 
 //get the sort order for projects/tasks
 $q   = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
-$row = db_fetch_num($q, $i );
+$row = db_fetch_num($q, 0 );
 $order = array($tail.' AND parent=0 '.$row[0], $tail.' AND parent<>0 '.$row[1] );
 
 $content .= "<form method=\"post\" action=\"calendar.php\">\n".

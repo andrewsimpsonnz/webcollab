@@ -202,7 +202,7 @@ switch($owner ) {
     break;
 
   default:
-    $q = db_query('SELECT fullname, email FROM '.PRE.'users WHERE id='.$owner );
+    $q   = db_query('SELECT fullname, email FROM '.PRE.'users WHERE id='.$owner );
     $row = db_fetch_num($q, 0 );
     $name_owner = $row[0];
     $email_owner = $row[1];

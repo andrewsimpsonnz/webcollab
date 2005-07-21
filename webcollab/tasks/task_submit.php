@@ -83,7 +83,7 @@ function user_access($taskid ) {
   if(ADMIN ) {
     return true;  
   }
-  $q = db_query('SELECT owner, usergroupid, groupaccess FROM '.PRE.'tasks WHERE id='.$taskid );
+  $q   = db_query('SELECT owner, usergroupid, groupaccess FROM '.PRE.'tasks WHERE id='.$taskid );
   $row = db_fetch_num($q, 0 );
 
   //user is owner
