@@ -60,8 +60,32 @@ ignore_user_abort(TRUE);
       //check if there was an upload
       if( ! is_uploaded_file($_FILES['userfile']['tmp_name'] ) ) {
         //no file upload occurred
-        warning($lang['file_submit'], $lang['no_upload'] );
-      }
+        switch($_FILES['userfile']['error'] ) {
+          case 1:
+            error("File submit", "The uploaded file exceeds the upload_max_filesize directive in php.ini" );
+            break;
+        
+          case 2:
+            error("File submit", "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" );
+            break;
+           
+          case 3:
+            warning($lang['file_submit'], "The uploaded file was only partially uploaded" );
+            break;
+            
+          case 4:
+            warning($lang['file_submit'], $lang['no_upload'] );
+            break;
+            
+          case 6:
+            error("File submit", "Missing a temporary folder" );
+            break;
+            
+          default: 
+            error("File submit", "Unknown file upload error with error code ".$_FILES['userfile']['tmp_name'] );     
+            break;
+        }
+      }        
 
       if(empty($_POST['taskid']) || ! is_numeric($_POST['taskid']) ) {
         //delete any upload before invoking the error function
@@ -92,9 +116,15 @@ ignore_user_abort(TRUE);
       //check the destination directory is writeable by the webserver
       if( ! is_writable(FILE_BASE.'/' ) ) {
         unlink($_FILES['userfile']['tmp_name'] );
-        error('Configuration error', 'The upload directory does not have write permissions set properly.  File upload has not been accepted.');
+        error('Configuration error', 'The upload directory does not have write permissions set properly, or the directory does not exist.  File upload has not been accepted.');
       }
 
+      //check for zero length files
+      if($_FILES['userfile']['size'] == 0 ) {
+        unlink($_FILES['userfile']['tmp_name'] );
+        warning($lang['file_submit'], $lang['no_upload'] );
+      }
+      
       //check for ridiculous uploads
       if($_FILES['userfile']['size'] > FILE_MAXSIZE ) {
         unlink($_FILES['userfile']['tmp_name'] );
@@ -102,7 +132,7 @@ ignore_user_abort(TRUE);
       }
 
       //check for dangerous file uploads
-     if(preg_match('/(\.php|\.php3|\.php4|\.js|\.asp)$/', $_FILES['userfile']['name'] ) ) {
+     if(preg_match('/\.(php|php3|php4|js|asp)$/', $_FILES['userfile']['name'] ) ) {
             unlink($_FILES['userfile']['tmp_name'] );
             error('File submit', 'The file types .php, .php3, .php4, .js and .asp are not acceptable for security reasons. You must either rename or compress the file.');
       }
