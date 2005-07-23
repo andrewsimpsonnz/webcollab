@@ -2,7 +2,7 @@
 /*
   $Id$
   
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -25,17 +25,33 @@
 
 */
 
-require_once("path.php" );
-
-include_once(BASE."config/config.php" );
-include_once(BASE."includes/common.php" );
+require_once('path.php' );
 
 //set some base variables
-$database_connection = "";
-$delim = "";
-$epoch = "UNIX_TIMESTAMP( ";
-$day_part = "DAYOFMONTH( ";
-$interval = "INTERVAL ";
+$database_connection = '';
+$delim = '';
+$epoch = 'UNIX_TIMESTAMP( ';
+$day_part = 'DAYOFMONTH( ';
+$interval = 'INTERVAL ';
+$escape_new = (version_compare(PHP_VERSION, '4.3.0' ) == '-1' ) ? false : true;
+
+//
+// connect to database
+//
+function db_connection() {
+
+  global $database_connection;
+
+  //make connection
+  if( ! ($database_connection = @mysql_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD ) ) )
+    error('No database connection',  'Sorry but there seems to be a problem in connecting to the database server');
+  
+  //select database
+  if( ! @mysql_select_db(DATABASE_NAME, $database_connection ) )
+    error('Database error', 'No connection to database tables' );
+
+return;   
+}
 
 //
 // Provides a safe way to do a query
@@ -45,22 +61,7 @@ function db_query( $query, $dieonerror=1 ) {
   global $database_connection, $db_name, $db_error_message, $db_content ;
   global $database_query_time, $database_query_count;
 
-  if( ! $database_connection ) {
-
-    //global variables don't seem to work within mysql functions
-    $db_host = DATABASE_HOST;
-    $db_user = DATABASE_USER;
-    $db_pass = DATABASE_PASSWORD;
-    $db_name = DATABASE_NAME;
-
-    //make connection
-    if( ! ($database_connection = @mysql_pconnect($db_host, $db_user, $db_pass ) ) )
-      error("No database connection",  "Sorry but there seems to be a problem in connecting to the database server");
-
-    //select database
-    if( ! @mysql_select_db($db_name, $database_connection ) )
-      error("Database error", "No connection to database tables" );
-  }
+  if( ! $database_connection ) db_connection();
 
   //start time
   list($usec, $sec) = explode(" ", microtime() );
@@ -74,7 +75,7 @@ function db_query( $query, $dieonerror=1 ) {
   }
 
   //count queries
-  $database_query_count++;
+  ++$database_query_count;
   
   //add query time to global query time
   list($usec, $sec ) = explode(" ", microtime() );
@@ -88,7 +89,7 @@ function db_query( $query, $dieonerror=1 ) {
                 "<table border=\"1\" >\n".
                 "<tr><td>table</td><td>type</td><td>possible_keys</td><td>key</td><td>key_len</td><td>ref</td><td>rows</td><td>extra</td></tr>\n";
 
-    for( $i=0 ; $row = @db_fetch_num($db_opt, $i ) ; $i++) {
+    for( $i=0 ; $row = @db_fetch_num($db_opt, $i ) ; ++$i) {
       if(isset($row[1] ) )
         $db_content .= "<tr><td>".$row[0]."</td><td>".$row[1]."</td><td>".$row[2]."</td><td>".$row[3]."</td><td>".$row[4]."</td><td>".$row[5]."</td><td>".$row[6]."</td><td>".$row[7]."</td></tr>\n";
       else
@@ -98,11 +99,30 @@ function db_query( $query, $dieonerror=1 ) {
                    "</table>\n".
                    "<br /><hr></div>";
   }
-  
+
   //all was okay return resultset
   return $result;
 }
 
+//
+// escapes special characters in a string for use in a SQL statement
+//
+function db_escape_string($string ) {
+  
+  global $database_connection, $escape_new;
+   
+  if($escape_new ) {
+    if(! $database_connection ) {
+      db_connection();
+    }
+    $result = mysql_real_escape_string($string, $database_connection );
+  }
+  else {
+    $result = mysql_escape_string($string );
+  }  
+    
+  return $result;
+}
 
 //
 // number of rows in result
@@ -162,11 +182,21 @@ return $lastoid;
 function db_data_seek($q ) {
 
   if(mysql_num_rows($q ) == 0 )
-    return;
+    return TRUE;
 
-  mysql_data_seek($q, 0 );
+  $result = mysql_data_seek($q, 0 );
 
-return;
+return $result;
+}
+
+//
+//free memory
+//
+function db_free_result($q ) {
+
+  $result = mysql_free_result($q );
+
+return $result;
 }
 
 //
@@ -176,7 +206,7 @@ function db_begin() {
 
   //not implemented with ISAM tables
 
-return;
+return TRUE;
 }
 
 //
@@ -186,7 +216,7 @@ function db_rollback() {
 
   //not implemented with ISAM tables
 
-return;
+return TRUE;
 }
 
 //
@@ -196,7 +226,7 @@ function db_commit() {
 
   //not implemented with ISAM tables
 
-return;
+return TRUE;
 }
 
 ?>

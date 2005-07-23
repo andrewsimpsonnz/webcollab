@@ -2,10 +2,11 @@
 /*
   $Id$
 
-  (c) 2002 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>  
+  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>  
   
   WebCollab
   ---------------------------------------
+  
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -27,11 +28,7 @@
 
 */
 
-require_once("path.php" );
-
-include_once( BASE."config/config.php" );
-include_once( BASE."includes/common.php");
-
+require_once('path.php' );
 
 /* NOTE!
    Standard Postgresql (Version 6.3 and later) setup does NOT support tcp/ip connections.
@@ -41,11 +38,11 @@ include_once( BASE."includes/common.php");
 */
 
 //set some base variables
-$database_connection = "";
+$database_connection = '';
 $delim = "'";
-$epoch = "extract(epoch FROM ";
-$day_part = "DATE_PART('day', ";
-$interval = "";
+$epoch = 'extract(epoch FROM ';
+$day_part = 'DATE_PART(\'day\', ';
+$interval = '';
 
 //
 // Provides a safe way to do a query
@@ -57,33 +54,29 @@ function db_query($query, $dieonerror=1 ) {
 
   if( ! $database_connection ) {
     //set initial value
-    $host = "";
+    $host = '';
     //now adjust if necessary
-    if(DATABASE_HOST != "localhost" )
-      $host = "host=".DATABASE_HOST;
+    if(DATABASE_HOST != 'localhost' )
+      $host = 'host='.DATABASE_HOST;
 
-    if( ! ($database_connection = @pg_connect("$host user=".DATABASE_USER." dbname=".DATABASE_NAME." password=".DATABASE_PASSWORD ) ) )
-      error("No database connection",  "Sorry but there seems to be a problem in connecting to the database" );
+    if( ! ($database_connection = @pg_connect($host.' user='.DATABASE_USER.' dbname='.DATABASE_NAME.' password='.DATABASE_PASSWORD ) ) )
+      error('No database connection',  'Sorry but there seems to be a problem in connecting to the database' );
 
     //make sure dates will be handled properly by internal date routines
-    pg_query($database_connection, "SET DATESTYLE TO 'European, ISO'");
+    pg_query($database_connection, 'SET DATESTYLE TO \'European, ISO\'');
     
     //get server encoding
     $q = @pg_query($database_connection, 'SHOW SERVER_ENCODING' );
     
     //SQL_ASCII is not encoded, other server encodings need to be corrected by the PostgreSQL client
-    if(pg_num_rows($q ) > 0 ){
-      if(pg_fetch_result($q, 0, 0 ) != 'SQL_ASCII' ) { 
-        pg_encoding();
-      }
-    }
-    else {
       //prior to version 7.4 a 'notice' is used instead of a query result
-      $notice = @pg_last_notice($database_connection );   
-      if(strpos($notice, 'encoding' ) && (strpos($notice, 'SQL_ASCII' ) === false ) ){
-        pg_encoding();
-      }
-    }    
+    if(pg_num_rows($q ) > 0 )
+      $notice = pg_fetch_result($q, 0, 0 );
+    else
+      $notice = @pg_last_notice($database_connection );
+    
+    if(strpos($notice, 'SQL_ASCII' ) === false ) 
+      pg_encoding();           
   }
   
   //start time
@@ -97,7 +90,7 @@ function db_query($query, $dieonerror=1 ) {
       error("Database query error", "The following query :<br /><br /><b> $query </b><br /><br />Had the following error:<br /><b>".pg_last_error($database_connection)."</b>" );
   }
   //count queries
-  $database_query_count++;
+  ++$database_query_count;
   
   //add query time to global query time
   list($usec, $sec ) = explode(" ", microtime() );
@@ -110,16 +103,24 @@ function db_query($query, $dieonerror=1 ) {
     $db_content .= "<div align=\"left\">".nl2br($query )."<br /><br />\n".
                 "<table border=\"1\" >\n";
 
-    for( $i=0 ; $row = @db_fetch_num($db_opt, $i ) ; $i++) {
+    for( $i=0 ; $row = @db_fetch_num($db_opt, $i ) ; ++$i) {
         $db_content .= "<tr><td>".$row[0]."</td></tr>\n";
     }
     $db_content .= "<tr><td>".sprintf("This query took %.5f seconds", $this_query_time )."</td></tr>\n".
                    "</table>\n".
                    "<br /><hr></div>";
   }
-  
+
   //all was okay return resultset
   return $result;
+}
+
+//
+// escapes special characters in a string for use in a SQL statement
+//
+function db_escape_string($string ) {
+  
+  return pg_escape_string($string);
 }
 
 //
@@ -168,7 +169,7 @@ return $result_row;
 function db_lastoid($seq_name ) {
   
   //must be done after an insert, and within a transaction
-  $result = db_query("SELECT CURRVAL('$seq_name') AS seq" );
+  $result = db_query('SELECT CURRVAL(\''.$seq_name.'\') AS seq' );
   $lastoid = pg_fetch_result( $result, 0, 0 );
 
 return $lastoid;
@@ -180,8 +181,20 @@ return $lastoid;
 function db_data_seek($q ) {
   //nothing happens here!
 
-return;
+return TRUE;
 }
+
+//
+//free memory
+//
+function db_free_result($q ){
+
+  global $database_connection;
+  
+  $result = pg_free_result($q );
+  
+return $result;
+}  
 
 //
 //begin transaction
@@ -190,9 +203,9 @@ function db_begin() {
 
   global $database_connection;
 
-  pg_query($database_connection, "BEGIN WORK" );
+  $result = pg_query($database_connection, 'BEGIN WORK' );
 
-return;
+return $result;
 }
 
 //
@@ -202,9 +215,9 @@ function db_rollback() {
 
   global $database_connection;
 
-  pg_query($database_connection, "ROLLBACK WORK" );
+  $result = pg_query($database_connection, 'ROLLBACK WORK' );
 
-return;
+return $result;
 }
 
 //
@@ -214,9 +227,9 @@ function db_commit() {
 
   global $database_connection;
 
-  pg_query($database_connection, "COMMIT WORK" );
+  $result = pg_query($database_connection, 'COMMIT WORK' );
 
-return;
+return $result;
 }
 
 //
@@ -236,6 +249,10 @@ function pg_encoding() {
       $pg_encoding = 'WIN';
       break;
 
+    case 'ISO-8859-2':
+      $pg_encoding = 'LATIN2';
+      break;
+    
     default: 
     case 'ISO-8859-1':
       $pg_encoding = 'LATIN1';
@@ -244,7 +261,7 @@ function pg_encoding() {
           
   //set client encoding to match character set in use
   if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
-    error("Database client encoding", "Cannot set PostgreSQL client encoding to the required ".CHARACTER_SET."character set." );
+    error('Database client encoding', 'Cannot set PostgreSQL client encoding to the required '.CHARACTER_SET.'character set.' );
   }  
   
 return;
