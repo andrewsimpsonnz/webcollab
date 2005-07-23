@@ -1,4 +1,14 @@
 WebCollab CVS
+*** 23 July 2005
+  Andrew Simpson
+
+- apply stripslashes to input data in setup
+
+- convert backslashes to forward slashes in setup file names
+
+- add help pages to set up  
+  
+WebCollab CVS
 *** 19 July 2005
   Andrew Simpson
 
