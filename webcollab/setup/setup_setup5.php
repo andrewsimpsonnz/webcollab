@@ -34,7 +34,7 @@ foreach($array as $var ) {
   if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
     error_setup("Variable ".$var." is not set");
   }
-  $data[$var] = $_POST[$var];
+  $data[$var] = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ) : $_POST[$var];
 }
 
 //non-essential values
@@ -45,9 +45,12 @@ foreach($array as $var ) {
     $data[$var] = '';
   }
   else {
-    $data[$var] = $_POST[$var];
+    $data[$var] = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ) : $_POST[$var];
   }
 }
+
+//convert Windows backslash (\) to Unix forward slash (/) 
+$filebase = str_replace("\\", "/", $data["file_base"] ); 
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
@@ -89,7 +92,7 @@ $content = "<?php\n".
 "    */\n\n".
 "//-- File upload parameters --\n\n".
 "  //upload to what directory ?\n".
-"  define('FILE_BASE', '".$data["file_base"]."' );\n\n".
+"  define('FILE_BASE', '".$filebase."' );\n\n".
 "  //max file size in bytes\n".
 "  define('FILE_MAXSIZE', '".$data["file_maxsize"]."' );\n\n".
 "    /*Note:\n".

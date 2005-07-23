@@ -35,7 +35,7 @@ foreach($array_essential as $var ) {
   if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
     error_setup("Variable ".$var." is not set");
   }
-  $data[$var] = $_POST[$var];
+  $data[$var] = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ) : $_POST[$var];
 }
 
 //non-essential values
@@ -46,7 +46,7 @@ foreach($array_optional as $var ) {
     $data[$var] = '';
   }
   else {
-    $data[$var] = $_POST[$var];
+    $data[$var] = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ) : $_POST[$var];
   }
 }
 
@@ -210,15 +210,19 @@ $content .= "<tr><td></td><td><br /><br /><b><u>Database Settings</u></b></td></
 
 $status = "<font color=\"green\"><b>OK !</b></font>";
 
+//convert Windows back slash (\) to Unix forward slash (/) 
+$filebase = (get_magic_quotes_gpc() ) ? stripslashes($data["file_base"] ) : $data["file_base"]; 
+$filebase = str_replace("\\", "/", $data["file_base"] ); 
+
 //check files directory exists
-if( ! is_writable($data["file_base"]) ) {
+if( ! is_writable($filebase) ) {
   $status = "<font color=\"blue\"><b>Directory either does not exist, or is not writable!</b></font>";
   $flag = $flag + 1;
 }
 
 //file settings
 $content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td></tr>\n".
-            "<tr><th>File location:</th><td>".$data["file_base"]."</td><td>".$status."</td></tr>\n".
+            "<tr><th>File location:</th><td>".$filebase."</td><td>".$status."</td></tr>\n".
             "<tr><th>File size:</th><td>".$data["file_maxsize"]."</td></tr>\n";
 
 $status = "<font color=\"green\"><b>OK !</b></font>";
@@ -269,14 +273,18 @@ $content .= "<tr><th>SMTP Host:</th><td>".$data["smtp_host"]."</td><td>".$status
 $status = "<font color=\"green\"><b>OK !</b></font>";
 
 if($flag > 9 ) {
-  $status = "<font color=\"red\"><b>Fatal errors detected in configuration!</b></font>";
+  $status = "<font color=\"red\"><b>Fatal errors detected in configuration!".
+            "Press 'Re-enter Config Data' to make corrections.</b></font>";
 }
 else {
   if($flag > 0 ){
-    $status = "<font color=\"blue\"><b>Warning errors in configuration.  Proceed with caution!</b></font>";
+    $status = "<font color=\"blue\"><b>Warning errors detected in configuration. The auto-detection in this stage is not totally reliable.<br />\n".
+              "If you are sure the input is correct, press 'Write to Config' button to proceed.<br />\n".
+              "To edit, or alter the values, press 'Re-enter Config Data'</b></font>\n";
   }
   else {
-    $status = "<font color=\"green\"><b>No errors detected in the input configuration. Press 'Write to Config' button to proceed.</b></font>";
+    $status = "<font color=\"green\"><b>No errors detected in the input configuration.".
+              "Press 'Write to Config' button to proceed.</b></font>";
   }
 }
 
@@ -291,8 +299,9 @@ $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
 $content .= "<tr><td></td><td>\n".
             "<form method=\"post\" action=\"setup_handler.php\">\n".            
             "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
-            "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />".
-            "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />";
+            "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+            "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />\n".
+            "<input type=\"hidden\" name=\"edit\" value=\"Y\" />";
             
 //output essential values for POST
 foreach($array_essential as $var ) {
