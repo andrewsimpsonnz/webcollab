@@ -33,6 +33,10 @@ create_top_setup("Setup Screen" );
 
 $content = "<p><b>Setup - Stage 2 of 5 : Database Setup</b></p>\n";
 
+$content .= "<table style=\"width : 98%\"><tr><td>\n".
+            "<span class=\"textlink\">[<a href=\"help/en_help_setup2.php\" onclick=\"window.open('help/en_help_setup2.php'); return false\">Help me with this form</a>]</span>\n".
+            "</td></tr>\n</table>\n";
+            
 $content .=
 "<form method=\"post\" action=\"setup_handler.php\">\n".
   "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
