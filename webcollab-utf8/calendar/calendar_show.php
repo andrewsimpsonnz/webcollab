@@ -118,8 +118,8 @@ else {
 $year += $yearoffset;
 
 //set day, if applicable
-if( $month == date('n', TIME_NOW) && $year == date('Y', TIME_NOW) ){
-  $today = date('j', TIME_NOW);
+if( $month == date('n', $epoch) && $year == date('Y', $epoch) ){
+  $today = date('j', $epoch);
 }
 else {
   $today = 0;
@@ -149,7 +149,7 @@ switch($selection ) {
 //get list of private projects and put them in an array for later use
 $q = db_query('SELECT id, usergroupid FROM '.PRE.'tasks WHERE parent=0 AND globalaccess=\'f\'' );
 
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
+for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   $no_access_project[$i] = $row[0];
   $no_access_group[$i] = $row[1];
 }
@@ -161,7 +161,7 @@ $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
                       WHERE '.PRE.'usergroups.private=1');
 
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
    $allowed[$i] = $row[1];
   }
@@ -173,19 +173,20 @@ $q = db_query('SELECT DISTINCT '.$day_part.'deadline) FROM '.PRE.'tasks
                       AND deadline <= (\''.$year.'-'.$month.'-01\'+'.$interval.$delim.'1 MONTH'.$delim.') '.
                       $tail );
                       
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ){
+for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ){
   $task_dates[$i] = (int)$row[0];
 }
 
 //get the sort order for projects/tasks
 $q   = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
-$row = db_fetch_num($q, $i );
+$row = db_fetch_num($q, 0 );
 $order = array($tail.' AND parent=0 '.$row[0], $tail.' AND parent<>0 '.$row[1] );
 
 $content .= "<form method=\"post\" action=\"calendar.php\">\n".
-            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" /></fieldset>\n ".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
+            "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n ".
             "<div style=\"text-align: center\">\n".
-            "<table style=\"margin-left: auto; margin-right: auto; background-color: #ddd; border: solid black 1px;\" cellpadding=\"5px\">\n".
+            "<table style=\"margin-left: auto; margin-right: auto; background-color: #dddddd; border: solid black 1px;\" cellpadding=\"5px\">\n".
             "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"".$s1." /><label for=\"users\">".$lang['users']."</label>\n".
             "<label for=\"users\"><select name=\"userid\">\n".
             "<option value=\"0\"".$s2.">".$lang['all_users']."</option>\n";
