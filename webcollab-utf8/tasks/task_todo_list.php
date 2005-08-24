@@ -157,7 +157,7 @@ $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
                       WHERE '.PRE.'usergroups.private=1');
 
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
    $allowed[] = $row[1];
   }
@@ -215,9 +215,9 @@ switch($selection ) {
 $content .= "<form method=\"post\" action=\"tasks.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\" /></fieldset>\n ".
-            "<table class=\"celldata\">\n".
-            "<tr><td>".$lang['todo_list_for']."</td></tr>".
-            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"user\"".$s1." /><label for=\"user\">".$lang['users']."</label></td><td>\n".
+            "<table style=\"background-color: #dddddd; border: solid black 1px;\" cellpadding=\"5px\">\n".
+            "<tr align=\"left\"><td>".$lang['todo_list_for']."</td>".
+            "<td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"user\"".$s1." /><label for=\"user\">".$lang['users']."</label></td><td>\n".
             "<label for=\"user\"><select name=\"userid\">\n".
             "<option value=\"0\"".$s2.">".$lang['nobody']."</option>\n";
 
@@ -241,8 +241,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   $content .= ">".$row['fullname']."</option>\n";
 }
 
-$content .= "</select></label></td></tr>\n".
-            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"".$s3." /><label for=\"group\">".$lang['usergroups']."</label></td><td>\n".
+$content .= "</select></label></td>\n".
+            "<td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"".$s3." /><label for=\"group\">".$lang['usergroups']."</label></td><td>\n".
             "<label for=\"group\"><select name=\"groupid\">\n".
             "<option value=\"0\"".$s4.">".$lang['no_group']."</option>\n";
 
@@ -266,14 +266,14 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   $content .= ">".$row['name']."</option>\n";
 }
 
-$content .= "</select></label><br /><br /></td></tr>\n".
-            "<tr><td><input type=\"submit\" value=\"".$lang['update']."\" /></td></tr>\n".
+$content .= "</select></label></td>\n".
+            "<td><input type=\"submit\" value=\"".$lang['update']."\" /></td></tr>\n".
             "</table>\n".
             "</form>\n";
 
 //get the sort order for projects/tasks
 $q   = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
-$row = db_fetch_num($q, $i );
+$row = db_fetch_num($q, 0 );
 $project_order = $row[0];
 $task_order    = $row[1];
 
@@ -302,7 +302,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $this_task = "<li><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
   
   //add highlighting if deadline is due
-  $state = ceil( ($row['task_due'] - TIME_NOW )/86400 );
+  $state = ceil( ($row['due'] - TIME_NOW )/86400 );
   
   if($state > 1) {
     $this_task .= $row['name']."</a>".sprintf($lang['due_in_sprt'], $state );

@@ -1,4 +1,12 @@
 WebCollab CVS
+*** 14 August 2005
+Andrew Simpson
+
+- merge to WebCollab CVS
+
+- bugfix: multi-line base64 encoding in email headers splitting incorrectly
+
+WebCollab CVS
 *** 19 July 2005
 Andrew Simpson
 

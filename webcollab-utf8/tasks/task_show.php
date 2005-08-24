@@ -77,11 +77,11 @@ db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$task
 if(isset($_GET['action']) && $_GET['action'] == "show_print" ) {
   $content  .= "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=$taskid\">".$lang['normal_version']."</a>]</span></p>";
 }
-else{
-  //show 'project jump' select box
-  $content .= project_jump($taskid);
+else {
   //show print tag
   $content .= "<div style=\"text-align : right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=show_print&amp;taskid=".$taskid."\">".$lang['print_version']."</a>]</span></div>\n";
+  //show 'project jump' select box
+  $content .= project_jump($taskid);
 }  
     
 //percentage_completed gauge if this is a project
@@ -293,17 +293,17 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
   }
   
   //(owner - groupaccess) & (uncompleted task)  ==> [I finished it] button
-  if(($access ) && ($TASKID_ROW['status'] != "done" ) && ($TASKID_ROW['parent'] != 0 ) ) {
+  if(($access ) && ($TASKID_ROW['status'] != 'done' ) && ($TASKID_ROW['parent'] != 0 ) ) {
     $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=done&amp;taskid=".$taskid."\">".$lang['i_finished']."</a>]&nbsp;\n";
   }
     
-  //owner ==> [I don't want it anymore] button
-  if(UID == $TASKID_ROW['owner'] ) {
+  //(owner) & (uncompleted task)==> [I don't want it anymore] button
+  if(UID == $TASKID_ROW['owner'] && ($TASKID_ROW['status'] != 'done' ) ) {
     $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=deown&amp;taskid=".$taskid."\">".$lang['i_dont_want']."</a>]&nbsp;\n";
   }
   
-  //(admin) & (not owner) & (has owner) ==> [Take over task] button
-  if((ADMIN ) && (UID != $TASKID_ROW['owner'] ) && ($TASKID_ROW['owner'] != 0 ) ) {
+  //(admin) & (not owner) & (has owner) & (uncompleted task) ==> [Take over task] button
+  if((ADMIN ) && (UID != $TASKID_ROW['owner'] ) && ($TASKID_ROW['owner'] != 0 ) && ($TASKID_ROW['status'] != 'done' ) ) {
     $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_".$TYPE] )."</a>]\n";
   }
   
