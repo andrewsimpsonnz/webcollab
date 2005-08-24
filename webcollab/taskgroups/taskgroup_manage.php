@@ -55,7 +55,8 @@ $content =
 
 //show all taskgroups
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
-  $content .= "<tr><td class=\"grouplist\"><b>".$row['name']."</b></td><td class=\"grouplist\"><i>".$row['description']."</i></td>".
+  $content .= "<tr><td colspan=\"3\"><hr /></td></tr>\n".
+              "<tr><td class=\"grouplist\"><b>".$row['name']."</b></td><td class=\"grouplist\"><i>".$row['description']."</i></td>".
               "<td class=\"grouplist\"><span class=\"textlink\"><a href=\"taskgroups.php?x=".$x."&amp;action=submit_del&amp;taskgroupid=".$row['id']."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">[".$lang['del']."]</a></span>&nbsp;".
               "<span class=\"textlink\"><a href=\"taskgroups.php?x=".$x."&amp;action=edit&amp;taskgroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td></tr>";
 

@@ -34,6 +34,7 @@ if(! defined('UID' ) ) {
 }
 
 //set variables
+$content = '';
 $allowed[0] = 0;
 $content_flag = 0;
 
@@ -57,8 +58,8 @@ $q = db_query('SELECT * FROM '.PRE.'usergroups ORDER BY name' );
 if(db_numrows($q) == 0 ) {
   $content = "<p>".$lang['no_usergroups']."</p>\n";
   
-  if($ADMIN) {
-    "<span class=\"textlink\"><a href=\"usergroups.php?x=".$x."&amp;action=add\">[".$lang['add']."]</a></span>\n";
+  if(ADMIN) {
+    $content .= "<span class=\"textlink\"><a href=\"usergroups.php?x=".$x."&amp;action=add\">[".$lang['add']."]</a></span>\n";
   }
   
   new_box($lang['usergroup_manage'], $content );
@@ -79,8 +80,10 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 
   $private = ($row['private'] ) ? $lang['yes'] : $lang['no']; 
+  $colspan = (ADMIN ) ? '4' : '3'; 
   
-  $content .= "<tr><td class=\"grouplist\"><b>".$row['name']."</b></td><td class=\"grouplist\"><i>".$row['description']."</i></td><td style=\"text-align: center\">".$private."</td>";
+  $content .= "<tr><td colspan=\"".$colspan."\"><hr /></td></tr>\n".
+              "<tr><td class=\"grouplist\"><b>".$row['name']."</b></td><td class=\"grouplist\"><i>".$row['description']."</i></td><td style=\"text-align: center\">".$private."</td>\n";
   
   if(ADMIN) {
     $content .= "<td><span class=\"textlink\"><a href=\"usergroups.php?x=".$x."&amp;action=submit_del&amp;usergroupid=".$row['id']."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">[".$lang['del']."]</a></span>&nbsp;".
@@ -106,11 +109,11 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
       continue;
     }
     
-    $content .= "<tr><td style=\"text-align:left\" colspan=\"3\"><small><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$user_row['id']."\">".$user_row['fullname']."</a></small></td></tr>";
+    $content .= "<tr><td style=\"text-align:left\" colspan=\"3\"><small><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$user_row['id']."\">".$user_row['fullname']."</a></small></td></tr>\n";
   }
   
-  $content .=   "<tr><td colspan=\"3\">&nbsp;</td></tr>";
-
+  $content .=   "<tr><td colspan=\"3\">&nbsp;</td></tr>\n";
+  
   //flag to indicate we have a listing 
   $content_flag = 1;
 }
