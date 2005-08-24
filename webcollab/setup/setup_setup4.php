@@ -107,7 +107,7 @@ switch ($url["scheme"] ){
       while (trim($line) != "") {
         if( ! strpos($line, "404" ) === FALSE ) {
           //404 - not found
-          $status = "<font color=\"blue\"><b>Self testing gives '404 page not found' message (Note: This test can give false warnings with some servers)</b></font>";
+          $status = "<font color=\"blue\"><b>Self testing gives '404 page not found' message.<br />(Note: This test can give false warnings with some servers)</b></font>";
           $flag = $flag + 1;
           break;
         }
@@ -159,15 +159,22 @@ switch($data["db_type"]) {
       $flag = $flag + 10;
     }
     else {
-      //connect to db
-      if( ! ($database_connection = @mysql_connect( $data["db_host"], $data["db_user"], $data["db_password"] ) ) ) {
-        $status = "<font color=\"red\"><b>Can't connect to specified database server!</b></font>";
+      //check for legal naming
+      if(preg_match('/[^A-Z0-9_$]/i', $data["db_user"] ) ) {
+        $status = "<font color=\"red\"><b>Database names can only consist of alphanumeric characters, '_' (underscore), and '$'</b></font>";
         $flag = $flag + 10;
       }
       else {
-        if( ! @mysql_select_db($data["db_name"], $database_connection ) ) {
-          $status = "<font color=\"red\"><b>Can't connect to specified database!</b></font>";
+        //connect to db
+        if( ! ($database_connection = @mysql_connect( $data["db_host"], $data["db_user"], $data["db_password"] ) ) ) {
+          $status = "<font color=\"red\"><b>Can't connect to specified database server!</b></font>";
           $flag = $flag + 10;
+        }
+        else {
+          if( ! @mysql_select_db($data["db_name"], $database_connection ) ) {
+            $status = "<font color=\"red\"><b>Can't connect to specified database!</b></font>";
+            $flag = $flag + 10;
+          }
         }
       }
     }
@@ -195,7 +202,8 @@ switch($data["db_type"]) {
     break;
 
   default:
-    setup_error("Database ".$data["db_type"]." does not exist</font>" );
+    $status = "<font color=\"red\"><b>Database type".$data["db_type"]." does not exist</b></font>";
+    $flag = $flag + 10;
     break;
 
 }
@@ -211,7 +219,6 @@ $content .= "<tr><td></td><td><br /><br /><b><u>Database Settings</u></b></td></
 $status = "<font color=\"green\"><b>OK !</b></font>";
 
 //convert Windows back slash (\) to Unix forward slash (/) 
-$filebase = (get_magic_quotes_gpc() ) ? stripslashes($data["file_base"] ) : $data["file_base"]; 
 $filebase = str_replace("\\", "/", $data["file_base"] ); 
 
 //check files directory exists
@@ -265,26 +272,25 @@ if($data["use_email"] == "Y" && $data["smtp_host"] != "" ) {
 
 if($data["use_email"] == "Y" && $data["smtp_host"] == "" ) {
   $status = "<font color=\"red\"><b>SMTP Host must be specified!</b></font>";
-  $flag = $flag + 1;
+  $flag = $flag + 10;
 }
 
 $content .= "<tr><th>SMTP Host:</th><td>".$data["smtp_host"]."</td><td>".$status."</td></tr>\n";
 
-$status = "<font color=\"green\"><b>OK !</b></font>";
-
 if($flag > 9 ) {
-  $status = "<font color=\"red\"><b>Fatal errors detected in configuration!".
-            "Press 'Re-enter Config Data' to make corrections.</b></font>";
+  $status = "<font color=\"red\"><b>Fatal errors detected in configuration!&nbsp;\n".
+            "Press 'Re-enter Config Data' to make corrections.</b></font>\n";
 }
 else {
   if($flag > 0 ){
-    $status = "<font color=\"blue\"><b>Warning errors detected in configuration. The auto-detection in this stage is not totally reliable.<br />\n".
-              "If you are sure the input is correct, press 'Write to Config' button to proceed.<br />\n".
-              "To edit, or alter the values, press 'Re-enter Config Data'</b></font>\n";
+    $status = "<font color=\"blue\"><b>Warning errors detected in configuration.&nbsp;\n".
+              "However, the auto-detection is not totally reliable.<br />\n".
+              "<ul>\n<li>If you are sure the input is correct, press 'Write to Config' button to proceed.</li>\n".
+              "<li>To edit, or alter the values, press 'Re-enter Config Data'</b></font></li>\n</ul>\n";
   }
   else {
-    $status = "<font color=\"green\"><b>No errors detected in the input configuration.".
-              "Press 'Write to Config' button to proceed.</b></font>";
+    $status = "<font color=\"green\"><b>No errors detected in the input configuration.<br />\n".
+              "Press 'Write to Config' button to proceed.</b></font>\n";
   }
 }
 
