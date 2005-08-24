@@ -55,7 +55,7 @@ if( ! ($row = @db_fetch_array($q, 0 ) ) ) {
 if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) ) {
   //get usergroups of user
   $q_group = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$row['id'] );
-  for( $i=0 ; $row_group = @db_fetch_num($q_group, $i ) ; ++$i) {
+  for($i=0 ; $row_group = @db_fetch_num($q_group, $i ) ; ++$i ) {
     $user_gid[$i] = $row_group[0];
   }
   //check if users are in the same usergroup
@@ -143,7 +143,7 @@ $row = db_result(db_query('SELECT COUNT(*) FROM '.PRE.'forum WHERE userid='.$use
 $content .=   "<tr><td>".$lang['number_forum']."</td><td>".$row."</td></tr>\n";
 
 //Get the number of files uploaded and the size
-$q = db_query('SELECT COUNT(size), SUM(size) FROM '.PRE.'files WHERE uploader='.$userid );
+$q   = db_query('SELECT COUNT(size), SUM(size) FROM '.PRE.'files WHERE uploader='.$userid );
 $row = db_fetch_num($q, 0 );
 $content .=   "<tr><td>".$lang['number_files']."</td><td>".$row[0]."</td></tr>\n";
 $size = $row[1];

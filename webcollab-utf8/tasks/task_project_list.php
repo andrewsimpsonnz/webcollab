@@ -154,7 +154,7 @@ $active_only = (isset($_GET['active']) )    ? $_GET['active']    : 0;
 $condensed   = (isset($_GET['condensed']) ) ? $_GET['condensed'] : 0;
 
 //get config order for sorting
-$q = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
+$q   = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
 $row = db_fetch_num($q, 0 );
 $project_order = $row[0];
 $task_order    = $row[1];
