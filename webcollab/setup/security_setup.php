@@ -32,7 +32,7 @@ if( ! isset($WEB_CONFIG ) ) {
 
 require_once('path.php' );
 require_once(BASE.'path_config.php' );
-require_once(CONFIG.'config.php' );
+require_once(BASE_CONFIG.'config.php' );
 
 include_once(BASE.'setup/screen_setup.php' );
 include_once(BASE.'includes/common.php' );
@@ -58,7 +58,7 @@ $x = 0;
 $admin = 0;
 
 //security checks
-if($WEB_CONFIG != 'Y' ) {
+if( ! isset($WEB_CONFIG ) || $WEB_CONFIG != 'Y' ) {
   error_setup('Current configuration file does not allow web-based setup' );
   die;
 }

@@ -34,7 +34,7 @@ create_top_setup("Setup Screen" );
 $content = "<p><b>Setup - Stage 2 of 5 : Database Setup</b></p>\n";
 
 $content .= "<table style=\"width : 98%\"><tr><td>\n".
-            "<span class=\"textlink\">[<a href=\"help/en_help_setup2.php\" onclick=\"window.open('help/en_help_setup2.php'); return false\">Help me with this form</a>]</span>\n".
+            "<span class=\"textlink\">[<a href=\"help/en_help_setup2.php?type=setup2&amp;lang=en\" onclick=\"window.open('help/en_help_setup2.php?type=setup2&amp;lang=en'); return false\"><i>Help me with this form</a></i>]</span>\n".
             "</td></tr>\n</table>\n";
             
 $content .=

@@ -30,7 +30,7 @@ require_once('path.php' );
 require_once(BASE.'setup/security_setup.php' );
 
 //check config can be written
-if( ! is_writeable(CONFIG.'config.php' ) ) {
+if( ! is_writeable(BASE_CONFIG.'config.php' ) ) {
   error_setup('Configuration file needs to be made writeable by the webserver to proceed.');
 }
 
@@ -90,7 +90,7 @@ create_top_setup('Setup Screen' );
 $content  = '';
 
 $content .= "<table style=\"width : 98%\"><tr><td>\n".
-            "<span class=\"textlink\">[<a href=\"help/en_help_setup3.php\" onclick=\"window.open('help/en_help_setup3.php'); return false\">Help me with this form</a>]</span>\n".
+            "<span class=\"textlink\">[<a href=\"help/en_help_setup3.php?type=setup3&amp;lang=en\" onclick=\"window.open('help/en_help_setup3.php?type=setup3&amp;lang=en'); return false\"><i>Help me with this form</i></a>]</span>\n".
             "</td></tr>\n</table>\n";
             
 $content .= "<form method=\"post\" action=\"setup_handler.php\">".

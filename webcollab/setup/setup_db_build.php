@@ -42,7 +42,7 @@ require_once(BASE.'setup/security_setup.php' );
       error_setup("The field for ".$message_array[$i]." was not entered.<br /><br />".
                    "Please go back and enter all the required data fields." );
     }
-  ++$i;
+    ++$i;
   }
 
   $database_name     = $_POST['database_name'];
@@ -217,7 +217,7 @@ require_once(BASE.'setup/security_setup.php' );
   }
 
   //check if config file can be written to
-  if( ! is_writable(CONFIG.'config.php' ) ) {
+  if( ! is_writable(BASE_CONFIG.'config.php' ) ) {
     error_setup( "<p>Creating a new database for WebCollab ... success!</p>\n".
                  "<p>Your database has been successfully setup.</p>\n".
                  "<p>The config file (config.php) exists, but the webserver does not have permissions to write to it.<br /><br />\n".

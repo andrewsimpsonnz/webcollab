@@ -2,7 +2,7 @@
 
 require_once('path.php');
 
-define('CONFIG', BASE.'config/' );
-define('CSS', BASE.'css/' );
+define('BASE_CONFIG', BASE.'config/' );
+define('BASE_CSS', BASE.'css/' );
 
 ?>
