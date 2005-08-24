@@ -60,13 +60,13 @@
 require_once('path.php' );
 require_once(BASE.'path_config.php' );
 
-require_once(CONFIG.'config.php' );
+require_once(BASE_CONFIG.'config.php' );
 include_once(BASE.'lang/lang.php' );
 
 //
 // Creates the initial window
 //
-function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $redirect_time=0 ) {
+function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $calendar=0, $redirect_time=0 ) {
 
   global $lang, $top_done, $bottom_text;
   
@@ -123,23 +123,23 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
 
   switch($page_type) {
     case 2: //print
-      $content .=   "<link rel=\"StyleSheet\" href=\"".CSS."print.css\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_PRINT."\" type=\"text/css\" />\n";
       break;
     
     case 3: //calendar
-      $content .=   "<link rel=\"StyleSheet\" href=\"".CSS."default.css\" type=\"text/css\" />\n";
-      $content .=   "<link rel=\"StyleSheet\" href=\"".CSS."calendar.css\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_MAIN."\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_CALENDAR."\" type=\"text/css\" />\n";
       break;
        
     case 0: //main window + menu sidebar
     case 1: //single main window (no menu sidebar)
     default:            
-      $content .=   "<link rel=\"StyleSheet\" href=\"".CSS."default.css\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_MAIN."\" type=\"text/css\" />\n";
       break;         
   }
   
-  //javascript to position cursor in the first box
-  if($cursor || $check || $date) {
+  //javascript scripts
+  if($cursor || $check || $date || $calendar ) {
     $content .=     "<script type=\"text/javascript\">\n".
                     "<!-- \n";
     if($cursor){
@@ -152,8 +152,8 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
                     "alert('".$lang['missing_field_javascript']."');\n".
                     "document.getElementById('".$check."').focus();\n".
                     "return false;}\n".
-                    "return;}\n";
-     }
+                    "}\n";
+    }
     if($date) {
       $content .=   "function dateCheck() {\n".
                     "var daysMonth = new Array(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 );\n". 
@@ -165,17 +165,25 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
                     "var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value, 0, 0, 0 )/1000;\n".
                     "if(inputDate - finishDate > 21600 ){\n".
                     "return confirm('".$lang['finish_date_javascript']."');} }\n".     
-                    "return;}\n";
-      }
-      $content .=   " // -->\n".
+                    "}\n";
+    }
+    if($calendar) {      
+      $content .=   "function dateSet(dayIndex, monthIndex, yearIndex) {\n".  
+                    "if(window.opener && !window.opener.closed) {\n".
+                    "window.opener.document.getElementById('day').selectedIndex=dayIndex;\n".
+                    "window.opener.document.getElementById('month').selectedIndex=monthIndex;\n".
+                    "window.opener.document.getElementById('year').selectedIndex=yearIndex;}\n".
+                    "}\n";
+    }  
+    $content .=     " // -->\n".
                     "</script>\n".
                     "</head>\n\n";
-      if($cursor) {
-        $content .= "<body onload=\"placeCursor()\">\n";
-      }
-      else {
-        $content .= "<body>\n";
-      }
+    if($cursor) {
+      $content .=   "<body onload=\"placeCursor()\">\n";
+    }
+    else {
+      $content .=   "<body>\n";
+    }
   }
   else {
     $content .=     "</head>\n\n".
@@ -193,7 +201,7 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
       $content .=   "<tr valign=\"top\"><td colspan=\"2\" class=\"masthead\">";
       //show username if applicable
       if(defined('UID_NAME') ) {
-        $content .=  sprintf( $lang['user_homepage_sprt'], UID_NAME );
+        $content .=  '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
       }
       $content .=   "</td></tr>\n";
       //create menu sidebar
@@ -205,7 +213,7 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
     case 3: //calendar  
       $content .=   "<tr valign=\"top\"><td class=\"masthead\">";
       if(defined('UID_NAME' ) ) {
-        $content .=  sprintf( $lang['user_homepage_sprt'], UID_NAME );
+        $content .= '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
       }
       $content .=   "</td></tr>\n";
       //create single window over entire screen
@@ -234,7 +242,7 @@ function new_box($title, $content, $style="boxdata", $size="tablebox" ) {
   echo  "\n<!-- start of ".$title." - box -->\n".
         "<br />\n".
         "<table class=\"".$size."\" cellspacing=\"0\">\n".
-        "<tr><td class=\"boxhead\">".$title."</td></tr>\n".
+        "<tr><td class=\"boxhead\">::&nbsp;".$title."</td></tr>\n".
         "<tr><td class=\"".$style."\">\n".
         $content."</td></tr>\n".
         "</table>\n".
