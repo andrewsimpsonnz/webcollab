@@ -67,13 +67,8 @@ $priority_select_box = "<tr><td>".$lang['priority'].":</td> <td>\n".
                        "<option value=\"3\">".$task_state['high']."</option>\n".
                        "<option value=\"4\">".$task_state['yesterday']."</option>\n".
                        "</select>\n</td></tr>\n";
-                       
-//we can't check the deadline date for a new project!
-if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
-  $javascript = "onsubmit=\"return dateCheck()\" ";
-}
 
-$content .= "<form method=\"post\" action=\"tasks.php\" ".$javascript.">\n";
+$content .= "<form method=\"post\" action=\"tasks.php\" onsubmit=\"return dateCheck()\" >\n";
 $content .= "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ";
 $content .= "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n ";
 
@@ -117,7 +112,8 @@ if( isset($_GET['parentid']) && is_numeric($_GET['parentid']) ) {
   }
   $content .= "<tr><td>".$lang['creation_time'].":</td> <td>".nicetime(time(), 1 )."</td> </tr>\n".
               "<tr><td>".$lang['task_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
-              "<tr><td>".$lang['deadline'].":</td> <td>".date_select_from_timestamp( $parent_row['deadline'] )." <small><i>".$lang['taken_from_parent']."</i></small></td> </tr>\n";
+              "<tr><td>".$lang['deadline'].":</td> <td>".date_select_from_timestamp( $parent_row['deadline'] ).               
+              "&nbsp;<small><i>".$lang['taken_from_parent']."</i></small></td></tr>\n";
 
   //priority
   $content .= $priority_select_box;
@@ -238,7 +234,7 @@ else {
               "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
 
               //deadline
-              "<tr><td>".$lang['deadline'].":</td> <td>".date_select()."</td> </tr>\n";
+              "<tr><td>".$lang['deadline'].":</td> <td>".date_select()."</td></tr>\n";
 
   //priority
   $content .= $priority_select_box;
