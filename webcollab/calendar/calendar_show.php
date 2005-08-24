@@ -186,9 +186,10 @@ $row = db_fetch_num($q, 0 );
 $order = array($tail.' AND parent=0 '.$row[0], $tail.' AND parent<>0 '.$row[1] );
 
 $content .= "<form method=\"post\" action=\"calendar.php\">\n".
-            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" /></fieldset>\n ".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
+            "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n ".
             "<div style=\"text-align: center\">\n".
-            "<table style=\"margin-left: auto; margin-right: auto; background-color: #ddd; border: solid black 1px;\" cellpadding=\"5px\">\n".
+            "<table style=\"margin-left: auto; margin-right: auto; background-color: #dddddd; border: solid black 1px;\" cellpadding=\"5px\">\n".
             "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"".$s1." /><label for=\"users\">".$lang['users']."</label>\n".
             "<label for=\"users\"><select name=\"userid\">\n".
             "<option value=\"0\"".$s2.">".$lang['all_users']."</option>\n";
