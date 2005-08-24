@@ -28,7 +28,7 @@
 //get our location
 require_once('path.php' );
 require_once(BASE.'path_config.php' );
-require_once(CONFIG.'config.php' );
+require_once(BASE_CONFIG.'config.php' );
 
 //setup files are not yet internationalised 
   //this option is for future development
