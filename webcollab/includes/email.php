@@ -237,8 +237,8 @@ Function List
 =============
 clean		Reinstate encoded html back to original text.
 message		Prepare message body, and if necessary, 'quoted-printable' encode for SMTP transmission.
-subject		Check subject line and 'quoted printable' encode if required for SMTP transmission.
 headers		Assemble message headers to RFC 822.
+header_encoding	Check header line and 'quoted printable' encode if required for SMTP transmission.
 response	Get response to client command from the connected SMTP server.
 debug		Debug!
 */
@@ -341,56 +341,6 @@ return $message_lines;
 
 
 //
-//function to prepare and encode the 'subject' line for transmission
-//
-
-function &subject($subject ) {
-
-  //get rid of any line breaks (\r\n, \n, \r) in subject line
-  $subject = str_replace(array("\r\n", "\r", "\n"), ' ', $subject );
-  //reinstate any HTML in subject back to text
-  $subject =& clean($subject );
-
-  //encode subject with 'printed-quotable' if high ASCII characters are present
-  switch(preg_match('/([\177-\377])/', $subject ) ) {
-    case false:
-      //no encoding required
-      $subject_lines = array('Subject: '.substr($subject, 0, 985 ) );
-      break;
-
-    case true:
-      //encode line with 'quoted-printable' (RFC 2045 / RFC 2047)
-      // replace high ascii, control, =, ?, <tab> and <space> characters (RFC 2045)
-      $line = preg_replace('/([\000-\010\011\013\014\016-\037\040\075\077\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $subject);
-      $s = 'Subject: ';
-      //break into lines no longer than 76 characters including encoding data (RFC 2047)
-      $len = 76 - strlen(CHARACTER_SET ) - 8;
-      while(strlen($line ) > $len ) {
-        //don't split line around coded character (eg. '=20' == <space>)
-        $pos = strrpos(substr($line, ($len - 3 ), 3 ), '=' ); 
-        if($pos === false ) {
-          //no coded characters in split zone - safe to split here
-          $subject_lines[] = $s.'=?'.CHARACTER_SET.'?Q?'.substr($line, 0, $len ).'?=';
-          $line = substr($line, $len );
-        }
-        else {
-          //coded characters within split zone - adjust to avoid splitting encoded word
-          $split = ($len - 3 ) + $pos;
-          $subject_lines[] = $s.'=?'.CHARACTER_SET.'?Q?'.substr($line, 0, $split).'?=';
-          $line = substr($line, $split );
-        }
-      //start additional lines with <space> (RFC 2047)
-      $s = ' ';
-      }
-      //output any remaining line (will be less than $len characters long)
-      $subject_lines[] = $s.'=?'.CHARACTER_SET.'?Q?'.$line.'?=';
-      break;
-  }
-
-return $subject_lines;
-}
-
-//
 //function to assemble mail headers
 //
 
@@ -402,6 +352,11 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   $from     = clean(EMAIL_FROM);
   $reply_to = clean(EMAIL_REPLY_TO);
   
+  //get rid of any line breaks (\r\n, \n, \r) in subject line
+  $subject = str_replace(array("\r\n", "\r", "\n"), ' ', $subject );
+  //reinstate any HTML in subject back to text
+  $subject =& clean($subject );
+  
   //now the prepare the 'to' header
   $line   = 'To:'.join(', ', (array)$to );
   //lines longer than 998 characters are broken up to separate lines (RFC 821)
@@ -412,12 +367,13 @@ function headers($to, $subject, $email_encode, $message_charset ) {
     $line = "\t".substr($line, $pos + 1 );
   }
   $headers[] = $line;
-  //assemble remaining message headers (RFC 821 / RFC 2045)
-  $headers[] = 'From:' .ABBR_MANAGER_NAME. '<'.$from.'>';
+  //'from' header 
+  $headers = array_merge($headers, header_encoding('From :', ABBR_MANAGER_NAME, '<'.$from.'>' ) );
+  //reply to
   $headers[] = 'Reply-To: '.$reply_to;
-
-  $headers = array_merge($headers, subject($subject ) );
-
+  //'subject' header
+  $headers = array_merge($headers, header_encoding('Subject :', $subject, '' ) );
+  //assemble remaining message headers (RFC 821 / RFC 2045)
   $headers[] = 'Message-Id: <'.md5(mt_rand()).'@'.$_SERVER['SERVER_NAME'].'>';
   $headers[] = 'X-Mailer: WebCollab (PHP/'.phpversion().')';
   $headers[] = 'X-Priority: 3';
@@ -429,6 +385,50 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   $headers[] = '';
 
 return $headers;
+}
+
+//
+//function to encode mail headers with 'quoted printable'
+//
+
+function header_encoding($header_type, $header, $header_suffix='' ) {
+
+  //encode subject with 'printed-quotable' if high ASCII characters are present
+  switch(preg_match('/([\177-\377])/', $header ) ) {
+    case false:
+      //no encoding required
+      $header_lines = array(substr($header_type .$header .$header_suffix, 0, 985 ) );
+      break;
+  
+    case true:
+      //encode line with 'quoted-printable' (RFC 2045 / RFC 2047)
+      // replace high ascii, control, =, ?, <tab> and <space> characters (RFC 2045)
+      $line = preg_replace('/([\000-\010\011\013\014\016-\037\040\075\077\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $header);
+      $s = $header_type;
+      //break into lines no longer than 76 characters including encoding data (RFC 2047)
+      $len = 76 - strlen(CHARACTER_SET ) - 8;
+      while(strlen($line ) > $len ) {
+        //don't split line around coded character (eg. '=20' == <space>)
+        $pos = strrpos(substr($line, ($len - 3 ), 3 ), '=' ); 
+        if($pos === false ) {
+          //no coded characters in split zone - safe to split here
+          $header_lines[] = $s.'=?'.CHARACTER_SET.'?Q?'.substr($line, 0, $len ).'?=';
+          $line = substr($line, $len );
+        }
+        else {
+          //coded characters within split zone - adjust to avoid splitting encoded word
+          $split = ($len - 3 ) + $pos;
+          $header_lines[] = $s.'=?'.CHARACTER_SET.'?Q?'.substr($line, 0, $split).'?=';
+          $line = substr($line, $split );
+        }
+      //start additional lines with <space> (RFC 2047)
+      $s = ' ';
+      }
+      //output any remaining line (will be less than $len characters long)
+      $header_lines[] = $s.'=?'.CHARACTER_SET.'?Q?'.$line.'?= '.$header_suffix;
+      break;
+  }
+  return $header_lines;
 }
 
 //
