@@ -1,13 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
   <title>WebCollab Frequently Asked Questions</title>
-  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
- <link REL="StyleSheet" HREF=doc.css TYPE="text/css">
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+ <link rel="StyleSheet" href="doc.css" type="text/css" />
 </head>
 <body>
-<a name="top"></a>
-<h1>WebCollab Frequently Asked Questions (FAQ) </h1>
+<h1><a name="top">WebCollab Frequently Asked Questions (FAQ)</a></h1>
 <h3>FAQ INDEX</h3>
 <p><a href="#setup">Setup Problems</a><br />
 <a href="#startup">Startup Problems</a><br />
@@ -24,8 +23,7 @@
 <a href="#backup">Database Backups</a><br />
 <a href="#translation">Translations</a><br />
 </p>
-<a name="setup"></a>
-<h3>SETUP PROBLEMS</h3>
+<h3><a name="setup">SETUP PROBLEMS</a></h3>
 <dl>
 <dt>1. Setup program says that database can be created, but cannot write to the config file.</dt>
 <dd>The web server does not/cannot have permissions to write to the config file.  You need to make
@@ -64,8 +62,7 @@ password.</li>
 </ol>
 </dd>
 </dl>
-<a name="startup"></a>
-<h3>START UP PROBLEMS</h3>
+<h3><a name="startup">START UP PROBLEMS</a></h3>
 <dl>
 <dt>1. "Initial installation works, but logging in as admin has no effect
 (no error message either)."</dt>
@@ -136,8 +133,7 @@ defaulted to 'off' since PHP 4.2.0.  WebCollab does not require Register Globals
 always leave Register Globals 'off', unless it is specifically required to be 'on' for other
 scripts.</dd>
 </dl>
-<a name="custom"></a>
-<h3>CUSTOMISING WEBCOLLAB</h3>
+<h3><a name="custom">CUSTOMISING WEBCOLLAB</a></h3>
 <dl>
 <dt>1. Can the 'Done', 'Active', 'On Hold' etc, labels be changed?</dt>
 <dd>Yes, all the parameters are defined in the language files in <i>[webcollab]/lang/</i> directory.
@@ -166,8 +162,7 @@ can be created by running setup, or by doing a manual SQL creation (see the INST
 line in <i>[webcollab]/config/config.php</i> that reads 'define("PRE", "" )' needs to be altered
 accordingly. For the example above, this would become 'define("PRE", "webcollab_" )'.</dd>
 </dl>
-<a name="tuning"></a>
-<h3>PERFORMANCE TUNING</h3>
+<h3><a name="tuning">PERFORMANCE TUNING</a></h3>
 <dl>
 <dt>1. Can output buffering be used to speed up WebCollab?</dt>
 <dd>WebCollab is normally very fast.  Most bottlenecks are caused by database performance rather
@@ -177,21 +172,21 @@ The <i>[webcollab]/includes/screen.php</i> file contains 'commented out' code fo
 buffering with ob_handler().  When this is enabled the output to the browser will be 'gzipped'
 before transmission, providing the browser is capable of accepting gzipped HTML - and most are. 
 However, there is a downside to this form of output buffering: Compression does not start until
-<u>all</u> the page is rendered by the web server.  This creates a noticeably high latency in page
+<span style="text-decoration: underline">all</span> the page is rendered by the web server.  This creates a noticeably
+high latency in page
 loading; for this reason the code has been 'commented out' in WebCollab.<br />
 <br />
 The preferred method of output buffering is with zlib.output_compression set in php.ini. Refer to <a
-href="http://www.php.net/manual/en/ref.zlib.php#ini.zlib.output-compression" target="new_window">PHP
+href="http://www.php.net/manual/en/ref.zlib.php#ini.zlib.output-compression">PHP
 Manual</a> for more information.  The downside of this option is that zlib.output_compression is not
 available on all versions or flavours of PHP.  
 </dd>
 <dt>2. Is caching worthwhile?</dt>
 <dd>WebCollab uses a modular codebase with a high reuse factor.  Compiler caches will work well with
-WebCollab.  Ioncube PHP Accelerator has proven very compatible with WebCollab; Turck MMCache and
+WebCollab.  Ioncube PHP Accelerator has proven very compatible with WebCollab; eAccelerator/Turck MMCache and
 Zend products should also work well.</dd>
 </dl>
-<a name="files"></a>
-<h3>UPLOADING FILES</h3>
+<h3><a name="files">UPLOADING FILES</a></h3>
 <dl>
 <dt>1. Error message about directory not writable when uploading files with the file upload
 feature.</dt>
@@ -256,8 +251,7 @@ directory.  WebCollab can accommodate an upload directory in any location of the
 file system - not just the web server root directory.  Make sure the chosen directory is writable by
 the user that normally runs the web server. </dd>
 </dl>
-<a name="email"></a>
-<h3>EMAIL SETUP</h3>
+<h3><a name="email">EMAIL SETUP</a></h3>
 <dl>
 <dt>1. How does email work in WebCollab?</dt>
 <dd>Early versions of WebCollab used the mail() function call in PHP.  In most cases it worked, but
@@ -303,8 +297,7 @@ Every email sent by WebCollab (except user details) is also sent to the mailing 
 mailing list will then get a lot of mail, but they will be fully abreast of the site workings.   
 </dd>
 </dl>
-<a name="security"></a>
-<h3>SECURITY</h3>
+<h3><a name="security">SECURITY</a></h3>
 <dl>
 <dt>1. What are practical measures to increase site security?</dt>
 <dd>
@@ -318,6 +311,10 @@ Practical measures to enhance security include:<br />
 anywhere in the file system. Check that the web server has write permissions for the chosen
 directory. This prevents uses uploading files, then navigating to the upload directory with a
 browser and executing the file.</li>
+<li>Shift the config file out of the webserver directories.  You will need to alter the file
+[webcollab]/path_config.php and add the new path to the include_path directive in php.ini.</li>
+ <li>Shift the program files out of the webserver directories.  You will need to alter the file
+[webcollab]/path.php and add the new path to the include_path directive in php.ini.</li>
 <li>Use a non-root user for the database.  The database user should have minimal privileges, and not
 be able to create and/or delete tables.</li>
 <li>Make sure that Apache configuration allows .htaccess files to set &lt;Limit&gt; in WebCollab
@@ -330,22 +327,20 @@ the web server user.</li>
 </ul>
 </dd>
 </dl>
-<a name="international"></a>
-<h3>INTERNATIONALISATION</h3>
+<h3><a name="international">INTERNATIONALISATION</a></h3>
 <dl>
 <dt>1. What character encoding does WebCollab use?  Or, what characters can be used with
 WebCollab?</dt>
 <dd>The character encoding is set by the language file in use.  For instance, English, French &amp;
 German all use ISO-8859-1 encoding (this is also known as Latin 1 encoding).   WebCollab is fully
-internationalised and language files should be able to be set up with most international character
-encodings.<br />
+internationalised and language files can be set up with any language encodings.<br />
 <br />  
-For better internationalisation capability, the Unicode version of WebCollab should be used. 
-Multi-byte character encodings (Korean &amp; Japanese) are only available in the Unicode
-version.  
+Note that the standard version of WebCollab is only designed for single byte language encodings.  For better
+internationalisation capability, the Unicode version of WebCollab should be used. Translations of multi-byte character
+encodings (Korean &amp; Japanese) are only available in the Unicode version.  
 </dd>
-<a name="unicode"></a>
-<h3>UNICODE</h3>
+</dl>
+<h3><a name="unicode">UNICODE</a></h3>
 <dl>
 <dt>1. What is the Unicode version, and why is it relevant?</dt>
 <dd>The standard WebCollab package uses a single byte character set specific to the
@@ -360,7 +355,7 @@ This Unicode version of WebCollab converts the localisation to Unicode (UTF-8),
 which natively supports over 650 languages.  Chinese, Japanese and European languages, for
 instance, can be displayed simulataneously on the same screen.
 </dd>
-<dt>2. Why is Unicode simply not included into the standard version of WebCollab?
+<dt>2. Why is Unicode simply not included into the standard version of WebCollab?</dt>
 <dd>Traditionally, PHP has been criticised for poor Unicode support.  Later versions (post PHP
 4.3.0) have Unicode support, but the required multi-byte strings library is not compiled in by
 default.  Additionally, MySQL database does not support Unicode prior to MySQL 4.1, and
@@ -375,13 +370,13 @@ However, for later PHP and MySQL versions the Unicode version is superior.
 <ul>
 <li>PHP versions 4.3.0, and higher.</li>
 <li>MySQL 4.1, and higher - or PostgreSQL 7.2, and higher.</li>   
-<li>The optional multibyte strings library (mb_library) in PHP <u>must</u> be installed and
+<li>The optional multibyte strings library (mb_library) in PHP <span style="text-decoration: underline">must</span> be
+installed and
  enabled.</li>
 </ul>
 </dd> 
 </dl>
-<a name="remote"></a>
-<h3>REMOTE DATABASE</h3>
+<h3><a name="remote">REMOTE DATABASE</a></h3>
 <dl>
 <dt>1. Why can't remote databases be used with PostgreSQL?</dt>
 <dd>Since version 6.3 (March 1998) PostgreSQL uses UNIX domain sockets by default. TCP port will NOT
@@ -392,11 +387,11 @@ Usually the pg_hba.conf (PostgreSQL config file) also needs to be edited to allo
 connections.<br />
 <br />
 Changing DATABASE_HOST in <i>config.php</i> from "localhost" to anything else (including
-127.0.0.1) without reconfiguring PostgreSQL will <u>always</u> prevent WebCollab from connecting
+127.0.0.1) without reconfiguring PostgreSQL will <span style="text-decoration: underline">always</span> prevent
+WebCollab from connecting
 to the database.</dd>
 </dl>
-<a name="database"></a>
-<h3>DATABASE TYPES</h3>
+<h3><a name="database">DATABASE TYPES</a></h3>
 <dl>
 <dt>1. What are the database types in the config file?</dt>
 <dd>
@@ -411,8 +406,7 @@ support</td></tr>
 <dd>At present SQLite does not have sufficient date/time functions to work with the WebCollab
 code.</dd>
 </dl>
-<a name="transactions"></a>
-<h3>TRANSACTIONS</h3>
+<h3><a name="transactions">TRANSACTIONS</a></h3>
 <dl>
 <dt>1. Are database transactions used?</dt>
 <dd>The PostgreSQL abstraction layer always uses transactions because:
@@ -430,14 +424,13 @@ For MySQL version 4.0, and above, innodb database support is enabled by default.
 versions (and configured 3.23.xx versions) it is recommended that the database be created with
 the mysql_innodb database creation script, and the mysql_innodb abstraction layer is used.<br />
 <br />
-For MySQL version 3.23.xx the database server <u>must</u> first be correctly configured to allow
-innodb databases to be used.  See the on line MySQL manual for more details:<br />
+For MySQL version 3.23.xx the database server <span style="text-decoration: underline">must</span> first be correctly
+configured to allow innodb databases to be used.  See the on line MySQL manual for more details:<br />
 <a href="http://www.mysql.com/doc/en/InnoDB_in_MySQL_3.23.html">
 http://www.mysql.com/doc/en/InnoDB_in_MySQL_3.23.html</a>
 </dd>
 </dl>
-<a name="backup"></a>
-<h3>DATABASE BACKUP</h3>
+<h3><a name="backup">DATABASE BACKUP</a></h3>
 <dl>
 <dt>1. Can the database be backed up?</dt>
 <dd>Two UNIX based shell scripts are provided in <i>[webcollab]/db</i> directory for backing up
@@ -461,8 +454,7 @@ PostgreSQL:<br />
 Both dump into a plain text file.  They can be automated with a cron job and emailed to a back
 up machine at regular intervals. </dd>
 </dl>
-<a name="translation"></a>
-<h3>TRANSLATIONS</h3>
+<h3><a name="translation">TRANSLATIONS</a></h3>
 <dl>
 <dt>1. Can I translate WebCollab text messages to my language? And how do I do it?</dt>
 <dd>The message translation files are in the <i>[webcollab]/lang</i> directory.  Using English as an
@@ -478,7 +470,8 @@ example:<br /><br />
 Translate the right hand side to your language.  Save the file (replacing 'en' with your
 language).<br /><br />
 The 'help' files are similar, but are mostly written in HTML text.  They are found in the
-<i>[webcollab]/help</i> directory.
+<i>[webcollab]/help</i> directory.<br /><br />
+Please send a copy of your translation for inclusion in the main program. 
 </dd>
 <dt>2. How do I install the translation files that I've written?</dt>
 <dd>Either:<br />
@@ -487,11 +480,14 @@ The 'help' files are similar, but are mostly written in HTML text.  They are fou
 [webcollab]/lang_long.php &amp; [webcollab]/lang_email.php</i>.
  If you have some PHP programming experience, the correct format in the files will be obvious;
 or;</li>
-<li>Send the translated files to the author (andrewsimpson@users.sourceforge.net), they will be
-returned
- with updated files.</li>
+<li>Send the translated files to the author (andrewsimpson@users.sourceforge.net). I am happy to check files and update
+the other program files to match.</li>
 </ul>
-Final step is obviously to alter the locale in the <i>[webcollab]/config/config file</i>.</dd>
+Final step is to alter the locale in the <i>[webcollab]/config/config file</i>.</dd>
+<dt>3. The translation file for my language still has some English phrases, or is out of date!</dt>
+<dd>Some translations have been offered by translators who do not wish to maintain them, or often I have been unable
+to contact the maintainer by email for updating.<br /><br />
+For these reasons, updates from others are welcomed.</dd> 
 </dl>
 </body>
 </html>
