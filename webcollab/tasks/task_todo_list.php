@@ -216,9 +216,9 @@ switch($selection ) {
 $content .= "<form method=\"post\" action=\"tasks.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\" /></fieldset>\n ".
-            "<table class=\"celldata\">\n".
-            "<tr><td>".$lang['todo_list_for']."</td></tr>".
-            "<tr><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"user\"".$s1." /><label for=\"user\">".$lang['users']."</label></td><td>\n".
+            "<table style=\"background-color: #dddddd; border: solid black 1px;\" cellpadding=\"5px\">\n".
+            "<tr align=\"left\"><td>".$lang['todo_list_for']."</td>".
+            "<td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"user\"".$s1." /><label for=\"user\">".$lang['users']."</label></td><td>\n".
             "<label for=\"user\"><select name=\"userid\">\n".
             "<option value=\"0\"".$s2.">".$lang['nobody']."</option>\n";
 
@@ -242,8 +242,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   $content .= ">".$row['fullname']."</option>\n";
 }
 
-$content .= "</select></label></td></tr>\n".
-            "<tr><td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"".$s3." /><label for=\"group\">".$lang['usergroups']."</label></td><td>\n".
+$content .= "</select></label></td>\n".
+            "<td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"".$s3." /><label for=\"group\">".$lang['usergroups']."</label></td><td>\n".
             "<label for=\"group\"><select name=\"groupid\">\n".
             "<option value=\"0\"".$s4.">".$lang['no_group']."</option>\n";
 
@@ -267,8 +267,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   $content .= ">".$row['name']."</option>\n";
 }
 
-$content .= "</select></label><br /><br /></td></tr>\n".
-            "<tr><td><input type=\"submit\" value=\"".$lang['update']."\" /></td></tr>\n".
+$content .= "</select></label></td>\n".
+            "<td><input type=\"submit\" value=\"".$lang['update']."\" /></td></tr>\n".
             "</table>\n".
             "</form>\n";
 
