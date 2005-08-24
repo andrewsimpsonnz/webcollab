@@ -62,11 +62,11 @@ ignore_user_abort(TRUE);
         //no file upload occurred
         switch($_FILES['userfile']['error'] ) {
           case 1:
-            error("File submit", "The uploaded file exceeds the upload_max_filesize directive in php.ini" );
+            error($lang['file_submit'], "The uploaded file exceeds the upload_max_filesize directive in php.ini" );
             break;
         
           case 2:
-            error("File submit", "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" );
+            error($lang['file_submit'], "The uploaded file exceeds maximum allowed file size" );
             break;
            
           case 3:
@@ -78,11 +78,11 @@ ignore_user_abort(TRUE);
             break;
             
           case 6:
-            error("File submit", "Missing a temporary folder" );
+            error($lang['file_submit'], "Missing a temporary folder" );
             break;
             
           default: 
-            error("File submit", "Unknown file upload error with error code ".$_FILES['userfile']['tmp_name'] );     
+            error($lang['file_submit'], "Unknown file upload error with error code ".$_FILES['userfile']['tmp_name'] );     
             break;
         }
       }        
