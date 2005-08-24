@@ -1,12 +1,30 @@
 WebCollab CVS
+*** 18 August 2005
+  Andrew Simpson
+
+- add pop-up calendar
+
+WebCollab CVS
+*** 3 August 2005
+  Andrew Simpson
+
+- rearrange task menubox to be more intuitive
+
+- change user edit password fields to text boxes
+
+- CSS files are now set in config to make WebCollab more skinnable
+
+- minor appearance improvements 
+
+WebCollab CVS
 *** 23 July 2005
   Andrew Simpson
 
 - apply stripslashes to input data in setup
 
-- convert backslashes to forward slashes in setup file names
+- convert (Windows) backslashes to forward slashes in setup file names
 
-- add help pages to set up  
+- add help pages to set up files  
   
 WebCollab CVS
 *** 19 July 2005
