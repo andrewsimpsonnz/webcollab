@@ -32,9 +32,29 @@ include_once(BASE.'includes/screen.php' );
 //
 // The action handler
 //
+if( ! isset($_REQUEST['action']) ){
+  error('Calendar action handler', 'No request given' );
+}
 
-create_top( $lang['calendar'], 3 );
-include(BASE.'calendar/calendar_show.php' );
-create_bottom();
+//what do you want to do today =]
+switch($_REQUEST['action'] ) {
+
+  case 'show':
+    create_top( $lang['calendar'], 3 );
+    include(BASE.'calendar/calendar_show.php' );
+    create_bottom();
+    break;
+  
+  case 'date':  
+    create_top( $lang['calendar'], 3, '', '', '', 1 );
+    include(BASE.'calendar/calendar_date.php' );
+    create_bottom();
+    break;
+  
+  //Error case
+  default:
+    error('Calendar action handler', 'Invalid request given' );
+    break;
+}
 
 ?>

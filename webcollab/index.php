@@ -47,7 +47,7 @@ function secure_error( $error = 'Login error', $redirect = 0 ) {
     $redirect_time = 0;
   }
   $content = "<div style=\"text-align : center\"><br />$error<br /></div>";
-  create_top($lang['login'], 1, '', '', '', $redirect_time );
+  create_top($lang['login'], 1, '', '', '', '', $redirect_time );
   new_box($lang['error'], $content, 'boxdata', 'singlebox' );
   
   if($redirect_time != 0) {
