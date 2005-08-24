@@ -104,6 +104,10 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
       break;
   }
   
+  if($flag == 1 ) {
+    $content .= "<tr><td style=\"padding-left: 30px\"><hr /></td></tr>\n";
+  }
+  
   //to indicate that there are viewable projects
   $flag = 1;
 
