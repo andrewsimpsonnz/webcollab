@@ -93,25 +93,10 @@ function nicetime($timestamp, $addtime=0 ) {
 }
   
 //
-// Give back a row that holds the date which comes from a pg/my timestamp
-//
-function date_select_from_timestamp($timestamp='' ) {
-
-  if($timestamp == '' )
-    return date_select(-1, -1, -1 );
-    
-  //deparse the line
-  $date_array = explode('-', substr($timestamp, 0, 10 ) );
-  
-  //show line
-  return date_select($date_array[2], $date_array[1], $date_array[0] );
-}
-
-//
-//show a date-time selection row
+//generate a HTML drop down box for date
 //
 function date_select($day=-1, $month=-1, $year=-1 ) {
-  global $month_array;
+  global $lang, $month_array, $x;
 
   //filter for no date set
   if($day == -1 || $month == -1 || $year == -1 ) {
@@ -155,9 +140,28 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
 
     $content .= ">".$i."</option>\n";
   }
-  $content .=  "</select>\n";
+  $content .=  "</select>\n".
+               "<a href=\"#\" onclick=\"window.open".
+               "('calendar.php?x=".$x."&amp;action=date&amp;month=".$month."&amp;year=".$year."','',".
+               "'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,dependent=yes,innerWidth=400,innerHeight=350')\">".
+               $lang['calendar']."</a>\n";
 
  return $content;
+}
+
+//
+//generate a HTML drop down box for date from a pg/my timestamp
+//
+function date_select_from_timestamp($timestamp='' ) {
+
+  if($timestamp == '' )
+    return date_select(-1, -1, -1 );
+    
+  //deparse the line
+  $date_array = explode('-', substr($timestamp, 0, 10 ) );
+  
+  //show line
+  return date_select($date_array[2], $date_array[1], $date_array[0] );
 }
 
 ?>
