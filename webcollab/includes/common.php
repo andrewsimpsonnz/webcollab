@@ -29,7 +29,7 @@
 
 require_once('path.php' );
 require_once(BASE.'path_config.php' );
-require_once(CONFIG.'config.php' );
+require_once(BASE_CONFIG.'config.php' );
 
 include_once(BASE.'lang/lang.php' );
 
@@ -92,6 +92,9 @@ function clean_up($body ) {
   
   global $validation_regex;
   
+  //decode URL entities
+  $body = urldecode($body );
+  
   //allow only normal printing characters valid for the character set in use
   if(! ctype_print($body) ) {
     $body = preg_replace($validation_regex, '?', $body );
@@ -136,8 +139,8 @@ function html_links($body, $database_escape=0 ) {
   if(ctype_space($body) ) {
     return '';
   }
-  
-  $body = preg_replace('/(([\w\-\.]+)@([\w\-\.]+)\.([\w]+))/', "<a href=\"mailto:$0\">$0</a>", $body );
+  $body = preg_replace('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', "<a href=\"mailto:$0\">$0</a>", $body );
+  //$body = preg_replace('/(([\w\-\.]+)@([\w\-\.]+)\.([\w]+))/', "<a href=\"mailto:$0\">$0</a>", $body );
   
   //data being submitted to a database needs ('$0') part escaped
   $escape = ($database_escape ) ? '\\' : '';  
