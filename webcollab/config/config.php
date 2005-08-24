@@ -115,6 +115,11 @@
 
 //MINOR CONFIG PARAMETERS
 
+  //Style sheets (CSS) Note: Setup always uses 'default.css' stylesheet for CSS_MAIN. (Place your CSS into /css directory)
+  define('CSS_MAIN', 'default.css' );
+  define('CSS_CALENDAR', 'calendar.css' );
+  define('CSS_PRINT', 'print.css' );
+  
   //session timeout in hours
   define('SESSION_TIMEOUT', 1 );
 
