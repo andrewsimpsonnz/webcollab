@@ -122,37 +122,39 @@ $content = "<?php\n".
 "    //location of SMTP server (IP address or FQDN)\n".
 "    define('SMTP_HOST', '".$data["smtp_host"]."' );\n\n".
 "    //mail transport (leave as SMTP for standard WebCollab)\n".
-"    define('MAIL_TRANSPORT', "SMTP" );\n\n".  
+"    define('MAIL_TRANSPORT', 'SMTP' );\n\n".  
 "    //use smtp auth? ('Y' or 'N')\n".
 "    define('SMTP_AUTH', 'N' );\n".
 "      //if using SMTP_AUTH give username & password\n".
 "      define('MAIL_USER', '' );\n".
 "      define('MAIL_PASSWORD', '' );\n\n".
-"//-- Splash image --\n\n".
-"  //custom image to replace the webcollab banner on login page (relative base directory is /images)\n".
-"    //(place your image into /images directory)\n".
-"  define('SITE_IMG', '' );\n\n".
 "//-- MINOR CONFIG PARAMETERS --\n\n".
 "//-- These items need to be edited directly from this file --\n\n".
+"  //Style sheets (CSS) Note: Setup always uses 'default.css' stylesheet for CSS_MAIN. (Place your CSS into /css directory)\n".
+"  define('CSS_MAIN', 'default.css' );\n".
+"  define('CSS_CALENDAR', 'calendar.css' );\n".
+"  define('CSS_PRINT', 'print.css' );\n\n".
 "  //session timeout in hours\n".
-"  define('SESSION_TIMEOUT', 1 );\n".
+"  define('SESSION_TIMEOUT', 1 );\n\n".
 "  //number of days that new or updated tasks should be highlighted as 'New' or 'Updated'\n".
-"  define('NEW_TIME', 14 );\n".
+"  define('NEW_TIME', 14 );\n\n".
+"  //custom image to replace the webcollab banner on splash page (base directory is /images)\n".
+"  define('SITE_IMG', '' );\n\n".
 "  //show full debugging messages on the screen when errors occur (values are 'N', or 'Y')\n".
-"  define('DEBUG', 'N' );\n".
+"  define('DEBUG', 'N' );\n\n".
 "  //Do not show full error message on the screen - just a 'sorry, try again' message (values are 'N', or 'Y')\n".
-"  define('NO_ERROR', 'N' );\n".
+"  define('NO_ERROR', 'N' );\n\n".
 "  //Use external webserver authorisation to login (values are 'N', or 'Y')\n".
-"  define('WEB_AUTH', 'N' );\n".
+"  define('WEB_AUTH', 'N' );\n\n".
 "  //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match)\n".  
-"  define('PRE', '' );\n".
+"  define('PRE', '' );\n\n".
 "  //WebCollab version string\n".
-"  define('WEBCOLLAB_VERSION', '1.70');\n".
+"  define('WEBCOLLAB_VERSION', '1.80');\n\n".
 "?>\n";
 
 //open file for writing
-if(! $handle = @fopen(CONFIG.'config.php', 'w' ) ) {
-  error_setup("Cannot open ".CONFIG."config file for writing");
+if(! $handle = @fopen(BASE_CONFIG.'config.php', 'w' ) ) {
+  error_setup("Cannot open ".BASE_CONFIG."config file for writing");
 }
 
 //write to file
