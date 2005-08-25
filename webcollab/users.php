@@ -70,11 +70,12 @@ switch($_REQUEST['action'] ) {
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'users/user_menubox.php' );
     include(BASE.'usergroups/usergroup_menubox.php' );
-
     goto_main();
     include(BASE.'users/user_existing_list.php' );
-    include(BASE.'users/user_deleted_list.php' );
-    include(BASE.'users/user_info.php' );
+    if(ADMIN) {
+      include(BASE.'users/user_deleted_list.php' );
+      include(BASE.'users/user_info.php' );
+    }
     create_bottom();
     break;
 
