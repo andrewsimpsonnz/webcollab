@@ -71,13 +71,23 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<tr><td class=\"grouplist\"><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>";
 
   if(ADMIN ) {
-    $content .= "<td><span class=\"textlink\"> [<a href=\"users.php?x=".$x."&amp;userid=".$row['id']."&amp;action=del\">".$lang['del']."</a>]&nbsp;".
-                "[<a href=\"users.php?x=".$x."&amp;userid=".$row['id']."&amp;action=edit\">".$lang['edit']."</a>]</span></td>";
+    $content .= "<td><span class=\"textlink\">";
+     
+    //prevent admins deleting themselves....!
+    if($row['id'] != UID ) {
+      $content .= "[<a href=\"users.php?x=".$x."&amp;userid=".$row['id']."&amp;action=del\">".$lang['del']."</a>]&nbsp;";
+    }
+    $content .= "[<a href=\"users.php?x=".$x."&amp;userid=".$row['id']."&amp;action=edit\">".$lang['edit']."</a>]</span></td>";
   }
   $content .= "</tr>\n";
 }
 
 $content .= "</table>";
+
+//admin can add a user
+if(ADMIN) {
+  $content .= "<p><span class=\"textlink\">[<a href=\"users.php?x=".$x."&amp;action=add\">".$lang['add']."</a>]</span></p>\n";
+}
 
 //show it
 new_box($lang['existing_users'], $content, 'boxdata' );
