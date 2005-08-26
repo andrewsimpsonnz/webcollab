@@ -105,7 +105,7 @@ switch($_REQUEST['action'] ) {
     }
     $email_unclean = $match[0];
 
-    $private_user = (isset($_POST['private_user']) && ( $_POST['private_user'] == "on" ) ) ? 1 : 0 ;
+    $private_user = (isset($_POST['private_user']) && ( $_POST['private_user'] === "on" ) ) ? 1 : 0 ;
     
     switch($_POST['user_type'] ) {
       case 'normal':
@@ -163,7 +163,7 @@ switch($_REQUEST['action'] ) {
       $usergroup_names = $lang['not_usergroup']."\n";
     }
     
-    $admin_state = ($admin_user == 't' ) ? $lang['admin_priv']."\n" : '';
+    $admin_state = ($admin_user === 't' ) ? $lang['admin_priv']."\n" : '';
     
     $name_unclean     = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'])     : $_POST['name'];
     $fullname_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['fullname']) : $_POST['fullname'];
@@ -206,7 +206,7 @@ switch($_REQUEST['action'] ) {
       }
       $userid = intval($_POST['userid']);
 
-      $private_user = (isset($_POST['private_user']) && ( $_POST['private_user'] == 'on' ) ) ? 1 : 0;
+      $private_user = (isset($_POST['private_user']) && ( $_POST['private_user'] === 'on' ) ) ? 1 : 0;
       
       switch($_POST['user_type'] ) {
         case 'normal':
@@ -291,7 +291,7 @@ switch($_REQUEST['action'] ) {
         $password_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['password']) : $_POST['password'];      
       }
       
-      $admin_state = ($admin_user == 't' ) ? $lang['admin_priv']."\n" : '' ;
+      $admin_state = ($admin_user === 't' ) ? $lang['admin_priv']."\n" : '' ;
       
       $name_unclean     = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'])     : $_POST['name'];
       $fullname_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['fullname']) : $_POST['fullname'];

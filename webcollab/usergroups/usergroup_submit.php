@@ -82,7 +82,7 @@ switch($_REQUEST['action'] ) {
     $name        = safe_data($_POST['name']);
     $description = safe_data($_POST['description']);
     
-    if( isset($_POST['private_group']) && ( $_POST['private_group'] == 'on' ) ) {
+    if( isset($_POST['private_group']) && ( $_POST['private_group'] === 'on' ) ) {
       $private_group = 1;
     }
     else {
@@ -128,7 +128,7 @@ switch($_REQUEST['action'] ) {
     $description = safe_data($_POST['description'] );
     $usergroupid = intval($_POST['usergroupid'] );
     
-    if( isset($_POST['private_group']) && ( $_POST['private_group'] == 'on' ) ) {
+    if( isset($_POST['private_group']) && ( $_POST['private_group'] === 'on' ) ) {
       $private_group = 1;
     }
     else {

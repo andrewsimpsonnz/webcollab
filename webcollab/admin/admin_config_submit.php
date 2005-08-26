@@ -45,7 +45,7 @@ $content = '';
 
 $input_array = array('email_admin', 'reply_to', 'from' );
 
-if(USE_EMAIL == 'Y' ){
+if(USE_EMAIL === 'Y' ){
 
   //check and validate email addresses
   foreach($input_array as $var) {
@@ -69,7 +69,7 @@ else { //no email
 //check and validate checkboxes
 $input_array = array('access', 'group_edit', 'owner', 'usergroup' );
 foreach($input_array as $var ) {
-  if(isset($_POST[$var]) && $_POST[$var] == 'on' ) {
+  if(isset($_POST[$var]) && $_POST[$var] === 'on' ) {
     ${$var} = "checked=\"checked\"";
   }
   else {
@@ -133,7 +133,7 @@ db_query('UPDATE '.PRE.'config SET email_admin=\''.$email_admin.'\',
                             task_order=\''.$task_list.'\'' );
 
 //if no email end here
-if(USE_EMAIL != 'Y' ){
+if(USE_EMAIL !== 'Y' ){
   header('Location: '.BASE_URL.'main.php?x='.$x );
   die;
 }

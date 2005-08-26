@@ -46,7 +46,7 @@ require_once(BASE.'includes/admin_config.php' );
 define('SMTP_PORT', 25 );
 define('TLS', 'N' );
 
-if( (SMTP_AUTH == 'Y') || (TLS == 'Y') ){
+if( (SMTP_AUTH === 'Y') || (TLS === 'Y') ){
   include_once(BASE.'includes/smtp_auth.php' );
 }
 
@@ -64,7 +64,7 @@ function email($to, $subject, $message ) {
   $bit8 = false;
   $pipelining = false;
 
-  if(USE_EMAIL == 'N' ) {
+  if(USE_EMAIL === 'N' ) {
     //email is turned off in config file
     return;
   }
@@ -106,12 +106,12 @@ function email($to, $subject, $message ) {
   }
           
   //do TLS if required (This is EXPERIMENTAL!!)
-  if(TLS == 'Y' ) {
+  if(TLS === 'Y' ) {
     $capability = starttls($connection, $capability );
   }  
     
   //do SMTP_AUTH if required
-  if(SMTP_AUTH == 'Y' ) {
+  if(SMTP_AUTH === 'Y' ) {
     smtp_auth($connection, $capability );
   }
   
@@ -459,7 +459,7 @@ function response() {
 
    global $connection, $log;
 
-   if(DEBUG == 'Y' ) {
+   if(DEBUG === 'Y' ) {
      $time_out = '';
      $meta = @socket_get_status($connection);
      if($meta['timed_out'] ) {

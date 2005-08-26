@@ -121,7 +121,7 @@ else {
 $year += $yearoffset;
 
 //set day, if applicable
-if( $month == date('n', $epoch) && $year == date('Y', $epoch) ){
+if($month == date('n', $epoch) && $year == date('Y', $epoch) ){
   $today = date('j', $epoch);
 }
 else {
@@ -233,7 +233,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<option value=\"".$row['id']."\"";
 
   //highlight current selection
-  if( $row[ "id" ] == $groupid ){
+  if( $row['id'] == $groupid ){
     $content .= " selected=\"selected\"";
   }
   $content .= ">".$row['name']."</option>\n";
@@ -330,7 +330,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
         for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
   
           //check for private usergroups
-          if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
+          if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] === 'f' ) ) {
   
             if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
               continue;
@@ -372,7 +372,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
   
                 default:
                   //task
-                  if($row['status'] == "done" ) {
+                  if($row['status'] === "done" ) {
                     $name = "<span class=\"green\">".$row['name'];
                   }
                   else {

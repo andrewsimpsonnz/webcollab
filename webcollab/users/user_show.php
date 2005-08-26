@@ -64,7 +64,7 @@ if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) ) {
   }
 }
 
-if($row['deleted'] == 't' ){
+if($row['deleted'] === 't' ){
   $content .= "<b><div style=\"text-align:center\"><span class=\"red\">".$lang['user_deleted']."</span></div></b><br />";
 }
 $content .= "<table>".
@@ -72,7 +72,7 @@ $content .= "<table>".
               "<tr><td>".$lang['full_name'].":</td><td>".$row['fullname']."</td></tr>\n".
               "<tr><td>".$lang['email'].":</td><td><a href=\"mailto:".$row['email']."\">".$row['email']."</a></td></tr>\n";
 
-if($row['admin'] == "t" ){
+if($row['admin'] === "t" ){
   $content .= "<tr><td>".$lang['admin'].":</td><td>".$lang['yes']."</td></tr>\n";
 }
 else {
@@ -177,7 +177,7 @@ if( $tasks_owned + $projects_owned > 0 ) {
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
     //check for private usergroups
-    if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
+    if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] === 'f' ) ) {
 
       if( ! in_array( $row['usergroupid'], (array)$GID ) ){
         continue;

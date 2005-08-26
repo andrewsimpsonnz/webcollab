@@ -58,7 +58,7 @@ $x = 0;
 $admin = 0;
 
 //security checks
-if( ! isset($WEB_CONFIG ) || $WEB_CONFIG != 'Y' ) {
+if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
   error_setup('Current configuration file does not allow web-based setup' );
   die;
 }
@@ -116,7 +116,7 @@ else {
   }
 
   //check rights
-  if($row['admin'] != 't' ) {
+  if($row['admin'] !== 't' ) {
     error_setup('You need to be an administrator to use this function' );
   }
   

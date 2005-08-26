@@ -52,7 +52,7 @@ function usergroup_check($taskid ) {
   }
   
   //check usergroup rights
-  if( ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
+  if( ($row[0] != 0 ) && ($row[1] === 'f' ) ) {
   
     //check if the user has a matching group
     if(! in_array($row[0], (array)$GID ) ) {
@@ -66,7 +66,7 @@ function usergroup_check($taskid ) {
     $row = db_fetch_num($q, 0 );
   
     //check if project is marked private 
-    if(($row[0] != 0 ) && ($row[1] == 'f' ) ) {
+    if(($row[0] != 0 ) && ($row[1] === 'f' ) ) {
   
       //check if the user has a matching group
       if(! in_array($row[0], (array)$GID ) ) {

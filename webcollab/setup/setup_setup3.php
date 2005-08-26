@@ -34,14 +34,14 @@ if( ! is_writeable(BASE_CONFIG.'config.php' ) ) {
   error_setup('Configuration file needs to be made writeable by the webserver to proceed.');
 }
 
-if(isset($_POST['new_db']) && $_POST['new_db'] == 'N' ) {
+if(isset($_POST['new_db']) && $_POST['new_db'] === 'N' ) {
   $new_db = 'N';
 }
 else {
   $new_db = 'Y';
 }
 
-if(isset($_POST['edit']) && $_POST['edit'] == 'Y' ) {
+if(isset($_POST['edit']) && $_POST['edit'] === 'Y' ) {
   $edit = 'Y';
 }
 else {
@@ -50,7 +50,7 @@ else {
 
 $file_path = realpath(dirname(__FILE__ ).'/..' ).'/';
 
-if(defined('DATABASE_NAME' ) && (DATABASE_NAME != '') && ($new_db == 'N' ) && ($edit == 'N') ) {
+if(defined('DATABASE_NAME' ) && (DATABASE_NAME != '') && ($new_db === 'N' ) && ($edit === 'N') ) {
   //this is an existing install and no new database has been created
   $db_name           = DATABASE_NAME;
   $db_user           = DATABASE_USER;
@@ -233,7 +233,7 @@ $content .=  "<tr><td></td><td><br /></td></tr>\n".
              "</select></td></tr>\n";
                         
 //email settings
-if($use_email == 'N' ) {
+if($use_email === 'N' ) {
   $setting = '';
 }
 else {

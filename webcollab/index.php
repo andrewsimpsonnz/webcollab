@@ -36,7 +36,7 @@ include_once(BASE.'includes/common.php' );
 $content = '';
 
 //error condition
-function secure_error( $error = 'Login error', $redirect = 0 ) {
+function secure_error( $error = 'Login error', $redirect=0 ) {
 
   global $lang;
 
@@ -61,7 +61,7 @@ function secure_error( $error = 'Login error', $redirect = 0 ) {
 
 //valid login attempt ?
 if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['username']) > 0 && strlen($_POST['password']) > 0 )
-    || (isset($_SERVER['REMOTE_USER'])  && (strlen($_SERVER['REMOTE_USER']) > 0 ) && WEB_AUTH == 'Y' ) ) {
+    || (isset($_SERVER['REMOTE_USER'])  && (strlen($_SERVER['REMOTE_USER']) > 0 ) && WEB_AUTH === 'Y' ) ) {
 
   $q = '';
   $ip = '';
@@ -78,7 +78,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
     secure_error('Unable to determine ip address');
   }
  
-  if(WEB_AUTH == 'Y' ) {
+  if(WEB_AUTH === 'Y' ) {
       //construct login query
       $login_q = 'SELECT id FROM '.PRE.'users WHERE name=\''.safe_data($_SERVER['REMOTE_USER'] ).'\' AND deleted=\'f\'';
   }

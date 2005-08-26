@@ -90,7 +90,7 @@ if(ADMIN ) {
   $s1 = "checked=\"checked\""; $s2 = ""; $s3 = "";
 
   //admin user
-  if($row['admin'] == 't' ) {
+  if($row['admin'] === 't' ) {
     $s1 = ""; $s2 = "checked=\"checked\""; $s3 = ""; 
   }
   

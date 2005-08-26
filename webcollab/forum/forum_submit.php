@@ -151,14 +151,14 @@ ignore_user_abort(TRUE);
       //make email adresses and web links clickable
       $text = html_links($text, 1 );
 
-      if(isset($_POST['mail_owner'] ) && ($_POST['mail_owner'] == 'on' ) ) {
+      if(isset($_POST['mail_owner'] ) && ($_POST['mail_owner'] === 'on' ) ) {
         $mail_owner = true;
       }
       else {
         $mail_owner = '';
       }
 
-      if(isset($_POST['mail_group'] ) && ($_POST['mail_group'] == 'on' ) ) {
+      if(isset($_POST['mail_group'] ) && ($_POST['mail_group'] === 'on' ) ) {
         $mail_group = true;
       }
       else {

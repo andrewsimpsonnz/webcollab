@@ -53,7 +53,7 @@ foreach($array_optional as $var ) {
 //convert checkboxes to 'Y' or 'N'
 $array = array('use_email' );
 foreach($array as $var ) {
-  if($data[$var] == 'on' ) {
+  if($data[$var] === 'on' ) {
     $data[$var] = 'Y';
   }
   else {
@@ -254,7 +254,7 @@ $content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></
 
 $status = "<font color=\"green\"><b>OK !</b></font>";
 
-if($data["use_email"] == "Y" && $data["smtp_host"] != "" ) {
+if($data["use_email"] === "Y" && $data["smtp_host"] != "" ) {
 
   if($fp = fsockopen($data["smtp_host"], 25, $errno, $errstr, 5 ) ) {
     //this function may not work in Windows (prefix with '@')
@@ -270,7 +270,7 @@ if($data["use_email"] == "Y" && $data["smtp_host"] != "" ) {
   }
 }
 
-if($data["use_email"] == "Y" && $data["smtp_host"] == "" ) {
+if($data["use_email"] === "Y" && $data["smtp_host"] == "" ) {
   $status = "<font color=\"red\"><b>SMTP Host must be specified!</b></font>";
   $flag = $flag + 10;
 }

@@ -55,7 +55,7 @@ function db_query($query, $dieonerror=1 ) {
     //set initial value
     $host = '';
     //now adjust if necessary
-    if(DATABASE_HOST != 'localhost' )
+    if(DATABASE_HOST !== 'localhost' )
       $host = 'host='.DATABASE_HOST;
 
     if( ! ($database_connection = @pg_connect($host.' user='.DATABASE_USER.' dbname='.DATABASE_NAME.' password='.DATABASE_PASSWORD ) ) )
