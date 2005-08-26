@@ -121,7 +121,7 @@ $deadline = date_to_datetime($day, $month, $year );
 //boolean for globalaccess, groupaccess
 $input_array = array('globalaccess', 'groupaccess' );
 foreach($input_array as $var ) {
-  if(isset($_POST[$var]) && $_POST[$var] == 'on' ) {
+  if(isset($_POST[$var]) && $_POST[$var] === 'on' ) {
     ${$var} = 't';
   }
   else {
@@ -199,7 +199,7 @@ if($parentid == 0 ) {
     case 'new':
     case 'active':
       //if reinstated project, set inactive child tasks to new
-      if($previous_status == 'cantcomplete' || $previous_status == 'notactive' ) {
+      if($previous_status === 'cantcomplete' || $previous_status === 'notactive' ) {
         db_query('UPDATE '.PRE.'tasks SET status=\'created\' WHERE projectid='.$projectid.' AND parent<>0 AND status=\''.$previous_status.'\'' );
       }
       break;
@@ -252,7 +252,7 @@ switch($owner ) {
   $text_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['text'] ) : $_POST['text'];
   
 //email owner ?
-if(isset($_POST['mailowner']) && ($_POST['mailowner'] == 'on') && ($owner != 0) ) {
+if(isset($_POST['mailowner']) && ($_POST['mailowner'] === 'on') && ($owner != 0) ) {
 
   include_once(BASE.'includes/email.php' );
 
@@ -264,7 +264,7 @@ if(isset($_POST['mailowner']) && ($_POST['mailowner'] == 'on') && ($owner != 0) 
 }
 
 //email the user group ?
-if(isset($_POST['maillist']) && ($_POST['maillist'] == 'on') ) {
+if(isset($_POST['maillist']) && ($_POST['maillist'] === 'on') ) {
   
   include_once(BASE.'includes/email.php' );
 

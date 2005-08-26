@@ -58,7 +58,7 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ){
     //edit, delete rights
     if((ADMIN ) || 
        ($TASKID_ROW['owner'] == UID ) || 
-       (($TASKID_ROW['groupaccess'] == "t") && (in_array($TASKID_ROW['usergroupid'], (array)$GID ) ) ) ) {
+       (($TASKID_ROW['groupaccess'] === "t") && (in_array($TASKID_ROW['usergroupid'], (array)$GID ) ) ) ) {
       
       //header + edit
       $content .= "<small><b>".$lang['admin'].":</b></small><br />\n".
@@ -76,7 +76,7 @@ if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ){
       
       //archive project
       if((ADMIN ) || ($TASKID_ROW['owner'] == UID ) ) {
-        if(($TYPE == 'project' ) && ($TASKID_ROW['archive'] == 0 ) ) {
+        if(($TYPE === 'project' ) && ($TASKID_ROW['archive'] == 0 ) ) {
           $content .= "<a href=\"archive.php?x=".$x."&amp;action=submit_archive&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang['javascript_archive_project'], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang['archive_project']."</a><br />\n";
         }
       }          

@@ -74,7 +74,7 @@ function user_access($owner, $usergroupid, $groupaccess ) {
   if($usergroupid == 0 ) {
     return false;
   }
-  if( $groupaccess == 't' ) {
+  if($groupaccess === 't' ) {
     if(in_array($usergroupid, (array)$GID ) ) {
       return true;
     }
@@ -138,7 +138,7 @@ $q = db_query('SELECT id, name, usergroupid, globalaccess FROM '.PRE.'tasks WHER
 
 for( $i=0; $parent_row = @db_fetch_array($q, $i ); ++$i ) {
   //check for private usergroups
-  if( (! ADMIN ) && ($parent_row['usergroupid'] != 0 ) && ($parent_row['globalaccess'] == 'f' ) ) {
+  if( (! ADMIN ) && ($parent_row['usergroupid'] != 0 ) && ($parent_row['globalaccess'] === 'f' ) ) {
 
     if( ! in_array($parent_row['usergroupid'], (array)$GID ) ) {
       continue;
@@ -329,8 +329,8 @@ for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
 $content .= "</select></td></tr>\n";
 
 //check box defaults
-$global = ($TASKID_ROW['globalaccess'] == 't' ) ? "checked=\"checked\"" : '';
-$group  = ($TASKID_ROW['groupaccess']  == 't' ) ? "checked=\"checked\"" : '';
+$global = ($TASKID_ROW['globalaccess'] === 't' ) ? "checked=\"checked\"" : '';
+$group  = ($TASKID_ROW['groupaccess']  === 't' ) ? "checked=\"checked\"" : '';
 
 $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help'); return false\">".$lang['all_users_view']."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" ".$global." /></td></tr>\n".
              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$group." /></td></tr>\n".

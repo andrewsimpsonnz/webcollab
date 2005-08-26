@@ -78,7 +78,7 @@ $deadline = date_to_datetime($day, $month, $year );
 //boolean for globalaccess, groupaccess
 $input_array = array('globalaccess', 'groupaccess' );
 foreach($input_array as $var ) {
-  if(isset($_POST[$var]) && $_POST[$var] == 'on' ) {
+  if(isset($_POST[$var]) && $_POST[$var] === 'on' ) {
     ${$var} = 't';
   }
   else {
@@ -151,7 +151,7 @@ $project_status = $status;
 if($parentid != 0 ) {
   $project_status = db_result(db_query('SELECT status FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 );
 
-  if($project_status == 'cantcomplete' || $project_status == 'notactive' ){
+  if($project_status === 'cantcomplete' || $project_status === 'notactive' ){
     db_query('UPDATE '.PRE.'tasks SET status=\''.$project_status.'\' WHERE id='.$taskid );
   }
 }
@@ -213,7 +213,7 @@ switch($owner ) {
 $text_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['text'] ) : $_POST['text'];
 
 //email owner ?
-if(isset($_POST['mailowner']) && ($_POST['mailowner'] == 'on') && ($owner != 0) ) {
+if(isset($_POST['mailowner']) && ($_POST['mailowner'] === 'on') && ($owner != 0) ) {
   
   include_once(BASE.'includes/email.php' );
   
@@ -224,7 +224,7 @@ if(isset($_POST['mailowner']) && ($_POST['mailowner'] == 'on') && ($owner != 0) 
 }
 
 //do we need to send an email to the user group to announce this message
-if(isset($_POST['maillist']) && $_POST['maillist'] == 'on' ) {
+if(isset($_POST['maillist']) && $_POST['maillist'] === 'on' ) {
 
   include_once(BASE.'includes/email.php' );
   

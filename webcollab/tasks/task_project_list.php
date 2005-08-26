@@ -153,6 +153,7 @@ $tz_offset = (TZ * 3600) - TZ_OFFSET;
 
 $active_only = (isset($_GET['active']) )    ? $_GET['active']    : 0;
 $condensed   = (isset($_GET['condensed']) ) ? $_GET['condensed'] : 0;
+$action      = (isset($_GET['action']) )    ? $_GET['action']    : 0;
 
 //get config order for sorting
 $q   = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
@@ -180,7 +181,7 @@ if(! $condensed) {
   for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
     
     //check if user can view this task
-    if( (! ADMIN ) && ($row[5] != 't' ) && ($row[6] != 0 ) ) {
+    if( (! ADMIN ) && ($row[5] !== 't' ) && ($row[6] != 0 ) ) {
       if(! in_array( $row[6], (array)$GID ) ) {
         continue;
       }
@@ -262,7 +263,7 @@ else {
 }
 
 //text link for 'printer friendly' page
-if(isset($_GET['action']) && ($_GET['action'] == "project_print" ) ) {
+if($action === "project_print" ) {
   $content  .= "\n[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."\">".$lang['normal_version']."</a>]";
 }
 else {
@@ -274,7 +275,7 @@ $content .= "</span></td></tr>\n</table>\n";
 $content .= "<table>\n";
 
 //show 'project jump' select box
-if(isset($_GET['action']) && $_GET['action'] != 'project_print') {
+if($action !== 'project_print') {
   $content .= "<tr><td class=\"projectlist\" style=\"padding-bottom : 0px\">\n".project_jump(0)."</td></tr>\n";
 }
   
@@ -282,7 +283,7 @@ if(isset($_GET['action']) && $_GET['action'] != 'project_print') {
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   //check the user has rights to view this project
-  if( (! ADMIN ) && ($row['globalaccess'] != 't' ) && ( $row['usergroupid'] != 0 ) ) {
+  if( (! ADMIN ) && ($row['globalaccess'] !== 't' ) && ( $row['usergroupid'] != 0 ) ) {
     if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
       continue;
     }

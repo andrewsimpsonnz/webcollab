@@ -74,7 +74,7 @@ if( ! ($row = db_fetch_array($q, 0 ) ) ) {
 db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$taskid.', now() )' );
 
 //text link for 'printer friendly' page
-if(isset($_GET['action']) && $_GET['action'] == "show_print" ) {
+if(isset($_GET['action']) && $_GET['action'] === "show_print" ) {
   $content  .= "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=$taskid\">".$lang['normal_version']."</a>]</span></p>";
 }
 else {
@@ -247,7 +247,7 @@ if( $TASKID_ROW['usergroupid'] != 0 ) {
       break;
   }
 
-  if($TASKID_ROW['groupaccess'] == 't' ) {
+  if($TASKID_ROW['groupaccess'] === 't' ) {
       $content .= "<tr><td>&nbsp;</td><td><i>".$lang["usergroup_can_edit_".$TYPE]."</i></td></tr>\n";
   }
 }
@@ -280,7 +280,7 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
 
   //check for owner or group access
   if((UID == $TASKID_ROW['owner'] ) || 
-     ($TASKID_ROW['groupaccess'] == "t") && (in_array($TASKID_ROW['usergroupid'], (array)$GID ) ) ) {
+     ($TASKID_ROW['groupaccess'] === "t") && (in_array($TASKID_ROW['usergroupid'], (array)$GID ) ) ) {
     $access = true;
   }
   else {
@@ -293,17 +293,17 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
   }
   
   //(owner - groupaccess) & (uncompleted task)  ==> [I finished it] button
-  if(($access ) && ($TASKID_ROW['status'] != 'done' ) && ($TASKID_ROW['parent'] != 0 ) ) {
+  if(($access ) && ($TASKID_ROW['status'] !== 'done' ) && ($TASKID_ROW['parent'] != 0 ) ) {
     $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=done&amp;taskid=".$taskid."\">".$lang['i_finished']."</a>]&nbsp;\n";
   }
     
   //(owner) & (uncompleted task)==> [I don't want it anymore] button
-  if(UID == $TASKID_ROW['owner'] && ($TASKID_ROW['status'] != 'done' ) ) {
+  if(UID == $TASKID_ROW['owner'] && ($TASKID_ROW['status'] !== 'done' ) ) {
     $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=deown&amp;taskid=".$taskid."\">".$lang['i_dont_want']."</a>]&nbsp;\n";
   }
   
   //(admin) & (not owner) & (has owner) & (uncompleted task) ==> [Take over task] button
-  if((ADMIN ) && (UID != $TASKID_ROW['owner'] ) && ($TASKID_ROW['owner'] != 0 ) && ($TASKID_ROW['status'] != 'done' ) ) {
+  if((ADMIN ) && (UID != $TASKID_ROW['owner'] ) && ($TASKID_ROW['owner'] != 0 ) && ($TASKID_ROW['status'] !== 'done' ) ) {
     $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_".$TYPE] )."</a>]\n";
   }
   
