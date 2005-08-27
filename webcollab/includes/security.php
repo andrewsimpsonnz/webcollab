@@ -91,7 +91,7 @@ if( ! ( $row = db_fetch_array($q, 0) ) ) {
 
 //if database table LEFT JOIN gives no rows will get NULL here
 //  also check for deleted users
-if(($row['user_id'] == NULL ) || ($row['deleted'] === 't' ) ){
+if((! $row['user_id'] ) || ($row['deleted'] == 't' ) ){
   error('Security manager', 'No valid user-id found');
 }
 
@@ -108,7 +108,7 @@ if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
 define('UID',   $row['user_id'] );
 define('GUEST', $row['guest'] );
 
-if($row['admin'] === 't' ) {
+if($row['admin'] == 't' ) {
   define('ADMIN', 1 );
 }
 else {

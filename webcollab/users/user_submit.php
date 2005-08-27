@@ -163,7 +163,7 @@ switch($_REQUEST['action'] ) {
       $usergroup_names = $lang['not_usergroup']."\n";
     }
     
-    $admin_state = ($admin_user === 't' ) ? $lang['admin_priv']."\n" : '';
+    $admin_state = ($admin_user == 't' ) ? $lang['admin_priv']."\n" : '';
     
     $name_unclean     = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'])     : $_POST['name'];
     $fullname_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['fullname']) : $_POST['fullname'];
@@ -291,7 +291,7 @@ switch($_REQUEST['action'] ) {
         $password_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['password']) : $_POST['password'];      
       }
       
-      $admin_state = ($admin_user === 't' ) ? $lang['admin_priv']."\n" : '' ;
+      $admin_state = ($admin_user == 't' ) ? $lang['admin_priv']."\n" : '' ;
       
       $name_unclean     = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'])     : $_POST['name'];
       $fullname_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['fullname']) : $_POST['fullname'];

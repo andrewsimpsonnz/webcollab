@@ -100,7 +100,7 @@ require_once(BASE.'setup/security_setup.php' );
       }      
     }
 
-    if($database_type === 'mysql') {
+    if($database_type == 'mysql') {
       $db_schema = 'db/schema_mysql.sql';
     }
     else {

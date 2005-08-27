@@ -78,7 +78,7 @@ $content .= "<table>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //check the user has rights to view this project
-  if( (! ADMIN ) && ($row['globalaccess'] !== 't' ) && ( $row['usergroupid'] != 0 ) ) {
+  if( (! ADMIN ) && ($row['globalaccess'] != 't' ) && ( $row['usergroupid'] != 0 ) ) {
     if( ! in_array( $row['usergroupid'], (array)$GID ) ){
       continue;
     }

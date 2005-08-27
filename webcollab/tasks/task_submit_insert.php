@@ -151,7 +151,7 @@ $project_status = $status;
 if($parentid != 0 ) {
   $project_status = db_result(db_query('SELECT status FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 );
 
-  if($project_status === 'cantcomplete' || $project_status === 'notactive' ){
+  if($project_status == 'cantcomplete' || $project_status == 'notactive' ){
     db_query('UPDATE '.PRE.'tasks SET status=\''.$project_status.'\' WHERE id='.$taskid );
   }
 }

@@ -199,7 +199,7 @@ if($parentid == 0 ) {
     case 'new':
     case 'active':
       //if reinstated project, set inactive child tasks to new
-      if($previous_status === 'cantcomplete' || $previous_status === 'notactive' ) {
+      if($previous_status == 'cantcomplete' || $previous_status == 'notactive' ) {
         db_query('UPDATE '.PRE.'tasks SET status=\'created\' WHERE projectid='.$projectid.' AND parent<>0 AND status=\''.$previous_status.'\'' );
       }
       break;

@@ -92,7 +92,7 @@ function list_tasks($parent ) {
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
     //check for private usergroups
-    if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] === 'f' ) ) {
+    if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
       if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
         //recursive search if the subtask is listed in parent_array (it has children then)
@@ -295,7 +295,7 @@ $q = db_query('SELECT usergroupid, globalaccess FROM '.PRE.'tasks WHERE id='.$TA
 
 $row = db_fetch_num($q, 0 );
 
-if( (! ADMIN ) && ($row[0] != 0 ) && ($row[1] === 'f' ) ) {
+if( (! ADMIN ) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
 
   //check if the user has a matching group
   if( ! in_array($row[0], (array)$GID ) ) {

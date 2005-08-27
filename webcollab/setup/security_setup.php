@@ -116,7 +116,7 @@ else {
   }
 
   //check rights
-  if($row['admin'] !== 't' ) {
+  if($row['admin'] != 't' ) {
     error_setup('You need to be an administrator to use this function' );
   }
   

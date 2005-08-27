@@ -290,7 +290,7 @@ $q = db_query('SELECT id, name, owner, deadline, parent, usergroupid, globalacce
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //check for private usergroups
-  if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] !== 't' ) ) {
+  if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] != 't' ) ) {
     if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
       continue;
     }
@@ -334,7 +334,7 @@ $q = db_query('SELECT id, name, usergroupid, globalaccess, deadline AS due
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
    //check for private usergroups
-   if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] === 'f' ) ) {
+   if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
      if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
        continue;

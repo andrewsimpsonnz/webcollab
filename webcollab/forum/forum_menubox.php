@@ -53,7 +53,7 @@ $q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //check if user can view this task
-  if( (! ADMIN ) && ($row['globalaccess'] !== 't' ) && ($row['usergroupid'] != 0 ) ) {
+  if( (! ADMIN ) && ($row['globalaccess'] != 't' ) && ($row['usergroupid'] != 0 ) ) {
     if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
       continue;
     }

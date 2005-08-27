@@ -330,7 +330,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
         for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
   
           //check for private usergroups
-          if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] === 'f' ) ) {
+          if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
   
             if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
               continue;
@@ -372,7 +372,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
   
                 default:
                   //task
-                  if($row['status'] === "done" ) {
+                  if($row['status'] == "done" ) {
                     $name = "<span class=\"green\">".$row['name'];
                   }
                   else {
