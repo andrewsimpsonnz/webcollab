@@ -1,4 +1,14 @@
 WebCollab CVS
+*** 27 August 2005
+  Andrew Simpson
+
+- allow users to view public user list
+
+- don't allow admins to delete themselves
+
+- change equalities with stings for more robust handling
+
+WebCollab CVS
 *** 18 August 2005
   Andrew Simpson
 
