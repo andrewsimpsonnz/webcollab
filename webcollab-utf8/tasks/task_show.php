@@ -74,7 +74,7 @@ if( ! ($row = db_fetch_array($q, 0 ) ) ) {
 db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$taskid.', now() )' );
 
 //text link for 'printer friendly' page
-if(isset($_GET['action']) && $_GET['action'] == "show_print" ) {
+if(isset($_GET['action']) && $_GET['action'] === "show_print" ) {
   $content  .= "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=$taskid\">".$lang['normal_version']."</a>]</span></p>";
 }
 else {

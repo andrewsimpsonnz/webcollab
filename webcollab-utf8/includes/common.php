@@ -221,7 +221,7 @@ function error($box_title, $error ) {
   
   create_top('ERROR', 1 );
 
-  if(NO_ERROR != 'Y' ) {
+  if(NO_ERROR !== 'Y' ) {
     $content = "<div style=\"text-align : center\">".$error."</div>";
     new_box( $box_title, $content, 'boxdata', 'singlebox' );
   }
@@ -256,7 +256,7 @@ function error($box_title, $error ) {
     email(EMAIL_ERROR, "ERROR on ".MANAGER_NAME, $message );
   }
         
-  if(DEBUG == 'Y' ) {
+  if(DEBUG === 'Y' ) {
     $content = nl2br($message);
     new_box("Error Debug", $content );
   }

@@ -132,7 +132,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 //
 
 //security checks
-if( ! isset($WEB_CONFIG ) || $WEB_CONFIG != 'Y' ) {
+if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
   secure_error("Current configuration file does not allow web-based setup." );
   die;
 }

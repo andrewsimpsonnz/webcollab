@@ -152,6 +152,7 @@ $task_projectid   = array();
 
 $active_only = (isset($_GET['active']) )    ? $_GET['active']    : 0;
 $condensed   = (isset($_GET['condensed']) ) ? $_GET['condensed'] : 0;
+$action      = (isset($_GET['action']) )    ? $_GET['action']    : 0;
 
 //get config order for sorting
 $q   = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
@@ -262,7 +263,7 @@ else {
 }
 
 //text link for 'printer friendly' page
-if(isset($_GET['action']) && ($_GET['action'] == "project_print" ) ) {
+if($action === "project_print" ) {
   $content  .= "\n[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."\">".$lang['normal_version']."</a>]";
 }
 else {
@@ -274,7 +275,7 @@ $content .= "</span></td></tr>\n</table>\n";
 $content .= "<table>\n";
 
 //show 'project jump' select box
-if(isset($_GET['action']) && $_GET['action'] != 'project_print') {
+if($action !== 'project_print') {
   $content .= "<tr><td class=\"projectlist\" style=\"padding-bottom : 0px\">\n".project_jump(0)."</td></tr>\n";
 }
   
