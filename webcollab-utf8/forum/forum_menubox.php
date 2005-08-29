@@ -37,7 +37,7 @@ include_once(BASE.'includes/time.php' );
 $list = '';
      
 //set the usergroup permissions on queries (Admin can see all)
-if(ADMIN == 1 ) {
+if(ADMIN ) {
   $tail = ' ';  
 }
 else {
