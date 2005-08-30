@@ -50,7 +50,7 @@ define('ABBR_MANAGER_NAME', 'WebCollab' );
 define('SMTP_HOST', '' );
 define('SERVER_NAME', '' );
 
-define('CHARACTER_SET', 'iso-8859-1' );
+define('CHARACTER_SET', 'utf-8' );
 define('MYSQL_41', false );
 
 define('DEBUG', false );
@@ -94,8 +94,8 @@ Function List
 email		Main wrapper function
 clean		Reinstate encoded html back to original text.
 message		Prepare message body, and if necessary, 'base64' encode for SMTP transmission.
-subject		Check subject line and 'base64' encode if required for SMTP transmission.
 headers		Assemble message headers to RFC 822.
+header_encoding	Check header line and 'base64' encode if required for SMTP transmission.
 response	Get response to client command from the connected SMTP server.
 smtp_auth	Do SMTP AUTH authentication
 db_query	Database query
@@ -128,9 +128,10 @@ function email($to, $subject, $message ) {
   
   //open an SMTP connection at the mail host
   $connection = @fsockopen(SMTP_HOST, 25, $errno, $errstr, 10 );
-  $log = "Opening connection to ".SMTP_HOST." on port ".SMTP_PORT."\n";
-  if (!$connection )
+  $log = "Opening connection to ".SMTP_HOST."\n";
+  if(! $connection ) {
     debug("Unable to open TCP/IP connection.\n\nReported socket error: ".$errno." ".$errstr."\n");
+  }
     
   //sometimes the SMTP server takes a little longer to respond
   // Windows does not have support for this timeout function before PHP ver 4.3.0
@@ -284,7 +285,7 @@ function email($to, $subject, $message ) {
   return;
 }
 
-function & clean($encoded ) {
+function clean($encoded ) {
   
   //reinstate encoded html back to original text
   $text = @html_entity_decode($encoded, ENT_NOQUOTES, CHARACTER_SET );
@@ -311,7 +312,7 @@ function & message($message, & $email_encode, & $message_charset, & $body ) {
   global $bit8;
 
   //clean up message
-  $message =& clean($message );
+  $message = clean($message );
   //check if message contains multi-byte characters and set encoding to match mailer capabilities
   switch(preg_match('/([\177-\377])/', $message ) ) {
     case true:
@@ -371,47 +372,6 @@ function & message($message, & $email_encode, & $message_charset, & $body ) {
 return $message_lines;
 }
 
-
-//
-//function to prepare and encode the 'subject' line for transmission
-//
-
-function &subject($subject ) {
-
-  //get rid of any line breaks (\r\n, \n, \r) in subject line
-  $subject = str_replace(array("\r\n", "\r", "\n"), ' ', $subject );
-  //reinstate any HTML in subject back to text
-  $subject =& clean($subject );
-
-  //encode subject with 'printed-quotable' if multi-byte characters are present
-  switch(preg_match('/([\177-\377])/', $subject ) ) {
-    case false:
-      //no encoding required
-      $subject_lines = array('Subject: '.substr($subject, 0, 985 ) );
-      break;
-
-    case true:
-      //base64 encoding
-      $line = base64_encode($subject );
-      //format follows RFC 2047
-      $s = 'Subject: ';
-      //lines are no longer than 76 characters including '?' and '=' 
-      //  76 - 10[=?UTF-8?B?] - 2[?=] = 64 encoded characters per line 
-      //  any additional new lines start with <space>  
-      $max_len = 76 - (strlen(CHARACTER_SET) - 5 ) - 2;
-      while(strlen($line) > $max_len ) {
-        $subject_lines[] = $s."=?".CHARACTER_SET."?B?".substr($line, 0, $max_len )."?="; 
-        $line = substr($line, $max_len );
-        $s = ' ';
-      }
-      //output any remaining line (will be less than $max_len characters long)
-      $subject_lines[] = $s."=?".CHARACTER_SET."?B?".$line."?=";
-      break;
-  }
-
-return $subject_lines;
-}
-
 //
 //function to assemble mail headers
 //
@@ -424,6 +384,11 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   $from     = clean(EMAIL_FROM);
   $reply_to = clean(EMAIL_REPLY_TO);
   
+  //get rid of any line breaks (\r\n, \n, \r) in subject line
+  $subject = str_replace(array("\r\n", "\r", "\n"), ' ', $subject );
+  //reinstate any HTML in subject back to text
+  $subject = clean($subject );
+  
   //now the prepare the 'to' header
   $line   = 'To:'.join(', ', (array)$to );
   //lines longer than 998 characters are broken up to separate lines (RFC 821)
@@ -434,12 +399,13 @@ function headers($to, $subject, $email_encode, $message_charset ) {
     $line = "\t".substr($line, $pos + 1 );
   }
   $headers[] = $line;
-  //assemble remaining message headers (RFC 821 / RFC 2045)
-  $headers[] = 'From:' .ABBR_MANAGER_NAME. '<'.$from.'>';
+  //'from' header 
+  $headers = array_merge($headers, header_encoding('From :', ABBR_MANAGER_NAME, '<'.$from.'>' ) );
+  //reply to
   $headers[] = 'Reply-To: '.$reply_to;
-
-  $headers = array_merge($headers, subject($subject ) );
-
+  //'subject' header
+  $headers = array_merge($headers, header_encoding('Subject :', $subject, '' ) );
+  //assemble remaining message headers (RFC 821 / RFC 2045)
   $headers[] = 'Message-Id: <'.md5(mt_rand()).'@'.SERVER_NAME.'>';
   $headers[] = 'X-Mailer: WebCollab (PHP/'.phpversion().')';
   $headers[] = 'X-Priority: 3';
@@ -451,6 +417,41 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   $headers[] = '';
 
 return $headers;
+}
+
+//
+//function to encode mail headers with 'quoted printable'
+//
+
+function header_encoding($header_type, $header, $header_suffix='' ) {
+
+  //encode subject with 'printed-quotable' if high ASCII characters are present
+  switch(preg_match('/([\177-\377])/', $header ) ) {
+    case false:
+      //no encoding required
+      $header_lines = array(substr($header_type .$header .$header_suffix, 0, 985 ) );
+      break;
+  
+    case true:
+      //base64 encoding
+      $line = base64_encode($header );
+      //format follows RFC 2047
+      $s = $header_type;
+      //lines are no longer than 76 characters including '?' and '=' 
+      //  76 - 10[=?UTF-8?B?] - 2[?=] = 64 encoded characters per line 
+      //  - any additional new lines start with <space>       
+      //  - each encoded line portion is rounded to multiple of 4 octets
+      $max_len = floor((76 - (strlen(CHARACTER_SET) + 5 ) - 2) / 4 ) * 4;
+      while(strlen($line) > $max_len ) {
+        $header_lines[] = $s."=?".CHARACTER_SET."?B?".substr($line, 0, $max_len )."?="; 
+        $line = substr($line, $max_len );
+        $s = ' ';
+      }
+      //output any remaining line (will be less than $max_len characters long)
+      $header_lines[] = $s."=?".CHARACTER_SET."?B?".$line."?= ".$header_suffix;
+      break;
+  }
+  return $header_lines;
 }
 
 //
@@ -670,7 +671,7 @@ function debug($error="Bad response from SMTP server\n" ){
   //show error
   fwrite(STDERR, $error."\n" );
   
-  $q = db_query("SELECT send_attempts FROM ".PRE."mail_spool WHERE mailid=".$mailid );
+  $q = db_query("SELECT send_attempts FROM ".PRE."mail_spool WHERE id=".$mailid );
   $result = fetch_row($q, 0 );
  
   if($result['send_attempts'] > 6 ){
