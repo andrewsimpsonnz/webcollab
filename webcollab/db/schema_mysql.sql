@@ -72,7 +72,7 @@ CREATE TABLE logins (
 	session_key VARCHAR(100) NOT NULL,
 	ip VARCHAR(100) NOT NULL,
 	lastaccess DATETIME NOT NULL,
-        INDEX (session_key(35), user_id )
+        INDEX (session_key(10), user_id )
 );
 
 
