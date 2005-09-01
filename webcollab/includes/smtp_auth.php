@@ -52,11 +52,11 @@ function smtp_auth($connection, $cap) {
      fputs($connection, "AUTH PLAIN\r\n" );
      $log .= 'C: AUTH PLAIN'."\n";
      
-     if(! strncmp('334', response(), 3 ) {
+     if(! strncmp('334', response(), 3 ) ) {
        //send username/password
        fputs($connection, base64_encode(MAIL_USER."\0".MAIL_USER."\0".MAIL_PASSWORD )."\r\n" );
        $log .= 'C: Authenticating...'."\n";
-       if(strncmp('235', response(), 3) ) {
+       if(! strncmp('235', response(), 3 ) ) {
          return;
        }
        
@@ -156,7 +156,7 @@ function starttls($connection, $cap ) {
     debug('TLS negotiation failed' );
   }
     
-  $log .= 'C: TLS success' ); 
+  $log .= 'C: TLS success'; 
   //do a new extended hello (EHLO) after successful negotiation (RFC 3207)
   fputs($connection, 'EHLO '.$_SERVER['SERVER_NAME']."\r\n" );
   $log .= 'C: EHLO'.$_SERVER['SERVER_NAME']."\n";
