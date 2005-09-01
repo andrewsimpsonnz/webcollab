@@ -35,7 +35,7 @@ if(! defined('UID' ) ) {
 
 //includes
 require_once(BASE.'includes/details.php' );
-include_once( BASE.'includes/usergroup_security.php' );
+include_once(BASE.'includes/usergroup_security.php' );
 
 $content = '';
 
@@ -92,7 +92,6 @@ if(db_numrows($q ) != 0 ) {
   }
   $content .= "</table>";
 }
-
 
 if((! GUEST ) && ($TASKID_ROW['archive'] == 0) ){
   $content .= "<span class=\"textlink\">[<a href=\"files.php?x=".$x."&amp;taskid=".$taskid."&amp;action=upload\">".$lang['add_file']."</a>]</span>";
