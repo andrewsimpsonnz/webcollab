@@ -368,11 +368,11 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   }
   $headers[] = $line;
   //'from' header 
-  $headers = array_merge($headers, header_encoding('From :', ABBR_MANAGER_NAME, '<'.$from.'>' ) );
+  $headers = array_merge($headers, header_encoding('From:', ABBR_MANAGER_NAME, '<'.$from.'>' ) );
   //reply to
   $headers[] = 'Reply-To: '.$reply_to;
   //'subject' header
-  $headers = array_merge($headers, header_encoding('Subject :', $subject, '' ) );
+  $headers = array_merge($headers, header_encoding('Subject:', $subject, '' ) );
   //assemble remaining message headers (RFC 821 / RFC 2045)
   $headers[] = 'Message-Id: <'.md5(mt_rand()).'@'.$_SERVER['SERVER_NAME'].'>';
   $headers[] = 'X-Mailer: WebCollab (PHP/'.phpversion().')';
