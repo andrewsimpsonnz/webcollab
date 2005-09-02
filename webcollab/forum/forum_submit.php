@@ -264,7 +264,7 @@ ignore_user_abort(TRUE);
               $row['username'] = "----";
             }
               
-            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_reply, UID_NAME, $row['username'], $original_message, $message_unclean ) );
+            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_reply, UID_NAME, $row['username'], $row['text'], $message_unclean ) );
             break;
         }
       }
