@@ -142,6 +142,6 @@
   define('PRE', "" );
 
   //version info
-  define('WEBCOLLAB_VERSION', "1.70" );
+  define('WEBCOLLAB_VERSION', "1.80" );
 
 ?>
