@@ -59,6 +59,10 @@ switch(LOCALE ) {
     include(BASE.'lang/fr_email.php' );
     break;
 
+  case 'gr':
+    include(BASE.'lang/gr_email.php' );
+    break;
+
   case 'hu':
     include(BASE.'lang/hu_email.php' );
     break;
