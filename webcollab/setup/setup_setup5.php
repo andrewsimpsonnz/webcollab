@@ -110,6 +110,7 @@ $content = "<?php\n".
 "  //                       'de' (German), 'it' (Italian), 'bg' (Bulgarian), 'da' (Danish)\n".
 "  //                       'ko' (Korean), 'pt-br' (Brazilian Portuguese), 'hu' (Hungarian)\n".
 "  //                       'ru' (Russian), 'ja' (Japanese),  'se' (Swedish) 'sr' (Serbian (Latin))\n".
+"  //                       'gr' (Greek)\n".
 "  define('LOCALE', '".$data["locale"]."' );\n\n".
 "//-- Timezone --\n\n".
 "  //timezone offset from GMT/UTC (hours)\n".
