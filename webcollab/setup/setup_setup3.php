@@ -48,7 +48,8 @@ else {
   $edit = 'N';
 }
 
-$file_path = realpath(dirname(__FILE__ ).'/..' ).'/';
+$file_path  = realpath(dirname(__FILE__ ).'/..' )."/files/filebase";
+$server_url = str_replace("setup_handler.php", "",  "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] );
 
 if(defined('DATABASE_NAME' ) && (DATABASE_NAME != '') && ($new_db === 'N' ) && ($edit === 'N') ) {
   //this is an existing install and no new database has been created
@@ -57,10 +58,10 @@ if(defined('DATABASE_NAME' ) && (DATABASE_NAME != '') && ($new_db === 'N' ) && (
   $db_password       = DATABASE_PASSWORD;
   $db_type           = DATABASE_TYPE;
   $db_host           = DATABASE_HOST;
-  $base_url          = (BASE_URL != '' )          ? BASE_URL          : str_replace( $_SERVER["DOCUMENT_ROOT"], "http://".$_SERVER["HTTP_HOST"], $file_path );
+  $base_url          = (BASE_URL != '' )          ? BASE_URL          : $server_url;
   $manager_name      = (MANAGER_NAME != '' )      ? MANAGER_NAME      : 'WebCollab Project Management';
   $abbr_manager_name = (ABBR_MANAGER_NAME != '' ) ? ABBR_MANAGER_NAME : 'WebCollab';
-  $file_base         = (FILE_BASE != '' )         ? FILE_BASE         : $file_path."files/filebase";
+  $file_base         = (FILE_BASE != '' )         ? FILE_BASE         : $file_path;
   $file_maxsize      = (FILE_MAXSIZE != '' )      ? FILE_MAXSIZE      : '2000000';
   $locale            = (LOCALE != '' )            ? LOCALE            : 'en';
   $tz                = (TZ != '' )                ? TZ                : (int)date('Z')/3600;
@@ -74,10 +75,10 @@ else {
   $db_password       = (isset($_POST['db_password']) )       ? $_POST['db_password']       : '';
   $db_type           = (isset($_POST['db_type']) )           ? $_POST['db_type']           : 'mysql';
   $db_host           = (isset($_POST['db_host']) )           ? $_POST['db_host']           : 'localhost';  
-  $base_url          = (isset($_POST['base_url']) )          ? $_POST['base_url']          : str_replace( $_SERVER["DOCUMENT_ROOT"], "http://".$_SERVER["HTTP_HOST"], $file_path );
+  $base_url          = (isset($_POST['base_url']) )          ? $_POST['base_url']          : $server_url;
   $manager_name      = (isset($_POST['manager_name']) )      ? $_POST['manager_name']      : 'WebCollab Project Management';
   $abbr_manager_name = (isset($_POST['abbr_manager_name']) ) ? $_POST['abbr_manager_name'] : 'WebCollab';
-  $file_base         = (isset($_POST['file_base']) )         ? $_POST['file_base']         : $file_path."files/filebase";
+  $file_base         = (isset($_POST['file_base']) )         ? $_POST['file_base']         : $file_path;
   $file_maxsize      = (isset($_POST['file_maxsize']) )      ? $_POST['file_maxsize']      : '2000000';
   $locale            = (isset($_POST['locale']) )            ? $_POST['locale']            : 'en';
   $tz                = (isset($_POST['timezone']) )          ? $_POST['timezone']          : (int)date('Z')/3600;
