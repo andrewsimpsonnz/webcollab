@@ -158,7 +158,7 @@ for( $i=0 ; $i < 16 ; ++$i ) {
 }
 
 //select current value
-$option_array = array('bg', 'ca', 'da', 'en', 'fr', 'de', 'gr', 'hu', 'it', 'ja', 'ko', 'pt-br', 'ru', 'es', 'sr', 'se' );
+$option_array = array('bg', 'ca', 'cs', 'da', 'en', 'fr', 'de', 'gr', 'hu', 'it', 'ja', 'ko', 'pt-br', 'ru', 'es', 'sr', 'se' );
 $selected = array_search($locale, $option_array );  
 $s[$selected] = " selected=\"selected\"";  
   
@@ -166,20 +166,21 @@ $content .= "<tr><td></td><td><br /></td></tr>\n".
             "<tr><th>Language:</th><td><select name=\"locale\">\n".
             "<option value=\"bg\" ".   $s[0].">Bulgarian</option>\n".
             "<option value=\"ca\" ".   $s[1].">Catalan</option>\n".
-            "<option value=\"da\" ".   $s[2].">Danish</option>\n".
-            "<option value=\"en\" ".   $s[3].">English</option>\n".
-            "<option value=\"fr\" ".   $s[4].">French</option>\n".
-            "<option value=\"de\" ".   $s[5].">German</option>\n".
-            "<option value=\"gr\" ".   $s[6].">Greek</option>\n".
-            "<option value=\"hu\" ".   $s[7].">Hungarian</option>\n".            
-            "<option value=\"it\" ".   $s[8].">Italian</option>\n".
-            "<option value=\"ja\" ".   $s[9].">Japanese</option>\n".
-            "<option value=\"ko\" "   .$s[10].">Korean</option>\n".
-            "<option value=\"pt-br\" ".$s[11].">Portuguese (Brazilian)</option>\n".
-            "<option value=\"ru\" ".   $s[12].">Russian</option>\n". 
-            "<option value=\"es\" ".   $s[13].">Spanish</option>\n". 
-            "<option value=\"se\" ".   $s[14].">Serbian (Latin)</option>\n".
-            "<option value=\"se\" ".   $s[15].">Swedish</option>\n".
+            "<option value=\"cs\" ".   $s[2].">Czech</option>\n".            
+            "<option value=\"da\" ".   $s[3].">Danish</option>\n".
+            "<option value=\"en\" ".   $s[4].">English</option>\n".
+            "<option value=\"fr\" ".   $s[5].">French</option>\n".
+            "<option value=\"de\" ".   $s[6].">German</option>\n".
+            "<option value=\"gr\" ".   $s[7].">Greek</option>\n".
+            "<option value=\"hu\" ".   $s[8].">Hungarian</option>\n".            
+            "<option value=\"it\" ".   $s[9].">Italian</option>\n".
+            "<option value=\"ja\" ".   $s[10].">Japanese</option>\n".
+            "<option value=\"ko\" "   .$s[11].">Korean</option>\n".
+            "<option value=\"pt-br\" ".$s[12].">Portuguese (Brazilian)</option>\n".
+            "<option value=\"ru\" ".   $s[13].">Russian</option>\n". 
+            "<option value=\"es\" ".   $s[14].">Spanish</option>\n". 
+            "<option value=\"se\" ".   $s[15].">Serbian (Latin)</option>\n".
+            "<option value=\"se\" ".   $s[16].">Swedish</option>\n".
             "</select></td></tr>\n";
              
 //timezone setting
