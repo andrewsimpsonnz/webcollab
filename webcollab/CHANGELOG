@@ -1,8 +1,16 @@
 WebCollab CVS
+*** 14 September 2005
+  Andrew Simpson
+
+- add Czech language (Credit: Lukas Moravek)
+
+- improve server URL autodetection in setup
+
+WebCollab CVS
 *** 5 September 2005
   Andrew Simpson
 
-- Add Greek language (Credit: Nico Bel - Designext) 
+- add Greek language (Credit: Nico Bel - Designext) 
 
 WebCollab 1.80 (Allendale)
 *** 4 September 2005
