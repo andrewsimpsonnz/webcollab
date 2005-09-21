@@ -101,6 +101,10 @@ switch(LOCALE ) {
   case 'sr':
     include(BASE.'lang/sr_message.php' );
     break;
+  
+  case 'tr':
+    include(BASE.'lang/tr_message.php' );
+    break;
     
   default:
     include(BASE.'lang/en_message.php' );
