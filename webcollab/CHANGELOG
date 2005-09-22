@@ -1,4 +1,12 @@
 WebCollab CVS
+*** 22 September 2005
+  Andrew Simpson
+
+- improve santisation of integer inputs
+
+- add Turkish language (Credit: Aydin Gurel)
+
+WebCollab CVS
 *** 14 September 2005
   Andrew Simpson
 
