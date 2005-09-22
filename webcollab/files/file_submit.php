@@ -87,7 +87,7 @@ ignore_user_abort(TRUE);
         }
       }        
 
-      if(empty($_POST['taskid']) || ! is_numeric($_POST['taskid']) ) {
+      if(! @safe_integer($_POST['taskid']) ) {
         //delete any upload before invoking the error function
         if(is_uploaded_file( $_FILES['userfile']['tmp_name'] ) ) {
           unlink( $_FILES['userfile']['tmp_name'] );
@@ -95,7 +95,7 @@ ignore_user_abort(TRUE);
         error('File submit', 'Not a valid taskid');
       }
 
-      $taskid = intval($_POST['taskid']);
+      $taskid = $_POST['taskid'];
       $description = safe_data_long($_POST['description'] );
       //make email adresses and web links clickable
       $description = html_links($description, 1 );
@@ -183,7 +183,7 @@ ignore_user_abort(TRUE);
       //alter task lastfileupload
       db_query('UPDATE '.PRE.'tasks SET lastfileupload=now() WHERE id='.$taskid );
       
-      //disarm it
+      //make the file non-executable for security
       chmod(FILE_BASE.'/'.$fileid.'__'.$filename, 0644 );
       
       //success!
@@ -240,11 +240,11 @@ ignore_user_abort(TRUE);
 
     case 'submit_del':
 
-      if(empty($_GET['fileid'] ) || ! is_numeric($_GET['fileid'] ) ) {
+      if( ! @safe_integer($_GET['fileid']) ) {
         error('File submit', 'Not a valid fileid' );
       }
 
-      $fileid = intval($_GET['fileid']);
+      $fileid = $_GET['fileid'];
 
       //get the files from this task
       $q = db_query('SELECT '.PRE.'files.uploader AS uploader,

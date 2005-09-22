@@ -140,10 +140,10 @@ ignore_user_abort(TRUE);
       }       
       $input_array = array('parentid', 'taskid', 'usergroupid');
       foreach($input_array as $var ) {   
-        if(! isset($_POST[$var]) || ! is_numeric($_POST[$var]) ){
+        if(! @safe_integer($_POST[$var]) ){
           error('Forum submit', "Variable $var is not set" );
         }
-        ${$var} = intval($_POST[$var]);
+        ${$var} = $_POST[$var];
       }
       
       $text = safe_data_long($_POST['text'] );
@@ -272,10 +272,10 @@ ignore_user_abort(TRUE);
 
     //owner of the thread can delete, admin can delete
     case 'submit_del':
-      if(empty($_GET['postid']) || ! is_numeric($_GET['postid']) ) {
+      if(! @safe_integer($_GET['postid']) ) {
         error('Forum submit', 'Postid not valid' );
       }
-      $postid = intval($_GET['postid'] );
+      $postid = $_GET['postid'];
 
       switch(ADMIN ) {
         

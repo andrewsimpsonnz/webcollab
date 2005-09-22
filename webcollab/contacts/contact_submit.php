@@ -87,10 +87,10 @@ switch($_REQUEST['action'] ) {
     if(empty($_POST['lastname'] ) || empty($_POST['firstname'] ) ) {
       warning($lang['contact_submit'], $lang['contact_warn'] );
     }
-    if(empty($_POST['contactid']) || ! is_numeric($_POST['contactid'] ) ) {
+    if(! @safe_integer($_POST['contactid']) ) {
       error('Contact submit', 'Not a valid contactid' );
     }
-    $contactid = intval($_POST['contactid']);
+    $contactid = $_POST['contactid'];
  
     db_query('UPDATE '.PRE.'contacts SET
                   firstname=\''.safe_data($_POST['firstname']).'\',
@@ -109,14 +109,14 @@ switch($_REQUEST['action'] ) {
                   date=now()
                   WHERE id = \''.$contactid.'\'' );
 
-  break;
+    break;
 
   case 'submit_delete':
       
-    if(empty($_POST['contactid']) || ! is_numeric($_POST['contactid'] ) ) {
+    if( ! @safe_integer($_POST['contactid']) ) {
       error('Contact submit', 'Not a valid contactid' );
     }
-    $contactid = intval($_POST['contactid']);
+    $contactid = $_POST['contactid'];
 
     //delete the contact 
     @db_query('DELETE FROM '.PRE.'contacts WHERE id='.$contactid );

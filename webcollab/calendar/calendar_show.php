@@ -50,14 +50,14 @@ else {
 }
 
 //set user default
-if(isset($_POST['userid']) && is_numeric($_POST['userid']) ){
-  $userid = ($_POST['userid']);
+if( @safe_integer($_POST['userid']) ){
+  $userid = $_POST['userid'];
 }
 else {
   $userid = (GUEST ) ? 0 : UID;
 }
 //set usergroup default
-if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) ){
+if( @safe_integer($_POST['groupid']) ){
   $groupid = $_POST['groupid'];
 }  
 else {
@@ -91,14 +91,14 @@ else {
 $epoch = TIME_NOW + (TZ * 3600) - TZ_OFFSET;
     
 //set month
-if(isset($_POST['month']) && is_numeric($_POST['month']) ){
+if( @safe_integer($_POST['month']) ){
   $month = $_POST['month'];
 }
 else {
   $month = date('n', $epoch);
 }
 //set year
-if(isset($_POST['year']) && is_numeric($_POST['year']) ){
+if( @safe_integer($_POST['year']) ){
   $year = $_POST['year'];
 }
 else {

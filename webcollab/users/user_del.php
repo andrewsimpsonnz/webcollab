@@ -42,11 +42,11 @@ if(! ADMIN ){
 }
 
 //get some stupid errors
-if(empty($_GET['userid']) || ! is_numeric($_GET['userid']) ) {
+if(! @safe_integer($_GET['userid']) ) {
   error('User delete', 'No userid specified' );
 }
 
-$userid = intval($_GET['userid']);
+$userid = $_GET['userid'];
 
 if(empty($_GET['action'] ) ){
   error('User delete', 'No action specified' );

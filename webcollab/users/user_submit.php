@@ -57,11 +57,11 @@ switch($_REQUEST['action'] ) {
     if(! ADMIN ){
       error('Authorisation failed', 'You have to be admin to do this' );
     }
-    if(empty($_GET['userid']) && ! is_numeric($_GET['userid']) ){
+    if(! @safe_integer($_GET['userid']) ){
       error('User submit', 'No userid was specified.' );
     }
 
-    $userid = intval($_GET['userid']);
+    $userid = $_GET['userid'];
 
     if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE deleted=\'t\' AND id='.$userid ), 0, 0 ) ) {
       //undelete
@@ -147,7 +147,7 @@ switch($_REQUEST['action'] ) {
       for( $i=0 ; $i < $max ; ++$i ) {
 
         //check for security
-        if(isset( $usergroup[$i] ) && is_numeric( $usergroup[$i] ) ) {
+        if(isset( $usergroup[$i] ) && safe_integer( $usergroup[$i] ) ) {
           db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.$user_id.', '.$usergroup[$i].')' );
           //get the usergroup name for the email
           $q = db_query('SELECT name FROM '.PRE.'usergroups WHERE id='.$usergroup[$i] );
@@ -201,10 +201,10 @@ switch($_REQUEST['action'] ) {
     if(ADMIN ) {
 
       //check for a userid
-      if(empty($_POST['userid']) || ! is_numeric($_POST['userid']) ){
+      if(! @safe_integer($_POST['userid']) ){
         error('User submit', 'No userid specified');
       }
-      $userid = intval($_POST['userid']);
+      $userid = $_POST['userid'];
 
       $private_user = (isset($_POST['private_user']) && ( $_POST['private_user'] === 'on' ) ) ? 1 : 0;
       
@@ -269,7 +269,7 @@ switch($_REQUEST['action'] ) {
         for($i=0 ; $i < sizeof($usergroup) ; ++$i) {
 
           //check for security
-          if(is_numeric( $usergroup[$i] ) ) {
+          if(safe_integer( $usergroup[$i] ) ) {
             db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.$userid.', '.$usergroup[$i].')' );
             //get the usergroup name for the email
             $q = db_query('SELECT name FROM '.PRE.'usergroups WHERE id='.$usergroup[$i] );

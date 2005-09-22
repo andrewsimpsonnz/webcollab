@@ -36,15 +36,15 @@ if(GUEST ) {
 }
 
 //we need a valid contactid
-if(empty( $_POST['contactid'] ) || ! is_numeric( $_POST['contactid'] ) ){
-  error('Contact engine', 'Not a valid value for contactid');
+if(! @safe_integer($_POST['contactid']) ){
+  error('Contact edit', 'Not a valid value for contactid');
 }
 
-$contactid = intval($_POST['contactid']);
+$contactid = $_POST['contactid'];
 
 //get contact information
 if( ! ($row = db_fetch_array( db_query( 'SELECT * FROM '.PRE.'contacts WHERE id='.$contactid ), 0 ) ) ){
-  error('Database value error', 'There is no information for the contact that you specified');
+  error('Contact edit', 'There is no information for that contact');
 }
 
 $content =

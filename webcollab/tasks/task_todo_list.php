@@ -172,15 +172,15 @@ else {
   $selection = 'user';
 }
 
-if(isset($_POST['userid']) && is_numeric($_POST['userid']) ){
-  $userid = intval($_POST['userid']);
+if( @safe_integer($_POST['userid']) ){
+  $userid = $_POST['userid'];
 }
 else {
   $userid = (GUEST ) ? 0 : UID;
 }
 
-if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) ) {
-  $groupid = intval($_POST['groupid']);
+if( @safe_integer($_POST['groupid']) ) {
+  $groupid = $_POST['groupid'];
 }
 else {
   $groupid = 0;

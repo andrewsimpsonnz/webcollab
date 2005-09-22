@@ -38,10 +38,10 @@ if(! ADMIN ){
 }
 
 //secure
-if(empty($_GET['taskgroupid']) || ! is_numeric($_GET['taskgroupid']) ){
+if(! @safe_integer($_GET['taskgroupid']) ){
   error('Taskgroup edit', 'There is no taskgroupid specified.' );
 }
-$taskgroupid = intval($_GET['taskgroupid']);
+$taskgroupid = $_GET['taskgroupid'];
 
 //get taskgroup information
 $q = db_query('SELECT * FROM '.PRE.'taskgroups WHERE id='.$taskgroupid );

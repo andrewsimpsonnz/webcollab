@@ -50,11 +50,11 @@ switch($_REQUEST['action'] ) {
   //delete a usergroup
   case 'submit_del':
 
-    if(empty($_GET['usergroupid']) || ! is_numeric($_GET['usergroupid']) ) {
+    if(! @safe_data($_GET['usergroupid']) ) {
       error('Usergroup submit', 'Not a valid value for usergroupid' );
     }
     
-    $usergroupid = intval($_GET['usergroupid'] );
+    $usergroupid = $_GET['usergroupid'];
 
     db_begin();
 
@@ -64,7 +64,7 @@ switch($_REQUEST['action'] ) {
     //delete the user entries out of usergroups_users
     db_query('DELETE FROM '.PRE.'usergroups_users WHERE usergroupid='.$usergroupid );
 
-    //delete the group
+    //delete the usergroup
     db_query('DELETE FROM '.PRE.'usergroups WHERE id='.$usergroupid );
 
     //update the tasks table by resetting the deleted usergroup id to zero
@@ -106,8 +106,8 @@ switch($_REQUEST['action'] ) {
       (array)$member = $_POST['member'];
       $max = sizeof($member);
       for($i=0 ; $i < $max ; ++$i ) {
-        if(isset($member[$i]) && is_numeric($member[$i] ) ) {
-          db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.intval($member[$i]).', '.$usergroupid.')' );
+        if(isset($member[$i]) && safe_integer($member[$i] ) ) {
+          db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.$member[$i].', '.$usergroupid.')' );
         }
       }
     }
@@ -118,7 +118,7 @@ switch($_REQUEST['action'] ) {
   //edit a usergroup
   case 'submit_edit':
 
-    if(empty($_POST['usergroupid'] ) || ! is_numeric($_POST['usergroupid'] ) ){
+    if(! @safe_integer($_POST['usergroupid'] ) ){
       error('Usergroup submit', 'Not a valid value for usergroupid' );
     }
     if(empty($_POST['name'] ) ){
@@ -126,7 +126,7 @@ switch($_REQUEST['action'] ) {
     }
     $name        = safe_data($_POST['name'] );
     $description = safe_data($_POST['description'] );
-    $usergroupid = intval($_POST['usergroupid'] );
+    $usergroupid = $_POST['usergroupid'];
     
     if( isset($_POST['private_group']) && ( $_POST['private_group'] === 'on' ) ) {
       $private_group = 1;
@@ -148,8 +148,8 @@ switch($_REQUEST['action'] ) {
         (array)$member = $_POST['member'];
         $max = sizeof($member);
         for($i=0 ; $i < $max ; ++$i ) {
-          if(isset($member[$i]) && is_numeric( $member[$i] ) ) {
-            db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.intval($member[$i]).', '.$usergroupid.')' );
+          if(isset($member[$i]) && safe_integer( $member[$i] ) ) {
+            db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.$member[$i].', '.$usergroupid.')' );
           }
         }
       }

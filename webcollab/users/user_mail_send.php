@@ -102,7 +102,7 @@ if(get_magic_quotes_gpc() ) {
       //loop through chosen usergroups
       for($i=0 ; $i < $max ; ++$i ){
         //check for security, then get users for each usergroup
-        if(isset($usergroup[$i] ) && is_numeric($usergroup[$i] ) ){
+        if(isset($usergroup[$i] ) && safe_integer($usergroup[$i] ) ){
           $q = db_query('SELECT '.PRE.'users.email
                           FROM '.PRE.'usergroups_users
                           LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'usergroups_users.userid)

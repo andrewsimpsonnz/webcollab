@@ -32,11 +32,11 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
-if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) ) {
+if(! @safe_integer($_REQUEST['taskid']) ) {
   error('Task details', 'The taskid input is not valid' ); 
 }
 
-$taskid = intval($_REQUEST['taskid']);
+$taskid = $_REQUEST['taskid'];
 
 //get task details
 if(! ($q = @db_query('SELECT * FROM '.PRE.'tasks WHERE id='.$taskid, 0 ) ) ) {

@@ -163,10 +163,10 @@ function find_children($parent ) {
 //MAIN PROGRAM
 
 //check the taskid is valid
-if( ! (isset($_GET['taskid']) && is_numeric($_GET['taskid']) ) ){
+if(! @safe_integer($_GET['taskid']) ) {
   error('Forum list', 'Not a valid taskid' );
 }
-$taskid = intval($_GET['taskid']);
+$taskid = $_GET['taskid'];
 
 //check usergroup security  
 $taskid = usergroup_check($taskid );
@@ -197,7 +197,7 @@ if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) )
 //private forums
 //
 
-//show all posts that are private to that task's user-group if you are within the group (so AND user AND task have to belong to the same group)
+//show all posts that are private to that task's usergroup if you are within the group (so AND user AND task have to belong to the same group)
 
 //dont show private forums if the task has not yet been assigned to a usergroup
 if($TASKID_ROW['usergroupid'] != 0 ) {

@@ -21,7 +21,7 @@
   Function:
   ---------
 
-  Add a task to the database
+  Archives or restores projects in the database
 
 */
 
@@ -29,8 +29,12 @@
 if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
+
+if(! @safe_integer($_GET['taskid']) ) {
+  error('Archive submit', 'Not a valid taskid' );
+}
   
-$taskid = intval($_GET['taskid']);
+$taskid = $_GET['taskid'];
   
 //check if the user has enough rights
 if( ( ! ADMIN ) && (db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$taskid.' AND owner='.UID ), 0, 0 ) < 1) ){

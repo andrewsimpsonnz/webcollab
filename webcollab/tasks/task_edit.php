@@ -82,11 +82,11 @@ function user_access($owner, $usergroupid, $groupaccess ) {
   return false;
 }
 
-if(empty($_GET['taskid']) || ! is_numeric($_GET['taskid']) ){
+if(! @safe_integer($_GET['taskid']) ){
   error('Task edit', 'The taskid input is not valid' );
 }
 
-$taskid = intval($_GET['taskid']);
+$taskid = $_GET['taskid'];
 
 //can this user edit this task ?
 if( ! user_access($TASKID_ROW['owner'], $TASKID_ROW['usergroupid'], $TASKID_ROW['groupaccess'] ) ) {

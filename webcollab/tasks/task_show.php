@@ -43,11 +43,11 @@ include_once(BASE.'includes/usergroup_security.php');
 $content = '';
 
 //is there an id ?
-if( ! isset( $_GET['taskid']) || ! is_numeric($_GET['taskid']) || $_GET['taskid'] == 0 ) {
+if(! @safe_integer($_GET['taskid']) || $_GET['taskid'] == 0 ) {
   error('Task show', 'Not a valid value for taskid' );
 }
 
-$taskid = intval($_GET['taskid']);
+$taskid = $_GET['taskid'];
 
 //check usergroup security
 $taskid = usergroup_check($taskid );

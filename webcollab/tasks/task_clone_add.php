@@ -37,11 +37,11 @@ if(! ADMIN ) {
   error('Unauthorised access', 'This function is for admins only' );
 }
 
-if(empty($_GET['taskid']) && ! is_numeric($_GET['taskid']) ) {
+if(! @safe_integer($_GET['taskid']) ) {
   error('Task clone', 'Taskid not set' );
 }
 
-$taskid = intval($_GET['taskid']);
+$taskid = $_GET['taskid'];
 
 $content = '';
 

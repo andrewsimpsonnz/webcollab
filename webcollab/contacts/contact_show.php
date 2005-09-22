@@ -24,7 +24,7 @@
    Function:
   ---------
 
-  Show contacts.
+  Show contacts
 
 */
 
@@ -34,14 +34,14 @@ if(! defined('UID' ) ) {
 }
 
 //we need a valid contactid
-if(empty($_GET['contactid']) || ! is_numeric($_GET['contactid']) ){
-  error('Contact submission', 'Not a valid value for contactid');
+if(! @safe_integer($_GET['contactid']) ){  
+  error('Contact show', 'Not a valid value for contactid');
 }
-$contactid = intval($_GET['contactid']);
+$contactid = $_GET['contactid'];
 
 //get contact information
-if( ! ($row = db_fetch_array( db_query('SELECT * FROM '.PRE.'contacts WHERE id='.$contactid ), 0 ) ) ){
-  error('Database value error', 'There is no information for the user that you specified');
+if( ! ($row = @db_fetch_array(db_query('SELECT * FROM '.PRE.'contacts WHERE id='.$contactid ), 0 ) ) ){
+  error('Contact show', 'There is no information for that contact');
 }
 
 $content =

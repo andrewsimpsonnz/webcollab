@@ -284,11 +284,11 @@ function list_tasks($parent ) {
 //
 
 //is the parentid set in tasks.php ?
-if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) ) {
-  error( 'Task list', 'Not a valid value for taskid');
+if(! @safe_integer($_REQUEST['taskid']) ) {
+  error('Task list', 'Not a valid value for taskid' );
 }
 
-$parentid = intval($_REQUEST['taskid']);
+$parentid = $_REQUEST['taskid'];
 
 //check for private usergroup projects
 $q = db_query('SELECT usergroupid, globalaccess FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] );

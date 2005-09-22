@@ -39,10 +39,10 @@ $userid = '';
 if(ADMIN ) {
 
   //is there a uid ?
-  if(empty($_REQUEST['userid']) || ! is_numeric($_REQUEST['userid']) ){
+  if(! safe_integer($_REQUEST['userid']) ){
     error('User edit', 'No userid was specified' );
   }
-  $userid = intval($_REQUEST['userid']);
+  $userid = $_REQUEST['userid'];
 
   //query for user
   $q = db_query('SELECT * FROM '.PRE.'users WHERE id='.$userid );

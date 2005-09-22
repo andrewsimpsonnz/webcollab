@@ -37,11 +37,11 @@ include_once(BASE.'includes/usergroup_security.php' );
 //set variables
 $fp = '';
 
-if(empty($_GET['fileid']) || ! is_numeric($_GET['fileid']) ){
+if( ! @safe_integer($_GET['fileid']) ){
   return;
 }
 
-$fileid = intval($_GET['fileid']);
+$fileid = $_GET['fileid'];
 
 //get the files info
 if( ! ($q = db_query('SELECT fileid, filename, size, mime, taskid FROM '.PRE.'files WHERE id='.$fileid, 0 ) ) )  {
@@ -61,8 +61,7 @@ if( ! ( file_exists( FILE_BASE.'/'.$row['fileid'].'__'.($row['filename'] ) ) ) )
 }
 
 //open the file
-$fp = fopen( FILE_BASE.'/'.$row['fileid'].'__'.($row['filename']), 'rb' );
-if($fp == 0 ) {
+if( ! ($fp = @fopen( FILE_BASE.'/'.$row['fileid'].'__'.($row['filename']), 'rb' ) ) {
   error('Download file', 'File handle for '.$row['filename'].' cannot be opened' );
 }
 

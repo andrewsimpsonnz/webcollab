@@ -105,10 +105,10 @@ function find_children($parent ) {
 //
 // advanced database-wide task-delete !!
 //
-if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) ) {
+if(! @safe_integer($_REQUEST['taskid']) ) {
   error('Task details', 'The taskid input is not valid' ); 
 }
-$taskid = intval($_REQUEST['taskid']);
+$taskid = $_REQUEST['taskid'];
 
 //get task and owner information
 $q = db_query('SELECT '.PRE.'tasks.parent AS parent,            

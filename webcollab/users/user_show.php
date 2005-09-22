@@ -38,11 +38,11 @@ $no_access_group   = array();
 $user_gid = array();
 
 //get some stupid errors
-if(empty($_GET['userid']) || ! is_numeric($_GET['userid']) ){
+if(! @safe_integer($_GET['userid']) ){
   error('User show', 'No userid was given' );
 }
 
-$userid = intval($_GET['userid']);
+$userid = $_GET['userid'];
 
 //select
 $q = db_query('SELECT id, name, fullname, email, admin, private, guest, deleted FROM '.PRE.'users WHERE id='.$userid );

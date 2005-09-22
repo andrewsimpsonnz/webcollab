@@ -46,10 +46,10 @@ if(empty($_REQUEST['action']) ){
   error('Task submit', 'No request given' );
 }
 
-if(empty($_GET['taskid']) || ! is_numeric($_GET['taskid']) ){
+if(! @safe_integer($_GET['taskid']) ){
   error('Task submit', 'No taskid given' );
 } 
-$taskid = intval($_GET['taskid']);
+$taskid = $_GET['taskid'];
   
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);

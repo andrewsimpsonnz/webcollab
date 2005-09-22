@@ -39,11 +39,11 @@ include_once(BASE.'includes/usergroup_security.php' );
 
 $content = '';
 
-if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) ){
+if(! @safe_integer($_REQUEST['taskid']) ){
   error('File list', 'The taskid input is not valid' ); 
 }
 
-$taskid = intval($_REQUEST['taskid']);
+$taskid = $_REQUEST['taskid'];
 //check usergroup security
 $taskid = usergroup_check($taskid );
 

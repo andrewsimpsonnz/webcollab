@@ -156,11 +156,11 @@ function copy_across($taskid, $new_parent, $name ) {
 //secure variables
 $parent_array = array();
 
-if(empty($_POST['taskid']) || ! is_numeric($_POST['taskid'] ) ) {
+if(! @safe_integer($_POST['taskid']) ) {
   error('Project clone', 'Not a valid value for taskid');
 }
 
-$taskid = intval($_POST['taskid']);
+$taskid = $_POST['taskid'];
 
 if(empty($_POST['name']) ) {
   warning('Project clone', 'Project name is not set' );

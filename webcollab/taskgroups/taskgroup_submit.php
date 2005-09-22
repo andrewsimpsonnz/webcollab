@@ -49,10 +49,10 @@ switch($_REQUEST['action'] ) {
   //delete a taskgroup
   case 'submit_del':
 
-    if(empty($_GET['taskgroupid'] ) || ! is_numeric($_GET['taskgroupid']) ) {
+    if(! @safe_integer($_GET['taskgroupid']) ) {
       error('Taskgroup submit', 'Not a valid value for taskgroupid' );
     }
-    $taskgroupid = intval($_GET['taskgroupid']);
+    $taskgroupid = $_GET['taskgroupid'];
 
     //if taskgroup exists we can delete it :)
     if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'taskgroups WHERE id='.$taskgroupid ), 0, 0 ) ) {
@@ -87,7 +87,7 @@ switch($_REQUEST['action'] ) {
   //edit an existing taskgroup
   case 'submit_edit':
 
-    if(empty($_POST['taskgroupid'] ) || ! is_numeric($_POST['taskgroupid'] ) ){
+    if(! @safe_integer($_POST['taskgroupid'] ) ){
       error('Taskgroup submit', 'Not a valid value for taskgroupid' );
     }
     
@@ -97,7 +97,7 @@ switch($_REQUEST['action'] ) {
     
     $name        = safe_data($_POST['name'] );
     $description = safe_data($_POST['description'] );
-    $taskgroupid = intval($_POST['taskgroupid'] );
+    $taskgroupid = $_POST['taskgroupid'];
 
     db_query('UPDATE '.PRE.'taskgroups SET name=\''.$name.'\', description=\''.$description.'\' WHERE id='.$taskgroupid );
     

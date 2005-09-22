@@ -43,11 +43,11 @@ if(GUEST ){
 }
 
 //check if file uploads are allowed in php.ini file
-if( ! (bool)ini_get('file_uploads' ) ){
+if( ! (bool)ini_get('file_uploads' ) ) {
   warning($lang['error'], $lang['no_file_uploads'] );
 }
 
-if(empty($_GET['taskid']) || ! is_numeric($_GET['taskid']) ){
+if( ! @safe_integer($_GET['taskid']) ) {
   error('File upload', 'Not a valid taskid');
 }
 $taskid = $_GET['taskid'];

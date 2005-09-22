@@ -94,17 +94,22 @@ $name = safe_data($_POST['name']);
 //mandatory numeric inputs
 $input_array = array('owner', 'parentid', 'priority', 'taskgroupid', 'usergroupid', 'day', 'month', 'year' );
 foreach($input_array as $var ) {
-  if(! isset($_POST[$var]) || ! is_numeric($_POST[$var]) ) {
+  if(! @safe_integer($_POST[$var]) ) {
     error( 'Task submit', 'Variable '.$var.' is not correctly set' );
   }
-  ${$var} = intval($_POST[$var]);
+  ${$var} = $_POST[$var];
+}
+
+//special case: $priority < 5
+if($priority > 5 ) {
+  error('Task submit', 'Variable priority is not correctly set' );
 }
 
 //special case: taskid cannot be zero
-if(empty($_POST['taskid']) || ! is_numeric($_POST['taskid']) ){
-  error( 'Task submit', 'Variable taskid is not correctly set' );
+if(! @safe_integer($_POST['taskid']) || $_POST['taskid'] == 0 ){
+  error('Task submit', 'Variable taskid is not correctly set' );
 }
-$taskid = intval($_POST['taskid']);
+$taskid = $_POST['taskid'];
 
 //mandatory text inputs
 if(empty($_POST['status']) ){

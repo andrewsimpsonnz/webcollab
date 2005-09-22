@@ -39,10 +39,10 @@ if( ! ADMIN ) {
 }
 
 //secure
-if(empty($_GET['usergroupid'] ) || ! is_numeric($_GET['usergroupid'] ) ) {
+if(! @safe_integer($_GET['usergroupid'] ) ) {
   error('Usergroup edit', 'Not a valid value for usergroupid.' );
 }
-$usergroupid = intval($_GET['usergroupid']);
+$usergroupid = $_GET['usergroupid'];
 
 //get taskgroup information
 $q = db_query('SELECT * FROM '.PRE.'usergroups WHERE id='.$usergroupid );

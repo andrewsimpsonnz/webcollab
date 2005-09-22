@@ -44,9 +44,9 @@ if(GUEST ) {
 }
 
 //get taskid (if any)
-if(! empty($_GET['taskid']) && is_numeric($_GET['taskid']) ){
+if(safe_integer($_GET['taskid']) ){
   
-  $taskid = intval($_GET['taskid']);  
+  $taskid = $_GET['taskid'];  
 
   require_once(BASE.'includes/details.php' );
   

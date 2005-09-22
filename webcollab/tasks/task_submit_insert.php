@@ -57,10 +57,15 @@ $name = safe_data($_POST['name']);
 //mandatory numeric inputs
 $input_array = array('owner', 'projectid', 'parentid', 'priority', 'taskgroupid', 'usergroupid', 'day', 'month', 'year' );
 foreach($input_array as $var ) {
-  if(! isset($_POST[$var]) || ! is_numeric($_POST[$var]) ) {
+  if(! @safe_integer($_POST[$var]) ) {
     error( 'Task submit', 'Variable '.$var.' is not correctly set' );
   }
-  ${$var} = intval($_POST[$var]);
+  ${$var} = $_POST[$var];
+}
+
+//special case: $priority < 5
+if($priority > 5 ) {
+  error('Task submit', 'Variable priority is not correctly set' );
 }
 
 //mandatory text inputs

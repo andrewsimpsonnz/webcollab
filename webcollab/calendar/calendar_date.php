@@ -63,15 +63,15 @@ else {
 $epoch = TIME_NOW + (TZ * 3600) - TZ_OFFSET;
     
 //set month
-if(isset($_REQUEST['month']) && is_numeric($_REQUEST['month']) ){
-  $month = intval($_REQUEST['month'] );
+if( @safe_integer($_REQUEST['month']) ){
+  $month = $_REQUEST['month'];
 }
 else {
   $month = date('n', $epoch);
 }
 //set year
-if(isset($_REQUEST['year']) && is_numeric($_REQUEST['year']) ){
-  $year = intval($_REQUEST['year'] );
+if( @safe_integer($_REQUEST['year']) ){
+  $year = $_REQUEST['year'];
 }
 else {
   $year = date('Y', $epoch);

@@ -39,25 +39,25 @@ require_once(BASE.'includes/usergroup_security.php' );
 //secure vars
 $content = '';
 
-if( ! isset($_REQUEST['usergroupid']) || ! is_numeric($_REQUEST['usergroupid']) ){
+if(! @safe_integer($_REQUEST['usergroupid']) ){
   $usergroupid = 0;
 }
 else {
-  $usergroupid = intval($_REQUEST['usergroupid']);
+  $usergroupid = $_REQUEST['usergroupid'];
 }
 
-if( ! isset($_REQUEST['parentid']) || ! is_numeric($_REQUEST['parentid']) ){
+if(! @safe_integer($_REQUEST['parentid']) ){
   $parentid = 0;
 }
 else {
-  $parentid = intval($_REQUEST['parentid']);
+  $parentid = $_REQUEST['parentid'];
 }
 
-if( ! isset($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) ) {
+if(! @safe_integer($_REQUEST['taskid']) ) {
   error('Forum add', 'Not a valid value for taskid');
 }
   
-$taskid = intval($_REQUEST['taskid']);
+$taskid = $_REQUEST['taskid'];
 //check usergroup security
 $taskid = usergroup_check($taskid );
 
