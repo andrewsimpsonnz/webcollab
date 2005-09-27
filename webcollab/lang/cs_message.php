@@ -107,9 +107,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Èt', 'Pá', 'So' );
     $lang['allow_group_edit']           = 'Povolit editovat skupinì?';
     $lang['set_email_owner']            = 'Poslat vlastníkovy email se zmìnami?';
     $lang['set_email_group']            = 'Poslat skupinì email se zmìnami?';
-//**    
     $lang['project_listing_order']      = 'Øazení projektù podle';
-//**    
     $lang['task_listing_order']         = 'Øazení úkolù podle'; 
     $lang['configuration']              = 'Nastavení';
 
@@ -133,7 +131,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Èt', 'Pá', 'So' );
     $lang['del_contact']                = 'Smazat kontakt';
     $lang['contact_info']               = 'Informace o kontaktu';
     $lang['contacts']                   = 'Kontakty';
-    $lang['contact_add_info']           = 'Jestli¾e bude zadán název spoleènosti, jm0no spoleènosti bude zobrazeno místo jména osoby.';
+    $lang['contact_add_info']           = 'Jestli¾e bude zadán název spoleènosti, jméno spoleènosti bude zobrazeno místo jména osoby.';
     $lang['show_contact']               = 'Zobrazit kontaky';
     $lang['edit_contact']               = 'Editovat kontakt';
     $lang['contact_submit']             = 'Potvrdit kontakt';
@@ -148,10 +146,10 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Èt', 'Pá', 'So' );
     $lang['files_assoc_project']        = 'Soubory spojené s tímto projektem';
     $lang['files_assoc_task']           = 'Soubory spojené s tímto úkolem';
     $lang['file_admin']                 = 'Spravovat soubory';
-    $lang['add_file']                   = 'Pøidej soubor';
+    $lang['add_file']                   = 'Pøidat soubor';
     $lang['files']                      = 'Soubory';
-    $lang['file_choose']                = 'Soubor pro pøidání:';
-    $lang['upload']                     = 'Pøidej';
+    $lang['file_choose']                = 'Soubor k pøidání:';
+    $lang['upload']                     = 'Pøidat';
     $lang['file_email_owner']           = 'Oznámit vlastníkovy projektu nový soubor?';
     $lang['file_email_usergroup']       = 'Oznámit skupinì nový soubor?';
     $lang['max_file_sprt']              = 'Soubor musí být men¹í ne¾ %s kb.';
@@ -181,14 +179,13 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Èt', 'Pá', 'So' );
     
  //includes
     $lang['report']                     = 'Report';
-    $lang['warning']                    = '<h1>Omlouváme se!</h1><p>V tuto chvýli nejsme schopni provést Vá¹ po¾adavek. Prosím zkuste to pozdìji.</p>';
+    $lang['warning']                    = '<h1>Omlouváme se!</h1><p>V tuto chvýli nejsme schopní provést Vá¹ po¾adavek. Prosím zkuste to pozdìji.</p>';
     $lang['home_page']                  = 'Domácí stránka';
     $lang['summary_page']               = 'Shrnutí';
     $lang['todo_list']                  = 'Úkoly';
     $lang['calendar']                   = 'Kalendáø';
     $lang['log_out']                    = 'Odhlásit';
     $lang['main_menu']                  = 'Hlavní nabídka';
-//**
     $lang['archive']                    = 'Archiv';   
     $lang['user_homepage_sprt']         = '%s';
     $lang['missing_field_javascript']   = 'Prosím vlo¾te hodnoty do chybìjcího pole';
@@ -205,14 +202,14 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Èt', 'Pá', 'So' );
  //taskgroups
     $lang['taskgroup_name']             = 'Název pracovní skupiny:';
     $lang['taskgroup_description']      = 'Popis pracovní skupiny:';
-    $lang['add_taskgroup']              = 'Pøidat praconí skupinu';
+    $lang['add_taskgroup']              = 'Pøidat pracovní skupinu';
     $lang['add_new_taskgroup']          = 'Pøidat novou pracovní skupinu';
     $lang['edit_taskgroup']             = 'Editovat pracovní skupinu';
     $lang['taskgroup_manage']           = 'Správa pracovní skupiny';
-    $lang['no_taskgroups']              = '®ádná pracovní skuina není definována';
+    $lang['no_taskgroups']              = '®ádná pracovní skupina není definována';
     $lang['manage_taskgroups']          = 'Spravovat pracovní skupiny';
     $lang['taskgroups']                 = 'Pracovní skupina';
-    $lang['taskgroup_dup_sprt']         = 'Pracovní skupina \'%s\' existuje.  Prosím vra»te se zpìt a zvolnte nový název.';
+    $lang['taskgroup_dup_sprt']         = 'Pracovní skupina \'%s\' existuje.  Prosím vra»te se zpìt a zvolte jiný název.';
     $lang['info_taskgroup_manage']      = 'Info pro správu pracovních skupin';
 
  //usergroups
@@ -234,7 +231,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Èt', 'Pá', 'So' );
     $lang['login_name']                 = 'Pøihla¹ovací jméno';
     $lang['full_name']                  = 'Celé jméno';
     $lang['password']                   = 'Heslo';
-    $lang['blank_for_current_password'] = '(Zanechte prázdné pro stávající heslo)';
+    $lang['blank_for_current_password'] = '(Zanechte prázdné, pokud chcete ponechat stávající heslo)';
     $lang['email']                      = 'E-mail';
     $lang['admin']                      = 'Administrátor';
     $lang['private_user']               = 'Privátní u¾ivatel';
