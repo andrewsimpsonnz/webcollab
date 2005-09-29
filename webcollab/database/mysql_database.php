@@ -32,7 +32,7 @@ $database_connection = '';
 $delim = '';
 $epoch = 'UNIX_TIMESTAMP( ';
 $day_part = 'DAYOFMONTH( ';
-$interval = 'INTERVAL ';
+$date_cast = '';
 $escape_new = (version_compare(PHP_VERSION, '4.3.0' ) == '-1' ) ? false : true;
 
 //

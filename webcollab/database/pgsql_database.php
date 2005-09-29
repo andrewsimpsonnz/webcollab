@@ -41,8 +41,8 @@ require_once('path.php' );
 $database_connection = '';
 $delim = "'";
 $epoch = 'extract(epoch FROM ';
+$date_cast = 'DATE ';
 $day_part = 'DATE_PART(\'day\', ';
-$interval = '';
 
 //
 // Provides a safe way to do a query

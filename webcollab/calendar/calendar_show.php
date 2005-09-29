@@ -173,7 +173,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 //get all the days with projects/tasks due in selected month and year
 $q = db_query('SELECT DISTINCT '.$day_part.'deadline) FROM '.PRE.'tasks 
                       WHERE deadline >= \''.$year.'-'.$month.'-01\' 
-                      AND deadline <= (\''.$year.'-'.$month.'-01\'+'.$interval.$delim.'1 MONTH'.$delim.') '.
+                      AND deadline <= ('.$date_cast.'\''.$year.'-'.$month.'-01\' + INTERVAL '.$delim.'1 MONTH'.$delim.') '.
                       $tail );
                       
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ){
