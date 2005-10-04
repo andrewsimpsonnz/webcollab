@@ -159,10 +159,10 @@ for($i=0 ; $i < $index ; ++$i ) {
   //delete all files physically
   $q = db_query('SELECT fileid, filename FROM '.PRE.'files WHERE taskid='.$match_array[$i] );
   
-  for($j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
+  for($j=0 ; $file_row = @db_fetch_array($q, $j ) ; ++$j ) {
 
-    if(file_exists(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] ) ) {
-      unlink( FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] );
+    if(file_exists(FILE_BASE.'/'.$file_row['fileid'].'__'.$file_row['filename'] ) ) {
+      unlink( FILE_BASE.'/'.$file_row['fileid'].'__'.$file_row['filename'] );
     }
   }
 
