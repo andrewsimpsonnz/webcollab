@@ -140,13 +140,14 @@ ignore_user_abort(TRUE);
       //okay accept file
       db_begin();
 
-      //stripslashes from file name if magic quotes is 'on'
-      $filename = (get_magic_quotes_gpc() ) ? stripslashes($_FILES['userfile']['name'] ) : $_FILES['userfile']['name']; 
+      //validate characters in filename
+      $filename = validate($_FILES['userfile']['name'] ); 
 
       //limit file name to 200 characters - should be enough for any sensible(!) file name :-) 
       $filename = substr($filename, 0, 200 );
       //strip illegal characters  
-      $filename = preg_replace('/[^a-zA-Z0-9\-\_\.]|[\.]{2}/', '_', $filename );
+      $filename = preg_replace('/[\x00-\x2a\x2f\x3a-\x3c\x3e-\x3f\x5c\x5e\x60\x7b-\x7e]|[\.]{2}/', '_', $filename );
+      
       //escape for database
       $db_filename = db_escape_string($filename );
         
