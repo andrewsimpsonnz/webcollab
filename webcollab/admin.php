@@ -30,7 +30,7 @@ require_once(BASE.'includes/security.php' );
 include_once(BASE.'includes/screen.php' );
 
 if(! ADMIN ){
-  return;
+  warning('Admin action handler', 'This area for admins only' );
 }
 
 //

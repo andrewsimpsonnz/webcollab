@@ -26,14 +26,15 @@
 
   Handles the calls to taskgroup related functions
 
-  A taskgroup is a group in which a task sits. This is done
-  to enhance readablility.
-
 */
 
 require_once('path.php');
 require_once(BASE.'includes/security.php' );
 include_once(BASE.'includes/screen.php' );
+
+if(! ADMIN ){
+  warning('Taskgroup action handler', 'This area for admins only' );
+}
 
 //
 // The action handler
