@@ -1,4 +1,20 @@
 WebCollab CVS
+*** 4 October 2005
+  Andrew Simpson
+
+- bugfix: variable overwritten in task_delete.php  (Bug #1311130)
+
+- add validate() to common.php
+
+- allow more filename characters in file upload
+
+WebCollab CVS
+*** 27 September 2005
+  Andrew Simpson
+
+- fix SQL error with PostgreSQL 8.0+ in calendar_show.php (James Bishop - bishoja ) 
+  
+WebCollab CVS
 *** 22 September 2005
   Andrew Simpson
 
