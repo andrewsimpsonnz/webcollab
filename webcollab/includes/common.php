@@ -43,14 +43,9 @@ function safe_data($body ) {
     return '';
   }
   
-  //we don't use magic_quotes
-  if(get_magic_quotes_gpc() ) {
-    $body = stripslashes($body );
-  }
+  //validate characters & remove whitespace      
+  $body = trim(validate($body) );
   
-  //remove whitespace      
-  $body = trim($body );
-
   //limit line length for single line entries
   if(strlen($body ) > 100 ) {
     $body = substr($body, 0, 100 );
@@ -61,7 +56,6 @@ function safe_data($body ) {
 return $body;
 }
 
-
 //
 // Input validation (multiple line input)
 //
@@ -71,11 +65,9 @@ function safe_data_long($body ) {
   if(ctype_space($body) ) {
     return '';
   }
-  
-  //we don't use magic_quotes
-  if(get_magic_quotes_gpc() ) {
-    $body = stripslashes($body );
-  }
+    
+  //validate characters & remove whitespace      
+  $body = trim(validate($body) );
       
   //normalise line breaks from Windows & Mac to UNIX style '\n' 
   $body = str_replace("\r\n", "\n", $body );
@@ -88,9 +80,14 @@ function safe_data_long($body ) {
 return $body;
 }
 
-function clean_up($body ) {
-  
+function validate($body ) {  
+
   global $validation_regex;
+  
+  //we don't use magic_quotes
+  if(get_magic_quotes_gpc() ) {
+    $body = stripslashes($body );
+  }
   
   //decode URL entities
   $body = urldecode($body );
@@ -99,6 +96,11 @@ function clean_up($body ) {
   if(! ctype_print($body) ) {
     $body = preg_replace($validation_regex, '?', $body );
   }
+
+  return $body;
+}
+  
+function clean_up($body ) {
   
   //prevent SQL injection
   $body = db_escape_string($body );
