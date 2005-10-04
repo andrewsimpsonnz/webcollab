@@ -61,7 +61,7 @@ if( ! ( file_exists( FILE_BASE.'/'.$row['fileid'].'__'.($row['filename'] ) ) ) )
 }
 
 //open the file
-if( ! ($fp = @fopen( FILE_BASE.'/'.$row['fileid'].'__'.($row['filename']), 'rb' ) ) {
+if( ! ($fp = @fopen( FILE_BASE.'/'.$row['fileid'].'__'.($row['filename']), 'rb' ) ) ) {
   error('Download file', 'File handle for '.$row['filename'].' cannot be opened' );
 }
 
