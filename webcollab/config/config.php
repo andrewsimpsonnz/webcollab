@@ -81,7 +81,7 @@
   //                       "de" (German),  "it" (Italian),  "bg" (Bulgarian), "da" (Danish),
   //                       "ko" (Korean),  "pt-br" (Brazilian Portuguese),    "hu" (Hungarian),
   //                       "ru" (Russian), "ja" (Japanese), "se" (Swedish)    "sr" (Serbian (Latin))
-  //                       "gr" (Greek),   "cz" (Czech),    "tr" (Turkish)
+  //                       "gr" (Greek),   "cz" (Czech),    "tr" (Turkish)    "zh" (Traditional Chinese)
   
   define('LOCALE', "en" );
   

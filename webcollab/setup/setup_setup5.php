@@ -106,11 +106,11 @@ $content = "<?php\n".
 "//----------------------------------------------------------------------------------------------\n".
 "// Less important items below this line\n\n".
 "//-- Language --\n\n".
-"  // available locales are 'en' (English), 'es' (Spanish), 'fr' (French), 'ca' (Catalan)\n".
-"  //                       'de' (German), 'it' (Italian), 'bg' (Bulgarian), 'da' (Danish)\n".
-"  //                       'ko' (Korean), 'pt-br' (Brazilian Portuguese), 'hu' (Hungarian)\n".
-"  //                       'ru' (Russian), 'ja' (Japanese),  'se' (Swedish) 'sr' (Serbian (Latin))\n".
-"  //                       'gr' (Greek), 'cs' (Czech), 'tr' (Turkish)\n".
+"  // available locales are 'en' (English), 'es' (Spanish),  'fr' (French),    'ca' (Catalan)\n".
+"  //                       'de' (German),  'it' (Italian),  'bg' (Bulgarian), 'da' (Danish)\n".
+"  //                       'ko' (Korean),  'pt-br' (Brazilian Portuguese),    'hu' (Hungarian)\n".
+"  //                       'ru' (Russian), 'ja' (Japanese), 'se' (Swedish)    'sr' (Serbian (Latin))\n".
+"  //                       'gr' (Greek),   'cs' (Czech),    'tr' (Turkish)    'zh' (Traditional Chinese)\n".
 "  define('LOCALE', '".$data["locale"]."' );\n\n".
 "//-- Timezone --\n\n".
 "  //timezone offset from GMT/UTC (hours)\n".
