@@ -50,7 +50,7 @@ if(USE_EMAIL === 'Y' ){
   //check and validate email addresses
   foreach($input_array as $var) {
     if(! empty($_POST[$var]) ) {
-      $input = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ): $_POST[$var];
+      $input = validate($_POST[$var] );
       if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $input, $match ) ) || (strlen(trim($input) ) > 200 ) ) {
         warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST[$var] ) );
       }
@@ -139,7 +139,7 @@ if(USE_EMAIL !== 'Y' ){
 }
 
 //begin mailing list clean up
-$input = (get_magic_quotes_gpc() ) ? stripslashes($_POST['email'] ): $_POST['email'];
+$input = validate($_POST['email'] );
 
 //use regex to get addresses - and strip any other stuff
 if((preg_match_all('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $input, $match, PREG_PATTERN_ORDER ) ) ) {
