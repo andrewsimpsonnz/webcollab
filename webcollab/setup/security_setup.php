@@ -52,10 +52,11 @@ function error_setup($message ) {
 }
 
 //clean up some variables
-$q = '';
+$q  = '';
 $ip = '';
-$x = 0;
+$x  = 0;
 $admin = 0;
+$row = array();
 
 //security checks
 if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
@@ -69,12 +70,12 @@ if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == '' ) {
 }
 else {
   //get session key from either a GET or POST
-  if(isset($_REQUEST['x']) && (strlen($_REQUEST['x'] ) == 32 ) ) {
-    $x = safe_data($_REQUEST['x']);
+  if(isset($_REQUEST['x']) && (strlen($_REQUEST['x'] ) == 32 ) && (ctype_xdigit($_REQUEST['x'] ) ) ) {
+    $x = db_escape_string($_REQUEST['x']);
   }
   //check for existing variable
-  elseif(isset($session_key) && (strlen($session_key) == 32 ) ) {
-    $x = safe_data($session_key);
+  elseif(isset($session_key) && (strlen($session_key) == 32 ) && (ctype_xdigit($session_key ) ) ) {
+    $x = db_escape_string($session_key);
   }
   //nothing
   else {   
