@@ -1,12 +1,20 @@
 WebCollab CVS
+*** 9 October 2005
+  Andrew Simpson
+
+- add Chinese (Simplified and Traditional) to Unicode version (Credit: Marcus Tsang )
+
+- improve error recovery in taskgroup_edit and usergroup_edit
+
+WebCollab CVS
 *** 4 October 2005
   Andrew Simpson
 
-- bugfix: variable overwritten in task_delete.php  (Bug #1311130)
+- bugfix: variable overwritten in task_delete.php (Bug #1311130)
 
 - add validate() to common.php
 
-- allow more filename characters in file upload
+- allow wider range of filename characters to be used in file upload
 
 WebCollab CVS
 *** 27 September 2005
