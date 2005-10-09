@@ -99,7 +99,7 @@ switch($_REQUEST['action'] ) {
     }
     $password_unclean = trim($_POST['password'] );
     
-    $email_raw = (get_magic_quotes_gpc() ) ? stripslashes($_POST['email'] ): $_POST['email'];
+    $email_raw = validate($_POST['email'] );
     if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $email_raw, $match ) ) || (strlen(trim($email_raw) ) > 200 ) ) {
       warning($lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST['email'] ) );
     }
@@ -165,9 +165,9 @@ switch($_REQUEST['action'] ) {
     
     $admin_state = ($admin_user == 't' ) ? $lang['admin_priv']."\n" : '';
     
-    $name_unclean     = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'])     : $_POST['name'];
-    $fullname_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['fullname']) : $_POST['fullname'];
-    $password_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['password']) : $_POST['password'];
+    $name_unclean     = validate($_POST['name'] );
+    $fullname_unclean = validate($_POST['fullname'] );
+    $password_unclean = validate($_POST['password'] );
       
     $message = sprintf($email_welcome, $name_unclean, $password_unclean, $usergroup_names,
                 $fullname_unclean, $admin_state );
@@ -191,7 +191,7 @@ switch($_REQUEST['action'] ) {
     //get new password, if any
     $password_unclean = (empty($_POST['password']) ) ? '' : trim($_POST['password']);    
     //magic quotes is not required
-    $email_raw = (get_magic_quotes_gpc() ) ? stripslashes($_POST['email'] ) : $_POST['email'];
+    $email_raw = validate($_POST['email'] );
     
     if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $email_raw, $match ) ) || (strlen(trim($email_raw) ) > 200 ) ) {
       warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST['email'] ) );
@@ -288,13 +288,13 @@ switch($_REQUEST['action'] ) {
         $password_unclean = $lang['no_password_change'];
       }  
       else {
-        $password_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['password']) : $_POST['password'];      
+        $password_unclean = validate($_POST['password']);      
       }
       
       $admin_state = ($admin_user == 't' ) ? $lang['admin_priv']."\n" : '' ;
       
-      $name_unclean     = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'])     : $_POST['name'];
-      $fullname_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['fullname']) : $_POST['fullname'];
+      $name_unclean     = validate($_POST['name']);
+      $fullname_unclean = validate($_POST['fullname']);
       
       //email the changes to the user
       $message = sprintf($email_user_change1, UID_NAME, UID_EMAIL, $name_unclean,
@@ -320,9 +320,9 @@ switch($_REQUEST['action'] ) {
                           WHERE id=".UID );
 
         //email the changes to the user
-        $name_unclean     = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'])     : $_POST['name'];
-        $fullname_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['fullname']) : $_POST['fullname'];
-        $password_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['password']) : $_POST['password'];
+        $name_unclean     = validate($_POST['name']);
+        $fullname_unclean = validate($_POST['fullname']);
+        $password_unclean = validate($_POST['password']);
         
         $message = sprintf($email_user_change2, $name_unclean, $password_unclean, $fullname_unclean );
         email($email_unclean, $title_user_change2, $message );
@@ -336,8 +336,8 @@ switch($_REQUEST['action'] ) {
                           WHERE id=".UID );
 
         //email the changes to the user
-        $name_unclean     = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'])     : $_POST['name'];
-        $fullname_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['fullname']) : $_POST['fullname'];
+        $name_unclean     = validate($_POST['name']);
+        $fullname_unclean = validate($_POST['fullname']);
            
         $message = sprintf($email_user_change3, $name_unclean, $fullname_unclean );
         email( $email_unclean, $title_user_change3, $message );
