@@ -153,38 +153,40 @@ $content .= "<tr><td></td><td><br />Location where uploaded files will be stored
 $content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></tr>\n";
 
 //initialise array with null values
-for( $i=0 ; $i < 19 ; ++$i ) {
+for( $i=0 ; $i < 20 ; ++$i ) {
   $s[$i] = "";
 }
 
 //select current value
-$option_array = array('bg', 'ca', 'zh', 'cs', 'da', 'en', 'fr', 'de', 'gr', 'hu', 'it', 'ja', 'ko', 'pt-br', 'ru', 'es', 'sr', 'se', 'tr' );
+$option_array = array('bg', 'ca', 'zh-tw', 'zh-cn', 'cs', 'da', 'en', 'fr', 'de', 'gr', 'hu', 'it', 'ja', 'ko', 'pt-br', 'ru', 'es', 'sr', 'se', 'tr' );
 $selected = array_search($locale, $option_array );  
 $s[$selected] = " selected=\"selected\"";  
+
+$content .= "<tr><td></td><td><br />Languages marked with * are only available in the Unicode versions</td></tr>\n";         
   
-$content .= "<tr><td></td><td><br /></td></tr>\n".
-            "<tr><th>Language:</th><td><select name=\"locale\">\n".
+$content .= "<tr><th>Language:</th><td><select name=\"locale\">\n".
             "<option value=\"bg\" ".   $s[0].">Bulgarian</option>\n".
             "<option value=\"ca\" ".   $s[1].">Catalan</option>\n".
-            "<option value=\"zh\" ".   $s[2].">Traditional Chinese</option>\n".
-            "<option value=\"cs\" ".   $s[3].">Czech</option>\n".            
-            "<option value=\"da\" ".   $s[4].">Danish</option>\n".
-            "<option value=\"en\" ".   $s[5].">English</option>\n".
-            "<option value=\"fr\" ".   $s[6].">French</option>\n".
-            "<option value=\"de\" ".   $s[7].">German</option>\n".
-            "<option value=\"gr\" ".   $s[8].">Greek</option>\n".
-            "<option value=\"hu\" ".   $s[9].">Hungarian</option>\n".            
-            "<option value=\"it\" ".   $s[10].">Italian</option>\n".
-            "<option value=\"ja\" ".   $s[11].">Japanese</option>\n".
-            "<option value=\"ko\" "   .$s[12].">Korean</option>\n".
-            "<option value=\"pt-br\" ".$s[13].">Portuguese (Brazilian)</option>\n".
-            "<option value=\"ru\" ".   $s[14].">Russian</option>\n". 
-            "<option value=\"es\" ".   $s[15].">Spanish</option>\n". 
-            "<option value=\"se\" ".   $s[16].">Serbian (Latin)</option>\n".
-            "<option value=\"se\" ".   $s[17].">Swedish</option>\n".
-            "<option value=\"tr\" ".   $s[18].">Turkish</option>\n".
+            "<option value=\"zh-tw\" ".$s[2].">*Chinese (Traditional)</option>\n".
+            "<option value=\"zh-cn\" ".$s[3].">*Chinese (Simplified)</option>\n".
+            "<option value=\"cs\" ".   $s[4].">Czech</option>\n".            
+            "<option value=\"da\" ".   $s[5].">Danish</option>\n".
+            "<option value=\"en\" ".   $s[6].">English</option>\n".
+            "<option value=\"fr\" ".   $s[7].">French</option>\n".
+            "<option value=\"de\" ".   $s[8].">German</option>\n".
+            "<option value=\"gr\" ".   $s[9].">Greek</option>\n".
+            "<option value=\"hu\" ".   $s[10].">Hungarian</option>\n".            
+            "<option value=\"it\" ".   $s[11].">Italian</option>\n".
+            "<option value=\"ja\" ".   $s[12].">*Japanese</option>\n".
+            "<option value=\"ko\" "   .$s[13].">*Korean</option>\n".
+            "<option value=\"pt-br\" ".$s[14].">Portuguese (Brazilian)</option>\n".
+            "<option value=\"ru\" ".   $s[15].">Russian</option>\n". 
+            "<option value=\"es\" ".   $s[16].">Spanish</option>\n". 
+            "<option value=\"se\" ".   $s[17].">Serbian (Latin)</option>\n".
+            "<option value=\"se\" ".   $s[18].">Swedish</option>\n".
+            "<option value=\"tr\" ".   $s[19].">Turkish</option>\n".
             "</select></td></tr>\n";
-             
+                         
 //timezone setting
 $content .= "<tr><td></td><td><br /><br /><b><u>Timezone Setting</u></b></td></tr>\n";
 
