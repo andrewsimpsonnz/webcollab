@@ -79,9 +79,9 @@ require_once(BASE.'setup/security_setup.php' );
     }
     //connect to database server
     if( ! ( $database_connection = @mysql_connect( $database_host, $database_user, $database_password ) ) ) {
-      error_setup( "Cannot connect to a database server at $database_host<br /><br />".
-                    "Check that your specified user and password are correct, and that a MySQL database is running on $database_host.<br /><br />".
-                    "User:     $database_user<br />Password: $database_password<br />" );
+      error_setup( "Cannot connect to a database server at ".$database_host."<br /><br />".
+                    "Check that your specified user and password are correct, and that a MySQL database is running on ".$database_host.".<br /><br />".
+                    "User:     ".$database_user."<br />Password: ".$database_password."<br />" );
     }
 
     //try and select the database
@@ -91,7 +91,7 @@ require_once(BASE.'setup/security_setup.php' );
       if( ! ($result = @mysql_query( 'CREATE DATABASE '.$database_name, $database_connection ) ) ){
         error_setup("Connected successfully to the database server, but database creation had the following error: <br />".
                              "<b>".mysql_error($database_connection)."</b><br /><br />".
-                             "The error message was created by the MySQL database server." );
+                             "The above error message was created by the MySQL database server." );
       }
       
       //select the newly created database
@@ -109,7 +109,7 @@ require_once(BASE.'setup/security_setup.php' );
 
     //sanity check
     if( ! is_readable($db_schema ) ) {
-      error_setup("Database schema is missing.  Check that the file /db/$db_schema exists and is readable by the webserver." );
+      error_setup("Database schema is missing.  Check that the file [webcollab]/db/".$db_schema." exists and is readable by the webserver." );
     }
 
     //open schema file
@@ -139,7 +139,7 @@ require_once(BASE.'setup/security_setup.php' );
       if( ! ($result = @mysql_query($table, $database_connection ) ) ) {
         error_setup("The database table creation had the following error:<br /><br /> ".
                             "<b>".mysql_error($database_connection)."</b><br /><br /> ".
-                            "The error message was created by the MySQL database server." );
+                            "The above error message was created by the MySQL database server." );
       }
     }
     break;
@@ -157,7 +157,7 @@ require_once(BASE.'setup/security_setup.php' );
       //connect to database server with standard 'template1' database
       if( ! ( $database_connection = @pg_connect( 'user='.$database_user.' dbname=template1 password='.$database_password ) ) ) {
         error_setup("Cannot connect to the database server at $database_host<br />".
-                    "No existing database, and cannot connect to PostgreSQL with template1 to create a new database.<br /><br />".
+                    "No existing database, and cannot connect to PostgreSQL with standard 'template1' database to create a new database.<br /><br />".
                     "User:     $database_user<br />Password: $database_password<br /><br />".
                     "Check user and password, then try creating the database manually and running setup again." );
       }
@@ -178,7 +178,7 @@ require_once(BASE.'setup/security_setup.php' );
 
     //sanity check
     if( ! is_readable('db/schema_pgsql.sql' ) ) {
-      error_setup("Database schema is missing.  Check that the file /db/schema_pgsql.sql exists and is readable by the webserver." );
+      error_setup("Database schema is missing.  Check that the file [webcollab]/db/schema_pgsql.sql exists and is readable by the webserver." );
     }
 
     //open schema file
