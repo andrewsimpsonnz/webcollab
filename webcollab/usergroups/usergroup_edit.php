@@ -44,9 +44,14 @@ if(! @safe_integer($_GET['usergroupid'] ) ) {
 }
 $usergroupid = $_GET['usergroupid'];
 
-//get taskgroup information
-$q = db_query('SELECT * FROM '.PRE.'usergroups WHERE id='.$usergroupid );
-$row = db_fetch_array( $q, 0 );
+//get usergroup information
+if(! ($q = db_query('SELECT * FROM '.PRE.'usergroups WHERE id='.$usergroupid, 0 ) ) ) {
+  error('Usergroup edit', 'There was an error in the data query.' );
+}
+
+if(! ($row = db_fetch_array( $q, 0 ) ) ) {
+  error('Usergroup edit', 'Usergroup does not exist' );
+}
 
 //set private usergroup checkbox
 if($row['private'] ){
@@ -90,8 +95,7 @@ for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; ++$i ) {
 
 $content .=  "</select><small><i>".$lang['select_instruct']."</i></small></td></tr>\n".
              "</table>\n".
-             "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" />&nbsp;".
-             "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>\n".
+             "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" /></p>\n".
              "</form>\n";
 
 new_box( $lang['edit_usergroup'], $content );

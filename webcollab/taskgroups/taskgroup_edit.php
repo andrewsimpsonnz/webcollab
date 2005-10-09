@@ -23,7 +23,7 @@
   Function:
   ---------
 
-  Edit task-groups
+  Edit taskgroups
 
 */
 
@@ -44,20 +44,24 @@ if(! @safe_integer($_GET['taskgroupid']) ){
 $taskgroupid = $_GET['taskgroupid'];
 
 //get taskgroup information
-$q = db_query('SELECT * FROM '.PRE.'taskgroups WHERE id='.$taskgroupid );
-$row = db_fetch_array( $q, 0 );
+if(! ($q = db_query('SELECT * FROM '.PRE.'taskgroups WHERE id='.$taskgroupid, 0 ) ) ) {
+  error('Taskgroup edit', 'There was an error in the data query.' );
+}
+
+if(! ($row = db_fetch_array( $q, 0 ) ) ) {
+  error('Taskgroup edit', 'Taskgroup does not exist' );
+}  
 
 $content =
             "<form method=\"post\" action=\"taskgroups.php\">\n".
-              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
-              "<input type=\"hidden\" name=\"taskgroupid\" value=\"".$taskgroupid."\" />\n".
-              "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" /></fieldset>\n".
-              "<table class=\"celldata\">\n".
-                "<tr><td>".$lang['taskgroup_name']."</td> <td><input type=\"text\" name=\"name\" value=\"".html_escape($row['name'])." \"size=\"30\" /></td></tr>\n".
-                "<tr><td>".$lang['taskgroup_description']."</td><td><input type=\"text\" name=\"description\" value=\"".html_escape($row['description'])." \"size=\"30\" /></td></tr>\n".
-              "</table>\n".
-              "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" />&nbsp;\n".
-              "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>\n".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+            "<input type=\"hidden\" name=\"taskgroupid\" value=\"".$taskgroupid."\" />\n".
+            "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" /></fieldset>\n".
+            "<table class=\"celldata\">\n".
+            "<tr><td>".$lang['taskgroup_name']."</td> <td><input type=\"text\" name=\"name\" value=\"".html_escape($row['name'])." \"size=\"30\" /></td></tr>\n".
+            "<tr><td>".$lang['taskgroup_description']."</td><td><input type=\"text\" name=\"description\" value=\"".html_escape($row['description'])." \"size=\"30\" /></td></tr>\n".
+            "</table>\n".
+            "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" /></p>\n".
             "</form>\n";
 
 new_box($lang['edit_taskgroup'], $content );
