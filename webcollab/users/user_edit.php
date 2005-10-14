@@ -139,8 +139,7 @@ if(ADMIN ) {
 }
 
 $content .= "</table>\n".
-            "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" />&nbsp;".
-            "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>\n".
+            "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" /></p>\n".
             "</form>\n";
 
 new_box($lang['edit_user'], $content );

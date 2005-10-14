@@ -59,8 +59,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 $content .=     "</select><small><i>".$lang['select_instruct']."</i></small></td></tr>\n".
               "</table>\n".
-              "<p><input type=\"submit\" value=\"".$lang['add_usergroup']."\" onclick=\"return fieldCheck()\" />&nbsp;".
-              "<input type=\"reset\" value=\"".$lang['reset']."\" /></p>\n".
+              "<p><input type=\"submit\" value=\"".$lang['add_usergroup']."\" onclick=\"return fieldCheck()\" /></p>".
             "</form>\n";
 
 new_box($lang['add_new_usergroup'], $content );
