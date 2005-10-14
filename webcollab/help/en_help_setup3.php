@@ -81,8 +81,8 @@ outside the web server root, but it does makes first-time setup easier).</li>
 information.</p>
 <p><b>Language:</b></p>
 <p>The language that will be used at the completion of set up.</p>
-<p>Multi-byte languages (Korean, Japanese) are only available in the Unicode version of
-WebCollab.</p>
+<p>Multi-byte languages (Chinese, Japanese and Korean) are only available in the Unicode version of
+WebCollab.  For easy reference these languages are marked with an asterisk '*' in the drop down box.</p>
 <p><b>Timezone:</b></p>
 <p>Preferred timezone to be used.</p>
 <p><b>Use email:</b></p>

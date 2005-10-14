@@ -82,7 +82,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "</tr>\n";
 }
 
-$content .= "</table>";
+$content .= "</table>\n";
 
 //admin can add a user
 if(ADMIN) {
