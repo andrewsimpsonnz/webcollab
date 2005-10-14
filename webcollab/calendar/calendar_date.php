@@ -101,7 +101,7 @@ $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"date\" /></fieldset>\n ".
             "<div style=\"text-align: center\">\n".
-            "<table style=\"margin-left: auto; margin-right: auto; background-color: #dddddd; border: solid black 1px;\">\n".
+            "<table class=\"decoration\" style=\"margin-left: auto; margin-right: auto;\">\n".
             "<tr><td><input type=\"submit\" name=\"lastyear\" value=\"&lt;&lt;\" /></td>\n".
             "<td><input type=\"submit\" name=\"lastmonth\" value=\"&lt;\" /></td>\n".
             "<td>\n<select name=\"month\">\n";

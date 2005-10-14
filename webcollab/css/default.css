@@ -95,6 +95,14 @@ TABLE.celldata {
   padding : 0;
 }
 
+/* Table with grey highlight background */
+TABLE.decoration {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12px;
+  background: #dddddd;
+  border: solid black 1px;
+}
+
 TD {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
@@ -196,6 +204,14 @@ TD.grouplist {
   padding-right : 5px;
   padding-bottom : 5px;
   background : #ffffff;
+  color : #000000;
+}
+
+/* Cell with grey background */
+TD.textbackground {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12px;
+  background : #eeeeee;
   color : #000000;
 }
 

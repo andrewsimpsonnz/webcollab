@@ -97,7 +97,7 @@ $content .= "<table width=\"98%\"><tr><td>\n";
 $content .= "<b>".$TASKID_ROW['name']."</b><br /><br /></td></tr>\n";
 
 //show text
-$content .= "<tr><td style=\"background : #EEEEEE; width : 95%\">\n";
+$content .= "<tr><td class=\"textbackground\" style=\"width: 95%\">\n";
 
 $content .= nl2br(html_links($TASKID_ROW['text'] ) );
 $content .= "</td></tr></table>\n";

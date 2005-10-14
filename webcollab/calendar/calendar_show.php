@@ -189,7 +189,7 @@ $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n ".
             "<div style=\"text-align: center\">\n".
-            "<table style=\"margin-left: auto; margin-right: auto; background-color: #dddddd; border: solid black 1px;\" cellpadding=\"5px\">\n".
+            "<table class=\"decoration\" style=\"margin-left: auto; margin-right: auto;\" cellpadding=\"5px\">\n".
             "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"".$s1." /><label for=\"users\">".$lang['users']."</label>\n".
             "<label for=\"users\"><select name=\"userid\">\n".
             "<option value=\"0\"".$s2.">".$lang['all_users']."</option>\n";

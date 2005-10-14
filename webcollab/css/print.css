@@ -127,6 +127,12 @@ TD.boxdata {
   color : #000000;
 }
 
+/* Cell with grey background */
+TD.textbackground {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12px;
+}
+
 /* Green progress bar */
 TD.greenbar {
   border-width : 0;
