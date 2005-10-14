@@ -44,7 +44,7 @@ if(GUEST ) {
 }
 
 //get taskid (if any)
-if(safe_integer($_GET['taskid']) ){
+if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
   
   $taskid = $_GET['taskid'];  
 
