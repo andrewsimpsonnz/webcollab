@@ -141,11 +141,12 @@ if(USE_EMAIL !== 'Y' ){
 //begin mailing list clean up
 $input = validate($_POST['email'] );
 
+//drop old list
+//can't use a transaction here - postgres' does not like it!
+db_query('TRUNCATE TABLE '.PRE.'maillist');
+
 //use regex to get addresses - and strip any other stuff
 if((preg_match_all('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $input, $match, PREG_PATTERN_ORDER ) ) ) {
-  //drop old list
-  //can't use a transaction here - postgres' does not like it!
-  db_query('TRUNCATE TABLE '.PRE.'maillist');
   
   //cycle through addresses and store in database
   foreach($match[0] as $address ) {
