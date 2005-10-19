@@ -1,4 +1,12 @@
 WebCollab CVS
+*** 19 October 2005
+  Andrew Simpson
+
+- bugfix: mailing lists not being dropped in admin_config_submit.php (aksels)
+
+- make forum emails more readable (Feature Request #1315172)  
+
+WebCollab CVS
 *** 9 October 2005
   Andrew Simpson
 
