@@ -37,11 +37,13 @@ $email_file_post        = "Hallo,\n\nIhre ".MANAGER_NAME."-Seite informiert sie,
 
 
 $title_forum_post        = ABBR_MANAGER_NAME.": Neuer Forenbeitrag: %s";
-$email_forum_post        = "Hallo,\n\nIhre ".MANAGER_NAME."-Seite informiert sie, da&szlig; seit ".$email_date." ein neuer Forenbeitrag vorliegt von %1\$s:\n\n%2\$s"; 
+$email_forum_post        = "Hallo,\n\nIhre ".MANAGER_NAME."-Seite informiert sie, da&szlig; seit ".$email_date." ein neuer Forenbeitrag vorliegt von %1\$s:\n\n----\n\n%2\$s\n\n----\n"; 
 $email_forum_reply       = "Hallo,\n\nIhre ".MANAGER_NAME."-Seite informiert sie, da&szlig; seit ".$email_date." ein neuer Forenbeitrag vorliegt von %1\$s.\n\n".
                            "Dieser beitrag ist eine Antwort auf einen fr&uuml;heren Beitrag von %2\$s.\n\n".
                            "Fr&uuml;herer Beitrag:\n %3\$s\n\n".
-                           "Neuer Beitrag:\n%4\$s\n";
+                           "----\n\n".
+                           "Neuer Beitrag:\n%4\$s\n\n".
+                           "----\n\n";
 
 
 

@@ -38,11 +38,13 @@ $email_file_post        = "Hola,\n\nEl sitio ".MANAGER_NAME." un nuevo archivo c
 
 
 $title_forum_post        = ABBR_MANAGER_NAME.": New forum post: %s";
-$email_forum_post        = "Hola,\n\nEl sitio ".MANAGER_NAME." le informa de un nuevo mensaje en el foro ".$email_date." por %1\$s:\n\n%2\$s"; 
+$email_forum_post        = "Hola,\n\nEl sitio ".MANAGER_NAME." le informa de un nuevo mensaje en el foro ".$email_date." por %1\$s:\n\n----\n\n%2\$s\n\n----\n\n"; 
 $email_forum_reply       = "Hola,\n\nEl sitio ".MANAGER_NAME." le informa de un nuevo mensaje en el foro ".$email_date." por %1\$s.\n\n".
                            "Este mensaje es una respuesta a %2\$s.\n\n".
                            "Mensaje original:\n %3\$s\n\n".
-                           "Nueva respuesta:\n%4\$s\n";
+                           "----\n\n".
+                           "Nueva respuesta:\n%4\$s\n\n".
+                           "----\n\n";
 
 
 $email_list = "Proyecto: %1\$s\n".

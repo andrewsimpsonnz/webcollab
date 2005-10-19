@@ -44,11 +44,13 @@ $email_file_post            = $email_commom_header . " от %1\$s бе качен нов фай
 
 
 $title_forum_post           = ABBR_MANAGER_NAME . ": Ново съобщени от форумите: %s";
-$email_forum_post           = $email_commom_header . " от %1\$s:\n%2\$s бе пуснато ново съобщение във форумите. ";
+$email_forum_post           = $email_commom_header . " от %1\$s:\n\n----\n\n%2\$s\n\n----\n\nбе пуснато ново съобщение във форумите. ";
 $email_forum_reply          = $email_commom_header . " от %1\$s бе пуснато ново съобщение във форумите. ".
                                 "То е отговор на предишното съобщение на %2\$s.\n\n".
                                 "Оригинално съобщениеt:\n %3\$s\n\n".
-                                "Отговор:\n%4\$s\n";
+                                "----\n\n".
+                                "Отговор:\n%4\$s\n\n".
+                                "----\n\n";
 
 
 $email_list                 = "Проект:  %1\$s\n".
