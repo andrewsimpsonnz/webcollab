@@ -171,15 +171,15 @@ else {
   $selection = 'user';
 }
 
-if(isset($_POST['userid']) && is_numeric($_POST['userid']) ){
-  $userid = intval($_POST['userid']);
+if( @safe_integer($_POST['userid']) ){
+  $userid = $_POST['userid'];
 }
 else {
   $userid = (GUEST ) ? 0 : UID;
 }
 
-if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) ) {
-  $groupid = intval($_POST['groupid']);
+if( @safe_integer($_POST['groupid']) ) {
+  $groupid = $_POST['groupid'];
 }
 else {
   $groupid = 0;
@@ -215,7 +215,7 @@ switch($selection ) {
 $content .= "<form method=\"post\" action=\"tasks.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\" /></fieldset>\n ".
-            "<table style=\"background-color: #dddddd; border: solid black 1px;\" cellpadding=\"5px\">\n".
+            "<table class=\"decoration\" cellpadding=\"5px\">\n".
             "<tr align=\"left\"><td>".$lang['todo_list_for']."</td>".
             "<td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"user\"".$s1." /><label for=\"user\">".$lang['users']."</label></td><td>\n".
             "<label for=\"user\"><select name=\"userid\">\n".

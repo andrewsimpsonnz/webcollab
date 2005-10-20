@@ -50,14 +50,14 @@ else {
 }
 
 //set user default
-if(isset($_POST['userid']) && is_numeric($_POST['userid']) ){
-  $userid = ($_POST['userid']);
+if( @safe_integer($_POST['userid']) ){
+  $userid = $_POST['userid'];
 }
 else {
   $userid = (GUEST ) ? 0 : UID;
 }
 //set usergroup default
-if(isset($_POST['groupid']) && is_numeric($_POST['groupid']) ){
+if( @safe_integer($_POST['groupid']) ){
   $groupid = $_POST['groupid'];
 }  
 else {
@@ -88,14 +88,14 @@ else {
 }
 
 //set month
-if(isset($_POST['month']) && is_numeric($_POST['month']) ){
+if( @safe_integer($_POST['month']) ){
   $month = $_POST['month'];
 }
 else {
   $month = date('n', TIME_NOW);
 }
 //set year
-if(isset($_POST['year']) && is_numeric($_POST['year']) ){
+if( @safe_integer($_POST['year']) ){
   $year = $_POST['year'];
 }
 else {
@@ -118,8 +118,8 @@ else {
 $year += $yearoffset;
 
 //set day, if applicable
-if( $month == date('n', $epoch) && $year == date('Y', $epoch) ){
-  $today = date('j', $epoch);
+if($month == date('n', TIME_NOW) && $year == date('Y', TIME_NOW) ){
+  $today = date('j', TIME_NOW);
 }
 else {
   $today = 0;
@@ -186,7 +186,7 @@ $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n ".
             "<div style=\"text-align: center\">\n".
-            "<table style=\"margin-left: auto; margin-right: auto; background-color: #dddddd; border: solid black 1px;\" cellpadding=\"5px\">\n".
+            "<table class=\"decoration\" style=\"margin-left: auto; margin-right: auto;\" cellpadding=\"5px\">\n".
             "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"".$s1." /><label for=\"users\">".$lang['users']."</label>\n".
             "<label for=\"users\"><select name=\"userid\">\n".
             "<option value=\"0\"".$s2.">".$lang['all_users']."</option>\n";
@@ -230,7 +230,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<option value=\"".$row['id']."\"";
 
   //highlight current selection
-  if( $row[ "id" ] == $groupid ){
+  if( $row['id'] == $groupid ){
     $content .= " selected=\"selected\"";
   }
   $content .= ">".$row['name']."</option>\n";

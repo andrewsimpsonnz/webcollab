@@ -35,15 +35,15 @@ if(! defined('UID' ) ) {
 
 //includes
 require_once(BASE.'includes/details.php' );
-include_once( BASE.'includes/usergroup_security.php' );
+include_once(BASE.'includes/usergroup_security.php' );
 
 $content = '';
 
-if(empty($_REQUEST['taskid']) || ! is_numeric($_REQUEST['taskid']) ){
+if(! @safe_integer($_REQUEST['taskid']) ){
   error('File list', 'The taskid input is not valid' ); 
 }
 
-$taskid = intval($_REQUEST['taskid']);
+$taskid = $_REQUEST['taskid'];
 //check usergroup security
 $taskid = usergroup_check($taskid );
 
@@ -92,7 +92,6 @@ if(db_numrows($q ) != 0 ) {
   }
   $content .= "</table>";
 }
-
 
 if((! GUEST ) && ($TASKID_ROW['archive'] == 0) ){
   $content .= "<span class=\"textlink\">[<a href=\"files.php?x=".$x."&amp;taskid=".$taskid."&amp;action=upload\">".$lang['add_file']."</a>]</span>";

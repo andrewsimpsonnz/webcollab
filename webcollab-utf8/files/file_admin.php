@@ -71,6 +71,10 @@ $content .= "<table>\n";
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
+  if($i > 0 ) {
+    $content .= "<tr><td><hr /></td></tr>\n";
+  }
+  
   //file part
   $content .= "<tr><td>".$lang['task'].":</td><td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['task_id']."\">".$row['task_name']."</a></td></tr>\n".
               "<tr><td>".$lang['file']."</td><td><a href=\"files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a>&nbsp;<small>(".$row['size'].$lang['bytes'].")&nbsp;</small>".
