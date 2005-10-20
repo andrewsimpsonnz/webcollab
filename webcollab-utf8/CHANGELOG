@@ -1,4 +1,12 @@
 WebCollab CVS
+*** 20 October 2005
+  Andrew Simpson
+
+- merge to WebCollab CVS
+
+- fix minor variable error in calendar_show.php
+  
+WebCollab CVS
 *** 9 October 2005
   Andrew Simpson
 
