@@ -4,7 +4,13 @@ WebCollab CVS
 
 - bugfix: mailing lists not being dropped in admin_config_submit.php (aksels)
 
-- make forum emails more readable (Feature Request #1315172)  
+- make format of forum emails more readable (Feature Request #1315172)  
+
+- allow task owner to see their own tasks in private usergroups (hmtksteve)
+
+- bugfix: remove redundant variable from forum_list.php
+
+- add validation filter for single line inputs containing line break control codes 
 
 WebCollab CVS
 *** 9 October 2005
