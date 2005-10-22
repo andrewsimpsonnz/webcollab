@@ -51,6 +51,9 @@ function safe_data($body ) {
     $body = substr($body, 0, 100 );
   }
   
+  //remove line breaks (not allowed in single lines!)
+  $body = strtr($body, array("\r"=>' ', "\n"=>' ' ) );
+  
   $body = clean_up($body);
    
 return $body;
