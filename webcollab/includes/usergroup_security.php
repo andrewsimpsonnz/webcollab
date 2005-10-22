@@ -42,7 +42,7 @@ function usergroup_check($taskid ) {
   }
   
   //get the tasks' security info
-  if( ! ($q = @db_query('SELECT usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE id='.$taskid, 0 ) ) ) {
+  if( ! ($q = @db_query('SELECT owner, usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE id='.intval($taskid), 0 ) ) ) {
     error('Usergroup security', 'There was an error in the data query.' );
   }
   
@@ -51,25 +51,30 @@ function usergroup_check($taskid ) {
     error('Usergroup security', 'There was an error in fetching the permission data.' );
   }
   
+  //task owner has access rights
+  if($row[0] == UID ) {
+    return $taskid;
+  }
+  
   //check usergroup rights
-  if( ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
+  if(($row[1] != 0 ) && ($row[2] == 'f' ) ) {
   
     //check if the user has a matching group
-    if(! in_array($row[0], (array)$GID ) ) {
+    if(! in_array($row[1], (array)$GID ) ) {
       warning($lang['access_denied'], $lang['private_usergroup'] );
     }
   }
   
   //if this is a task, then get project data  
-  if($row[2] != $taskid ) {
-    $q   = db_query('SELECT usergroupid, globalaccess FROM '.PRE.'tasks WHERE id='.$row[2] );
+  if($row[3] != $taskid ) {
+    $q   = db_query('SELECT usergroupid, globalaccess FROM '.PRE.'tasks WHERE id='.$row[3] );
     $row = db_fetch_num($q, 0 );
   
     //check if project is marked private 
-    if(($row[0] != 0 ) && ($row[1] == 'f' ) ) {
+    if(($row[1] != 0 ) && ($row[2] == 'f' ) ) {
   
       //check if the user has a matching group
-      if(! in_array($row[0], (array)$GID ) ) {
+      if(! in_array($row[1], (array)$GID ) ) {
         warning($lang['access_denied'], $lang['private_usergroup'] );
       }
     }
