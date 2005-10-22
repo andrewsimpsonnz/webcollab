@@ -35,6 +35,8 @@ if(! defined('UID' ) ) {
 //includes
 require_once(BASE.'includes/details.php' );
 
+include_once(BASE.'tasks/task_common.php' );
+
 //init values
 $content = '';
 
@@ -43,7 +45,7 @@ $content = '';
 //
 function list_tasks($parent ) {
 
-  global $x, $GID, $parentid, $parent_array, $epoch, $lang;
+  global $x, $parentid, $parent_array, $epoch, $lang;
   global $taskgroup_flag, $task_state, $ul_flag;
   global $no_group, $task_order;
 
@@ -64,6 +66,7 @@ function list_tasks($parent ) {
                   '.$epoch.' '.PRE.'tasks.lastfileupload) AS lastfileupload,
                   '.PRE.'tasks.globalaccess AS globalaccess,
                   '.PRE.'tasks.usergroupid AS usergroupid,
+                  '.PRE.'tasks.owner AS owner,
                   '.PRE.'users.fullname AS username,
                   '.PRE.'users.id AS userid,
                   '.PRE.'taskgroups.name AS groupname,
@@ -91,19 +94,16 @@ function list_tasks($parent ) {
   //show all tasks
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
-    //check for private usergroups
-    if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
-
-      if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
-        //recursive search if the subtask is listed in parent_array (it has children then)
-        if(in_array( $row['id'], $parent_array, FALSE) ) {
-          $this_content .= list_tasks( $row['id']);
-          $this_content .= "\n</ul></li>\n";
-        }
-        continue;
+    //check for closed usergroups
+    if(task_usergroup($row['globalaccess'], $row['usergroupid'], $row['owner'] ) === false ) {
+      
+      //do a recursive search if the subtask is listed in parent_array (it has children then)
+      if(in_array( $row['id'], $parent_array, FALSE) ) {
+        $this_content .= list_tasks( $row['id']);
+        $this_content .= "\n</ul></li>\n";
       }
+      continue;
     }
-
 
     //check if there are taskgroups set, and if this is the first layer of tasks
     if( ($taskgroup_flag == 1 ) && ($parent == $parentid ) ) {
@@ -290,18 +290,13 @@ if(! @safe_integer($_REQUEST['taskid']) ) {
 
 $parentid = $_REQUEST['taskid'];
 
-//check for private usergroup projects
-$q = db_query('SELECT usergroupid, globalaccess FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] );
-
+//check for closed usergroup projects
+$q = db_query('SELECT globalaccess, usergroupid, owner FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] );
 $row = db_fetch_num($q, 0 );
 
-if( (! ADMIN ) && ($row[0] != 0 ) && ($row[1] == 'f' ) ) {
-
-  //check if the user has a matching group
-  if( ! in_array($row[0], (array)$GID ) ) {
-    return;
-  }
-}
+if(task_usergroup($row[0], $row[1], $row[2] ) === false ) {
+  return;
+}  
 
 //find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query
 $parent_query = db_query('SELECT DISTINCT parent FROM '.PRE.'tasks WHERE projectid='.$TASKID_ROW['projectid'] );

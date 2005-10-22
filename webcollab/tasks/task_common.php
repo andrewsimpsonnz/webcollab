@@ -87,7 +87,8 @@ function project_jump($taskid=0) {
   $q = db_query('SELECT id,
                         name,
                         globalaccess,
-                        usergroupid
+                        usergroupid,
+                        owner
                         FROM '.PRE.'tasks
                         WHERE parent=0
                         AND completed<>100
@@ -108,10 +109,8 @@ function project_jump($taskid=0) {
     for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ){
     
       //check if user can view this project
-      if( (! ADMIN ) && ($row['globalaccess'] != 't' ) && ($row['usergroupid'] != 0 ) ) {
-        if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
-          continue;
-        }
+      if(task_usergroup($row['globalaccess'], $row['usergroupid'], $row['owner'] ) === false ) {
+        continue;
       }
           
       $content .= "<option value=\"".$row["id"]."\"";
@@ -131,5 +130,30 @@ function project_jump($taskid=0) {
   
   return $content;
 }  
+
+
+//
+//  Check user access rights
+//
+function task_usergroup($globalaccess, $usergroupid, $owner ) {
+
+  global $GID;
+
+  //check the user has rights to view this project/task
+  if(($globalaccess != 't' ) && ( $usergroupid != 0 ) && ($owner != UID ) && (! ADMIN ) ) {
+    if( ! in_array($usergroupid, (array)$GID ) ) {
+      return false;
+    }
+  }
+  
+  return true; 
+}
+
+
+
+
+
+
+
 
 ?>
