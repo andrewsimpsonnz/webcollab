@@ -32,6 +32,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+include_once(BASE.'tasks/task_common.php' );
+
 //
 // List tasks
 //
@@ -253,7 +256,7 @@ $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
     
   //usergroup test for privacy
-  if( (! ADMIN ) && ($row['private'] ) && ( ! in_array($row['id'], (array)$GID ) ) ) {
+  if( ($row['private'] ) && ( ! in_array($row['id'], (array)$GID ) ) && (! ADMIN ) ) {
     continue;
   }
     
@@ -288,11 +291,9 @@ $q = db_query('SELECT id, name, owner, deadline, parent, usergroupid, globalacce
 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
-  //check for private usergroups
-  if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] != 't' ) ) {
-    if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
-      continue;
-    }
+  //check for closed tasks
+  if(task_usergroup($row['globalaccess'], $row['usergroupid'], $row['owner'] ) === false ) {
+    continue;
   }
   
   //put values into array
@@ -324,7 +325,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 db_free_result($q);
 
 //query to get the all the projects
-$q = db_query('SELECT id, name, usergroupid, globalaccess, deadline AS due 
+$q = db_query('SELECT id, name, owner, usergroupid, globalaccess, deadline AS due 
                       FROM '.PRE.'tasks 
                       WHERE parent=0
                       AND archive=0 '.$project_order );
@@ -332,13 +333,10 @@ $q = db_query('SELECT id, name, usergroupid, globalaccess, deadline AS due
 // show all uncompleted tasks and projects belonging to this user or group
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
-   //check for private usergroups
-   if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
-
-     if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
-       continue;
-     }
-   }
+  //check for closed projects
+  if(task_usergroup($row['globalaccess'], $row['usergroupid'], $row['owner'] ) === false ) {
+    continue;
+  }
 
   $new_content = listTasks($row['id'], $tail );
 

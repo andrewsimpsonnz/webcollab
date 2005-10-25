@@ -167,7 +167,8 @@ if(ADMIN == 1 ){
 else {
   $tail = 'AND (globalaccess=\'f\' AND usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
            OR globalaccess=\'t\'   
-           OR usergroupid=0) ';                      
+           OR usergroupid=0
+           OR owner='.UID.') ';                      
 }
 
 //don't get tasks if we aren't going to view them
