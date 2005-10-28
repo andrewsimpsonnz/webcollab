@@ -7,21 +7,11 @@ BODY {
   color : #000000;
 }
 
-FONT {
-  font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
-}
-
-
 LI {
-  font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
   list-style-type: disc;
 }
 
 LI LI {
-  font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
   list-style-type: circle;
 }
 
@@ -38,16 +28,12 @@ FIELDSET {
 }
 
 TABLE {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
   border-width : 0;
   padding : 0;
 }
 
 /* Global container box */
 TABLE.main {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
   margin-left : auto;
   margin-right : auto;
   border-width : 0;
@@ -61,46 +47,36 @@ TABLE.main {
   - aligned centre
 */
 TABLE.singlebox {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
   margin-left : auto;
   margin-right : auto;
   width : 400px;
-  text-align : center;
   border: 1px solid #000000;
   padding : 0;
 }
 
 /* Standard table box */
 TABLE.tablebox {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
   margin-left : auto;
   margin-right : auto;
   width : 97%;
-  text-align : left;
   border: 1px solid #000000;
   padding : 0;
 }
 
 /* Table for use in data cells */
 TABLE.celldata {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
   margin-left : 0;
   margin-top : 5px;
   margin-bottom : 20px;
-  text-align : left;
   border-width: 0;
   padding : 0;
 }
 
 /* Table with grey highlight background */
 TABLE.decoration {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
   background: #dddddd;
   border: solid black 1px;
+  color : #000000;
 }
 
 TD {
@@ -110,8 +86,6 @@ TD {
 
 /* Masthead band to top of page */
 TD.masthead {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 10px;
   text-align : left;
   padding-top : 4px;
   padding-left : 3px;
@@ -122,8 +96,6 @@ TD.masthead {
 
 /* Box head styling */
 TD.boxhead {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
   font-weight : bold;
   text-align : left;
   border-width : 0;
@@ -135,8 +107,6 @@ TD.boxhead {
 
 /* Box content styling for menu list*/
 TD.boxmenu {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
@@ -147,8 +117,6 @@ TD.boxmenu {
 
 /* Box content styling for info boxes */
 TD.boxdata {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
@@ -164,8 +132,6 @@ TD.boxdata {
   - bottom padding reduced
 */
 TD.boxdata2 {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
@@ -179,8 +145,6 @@ TD.boxdata2 {
 
 /* Box content styling for project listing */
 TD.projectlist {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
@@ -194,8 +158,6 @@ TD.projectlist {
 
 /* Box content styling for user & group lists */
 TD.grouplist {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
@@ -209,8 +171,6 @@ TD.grouplist {
 
 /* Cell with grey background */
 TD.textbackground {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
   background : #eeeeee;
   color : #000000;
 }
@@ -237,17 +197,16 @@ TD.redbar {
 
 /* Class for text at page bottom */ 
 .bottomtext {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 10px;
   padding-top : 10px;
   padding-left : 5px;
   padding-bottom : 10px;
   color : #1e4b79;
+  background : transparent;
 }
 
 /* Font for text based hyperlinks in [brackets] */
 .textlink {
-  font-family: "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 10px;
   font-weight : bold;
 }
@@ -263,7 +222,6 @@ TD.redbar {
 
 /* Class for new graphic */
 .new {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 9px;
   font-weight : bold;
   font-style : italic;
@@ -273,7 +231,6 @@ TD.redbar {
 
 /* Class for updated graphic */
 .updated {
-  font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 9px;
   font-weight : bold;
   background : #00FF7F;
@@ -283,26 +240,31 @@ TD.redbar {
 /* Class for green text */
 .green {
   color : #006400;
+  background : transparent;
 }
 
 /* Class for orange text */
 .orange {
   color : #FFA500;
+  background : transparent;
 }
 
 /* Class for grey text */
 .grey {
   color : #BEBEBE;
+  background : transparent;
 }
 
 /* Class for blue text */
 .blue {
   color : #0000FF;
+  background : transparent;
 }
 
 /* Class for red text */
 .red {
   color : #FF0000;
+  background : transparent;
 }
 
 a:link {
@@ -322,8 +284,3 @@ a:hover {
   background : transparent;
   text-decoration : none;
 }
-
-
-
-
-
