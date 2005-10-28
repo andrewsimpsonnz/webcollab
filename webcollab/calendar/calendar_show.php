@@ -322,15 +322,15 @@ for($num = 1; $num <= $numdays; ++$num ) {
     //rows exist for this date - get them!
     //projects first, then tasks in order set by admin  
     foreach($order as $suffix ) { 
-      $q = db_query('SELECT id, name, parent, status, usergroupid, globalaccess, projectid, deadline AS due
+      $q = db_query('SELECT id, name, parent, status, usergroupid, globalaccess, projectid, deadline AS due, owner
                             FROM '.PRE.'tasks 
                             WHERE deadline=\''.$year.'-'.$month.'-'.$num.'\' 
                             AND archive=0 '.$suffix );
   
         for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
   
-          //check for private usergroups
-          if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
+          //check for closed usergroups
+          if( ($row['globalaccess'] == 'f' ) && ($row['usergroupid'] != 0 ) && (! ADMIN ) && ($row['owner'] != UID ) ) {
   
             if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
               continue;

@@ -78,12 +78,10 @@ $content .= "<table>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //check the user has rights to view this project
-  if( (! ADMIN ) && ($row['globalaccess'] != 't' ) && ( $row['usergroupid'] != 0 ) ) {
-    if( ! in_array( $row['usergroupid'], (array)$GID ) ){
-      continue;
-    }
+  if(task_usergroup($row['globalaccess'], $row['usergroupid'], $row['owner'] ) === false ) {
+    continue;
   }
-
+  
   //set project status
   $project_status = $row['status'];
   
