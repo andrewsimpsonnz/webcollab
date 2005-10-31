@@ -26,6 +26,8 @@
 
   Maintainer: Yu-Chan, Park < yuchan at kisti.re.kr>
 
+  NOTE: This file is written in UTF-8 character set
+
 */
 
 // Get current date/time for emails in a preferred format eg: 01 Apr 2004 9:18 am NZDT  
@@ -115,7 +117,7 @@ $email_welcome      = "Hello,\n\nThis is the ".MANAGER_NAME." site welcoming you
 			"it enables you to quickly spot where the activity is.\n\n".
 			"You can also take or get ownership of tasks and you will find yourself able to edit them and all the forum posts belonging to it. ".
 			"As you progress with your work please edit your task's text and status so that everybody can keep a track on your progress. ".
-			"\n\nI can only wish you success now and email ".$EMAIL_ADMIN." if you are stuck.\n\n --Good luck !\n\n".
+			"\n\nI can only wish you success now and email ".EMAIL_ADMIN." if you are stuck.\n\n --Good luck !\n\n".
 			"Login:      %1\$s\n".
 			"Password:   %2\$s\n\n".
 			"Usergroups: %3\$s".
@@ -149,13 +151,13 @@ $email_revive       = "Hello,\n\nThis is the ".MANAGER_NAME." site informing you
 			"Loginname: %1\$s\n".
 			"Username:  %2\$s\n\n".
 			"We cannot send you your password because it is encrypted. \n\n".
-			"If you have forgotten your password email ".$EMAIL_ADMIN." for a new password.";
+			"If you have forgotten your password email ".EMAIL_ADMIN." for a new password.";
 
 
 
 $title_delete_user  = ABBR_MANAGER_NAME.": Account deactivated.";
 $email_delete_user  = "Hello,\n\nThis is the ".MANAGER_NAME." site informing you that your account has been deactivated on ".$email_date.".\n".
 			"We are sorry that you have left and would like to thank you for your work!\n\n".
-			"If you object to being deactivated, or think that this is an error, send an email to ".$EMAIL_ADMIN.".";
+			"If you object to being deactivated, or think that this is an error, send an email to ".EMAIL_ADMIN.".";
 
 ?>

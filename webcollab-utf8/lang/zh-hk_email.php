@@ -26,6 +26,9 @@
 
   Maintainer: Andrew Simpson <andrew.simpson at paradise.net.nz>
 
+  
+  NOTE: This file is written in UTF-8 character set
+
 */
 
 // Get current date/time for emails in a preferred format eg: 01 Apr 2004 9:18 am NZDT  
