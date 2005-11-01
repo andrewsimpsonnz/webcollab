@@ -1,4 +1,10 @@
 WebCollab CVS
+*** 1 November 2005
+  Andrew Simpson
+
+- bugfix: Syntax error in de_message.php (Bug #1343921) (Credit: klamu)
+
+WebCollab CVS
 *** 29 October 2005
   Andrew Simpson
 
