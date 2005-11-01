@@ -173,7 +173,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['no_message']                  = 'Keine Nachricht angegeben! Bitte gehen Sie zur&uuml;ck und versuchen Sie es noch einmal';
     $lang['add_reply']                   = 'Antwort hinzuf&uuml;gen';
     $lang['last_post_sprt']              = 'Letzter Beitrag %s'; //Note to translators: context is 'Last post 2004-Dec-22'
-    $lang['recent_posts']                = 'Neueste Beitr&auml:ge';
+    $lang['recent_posts']                = 'Neueste Beitr&auml;ge';
 
  //includes
     $lang['report']                      = 'Report';
