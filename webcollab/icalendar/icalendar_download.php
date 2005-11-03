@@ -48,14 +48,15 @@ function icalendar_header($id ) {
   header('Cache-control: private');
   
   //send the headers describing the file type
-  header('Content-Type: text/calendar' );
+  header('Content-Type: text/calendar; charset=UTF-8' );
   header('Content-Disposition: attachment; filename="'.ABBR_MANAGER_NAME.'-'.$id.'-'.date('Ymd').'.ics"');
-  
+    
   echo  "BEGIN:VCALENDAR\r\n".
         "VERSION\r\n".
         " :2.0\r\n".
         "PRODID\r\n".
-        " :-//WebCollab iCalendar V1.0//EN\r\n";
+        " :-//WebCollab iCalendar V1.0//EN\r\n".
+        "METHOD:PUBLISH\r\n";
   
   return;
 }
@@ -69,22 +70,24 @@ function icalendar_vtodo($row) {
   global $icalendar_id;
   
   $content = "BEGIN:VTODO\r\n".
-              "UID\r\n".
-              " :".$row['taskid']."-".$icalendar_id."\r\n".
-              "SUMMARY\r\n".
-              " :".icalendar_text_format($row['name'] )."\r\n".              
-              "DESCRIPTION\r\n".
-              " :".icalendar_text_format($row['text'] )."\r\n".
-              "CREATED;VALUE=DATE\r\n".
-              " :".icalendar_date($row['created'])."\r\n".
-              "LAST-MODIFIED;VALUE=DATE\r\n".
-              " :".icalendar_date($row['edited'])."\r\n".
-              "DUE;VALUE=DATE\r\n".
-              " :".icalendar_date($row['deadline'])."\r\n".
-              "ORGANIZER;CN=".$row['fullname']."\r\n".
-              " :MAILTO:".$row['email']."\r\n";
-              //"SEQUENCE\r\n".
-              //" :".$row['sequence']."\r\n";
+             "UID\r\n".
+             " :".$row['taskid']."-".$icalendar_id."\r\n".
+             "SUMMARY\r\n".
+             " :".icalendar_text_format($row['name'] )."\r\n".              
+             "DESCRIPTION\r\n".
+             " :".icalendar_text_format($row['text'] )."\r\n".
+             "CREATED;VALUE=DATE\r\n".
+             " :".icalendar_date($row['created'])."\r\n".
+             "LAST-MODIFIED;VALUE=DATE\r\n".
+             " :".icalendar_date($row['edited'])."\r\n".
+             "DUE;VALUE=DATE\r\n".
+             " :".icalendar_date($row['deadline'])."\r\n".
+             "DTSTAMP\r\n".
+             " :".gmdate('Ymd\THis\Z')."\r\n".
+             "DTSTART;VALUE-DATE\r\n".
+             " :".icalendar_date($row['created'])."\r\n".
+             "ORGANIZER;CN=\"".$row['fullname']."\"\r\n".
+             " :MAILTO:".$row['email']."\r\n";
               
   switch($row['status'] ) {
     case 'done':
@@ -146,13 +149,16 @@ function icalendar_vtodo($row) {
     //task ==> show relationships
     $content.= "CATEGORIES\r\n".
     " :Task\r\n";
-    $content.= "RELATED-TO;RELTYPE=CHILD\r\n".
-    " :".$row['projectid']."-".$icalendar_id."\r\n";
-    //sub task parent
-    if($row['parent'] != $row['projectid'] ) {
+    if($row['parent'] == $row['projectid'] ) {
+      //task under project 
+      $content.= "RELATED-TO;RELTYPE=CHILD\r\n".
+                 " :".$row['projectid']."-".$icalendar_id."\r\n";
+    }
+    else {
+       //sub task
        $content.= "RELATED-TO;RELTYPE=CHILD\r\n".
-       " :".$row['parent']."-".$icalendar_id."\r\n";
-     }  
+                  " :".$row['parent']."-".$icalendar_id."\r\n";
+    }  
   }
              
   //private 
@@ -195,11 +201,14 @@ function icalendar_text_format($string ) {
     $string = iconv(CHARACTER_SET, 'UTF-8', $string);
   }
   else {
-    $string = preg_replace("/([\x80-\xFF])/e", "chr(0xC0|ord('\\1')>>6).chr(0x80|ord('\\1')&0x3F)", $string );
+    //fallback conversion assumes ISO-8859-1
+    $string = preg_replace("/([\x80-\xff])/e", "chr(0xc0|ord('\\1') >>6 ).chr(0x80|ord('\\1') & 0x3f )", $string );
   }
     
+  //convert line breaks
   $string = strtr($string, array("\n"=>'\n' ) );
     
+  //word wrap at 75 octets
   $string = wordwrap($string, 75, " \r\n", 1 );
   
   return $string;
