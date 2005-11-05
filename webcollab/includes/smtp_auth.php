@@ -60,7 +60,7 @@ function smtp_auth($connection, $cap) {
          return;
        }
        
-       $log .= 'C: Authentication failure'."\n";         
+       $log .= 'C: Authentication failure for PLAIN AUTH'."\n";         
      }
    }
 
@@ -84,7 +84,7 @@ function smtp_auth($connection, $cap) {
          return;  
        }
          
-       $log .= 'C: Authentication failure'."\n";
+       $log .= 'C: Authentication failure for AUTH LOGIN'."\n";
        }
    }
 
@@ -122,7 +122,7 @@ function smtp_auth($connection, $cap) {
          return;
        }
        
-       $log .= 'C: Authentication failure'."\n";
+       $log .= 'C: Authentication failure for CRAM-MD5'."\n";
      }
    }
 
