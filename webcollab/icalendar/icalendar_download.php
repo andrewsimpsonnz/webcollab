@@ -84,7 +84,7 @@ function icalendar_vtodo($row) {
              " :".icalendar_date($row['deadline'])."\r\n".
              "DTSTAMP\r\n".
              " :".gmdate('Ymd\THis\Z')."\r\n".
-             "DTSTART;VALUE-DATE\r\n".
+             "DTSTART;VALUE=DATE\r\n".
              " :".icalendar_date($row['created'])."\r\n".
              "ORGANIZER;CN=\"".$row['fullname']."\"\r\n".
              " :MAILTO:".$row['email']."\r\n";
