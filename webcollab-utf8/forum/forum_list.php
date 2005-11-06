@@ -182,9 +182,6 @@ if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) )
 
   //get all posts
   $content .= list_posts_from_task( $taskid, 0 );
-  if($ul_flag == 1 ){
-    $content .= "<br />\n";
-  }
   //add an option to add posts
   if($TASKID_ROW['archive'] == 0 ) {
     $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."\">".$lang['new_post']."</a>]</span>";
@@ -207,9 +204,6 @@ if($TASKID_ROW['usergroupid'] != 0 ) {
   if(in_array($TASKID_ROW['usergroupid'], (array)$GID ) || ADMIN ) {
 
     $content .= list_posts_from_task( $taskid, $TASKID_ROW['usergroupid'] );
-    if($ul_flag == 1 ){
-      $content .= "<br />\n";
-    }
     //add an option to add posts
     if($TASKID_ROW['archive'] == 0 ){
       $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."&amp;usergroupid=".$TASKID_ROW['usergroupid']."&amp;\">".$lang['new_post']."</a>]</span>";
