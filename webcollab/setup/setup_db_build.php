@@ -143,7 +143,7 @@ require_once(BASE.'setup/security_setup.php' );
       }
     }
     break;
-
+  
   case 'postgresql':
     //check we can do pgsql functions!!
     if( ! extension_loaded('pgsql' ) ) {
