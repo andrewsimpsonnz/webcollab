@@ -32,7 +32,6 @@ $database_connection = '';
 $delim = '';
 $epoch = 'UNIX_TIMESTAMP( ';
 $day_part = 'DAYOFMONTH( ';
-$interval = 'INTERVAL ';
 
 //
 // connect to database
