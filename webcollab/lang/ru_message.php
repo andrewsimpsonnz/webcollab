@@ -13,10 +13,10 @@
 */
 
 //required language encodings
-define('CHARACTER_SET', "koi8-r" );
+define('CHARACTER_SET', "KOI8-R" );
 
 //this is the regex for input validation filter used in common.php 
-$validation_regex = '/([^\x09\x0a\x0d\x20-\xff])/s'; //koi8-r
+$validation_regex = '/([^\x09\x0a\x0d\x20-\xff])/s'; //KOI8-R
 
 //dates
 $month_array = array (NULL, 'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек' );
