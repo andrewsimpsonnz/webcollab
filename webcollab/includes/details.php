@@ -39,7 +39,7 @@ if(! @safe_integer($_REQUEST['taskid']) ) {
 $taskid = $_REQUEST['taskid'];
 
 //get task details
-if(! ($q = @db_query('SELECT * FROM '.PRE.'tasks WHERE id='.$taskid, 0 ) ) ) {
+if(! ($q = @db_query('SELECT * FROM '.PRE.'tasks WHERE id='.$taskid.' LIMIT 1', 0 ) ) ) {
   error('Task details', 'There was an error in the data query.' );
 }
 
