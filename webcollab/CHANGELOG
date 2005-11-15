@@ -1,4 +1,24 @@
 WebCollab CVS
+*** 15 November 2005
+  Andrew Simpson
+
+- change to MySQL 4.1+ minimum requirement
+
+- change to PHP 4.3.0+ minimum requirement
+
+- timezones now handled internally by database per session
+
+- usergroup permissions now handled by sub-select in database
+
+- database now matches character sets internally to web client  
+  
+WebCollab 1.81 (Ardness)
+*** 9 November 2005
+  Andrew Simpson
+
+- release
+
+WebCollab CVS
 *** 1 November 2005
   Andrew Simpson
 
