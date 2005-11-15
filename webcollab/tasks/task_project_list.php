@@ -149,7 +149,6 @@ $flag = 0;
 $project_print = 0;
 $task_uncompleted = array();
 $task_projectid   = array();
-$tz_offset = (TZ * 3600) - TZ_OFFSET;
 
 $active_only = (isset($_GET['active']) )    ? $_GET['active']    : 0;
 $condensed   = (isset($_GET['condensed']) ) ? $_GET['condensed'] : 0;
@@ -161,6 +160,9 @@ $row = db_fetch_num($q, 0 );
 $project_order = $row[0];
 $task_order    = $row[1];
 
+//set the usergroup permissions on queries
+$tail = usergroup_tail();  
+
 //don't get tasks if we aren't going to view them
 if(! $condensed) {
 
@@ -170,22 +172,15 @@ if(! $condensed) {
                         parent,
                         projectid,
                         status, 
-                        globalaccess, 
-                        usergroupid, 
-                        '.$epoch.' deadline ) AS due,
-                        owner
+                        '.$epoch.' deadline ) AS due
                         FROM '.PRE.'tasks 
                         WHERE status<>\'done\'
                         AND parent<>0 '
+                        .$tail
                         .$task_order );
   
   for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
     
-    //check if user can view this task
-    if(task_usergroup($row[5], $row[6], $row[8] ) === false ) {
-      continue;
-    }
-  
     //put values into array
     $task_uncompleted[$i]['id']     = $row[0];
     $task_uncompleted[$i]['parent'] = $row[2];
@@ -203,7 +198,7 @@ if(! $condensed) {
       default:
         $suffix = '</a>';
         //check if late
-        if( (TIME_NOW + $tz_offset - $row[7] ) >= 86400 ) {
+        if( (TIME_NOW - $row[5]) >= 86400 ) {
           $suffix = "</a> &nbsp;<span class=\"late\">".$lang['late_g']."</span><br />\n";
         }
         break;
@@ -226,15 +221,13 @@ $q = db_query('SELECT id,
                       deadline,
                       status,
                       '.$epoch.' deadline) AS due,
-                      '.$epoch.' finished_time) AS finished_time,
-                      '.$epoch.' completion_time) AS completion_time,
-                      usergroupid,
-                      globalaccess,
-                      completed,
-                      owner
+                      finished_time,
+                      completion_time,
+                      completed
                       FROM '.PRE.'tasks
                       WHERE parent=0
                       AND archive=0 '
+                      .$tail
                       .$project_order );
 
 //check if there are projects
@@ -282,11 +275,6 @@ if($action !== 'project_print') {
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
-  //check the user has rights to view this project
-  if(task_usergroup($row['globalaccess'], $row['usergroupid'], $row['owner'] ) === false ) {
-    continue;
-  }
-
   //set project status
   $project_status = $row['status'];
   
@@ -331,11 +319,11 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   switch($project_status ) {
 
     case 'done':
-      $content .= $task_state['completed']." (".nicetime( $row['completion_time'] ).")\n";
+      $content .= $task_state['completed']." (".nicedate( $row['completion_time'] ).")\n";
       break;
 
     case 'cantcomplete':
-      $content .= "<i>".sprintf($lang['project_hold_sprt'], nicetime($row['finished_time']) )."</i><br />\n";
+      $content .= "<i>".sprintf($lang['project_hold_sprt'], nicedate($row['finished_time']) )."</i><br />\n";
       $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )."<br />\n";
       break;
 
@@ -356,7 +344,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
     default:
       $content .= sprintf($lang['percent_sprt'], $row['completed'] )."<br />\n";
       $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )." ";
-      $state = ($row['due'] - (TIME_NOW + $tz_offset ) )/86400 ;
+      $state = ($row['due'] - TIME_NOW )/86400 ;
       if($state > 1 ) {
         $content .=  "(".sprintf($lang['due_sprt'], ceil((real)$state) ).")\n";
       }

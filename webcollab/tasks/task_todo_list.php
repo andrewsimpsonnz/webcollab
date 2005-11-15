@@ -152,7 +152,6 @@ $content = '';
 $allowed = array();
 $task_uncompleted = array();  
 $task_projectid   = array();
-$tz_offset = (TZ * 3600) - TZ_OFFSET;
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
@@ -200,7 +199,7 @@ if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent=0' ), 0, 0
 switch($selection ) {
   case 'group':
     $userid = 0; $s1 = ""; $s2 = " selected=\"selected\""; $s3 = " checked=\"checked\""; $s4 = "";
-    $tail = "AND usergroupid=$groupid";
+    $type = "AND usergroupid=".$groupid." ";
     if($groupid == 0 ){
       $s4 = " selected=\"selected\"";
     }
@@ -209,7 +208,7 @@ switch($selection ) {
   case 'user':
   default:
     $groupid = 0; $s1 = " checked=\"checked\""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
-    $tail = "AND owner=$userid";
+    $type = "AND owner=".$userid." ";
     if($userid == 0 ){
       $s2 = " selected=\"selected\"";
     }
@@ -275,6 +274,9 @@ $content .= "</select></label></td>\n".
             "</table>\n".
             "</form>\n";
 
+//set the usergroup permissions on queries
+$tail = usergroup_tail();  
+
 //get the sort order for projects/tasks
 $q   = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
 $row = db_fetch_num($q, 0 );
@@ -282,21 +284,16 @@ $project_order = $row[0];
 $task_order    = $row[1];
 
 // show all subtasks that are not complete
-$q = db_query('SELECT id, name, owner, deadline, parent, usergroupid, globalaccess, projectid,
+$q = db_query('SELECT id, name, deadline, parent, projectid,
                         '.$epoch.' deadline) AS due
                         FROM '.PRE.'tasks
                         WHERE parent<>0
                         AND (status=\'created\' OR status=\'active\')
-                        '.$tail.' '.
+                        '.$type.$tail.
                         $task_order );
 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
-  //check for closed tasks
-  if(task_usergroup($row['globalaccess'], $row['usergroupid'], $row['owner'] ) === false ) {
-    continue;
-  }
-  
   //put values into array
   $task_uncompleted[$i]['id'] = $row['id'];
   $task_uncompleted[$i]['parent'] = $row['parent'];
@@ -304,7 +301,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $this_task = "<li><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
   
   //add highlighting if deadline is due
-  $state = ceil((real)($row['due'] - (TIME_NOW + $tz_offset ) )/86400 );
+  $state = ceil( ($row['due'] - TIME_NOW )/86400 );
   
   if($state > 1) {
     $this_task .= $row['name']."</a>".sprintf($lang['due_in_sprt'], $state );
@@ -326,20 +323,12 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 db_free_result($q);
 
 //query to get the all the projects
-$q = db_query('SELECT id, name, owner, usergroupid, globalaccess, deadline AS due 
-                      FROM '.PRE.'tasks 
-                      WHERE parent=0
-                      AND archive=0 '.$project_order );
+$q = db_query('SELECT id, name FROM '.PRE.'tasks WHERE parent=0 AND archive=0 '.$tail.$project_order );
 
 // show all uncompleted tasks and projects belonging to this user or group
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
-  //check for closed projects
-  if(task_usergroup($row['globalaccess'], $row['usergroupid'], $row['owner'] ) === false ) {
-    continue;
-  }
-
-  $new_content = listTasks($row['id'], $tail );
+  $new_content = listTasks($row['id'] );
 
   //if no task, don't show project name either
   if($new_content != '' ) {

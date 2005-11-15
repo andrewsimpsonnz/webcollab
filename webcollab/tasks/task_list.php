@@ -47,19 +47,18 @@ function list_tasks($parent ) {
 
   global $x, $parentid, $parent_array, $epoch, $lang;
   global $taskgroup_flag, $task_state, $ul_flag;
-  global $no_group, $task_order;
+  global $no_group, $task_order, $GID;
 
   //init values
   $stored_groupname = NULL;
   $this_content = '';
   $ul_flag = 0;
-  $tz_offset = (TZ * 3600) - TZ_OFFSET;
     
   //query to get the children for this taskid
   $q = db_query('SELECT '.PRE.'tasks.id AS id,
                   '.PRE.'tasks.name AS name,
                   '.PRE.'tasks.status AS status,
-                  '.$epoch.' '.PRE.'tasks.finished_time) AS finished_time,
+                '.PRE.'tasks.finished_time AS finished_time,
                   '.$epoch.' '.PRE.'tasks.deadline) AS due,
                   '.$epoch.' '.PRE.'tasks.edited) AS edited,
                   '.$epoch.' '.PRE.'tasks.lastforumpost) AS lastpost,
@@ -94,15 +93,16 @@ function list_tasks($parent ) {
   //show all tasks
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
-    //check for closed usergroups
-    if(task_usergroup($row['globalaccess'], $row['usergroupid'], $row['owner'] ) === false ) {
-      
-      //do a recursive search if the subtask is listed in parent_array (it has children then)
-      if(in_array( $row['id'], $parent_array, FALSE) ) {
-        $this_content .= list_tasks( $row['id']);
-        $this_content .= "\n</ul></li>\n";
+    //check the user has rights to view this project/task
+    if(($row['globalaccess'] != 't' ) && ( $row['usergroupid'] != 0 ) && ($row['owner'] != UID ) && (! ADMIN ) ) {
+      if( ! in_array($usergroupid, (array)$GID ) ) {        
+        //do a recursive search if the subtask is listed in parent_array (it has children then)
+        if(in_array( $row['id'], $parent_array, FALSE) ) {
+          $this_content .= list_tasks( $row['id']);
+          $this_content .= "\n</ul></li>\n";
+        }
+        continue;
       }
-      continue;
     }
 
     //check if there are taskgroups set, and if this is the first layer of tasks
@@ -195,7 +195,7 @@ function list_tasks($parent ) {
     //status
     switch($row['status'] ) {
       case "done":
-        $status_content="<span class=\"green\">(".$task_state['completed']." ".nicetime($row['finished_time']).")</span>";
+        $status_content="<span class=\"green\">(".$task_state['completed']." ".nicedate($row['finished_time']).")</span>";
         break;
 
       case "active":
@@ -207,7 +207,7 @@ function list_tasks($parent ) {
         break;
 
       case "cantcomplete":
-        $status_content="<span class=\"blue\">(".$task_state['cantcomplete']." ".nicetime($row['finished_time']).")</span>";
+        $status_content="<span class=\"blue\">(".$task_state['cantcomplete']." ".nicedate($row['finished_time']).")</span>";
         break;
     }
 
@@ -233,7 +233,7 @@ function list_tasks($parent ) {
         break;
 
       default:
-        $state = ($row['due'] - (TIME_NOW + $tz_offset ) )/86400 ;
+        $state = ( ($row['due'] - TIME_NOW)/86400 );
         if($state > 1 ) {
           $this_content .=  "(".sprintf( $lang['due_sprt'], ceil((real)$state) ).")";
         }
@@ -291,11 +291,13 @@ if(! @safe_integer($_REQUEST['taskid']) ) {
 $parentid = $_REQUEST['taskid'];
 
 //check for closed usergroup projects
-$q = db_query('SELECT globalaccess, usergroupid, owner FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] );
-$row = db_fetch_num($q, 0 );
-
-if(task_usergroup($row[0], $row[1], $row[2] ) === false ) {
-  return;
+if(! ADMIN ) {
+  $tail = usergroup_tail();
+  $q = @db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'].$tail.' LIMIT 1' );
+  
+  if(db_result($q, 0, 0 ) < 1 ) {
+    return;
+  }
 }  
 
 //find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query

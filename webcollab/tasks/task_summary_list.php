@@ -40,7 +40,6 @@ include_once(BASE.'includes/time.php' );
 //initialise variables
 $no_access_project[0] = 0;
 $no_access_group[0] = 0;
-$tz_offset = (TZ * 3600) - TZ_OFFSET;
 
 //
 // MAIN FUNCTION
@@ -51,7 +50,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
   global $x, $GID, $lang, $task_state;
   global $no_access_project, $no_access_group;
   global $sortby;
-  global $epoch, $tz_offset;
+  global $epoch;
 
   $q = db_query( 'SELECT '.PRE.'tasks.id AS id,
                          '.PRE.'tasks.parent AS parent,
@@ -94,7 +93,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
       }
     }
 
-    $due = round( ($row['due'] - (TIME_NOW + $tz_offset ) )/86400 );
+    $due = round( ($row['due'] - TIME_NOW )/86400 );
 
     $seenq = db_query( 'SELECT '.$epoch.' time) FROM '.PRE.'seen WHERE taskid='.$row['id'].' AND userid='.UID.' LIMIT 1' );
 
@@ -163,7 +162,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
           break;
 
         default:
-          $date = nicedate($row['deadline']);
+          $date = nicedate(date('Y-m-d H:i:s', $row['due'] ) );
           if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND status<>\'done\' AND parent<>0' ), 0, 0 ) == 0 ) {
             $color = 'green';
             $status = $task_state['done'];
@@ -179,17 +178,17 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
       switch( $row['status'] ) {
         case 'done':
           $color = '';
-          $date = nicedate($row['deadline']);
+          $date = nicedate(date('Y-m-d H:i:s', $row['due'] ) );
           $status =  "<span class=\"green\">".$task_state['done']."</span>";
           break;
 
         case 'created':
-          $date = nicedate($row['deadline']);
+          $date = nicedate(date('Y-m-d H:i:s', $row['due'] ) );
           $status =  $task_state['new'];
           break;
 
         case 'active':
-          $date = nicedate($row['deadline']);
+          $date = nicedate(date('Y-m-d H:i:s', $row['due'] ) );
           $color = 'orange';
           $status =  $task_state['task_active'];
           break;
@@ -207,7 +206,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
           break;
 
         default:
-          $date = nicedate($row['deadline']);
+          $date = nicedate(date('Y-m-d H:i:s', $row['due'] ) );
           $status =  "<span class=\"orange\">".$row['status']."</span>";
           break;
       }

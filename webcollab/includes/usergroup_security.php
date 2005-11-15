@@ -36,49 +36,41 @@ function usergroup_check($taskid ) {
 
   global $GID, $lang;
 
-  //admins can go free, the rest are checked
-  if(ADMIN ) {
+  //admins are exempt & don't do check more than once
+  if(ADMIN || (defined('USERGROUP_CHECK') && USERGROUP_CHECK ) ) {
     return $taskid;
   }
-  
-  //get the tasks' security info
-  if( ! ($q = @db_query('SELECT owner, usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE id='.intval($taskid), 0 ) ) ) {
+ 
+  $tail = 'AND (globalaccess=\'f\' AND usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+           OR globalaccess=\'t\'   
+           OR usergroupid=0
+           OR owner='.UID.')';                      
+
+   
+  if(! ($q = @db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.intval($taskid).$tail.' LIMIT 1', 0 ) ) ) {
     error('Usergroup security', 'There was an error in the data query.' );
   }
   
-  //get the data
-  if( ! ($row = @db_fetch_num($q, 0 ) ) ) {
-    error('Usergroup security', 'There was an error in fetching the permission data.' );
-  }
+  if(db_numrows($q ) < 1 ) {
+      warning($lang['access_denied'], $lang['private_usergroup'] );
+  }    
   
-  //task owner has access rights
-  if($row[0] == UID ) {
-    return $taskid;
-  }
+  $projectid = db_result($q, 0, 0 );
   
-  //check usergroup rights
-  if(($row[1] != 0 ) && ($row[2] == 'f' ) ) {
-  
-    //check if the user has a matching group
-    if(! in_array($row[1], (array)$GID ) ) {
+  //if this is a task, then get project data  
+  if($projectid != $taskid ) {
+    if(! ($q = db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$projectid.$tail.' LIMIT 1', 0 ) ) ) {
+      error('Usergroup security', 'There was an error in the data query.' );
+    }
+        
+    if(db_result($q, 0, 0 ) < 1 ) {  
       warning($lang['access_denied'], $lang['private_usergroup'] );
     }
   }
   
-  //if this is a task, then get project data  
-  if($row[3] != $taskid ) {
-    $q   = db_query('SELECT usergroupid, globalaccess FROM '.PRE.'tasks WHERE id='.$row[3] );
-    $row = db_fetch_num($q, 0 );
+  //flag to show check has been done
+  define('USERGROUP_CHECK', true );
   
-    //check if project is marked private 
-    if(($row[1] != 0 ) && ($row[2] == 'f' ) ) {
-  
-      //check if the user has a matching group
-      if(! in_array($row[1], (array)$GID ) ) {
-        warning($lang['access_denied'], $lang['private_usergroup'] );
-      }
-    }
-  }
   return $taskid;
 }
 ?>

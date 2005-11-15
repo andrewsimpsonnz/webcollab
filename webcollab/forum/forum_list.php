@@ -52,7 +52,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
   
   $q = db_query('SELECT '.PRE.'forum.text AS text,
                         '.PRE.'forum.id AS id,
-                        '.$epoch.PRE.'forum.posted) AS posted,
+                        '.PRE.'forum.posted AS posted,
                         '.PRE.'forum.userid AS postowner,
                         '.PRE.'users.id AS userid,
                         '.PRE.'users.fullname AS fullname,
@@ -83,7 +83,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
     else {
       $this_post = "<li><small><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".$row['fullname']."</a>";
     }              
-    $this_post .= "&nbsp;(".nicetime( $row['posted'], 1 ).")</small>";
+    $this_post .= "&nbsp;(".nicetime( $row['posted']).")</small>";
                      
     //owners of the thread, owners of the post and admins have a "delete" option
     if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['postowner'] ) ) {

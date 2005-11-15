@@ -83,7 +83,17 @@ function project_jump($taskid=0) {
   
   $content = '';
   
-  // query to get the non-completed projects
+  //set the usergroup permissions on queries (Admin can see all)
+  if(ADMIN ) {
+    $tail = ' ';  
+  }
+  else {
+    $tail = ' AND ('.PRE.'globalaccess=\'f\' AND '.PRE.'usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+              OR '.PRE.'globalaccess=\'t\'   
+              OR '.PRE.'usergroupid=0) ';                      
+  }
+
+  //query to get the non-completed projects
   $q = db_query('SELECT id,
                         name,
                         globalaccess,
@@ -92,8 +102,9 @@ function project_jump($taskid=0) {
                         FROM '.PRE.'tasks
                         WHERE parent=0
                         AND completed<>100
-                        AND archive=0
-                        ORDER BY name' );
+                        AND archive=0'
+                        .$tail.
+                        'ORDER BY name' );
   
   //check if there are projects
   if(db_numrows($q) > 0 ){
@@ -108,11 +119,6 @@ function project_jump($taskid=0) {
     // loop through the data
     for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ){
     
-      //check if user can view this project
-      if(task_usergroup($row['globalaccess'], $row['usergroupid'], $row['owner'] ) === false ) {
-        continue;
-      }
-          
       $content .= "<option value=\"".$row["id"]."\"";
       if($taskid == $row['id']) {
         $content .= " selected=\"selected\"";
@@ -133,27 +139,20 @@ function project_jump($taskid=0) {
 
 
 //
-//  Check user access rights
+// SQL tail for user access rights
 //
-function task_usergroup($globalaccess, $usergroupid, $owner ) {
 
-  global $GID;
-
-  //check the user has rights to view this project/task
-  if(($globalaccess != 't' ) && ( $usergroupid != 0 ) && ($owner != UID ) && (! ADMIN ) ) {
-    if( ! in_array($usergroupid, (array)$GID ) ) {
-      return false;
-    }
-  }
+function usergroup_tail() {  
   
-  return true; 
+  //set the usergroup permissions on queries (Admin can see all)
+  if(ADMIN ) {
+    $tail = ' ';  
+  }
+  else {
+    $tail = ' AND ('.PRE.'globalaccess=\'f\' AND '.PRE.'usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+              OR '.PRE.'globalaccess=\'t\'   
+              OR '.PRE.'usergroupid=0) ';                      
+  }
+  return $tail;
 }
-
-
-
-
-
-
-
-
 ?>

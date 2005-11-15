@@ -119,8 +119,8 @@ else {
 }
 
 //get the last login time of a user
-$row = @db_result(db_query('SELECT '.$epoch.' lastaccess) FROM '.PRE.'logins WHERE user_id='.$userid ), 0, 0);
-$content .=   "<tr><td>".$lang['last_time_here']."</td><td>".nicetime($row, 1 )."</td></tr>\n";
+$row = @db_result(db_query('SELECT lastaccess FROM '.PRE.'logins WHERE user_id='.$userid ), 0, 0);
+$content .=   "<tr><td>".$lang['last_time_here']."</td><td>".nicetime($row)."</td></tr>\n";
 
 //Get the number of tasks/projects created
 $row = db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE creator='.$userid ), 0, 0 );
@@ -171,7 +171,7 @@ if( $tasks_owned + $projects_owned > 0 ) {
   }
 
   //Get the number of tasks
-  $q = db_query('SELECT id, name, parent, status, '.$epoch.'finished_time) AS finished_time, usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE owner='.$userid.' AND archive=0' );
+  $q = db_query('SELECT id, name, parent, status, finished_time AS finished_time, usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE owner='.$userid.' AND archive=0' );
 
   //show them
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -198,7 +198,7 @@ if( $tasks_owned + $projects_owned > 0 ) {
     //status
     switch( $row['status'] ) {
       case 'done':
-        $status_content="<span class=\"green\">(".$task_state['done']."&nbsp;".nicetime($row['finished_time']).")</span>";
+        $status_content="<span class=\"green\">(".$task_state['done']."&nbsp;".nicedate($row['finished_time']).")</span>";
         break;
 
       case 'active':
@@ -210,7 +210,7 @@ if( $tasks_owned + $projects_owned > 0 ) {
         break;
 
       case 'cantcomplete':
-        $status_content="<span class=\"blue\">(".$task_state['cantcomplete']."&nbsp;".nicetime($row['finished_time']).")</span>";
+        $status_content="<span class=\"blue\">(".$task_state['cantcomplete']."&nbsp;".nicedate($row['finished_time']).")</span>";
         break;
     }
 

@@ -35,42 +35,35 @@ include_once(BASE.'includes/time.php' );
 
 //initialise variables            
 $list = '';
-unset($lastpost);
-$j = 0;
-                  
+     
+//set the usergroup permissions on queries (Admin can see all)
+if(ADMIN ) {
+  $tail = ' ';  
+}
+else {
+  $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+           OR '.PRE.'tasks.globalaccess=\'t\'   
+           OR '.PRE.'tasks.usergroupid=0) ';                      
+}
+             
 $q = db_query('SELECT '.PRE.'forum.taskid AS taskid, 
                       MAX('.PRE.'forum.posted) AS recentpost,
-                      '.PRE.'tasks.name AS taskname,
-                      '.PRE.'tasks.globalaccess AS globalaccess,
-                      '.PRE.'tasks.usergroupid AS usergroupid
+                      '.PRE.'tasks.name AS taskname
                     FROM '.PRE.'forum 
                     LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
                     WHERE '.PRE.'forum.posted > ( now()-INTERVAL '.$delim.NEW_TIME.' DAY'.$delim.')
-                    GROUP BY '.PRE.'forum.taskid, taskname, globalaccess, '.PRE.'tasks.usergroupid
-                    ORDER BY recentpost DESC' );
+                    '.$tail.'
+                    GROUP BY '.PRE.'forum.taskid, taskname
+                    ORDER BY recentpost DESC LIMIT 10' );
 
 //iterate for posts                            
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
-
-  //check if user can view this task
-  if( (! ADMIN ) && ($row['globalaccess'] != 't' ) && ($row['usergroupid'] != 0 ) ) {
-    if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
-      continue;
-    }
-  }
   
   //date of latest post
-  if(! isset($lastpost) ) {
-    $lastpost = $row['recentpost'];
-  }
-  //show it
-  $list .= "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['taskid']."\">".substr($row['taskname'], 0, 25 )."</a><br />\n";
-  ++$j;
+  $lastpost = $row['recentpost'];
   
-  //show max of 10 posts
-  if($j > 10 ){
-    break;
-  }
+  //show it
+  $list .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['taskid']."\">".mb_strimwidth($row['taskname'], 0, 25 )."</a><br />\n";
 }
 
 db_free_result($q );

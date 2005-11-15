@@ -50,7 +50,7 @@ $taskid = usergroup_check($taskid );
 //get the files from this task
 $q = db_query('SELECT '.PRE.'files.id AS id,
                         '.PRE.'files.filename AS filename,
-                        '.$epoch.PRE.'files.uploaded) AS uploaded,
+                        '.PRE.'files.uploaded AS uploaded,
                         '.PRE.'files.size AS size,
                         '.PRE.'files.mime AS mime,
                         '.PRE.'files.description AS description,
@@ -81,7 +81,7 @@ if(db_numrows($q ) != 0 ) {
     }
     
     //user part
-    $content .= "<tr><td>".$lang['uploader']." <a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'], 1 ).")</td></tr>\n";
+    $content .= "<tr><td>".$lang['uploader']." <a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")</td></tr>\n";
 
     //show description
     if( $row['description'] != '' ) {

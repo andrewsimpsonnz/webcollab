@@ -39,6 +39,9 @@ $content = '';
 $flag = 0;
 $archive_print = 0;
 
+//set the usergroup permissions on queries
+$tail = usergroup_tail();  
+
 // query to get the projects
 $q = db_query('SELECT id,
                       name,
@@ -47,13 +50,12 @@ $q = db_query('SELECT id,
                       '.$epoch.' finished_time) AS finished_time,
                       '.$epoch.' completion_time) AS completion_time,
                       owner,
-                      usergroupid,
-                      globalaccess,
                       completed
                       FROM '.PRE.'tasks
                       WHERE parent=0
-                      AND archive=1
-                      ORDER BY name' );
+                      AND archive=1'
+                      .$tail.
+                      'ORDER BY name' );
 
 //check if there are projects
 if(db_numrows($q) < 1 ) {
@@ -77,11 +79,6 @@ $content .= "<table>\n";
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
-  //check the user has rights to view this project
-  if(task_usergroup($row['globalaccess'], $row['usergroupid'], $row['owner'] ) === false ) {
-    continue;
-  }
-  
   //set project status
   $project_status = $row['status'];
   

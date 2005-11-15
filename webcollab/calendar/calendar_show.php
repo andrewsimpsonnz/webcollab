@@ -87,22 +87,19 @@ else {
   }
 }
 
-//set dates to match local time 
-$epoch = TIME_NOW + (TZ * 3600) - TZ_OFFSET;
-    
 //set month
 if( @safe_integer($_POST['month']) ){
   $month = $_POST['month'];
 }
 else {
-  $month = date('n', $epoch);
+  $month = date('n', TIME_NOW);
 }
 //set year
 if( @safe_integer($_POST['year']) ){
   $year = $_POST['year'];
 }
 else {
-  $year = date('Y', $epoch);
+  $year = date('Y', TIME_NOW);
 }
 //Apply any calendar navigation
 $month += $monthoffset;
@@ -121,8 +118,8 @@ else {
 $year += $yearoffset;
 
 //set day, if applicable
-if($month == date('n', $epoch) && $year == date('Y', $epoch) ){
-  $today = date('j', $epoch);
+if($month == date('n', TIME_NOW) && $year == date('Y', TIME_NOW) ){
+  $today = date('j', TIME_NOW);
 }
 else {
   $today = 0;
@@ -152,7 +149,7 @@ switch($selection ) {
 //get list of private projects and put them in an array for later use
 $q = db_query('SELECT id, usergroupid FROM '.PRE.'tasks WHERE parent=0 AND globalaccess=\'f\'' );
 
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
+for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   $no_access_project[$i] = $row[0];
   $no_access_group[$i] = $row[1];
 }
@@ -164,7 +161,7 @@ $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
                       WHERE '.PRE.'usergroups.private=1');
 
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
    $allowed[$i] = $row[1];
   }
@@ -173,10 +170,10 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 //get all the days with projects/tasks due in selected month and year
 $q = db_query('SELECT DISTINCT '.$day_part.'deadline) FROM '.PRE.'tasks 
                       WHERE deadline >= \''.$year.'-'.$month.'-01\' 
-                      AND deadline <= ('.$date_cast.'\''.$year.'-'.$month.'-01\' + INTERVAL '.$delim.'1 MONTH'.$delim.') '.
+                      AND deadline <= (CAST(\''.$year.'-'.$month.'-01\' AS DATE) + INTERVAL '.$delim.'1 MONTH'.$delim.') '.
                       $tail );
                       
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ){
+for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ){
   $task_dates[$i] = (int)$row[0];
 }
 
