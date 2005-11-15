@@ -60,38 +60,26 @@ function nicedate($timestamp ) {
   $date_array = explode('-', substr($timestamp, 0, 10) );
   
   //format is 2004-Aug-02
-  //return sprintf('%s-%s-%02d', $date_array[0], $month_array[(int)($date_array[1])], (int)$date_array[2]);
   return $date_array[0].'-'.$month_array[(int)($date_array[1])].'-'.$date_array[2];
 }
 
 //
-// Take an epoch value (unix timestamp) and make it look nice *and* in the correct timezone
+// Take a database timestamp and make it look nice
 //
-function nicetime($timestamp, $addtime=0 ) {
+function nicetime($timestamp ) {
   global $month_array;
 
   if(empty($timestamp) )
     return '';
+  $date_array = explode('-', substr($timestamp, 0, 10 ) );
   
-  //get timestamp into the chosen timezone 
-  $local = $timestamp - TZ_OFFSET + (TZ * 3600);
-  
-  //format is 2004-Aug-02  
-  if(! $addtime)
-    return date('Y-', $local).$month_array[(date('n', $local))].date('-d', $local);
-  
-  $minutes = abs(TZ - floor(TZ)) * 60;
-  
-  if(TZ >= 0 )
-    $offset = sprintf('+%02d%02d', floor(TZ), $minutes );
-  else
-    $offset = sprintf('%03d%02d', floor(TZ), $minutes );
+  $time = substr($timestamp, 11, 5 );
   
   //format is 2004-Aug-02 18:06 +1200 
-  return date('Y-', $local).$month_array[(date('n', $local))].date('-d H:i ', $local).$offset;
-
+  return sprintf('%s-%s-%02d %s  %+03d00', $date_array[0], $month_array[(int)($date_array[1])], (int)$date_array[2], $time, TZ );
 }
   
+
 //
 //generate a HTML drop down box for date
 //
@@ -100,10 +88,9 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
 
   //filter for no date set
   if($day == -1 || $month == -1 || $year == -1 ) {
-    $local = TIME_NOW - TZ_OFFSET + (TZ * 3600);
-    $day   = date('d', $local );
-    $month = date('m', $local );
-    $year  = date('Y', $local );
+    $day   = date('d', TIME_NOW );
+    $month = date('m', TIME_NOW );
+    $year  = date('Y', TIME_NOW );
   }
 
   //day
