@@ -60,7 +60,6 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
                          '.PRE.'tasks.owner AS owner,
                          '.PRE.'tasks.taskgroupid AS taskgroupid,
                          '.PRE.'tasks.usergroupid AS usergroupid,
-                         '.PRE.'tasks.globalaccess AS globalaccess,
                          '.PRE.'tasks.projectid AS projectid,
                          '.PRE.'tasks.completed AS completed,
                          '.$epoch.' deadline) AS due,
@@ -80,11 +79,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
   $result = '';
 
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
-    //check usergroup permissions
-    if(task_usergroup($row['globalaccess'], $row['usergroupid'], $row['owner'] ) === false ) {
-      continue;
-    }
-
+    
     //don't show tasks in closed usergroup projects
     if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project) ) {
       $key = array_search($row['projectid'], $no_access_project );
@@ -162,8 +157,8 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
           break;
 
         default:
-          $date = nicedate(date('Y-m-d H:i:s', $row['due'] ) );
-          if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND status<>\'done\' AND parent<>0' ), 0, 0 ) == 0 ) {
+          $date = nicedate($row['deadline'] );
+          if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND status<>\'done\' AND parent<>0 LIMIT 1' ), 0, 0 ) == 0 ) {
             $color = 'green';
             $status = $task_state['done'];
           }
@@ -178,17 +173,17 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
       switch( $row['status'] ) {
         case 'done':
           $color = '';
-          $date = nicedate(date('Y-m-d H:i:s', $row['due'] ) );
+          $date = nicedate($row['deadline'] );
           $status =  "<span class=\"green\">".$task_state['done']."</span>";
           break;
 
         case 'created':
-          $date = nicedate(date('Y-m-d H:i:s', $row['due'] ) );
+          $date = nicedate($row['deadline'] );
           $status =  $task_state['new'];
           break;
 
         case 'active':
-          $date = nicedate(date('Y-m-d H:i:s', $row['due'] ) );
+          $date = nicedate($row['deadline'] );
           $color = 'orange';
           $status =  $task_state['task_active'];
           break;
@@ -206,7 +201,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
           break;
 
         default:
-          $date = nicedate(date('Y-m-d H:i:s', $row['due'] ) );
+          $date = nicedate($row['deadline'] );
           $status =  "<span class=\"orange\">".$row['status']."</span>";
           break;
       }
@@ -227,7 +222,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
       }
     }
     else {
-      $owner = db_result(db_query('SELECT fullname FROM '.PRE.'users WHERE id='.$row['owner'] ), 0, 0  );
+      $owner = db_result(db_query('SELECT fullname FROM '.PRE.'users WHERE id='.$row['owner'],' LIMIT 1' ), 0, 0  );
       $owner = "<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['owner']."\">".$owner."</a>";
     }
 
@@ -255,7 +250,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
         $group = $row[$groupname];
       }
       else
-        $group = db_result(db_query('SELECT name FROM '.PRE.$grouptable.' WHERE id='.$row[$groupid] ), 0, 0 );
+        $group = db_result(db_query('SELECT name FROM '.PRE.$grouptable.' WHERE id='.$row[$groupid].' LIMIT 1' ), 0, 0 );
     }
 
     //Build up the page columns for display.  Starting with the flags
@@ -307,7 +302,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
 
     $result .= "</td></tr>\n";
     if( $depth >= 0 ) {
-      $result .= project_summary( 'WHERE '.PRE.'tasks.parent=\''.$row['id'].'\' ORDER BY taskname', $depth+1 );
+      $result .= project_summary( 'WHERE '.PRE.'tasks.parent=\''.$row['id'].'\''.usergroup_tail().' ORDER BY taskname', $depth+1 );
     }
   }
 
@@ -366,40 +361,42 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
   $no_access_group[$i]   = $row[1];
 }
 
+$group_tail = 'WHERE archive=0'.usergroup_tail();
+
 // tail end of SQL query
 switch($sortby ) {
   case 'deadline':
-    $content .= project_summary(' WHERE archive=0 ORDER BY deadline,taskname', -1 );
+    $content .= project_summary($group_tail.' ORDER BY deadline,taskname', -1 );
     $suffix = $lang['by_deadline'];
     break;
 
   case 'status':
-    $content .= project_summary(' WHERE archive=0 ORDER BY status,deadline,taskname', -1 );
+    $content .= project_summary($group_tail.' ORDER BY status,deadline,taskname', -1 );
     $suffix = $lang['by_status'];
     break;
 
   case 'owner':
-    $content .= project_summary('LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner) WHERE archive=0  ORDER BY username,deadline,taskname', -1, ', '.PRE.'users.fullname AS username' );
+    $content .= project_summary('LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner) '.$group_tail.' ORDER BY username,deadline,taskname', -1, ', '.PRE.'users.fullname AS username' );
     $suffix = $lang['by_owner'];
     break;
 
   case 'usergroupid':
-    $content .= project_summary('LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'tasks.usergroupid) WHERE archive=0 ORDER BY usergroupname,deadline,taskname', -1, ', '.PRE.'usergroups.name AS usergroupname' );
+    $content .= project_summary('LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'tasks.usergroupid) '.$group_tail.' ORDER BY usergroupname,deadline,taskname', -1, ', '.PRE.'usergroups.name AS usergroupname' );
     $suffix = $lang['by_usergroup'];
     break;
 
   case 'taskgroupid':
-    $content .= project_summary('LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid) WHERE archive=0 ORDER BY taskgroupname,deadline,taskname', -1, ', '.PRE.'taskgroups.name AS taskgroupname' );
+    $content .= project_summary('LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid) '.$group_tail.' ORDER BY taskgroupname,deadline,taskname', -1, ', '.PRE.'taskgroups.name AS taskgroupname' );
     $suffix = $lang['by_taskgroup'];
     break;
 
   case 'taskname':
-    $content .= project_summary('WHERE archive=0 ORDER BY taskname,deadline', -1 );
+    $content .= project_summary($group_tail.' ORDER BY taskname,deadline', -1 );
     $suffix = '';
     break;
 
   default:
-    $content .= project_summary('WHERE parent=0 AND archive=0 ORDER BY taskname', 0 );
+    $content .= project_summary($group_tail.'AND parent=0 ORDER BY taskname', 0 );
     $suffix = '';
     break;
 }

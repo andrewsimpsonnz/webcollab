@@ -41,7 +41,6 @@ require_once('path.php' );
 $database_connection = '';
 $delim = "'";
 $epoch = 'extract(epoch FROM ';
-$date_cast = 'DATE ';
 $day_part = 'DATE_PART(\'day\', ';
 
 //
@@ -55,7 +54,7 @@ function db_query($query, $dieonerror=1 ) {
     //set initial value
     $host = '';
     //now adjust if necessary
-    if(DATABASE_HOST !== 'localhost' )
+    if(DATABASE_HOST != 'localhost' )
       $host = 'host='.DATABASE_HOST;
 
     if( ! ($database_connection = @pg_connect($host.' user='.DATABASE_USER.' dbname='.DATABASE_NAME.' password='.DATABASE_PASSWORD ) ) )
@@ -215,6 +214,26 @@ function pg_encoding() {
 
   switch(strtoupper(CHARACTER_SET ) ) {
 
+    case 'ISO-8859-1':
+      $pg_encoding = 'LATIN1';
+      break;
+    
+    case 'UTF-8':
+      $pg_encoding = 'UNICODE';
+      break; 
+
+    case 'ISO-8859-2':
+      $pg_encoding = 'LATIN2';
+      break;
+    
+    case 'ISO-8859-7':
+      $pg_encoding = 'ISO_8859_7';
+      break;
+    
+    case 'ISO-8859-9':
+      $pg_encoding = 'LATIN5';
+      break;
+    
     case 'KOI8-R':
       $pg_encoding = 'KOI8';
       break;
@@ -223,12 +242,7 @@ function pg_encoding() {
       $pg_encoding = 'WIN';
       break;
 
-    case 'ISO-8859-2':
-      $pg_encoding = 'LATIN2';
-      break;
-    
     default: 
-    case 'ISO-8859-1':
       $pg_encoding = 'LATIN1';
       break;
   }      
