@@ -41,10 +41,10 @@ function usergroup_check($taskid ) {
     return $taskid;
   }
  
-  $tail = 'AND (globalaccess=\'f\' AND usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
-           OR globalaccess=\'t\'   
-           OR usergroupid=0
-           OR owner='.UID.')';                      
+  $tail = ' AND (globalaccess=\'f\' AND usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+            OR globalaccess=\'t\'   
+            OR usergroupid=0
+            OR owner='.UID.')';                      
 
    
   if(! ($q = @db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.intval($taskid).$tail.' LIMIT 1', 0 ) ) ) {
