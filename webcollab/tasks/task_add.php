@@ -88,7 +88,7 @@ if( @safe_integer($_GET['parentid']) ) {
   }
   
   //add the project deadline (plus GMT offset) for the javascript
-  $project_deadline = db_result(db_query('SELECT '.$epoch.'deadline) FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ) ) + TZ_OFFSET;
+  $project_deadline = db_result(db_query('SELECT '.$epoch.'deadline) FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ) ) + (TZ * 3600 );
   
   $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" />\n";            
                 

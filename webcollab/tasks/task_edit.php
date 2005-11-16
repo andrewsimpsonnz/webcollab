@@ -94,7 +94,7 @@ if( ! user_access($TASKID_ROW['owner'], $TASKID_ROW['usergroupid'], $TASKID_ROW[
 }  
   
 //get project details - if any
-$q = db_query('SELECT name, '.$epoch.'deadline) AS deadline FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] );
+$q = db_query('SELECT name, '.$epoch.'deadline) AS deadline FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'].' LIMIT 1' );
 $project_row = db_fetch_array($q, 0 );
 
 //all okay show task info
@@ -116,7 +116,7 @@ switch($TYPE) {
 
   case 'task':
     //show project finish date for javascript (plus GMT offset)
-    $project_deadline = $project_row['deadline'] + TZ_OFFSET; 
+    $project_deadline = $project_row['deadline'] + (TZ * 3600 ); 
     
     $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" /></fieldset>\n".          
                  "<table class=\"celldata\">\n".
