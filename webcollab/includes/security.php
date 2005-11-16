@@ -72,7 +72,6 @@ if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS user_id,
                              '.PRE.'users.guest AS guest,
                              '.PRE.'users.deleted AS deleted,
                              '.$epoch.' now() ) AS now,
-                             '.$epoch.'DATE \'1970-01-02 00:00:00\') AS tz
                              FROM '.PRE.'logins
                              LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
                              WHERE '.PRE.'logins.session_key=\''.$session_key.'\'', 0 ) ) ) {
@@ -118,7 +117,6 @@ define('UID_NAME',  $row['fullname'] );
 define('UID_EMAIL', $row['email'] );
 
 define('TIME_NOW',  $row['now'] );
-define('TZ_OFFSET', (86400 - $row['tz'] ) );
     
 //get usergroups of user
 $q = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID );
@@ -140,7 +138,6 @@ db_query('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.$sessi
 // GUEST [0,1] = is the user a guest?
 // $GID[]      = array of user's groups
 // TIME_NOW    = UNIX epoch time now (seconds since 1 Jan 1970) 
-// TZ_OFFSET   = database timezone offset relative to GMT/UTC in seconds 
 //
 // and of course, access !!
 
