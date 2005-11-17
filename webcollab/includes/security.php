@@ -71,7 +71,7 @@ if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS user_id,
                              '.PRE.'users.fullname AS fullname,
                              '.PRE.'users.guest AS guest,
                              '.PRE.'users.deleted AS deleted,
-                             '.$epoch.' now() ) AS now,
+                             '.$epoch.' now() ) AS now
                              FROM '.PRE.'logins
                              LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
                              WHERE '.PRE.'logins.session_key=\''.$session_key.'\'', 0 ) ) ) {
