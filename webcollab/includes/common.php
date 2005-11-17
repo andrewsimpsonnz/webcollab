@@ -166,6 +166,25 @@ function html_links($body, $database_escape=0 ) {
 }
 
 //
+// String functions for compatibility with Unicode versions
+//
+function msubstr($string, $len ) {
+
+  return substr($string, 0, $len );
+}
+
+function mstrimwidth($string, $len ) {
+
+ return substr($string, 0, $len );
+}
+
+function mstrtoupper($string ) {
+
+ return strtoupper($string );
+}  
+
+
+//
 // Builds up an error screen
 //
 function error($box_title, $error ) {

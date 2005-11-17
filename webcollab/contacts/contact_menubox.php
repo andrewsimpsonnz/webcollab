@@ -46,14 +46,14 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   if( $row['company'] != '' ) {
      if ($row['company'] != $company ){
-       $content .= substr($row['company'], 0, 30 )."<br />";
+       $content .= mstrimwidth($row['company'], 30 )."<br />";
      }
-     $show = substr($row['lastname'], 0, 30 ).", ".strtoupper(substr( $row['firstname'], 0, 1 ) ).".";
+     $show = mstrimwidth($row['lastname'], 30 ).", ".mstrtoupper(msubstr($row['firstname'], 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=".$x."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
      $company =  $row['company'];
    }
    else{
-     $show = substr($row['lastname'], 0, 30 ).", ".strtoupper(substr( $row['firstname'], 0, 1 ) ).".";
+     $show = mstrimwidth($row['lastname'], 30 ).", ".mstrtoupper(msubstr($row['firstname'], 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=".$x."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
    }
 }
