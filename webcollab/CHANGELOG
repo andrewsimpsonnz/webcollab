@@ -1,4 +1,12 @@
 WebCollab CVS
+*** 19 November 2005
+  Andrew Simpson
+
+- bugfix: 'completion_time' field missing in project clone (Credit: michellapointe ) 
+
+- add iCalendar function
+
+WebCollab CVS
 *** 15 November 2005
   Andrew Simpson
 
