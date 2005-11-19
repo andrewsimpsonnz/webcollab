@@ -37,9 +37,14 @@ if(! defined('UID' ) ) {
 
 function icalendar_header($id ) {
 
+  global $dtstamp;
+  
   //get rid of some problematic system settings
   @ob_end_clean();
   @ini_set('zlib.output_compression', 'Off');
+  
+  //cache the generated timestamp (date functions are slow)
+  $dtstamp = gmdate('Ymd\THis\Z');
   
   //these headers are for IE 6
   header('Pragma: public');
@@ -49,7 +54,7 @@ function icalendar_header($id ) {
   
   //send the headers describing the file type
   header('Content-Type: text/calendar; charset=UTF-8' );
-  header('Content-Disposition: attachment; filename="'.ABBR_MANAGER_NAME.'-'.$id.'-'.date('Ymd').'.ics"');
+  header('Content-Disposition: attachment; filename="'.ABBR_MANAGER_NAME.'-'.$id.'-'.date('Ymd').'-1.ics"');
     
   echo  "BEGIN:VCALENDAR\r\n".
         "VERSION\r\n".
@@ -67,7 +72,7 @@ function icalendar_header($id ) {
 
 function icalendar_vtodo($row) {
   
-  global $icalendar_id;
+  global $icalendar_id, $dtstamp;
   
   $content = "BEGIN:VTODO\r\n".
              "UID\r\n".
@@ -83,7 +88,7 @@ function icalendar_vtodo($row) {
              "DUE;VALUE=DATE\r\n".
              " :".icalendar_date($row['deadline'])."\r\n".
              "DTSTAMP\r\n".
-             " :".gmdate('Ymd\THis\Z')."\r\n".
+             " :".$dtstamp."\r\n".
              "DTSTART;VALUE=DATE\r\n".
              " :".icalendar_date($row['created'])."\r\n".
              "ORGANIZER;CN=\"".$row['fullname']."\"\r\n".
@@ -194,35 +199,43 @@ function icalendar_end(){
 function icalendar_text_format($string ) {
 
   //iCalendar uses UTF-8 only
-  if(function_exists('mb_convert_encoding' ) ) { 
-    $string = mb_convert_encoding($string, 'UTF-8', CHARACTER_SET );
-  }
-  elseif(function_exists('iconv' ) ) {
-    $string = iconv(CHARACTER_SET, 'UTF-8', $string);
-  }
-  else {
-    //fallback conversion assumes ISO-8859-1
-    $string = preg_replace("/([\x80-\xff])/e", "chr(0xc0|ord('\\1') >>6 ).chr(0x80|ord('\\1') & 0x3f )", $string );
+  if(CHARACTER_SET != 'UTF-8' ) {
+    
+    if(function_exists('mb_convert_encoding' ) ) { 
+      $string = mb_convert_encoding($string, 'UTF-8', CHARACTER_SET );
+    }
+    
+    elseif(function_exists('iconv' ) ) {
+      $string = iconv(strtoupper(CHARACTER_SET ), 'UTF-8', $string);
+    }
+    
+    elseif(function_exists('utf8_encode' ) && (CHARACTER_SET == 'ISO-8859-1') ) {
+      $string = utf8_encode($string );
+    }
+    else {
+      //remove high order ASCII to prevent confusion with UTF-8
+      $string = preg_replace("/[\x80-\xff]/", '?', $string );
+    }
   }
     
   //convert line breaks
   $string = strtr($string, array("\n"=>'\n' ) );
     
-  //word wrap at 75 octets
+  //word wrap at 75 octets with '[space]\r\n'
   $string = wordwrap($string, 75, " \r\n", 1 );
   
   return $string;
 }
 
 //
-// Convert databse timestamp to iCalendar timestamp
+// Convert database timestamp to iCalendar timestamp
 //
 
 function icalendar_date($timestamp ) {
 
   $date_array = explode('-', substr($timestamp, 0, 10) );
   
-  //format is 20040802 for 2 August 2002
+  //format is 20040803 for 3 August 2002
   $date = $date_array[0].$date_array[1].$date_array[2];
 
   return $date;

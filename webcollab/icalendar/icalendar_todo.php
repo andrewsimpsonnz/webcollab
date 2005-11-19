@@ -32,6 +32,7 @@ if(! defined('UID' ) ) {
 }
 
 include_once(BASE.'icalendar/icalendar_download.php' );
+include_once(BASE.'icalendar/icalendar_common.php' );
 
 //set variables
 $content  = '';
@@ -78,28 +79,8 @@ switch($selection ) {
     break;
 }
 
-$main_query = 'SELECT '.PRE.'tasks.id AS taskid, 
-                      '.PRE.'tasks.name AS name,
-                      '.PRE.'tasks.text AS text,
-                      '.PRE.'tasks.deadline AS deadline,
-                      '.PRE.'tasks.created AS created,
-                      '.PRE.'tasks.edited AS edited,
-                      '.PRE.'tasks.status AS status,
-                      '.PRE.'tasks.priority AS priority,
-                      '.PRE.'tasks.parent AS parent,
-                      '.PRE.'tasks.owner AS owner,
-                      '.PRE.'tasks.usergroupid AS usergroupid,
-                      '.PRE.'tasks.globalaccess AS globalaccess,
-                      '.PRE.'tasks.projectid AS projectid,
-                      '.PRE.'tasks.completed AS completed,
-                      '.PRE.'users.id AS userid,
-                      '.PRE.'users.fullname AS fullname,
-                      '.PRE.'users.email AS email                                 
-                      FROM '.PRE.'tasks
-                      LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)';
-
 // show all subtasks that are not complete
-$q = db_query($main_query.' WHERE parent<>0 AND (status=\'created\' OR status=\'active\') AND archive=0'.$tail );
+$q = db_query( icalendar_query().' AND '.PRE.'tasks.parent<>0 '.$tail. icalendar_usergroup_tail() );
 
 //no rows ==> return
 if(db_numrows($q) < 1 ) {
@@ -111,18 +92,13 @@ icalendar_header($id);
 
 for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {            
 
-  //check for closed tasks
-  if(icalendar_usergroup($row['globalaccess'], $row['usergroupid'], $row['owner'] ) === false ) {
-    continue;
-  }
-
   if(! in_array($row['projectid'], (array)$projects ) ) {
   
-    $project_q = db_query($main_query.' WHERE '.PRE.'tasks.id='.$row['projectid'] );
+    $project_q = db_query(icalendar_query().' AND '.PRE.'tasks.id='.$row['projectid']. icalendar_usergroup_tail() );
                                   
     
     //check for closed projects
-    if(icalendar_usergroup($row['globalaccess'], $row['usergroupid'], $row['owner'] ) === false ) {
+    if(db_numrows($project_q) < 1 ) {
       continue;
     }
                                    
@@ -138,23 +114,6 @@ for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 //end of file
 icalendar_end();
 
-//
-// Check usergroup access
-//
-
-function icalendar_usergroup($globalaccess, $usergroupid, $owner ) {
-
-  global $GID;
-
-  //check the user has rights to view this project/task
-  if(($globalaccess != 't' ) && ( $usergroupid != 0 ) && ($owner != UID ) && (! ADMIN ) ) {
-    if( ! in_array($usergroupid, (array)$GID ) ) {
-      return false;
-    }
-  }
-  
-  return true; 
-}
 
 //
 // Check for private users
