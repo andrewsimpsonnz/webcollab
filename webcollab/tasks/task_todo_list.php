@@ -215,6 +215,11 @@ switch($selection ) {
     break;
 }
 
+  $content  .= "<div style=\"text-align : right\"><span class=\"textlink\">\n".
+               "[<a href=\"icalendar.php?x=".$x."&amp;action=todo&amp;selection=".$selection."&amp;userid=".$userid."&amp;groupid=".$groupid."\">"."iCalendar"."</a>]\n".
+               "</span></div>";
+
+
 $content .= "<form method=\"post\" action=\"tasks.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\" /></fieldset>\n ".
@@ -323,7 +328,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 db_free_result($q);
 
 //query to get the all the projects
-$q = db_query('SELECT id, name FROM '.PRE.'tasks WHERE parent=0 AND archive=0 '.$tail.$project_order );
+$q = db_query('SELECT id, name, '.$epoch.' deadline) AS due FROM '.PRE.'tasks WHERE parent=0 AND archive=0 '.$tail.$project_order );
 
 // show all uncompleted tasks and projects belonging to this user or group
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {

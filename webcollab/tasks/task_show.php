@@ -75,11 +75,13 @@ db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$task
 
 //text link for 'printer friendly' page
 if(isset($_GET['action']) && $_GET['action'] === "show_print" ) {
-  $content  .= "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=$taskid\">".$lang['normal_version']."</a>]</span></p>";
+  $content  .= "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$taskid."\">".$lang['normal_version']."</a>]</span></p>";
 }
 else {
   //show print tag
-  $content .= "<div style=\"text-align : right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=show_print&amp;taskid=".$taskid."\">".$lang['print_version']."</a>]</span></div>\n";
+  $content .= "<div style=\"text-align : right\"><span class=\"textlink\">".
+              "[<a href=\"icalendar.php?x=".$x."&amp;action=project&amp;taskid=".$taskid."\">"."iCalendar"."</a>]&nbsp;".
+              "[<a href=\"tasks.php?x=".$x."&amp;action=show_print&amp;taskid=".$taskid."\">".$lang['print_version']."</a>]</span></div>\n";
   //show 'project jump' select box
   $content .= project_jump($taskid);
 }  
