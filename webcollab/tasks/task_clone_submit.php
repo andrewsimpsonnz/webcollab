@@ -114,7 +114,10 @@ function copy_across($taskid, $new_parent, $name ) {
                     usergroupid,
                     globalaccess,
                     groupaccess,
-                    status )
+                    status,
+                    completed,
+                    completion_time,
+                    archive )
                     values('$new_name',
                     '".db_escape_string($row['text'])."',
                     now(),
@@ -132,7 +135,10 @@ function copy_across($taskid, $new_parent, $name ) {
                     ".$row['usergroupid'].",
                     '".$row['globalaccess']."',
                     '".$row['groupaccess']."',
-                    '".db_escape_string($row['status'])."')" );
+                    '".db_escape_string($row['status'])."',
+                    '".$row['completed']."',
+                    '".$row['completion_time']."',
+                    '".$row['archive']."')" );
 
     // get taskid for the new task/project
     $new_taskid = db_lastoid('tasks_id_seq' );
