@@ -28,6 +28,7 @@
 require_once('path.php');
 require_once(BASE.'includes/security.php' );
 
+
 //
 // The action handler
 //
@@ -42,9 +43,13 @@ switch($_REQUEST['action'] ) {
     include(BASE.'icalendar/icalendar_todo.php' );
     break;
   
-  case 'user':  
-    include(BASE.'icalendar/icalendar_user.php' );
+  case 'project':  
+    include(BASE.'icalendar/icalendar_project.php' );
     break;
+    
+  case 'all':
+    include(BASE.'icalendar/icalendar_all.php' );
+    break; 
   
   //Error case
   default:
