@@ -88,7 +88,7 @@ require_once(BASE.'setup/security_setup.php' );
     if( ! @mysql_select_db( $database_name, $database_connection ) ) {
 
       //no database exists yet - try and create it...
-      if( ! ($result = @mysql_query( 'CREATE DATABASE '.$database_name, $database_connection ) ) ){
+      if( ! ($result = @mysql_query( 'CREATE DATABASE '.$database_name.' CHARACTER SET utf8', $database_connection ) ) ){
         error_setup("Connected successfully to the database server, but database creation had the following error: <br />".
                              "<b>".mysql_error($database_connection)."</b><br /><br />".
                              "The above error message was created by the MySQL database server." );
