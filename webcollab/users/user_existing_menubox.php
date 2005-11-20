@@ -49,7 +49,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 }
 
 //query
-$q = db_query('SELECT * FROM '.PRE.'users WHERE deleted=\'f\' ORDER by fullname' );
+$q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' ORDER by fullname' );
 
 //check for enough users
 if(db_numrows($q) < 1 ) {
