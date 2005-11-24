@@ -22,32 +22,22 @@ General Arrangement
 Here is how the translation files work:
 
 
-    $lang['name']                       = 'Name';
+    $lang['name']                       = "Name";
   ^^^^^^^^^^^^^^^^
          
 The lefthand side of the equals sign is the call up tag for the word string (text).  This
 needs to remain as shown.  
     
        
-    $lang['name']                       = 'Name';
+    $lang['name']                       = "Name";
                                          ^^^^^^^^
 
 The righthand side of the equals sign is the string to be translated.  The string is
 enclosed in single (or double) quotes and ends with a semi-colon.
-
-Note:  Translated text enclosed by single quotes must have any another single quote(s)
-escaped to prevent the text parser becoming confused.  This is done by adding a
-backslash ('\') before the single quote.  For example:
-
-    $lang['orig_message']                = 'Message d\'origine:'; 
     
-    
-The same applies to translated text enclosed by double quotes and containing double
-quote(s).    
-                                           
-Some messages contain strings like %s, %1$s, \n and HTML (<br />, <b>, <p> etc).
+Some messages contain strings like %s, %1\$s, \n and HTML (<br />, <b>, <p> etc).
 
-  %s, %1$s           - are placeholders for values to be inserted by the code.
+  %s, %1\$s          - are placeholders for values to be inserted by the code.
   \n                 - tells the browser to place a linebreak in the HTML code.
   <br />, <b>, <p>   - are HTML formatting codes
   
@@ -71,15 +61,18 @@ String (eg: 'Project')
 Formatted print string 
 (eg: 'Files associated with this %s' - where %s is inserted by the code)
 
-Note: Formatted strings with %1$s; %2$s; %3$s etc. can have parameters interchanged - as
+Note: Formatted strings with %1\$s; %2\$s; %3\$s etc. can have parameters interchanged - as
 in:
 
-'Message from %1$s about %2$s'
+"Message from %1\$s about %2\$s"
  
  _could also be_ 
 
-'Message about %2$s from %1$s'
+"Message about %2\$s from %1\$s"
     
+(Note: For those familiar with PHP; the interchangable parameters have the '$' escaped
+('\') to prevent text parser interpreting them as a variable in the double quoted strings).
+
 
 **    $lang['xxxx_g']
     
@@ -91,10 +84,15 @@ Note:  To look correct on the screen, these items should start and end with a HT
 
 **    $lang['xxxx_javascript']
 
-String is used in Javascript (No special requirements).
+String is used in Javascript.
 
 (eg: 'Are you sure you want to delete?') 
 
+Note:  Text with a single quote (apostrophe) in a word must have the quote escaped to
+prevent the javascript text parser becoming confused.  This is done by adding a
+backslash ('\') before the single quote.  For example:
+
+    $lang['confirm_del_javascript']      = "Confirmer l\'effacement!";    
     
 
 Special Strings in xx_message.php
@@ -134,10 +132,10 @@ Validation Regex
 ================
 
 Every character set needs a validation filter that WebCollab uses to reject illegal
-characters.  This is the one for ISO-8859-1: 
+characters.  This is the one for ISO-8859-1 (and most other ISO-8859-x character sets): 
 
     //this is the regex for input validation filter used in common.php 
-    $validation_regex = '/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s';
+    $validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s"; //ISO-8859-x
 
 For testing a new character set use:
 
