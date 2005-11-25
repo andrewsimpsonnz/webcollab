@@ -217,6 +217,24 @@ function html_links($body, $database_escape=0 ) {
 }
 
 //
+// String functions for compatibility with non-Unicode versions
+//
+function msubstr($string, $len ) {
+
+  return mb_substr($string, 0, $len );
+}
+
+function mstrimwidth($string, $len ) {
+
+ return mb_strimwidth($string, 0, $len, '..' );
+}
+
+function mstrtoupper($string ) {
+
+ return mb_strtoupper($string );
+}  
+
+//
 // Builds up an error screen
 //
 function error($box_title, $error ) {
