@@ -41,7 +41,7 @@ function db_connection() {
   global $database_connection;
   
   //make connection
-  if( ! ($database_connection = @mysql_pconnect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD ) ) ) {
+  if( ! ($database_connection = @mysql_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD ) ) ) {
     error('No database connection',  'Sorry but there seems to be a problem in connecting to the database server');
   }
   
@@ -190,7 +190,7 @@ function db_begin() {
 
   $result = mysql_query('BEGIN' );
 
-return $result;
+  return $result;
 }
 
 //
@@ -213,6 +213,8 @@ function db_commit() {
   global $database_connection;
 
   $result = mysql_query('COMMIT' );
+
+return $result;
 }
 
 //
@@ -253,6 +255,14 @@ function mysql_encoding() {
    
     case 'ISO-8859-2':
       $my_encoding = 'latin2';
+      break;
+    
+    case 'ISO-8859-7':
+      $my_encoding = 'greek';
+      break;
+    
+    case 'ISO-8859-9':
+      $my_encoding = 'latin5';
       break;
     
     default:  
