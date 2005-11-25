@@ -107,7 +107,7 @@ switch(LOCALE ) {
     break;
   
   case 'zh-hk':
-    include(BASE.'lang/zh-tw_message.php' );
+    include(BASE.'lang/zh-hk_message.php' );
     break;
       
   case 'zh-cn':
