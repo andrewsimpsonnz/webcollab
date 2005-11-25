@@ -232,7 +232,7 @@ function list_tasks($parent ) {
         break;
 
       default:
-        $state = ($row['due'] - (TIME_NOW)/86400 );
+        $state = ( ($row['due'] - TIME_NOW)/86400 );
         if($state > 1 ) {
           $this_content .=  "(".sprintf( $lang['due_sprt'], ceil((real)$state) ).")";
         }
