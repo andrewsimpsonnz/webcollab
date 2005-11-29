@@ -2,6 +2,14 @@ WebCollab CVS
 *** 19 November 2005
   Andrew Simpson
 
+- update French translation (Credit: michellapointe - Michel Lapointe )
+
+- associate contacts with projects & tasks (Feature Request #1315154) 
+
+WebCollab CVS
+*** 19 November 2005
+  Andrew Simpson
+
 - bugfix: 'completion_time' field missing in project clone (Credit: michellapointe ) 
 
 - add iCalendar function
@@ -18,7 +26,7 @@ WebCollab CVS
 
 - usergroup permissions now handled by sub-select in database
 
-- database now matches character sets internally to web client  
+- database now matches character sets internally to selected locale  
   
 WebCollab 1.81 (Ardness)
 *** 9 November 2005
