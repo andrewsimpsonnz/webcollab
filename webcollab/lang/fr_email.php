@@ -32,18 +32,18 @@
 
 $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y g:i a' );
 
-$title_file_post          = ABBR_MANAGER_NAME.": New file upload: %s";
-$email_file_post          = "Hello,\n\nThis is the ".MANAGER_NAME." site informing you that a new file has been uploaded on ".$email_date." by %1\$s.\n\n".
-                            "File:        %2\$s\n".
+$title_file_post          = ABBR_MANAGER_NAME.": Nouveau Fichier ajout&eacute;: %s";
+$email_file_post          = "Bonjour,\n\nC'est le site ".MANAGER_NAME." qui vous informe qu'un nouveau fichier a &eacute;t&eacute; ajout&eacute; le ".$email_date." par %1\$s.\n\n".
+                            "Fichier:        %2\$s\n".
                             "Description: %3\$s";
 
-$title_forum_post         = ABBR_MANAGER_NAME.": New forum post: %s";
-$email_forum_post         = "Hello,\n\nThis is the ".MANAGER_NAME." site informing you that a new forum post has been made on ".$email_date." by %1\$s:\n\n----\n\n%2\$s\n\n----\n\n"; 
-$email_forum_reply        = "Hello,\n\nThis is the ".MANAGER_NAME." site informing you that a new forum post has been made on ".$email_date." by %1\$s.\n\n".
-                           "This post is in reply to an earlier post by %2\$s.\n\n".
-                           "Original post:\n %3\$s\n\n".
+$title_forum_post         = ABBR_MANAGER_NAME.": Nouveau message: %s";
+$email_forum_post         = "Bonjour,\n\nC'est le site ".MANAGER_NAME." qui vous informe qu'un nouveau message a &eacute;t&eacute; ajout&eacute; le ".$email_date." par %1\$s:\n\n----\n\n%2\$s\n\n----\n\n";
+$email_forum_reply        = "Bonjour,\n\nC'est le site ".MANAGER_NAME." qui vous informe qu'un nouveau message a &eacute;t&eacute; ajout&eacute; le ".$email_date." par %1\$s.\n\n".
+                           "Ce message est en r&eacute;ponse à un message pr&eacute;c&eacute;dent de %2\$s.\n\n".
+                           "Message original:\n %3\$s\n\n".
                             "----\n\n".
-                           "New reply:\n%4\$s\n\n".
+                           "Nouvelle r&eacute;ponse:\n%4\$s\n\n".
                             "----\n\n";
 
 $email_list               = "Projet: %1\$s\n".
