@@ -40,8 +40,13 @@ if(! @safe_integer($_GET['contactid']) ){
 $contactid = $_GET['contactid'];
 
 //get contact information
-if( ! ($row = @db_fetch_array(db_query('SELECT * FROM '.PRE.'contacts WHERE id='.$contactid ), 0 ) ) ){
+if( ! ($row = @db_fetch_array(db_query('SELECT * FROM '.PRE.'contacts WHERE id='.$contactid.' LIMIT 1' ), 0 ) ) ){
   error('Contact show', 'There is no information for that contact');
+}
+
+if($row['taskid'] > 0 ) {
+  require_once(BASE.'includes/usergroup_security.php' );
+  usergroup_check($row['taskid']);
 }
 
 $content =

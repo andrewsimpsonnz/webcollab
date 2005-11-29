@@ -59,6 +59,7 @@ switch($_REQUEST['action'] ) {
       //include(BASE.'admin/admin_config_menubox.php' );
       include(BASE.'files/file_menubox.php' );
     }
+    include(BASE.'contacts/contact_menubox.php' );
     goto_main();
     include(BASE.'tasks/task_show.php' );
     include(BASE.'tasks/task_list.php' );

@@ -35,11 +35,31 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//initialise variables
 $content = '';
 $company = '';
 
+if( @safe_integer($_GET['taskid']) ) {
+  
+  $taskid = $_GET['taskid'];
+  
+  //get task details
+  require_once(BASE.'includes/details.php' );
+  
+  //check usergroup rights
+  require_once(BASE.'includes/usergroup_security.php' );
+  usergroup_check($taskid );
+  
+  $tail = 'WHERE taskid='.$taskid.' OR taskid='.$TASKID_ROW['projectid'];
+  $add  = '&amp;taskid='.$taskid;
+}
+else {
+  $tail = 'WHERE taskid=0';
+  $add  = '';
+}
+
 //get all contacts
-$q = db_query('SELECT id, firstname, lastname, company FROM '.PRE.'contacts ORDER BY company, lastname' );
+$q = db_query('SELECT id, firstname, lastname, company FROM '.PRE.'contacts '.$tail.' ORDER BY company, lastname' );
 
 //show all contacts
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
@@ -52,7 +72,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
      $content .= "<a href=\"contacts.php?x=".$x."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
      $company =  $row['company'];
    }
-   else{
+   else {
      $show = mstrimwidth($row['lastname'], 30 ).", ".mstrtoupper(msubstr($row['firstname'], 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=".$x."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
    }
@@ -64,7 +84,7 @@ $content .= "<br />\n";
 
 //the add button
 if(! GUEST ){
-  $content .= "<span class=\"textlink\">[<a href=\"contacts.php?x=".$x."&amp;action=add\">".$lang['add_contact']."</a>]</span>\n";
+  $content .= "<span class=\"textlink\">[<a href=\"contacts.php?x=".$x."&amp;action=add".$add."\">".$lang['add_contact']."</a>]</span>\n";
 }
 
 //show the box

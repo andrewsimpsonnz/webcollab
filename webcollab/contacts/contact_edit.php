@@ -47,6 +47,12 @@ if( ! ($row = db_fetch_array( db_query( 'SELECT * FROM '.PRE.'contacts WHERE id=
   error('Contact edit', 'There is no information for that contact');
 }
 
+//check usergroups
+if($row['taskid'] ) {
+  require_once(BASE.'includes/usergroup_security.php' );
+  usergroup_check($row['taskid']);
+}
+
 $content =
     "<form method=\"post\" action=\"contacts.php\">\n".
       "<fieldset><input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".

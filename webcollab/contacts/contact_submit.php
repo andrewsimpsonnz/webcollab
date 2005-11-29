@@ -50,6 +50,19 @@ switch($_REQUEST['action'] ) {
       warning($lang['contact_submit'], $lang['contact_warn'] );
     }
     
+    if( @safe_integer($_POST['taskid']) ) { 
+    
+      $taskid = $_POST['taskid'];
+    
+      //check for non-existent tasks...
+      if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$taskid.' LIMIT 1' ), 0, 0 ) < 1 ) {
+        error('Contact submit', 'Not a valid taskid' );
+      }
+    }
+    else {
+      $taskid = 0;  
+    }
+
     db_query( 'INSERT INTO '.PRE.'contacts(firstname,
                                       lastname,
                                       company,
@@ -64,7 +77,8 @@ switch($_REQUEST['action'] ) {
                                       notes,
                                       added_by,
                                       user_id,
-                                      date )
+                                      date,
+                                      taskid )
                                   values(\''.safe_data($_POST['firstname']).'\',
                                   \''.safe_data($_POST['lastname']).'\',
                                   \''.safe_data($_POST['company']).'\',
@@ -79,7 +93,8 @@ switch($_REQUEST['action'] ) {
                                   \''.safe_data_long($_POST['notes']).'\',
                                   '.UID.',
                                   '.UID.',
-                                  now() )' );
+                                  now(),
+                                  '.$taskid.')' );
     break;
 
   case 'submit_edit':
@@ -87,11 +102,15 @@ switch($_REQUEST['action'] ) {
     if(empty($_POST['lastname'] ) || empty($_POST['firstname'] ) ) {
       warning($lang['contact_submit'], $lang['contact_warn'] );
     }
+    
     if(! @safe_integer($_POST['contactid']) ) {
       error('Contact submit', 'Not a valid contactid' );
     }
     $contactid = $_POST['contactid'];
  
+    //get taskid (used for HTTP return value below)
+    $taskid = db_result(db_query('SELECT taskid FROM '.PRE.'contacts WHERE id='.$contactid.' LIMIT 1' ), 0, 0 );
+    
     db_query('UPDATE '.PRE.'contacts SET
                   firstname=\''.safe_data($_POST['firstname']).'\',
                   lastname=\''.safe_data($_POST['lastname']).'\',
@@ -107,7 +126,7 @@ switch($_REQUEST['action'] ) {
                   notes=\''.safe_data_long($_POST['notes']).'\',
                   added_by='.UID.',
                   date=now()
-                  WHERE id = \''.$contactid.'\'' );
+                  WHERE id ='.$contactid );
 
     break;
 
@@ -118,6 +137,15 @@ switch($_REQUEST['action'] ) {
     }
     $contactid = $_POST['contactid'];
 
+    //get taskid - if any
+    $taskid = db_result(db_query('SELECT taskid FROM '.PRE.'contacts WHERE id='.$contactid.' LIMIT 1' ), 0, 0 );
+    
+    //check usergroup if required
+    if($taskid ) {
+      require_once(BASE.'includes/usergroup_security.php' );
+      usergroup_check($taskid);
+    }
+    
     //delete the contact 
     @db_query('DELETE FROM '.PRE.'contacts WHERE id='.$contactid );
     break;
@@ -128,7 +156,13 @@ switch($_REQUEST['action'] ) {
     break;
 }
 
-header('Location: '.BASE_URL.'main.php?x='.$x );
-die;
+if($taskid ) {
+  header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$taskid );
+  die;
+}
+else {
+  header('Location: '.BASE_URL.'main.php?x='.$x );
+  die;
+}
 
 ?>

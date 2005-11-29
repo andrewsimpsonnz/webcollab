@@ -37,10 +37,13 @@ if(GUEST ) {
   error('Contact add', 'Guest not authorised' );
 }
 
+$taskid = ( @safe_integer($_GET['taskid']) ) ? $_GET['taskid'] : 0 ;
+
 $content =
         "<form method=\"post\" action=\"contacts.php\">\n".
           "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
-          "<input type=\"hidden\" name=\"action\" value=\"submit_add\" /></fieldset>\n".
+          "<input type=\"hidden\" name=\"action\" value=\"submit_add\" />\n".
+          "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" /></fieldset>\n".
           "<table class=\"celldata\">\n".
             "<tr><td><i>".$lang['firstname']."</i></td><td><input id=\"firstname\" type=\"text\" name=\"firstname\" size=\"30\" /></td></tr>\n".
             "<tr><td><i>".$lang['lastname']."</i></td><td><input type=\"text\" name=\"lastname\" size=\"30\" /></td></tr>\n".
