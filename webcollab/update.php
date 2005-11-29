@@ -291,6 +291,28 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     $content .= "<p>Updating from version pre-1.70 database ... success!</p>\n";  
   }
     
+  //update version 1.81 -> 2.00   
+  if(! (db_query("SELECT projectid FROM ".PRE."contacts", 0 ) ) ) {
+  
+    //convert mysql databases to UTF-8 
+    if((DATABASE_TYPE == 'mysql' ) || (DATABASE_TYPE == 'mysql_innodb' ) ) { 
+      db_query('ALTER DATABASE '.DATABASE_NAME.' DEFAULT CHARACTER SET utf8' );
+    } 
+    //add project capability to contacts
+    db_query('ALTER TABLE '.PRE.'contacts ADD COLUMN taskid INT' );
+    db_query('UPDATE '.PRE.'contacts SET taskid=0' );
+    
+    //add timezones for users
+    db_query('ALTER TABLE '.PRE.'users ADD COLUMN timezone VARCHAR(10)' );
+    db_query('UPDATE '.PRE.'users SET timezone=\''.TZ.'\'' );
+          
+    //add locale for users
+    db_query('ALTER TABLE '.PRE.'users ADD COLUMN locale VARCHAR(10)' );
+    db_query('UPDATE '.PRE.'users SET locale=\''.LOCALE.'\'' );
+  
+    $content .= "<p>Updating from version pre-2.00 database ... success!</p>\n";
+  }  
+    
   if( ! $content ) {
     $content .= "<p>No database updates were required.</p>\n";
   }
