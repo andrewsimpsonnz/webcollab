@@ -51,6 +51,7 @@ function icalendar_query() {
                 '.PRE.'tasks.globalaccess AS globalaccess,
                 '.PRE.'tasks.projectid AS projectid,
                 '.PRE.'tasks.completed AS completed,
+                '.PRE.'tasks.sequence AS sequence,
                 '.PRE.'users.id AS userid,
                 '.PRE.'users.fullname AS fullname,
                 '.PRE.'users.email AS email                                 

@@ -92,7 +92,9 @@ function icalendar_vtodo($row) {
              "DTSTART;VALUE=DATE\r\n".
              " :".icalendar_date($row['created'])."\r\n".
              "ORGANIZER;CN=\"".$row['fullname']."\"\r\n".
-             " :MAILTO:".$row['email']."\r\n";
+             " :MAILTO:".$row['email']."\r\n".
+             "SEQUENCE\r\n".
+             " :".$row['sequence']."\r\n";
               
   switch($row['status'] ) {
     case 'done':
