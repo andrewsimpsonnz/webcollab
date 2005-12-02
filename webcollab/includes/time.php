@@ -71,6 +71,7 @@ function nicetime($timestamp ) {
 
   if(empty($timestamp) )
     return '';
+  
   $date_array = explode('-', substr($timestamp, 0, 10 ) );
   
   $time = substr($timestamp, 11, 5 );
