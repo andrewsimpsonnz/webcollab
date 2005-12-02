@@ -117,6 +117,7 @@ function copy_across($taskid, $new_parent, $name ) {
                     status,
                     completed,
                     completion_time,
+                    sequence,
                     archive )
                     values('$new_name',
                     '".db_escape_string($row['text'])."',
@@ -138,6 +139,7 @@ function copy_across($taskid, $new_parent, $name ) {
                     '".db_escape_string($row['status'])."',
                     '".$row['completed']."',
                     '".$row['completion_time']."',
+                    0,
                     '".$row['archive']."')" );
 
     // get taskid for the new task/project

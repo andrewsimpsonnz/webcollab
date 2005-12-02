@@ -63,7 +63,7 @@ ignore_user_abort(TRUE);
       if( ! user_access($taskid) ){
         error('Task submit', 'Access denied, you do not have enough rights to do that' );
       }
-      db_query('UPDATE '.PRE.'tasks SET status=\'done\', finished_time=now(), edited=now() WHERE id='.$taskid );
+      db_query('UPDATE '.PRE.'tasks SET status=\'done\', finished_time=now(), edited=now(), sequence=sequence+1 WHERE id='.$taskid );
         
       //if all tasks are completed, then mark the project as 'done'
       $projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$taskid ), 0, 0 );
@@ -90,7 +90,7 @@ ignore_user_abort(TRUE);
       }
 
       //note: self-securing query
-      db_query('UPDATE '.PRE.'tasks SET owner=0 WHERE owner='.UID.' AND id='.$taskid );
+      db_query('UPDATE '.PRE.'tasks SET owner=0,sequence=sequence+1 WHERE owner='.UID.' AND id='.$taskid );
       break;
 
 
@@ -101,7 +101,7 @@ ignore_user_abort(TRUE);
       //non-admins can only take non-owned tasks
       //note: self-securing query
       if(! ADMIN ){
-        db_query('UPDATE '.PRE.'tasks SET owner='.UID.' WHERE id='.$taskid.' AND owner=0' );
+        db_query('UPDATE '.PRE.'tasks SET owner='.UID.', sequence=sequence+1 WHERE id='.$taskid.' AND owner=0' );
       }
       if(ADMIN ) {
         db_begin();

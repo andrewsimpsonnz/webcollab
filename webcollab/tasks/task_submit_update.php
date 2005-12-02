@@ -142,7 +142,7 @@ if(! user_access($taskid ) ){
 db_begin();
 
 //get existing status
-$previous_status = db_result(db_query('SELECT status FROM '.PRE.'tasks WHERE id='.$taskid ), 0, 0 );
+$previous_status = db_result(db_query('SELECT status FROM '.PRE.'tasks WHERE id='.$taskid.' LIMIT 1' ), 0, 0 );
 
 //change the info
 db_query('UPDATE '.PRE.'tasks
@@ -157,11 +157,12 @@ db_query('UPDATE '.PRE.'tasks
       usergroupid='.$usergroupid.',
       status=\''.$status.'\',
       globalaccess=\''.$globalaccess.'\',
-      groupaccess=\''.$groupaccess.'\'
+      groupaccess=\''.$groupaccess.'\',
+      sequence=sequence+1 
       WHERE id='.$taskid );
 
 //get existing projectid and parent from the database
-$q = db_query('SELECT projectid, parent FROM '.PRE.'tasks WHERE id='.$taskid );
+$q = db_query('SELECT projectid, parent FROM '.PRE.'tasks WHERE id='.$taskid.' LIMIT 1' );
 $row = db_fetch_array($q, 0 );
 $projectid = $row['projectid'];
 
@@ -175,7 +176,7 @@ if($row['parent'] != $parentid ) {
     $projectid = $taskid;
   }
   else {
-    $projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$parentid ), 0, 0 );
+    $projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$parentid.' LIMIT 1' ), 0, 0 );
   }
   
   //can't put a project onto it's own tasks
@@ -218,7 +219,7 @@ adjust_completion($projectid );
 db_commit();
 
 //get name of project and owner for emails
-$name_project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 );
+$name_project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$projectid.' LIMIT 1' ), 0, 0 );
 
 switch($parentid ){
   case 0:
@@ -246,7 +247,7 @@ switch($owner ) {
     break;
 
   default:
-    $q = db_query('SELECT fullname, email FROM '.PRE.'users WHERE id='.$owner );
+    $q = db_query('SELECT fullname, email FROM '.PRE.'users WHERE id='.$owner.' LIMIT 1' );
     $row = db_fetch_num($q, 0 );
     $name_owner = $row[0];
     $email_owner = $row[1];
@@ -261,7 +262,7 @@ if(isset($_POST['mailowner']) && ($_POST['mailowner'] === 'on') && ($owner != 0)
 
   include_once(BASE.'includes/email.php' );
 
-  $email_address_owner = db_result(db_query('SELECT email FROM '.PRE.'users WHERE id='.$owner, 0), 0, 0 );
+  $email_address_owner = db_result(db_query('SELECT email FROM '.PRE.'users WHERE id='.$owner.' LIMIT 1', 0), 0, 0 );
 
   $message = $email1 .
               sprintf($email_list, $name_project, $name_task_unclean, status($status, $deadline), $name_owner, $email_owner, $text_unclean );

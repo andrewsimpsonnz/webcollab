@@ -94,10 +94,10 @@ foreach($input_array as $var ) {
 //carry out some data consistency checking
 if( $parentid != 0 ) {
 
-  if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$parentid ), 0, 0 ) < 1 ) {
+  if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$parentid.' LIMIT 1' ), 0, 0 ) < 1 ) {
     error('Database integrity check', 'Input data does not match - no parent for task' );
   }
-  if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 ) < 1 ) {
+  if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$projectid.' LIMIT 1' ), 0, 0 ) < 1 ) {
     error('Database integrity check', 'Input data does not match - no project for task' );
   }
 }
@@ -121,6 +121,7 @@ $q = db_query("INSERT INTO ".PRE."tasks(name,
               globalaccess,
               groupaccess,
               status,
+              sequence,
               completion_time )
               values('$name',
               '$text',
@@ -140,6 +141,7 @@ $q = db_query("INSERT INTO ".PRE."tasks(name,
               '$globalaccess',
               '$groupaccess',
               '$status',
+              0,
               now() )" );
 
 // get taskid for the new task/project
@@ -154,7 +156,7 @@ if($parentid == 0 || $projectid == 0 ) {
 //if inactive parent project, then set this task to inactive too
 $project_status = $status;
 if($parentid != 0 ) {
-  $project_status = db_result(db_query('SELECT status FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 );
+  $project_status = db_result(db_query('SELECT status FROM '.PRE.'tasks WHERE id='.$projectid.' LIMIT 1' ), 0, 0 );
 
   if($project_status == 'cantcomplete' || $project_status == 'notactive' ){
     db_query('UPDATE '.PRE.'tasks SET status=\''.$project_status.'\' WHERE id='.$taskid );
@@ -178,7 +180,7 @@ if($percent_completed == 100 ){
 db_commit();
 
 //get name of project for emails
-$name_project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 );
+$name_project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$projectid.' LIMIT 1' ), 0, 0 );
 
 //set project/task type for emails
 switch($parentid){
@@ -207,7 +209,7 @@ switch($owner ) {
     break;
 
   default:
-    $q   = db_query('SELECT fullname, email FROM '.PRE.'users WHERE id='.$owner );
+    $q   = db_query('SELECT fullname, email FROM '.PRE.'users WHERE id='.$owner.' LIMIT 1' );
     $row = db_fetch_num($q, 0 );
     $name_owner = $row[0];
     $email_owner = $row[1];
@@ -222,7 +224,7 @@ if(isset($_POST['mailowner']) && ($_POST['mailowner'] === 'on') && ($owner != 0)
   
   include_once(BASE.'includes/email.php' );
   
-  $email_address_owner = db_result( db_query('SELECT email FROM '.PRE.'users WHERE id='.$owner, 0), 0, 0 );
+  $email_address_owner = db_result( db_query('SELECT email FROM '.PRE.'users WHERE id='.$owner.' LIMIT 1', 0), 0, 0 );
   $message = $email1 .
               sprintf($email_list, $name_project, $name_task_unclean, status($status, $deadline), $name_owner, $email_owner, $text_unclean );
   email($email_address_owner, $title1, $message );
