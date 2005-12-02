@@ -309,7 +309,7 @@ for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; ++$i ) {
 
 //check to see if any tasks at this task level have the taskgroup descriptor set.
 //Use this later to toggle the taskgroup headings.
-if( db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent='.$parentid.' AND taskgroupid<>0' ), 0, 0 ) > 0 ) {
+if( db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent='.$parentid.' AND taskgroupid<>0 LIMIT 1' ), 0, 0 ) > 0 ) {
   $taskgroup_flag = 1;
 }
 else {
