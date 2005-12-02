@@ -60,16 +60,16 @@
 require_once('path.php' );
 require_once(BASE.'path_config.php' );
 
-require_once(CONFIG.'config.php' );
+require_once(BASE_CONFIG.'config.php' );
 include_once(BASE.'lang/lang.php' );
 
 //
 // Creates the initial window
 //
-function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $redirect_time=0 ) {
+function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $calendar=0, $redirect_time=0 ) {
 
   global $lang, $top_done, $bottom_text;
-  global $loadtime;
+  global $utime_before, $stime_before;
   
   //only build top once...
   //  (we don't use headers_sent() 'cause it seems to be buggy in PHP5)
@@ -79,9 +79,13 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
   $top_done = 1;
      
   //first of all record our loading time
-  list($usec, $sec)=explode(" ", microtime());
-  $loadtime = ( (float)$usec + (float)$sec );
-    
+  //list($usec, $sec)=explode(" ", microtime());
+  //$loadtime = ( (float)$usec + (float)$sec );
+  
+  $dat = getrusage();
+  $utime_before = $dat["ru_utime.tv_sec"].$dat["ru_utime.tv_usec"];
+  $stime_before = $dat["ru_stime.tv_sec"].$dat["ru_stime.tv_usec"];
+  
   //remove /* and */ in section below to use compressed HTML output:
   //Note: PHP manual recommends use of zlib.output_compression in php.ini instead of ob_gzhandler in here
   /*
@@ -128,23 +132,23 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
 
   switch($page_type) {
     case 2: //print
-      $content .=   "<link rel=\"StyleSheet\" href=\"".CSS."print.css\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_PRINT."\" type=\"text/css\" />\n";
       break;
     
     case 3: //calendar
-      $content .=   "<link rel=\"StyleSheet\" href=\"".CSS."default.css\" type=\"text/css\" />\n";
-      $content .=   "<link rel=\"StyleSheet\" href=\"".CSS."calendar.css\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_MAIN."\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_CALENDAR."\" type=\"text/css\" />\n";
       break;
        
     case 0: //main window + menu sidebar
     case 1: //single main window (no menu sidebar)
     default:            
-      $content .=   "<link rel=\"StyleSheet\" href=\"".CSS."default.css\" type=\"text/css\" />\n";
+      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_MAIN."\" type=\"text/css\" />\n";
       break;         
   }
   
-  //javascript to position cursor in the first box
-  if($cursor || $check || $date) {
+  //javascript scripts
+  if($cursor || $check || $date || $calendar ) {
     $content .=     "<script type=\"text/javascript\">\n".
                     "<!-- \n";
     if($cursor){
@@ -157,8 +161,8 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
                     "alert('".$lang['missing_field_javascript']."');\n".
                     "document.getElementById('".$check."').focus();\n".
                     "return false;}\n".
-                    "return;}\n";
-     }
+                    "}\n";
+    }
     if($date) {
       $content .=   "function dateCheck() {\n".
                     "var daysMonth = new Array(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 );\n". 
@@ -170,17 +174,25 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
                     "var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value, 0, 0, 0 )/1000;\n".
                     "if(inputDate - finishDate > 21600 ){\n".
                     "return confirm('".$lang['finish_date_javascript']."');} }\n".     
-                    "return;}\n";
-      }
-      $content .=   " // -->\n".
+                    "}\n";
+    }
+    if($calendar) {      
+      $content .=   "function dateSet(dayIndex, monthIndex, yearIndex) {\n".  
+                    "if(window.opener && !window.opener.closed) {\n".
+                    "window.opener.document.getElementById('day').selectedIndex=dayIndex;\n".
+                    "window.opener.document.getElementById('month').selectedIndex=monthIndex;\n".
+                    "window.opener.document.getElementById('year').selectedIndex=yearIndex;}\n".
+                    "}\n";
+    }  
+    $content .=     " // -->\n".
                     "</script>\n".
                     "</head>\n\n";
-      if($cursor) {
-        $content .= "<body onload=\"placeCursor()\">\n";
-      }
-      else {
-        $content .= "<body>\n";
-      }
+    if($cursor) {
+      $content .=   "<body onload=\"placeCursor()\">\n";
+    }
+    else {
+      $content .=   "<body>\n";
+    }
   }
   else {
     $content .=     "</head>\n\n".
@@ -198,7 +210,7 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
       $content .=   "<tr valign=\"top\"><td colspan=\"2\" class=\"masthead\">";
       //show username if applicable
       if(defined('UID_NAME') ) {
-        $content .=  sprintf( $lang['user_homepage_sprt'], UID_NAME );
+        $content .=  '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
       }
       $content .=   "</td></tr>\n";
       //create menu sidebar
@@ -210,7 +222,7 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
     case 3: //calendar  
       $content .=   "<tr valign=\"top\"><td class=\"masthead\">";
       if(defined('UID_NAME' ) ) {
-        $content .=  sprintf( $lang['user_homepage_sprt'], UID_NAME );
+        $content .= '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
       }
       $content .=   "</td></tr>\n";
       //create single window over entire screen
@@ -227,7 +239,8 @@ function create_top($title='', $page_type=0, $cursor='', $check='', $date='', $r
 
   //flush buffer
   echo $content; 
-  
+  //echo "Initial memory value: ".memory_get_usage()."<br />";
+    
   return;
 }
 
@@ -239,9 +252,11 @@ function new_box($title, $content, $style="boxdata", $size="tablebox" ) {
   echo  "\n<!-- start of ".$title." - box -->\n".
         "<br />\n".
         "<table class=\"".$size."\" cellspacing=\"0\">\n".
-        "<tr><td class=\"boxhead\">".$title."</td></tr>\n".
+        "<tr><td class=\"boxhead\">::&nbsp;".$title."</td></tr>\n".
         "<tr><td class=\"".$style."\">\n".
         $content."</td></tr>\n".
+        "<tr><td class=\"".$style."\">\n".
+        //"This box memory value: ".memory_get_usage()."</td></tr>\n".
         "</table>\n".
         "<!-- end -->\n";
                     
@@ -263,7 +278,7 @@ function goto_main() {
 function create_bottom() {
 
   global $bottom_text, $db_content;
-  global $database_query_time, $loadtime, $database_query_count;
+  global $database_query_time, $stime_before, $utime_before, $database_query_count;
 
   //clean
   $content =  "\n<br />\n";
@@ -272,13 +287,21 @@ function create_bottom() {
   $content .= "</td></tr>\n</table>";
 
   //shows the time it took to load the page
-  list($usec, $sec)=explode(" ", microtime());
-  $finishtime = ( (float)$usec + (float)$sec ) - $loadtime;
+  //list($usec, $sec)=explode(" ", microtime());
+  //$finishtime = ( (float)$usec + (float)$sec ) - $loadtime;
+  
+  $dat = getrusage();
+  $utime_after = $dat["ru_utime.tv_sec"].$dat["ru_utime.tv_usec"];
+  $stime_after = $dat["ru_stime.tv_sec"].$dat["ru_stime.tv_usec"];
+
+  $utime_elapsed = ($utime_after - $utime_before);
+  $stime_elapsed = ($stime_after - $stime_before);
   
   $time_content = "<div style=\"text-align: center\">\n".
-                  sprintf("Total execution time: %.4f", $finishtime)."<br />".
-                  sprintf("Total database time: %.4f", $database_query_time )."<br />".
-                  sprintf("Query count: %d", $database_query_count)."</div><br />\n";
+                  sprintf("Elapsed PHP user time: %d µseconds", $utime_elapsed )."<br />".
+                  sprintf("Elapsed PHP system time: %d µseconds", $stime_elapsed )."<br />".
+                  sprintf("Elapsed database time: %d µseconds", ($database_query_time * 1000000 ) )."<br />".
+                  sprintf("Dayabase query count: %d", $database_query_count)."</div><br />\n";
   
   new_box("Timing information", $time_content );                
                     

@@ -43,6 +43,7 @@ $delim = "'";
 $epoch = 'extract(epoch FROM ';
 $day_part = 'DATE_PART(\'day\', ';
 $interval = '';
+$database_query_time = 0;
 
 //
 // Provides a safe way to do a query
@@ -82,7 +83,7 @@ function db_query($query, $dieonerror=1 ) {
   //start time
   list($usec, $sec) = explode(" ", microtime() );
   $starttime = ((float)$usec + (float)$sec );
-  
+      
   //do it
   if( ! ($result = @pg_query($database_connection, $query ) ) ) {
 
@@ -96,7 +97,7 @@ function db_query($query, $dieonerror=1 ) {
   list($usec, $sec ) = explode(" ", microtime() );
   $this_query_time = ((float)$usec + (float)$sec ) - $starttime;
   $database_query_time += $this_query_time;
-      
+        
   if(substr($query, 0, 6 ) == "SELECT" ) {
     //show the preformance and optimisations
     $db_opt = pg_query($database_connection, "EXPLAIN ".$query.";" );
@@ -106,7 +107,7 @@ function db_query($query, $dieonerror=1 ) {
     for( $i=0 ; $row = @db_fetch_num($db_opt, $i ) ; ++$i) {
         $db_content .= "<tr><td>".$row[0]."</td></tr>\n";
     }
-    $db_content .= "<tr><td>".sprintf("This query took %.5f seconds", $this_query_time )."</td></tr>\n".
+    $db_content .= "<tr><td>".sprintf("This query took %d µseconds", ($this_query_time * 1000000 ) )."</td></tr>\n".
                    "</table>\n".
                    "<br /><hr></div>";
   }
