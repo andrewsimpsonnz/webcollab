@@ -83,15 +83,7 @@ function project_jump($taskid=0) {
   
   $content = '';
   
-  //set the usergroup permissions on queries (Admin can see all)
-  if(ADMIN ) {
-    $tail = ' ';  
-  }
-  else {
-    $tail = ' AND ('.PRE.'globalaccess=\'f\' AND '.PRE.'usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
-              OR '.PRE.'globalaccess=\'t\'   
-              OR '.PRE.'usergroupid=0) ';                      
-  }
+  $tail = usergroup_tail();  
 
   //query to get the non-completed projects
   $q = db_query('SELECT id,
@@ -155,4 +147,5 @@ function usergroup_tail() {
   }
   return $tail;
 }
+
 ?>
