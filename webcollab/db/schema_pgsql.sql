@@ -23,6 +23,7 @@ CREATE TABLE "tasks" (
         "completed" integer DEFAULT 0::int NOT NULL,
         "completion_time" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
         "archive" smallint DEFAULT 0::int NOT NULL,
+        "sequence" integer DEFAULT 0::int NOT NULL,
 	Constraint "tasks_pkey" Primary Key ("id")
 );
 CREATE INDEX tasks_owner_idx ON tasks USING btree ("owner");
@@ -45,6 +46,8 @@ CREATE TABLE "users" (
 	"private" smallint DEFAULT 0::int NOT NULL,
         "guest" smallint DEFAULT 0::int NOT NULL,
 	"deleted" boolean NOT NULL DEFAULT 'f'::bool,
+        "timezone" varying(10) DEFAULT '0'::text NOT NULL,
+        "locale" varying(10) DEFAULT 'en'::text NOT NULL,
 	Constraint "users_pkey" Primary Key ("id")
 );
 CREATE INDEX users_fullname_idx ON users USING btree (fullname);
@@ -125,6 +128,7 @@ CREATE TABLE "contacts" (
 	"added_by" integer NOT NULL,
 	"date" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
 	"user_id" integer NOT NULL,
+        "taskid" integer DEFAULT 0::int NOT NULL,
 	Constraint "contacts_pkey" Primary Key ("id")
 );
 
@@ -139,9 +143,9 @@ CREATE TABLE "contacts_tasks" (
 CREATE SEQUENCE "files_id_seq" start 1 increment 1 maxvalue 2147483647 minvalue 1 cache 1;
 CREATE TABLE "files" (
 	"id" integer DEFAULT nextval('"files_id_seq"'::text) NOT NULL,
-	"fileid" integer NOT NULL DEFAULT 0,
+	"fileid" integer NOT NULL DEFAULT 0::int,
 	"filename" character varying(255),
-	"size" bigint NOT NULL DEFAULT 0,
+	"size" bigint NOT NULL DEFAULT 0::int,
 	"description" text,
 	"uploaded" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
 	"uploader" integer NOT NULL,
