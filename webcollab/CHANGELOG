@@ -1,10 +1,14 @@
 WebCollab CVS
-*** 19 November 2005
+*** 2 December 2005
   Andrew Simpson
 
 - update French translation (Credit: michellapointe - Michel Lapointe )
 
 - associate contacts with projects & tasks (Feature Request #1315154) 
+
+- bugfix: MySQL not allowing for minutes in client timezone
+
+- bugfix: PgSQL timezone setting unintentionally been removed from CVS
 
 WebCollab CVS
 *** 19 November 2005
