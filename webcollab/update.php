@@ -310,6 +310,11 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     db_query('ALTER TABLE '.PRE.'users ADD COLUMN locale VARCHAR(10)' );
     db_query('UPDATE '.PRE.'users SET locale=\''.LOCALE.'\'' );
   
+    //add sequence for iCalendar
+    db_query('ALTER TABLE '.PRE.'tasks ADD COLUMN sequence INT' );
+    db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN sequence SET DEFAULT 0' );
+    db_query('UPDATE '.PRE.'tasks SET sequence=0' );
+    
     $content .= "<p>Updating from version pre-2.00 database ... success!</p>\n";
   }  
     
