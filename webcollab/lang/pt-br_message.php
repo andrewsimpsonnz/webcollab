@@ -42,14 +42,14 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
 //task states
  
  //priorities
-    $task_state['dontdo']               = "N&atilde;o fazer";
+    $task_state['dontdo']               = "Não fazer";
     $task_state['low']                  = "Baixa";
     $task_state['normal']               = "Normal";
     $task_state['high']                 = "Alta";
     $task_state['yesterday']            = "Para ontem!!";
  //status
     $task_state['new']                  = "Nova";
-    $task_state['planned']              = "Planejada (n&atilde;o ativa)";
+    $task_state['planned']              = "Planejada (não ativa)";
     $task_state['active']               = "Ativa (sendo trabalhada)";
     $task_state['cantcomplete']         = "Em espera";
     $task_state['completed']            = "Finalizada";
@@ -57,41 +57,41 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $task_state['task_planned']         = "Planejada";
     $task_state['task_active']          = "Ativa";
  //project states
-    $task_state['planned_project']      = "Projeto planejado (n&atilde;o ativo)";
+    $task_state['planned_project']      = "Projeto planejado (não ativo)";
     $task_state['no_deadline_project']  = "Sem prazo definido";
     $task_state['active_project']       = "Projeto ativo";
     
 //common items
-    $lang['description']                = "Descri&ccedil;&atilde;o";
+    $lang['description']                = "Descrição";
     $lang['name']                       = "Nome";
     $lang['add']                        = "Adicionar";
     $lang['update']                     = "Atualizar";
-    $lang['submit_changes']             = "Enviar altera&ccedil;&otilde;es";
+    $lang['submit_changes']             = "Enviar alterações";
     $lang['continue']                   = "Continuar";
     $lang['reset']                      = "Reset";
     $lang['manage']                     = "Gerenciar";
     $lang['edit']                       = "Editar";
     $lang['delete']                     = "Excluir";
     $lang['del']                        = "Excluir";
-    $lang['confirm_del_javascript']     = "Confirma exclus&atilde;o!";
+    $lang['confirm_del_javascript']     = "Confirma exclusão!";
     $lang['yes']                        = "Sim";
-    $lang['no']                         = "N&atilde;o";
-    $lang['action']                     = "A&ccedil;&atilde;o";
+    $lang['no']                         = "Não";
+    $lang['action']                     = "Ação";
     $lang['task']                       = "Tarefa";
     $lang['tasks']                      = "Tarefas";
     $lang['project']                    = "Projeto";
-    $lang['info']                       = "Informa&ccedil;&atilde;o";
+    $lang['info']                       = "Informação";
     $lang['bytes']                      = "bytes";
     $lang['select_instruct']            = "(Pressione Ctrl para selecionar ou
 deselecionar mais de um)";
-    $lang['member_groups']              = "O usu&aacute;rio &eacute; membro dos grupos real&ccedil;ados abaixo (caso hajam)";
+    $lang['member_groups']              = "O usuário é membro dos grupos realçados abaixo (caso hajam)";
     $lang['login']                      = "Login";
     $lang['error']                      = "Erro";
-    $lang['no_login']                   = "Acesso negado, verifique o nome de usu&aacute;rio e a senha";
+    $lang['no_login']                   = "Acesso negado, verifique o nome de usuário e a senha";
 //**    
-    $lang['redirect_sprt']              = "Voc&ecirc; ser&aacute; automaticamente redirecionado &agrave; p&aacute;gina de Login em %d segundos";
+    $lang['redirect_sprt']              = "Você será automaticamente redirecionado à página de Login em %d segundos";
 //**
-    $lang['login_now']                  = "Por favor, clique aqui para retornar &agrave; p&aacute;gina de Login agora";   
+    $lang['login_now']                  = "Por favor, clique aqui para retornar à página de Login agora";   
     $lang['please_login']               = "Entre, por favor";
     $lang['go']                         = "Vai!";
     
@@ -101,22 +101,22 @@ deselecionar mais de um)";
     $lang['updated_g']                  = "&nbsp;ATUALIZADO&nbsp;";
 
 //admin config
-    $lang['admin_config']               = "Configura&ccedil;&otilde;es administrativas";
-    $lang['email_settings']             = "Configura&ccedil;&otilde;es do cabe&ccedil;alho de e-mail";
+    $lang['admin_config']               = "Configurações administrativas";
+    $lang['email_settings']             = "Configurações do cabeçalho de e-mail";
     $lang['admin_email']                = "E-mail administrativo";
     $lang['email_reply']                = "E-mail 'Responder'";
     $lang['email_from']                 = "E-mail 'De'";
     $lang['mailing_list']               = "Lista de e-mails";
-    $lang['default_checkbox']           = "Configura&ccedil;&otilde;es padr&atilde;o para Projetos/Tarefas";
+    $lang['default_checkbox']           = "Configurações padrão para Projetos/Tarefas";
     $lang['allow_globalaccess']         = "Permitir acesso global?";
-    $lang['allow_group_edit']           = "Permitir edi&ccedil;&atilde;o por todos do grupo de usu&aacute;rios?";
-    $lang['set_email_owner']            = "Sempre notificar respons&aacute;vel sobre mudan&ccedil;as?";
-    $lang['set_email_group']            = "Sempre notificar grupo de usu&aacute;rios sobre mudan&ccedil;as?";
+    $lang['allow_group_edit']           = "Permitir edição por todos do grupo de usuários?";
+    $lang['set_email_owner']            = "Sempre notificar responsável sobre mudanças?";
+    $lang['set_email_group']            = "Sempre notificar grupo de usuários sobre mudanças?";
 //**    
     $lang['project_listing_order']      = "Ordem de listagem dos projetos";
 //**    
     $lang['task_listing_order']         = "Ordem de listagem das tarefas"; 
-    $lang['configuration']              = "Configura&ccedil;&atilde;o";
+    $lang['configuration']              = "Configuração";
 
 //archive
 //**
@@ -130,16 +130,16 @@ deselecionar mais de um)";
     $lang['mobile']                     = "Cel.:";
     $lang['fax']                        = "Fax:";
     $lang['bus_phone']                  = "Tel. Com.:";
-    $lang['address']                    = "Endere&ccedil;o:";
+    $lang['address']                    = "Endereço:";
     $lang['postal']                     = "CEP:";
     $lang['city']                       = "Cidade:";
     $lang['email']                      = "E-mail:";
     $lang['notes']                      = "OBS:";
     $lang['add_contact']                = "Adicionar contato";
     $lang['del_contact']                = "Excluir contato";
-    $lang['contact_info']               = "Informa&ccedil;&atilde;o do contato";
+    $lang['contact_info']               = "Informação do contato";
     $lang['contacts']                   = "Contatos";
-    $lang['contact_add_info']           = "Quando cadastrado, o nome da empresa ser&aacute; exibido ao inv&eacute;s do nome do usu&aacute;rio.";
+    $lang['contact_add_info']           = "Quando cadastrado, o nome da empresa será exibido ao invés do nome do usuário.";
     $lang['show_contact']               = "Exibir contatos";
     $lang['edit_contact']               = "Editar contatos";
     $lang['contact_submit']             = "Enviar contato";
@@ -147,72 +147,72 @@ deselecionar mais de um)";
 
  //files
     $lang['manage_files']               = "Gerenciar arquivos";
-    $lang['no_files']                   = "N&atilde;o existem arquivos para serem gerenciados	";
-    $lang['no_file_uploads']            = "As configura&ccedil;&otilde;es do servidor para esse site n&atilde;o permitem o envio de arquivos";
+    $lang['no_files']                   = "Não existem arquivos para serem gerenciados	";
+    $lang['no_file_uploads']            = "As configurações do servidor para esse site não permitem o envio de arquivos";
     $lang['file']                       = "Arquivo:";
     $lang['uploader']                   = "De:";
     $lang['files_assoc_project']        = "Arquivos associados a este projeto";
     $lang['files_assoc_task']           = "Arquivos associados a esta tarefa";
-    $lang['file_admin']                 = "Administra&ccedil;&atilde;o de arquivos";
+    $lang['file_admin']                 = "Administração de arquivos";
     $lang['add_file']                   = "Adicionar arquivo";
     $lang['files']                      = "Arquivos";
     $lang['file_choose']                = "Arquivo a ser enviado:";
     $lang['upload']                     = "Enviar";
-    $lang['file_email_owner']           = "Notificar sobre o novo arquivo ao respons&aacute;vel?";
-    $lang['file_email_usergroup']       = "Notificar sobre o novo arquivo ao grupo de usu&aacute;rios?";
+    $lang['file_email_owner']           = "Notificar sobre o novo arquivo ao responsável?";
+    $lang['file_email_usergroup']       = "Notificar sobre o novo arquivo ao grupo de usuários?";
     $lang['max_file_sprt']              = "O arquivo a ser enviado deve ter menos que %s kb.";
     $lang['file_submit']                = "Enviar arquivo";
-    $lang['no_upload']                  = "O arquivo n&atilde;o foi enviado. Por favor, volte e tente novamente.";
-    $lang['file_too_big_sprt']          = "O tamanho m&aacute;ximo para envio de arquivos &eacute; de %s bytes. O arquivo enviado foi exclu&iacute;do por exceder tais limites.";
-    $lang['del_file_javascript_sprt']   = "Est&aacute; certo de que deseja excluir %s ?";
+    $lang['no_upload']                  = "O arquivo não foi enviado. Por favor, volte e tente novamente.";
+    $lang['file_too_big_sprt']          = "O tamanho máximo para envio de arquivos é de %s bytes. O arquivo enviado foi excluído por exceder tais limites.";
+    $lang['del_file_javascript_sprt']   = "Está certo de que deseja excluir %s ?";
 
 
  //forum
     $lang['orig_message']               = "Mensagem original:";
     $lang['post']                       = "Postar!";
     $lang['message']                    = "Mensagem:";
-    $lang['post_reply_sprt']            = "Postar uma resposta &agrave; mensagem de '%1\$s' sobre '%2\$s'";
+    $lang['post_reply_sprt']            = "Postar uma resposta à mensagem de '%1\$s' sobre '%2\$s'";
     $lang['post_message_sprt']          = "Postar mensagem para: '%s'";
-    $lang['forum_email_owner']          = "Notificar respons&aacute;vel sobre postagem?";
-    $lang['forum_email_usergroup']      = "Notificar grupo de usu&aacute;rios sobre postagem?";
+    $lang['forum_email_owner']          = "Notificar responsável sobre postagem?";
+    $lang['forum_email_usergroup']      = "Notificar grupo de usuários sobre postagem?";
     $lang['reply']                      = "Responder";
     $lang['new_post']                   = "Nova postagem";
-    $lang['public_user_forum']          = "F&oacute;rum p&uacute;blico";
-    $lang['private_forum_sprt']         = "F&oacute;rum privativo para o grupo de usu&aacute;rios '%s' ";
-    $lang['forum_submit']               = "Enviar para f&oacute;rum";
+    $lang['public_user_forum']          = "Fórum público";
+    $lang['private_forum_sprt']         = "Fórum privativo para o grupo de usuários '%s' ";
+    $lang['forum_submit']               = "Enviar para fórum";
     $lang['no_message']                 = "Sem mensagens! Por favor, retorne e tente novamente";
     $lang['add_reply']                  = "Adicionar resposta";
 //**  
-    $lang['last_post_sprt']             = "&Uacute;ltima postagem em %s"; //Note to translators: context is 'Last post 2004-Dec-22'
+    $lang['last_post_sprt']             = "Última postagem em %s"; //Note to translators: context is 'Last post 2004-Dec-22'
 //**   
-    $lang['recent_posts']               = "Postagens recentes no f&oacute;rum";      
+    $lang['recent_posts']               = "Postagens recentes no fórum";      
     
  //includes
-    $lang['report']                     = "Relat&oacute;rio";
-    $lang['warning']                    = "<h1>Desculpe!</h1><p>Foi imposs&iacute;vel processar sua solicita&ccedil;&atilde;o no momento. Por favor, tente novamente mais tarde.</p>";
-    $lang['home_page']                  = "In&iacute;cio";
-    $lang['summary_page']               = "Sum&aacute;rio";
-    $lang['todo_list']                  = "&Agrave; Fazer";
-    $lang['calendar']                   = "Calend&aacute;rio";
+    $lang['report']                     = "Relatório";
+    $lang['warning']                    = "<h1>Desculpe!</h1><p>Foi impossível processar sua solicitação no momento. Por favor, tente novamente mais tarde.</p>";
+    $lang['home_page']                  = "Início";
+    $lang['summary_page']               = "Sumário";
+    $lang['todo_list']                  = "À Fazer";
+    $lang['calendar']                   = "Calendário";
     $lang['log_out']                    = "Sair";
     $lang['main_menu']                  = "Menu Principal";
 //**
     $lang['archive']                    = "Arquivo";   
-    $lang['user_homepage_sprt']         = "P&aacute;gina principal para %s'";
+    $lang['user_homepage_sprt']         = "Página principal para %s'";
     $lang['missing_field_javascript']   = "Por favor, entre um valor para o campo faltante";
-    $lang['invalid_date_javascript']    = "Por favor, escolha uma data v&aacute;lida no calend&aacute;rio";
-    $lang['finish_date_javascript']     = "A data fornecida acontece ap&oacute;s a data de t&eacute;rmino do projeto!";
-    $lang['security_manager']           = "Ger&ecirc;ncia de seguran&ccedil;a";
-    $lang['session_timeout_sprt']       = "Acesso negado, a &uacute;ltima a&ccedil;&atilde;o foi h&aacute; %1\$d minutos e o intervalo de parada &eacute; de %2\$d minutos, por favor <a href=\"%3\$sindex.php\">entre</a> novamente";
+    $lang['invalid_date_javascript']    = "Por favor, escolha uma data válida no calendário";
+    $lang['finish_date_javascript']     = "A data fornecida acontece após a data de término do projeto!";
+    $lang['security_manager']           = "Gerência de segurança";
+    $lang['session_timeout_sprt']       = "Acesso negado, a última ação foi há %1\$d minutos e o intervalo de parada é de %2\$d minutos, por favor <a href=\"%3\$sindex.php\">entre</a> novamente";
     $lang['access_denied']              = "Acesso negado";
-    $lang['private_usergroup']          = "Desculpe, esta &aacute;rea &eacute; privativa de um grupo de usu&aacute;rios e voc&ecirc; n&atilde;o tem direitos de acesso.";
-    $lang['invalid_date']               = "Data inv&aacute;lida";
-    $lang['invalid_date_sprt']          = "A data %s n&atilde;o existe no calend&aacute;rio (Verifique o n&uacute;mero de dias no m&ecirc;s).<br/>Por favor, retorne e escolha outra data.";
+    $lang['private_usergroup']          = "Desculpe, esta área é privativa de um grupo de usuários e você não tem direitos de acesso.";
+    $lang['invalid_date']               = "Data inválida";
+    $lang['invalid_date_sprt']          = "A data %s não existe no calendário (Verifique o número de dias no mês).<br/>Por favor, retorne e escolha outra data.";
 
 
  //taskgroups
     $lang['taskgroup_name']             = "Grupo de tarefas:";
-    $lang['taskgroup_description']      = "Breve descri&ccedil;&atilde;o do grupo de tarefas:";
+    $lang['taskgroup_description']      = "Breve descrição do grupo de tarefas:";
     $lang['add_taskgroup']              = "Adicionar grupo de tarefas";
     $lang['add_new_taskgroup']          = "Adicionar novo grupo de tarefas";
     $lang['edit_taskgroup']             = "Editar grupo de tarefas";
@@ -220,12 +220,12 @@ deselecionar mais de um)";
     $lang['no_taskgroups']              = "Sem grupo de tarefas";
     $lang['manage_taskgroups']          = "Gerenciar grupos de tarefas";
     $lang['taskgroups']                 = "Grupos de tarefas";
-    $lang['taskgroup_dup_sprt']         = "J&aacute; existe um grupo de tarefas chamado '%s'. Por favor, retorne e escolha outro nome.";
-    $lang['info_taskgroup_manage']      = "Informa&ccedil;&otilde;es para gerenciamento do grupo de tarefas";
+    $lang['taskgroup_dup_sprt']         = "Já existe um grupo de tarefas chamado '%s'. Por favor, retorne e escolha outro nome.";
+    $lang['info_taskgroup_manage']      = "Informações para gerenciamento do grupo de tarefas";
 
  //usergroups
     $lang['usergroup_name']             = "Equipe:";
-    $lang['usergroup_description']      = "Breve descri&ccedil;&atilde;o da equipe:";
+    $lang['usergroup_description']      = "Breve descrição da equipe:";
     $lang['members']                    = "Membros:";
     $lang['private_usergroup']          = "Equipe privativa";
     $lang['add_usergroup']              = "Adicionar equipe";
@@ -235,190 +235,190 @@ deselecionar mais de um)";
     $lang['no_usergroups']              = "Sem equipes";
     $lang['manage_usergroups']          = "Gerenciar equipes";
     $lang['usergroups']                 = "Equipes";
-    $lang['usergroup_dup_sprt']         = "J&aacute; existe uma equipe chamada '%s'. Por favor, retorne e escolha outro nome.";
-    $lang['info_usergroup_manage']      = "Informa&ccedil;&otilde;es para gerenciamento de equipe";
+    $lang['usergroup_dup_sprt']         = "Já existe uma equipe chamada '%s'. Por favor, retorne e escolha outro nome.";
+    $lang['info_usergroup_manage']      = "Informações para gerenciamento de equipe";
 
  //users
-    $lang['login_name']                 = "Nome de usu&aacute;rio";
+    $lang['login_name']                 = "Nome de usuário";
     $lang['full_name']                  = "Nome completo";
     $lang['password']                   = "Senha";
     $lang['blank_for_current_password'] = "(Deixe em branco para manter a senha atual)";
     $lang['email']                      = "E-mail";
-    $lang['admin']                      = "Administra&ccedil;&atilde;o";
-    $lang['private_user']               = "Usu&aacute;rio privativo";
+    $lang['admin']                      = "Administração";
+    $lang['private_user']               = "Usuário privativo";
  //**
-    $lang['normal_user']                = "Usu&aacute;rio normal"; 
+    $lang['normal_user']                = "Usuário normal"; 
     $lang['is_admin']                   = "Configurar como administrador?";
  //**
     $lang['is_guest']                   = "Configurar como visitante?";
  //**
     $lang['guest']                      = "Visitante";
-    $lang['user_info']                  = "Informa&ccedil;&atilde;o de usu&aacute;rio";
-    $lang['deleted_users']              = "Usu&aacute;rios exclu&iacute;dos";
-    $lang['no_deleted_users']           = "N&atilde;o existem usu&aacute;rios exclu&iacute;dos.";
+    $lang['user_info']                  = "Informação de usuário";
+    $lang['deleted_users']              = "Usuários excluídos";
+    $lang['no_deleted_users']           = "Não existem usuários excluídos.";
     $lang['revive']                     = "Ressucitar";
-    $lang['permdel']                    = "Exclus&atilde;o definitiva";
-    $lang['permdel_javascript_sprt']    = "Isto ir&aacute; excluir permanentemente todos os registros e tarefas associadas ao usu&aacute;rio %s. Est&aacute; certo disso?";
-    $lang['add_user']                   = "Adicionar usu&aacute;rio";
-    $lang['edit_user']                  = "Editar usu&aacute;rio";
-    $lang['no_users']                   = "O sistema n&atilde;o possui usu&aacute;rios";
-    $lang['users']                      = "Usu&aacute;rios";
-    $lang['existing_users']             = "Usu&aacute;rios existentes";
-    $lang['private_profile']            = "Este usu&aacute;rio possui um perfil privativo que n&atilde;o pode ser visualizado por voc&ecirc;.";
-    $lang['private_usergroup_profile']  = "(Este usu&aacute;rio &eacute; membro de uma equipe privativa e n&atilde;o pode ser visualizado por voc&ecirc;)";
-    $lang['email_users']                = "Enviar e-mail para usu&aacute;rios";
+    $lang['permdel']                    = "Exclusão definitiva";
+    $lang['permdel_javascript_sprt']    = "Isto irá excluir permanentemente todos os registros e tarefas associadas ao usuário %s. Está certo disso?";
+    $lang['add_user']                   = "Adicionar usuário";
+    $lang['edit_user']                  = "Editar usuário";
+    $lang['no_users']                   = "O sistema não possui usuários";
+    $lang['users']                      = "Usuários";
+    $lang['existing_users']             = "Usuários existentes";
+    $lang['private_profile']            = "Este usuário possui um perfil privativo que não pode ser visualizado por você.";
+    $lang['private_usergroup_profile']  = "(Este usuário é membro de uma equipe privativa e não pode ser visualizado por você)";
+    $lang['email_users']                = "Enviar e-mail para usuários";
     $lang['select_usergroup']           = "Equipe selecionada abaixo:";
     $lang['subject']                    = "Assunto:";
-    $lang['message_sent_maillist']      = "Sempre a mensagem tamb&eacute;m &eacute; copiada para a lista de e-mails.";
-    $lang['who_online']                 = "Quem est&aacute; conectado?";
+    $lang['message_sent_maillist']      = "Sempre a mensagem também é copiada para a lista de e-mails.";
+    $lang['who_online']                 = "Quem está conectado?";
     $lang['edit_details']               = "Editar detalhes";
     $lang['show_details']               = "Exibir detalhes";
-    $lang['user_deleted']               = "Esse usu&aacute;rio foi exclu&iacute;do!";
-    $lang['no_usergroup']               = "O usu&aacute;rio n&atilde;o &eacute; membro de uma equipe";
-    $lang['not_usergroup']              = "(N&atilde;o &eacute; membro de nenhuma equipe)";
-    $lang['no_password_change']         = "(Sua senha n&atilde;o foi alterada)";
-    $lang['last_time_here']             = "&Uacute;ltimo acesso:";
-    $lang['number_items_created']       = "Nº de &iacute;tens criados:";
+    $lang['user_deleted']               = "Esse usuário foi excluído!";
+    $lang['no_usergroup']               = "O usuário não é membro de uma equipe";
+    $lang['not_usergroup']              = "(Não é membro de nenhuma equipe)";
+    $lang['no_password_change']         = "(Sua senha não foi alterada)";
+    $lang['last_time_here']             = "Último acesso:";
+    $lang['number_items_created']       = "Nº de ítens criados:";
     $lang['number_projects_owned']      = "Nº de projetos sob sua responsabilidade:";
     $lang['number_tasks_owned']         = "Nº de tarefas sob sua responsabilidade:";
     $lang['number_tasks_completed']     = "Nº de tarefas finalizadas:";
-    $lang['number_forum']               = "Nº de postagens em f&oacute;runs:";
+    $lang['number_forum']               = "Nº de postagens em fóruns:";
     $lang['number_files']               = "Nº de arquivos enviados:";
     $lang['size_all_files']             = "Tamanho total de arquivos enviados:";
     $lang['owned_tasks']                = "Tarefas sob sua responsabilidade";
-    $lang['invalid_email']              = "Endere&ccedil;o de e-mail inv&aacute;lido";
-    $lang['invalid_email_given_sprt']   = "O endere&ccedil;o de e-mail '%s' &eacute; inv&aacute;lido. Por favor, retorne e tente novamente.";
-    $lang['duplicate_user']             = "Duplicar usu&aacute;rio";
-    $lang['duplicate_change_user_sprt'] = "O usu&aacute;rio '%s' j&aacute; existe. Por favor, retorne e mude um dos nomes.";
+    $lang['invalid_email']              = "Endereço de e-mail inválido";
+    $lang['invalid_email_given_sprt']   = "O endereço de e-mail '%s' é inválido. Por favor, retorne e tente novamente.";
+    $lang['duplicate_user']             = "Duplicar usuário";
+    $lang['duplicate_change_user_sprt'] = "O usuário '%s' já existe. Por favor, retorne e mude um dos nomes.";
     $lang['value_missing']              = "Dado faltante";
-    $lang['field_sprt']                 = "O campo para o dado '%s' &eacute; faltante. Por favor, retorne e preencha-o.";
-    $lang['admin_priv']                 = "OBS: Voc&ecirc; possui privil&eacute;gios de administrador.";
-    $lang['manage_users']               = "Gerenciar usu&aacute;rios";
-    $lang['users_online']               = "Usu&aacute;rios conectados";
-    $lang['online']                     = "Usu&aacute;rios duro-na-queda (Conectados h&aacute; pelo menos 60 minutos)";
+    $lang['field_sprt']                 = "O campo para o dado '%s' é faltante. Por favor, retorne e preencha-o.";
+    $lang['admin_priv']                 = "OBS: Você possui privilégios de administrador.";
+    $lang['manage_users']               = "Gerenciar usuários";
+    $lang['users_online']               = "Usuários conectados";
+    $lang['online']                     = "Usuários duro-na-queda (Conectados há pelo menos 60 minutos)";
     $lang['not_online']                 = "O resto";
-    $lang['user_activity']              = "Atividade de usu&aacute;rio";
+    $lang['user_activity']              = "Atividade de usuário";
 
   //tasks
     $lang['add_new_task']               = "Adicionar nova tarefa";
     $lang['priority']                   = "Prioridade";
     $lang['parent_task']                = "Relacionada";
-    $lang['creation_time']              = "Data de cria&ccedil;&atilde;o";
+    $lang['creation_time']              = "Data de criação";
     $lang['by_sprt']                    = "%1\$s por %2\$s"; //Note to translators: context is 'Creation time: <date> by <user>'
     $lang['project_name']               = "Nome do Projeto";
     $lang['task_name']                  = "Nome da tarefa";
     $lang['deadline']                   = "Prazo";
     $lang['taken_from_parent']          = " (Obtida da tarefa relacionada)";
     $lang['status']                     = "Status";
-    $lang['task_owner']                 = "Respons&aacute;vel pela Tarefa";
-    $lang['project_owner']              = "Respons&aacute;vel pelo Projeto";
+    $lang['task_owner']                 = "Responsável pela Tarefa";
+    $lang['project_owner']              = "Responsável pelo Projeto";
     $lang['taskgroup']                  = "Grupo de tarefas";
     $lang['usergroup']                  = "Equipe";
-    $lang['nobody']                     = "Ningu&eacute;m";
+    $lang['nobody']                     = "Ninguém";
     $lang['none']                       = "Nenhum";
     $lang['no_group']                   = "Sem equipe";
     $lang['all_groups']                 = "Todas as equipes";
-    $lang['all_users']                  = "Todos os usu&aacute;rios";
-    $lang['all_users_view']             = "Vis&iacute;vel para todos os usu&aacute;rios?";
-    $lang['group_edit']                 = "Edit&aacute;vel por qualquer membro da equipe?";
-    $lang['project_description']        = "Descri&ccedil;&atilde;o do projeto";
-    $lang['task_description']           = "Descri&ccedil;&atilde;o da tarefa";
-    $lang['email_owner']                = "Notificar respons&aacute;vel sobre altera&ccedil;&otilde;es?";
-    $lang['email_new_owner']            = "Notificar (novo) respons&aacute;vel sobre altera&ccedil;&otilde;es?";
-    $lang['email_group']                = "Notificar equipe sobre altera&ccedil;&otilde;es?";
+    $lang['all_users']                  = "Todos os usuários";
+    $lang['all_users_view']             = "Visível para todos os usuários?";
+    $lang['group_edit']                 = "Editável por qualquer membro da equipe?";
+    $lang['project_description']        = "Descrição do projeto";
+    $lang['task_description']           = "Descrição da tarefa";
+    $lang['email_owner']                = "Notificar responsável sobre alterações?";
+    $lang['email_new_owner']            = "Notificar (novo) responsável sobre alterações?";
+    $lang['email_group']                = "Notificar equipe sobre alterações?";
     $lang['add_new_project']            = "Adicionar novo projeto";
-    $lang['uncategorised']              = "N&atilde;o-categorizado";
+    $lang['uncategorised']              = "Não-categorizado";
     $lang['due_sprt']                   = "Para daqui a %d dias";
-    $lang['tomorrow']                   = "Amanh&atilde;";
-    $lang['due_today']                  = "At&eacute; hoje";
+    $lang['tomorrow']                   = "Amanhã";
+    $lang['due_today']                  = "Até hoje";
     $lang['overdue_1']                  = "Atrasado 1 dia";
     $lang['overdue_sprt']               = "Atrasado %d dias";
     $lang['edit_task']                  = "Editar tarefa";
     $lang['edit_project']               = "Editar projeto";
     $lang['no_reparent']                = "Nenhum (projeto principal)";
-    $lang['del_javascript_project_sprt']= "Isto ir&aacute; excluir o projeto %s. Est&aacute; certo disso?";
-    $lang['del_javascript_task_sprt']   = "Isto ir&aacute; excluir a tarefa %s. Est&aacute; certo disso?";
+    $lang['del_javascript_project_sprt']= "Isto irá excluir o projeto %s. Está certo disso?";
+    $lang['del_javascript_task_sprt']   = "Isto irá excluir a tarefa %s. Está certo disso?";
     $lang['add_task']                   = "Adicionar tarefa";
     $lang['add_subtask']                = "Adicionar sub-tarefa";
     $lang['add_project']                = "Adicionar projeto";
     $lang['clone_project']              = "Clonar projeto";
     $lang['clone_task']                 = "Clonar tarefa";
 //**
-    $lang['quick_jump']                 = "Jogo r&aacute;pido";
-    $lang['no_edit']                    = "O &iacute;tem n&atilde;o est&aacute; sob sua responsabilidade, portanto voc&ecirc; n&atilde;o pode edit&aacute;-lo";
-    $lang['uncategorised']              = "N&atilde;o-categorizado";
-    $lang['admin']                      = "Administra&ccedil;&atilde;o";
+    $lang['quick_jump']                 = "Jogo rápido";
+    $lang['no_edit']                    = "O ítem não está sob sua responsabilidade, portanto você não pode editá-lo";
+    $lang['uncategorised']              = "Não-categorizado";
+    $lang['admin']                      = "Administração";
     $lang['global']                     = "Global";
     $lang['delete_project']             = "Excluir projeto";
     $lang['delete_task']                = "Excluir tarefa";
-    $lang['project_options']            = "Op&ccedil;&otilde;es do projeto";
-    $lang['task_options']               = "Op&ccedil;&otilde;es da tarefa";
+    $lang['project_options']            = "Opções do projeto";
+    $lang['task_options']               = "Opções da tarefa";
 //**    
-    $lang['javascript_archive_project'] = "Isto ir&aacute; arquivar o projeto %s.  Est&aacute; certo disso?";
+    $lang['javascript_archive_project'] = "Isto irá arquivar o projeto %s.  Está certo disso?";
 //**    
     $lang['archive_project']            = "Arquivar projeto";
     $lang['task_navigation']            = "Navegar pela tarefa";
 //**
     $lang['new_task']                   = "Nova tarefa";    
-    $lang['no_projects']                = "N&atilde;o existem projetos para visualizar";
+    $lang['no_projects']                = "Não existem projetos para visualizar";
     $lang['show_all_projects']          = "Exibir todos os projetos";
     $lang['show_active_projects']       = "Exibir apenas os projetos ativos";
     $lang['project_hold_sprt']          = "Projeto em espera desde %s";
     $lang['project_planned']            = "Projeto planejado";
-    $lang['percent_sprt']               = "%d%% da tarefa conclu&iacute;da";
-    $lang['project_no_deadline']        = "O projeto n&atilde;o possui prazo definido";
-    $lang['no_allowed_projects']        = "N&atilde;o existem projetos que voc&ecirc; esteja autorizado a visualizar";
+    $lang['percent_sprt']               = "%d%% da tarefa concluída";
+    $lang['project_no_deadline']        = "O projeto não possui prazo definido";
+    $lang['no_allowed_projects']        = "Não existem projetos que você esteja autorizado a visualizar";
     $lang['projects']                   = "Projetos";
-    $lang['percent_project_sprt']       = "Este projeto est&aacute; %d%% conclu&iacute;do";
-    $lang['owned_by']                   = "Respons&aacute;vel";
+    $lang['percent_project_sprt']       = "Este projeto está %d%% concluído";
+    $lang['owned_by']                   = "Responsável";
     $lang['created_on']                 = "Criado em";
     $lang['completed_on']               = "Finalizado em";
     $lang['modified_on']                = "Modificado em";
-    $lang['project_on_hold']            = "Projeto est&aacute; em espera";
-    $lang['project_accessible']         = "(Este projeto &eacute; acess&iacute;vel por todos os usu&aacute;rios)";
-    $lang['task_accessible']            = "(Esta tarefa &eacute; acess&iacute;vel por todos os usu&aacute;rios)";
-    $lang['project_not_accessible']     = "(Este projeto &eacute; acess&iacute;vel apenas por membros da equipe)";
-    $lang['task_not_accessible']        = "(Esta tarefa &eacute; acess&iacute;vel apenas por membros da equipe)";
-    $lang['project_not_in_usergroup']   = "Este projeto n&atilde;o pertence a nenhuma equipe e &eacute; acess&iacute;vel por todos.";
-    $lang['task_not_in_usergroup']      = "Esta tarefa n&atilde;o pertence a nenhuma equipe e &eacute; acess&iacute;vel por todos.";
-    $lang['usergroup_can_edit_project'] = "Este projeto pode ser editado tamb&eacute;m por membros da equipe.";
-    $lang['usergroup_can_edit_task']    = "Esta tarefa pode ser editada tamb&eacute;m por membros da equipe.";
+    $lang['project_on_hold']            = "Projeto está em espera";
+    $lang['project_accessible']         = "(Este projeto é acessível por todos os usuários)";
+    $lang['task_accessible']            = "(Esta tarefa é acessível por todos os usuários)";
+    $lang['project_not_accessible']     = "(Este projeto é acessível apenas por membros da equipe)";
+    $lang['task_not_accessible']        = "(Esta tarefa é acessível apenas por membros da equipe)";
+    $lang['project_not_in_usergroup']   = "Este projeto não pertence a nenhuma equipe e é acessível por todos.";
+    $lang['task_not_in_usergroup']      = "Esta tarefa não pertence a nenhuma equipe e é acessível por todos.";
+    $lang['usergroup_can_edit_project'] = "Este projeto pode ser editado também por membros da equipe.";
+    $lang['usergroup_can_edit_task']    = "Esta tarefa pode ser editada também por membros da equipe.";
     $lang['i_take_it']                  = "Deixa comigo :)";
     $lang['i_finished']                 = "Terminei!";
     $lang['i_dont_want']                = "Passar a bola";
     $lang['take_over_project']          = "Assumir projeto";
     $lang['take_over_task']             = "Assumir tarefa";
-    $lang['task_info']                  = "Informa&ccedil;&atilde;o da tarefa";
+    $lang['task_info']                  = "Informação da tarefa";
     $lang['project_details']            = "Detalhes do projeto";
-    $lang['todo_list_for']              = "Lista &agrave; fazer para: ";
+    $lang['todo_list_for']              = "Lista à fazer para: ";
     $lang['due_in_sprt']                = " (Prazo de %d dias)";
-    $lang['due_tomorrow']               = " (Para amanh&atilde;)";
-    $lang['no_assigned']                = "N&atilde;o existem tarefas incompletas designadas para esse usu&aacute;rio.";
-    $lang['todo_list']                  = "&Agrave; Fazer";
-    $lang['summary_list']               = "Sum&aacute;rio";
+    $lang['due_tomorrow']               = " (Para amanhã)";
+    $lang['no_assigned']                = "Não existem tarefas incompletas designadas para esse usuário.";
+    $lang['todo_list']                  = "À Fazer";
+    $lang['summary_list']               = "Sumário";
     $lang['task_submit']                = "Enviar tarefa";
-    $lang['not_owner']                  = "Acesso negado, ou voc&ecirc; n&atilde;o &eacute; o respons&aacute;vel ou n&atilde;o possui direitos de acesso";
+    $lang['not_owner']                  = "Acesso negado, ou você não é o responsável ou não possui direitos de acesso";
     $lang['missing_values']             = "Os campos preenchidos foram insuficientes, por favor retorne e tente novamente";
     $lang['future']                     = "Futuro";
     $lang['flags']                      = "Flags";
-    $lang['owner']                      = "Respons&aacute;vel";
+    $lang['owner']                      = "Responsável";
     $lang['group']                      = "Equipe";
     $lang['by_usergroup']               = " (por equipe)";
     $lang['by_taskgroup']               = " (por grupo de tarefas)";
     $lang['by_deadline']                = " (por prazo)";
     $lang['by_status']                  = " (por status)";
-    $lang['by_owner']                   = " (por respons&aacute;vel)";
+    $lang['by_owner']                   = " (por responsável)";
     $lang['project_cloned']             = "Projeto a ser clonado :";
     $lang['task_cloned']                = "Tarefa a ser clonada :";
-    $lang['note_clone']                 = "Obs: Essa tarefa ser&aacute; clonada como um novo projeto";
+    $lang['note_clone']                 = "Obs: Essa tarefa será clonada como um novo projeto";
 
 //bits 'n' pieces
-    $lang['calendar']                   = "Calend&aacute;rio";
-    $lang['normal_version']             = "Vers&atilde;o normal";
-    $lang['print_version']              = "Vers&atilde;o para impress&atilde;o";
+    $lang['calendar']                   = "Calendário";
+    $lang['normal_version']             = "Versão normal";
+    $lang['print_version']              = "Versão para impressão";
 //**    
-    $lang['condensed_view']             = "Exibi&ccedil;&atilde;o resumida";
+    $lang['condensed_view']             = "Exibição resumida";
 //**    
-    $lang['full_view']                  = "Exibi&ccedil;&atilde;o completa";
+    $lang['full_view']                  = "Exibição completa";
 
 ?>

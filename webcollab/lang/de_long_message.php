@@ -29,30 +29,30 @@
 */
 
 
-$taskgroup_info =   "<ul><li>Wenn eine Aufgabengruppe gel&ouml;scht wird, wird die Zuordnung ihrer Aufgaben zur&uuml;ckgesetzt.</li>\n".
-                      "<li>Der Name einer Aufgabengruppe kann ohne Nebenwirkung auf die Aufgabenzuordnung ge&auml;ndert werden.</li>\n".
-                      "<li>Es d&uuml;rfen keine zwei Aufgabengruppen mit dem gleichen Namen existieren.</li></ul>\n";
+$taskgroup_info =   "<ul><li>Wenn eine Aufgabengruppe gelöscht wird, wird die Zuordnung ihrer Aufgaben zurückgesetzt.</li>\n".
+                      "<li>Der Name einer Aufgabengruppe kann ohne Nebenwirkung auf die Aufgabenzuordnung geändert werden.</li>\n".
+                      "<li>Es dürfen keine zwei Aufgabengruppen mit dem gleichen Namen existieren.</li></ul>\n";
 
-$usergroup_info =   "<ul><li>Wenn eine Nutzergruppe gel&ouml;scht wird, werden alle zugeh&ouml;rigen privaten Forumsbeitr&auml;ge gel&ouml;scht.</li>\n".
-                      "<li>Private Nutzergruppen k&ouml;nnen nur von Mitgliedern dieser privaten Nutzergruppe gesehen werden.</li>\n".
-                      "<li>Der Name einer Nutzergruppe kann ohne Nebenwirkung auf die zugeordneten Nutzer ge&auml;ndert werden.</li>\n".
-                      "<li>Es d&uuml;rfen keine zwei Nutzergruppen mit dem gleichen Namen existieren.</li></ul>\n";
+$usergroup_info =   "<ul><li>Wenn eine Nutzergruppe gelöscht wird, werden alle zugehörigen privaten Forumsbeiträge gelöscht.</li>\n".
+                      "<li>Private Nutzergruppen können nur von Mitgliedern dieser privaten Nutzergruppe gesehen werden.</li>\n".
+                      "<li>Der Name einer Nutzergruppe kann ohne Nebenwirkung auf die zugeordneten Nutzer geändert werden.</li>\n".
+                      "<li>Es dürfen keine zwei Nutzergruppen mit dem gleichen Namen existieren.</li></ul>\n";
 
-$user_info      =    "Bitte w&auml;hlen sie ihre Aktion aus dem Men&uuml; links.<br /><br />".
+$user_info      =    "Bitte wählen sie ihre Aktion aus dem Menü links.<br /><br />".
                       "Hinweise:<br />".
                       "<ul>".
-                      "<li>Private Nutzer k&ouml;nnen nur von Mitgliedern der gleichen Nutzergruppe gesehen werden.</li>\n".
-                      "<li>Nutzer haben zwei Stadien des Gel&ouml;schtseins. Das zweite ist dauerhaft.</li>\n".
-                      "<li>Ein gel&ouml;schter Nutzer verliert alle seine Aufgaben, aber nicht seine Forumsbeitr&auml;ge.</li>\n".
-                      "<li>Ein dauerhaft gel&ouml;schter Nutzer hat alles verloren.</li>\n".
-                      "<li>Ein gel&ouml;schter Nutzer beh&auml;lt die Sichtbarkeit der f&uuml;r ihn sichtbaren Aufgaben und erh&auml;lt sie nach der Wiederbelebung zur&uuml;ck.</li>\n".
+                      "<li>Private Nutzer können nur von Mitgliedern der gleichen Nutzergruppe gesehen werden.</li>\n".
+                      "<li>Nutzer haben zwei Stadien des Gelöschtseins. Das zweite ist dauerhaft.</li>\n".
+                      "<li>Ein gelöschter Nutzer verliert alle seine Aufgaben, aber nicht seine Forumsbeiträge.</li>\n".
+                      "<li>Ein dauerhaft gelöschter Nutzer hat alles verloren.</li>\n".
+                      "<li>Ein gelöschter Nutzer behält die Sichtbarkeit der für ihn sichtbaren Aufgaben und erhält sie nach der Wiederbelebung zurück.</li>\n".
                       "<li>ALLE Aktionen, die mit einem Nutzer geschehen, werden ihm/ihr per Email mitgeteilt.</li>\n".
-                      "<li>Die Passw&ouml;rter werden verschl&uuml;sselt in der Datenbank gespeichert. Man kann nur neue vergeben.</li>\n".
-                      "<li>Passw&ouml;rter werden nach der Vergabe an den Nutzer gesendet. Also aufpassen, an wen gemailt wird!</li>\n".
-                      "<li>Nutzer k&ouml;nnen sich selbst bearbeiten, ohne da&szlig; die Administratoren das erfahren. Dies soll Zeit und Spam sparen.</li>\n".
+                      "<li>Die Passwörter werden verschlüsselt in der Datenbank gespeichert. Man kann nur neue vergeben.</li>\n".
+                      "<li>Passwörter werden nach der Vergabe an den Nutzer gesendet. Also aufpassen, an wen gemailt wird!</li>\n".
+                      "<li>Nutzer können sich selbst bearbeiten, ohne daß die Administratoren das erfahren. Dies soll Zeit und Spam sparen.</li>\n".
                       "</ul>\n";
 
-$calendar_key    =  "<i>Zur&uuml;ck zum Hauptmen&uuml;</i></a>]</b><br />\n".
+$calendar_key    =  "<i>Zurück zum Hauptmenü</i></a>]</b><br />\n".
                       "<p><b><span class=\"underline\">Hinweise zum Kalender</span></b><br /><br />\n".
                       "<span class=\"blue\">Projekt (mit offenen Aufgaben)</span><br />\n".
                       "<span class=\"green\"><span class=\"underline\">Projekt </span>(alle Aufgaben fertiggestellt)</span><br />\n".

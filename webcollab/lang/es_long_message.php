@@ -37,7 +37,7 @@ $taskgroup_info = "<ul><li>Si elimina un grupo de tareas todas las tareas de su 
   "<li>Puede cambiar el nombre de la categoria sin interferir con las tareas.</li>\n".
   "<li>Dos grupos de tareas no pueden tener el mismo nombre.</li></ul>\n";
 
-$usergroup_info = "<ul><li>Si elimina un grupo de usuarios todos los env&iacute;os privados al foro relacionados seran eliminados tambien.</li>\n".
+$usergroup_info = "<ul><li>Si elimina un grupo de usuarios todos los envíos privados al foro relacionados seran eliminados tambien.</li>\n".
   "<li>Puede modificar el nombre del grupo de usuario sin que afecte a sus usuarios.</li>\n".
   "<li>Dos grupos de usuarios no pueden tener el mismo nombre.</li></ul>\n";
 
