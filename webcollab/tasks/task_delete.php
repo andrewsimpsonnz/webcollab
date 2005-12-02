@@ -150,6 +150,9 @@ find_tasks( $taskid, $row['projectid'] );
 
 for($i=0 ; $i < $index ; ++$i ) {
 
+  //delete contacts
+  db_query('DELETE FROM '.PRE.'contacts WHERE taskid='.$match_array[$i] );
+
   //delete all from seen table
   db_query('DELETE FROM '.PRE.'seen WHERE taskid='.$match_array[$i] );
 
@@ -168,12 +171,13 @@ for($i=0 ; $i < $index ; ++$i ) {
 
   //delete all files attached to it in the database
   db_query('DELETE FROM '.PRE.'files WHERE taskid='.$match_array[$i] );
-
+ 
   //delete item
   db_query('DELETE FROM '.PRE.'tasks WHERE id='.$match_array[$i] );
 }
 
 if($row['parent'] != 0 ){
+  
   //set the new completed percentage project record
   $percent_completed = round(percent_complete($row['projectid'] ) );
   db_query('UPDATE '.PRE.'tasks SET completed='.$percent_completed.' WHERE id='.$row['projectid'] );
