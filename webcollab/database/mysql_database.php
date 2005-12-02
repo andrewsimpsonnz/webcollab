@@ -64,7 +64,7 @@ function db_connection() {
   }
   
   //set timezone  
-  if(! mysql_query("SET time_zone='".sprintf('%+02d:00', TZ )."'", $database_connection ) ) {
+  if(! mysql_query("SET time_zone='".sprintf('%+02d:%02d', TZ, (TZ - floor(TZ) )*60 )."'", $database_connection ) ) {
     error("Database error", "Not able to set timezone" );  
   }
 
