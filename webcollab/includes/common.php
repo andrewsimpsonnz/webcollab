@@ -27,12 +27,6 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'path_config.php' );
-require_once(BASE_CONFIG.'config.php' );
-
-include_once(BASE.'lang/lang.php' );
-
 //
 // Input validation (single line input)
 //
@@ -91,9 +85,6 @@ function validate($body ) {
   if(get_magic_quotes_gpc() ) {
     $body = stripslashes($body );
   }
-  
-  //decode URL entities
-  $body = urldecode($body );
   
   //allow only normal printing characters valid for the character set in use
   if(! ctype_print($body) ) {
