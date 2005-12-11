@@ -152,6 +152,7 @@ $content = "<?php\n".
 "  define('PRE', '' );\n\n".
 "  //WebCollab version string\n".
 "  define('WEBCOLLAB_VERSION', '1.80');\n\n".
+"  define('UNICODE_VERSION', 'N' );\n\n".
 "?>\n";
 
 //open file for writing
