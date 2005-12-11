@@ -145,5 +145,6 @@
 
   //version info
   define('WEBCOLLAB_VERSION', "1.80" );
+  define('UNICODE_VERSION', "N" );
 
 ?>
