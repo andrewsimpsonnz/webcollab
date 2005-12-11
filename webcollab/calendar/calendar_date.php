@@ -59,22 +59,19 @@ else {
   }
 }
 
-//set dates to match local time 
-$epoch = TIME_NOW + (TZ * 3600) - TZ_OFFSET;
-    
 //set month
 if( @safe_integer($_REQUEST['month']) ){
   $month = $_REQUEST['month'];
 }
 else {
-  $month = date('n', $epoch);
+  $month = date('n', TIME_NOW - date('Z') );
 }
 //set year
 if( @safe_integer($_REQUEST['year']) ){
   $year = $_REQUEST['year'];
 }
 else {
-  $year = date('Y', $epoch);
+  $year = date('Y', TIME_NOW - date('Z') );
 }
 
 //Apply any calendar navigation
