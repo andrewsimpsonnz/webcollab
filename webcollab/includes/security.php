@@ -40,7 +40,6 @@ $GID = array();
 require_once('path.php' );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
-require_once(BASE.'lang/lang.php' );
 require_once(BASE.'includes/common.php' );
 require_once(BASE.'database/database.php' );
 
@@ -71,6 +70,7 @@ if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS user_id,
                              '.PRE.'users.fullname AS fullname,
                              '.PRE.'users.guest AS guest,
                              '.PRE.'users.deleted AS deleted,
+                             '.PRE.'users.locale AS locale,
                              '.$epoch.' now() ) AS now
                              FROM '.PRE.'logins
                              LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
@@ -94,6 +94,16 @@ if((! $row['user_id'] ) || ($row['deleted'] == 't' ) ){
   error('Security manager', 'No valid user-id found');
 }
 
+//set user locale - if applicable
+$locale = (UNICODE_VERSION == 'Y') ? $row['locale'] : LOCALE;
+define('LOCALE_USER', $locale );
+
+//get required language files
+require_once(BASE.'lang/lang.php' );
+
+//set the character set for database queries
+db_user_locale(CHARACTER_SET );
+
 //check the last login time (there is an inactivity time limit set by SESSION_TIMEOUT)
 if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
   db_query('UPDATE '.PRE.'logins SET session_key=\'xxxx\' WHERE user_id='.$row['user_id'] );
@@ -106,6 +116,8 @@ if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
 
 define('UID',   $row['user_id'] );
 define('GUEST', $row['guest'] );
+define('UID_NAME',  $row['fullname'] );
+define('UID_EMAIL', $row['email'] );
 
 if($row['admin'] == 't' ) {
   define('ADMIN', 1 );
@@ -113,11 +125,9 @@ if($row['admin'] == 't' ) {
 else {
   define('ADMIN', 0 );
 }
-define('UID_NAME',  $row['fullname'] );
-define('UID_EMAIL', $row['email'] );
 
-define('TIME_NOW',  $row['now'] );
-    
+define('TIME_NOW', $row['now'] );
+
 //get usergroups of user
 $q = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID );
 
