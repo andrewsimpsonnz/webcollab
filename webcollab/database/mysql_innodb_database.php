@@ -218,11 +218,13 @@ return $result;
 }
 
 //
-//sets the required client encoding to the mysql client
+//sets the required session client encoding
 //
-function mysql_encoding() {
+function db_user_locale($encoding ) {
 
-  switch(strtoupper(CHARACTER_SET ) ) {
+  global $database_connection;
+  
+  switch(strtoupper($encoding) ) {
 
     case 'ISO-8859-1':
       $my_encoding = 'latin1';
@@ -231,7 +233,7 @@ function mysql_encoding() {
     case 'UTF-8':
       $my_encoding = 'utf8';
       break; 
-    
+                         
     case 'ISO-8859-2':
       $my_encoding = 'latin2';
       break;
@@ -241,7 +243,7 @@ function mysql_encoding() {
       break;
     
     case 'ISO-8859-9':
-       //ISO-8859-9 === latin5 in MySQL!!
+      //ISO-8859-9 === latin5 in MySQL!!
       $my_encoding = 'latin5';
       break;
     
@@ -253,12 +255,21 @@ function mysql_encoding() {
       $my_encoding = 'cp1251';
       break;
 
-    default:  
+   default:  
       $my_encoding = 'latin1';
       break; 
   }      
 
-return $my_encoding;
+  //set character set -- 1
+  if(! mysql_query("SET NAMES '".$my_encoding."'", $database_connection ) ) {
+    error("Database error", "Not able to set ".$my_encoding." client encoding" );
+  }
+  
+  //set character set -- 2
+  if(! mysql_query("SET CHARACTER SET ".$my_encoding, $database_connection ) ) {
+    error("Database error", "Not able to set CHARACTER SET : ".$my_encoding );
+  }  
+  return;
 }
 
 ?>

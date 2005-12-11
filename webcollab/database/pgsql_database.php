@@ -61,19 +61,14 @@ function db_query($query, $dieonerror=1 ) {
       error('No database connection',  'Sorry but there seems to be a problem in connecting to the database' );
 
     //make sure dates will be handled properly by internal date routines
-    pg_query($database_connection, 'SET DATESTYLE TO \'European, ISO\'');
+    pg_query($database_connection, 'SET DATESTYLE TO \'European, ISO\'');    
     
     //set the timezone
     if(! @pg_query($database_connection, 'SET TIME ZONE '.TZ ) ) {
       error("Database error",  "Not able to set timezone" );
     }
-
-    //set client encoding to match character set in use
-    if(pg_set_client_encoding($database_connection, pg_encoding() ) == -1 ){ 
-      error('Database client encoding', 'Cannot set PostgreSQL client encoding to the required '.CHARACTER_SET.'character set.' );
-    }  
-       
   }
+  
   //do it
   if( ! ($result = @pg_query($database_connection, $query ) ) ) {
 
@@ -204,12 +199,14 @@ return $result;
 }
 
 //
-//set client encoding for specific single byte character sets
+//sets the required session client encoding
 //
-function pg_encoding() {
+function db_user_locale($encoding ) {
 
-  switch(strtoupper(CHARACTER_SET ) ) {
-
+  global $database_connection;
+  
+  switch(strtoupper($encoding) ) {
+    
     case 'ISO-8859-1':
       $pg_encoding = 'LATIN1';
       break;
@@ -243,7 +240,12 @@ function pg_encoding() {
       break;
   }      
           
-return $pg_encoding;
+  //set client encoding to match character set in use
+  if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
+    error('Database client encoding', 'Cannot set PostgreSQL client encoding to the required '.$encoding.'character set.' );
+  }  
+
+return;
 }
 
 ?>
