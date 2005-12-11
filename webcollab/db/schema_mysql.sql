@@ -42,7 +42,6 @@ CREATE TABLE users (
 	private TINYINT NOT NULL DEFAULT 0,
         guest TINYINT NOT NULL DEFAULT 0,
 	deleted VARCHAR(5) NOT NULL DEFAULT 'f',
-        timezone VARCHAR(10) NOT NULL DEFAULT '0',
         locale VARCHAR(10) NOT NULL DEFAULT 'en',
         INDEX (fullname(10))
 );

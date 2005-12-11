@@ -46,7 +46,6 @@ CREATE TABLE "users" (
 	"private" smallint DEFAULT 0::int NOT NULL,
         "guest" smallint DEFAULT 0::int NOT NULL,
 	"deleted" boolean NOT NULL DEFAULT 'f'::bool,
-        "timezone" varying(10) DEFAULT '0'::text NOT NULL,
         "locale" varying(10) DEFAULT 'en'::text NOT NULL,
 	Constraint "users_pkey" Primary Key ("id")
 );
