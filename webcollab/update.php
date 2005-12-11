@@ -302,10 +302,6 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     db_query('ALTER TABLE '.PRE.'contacts ADD COLUMN taskid INT' );
     db_query('UPDATE '.PRE.'contacts SET taskid=0' );
     
-    //add timezones for users
-    db_query('ALTER TABLE '.PRE.'users ADD COLUMN timezone VARCHAR(10)' );
-    db_query('UPDATE '.PRE.'users SET timezone=\''.TZ.'\'' );
-          
     //add locale for users
     db_query('ALTER TABLE '.PRE.'users ADD COLUMN locale VARCHAR(10)' );
     db_query('UPDATE '.PRE.'users SET locale=\''.LOCALE.'\'' );
