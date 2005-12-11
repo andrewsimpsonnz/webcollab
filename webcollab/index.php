@@ -28,9 +28,11 @@
 */
 
 require_once('path.php' );
+require_once(BASE.'path_config.php' );
+require_once(BASE_CONFIG.'config.php' );
 
+include_once(BASE.'lang/lang.php' );
 include_once(BASE.'includes/screen.php' );
-include_once(BASE.'includes/common.php' );
 
 //secure variables
 $content = '';

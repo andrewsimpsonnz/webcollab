@@ -36,6 +36,7 @@ if(! defined('UID' ) ) {
 include_once(BASE.'includes/email.php' );
 include_once(BASE.'lang/lang_email.php' );
 include_once(BASE.'includes/time.php' );
+include_once(BASE.'users/user_common.php' );
 
 $usergroup_names = '';
 $admin_state = '';
@@ -99,6 +100,9 @@ switch($_REQUEST['action'] ) {
     }
     $password_unclean = trim($_POST['password'] );
     
+    //get locale
+    $locale = (empty($_POST['locale']) ) ? LOCALE : user_locale_check(safe_data($_POST['locale']) ); 
+    
     $email_raw = validate($_POST['email'] );
     if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $email_raw, $match ) ) || (strlen(trim($email_raw) ) > 200 ) ) {
       warning($lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST['email'] ) );
@@ -132,8 +136,8 @@ switch($_REQUEST['action'] ) {
     //begin transaction
     db_begin();
     //insert into the users table
-    $q = db_query("INSERT INTO ".PRE."users(name, fullname, password, email, private, admin, guest, deleted)
-                    VALUES('$name', '$fullname', '".md5($password_unclean)."', '".db_escape_string($email_unclean)."', '$private_user', '$admin_user',  '$guest_user', 'f')" );
+    $q = db_query("INSERT INTO ".PRE."users(name, fullname, password, email, private, admin, guest, deleted, locale )
+                    VALUES('$name', '$fullname', '".md5($password_unclean)."', '".db_escape_string($email_unclean)."', '$private_user', '$admin_user',  '$guest_user', 'f', '$locale' )" );
 
     //if the user is assigned to any groups execute the following code to add him/her
     if(isset($_POST['usergroup']) ) {
@@ -193,6 +197,9 @@ switch($_REQUEST['action'] ) {
     //magic quotes is not required
     $email_raw = validate($_POST['email'] );
     
+    //get locale
+    $locale = (empty($_POST['locale']) ) ? LOCALE : user_locale_check(safe_data($_POST['locale']) ); 
+    
     if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $email_raw, $match ) ) || (strlen(trim($email_raw) ) > 200 ) ) {
       warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST['email'] ) );
     }
@@ -243,7 +250,8 @@ switch($_REQUEST['action'] ) {
                               password='".md5($password_unclean)."',
                               private='$private_user',
                               admin='$admin_user',
-                              guest='$guest_user'
+                              guest='$guest_user',
+                              locale='$locale'
                               WHERE id=$userid" );
       }
       else {
@@ -254,7 +262,8 @@ switch($_REQUEST['action'] ) {
                               email='".db_escape_string($email_unclean)."',
                               private='$private_user',
                               admin='$admin_user',
-                              guest='$guest_user'
+                              guest='$guest_user',
+                              locale='$locale'
                               WHERE id=$userid" );
       }
 
@@ -316,7 +325,8 @@ switch($_REQUEST['action'] ) {
                           SET name='$name',
                           fullname='$fullname',
                           password='".md5($password_unclean)."',
-                          email='".db_escape_string($email_unclean)."'
+                          email='".db_escape_string($email_unclean)."',
+                          locale='$locale'
                           WHERE id=".UID );
 
         //email the changes to the user
@@ -332,7 +342,8 @@ switch($_REQUEST['action'] ) {
         db_query("UPDATE ".PRE."users
                           SET name='$name',
                           fullname='$fullname',
-                          email='".db_escape_string($email_unclean)."'
+                          email='".db_escape_string($email_unclean)."',
+                          locale='$locale'
                           WHERE id=".UID );
 
         //email the changes to the user

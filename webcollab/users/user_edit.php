@@ -32,6 +32,8 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+include_once(BASE.'users/user_common.php' );
+
 //secure vars
 $userid = '';
 
@@ -71,6 +73,8 @@ $content =  "<form method=\"post\" action=\"users.php\">\n".
               "<tr><td>".$lang['password'].":</td><td><input type=\"text\" name=\"password\" size=\"30\" value=\"\" /></td><td><small><i>".$lang['blank_for_current_password']."</i></small></td></tr>\n".
               "<tr><td>".$lang['email'].":</td><td><input type=\"text\" name=\"email\" size=\"30\" value=\"".$row['email']."\" /></td></tr>\n";
 
+$content .=  user_locale(LOCALE_USER);            
+                             
 //dangerous action!
 if(ADMIN ) {
 

@@ -32,6 +32,8 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+include_once(BASE.'users/user_common.php' );
+
 //admins only
 if(! ADMIN ){
   error('Unauthorised access', 'This function is for admins only.' );
@@ -46,6 +48,7 @@ $content =
                "<tr><td>".$lang['full_name'].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" /></td></tr>\n".
                "<tr><td>".$lang['password'].":</td><td><input type=\"text\" name=\"password\" size=\"30\" /></td></tr>\n".
                "<tr><td>".$lang['email'].":</td><td><input type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".
+               user_locale(LOCALE).
                "<tr><td>&nbsp;</td></tr>\n".
                "<tr><td><label for=\"private\">".$lang['private_user'].":</label></td><td><input type=\"checkbox\" name=\"private_user\" id=\"private\" /></td></tr>\n".
                "<tr><td>&nbsp;</td></tr>\n".
