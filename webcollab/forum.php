@@ -62,6 +62,15 @@ switch($_REQUEST['action'] ) {
     include(BASE.'forum/forum_submit.php');
     break;
     
+  //search
+  case 'search':
+    create_top($lang['info'] );
+    include(BASE.'includes/mainmenu.php');
+    goto_main();
+    include(BASE.'forum/forum_search.php');
+    create_bottom();
+    break;
+
   //Error case
   default:
     error('Forum action handler', 'Invalid request given' );

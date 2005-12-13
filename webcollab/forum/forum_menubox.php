@@ -46,15 +46,16 @@ else {
            OR '.PRE.'tasks.usergroupid=0) ';                      
 }
              
-$q = db_query('SELECT '.PRE.'forum.taskid AS taskid, 
+$q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
+                      '.PRE.'forum.posted AS posted,
                       MAX('.PRE.'forum.posted) AS recentpost,
                       '.PRE.'tasks.name AS taskname
-                    FROM '.PRE.'forum 
-                    LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
-                    WHERE '.PRE.'forum.posted > ( now()-INTERVAL '.$delim.NEW_TIME.' DAY'.$delim.')
-                    '.$tail.'
-                    GROUP BY '.PRE.'forum.taskid, taskname
-                    ORDER BY recentpost DESC LIMIT 10' );
+                      FROM '.PRE.'forum 
+                      LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
+                      WHERE '.PRE.'forum.posted > ( now()-INTERVAL '.$delim.NEW_TIME.' DAY'.$delim.')
+                      '.$tail.'
+                      GROUP BY '.PRE.'forum.taskid, posted, taskname
+                      ORDER BY posted DESC LIMIT 10' );
 
 //iterate for posts                            
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -72,5 +73,16 @@ if($list != '') {
   $content = "<small>".$list.sprintf($lang['last_post_sprt'], nicedate($lastpost) )."</small>\n";
   new_box($lang['recent_posts'], $content, 'boxmenu' ); 
 }
+
+$content = "<form id=\"ForumSearch\" method=\"post\" action=\"forum.php\" >\n".
+           "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
+           "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
+           "<input type=\"hidden\" name=\"start\" value=\"0\" /></fieldset>\n".
+           "<input type=\"text\" name=\"string\" size=\"15\" />\n".
+           "<a href=\"javascript:document.getElementById('ForumSearch').submit();\"><small>".$lang['go']."</small></a>\n".
+           "</form>";
+            
+ new_box("Forum search", $content, 'boxmenu' );            
+
 
 ?>
