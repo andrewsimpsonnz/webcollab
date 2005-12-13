@@ -32,17 +32,38 @@ if(! defined('UID' ) ) {
 
 include_once(BASE.'includes/time.php' );
 
+function search_no_result() {
+  
+  global $x, $lang;
+  
+  $content = "No results found<br /><br />\n".
+             "<form method=\"post\" action=\"forum.php\" >\n".
+             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
+             "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
+             "<input type=\"hidden\" name=\"start\" value=\"0\" /></fieldset>\n".
+             "<input id=\"name\" type=\"text\" name=\"string\" size=\"30\" />\n".
+             "<input type=\"submit\" value=\"".$lang['go']."\" />\n".
+             "</form>";
+   
+  new_box($lang['info'], $content ); 
+  return;
+}                  
+
 //initialise variables            
 $content = '';
 $min = 0;
 
-if(empty($_POST['string'] ) ) {
-  warning($lang['forum_submit'], $lang['no_message'] );
+if(empty($_POST['string'] ) || strlen(trim($_POST['string'] ) ) == 0 ) {
+  search_no_result();
+  die;
 }     
 $string = safe_data($_POST['string'] );
 
+//escaped string for database
+$esc_string = strtr($string, array('%'=>'\%', '_'=>'\_' ) );
+
 if(! is_numeric($_POST['start']) ) {
-  error('Forum search', 'Not a valid search integer' );
+  error('Forum search', 'Not a valid integer' );
 }
 $start = $_POST['start'];
 
@@ -54,7 +75,6 @@ if(isset($_POST['forward'] ) && strlen($_POST['forward']) > 0 ) {
   $min = $start + 10;
 }
 
-
 //set the usergroup permissions on queries (Admin can see all)
 if(ADMIN ) {
   $tail = ' ';  
@@ -64,26 +84,28 @@ else {
            OR '.PRE.'tasks.globalaccess=\'t\'   
            OR '.PRE.'tasks.usergroupid=0) ';                      
 }
-             
-$q = db_query('SELECT '.PRE.'tasks.name AS taskname
+     
+//postgres' uses ILIKE for case insensitive seaching
+$like = (substr(DATABASE_TYPE, 0, 5) == 'mysql' ) ? 'LIKE' : 'ILIKE';        
+
+$q = db_query('SELECT COUNT(*)
                       FROM '.PRE.'forum
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
                       LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
-                      WHERE forum.text LIKE \'%'.$string.'%\'
-                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname LIKE \''.$string.'%\')'
+                      WHERE forum.text '.$like.' \'%'.$esc_string.'%\'
+                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' \'%'.$esc_string.'%\')'
                       .$tail ); 
 
-//$total = db_result($q, 0, 0 );
-$total = db_numrows($q);
+$total = db_result($q, 0, 0 );
 
 if($total == 0 ) {
 //no results
-//**
-return;
+  search_no_result();
+  die;
 }
 
 $min = ($min > $total ) ? 0 : $min;
-$max = ($total < $min + 10 ) ? $total : ($min + 10); 
+$max = ($total > $min + 10 ) ? ($min + 10) : $total; 
 
 $q = db_query('SELECT '.PRE.'forum.taskid AS taskid, 
                       '.PRE.'forum.posted AS posted,
@@ -94,33 +116,36 @@ $q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
                       FROM '.PRE.'forum 
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
                       LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
-                      WHERE '.PRE.'forum.text LIKE \'%'.$string.'%\'
-                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname LIKE \''.$string.'%\')'
+                      WHERE '.PRE.'forum.text '.$like.' \'%'.$esc_string.'%\'
+                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' \'%'.$esc_string.'%\')'
                       .$tail.
                       'ORDER BY posted DESC LIMIT '.($max - $min).' OFFSET '.$min );
 
-$number = db_numrows($q);
+$content .= "Found ".$total." results for \"".$string."\"<br />\n".
+            "Showing results ".($min + 1)." to ".$max."<br /><br />\n";
 
-$content .= "<dl>\n";
+$content .= "<ul>\n";
+
+$replacement   = "<span class=\"red\">".$string."</span>";
 
 //iterate for posts                            
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   
   //show it
-  $content .= "<dt><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['taskid']."\">".$row['taskname']."</a>". 
-              "[<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".strtr($row['username'], array($string =>"<span class=\"red\">$string</span>" ) )."</a>]".
-              "(".nicetime($row['posted']).")</dt>\n";
+  $content .= "<li><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['taskid']."\">".$row['taskname']."</a>&nbsp;". 
+              "[<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".str_replace($string, $replacement, $row['username'] )."</a>]&nbsp;".
+              "(".nicetime($row['posted']).")<br />\n";
   
-  $content .= "<dd>".nl2br(strtr($row['text'], array($string =>"<span class=\"red\">$string</span>" ) ) )."</dd>\n";
+  $content .= nl2br(str_replace($string, $replacement, $row['text'] ) )."</li>\n";
 }
 
-$content .= "</dl>\n";
+$content .= "</ul>\n";
 
 db_free_result($q );
 
 if($min > 0 || $max < $total ) {
 
-  $content .= "<form method=\"post\" action=\"forum.php\">\n".
+  $content .= "<p><form method=\"post\" action=\"forum.php\">\n".
               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
               "<input type=\"hidden\" name=\"string\" value=\"".$string."\" />\n".
@@ -133,12 +158,12 @@ if($min > 0 || $max < $total ) {
   
   if($max < $total ) {
     //show right arrow
-    $content .= "<input type=\"submit\" name=\"forward\" value=\"&gt;&gt;\" />\n";
+    $content .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"forward\" value=\"&gt;&gt;\" />\n";
   }
   
-  $content .= "</form>\n";
+  $content .= "</form></p>\n";
 }
 
-new_box($lang['recent_posts'], $content ); 
+new_box($lang['info'], $content ); 
 
 ?>
