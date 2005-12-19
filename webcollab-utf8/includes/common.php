@@ -27,15 +27,9 @@
 
 */
 
-require_once('path.php' );
-require_once(BASE.'path_config.php' );
-require_once(BASE_CONFIG.'config.php' );
-
-include_once(BASE.'lang/lang.php' );
-
 //set character set encoding to be used
-if(! mb_internal_encoding(CHARACTER_SET ) ) {
-  error("Internal encoding", "Unable to set ".CHARACTER_SET." encoding in PHP" );
+if(! mb_internal_encoding('UTF-8') ) {
+  error("Internal encoding", "Unable to set UTF-8 encoding in PHP" );
 }
 
 //
@@ -95,53 +89,30 @@ function validate($body ) {
     $body = stripslashes($body );
   }
   
-  //decode URL entities
-  $body = urldecode($body );
-  
-  switch(strtoupper(CHARACTER_SET) ) {
-    
-    case 'UTF-8':
-      //decode decimal HTML entities added by web browser
-      $body = preg_replace('/&#\d{2,5};/e', "utf8_entity_decode('$0')", $body );
-      //decode hex HTML entities added by web browser
-      $body = preg_replace('/&#x([a-fA-F0-7]{2,8});/e', "utf8_entity_decode('&#'.hexdec('$1').';')", $body );
+  //decode decimal HTML entities added by web browser
+  //(convert up to U+10000)
+  $body = preg_replace('/&#\d{2,5};/e', "mb_decode_numericentity('$0', array(0x0, 0x10000, 0, 0xfffff) )", $body );
+  //decode hex HTML entities added by web browser
+  $body = preg_replace('/&#x([a-fA-F0-7]{2,8});/e', "mb_decode_numericentity('&#'.hexdec('$1').';', array(0x0, 0x10000, 0, 0xfffff) )", $body );
 
-      //allow only normal UTF-8 characters up to U+10000, which is the limit of 3 byte characters
-      // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )   
-      preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                         // ASCII characters
-                    '|[\xc2-\xdf][\x80-\xbf]'.                            // 2-byte UTF-8 (except overly longs)
-                    '|\xe0[\xa0-\xbf][\x80-\xbf]'.                        // 3 byte (except overly longs)
-                    '|[\xe1-\xec\xee\xef][\x80-\xbf]{2}'.                 // 3 byte (except overly longs)
-                    '|\xed[\x80-\x9f][\x80-\xbf])+/', $body, $ar );       // 3 byte (except UTF-16 surrogates)
-    
-      $body = join('?', $ar[0] );
-      break;
+  $max   = mb_strlen($text);
+  $clean = '';
+  //this size limiting hack is because preg_match_all() crashes on very long strings...
+  for($i=0; $i < $max; $i=($i+1000) ) {
   
-    case 'EUC_KR':
-    case 'EUC_CN':
-      $body = preg_match_all('/([\x09\x0a\x0d\x20-\x7f]'.                   // CS0  ASCII
-                              '|[\xa1-\xfe]{2})+/', $body, $ar );           // CS1  GB2312-80 
-      $body = join('?', $ar[0] );
-      break;
+    $part = mb_substr($body, $i, 1000 );  
     
-    case 'EUC-JP':
-      $body = preg_match_all('/([\x09\x0a\x0d\x20-\x7f]'.                   // CS0  ASCII
-                              '|[\xa1-\xfe]{2}'.                            // CS1  JIS X 0208:1997
-                              '|\x8e[\xa0-\xdf]'.                           // CS2  half width katakana
-                              '|\x8f[\xa1-\xfe]{2})+/', $body, $ar );       // CS3  JIS X 0212-1990   
-      $body = join('?', $ar[0] );
-      break;
-            
-    default:
-      //backward compatibility for standard WebCollab here...
-      if(! isset($validation_regex ) ) {
-        error("Input validation", "The selected ".CHARACTER_SET." does not have a valid input validation filter" ); 
-      }
-      $body = preg_replace($validation_regex, '?', $body );
-      break;
+    //allow only normal UTF-8 characters up to U+10000, which is the limit of 3 byte characters
+    // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )   
+    preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                         // ASCII characters
+                  '|[\xc2-\xdf][\x80-\xbf]'.                            // 2-byte UTF-8 (except overly longs)
+                  '|\xe0[\xa0-\xbf][\x80-\xbf]'.                        // 3 byte (except overly longs)
+                  '|[\xe1-\xec\xee\xef][\x80-\xbf]{2}'.                 // 3 byte (except overly longs)
+                  '|\xed[\x80-\x9f][\x80-\xbf])+/', $part, $ar );       // 3 byte (except UTF-16 surrogates)
   
-  }    
-  return $body;   
+    $clean .= join('?', $ar[0] );
+  }
+  return $clean;   
 }
   
 function clean_up($body ) {
@@ -154,16 +125,6 @@ function clean_up($body ) {
   $body  = strtr($body, $trans );
   
   return $body; 
-}
-
-//
-// decode html entities into UTF-8
-//
-function utf8_entity_decode($entity){
-
- //convert up to U+10000
- $convmap = array(0x0, 0x10000, 0, 0xfffff);
- return mb_decode_numericentity($entity, $convmap, 'UTF-8');
 }
 
 //
@@ -207,7 +168,6 @@ function html_links($body, $database_escape=0 ) {
     return '';
   }
   $body = preg_replace('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', "<a href=\"mailto:$0\">$0</a>", $body );
-  //$body = preg_replace('/(([\w\-\.]+)@([\w\-\.]+)\.([\w]+))/', "<a href=\"mailto:$0\">$0</a>", $body );
   
   //data being submitted to a database needs ('$0') part escaped
   $escape = ($database_escape ) ? '\\' : '';  
@@ -241,6 +201,7 @@ function error($box_title, $error ) {
 
   global $db_error_message;
   
+  include_once(BASE.'lang/lang.php' );
   include_once(BASE.'includes/screen.php' );
   
   create_top('ERROR', 1 );
@@ -299,6 +260,7 @@ function warning($box_title, $message ) {
 
   global $lang;
 
+  include_once(BASE.'lang/lang.php' );
   include_once(BASE.'includes/screen.php' );
 
   create_top($lang['error'], 1 );
