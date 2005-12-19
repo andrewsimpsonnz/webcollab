@@ -1,4 +1,16 @@
 WebCollab CVS
+*** 19 December 2005
+  Andrew Simpson
+
+- merge to WebCollab CVS
+
+- fix large file crash in preg_match_all() in common.php (PHP bug)
+
+- simplify HTML entities conversion
+
+- remove support for character sets other than UTF-8
+
+WebCollab CVS
 *** 20 October 2005
   Andrew Simpson
 
