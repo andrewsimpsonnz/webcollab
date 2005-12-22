@@ -195,6 +195,11 @@ TD.redbar {
   color : #000000;
 }
 
+/* Class for underlined text */
+.underline {
+  text-decoration: underline;
+}
+
 /* Class for text at page bottom */ 
 .bottomtext {
   font-size : 10px;

@@ -33,8 +33,3 @@ TD span.daynum {
   display: block;
   text-align: center;
 }
-
-/* Class for underlined text */
-.underline {
-  text-decoration: underline;
-}
