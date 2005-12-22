@@ -74,7 +74,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
   
   include_once(BASE.'includes/common.php');
   include_once(BASE.'database/database.php');
-
+  
  //no ip (possible?)
   if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
     secure_error('Unable to determine ip address');
