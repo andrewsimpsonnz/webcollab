@@ -32,12 +32,11 @@ if(! defined('UID' ) ) {
 
 include_once(BASE.'includes/time.php' );
 
-function search_no_result() {
+function search_input() {
   
   global $x, $lang;
   
-  $content = "No results found<br /><br />\n".
-             "<form method=\"post\" action=\"forum.php\" >\n".
+  $content = "<form method=\"post\" action=\"forum.php\" >\n".
              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
              "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
              "<input type=\"hidden\" name=\"start\" value=\"0\" /></fieldset>\n".
@@ -45,27 +44,41 @@ function search_no_result() {
              "<input type=\"submit\" value=\"".$lang['go']."\" />\n".
              "</form>";
    
-  new_box($lang['info'], $content ); 
-  return;
+  return $content;
 }                  
 
 //initialise variables            
 $content = '';
 $min = 0;
 
-if(empty($_POST['string'] ) || strlen(trim($_POST['string'] ) ) == 0 ) {
-  search_no_result();
+if(empty($_REQUEST['string'] ) || strlen(trim($_REQUEST['string'] ) ) == 0 ) {
+  //no results possible
+  $content .= "No results found<br /><br />\n";
+  $content .= search_input(); 
+  new_box($lang['info'], $content ); 
   die;
 }     
-$string = safe_data($_POST['string'] );
 
+$string = safe_data($_REQUEST['string'] );
 //escaped string for database
-$esc_string = strtr($string, array('%'=>'\%', '_'=>'\_' ) );
+$db_string = strtr($string, array('%'=>'\%', '_'=>'\_' ) );
 
-if(! is_numeric($_POST['start']) ) {
+//valid string for screen display
+$valid_string = validate($_REQUEST['string'] );
+$valid_string = substr($valid_string, 0, 100 );
+
+//convert to HTML and line breaks to match common.php conversion 
+$trans = array('<'=>'&lt;', '>'=>'&gt;', '%'=>'&#037;', "\r"=>' ', "\n"=>'' );
+$valid_string = strtr($valid_string, $trans );
+
+//quote for regex terms
+$preg_string = preg_quote($valid_string, '/' );
+ 
+if(! is_numeric($_REQUEST['start']) ) {
   error('Forum search', 'Not a valid integer' );
 }
-$start = $_POST['start'];
+$start = $_REQUEST['start'];
+$min = $start;
 
 if(isset($_POST['backward'] ) && strlen($_POST['backward']) > 0 ) {
   $min = max(0, ($start - 10) );
@@ -92,15 +105,18 @@ $q = db_query('SELECT COUNT(*)
                       FROM '.PRE.'forum
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
                       LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
-                      WHERE forum.text '.$like.' \'%'.$esc_string.'%\'
-                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' \'%'.$esc_string.'%\')'
+                      WHERE forum.text '.$like.' \'%'.$db_string.'%\'
+                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' \'%'.$db_string.'%\')'
                       .$tail ); 
 
 $total = db_result($q, 0, 0 );
 
 if($total == 0 ) {
-//no results
-  search_no_result();
+  //no results
+  $content .= "No results found for '".$valid_string."'<br /><br />\n";
+  $content .= search_input();
+  
+  new_box($lang['info'], $content ); 
   die;
 }
 
@@ -116,27 +132,30 @@ $q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
                       FROM '.PRE.'forum 
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
                       LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
-                      WHERE '.PRE.'forum.text '.$like.' \'%'.$esc_string.'%\'
-                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' \'%'.$esc_string.'%\')'
+                      WHERE '.PRE.'forum.text '.$like.' \'%'.$db_string.'%\'
+                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' \'%'.$db_string.'%\')'
                       .$tail.
                       'ORDER BY posted DESC LIMIT '.($max - $min).' OFFSET '.$min );
 
-$content .= "Found ".$total." results for \"".$string."\"<br />\n".
+$content .= "<table class=\"celldata\">\n".
+            "<tr><td>Found ".$total." results for \"".$string."\"<br />\n".
             "Showing results ".($min + 1)." to ".$max."<br /><br />\n";
 
 $content .= "<ul>\n";
 
-$replacement   = "<span class=\"red\">".$string."</span>";
+//search terms for regex
+$replacement = '<span class="red"><b>$0</b></span>';
+$search      = (UNICODE_VERSION) ? '/'.$preg_string.'/isu' : '/'.$preg_string.'/is';
 
 //iterate for posts                            
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   
   //show it
   $content .= "<li><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['taskid']."\">".$row['taskname']."</a>&nbsp;". 
-              "[<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".str_replace($string, $replacement, $row['username'] )."</a>]&nbsp;".
+              "[<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".preg_replace($search, $replacement, $row['username'] )."</a>]&nbsp;".
               "(".nicetime($row['posted']).")<br />\n";
   
-  $content .= nl2br(str_replace($string, $replacement, $row['text'] ) )."</li>\n";
+  $content .= nl2br(preg_replace($search, $replacement, $row['text'] ) )."</li>\n";
 }
 
 $content .= "</ul>\n";
@@ -145,25 +164,44 @@ db_free_result($q );
 
 if($min > 0 || $max < $total ) {
 
-  $content .= "<p><form method=\"post\" action=\"forum.php\">\n".
+  $content .= "<form method=\"post\" action=\"forum.php\">\n".
               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
-              "<input type=\"hidden\" name=\"string\" value=\"".$string."\" />\n".
-              "<input type=\"hidden\" name=\"start\" value=\"".$min."\" /></fieldset>\n";
+              "<input type=\"hidden\" name=\"string\" value=\"".$valid_string."\" />\n".
+              "<input type=\"hidden\" name=\"start\" value=\"".$min."\" /></fieldset>\n".
+              "<table class=\"decoration\" cellpadding=\"5px\" >\n";
 
   if($min > 0 ) {
     //show left arrow
-    $content .= "<input type=\"submit\" name=\"backward\" value=\"&lt;&lt;\" />\n";
+    $content .= "<tr><td><input style=\"float:left\" type=\"submit\" name=\"backward\" value=\"&lt;&lt;\" /></td>\n";
   }
+  
+  $content .= "<td>\n";
+  
+  //show page numbers along bottom
+  for($i = 0; $i < $total; $i = ($i + 10 ) ) {
+    
+    if($i == $min) {
+      //highlight current page
+      $content .= "&nbsp;&nbsp;<b>".intval($i/10 + 1)."</b>&nbsp;&nbsp;\n";
+    }
+    else {  
+      //hyperlink for other pages 
+      $content .= "&nbsp;&nbsp;<a href=\"forum.php?x=".$x."&amp;action=search&amp;start=".$i."&amp;string=".$string."\">".intval($i/10 + 1)."</a>&nbsp;&nbsp;\n";
+    }
+  }  
+  $content .= "</td>\n";
   
   if($max < $total ) {
     //show right arrow
-    $content .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"submit\" name=\"forward\" value=\"&gt;&gt;\" />\n";
+    $content .= "<td ><input style=\"float:right\" type=\"submit\" name=\"forward\" value=\"&gt;&gt;\" /></td>\n";
   }
   
-  $content .= "</form></p>\n";
+  $content .= "</tr></table></form>\n";
 }
 
-new_box($lang['info'], $content ); 
+$content .= "</td></tr></table>\n";
+
+new_box($lang['info'], $content, 'boxdata2' ); 
 
 ?>
