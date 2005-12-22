@@ -151,8 +151,8 @@ $content = "<?php\n".
 "  //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match)\n".  
 "  define('PRE', '' );\n\n".
 "  //WebCollab version string\n".
-"  define('WEBCOLLAB_VERSION', '1.80');\n\n".
-"  define('UNICODE_VERSION', 'N' );\n\n".
+"  define('WEBCOLLAB_VERSION', '".SETUP_WEBCOLLAB_VERSION."');\n\n".
+"  define('UNICODE_VERSION', '".SETUP_UNICODE_VERSION."' );\n\n".
 "?>\n";
 
 //open file for writing
