@@ -70,9 +70,7 @@ if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
       }
       
       //clone
-      if(ADMIN ) {
-        $content .= "<a href=\"tasks.php?x=".$x."&amp;action=clone&amp;taskid=".$taskid."\">".$lang["clone_".$TYPE]."</a><br />\n";
-      }
+      $content .= "<a href=\"tasks.php?x=".$x."&amp;action=clone&amp;taskid=".$taskid."\">".$lang["clone_".$TYPE]."</a><br />\n";
       
       //archive project
       if((ADMIN ) || ($TASKID_ROW['owner'] == UID ) ) {

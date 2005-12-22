@@ -31,13 +31,13 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//guests shouldn't get here
+if(GUEST ) {
+  warning($lang['access_denied'], $lang['not_owner'] );
+}
+
 include_once(BASE.'tasks/task_common.php' );
 
-//admins only
-if(! ADMIN ) {
-  error('Unauthorised access', 'This function is for admins only' );
-}
-  
 //
 // Recursive function to create new project structure
 //
@@ -125,7 +125,7 @@ function copy_across($taskid, $new_parent, $name ) {
                     now(),
                     now(),
                     now(),
-                    ".$row['owner'].",
+                    ".UID.",
                     ".UID.",
                     '".$row['deadline']."',
                     now(),

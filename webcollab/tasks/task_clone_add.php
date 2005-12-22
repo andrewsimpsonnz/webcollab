@@ -32,9 +32,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
-//admins only
-if(! ADMIN ) {
-  error('Unauthorised access', 'This function is for admins only' );
+//guests shouldn't get here
+if(GUEST ) {
+  warning($lang['access_denied'], $lang['not_owner'] );
 }
 
 if(! @safe_integer($_GET['taskid']) ) {
