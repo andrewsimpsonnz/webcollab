@@ -66,6 +66,18 @@ function db_connection() {
     error("Database error", "Not able to set timezone" );
   }  
   
+  $my_encoding = db_user_locale();
+   
+  //set character set -- 1
+  if(! mysql_query("SET NAMES '".$my_encoding."'", $database_connection ) ) {
+    error("Database error", "Not able to set ".$my_encoding." client encoding" );
+  }
+  
+  //set character set -- 2
+  if(! mysql_query("SET CHARACTER SET ".$my_encoding, $database_connection ) ) {
+    error("Database error", "Not able to set CHARACTER SET : ".$my_encoding );
+  }  
+  
   return;  
 }
 
@@ -220,11 +232,11 @@ return $result;
 //
 //sets the required session client encoding
 //
-function db_user_locale($encoding ) {
+function db_user_locale() {
 
   global $database_connection;
   
-  switch(strtoupper($encoding) ) {
+  switch(strtoupper(CHARACTER_SET) ) {
 
     case 'ISO-8859-1':
       $my_encoding = 'latin1';
@@ -260,16 +272,7 @@ function db_user_locale($encoding ) {
       break; 
   }      
 
-  //set character set -- 1
-  if(! mysql_query("SET NAMES '".$my_encoding."'", $database_connection ) ) {
-    error("Database error", "Not able to set ".$my_encoding." client encoding" );
-  }
-  
-  //set character set -- 2
-  if(! mysql_query("SET CHARACTER SET ".$my_encoding, $database_connection ) ) {
-    error("Database error", "Not able to set CHARACTER SET : ".$my_encoding );
-  }  
-  return;
+  return $my_encoding;
 }
 
 ?>

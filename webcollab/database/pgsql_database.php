@@ -67,6 +67,13 @@ function db_query($query, $dieonerror=1 ) {
     if(! @pg_query($database_connection, 'SET TIME ZONE '.TZ ) ) {
       error("Database error",  "Not able to set timezone" );
     }
+    
+    $pg_encoding = db_user_locale();
+    
+    //set client encoding to match character set in use
+    if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
+      error('Database client encoding', 'Cannot set PostgreSQL client encoding to the required '.$pg_encoding.'character set.' );
+    }  
   }
   
   //do it
@@ -201,11 +208,9 @@ return $result;
 //
 //sets the required session client encoding
 //
-function db_user_locale($encoding ) {
+function db_user_locale() {
 
-  global $database_connection;
-  
-  switch(strtoupper($encoding) ) {
+  switch(strtoupper(CHARACTER_SET) ) {
     
     case 'ISO-8859-1':
       $pg_encoding = 'LATIN1';
@@ -240,12 +245,7 @@ function db_user_locale($encoding ) {
       break;
   }      
           
-  //set client encoding to match character set in use
-  if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
-    error('Database client encoding', 'Cannot set PostgreSQL client encoding to the required '.$encoding.'character set.' );
-  }  
-
-return;
+return $pg_encoding;
 }
 
 ?>
