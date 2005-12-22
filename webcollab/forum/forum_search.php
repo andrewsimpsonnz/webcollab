@@ -187,7 +187,7 @@ if($min > 0 || $max < $total ) {
     }
     else {  
       //hyperlink for other pages 
-      $content .= "&nbsp;&nbsp;<a href=\"forum.php?x=".$x."&amp;action=search&amp;start=".$i."&amp;string=".$string."\">".intval($i/10 + 1)."</a>&nbsp;&nbsp;\n";
+      $content .= "&nbsp;&nbsp;<span class=\"underline\"><a href=\"forum.php?x=".$x."&amp;action=search&amp;start=".$i."&amp;string=".$string."\">".intval($i/10 + 1)."</a></span>&nbsp;&nbsp;\n";
     }
   }  
   $content .= "</td>\n";
