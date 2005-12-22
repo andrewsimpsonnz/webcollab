@@ -147,7 +147,6 @@ function html_links($body, $database_escape=0 ) {
     return '';
   }
   $body = preg_replace('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', "<a href=\"mailto:$0\">$0</a>", $body );
-  //$body = preg_replace('/(([\w\-\.]+)@([\w\-\.]+)\.([\w]+))/', "<a href=\"mailto:$0\">$0</a>", $body );
   
   //data being submitted to a database needs ('$0') part escaped
   $escape = ($database_escape ) ? '\\' : '';  
@@ -182,6 +181,7 @@ function error($box_title, $error ) {
 
   global $db_error_message;
   
+  include_once(BASE.'lang/lang.php' );
   include_once(BASE.'includes/screen.php' );
   
   create_top('ERROR', 1 );
@@ -240,6 +240,7 @@ function warning($box_title, $message ) {
 
   global $lang;
 
+  include_once(BASE.'lang/lang.php' );
   include_once(BASE.'includes/screen.php' );
 
   create_top($lang['error'], 1 );
