@@ -56,7 +56,7 @@ if( (SMTP_AUTH === 'Y') || (TLS === 'Y') ){
 
 function email($to, $subject, $message ) {
 
-  global $bit8, $connection, $log;
+  global $connection, $log;
 
   $email_encode = '';
   $message_charset = '';
@@ -126,7 +126,7 @@ function email($to, $subject, $message ) {
       
   //arrange message - and set email encoding to 8BITMIME if we need to
   //(we *must* do this before 'MAIL FROM:' in case we need to set encoding to suit the message body)
-  $message_lines  =& message($message, $email_encode, $message_charset, $body );
+  $message_lines  =& message($message, $email_encode, $message_charset, $body, $bit8 );
   $header_lines   = headers($to, $subject, $email_encode, $message_charset );
   $count_commands = 0;
      
@@ -247,21 +247,18 @@ debug		Debug!
 //function to reinstate html in text and remove any dangerous html scripting tags
 //
 
-function & clean($encoded ) {
+function & clean($text ) {
 
-  
-  //reinstate htmlentities back to ordinary text
-  $trans = array_flip(get_html_translation_table(HTML_ENTITIES, ENT_NOQUOTES ) );
-  $text  = strtr($encoded, $trans );
-  $text  = preg_replace('/&#(\d{2,3});/e', "chr('$1')", $text );
-    
   //characters previously escaped/encoded to avoid SQL injection/CSS attacks are reinstated. 
-  //$trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=' );  
-  //$text = strtr($text, $trans );
+  $trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=' );  
+  $text  = strtr($text, $trans );
   
-  //remove any dangerous tags that exist after decoding
+  $text  = html_entity_decode($text, ENT_QUOTES , CHARACTER_SET );
+ 
+  //remove any dangerous tags that exist
   $text = preg_replace("/(<\/?\s*)(APPLET|SCRIPT|EMBED|FORM|\?|%)(\w*|\s*)([^>]*>)/i", "\\1****\\3\\4", $text );
-  
+    
+
   return $text;
 }
 
@@ -269,12 +266,18 @@ function & clean($encoded ) {
 //function to prepare and encode message body for transmission
 //
 
-function & message($message, & $email_encode, & $message_charset, & $body ) {
-
-  global $bit8;
+function & message($message, & $email_encode, & $message_charset, & $body, $bit8 ) {
 
   //clean up message
-  $message =& clean($message );
+  $message = clean($message );
+  
+  //normalise end-of-lines (\r\n, \r ) in message body to \n - and change back to \r\n later
+  $message = str_replace("\r\n", "\n", $message );
+  $message = str_replace("\r", "\n", $message );
+  
+  //make sure message ends in a new line \n
+  $message = $message."\n";
+  
   //check if message contains high bit ascii characters and set encoding to match mailer capabilities
   switch(preg_match('/([\177-\377])/', $message ) ) {
     case true:
@@ -285,6 +288,9 @@ function & message($message, & $email_encode, & $message_charset, & $body ) {
           $email_encode = '8bit';
           $body = ' BODY=8BITMIME';
           $message_charset = CHARACTER_SET;
+          
+          //break up any lines longer than 998 bytes (RFC 821)
+          $message = wordwrap($message, 998, "\n", 1 );
           break;
         
         case false:
@@ -292,6 +298,14 @@ function & message($message, & $email_encode, & $message_charset, & $body ) {
           $email_encode = 'quoted-printable';
           $body = '';
           $message_charset = CHARACTER_SET;
+          
+          //replace high ascii, control and = characters (RFC 2045)
+          $message = preg_replace('/([\000-\010\013\014\016-\037\075\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $message);
+          //replace spaces and tabs when it's the last character on a line (RFC 2045)
+          $message = preg_replace('/([\011\040])\n/e', "'='.sprintf('%02X', ord('\\1')).'\n'", $message);
+          //break up any lines longer than 76 characters with soft line breaks " =\r\n" (RFC 2045)
+          //(end of line \n gets changed to \r\n after explode)
+          $message = wordwrap($message, 73, " =\n", 1 );
           break;
       }
       break;
@@ -301,34 +315,9 @@ function & message($message, & $email_encode, & $message_charset, & $body ) {
       $email_encode = '7bit';
       $message_charset = 'us-ascii';
       $body = '';
-      break;
-  }
-
-  //normalise end-of-lines (\r\n, \r ) in message body to \n - and change back to \r\n later
-  $message = str_replace("\r\n", "\n", $message );
-  $message = str_replace("\r", "\n", $message );
-  //make sure message ends in a new line \n
-  $message = $message."\n";
-
-  //encode message body
-  switch(strtolower($email_encode ) ){
-    case '7bit':
-    case '8bit':
       //break up any lines longer than 998 bytes (RFC 821)
       $message = wordwrap($message, 998, "\n", 1 );
       break;
-
-    case 'quoted-printable':
-    default:
-      //replace high ascii, control and = characters (RFC 2045)
-      $message = preg_replace('/([\000-\010\013\014\016-\037\075\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $message);
-      //replace spaces and tabs when it's the last character on a line (RFC 2045)
-      $message = preg_replace('/([\011\040])\n/e', "'='.sprintf('%02X', ord('\\1')).'\n'", $message);
-      //break up any lines longer than 76 characters with soft line breaks " =\r\n" (RFC 2045)
-      //(end of line \n gets changed to \r\n after explode)
-      $message = wordwrap($message, 73, " =\n", 1 );
-      break;
-
   }
 
   //lines starting with "." get an additional "." added. (RFC 2821 - 4.5.2)
