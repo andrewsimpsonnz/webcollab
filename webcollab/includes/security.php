@@ -101,9 +101,6 @@ define('LOCALE_USER', $locale );
 //get required language files
 require_once(BASE.'lang/lang.php' );
 
-//set the character set for database queries
-db_user_locale(CHARACTER_SET );
-
 //check the last login time (there is an inactivity time limit set by SESSION_TIMEOUT)
 if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
   db_query('UPDATE '.PRE.'logins SET session_key=\'xxxx\' WHERE user_id='.$row['user_id'] );
