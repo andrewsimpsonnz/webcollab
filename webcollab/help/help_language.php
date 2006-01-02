@@ -1,11 +1,12 @@
 <?php
 /*
   $Id$
-  
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -33,7 +34,17 @@ require_once(BASE_CONFIG.'config.php' );
 $help_item = $_GET['item'];
 $help_type = $_GET['type'];
 
-switch(LOCALE ) {
+if(defined('LOCALE_USER' ) {
+  $locale = LOCALE_USER;
+}
+elseif(defined('LOCALE' ) ) {
+  $locale = LOCALE;
+}
+else {
+  die('Config file not loaded properly for languages' );
+}
+
+switch($locale ) {
 
   case 'bg':
     switch($help_type ) {
@@ -47,7 +58,7 @@ switch(LOCALE ) {
         break;
     }
     break;
-  
+
   case 'es':
     switch($help_type ) {
       case 'admin':
@@ -73,7 +84,7 @@ switch(LOCALE ) {
         break;
     }
     break;
-  
+
   case 'ru':
     switch($help_type ) {
       case 'admin':
@@ -99,7 +110,7 @@ switch(LOCALE ) {
         break;
     }
     break;
-    
+
   case 'en':
   default:
    switch($help_type ) {

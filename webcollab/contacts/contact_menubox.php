@@ -2,13 +2,11 @@
 /*
   $Id$
   
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
   
-  This file originally part of CoreAPM by Dennis Fleurbaaij 2001/2002
-
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -39,17 +37,28 @@ if(! defined('UID' ) ) {
 $content = '';
 $company = '';
 
+if(UNICODE_VERSION == 'Y' ) {
+  $m_substr     = 'mb_substr';
+  $m_strtoupper = 'mb_strtoupper';
+  $m_strimwidth = 'mb_strimwidth';
+}
+else {
+  $m_substr     = 'substr';
+  $m_strtoupper = 'strtoupper';
+  $m_strimwidth = 'substr';
+}
+
 if( @safe_integer($_GET['taskid']) ) {
-  
+
   $taskid = $_GET['taskid'];
-  
+
   //get task details
   require_once(BASE.'includes/details.php' );
-  
+
   //check usergroup rights
   require_once(BASE.'includes/usergroup_security.php' );
   usergroup_check($taskid );
-  
+
   $tail = 'WHERE taskid='.$taskid.' OR taskid='.$TASKID_ROW['projectid'];
   $add  = '&amp;taskid='.$taskid;
 }
@@ -66,14 +75,14 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   if( $row['company'] != '' ) {
      if ($row['company'] != $company ){
-       $content .= mstrimwidth($row['company'], 30 )."<br />";
+       $content .= $m_strimwidth($row['company'], 0, 30 )."<br />";
      }
-     $show = mstrimwidth($row['lastname'], 30 ).", ".mstrtoupper(msubstr($row['firstname'], 1 ) ).".";
+     $show = $m_strimwidth($row['lastname'], 0, 30 ).", ".$m_strtoupper($m_substr($row['firstname'], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=".$x."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
      $company =  $row['company'];
    }
    else {
-     $show = mstrimwidth($row['lastname'], 30 ).", ".mstrtoupper(msubstr($row['firstname'], 1 ) ).".";
+     $show = $m_strimwidth($row['lastname'], 0, 30 ).", ".$m_strtoupper($m_substr($row['firstname'], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=".$x."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
    }
 }

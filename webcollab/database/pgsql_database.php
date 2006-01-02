@@ -2,11 +2,11 @@
 /*
   $Id$
 
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>  
-  
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>  
+
   WebCollab
   ---------------------------------------
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -62,20 +62,20 @@ function db_query($query, $dieonerror=1 ) {
 
     //make sure dates will be handled properly by internal date routines
     pg_query($database_connection, 'SET DATESTYLE TO \'European, ISO\'');    
-    
+
     //set the timezone
     if(! @pg_query($database_connection, 'SET TIME ZONE '.TZ ) ) {
       error("Database error",  "Not able to set timezone" );
     }
-    
+
     $pg_encoding = db_user_locale();
-    
+
     //set client encoding to match character set in use
     if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
       error('Database client encoding', 'Cannot set PostgreSQL client encoding to the required '.$pg_encoding.'character set.' );
-    }  
+    }
   }
-  
+
   //do it
   if( ! ($result = @pg_query($database_connection, $query ) ) ) {
 
@@ -92,7 +92,7 @@ function db_query($query, $dieonerror=1 ) {
 // escapes special characters in a string for use in a SQL statement
 //
 function db_escape_string($string ) {
-  
+
   return pg_escape_string($string);
 }
 
@@ -163,11 +163,11 @@ return TRUE;
 function db_free_result($q ){
 
   global $database_connection;
-  
+
   $result = pg_free_result($q );
-  
+
 return $result;
-}  
+}
 
 //
 //begin transaction
@@ -211,40 +211,40 @@ return $result;
 function db_user_locale() {
 
   switch(strtoupper(CHARACTER_SET) ) {
-    
+
     case 'ISO-8859-1':
       $pg_encoding = 'LATIN1';
       break;
-    
+
     case 'UTF-8':
       $pg_encoding = 'UNICODE';
-      break; 
+      break;
 
     case 'ISO-8859-2':
       $pg_encoding = 'LATIN2';
       break;
-    
+
     case 'ISO-8859-7':
       $pg_encoding = 'ISO_8859_7';
       break;
-    
+
     case 'ISO-8859-9':
       $pg_encoding = 'LATIN5';
       break;
-    
+
     case 'KOI8-R':
       $pg_encoding = 'KOI8';
       break;
-       
+
     case 'WINDOWS-1251':
       $pg_encoding = 'WIN';
       break;
 
-    default: 
+    default:
       $pg_encoding = 'LATIN1';
       break;
-  }      
-          
+  }
+
 return $pg_encoding;
 }
 

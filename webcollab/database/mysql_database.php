@@ -2,10 +2,11 @@
 /*
   $Id$
   
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -44,24 +45,24 @@ function db_connection() {
   if( ! ($database_connection = @mysql_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD ) ) ) {
     error('No database connection',  'Sorry but there seems to be a problem in connecting to the database server');
   }
-  
+
   //select database
   if( ! @mysql_select_db(DATABASE_NAME, $database_connection ) ) {
     error('Database error', 'No connection to database tables' );
   }
-  
+
   //set timezone  
   if(! mysql_query("SET time_zone='".sprintf('%+02d:%02d', TZ, (TZ - floor(TZ ) )*60 )."'", $database_connection ) ) {
     error("Database error", "Not able to set timezone" );  
   }
-  
+
   $my_encoding = db_user_locale();
-  
+
   //set character set -- 1
   if(! mysql_query("SET NAMES '".$my_encoding."'", $database_connection ) ) {
     error("Database error", "Not able to set ".$my_encoding." client encoding" );
   }
-  
+
   //set character set -- 2
   if(! mysql_query("SET CHARACTER SET ".$my_encoding, $database_connection ) ) {
     error("Database error", "Not able to set CHARACTER SET : ".$my_encoding );
@@ -82,7 +83,7 @@ function db_query( $query, $dieonerror=1 ) {
   //do it
   if( ! ($result = @mysql_query( $query, $database_connection ) ) ) {
     $db_error_message = mysql_error($database_connection);
-    
+
     if($dieonerror == 1 ) {
      error('Database query error', 'The following query :<br /><br /><b>'.$query.' </b><br /><br />Had the following error:<br /><b>'.mysql_error($database_connection).'</b>' );
     }
@@ -96,15 +97,15 @@ function db_query( $query, $dieonerror=1 ) {
 // escapes special characters in a string for use in a SQL statement
 //
 function db_escape_string($string ) {
-  
+
   global $database_connection;
-   
+
   if(! $database_connection ) {
     db_connection();
   }
-  
+
   $result = mysql_real_escape_string($string, $database_connection );
-    
+
   return $result;
 }
 
@@ -223,36 +224,36 @@ function db_user_locale() {
     case 'ISO-8859-1':
       $my_encoding = 'latin1';
       break;
-   
+
     case 'UTF-8':
       $my_encoding = 'utf8';
       break; 
-                         
+
     case 'ISO-8859-2':
       $my_encoding = 'latin2';
       break;
-    
+
     case 'ISO-8859-7':
       $my_encoding = 'greek';
       break;
-    
+
     case 'ISO-8859-9':
       //ISO-8859-9 === latin5 in MySQL!!
       $my_encoding = 'latin5';
       break;
-    
+
      case 'KOI8-R':
       $my_encoding = 'koi8r';
       break;
-       
+
     case 'WINDOWS-1251':
       $my_encoding = 'cp1251';
       break;
 
-   default:  
+   default:
       $my_encoding = 'latin1';
-      break; 
-  }      
+      break;
+  }
 
   return $my_encoding;
 }

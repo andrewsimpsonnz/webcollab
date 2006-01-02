@@ -2,11 +2,11 @@
 /*
   $Id$
 
-  (c) 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
-  
+  (c) 2005 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -40,8 +40,8 @@ $icalendar_id = md5(MANAGER_NAME.BASE_URL);
 
 if(! @safe_integer($_GET['taskid']) ){
   error('iCalendar show', 'Not a valid value for taskid' );
-}  
-  
+}
+
 $taskid = $_GET['taskid'];
 
 if(db_result(db_query('SELECT COUNT(*) FROM tasks WHERE id='.$taskid.' AND parent=0' ), 0, 0 ) > 0 ) {
@@ -57,7 +57,7 @@ else {
 
 //main query
 $q = db_query(icalendar_query().' AND '.PRE.$type.$taskid. icalendar_usergroup_tail() );
-                      
+
 //no rows ==> return
 if(db_numrows($q) < 1 ) {
 echo icalendar_query().' AND '.PRE.'tasks.projectid='.$taskid. icalendar_usergroup_tail();
@@ -67,7 +67,7 @@ echo icalendar_query().' AND '.PRE.'tasks.projectid='.$taskid. icalendar_usergro
 //send headers to browser
 icalendar_header($id.$taskid );
 
-for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {            
+for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
   //add vtodo
   icalendar_vtodo($row);

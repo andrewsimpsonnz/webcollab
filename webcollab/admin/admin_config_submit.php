@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz> 
     
   WebCollab
   ---------------------------------------
@@ -36,7 +36,7 @@ if(! defined('UID' ) ) {
 if( ! ADMIN ){
   error('Not permitted', 'This function is for admins only' );
 }
-  
+
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
@@ -88,34 +88,34 @@ switch($project_order) {
   case 'deadline':
     $project_list = 'ORDER BY due ASC, name';
     break;
-    
+
   case 'priority':
     $project_list = 'ORDER BY priority DESC, name';
     break;
-  
+
   default:  
   case 'name':
     $project_list = 'ORDER BY name';
     break;
 }
-    
+
 if(isset($_POST['task_order'] ) ){
   $task_order = $_POST['task_order'];
 }
-else { 
+else {
   $task_order = '';
 }
 
-switch($task_order) {  
+switch($task_order) {
   case 'deadline':
     $task_list = 'ORDER BY due ASC, name';
     break;
-    
+
   case 'priority':
     $task_list = 'ORDER BY priority DESC, name';
     break;
-  
-  default:  
+
+  default:
   case 'name':
     $task_list = 'ORDER BY name';
     break;
@@ -147,7 +147,7 @@ db_query('TRUNCATE TABLE '.PRE.'maillist');
 
 //use regex to get addresses - and strip any other stuff
 if((preg_match_all('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $input, $match, PREG_PATTERN_ORDER ) ) ) {
-  
+
   //cycle through addresses and store in database
   foreach($match[0] as $address ) {
     //remove excessively long addresses

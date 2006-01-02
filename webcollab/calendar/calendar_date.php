@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -34,7 +34,7 @@ if(! defined('UID' ) ) {
 
 //secure variables
 $content = '';
- 
+
 //get calendar navigation offsets
 if(isset($_POST['lastyear']) && strlen($_POST['lastyear']) > 0 ){
   $yearoffset = -1;
@@ -49,7 +49,7 @@ else {
 }
 if(isset($_POST['lastmonth']) && strlen($_POST['lastmonth']) > 0 ){
   $monthoffset = -1;
-}  
+}
 else {
   if(isset($_POST['nextmonth']) && strlen($_POST['nextmonth']) > 0 ) {
     $monthoffset = +1;

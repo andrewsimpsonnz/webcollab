@@ -1,11 +1,12 @@
 <?php
 /*
   $Id$
-  
-  (c) 2004 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2005 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -21,7 +22,7 @@
   Function:
   ---------
 
-  Lists all the recent forum posts
+  Provides a search engine for forum posts
 
 */
 
@@ -33,9 +34,9 @@ if(! defined('UID' ) ) {
 include_once(BASE.'includes/time.php' );
 
 function search_input() {
-  
+
   global $x, $lang;
-  
+
   $content = "<form method=\"post\" action=\"forum.php\" >\n".
              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
              "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
@@ -43,11 +44,11 @@ function search_input() {
              "<input id=\"name\" type=\"text\" name=\"string\" size=\"30\" />\n".
              "<input type=\"submit\" value=\"".$lang['go']."\" />\n".
              "</form>";
-   
-  return $content;
-}                  
 
-//initialise variables            
+  return $content;
+}
+
+//initialise variables
 $content = '';
 $min = 0;
 
@@ -57,7 +58,7 @@ if(empty($_REQUEST['string'] ) || strlen(trim($_REQUEST['string'] ) ) == 0 ) {
   $content .= search_input(); 
   new_box($lang['info'], $content ); 
   die;
-}     
+}
 
 $string = safe_data($_REQUEST['string'] );
 //escaped string for database
@@ -73,7 +74,7 @@ $valid_string = strtr($valid_string, $trans );
 
 //quote for regex terms
 $preg_string = preg_quote($valid_string, '/' );
- 
+
 if(! is_numeric($_REQUEST['start']) ) {
   error('Forum search', 'Not a valid integer' );
 }
@@ -90,16 +91,16 @@ if(isset($_POST['forward'] ) && strlen($_POST['forward']) > 0 ) {
 
 //set the usergroup permissions on queries (Admin can see all)
 if(ADMIN ) {
-  $tail = ' ';  
+  $tail = ' ';
 }
 else {
   $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
-           OR '.PRE.'tasks.globalaccess=\'t\'   
-           OR '.PRE.'tasks.usergroupid=0) ';                      
+           OR '.PRE.'tasks.globalaccess=\'t\'
+           OR '.PRE.'tasks.usergroupid=0) ';
 }
-     
+
 //postgres' uses ILIKE for case insensitive seaching
-$like = (substr(DATABASE_TYPE, 0, 5) == 'mysql' ) ? 'LIKE' : 'ILIKE';        
+$like = (substr(DATABASE_TYPE, 0, 5) == 'mysql' ) ? 'LIKE' : 'ILIKE';
 
 $q = db_query('SELECT COUNT(*)
                       FROM '.PRE.'forum
@@ -107,7 +108,7 @@ $q = db_query('SELECT COUNT(*)
                       LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
                       WHERE forum.text '.$like.' \'%'.$db_string.'%\'
                       OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' \'%'.$db_string.'%\')'
-                      .$tail ); 
+                      .$tail );
 
 $total = db_result($q, 0, 0 );
 
@@ -147,14 +148,14 @@ $content .= "<ul>\n";
 $replacement = '<span class="red"><b>$0</b></span>';
 $search      = (UNICODE_VERSION) ? '/'.$preg_string.'/isu' : '/'.$preg_string.'/is';
 
-//iterate for posts                            
+//iterate for posts
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
-  
+
   //show it
   $content .= "<li><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['taskid']."\">".$row['taskname']."</a>&nbsp;". 
               "[<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".preg_replace($search, $replacement, $row['username'] )."</a>]&nbsp;".
               "(".nicetime($row['posted']).")<br />\n";
-  
+
   $content .= nl2br(preg_replace($search, $replacement, $row['text'] ) )."</li>\n";
 }
 
@@ -175,28 +176,28 @@ if($min > 0 || $max < $total ) {
     //show left arrow
     $content .= "<tr><td><input style=\"float:left\" type=\"submit\" name=\"backward\" value=\"&lt;&lt;\" /></td>\n";
   }
-  
+
   $content .= "<td>\n";
-  
+
   //show page numbers along bottom
   for($i = 0; $i < $total; $i = ($i + 10 ) ) {
-    
+
     if($i == $min) {
       //highlight current page
       $content .= "&nbsp;&nbsp;<b>".intval($i/10 + 1)."</b>&nbsp;&nbsp;\n";
     }
-    else {  
+    else {
       //hyperlink for other pages 
       $content .= "&nbsp;&nbsp;<span class=\"underline\"><a href=\"forum.php?x=".$x."&amp;action=search&amp;start=".$i."&amp;string=".$string."\">".intval($i/10 + 1)."</a></span>&nbsp;&nbsp;\n";
     }
-  }  
+  }
   $content .= "</td>\n";
-  
+
   if($max < $total ) {
     //show right arrow
     $content .= "<td ><input style=\"float:right\" type=\"submit\" name=\"forward\" value=\"&gt;&gt;\" /></td>\n";
   }
-  
+
   $content .= "</tr></table></form>\n";
 }
 

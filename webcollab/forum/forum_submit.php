@@ -1,12 +1,11 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Based on original file written for Core APM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -42,14 +41,14 @@ require_once(BASE.'includes/usergroup_security.php' );
 function find_posts( $postid ) {
 
   global $post_array, $parent_array, $match_array, $index, $post_count;
-  
+
   $post_array   = array();
   $parent_array = array();
   $match_array  = array();
   $parent_count = 0;
   $post_count   = 0;
   $index = 0; 
-  
+
   $taskid = db_result(db_query('SELECT taskid FROM '.PRE.'forum WHERE id='.$postid ), 0, 0 );
 
   $q = db_query('SELECT id, parent FROM '.PRE.'forum WHERE taskid='.$taskid );
@@ -60,23 +59,23 @@ function find_posts( $postid ) {
     $post_array[$i]['id'] = $row['id'];
     $post_array[$i]['parent'] = $row['parent'];
     ++$post_count;
-  
+
     //if this is a subpost, store the parent id 
     if($row['parent'] != 0 ) {
       $parent_array[$parent_count] = $row['parent'];
       ++$parent_count;
     }
   }
-  
+
   //record first match
   $match_array[$index] = $postid;
   ++$index;
-  
+
   //if selected post has children (subposts), iterate recursively to find them 
   if(in_array($postid, (array)$parent_array ) ){
     find_children($postid);
   }
-  
+
   return;
 }
 
@@ -86,22 +85,22 @@ function find_posts( $postid ) {
 function find_children($parent ) {
 
   global $post_array, $parent_array, $match_array, $index, $post_count;
-  
+
   for($i=0 ; $i < $post_count ; ++$i ) {
-    
+
     if($post_array[$i]['parent'] != $parent ){
       continue;
     }
     $match_array[$index] = $post_array[$i]['id'];
     ++$index;
-    
+
     //if this post has children (subposts), iterate recursively to find them
     if(in_array($post_array[$i]['id'], (array)$parent_array ) ){
       find_children($post_array[$i]['id'] );
     }
   }
   return;
-}      
+}
 
 //
 // Perform delete of all forum messages in the thread below the selected message
@@ -111,11 +110,11 @@ function delete_messages($postid ) {
   global $match_array, $index;
 
   find_posts($postid );
-    
+
   // perform the delete - delete from newest post first to oldest post last to prevent database referential errors
   for($i=0; $i < $index; ++$i ) {
     db_query('DELETE FROM '.PRE.'forum WHERE id='.$match_array[($index - 1) - $i] );
-    
+
   }
   return;
 }
@@ -137,17 +136,17 @@ ignore_user_abort(TRUE);
       //if all values are filled in correctly we can submit the forum-item
       if(empty($_POST['text'] ) ) {
         warning($lang['forum_submit'], $lang['no_message'] );
-      }       
+      }
       $input_array = array('parentid', 'taskid', 'usergroupid');
-      foreach($input_array as $var ) {   
+      foreach($input_array as $var ) {
         if(! @safe_integer($_POST[$var]) ){
           error('Forum submit', "Variable $var is not set" );
         }
         ${$var} = $_POST[$var];
       }
-      
+
       $text = safe_data_long($_POST['text'] );
-      
+
       //make email adresses and web links clickable
       $text = html_links($text, 1 );
 
@@ -174,7 +173,7 @@ ignore_user_abort(TRUE);
 
       //check usergroup security
       $taskid = usergroup_check($taskid );
-       
+
       //okay now check if we need to post in the public or the private forums of the task
       switch($usergroupid ) {
         case 0:
@@ -190,7 +189,7 @@ ignore_user_abort(TRUE);
           if((! ADMIN ) && ( ! in_array($usergroupid, (array)$GID ) ) ) {
             error('Forum submit', 'You do not have enough rights to post in that forum' );
           }
-          
+
           db_begin();
           db_query ('INSERT INTO '.PRE.'forum(parent, taskid, posted, text, userid, usergroupid)
                                             VALUES ('.$parentid.', '.$taskid.', now(), \''.$text.'\', '.UID.', '.$usergroupid.')' );
@@ -200,7 +199,7 @@ ignore_user_abort(TRUE);
       //set time of last forum post to this task
       db_query('UPDATE '.PRE.'tasks SET lastforumpost=now() WHERE id='.$taskid );
       db_commit();
-      
+
       //get task data
       $q = db_query('SELECT '.PRE.'tasks.name AS name,
                             '.PRE.'tasks.usergroupid AS usergroupid,
@@ -234,16 +233,16 @@ ignore_user_abort(TRUE);
         include_once(BASE.'lang/lang_email.php' );
 
         $message_unclean = $_POST['text'];
-          
+
         //get rid of magic_quotes - it is not required here
         if(get_magic_quotes_gpc() ){
           $message_unclean = stripslashes($message_unclean );  
-        }  
+        }
         //get & add the mailing list
         if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
           $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
         }
-        
+
         switch($parentid ) {
           case 0:
             //this is a new post
@@ -263,7 +262,7 @@ ignore_user_abort(TRUE);
             if($row['username'] == NULL ){
               $row['username'] = "----";
             }
-              
+
             email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_reply, UID_NAME, $row['username'], $row['text'], $message_unclean ) );
             break;
         }
@@ -278,7 +277,7 @@ ignore_user_abort(TRUE);
       $postid = $_GET['postid'];
 
       switch(ADMIN ) {
-        
+
         case 1:
         case true:
           //admin can delete all

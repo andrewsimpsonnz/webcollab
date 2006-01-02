@@ -1,14 +1,12 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  
-  Based on original file written for Core APM by Dennis Fleurbaaij 2001/2002
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -72,7 +70,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   if($i > 0 ) {
     $content .= "<tr><td><hr /></td></tr>\n";
   }
-  
+
   //file part
   $content .= "<tr><td>".$lang['task'].":</td><td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['task_id']."\">".$row['task_name']."</a></td></tr>\n".
               "<tr><td>".$lang['file']."</td><td><a href=\"files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a>&nbsp;<small>(".$row['size'].$lang['bytes'].")&nbsp;</small>".
@@ -87,7 +85,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
   //blank line to end
   $content .= "<tr><td>&nbsp;</td></tr>\n";    
-    
+
 }
 
 $content .= "</table>\n";

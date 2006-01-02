@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -59,7 +59,7 @@ else {
 //set usergroup default
 if( @safe_integer($_POST['groupid']) ){
   $groupid = $_POST['groupid'];
-}  
+}
 else {
   $groupid = 0;
 }
@@ -172,7 +172,7 @@ $q = db_query('SELECT DISTINCT '.$day_part.'deadline) FROM '.PRE.'tasks
                       WHERE deadline >= \''.$year.'-'.$month.'-01\' 
                       AND deadline <= (CAST(\''.$year.'-'.$month.'-01\' AS DATE) + INTERVAL '.$delim.'1 MONTH'.$delim.') '.
                       $tail );
-                      
+ 
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ){
   $task_dates[$i] = (int)$row[0];
 }
@@ -311,7 +311,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
   if($num == $today) {
     $content .= "style=\"background : #C0C0C0\"";
   }
-  
+
   $content .= "><span class=\"daynum\">".$num."</span>";
 
   //check if this date has projects/tasks
@@ -323,26 +323,26 @@ for($num = 1; $num <= $numdays; ++$num ) {
                             FROM '.PRE.'tasks 
                             WHERE deadline=\''.$year.'-'.$month.'-'.$num.'\' 
                             AND archive=0 '.$suffix );
-  
+
         for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
-  
+
           //check for closed usergroups
           if( ($row['globalaccess'] == 'f' ) && ($row['usergroupid'] != 0 ) && (! ADMIN ) && ($row['owner'] != UID ) ) {
-  
+
             if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
               continue;
             }
           }
-  
+
           //don't show tasks in private usergroup projects
           if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project) ) {
             $key = array_search($row['projectid'], $no_access_project );
-  
+
             if( ! in_array($no_access_group[$key], (array)$GID ) ) {
               continue;
             }
           }
-  
+
           switch($row['status'] ) {
             case 'notactive':
             case 'cantcomplete':
@@ -350,7 +350,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
               //don't show if not active
               continue 2;
               break;
-  
+
             default:
               //active task or project
               switch($row['parent'] ) {
@@ -366,7 +366,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
                   $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
                             "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</span></a><br />\n";
                   break;
-  
+
                 default:
                   //task
                   if($row['status'] == "done" ) {

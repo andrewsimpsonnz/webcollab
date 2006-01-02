@@ -2,12 +2,10 @@
 /*
   $Id$
 
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
-  
-  This file originally written as part of Core APM by Dennis Fleurbaaij 2001/2002.
   
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -64,9 +62,9 @@ $content =
        "<tr><td><i>".$lang['email']."</i></td><td><a href=\"mailto:".$row['email']."\">".$row['email']."</a></td></tr>\n".
     "</table>\n".
     "<p><i>".$lang['notes']."</i><br />".nl2br(html_links($row['notes'] ) )."</p>\n";
-    
+
 if(! GUEST ){
-  $content .=    
+  $content .=
     "<form method=\"post\" action=\"contacts.php\" >\n".
       "<fieldset><input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"".$row['id']."\" />\n".

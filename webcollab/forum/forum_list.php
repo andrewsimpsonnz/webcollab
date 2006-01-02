@@ -1,12 +1,11 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Based on original file written for Core APM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -49,7 +48,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
   $parent_array = array();
   $parent_count = 0;
   $post_count   = 0;
-  
+
   $q = db_query('SELECT '.PRE.'forum.text AS text,
                         '.PRE.'forum.id AS id,
                         '.PRE.'forum.posted AS posted,
@@ -68,23 +67,23 @@ function list_posts_from_task( $taskid, $usergroupid ) {
     return;
   }
 
-  $content = "<ul>\n";  
-    
+  $content = "<ul>\n";
+
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
     //put values into array
     $post_array[$i]['id'] = $row['id'];
     $post_array[$i]['parent'] = $row['parent'];
-  
+
     //name of poster (NULL if poster's id has been deleted)
     if($row['fullname'] == NULL ) {
       $this_post = "<li><small>----";
     }
     else {
       $this_post = "<li><small><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".$row['fullname']."</a>";
-    }              
+    }
     $this_post .= "&nbsp;(".nicetime( $row['posted']).")</small>";
-                     
+
     //owners of the thread, owners of the post and admins have a "delete" option
     if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['postowner'] ) ) {
       $this_post .= " <span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=submit_del&amp;postid=".$row['id']."&amp;taskid=".$taskid."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."' )\">".$lang['del']."</a>]</span>";
@@ -103,30 +102,30 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 
     $post_array[$i]['post'] = $this_post."<br />\n".nl2br($row['text'] )."\n";
     ++$post_count;
-    
-    //if this is a subpost, store the parent id 
+
+    //if this is a subpost, store the parent id
     if($row['parent'] != 0 ) {
       $parent_array[$parent_count] = $row['parent'];
       ++$parent_count;
     }
   }
-  
+
   //iteration for first level posts
   for($i=0 ; $i < $post_count ; ++$i ){
-  
+
     //ignore subtasks in this iteration
     if($post_array[$i]['parent'] != 0 ){
       continue;
     }
     $content .= $post_array[$i]['post'];
-    
-    //if this post has children (subposts), iterate recursively to find them 
+
+    //if this post has children (subposts), iterate recursively to find them
     if(in_array($post_array[$i]['id'], (array)$parent_array ) ){
       $content .= find_children($post_array[$i]['id'] );
     }
     $content .= "</li>\n";
   }
-  $content .= "</ul>\n";  
+  $content .= "</ul>\n";
   return $content;
 }
 
@@ -138,24 +137,24 @@ function find_children($parent ) {
   global $post_array, $parent_array, $post_count;
 
   $content = "<ul>\n";
-       
+
   for($i=0 ; $i < $post_count ; ++$i ) {
-  
+
     if($post_array[$i]['parent'] != $parent ){
       continue;
     }
     $content .= $post_array[$i]['post'];
-    
+
     //if this post has children (subposts), iterate recursively to find them
     if(in_array($post_array[$i]['id'], $parent_array ) ){
       $content .= find_children($post_array[$i]['id'] );
     }
-    $content .= "</li>\n";    
+    $content .= "</li>\n";
   }
-  $content .= "</ul>\n"; 
-  
+  $content .= "</ul>\n";
+
   return $content;
-}      
+}
 
 
 //--------------------------------------------------------------------------------------------------------------------------------
@@ -168,14 +167,14 @@ if(! @safe_integer($_GET['taskid']) ) {
 }
 $taskid = $_GET['taskid'];
 
-//check usergroup security  
+//check usergroup security
 $taskid = usergroup_check($taskid );
 
 //
 //public forums
 //
 
-//don't show public forum if task is set to private usergroup only (and a usergroup is set) 
+//don't show public forum if task is set to private usergroup only (and a usergroup is set)
 if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) ){
 
   $content = '';

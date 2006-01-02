@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -81,7 +81,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //set project status
   $project_status = $row['status'];
-  
+
   //make adjustments
   switch( $project_status ) {
 
@@ -98,11 +98,11 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
       }
       break;
   }
-  
+
   if($flag == 1 ) {
     $content .= "<tr><td style=\"padding-left: 30px\"><hr /></td></tr>\n";
   }
-  
+
   //to indicate that there are viewable projects
   $flag = 1;
 
@@ -140,11 +140,11 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
       break;
   }
   if(ADMIN || UID == $row['owner'] ){
-  
+
     $content .= "<span class=\"textlink\">".
                 "[<a href=\"tasks.php?x=".$x."&amp;action=delete&amp;taskid=".$row['id']."\" onclick=\"return confirm( '".sprintf($lang["del_javascript_project_sprt"], javascript_escape($row['name'] ) )."')\">".$lang['del']."</a>]&nbsp;&nbsp;&nbsp;&nbsp;\n".
                 "[<a href=\"archive.php?x=".$x."&amp;action=submit_restore&amp;taskid=".$row['id']."\">".$lang['revive']."</a>]</span>\n";
-  }            
+  }
   //end list
   $content .= "</td></tr>\n";
 }

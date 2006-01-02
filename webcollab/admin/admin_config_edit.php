@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz> 
   
   WebCollab
   ---------------------------------------
@@ -88,42 +88,42 @@ switch($row['project_order']){
   case 'ORDER BY due ASC, name':
     $s1 = ""; $s2 = " selected=\"selected\""; $s3 = "";
     break;
-      
+
   case 'ORDER BY priority DESC, name':
     $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\"";
     break;
-  
+
   case 'ORDER BY name':
   default:
     $s1 = " selected=\"selected\""; $s2 = ""; $s3 = "";
     break;
-}            
+}
 
-//project listing order                                         
+//project listing order 
 $content .= "<tr><td>".$lang['project_listing_order'].":</td><td>\n".
             "<select name=\"project_order\">\n".
             "<option value=\"name\"".$s1.">".$lang['name']."</option>\n".
             "<option value=\"deadline\"".$s2.">".$lang['deadline']."</option>\n".
             "<option value=\"priority\"".$s3.">".$lang['priority']."</option>\n".
             "</select></td></tr>\n";
-          
+
 //set default selection for task listing
 switch($row['task_order']){
   case 'ORDER BY due ASC, name':
     $s1 = ""; $s2 = " selected=\"selected\""; $s3 = "";
     break;
-      
+
   case 'ORDER BY priority DESC, name':
     $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\"";
     break;
-  
+
   case 'ORDER BY name':
   default:
     $s1 = " selected=\"selected\""; $s2 = ""; $s3 = "";
     break;
-}            
+}
 
-//task listing order                                         
+//task listing order
 $content .= "<tr><td>".$lang['task_listing_order'].":</td><td>\n".
             "<select name=\"task_order\">\n".
             "<option value=\"name\"".$s1.">".$lang['name']."</option>\n".
@@ -131,7 +131,7 @@ $content .= "<tr><td>".$lang['task_listing_order'].":</td><td>\n".
             "<option value=\"priority\"".$s3.">".$lang['priority']."</option>\n".
             "</select></td></tr>\n".
             "</table>\n";
-          
+
 $content .=
           "<p><input type=\"submit\" value=\"".$lang['update']."\" /></p>\n".
         "</form>\n";

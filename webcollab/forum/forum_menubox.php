@@ -2,10 +2,11 @@
 /*
   $Id$
   
-  (c) 2004 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -33,19 +34,21 @@ if(! defined('UID' ) ) {
 //includes
 include_once(BASE.'includes/time.php' );
 
-//initialise variables            
+//initialise variables
 $list = '';
-     
+
+$m_strimwidth = (UNICODE_VERSION == 'Y' ) ? 'mb_strimwidth' : 'substr';
+
 //set the usergroup permissions on queries (Admin can see all)
 if(ADMIN ) {
-  $tail = ' ';  
+  $tail = ' ';
 }
 else {
   $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
-           OR '.PRE.'tasks.globalaccess=\'t\'   
-           OR '.PRE.'tasks.usergroupid=0) ';                      
+           OR '.PRE.'tasks.globalaccess=\'t\'
+           OR '.PRE.'tasks.usergroupid=0) ';
 }
-             
+
 $q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
                       '.PRE.'forum.posted AS posted,
                       MAX('.PRE.'forum.posted) AS recentpost,
@@ -57,21 +60,21 @@ $q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
                       GROUP BY '.PRE.'forum.taskid, posted, taskname
                       ORDER BY posted DESC LIMIT 10' );
 
-//iterate for posts                            
+//iterate for posts
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
-  
+
   //date of latest post
   $lastpost = $row['recentpost'];
-  
+
   //show it
-  $list .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['taskid']."\">".mstrimwidth($row['taskname'], 25 )."</a><br />\n";
+  $list .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['taskid']."\">".$m_strimwidth($row['taskname'], 0, 25 )."</a><br />\n";
 }
 
 db_free_result($q );
 
 if($list != '') {
   $content = "<small>".$list.sprintf($lang['last_post_sprt'], nicedate($lastpost) )."</small>\n";
-  new_box($lang['recent_posts'], $content, 'boxmenu' ); 
+  new_box($lang['recent_posts'], $content, 'boxmenu' );
 }
 
 $content = "<form id=\"ForumSearch\" method=\"post\" action=\"forum.php\" >\n".
@@ -81,8 +84,7 @@ $content = "<form id=\"ForumSearch\" method=\"post\" action=\"forum.php\" >\n".
            "<input type=\"text\" name=\"string\" size=\"15\" />\n".
            "<a href=\"javascript:document.getElementById('ForumSearch').submit();\"><small>".$lang['go']."</small></a>\n".
            "</form>";
-            
- new_box("Forum search", $content, 'boxmenu' );            
 
+ new_box("Forum search", $content, 'boxmenu' );
 
 ?>

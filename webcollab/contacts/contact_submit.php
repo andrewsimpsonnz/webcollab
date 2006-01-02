@@ -2,13 +2,11 @@
 /*
   $Id$
   
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
   
-  Based on original file written for Core APM by Dennis Fleurbaaij & Andrew Simpson 2001/2002
-   
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -49,11 +47,11 @@ switch($_REQUEST['action'] ) {
     if(empty($_POST['lastname'] ) || empty($_POST['firstname'] ) ) {
       warning($lang['contact_submit'], $lang['contact_warn'] );
     }
-    
+
     if( @safe_integer($_POST['taskid']) ) { 
-    
+
       $taskid = $_POST['taskid'];
-    
+
       //check for non-existent tasks...
       if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$taskid.' LIMIT 1' ), 0, 0 ) < 1 ) {
         error('Contact submit', 'Not a valid taskid' );
@@ -102,15 +100,15 @@ switch($_REQUEST['action'] ) {
     if(empty($_POST['lastname'] ) || empty($_POST['firstname'] ) ) {
       warning($lang['contact_submit'], $lang['contact_warn'] );
     }
-    
+
     if(! @safe_integer($_POST['contactid']) ) {
       error('Contact submit', 'Not a valid contactid' );
     }
     $contactid = $_POST['contactid'];
- 
+
     //get taskid (used for HTTP return value below)
     $taskid = db_result(db_query('SELECT taskid FROM '.PRE.'contacts WHERE id='.$contactid.' LIMIT 1' ), 0, 0 );
-    
+
     db_query('UPDATE '.PRE.'contacts SET
                   firstname=\''.safe_data($_POST['firstname']).'\',
                   lastname=\''.safe_data($_POST['lastname']).'\',
@@ -131,7 +129,7 @@ switch($_REQUEST['action'] ) {
     break;
 
   case 'submit_delete':
-      
+
     if( ! @safe_integer($_POST['contactid']) ) {
       error('Contact submit', 'Not a valid contactid' );
     }
@@ -139,13 +137,13 @@ switch($_REQUEST['action'] ) {
 
     //get taskid - if any
     $taskid = db_result(db_query('SELECT taskid FROM '.PRE.'contacts WHERE id='.$contactid.' LIMIT 1' ), 0, 0 );
-    
+
     //check usergroup if required
     if($taskid ) {
       require_once(BASE.'includes/usergroup_security.php' );
       usergroup_check($taskid);
     }
-    
+
     //delete the contact 
     @db_query('DELETE FROM '.PRE.'contacts WHERE id='.$contactid );
     break;

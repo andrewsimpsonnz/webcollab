@@ -2,11 +2,11 @@
 /*
   $Id$
 
-  (c) 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
-  
+  (c) 2005 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -73,7 +73,7 @@ switch($selection ) {
   default:
     if(! icalendar_private_user($userid ) ) {
       return;
-    }     
+    }
     $tail = "AND owner=".$userid;
     $id   = 'U'.$userid;
     break;
@@ -85,25 +85,25 @@ $q = db_query( icalendar_query().' AND '.PRE.'tasks.parent<>0 '.$tail. icalendar
 //no rows ==> return
 if(db_numrows($q) < 1 ) {
   return;
-} 
+}
 
 //send headers to browser
 icalendar_header($id);
 
-for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {            
+for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
   if(! in_array($row['projectid'], (array)$projects ) ) {
-  
+
     $project_q = db_query(icalendar_query().' AND '.PRE.'tasks.id='.$row['projectid']. icalendar_usergroup_tail() );
-                                  
-    
+
+
     //check for closed projects
     if(db_numrows($project_q) < 1 ) {
       continue;
     }
-                                   
+
     icalendar_vtodo(db_fetch_array($project_q, 0) );
-    
+
     $projects[] = $row['projectid'];
   }
 

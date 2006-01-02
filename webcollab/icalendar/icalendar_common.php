@@ -2,11 +2,11 @@
 /*
   $Id$
 
-  (c) 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
-  
+  (c) 2005 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -23,7 +23,7 @@
   ---------
 
   iCalendar common functions
-  
+
 */
 
 //security check
@@ -54,7 +54,7 @@ function icalendar_query() {
                 '.PRE.'tasks.sequence AS sequence,
                 '.PRE.'users.id AS userid,
                 '.PRE.'users.fullname AS fullname,
-                '.PRE.'users.email AS email                                 
+                '.PRE.'users.email AS email
                 FROM '.PRE.'tasks
                 LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
                 WHERE '.PRE.'tasks.archive=0 ';
@@ -66,16 +66,16 @@ function icalendar_query() {
 // SQL tail for user access rights
 //
 
-function icalendar_usergroup_tail() {  
-  
+function icalendar_usergroup_tail() {
+
   //set the usergroup permissions on queries (Admin can see all)
   if(ADMIN ) {
-    $tail = ' ';  
+    $tail = ' ';
   }
   else {
     $tail = ' AND ('.PRE.'globalaccess=\'f\' AND '.PRE.'usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
-              OR '.PRE.'globalaccess=\'t\'   
-              OR '.PRE.'usergroupid=0) ';                      
+              OR '.PRE.'globalaccess=\'t\'
+              OR '.PRE.'usergroupid=0) ';
   }
   return $tail;
 }

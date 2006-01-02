@@ -1,13 +1,11 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  
-  Based on original file written for Core APM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -40,7 +38,7 @@ include_once(BASE.'includes/usergroup_security.php' );
 if(GUEST ){
  warning($lang['access_denied'], $lang['not_owner'] );  
 }
- 
+
 //secure variables
 $mail_list = array();
 
@@ -64,28 +62,28 @@ ignore_user_abort(TRUE);
           case 1:
             error($lang['file_submit'], "The uploaded file exceeds the upload_max_filesize directive in php.ini" );
             break;
-        
+
           case 2:
             error($lang['file_submit'], "The uploaded file exceeds maximum allowed file size" );
             break;
-           
+
           case 3:
             warning($lang['file_submit'], "The uploaded file was only partially uploaded" );
             break;
-            
+
           case 4:
             warning($lang['file_submit'], $lang['no_upload'] );
             break;
-            
+
           case 6:
             error($lang['file_submit'], "Missing a temporary folder" );
             break;
-            
+
           default: 
             error($lang['file_submit'], "Unknown file upload error with error code ".$_FILES['userfile']['tmp_name'] );     
             break;
         }
-      }        
+      }
 
       if(! @safe_integer($_POST['taskid']) ) {
         //delete any upload before invoking the error function
@@ -109,10 +107,10 @@ ignore_user_abort(TRUE);
           ${$var} = false;
         }
       }
-            
+
       //check usergroup security
       $taskid = usergroup_check($taskid );
-      
+
       //check the destination directory is writeable by the webserver
       if( ! is_writable(FILE_BASE.'/' ) ) {
         unlink($_FILES['userfile']['tmp_name'] );
@@ -124,7 +122,7 @@ ignore_user_abort(TRUE);
         unlink($_FILES['userfile']['tmp_name'] );
         warning($lang['file_submit'], $lang['no_upload'] );
       }
-      
+
       //check for ridiculous uploads
       if($_FILES['userfile']['size'] > FILE_MAXSIZE ) {
         unlink($_FILES['userfile']['tmp_name'] );
@@ -135,6 +133,13 @@ ignore_user_abort(TRUE);
      if(preg_match('/\.(php|php3|php4|js|asp)$/', $_FILES['userfile']['name'] ) ) {
             unlink($_FILES['userfile']['tmp_name'] );
             error('File submit', 'The file types .php, .php3, .php4, .js and .asp are not acceptable for security reasons. You must either rename or compress the file.');
+      }
+
+      if(empty($_FILES['userfile']['type']) || $_FILES['userfile']['type'] == '' ) {
+        $mime = "application/octet-stream";
+      }
+      else {
+        $mime = $_FILES['userfile']['type'];
       }
 
       //okay accept file
@@ -165,11 +170,11 @@ ignore_user_abort(TRUE);
                                             now(),
                                             ".UID.",
                                             $taskid,
-                                            '".$_FILES['userfile']['type']."' )" );
+                                            '".$mime."' )" );
 
       //get last insert id 
       $fileid = db_lastoid('files_id_seq' );
-      
+
       //copy it
       if( ! move_uploaded_file( $_FILES['userfile']['tmp_name'], FILE_BASE.'/'.$fileid.'__'.$filename ) ) {
         db_query('DELETE FROM '.PRE.'files WHERE id='.$fileid );
@@ -180,16 +185,16 @@ ignore_user_abort(TRUE);
 
       //set the fileid in the database
       db_query('UPDATE '.PRE.'files SET fileid='.$fileid.' WHERE id='.$fileid );
-      
+
       //alter task lastfileupload
       db_query('UPDATE '.PRE.'tasks SET lastfileupload=now() WHERE id='.$taskid );
-      
+
       //make the file non-executable for security
       chmod(FILE_BASE.'/'.$fileid.'__'.$filename, 0644 );
-      
+
       //success!
       db_commit();
-      
+
       //get task data
       $q = db_query('SELECT '.PRE.'tasks.name AS name,
                             '.PRE.'tasks.usergroupid AS usergroupid,
@@ -197,7 +202,7 @@ ignore_user_abort(TRUE);
                             FROM '.PRE.'tasks
                             LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.owner='.PRE.'users.id)
                             WHERE '.PRE.'tasks.id='.$taskid );
-      
+
       $task_row = db_fetch_array($q, 0 );
 
       //set owner's email
@@ -224,12 +229,12 @@ ignore_user_abort(TRUE);
         include_once(BASE.'lang/lang_email.php' );
 
         $message_unclean = $_POST['description'];
-        
+
         //get rid of magic_quotes - it is not required here
         if(get_magic_quotes_gpc() ) {
           $message_unclean = stripslashes($message_unclean );
         }
-        
+
         //get & add the mailing list
         if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
           $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
