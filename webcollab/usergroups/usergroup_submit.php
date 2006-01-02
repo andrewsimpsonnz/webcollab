@@ -1,13 +1,11 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  
-  Based on CoreAPM by Dennis Fleurbaaij 2001/2002.
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -53,7 +51,7 @@ switch($_REQUEST['action'] ) {
     if(! @safe_data($_GET['usergroupid']) ) {
       error('Usergroup submit', 'Not a valid value for usergroupid' );
     }
-    
+
     $usergroupid = $_GET['usergroupid'];
 
     db_begin();
@@ -69,7 +67,7 @@ switch($_REQUEST['action'] ) {
 
     //update the tasks table by resetting the deleted usergroup id to zero
     @db_query('UPDATE '.PRE.'tasks SET usergroupid=0 WHERE usergroupid='.$usergroupid );
-    
+
     db_commit();
     break;
 
@@ -78,24 +76,24 @@ switch($_REQUEST['action'] ) {
 
     if(empty($_POST['name'] ) ) {
       warning($lang['value_missing'], sprintf($lang['field_sprt'], $lang['usergroup_name'] ) );
-    } 
+    }
     $name        = safe_data($_POST['name']);
     $description = safe_data($_POST['description']);
-    
+
     if( isset($_POST['private_group']) && ( $_POST['private_group'] === 'on' ) ) {
       $private_group = 1;
     }
     else {
       $private_group = 0;
     }
-    
+
     //check for duplicates
     if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'usergroups WHERE name=\''.$name.'\''), 0, 0 ) > 0 ) {
       warning($lang['add_usergroup'], sprintf($lang['usergroup_dup_sprt'], $name ) );
     }
     //begin transaction
     db_begin();
-    
+
     db_query('INSERT INTO '.PRE.'usergroups(name, description, private ) VALUES (\''.$name.'\', \''.$description.'\', \''.$private_group.'\')' );
 
     if(isset($_POST['member'] ) ) {
@@ -127,7 +125,7 @@ switch($_REQUEST['action'] ) {
     $name        = safe_data($_POST['name'] );
     $description = safe_data($_POST['description'] );
     $usergroupid = $_POST['usergroupid'];
-    
+
     if( isset($_POST['private_group']) && ( $_POST['private_group'] === 'on' ) ) {
       $private_group = 1;
     }

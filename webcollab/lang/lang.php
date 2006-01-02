@@ -25,14 +25,20 @@
 
 */
 
-if(! defined('LOCALE' ) ) {
+if(defined('LOCALE_USER' ) ) {
+  $locale = LOCALE_USER;
+}
+elseif(defined('LOCALE' ) ) {
+  $locale = LOCALE;
+}
+else {
   die('Config file not loaded properly for languages' );
 }
 
 //initialise variables
 $lang = array();
  
-switch(LOCALE ) {
+switch($locale ) {
 
   case 'en':
     include(BASE.'lang/en_message.php' );

@@ -2,12 +2,11 @@
 /*
   $Id$
 
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
-  
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-  Based on CoreAPM 2001/2002 by Dennis Fleurbaaij
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -35,10 +34,10 @@ if(! defined('UID' ) ) {
 $content = '';
 $allowed = array();
 
-//get list of common users in private usergroups that this user can view 
+//get list of common users in private usergroups that this user can view
 $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
-                      '.PRE.'usergroups_users.userid AS userid 
-                      FROM '.PRE.'usergroups_users 
+                      '.PRE.'usergroups_users.userid AS userid
+                      FROM '.PRE.'usergroups_users
                       LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
                       WHERE '.PRE.'usergroups.private=1');
 

@@ -2,10 +2,11 @@
 /*
   $Id$
 
-  (c) 2004 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
-  
+  (c) 2004 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -44,13 +45,13 @@ switch($_REQUEST['action'] ) {
     include(BASE.'calendar/calendar_show.php' );
     create_bottom();
     break;
-  
-  case 'date':  
+
+  case 'date':
     create_top( $lang['calendar'], 3, '', '', '', 1 );
     include(BASE.'calendar/calendar_date.php' );
     create_bottom();
     break;
-  
+
   //Error case
   default:
     error('Calendar action handler', 'Invalid request given' );

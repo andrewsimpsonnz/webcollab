@@ -2,11 +2,10 @@
 /*
   $Id$
 
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>  
-  
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-  Based on CoreAPM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -47,7 +46,7 @@ if(empty($_REQUEST['action']) ) {
 }
 
 //if user aborts, let the script carry onto the end
-ignore_user_abort(TRUE);  
+ignore_user_abort(TRUE);
 
 switch($_REQUEST['action'] ) {
 
@@ -99,10 +98,10 @@ switch($_REQUEST['action'] ) {
       warning( $lang['value_missing'], sprintf( $lang['field_sprt'], 'password' ) );
     }
     $password_unclean = trim($_POST['password'] );
-    
+
     //get locale
-    $locale = (empty($_POST['locale']) ) ? LOCALE : user_locale_check(safe_data($_POST['locale']) ); 
-    
+    $locale = (empty($_POST['locale']) ) ? LOCALE : user_locale_check(safe_data($_POST['locale']) );
+
     $email_raw = validate($_POST['email'] );
     if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $email_raw, $match ) ) || (strlen(trim($email_raw) ) > 200 ) ) {
       warning($lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST['email'] ) );
@@ -110,24 +109,24 @@ switch($_REQUEST['action'] ) {
     $email_unclean = $match[0];
 
     $private_user = (isset($_POST['private_user']) && ( $_POST['private_user'] === "on" ) ) ? 1 : 0 ;
-    
+
     switch($_POST['user_type'] ) {
       case 'normal':
         $admin_user = 'f';
         $guest_user = 0;
         break;
-      
+
       case 'admin':
         $admin_user = 't';
         $guest_user = 0;
         break;
-      
+
       case 'guest':
       default:
         $admin_user = 'f';
-        $guest_user = 1;        
+        $guest_user = 1;
         break;
-    }     
+    }
     //prohibit 2 people from choosing the same username
     if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE name=\''.$name.'\'', 0 ), 0, 0 ) > 0 ){
       warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
@@ -166,13 +165,13 @@ switch($_REQUEST['action'] ) {
     if($usergroup_names == '' ){
       $usergroup_names = $lang['not_usergroup']."\n";
     }
-    
+
     $admin_state = ($admin_user == 't' ) ? $lang['admin_priv']."\n" : '';
-    
+
     $name_unclean     = validate($_POST['name'] );
     $fullname_unclean = validate($_POST['fullname'] );
     $password_unclean = validate($_POST['password'] );
-      
+
     $message = sprintf($email_welcome, $name_unclean, $password_unclean, $usergroup_names,
                 $fullname_unclean, $admin_state );
     email($email_unclean, $title_welcome, $message );
@@ -193,18 +192,18 @@ switch($_REQUEST['action'] ) {
     }
 
     //get new password, if any
-    $password_unclean = (empty($_POST['password']) ) ? '' : trim($_POST['password']);    
+    $password_unclean = (empty($_POST['password']) ) ? '' : trim($_POST['password']);
     //magic quotes is not required
     $email_raw = validate($_POST['email'] );
-    
+
     //get locale
-    $locale = (empty($_POST['locale']) ) ? LOCALE : user_locale_check(safe_data($_POST['locale']) ); 
-    
+    $locale = (empty($_POST['locale']) ) ? LOCALE : user_locale_check(safe_data($_POST['locale']) );
+
     if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $email_raw, $match ) ) || (strlen(trim($email_raw) ) > 200 ) ) {
       warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST['email'] ) );
     }
     $email_unclean = $match[0];
-    
+
     if(ADMIN ) {
 
       //check for a userid
@@ -214,25 +213,25 @@ switch($_REQUEST['action'] ) {
       $userid = $_POST['userid'];
 
       $private_user = (isset($_POST['private_user']) && ( $_POST['private_user'] === 'on' ) ) ? 1 : 0;
-      
+
       switch($_POST['user_type'] ) {
         case 'normal':
           $admin_user = 'f';
           $guest_user = 0;
           break;
-        
+
         case 'admin':
           $admin_user = 't';
           $guest_user = 0;
           break;
-        
+
         case 'guest':
         default:
           $admin_user = 'f';
-          $guest_user = 1;        
+          $guest_user = 1;
           break;
       }
-      
+
       //prohibit 2 people from choosing the same username
       if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE name=\''.$name.'\' AND NOT id='.$userid, 0 ), 0, 0 ) > 0 ){
         warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
@@ -292,19 +291,19 @@ switch($_REQUEST['action'] ) {
       if($usergroup_names == '' ){
         $usergroup_names = $lang['not_usergroup']."\n";
       }
-      
+
       if($password_unclean == '' ){
         $password_unclean = $lang['no_password_change'];
-      }  
-      else {
-        $password_unclean = validate($_POST['password']);      
       }
-      
+      else {
+        $password_unclean = validate($_POST['password']);
+      }
+
       $admin_state = ($admin_user == 't' ) ? $lang['admin_priv']."\n" : '' ;
-      
+
       $name_unclean     = validate($_POST['name']);
       $fullname_unclean = validate($_POST['fullname']);
-      
+
       //email the changes to the user
       $message = sprintf($email_user_change1, UID_NAME, UID_EMAIL, $name_unclean,
               $password_unclean, $usergroup_names, $fullname_unclean, $admin_state );
@@ -318,7 +317,7 @@ switch($_REQUEST['action'] ) {
       if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE name=\''.$name.'\' AND NOT id='.UID, 0 ), 0, 0 ) > 0 ){
         warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
       }
-      
+
       //did the user change his/her password ?
       if($password_unclean != '' ) {
         db_query("UPDATE ".PRE."users
@@ -333,7 +332,7 @@ switch($_REQUEST['action'] ) {
         $name_unclean     = validate($_POST['name']);
         $fullname_unclean = validate($_POST['fullname']);
         $password_unclean = validate($_POST['password']);
-        
+
         $message = sprintf($email_user_change2, $name_unclean, $password_unclean, $fullname_unclean );
         email($email_unclean, $title_user_change2, $message );
       }
@@ -349,7 +348,7 @@ switch($_REQUEST['action'] ) {
         //email the changes to the user
         $name_unclean     = validate($_POST['name']);
         $fullname_unclean = validate($_POST['fullname']);
-           
+
         $message = sprintf($email_user_change3, $name_unclean, $fullname_unclean );
         email( $email_unclean, $title_user_change3, $message );
       }
@@ -368,8 +367,8 @@ if(ADMIN ) {
   die;
 }
 else {
-  header( "location: ".BASE_URL."users.php?x=".$x."&action=show&userid=".UID );
+  header("Location: ".BASE_URL."users.php?x=".$x."&action=show&userid=".UID );
   die;
 }
-      
+
 ?>

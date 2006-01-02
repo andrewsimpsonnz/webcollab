@@ -1,8 +1,8 @@
 <?php
 /*
   $Id$
-  
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -36,7 +36,7 @@ $content = "<p><b>Setup - Stage 2 of 5 : Database Setup</b></p>\n";
 $content .= "<table style=\"width : 98%\"><tr><td>\n".
             "<span class=\"textlink\">[<a href=\"help/en_help_setup2.php?type=setup2&amp;lang=en\" onclick=\"window.open('help/en_help_setup2.php?type=setup2&amp;lang=en'); return false\"><i>Help me with this form</a></i>]</span>\n".
             "</td></tr>\n</table>\n";
-            
+
 $content .=
 "<form method=\"post\" action=\"setup_handler.php\">\n".
   "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".

@@ -1,12 +1,11 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
-  
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-  Based on CoreAPM  by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -73,43 +72,43 @@ $content =  "<form method=\"post\" action=\"users.php\">\n".
               "<tr><td>".$lang['password'].":</td><td><input type=\"text\" name=\"password\" size=\"30\" value=\"\" /></td><td><small><i>".$lang['blank_for_current_password']."</i></small></td></tr>\n".
               "<tr><td>".$lang['email'].":</td><td><input type=\"text\" name=\"email\" size=\"30\" value=\"".$row['email']."\" /></td></tr>\n";
 
-$content .=  user_locale(LOCALE_USER);            
-                             
+$content .=  user_locale(LOCALE_USER);
+
 //dangerous action!
 if(ADMIN ) {
 
   //add blank line
   $content .= "<tr><td>&nbsp;</td></tr>\n";
-  
+
   //private user
   if( $row['private'] == 1 ){
     $content .= "<tr><td><label for=\"private\">".$lang['private_user'].":</label></td><td><input type=\"checkbox\" name=\"private_user\" checked=\"checked\" id=\"private\" /></td></tr>\n";
   }
-  else{  
+  else{
     $content .= "<tr><td><label for=\"private\">".$lang['private_user'].":</label></td><td><input type=\"checkbox\" name=\"private_user\" id=\"private\" /></td></tr>\n".
                 "<tr><td>&nbsp;</td></tr>\n";
   }
-  
+
   //normal user
   $s1 = "checked=\"checked\""; $s2 = ""; $s3 = "";
 
   //admin user
   if($row['admin'] == 't' ) {
-    $s1 = ""; $s2 = "checked=\"checked\""; $s3 = ""; 
+    $s1 = ""; $s2 = "checked=\"checked\""; $s3 = "";
   }
-  
+
   //guest user
-  if($row['guest'] == 1 ) {                
+  if($row['guest'] == 1 ) {
     $s1 = ""; $s2 = ""; $s3 = "checked=\"checked\"";
   }
-               
+
    $content .= "<tr><td><label for=\"normal\">".$lang['normal_user'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"normal\" id=\"normal\" ".$s1." /></td></tr>\n".
                "<tr><td><label for=\"admin\">".$lang['is_admin'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"admin\" id=\"admin\" ".$s2." /></td></tr>\n".
                "<tr><td><label for=\"guest\">".$lang['is_guest'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"guest\" id=\"guest\" ".$s3." /></td></tr>\n";
-    
+
   //add blank line
   $content .= "<tr><td>&nbsp;</td></tr>\n";
-  
+
   //add user-groups
   $usergroup_q = db_query( "SELECT name, id FROM ".PRE."usergroups ORDER BY name" );
   $content .= "<tr><td></td><td colspan=\"2\"><small><i>".$lang['member_groups']."</i></small></td></tr>\n".

@@ -1,12 +1,11 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Based on CoreAPM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -56,7 +55,7 @@ $content =
                "<tr><td><label for=\"admin\">".$lang['is_admin'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"admin\" id=\"admin\" /></td></tr>\n".
                "<tr><td><label for=\"guest\">".$lang['is_guest'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"guest\" id=\"guest\" /></td></tr>\n".
                "<tr><td>&nbsp;</td></tr>\n";
-               
+
 //add user-groups
 $q = db_query('SELECT name, id FROM '.PRE.'usergroups ORDER BY name' );
 

@@ -2,10 +2,11 @@
 /*
   $Id$
 
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -111,7 +112,7 @@ $content = "<?php\n".
 "  //                       'ko' (Korean),  'pt-br' (Brazilian Portuguese),    'hu' (Hungarian)\n".
 "  //                       'ru' (Russian), 'ja' (Japanese), 'se' (Swedish)    'sr' (Serbian (Latin))\n".
 "  //                       'gr' (Greek),   'cs' (Czech),    'tr' (Turkish)\n".    
-"  //                       'zh-tw' (Traditional Chinese)    'zh-cn' (Simplified Chinese)\n".                   
+"  //                       'zh-tw' (Traditional Chinese)    'zh-cn' (Simplified Chinese)\n".
 "  define('LOCALE', '".$data["locale"]."' );\n\n".
 "//-- Timezone --\n\n".
 "  //timezone offset from GMT/UTC (hours)\n".

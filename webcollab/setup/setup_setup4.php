@@ -1,11 +1,12 @@
 <?php
 /*
   $Id$
-  
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -69,7 +70,7 @@ create_top_setup('Setup Screen' );
 $content .= "<table border=\"0\">\n".
             "<tr><td>\n".
             "<form method=\"post\" action=\"setup_handler.php\">";
-            
+
 
 //output essential values for POST
 foreach($array_essential as $var ) {
@@ -84,7 +85,7 @@ $content .= "<input type=\"hidden\" name=\"".$var."\" value=\"".$data[$var]."\" 
 $content .= "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"setup5\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />\n";
-            
+
 
 //set variables
 $status = "<font color=\"green\"><b>OK !</b></font>";
@@ -249,8 +250,6 @@ $content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></
             "<tr><th>Timezone:</th><td>".$data["timezone"]."</td></tr>\n".
             "<tr><td></td><td><br /><br /><b><u>Email Settings</u></b><br /></td></tr>\n".
             "<tr><th>Use email?</th><td>".$data["use_email"]."</td></tr>\n";
-            //"<tr><td></td><td><br /><br />If an error occurs on the site, who do we email?</td></tr>\n".
-            //"<tr><th>Error emails sent to:</th><td>".$data["email_error"]."</td></tr>\n";
 
 $status = "<font color=\"green\"><b>OK !</b></font>";
 
@@ -303,12 +302,12 @@ $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
 
 //form for 'try again' button
 $content .= "<tr><td></td><td>\n".
-            "<form method=\"post\" action=\"setup_handler.php\">\n".            
+            "<form method=\"post\" action=\"setup_handler.php\">\n".
             "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />\n".
             "<input type=\"hidden\" name=\"edit\" value=\"Y\" />";
-            
+
 //output essential values for POST
 foreach($array_essential as $var ) {
 $content .= "<input type=\"hidden\" name=\"".$var."\" value=\"".$data[$var]."\" />\n";
@@ -323,7 +322,7 @@ $content .= "<input type=\"hidden\" name=\"".$var."\" value=\"".$data[$var]."\" 
 $content .= "<input type=\"submit\" value=\"Re-enter Config Data\" /></td></tr>\n".
             "</form>\n".
             "</table>\n";
-            
+
 new_box_setup( "Setup - Stage 4 of 5 : Verifying Data", $content, "boxdata", "tablebox" );
 create_bottom_setup();
 

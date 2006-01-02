@@ -2,11 +2,10 @@
 /*
   $Id$
   
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Parts are based on original file written for CoreAPM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -23,7 +22,7 @@
   Function:
   ---------
 
-  Serves some common things
+  Common functions library
 
 */
 
@@ -31,25 +30,25 @@
 // Input validation (single line input)
 //
 function safe_data($body ) {
-  
+
   //return null for nothing input
   if(ctype_space($body) ) {
     return '';
   }
-  
+
   //validate characters & remove whitespace      
   $body = trim(validate($body) );
-  
+
   //limit line length for single line entries
   if(strlen($body ) > 100 ) {
     $body = substr($body, 0, 100 );
   }
-  
+
   //remove line breaks (not allowed in single lines!)
   $body = strtr($body, array("\r"=>' ', "\n"=>' ' ) );
-  
+
   $body = clean_up($body);
-   
+
 return $body;
 }
 
@@ -62,10 +61,10 @@ function safe_data_long($body ) {
   if(ctype_space($body) ) {
     return '';
   }
-    
+
   //validate characters & remove whitespace      
   $body = trim(validate($body) );
-      
+
   //normalise line breaks from Windows & Mac to UNIX style '\n' 
   $body = str_replace("\r\n", "\n", $body );
   $body = str_replace("\r", "\n", $body );
@@ -80,12 +79,12 @@ return $body;
 function validate($body ) {  
 
   global $validation_regex;
-  
+
   //we don't use magic_quotes
   if(get_magic_quotes_gpc() ) {
     $body = stripslashes($body );
   }
-  
+
   //allow only normal printing characters valid for the character set in use
   if(! ctype_print($body) ) {
     $body = preg_replace($validation_regex, '?', $body );
@@ -93,16 +92,16 @@ function validate($body ) {
 
   return $body;
 }
-  
+
 function clean_up($body ) {
-  
+
   //prevent SQL injection
   $body = db_escape_string($body );
   //use HTML encoding, or add escapes '\' for characters that could be used for xss <script> or SQL injection attacks
       //for better xss protection (at the expense of ability to upload non-ASCII characters) add to $trans array '&'=>'&amp;'    
   $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '+'=>'\+', '-'=>'\-', '='=>'\=', '%'=>'&#037;' );
   $body  = strtr($body, $trans );
-  
+
   return $body;
 }
 
@@ -110,7 +109,7 @@ function clean_up($body ) {
 //check for true positive integer values to max size limits of PHP
 //
 function safe_integer($integer ) {
- 
+
   if(is_numeric($integer) && ((string)$integer === (string)intval(abs($integer ) ) ) ) {
     return true;
   }
@@ -123,7 +122,7 @@ function safe_integer($integer ) {
 function html_escape($body ) {
 
   $trans = array('"'=>'&quot;', "'"=>'&apos;' );
-    
+
   return strtr($body, $trans );
 }
 
@@ -134,7 +133,7 @@ function html_escape($body ) {
 function javascript_escape($body ) {
 
   $trans = array('"'=>'&quot;', "'"=>"\\'" );
-    
+
   return strtr($body, $trans );
 }
 
@@ -147,32 +146,13 @@ function html_links($body, $database_escape=0 ) {
     return '';
   }
   $body = preg_replace('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', "<a href=\"mailto:$0\">$0</a>", $body );
-  
+
   //data being submitted to a database needs ('$0') part escaped
   $escape = ($database_escape ) ? '\\' : '';  
-      
+
   $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s]+)/i', "<a href=\"$0\" onclick=\"window.open(".$escape."'$0".$escape."'); return false\">$0</a>", $body );
   return $body;
 }
-
-//
-// String functions for compatibility with Unicode versions
-//
-function msubstr($string, $len ) {
-
-  return substr($string, 0, $len );
-}
-
-function mstrimwidth($string, $len ) {
-
- return substr($string, 0, $len );
-}
-
-function mstrtoupper($string ) {
-
- return strtoupper($string );
-}  
-
 
 //
 // Builds up an error screen
@@ -180,10 +160,10 @@ function mstrtoupper($string ) {
 function error($box_title, $error ) {
 
   global $db_error_message;
-  
+
   include_once(BASE.'lang/lang.php' );
   include_once(BASE.'includes/screen.php' );
-  
+
   create_top('ERROR', 1 );
 
   if(NO_ERROR !== 'Y' ) {
@@ -215,17 +195,17 @@ function error($box_title, $error ) {
             "IP: ".$_SERVER['REMOTE_ADDR']."\n".
             "WebCollab version:".WEBCOLLAB_VERSION."\n".
             "POST variables: $post\n\n";
-  
+
   if(EMAIL_ERROR != NULL ) {
     include_once(BASE.'includes/email.php' );
     email(EMAIL_ERROR, "ERROR on ".MANAGER_NAME, $message );
   }
-        
+
   if(DEBUG === 'Y' ) {
     $content = nl2br($message);
     new_box("Error Debug", $content );
   }
-  
+
   create_bottom();
 
   //do not return

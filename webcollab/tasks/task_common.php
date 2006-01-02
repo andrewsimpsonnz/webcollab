@@ -1,8 +1,8 @@
 <?php
 /*
   $Id$
-  
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,26 +35,26 @@ if(! defined('UID' ) ) {
 //
 //
 function percent_complete($taskid ) {
-  
+
   $tasks_completed = 0;
   $total_tasks = 0;
-  
+
   $q = db_query('SELECT status FROM '.PRE.'tasks WHERE projectid='.$taskid.' AND parent<>0'  );
-  
+
   for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) { 
-    
+
     ++$total_tasks;
-      
+
     if($row[0] == 'done'){
       ++$tasks_completed;
     }
   }
-  
+
   //project with no tasks is complete
   if($total_tasks == 0 ){
     return 0;
   }
-  
+
   return round(($tasks_completed / ($total_tasks ) ) * 100 );  
 }
 
@@ -62,27 +62,27 @@ function percent_complete($taskid ) {
 // Show percent
 //
 function show_percent($percent=0 ) {
-  
+
   if($percent == 0 ){
     return "<table width=\"400px\"><tr><td style=\"width: 400px\" class=\"redbar\"></td></tr></table>\n";
   }
   if($percent == 100 ){
     return "<table width=\"400px\"><tr><td style=\"width: 400px\" class=\"greenbar\"></td></tr></table>\n";
-  }    
+  }
   return "<table width=\"400px\"><tr><td style=\"width:".($percent * (400/100))."px\" class=\"greenbar\">".
            "</td><td style=\"width :".(400-($percent*(400/100)))."px\" class=\"redbar\"></td></tr></table>\n"; 
-      
+
 }
 
 //
 // Project Jump function
 //
 function project_jump($taskid=0) {
-  
+
   global $x, $lang, $GID;
-  
+
   $content = '';
-  
+
   $tail = usergroup_tail();  
 
   //query to get the non-completed projects
@@ -97,35 +97,35 @@ function project_jump($taskid=0) {
                         AND archive=0'
                         .$tail.
                         'ORDER BY name' );
-  
+
   //check if there are projects
   if(db_numrows($q) > 0 ){
-      
+
     // Prepare the form
     $content .= "<form id=\"ProjectQuickJump\" method=\"get\" action=\"tasks.php\">\n".
                 "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
                 "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n".
                 "<div><select name=\"taskid\">\n".
                 "<option value=\"-1\">".$lang['quick_jump']."</option>\n";
-  
+
     // loop through the data
     for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ){
-    
+
       $content .= "<option value=\"".$row["id"]."\"";
       if($taskid == $row['id']) {
         $content .= " selected=\"selected\"";
       }
       $content .= ">".$row['name']."</option>\n";
     }
-  
+
   // wrap up the select and the submit
   $content .= "</select>\n".
               "<a href=\"javascript:document.getElementById('ProjectQuickJump').submit();\"><small>".$lang['go']."</small></a></div>\n".
               "</form>\n";
   }
-  
+
   db_free_result($q );
-  
+
   return $content;
 }  
 
@@ -135,15 +135,15 @@ function project_jump($taskid=0) {
 //
 
 function usergroup_tail() {  
-  
+
   //set the usergroup permissions on queries (Admin can see all)
   if(ADMIN ) {
-    $tail = ' ';  
+    $tail = ' ';
   }
   else {
     $tail = ' AND ('.PRE.'globalaccess=\'f\' AND '.PRE.'usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
-              OR '.PRE.'globalaccess=\'t\'   
-              OR '.PRE.'usergroupid=0) ';                      
+              OR '.PRE.'globalaccess=\'t\'
+              OR '.PRE.'usergroupid=0) ';
   }
   return $tail;
 }

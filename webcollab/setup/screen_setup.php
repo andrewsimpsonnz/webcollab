@@ -2,8 +2,8 @@
 /*
   $Id$
 
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
-  
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
   This program is free software; you can redistribute it and/or modify it under the
@@ -33,7 +33,7 @@ require_once(BASE.'setup/setup_config.php' );
 //
 // Creates the inital window, and sets some vars. This _HAS_ to be the first function because of the header() calls
 //
-function create_top_setup($title="" ) {
+function create_top_setup($title='' ) {
 
   global $topbuild;
 
@@ -55,7 +55,7 @@ function create_top_setup($title="" ) {
 
   echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n".
        "<html>\n\n".
-       "<!-- (c) 2002 - 2005 Andrew Simpson -->\n\n".
+       "<!-- (c) 2002 - 2006 Andrew Simpson -->\n\n".
        "<head>\n".
        "<title>".$title."</title>\n".
        "<meta http-equiv=\"Pragma\" content=\"no-cache\">".

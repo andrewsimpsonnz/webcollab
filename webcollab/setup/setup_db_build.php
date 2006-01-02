@@ -1,11 +1,12 @@
 <?php
 /*
   $Id$
-  
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -55,7 +56,7 @@ require_once(BASE.'setup/security_setup.php' );
   else {
     $database_password = '';
   }
-    
+
   if( isset($_POST['database_host'] ) ) {
     $database_host = $_POST['database_host'];
   }
@@ -66,7 +67,7 @@ require_once(BASE.'setup/security_setup.php' );
   if(preg_match('/[^A-Z0-9_$]/i', $database_name ) ){
     error_setup("Database names can only consist of alphanumeric characters, '_' (underscore), and '$'."); 
   }
-  
+
   switch ($database_type) {
 
   case 'mysql':
@@ -93,11 +94,11 @@ require_once(BASE.'setup/security_setup.php' );
                              "<b>".mysql_error($database_connection)."</b><br /><br />".
                              "The above error message was created by the MySQL database server." );
       }
-      
+
       //select the newly created database
       if( ! @mysql_select_db( $database_name, $database_connection ) ){
         error_setup("Created a new database, but not able to select the new database. Error message was: <br />".mysql_error($database_connection) );
-      }      
+      }
     }
 
     if($database_type == 'mysql') {
@@ -143,14 +144,14 @@ require_once(BASE.'setup/security_setup.php' );
       }
     }
     break;
-  
+
   case 'postgresql':
     //check we can do pgsql functions!!
     if( ! extension_loaded('pgsql' ) ) {
       error_setup( "Your version of PHP does not have support for PostgreSQL<br /><br />".
                    "Check that PostgreSQL support is compiled in, and enabled in php.ini config file<br />" );
     }
-    
+
     if( ! ( $database_connection = @pg_connect( 'user='.$database_user.' dbname='.$database_name.' password='.$database_password ) ) ) {
       //selected database doesn't exist - need to create it
 

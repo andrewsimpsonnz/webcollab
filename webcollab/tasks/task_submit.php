@@ -1,12 +1,12 @@
 <?php
 /*
   $Id$
-    
-  (c) 2004 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2004 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -74,14 +74,14 @@ return $message;
 function user_access($taskid ) {
 
   global $GID;
-  
+
   //guest has no access rights
   if(GUEST ){
     return false;
-  } 
+  }
   //admin always has rights
   if(ADMIN ) {
-    return true;  
+    return true;
   }
   $q   = db_query('SELECT owner, usergroupid, groupaccess FROM '.PRE.'tasks WHERE id='.$taskid );
   $row = db_fetch_num($q, 0 );
@@ -116,13 +116,13 @@ function status_check($status ) {
     case 'done':
     case 'created':
     case 'nolimit':
-      //all valid values 
+      //all valid values
       break;
-        
+
     default:
       //invalid value selected
-      error('Task submit', 'Invalid value for status' ); 
-      break; 
+      error('Task submit', 'Invalid value for status' );
+      break;
   }
   return $status;
 }

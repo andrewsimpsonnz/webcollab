@@ -1,13 +1,15 @@
 <?php
 /*
-  
+
   $Id$
 
-  (c) 2002 - 2005 Andrew Simpson 
-  
+  (c) 2002 Marshall Rose (attributed)
+  (c) 2002 - 2006 Andrew Simpson
+
   WebCollab
   ---------------------------------------
-  Based on file originally written as part of Core APM by Marshall Rose 2002.
+
+  Based on file originally written as part of Core Lan Org by Marshall Rose 2002.
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -79,7 +81,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
   $result = '';
 
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
-    
+
     //don't show tasks in closed usergroup projects
     if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project) ) {
       $key = array_search($row['projectid'], $no_access_project );
@@ -98,7 +100,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
     else {
       $seen = 0;
     }
-    
+
     //flags column
     $alink = "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">";
 
@@ -292,11 +294,11 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
     if( ($row['parent'] == 0 ) && ($depth >= 0 ) ) {
       if($row['completed'] > 0 ) {
        $result .= "<table width=\"200px\"><tr><td class=\"greenbar\" style=\"height: 2px; width :".($row['completed']*2)."px\"></td><td class=\"redbar\" style=\"height: 2px; width :".(200-($row['completed']*2))."px\"></td></tr></table>\n";
-       
+
       }
       else {
         $result .= "<table width=\"200px\"><tr><td class=\"redbar\" style=\"height: 2px; width : 200px\"></td></tr></table>\n";
-      
+
       }
     }
 

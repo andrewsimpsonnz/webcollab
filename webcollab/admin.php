@@ -2,10 +2,11 @@
 /*
   $Id$
 
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
-  
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -49,10 +50,10 @@ switch ($_REQUEST['action'] ) {
     include(BASE.'admin/admin_config_edit.php' );
     create_bottom();
     break;
-    
+
   case 'submit':
     include(BASE.'admin/admin_config_submit.php' );
-    break;  
+    break;
 
   //error case
   default:

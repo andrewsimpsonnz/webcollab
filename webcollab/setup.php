@@ -2,10 +2,11 @@
 /*
   $Id$
 
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
-  
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -30,6 +31,8 @@ $WEB_CONFIG = "N";
 
 //includes
 require_once('path.php' );
+require_once(BASE.'setup/setup_config.php');
+
 include_once(BASE.'setup/screen_setup.php' );
 
 //
@@ -65,29 +68,29 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
     secure_error("Unable to determine ip address");
   }
-  
+
   if(! defined('PRE') ){
     define('PRE', '' );
   }
-  
-  //limit login attempts if post-1.60 database is being used 
+
+  //limit login attempts if post-1.60 database is being used
   if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {
-        
+
     //count the number of recent login attempts
-    $count_attempts = db_result(@db_query('SELECT COUNT(*) FROM '.PRE.'login_attempt 
-                                                  WHERE name=\''.$username.'\' 
+    $count_attempts = db_result(@db_query('SELECT COUNT(*) FROM '.PRE.'login_attempt
+                                                  WHERE name=\''.$username.'\'
                                                   AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 6' ), 0, 0 );
-      
-    //protect against password guessing attacks 
+
+    //protect against password guessing attacks
     if($count_attempts > 3 ) {
       secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
-    }                                                                              
-    $flag_attempt = TRUE; 
-    
+    }
+    $flag_attempt = TRUE;
+
     //record this login attempt
     db_query('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (\''.$username.'\', \''.$ip.'\', now() )' );
   }
-                                                                                     
+
   //do query and check database connection
   if( ! $q = db_query('SELECT id FROM '.PRE.'users
                              WHERE deleted=\'f\'
@@ -118,7 +121,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   //remove the old login information for post 1.60 database
   if($flag_attempt ) {
     @db_query('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.$delim.'20 MINUTE'.$delim.') OR name=\''.$username.'\'' );
-  } 
+  }
   //log the user in
   db_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess )
                        VALUES(\''.$user_id.'\', \''.$session_key.'\', \''.$ip.'\', now() )' );
@@ -138,18 +141,33 @@ if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
 }
 
 //version check
-if(version_compare(PHP_VERSION, '4.2.0' ) == -1 ) {
-  secure_error("WebCollab needs PHP version 4.2.0, or higher.  This version is ".PHP_VERSION );
+if(version_compare(PHP_VERSION, '4.3.0' ) == -1 ) {
+  secure_error("WebCollab needs PHP version 4.3.0, or higher.  This version is ".PHP_VERSION );
 }
+
+if(UNICODE_VERSION == 'Y' ) {
+  //check that UTF-8 character encoding can be used
+  if(! function_exists('mb_internal_encoding') ) {
+    error("Unable to set UTF-8 encoding in PHP.<br \>\n".
+          "The PHP installed on this server does not appear to have the multi-byte string (mb_string) library enabled.<br />\n".
+          "This library is essential for using UTF-8 with WebCollab" );
+  }
+}
+
+if(! function_exists('ctype_space' ) {
+  error("The ctype library is missing from your version PHP.<br \>\n".
+        "This is a built-in library but some Linux distributions - notably Mandriva & Suse - and OpenBSD have a separate RPM package for 'php-ctype'.  It is a small package of about 10 kb, and needs to be installed.<br \>\n".
+        "For FreeBSD (and others?) install the textproc/php4-ctype port.<br \>\n";
+
 
 //check for initial install
 if(DATABASE_NAME == '' ) {
-  //this is an initial install 
+  //this is an initial install
  include(BASE.'setup/setup_setup1.php' );
  die;
 }
 
-//login box screen code 
+//login box screen code
 create_top_setup('Login' );
 
 $content = "<p>Admin login is required for setup:</p>\n".

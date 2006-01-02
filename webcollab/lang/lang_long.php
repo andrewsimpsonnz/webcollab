@@ -25,11 +25,11 @@
 
 */
 
-if(! defined('LOCALE' ) ) {
+if(! defined('LOCALE_USER' ) ) {
   die('Config file not loaded properly for languages' );
 }
 
-switch(LOCALE ) {
+switch(LOCALE_USER ) {
 
   case 'en':
     include(BASE.'lang/en_long_message.php' );

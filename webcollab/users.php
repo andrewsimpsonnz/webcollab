@@ -1,14 +1,12 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  
-  Based on file originally part of CoreAPM by Dennis Fleurbaaij 2001/2002
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -24,7 +22,7 @@
   Function:
   ---------
 
-  Easy user manager
+  Handles user actions
 
 */
 
@@ -34,7 +32,7 @@ include_once(BASE.'includes/screen.php' );
 include_once(BASE.'includes/time.php' );
 
 //
-// code to handle an action state
+// action handler
 //
 if( ! isset($_REQUEST['action']) ){
   error('Users action handler', 'No request given' );
@@ -112,20 +110,20 @@ switch($_REQUEST['action'] ) {
   case 'submit_email':
     include(BASE.'users/user_mail_send.php' );
     break;
-                
+
   //submit insert/update to submission engine
   case 'submit_insert':
   case 'submit_edit':
   case 'revive':
     include(BASE.'users/user_submit.php' );
     break;
-  
+
   //delete to submission engine
   case 'del':
-  case 'permdel':    
+  case 'permdel':
     include(BASE.'users/user_del.php' );
     break;
-        
+
   //Error case
   default:
     error('Users action handler', 'Invalid request given' );

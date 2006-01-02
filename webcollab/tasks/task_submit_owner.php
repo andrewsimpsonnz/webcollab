@@ -1,14 +1,14 @@
 <?php
 /*
   $Id$
-    
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Parts of this file originally written for Core APM by Dennis Fleurbaaij, Andrew Simpson &
-  Marshall Rose 2001/2002.
-  
+  Parts of this file originally written for Core Lan Org by Dennis Fleurbaaij, Andrew
+  Simpson & Marshall Rose 2001/2002.
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -48,9 +48,9 @@ if(empty($_REQUEST['action']) ){
 
 if(! @safe_integer($_GET['taskid']) ){
   error('Task submit', 'No taskid given' );
-} 
+}
 $taskid = $_GET['taskid'];
-  
+
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
@@ -64,24 +64,24 @@ ignore_user_abort(TRUE);
         error('Task submit', 'Access denied, you do not have enough rights to do that' );
       }
       db_query('UPDATE '.PRE.'tasks SET status=\'done\', finished_time=now(), edited=now(), sequence=sequence+1 WHERE id='.$taskid );
-        
+
       //if all tasks are completed, then mark the project as 'done'
       $projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$taskid ), 0, 0 );
-      
+
       //set completed percentage project record
       $percent_completed = percent_complete($projectid );
       db_query('UPDATE '.PRE.'tasks SET completed='.$percent_completed.' WHERE id='.$projectid );
-      
+
       //for completed project set the completion time
       if($percent_completed == 100 ){
         $completion_time = db_result(db_query('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid='.$projectid ), 0, 0 );
         db_query('UPDATE '.PRE.'tasks SET completion_time=\''.$completion_time.'\' WHERE id='.$projectid );
       }
-  
+
       break;
 
 
-    //drop ownership 
+    //drop ownership
     case 'deown':
 
       //check if the user has enough rights
@@ -120,7 +120,7 @@ ignore_user_abort(TRUE);
         $row = db_fetch_array($q, 0 );
         //do the action
         db_query('UPDATE '.PRE.'tasks SET owner='.UID.' WHERE id='.$taskid );
-        
+
         db_commit();
 
         //if there was no previous owner do nothing!
@@ -144,7 +144,7 @@ ignore_user_abort(TRUE);
               $name_task = $row['name'];
               break;
           }
-          
+
           include_once(BASE.'includes/email.php' );
 
           //send email

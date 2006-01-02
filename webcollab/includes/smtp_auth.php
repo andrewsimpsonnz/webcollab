@@ -3,10 +3,11 @@
 /*
   $Id$
 
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
-  
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -46,12 +47,12 @@ function smtp_auth($connection, $cap) {
    if(strpos($cap, 'AUTH' ) === false ) {
         debug('This SMTP server cannot do SMTP AUTH' );
    }
-   
+
    //try plain auth
    if( ! strpos($cap, 'PLAIN' ) === false ) {
      fputs($connection, "AUTH PLAIN\r\n" );
      $log .= 'C: AUTH PLAIN'."\n";
-     
+
      if(! strncmp('334', response(), 3 ) ) {
        //send username/password
        fputs($connection, base64_encode(MAIL_USER."\0".MAIL_USER."\0".MAIL_PASSWORD )."\r\n" );
@@ -59,8 +60,8 @@ function smtp_auth($connection, $cap) {
        if(! strncmp('235', response(), 3 ) ) {
          return;
        }
-       
-       $log .= 'C: Authentication failure for PLAIN AUTH'."\n";         
+
+       $log .= 'C: Authentication failure for PLAIN AUTH'."\n";
      }
    }
 
@@ -83,7 +84,7 @@ function smtp_auth($connection, $cap) {
        if(! strncmp('235', response(), 3 ) ) {
          return;  
        }
-         
+
        $log .= 'C: Authentication failure for AUTH LOGIN'."\n";
        }
    }
@@ -101,8 +102,8 @@ function smtp_auth($connection, $cap) {
 
        if(function_exists('mhash' ) ) {
          $mhash = bin2hex(mhash(MHASH_MD5, $data, $key ) );
-       }  
-       else {       
+       }
+       else {
          //the algorithm below does mhash() without needing the external mhash library to be installed on PHP
          if(strlen($key) > 64 ){
            $key = pack("H*", md5($key) );
@@ -112,16 +113,16 @@ function smtp_auth($connection, $cap) {
          $opad = str_pad('', 64, chr(0x5c) );
          $k_ipad = $key ^ $ipad ;
          $k_opad = $key ^ $opad;
-  
+
          $mhash = md5($k_opad.pack("H*",md5($k_ipad.$data ) ) );
        }
-         
+
        fputs($connection, base64_encode(MAIL_USER." ".$mhash )."\r\n" );
        $log .= 'C: Authenticating...'."\n";
        if(! strncmp('235', response(), 3 ) ) {
          return;
        }
-       
+
        $log .= 'C: Authentication failure for CRAM-MD5'."\n";
      }
    }
@@ -132,17 +133,17 @@ function smtp_auth($connection, $cap) {
 }
 
 function starttls($connection, $cap ) {
-   
+
   //check if crypto function exists...
   if(! function_exists('stream_socket_enable_crypto' ) ) {
     debug('This version of PHP cannot do STARTTLS negotiation' );
-  } 
+  }
 
   //check if server can do TLS...
   if(strpos($cap, 'STARTTLS' ) === false ) {
     debug('This SMTP server cannot do STARTTLS' );
   }
-  
+
   //issue STARTTLS verb...
   fputs($connection, "STARTTLS\r\n" );
   $log .= 'C: STARTTLS'."\n";
@@ -150,22 +151,22 @@ function starttls($connection, $cap ) {
   if(strncmp('220', response(), 3 ) ) {
     debug('Starting TLS...' );
   }
-    
+
   //start TLS negotiation
   if(! @stream_socket_enable_crypto($connection, TRUE, STREAM_CRYPTO_METHOD_TLS_CLIENT ) ) {
     debug('TLS negotiation failed' );
   }
-    
+
   $log .= 'C: TLS success'; 
   //do a new extended hello (EHLO) after successful negotiation (RFC 3207)
   fputs($connection, 'EHLO '.$_SERVER['SERVER_NAME']."\r\n" );
   $log .= 'C: EHLO'.$_SERVER['SERVER_NAME']."\n";
   $new_capability = response();
-  
+
   if(strncmp('250', $res, 3 ) ) { 
     debug();
   }
-  
+
   return $new_capability;
 }
 

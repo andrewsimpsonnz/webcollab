@@ -1,14 +1,14 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Based on original file written for Core APM by Dennis Fleurbaaij, Andrew Simpson &
+  Based on original file written for Core Lan Org by Dennis Fleurbaaij, Andrew Simpson &
   Marshall Rose 2001/2002
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -24,7 +24,7 @@
   Function:
   ---------
 
-  Some functions to get db <-> user and user <-> code time.
+  Time and date display handling functions.
 
 */
 
@@ -43,7 +43,7 @@ function date_to_datetime($day, $month, $year ) {
   if( ! checkdate($month, $day, $year ) ) {
     warning($lang['invalid_date'], sprintf($lang['invalid_date_sprt'], $year.'-'.$month_array[$month ].'-'.$day ) );
   }
-  
+
   //format is 2004-08-02 00:00:00
   return sprintf('%04d-%02d-%02d 00:00:00', $year, $month, $day );
 }
@@ -53,12 +53,12 @@ function date_to_datetime($day, $month, $year ) {
 //
 function nicedate($timestamp ) {
   global $month_array;
-  
+
   if(empty($timestamp) )
     return '';
-  
+
   $date_array = explode('-', substr($timestamp, 0, 10) );
-  
+
   //format is 2004-Aug-02
   return $date_array[0].'-'.$month_array[(int)($date_array[1])].'-'.$date_array[2];
 }
@@ -71,15 +71,15 @@ function nicetime($timestamp ) {
 
   if(empty($timestamp) )
     return '';
-  
+
   $date_array = explode('-', substr($timestamp, 0, 10 ) );
-  
+
   $time = substr($timestamp, 11, 5 );
-  
+
   //format is 2004-Aug-02 18:06 +1200 
   return sprintf('%s-%s-%02d %s  %+03d00', $date_array[0], $month_array[(int)($date_array[1])], (int)$date_array[2], $time, TZ );
 }
-  
+
 
 //
 //generate a HTML drop down box for date
@@ -144,10 +144,10 @@ function date_select_from_timestamp($timestamp='' ) {
 
   if($timestamp == '' )
     return date_select(-1, -1, -1 );
-    
+
   //deparse the line
   $date_array = explode('-', substr($timestamp, 0, 10 ) );
-  
+
   //show line
   return date_select($date_array[2], $date_array[1], $date_array[0] );
 }

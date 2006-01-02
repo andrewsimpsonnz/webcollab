@@ -1,12 +1,11 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2005 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Parts are based on original file written for CoreAPM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -33,43 +32,43 @@ if(! defined('UID' ) ) {
 }
 
 //
-// Create drop down box with available languages 
+// Create drop down box with available languages
 //
 function user_locale($locale) {
-  
+
   $content = '';
-  
+
   if(UNICODE_VERSION != 'Y') {
     return;
   }
-  
+
   //get list of languages
   include_once(BASE.'lang/lang_list.php' );
-  
+
   //language list
   $selection = array_keys($lang_list);
-  
+
   //initialise array with null values
   for( $i=0 ; $i < 20 ; ++$i ) {
     $s[$i] = "";
   }
-  
+
   //highlight current language
-  $selected = array_search($locale, $selection );   
-  $s[$selected] = " selected=\"selected\""; 
-  
+  $selected = array_search($locale, $selection );
+  $s[$selected] = " selected=\"selected\"";
+
   //start menu box
   $content .= "<tr><td>Language:</td><td><select name=\"locale\">\n";
   $i = 0;
-  
-  foreach($selection as $var ) {  
+
+  foreach($selection as $var ) {
     $content .= "<option value=\"".$var."\" ".$s[$i].">".$lang_list[$var]."</option>\n";
     ++$i;
   }
-  
+
   $content .= "</select></td></tr>\n";
-  
- return $content;             
+
+ return $content;
 }
 
 //
@@ -89,8 +88,8 @@ function user_locale_check($locale ) {
 
   if(! array_search($locale, $available_lang ) ) {
     warning("User submit", "Language file ".$locale." does not exist" );
-  }   
-  
+  }
+
   return $locale;
 }
 

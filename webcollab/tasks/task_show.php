@@ -2,12 +2,10 @@
 /*
   $Id$
 
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>  
-  
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-  
-  Parts of this file originally written as Core APM by Dennis Fleurbaaij 2001/2002.
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -84,8 +82,8 @@ else {
               "[<a href=\"tasks.php?x=".$x."&amp;action=show_print&amp;taskid=".$taskid."\">".$lang['print_version']."</a>]</span></div>\n";
   //show 'project jump' select box
   $content .= project_jump($taskid);
-}  
-    
+}
+
 //percentage_completed gauge if this is a project
 if( $TASKID_ROW['parent'] == 0 ) {
   $content .= sprintf( $lang['percent_project_sprt'], $TASKID_ROW['completed'] )."\n";
@@ -151,7 +149,7 @@ switch($TASKID_ROW['priority'] ) {
 $content .= "</td></tr>\n";
 
 //status info and task completion date
-switch($TASKID_ROW['parent'] ) { 
+switch($TASKID_ROW['parent'] ) {
   case 0:
     //project - show the finish date and status
     $title = $lang['project_details'];
@@ -160,26 +158,26 @@ switch($TASKID_ROW['parent'] ) {
         $content .= "<tr><td>".$lang['status'].": </td><td><b>".$lang['project_on_hold']."</b></td></tr>\n";
         $content .= "<tr><td>".$lang['modified_on'].": </td><td>".nicedate($row['finished'])."</td></tr>\n";
         break;
-  
+
       case 'notactive':
         $content .= "<tr><td>".$lang['status'].": </td><td>".$lang['project_planned']."</td></tr>\n";
         break;
-  
+
       case 'nolimit':
         $content .= "<tr><td>".$lang['status'].": </td><td>".$lang['project_no_deadline']."</td></tr>\n";
         break;
-  
+
       case 'done':
       default:
-        if($TASKID_ROW['completed'] == 100 ) {  
+        if($TASKID_ROW['completed'] == 100 ) {
           $content .= "<tr><td>".$lang['completed_on'].": </td><td>".nicedate($row['completion'] )."</td></tr>\n";
         }
         break;
     }
     break;
-    
-  default:  
-    //task 
+
+  default:
+    //task
     $title = $lang['task_info'];
     $content .= "<tr><td>".$lang['status'].": </td><td>";
     switch($TASKID_ROW['status'] ) {
@@ -203,17 +201,17 @@ switch($TASKID_ROW['parent'] ) {
         break;
     }
     $content .= "</td></tr>\n";
-  
+
     //is there a finished date ?
     switch($TASKID_ROW['status'] ) {
       case 'done':
         $content .= "<tr><td>".$lang['completed_on'].": </td><td>".nicedate($row['finished'])."</td></tr>\n";
         break;
-  
+
       case 'cantcomplete':
         $content .= "<tr><td>".$lang['modified_on'].": </td><td>".nicedate($row['finished'])."</td></tr>\n";
         break;
-  
+
       default:
         break;
     }
@@ -259,56 +257,56 @@ else {
 
 $content .= "</table>\n";
 
-//if this is an archived task, or you are a GUEST user, then no user functions are available 
+//if this is an archived task, or you are a GUEST user, then no user functions are available
 if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
-  
+
   $content .= "<div style=\"text-align : center\"><span class=\"textlink\">\n";
-    
+
   //set add function
   switch($TYPE){
     case 'project':
       $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a>]&nbsp;\n";
       break;
-  
+
     case 'task':
       $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_subtask']."</a>]&nbsp;\n";
       break;
   }
-  
+
   //unowned task ==> [I'll take it!] button
   if($TASKID_ROW['owner'] == 0 ) {
     $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=meown&amp;taskid=".$taskid."\">".$lang['i_take_it']."</a>]&nbsp;\n";
   }
 
   //check for owner or group access
-  if((UID == $TASKID_ROW['owner'] ) || 
+  if((UID == $TASKID_ROW['owner'] ) ||
      ($TASKID_ROW['groupaccess'] == "t") && (in_array($TASKID_ROW['usergroupid'], (array)$GID ) ) ) {
     $access = true;
   }
   else {
     $access = false;
-  }    
-  
+  }
+
   //admin - owner - groupaccess  ==> [edit] button
   if((ADMIN ) || ($access ) ) {
     $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
   }
-  
+
   //(owner - groupaccess) & (uncompleted task)  ==> [I finished it] button
   if(($access ) && ($TASKID_ROW['status'] != 'done' ) && ($TASKID_ROW['parent'] != 0 ) ) {
     $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=done&amp;taskid=".$taskid."\">".$lang['i_finished']."</a>]&nbsp;\n";
   }
-    
+
   //(owner) & (uncompleted task)==> [I don't want it anymore] button
   if(UID == $TASKID_ROW['owner'] && ($TASKID_ROW['status'] != 'done' ) ) {
     $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=deown&amp;taskid=".$taskid."\">".$lang['i_dont_want']."</a>]&nbsp;\n";
   }
-  
+
   //(admin) & (not owner) & (has owner) & (uncompleted task) ==> [Take over task] button
   if((ADMIN ) && (UID != $TASKID_ROW['owner'] ) && ($TASKID_ROW['owner'] != 0 ) && ($TASKID_ROW['status'] != 'done' ) ) {
     $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_".$TYPE] )."</a>]\n";
   }
-  
+
   $content .= "</span></div>\n";
 }
 

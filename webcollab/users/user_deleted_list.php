@@ -1,12 +1,11 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Based on CoreAPM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -23,7 +22,7 @@
   Function:
   ---------
 
-  Shows the deleted users and allow to revive them
+  Shows the deleted users and allow admins to revive them
 
 */
 
@@ -53,12 +52,12 @@ $content = "<table class=\"celldata\">\n";
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<tr><td class=\"grouplist\"><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>\n".
               "<td><span class=\"textlink\">";
-              
+
   //if this user has NO tasks owned then we can delete him forever :)
   if( ! db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner='.$row['id'] ), 0, 0 ) ) {
     $content .= "[<a href=\"users.php?x=".$x."&amp;action=permdel&amp;userid=".$row['id']."\" onclick=\"return confirm( '".sprintf($lang['permdel_javascript_sprt'], javascript_escape($row['fullname'] ) )."' )\">".$lang['permdel']." </a>]&nbsp;";
   }
-  
+
   $content .= "[<a href=\"users.php?x=".$x."&amp;action=revive&amp;userid=".$row['id']."\">".$lang['revive']."</a>]".
               "</span></td></tr>\n";
 }

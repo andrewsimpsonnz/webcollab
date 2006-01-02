@@ -1,14 +1,14 @@
 <?php
 /*
   $Id$
-    
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Parts of this file originally written for Core APM by Dennis Fleurbaaij, Andrew Simpson &
-  Marshall Rose 2001/2002.
-  
+  Parts of this file originally written for Core Lan Org by Dennis Fleurbaaij, Andrew
+  Simpson & Marshall Rose 2001/2002.
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -45,7 +45,7 @@ $usergroup_mail = array();
 
 //deny guest users
 if(GUEST ) {
- warning($lang['access_denied'], $lang['not_owner'] );  
+ warning($lang['access_denied'], $lang['not_owner'] );
 }
 
 //check task name is present
@@ -76,7 +76,7 @@ $status = status_check(safe_data($_POST['status']) );
 
 //optional text input (can be multiple lines)
 $text = safe_data_long($_POST['text']);
- 
+
 //get the submitted date
 $deadline = date_to_datetime($day, $month, $year );
 
@@ -198,7 +198,7 @@ switch($parentid){
     $title1 = $title_new_owner_task;
     $title2 = $title_new_group_task;
     //get rid of magic_quotes - it is not required here
-    $name_task_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'] ) : $_POST['name']; 
+    $name_task_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'] ) : $_POST['name'];
     break;
 }
 
@@ -215,15 +215,15 @@ switch($owner ) {
     $email_owner = $row[1];
     break;
 }
-    
+
 //get rid of magic_quotes - it is not required here
 $text_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['text'] ) : $_POST['text'];
 
 //email owner ?
 if(isset($_POST['mailowner']) && ($_POST['mailowner'] === 'on') && ($owner != 0) ) {
-  
+
   include_once(BASE.'includes/email.php' );
-  
+
   $email_address_owner = db_result( db_query('SELECT email FROM '.PRE.'users WHERE id='.$owner.' LIMIT 1', 0), 0, 0 );
   $message = $email1 .
               sprintf($email_list, $name_project, $name_task_unclean, status($status, $deadline), $name_owner, $email_owner, $text_unclean );
@@ -234,7 +234,7 @@ if(isset($_POST['mailowner']) && ($_POST['mailowner'] === 'on') && ($owner != 0)
 if(isset($_POST['maillist']) && $_POST['maillist'] === 'on' ) {
 
   include_once(BASE.'includes/email.php' );
-  
+
   $message = $email2 .
               sprintf($email_list, $name_project, $name_task_unclean, status($status, $deadline), $name_owner, $email_owner, $text_unclean );
 
@@ -249,9 +249,9 @@ if(isset($_POST['maillist']) && $_POST['maillist'] === 'on' ) {
       $usergroup_mail[] = $row[0];
     }
   }
-  
+
   if(sizeof($usergroup_mail) > 0 ) {
-    
+
     //get & add the mailing list
     if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
       $usergroup_mail = array_merge((array)$usergroup_mail, (array)$EMAIL_MAILINGLIST );

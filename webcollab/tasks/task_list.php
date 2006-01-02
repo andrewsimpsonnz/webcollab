@@ -1,12 +1,11 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Based on CoreAPM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -53,7 +52,7 @@ function list_tasks($parent ) {
   $stored_groupname = NULL;
   $this_content = '';
   $ul_flag = 0;
-    
+
   //query to get the children for this taskid
   $q = db_query('SELECT '.PRE.'tasks.id AS id,
                   '.PRE.'tasks.name AS name,
@@ -89,7 +88,7 @@ function list_tasks($parent ) {
   else {
     $this_content .= "<ul>";
   }
-  
+
   //show all tasks
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
@@ -115,7 +114,7 @@ function list_tasks($parent ) {
       else {
         $groupname = $row['groupname'];
       }
-      
+
       //check if taskgroup has changed from last iteration
       if($stored_groupname != $groupname ) {
 
@@ -131,7 +130,7 @@ function list_tasks($parent ) {
         if($row['groupdescription'] != NULL ) {
           $this_content .=  "&nbsp;<i>( ".$row['groupdescription']." )</i>";
         }
-        
+
         $this_content .= "</p>\n";
         $this_content .= "<ul>\n";
 
@@ -273,7 +272,7 @@ function list_tasks($parent ) {
   }
   //free memory
   db_free_result($q);
-  
+
   return $this_content;
 }
 
@@ -294,7 +293,7 @@ $parentid = $_REQUEST['taskid'];
 if(! ADMIN ) {
   $tail = usergroup_tail();
   $q = @db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'].$tail.' LIMIT 1' );
-  
+
   if(db_result($q, 0, 0 ) < 1 ) {
     return;
   }

@@ -2,11 +2,11 @@
 /*
   $Id$
 
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -39,10 +39,10 @@ include_once(BASE.'includes/time.php' );
 //
 
 function listTasks($projectid ) {
-  
+
   global $task_uncompleted, $task_projectid;
   global $task_array, $parent_array, $shown_array, $shown_count, $task_count;
-   
+
   //initialise variables
   $task_array   = array();
   $parent_array = array();
@@ -50,37 +50,37 @@ function listTasks($projectid ) {
   $shown_count  = 0;  //counter for $shown_array
   $parent_count = 0;  //counter for $parent_array
   $task_count   = 0;  //counter for $task_array
-    
+
   //search for uncompleted tasks by projectid
   $task_key = array_keys((array)$task_projectid, $projectid );
-  
+
   if(sizeof($task_key) < 1 ) {
     return;
   }
-  
+
   //cycle through relevant tasks
-  foreach((array)$task_key as $key ) {  
-       
+  foreach((array)$task_key as $key ) {
+
     $task_array[$task_count]['id']     = $task_uncompleted[($key)]['id'];
     $task_array[$task_count]['parent'] = $task_uncompleted[($key)]['parent'];
     $task_array[$task_count]['task']   = $task_uncompleted[($key)]['task'];
-           
-    //if this is a subtask, store the parent id 
+
+    //if this is a subtask, store the parent id
     if($task_array[$task_count]['parent'] != $projectid ) {
       $parent_array[$parent_count] = $task_array[$task_count]['parent'];
       ++$parent_count;
     }
     ++$task_count;
-        
+
     //remove used key to shorten future searches
-    unset($task_projectid[$key] );    
+    unset($task_projectid[$key] );
   }
-      
-  $content = "<ul>\n";  
-  
+
+  $content = "<ul>\n";
+
   //iteration for main tasks
   for($i=0 ; $i < $task_count ; ++$i ){
-  
+
     //ignore subtasks in this iteration
     if($task_array[$i]['parent'] != $projectid ){
       continue;
@@ -88,15 +88,15 @@ function listTasks($projectid ) {
     //show line
     $content .= $task_array[$i]['task'];
     $shown_array[$shown_count] = $task_array[$i]['id'];
-    ++$shown_count; 
-    
-    //if this task has children (subtasks), iterate recursively to find them 
+    ++$shown_count;
+
+    //if this task has children (subtasks), iterate recursively to find them
     if(in_array($task_array[$i]['id'], (array)$parent_array ) ) {
       $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";
   }
- 
+
   //look for any orphaned tasks, and show them too
   if($task_count != $shown_count ) {
     for($i=0 ; $i < $task_count ; ++$i ) {
@@ -104,11 +104,11 @@ function listTasks($projectid ) {
         $content .= $task_array[$i]['task']."</li>\n";
       }
     }
-  } 
+  }
   $content .= "</ul>\n";
-  
-  return $content;   
-}   
+
+  return $content;
+}
 
 //
 // List subtasks (recursive function)
@@ -118,9 +118,9 @@ function find_children($parent ) {
   global $task_array, $parent_array, $shown_array, $task_count, $shown_count;
 
   $content = "<ul>\n";
-         
+
   for($i=0 ; $i < $task_count ; ++$i ) {
-    
+
     //ignore tasks not directly under this parent
     if($task_array[$i]['parent'] != $parent ){
       continue;
@@ -128,16 +128,16 @@ function find_children($parent ) {
     $content .= $task_array[$i]['task'];
     $shown_array[$shown_count] = $task_array[$i]['id'];
     ++$shown_count;
-            
+
     //if this task has children (subtasks), iterate recursively to find them
     if(in_array($task_array[$i]['id'], (array)$parent_array ) ) {
       $content .= find_children($task_array[$i]['id'] );
     }
-    $content .= "</li>\n";    
+    $content .= "</li>\n";
   }
   $content .= "</ul>\n";
   return $content;
-}      
+}
 
 //
 //START OF MAIN PROGRAM
@@ -161,7 +161,7 @@ $project_order = $row[0];
 $task_order    = $row[1];
 
 //set the usergroup permissions on queries
-$tail = usergroup_tail();  
+$tail = usergroup_tail();
 
 //don't get tasks if we aren't going to view them
 if(! $condensed) {
@@ -171,30 +171,30 @@ if(! $condensed) {
                         name,
                         parent,
                         projectid,
-                        status, 
+                        status,
                         '.$epoch.' deadline ) AS due
-                        FROM '.PRE.'tasks 
+                        FROM '.PRE.'tasks
                         WHERE status<>\'done\'
                         AND parent<>0 '
                         .$tail
                         .$task_order );
-  
+
   for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-    
+
     //put values into array
     $task_uncompleted[$i]['id']     = $row[0];
     $task_uncompleted[$i]['parent'] = $row[2];
-    
+
     //add suffix information
     switch( $row[4] ) {
       case 'cantcomplete':
         $suffix = "</a> &nbsp;<b><i>".$task_state['cantcomplete']."</i></b><br />\n";
         break;
-  
+
       case 'notactive':
         $suffix = "</a> &nbsp;<i>".$task_state['task_planned']."</i><br />\n";
         break;
-  
+
       default:
         $suffix = '</a>';
         //check if late
@@ -203,7 +203,7 @@ if(! $condensed) {
         }
         break;
     }
- 
+
   //task details
   $task_uncompleted[$i]['task'] = "<li><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row[0]."\">".$row[1].$suffix;
 
@@ -273,13 +273,13 @@ $content .= "<table>\n";
 if($action !== 'project_print') {
   $content .= "<tr><td class=\"projectlist\" style=\"padding-bottom : 0px\">\n".project_jump(0)."</td></tr>\n";
 }
-  
+
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   //set project status
   $project_status = $row['status'];
-  
+
   //make adjustments
   switch( $project_status ) {
 
@@ -298,14 +298,14 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
       if($row['completed'] == 100 ) {
         $project_status = 'done';
       }
-        
+
       //for 'active_only' skip completed project
       if($active_only && $project_status == 'done' ) {
         continue(2);
       }
       break;
   }
-  
+
   //to indicate that there are viewable projects
   $flag = 1;
 
@@ -368,7 +368,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
             break;
         }
       }
-      
+
       //show subtasks that are not complete
       if(! $condensed ) {
         $content .= listTasks($row['id'] );
@@ -384,7 +384,7 @@ $content .= "</table>\n";
 if($flag != 1 ) {
   $content .= "<div style=\"text-align : center\">".$lang['no_allowed_projects']."</div>\n";
 }
-  
+
 new_box($lang['projects'], $content );
 
 ?>

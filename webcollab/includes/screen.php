@@ -1,13 +1,14 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Parts of this file originally written for Core APM by Dennis Fleurbaaij 2001/2002.
- 
+
+  Concept based on file originally written for Core Lan Org by Dennis Fleurbaaij 2001.
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -63,14 +64,14 @@
 function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $calendar=0, $redirect_time=0 ) {
 
   global $lang, $top_done, $bottom_text;
-  
+
   //only build top once...
   //  (we don't use headers_sent() 'cause it seems to be buggy in PHP5)
   if(isset($top_done) && $top_done == 1 ){
     return;
   }
   $top_done = 1;
-     
+
   //remove /* and */ in section below to use compressed HTML output:
   //Note: PHP manual recommends use of zlib.output_compression in php.ini instead of ob_gzhandler in here
   /*
@@ -87,29 +88,29 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
   header('Cache-Control: post-check=0, pre-check=0', false);
   header('Pragma: no-cache');
   header('Content-Type: text/html; charset='.CHARACTER_SET );
-  
+
   //do a refresh if required
   if($redirect_time != 0) {
     header('Refresh: $redirect_time; url='.BASE_URL.'index.php' );
   }
-  
+
   $content =        "<!DOCTYPE html PUBLIC\n".
                     "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
                     "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n".
                     "<html>\n\n".
                     "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
                     "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
-                    "<!-- (c) 2002-2005 Andrew Simpson -->\n\n".
+                    "<!-- (c) 2002-2006 Andrew Simpson for WebCollab -->\n\n".
                     "<head>\n";
 
   if( $title == '' ) {
     $title = MANAGER_NAME;
   }
-  
+
   $content .=       "<title>".$title."</title>\n".
                     "<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".
                     "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".CHARACTER_SET."\" />\n";
-  
+
   //do a refresh if required
   if($redirect_time != 0) {
     $content .=     "<meta http-equiv=\"Refresh\" content=\"".$redirect_time.";url=".BASE_URL."index.php\" />\n";
@@ -119,19 +120,19 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
     case 2: //print
       $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_PRINT."\" type=\"text/css\" />\n";
       break;
-    
+
     case 3: //calendar
       $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_MAIN."\" type=\"text/css\" />\n";
       $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_CALENDAR."\" type=\"text/css\" />\n";
       break;
-       
+
     case 0: //main window + menu sidebar
     case 1: //single main window (no menu sidebar)
-    default:            
+    default:
       $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_MAIN."\" type=\"text/css\" />\n";
-      break;         
+      break;
   }
-  
+
   //javascript scripts
   if($cursor || $check || $date || $calendar ) {
     $content .=     "<script type=\"text/javascript\">\n".
@@ -139,7 +140,7 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
     if($cursor){
       $content .=   "function placeCursor() {document.getElementById('".$cursor."').focus();}\n";
     }
-       
+
     if($check){
       $content .=   "function fieldCheck(){\n".
                     "if(document.getElementById('".$check."').value===\"\"){\n".
@@ -161,14 +162,14 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
                     "return confirm('".$lang['finish_date_javascript']."');} }\n".     
                     "}\n";
     }
-    if($calendar) {      
+    if($calendar) {
       $content .=   "function dateSet(dayIndex, monthIndex, yearIndex) {\n".  
                     "if(window.opener && !window.opener.closed) {\n".
                     "window.opener.document.getElementById('day').selectedIndex=dayIndex;\n".
                     "window.opener.document.getElementById('month').selectedIndex=monthIndex;\n".
                     "window.opener.document.getElementById('year').selectedIndex=yearIndex;}\n".
                     "}\n";
-    }  
+    }
     $content .=     " // -->\n".
                     "</script>\n".
                     "</head>\n\n";
@@ -224,7 +225,7 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
 
   //flush buffer
   echo $content; 
-  
+
   return;
 }
 
@@ -241,7 +242,7 @@ function new_box($title, $content, $style="boxdata", $size="tablebox" ) {
         $content."</td></tr>\n".
         "</table>\n".
         "<!-- end -->\n";
-                    
+
   return;
 }
 
@@ -249,7 +250,7 @@ function new_box($title, $content, $style="boxdata", $size="tablebox" ) {
 // End the left frame and go the the right one
 //
 function goto_main() {
-  
+
   echo "\n</td><td align=\"center\">\n";
   return;
 }
@@ -271,21 +272,21 @@ function create_bottom() {
     case 0: //no bottom text
       $align = '';
       break;
-      
+
     case 1:
       $align = "style=\"text-align: left\"";
       break;
-      
+
     case 2:
     default:
       $align = "style=\"text-align: center\"";
       break;
  }
- 
+
  //shows the logo
  if($bottom_text) {
-   $content .= "<div class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2005</div>\n";
- }     
+   $content .= "<div class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2006</div>\n";
+ }
   //end xml parsing
   $content .= "</body>\n</html>\n";
   echo $content;

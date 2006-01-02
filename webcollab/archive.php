@@ -1,11 +1,12 @@
 <?php
 /*
   $Id$
-  
-  (c) 2004 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+
+  (c) 2004 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -58,7 +59,7 @@ switch($_REQUEST['action'] ) {
     include(BASE.'archive/archive_list.php' );
     create_bottom();
     break;
-  
+
   //archive project
   case 'submit_archive':
     include(BASE.'archive/archive_submit.php' );
@@ -68,12 +69,11 @@ switch($_REQUEST['action'] ) {
   case 'submit_restore':
     include(BASE.'archive/archive_submit.php' );
     break;
-  
+
   //Error case
   default:
     error('Archive action handler', 'Invalid request given') ;
     break;
 }
-
 
 ?>

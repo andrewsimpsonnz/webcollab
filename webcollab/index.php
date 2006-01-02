@@ -1,13 +1,12 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  This file originally written as part of Core APM by Dennis Fleurbaaij 2001/2002.
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -32,6 +31,7 @@ require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 
 include_once(BASE.'lang/lang.php' );
+include_once(BASE.'includes/common.php' );
 include_once(BASE.'includes/screen.php' );
 
 //secure variables
@@ -51,12 +51,12 @@ function secure_error( $error = 'Login error', $redirect=0 ) {
   $content = "<div style=\"text-align : center\"><br />$error<br /></div>";
   create_top($lang['login'], 1, '', '', '', '', $redirect_time );
   new_box($lang['error'], $content, 'boxdata', 'singlebox' );
-  
+
   if($redirect_time != 0) {
     $content = "<div style=\"text-align : center\"><a href=\"".BASE_URL."index.php\">".$lang['login_now']."</a></div>\n";
     new_box(sprintf($lang['redirect_sprt'], $redirect_time ), $content, 'boxdata', 'singlebox' );
   }
-  
+
   create_bottom();
   die;
 }
@@ -71,15 +71,14 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
   $username = '0';
   $md5pass = '0';
   $session_key = '';
-  
-  include_once(BASE.'includes/common.php');
+
   include_once(BASE.'database/database.php');
-  
+
  //no ip (possible?)
   if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
     secure_error('Unable to determine ip address');
   }
- 
+
   if(WEB_AUTH === 'Y' ) {
       //construct login query
       $login_q = 'SELECT id FROM '.PRE.'users WHERE name=\''.safe_data($_SERVER['REMOTE_USER'] ).'\' AND deleted=\'f\'';
@@ -89,37 +88,37 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
     //encrypt password
     $md5pass = md5($_POST['password'] );
 
-                                                                                     
+
     //construct login query
     $login_q = 'SELECT id FROM '.PRE.'users WHERE password=\''.$md5pass.'\' AND name=\''.$username.'\' AND deleted=\'f\'';
   }
-   
+
   //database query
   if( ! $q = @db_query($login_q, 0 ) ) {
     sleep (2);
     secure_error($lang['no_login'], 1 );
-  }   
-  
+  }
+
   //no such user-password combination
   if( @db_numrows($q) < 1 ) {
-      
+
     //count the number of recent failed login attempts
-    if( ! $q = @db_query('SELECT COUNT(*) FROM '.PRE.'login_attempt 
-                               WHERE name=\''.$username.'\' 
+    if( ! $q = @db_query('SELECT COUNT(*) FROM '.PRE.'login_attempt
+                               WHERE name=\''.$username.'\'
                                AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 6', 0 ) ) {
       secure_error('Unable to connect to database.  Please try again later.' );
     }
-  
+
     $count_attempts = db_result($q, 0, 0 );
-      
-    //protect against password guessing attacks 
+
+    //protect against password guessing attacks
     if($count_attempts > 4 ) {
       secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
-    }                                                                              
-    
+    }
+
     //record this login attempt
     db_query('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (\''.$username.'\', \''.$ip.'\', now() )' );
-  
+
     //wait 2 seconds then record an error
     sleep (2);
     secure_error($lang['no_login'], 1 );
@@ -133,13 +132,13 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
   //user is okay log him/her in
 
   //create session key
-  //use Mersenne Twister algorithm (random number) + user's IP address, then one-way hash to give session key  
+  //use Mersenne Twister algorithm (random number) + user's IP address, then one-way hash to give session key
   $session_key = md5(mt_rand().$ip );
 
   //remove the old login information
   @db_query('DELETE FROM '.PRE.'logins WHERE user_id='.$user_id );
   @db_query('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.$delim.'20 MINUTE'.$delim.') OR name=\''.$username.'\'' );
-   
+
   //log the user in
   db_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES (\''.$user_id.'\', \''.$session_key.'\', \''.$ip.'\', now() )' );
 
@@ -155,10 +154,10 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
 
 //allow for continuation of session if a valid cookie is already set
 if(isset($_COOKIE['webcollab_session'] ) && strlen($_COOKIE['webcollab_session'] ) == 32 ) {
- 
-  include_once 'includes/common.php'; 
-  include_once 'database/database.php'; 
-    
+
+  include_once 'includes/common.php';
+  include_once 'database/database.php';
+
   //check if session is valid and within time limits
   if(db_result(@db_query('SELECT COUNT(*) FROM '.PRE.'logins
                                  WHERE session_key=\''.safe_data($_COOKIE['webcollab_session']).'\'
@@ -191,18 +190,18 @@ $content .= "<p>".$lang['please_login'].":</p>\n".
   switch( DATABASE_TYPE ) {
   case 'postgresql':
     $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\" /></a></p>";
-    break; 
-  
+    break;
+
   case 'mysql':
   case 'mysql_innodb':
     $content .= "<p><a href=\"http://www.mysql.com\"><img src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\" /></a></p>\n";
     break;
-    
-  default:           
+
+  default:
      $content .= "<p><a href=\"http://www.php.net\"> <img src=\"images/php-logo.gif\" alt=\"PHP 4 code\" /></a></p>";
      break;
-}      
-           
+}
+
 $content .= "</form>".
             "</div>";
 

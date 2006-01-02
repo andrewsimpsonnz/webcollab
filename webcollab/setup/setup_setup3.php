@@ -1,8 +1,8 @@
 <?php
 /*
   $Id$
-  
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -93,7 +93,7 @@ $content  = '';
 $content .= "<table style=\"width : 98%\"><tr><td>\n".
             "<span class=\"textlink\">[<a href=\"help/en_help_setup3.php?type=setup3&amp;lang=en\" onclick=\"window.open('help/en_help_setup3.php?type=setup3&amp;lang=en'); return false\"><i>Help me with this form</i></a>]</span>\n".
             "</td></tr>\n</table>\n";
-            
+
 $content .= "<form method=\"post\" action=\"setup_handler.php\">".
             "<input type=\"hidden\" name=\"action\" value=\"setup4\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
@@ -162,20 +162,20 @@ $option_array = array('bg', 'ca', 'zh-tw', 'zh-cn', 'cs', 'da', 'en', 'fr', 'de'
 $selected = array_search($locale, $option_array );  
 $s[$selected] = " selected=\"selected\"";  
 
-$content .= "<tr><td></td><td><br />Languages marked with * are only available in the Unicode versions</td></tr>\n";         
-  
+$content .= "<tr><td></td><td><br />Languages marked with * are only available in the Unicode versions</td></tr>\n";
+
 $content .= "<tr><th>Language:</th><td><select name=\"locale\">\n".
             "<option value=\"bg\" ".   $s[0].">Bulgarian</option>\n".
             "<option value=\"ca\" ".   $s[1].">Catalan</option>\n".
             "<option value=\"zh-tw\" ".$s[2].">*Chinese (Traditional)</option>\n".
             "<option value=\"zh-cn\" ".$s[3].">*Chinese (Simplified)</option>\n".
-            "<option value=\"cs\" ".   $s[4].">Czech</option>\n".            
+            "<option value=\"cs\" ".   $s[4].">Czech</option>\n".
             "<option value=\"da\" ".   $s[5].">Danish</option>\n".
             "<option value=\"en\" ".   $s[6].">English</option>\n".
             "<option value=\"fr\" ".   $s[7].">French</option>\n".
             "<option value=\"de\" ".   $s[8].">German</option>\n".
             "<option value=\"gr\" ".   $s[9].">Greek</option>\n".
-            "<option value=\"hu\" ".   $s[10].">Hungarian</option>\n".            
+            "<option value=\"hu\" ".   $s[10].">Hungarian</option>\n".
             "<option value=\"it\" ".   $s[11].">Italian</option>\n".
             "<option value=\"ja\" ".   $s[12].">*Japanese</option>\n".
             "<option value=\"ko\" "   .$s[13].">*Korean</option>\n".
@@ -186,7 +186,7 @@ $content .= "<tr><th>Language:</th><td><select name=\"locale\">\n".
             "<option value=\"se\" ".   $s[18].">Swedish</option>\n".
             "<option value=\"tr\" ".   $s[19].">Turkish</option>\n".
             "</select></td></tr>\n";
-                         
+
 //timezone setting
 $content .= "<tr><td></td><td><br /><br /><b><u>Timezone Setting</u></b></td></tr>\n";
 
@@ -199,7 +199,7 @@ $time = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 
 
 //select current value
 $s[(array_search($tz, $time) )] = " selected=\"selected\"";
-  
+
 $content .=  "<tr><td></td><td><br /></td></tr>\n".
              "<tr><th>Timezone:</th><td><select name=\"timezone\">\n".
              "<option value=\"-12\"". $s[0]. ">GMT -1200</option>\n".
@@ -238,7 +238,7 @@ $content .=  "<tr><td></td><td><br /></td></tr>\n".
              "<option value=\"12\"".  $s[33].">GMT +1200</option>\n".
              "<option value=\"13\"".  $s[34].">GMT +1300</option>\n".
              "</select></td></tr>\n";
-                        
+
 //email settings
 if($use_email === 'N' ) {
   $setting = '';
@@ -250,7 +250,7 @@ else {
 $content .= "<tr><td></td><td><br /><br /><b><u>Email Settings</u></b></td></tr>\n".
             "<tr><td></td><td><br /></td></tr>\n".
             "<tr><th>Use email?</th><td><input type=\"checkbox\" name=\"use_email\" ".$setting."  /></td></tr>\n";
-            
+
 $content .= "<tr><td></td><td><br /><br /><i>SMTP host is required if email is enabled</i></tr>\n".
             "<tr><th><i>SMTP Host:</i></th><td><input type=\"text\" name=\"smtp_host\" value=\"".$smtp_host."\" size=\"50\" /></td></tr>\n";
 

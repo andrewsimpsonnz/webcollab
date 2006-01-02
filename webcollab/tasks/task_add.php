@@ -1,14 +1,12 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 -2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  
-  Based on CoreAPM by Dennis Fleurbaaij 2001/2002
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -82,20 +80,20 @@ if( @safe_integer($_GET['parentid']) ) {
   //get info about the parent of this task
   $q = db_query('SELECT name, deadline, status, owner, parent, projectid, usergroupid, globalaccess, taskgroupid 
                        FROM '.PRE.'tasks WHERE id='.$parentid );
-  
+
   if( ! $parent_row = db_fetch_array($q, 0 ) ) {
     error('Task add', 'No parent for taskid' );
   }
-  
+
   //add the project deadline (plus GMT offset) for the javascript
   $project_deadline = db_result(db_query('SELECT '.$epoch.'deadline) FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ) ) + (TZ * 3600 );
-  
-  $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" />\n";            
-                
+
+  $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" />\n"; 
+
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"".$parentid."\" />\n".
               "<input type=\"hidden\" name=\"projectid\" value=\"".$parent_row['projectid']."\" /></fieldset>\n".
               "<table class=\"celldata\">\n";
-  
+
   //show project name
   if( $parent_row['projectid'] == $parentid) {
     $project = $parent_row['name'];
@@ -103,7 +101,7 @@ if( @safe_integer($_GET['parentid']) ) {
   else {
     $project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ), 0, 0 );
   }
-  
+
   $content .= "<tr><td>".$lang['project'] .":</td> <td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$parent_row['projectid']."\">".$project."</a></td></tr>\n";
 
   //check if task has a parent task
@@ -136,12 +134,12 @@ if( @safe_integer($_GET['parentid']) ) {
   $content .= "<tr><td>".$lang['task_owner'].":</td><td><select name=\"owner\">\n".
               "<option value=\"0\">".$lang['nobody']."</option>\n";
   for( $i=0 ; $user_row = @db_fetch_array($q, $i ) ; ++$i) {
-      
+
     //user test for privacy
     if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ) {
       continue;
     }
-    
+
     $content .= "<option value=\"".$user_row['id']."\"";
 
     //default owner is present user
@@ -160,7 +158,7 @@ if( @safe_integer($_GET['parentid']) ) {
   $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
   for( $i=0 ; $taskgroup_row = @db_fetch_array($q, $i ) ; ++$i) {
-    
+
     //inherit taskgroup from parent
     if($parent_row['taskgroupid'] == $taskgroup_row['id'] ) {
       $content .= "<option value=\"".$taskgroup_row['id']."\" selected=\"selected\">".$taskgroup_row['name']."</option>\n";
@@ -178,21 +176,21 @@ if( @safe_integer($_GET['parentid']) ) {
   $content .= "<option value=\"0\">".$lang['all_groups']."</option>\n";
 
   for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
-    
+
     //usergroup test for privacy
     if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
       continue;
     }
-    
+
     //inherit usergroup from parent, if parent is private
     if(($parent_row['globalaccess'] == 'f' ) && ( $parent_row['usergroupid'] == $usergroup_row['id'] ) ) {
       $content .= "<option value=\"".$usergroup_row['id']."\" selected=\"selected\">".$usergroup_row['name']."</option>\n";
     }
-    else {   
+    else {
       $content .= "<option value=\"".$usergroup_row['id']."\">".$usergroup_row['name']."</option>\n";
     }
   }
-  
+
   //new task inherits globaccess from parent
   if($parent_row['globalaccess'] == 'f' ) {
     //set private
@@ -202,7 +200,7 @@ if( @safe_integer($_GET['parentid']) ) {
     //use defaults 
     $globalaccess = DEFAULT_ACCESS;
   }
-  
+
   $content .= "</select></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help'); return false\">".$lang['all_users_view']."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$globalaccess." /></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".DEFAULT_EDIT." /></td></tr>\n".
@@ -226,7 +224,7 @@ else {
 
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"0\" />\n".
               "<input type=\"hidden\" name=\"projectid\" value=\"0\" />\n".
-              "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"-1\" />\n".      
+              "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"-1\" />\n".
               //taskgroup - we don't have this for projects
               "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n".
               "<table class=\"celldata\">\n".
@@ -254,7 +252,7 @@ else {
   //owner
   $content .= "<tr><td>".$lang['project_owner'].":</td><td><select name=\"owner\">\n";
   for( $i=0 ; $user_row = @db_fetch_array($q, $i) ; ++$i) {
-    
+
     //user test for privacy
     if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
       continue;
@@ -276,7 +274,7 @@ else {
               "<option value=\"0\">".$lang['all_groups']."</option>\n";
 
   for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
-    
+
     //usergroup test for privacy
     if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
       continue;

@@ -1,11 +1,12 @@
 <?php
 /*
   $Id$
- 
- (c) 2004 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
- 
+
+ (c) 2004 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -40,14 +41,14 @@ if( ! isset($_REQUEST['action']) ){
 switch($_REQUEST['action'] ) {
 
   //show a task
-  case 'show':      
-    
+  case 'show':
+
     //catch & redirect hack for invalid entry from ProjectJump
     if(isset($_REQUEST['taskid']) && ($_REQUEST['taskid'] == -1 ) ){
       header('Location: '.BASE_URL.'main.php?x='.$x );
       die;
     }
-    
+
     create_top($lang['task_info']);
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'tasks/task_navigate.php' );
@@ -106,7 +107,7 @@ switch($_REQUEST['action'] ) {
     include(BASE.'tasks/task_summary_list.php' );
     create_bottom();
     break;
-  
+
   //todo list
   case 'todo':
     create_top($lang['todo_list'] );
@@ -128,29 +129,29 @@ switch($_REQUEST['action'] ) {
     include(BASE.'tasks/task_clone_add.php' );
     create_bottom();
     break;
-  
+
   //insert new task
   case 'submit_insert':
     include(BASE.'tasks/task_submit_insert.php' );
-    break;   
-  
-  //update task   
+    break;
+
+  //update task
   case 'submit_update':
     include(BASE.'tasks/task_submit_update.php' );
-    break;   
-  
+    break;
+
   //misc. update items
   case 'meown':
   case 'deown':
   case 'done':
     include(BASE.'tasks/task_submit_owner.php' );
-    break;   
-          
+    break;
+
   //submit clone
   case 'submit_clone':
     include(BASE.'tasks/task_clone_submit.php' );
-    break;   
-          
+    break;
+
   //printable task info
   case 'show_print':
     create_top($lang['task_info'], 2 );

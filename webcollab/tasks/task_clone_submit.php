@@ -2,8 +2,8 @@
 /*
   $Id$
 
-  (c) 2004 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
-  
+  (c) 2004 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
    WebCollab
   ---------------------------------------
 
@@ -149,7 +149,7 @@ function copy_across($taskid, $new_parent, $name ) {
     if($new_parent == 0 ) {
       db_query('UPDATE '.PRE.'tasks SET projectid='.$new_taskid.' WHERE id='.$new_taskid );
     }
-    
+
     //you have already seen this item, no need to announce it to you
     db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES('.UID.', '.$new_taskid.', now() )');
 
@@ -173,7 +173,7 @@ $taskid = $_POST['taskid'];
 if(empty($_POST['name']) ) {
   warning('Project clone', 'Project name is not set' );
 }
-  
+
 $name = safe_data($_POST['name']);
 
 //start transaction
@@ -187,7 +187,7 @@ if(! $q = @db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$taskid, 0 ) 
 //get the projectid
 if( ! $projectid = @db_result($q, 0, 0) ) {
   error('Task clone', 'The project to be cloned has either been deleted, or is now invalid.');
-}  
+}
 
 //get details
 $q = db_query('SELECT DISTINCT parent FROM '.PRE.'tasks WHERE projectid='.$projectid );

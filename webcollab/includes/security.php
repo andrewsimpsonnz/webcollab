@@ -1,13 +1,12 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Parts of this file originally written for Core APM by Dennis Fleurbaaij 2001/2002.
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -61,7 +60,7 @@ else {
   header("Location: ".BASE_URL."index.php");
   die;
 }
-    
+
 //seems okay at first, now go cross-checking with the known data from the database
 if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS user_id,
                              '.$epoch.' '.PRE.'logins.lastaccess) AS sec_lastaccess,

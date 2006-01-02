@@ -2,8 +2,8 @@
 /*
   $Id$
 
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
-  
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
   This program is free software; you can redistribute it and/or modify it under the
@@ -91,7 +91,7 @@ else {
   if(! defined('PRE' ) ) {
     define('PRE', '' );
   }
-  
+
   //seems okay at first, now go cross-checking with the known data from the database
   if( ! ($q = db_query('SELECT '.PRE.'logins.user_id AS user_id, 
                                '.PRE.'logins.lastaccess AS lastaccess,
@@ -121,7 +121,7 @@ else {
   if($row['admin'] != 't' ) {
     error_setup('You need to be an administrator to use this function' );
   }
-  
+
   //check the last logintime (there is a 10 min limit)
   if( ($row['now'] - $row['sec_lastaccess']) > 600 ) {
     db_query('UPDATE '.PRE.'logins SET session_key=\'xxxx\' WHERE user_id='.$row['user_id'] );
@@ -130,7 +130,7 @@ else {
 
   //update the 'I was here' time
   db_query('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.$x.'\' AND user_id='.$row['user_id'] );
-} 
+}
 
 //for compatability in common.php
 define('UID_NAME', '' );

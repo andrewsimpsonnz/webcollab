@@ -1,14 +1,12 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  
-  Based on CoreAPM by Dennis Fleurbaaij 2001/2002
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -38,10 +36,10 @@ $content = '';
 $allowed[0] = 0;
 $content_flag = 0;
 
-//get list of common users in private usergroups that this user can view 
+//get list of common users in private usergroups that this user can view
 $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       '.PRE.'usergroups_users.userid AS userid
-                      FROM '.PRE.'usergroups_users 
+                      FROM '.PRE.'usergroups_users
                       LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
                       WHERE '.PRE.'usergroups.private=1');
 
@@ -57,11 +55,11 @@ $q = db_query('SELECT * FROM '.PRE.'usergroups ORDER BY name' );
 //nothing here yet
 if(db_numrows($q) == 0 ) {
   $content = "<p>".$lang['no_usergroups']."</p>\n";
-  
+
   if(ADMIN) {
     $content .= "<span class=\"textlink\"><a href=\"usergroups.php?x=".$x."&amp;action=add\">[".$lang['add']."]</a></span>\n";
   }
-  
+
   new_box($lang['usergroup_manage'], $content );
   return;
 }
@@ -71,27 +69,27 @@ $content =  "<table class=\"celldata\">\n".
 
 //show all usergroups
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
-  
+
   //check for private usergroups
-  if(! ADMIN ) {  
+  if(! ADMIN ) {
     if( ($row['private'] ) && (! in_array( $row['id'], (array)$GID ) ) ) {
       continue;
     }
   }
 
-  $private = ($row['private'] ) ? $lang['yes'] : $lang['no']; 
-  $colspan = (ADMIN ) ? '4' : '3'; 
-  
+  $private = ($row['private'] ) ? $lang['yes'] : $lang['no'];
+  $colspan = (ADMIN ) ? '4' : '3';
+
   $content .= "<tr><td colspan=\"".$colspan."\"><hr /></td></tr>\n".
               "<tr><td class=\"grouplist\"><b>".$row['name']."</b></td><td class=\"grouplist\"><i>".$row['description']."</i></td><td style=\"text-align: center\">".$private."</td>\n";
-  
+
   if(ADMIN) {
     $content .= "<td><span class=\"textlink\"><a href=\"usergroups.php?x=".$x."&amp;action=submit_del&amp;usergroupid=".$row['id']."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">[".$lang['del']."]</a></span>&nbsp;".
                 "<span class=\"textlink\"><a href=\"usergroups.php?x=".$x."&amp;action=edit&amp;usergroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td>";
   }
-  
+
   $content .= "</tr>\n";
-  
+
   //get users from that group
   $users_q = db_query('SELECT '.PRE.'users.fullname AS fullname,
                               '.PRE.'users.id AS id,
@@ -103,18 +101,18 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
                               ORDER BY '.PRE.'users.fullname' );
 
   for($j=0 ; $user_row = @db_fetch_array($users_q, $j ) ; ++$j ) {
-    
+
     //check for private users
     if((! ADMIN ) && ($row['private'] ) && (! in_array($row['id'], (array)$allowed ) ) ) {
       continue;
     }
-    
+
     $content .= "<tr><td style=\"text-align:left\" colspan=\"3\"><small><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$user_row['id']."\">".$user_row['fullname']."</a></small></td></tr>\n";
   }
-  
+
   $content .=   "<tr><td colspan=\"3\">&nbsp;</td></tr>\n";
-  
-  //flag to indicate we have a listing 
+
+  //flag to indicate we have a listing
   $content_flag = 1;
 }
 
@@ -130,11 +128,11 @@ else {
     $content = "<p>".$lang['no_usergroups']."</p>\n";
   }
 }
-    
+
 new_box($lang['manage_usergroups'], $content, "boxdata2" );
 
 //admin gets some user notes
-if(ADMIN ) {    
+if(ADMIN ) {
   include_once(BASE.'lang/lang_long.php' );
   $content = $usergroup_info;
   new_box($lang['info_usergroup_manage'], $content );

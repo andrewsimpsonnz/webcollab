@@ -1,19 +1,20 @@
 <?php
 /*
   $Id$
-  
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
-   
+
   This program is distributed in the hope that it will be useful, but WITHOUT ANY 
   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
   PARTICULAR PURPOSE. See the GNU General Public License for more details.
-   
+
   You should have received a copy of the GNU General Public License along with this
   program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave, 
   Cambridge, MA 02139, USA.
@@ -34,41 +35,50 @@ if(! defined('UID' ) ) {
 //secure variables
 $content  = '';
 
+if(UNICODE_VERSION == 'Y' ) {
+  $m_substr     = 'mb_substr';
+  $m_strimwidth = 'mb_strimwidth';
+}
+else {
+  $m_substr     = 'substr';
+  $m_strimwidth = 'substr';
+}
+
 //existing task or project
 if( @safe_integer($_GET['taskid']) ) {
 
   $taskid = $_GET['taskid'];
 
   require_once(BASE.'includes/details.php' );
-  
+
   $content .= "<small><b>".$lang['project'].":</b></small><br />\n";
 
   switch($TASKID_ROW['parent'] ) {
 
     case '0':
       //project
-      $content .= "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".mstrimwidth($TASKID_ROW['name'], 20 )."<br />\n";
+      $content .= "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".$m_strimwidth($TASKID_ROW['name'], 0, 20 )."<br />\n";
       break;
 
     case ($TASKID_ROW['projectid'] ):
       //task under project
-      
+
       //get project name (limited to 20 characters)
-      $project_name = mstrimwidth(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] ), 0, 0 ), 20 );
-      
+      $project_name = $m_strimwidth(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] ), 0, 0 ), 0, 20 );
+
       $content .= "&nbsp; <a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a><br />\n".
                   "<small><b>".$lang['task'].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".mstrimwidth($TASKID_ROW['name'], 20 )."<br />\n";
+                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".$m_substr($TASKID_ROW['name'], 0, 20 )."<br />\n";
       break;
 
     default:
       //task with parent task
-      
+
       //get project name
-      $project_name = substr(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] ), 0, 0 ), 0, 20 );
+      $project_name = $m_substr(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] ), 0, 0 ), 0, 20 );
       //get parent name
-      $parent_name = substr(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['parent'] ), 0, 0 ), 0, 20 );
-      
+      $parent_name = $m_substr(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['parent'] ), 0, 0 ), 0, 20 );
+
       $content .= "&nbsp; <a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a><br />\n".
                   "<small><b>".$lang['parent_task'].":</b></small><br />\n".
                   "&nbsp; <a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$TASKID_ROW['parent']."\">".$parent_name."</a><br />\n".
@@ -83,7 +93,7 @@ if( @safe_integer($_GET['taskid']) ) {
 
 //new task
 elseif( @safe_integer($_GET['parentid']) ){
-  
+
   $parentid = $_GET['parentid'];
 
   //get task parent details
@@ -92,7 +102,7 @@ elseif( @safe_integer($_GET['parentid']) ){
     error('Task navigate', 'Parent does not exist' );
 
   //get project name
-  $project_name = mstrimwidth(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$row['projectid'] ), 0, 0 ), 20 );
+  $project_name = $m_strimwidth(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$row['projectid'] ), 0, 0 ), 0, 20 );
 
   $content .= "<small><b>".$lang['project'].":</b></small><br />\n".
               "&nbsp; <a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['projectid']."\">".$project_name."</a><br />\n";

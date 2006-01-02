@@ -1,8 +1,8 @@
 <?php
 /*
   $Id$
-  
-  (c) 2004 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2004 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -56,6 +56,6 @@ else {
 }
 
 //free memory  
-db_free_result($q );  
-    
+db_free_result($q );
+
 ?>

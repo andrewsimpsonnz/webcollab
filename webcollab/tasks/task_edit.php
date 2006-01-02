@@ -2,8 +2,8 @@
 /*
   $Id$
 
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
-  
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
   Based on original file written for CoreAPM by Dennis Fleurbaaij, Andrew Simpson &
@@ -92,7 +92,7 @@ $taskid = $_GET['taskid'];
 if( ! user_access($TASKID_ROW['owner'], $TASKID_ROW['usergroupid'], $TASKID_ROW['groupaccess'] ) ) {
   warning($lang['access_denied'], $lang['no_edit'] );
 }  
-  
+
 //get project details - if any
 $q = db_query('SELECT name, '.$epoch.'deadline) AS deadline FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'].' LIMIT 1' );
 $project_row = db_fetch_array($q, 0 );
@@ -102,11 +102,11 @@ $content .= "<form method=\"post\" action=\"tasks.php\" onsubmit= \"return dateC
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"submit_update\" />\n ".
             "<input type=\"hidden\" name=\"taskid\" value=\"".$TASKID_ROW['id']."\" />\n";
-                                      
+
 //select either project or task for text
 switch($TYPE) {
   case 'project':
-    $content .= "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"-1\" />\n".            
+    $content .= "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"-1\" />\n".
                 //no taskgroups in projects
                 "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n ".
                 "<table class=\"celldata\">\n".
@@ -117,8 +117,8 @@ switch($TYPE) {
   case 'task':
     //show project finish date for javascript (plus GMT offset)
     $project_deadline = $project_row['deadline'] + (TZ * 3600 ); 
-    
-    $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" /></fieldset>\n".          
+
+    $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" /></fieldset>\n".
                  "<table class=\"celldata\">\n".
                  "<tr><td>".$lang['creation_time']."</td><td>".nicedate($TASKID_ROW['created'] )."</td></tr>\n".
                  "<tr><td>".$lang['project'] .":</td><td><a href=\"tasks.php?x=".$x."&amp;action=show&taskid=".$TASKID_ROW['projectid']."\">".$project_row['name']."</a></td></tr>\n";
@@ -145,7 +145,7 @@ for( $i=0; $parent_row = @db_fetch_array($q, $i ); ++$i ) {
     }
   }
   $content .= "<option value=\"".$parent_row['id']."\"";
-  
+
   if($TASKID_ROW['parent'] == $parent_row['id'] ) {
     $content .= " selected=\"selected\"";
   }
@@ -265,12 +265,12 @@ $content .= "<tr> <td>".$lang[$TYPE."_owner"].":</td> <td><select name=\"owner\"
 $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname' );
 
 for( $i=0 ; $user_row = @db_fetch_array($q, $i ) ; ++$i ) {
-      
+
   //user test for privacy
   if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
     continue;
   }
-    
+
   $content .= "<option value=\"".$user_row['id']."\"";
 
   if( $TASKID_ROW['owner'] == $user_row['id'] ){
@@ -284,13 +284,13 @@ $content .= "</select></td></tr>\n";
 
 //show a selection box with the taskgroups
 //  (projects don't have taskgroups)
-if($TASKID_ROW['parent'] != 0 ){
+if($TASKID_ROW['parent'] != 0 ) {
 
   $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help'); return false\">".$lang['taskgroup']."</a>: </td> <td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
   $q = db_query('SELECT id, name FROM '.PRE.'taskgroups ORDER BY name' );
-  
+
   for( $i=0 ; $taskgroup_row = @db_fetch_array($q, $i ) ; ++$i) {
 
     $content .= "<option value=\"".$taskgroup_row['id']."\"";
@@ -310,7 +310,7 @@ $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
 
 for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
-     
+
   //usergroup test for privacy
   if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
     continue;
@@ -342,7 +342,7 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
              "<tr><td><label for=\"maillist\">".$lang['email_group']."</label></td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".DEFAULT_GROUP." /></td></tr>\n".
 
              "</table>\n".
-             
+
              "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" onclick=\"return fieldCheck()\" /></p>".
              "</form>\n";
 

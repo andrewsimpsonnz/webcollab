@@ -1,14 +1,15 @@
 <?php
 /*
   $Id$
-    
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Parts of this file originally written for Core APM by Dennis Fleurbaaij, Andrew Simpson &
-  Marshall Rose 2001/2002.
-  
+
+  Parts of this file originally written for Core Lan Org by Dennis Fleurbaaij, Andrew
+  Simpson & Marshall Rose 2001/2002.
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -68,7 +69,7 @@ return;
 }
 
 //
-// Adjust and set completion status 
+// Adjust and set completion status
 //
 
 function adjust_completion($projectid ) {
@@ -76,7 +77,7 @@ function adjust_completion($projectid ) {
   //set completed percentage project record
   $percent_completed = percent_complete($projectid );
   db_query('UPDATE '.PRE.'tasks SET completed='.$percent_completed.' WHERE id='.$projectid );
-  
+
   //for completed project set the completion time
   if($percent_completed == 100 ){
     $completion_time = db_result(db_query('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid='.$projectid ), 0, 0 );
@@ -158,7 +159,7 @@ db_query('UPDATE '.PRE.'tasks
       status=\''.$status.'\',
       globalaccess=\''.$globalaccess.'\',
       groupaccess=\''.$groupaccess.'\',
-      sequence=sequence+1 
+      sequence=sequence+1
       WHERE id='.$taskid );
 
 //get existing projectid and parent from the database
@@ -170,7 +171,7 @@ $projectid = $row['projectid'];
 //(we do this after the main update, then if anything breaks, the database is not corrupted)
 if($row['parent'] != $parentid ) {
   //first we store the old details
-  $old_projectid = $projectid;  
+  $old_projectid = $projectid;
   //now we set the new projectid
   if($parentid == 0 ) {
     $projectid = $taskid;
@@ -178,7 +179,7 @@ if($row['parent'] != $parentid ) {
   else {
     $projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$parentid.' LIMIT 1' ), 0, 0 );
   }
-  
+
   //can't put a project onto it's own tasks
   if(($projectid == $row['projectid'] ) && ($row['parent'] == 0 ) ){
     //do nothing
@@ -188,7 +189,7 @@ if($row['parent'] != $parentid ) {
     db_query('UPDATE '.PRE.'tasks SET projectid='.$projectid.', parent='.$parentid.' WHERE id='.$taskid );
     reparent_children($taskid );
   }
-  
+
   //adjust completion status in former project
   adjust_completion($old_projectid );
 }
@@ -256,7 +257,7 @@ switch($owner ) {
 
   //get rid of magic_quotes - it is not required here
   $text_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['text'] ) : $_POST['text'];
-  
+
 //email owner ?
 if(isset($_POST['mailowner']) && ($_POST['mailowner'] === 'on') && ($owner != 0) ) {
 
@@ -271,12 +272,12 @@ if(isset($_POST['mailowner']) && ($_POST['mailowner'] === 'on') && ($owner != 0)
 
 //email the user group ?
 if(isset($_POST['maillist']) && ($_POST['maillist'] === 'on') ) {
-  
+
   include_once(BASE.'includes/email.php' );
 
   $message = sprintf($email2, $name_owner ).
               sprintf($email_list, $name_project, $name_task_unclean, status($status, $deadline), $name_owner, $email_owner, $text_unclean );
-                
+
   if($usergroupid != 0 ) {
     $q = db_query('SELECT '.PRE.'users.email
                       FROM '.PRE.'users
@@ -289,12 +290,12 @@ if(isset($_POST['maillist']) && ($_POST['maillist'] === 'on') ) {
     }
   }
   if(sizeof($usergroup_mail) > 0 ) {
-    
+
     //get & add the mailing list
     if(sizeof($EMAIL_MAILINGLIST ) > 0 ) {
       $usergroup_mail = array_merge((array)$usergroup_mail, (array)$EMAIL_MAILINGLIST );
     }
-    
+
     email($usergroup_mail, $title2, $message );
   }
 }

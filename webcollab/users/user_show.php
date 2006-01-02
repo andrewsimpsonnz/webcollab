@@ -2,11 +2,10 @@
 /*
   $Id$
 
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>  
-  
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-  Based on CoreAPM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -23,7 +22,7 @@
   Function:
   ---------
 
-  Show selected user details 
+  Show selected user details
 
 */
 
@@ -155,8 +154,8 @@ $content .=   "<tr><td>".$lang['size_all_files']."</td><td>".$size.$lang['bytes'
             "</table>";
 
 new_box($lang['user_info'], $content );
-  
-  
+
+
 //shows quick links to the tasks that the user owns
 
 if( $tasks_owned + $projects_owned > 0 ) {
@@ -224,5 +223,5 @@ if( $tasks_owned + $projects_owned > 0 ) {
   }
   $content .= "</ul>";
   new_box($lang['owned_tasks'], $content );
-}  
+}
 ?>

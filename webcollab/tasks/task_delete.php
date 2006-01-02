@@ -2,12 +2,10 @@
 /*
   $Id$
 
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
-  
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-  
-  Based on CoreAPM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -50,7 +48,7 @@ function find_tasks( $taskid, $projectid ) {
   $parent_count = 0;
   $task_count = 0;
   $index = 0; 
-    
+
   $q = db_query('SELECT id, parent FROM '.PRE.'tasks WHERE projectid='.$projectid );
 
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
@@ -59,23 +57,23 @@ function find_tasks( $taskid, $projectid ) {
     $task_array[$i]['id'] = $row['id'];
     $task_array[$i]['parent'] = $row['parent'];
     ++$task_count;
-  
+
     //if this is a subtask, store the parent id 
     if($row['parent'] != 0 ) {
       $parent_array[$parent_count] = $row['parent'];
       ++$parent_count;
     }
   }
-    
+
   //record first match
   $match_array[$index] = $taskid;
   ++$index;
-  
+
   //if selected task has children (subtasks), iterate recursively to find them 
   if(in_array($taskid, (array)$parent_array ) ){
     find_children($taskid);
   }
-  
+
   return;
 }
 
@@ -85,15 +83,15 @@ function find_tasks( $taskid, $projectid ) {
 function find_children($parent ) {
 
   global $task_array, $parent_array, $match_array, $index, $task_count;
-       
+
   for($i=0 ; $i < $task_count ; ++$i ) {
-  
+
     if($task_array[$i]['parent'] != $parent ){
       continue;
     }
     $match_array[$index] = $task_array[$i]['id'];
     ++$index;
-    
+
     //if this post has children (subtasks), iterate recursively to find them
     if(in_array($task_array[$i]['id'], (array)$parent_array ) ){
       find_children($task_array[$i]['id'] );
@@ -161,7 +159,7 @@ for($i=0 ; $i < $index ; ++$i ) {
 
   //delete all files physically
   $q = db_query('SELECT fileid, filename FROM '.PRE.'files WHERE taskid='.$match_array[$i] );
-  
+
   for($j=0 ; $file_row = @db_fetch_array($q, $j ) ; ++$j ) {
 
     if(file_exists(FILE_BASE.'/'.$file_row['fileid'].'__'.$file_row['filename'] ) ) {
@@ -171,17 +169,17 @@ for($i=0 ; $i < $index ; ++$i ) {
 
   //delete all files attached to it in the database
   db_query('DELETE FROM '.PRE.'files WHERE taskid='.$match_array[$i] );
- 
+
   //delete item
   db_query('DELETE FROM '.PRE.'tasks WHERE id='.$match_array[$i] );
 }
 
 if($row['parent'] != 0 ){
-  
+
   //set the new completed percentage project record
   $percent_completed = round(percent_complete($row['projectid'] ) );
   db_query('UPDATE '.PRE.'tasks SET completed='.$percent_completed.' WHERE id='.$row['projectid'] );
-  
+
   //for completed project set the completion time
   if($percent_completed == 100 ){
     $completion_time = db_result(db_query('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid='.$row['projectid'] ), 0, 0 );
@@ -194,11 +192,11 @@ db_commit();
 
 //inform the user that his task has been deleted by an admin
 if(($row['owner'] != 0 ) && (UID != $row['owner']) ) {
-  
+
   include_once(BASE.'includes/email.php' );
   include_once(BASE.'includes/time.php' );
   include_once(BASE.'lang/lang_email.php' );
-  
+
   switch ($row['parent']) {
     case 0:
       $name_project = $row['name'];
@@ -206,7 +204,7 @@ if(($row['owner'] != 0 ) && (UID != $row['owner']) ) {
       $title = $title_delete_project;
       $email = $email_delete_project;
       break;
-      
+
     default:
       $name_project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$row['projectid'] ), 0, 0 );
       $name_task = $row['name'];
@@ -214,7 +212,7 @@ if(($row['owner'] != 0 ) && (UID != $row['owner']) ) {
       $email = $email_delete_task;
       break;
   }
-  
+
   switch($row['status'] ) {
     case 'created':
       $status = $task_state['new'];

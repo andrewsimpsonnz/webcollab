@@ -1,12 +1,11 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
-  
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-  Based on CoreAPM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -71,16 +70,16 @@ switch($_REQUEST['action'] ) {
     if(empty($_POST['name'] ) ){
       warning($lang['value_missing'], sprintf($lang['field_sprt'], $lang['taskgroup_name'] ) );
     }
-    
+
     $name        = safe_data($_POST['name']);
     $description = safe_data($_POST['description']);
-    
+
     //check for duplicates
     if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'taskgroups WHERE name=\''.$name.'\'' ), 0, 0 ) > 0 )
       warning($lang['add_taskgroup'], sprintf($lang['taskgroup_dup_sprt'], $name ) );
 
     db_query('INSERT INTO '.PRE.'taskgroups(name, description) VALUES (\''.$name.'\', \''.$description.'\')' );
-    
+
     break;
 
 
@@ -90,17 +89,17 @@ switch($_REQUEST['action'] ) {
     if(! @safe_integer($_POST['taskgroupid'] ) ){
       error('Taskgroup submit', 'Not a valid value for taskgroupid' );
     }
-    
+
     if(empty($_POST['name'] ) ){
       warning($lang['value_missing'], sprintf($lang['field_sprt'], $lang['taskgroup_name'] ) );
     }
-    
+
     $name        = safe_data($_POST['name'] );
     $description = safe_data($_POST['description'] );
     $taskgroupid = $_POST['taskgroupid'];
 
     db_query('UPDATE '.PRE.'taskgroups SET name=\''.$name.'\', description=\''.$description.'\' WHERE id='.$taskgroupid );
-    
+
     break;
 
   //error case

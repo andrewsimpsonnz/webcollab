@@ -1,13 +1,11 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  
-  Based on file originally part of CoreAPM by Dennis Fleurbaaij 2001/2002
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -51,7 +49,7 @@ switch($_REQUEST['action'] ) {
   case 'download':
     include(BASE.'files/file_download.php' );
     break;
-    
+
   //upload a file
   case 'upload':
     create_top($lang['file_choose'], 0, 'userfile', 'userfile' );
@@ -64,8 +62,8 @@ switch($_REQUEST['action'] ) {
   case 'submit_del':
   case 'submit_upload':
     include(BASE.'files/file_submit.php' );
-    break;  
-  
+    break;
+
   //admin files
   case 'admin':
     create_top($lang['file_admin'] );
@@ -75,7 +73,7 @@ switch($_REQUEST['action'] ) {
     include(BASE.'files/file_admin.php' );
     create_bottom();
     break;
-        
+
   //Error case
   default:
     error('File action handler', 'Invalid request given' );
