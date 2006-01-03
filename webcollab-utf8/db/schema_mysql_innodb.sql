@@ -172,8 +172,8 @@ CREATE TABLE config (
 TYPE = InnoDB
 CHARACTER SET = utf8;
 
-CREATE TABLE login_attempt ( 
-	name VARCHAR(100) NOT NULL,                                               
+CREATE TABLE login_attempt (
+	name VARCHAR(100) NOT NULL,
 	ip VARCHAR(100) NOT NULL,
 	last_attempt DATETIME NOT NULL
 )

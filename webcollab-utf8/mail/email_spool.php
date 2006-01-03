@@ -1,8 +1,8 @@
 <?php
 /*
   $Id$
-  
-  (c) 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+
+  (c) 2005 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -45,18 +45,18 @@ function email($to, $subject, $message ) {
     //no email address specified - end function
     return;
   }
-  
+
   //serialize array for storage
   $to_serial = serialize($to );
-  
+
   //database escaping
   foreach(array('to_serial', 'subject', 'message' ) as $var ) {
     ${$var} = db_escape_string(${$var} );
   }
-  
+
   //spool message
-  db_query('INSERT INTO '.PRE.'mail_spool(mail_to, subject, message ) VALUES(\''.$to_serial.'\', \''.$subject.'\', \''.$message.'\')' ); 
-  
+  db_query('INSERT INTO '.PRE.'mail_spool(mail_to, subject, message ) VALUES(\''.$to_serial.'\', \''.$subject.'\', \''.$message.'\')' );
+
   return;
 }
 

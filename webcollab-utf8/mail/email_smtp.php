@@ -1,11 +1,12 @@
 <?php
 /*
   $Id$
-  
-  (c) 2003 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -85,17 +86,17 @@ function email($to, $subject, $message ) {
   //sometimes the SMTP server takes a little longer to respond
   // Windows does not have support for this timeout function before PHP ver 4.3.0
   if(function_exists('socket_set_timeout') )
-    @socket_set_timeout($connection, 10, 0 );  
-  
+    @socket_set_timeout($connection, 10, 0 );
+
   if(strncmp('220', response(), 3 ) ) {
     debug();
-  } 
-    
+  }
+
   //do extended hello (EHLO)
   fputs($connection, 'EHLO '.$_SERVER['SERVER_NAME']."\r\n" );
   $log .= "C: EHLO ".$_SERVER['SERVER_NAME']."\n";
   $capability = response();
-  
+
   //if EHLO (RFC 1869) not working, try the older HELO (RFC 821)...
   if(strncmp('250', $capability, 3 ) ) {
     fputs($connection, "HELO ".$_SERVER['SERVER_NAME']."\r\n" );
@@ -104,49 +105,49 @@ function email($to, $subject, $message ) {
     if(strncmp('250', response(), 3 ) )
       debug();
   }
-          
+
   //do TLS if required (This is EXPERIMENTAL!!)
   if(TLS == 'Y' ) {
     $capability = starttls($connection, $capability );
-  }  
-    
+  }
+
   //do SMTP_AUTH if required
   if(SMTP_AUTH == 'Y' ) {
     smtp_auth($connection, $capability );
   }
-  
-  //see if server is offering 8bit mime capability & pipelining    
+
+  //see if server is offering 8bit mime capability & pipelining
   if( ! strpos($capability, '8BITMIME' ) === false ) {
     $bit8 = true;
   }
-      
-  if( ! strpos($capability, 'PIPELINING' ) === false ) {    
+
+  if( ! strpos($capability, 'PIPELINING' ) === false ) {
     $pipelining = true;
   }
-      
+
   //arrange message - and set email encoding to 8BITMIME if we need to
   //(we *must* do this before 'MAIL FROM:' in case we need to set encoding to suit the message body)
   $message_lines  =& message($message, $email_encode, $message_charset, $body );
   $header_lines   = headers($to, $subject, $email_encode, $message_charset );
   $count_commands = 0;
-     
-  //envelope from  
+
+  //envelope from
   fputs($connection, 'MAIL FROM: <'.clean(EMAIL_FROM).'>'.$body."\r\n" );
-  $log .= 'C: MAIL FROM: '.EMAIL_FROM." $body \n"; 
+  $log .= 'C: MAIL FROM: '.EMAIL_FROM." $body \n";
   ++$count_commands;
-  
+
   if(! $pipelining ) {
     if(strncmp('250', response(), 3 ) ) {
       debug();
     }
   }
-  
+
   //envelope to
   foreach((array)$to as $address ) {
     fputs($connection, 'RCPT TO: <'.trim(clean($address ) ).">\r\n" );
     $log .= 'C: RCPT TO: '.$address."\n";
     ++$count_commands;
-    
+
     if(! $pipelining ) {
       if(strncmp('25', response(), 2 ) ){
         debug();
@@ -166,53 +167,53 @@ function email($to, $subject, $message ) {
   }
   else {
     //we have been pipelining ==> roll back & check the server responses
-    for($i=0 ; $i<$count_commands ; ++$i ) {      
-      
+    for($i=0 ; $i<$count_commands ; ++$i ) {
+
       switch(substr(response(), 0, 3 ) ) {
         case '250':
         case '251':
           //correct response for most commands
           break;
-          
+
         case '354':
           //correct response for final DATA command
           if($i == ($count_commands - 1 ) ){
             break(2);
-          }  
-          else { 
+          }
+          else {
             debug('Pipelining: Bad response to DATA' );
           }
           break;
-            
+
         default:
           //anything else is no good
           debug('Pipelining: Bad response to MAIL FROM or RCPT TO');
       }
     }
   }
-  
+
   //send headers & message to server (with correct end-of-line \r\n)
   foreach(array('header_lines', 'message_lines' ) as $var ) {
-    $log .= "C: Sending $var...\n";    
+    $log .= "C: Sending $var...\n";
     foreach(${$var} as $line_out ) {
       fputs($connection, "$line_out\r\n" );
     }
   }
-  
+
   //ok all the message data has been sent - finish with a period on it's own line
   fputs($connection, ".\r\n" );
   $log .= "C: End of message\n";
-  
+
   if(! $pipelining) {
     if(strncmp('250', response(), 3 ) ) {
       debug();
     }
   }
-  
+
   //say bye bye
   fputs($connection, "QUIT\r\n" );
   $log .= "C: QUIT\n";
-  
+
   if(! $pipelining) {
     if(strncmp('221', response(), 3 ) ) {
       debug();
@@ -251,17 +252,17 @@ function clean($encoded ) {
 
   //reinstate encoded html back to original text
   $text = @html_entity_decode($encoded, ENT_NOQUOTES, CHARACTER_SET );
-  
+
   //reinstate decimal encoded html that html_entity_decode() can't handle...
   $text = preg_replace('/&#\d{2,5};/e', "utf8_entity_decode('$0')", $text );
-  
-  //characters previously escaped/encoded to avoid SQL injection/CSS attacks are reinstated. 
-  //$trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=' );  
+
+  //characters previously escaped/encoded to avoid SQL injection/CSS attacks are reinstated.
+  //$trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=' );
   //$text = strtr($text, $trans );
-  
+
   //remove any dangerous tags that exist after decoding
   $text = preg_replace('/(<\/?\s*)(APPLET|SCRIPT|EMBED|FORM|\?|%)(\w*|\s*)([^>]*>)/i', "\\1****\\3\\4", $text );
-  
+
   return $text;
 }
 
@@ -345,7 +346,7 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   //clean return addresses
   $from     = clean(EMAIL_FROM);
   $reply_to = clean(EMAIL_REPLY_TO);
-  
+
   //get rid of any line breaks (\r\n, \n, \r) in subject line
   $subject = str_replace(array("\r\n", "\r", "\n"), ' ', $subject );
   //reinstate any HTML in subject back to text
@@ -361,7 +362,7 @@ function headers($to, $subject, $email_encode, $message_charset ) {
     $line = "\t".substr($line, $pos + 1 );
   }
   $headers[] = $line;
-  //'from' header 
+  //'from' header
   $headers = array_merge($headers, header_encoding('From :', ABBR_MANAGER_NAME, '<'.$from.'>' ) );
   //reply to
   $headers[] = 'Reply-To: '.$reply_to;
@@ -393,19 +394,19 @@ function header_encoding($header_type, $header, $header_suffix='' ) {
       //no encoding required
       $header_lines = array(substr($header_type .$header .$header_suffix, 0, 985 ) );
       break;
-  
+
     case true:
       //base64 encoding
       $line = base64_encode($header );
       //format follows RFC 2047
       $s = $header_type;
-      //lines are no longer than 76 characters including '?' and '=' 
-      //  76 - 10[=?UTF-8?B?] - 2[?=] = 64 encoded characters per line 
-      //  - any additional new lines start with <space>       
+      //lines are no longer than 76 characters including '?' and '='
+      //  76 - 10[=?UTF-8?B?] - 2[?=] = 64 encoded characters per line
+      //  - any additional new lines start with <space>
       //  - each encoded line portion is rounded to multiple of 4 octets
       $max_len = floor((76 - (strlen(CHARACTER_SET) + 5 ) - 2) / 4 ) * 4;
       while(strlen($line) > $max_len ) {
-        $header_lines[] = $s."=?".CHARACTER_SET."?B?".substr($line, 0, $max_len )."?="; 
+        $header_lines[] = $s."=?".CHARACTER_SET."?B?".substr($line, 0, $max_len )."?=";
         $line = substr($line, $max_len );
         $s = ' ';
       }
@@ -425,17 +426,17 @@ function response() {
   global $connection, $log;
 
   $res = '';
-  
+
   while($str = fgets($connection, 256 ) ) {
-    $res .= $str;    
+    $res .= $str;
     $log .= 'S : '.$str;
-    
+
     //<space> after three digit code indicates this is last line of data ("-" for more lines)
     if(strpos($str, ' ' ) == 3 ) {
       break;
     }
   }
-  
+
   return $res;
 }
 
