@@ -64,6 +64,8 @@ switch($_REQUEST['action'] ) {
   case 'search':
     create_top($lang['info'] );
     include(BASE.'includes/mainmenu.php');
+    include(BASE.'forum/forum_menubox.php');
+    include(BASE.'forum/forum_searchbox.php');
     goto_main();
     include(BASE.'forum/forum_search.php');
     create_bottom();
