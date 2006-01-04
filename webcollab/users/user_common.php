@@ -86,7 +86,7 @@ function user_locale_check($locale ) {
   //language list
   $available_lang = array_keys($lang_list);
 
-  if(! array_search($locale, $available_lang ) ) {
+  if(array_search($locale, $available_lang ) === false ) {
     warning("User submit", "Language file ".$locale." does not exist" );
   }
 
