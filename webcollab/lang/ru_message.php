@@ -70,9 +70,7 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['login']                      = "Вход";
     $lang['error']                      = "Ашипка";
     $lang['no_login']                   = "Доступ запрещен; неверное имя или пароль";
-//**    
     $lang['redirect_sprt']              = "Вы автоматически вернетесь на страницу входа через %d секунд";
-//**
     $lang['login_now']                  = "Нажмите здесь для возврата к регистрации";   
     $lang['please_login']               = "Зарегистрируйтесь";
     $lang['go']                         = "Прыг!";
@@ -96,12 +94,10 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['set_email_group']            = "Всегда сообщять по email группу пользователей при изменениях?";
 //**    
     $lang['project_listing_order']      = "Порядок сортировки проектов";
-//**    
     $lang['task_listing_order']         = "Порядок сортировки заданий"; 
     $lang['configuration']              = "Конфигурация";
 
 //archive
-//**
     $lang['archived_projects']          = "Архивные проекты";    
 
 //contacts
@@ -164,11 +160,17 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['forum_submit']               = "Форум: Подтверждение";
     $lang['no_message']                 = "Ничего нет, пусто! Вернитесь назад и поробуйте еще раз";
     $lang['add_reply']                  = "Добавить ответ";
-//**  
     $lang['last_post_sprt']             = "Последнее сообщение от %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**   
     $lang['recent_posts']               = "Новое сообщение в форуме";      
-    
+//**
+    $lang['recent_posts']               = "Recent forum posts";
+//**
+    $lang['forum_search']               = "Forum search";
+//**
+    $lang['no_results']                 = "No results found for '%s'";
+//**
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                     = "Отчет";
     $lang['warning']                    = "<h1>Извините!</h1><p>Мы не можем обслужить ваш запрос прямо сейчас. Поробуйте позже.</p>";
@@ -178,8 +180,7 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['calendar']                   = "Календарь";
     $lang['log_out']                    = "Выход";
     $lang['main_menu']                  = "Главное меню";
-//**
-    $lang['archive']                    = "Архив";   
+    $lang['archive']                    = "Архив";
     $lang['user_homepage_sprt']         = "%s - Управление проектами";
     $lang['missing_field_javascript']   = "Заполните пропущенные поля";
     $lang['invalid_date_javascript']    = "Пожалуйста, выбирайте подходящие даты из календаря";
@@ -228,12 +229,9 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['email']                      = "E-mail";
     $lang['admin']                      = "Администратор";
     $lang['private_user']               = "Засекречен";
- //**
     $lang['normal_user']                = "Обычный пользователь"; 
     $lang['is_admin']                   = "Будет администратором?";
- //**
     $lang['is_guest']                   = "Будет гостем?";
- //**
     $lang['guest']                      = "Гость";
     $lang['user_info']                  = "Пользователь: Информация";
     $lang['deleted_users']              = "Удаленные пользователи";
@@ -325,7 +323,6 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['add_project']                = "Начать проект";
     $lang['clone_project']              = "Клонировать проект";
     $lang['clone_task']                 = "Клонировать задание";
-//**
     $lang['quick_jump']                 = "Быстрый переход";
     $lang['no_edit']                    = "Вы не имеете никакого отношения к этому, а потому и редактировать не можете";
     $lang['uncategorised']              = "Uncategorised";
@@ -335,13 +332,10 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['delete_task']                = "Удалить задание";
     $lang['project_options']            = "Проект: опции";
     $lang['task_options']               = "Задание: опции";
-//**    
     $lang['javascript_archive_project'] = "Вы собираетесь отправить проект %s в архив.  Вы уверены?";
-//**    
     $lang['archive_project']            = "Архивировать проект";
     $lang['task_navigation']            = "Задания: Навигация";
-//**
-    $lang['new_task']                   = "Новое задание";    
+    $lang['new_task']                   = "Новое задание";
     $lang['no_projects']                = "Нет ни одного проекта что бы показать";
     $lang['show_all_projects']          = "Показать все проекты";
     $lang['show_active_projects']       = "Показать только проекты в работе";
@@ -398,9 +392,9 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['calendar']                   = "Календарь";
     $lang['normal_version']             = "Нормальный вид";
     $lang['print_version']              = "Версия для печати";
-//**    
     $lang['condensed_view']             = "Свернуть";
-//**    
     $lang['full_view']                  = "Развернуть";
+//**
+    $lang['icalendar']                  = "iCalendar";
 
 ?>

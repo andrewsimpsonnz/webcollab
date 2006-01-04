@@ -177,10 +177,18 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['forum_submit']                 = "[Forum submit]";
     $lang['no_message']                   = "Няма съобщение! Моля, върнете се обратно и пробвайте пак";
     $lang['add_reply']                    = "Добави отговор";
-//**  
+//**
     $lang['last_post_sprt']               = "Last post %s"; //Note to translators: context is 'Last post 2004-Dec-22";
-//**   
+//**
     $lang['recent_posts']                 = "Recent forum posts";
+//**
+    $lang['recent_posts']                 = "Recent forum posts";
+//**
+    $lang['forum_search']                 = "Forum search";
+//**
+    $lang['no_results']                   = "No results found for '%s'";
+//**
+    $lang['search_results']               = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
 
 //includes
     $lang['report']                       = "Съобщение";
@@ -403,9 +411,10 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['calendar']                     = "Календар";
     $lang['normal_version']               = "Нормална версия";
     $lang['print_version']                = "Версия за печат";
-//**    
     $lang['condensed_view']               = "Condensed view";
-//**    
+//**
     $lang['full_view']                    = "Full view";
+//**
+    $lang['icalendar']                    = "iCalendar";
 
 ?>

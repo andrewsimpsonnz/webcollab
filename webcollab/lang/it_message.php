@@ -186,11 +186,19 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['forum_submit']                 = "Invia Forum";
     $lang['no_message']                   = "Nessun messaggio! Torna indietro e riprova";
     $lang['add_reply']                    = "Aggiungi risposta";
-//**  
+//**
     $lang['last_post_sprt']               = "Last post %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**   
+//**
     $lang['recent_posts']                 = "Recent forum posts";
-    
+//**
+    $lang['recent_posts']                 = "Recent forum posts";
+//**
+    $lang['forum_search']                 = "Forum search";
+//**
+    $lang['no_results']                   = "No results found for '%s'";
+//**
+    $lang['search_results']               = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                       = "Report";
     $lang['warning']                      = "<h1>Spiacente!</h1><p>Non è possibile processare la tua richiesta adesso. Riprova più tardi.</p>";
@@ -424,5 +432,7 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['condensed_view']               = "Condensed view";
 //**    
     $lang['full_view']                    = "Full view";
+//**
+    $lang['icalendar']                    = "iCalendar";
 
 ?>

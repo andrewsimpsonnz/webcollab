@@ -176,7 +176,15 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ' );
     $lang['add_reply']                  = "Προσθέστε απάντηση";
     $lang['last_post_sprt']             = "Τελευταία αποστολή %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']               = "Τελευταίες αποστολές στο forum";      
-    
+//**
+    $lang['recent_posts']               = "Recent forum posts";
+//**
+    $lang['forum_search']               = "Forum search";
+//**
+    $lang['no_results']                 = "No results found for '%s'";
+//**
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                     = "Αναφορά";
     $lang['warning']                    = "<h1>Συγνώμη!</h1><p>Δεν μπορέσαμε να προωθήσουμε το αίτημα σας αυτή τη στιγμή. Παρακαλούμε προσπαθήστε αργότερα.</p>";
@@ -401,5 +409,7 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ' );
     $lang['print_version']              = "Έκδοση εκτύπωσης";
     $lang['condensed_view']             = "Τμηματική προβολή";
     $lang['full_view']                  = "Ολοκληρωμένη προβολή";
+//**
+    $lang['icalendar']                  = "iCalendar";
 
 ?>

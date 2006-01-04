@@ -30,15 +30,15 @@
 //required language encodings
 define('CHARACTER_SET', "ISO-8859-1" );
 
-//this is the regex for input validation filter used in common.php 
-$validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s"; //ISO-8859-x 
+//this is the regex for input validation filter used in common.php
+$validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s"; //ISO-8859-x
 
 //dates
 $month_array = array (NULL, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' );
 $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
 
 //task states
- 
+
  //priorities
     $task_state['dontdo']               = "Don't do";
     $task_state['low']                  = "Low";
@@ -58,7 +58,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $task_state['planned_project']      = "Planned project (not active)";
     $task_state['no_deadline_project']  = "No deadline set";
     $task_state['active_project']       = "Active project";
-    
+
 //common items
     $lang['description']                = "Description";
     $lang['name']                       = "Name";
@@ -85,13 +85,11 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['login']                      = "Login";
     $lang['error']                      = "Error";
     $lang['no_login']                   = "Access denied; incorrect login or password";
-//**    
     $lang['redirect_sprt']              = "You will automatically return to Login after a %d second delay";
-//**
-    $lang['login_now']                  = "Please click here to return to Login now";   
+    $lang['login_now']                  = "Please click here to return to Login now";
     $lang['please_login']               = "Please log in";
     $lang['go']                         = "Go!";
-    
+
 //graphic items
     $lang['late_g']                     = "&nbsp;LATE&nbsp;";
     $lang['new_g']                      = "&nbsp;NEW&nbsp;";
@@ -109,15 +107,12 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['allow_group_edit']           = "Allow all in usergroup to edit?";
     $lang['set_email_owner']            = "Always email owner with changes?";
     $lang['set_email_group']            = "Always email usergroup with changes?";
-//**    
     $lang['project_listing_order']      = "Project listing order";
-//**    
-    $lang['task_listing_order']         = "Task listing order"; 
+    $lang['task_listing_order']         = "Task listing order";
     $lang['configuration']              = "Configuration";
 
 //archive
-//**
-    $lang['archived_projects']          = "Archived Projects";    
+    $lang['archived_projects']          = "Archived Projects";
 
 //contacts
     $lang['firstname']                  = "Firstname:";
@@ -163,7 +158,6 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['file_too_big_sprt']          = "The maximum upload size is %s bytes.  Your upload was too big and has been deleted.";
     $lang['del_file_javascript_sprt']   = "Are you sure you want to delete %s ?";
 
-
  //forum
     $lang['orig_message']               = "Original message:";
     $lang['post']                       = "Post it!";
@@ -179,11 +173,15 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['forum_submit']               = "Forum submit";
     $lang['no_message']                 = "No message! Please go back and try again";
     $lang['add_reply']                  = "Add reply";
-//**  
     $lang['last_post_sprt']             = "Last post %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**   
-    $lang['recent_posts']               = "Recent forum posts";      
-    
+    $lang['recent_posts']               = "Recent forum posts";
+//**
+    $lang['forum_search']               = "Forum search";
+//**
+    $lang['no_results']                 = "No results found for '%s'";
+//**
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                     = "Report";
     $lang['warning']                    = "<h1>Sorry!</h1><p>We are unable to process your request right now. Please try again later.</p>";
@@ -193,8 +191,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['calendar']                   = "Calendar";
     $lang['log_out']                    = "Log out";
     $lang['main_menu']                  = "Main menu";
-//**
-    $lang['archive']                    = "Archive";   
+    $lang['archive']                    = "Archive";
     $lang['user_homepage_sprt']         = "%s's homepage";
     $lang['missing_field_javascript']   = "Please enter a value for the missing field";
     $lang['invalid_date_javascript']    = "Please choose a valid calendar date";
@@ -243,12 +240,9 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['email']                      = "E-mail";
     $lang['admin']                      = "Admin";
     $lang['private_user']               = "Private user";
- //**
-    $lang['normal_user']                = "Normal user"; 
+    $lang['normal_user']                = "Normal user";
     $lang['is_admin']                   = "Is an admin?";
- //**
     $lang['is_guest']                   = "Is a guest?";
- //**
     $lang['guest']                      = "Guest user";
     $lang['user_info']                  = "User information";
     $lang['deleted_users']              = "Deleted users";
@@ -340,7 +334,6 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['add_project']                = "Add project";
     $lang['clone_project']              = "Clone project";
     $lang['clone_task']                 = "Clone task";
-//**
     $lang['quick_jump']                 = "Quick Jump";
     $lang['no_edit']                    = "You do not own this item and therefore you may not edit it";
     $lang['uncategorised']              = "Uncategorised";
@@ -350,13 +343,10 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['delete_task']                = "Delete task";
     $lang['project_options']            = "Project options";
     $lang['task_options']               = "Task options";
-//**    
     $lang['javascript_archive_project'] = "This will archive project %s.  Are you sure?";
-//**    
     $lang['archive_project']            = "Archive project";
     $lang['task_navigation']            = "Task navigation";
-//**
-    $lang['new_task']                   = "New task";    
+    $lang['new_task']                   = "New task";
     $lang['no_projects']                = "There are no projects to view";
     $lang['show_all_projects']          = "Show all projects";
     $lang['show_active_projects']       = "Show only active projects";
@@ -410,12 +400,10 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['note_clone']                 = "Note: The task will be cloned as a new project";
 
 //bits 'n' pieces
-    $lang['calendar']                   = "Calendar";
     $lang['normal_version']             = "Normal version";
     $lang['print_version']              = "Print version";
-//**    
     $lang['condensed_view']             = "Condensed view";
-//**    
     $lang['full_view']                  = "Full view";
-
+//**
+    $lang['icalendar']                  = "iCalendar";
 ?>

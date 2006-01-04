@@ -38,7 +38,7 @@ $month_array = array (NULL, 'Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Au
 $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
 
 //task states
- 
+
  //priorities
     $task_state['dontdo']               = "Gör inget";
     $task_state['low']                  = "Låg";
@@ -58,7 +58,7 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $task_state['planned_project']      = "Planerat projekt (inte aktivt)";
     $task_state['no_deadline_project']  = "Slutdatum inte satt";
     $task_state['active_project']       = "Aktivt projekt";
-    
+
 //common items
     $lang['description']                = "Beskrivning";
     $lang['name']                       = "Namn";
@@ -89,7 +89,7 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['login_now']                  = "Klicka här för att återvända till inloggning";   
     $lang['please_login']               = "Var god logga in";
     $lang['go']                         = "Kör!";
-    
+
 //graphic items
     $lang['late_g']                     = "&nbsp;SEN&nbsp;";
     $lang['new_g']                      = "&nbsp;NY&nbsp;";
@@ -176,7 +176,15 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['add_reply']                  = "Lägg till svar";
     $lang['last_post_sprt']             = "Senaste inlägg %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']               = "Aktuella foruminlägg";      
-    
+//**
+    $lang['recent_posts']               = "Recent forum posts";
+//**
+    $lang['forum_search']               = "Forum search";
+//**
+    $lang['no_results']                 = "No results found for '%s'";
+//**
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                     = "Rapport";
     $lang['warning']                    = "<h1>Tyvärr!</h1><p>Vi kan inte ta emot din begäran just nu. Var god försök igen senare.</p>";
@@ -399,5 +407,7 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['print_version']              = "För utskrift";
     $lang['condensed_view']             = "Komprimerad vy";
     $lang['full_view']                  = "Fullständig vy";
+//**
+    $lang['icalendar']                  = "iCalendar";
 
 ?>

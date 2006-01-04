@@ -86,12 +86,9 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['login']                        = "Connexion";
     $lang['error']                        = "Erreur";
     $lang['no_login']                     = "Accès refusé, utilisateur ou mot de passe incorrect";
-//**    
     $lang['redirect_sprt']                = "Vous serez automatiquement redirigé vers l'écran de connexion<br />&nbsp;&nbsp;&nbsp;après un délais de %d secondes";
-//**
     $lang['login_now']                    = "Veuillez cliquer ici pour retourner à l'écran de login immédiatement";
     $lang['please_login']                 = "Merci de vous connecter";
-//**    
     $lang['go']                           = "Go!";
 
  //graphic items
@@ -111,9 +108,7 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['allow_group_edit']             = "Autoriser l'édition pour tous les membres du groupes d'utilisateurs?";
     $lang['set_email_owner']              = "Toujours faire part des modifications (par courriel) au propriétaire?";
     $lang['set_email_group']              = "Toujours faire part des modifications (par courriel)au groupes d'utilisateurs?";
-//**
     $lang['project_listing_order']        = "Ordre d'affichage des projets";
-//**    
     $lang['task_listing_order']           = "Ordre d'affichage des tâches";
     $lang['configuration']                = "Configuration";
 
@@ -181,10 +176,16 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['forum_submit']                 = "Soumettre au forum";
     $lang['no_message']                   = "Pas de message! Merci de revenir en arrière et d'essayer à nouveau";
     $lang['add_reply']                    = "Ajouter une réponse";
-//**  
     $lang['last_post_sprt']               = "Dernier message %s"; //Note to translators: context is 'Last post 2004-Dec-22";
-//**   
     $lang['recent_posts']                 = "Messages récents";
+//**
+    $lang['recent_posts']                 = "Recent forum posts";
+//**
+    $lang['forum_search']                 = "Forum search";
+//**
+    $lang['no_results']                   = "No results found for '%s'";
+//**
+    $lang['search_results']               = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
 
  //includes
     $lang['report']                       = "Rapport";
@@ -195,8 +196,7 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['calendar']                     = "Calendrier";
     $lang['log_out']                      = "Déconnection";
     $lang['main_menu']                    = "Menu Principal";
-//**
-    $lang['archive']                      = "Archive";   
+    $lang['archive']                      = "Archive";
     $lang['user_homepage_sprt']           = "Profile: %1\$s";
     $lang['missing_field_javascript']     = "Complêtez, s\'il vous plait, le champ manquant ";
     $lang['invalid_date_javascript']      = "Choisissez une date valide";
@@ -342,7 +342,6 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['add_project']                  = "Ajouter un projet";
     $lang['clone_project']                = "Cloner le projet";
     $lang['clone_task']                   = "Cloner la tâche";
-//**
     $lang['quick_jump']                   = "Accès Rapide";
     $lang['no_edit']                      = "Vous n'êtes pas propriétaire de cet élément et vous ne pouvez pas l'éditer. Demandez à l'administrateur, ou au propriétaire de ces tâches de le faire pour vous.";
     $lang['uncategorised']                = "Non classé";
@@ -352,12 +351,9 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['delete_task']                  = "Détruire la tâche";
     $lang['project_options']              = "Options Projet";
     $lang['task_options']                 = "Options tâche";
-//**    
     $lang['javascript_archive_project']   = "Ceci archivera le projet %s.  Voulez-vous continuer?";
-//**    
     $lang['archive_project']              = "Archiver le project";
     $lang['task_navigation']              = "Navigation tâches";
-//**
     $lang['new_task']                     = "Nouvelle Tâche";
     $lang['no_projects']                  = "Pas de projet à afficher";
     $lang['show_all_projects']            = "Montrer tous les projets";
@@ -416,9 +412,10 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['calendar']                     = "Calendrier";
     $lang['normal_version']               = "Version normale";
     $lang['print_version']                = "Version imprimable";
-//**    
     $lang['condensed_view']               = "Vue réduite";
-//**    
     $lang['full_view']                    = "Vue complète";
+//**
+    $lang['icalendar']                    = "iCalendar";
+
 
 ?>

@@ -58,7 +58,7 @@ $week_array = array('Ned', 'Pon', 'Uto', 'Sre', 'Èet', 'Pet', 'Sub' );
     $task_state['planned_project']      = "Planiran projekat (nije aktivan)";
     $task_state['no_deadline_project']  = "Bez krajnjeg roka";
     $task_state['active_project']       = "Aktivan projekat";
-    
+
 //common items
     $lang['description']                = "Opis";
     $lang['name']                       = "Ime";
@@ -85,13 +85,11 @@ $week_array = array('Ned', 'Pon', 'Uto', 'Sre', 'Èet', 'Pet', 'Sub' );
     $lang['login']                      = "Korisnièko ime";
     $lang['error']                      = "Gre¹ka";
     $lang['no_login']                   = "Pristup odbijen; netaèno korisnièko ime ili lozinka";
-//**    
     $lang['redirect_sprt']              = "Automatski æete biti vraæeni nazad na prijavljivanje posel pauze od %d sekundi";
-//**
     $lang['login_now']                  = "Molim vas kliknite ovde za vraæanje na prijavljivanje";   
     $lang['please_login']               = "Molim vas da se prijavite";
     $lang['go']                         = "Kreni!";
-    
+
 //graphic items
     $lang['late_g']                     = "&nbsp;KASNI&nbsp;";
     $lang['new_g']                      = "&nbsp;NOVO&nbsp;";
@@ -109,14 +107,11 @@ $week_array = array('Ned', 'Pon', 'Uto', 'Sre', 'Èet', 'Pet', 'Sub' );
     $lang['allow_group_edit']           = "Dozvoli svim korisnicima u korisnièkoj grupi da menjaju?";
     $lang['set_email_owner']            = "Uvek po¹alji vlasniku e-po¹tu sa promenama?";
     $lang['set_email_group']            = "Uvek po¹alji korisnicima e-po¹tu sa promenama?";
-//**    
     $lang['project_listing_order']      = "Listanje projekata po kategoriji";
-//**    
     $lang['task_listing_order']         = "Listanje zadataka po kategoriji"; 
     $lang['configuration']              = "Pode¹avanje";
 
 //archive
-//**
     $lang['archived_projects']          = "Arhivirani projekti";    
 
 //contacts
@@ -179,11 +174,17 @@ $week_array = array('Ned', 'Pon', 'Uto', 'Sre', 'Èet', 'Pet', 'Sub' );
     $lang['forum_submit']               = "Postavljanje poruke na forum";
     $lang['no_message']                 = "Nema poruke! Molim vas vratite se nazad i poku¹ajte ponovo";
     $lang['add_reply']                  = "Dodaj odgovor";
-//**  
     $lang['last_post_sprt']             = "Poslednja poruka %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**   
-    $lang['recent_posts']               = "Nedavne poruke na forumima";      
-    
+    $lang['recent_posts']               = "Nedavne poruke na forumima";
+//**
+    $lang['recent_posts']                = "Recent forum posts";
+//**
+    $lang['forum_search']                = "Forum search";
+//**
+    $lang['no_results']                  = "No results found for '%s'";
+//**
+    $lang['search_results']              = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                     = "Izve¹taj";
     $lang['warning']                    = "<h1>®ao nam je!</h1><p>Nismo u moguænosti da obradimo va¹ zahtev trenutno. Molim vas poku¹ajte ponovo kasnije.</p>";
@@ -193,8 +194,7 @@ $week_array = array('Ned', 'Pon', 'Uto', 'Sre', 'Èet', 'Pet', 'Sub' );
     $lang['calendar']                   = "Kalendar";
     $lang['log_out']                    = "Odjavi se";
     $lang['main_menu']                  = "Glavni meni";
-//**
-    $lang['archive']                    = "Arhiva";   
+    $lang['archive']                    = "Arhiva";
     $lang['user_homepage_sprt']         = "Glavna strana korisnika: %s";
     $lang['missing_field_javascript']   = "Molim vas unesite vrednost za nedostajuæe polje";
     $lang['invalid_date_javascript']    = "Molim vas odaberite ispravan kalendarski datum";
@@ -243,12 +243,9 @@ $week_array = array('Ned', 'Pon', 'Uto', 'Sre', 'Èet', 'Pet', 'Sub' );
     $lang['email']                      = "E-po¹ta";
     $lang['admin']                      = "Administrator";
     $lang['private_user']               = "Privatni korisnik";
- //**
     $lang['normal_user']                = "Normalan korisnik"; 
     $lang['is_admin']                   = "Da li je administrator?";
- //**
     $lang['is_guest']                   = "Da li je gost?";
- //**
     $lang['guest']                      = "Gost";
     $lang['user_info']                  = "Informacije o korisniku";
     $lang['deleted_users']              = "Izbrisan korisnik";
@@ -340,7 +337,6 @@ $week_array = array('Ned', 'Pon', 'Uto', 'Sre', 'Èet', 'Pet', 'Sub' );
     $lang['add_project']                = "Dodaj projekat";
     $lang['clone_project']              = "Kloniraj projekat";
     $lang['clone_task']                 = "Kloniraj zadatak";
-//**
     $lang['quick_jump']                 = "Brzi skok";
     $lang['no_edit']                    = "Vi niste vlasnik ovog unosa i stoga ga ne mo¾ete menjati";
     $lang['uncategorised']              = "Nekategorizovano";
@@ -350,12 +346,9 @@ $week_array = array('Ned', 'Pon', 'Uto', 'Sre', 'Èet', 'Pet', 'Sub' );
     $lang['delete_task']                = "Obri¹i zadatak";
     $lang['project_options']            = "Opcije projekta";
     $lang['task_options']               = "Opcije zadatka";
-//**    
     $lang['javascript_archive_project'] = "Ovo æe arhivirati projekat pod imenom %s. Da li ste sigurni?";
-//**    
     $lang['archive_project']            = "Arhiviraj projekat";
     $lang['task_navigation']            = "Navigacija kroz zadatke";
-//**
     $lang['new_task']                   = "Novi zadatak";    
     $lang['no_projects']                = "Ne postoji nijedan projekat";
     $lang['show_all_projects']          = "Prika¾i sve projekte";
@@ -413,9 +406,9 @@ $week_array = array('Ned', 'Pon', 'Uto', 'Sre', 'Èet', 'Pet', 'Sub' );
     $lang['calendar']                   = "Kalendar";
     $lang['normal_version']             = "Normalna verzija";
     $lang['print_version']              = "Verzija za ¹tampu";
-//**    
     $lang['condensed_view']             = "Sabijen pregled";
-//**    
     $lang['full_view']                  = "Pun pregled";
+//**
+    $lang['icalendar']                  = "iCalendar";
 
 ?>

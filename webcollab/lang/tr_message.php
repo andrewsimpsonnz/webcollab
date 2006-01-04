@@ -38,7 +38,7 @@ $month_array = array (NULL, 'Oca', 'Þub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Að
 $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
 
 //task states
- 
+
  //priorities
     $task_state['dontdo']               = "Yapma";
     $task_state['low']                  = "Düþük";
@@ -58,7 +58,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $task_state['planned_project']      = "Planlanmýþ proje (etkin deðil)";
     $task_state['no_deadline_project']  = "Son bitiþ tarihi belirlenmemiþ";
     $task_state['active_project']       = "Etkin proje";
-    
+
 //common items
     $lang['description']                = "Taným";
     $lang['name']                       = "Ad";
@@ -89,7 +89,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['login_now']                  = "Sisteme giriþ sayfasýna þimdi dönmek için lütfen buraya týklayýn";   
     $lang['please_login']               = "Lütfen sisteme girin";
     $lang['go']                         = "Git!";
-    
+
 //graphic items
     $lang['late_g']                     = "&nbsp;GECÝKMÝÞ&nbsp;";
     $lang['new_g']                      = "&nbsp;YENÝ&nbsp;";
@@ -176,7 +176,15 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['add_reply']                  = "Yanýt ekle";
     $lang['last_post_sprt']             = "Son mesaj: %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']               = "Yakýn zamanda gönderilmiþ forum mesajlarý";      
-    
+//**
+    $lang['recent_posts']               = "Recent forum posts";
+//**
+    $lang['forum_search']               = "Forum search";
+//**
+    $lang['no_results']                 = "No results found for '%s'";
+//**
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                     = "Rapor";
     $lang['warning']                    = "<h1>Özür dileriz!</h1><p>Þu anda isteðinizi yerine getiremiyoruz. Lütfen daha sonra tekrar deneyin.</p>";
@@ -400,5 +408,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['print_version']              = "Yazýcý sürümü";
     $lang['condensed_view']             = "Sýkýþtýrýlmýþ görünüm";
     $lang['full_view']                  = "Tam görünüm";
+//**
+    $lang['icalendar']                  = "iCalendar";
 
 ?>

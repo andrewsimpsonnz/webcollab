@@ -177,6 +177,14 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['add_reply']                   = "Antwort hinzufügen";
     $lang['last_post_sprt']              = "Letzter Beitrag %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']                = "Neueste Beiträge";
+//**
+    $lang['recent_posts']                = "Recent forum posts";
+//**
+    $lang['forum_search']                = "Forum search";
+//**
+    $lang['no_results']                  = "No results found for '%s'";
+//**
+    $lang['search_results']              = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
 
  //includes
     $lang['report']                      = "Report";
@@ -402,5 +410,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['print_version']               = "Druckversion";
     $lang['condensed_view']              = "Kurzansicht";
     $lang['full_view']                   = "Vollständige Ansicht";
+//**
+    $lang['icalendar']                   = "iCalendar";
 
 ?>

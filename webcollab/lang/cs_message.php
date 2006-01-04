@@ -176,7 +176,17 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Èt', 'Pá', 'So' );
     $lang['add_reply']                  = "Pøidat zprávu";
     $lang['last_post_sprt']             = "Poslední pøíspìvek: %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']               = "Nedávné pøíspìvky ve fóru";      
-    
+//**
+    $lang['last_post_sprt']             = "Last post %s"; //Note to translators: context is 'Last post 2004-Dec-22'
+//**
+    $lang['recent_posts']               = "Recent forum posts";
+//**
+    $lang['forum_search']               = "Forum search";
+//**
+    $lang['no_results']                 = "No results found for '%s'";
+//**
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                     = "Report";
     $lang['warning']                    = "<h1>Omlouváme se!</h1><p>V tuto chvýli nejsme schopní provést Vá¹ po¾adavek. Prosím zkuste to pozdìji.</p>";
@@ -400,5 +410,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Èt', 'Pá', 'So' );
     $lang['print_version']              = "Verze pro tisk";
     $lang['condensed_view']             = "Zkrácený výbìr";
     $lang['full_view']                  = "Plné zobrazení";
+//**
+    $lang['icalendar']                  = "iCalendar";
 
 ?>

@@ -178,6 +178,14 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['add_reply']                  = "Válasz hozzáadása";
     $lang['last_post_sprt']             = "Utolsó üzenet: %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']               = "Legutóbbi fórum üzenetek";      
+//**
+    $lang['recent_posts']               = "Recent forum posts";
+//**
+    $lang['forum_search']               = "Forum search";
+//**
+    $lang['no_results']                 = "No results found for '%s'";
+//**
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
     
  //includes
     $lang['report']                     = "Jelentés";
@@ -403,5 +411,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['print_version']              = "Nyomtatható verzió";
     $lang['condensed_view']             = "Áttekintõ nézet";
     $lang['full_view']                  = "Részletes nézet";
+//**
+    $lang['icalendar']                  = "iCalendar";
 
 ?>
