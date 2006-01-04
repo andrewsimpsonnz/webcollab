@@ -100,7 +100,7 @@ switch($_REQUEST['action'] ) {
     $password_unclean = trim($_POST['password'] );
 
     //get locale
-    $locale = (empty($_POST['locale']) ) ? LOCALE : user_locale_check(safe_data($_POST['locale']) );
+    $locale = (empty($_POST['locale']) ) ? LOCALE : user_locale_check(validate($_POST['locale']) );
 
     $email_raw = validate($_POST['email'] );
     if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $email_raw, $match ) ) || (strlen(trim($email_raw) ) > 200 ) ) {
@@ -197,7 +197,7 @@ switch($_REQUEST['action'] ) {
     $email_raw = validate($_POST['email'] );
 
     //get locale
-    $locale = (empty($_POST['locale']) ) ? LOCALE : user_locale_check(safe_data($_POST['locale']) );
+    $locale = (empty($_POST['locale']) ) ? LOCALE : user_locale_check(validate($_POST['locale']) );
 
     if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $email_raw, $match ) ) || (strlen(trim($email_raw) ) > 200 ) ) {
       warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST['email'] ) );
