@@ -54,7 +54,7 @@ $min = 0;
 
 if(empty($_REQUEST['string'] ) || strlen(trim($_REQUEST['string'] ) ) == 0 ) {
   //no results possible
-  $content .= "No results found<br /><br />\n";
+  $content .= sprintf($lang['no_results'], '' )."<br /><br />\n";
   $content .= search_input(); 
   new_box($lang['info'], $content ); 
   die;
@@ -69,7 +69,7 @@ $valid_string = validate($_REQUEST['string'] );
 $valid_string = substr($valid_string, 0, 100 );
 
 //convert to HTML and line breaks to match common.php conversion 
-$trans = array('<'=>'&lt;', '>'=>'&gt;', '%'=>'&#037;', "\r"=>' ', "\n"=>'' );
+$trans = array('<'=>'&lt;', '>'=>'&gt;', '%'=>'&#037;', "\r"=>'', "\n"=>'' );
 $valid_string = strtr($valid_string, $trans );
 
 //quote for regex terms
@@ -114,17 +114,17 @@ $total = db_result($q, 0, 0 );
 
 if($total == 0 ) {
   //no results
-  $content .= "No results found for '".$valid_string."'<br /><br />\n";
+  $content .= sprintf($lang['no_results'], $valid_string )."<br /><br />\n";
   $content .= search_input();
-  
+
   new_box($lang['info'], $content ); 
   die;
 }
 
 $min = ($min > $total ) ? 0 : $min;
-$max = ($total > $min + 10 ) ? ($min + 10) : $total; 
+$max = ($total > $min + 10 ) ? ($min + 10) : $total;
 
-$q = db_query('SELECT '.PRE.'forum.taskid AS taskid, 
+$q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
                       '.PRE.'forum.posted AS posted,
                       '.PRE.'forum.text AS text,
                       '.PRE.'tasks.name AS taskname,
@@ -139,8 +139,7 @@ $q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
                       'ORDER BY posted DESC LIMIT '.($max - $min).' OFFSET '.$min );
 
 $content .= "<table class=\"celldata\">\n".
-            "<tr><td>Found ".$total." results for \"".$string."\"<br />\n".
-            "Showing results ".($min + 1)." to ".$max."<br /><br />\n";
+            "<tr><td>".sprintf($lang['search_results'], $total, $string, ($min + 1), $max )."<br /><br />\n";
 
 $content .= "<ul>\n";
 
@@ -203,6 +202,6 @@ if($min > 0 || $max < $total ) {
 
 $content .= "</td></tr></table>\n";
 
-new_box($lang['info'], $content, 'boxdata2' ); 
+new_box($lang['forum_search'], $content, 'boxdata2' ); 
 
 ?>
