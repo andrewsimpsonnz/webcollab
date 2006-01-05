@@ -2,9 +2,10 @@
 /*
   $Id$
 
+ (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-  This file created 2003 by Andrew Simpson.
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -37,13 +38,13 @@ else {
 
 //initialise variables
 $lang = array();
- 
+
 switch($locale ) {
 
   case 'en':
     include(BASE.'lang/en_message.php' );
     break;
-  
+
   case 'bg':
     include(BASE.'lang/bg_message.php' );
     break;
@@ -83,11 +84,11 @@ switch($locale ) {
   case 'it':
     include(BASE.'lang/it_message.php' );
     break;
-  
+
   case 'ja':
     include(BASE.'lang/ja_message.php' );
     break;
-    
+
   case 'ko':
     include(BASE.'lang/ko_message.php' );
     break;
@@ -99,7 +100,7 @@ switch($locale ) {
   case 'ru':
     include(BASE.'lang/ru_message.php' );
     break;
-        
+
   case 'se':
     include(BASE.'lang/se_message.php' );
     break;
@@ -107,19 +108,19 @@ switch($locale ) {
   case 'sr':
     include(BASE.'lang/sr_message.php' );
     break;
-  
+
   case 'tr':
     include(BASE.'lang/tr_message.php' );
     break;
-  
+
   case 'zh-hk':
     include(BASE.'lang/zh-hk_message.php' );
     break;
-      
+
   case 'zh-cn':
     include(BASE.'lang/zh-cn_message.php' );
     break;
-      
+
   default:
     include(BASE.'lang/en_message.php' );
     break;

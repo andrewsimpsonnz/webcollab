@@ -2,6 +2,8 @@
 /*
   $Id$
 
+ (c) 2005 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+
   WebCollab
   ---------------------------------------
   This file created 2003 by Andrew Simpson.
@@ -23,10 +25,11 @@
 
   Creates a list of languages for the Unicode version of WebCollab
 
+  Note:  This is the non-Unicode version of this file.
+
 */
 
-
-//Not used in this version...
+//Not used in this version... only used in the Unicode versions
 
 $lang_list = array();
 

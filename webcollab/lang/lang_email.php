@@ -2,9 +2,10 @@
 /*
   $Id$
 
+ (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-  This file created 2003 by Andrew Simpson.
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -25,7 +26,7 @@
 
 */
 
-if(! defined('LOCALE' ) ) {
+if(! defined('LOCALE_USER' ) ) {
   die('Config file not loaded properly for languages' );
 }
 
@@ -34,7 +35,7 @@ switch(LOCALE ) {
   case 'en':
     include(BASE.'lang/en_email.php' );
     break;
-      
+
   case 'bg':
     include(BASE.'lang/bg_email.php' );
     break;
@@ -74,7 +75,7 @@ switch(LOCALE ) {
   case 'it':
     include(BASE.'lang/it_email.php' );
     break;
-  
+
   case 'ja':
     include(BASE.'lang/ja_email.php' );
     break;
@@ -90,11 +91,11 @@ switch(LOCALE ) {
   case 'ru':
     include(BASE.'lang/ru_email.php' );
     break;
-  
+
   case 'se':
     include(BASE.'lang/se_email.php' );
     break;
-  
+
   case 'sr':
     include(BASE.'lang/sr_email.php' );
     break;
@@ -102,15 +103,15 @@ switch(LOCALE ) {
   case 'tr':
     include(BASE.'lang/tr_email.php' );
     break;
-          
+
   case 'zh-hk':
     include(BASE.'lang/zh-hk_email.php' );
     break;
-          
+
   case 'zh-cn':
     include(BASE.'lang/zh-cn_email.php' );
     break;
-          
+
   default:
     include(BASE.'lang/en_email.php' );
     break;

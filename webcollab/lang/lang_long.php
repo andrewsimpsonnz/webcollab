@@ -2,9 +2,10 @@
 /*
   $Id$
 
+  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+
   WebCollab
   ---------------------------------------
-  This file created 2003 by Andrew Simpson.
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -34,7 +35,7 @@ switch(LOCALE_USER ) {
   case 'en':
     include(BASE.'lang/en_long_message.php' );
     break;
-  
+
   case 'bg':
     include(BASE.'lang/bg_long_message.php' );
     break;
@@ -74,15 +75,15 @@ switch(LOCALE_USER ) {
   case 'it':
     include(BASE.'lang/it_long_message.php' );
     break;
-  
+
   case 'ja':
     include(BASE.'lang/ja_long_message.php' );
     break;
-  
+
   case 'ko':
     include(BASE.'lang/ko_long_message.php' );
     break;
-  
+
   case 'pt-br':
     include(BASE.'lang/pt-br_long_message.php' );
     break;
@@ -90,7 +91,7 @@ switch(LOCALE_USER ) {
   case 'ru':
     include(BASE.'lang/ru_long_message.php' );
     break;
-  
+
   case 'se':
     include(BASE.'lang/se_long_message.php' );
     break;
@@ -98,19 +99,19 @@ switch(LOCALE_USER ) {
   case 'sr':
     include(BASE.'lang/sr_long_message.php' );
     break;
-  
+
   case 'tr':
     include(BASE.'lang/tr_long_message.php' );
     break;
-      
+
   case 'zh-hk':
     include(BASE.'lang/zh-hk_long_message.php' );
     break;
-      
+
   case 'zh-cn':
     include(BASE.'lang/zh-cn_long_message.php' );
     break;
-      
+
   default:
     include(BASE.'lang/en_long_message.php' );
     break;
