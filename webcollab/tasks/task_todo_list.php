@@ -216,7 +216,7 @@ switch($selection ) {
 }
 
   $content  .= "<div style=\"text-align : right\"><span class=\"textlink\">\n".
-               "[<a href=\"icalendar.php?x=".$x."&amp;action=todo&amp;selection=".$selection."&amp;userid=".$userid."&amp;groupid=".$groupid."\">"."iCalendar"."</a>]\n".
+               "[<a href=\"icalendar.php?x=".$x."&amp;action=todo&amp;selection=".$selection."&amp;userid=".$userid."&amp;groupid=".$groupid."\">".$lang['icalendar']."</a>]\n".
                "</span></div>";
 
 

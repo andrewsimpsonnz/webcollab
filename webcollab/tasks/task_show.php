@@ -78,7 +78,7 @@ if(isset($_GET['action']) && $_GET['action'] === "show_print" ) {
 else {
   //show print tag
   $content .= "<div style=\"text-align : right\"><span class=\"textlink\">".
-              "[<a href=\"icalendar.php?x=".$x."&amp;action=project&amp;taskid=".$taskid."\">"."iCalendar"."</a>]&nbsp;".
+              "[<a href=\"icalendar.php?x=".$x."&amp;action=project&amp;taskid=".$taskid."\">".$lang['icalendar']."</a>]&nbsp;".
               "[<a href=\"tasks.php?x=".$x."&amp;action=show_print&amp;taskid=".$taskid."\">".$lang['print_version']."</a>]</span></div>\n";
   //show 'project jump' select box
   $content .= project_jump($taskid);

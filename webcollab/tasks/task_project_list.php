@@ -261,7 +261,7 @@ if($action === "project_print" ) {
 }
 else {
   $content  .= "</span></td>\n<td style=\"text-align : right\"><span class=\"textlink\">".
-               "[<a href=\"icalendar.php?x=".$x."&amp;action=all\">"."iCalendar"."</a>]&nbsp;".
+               "[<a href=\"icalendar.php?x=".$x."&amp;action=all\">".$lang['icalendar']."</a>]&nbsp;".
                "[<a href=\"tasks.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."&amp;action=project_print\">".$lang['print_version']."</a>]";
 }
 $content .= "</span></td></tr>\n</table>\n";
