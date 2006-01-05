@@ -40,7 +40,7 @@ WebCollab CVS
 
 - usergroup permissions now handled by sub-select in database
 
-- database now matches character sets internally to selected locale  
+- MySQL database now matches character sets internally to selected locale (PgSQL aready does this)
   
 WebCollab 1.81 (Ardness)
 *** 9 November 2005
@@ -236,7 +236,7 @@ WebCollab CVS
 *** 24 May 2005
   Andrew Simpson
   
-- Spanish language update (Credit: Alberto Vizcaíno López) 
+- Spanish language update (Credit: Alberto Vizcaï¿½o Lï¿½ez) 
 
 WebCollab CVS
 *** 21 May 2005
@@ -258,7 +258,7 @@ WebCollab CVS
 
 - optimise graphical bar function
 
-- change SQL in forum_menubox.php (problems with PostgeSQL 7.3.2) (Credit: Vajkó Péter)
+- change SQL in forum_menubox.php (problems with PostgeSQL 7.3.2) (Credit: Vajkï¿½Pï¿½er)
 
 - provide better echo chunking in screen.php
 
@@ -316,7 +316,7 @@ WebCollab CVS
 *** 5 April 2005
   Andrew Simpson
   
-- Swedish translation added (Credit: Göran Källqvist )
+- Swedish translation added (Credit: Gï¿½an Kï¿½lqvist )
 
 - bugfix: Data validation could corrupt SQL strings (Bug #1176733) (Credit: Thomas Briggs)
 
@@ -362,7 +362,7 @@ WebCollab CVS
 *** 28 February 2005
   Andrew Simpson
   
-- added Hungarian translation (Credit: Széll Tamás)
+- added Hungarian translation (Credit: Szï¿½l Tamï¿½)
 
 WebCollab CVS
 *** 21 February 2005
