@@ -27,10 +27,9 @@
 
   Maintainer: Michael Bunk <micha137 at users.sourceforge.net>
 
-*/
+  NOTE: This file is written in UTF-8 character set
 
-//required language encodings
-define('CHARACTER_SET', "UTF-8" );
+*/
 
 //dates
 $month_array = array ( NULL, "Jan", "Feb", "M&auml;r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" );
@@ -174,6 +173,12 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['add_reply']                   = "Antwort hinzuf&uuml;gen";
     $lang['last_post_sprt']              = "Letzter Beitrag %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']                = "Neueste Beitr&auml;ge";
+//**
+    $lang['forum_search']                = "Forum search";
+//**
+    $lang['no_results']                  = "No results found for '%s'";
+//**
+    $lang['search_results']              = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
 
  //includes
     $lang['report']                      = "Report";
@@ -399,5 +404,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['print_version']               = "Druckversion";
     $lang['condensed_view']              = "Kurzansicht";
     $lang['full_view']                   = "Vollst&auml;ndige Ansicht";
+//**
+    $lang['icalendar']                     = "iCalendar";
 
 ?>

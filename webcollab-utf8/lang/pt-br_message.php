@@ -25,17 +25,16 @@
 
   Translation: Eduardo Alvim <eduardoalvim at terra.com.br>
 
-*/
+  NOTE: This file is written in UTF-8 character set
 
-//required language encodings
-define('CHARACTER_SET', "UTF-8" );
+*/
 
 //dates
 $month_array = array (NULL, 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' );
 $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
 
 //task states
- 
+
  //priorities
     $task_state['dontdo']               = "N&atilde;o fazer";
     $task_state['low']                  = "Baixa";
@@ -55,7 +54,7 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $task_state['planned_project']      = "Projeto planejado (n&atilde;o ativo)";
     $task_state['no_deadline_project']  = "Sem prazo definido";
     $task_state['active_project']       = "Projeto ativo";
-    
+
 //common items
     $lang['description']                = "Descri&ccedil;&atilde;o";
     $lang['name']                       = "Nome";
@@ -83,13 +82,11 @@ deselecionar mais de um)";
     $lang['login']                      = "Login";
     $lang['error']                      = "Erro";
     $lang['no_login']                   = "Acesso negado, verifique o nome de usu&aacute;rio e a senha";
-//**    
     $lang['redirect_sprt']              = "Voc&ecirc; ser&aacute; automaticamente redirecionado &agrave; p&aacute;gina de Login em %d segundos";
-//**
-    $lang['login_now']                  = "Por favor, clique aqui para retornar &agrave; p&aacute;gina de Login agora";   
+    $lang['login_now']                  = "Por favor, clique aqui para retornar &agrave; p&aacute;gina de Login agora";
     $lang['please_login']               = "Entre, por favor";
     $lang['go']                         = "Vai!";
-    
+
 //graphic items
     $lang['late_g']                     = "&nbsp;ATRASADO&nbsp;";
     $lang['new_g']                      = "&nbsp;NOVO&nbsp;";
@@ -107,15 +104,12 @@ deselecionar mais de um)";
     $lang['allow_group_edit']           = "Permitir edi&ccedil;&atilde;o por todos do grupo de usu&aacute;rios?";
     $lang['set_email_owner']            = "Sempre notificar respons&aacute;vel sobre mudan&ccedil;as?";
     $lang['set_email_group']            = "Sempre notificar grupo de usu&aacute;rios sobre mudan&ccedil;as?";
-//**    
     $lang['project_listing_order']      = "Ordem de listagem dos projetos";
-//**    
-    $lang['task_listing_order']         = "Ordem de listagem das tarefas"; 
+    $lang['task_listing_order']         = "Ordem de listagem das tarefas";
     $lang['configuration']              = "Configura&ccedil;&atilde;o";
 
 //archive
-//**
-    $lang['archived_projects']          = "Projetos Arquivados";    
+    $lang['archived_projects']          = "Projetos Arquivados";
 
 //contacts
     $lang['firstname']                  = "Nome:";
@@ -177,11 +171,15 @@ deselecionar mais de um)";
     $lang['forum_submit']               = "Enviar para f&oacute;rum";
     $lang['no_message']                 = "Sem mensagens! Por favor, retorne e tente novamente";
     $lang['add_reply']                  = "Adicionar resposta";
-//**  
     $lang['last_post_sprt']             = "&Uacute;ltima postagem em %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**   
-    $lang['recent_posts']               = "Postagens recentes no f&oacute;rum";      
-    
+    $lang['recent_posts']               = "Postagens recentes no f&oacute;rum";
+//**
+    $lang['forum_search']               = "Forum search";
+//**
+    $lang['no_results']                 = "No results found for '%s'";
+//**
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                     = "Relat&oacute;rio";
     $lang['warning']                    = "<h1>Desculpe!</h1><p>Foi imposs&iacute;vel processar sua solicita&ccedil;&atilde;o no momento. Por favor, tente novamente mais tarde.</p>";
@@ -191,8 +189,7 @@ deselecionar mais de um)";
     $lang['calendar']                   = "Calend&aacute;rio";
     $lang['log_out']                    = "Sair";
     $lang['main_menu']                  = "Menu Principal";
-//**
-    $lang['archive']                    = "Arquivo";   
+    $lang['archive']                    = "Arquivo";
     $lang['user_homepage_sprt']         = "P&aacute;gina principal para %s'";
     $lang['missing_field_javascript']   = "Por favor, entre um valor para o campo faltante";
     $lang['invalid_date_javascript']    = "Por favor, escolha uma data v&aacute;lida no calend&aacute;rio";
@@ -241,12 +238,9 @@ deselecionar mais de um)";
     $lang['email']                      = "E-mail";
     $lang['admin']                      = "Administra&ccedil;&atilde;o";
     $lang['private_user']               = "Usu&aacute;rio privativo";
- //**
-    $lang['normal_user']                = "Usu&aacute;rio normal"; 
+    $lang['normal_user']                = "Usu&aacute;rio normal";
     $lang['is_admin']                   = "Configurar como administrador?";
- //**
     $lang['is_guest']                   = "Configurar como visitante?";
- //**
     $lang['guest']                      = "Visitante";
     $lang['user_info']                  = "Informa&ccedil;&atilde;o de usu&aacute;rio";
     $lang['deleted_users']              = "Usu&aacute;rios exclu&iacute;dos";
@@ -338,7 +332,6 @@ deselecionar mais de um)";
     $lang['add_project']                = "Adicionar projeto";
     $lang['clone_project']              = "Clonar projeto";
     $lang['clone_task']                 = "Clonar tarefa";
-//**
     $lang['quick_jump']                 = "Jogo r&aacute;pido";
     $lang['no_edit']                    = "O &iacute;tem n&atilde;o est&aacute; sob sua responsabilidade, portanto voc&ecirc; n&atilde;o pode edit&aacute;-lo";
     $lang['uncategorised']              = "N&atilde;o-categorizado";
@@ -348,13 +341,10 @@ deselecionar mais de um)";
     $lang['delete_task']                = "Excluir tarefa";
     $lang['project_options']            = "Op&ccedil;&otilde;es do projeto";
     $lang['task_options']               = "Op&ccedil;&otilde;es da tarefa";
-//**    
     $lang['javascript_archive_project'] = "Isto ir&aacute; arquivar o projeto %s.  Est&aacute; certo disso?";
-//**    
     $lang['archive_project']            = "Arquivar projeto";
     $lang['task_navigation']            = "Navegar pela tarefa";
-//**
-    $lang['new_task']                   = "Nova tarefa";    
+    $lang['new_task']                   = "Nova tarefa";
     $lang['no_projects']                = "N&atilde;o existem projetos para visualizar";
     $lang['show_all_projects']          = "Exibir todos os projetos";
     $lang['show_active_projects']       = "Exibir apenas os projetos ativos";
@@ -411,9 +401,9 @@ deselecionar mais de um)";
     $lang['calendar']                   = "Calend&aacute;rio";
     $lang['normal_version']             = "Vers&atilde;o normal";
     $lang['print_version']              = "Vers&atilde;o para impress&atilde;o";
-//**    
     $lang['condensed_view']             = "Exibi&ccedil;&atilde;o resumida";
-//**    
     $lang['full_view']                  = "Exibi&ccedil;&atilde;o completa";
+//**
+    $lang['icalendar']                  = "iCalendar";
 
 ?>

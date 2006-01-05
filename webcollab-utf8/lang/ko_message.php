@@ -25,9 +25,9 @@
 
   Maintainer: Yu-Chan, Park < yuchan at kisti.re.kr>
 
-*/
+  NOTE: This file is written in UTF-8 character set
 
-define('CHARACTER_SET', "UTF-8" );
+*/
 
 //dates
 $month_array = array (NULL, "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" );
@@ -79,13 +79,13 @@ $week_array = array('일', '월', '화', '수', '목', '금', '토' );
     $lang['member_groups']                = "이 사용자는 아래에 밝게 표시된 그룹의 멤버입니다(if any)";
     $lang['login']                        = "로그인";
     $lang['error']                        = "오류";
-//**    
+//**
     $lang['redirect_sprt']                = "You will automatically return to Login after a %d second delay";
 //**
-    $lang['login_now']                    = "Please click here to return to Login now";   
+    $lang['login_now']                    = "Please click here to return to Login now";
     $lang['no_login']                     = "접근 금지. 로그인이나 비밀번호가 맞지 않습니다.";
     $lang['please_login']                 = "로그인하십시오";
-    $lang['go']                           = "Go!";    
+    $lang['go']                           = "Go!";
 
 //graphic items
     $lang['late_g']                       = "&nbsp;LATE&nbsp;";
@@ -105,15 +105,15 @@ $week_array = array('일', '월', '화', '수', '목', '금', '토' );
     $lang['set_email_owner']              = "항상 소유자에게 전자우편으로 변경 사항을 알리겠습니까?";
     $lang['set_email_group']              = "변경 사항을 사용자 그룹에게 전자우편으로 알리겠습니까?";
     $lang['configuration']                = "설정";
-//**    
+//**
     $lang['project_listing_order']        = "Project listing order";
-//**    
-    $lang['task_listing_order']           = "Task listing order"; 
+//**
+    $lang['task_listing_order']           = "Task listing order";
     $lang['configuration']                = "Configuration";
 
 //archive
 //**
-    $lang['archived_projects']            = "Archived Projects";    
+    $lang['archived_projects']            = "Archived Projects";
 
 //contacts
     $lang['firstname']                    = "이름:";
@@ -175,11 +175,17 @@ $week_array = array('일', '월', '화', '수', '목', '금', '토' );
     $lang['forum_submit']                 = "포럼 전송";
     $lang['no_message']                   = "메시지가 없습니다! 되돌아가서 다시 시도하십시오";
     $lang['add_reply']                    = "답글 추가";
-//**  
+//**
     $lang['last_post_sprt']               = "Last post %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**   
-    $lang['recent_posts']                 = "Recent forum posts";      
-    
+//**
+    $lang['recent_posts']                 = "Recent forum posts";
+//**
+    $lang['forum_search']                 = "Forum search";
+//**
+    $lang['no_results']                   = "No results found for '%s'";
+//**
+    $lang['search_results']               = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                       = "보고";
     $lang['warning']                      = "<h1>죄송합니다!</h1><p>요청을 올바르게 처리할 수 없습니다. 나중에 다시 시도하십시오.</p>";
@@ -190,7 +196,7 @@ $week_array = array('일', '월', '화', '수', '목', '금', '토' );
     $lang['log_out']                      = "로그 아웃";
     $lang['main_menu']                    = "메인 메뉴";
 //**
-    $lang['archive']                      = "Archive";   
+    $lang['archive']                      = "Archive";
     $lang['user_homepage_sprt']           = "%s 의 홈페이지";
     $lang['missing_field_javascript']     = "입력하지 않은 필드에 값을 입력하십시오";
     $lang['invalid_date_javascript']      = "이용 가능한 달력 날짜를 선택하십시오";
@@ -240,7 +246,7 @@ $week_array = array('일', '월', '화', '수', '목', '금', '토' );
     $lang['admin']                        = "관리자";
     $lang['private_user']                 = "비공개 사용자";
  //**
-    $lang['normal_user']                  = "Normal user"; 
+    $lang['normal_user']                  = "Normal user";
     $lang['is_admin']                     = "관리자입니까?";
  //**
     $lang['is_guest']                     = "Is a guest?";
@@ -336,7 +342,7 @@ $week_array = array('일', '월', '화', '수', '목', '금', '토' );
     $lang['add_project']                  = "프로젝트 추가";
     $lang['clone_project']                = "복제 프로젝트";
     $lang['clone_task']                   = "작업 복제";
-    $lang['quick_jump']                   = "Quick Jump";    
+    $lang['quick_jump']                   = "Quick Jump";
     $lang['no_edit']                      = "이 항목에 대한 소유 권한이 없기 때문에 편집할 수 없습니다";
     $lang['uncategorised']                = "분류되어있지 않음";
     $lang['admin']                        = "관리";
@@ -345,13 +351,13 @@ $week_array = array('일', '월', '화', '수', '목', '금', '토' );
     $lang['delete_task']                  = "작업 삭제";
     $lang['project_options']              = "프로젝트 옵션";
     $lang['task_options']                 = "작업 옵션";
-//**    
+//**
     $lang['javascript_archive_project']   = "This will archive project %s.  Are you sure?";
-//**    
+//**
     $lang['archive_project']              = "Archive project";
     $lang['task_navigation']              = "작업 보기";
 //**
-    $lang['new_task']                     = "New task";    
+    $lang['new_task']                     = "New task";
     $lang['no_projects']                  = "볼 프로젝트가 없습니다.";
     $lang['show_all_projects']            = "모든 프로젝트 보기";
     $lang['show_active_projects']         = "활성화된 프로젝트만 보기";
@@ -408,9 +414,11 @@ $week_array = array('일', '월', '화', '수', '목', '금', '토' );
     $lang['calendar']                     = "달력";
     $lang['normal_version']               = "일반적인 형태";
     $lang['print_version']                = "프린트 가능한 형태";
-//**    
+//**
     $lang['condensed_view']               = "Condensed view";
-//**    
+//**
     $lang['full_view']                    = "Full view";
+//**
+    $lang['icalendar']                    = "iCalendar";
 
 ?>

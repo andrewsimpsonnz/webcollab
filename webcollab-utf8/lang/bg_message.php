@@ -25,13 +25,10 @@
 
   Maintainer: Stoyan Dimitrov <stoyan at adiumdesign dot com>
 
-  
-  NOTE: This file is written in UTF-8 character set
-    
-*/
 
-//required language encodings
-define('CHARACTER_SET', "UTF-8" );
+  NOTE: This file is written in UTF-8 character set
+
+*/
 
 //dates
 $month_array                              = array (NULL, "Яну", "Фев", "Мар", "Апр", "Май", "Юни", "Юли", "Авг", "Сеп", "Окт", "Ное", "Дек" );
@@ -85,12 +82,12 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['login']                        = "Вход";
     $lang['error']                        = "Грешка";
     $lang['no_login']                     = "Достъпът отказан, грешно име или парола";
-//**    
+//**
     $lang['redirect_sprt']                = "You will automatically return to Login after a %d second delay";
 //**
-    $lang['login_now']                    = "Please click here to return to Login now";   
+    $lang['login_now']                    = "Please click here to return to Login now";
     $lang['please_login']                 = "Моля влезте";
-//**    
+//**
     $lang['go']                           = "Go!";
 //graphic items
     $lang['late_g']                       = "&nbsp;ЗАКЪСНЕНИЕ&nbsp;";
@@ -108,15 +105,15 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['allow_group_edit']             = "Позволи всеки в групата да променя";
     $lang['set_email_owner']              = "Винаги изпращай писмо на притежателя с промените";
     $lang['set_email_group']              = "Винаги изпращай писмо до групата с промените";
-//**    
+//**
     $lang['project_listing_order']        = "Project listing order";
-//**    
-    $lang['task_listing_order']           = "Task listing order"; 
+//**
+    $lang['task_listing_order']           = "Task listing order";
     $lang['configuration']                = "Configuration";
     $lang['configuration']                = "Конфигуриране";
 //archive
 //**
-    $lang['archived_projects']            = "Archived Projects";    
+    $lang['archived_projects']            = "Archived Projects";
 //contacts
     $lang['firstname']                    = "Име:";
     $lang['lastname']                     = "Фамилия:";
@@ -174,10 +171,16 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['forum_submit']                 = "[Forum submit]";
     $lang['no_message']                   = "Няма съобщение! Моля, върнете се обратно и пробвайте пак";
     $lang['add_reply']                    = "Добави отговор";
-//**  
+//**
     $lang['last_post_sprt']               = "Last post %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**   
-    $lang['recent_posts']                 = "Recent forum posts";      
+//**
+    $lang['recent_posts']                 = "Recent forum posts";
+//**
+    $lang['forum_search']                 = "Forum search";
+//**
+    $lang['no_results']                   = "No results found for '%s'";
+//**
+    $lang['search_results']               = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
 
 //includes
     $lang['report']                       = "Съобщение";
@@ -189,7 +192,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['log_out']                      = "Изход";
     $lang['main_menu']                    = "Меню";
 //**
-    $lang['archive']                    = "Archive";   
+    $lang['archive']                      = "Archive";
     $lang['user_homepage_sprt']           = "Дейностите на <b>%s</b>";
     $lang['missing_field_javascript']     = "Моля въведете липсващата стойност!";
     $lang['invalid_date_javascript']      = "Моля изберете валидна календарна дата";
@@ -235,7 +238,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['admin']                        = "Админ";
     $lang['private_user']                 = "Поверителен";
  //**
-    $lang['normal_user']                  = "Normal user"; 
+    $lang['normal_user']                  = "Normal user";
     $lang['is_admin']                     = "Администратор";
  //**
     $lang['is_guest']                     = "Is a guest?";
@@ -339,12 +342,12 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['delete_task']                  = "Изтриване задача";
     $lang['project_options']              = "Проекти";
     $lang['task_options']                 = "Настройки на задача";
-//**    
+//**
     $lang['javascript_archive_project']   = "This will archive project %s.  Are you sure?";
-//**    
+//**
     $lang['archive_project']              = "Archive project";
     $lang['task_navigation']              = "Задачи";
-    $lang['new_task']                     = "New task";    
+    $lang['new_task']                     = "New task";
     $lang['no_projects']                  = "Няма проекти";
     $lang['show_all_projects']            = "Покажи всички проекти";
     $lang['show_active_projects']         = "Покажи само активните проекти";
@@ -400,9 +403,11 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['calendar']                     = "Календар";
     $lang['normal_version']               = "Нормална версия";
     $lang['print_version']                = "Версия за печат";
-//**    
-    $lang['condensed_view']             = "Condensed view";
-//**    
-    $lang['full_view']                  = "Full view";
+//**
+    $lang['condensed_view']               = "Condensed view";
+//**
+    $lang['full_view']                    = "Full view";
+//**
+    $lang['icalendar']                    = "iCalendar";
 
 ?>

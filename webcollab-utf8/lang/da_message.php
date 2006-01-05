@@ -28,18 +28,14 @@
 
   Language files for 'da' (Danish)
 
-  Maintainer: 
+  Maintainer:
 
-  
+
   Translation by Jens Thomsen
-    
+
   NOTE: This file is written in UTF-8 character set
-    
 
 */
-
-//required language encodings
-define('CHARACTER_SET', "UTF-8" );
 
 //dates
 $month_array = array ( NULL, "Jan", "Feb", "Mar", "Apr", "Maj", "Juni", "Juli", "Aug", "Sep", "Okt", "Nov", "Dec" );
@@ -92,13 +88,13 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['login']                        = "Login";
     $lang['error']                        = "Fejl";
     $lang['no_login']                     = "Adgang nægtet, ikke korrekt login eller password";
-//**    
+//**
     $lang['redirect_sprt']                = "You will automatically return to Login after a %d second delay";
 //**
-    $lang['login_now']                    = "Please click here to return to Login now";   
+    $lang['login_now']                    = "Please click here to return to Login now";
     $lang['please_login']                 = "Vær venlig at logge in";
     $lang['go']                           = "Go!";
-    
+
 //graphic items
     $lang['late_g']                       = "&nbsp;FORSINKET&nbsp;";
     $lang['new_g']                        = "&nbsp;NY&nbsp;";
@@ -116,15 +112,15 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['allow_group_edit']             = "Tillad alle i brugergruppe at redigere?";
     $lang['set_email_owner']              = "Email altid ejer ved ændringer?";
     $lang['set_email_group']              = "Email altid brugergruppe ved ændringer?";
-//**    
+//**
     $lang['project_listing_order']        = "Project listing order";
-//**    
-    $lang['task_listing_order']           = "Task listing order"; 
+//**
+    $lang['task_listing_order']           = "Task listing order";
     $lang['configuration']                = "Configuration";
 
 //archive
 //**
-    $lang['archived_projects']            = "Arkiverede projekter";    
+    $lang['archived_projects']            = "Arkiverede projekter";
 
 //contacts
     $lang['firstname']                    = "Fornavn:";
@@ -185,10 +181,16 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['forum_submit']                 = "Forum send";
     $lang['no_message']                   = "Ingen meddelelse! Gå venligst tilbage og prøv igen";
     $lang['add_reply']                    = "Tilføj svar";
-//**  
+//**
     $lang['last_post_sprt']               = "Sidste indlæg %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**   
-    $lang['recent_posts']                 = "Nyeste indlæg til forum";      
+//**
+    $lang['recent_posts']                 = "Nyeste indlæg til forum";
+//**
+    $lang['forum_search']                 = "Forum search";
+//**
+    $lang['no_results']                   = "No results found for '%s'";
+//**
+    $lang['search_results']               = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
 
  //includes
     $lang['report']                       = "Rapport";
@@ -200,7 +202,7 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['log_out']                      = "Log out";
     $lang['main_menu']                    = "Hovedmenu";
 //**
-    $lang['archive']                      = "Arkiv";   
+    $lang['archive']                      = "Arkiv";
     $lang['user_homepage_sprt']           = "%s's hjemmeside";
     $lang['missing_field_javascript']     = "Vær så venlig at tilføje en værdi til det manglende felt";
     $lang['invalid_date_javascript']      = "Vær så venlig at vælge en gyldig kalenderdato";
@@ -250,7 +252,7 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
   //**
     $lang['private_user']                 = "Privat bruger";
  //**
-    $lang['normal_user']                  = "Normal bruger"; 
+    $lang['normal_user']                  = "Normal bruger";
     $lang['private_user']                 = "Privat bruger";
     $lang['is_admin']                     = "Er en admin?";
  //**
@@ -359,13 +361,13 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['delete_task']                  = "Slet opgave";
     $lang['project_options']              = "Projekt muligheder";
     $lang['task_options']                 = "Opgave muligheder";
-//**    
+//**
     $lang['javascript_archive_project']   = "Dette vil arkivere projekt %s.  Er du sikker?";
-//**    
+//**
     $lang['archive_project']              = "Arkivprojekt";
     $lang['task_navigation']              = "Opgave navigation";
 //**
-    $lang['new_task']                     = "Ny opgave";    
+    $lang['new_task']                     = "Ny opgave";
     $lang['no_projects']                  = "Der er ingen projekter at vise";
  //**
     $lang['show_all_projects']            = "Vis alle projekter";
@@ -429,10 +431,11 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['normal_version']               = "Normal version";
     //**
     $lang['print_version']                = "Print version";
-//**    
+//**
     $lang['condensed_view']               = "Koncentreret visning";
-//**    
+//**
     $lang['full_view']                    = "Fuld visning";
-
+//**
+    $lang['icalendar']                     = "iCalendar";
 
 ?>

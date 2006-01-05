@@ -21,22 +21,21 @@
   Function:
   ---------
 
-  
+
   Language files for 'zh-cn' (Traditional Chinese)
 
   Maintainer: Marcus Tsang <mathk2004 @ yahoo.com.hk>
 
-*/
+  NOTE: This file is written in UTF-8 character set
 
-//required language encodings
-define('CHARACTER_SET', "UTF-8" );
+*/
 
 //dates
 $month_array = array (NULL, '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月' );
 $week_array = array('日', '一', '二', '三', '四', '五', '六' );
 
 //task states
- 
+
  //priorities
     $task_state['dontdo']               = "不要做!";
     $task_state['low']                  = "低";
@@ -56,7 +55,7 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $task_state['planned_project']      = "已计划的专案 (非活跃的)";
     $task_state['no_deadline_project']  = "未设定最后限期";
     $task_state['active_project']       = "活跃中的专案";
-    
+
 //common items
     $lang['description']                = "描述";
     $lang['name']                       = "姓名";
@@ -84,10 +83,10 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['error']                      = "错误";
     $lang['no_login']                   = "禁止查阅，不正确的登入名称或密码";
     $lang['redirect_sprt']              = "你将会于 %d 秒闲置后自动返回登入页";
-    $lang['login_now']                  = "请点击这里返回登入页";   
+    $lang['login_now']                  = "请点击这里返回登入页";
     $lang['please_login']               = "请登入";
     $lang['go']                         = "进入!";
-    
+
 //graphic items
     $lang['late_g']                     = "&nbsp;LATE&nbsp;";
     $lang['new_g']                      = "&nbsp;NEW&nbsp;";
@@ -106,11 +105,11 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['set_email_owner']            = "有改变时永远都向拥有者发出 email?";
     $lang['set_email_group']            = "有改变时永远都向使用者组别发出 email?";
     $lang['project_listing_order']      = "专案排列次序";
-    $lang['task_listing_order']         = "工作排列次序"; 
+    $lang['task_listing_order']         = "工作排列次序";
     $lang['configuration']              = "设定";
 
 //archive
-    $lang['archived_projects']          = "封存了的专案";    
+    $lang['archived_projects']          = "封存了的专案";
 
 //contacts
     $lang['firstname']                  = "名:";
@@ -173,8 +172,15 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['no_message']                 = "无信息!请返回再试";
     $lang['add_reply']                  = "新增回覆信息";
     $lang['last_post_sprt']             = "最后的信息于 %s 发布"; //Note to translators: context is 'Last post 2004-Dec-22'
-    $lang['recent_posts']               = "最近的讨论区信息";      
-    
+    $lang['recent_posts']               = "最近的讨论区信息";
+//**
+    $lang['forum_search']               = "Forum search";
+//**
+    $lang['no_results']                 = "No results found for '%s'";
+//**
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
+
  //includes
     $lang['report']                     = "Report";
     $lang['warning']                    = "<h1>不好意思!</h1><p>我们现在未能处理你的要求，请稍后再试</p>";
@@ -184,7 +190,7 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['calendar']                   = "月历";
     $lang['log_out']                    = "登出";
     $lang['main_menu']                  = "主选单";
-    $lang['archive']                    = "封存";   
+    $lang['archive']                    = "封存";
     $lang['user_homepage_sprt']         = "%s 的首页";
     $lang['missing_field_javascript']   = "请在遣留的项目填回内容";
     $lang['invalid_date_javascript']    = "请选择一个有效的日期";
@@ -233,7 +239,7 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['email']                      = "E-mail";
     $lang['admin']                      = "系统管理员";
     $lang['private_user']               = "私人使用者";
-    $lang['normal_user']                = "普通使用者"; 
+    $lang['normal_user']                = "普通使用者";
     $lang['is_admin']                   = "是系统管理员?";
     $lang['is_guest']                   = "是访客?";
     $lang['guest']                      = "访客";
@@ -339,7 +345,7 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['javascript_archive_project'] = "这样做会封存专案: %s.  你确定?";
     $lang['archive_project']            = "封存专案";
     $lang['task_navigation']            = "浏览工作";
-    $lang['new_task']                   = "新增工作";    
+    $lang['new_task']                   = "新增工作";
     $lang['no_projects']                = "无可以查阅的专案";
     $lang['show_all_projects']          = "显示所有的专案";
     $lang['show_active_projects']       = "只显示活跃的专案";
@@ -398,5 +404,7 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['print_version']              = "看可供列印版本";
     $lang['condensed_view']             = "重点内容";
     $lang['full_view']                  = "全部内容";
+//**
+    $lang['icalendar']                  = "iCalendar";
 
 ?>

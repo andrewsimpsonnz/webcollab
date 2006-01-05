@@ -20,23 +20,22 @@
 
   Function:
   ---------
-  
+
   Language files for 'zh-tw'(Traditional Chinese)
-  
+
   Maintainer: Marcus Tsang <mathk2004 @ yahoo.com.hk>
               (please email me to discuss the wording in this language file)
 
-*/
+  NOTE: This file is written in UTF-8 character set
 
-//required language encodings
-define('CHARACTER_SET', "UTF-8" );
+*/
 
 //dates
 $month_array = array (NULL, '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月' );
 $week_array = array('日', '一', '二', '三', '四', '五', '六' );
 
 //task states
- 
+
  //priorities
     $task_state['dontdo']               = "不要做!";
     $task_state['low']                  = "低";
@@ -56,7 +55,7 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $task_state['planned_project']      = "已計劃的專案 (非活躍的)";
     $task_state['no_deadline_project']  = "未設定最後限期";
     $task_state['active_project']       = "活躍中的專案";
-    
+
 //common items
     $lang['description']                = "描述";
     $lang['name']                       = "姓名";
@@ -83,13 +82,11 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['login']                      = "登入";
     $lang['error']                      = "錯誤";
     $lang['no_login']                   = "禁止查閱，不正確的登入名稱或密碼";
-//**    
     $lang['redirect_sprt']              = "你將會於 %d 秒閒置後自動返回登入頁";
-//**
-    $lang['login_now']                  = "請點擊這裏返回登入頁";   
+    $lang['login_now']                  = "請點擊這裏返回登入頁";
     $lang['please_login']               = "請登入";
     $lang['go']                         = "進入!";
-    
+
 //graphic items
     $lang['late_g']                     = "&nbsp;LATE&nbsp;";
     $lang['new_g']                      = "&nbsp;NEW&nbsp;";
@@ -107,15 +104,12 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['allow_group_edit']           = "容許所有在使用者組別的成員修改?";
     $lang['set_email_owner']            = "有改變時永遠都向擁有者發出 email?";
     $lang['set_email_group']            = "有改變時永遠都向使用者組別發出 email?";
-//**    
     $lang['project_listing_order']      = "專案排列次序";
-//**    
-    $lang['task_listing_order']         = "工作排列次序"; 
+    $lang['task_listing_order']         = "工作排列次序";
     $lang['configuration']              = "設定";
 
 //archive
-//**
-    $lang['archived_projects']          = "封存了的專案";    
+    $lang['archived_projects']          = "封存了的專案";
 
 //contacts
     $lang['firstname']                  = "名:";
@@ -177,11 +171,15 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['forum_submit']               = "Forum submit";
     $lang['no_message']                 = "無信息!請返回再試";
     $lang['add_reply']                  = "新增回覆信息";
-//**  
     $lang['last_post_sprt']             = "最後的信息於 %s 發佈"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**   
-    $lang['recent_posts']               = "最近的討論區信息";      
-    
+    $lang['recent_posts']               = "最近的討論區信息";
+//**
+    $lang['forum_search']               = "Forum search";
+//**
+    $lang['no_results']                 = "No results found for '%s'";
+//**
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                     = "Report";
     $lang['warning']                    = "<h1>不好意思!</h1><p>我們現在未能處理你的要求，請稍後再試</p>";
@@ -191,8 +189,7 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['calendar']                   = "月曆";
     $lang['log_out']                    = "登出";
     $lang['main_menu']                  = "主選單";
-//**
-    $lang['archive']                    = "封存";   
+    $lang['archive']                    = "封存";
     $lang['user_homepage_sprt']         = "%s 的首頁";
     $lang['missing_field_javascript']   = "請在遣留的項目填回內容";
     $lang['invalid_date_javascript']    = "請選擇一個有效的日期";
@@ -241,12 +238,9 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['email']                      = "E-mail";
     $lang['admin']                      = "系統管理員";
     $lang['private_user']               = "私人使用者";
- //**
-    $lang['normal_user']                = "普通使用者"; 
+    $lang['normal_user']                = "普通使用者";
     $lang['is_admin']                   = "是系統管理員?";
- //**
     $lang['is_guest']                   = "是訪客?";
- //**
     $lang['guest']                      = "訪客";
     $lang['user_info']                  = "使用者資訊";
     $lang['deleted_users']              = "刪除使用者";
@@ -338,7 +332,6 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['add_project']                = "新增專案";
     $lang['clone_project']              = "複製專案";
     $lang['clone_task']                 = "複製工作";
-//**
     $lang['quick_jump']                 = "快速跳入";
     $lang['no_edit']                    = "你未擁有這項目所以不能修改它";
     $lang['uncategorised']              = "未歸類";
@@ -348,13 +341,10 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['delete_task']                = "刪除工作";
     $lang['project_options']            = "專案選項";
     $lang['task_options']               = "工作選項";
-//**    
     $lang['javascript_archive_project'] = "這樣做會封存專案: %s.  你確定?";
-//**    
     $lang['archive_project']            = "封存專案";
     $lang['task_navigation']            = "瀏覽工作";
-//**
-    $lang['new_task']                   = "新增工作";    
+    $lang['new_task']                   = "新增工作";
     $lang['no_projects']                = "無可以查閱的專案";
     $lang['show_all_projects']          = "顯示所有的專案";
     $lang['show_active_projects']       = "只顯示活躍的專案";
@@ -411,9 +401,9 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['calendar']                   = "月曆";
     $lang['normal_version']             = "看普通版本";
     $lang['print_version']              = "看可供列印版本";
-//**    
     $lang['condensed_view']             = "重點內容";
-//**    
     $lang['full_view']                  = "全部內容";
+//**
+    $lang['icalendar']                  = "iCalendar";
 
 ?>

@@ -29,9 +29,6 @@
   
 */
 
-//required language encodings
-define('CHARACTER_SET', 'UTF-8' );
-
 //dates
 $month_array = array (NULL, 'Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec' );
 $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
@@ -175,6 +172,12 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['add_reply']                  = "Lägg till svar";
     $lang['last_post_sprt']             = "Senaste inlägg %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']               = "Aktuella foruminlägg";      
+//**
+    $lang['forum_search']               = "Forum search";
+//**
+    $lang['no_results']                 = "No results found for '%s'";
+//**
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
     
  //includes
     $lang['report']                     = "Rapport";
@@ -398,5 +401,7 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['print_version']              = "För utskrift";
     $lang['condensed_view']             = "Komprimerad vy";
     $lang['full_view']                  = "Fullständig vy";
+//**
+    $lang['icalendar']                  = "iCalendar";
 
 ?>

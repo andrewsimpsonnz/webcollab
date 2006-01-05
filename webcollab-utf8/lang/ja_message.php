@@ -25,16 +25,16 @@
 
   Maintainer: Tadashi Jokagi <elf2000 at users.sourceforge.net>
 
+  NOTE: This file is written in UTF-8 character set
+
 */
-//required language encodings
-define('CHARACTER_SET', "UTF-8" );
 
 //dates
 $month_array = array (NULL, '1 月', '2 月', '3 月', '4 月', '5 月', '6 月', '7 月', '8 月', '9 月', '10 月', '11 月', '12月' );
 $week_array = array('日', '月', '火', '水', '木', '金', '土' );
 
 //task states
- 
+
  //priorities
     $task_state['dontdo']               = "行ってない";
     $task_state['low']                  = "低い";
@@ -54,7 +54,7 @@ $week_array = array('日', '月', '火', '水', '木', '金', '土' );
     $task_state['planned_project']      = "計画済みプロジェクト (未活動)";
     $task_state['no_deadline_project']  = "デッドラインが設定されていない";
     $task_state['active_project']       = "活動プロジェクト";
-    
+
 //common items
     $lang['description']                = "説明";
     $lang['name']                       = "名前";
@@ -81,13 +81,13 @@ $week_array = array('日', '月', '火', '水', '木', '金', '土' );
     $lang['login']                      = "ログイン";
     $lang['error']                      = "エラー";
     $lang['no_login']                   = "Access denied; incorrect login or password";
-//**    
+//**
     $lang['redirect_sprt']              = "You will automatically return to Login after a %d second delay";
 //**
-    $lang['login_now']                  = "Please click here to return to Login now";   
+    $lang['login_now']                  = "Please click here to return to Login now";
     $lang['please_login']               = "ログインしてください";
     $lang['go']                         = "Go!";
-    
+
 //graphic items
     $lang['late_g']                     = "&nbsp;LATE&nbsp;";
     $lang['new_g']                      = "&nbsp;NEW&nbsp;";
@@ -105,15 +105,12 @@ $week_array = array('日', '月', '火', '水', '木', '金', '土' );
     $lang['allow_group_edit']           = "ユーザーグループに含まれるすべてへの編集を許可しますか?";
     $lang['set_email_owner']            = "常に変更を所有者に電子メールを送信しますか?";
     $lang['set_email_group']            = "常に変更をユーザーグループに電子メールを送信しますか?";
-//**    
     $lang['project_listing_order']      = "プロジェクト一覧の表示順序";
-//**    
-    $lang['task_listing_order']         = "タスク一覧の表示順序"; 
+    $lang['task_listing_order']         = "タスク一覧の表示順序";
     $lang['configuration']              = "設定";
 
 //archive
-//**
-    $lang['archived_projects']          = "書庫化されたプロジェクト";    
+    $lang['archived_projects']          = "書庫化されたプロジェクト";
 
 //contacts
     $lang['firstname']                  = "名前(ファーストネーム):";
@@ -175,11 +172,15 @@ $week_array = array('日', '月', '火', '水', '木', '金', '土' );
     $lang['forum_submit']               = "フォーラム送信";
     $lang['no_message']                 = "メッセージがありません! 戻って再挑戦してください";
     $lang['add_reply']                  = "返信の追加";
-//**  
     $lang['last_post_sprt']             = "最終投稿 %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**   
-    $lang['recent_posts']               = "最近のフォーラムの投稿";      
-    
+    $lang['recent_posts']               = "最近のフォーラムの投稿";
+//**
+    $lang['forum_search']               = "Forum search";
+//**
+    $lang['no_results']                 = "No results found for '%s'";
+//**
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                     = "報告";
     $lang['warning']                    = "<h1>Sorry!</h1><p>We are unable to process your request right now. Please try again later.</p>";
@@ -189,8 +190,7 @@ $week_array = array('日', '月', '火', '水', '木', '金', '土' );
     $lang['calendar']                   = "カレンダー";
     $lang['log_out']                    = "ログアウト";
     $lang['main_menu']                  = "メインメニュー";
-//**
-    $lang['archive']                    = "書庫";   
+    $lang['archive']                    = "書庫";
     $lang['user_homepage_sprt']         = "%s のホームページ";
     $lang['missing_field_javascript']   = "不足フィールドの値を入力してください";
     $lang['invalid_date_javascript']    = "正しいカレンダーの日付を選択してください";
@@ -239,12 +239,9 @@ $week_array = array('日', '月', '火', '水', '木', '金', '土' );
     $lang['email']                      = "電子メール";
     $lang['admin']                      = "管理";
     $lang['private_user']               = "プライベートユーザー";
- //**
-    $lang['normal_user']                = "通常ユーザー"; 
+    $lang['normal_user']                = "通常ユーザー";
     $lang['is_admin']                   = "管理者ですか?";
- //**
     $lang['is_guest']                   = "ゲストですか?";
- //**
     $lang['guest']                      = "ゲストユーザー";
     $lang['user_info']                  = "ユーザー情報";
     $lang['deleted_users']              = "ユーザーを削除しました";
@@ -336,7 +333,6 @@ $week_array = array('日', '月', '火', '水', '木', '金', '土' );
     $lang['add_project']                = "プロジェクトを追加";
     $lang['clone_project']              = "プロジェクトを複製";
     $lang['clone_task']                 = "タスクを複製";
-//**
     $lang['quick_jump']                 = "クイックジャンプ";
     $lang['no_edit']                    = "You do not own this item and therefore you may not edit it";
     $lang['uncategorised']              = "未カテゴリ設定";
@@ -346,13 +342,10 @@ $week_array = array('日', '月', '火', '水', '木', '金', '土' );
     $lang['delete_task']                = "タスクを削除";
     $lang['project_options']            = "プロジェクトオプション";
     $lang['task_options']               = "タスクオプション";
-//**    
     $lang['javascript_archive_project'] = "これはプロジェクト %s を書庫化するでしょう。本当にしますか?";
-//**    
     $lang['archive_project']            = "書庫プロジェクト";
     $lang['task_navigation']            = "タスクナビゲーション";
-//**
-    $lang['new_task']                   = "新規タスク";    
+    $lang['new_task']                   = "新規タスク";
     $lang['no_projects']                = "There are no projects to view";
     $lang['show_all_projects']          = "すべてのプロジェクトを表示";
     $lang['show_active_projects']       = "有効なプロジェクトのみ表示";
@@ -409,9 +402,11 @@ $week_array = array('日', '月', '火', '水', '木', '金', '土' );
     $lang['calendar']                   = "カレンダー";
     $lang['normal_version']             = "通常バージョン";
     $lang['print_version']              = "印刷用バージョン";
-//**    
+//**
     $lang['condensed_view']             = "Condensed view";
-//**    
+//**
     $lang['full_view']                  = "Full view";
+//**
+    $lang['icalendar']                  = "iCalendar";
 
 ?>

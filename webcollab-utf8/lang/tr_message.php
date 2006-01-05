@@ -27,18 +27,15 @@
 
 
   NOTE: This file is written in UTF-8 character set
-  
-*/
 
-//required language encodings
-define('CHARACTER_SET', "UTF-8" );
+*/
 
 //dates
 $month_array = array (NULL, 'Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara' );
 $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
 
 //task states
- 
+
  //priorities
     $task_state['dontdo']               = "Yapma";
     $task_state['low']                  = "Düşük";
@@ -58,7 +55,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $task_state['planned_project']      = "Planlanmış proje (etkin değil)";
     $task_state['no_deadline_project']  = "Son bitiş tarihi belirlenmemiş";
     $task_state['active_project']       = "Etkin proje";
-    
+
 //common items
     $lang['description']                = "Tanım";
     $lang['name']                       = "Ad";
@@ -86,10 +83,10 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['error']                      = "Hata";
     $lang['no_login']                   = "Erişim engellendi; yanlış kullanıcı adı ya da şifre";
     $lang['redirect_sprt']              = "%d saniye sonra otomatik olarak sisteme giriş sayfasına döneceksiniz";
-    $lang['login_now']                  = "Sisteme giriş sayfasına şimdi dönmek için lütfen buraya tıklayın";   
+    $lang['login_now']                  = "Sisteme giriş sayfasına şimdi dönmek için lütfen buraya tıklayın";
     $lang['please_login']               = "Lütfen sisteme girin";
     $lang['go']                         = "Git!";
-    
+
 //graphic items
     $lang['late_g']                     = "&nbsp;GECİKMİŞ&nbsp;";
     $lang['new_g']                      = "&nbsp;YENİ&nbsp;";
@@ -108,11 +105,11 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['set_email_owner']            = "Sahibine değişiklikleri her zaman epostayla haber ver?";
     $lang['set_email_group']            = "Kullanıcı grubuna değişiklikleri her zaman epostayla haber ver?";
     $lang['project_listing_order']      = "Proje listeleme sırası";
-    $lang['task_listing_order']         = "Görev listeleme sırası"; 
+    $lang['task_listing_order']         = "Görev listeleme sırası";
     $lang['configuration']              = "Tanımlamalar";
 
 //archive
-    $lang['archived_projects']          = "Arşivlenmiş projeler";    
+    $lang['archived_projects']          = "Arşivlenmiş projeler";
 
 //contacts
     $lang['firstname']                  = "Ad:";
@@ -175,8 +172,14 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['no_message']                 = "Mesaj yok! Lütfen geri dönün ve tekrar deneyin";
     $lang['add_reply']                  = "Yanıt ekle";
     $lang['last_post_sprt']             = "Son mesaj: %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-    $lang['recent_posts']               = "Yakın zamanda gönderilmiş forum mesajları";      
-    
+    $lang['recent_posts']               = "Yakın zamanda gönderilmiş forum mesajları";
+//**
+    $lang['forum_search']               = "Forum search";
+//**
+    $lang['no_results']                 = "No results found for '%s'";
+//**
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                     = "Rapor";
     $lang['warning']                    = "<h1>Özür dileriz!</h1><p>Şu anda isteğinizi yerine getiremiyoruz. Lütfen daha sonra tekrar deneyin.</p>";
@@ -186,7 +189,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['calendar']                   = "Takvim";
     $lang['log_out']                    = "Sistemden çık";
     $lang['main_menu']                  = "Ana menü";
-    $lang['archive']                    = "Arşiv";   
+    $lang['archive']                    = "Arşiv";
     $lang['user_homepage_sprt']         = "kullanıcı ana sayfası: %s";
     $lang['missing_field_javascript']   = "Lütfen eksik alana bir değer girin";
     $lang['invalid_date_javascript']    = "Lütfen geçerli bir tarih seçin";
@@ -235,7 +238,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['email']                      = "Eposta";
     $lang['admin']                      = "Yönetici";
     $lang['private_user']               = "Özel kullanıcı";
-    $lang['normal_user']                = "Normal kullanıcı"; 
+    $lang['normal_user']                = "Normal kullanıcı";
     $lang['is_admin']                   = "Yönetici mi?";
     $lang['is_guest']                   = "Misafir mi?";
     $lang['guest']                      = "Misafir kullanıcı";
@@ -341,7 +344,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['javascript_archive_project'] = "Bu işlem %s projesini arşive kaldıracak. Emin misiniz?";
     $lang['archive_project']            = "Projeyi arşive kaldır";
     $lang['task_navigation']            = "Görev navigasyon";
-    $lang['new_task']                   = "Yeni görev";    
+    $lang['new_task']                   = "Yeni görev";
     $lang['no_projects']                = "Bakılacak proje yok";
     $lang['show_all_projects']          = "Tüm projeleri göster";
     $lang['show_active_projects']       = "Sadece aktif projeleri göster";
@@ -400,5 +403,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['print_version']              = "Yazıcı sürümü";
     $lang['condensed_view']             = "Sıkıştırılmış görünüm";
     $lang['full_view']                  = "Tam görünüm";
+//**
+    $lang['icalendar']                  = "iCalendar";
 
 ?>

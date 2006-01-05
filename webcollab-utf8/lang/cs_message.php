@@ -25,20 +25,17 @@
 
   Translation: Lukas Moravek <moravekl at gmail.com>
 
-  
+
   NOTE: This file is written in UTF-8 character set
 
 */
-
-//required language encodings
-define('CHARACTER_SET', "UTF-8" );
 
 //dates
 $month_array = array (NULL, 'Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Lisopad', 'Prosinec' );
 $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
 
 //task states
- 
+
  //priorities
     $task_state['dontdo']               = "Až nebude práce";
     $task_state['low']                  = "Nízká";
@@ -58,7 +55,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $task_state['planned_project']      = "Plánovaný projekt (zatím neaktivní)";
     $task_state['no_deadline_project']  = "Bez konečného data";
     $task_state['active_project']       = "Aktivní projekt";
-    
+
 //common items
     $lang['description']                = "Popis";
     $lang['name']                       = "Jméno";
@@ -86,10 +83,10 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['error']                      = "Chyba";
     $lang['no_login']                   = "Přístup odepřen; špatné jeméno nebo heslo";
     $lang['redirect_sprt']              = "Automaticky budete přesměrovány na přihlašovací stránku za %d sekund";
-    $lang['login_now']                  = "Prosím klikněte zde pro přihlášení";   
+    $lang['login_now']                  = "Prosím klikněte zde pro přihlášení";
     $lang['please_login']               = "Prosím přihlašte se";
     $lang['go']                         = "Přejít";
-    
+
 //graphic items
     $lang['late_g']                     = "&nbsp;Zpožděn&nbsp;";
     $lang['new_g']                      = "&nbsp;Nový&nbsp;";
@@ -108,11 +105,11 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['set_email_owner']            = "Poslat vlastníkovy email se změnami?";
     $lang['set_email_group']            = "Poslat skupině email se změnami?";
     $lang['project_listing_order']      = "Řazení projektů podle";
-    $lang['task_listing_order']         = "Řazení úkolů podle"; 
+    $lang['task_listing_order']         = "Řazení úkolů podle";
     $lang['configuration']              = "Nastavení";
 
 //archive
-    $lang['archived_projects']          = "Archivované projekty";    
+    $lang['archived_projects']          = "Archivované projekty";
 
 //contacts
     $lang['firstname']                  = "Jméno:";
@@ -175,8 +172,14 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['no_message']                 = "Žádné zprávý! Prosím vrattě se zpět a zkuste to znovu";
     $lang['add_reply']                  = "Přidat zprávu";
     $lang['last_post_sprt']             = "Poslední příspěvek: %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-    $lang['recent_posts']               = "Nedávné příspěvky ve fóru";      
-    
+    $lang['recent_posts']               = "Nedávné příspěvky ve fóru";
+//**
+    $lang['forum_search']               = "Forum search";
+//**
+    $lang['no_results']                 = "No results found for '%s'";
+//**
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                     = "Report";
     $lang['warning']                    = "<h1>Omlouváme se!</h1><p>V tuto chvýli nejsme schopní provést Váš požadavek. Prosím zkuste to později.</p>";
@@ -186,7 +189,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['calendar']                   = "Kalendář";
     $lang['log_out']                    = "Odhlásit";
     $lang['main_menu']                  = "Hlavní nabídka";
-    $lang['archive']                    = "Archiv";   
+    $lang['archive']                    = "Archiv";
     $lang['user_homepage_sprt']         = "%s";
     $lang['missing_field_javascript']   = "Prosím vložte hodnoty do chybějcího pole";
     $lang['invalid_date_javascript']    = "Prosím zadejte správné datum";
@@ -235,7 +238,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['email']                      = "E-mail";
     $lang['admin']                      = "Administrátor";
     $lang['private_user']               = "Privátní uživatel";
-    $lang['normal_user']                = "Normální uživatel"; 
+    $lang['normal_user']                = "Normální uživatel";
     $lang['is_admin']                   = "Administrátor";
     $lang['is_guest']                   = "Host";
     $lang['guest']                      = "Host";
@@ -341,7 +344,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['javascript_archive_project'] = "Chcete opravdu archivovat projekt %s ?";
     $lang['archive_project']            = "Archivovat projekt";
     $lang['task_navigation']            = "Navigace";
-    $lang['new_task']                   = "Nový ůkol";    
+    $lang['new_task']                   = "Nový ůkol";
     $lang['no_projects']                = "Nejsou zde žádné projekty";
     $lang['show_all_projects']          = "Všechny projekty";
     $lang['show_active_projects']       = "Pouze aktivní projekty";
@@ -400,5 +403,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['print_version']              = "Verze pro tisk";
     $lang['condensed_view']             = "Zkrácený výběr";
     $lang['full_view']                  = "Plné zobrazení";
+//**
+    $lang['icalendar']                  = "iCalendar";
 
 ?>

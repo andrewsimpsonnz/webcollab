@@ -27,9 +27,6 @@
 
 */
 
-//required language encodings
-define('CHARACTER_SET', "UTF-8" );
-
 //dates
 $month_array = array ( NULL, "Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic" );
 $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
@@ -81,16 +78,16 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['login']                        = "Login";
     $lang['error']                        = "Errore";
     $lang['no_login']                     = "Accesso negato, login o password errati";
-//**    
+//**
     $lang['redirect_sprt']                = "You will automatically return to Login after a %d second delay";
 //**
-    $lang['login_now']                    = "Please click here to return to Login now";   
+    $lang['login_now']                    = "Please click here to return to Login now";
     $lang['please_login']                 = "Identificazione utente";
 //for collaltosabino.net
 //  $lang['please_login']                 = "<span class="navy"><b>collaltosabino.net</b><br><span class="darkred"><b>*** Sistema di gestione progetti ***<br><br><span class="navy">Identificazione utente</b></span>";
-//**    
+//**
     $lang['go']                           = "Go!";
-    
+
 
 //graphic items
     $lang['late_g']                       = "&nbsp;IN RITARDO&nbsp;";
@@ -109,15 +106,15 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['allow_group_edit']             = "Allow all in usergroup to edit?";
     $lang['set_email_owner']              = "Always email owner with changes?";
     $lang['set_email_group']              = "Always email usergroup with changes?";
-//**    
+//**
     $lang['project_listing_order']        = "Project listing order";
-//**    
-    $lang['task_listing_order']           = "Task listing order"; 
+//**
+    $lang['task_listing_order']           = "Task listing order";
     $lang['configuration']                = "Configuration";
 
 //archive
 //**
-    $lang['archived_projects']            = "Archived Projects";    
+    $lang['archived_projects']            = "Archived Projects";
 
 //contacts
     $lang['firstname']                    = "Nome:";
@@ -183,11 +180,17 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['forum_submit']                 = "Invia Forum";
     $lang['no_message']                   = "Nessun messaggio! Torna indietro e riprova";
     $lang['add_reply']                    = "Aggiungi risposta";
-//**  
+//**
     $lang['last_post_sprt']               = "Last post %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**   
-    $lang['recent_posts']                 = "Recent forum posts";      
-    
+//**
+    $lang['recent_posts']                 = "Recent forum posts";
+//**
+    $lang['forum_search']                 = "Forum search";
+//**
+    $lang['no_results']                   = "No results found for '%s'";
+//**
+    $lang['search_results']               = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                       = "Report";
     $lang['warning']                      = "<h1>Spiacente!</h1><p>Non &egrave; possibile processare la tua richiesta adesso. Riprova pi&ugrave; tardi.</p>";
@@ -198,7 +201,7 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['log_out']                      = "Log out";
     $lang['main_menu']                    = "Menu principale";
 //**
-    $lang['archive']                      = "Archive";   
+    $lang['archive']                      = "Archive";
     $lang['user_homepage_sprt']           = "%s's homepage";
     $lang['missing_field_javascript']     = "Prego, inserisci un valore nel campo omesso";
     $lang['invalid_date_javascript']      = "Prego, scegli una data valida";
@@ -248,7 +251,7 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['admin']                        = "Admin";
     $lang['private_user']                 = "Private user";
  //**
-    $lang['normal_user']                  = "Normal user"; 
+    $lang['normal_user']                  = "Normal user";
     $lang['is_admin']                     = "E' un admin?";
  //**
     $lang['is_guest']                     = "Is a guest?";
@@ -343,7 +346,7 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['add_subtask']                  = "Aggiungi subattivit&agrave;";
     $lang['add_project']                  = "Aggiungi progetto";
     $lang['clone_project']                = "Clona progetto";
-    $lang['clone_task']                   = "Clona attivit&agrave;"; 
+    $lang['clone_task']                   = "Clona attivit&agrave;";
 //**
     $lang['quick_jump']                   = "Quick Jump";
     $lang['no_edit']                      = "Non sei il proprietario di questo item e non puoi editarlo. Chiedi ad un admin o al proprietario dell'item di effettuare l'operazione.";
@@ -354,13 +357,13 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['delete_task']                  = "Cancella attivit&agrave;";
     $lang['project_options']              = "Opzioni del progetto";
     $lang['task_options']                 = "Opzioni dell'attivit&agrave;";
-//**    
+//**
     $lang['javascript_archive_project']   = "This will archive project %s.  Are you sure?";
-//**    
+//**
     $lang['archive_project']              = "Archive project";
     $lang['task_navigation']              = "Navigazione nelle attivit&agrave;";
 //**
-    $lang['new_task']                     = "New task";    
+    $lang['new_task']                     = "New task";
     $lang['no_projects']                  = "Non ci sono progetti da vedere";
     $lang['show_all_projects']            = "Visualizza tutti i progetti";
     $lang['show_active_projects']         = "Visualizza solo i progetti attivi";
@@ -417,9 +420,11 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['calendar']                     = "Calendario";
     $lang['normal_version']               = "Versione normale";
     $lang['print_version']                = "Versione stampabile";
-//**    
+//**
     $lang['condensed_view']               = "Condensed view";
-//**    
+//**
     $lang['full_view']                    = "Full view";
+//**
+    $lang['icalendar']                    = "iCalendar";
 
 ?>

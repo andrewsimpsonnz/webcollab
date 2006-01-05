@@ -24,23 +24,19 @@
   Language files for 'hu' (Hungarian)
 
   Translation: Széll Tamás
-  
+
   Maintainer: Széll Tamás
 
+  NOTE: This file is written in UTF-8 character set
+
 */
-
-//required language encodings
-define('CHARACTER_SET', "UTF-8" );
-
-//this is the regex for input validation filter used in common.php 
-$validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s"; //ISO-8859-x 
 
 //dates
 $month_array = array (NULL, 'Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Sze', 'Okt', 'Nov', 'Dec' );
 $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
 
 //task states
- 
+
  //priorities
     $task_state['dontdo']               = "Nem fontos";
     $task_state['low']                  = "Alacsony";
@@ -60,7 +56,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $task_state['planned_project']      = "Tervezett projekt (inaktív)";
     $task_state['no_deadline_project']  = "Nincs határidõ megszabva";
     $task_state['active_project']       = "Aktív projekt";
-    
+
 //common items
     $lang['description']                = "Leírás";
     $lang['name']                       = "Név";
@@ -88,10 +84,10 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['error']                      = "Hibe";
     $lang['no_login']                   = "Belépés megtagadva; hibás felhasználói név vagy jelszó!";
     $lang['redirect_sprt']              = "Automatikusan vissza fog jutni a bejentkezéshez %d másodperc késleltetés után";
-    $lang['login_now']                  = "Kattintson ide a bejelentkezéshez";   
+    $lang['login_now']                  = "Kattintson ide a bejelentkezéshez";
     $lang['please_login']               = "Kérem jelentkezzen be";
     $lang['go']                         = "Ugrás!";
-    
+
 //graphic items
     $lang['late_g']                     = "&nbsp;KÉSÉSBEN&nbsp;";
     $lang['new_g']                      = "&nbsp;ÚJ&nbsp;";
@@ -110,11 +106,11 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['set_email_owner']            = "Mindig küldjön emailt a tulajdonosnak változásokkor?";
     $lang['set_email_group']            = "Mindig küldjön emailt a felhasználói csoprtnak változásokkor?";
     $lang['project_listing_order']      = "Projekt felsorolás rendezése";
-    $lang['task_listing_order']         = "Feladat felsorolás rendezése"; 
+    $lang['task_listing_order']         = "Feladat felsorolás rendezése";
     $lang['configuration']              = "Beállítások";
 
 //archive
-    $lang['archived_projects']          = "Archív projektek";    
+    $lang['archived_projects']          = "Archív projektek";
 
 //contacts
     $lang['firstname']                  = "Vezetéknév:";
@@ -177,8 +173,14 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['no_message']                 = "Nincs üzenet! Kérem lépjen vissza és próbálja megújra!";
     $lang['add_reply']                  = "Válasz hozzáadása";
     $lang['last_post_sprt']             = "Utolsó üzenet: %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-    $lang['recent_posts']               = "Legutóbbi fórum üzenetek";      
-    
+    $lang['recent_posts']               = "Legutóbbi fórum üzenetek";
+//**
+    $lang['forum_search']               = "Forum search";
+//**
+    $lang['no_results']                 = "No results found for '%s'";
+//**
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
  //includes
     $lang['report']                     = "Jelentés";
     $lang['warning']                    = "<h1>Sájnáljuk!</h1><p>Most nem tudjuk a kérését teljesíteni. Kérjük próbálja meg késõbb újra!</p>";
@@ -188,8 +190,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['calendar']                   = "Naptár";
     $lang['log_out']                    = "Kijelentkezés";
     $lang['main_menu']                  = "Fõmenü";
-//**
-    $lang['archive']                    = "Archívum";   
+    $lang['archive']                    = "Archívum";
     $lang['user_homepage_sprt']         = "%s\ oldala";
     $lang['missing_field_javascript']   = "Kérem adja mag a hiányzó mezõ adatait";
     $lang['invalid_date_javascript']    = "Kérem válasszon egy létezõ dátumot";
@@ -238,7 +239,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['email']                      = "E-mail";
     $lang['admin']                      = "Admin";
     $lang['private_user']               = "Privát felhasználó";
-    $lang['normal_user']                = "Normál felhasználó"; 
+    $lang['normal_user']                = "Normál felhasználó";
     $lang['is_admin']                   = "Admin jogokkal rendelkezik?";
     $lang['is_guest']                   = "Vendég jogokkal rendelkezik?";
     $lang['guest']                      = "Vendég felhasználó";
@@ -344,7 +345,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['javascript_archive_project'] = "Ez archiválni fogja a következõ projektet: %s.  Biztos benne?";
     $lang['archive_project']            = "Projekt archiválása";
     $lang['task_navigation']            = "Feladatok közti navigáció";
-    $lang['new_task']                   = "Új feladat";    
+    $lang['new_task']                   = "Új feladat";
     $lang['no_projects']                = "Nincs megjelenítendõ projekt";
     $lang['show_all_projects']          = "Minden projekt mutatása";
     $lang['show_active_projects']       = "Csak az aktív projektek mutatása";
@@ -403,5 +404,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['print_version']              = "Nyomtatható verzió";
     $lang['condensed_view']             = "Áttekintõ nézet";
     $lang['full_view']                  = "Részletes nézet";
+//**
+    $lang['icalendar']                  = "iCalendar";
 
 ?>

@@ -2,9 +2,10 @@
 /*
   $Id$
 
+  (c) 2005 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
   WebCollab
   ---------------------------------------
-  This file created 2003 by Andrew Simpson.
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -21,10 +22,10 @@
   Function:
   ---------
 
-  Creates a list of languages.
+  Creates a list of languages for the Unicode version.
 
-  Note: This file is UTF-8 character set
-   
+  Note: This file is in UTF-8 character set
+
 */
 
 
@@ -50,5 +51,5 @@ $lang_list['sr']    = 'Srpski';
 $lang_list['tr']    = 'Türkçe';
 $lang_list['zh-cn'] = 'Chinese (Traditional)';
 $lang_list['zh-hk'] = 'Chinese (Simplified)';
-    
+
 ?>
