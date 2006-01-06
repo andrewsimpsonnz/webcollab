@@ -83,19 +83,31 @@ extension_dir = "c:\php\extensions\"
 </pre></li>
 <li>Save the file, and restart Apache.</li>
 </ol>
-For Linux you need to ensure that PHP has been compiled with the '--enable-mbstring=all' option
-set, and that the lines above have been set in php.ini. 
+</dd>
+<dt>4. How do you install the mb_string library (for the Unicode version of WebCollab) on
+Linux?</dt>
+<dd>
+<ul>
+<li>Some Linux distributions, such as Debian and derivatives, already have mb_strings
+ compiled into PHP.</li>
+<li>Some Linux distributions, notably Suse, Mandriva &amp; Fedora have a separate RPM package for
+mb_strings that needs to be installed.</li>
+<li>For compiling from source, you need to ensure that PHP has been compiled with the
+'--enable-mbstring=all' option set, and that the module enabling lines (see previous
+question) have been set in php.ini.</li>
+</ul>
 </dd> 
 </dl>
 <h3><a name="startup">START UP PROBLEMS</a></h3>
 <dl>
-<dt>1. "Initial installation works, but logging in as admin has no effect
-(no error message either)."</dt>
-<dd>This problem occurs with PHP 4.0.6 and lower.  WebCollab will only run on PHP 4.2.0, or higher.
- Earlier versions of PHP do not support $_POST, $_GET or $_REQUEST global arrays, which are
-necessary for WebCollab to function.<br />
-<br />
-(The setup program now checks for early versions of PHP and will record an error).</dd>
+<dt>1. "Initial installation works, but logging in gives a error message about undefined
+ctype_space function.</dt>
+<dd>The ctype function is built into PHP, but some Linux distributions - notably Mandriva &amp;
+Suse - have a separate RPM package for 'php-ctype'.  It is a small package of about 10 kb, and
+needs to be installed.<br />
+For FreeBSD you have to install the textproc/php4-ctype port.  This probably also applies to other
+*BSD's - comments &amp; confirmations from users please!
+</dd>
 <dt>2. "Initial installation works, but logging in as admin gives a blank
 screen."</dt>
 <dd>Check that PHP has your database extensions compiled in.  From the command
