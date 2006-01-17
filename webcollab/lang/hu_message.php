@@ -24,23 +24,23 @@
   Language files for 'hu' (Hungarian)
 
   Translation: Széll Tamás
-  
+
   Maintainer: Széll Tamás
 
 */
 
 //required language encodings
-define('CHARACTER_SET', "ISO-8859-1" );
+define('CHARACTER_SET', "ISO-8859-2" );
 
-//this is the regex for input validation filter used in common.php 
-$validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s"; //ISO-8859-x 
+//this is the regex for input validation filter used in common.php
+$validation_regex = '/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s'; //ISO-8859-x
 
 //dates
-$month_array = array (NULL, 'Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Sze', 'Okt', 'Nov', 'Dec' );
+$month_array = array (NULL, 'jan', 'feb', 'már', 'ápr', 'máj', 'jún', 'júl', 'aug', 'sze', 'okt', 'nov', 'dec' );
 $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
 
 //task states
- 
+
  //priorities
     $task_state['dontdo']               = "Nem fontos";
     $task_state['low']                  = "Alacsony";
@@ -60,7 +60,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $task_state['planned_project']      = "Tervezett projekt (inaktív)";
     $task_state['no_deadline_project']  = "Nincs határidõ megszabva";
     $task_state['active_project']       = "Aktív projekt";
-    
+
 //common items
     $lang['description']                = "Leírás";
     $lang['name']                       = "Név";
@@ -72,7 +72,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['manage']                     = "Kezelés";
     $lang['edit']                       = "Szerkesztés";
     $lang['delete']                     = "Törlés";
-    $lang['del']                        = "Törl";
+    $lang['del']                        = "Töröl";
     $lang['confirm_del_javascript']     = " Törlés megerõsítése!";
     $lang['yes']                        = "Igen";
     $lang['no']                         = "Nem";
@@ -84,14 +84,14 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['bytes']                      = " byte";
     $lang['select_instruct']            = "(használja a ctrl-t a többszörös kijelöléshez; vagy a kijelölés megszüntetéséhez)";
     $lang['member_groups']              = "A felhasználó az alább kiemelt csoportok tagja (ha van ilyen)";
-    $lang['login']                      = "Bejelntkezés";
-    $lang['error']                      = "Hibe";
+    $lang['login']                      = "Bejelentkezés";
+    $lang['error']                      = "Hiba";
     $lang['no_login']                   = "Belépés megtagadva; hibás felhasználói név vagy jelszó!";
     $lang['redirect_sprt']              = "Automatikusan vissza fog jutni a bejentkezéshez %d másodperc késleltetés után";
-    $lang['login_now']                  = "Kattintson ide a bejelentkezéshez";   
+    $lang['login_now']                  = "Kattintson ide a bejelentkezéshez";
     $lang['please_login']               = "Kérem jelentkezzen be";
     $lang['go']                         = "Ugrás!";
-    
+
 //graphic items
     $lang['late_g']                     = "&nbsp;KÉSÉSBEN&nbsp;";
     $lang['new_g']                      = "&nbsp;ÚJ&nbsp;";
@@ -108,13 +108,13 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['allow_globalaccess']         = "Mindenki szerkesztheti?";
     $lang['allow_group_edit']           = "Felhasználói csoport minden tagja szerkesztheti?";
     $lang['set_email_owner']            = "Mindig küldjön emailt a tulajdonosnak változásokkor?";
-    $lang['set_email_group']            = "Mindig küldjön emailt a felhasználói csoprtnak változásokkor?";
+    $lang['set_email_group']            = "Mindig küldjön emailt a felhasználói csoportnak változásokkor?";
     $lang['project_listing_order']      = "Projekt felsorolás rendezése";
-    $lang['task_listing_order']         = "Feladat felsorolás rendezése"; 
+    $lang['task_listing_order']         = "Feladat felsorolás rendezése";
     $lang['configuration']              = "Beállítások";
 
 //archive
-    $lang['archived_projects']          = "Archív projektek";    
+    $lang['archived_projects']          = "Archív projektek";
 
 //contacts
     $lang['firstname']                  = "Vezetéknév:";
@@ -152,8 +152,8 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['files']                      = "Fájlok";
     $lang['file_choose']                = "Feltöltendõ fájl:";
     $lang['upload']                     = "Feltöltés";
-    $lang['file_email_owner']           = "Email érttesítés új fájlokról a tulajdonosnak?";
-    $lang['file_email_usergroup']       = "Email érttesítés új fájlokról a felhasználói csoportnak?";
+    $lang['file_email_owner']           = "Email értesítés új fájlokról a tulajdonosnak?";
+    $lang['file_email_usergroup']       = "Email értesítés új fájlokról a felhasználói csoportnak?";
     $lang['max_file_sprt']              = "Feltöltendõ fájl meximális mérete: %s kb.";
     $lang['file_submit']                = "Fájl beküldése";
     $lang['no_upload']                  = "Nem sikerült fájlt feltölteni.  Kérem lépjen vissza és próbálja meg újra!";
@@ -172,12 +172,12 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['reply']                      = "Válasz";
     $lang['new_post']                   = "Új üzenet";
     $lang['public_user_forum']          = "Nyilvános felhasználói fórum";
-    $lang['private_forum_sprt']         = "Nyilvános fórum a '%s' felhasználói csoportnak";
+    $lang['private_forum_sprt']         = "Magán fórum a '%s' felhasználói csoportnak";
     $lang['forum_submit']               = "Fórum beküldése";
     $lang['no_message']                 = "Nincs üzenet! Kérem lépjen vissza és próbálja megújra!";
     $lang['add_reply']                  = "Válasz hozzáadása";
     $lang['last_post_sprt']             = "Utolsó üzenet: %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-    $lang['recent_posts']               = "Legutóbbi fórum üzenetek";      
+    $lang['recent_posts']               = "Legutóbbi fórum üzenetek";
 //**
     $lang['recent_posts']               = "Recent forum posts";
 //**
@@ -186,10 +186,10 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['no_results']                 = "No results found for '%s'";
 //**
     $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
-    
+
  //includes
     $lang['report']                     = "Jelentés";
-    $lang['warning']                    = "<h1>Sájnáljuk!</h1><p>Most nem tudjuk a kérését teljesíteni. Kérjük próbálja meg késõbb újra!</p>";
+    $lang['warning']                    = "<h1>Sajnáljuk!</h1><p>Most nem tudjuk a kérését teljesíteni. Kérjük próbálja meg késõbb újra!</p>";
     $lang['home_page']                  = "Kezdõlap";
     $lang['summary_page']               = "Összesítõ lap";
     $lang['todo_list']                  = "ToDo lista";
@@ -197,8 +197,8 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['log_out']                    = "Kijelentkezés";
     $lang['main_menu']                  = "Fõmenü";
 //**
-    $lang['archive']                    = "Archívum";   
-    $lang['user_homepage_sprt']         = "%s\ oldala";
+    $lang['archive']                    = "Archívum";
+    $lang['user_homepage_sprt']         = "%s oldala";
     $lang['missing_field_javascript']   = "Kérem adja mag a hiányzó mezõ adatait";
     $lang['invalid_date_javascript']    = "Kérem válasszon egy létezõ dátumot";
     $lang['finish_date_javascript']     = "A megadott dátum a projekt határidején túl van!";
@@ -213,9 +213,9 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
  //taskgroups
     $lang['taskgroup_name']             = "Feladatcsoport neve:";
     $lang['taskgroup_description']      = "Feladatcsoport rövid leírása:";
-    $lang['add_taskgroup']              = "Feladatcsoportt hozzáadása";
+    $lang['add_taskgroup']              = "Feladatcsoport hozzáadása";
     $lang['add_new_taskgroup']          = "Új feladatcsoport hozzáadása";
-    $lang['edit_taskgroup']             = "Feladatcsoprt szerkesztése";
+    $lang['edit_taskgroup']             = "Feladatcsoport szerkesztése";
     $lang['taskgroup_manage']           = "Feladatcsoportok kezelése";
     $lang['no_taskgroups']              = "Nincsenek feladatcsoportok kialakítva";
     $lang['manage_taskgroups']          = "Feladatcsoportok kezelése";
@@ -243,17 +243,17 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['full_name']                  = "Teljes név";
     $lang['password']                   = "Jelszó";
     $lang['blank_for_current_password'] = "(Hagyja üresen, ha nem akarj megváltoztatni)";
-    $lang['email']                      = "E-mail";
+    $lang['email']                      = "Email";
     $lang['admin']                      = "Admin";
     $lang['private_user']               = "Privát felhasználó";
-    $lang['normal_user']                = "Normál felhasználó"; 
+    $lang['normal_user']                = "Normál felhasználó";
     $lang['is_admin']                   = "Admin jogokkal rendelkezik?";
     $lang['is_guest']                   = "Vendég jogokkal rendelkezik?";
     $lang['guest']                      = "Vendég felhasználó";
     $lang['user_info']                  = "Felhasználói információ";
     $lang['deleted_users']              = "Törölt felhasználók";
     $lang['no_deleted_users']           = "Nincsenek törölt felhasználók.";
-    $lang['revive']                     = "Újáéleszt";
+    $lang['revive']                     = "Újraéleszt";
     $lang['permdel']                    = "Végleges törlés";
     $lang['permdel_javascript_sprt']    = "Ez véglegesen ki fogja törölni a felhasználót, valamint a feladatokat amelyeknek %s volt az elvállalója. Biztos ezt akarja?";
     $lang['add_user']                   = "Felhasználó hozzáadása";
@@ -271,7 +271,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['edit_details']               = "Felhasználó részleteinek szerkesztése";
     $lang['show_details']               = "Felhasználó részleteinek mutatása";
     $lang['user_deleted']               = "Ez a felhasználó törölve van!";
-    $lang['no_usergroup']               = "Ez a felhasznló nem tagja egy felhasználói csoportnak sem";
+    $lang['no_usergroup']               = "Ez a felhasználó nem tagja egy felhasználói csoportnak sem";
     $lang['not_usergroup']              = "(Nem tagja felhasználói csoporttnak)";
     $lang['no_password_change']         = "(A jelszavad nem változott meg)";
     $lang['last_time_here']             = "Itt járt legutóbb ekkor:";
@@ -292,7 +292,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['admin_priv']                 = "MEGJEGYZÉS: Admin jogokat adtál.";
     $lang['manage_users']               = "Felhasználók kezelése";
     $lang['users_online']               = "Online felhasználók";
-    $lang['online']                     = "Drágán add az életed felhasználók (kevesebb mint 60 perce online)";
+    $lang['online']                     = "Felhasználók (kevesebb mint 60 perce online)";
     $lang['not_online']                 = "A többiek";
     $lang['user_activity']              = "Felhasználó aktivitás";
 
@@ -320,7 +320,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['group_edit']                 = "Mindenki szerkesztheti a felhasználói csoportban?";
     $lang['project_description']        = "Projekt leírása";
     $lang['task_description']           = "Feladat leírása";
-    $lang['email_owner']                = "Email küldése a változtatásokról a tulajdononsak?";
+    $lang['email_owner']                = "Email küldése a változtatásokról a tulajdonosnak?";
     $lang['email_new_owner']            = "Email küldése a változtatásokról az (új) tulajdonosnak?";
     $lang['email_group']                = "Email küldése a változtatásokról a felhasználói csoportnak?";
     $lang['add_new_project']            = "Új projekt hozzáadása";
@@ -352,7 +352,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['javascript_archive_project'] = "Ez archiválni fogja a következõ projektet: %s.  Biztos benne?";
     $lang['archive_project']            = "Projekt archiválása";
     $lang['task_navigation']            = "Feladatok közti navigáció";
-    $lang['new_task']                   = "Új feladat";    
+    $lang['new_task']                   = "Új feladat";
     $lang['no_projects']                = "Nincs megjelenítendõ projekt";
     $lang['show_all_projects']          = "Minden projekt mutatása";
     $lang['show_active_projects']       = "Csak az aktív projektek mutatása";
@@ -362,7 +362,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['project_no_deadline']        = "Nincs határidõ megadva ehhez a projekthez";
     $lang['no_allowed_projects']        = "Nincs olyan projekt, amelyet engedélye van megtekinteni";
     $lang['projects']                   = "Projektek";
-    $lang['percent_project_sprt']       = "Ez a projekz %d%%-ban be van fejezve";
+    $lang['percent_project_sprt']       = "Ez a projekt %d%%-ban be van fejezve";
     $lang['owned_by']                   = "Tulajdonosa";
     $lang['created_on']                 = "Létrehozója";
     $lang['completed_on']               = "Befejezve";
@@ -386,7 +386,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['todo_list_for']              = "ToDo lista ehhez: ";
     $lang['due_in_sprt']                = " (%d napra)";
     $lang['due_tomorrow']               = " (holnapra)";
-    $lang['no_assigned']                = "Nincsenek befejezetlen feladatok ehhez a felhasználóhooz társítva.";
+    $lang['no_assigned']                = "Nincsenek befejezetlen feladatok ehhez a felhasználóhoz társítva.";
     $lang['todo_list']                  = "ToDo lista";
     $lang['summary_list']               = "Összesítõ lista";
     $lang['task_submit']                = "Feladat bejegyzése";

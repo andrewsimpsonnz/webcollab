@@ -46,10 +46,10 @@ $user_info      =    "Kérem válassza ki az utasítást a baloldali menübõl!<br /><
                       //**
                       "<li>A privát felhasználókat csak a felhasználói csoport tagjai láthatják.</li>\n".
                       "<li>A felhasználók törlésének két fázisa van, a második a végleges.</li>\n".
-                      "<li>Egy töröltfelhasználó elveszti a feladatait, de a fórum üzeneteit nem.</li>\n".
+                      "<li>Egy törölt felhasználó elveszti a feladatait, de a fórum üzeneteit nem.</li>\n".
                       "<li>Egy véglegesen kitörölt felhasználó mindent elveszt.</li>\n".
                       //"<li>Nem törölhetsz véglegesen olyan felhasználót, amelynek még vannak fórum elemei.</li>\n".
-                      "<li>Egy törölt felhasználó megtartja a látogatott feladatok listáját, és újjáélesztés után ezzel a listával folytatja.</li>\n".
+                      "<li>Egy törölt felhasználó megtartja a látogatott feladatok listáját, és újraélesztés után ezzel a listával folytatja.</li>\n".
                       "<li>MINDEN, amit egy felhasználón mûvelnek el lesz küldve emailen a felhasználónak.</li>\n".
                       "<li>A jelszavak titkosítva vannak az adatbázisban. Csak újat tudsz megadni.</li>\n".
                       "<li>A jelszavakat csak egyszer, megadásukkor küldjük ki a felhasználónak, úgyhogy figyelemmel küldje el õket!</li>\n".
