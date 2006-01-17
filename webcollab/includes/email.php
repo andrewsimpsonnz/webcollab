@@ -250,10 +250,10 @@ debug		Debug!
 function & clean($text ) {
 
   //characters previously escaped/encoded to avoid SQL injection/CSS attacks are reinstated. 
-  $trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=' );  
+  $trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=' );
   $text  = strtr($text, $trans );
 
-  $text  = html_entity_decode($text, ENT_QUOTES , CHARACTER_SET );
+  $text  = @html_entity_decode($text, ENT_QUOTES , CHARACTER_SET );
 
   //remove any dangerous tags that exist
   $text = preg_replace("/(<\/?\s*)(APPLET|SCRIPT|EMBED|FORM|\?|%)(\w*|\s*)([^>]*>)/i", "\\1****\\3\\4", $text );
