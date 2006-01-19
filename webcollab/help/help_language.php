@@ -34,7 +34,7 @@ require_once(BASE_CONFIG.'config.php' );
 $help_item = $_GET['item'];
 $help_type = $_GET['type'];
 
-if(defined('LOCALE_USER' ) {
+if(defined('LOCALE_USER' ) ) {
   $locale = LOCALE_USER;
 }
 elseif(defined('LOCALE' ) ) {
