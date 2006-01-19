@@ -28,6 +28,10 @@
 require_once("path.php" );
 
 include_once(BASE."includes/screen.php" );
+require_once(BASE.'path_config.php' );
+require_once(BASE_CONFIG.'config.php' );
+
+define('CHARACTER_SET', 'ISO-8859-1' );
 
 create_top("Hjälp", 1 );
 

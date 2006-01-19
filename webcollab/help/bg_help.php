@@ -3,6 +3,7 @@
   $Id$
 
   WebCollab
+
   ---------------------------------------
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -20,18 +21,19 @@
   ---------
 
   Help page for 'bg' (Bulgarian)
-    
+
   Maintainer: Stoyan Dimitrov <stoyan at adiumdesign dot com>
 
-  
   NOTE: This file is written in Windows-1251 character set
-    
-
 
 */
 
 //get our location
 require_once("path.php" );
+require_once(BASE.'path_config.php' );
+require_once(BASE_CONFIG.'config.php' );
+
+define('CHARACTER_SET', 'Windows-1251' );
 
 include_once(BASE . "includes/screen.php" );
 

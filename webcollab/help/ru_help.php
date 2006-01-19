@@ -32,6 +32,10 @@
 
 //get our location
 require_once("path.php" );
+require_once(BASE.'path_config.php' );
+require_once(BASE_CONFIG.'config.php' );
+
+define('CHARACTER_SET', 'KOI8-R' );
 
 include_once(BASE."includes/screen.php" );
 
