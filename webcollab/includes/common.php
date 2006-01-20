@@ -174,18 +174,23 @@ function error($box_title, $error ) {
     new_box($lang['report'], $lang['warning'], 'boxdata2', 'singlebox' );
   }
 
-  //get the post vars
-  ob_start();
-  print_r($_REQUEST );
-  $post = ob_get_contents();
-  ob_end_clean();
+  if((EMAIL_ERROR != NULL ) || (DEBUG === 'Y' ) ) {
 
-  //email to the error address
-  $message = "Hello,\n This is the ".MANAGER_NAME." site and I have an error :/  \n".
+    $uid_name = defined('UID_NAME') ? UID_NAME : "----";
+    $uid_email = defined('UID_EMAIL') ? UID_EMAIL : "----";
+
+    //get the post vars
+    ob_start();
+    print_r($_REQUEST );
+    $post = ob_get_contents();
+    ob_end_clean();
+
+    //email to the error address
+    $message = "Hello,\n This is the ".MANAGER_NAME." site and I have an error :/  \n".
             "\n\n".
             "Error message: ".$error."\n".
             "Database message: ".$db_error_message."\n".
-            "User: ".UID_NAME." (".UID_EMAIL.")\n".
+            "User: ".$uid_name." (".$uid_email.")\n".
             "Component: ".$box_title."\n".
             "Page that was called: ".$_SERVER['SCRIPT_NAME']."\n".
             "Requested URL: ".$_SERVER['REQUEST_URI']."\n".
@@ -196,14 +201,15 @@ function error($box_title, $error ) {
             "WebCollab version:".WEBCOLLAB_VERSION."\n".
             "POST variables: $post\n\n";
 
-  if(EMAIL_ERROR != NULL ) {
-    include_once(BASE.'includes/email.php' );
-    email(EMAIL_ERROR, "ERROR on ".MANAGER_NAME, $message );
-  }
+    if(EMAIL_ERROR != NULL ) {
+      include_once(BASE.'includes/email.php' );
+      email(EMAIL_ERROR, "ERROR on ".MANAGER_NAME, $message );
+    }
 
-  if(DEBUG === 'Y' ) {
-    $content = nl2br($message);
-    new_box("Error Debug", $content );
+    if(DEBUG === 'Y' ) {
+      $content = nl2br($message);
+      new_box("Error Debug", $content );
+    }
   }
 
   create_bottom();
@@ -224,10 +230,10 @@ function warning($box_title, $message ) {
   include_once(BASE.'includes/screen.php' );
 
   create_top($lang['error'], 1 );
-  
+
   $content = "<div style=\"text-align : center\">".$message."</div>\n";
   new_box($box_title, $content, 'boxdata', 'singlebox' );
-  
+
   create_bottom();
 
   //do not return
