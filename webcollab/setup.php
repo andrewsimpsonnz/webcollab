@@ -154,10 +154,11 @@ if(UNICODE_VERSION == 'Y' ) {
   }
 }
 
-if(! function_exists('ctype_space' ) {
+if(! function_exists('ctype_space' ) ) {
   error("The ctype library is missing from your version PHP.<br \>\n".
         "This is a built-in library but some Linux distributions - notably Mandriva & Suse - and OpenBSD have a separate RPM package for 'php-ctype'.  It is a small package of about 10 kb, and needs to be installed.<br \>\n".
-        "For FreeBSD (and others?) install the textproc/php4-ctype port.<br \>\n";
+        "For FreeBSD (and others?) install the textproc/php4-ctype port.<br \>\n" );
+}
 
 
 //check for initial install
