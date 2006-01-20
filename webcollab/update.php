@@ -26,11 +26,13 @@
 
 */
 
-require_once('path.php');
+require_once('path.php' );
+require_once(BASE.'path_config.php' );
+require_once(BASE_CONFIG.'config.php' );
 
-//includes
-require_once(BASE.'path.php' );
-include_once(BASE.'setup/screen_setup.php' );
+include_once(BASE.'lang/lang.php' );
+include_once(BASE.'includes/common.php' );
+include_once(BASE.'includes/screen.php' );
 
 //
 // ERROR FUNCTION
@@ -38,9 +40,9 @@ include_once(BASE.'setup/screen_setup.php' );
 
 function secure_error($message ) {
 
-  create_top_setup('Error' );
-  new_box_setup('Error', "<div align=\"center\">".$message."</div>", 'boxdata', 'singlebox' );
-  create_bottom_setup();
+  create_top('Error' );
+  new_box('Error', "<div align=\"center\">".$message."</div>", 'boxdata', 'singlebox' );
+  create_bottom();
   die;
 
 }
@@ -293,12 +295,14 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   }
 
   //update version 1.81 -> 2.00
-  if(! (db_query("SELECT projectid FROM ".PRE."contacts", 0 ) ) ) {
+  if(! (db_query("SELECT taskid FROM ".PRE."contacts", 0 ) ) ) {
 
+   /*
     //convert mysql databases to UTF-8
-    if((DATABASE_TYPE == 'mysql' ) || (DATABASE_TYPE == 'mysql_innodb' ) ) {
+   if((DATABASE_TYPE == 'mysql' ) || (DATABASE_TYPE == 'mysql_innodb' ) ) {
       db_query('ALTER DATABASE '.DATABASE_NAME.' DEFAULT CHARACTER SET utf8' );
     }
+    */
     //add project capability to contacts
     db_query('ALTER TABLE '.PRE.'contacts ADD COLUMN taskid INT' );
     db_query('UPDATE '.PRE.'contacts SET taskid=0' );
@@ -322,9 +326,9 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   $content .= "<p>Database update action has been completed.</p>\n";
 
   //display box calls
-  create_top_setup("Info" );
-  new_box_setup("Update completed", $content, 'boxdata', 'singlebox' );
-  create_bottom_setup();
+  create_top("Info", 1 );
+  new_box("Update completed", $content, 'boxdata', 'singlebox' );
+  create_bottom();
   die;
 }
 
@@ -333,12 +337,12 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 //
 
 //login box screen code
-create_top_setup('Login' );
+create_top('Login', 1, 'username' );
 
 $content = "<p>Admin login is required for database update:</p>\n".
            "<form name=\"inputform\" method=\"post\" action=\"update.php\">\n".
              "<table>\n".
-               "<tr><td>Login: </td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
+               "<tr><td>Login: </td><td><input type=\"text\" id=\"username\" name=\"username\" size=\"30\" /></td></tr>\n".
                "<tr><td>Password: </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
              "</table>\n".
              "<div align=\"center\">\n".
@@ -346,8 +350,8 @@ $content = "<p>Admin login is required for database update:</p>\n".
              "</div></form>\n";
 
 //set box options
-new_box_setup("Login", $content, 'boxdata', 'singlebox' );
+new_box("Login", $content, 'boxdata', 'singlebox' );
 
-create_bottom_setup();
+create_bottom();
 
 ?>
