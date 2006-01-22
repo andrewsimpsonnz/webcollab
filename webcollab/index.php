@@ -93,6 +93,9 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
     $login_q = 'SELECT id FROM '.PRE.'users WHERE password=\''.$md5pass.'\' AND name=\''.$username.'\' AND deleted=\'f\'';
   }
 
+  //set character set & connect to database
+  db_user_locale(CHARACTER_SET);
+
   //database query
   if( ! $q = @db_query($login_q, 0 ) ) {
     sleep (2);

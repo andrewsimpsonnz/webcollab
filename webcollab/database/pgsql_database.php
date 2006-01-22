@@ -44,37 +44,37 @@ $epoch = 'extract(epoch FROM ';
 $day_part = 'DATE_PART(\'day\', ';
 
 //
+// Makes a connection to the database
+//
+function db_connection() {
+
+  global $database_connection;
+
+  //set host string correctly
+  $host = (DATABASE_HOST != 'localhost' ) ? 'host='.DATABASE_HOST : '';
+
+  if( ! ($database_connection = @pg_connect($host.' user='.DATABASE_USER.' dbname='.DATABASE_NAME.' password='.DATABASE_PASSWORD ) ) )
+    error('No database connection',  'Sorry but there seems to be a problem in connecting to the database' );
+
+  //make sure dates will be handled properly by internal date routines
+  pg_query($database_connection, 'SET DATESTYLE TO \'European, ISO\'');
+
+  //set the timezone
+  if(! @pg_query($database_connection, 'SET TIME ZONE '.TZ ) ) {
+    error("Database error",  "Not able to set timezone" );
+  }
+
+return;
+}
+
+//
 // Provides a safe way to do a query
 //
 function db_query($query, $dieonerror=1 ) {
 
   global $database_connection;
 
-  if( ! $database_connection ) {
-    //set initial value
-    $host = '';
-    //now adjust if necessary
-    if(DATABASE_HOST != 'localhost' )
-      $host = 'host='.DATABASE_HOST;
-
-    if( ! ($database_connection = @pg_connect($host.' user='.DATABASE_USER.' dbname='.DATABASE_NAME.' password='.DATABASE_PASSWORD ) ) )
-      error('No database connection',  'Sorry but there seems to be a problem in connecting to the database' );
-
-    //make sure dates will be handled properly by internal date routines
-    pg_query($database_connection, 'SET DATESTYLE TO \'European, ISO\'');    
-
-    //set the timezone
-    if(! @pg_query($database_connection, 'SET TIME ZONE '.TZ ) ) {
-      error("Database error",  "Not able to set timezone" );
-    }
-
-    $pg_encoding = db_user_locale();
-
-    //set client encoding to match character set in use
-    if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
-      error('Database client encoding', 'Cannot set PostgreSQL client encoding to the required '.$pg_encoding.'character set.' );
-    }
-  }
+  if(! $database_connection ) db_connection();
 
   //do it
   if( ! ($result = @pg_query($database_connection, $query ) ) ) {
@@ -208,9 +208,13 @@ return $result;
 //
 //sets the required session client encoding
 //
-function db_user_locale() {
+function db_user_locale($encoding ) {
 
-  switch(strtoupper(CHARACTER_SET) ) {
+  global $database_connection;
+
+  if(! $database_connection ) db_connection();
+
+  switch(strtoupper($encoding) ) {
 
     case 'ISO-8859-1':
       $pg_encoding = 'LATIN1';
@@ -245,7 +249,11 @@ function db_user_locale() {
       break;
   }
 
-return $pg_encoding;
+  //set client encoding to match character set in use
+  if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
+    error('Database client encoding', 'Cannot set PostgreSQL client encoding to the required '.$pg_encoding.'character set.' );
+  }
+  return true;
 }
 
 ?>

@@ -71,6 +71,9 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     secure_error('Unable to determine ip address');
   }
 
+  //set character set & connect to database
+  db_user_locale(CHARACTER_SET);
+
   //limit login attempts if post-1.60 database is being used
   if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {
 
