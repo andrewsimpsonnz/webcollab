@@ -82,11 +82,12 @@
   //                       "ko" (Korean),  "pt-br" (Brazilian Portuguese),    "hu" (Hungarian),
   //                       "ru" (Russian), "ja" (Japanese), "se" (Swedish)    "sr" (Serbian (Latin))
   //                       "gr" (Greek),   "cz" (Czech),    "tr" (Turkish) 
-  //                       "zh-tw" (Traditional Chinese)    "zh-cn" (Simplified Chinese)    
-  
+  //                       "zh-tw" (Traditional Chinese)    "zh-cn" (Simplified Chinese)
+  //                       "sk" (Slovak)
+
   define('LOCALE', "en" );
-  
-  
+
+
 //TIMEZONE
   //timezone offset from GMT/UTC (hours)
   define('TZ', 0 );
@@ -108,7 +109,7 @@
 
       //mail transport (leave as SMTP for standard WebCollab)
       define('MAIL_TRANSPORT', "SMTP" );
-      
+
       //use smtp auth? ('Y' or 'N')
       define('SMTP_AUTH', "N" );
         //if using SMTP_AUTH give username & password
@@ -121,7 +122,7 @@
   define('CSS_MAIN', 'default.css' );
   define('CSS_CALENDAR', 'calendar.css' );
   define('CSS_PRINT', 'print.css' );
-  
+
   //session timeout in hours
   define('SESSION_TIMEOUT', 1 );
 
