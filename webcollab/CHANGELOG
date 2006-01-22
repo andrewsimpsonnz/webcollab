@@ -1,8 +1,12 @@
 WebCollab CVS
-*** 23 January 2006
+*** 22 January 2006
   Andrew Simpson
 
 - add Slovak language translation (Credit: Stanislav Pekacik)
+
+- separate out database encoding function
+
+- UTF-8 set in database for iCalendar
 
 WebCollab CVS
 *** 17 January 2006
