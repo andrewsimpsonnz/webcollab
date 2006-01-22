@@ -41,8 +41,10 @@ $icalendar_id = md5(MANAGER_NAME.BASE_URL);
 if(! @safe_integer($_GET['taskid']) ){
   error('iCalendar show', 'Not a valid value for taskid' );
 }
-
 $taskid = $_GET['taskid'];
+
+//set database character set to UTF-8
+db_user_locale('UTF-8');
 
 if(db_result(db_query('SELECT COUNT(*) FROM tasks WHERE id='.$taskid.' AND parent=0' ), 0, 0 ) > 0 ) {
   //project - get all the tasks too...

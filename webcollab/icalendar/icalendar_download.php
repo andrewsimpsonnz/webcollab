@@ -200,26 +200,6 @@ function icalendar_end(){
 
 function icalendar_text_format($string ) {
 
-  //iCalendar uses UTF-8 only
-  if(CHARACTER_SET != 'UTF-8' ) {
-
-    if(function_exists('mb_convert_encoding' ) ) { 
-      $string = mb_convert_encoding($string, 'UTF-8', CHARACTER_SET );
-    }
-
-    elseif(function_exists('iconv' ) ) {
-      $string = iconv(strtoupper(CHARACTER_SET ), 'UTF-8', $string);
-    }
-
-    elseif(function_exists('utf8_encode' ) && (CHARACTER_SET == 'ISO-8859-1') ) {
-      $string = utf8_encode($string );
-    }
-    else {
-      //remove high order ASCII to prevent confusion with UTF-8
-      $string = preg_replace("/[\x80-\xff]/", '?', $string );
-    }
-  }
-
   //convert line breaks
   $string = strtr($string, array("\n"=>'\n' ) );
 

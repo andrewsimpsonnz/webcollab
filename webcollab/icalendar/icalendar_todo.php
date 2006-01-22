@@ -79,7 +79,10 @@ switch($selection ) {
     break;
 }
 
-// show all subtasks that are not complete
+//set database character set to UTF-8
+db_user_locale('UTF-8');
+
+//show all subtasks that are not complete
 $q = db_query( icalendar_query().' AND '.PRE.'tasks.parent<>0 '.$tail. icalendar_usergroup_tail() );
 
 //no rows ==> return
