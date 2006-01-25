@@ -251,7 +251,7 @@ debug		Debug!
 function clean($encoded ) {
 
   //reinstate encoded html back to original text
-  $text = @html_entity_decode($encoded, ENT_NOQUOTES, CHARACTER_SET );
+  $text = @html_entity_decode($encoded, ENT_NOQUOTES, 'UTF-8' );
 
   //reinstate decimal encoded html that html_entity_decode() can't handle...
   $text = preg_replace('/&#\d{2,5};/e', "utf8_entity_decode('$0')", $text );
