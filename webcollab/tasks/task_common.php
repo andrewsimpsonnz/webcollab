@@ -120,7 +120,7 @@ function project_jump($taskid=0) {
 
   // wrap up the select and the submit
   $content .= "</select>\n".
-              "<a href=\"javascript:document.getElementById('ProjectQuickJump').submit();\"><small>".$lang['go']."</small></a></div>\n".
+              "<a href=\"javascript:void(document.getElementById('ProjectQuickJump').submit())\"><small>".$lang['go']."</small></a></div>\n".
               "</form>\n";
   }
 

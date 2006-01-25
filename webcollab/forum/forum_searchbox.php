@@ -33,11 +33,11 @@ if(! defined('UID' ) ) {
 
 
 $content = "<form id=\"ForumSearch\" method=\"post\" action=\"forum.php\" >\n".
-           "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
+           "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
            "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
            "<input type=\"hidden\" name=\"start\" value=\"0\" /></fieldset>\n".
            "<input type=\"text\" name=\"string\" size=\"15\" />\n".
-           "<a href=\"javascript:document.getElementById('ForumSearch').submit();\"><small>".$lang['go']."</small></a>\n".
+           "<a href=\"javascript:void(document.getElementById('ForumSearch').submit())\"><small>".$lang['go']."</small></a>\n".
            "</form>";
 
  new_box($lang['forum_search'], $content, 'boxmenu' );

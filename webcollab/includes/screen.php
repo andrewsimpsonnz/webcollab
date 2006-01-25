@@ -135,15 +135,16 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
 
   //javascript scripts
   if($cursor || $check || $date || $calendar ) {
-    $content .=     "<script type=\"text/javascript\">\n".
-                    "<!-- \n";
+    $content .=     "<script type=\"text/javascript\">\n";
+
     if($cursor){
       $content .=   "function placeCursor() {document.getElementById('".$cursor."').focus();}\n";
     }
 
     if($check){
       $content .=   "function fieldCheck(){\n".
-                    "if(document.getElementById('".$check."').value===\"\"){\n".
+                    "var field = document.getElementById('".$check."').value;\n".
+                    "if(field===\"\"){\n".
                     "alert('".$lang['missing_field_javascript']."');\n".
                     "document.getElementById('".$check."').focus();\n".
                     "return false;}\n".
@@ -154,12 +155,12 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
                     "var daysMonth = new Array(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 );\n". 
                     "if(document.getElementById('day').value > daysMonth[(document.getElementById('month').value-1)] ){\n".
                     "alert('".$lang['invalid_date_javascript']."');\n".
-                    "return false;}\n". 
+                    "return false;}\n".
                     "var finishDate = document.getElementById('projectDate').value;\n".
                     "if(finishDate > 0 ){\n".
-                    "var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value, 0, 0, 0 )/1000;\n".
-                    "if(inputDate - finishDate > 21600 ){\n".
-                    "return confirm('".$lang['finish_date_javascript']."');} }\n".     
+                    "var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value, 0, 0, 0 );\n".
+                    "if((inputDate/1000) - finishDate > 21600 ){\n".
+                    "return confirm('".$lang['finish_date_javascript']."');} }\n".
                     "}\n";
     }
     if($calendar) {
@@ -170,8 +171,7 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
                     "window.opener.document.getElementById('year').selectedIndex=yearIndex;}\n".
                     "}\n";
     }
-    $content .=     " // -->\n".
-                    "</script>\n".
+    $content .=     "</script>\n".
                     "</head>\n\n";
     if($cursor) {
       $content .=   "<body onload=\"placeCursor()\">\n";
