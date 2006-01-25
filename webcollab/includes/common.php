@@ -1,7 +1,7 @@
 <?php
 /*
   $Id$
-  
+
   (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
@@ -36,7 +36,7 @@ function safe_data($body ) {
     return '';
   }
 
-  //validate characters & remove whitespace      
+  //validate characters & remove whitespace
   $body = trim(validate($body) );
 
   //limit line length for single line entries
@@ -62,7 +62,7 @@ function safe_data_long($body ) {
     return '';
   }
 
-  //validate characters & remove whitespace      
+  //validate characters & remove whitespace
   $body = trim(validate($body) );
 
   //normalise line breaks from Windows & Mac to UNIX style '\n' 
@@ -76,7 +76,7 @@ function safe_data_long($body ) {
 return $body;
 }
 
-function validate($body ) {  
+function validate($body ) {
 
   global $validation_regex;
 
@@ -97,8 +97,10 @@ function clean_up($body ) {
 
   //prevent SQL injection
   $body = db_escape_string($body );
+
+  //change '&' to '&amp;' except when part of an entity, or already changed
+  $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
   //use HTML encoding, or add escapes '\' for characters that could be used for xss <script> or SQL injection attacks
-      //for better xss protection (at the expense of ability to upload non-ASCII characters) add to $trans array '&'=>'&amp;'    
   $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '+'=>'\+', '-'=>'\-', '='=>'\=', '%'=>'&#037;' );
   $body  = strtr($body, $trans );
 
@@ -148,7 +150,7 @@ function html_links($body, $database_escape=0 ) {
   $body = preg_replace('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', "<a href=\"mailto:$0\">$0</a>", $body );
 
   //data being submitted to a database needs ('$0') part escaped
-  $escape = ($database_escape ) ? '\\' : '';  
+  $escape = ($database_escape ) ? '\\' : '';
 
   $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s]+)/i', "<a href=\"$0\" onclick=\"window.open(".$escape."'$0".$escape."'); return false\">$0</a>", $body );
   return $body;
@@ -176,8 +178,8 @@ function error($box_title, $error ) {
 
   if((EMAIL_ERROR != NULL ) || (DEBUG === 'Y' ) ) {
 
-    $uid_name = defined('UID_NAME') ? UID_NAME : "----";
-    $uid_email = defined('UID_EMAIL') ? UID_EMAIL : "----";
+    $uid_name = defined('UID_NAME') ? UID_NAME : '';
+    $uid_email = defined('UID_EMAIL') ? UID_EMAIL : '';
 
     //get the post vars
     ob_start();
@@ -217,7 +219,6 @@ function error($box_title, $error ) {
   //do not return
   die;
 }
-
 
 //
 // Builds up a warning screen
