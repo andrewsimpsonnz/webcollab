@@ -26,8 +26,6 @@
 
 */
 
-
-
 //set character set encoding to be used
 if(! defined('CHARACTER_SET') )
   define('CHARACTER_SET', 'UTF-8' );
@@ -101,7 +99,7 @@ function validate($body ) {
 
   $max   = mb_strlen($body);
   $clean = '';
-  //this size limiting hack is because preg_match_all() crashes on very long strings...
+  //this ugly size limiting hack is because preg_match_all() crashes on very long strings...
   for($i=0; $i < $max; $i=($i+1000) ) {
 
     $part = mb_substr($body, $i, 1000 );
@@ -124,8 +122,7 @@ function clean_up($body ) {
   //prevent SQL injection
   $body = db_escape_string($body );
   //use HTML encoding, or add escapes '\' for characters that could be used for xss <script> or SQL injection attacks
-      //for better xss protection (at the expense of ability to upload non-ASCII characters) add to $trans array '&'=>'&amp;'
-  $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '+'=>'\+', '-'=>'\-', '='=>'\=', '%'=>'&#037;' );
+  $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '+'=>'\+', '-'=>'\-', '='=>'\=', '%'=>'&#037;', '&'=>'&amp;' );
   $body  = strtr($body, $trans );
 
   return $body;
@@ -200,18 +197,23 @@ function error($box_title, $error ) {
     new_box($lang['report'], $lang['warning'], 'boxdata2', 'singlebox' );
   }
 
-  //get the post vars
-  ob_start();
-  print_r($_REQUEST );
-  $post = ob_get_contents();
-  ob_end_clean();
+  if((EMAIL_ERROR != NULL ) || (DEBUG === 'Y' ) ) {
 
-  //email to the error address
-  $message = "Hello,\n This is the ".MANAGER_NAME." site and I have an error :/  \n".
+    $uid_name = defined('UID_NAME') ? UID_NAME : '';
+    $uid_email = defined('UID_EMAIL') ? UID_EMAIL : '';
+
+    //get the post vars
+    ob_start();
+    print_r($_REQUEST );
+    $post = ob_get_contents();
+    ob_end_clean();
+
+    //email to the error address
+    $message = "Hello,\n This is the ".MANAGER_NAME." site and I have an error :/  \n".
             "\n\n".
             "Error message: ".$error."\n".
             "Database message: ".$db_error_message."\n".
-            "User: ".UID_NAME." (".UID_EMAIL.")\n".
+            "User: ".$uid_name." (".$uid_email.")\n".
             "Component: ".$box_title."\n".
             "Page that was called: ".$_SERVER['SCRIPT_NAME']."\n".
             "Requested URL: ".$_SERVER['REQUEST_URI']."\n".
@@ -222,14 +224,15 @@ function error($box_title, $error ) {
             "WebCollab version:".WEBCOLLAB_VERSION."\n".
             "POST variables: $post\n\n";
 
-  if(EMAIL_ERROR != NULL ) {
-    include_once(BASE.'includes/email.php' );
-    email(EMAIL_ERROR, "ERROR on ".MANAGER_NAME, $message );
-  }
+    if(EMAIL_ERROR != NULL ) {
+      include_once(BASE.'includes/email.php' );
+      email(EMAIL_ERROR, "ERROR on ".MANAGER_NAME, $message );
+    }
 
-  if(DEBUG === 'Y' ) {
-    $content = nl2br($message);
-    new_box("Error Debug", $content );
+    if(DEBUG === 'Y' ) {
+      $content = nl2br($message);
+      new_box("Error Debug", $content );
+    }
   }
 
   create_bottom();
