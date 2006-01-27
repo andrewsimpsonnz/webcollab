@@ -138,21 +138,23 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
     $content .=     "<script type=\"text/javascript\">\n";
 
     if($cursor){
-      $content .=   "function placeCursor() {document.getElementById('".$cursor."').focus();}\n";
+      $content .=   "function placeCursor() {document.getElementById('".$cursor."').focus()}\n";
     }
 
     if($check){
       $content .=   "function fieldCheck(){\n".
                     "var field = document.getElementById('".$check."').value;\n".
-                    "if(field===\"\"){\n".
+                    "if(field.length == 0){\n".
                     "alert('".$lang['missing_field_javascript']."');\n".
                     "document.getElementById('".$check."').focus();\n".
                     "return false;}\n".
-                    "}\n";
+                    "return true;}\n";
     }
     if($date) {
       $content .=   "function dateCheck() {\n".
-                    "var daysMonth = new Array(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 );\n". 
+                    "if(!fieldCheck()){\n".
+                    "return false;}\n".
+                    "var daysMonth = new Array(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 );\n".
                     "if(document.getElementById('day').value > daysMonth[(document.getElementById('month').value-1)] ){\n".
                     "alert('".$lang['invalid_date_javascript']."');\n".
                     "return false;}\n".
@@ -164,7 +166,7 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
                     "}\n";
     }
     if($calendar) {
-      $content .=   "function dateSet(dayIndex, monthIndex, yearIndex) {\n".  
+      $content .=   "function dateSet(dayIndex, monthIndex, yearIndex) {\n".
                     "if(window.opener && !window.opener.closed) {\n".
                     "window.opener.document.getElementById('day').selectedIndex=dayIndex;\n".
                     "window.opener.document.getElementById('month').selectedIndex=monthIndex;\n".
