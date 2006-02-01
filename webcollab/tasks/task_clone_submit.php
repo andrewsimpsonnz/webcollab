@@ -64,9 +64,12 @@ function add($taskid, $new_parent, $new_name ) {
     //now cloning the topmost task (project)
     $new_taskid = copy_across($taskid, 0, $new_name );
 
-    //recursive function if the subtask is listed in parent_array (it has children then)
-    if(in_array($taskid, (array)$parent_array ) ) {
-      add($taskid, $new_taskid, NULL );
+    //no recursive search for children of private tasks that weren't copied across
+    if($new_taskid ) {
+      //recursive function if the subtask is listed in parent_array (it has children then)
+      if(in_array($taskid, (array)$parent_array ) ) {
+        add($taskid, $new_taskid, NULL );
+      }
     }
   }
 
@@ -80,8 +83,23 @@ function add($taskid, $new_parent, $new_name ) {
 
 function copy_across($taskid, $new_parent, $name ) {
 
+    global $tail;
+
     //get task details
-    $q = db_query('SELECT * FROM '.PRE.'tasks WHERE id='.$taskid );
+    $q = db_query('SELECT * FROM '.PRE.'tasks WHERE id='.$taskid.$tail );
+
+    //check if this was a private usergroup task
+    if(db_numrows($q) == 0 ) {
+      //topmost task is private - no point proceeding
+      if($new_parent == 0 ) {
+        error("Task clone", "You do not have sufficient rights to clone this task" );
+      }
+      else {
+        //lower task is private - don't copy
+        return false;
+      }
+    }
+
     $row = db_fetch_array($q, 0 );
 
     //set values
@@ -178,6 +196,9 @@ $name = safe_data($_POST['name']);
 
 //start transaction
 db_begin();
+
+//set the usergroup SQL tail
+$tail = usergroup_tail();
 
 //find all parent-tasks in this project and add them to an array for later use
 if(! $q = @db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$taskid, 0 ) ) {
