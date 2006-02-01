@@ -94,7 +94,7 @@ function list_tasks($parent ) {
 
     //check the user has rights to view this project/task
     if(($row['globalaccess'] != 't' ) && ( $row['usergroupid'] != 0 ) && ($row['owner'] != UID ) && (! ADMIN ) ) {
-      if( ! in_array($usergroupid, (array)$GID ) ) {        
+      if( ! in_array($row['usergroupid'], (array)$GID ) ) {
         //do a recursive search if the subtask is listed in parent_array (it has children then)
         if(in_array( $row['id'], $parent_array, FALSE) ) {
           $this_content .= list_tasks( $row['id']);
