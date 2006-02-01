@@ -62,9 +62,9 @@ function user_access($owner, $usergroupid, $groupaccess ) {
 
   global $GID, $TASKID_ROW;
 
-  if(ADMIN ){  
+  if(ADMIN ){
     return true;
-  }  
+  }
   if(GUEST ){
     return false;   
   }
@@ -91,7 +91,7 @@ $taskid = $_GET['taskid'];
 //can this user edit this task ?
 if( ! user_access($TASKID_ROW['owner'], $TASKID_ROW['usergroupid'], $TASKID_ROW['groupaccess'] ) ) {
   warning($lang['access_denied'], $lang['no_edit'] );
-}  
+}
 
 //get project details - if any
 $q = db_query('SELECT name, '.$epoch.'deadline) AS deadline FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'].' LIMIT 1' );
