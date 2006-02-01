@@ -63,15 +63,21 @@ function percent_complete($taskid ) {
 //
 function show_percent($percent=0 ) {
 
-  if($percent == 0 ){
-    return "<table width=\"400px\"><tr><td style=\"width: 400px\" class=\"redbar\"></td></tr></table>\n";
-  }
-  if($percent == 100 ){
-    return "<table width=\"400px\"><tr><td style=\"width: 400px\" class=\"greenbar\"></td></tr></table>\n";
-  }
-  return "<table width=\"400px\"><tr><td style=\"width:".($percent * (400/100))."px\" class=\"greenbar\">".
-           "</td><td style=\"width :".(400-($percent*(400/100)))."px\" class=\"redbar\"></td></tr></table>\n"; 
+  switch($percent ) {
+    case '0':
+      return "<table width=\"400px\"><tr><td style=\"width: 400px\" class=\"redbar\"></td></tr></table>\n";
+      break;
 
+    case '100':
+      return "<table width=\"400px\"><tr><td style=\"width: 400px\" class=\"greenbar\"></td></tr></table>\n";
+      break;
+
+    default:
+      return "<table width=\"400px\"><tr><td style=\"width:".($percent * (400/100))."px\" class=\"greenbar\">".
+             "</td><td style=\"width :".(400-($percent*(400/100)))."px\" class=\"redbar\"></td></tr></table>\n"; 
+      break;
+  }
+  return;
 }
 
 //
@@ -127,14 +133,14 @@ function project_jump($taskid=0) {
   db_free_result($q );
 
   return $content;
-}  
+}
 
 
 //
 // SQL tail for user access rights
 //
 
-function usergroup_tail() {  
+function usergroup_tail() {
 
   //set the usergroup permissions on queries (Admin can see all)
   if(ADMIN ) {
