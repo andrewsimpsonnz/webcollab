@@ -1,4 +1,10 @@
 WebCollab CVS
+*** 1 Febuary 2006
+  Andrew Simpson
+
+-prevent users cloning private projects to themselves 
+
+WebCollab CVS
 *** 22 January 2006
   Andrew Simpson
 
