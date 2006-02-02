@@ -27,7 +27,7 @@
 
 */
 
-$taskgroup_info =   "<ul><li>Ak bude zru¹ená skupina pre úlohu, v¹etky jej úlohy budú nastavené ako nekategorizované.</li>\n".
+$taskgroup_info =   "<ul><li>Ak bude zru¹ená skupina pre úlohu, v¹etky jej úlohy budú nastavené ako nezaradené.</li>\n".
                       "<li>Mô¾te zmeni» meno kategórie bez závislosti s úlohou.</li>\n".
                       "<li>Dve skupiny pre úlohu nemô¾u ma» rovnaké meno.</li></ul>\n";
 
@@ -45,11 +45,11 @@ $user_info      =    "Prosím zvoµte Va¹u akciu z menu vµavo.<br /><br />".
                       "<li>Zru¹ený u¾ívateµ stráca v¹etky svoje úlohy, ale nie svoje správy na fóre.</li>\n".
                       "<li>Trvalo zru¹ený u¾ívateµ stráca v¹etko.</li>\n".
                       //"<li>You cannot permanently delete a user that still has forum items.</li>\n".
-                      "<li>Zru¹enému u¾ívateµovi ostáva zoznam viditeµných úloh, a bude pokraèova» s týmto zoznamom po obnove.</li>\n".
+                      "<li>Zru¹enému u¾ívateµovi ostáva zoznam úloh, a bude pokraèova» s týmto zoznamom po obnove.</li>\n".
                       "<li>Informácie o v¹etkých akciách vykonaných u¾ívateµom budú u¾ivateµovi poslané emailom.</li>\n".
                       "<li>Heslo je kryptované v databáze. Vy mô¾te len nastavi» nové.</li>\n".
-                      "<li>Heslá sú pri zadaní zaslané emailom u¾ivateµoví iba raz, tak¾e bud»e opatrný komu ich zasielate emailom!</li>\n".
-                      "<li>U¾ívateµ mô¾e editova» sám seba bez vedomia adminstrátora - to mô¾e u¹etri» Vá¹ èas (a spam)</li>\n".
+                      "<li>Heslá sú zaslané len pri zadaní, tak¾e bud»e opatrný komu ich zasielate emailom!</li>\n".
+                      "<li>U¾ívateµ mô¾e èiastoène editova» sám seba bez vedomia adminstrátora - to mô¾e u¹etri» Vá¹ èas (a spam)</li>\n".
                       "</ul>\n";
 
 $calendar_key    =  "<i>Návrat do hlavného menu</i></a>]</b><br />\n".
@@ -60,4 +60,3 @@ $calendar_key    =  "<i>Návrat do hlavného menu</i></a>]</b><br />\n".
                       "<span class=\"green\">Úloha (splnená)</span><br /></p>\n";
 
 ?>
-

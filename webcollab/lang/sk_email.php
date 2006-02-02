@@ -31,9 +31,9 @@
 // Get current date/time for emails in a preferred format eg: 01 Apr 2004 9:18 am NZDT  
 $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y \a\t g:i a T' );
 
-$title_file_post          = ABBR_MANAGER_NAME.": Nový súbor upload: %s";
+$title_file_post          = ABBR_MANAGER_NAME.": Nový súbor nahratý: %s";
 $email_file_post          = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka ktorá Vás informuje ¾e bol upload nového súboru dòa ".$email_date." od %1\$s.\n\n".
+                            "To je ".MANAGER_NAME." stránka ktorá Vás informuje ¾e bol nahratý nový súbor dòa ".$email_date." od %1\$s.\n\n".
                             "Súbor:        %2\$s\n".
                             "Obsah: %3\$s\n\n".
                             "Prosím nav¹tívte webstránku pre ïal¹ie informácie.\n\n".BASE_URL."\n";
@@ -139,13 +139,13 @@ $title_welcome            = "Vítame Vás".ABBR_MANAGER_NAME;
 $email_welcome            = "Haló,\n\nTo je ".MANAGER_NAME." Va¹a uvítacia stránka ;), zo dòa ".$email_date.".\n\n".
                             "Ak ste tu nový u¾ívateµ, vysvetlí Vám pár vecí, aby ste mohli rýchlo zaèa»\n\n".
                             "Ako prvé tu je nástroj na riadenie projektu, hlavná stránka Vám uká¾e práve dostupné projekty. ".
-                            "Ak kliknete na jeden z nich budete vidie» úlohy priradené k projektu. To je miesto, kde zaèína práca.\n\n".
+                            "Ak kliknete na jeden z nich budete vidie» úlohy priradené k projektu. Tu mô¾te zaèa» pracova».\n\n".
                             "Ka¾dá správa alebo úloha, ktorú editujete bude zobrazená ostatným u¾ívateµom ako 'nová' alebo 'zmenená'. To funguje aj opaène a ".
                             "umo¾nuje Vám rýchlo nájs» nové aktivity .\n\n".
                             "Mô¾te tie¾ prevza» alebo da» vlastníctvo úloh a budete ich môc» editova» aj
-							v¹etky správy na fóre pripadajúce im. ".
+							v¹etky správy na fóre pripadajúce k nej. ".
                             "Ako budete postupova» v práci editujte text a stav úloh tak, ¾e ka¾dý mô¾e sledova» Vá¹ postup. ".
-                            "\n\nMô¾em Vám len teraz za¾ela» úspech a zasla» emailovú adresu ".EMAIL_ADMIN." \n\n --Veµa ¹»astia!\n\n".
+                            "\n\nMô¾em Vám len teraz za¾ela» úspech. Ak si nebudete vedie» rady, po¹lite mail na".EMAIL_ADMIN." \n\n --Veµa ¹»astia!\n\n".
                             "Login:      %1\$s\n".
                             "Heslo:   %2\$s\n\n".
                             "U¾ívateµská skupina: %3\$s".

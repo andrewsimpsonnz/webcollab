@@ -25,10 +25,7 @@
 
   Translation: Stanislav Pekarèík,fredis@SoftHome.net
 
-  Maintainer:
-
-  Note: This file is in IS0-8859-2 character encoding
-
+  Maintainer: 
 */
 
 //required language encodings
@@ -48,7 +45,7 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', '©tv', 'Pi', 'So' );
     $task_state['low']                  = 'Nízka';
     $task_state['normal']               = 'Normálna';
     $task_state['high']                 = 'Vysoká';
-    $task_state['yesterday']            = 'Vèera!';
+    $task_state['yesterday']            = 'Vèera bolo neskoro!';
  //status
     $task_state['new']                  = 'Nový';
     $task_state['planned']              = 'Plánovaný (neaktívny)';
@@ -84,8 +81,8 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', '©tv', 'Pi', 'So' );
     $lang['project']                    = 'Projekt';
     $lang['info']                       = 'Info';
     $lang['bytes']                      = ' bytov';
-    $lang['select_instruct']            = '(Pou¾ite ctrl pre ïal¹í výber; alebo pre ¾iadný výber)';
-    $lang['member_groups']              = 'U¾ivateµ je èlen dole zvýraznenej skupiny (ak je èlen nejakej skupiny)';
+    $lang['select_instruct']            = '(Pou¾ite ctrl pre výber viac polo¾iek; alebo ¾iadnej)';
+    $lang['member_groups']              = 'U¾ivateµ je èlen dole zvýraznených skupín (ak je èlen nejakej skupiny)';
     $lang['login']                      = 'Login';
     $lang['error']                      = 'Chyba';
     $lang['no_login']                   = 'Prístup odmietnutý; neplatný login alebo heslo';
@@ -95,12 +92,12 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', '©tv', 'Pi', 'So' );
     $lang['go']                         = 'Choï';
 
     //graphic items
-    $lang['late_g']                     = '&nbsp;STARÝ&nbsp;';
+    $lang['late_g']                     = '&nbsp;ZME©KANÝ&nbsp;';
     $lang['new_g']                      = '&nbsp;NOVÝ&nbsp;';
     $lang['updated_g']                  = '&nbsp;ZMENENÝ&nbsp;';
 
 //admin config
-    $lang['admin_config']               = 'Administrátor konfigurácia';
+    $lang['admin_config']               = 'Konfigurácia administrátora';
     $lang['email_settings']             = 'Nastavenie hlavièky emailu';
     $lang['admin_email']                = 'E-mail administrátora';
     $lang['email_reply']                = 'Email \'odpoveda»\'';
@@ -135,7 +132,7 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', '©tv', 'Pi', 'So' );
     $lang['del_contact']                = 'Zmaza» kontakt';
     $lang['contact_info']               = 'Info o kontakte';
     $lang['contacts']                   = 'Kontakty';
-    $lang['contact_add_info']           = 'Ak pridáte meno spoloènosti, bude zobrazené miesto u¾ívateµa.';
+    $lang['contact_add_info']           = 'Ak zadáte meno spoloènosti, bude zobrazené miesto mena u¾ívateµa.';
     $lang['show_contact']               = 'Zobrazi» kontakty';
     $lang['edit_contact']               = 'Editova» kontakty';
     $lang['contact_submit']             = 'Odosla» kontakt';
@@ -143,23 +140,23 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', '©tv', 'Pi', 'So' );
 
  //files
     $lang['manage_files']               = 'Spravova» súbory';
-    $lang['no_files']                   = 'Nie sú ¾iadné uploaded';
+    $lang['no_files']                   = '®iadné súbory ku správe';
     $lang['no_file_uploads']            = 'Konfigurácia servera pre túto stránku nepovoµuje upload súborov';
     $lang['file']                       = 'Súbor:';
-    $lang['uploader']                   = 'Poslal:';
+    $lang['uploader']                   = 'Nahral:';
     $lang['files_assoc_project']        = 'Súbory priradené k tomuto projektu';
     $lang['files_assoc_task']           = 'Súbory priradené k tejto úlohe';
     $lang['file_admin']                 = 'Administrácia súborov';
     $lang['add_file']                   = 'Prida» súbor';
     $lang['files']                      = 'Súbory';
-    $lang['file_choose']                = 'Súbory pre upload:';
-    $lang['upload']                     = 'Upload';
+    $lang['file_choose']                = 'Súbory k pridaniu:';
+    $lang['upload']                     = 'Prida»';
     $lang['file_email_owner']           = 'Emailové notifikácia nového súboru vlastníkovi?';
     $lang['file_email_usergroup']       = 'Emailová notifikácia nového súboru u¾ivateµskej skupine?';
-    $lang['max_file_sprt']              = 'Súbor pre upload musí by» men¹í ne¾ %s kb.';
-    $lang['file_submit']                = 'Súbor odoslaný';
-    $lang['no_upload']                  = 'Súbor nebol odoslaný.  Prosím vrá»te sa a skúste znova.';
-    $lang['file_too_big_sprt']          = 'Maximálna veµkos» uploadu je %s bytov.  Vá¹ upload bol väè¹¹í a bol zru¹ený.';
+    $lang['max_file_sprt']              = 'Súbor musí by» men¹í ne¾ %s kb.';
+    $lang['file_submit']                = 'Potvrdi» súbor ';
+    $lang['no_upload']                  = 'Súbor nebol nahratý.  Prosím vrá»te sa a skúste znova.';
+    $lang['file_too_big_sprt']          = 'Maximálna veµkos» súboru je %s bytov.  Vá¹ súbor bol väè¹¹í a bol zru¹ený.';
     $lang['del_file_javascript_sprt']   = 'Naozaj vymaza» %s ?';
 
 
@@ -175,18 +172,14 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', '©tv', 'Pi', 'So' );
     $lang['new_post']                   = 'Nová správa';
     $lang['public_user_forum']          = 'Verejné u¾ivateµské fórum';
     $lang['private_forum_sprt']         = 'Privátne fórum pre \'%s\' u¾ivateµsku skupinu';
-    $lang['forum_submit']               = 'Forum submit';
+    $lang['forum_submit']               = 'Potvrdi» fórum ';
     $lang['no_message']                 = '®iadna správa! Prosím vrá»te sa a skúste znova';
     $lang['add_reply']                  = 'Prida» odpoveï';
     $lang['last_post_sprt']             = 'Posledná správa %s'; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']               = 'Nedávne správy na fóre';
-//**
-    $lang['forum_search']               = "Forum search";
-//**
-    $lang['no_results']                 = "No results found for '%s'";
-//**
-    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
-
+    $lang['forum_search']               = "Hµada» na fóre";
+    $lang['no_results']                 = "Nenájdené výsledky pre '%s'";
+    $lang['search_results']             = "Nájdené %1\$s výsledkov pre '%2\$s'<br />Ukáza» výsledky %3\$s do %4\$s";
  //includes
     $lang['report']                     = 'Report';
     $lang['warning']                    = '<h1>Pardon!</h1><p>Teraz nie sme schopný vykona» Va¹u po¾iadavku. Prosím skúste neskôr.</p>';
@@ -194,7 +187,6 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', '©tv', 'Pi', 'So' );
     $lang['summary_page']               = 'Sumárny prehµad';
     $lang['todo_list']                  = 'Zoznam úloh';
     $lang['calendar']                   = 'Kalendár';
-    //$lang['gantt']                    = 'Ganttov diagram';
     $lang['log_out']                    = 'Odhlási»';
     $lang['main_menu']                  = 'Hlavné menu';
     $lang['archive']                    = 'Archív';   
@@ -209,7 +201,6 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', '©tv', 'Pi', 'So' );
     $lang['invalid_date']               = 'Neplatný dátum';
     $lang['invalid_date_sprt']          = 'Dátum %s nie je platný kalendáry dátum (Skontrolujte
 poèet dní v mesiaci).<br />Prosím vrá»te sa a zadajte platný dátum.';
-
 
  //taskgroups
     $lang['taskgroup_name']             = 'Skupina pre úlohu:';
@@ -275,17 +266,18 @@ poèet dní v mesiaci).<br />Prosím vrá»te sa a zadajte platný dátum.';
     $lang['no_usergroup']               = 'Tento u¾ívateµ nie je èlen nijakej u¾ivateµskej skupiny';
     $lang['not_usergroup']              = '(Nie je èlen ¾iadnej u¾ivateµskej skupiny)';
     $lang['no_password_change']         = '(Va¹e heslo nebolo zmenené)';
-    $lang['last_time_here']             = 'Posledný pohµad tu:';
+    $lang['last_time_here']             = 'Posledná náv¹teva:';
     $lang['number_items_created']       = 'Poèet vytvorených polo¾iek:';
     $lang['number_projects_owned']      = 'Poèet vlastných projektov:';
     $lang['number_tasks_owned']         = 'Poèet vlastných úloh:';
     $lang['number_tasks_completed']     = 'Poèet hotových úloh:';
     $lang['number_forum']               = 'Poèet správ ma fóre:';
-    $lang['number_files']               = 'Poèet upload súborov:';
+    $lang['number_files']               = 'Poèet nahratých súborov:';
     $lang['size_all_files']             = 'Celková veµkos» vlastných súborov:';
     $lang['owned_tasks']                = 'Vlastné úlohy';
     $lang['invalid_email']              = 'Neplatná e-mailová adresa';
-    $lang['invalid_email_given_sprt']   = 'E-mailová adresa \'%s\' je neplatná.  Prosím vrá»te sa a skúste znova.';
+    $lang['invalid_email_given_sprt']   = 'E-mailová adresa \'%s\' je neplatná.  Prosím vrá»te sa
+ a skúste znova.';
     $lang['duplicate_user']             = 'U¾ivateµ u¾ existuje';
     $lang['duplicate_change_user_sprt'] = 'U¾ívateµ \'%s\' u¾ existuje.  Prosím vrá»te sa a zmeòte meno.';
     $lang['value_missing']              = 'Hodnota chýba';
@@ -293,7 +285,7 @@ poèet dní v mesiaci).<br />Prosím vrá»te sa a zadajte platný dátum.';
     $lang['admin_priv']                 = 'POZNÁMKA: Máte administrátorské privilégia.';
     $lang['manage_users']               = 'Správa u¾ívateµov';
     $lang['users_online']               = 'Online u¾ívatelia';
-    $lang['online']                     = 'Stratený surferi (Online menej ako 60 minút)';
+    $lang['online']                     = 'Poslední surferi (Online menej ako 60 minút)';
     $lang['not_online']                 = 'Zostáva';
     $lang['user_activity']              = 'Aktivita u¾ívateµa';
 
@@ -306,7 +298,7 @@ poèet dní v mesiaci).<br />Prosím vrá»te sa a zadajte platný dátum.';
     $lang['project_name']               = 'Meno projektu';
     $lang['task_name']                  = 'Meno úlohy';
     $lang['deadline']                   = 'Hranièný termín';
-    $lang['taken_from_parent']          = '(Prevzia» od rodièa)';
+    $lang['taken_from_parent']          = '(Prevziatý od rodièa)';
     $lang['status']                     = 'Stav';
     $lang['task_owner']                 = 'Vlastník úlohy';
     $lang['project_owner']              = 'Vlastník projektu';
@@ -325,7 +317,7 @@ poèet dní v mesiaci).<br />Prosím vrá»te sa a zadajte platný dátum.';
     $lang['email_new_owner']            = 'Posla» email o zmene (novému) vlastníkovi?';
     $lang['email_group']                = 'posla» email o zmene u¾ivateµskej skupine?';
     $lang['add_new_project']            = 'Prida» nový projekt';
-    $lang['uncategorised']              = 'Nekategorizované';
+    $lang['uncategorised']              = 'Nezaradený';
     $lang['due_sprt']                   = '%d dní od teraz';
     $lang['tomorrow']                   = 'Zajtra';
     $lang['due_today']                  = 'Dnes';
@@ -333,7 +325,7 @@ poèet dní v mesiaci).<br />Prosím vrá»te sa a zadajte platný dátum.';
     $lang['overdue_sprt']               = '%d dní oneskorený';
     $lang['edit_task']                  = 'Editova» úlohu';
     $lang['edit_project']               = 'Editova» projekt';
-    $lang['no_reparent']                = '®iadný (projekt, nie je úloha)';
+    $lang['no_reparent']                = '®iadný (samostatný projekt)';
     $lang['del_javascript_project_sprt']= 'Zmaza» projekt %s. Naozaj ?';
     $lang['del_javascript_task_sprt']   = 'Zmaza» úlohu %s. Naozaj ?';
     $lang['add_task']                   = 'Prida» úlohu';
@@ -341,11 +333,11 @@ poèet dní v mesiaci).<br />Prosím vrá»te sa a zadajte platný dátum.';
     $lang['add_project']                = 'Prida» projekt';
     $lang['clone_project']              = 'Kopírova» projekt';
     $lang['clone_task']                 = 'Kopírova» úlohu';
-    $lang['quick_jump']                 = 'Rýchly výber';
+    $lang['quick_jump']                 = 'Prejs» na';
     $lang['no_edit']                    = 'Nie ste vlastník polo¾ky a preto ju nemô¾ete editova»';
-    $lang['uncategorised']              = 'Nekategorizované';
+    $lang['uncategorised']              = 'Nezaradený';
     $lang['admin']                      = 'Administrátor';
-    $lang['global']                     = 'Globálne';
+    $lang['global']                     = 'Ostatní';
     $lang['delete_project']             = 'Zmaza» projekt';
     $lang['delete_task']                = 'Zmaza» úlohu';
     $lang['project_options']            = 'Voµby projektu';
@@ -412,7 +404,5 @@ poèet dní v mesiaci).<br />Prosím vrá»te sa a zadajte platný dátum.';
     $lang['print_version']              = 'Verzia pre tlaè';
     $lang['condensed_view']             = 'Zú¾ený pohµad';
     $lang['full_view']                  = 'Plný pohµad';
-//**
-    $lang['icalendar']                  = "iCalendar";
-
+    $lang['icalendar']                  = "iKalendár";
 ?>
