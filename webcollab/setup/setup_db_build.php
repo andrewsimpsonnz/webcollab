@@ -88,8 +88,14 @@ require_once(BASE.'setup/security_setup.php' );
     //try and select the database
     if( ! @mysql_select_db( $database_name, $database_connection ) ) {
 
+      if(defined('DATABASE_CHARACTER_SET') && DATABASE_CHARACTER_SET != '' ) {
+        $db_character = ' CHARACTER SET '.DATABASE_CHARACTER_SET;
+      }
+      else {
+        $db_character = '';
+
       //no database exists yet - try and create it...
-      if( ! ($result = @mysql_query( 'CREATE DATABASE '.$database_name.' CHARACTER SET utf8', $database_connection ) ) ){
+      if( ! ($result = @mysql_query( 'CREATE DATABASE '.$database_name.$db_character, $database_connection ) ) ){
         error_setup("Connected successfully to the database server, but database creation had the following error: <br />".
                              "<b>".mysql_error($database_connection)."</b><br /><br />".
                              "The above error message was created by the MySQL database server." );
