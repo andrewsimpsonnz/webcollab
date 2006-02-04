@@ -47,8 +47,8 @@ $q = db_query('SELECT id,
                       name,
                       deadline,
                       status,
-                      '.$epoch.' finished_time) AS finished_time,
-                      '.$epoch.' completion_time) AS completion_time,
+                      finished_time,
+                      completion_time,
                       owner,
                       completed
                       FROM '.PRE.'tasks
