@@ -89,9 +89,9 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
 
   //filter for no date set
   if($day == -1 || $month == -1 || $year == -1 ) {
-    $day   = date('d', TIME_NOW - date('Z') );
-    $month = date('m', TIME_NOW - date('Z') );
-    $year  = date('Y', TIME_NOW - date('Z') );
+    $day   = date('d', TIME_NOW - date('Z') + TZ*60*60 );
+    $month = date('m', TIME_NOW - date('Z') + TZ*60*60 );
+    $year  = date('Y', TIME_NOW - date('Z') + TZ*60*60 );
   }
 
   //day
