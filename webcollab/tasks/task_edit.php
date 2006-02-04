@@ -115,10 +115,8 @@ switch($TYPE) {
     break;
 
   case 'task':
-    //show project finish date for javascript (plus GMT offset)
-    $project_deadline = $project_row['deadline'] + (TZ * 3600 ); 
-
-    $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" /></fieldset>\n".
+    //show project finish date for javascript
+    $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_row['deadline']."\" /></fieldset>\n".
                  "<table class=\"celldata\">\n".
                  "<tr><td>".$lang['creation_time']."</td><td>".nicedate($TASKID_ROW['created'] )."</td></tr>\n".
                  "<tr><td>".$lang['project'] .":</td><td><a href=\"tasks.php?x=".$x."&amp;action=show&taskid=".$TASKID_ROW['projectid']."\">".$project_row['name']."</a></td></tr>\n";

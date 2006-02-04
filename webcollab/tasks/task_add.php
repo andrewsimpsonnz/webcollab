@@ -86,7 +86,7 @@ if( @safe_integer($_GET['parentid']) ) {
   }
 
   //add the project deadline (plus GMT offset) for the javascript
-  $project_deadline = db_result(db_query('SELECT '.$epoch.'deadline) FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ) ) + (TZ * 3600 );
+  $project_deadline = db_result(db_query('SELECT '.$epoch.'deadline) FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ) );
 
   $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" />\n"; 
 
@@ -108,9 +108,9 @@ if( @safe_integer($_GET['parentid']) ) {
   if( $parent_row['parent'] != 0 ) {
     $content .= "<tr><td>".$lang['parent_task'].":</td> <td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$parent_row['parent']."\">".$parent_row['name']."</a></td> </tr>\n";
   }
-  $content .= "<tr><td>".$lang['creation_time'].":</td> <td>".nicetime(date('Y-m-d H:i:s', TIME_NOW - date('Z') ) )."</td> </tr>\n".
+  $content .= "<tr><td>".$lang['creation_time'].":</td> <td>".nicetime(date('Y-m-d H:i:s', TIME_NOW - date('Z') + TZ*60*60 ) )."</td> </tr>\n".
               "<tr><td>".$lang['task_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
-              "<tr><td>".$lang['deadline'].":</td> <td>".date_select_from_timestamp( $parent_row['deadline'] ).               
+              "<tr><td>".$lang['deadline'].":</td> <td>".date_select_from_timestamp( $parent_row['deadline'] ).
               "&nbsp;<small><i>".$lang['taken_from_parent']."</i></small></td></tr>\n";
 
   //priority
@@ -228,7 +228,7 @@ else {
               //taskgroup - we don't have this for projects
               "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n".
               "<table class=\"celldata\">\n".
-              "<tr><td>".$lang['creation_time'].":</td><td>".nicetime(date('Y-m-d H:i:s',TIME_NOW - date('Z') ) )."</td></tr>\n".
+              "<tr><td>".$lang['creation_time'].":</td><td>".nicetime(date('Y-m-d H:i:s',TIME_NOW - date('Z') + TZ*60*60 ) )."</td></tr>\n".
               "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
 
               //deadline
