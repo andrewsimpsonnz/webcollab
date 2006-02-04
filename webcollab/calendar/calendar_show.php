@@ -92,14 +92,14 @@ if( @safe_integer($_POST['month']) ){
   $month = $_POST['month'];
 }
 else {
-  $month = date('n', TIME_NOW - date('Z') );
+  $month = date('n', TIME_NOW - date('Z') + TZ*60*60 );
 }
 //set year
 if( @safe_integer($_POST['year']) ){
   $year = $_POST['year'];
 }
 else {
-  $year = date('Y', TIME_NOW - date('Z') );
+  $year = date('Y', TIME_NOW - date('Z') + TZ*60*60 );
 }
 //Apply any calendar navigation
 $month += $monthoffset;
@@ -118,8 +118,8 @@ else {
 $year += $yearoffset;
 
 //set day, if applicable
-if($month == date('n', TIME_NOW - date('Z') ) && $year == date('Y', TIME_NOW - date('Z') ) ){
-  $today = date('j', TIME_NOW - date('Z') );
+if($month == date('n', TIME_NOW - date('Z') + TZ*60*60 ) && $year == date('Y', TIME_NOW - date('Z') + TZ*60*60 ) ){
+  $today = date('j', TIME_NOW - date('Z') + TZ*60*60 );
 }
 else {
   $today = 0;

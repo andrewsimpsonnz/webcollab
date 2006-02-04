@@ -64,14 +64,14 @@ if( @safe_integer($_REQUEST['month']) ){
   $month = $_REQUEST['month'];
 }
 else {
-  $month = date('n', TIME_NOW - date('Z') );
+  $month = date('n', TIME_NOW - date('Z') + TZ*60*60 );
 }
 //set year
 if( @safe_integer($_REQUEST['year']) ){
   $year = $_REQUEST['year'];
 }
 else {
-  $year = date('Y', TIME_NOW - date('Z') );
+  $year = date('Y', TIME_NOW - date('Z') + TZ*60*60 );
 }
 
 //Apply any calendar navigation
