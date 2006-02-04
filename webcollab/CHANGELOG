@@ -1,4 +1,14 @@
 WebCollab CVS
+*** 4 Febuary 2006
+  Andrew Simpson
+
+- change MySQL DATETIME to TIMESTAMP (required for timezone functionality)
+
+- bugfix: dates not being adjusted correctly for timezones
+
+- web client timezone now checked in javascript
+
+WebCollab CVS
 *** 1 Febuary 2006
   Andrew Simpson
 

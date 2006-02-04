@@ -1,4 +1,10 @@
 WebCollab CVS
+*** 4 Febuary 2006
+  Andrew Simpson
+
+- bugfix: change MySQL DATETIME to TIMESTAMP (required for timezone functionality)
+
+WebCollab CVS
 *** 25 January 2006
   Andrew Simpson
 
