@@ -73,8 +73,6 @@ if(! ($q = db_query('SELECT '.$epoch.'MAX(posted) ) AS last FROM '.PRE.'forum', 
 
 if(db_numrows($q) > 0 ) {
   $last_mod  = db_result($q, 0, 0 );
-  //add on timezone offset to give GMT
-  $last_mod += (TZ * 60 * 60 );
 }
 else {
   $last_mod = gmmktime();
