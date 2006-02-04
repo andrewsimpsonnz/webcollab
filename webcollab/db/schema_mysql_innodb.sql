@@ -4,23 +4,23 @@ CREATE TABLE tasks (
 	parent INT UNSIGNED NOT NULL,
 	name VARCHAR(255) NOT NULL,
 	text TEXT,
-	created DATETIME NOT NULL,
-	edited DATETIME NOT NULL,
+	created TIMESTAMP NOT NULL,
+	edited TIMESTAMP NOT NULL,
 	owner INT UNSIGNED NOT NULL,
 	creator INT UNSIGNED NOT NULL,
-	finished_time DATETIME NOT NULL,
+	finished_time TIMESTAMP NOT NULL,
 	projectid INT UNSIGNED NOT NULL DEFAULT 0,
-	deadline DATETIME NOT NULL,
+	deadline TIMESTAMP NOT NULL,
 	priority TINYINT NOT NULL DEFAULT 2,
 	status VARCHAR(20) NOT NULL DEFAULT 'created',
 	taskgroupid INT UNSIGNED NOT NULL,
-	lastforumpost DATETIME NOT NULL,
+	lastforumpost TIMESTAMP NOT NULL,
 	usergroupid INT UNSIGNED NOT NULL,
 	globalaccess VARCHAR(5) NOT NULL DEFAULT 't',
 	groupaccess VARCHAR(5) NOT NULL DEFAULT 'f',
-	lastfileupload DATETIME NOT NULL,
+	lastfileupload TIMESTAMP NOT NULL,
         completed TINYINT NOT NULL DEFAULT 0,
-        completion_time DATETIME NOT NULL,
+        completion_time TIMESTAMP NOT NULL,
         archive TINYINT NOT NULL DEFAULT 0,
         sequence INT UNSIGNED NOT NULL DEFAULT 0,
         INDEX (owner),
@@ -62,7 +62,7 @@ CREATE TABLE forum (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	parent INT UNSIGNED NOT NULL,
 	taskid INT UNSIGNED NOT NULL,
-	posted DATETIME NOT NULL,
+	posted TIMESTAMP NOT NULL,
 	text TEXT,
 	userid INT UNSIGNED NOT NULL,
 	usergroupid INT UNSIGNED NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE logins (
 	user_id INT UNSIGNED NOT NULL,
 	session_key VARCHAR(100) NOT NULL,
 	ip VARCHAR(100) NOT NULL,
-	lastaccess DATETIME NOT NULL,
+	lastaccess TIMESTAMP NOT NULL,
         INDEX (session_key(10), user_id )
 )
 TYPE = InnoDB;
@@ -85,7 +85,7 @@ TYPE = InnoDB;
 CREATE TABLE seen (
 	taskid INT UNSIGNED NOT NULL,
 	userid INT UNSIGNED NOT NULL,
-	time DATETIME NOT NULL,
+	time TIMESTAMP NOT NULL,
 	INDEX (taskid, userid)
 )
 TYPE = InnoDB;
@@ -113,7 +113,7 @@ CREATE TABLE contacts (
 	notes VARCHAR(100),
 	email VARCHAR(100),
 	added_by INT UNSIGNED NOT NULL,
-	date DATETIME NOT NULL,
+	date TIMESTAMP NOT NULL,
 	user_id INT UNSIGNED NOT NULL,
         taskid INT UNSIGNED NOT NULL DEFAULT 0
 )
@@ -131,7 +131,7 @@ CREATE TABLE files (
 	filename VARCHAR(255),
 	size BIGINT NOT NULL DEFAULT 0,
 	description TEXT,
-	uploaded DATETIME NOT NULL,
+	uploaded TIMESTAMP NOT NULL,
 	uploader INT UNSIGNED NOT NULL,
 	mime VARCHAR(50),
 	taskid INT UNSIGNED NOT NULL,
@@ -168,7 +168,7 @@ TYPE = InnoDB;
 CREATE TABLE login_attempt ( 
 	name VARCHAR(100) NOT NULL,                                               
 	ip VARCHAR(100) NOT NULL,
-	last_attempt DATETIME NOT NULL
+	last_attempt TIMESTAMP NOT NULL
 )
 TYPE = InnoDB;
 

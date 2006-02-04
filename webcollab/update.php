@@ -300,12 +300,6 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   //update version 1.81 -> 2.00
   if(! (db_query("SELECT taskid FROM ".PRE."contacts", 0 ) ) ) {
 
-   /*
-    //convert mysql databases to UTF-8
-   if((DATABASE_TYPE == 'mysql' ) || (DATABASE_TYPE == 'mysql_innodb' ) ) {
-      db_query('ALTER DATABASE '.DATABASE_NAME.' DEFAULT CHARACTER SET utf8' );
-    }
-    */
     //add project capability to contacts
     db_query('ALTER TABLE '.PRE.'contacts ADD COLUMN taskid INT' );
     db_query('UPDATE '.PRE.'contacts SET taskid=0' );
@@ -318,6 +312,23 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     db_query('ALTER TABLE '.PRE.'tasks ADD COLUMN sequence INT' );
     db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN sequence SET DEFAULT 0' );
     db_query('UPDATE '.PRE.'tasks SET sequence=0' );
+
+    //change 'datetime' columns to 'timestamp'
+    if((DATABASE_TYPE == 'mysql' ) || (DATABASE_TYPE == 'mysql_innodb' ) ) {
+      db_query('ALTER TABLE '.PRE.'tasks MODIFY COLUMN created TIMESTAMP' );
+      db_query('ALTER TABLE '.PRE.'tasks MODIFY COLUMN edited TIMESTAMP' );
+      db_query('ALTER TABLE '.PRE.'tasks MODIFY COLUMN finished_time TIMESTAMP' );
+      db_query('ALTER TABLE '.PRE.'tasks MODIFY COLUMN deadline TIMESTAMP' );
+      db_query('ALTER TABLE '.PRE.'tasks MODIFY COLUMN lastforumpost TIMESTAMP' );
+      db_query('ALTER TABLE '.PRE.'tasks MODIFY COLUMN lastfileupload TIMESTAMP' );
+      db_query('ALTER TABLE '.PRE.'tasks MODIFY COLUMN completion_time TIMESTAMP' );
+      db_query('ALTER TABLE '.PRE.'forum MODIFY COLUMN posted TIMESTAMP' );
+      db_query('ALTER TABLE '.PRE.'logins MODIFY COLUMN lastaccess TIMESTAMP' );
+      db_query('ALTER TABLE '.PRE.'seen MODIFY COLUMN time TIMESTAMP' );
+      db_query('ALTER TABLE '.PRE.'contacts MODIFY COLUMN date TIMESTAMP' );
+      db_query('ALTER TABLE '.PRE.'files MODIFY COLUMN uploaded TIMESTAMP' );
+      db_query('ALTER TABLE '.PRE.'login_attempt MODIFY COLUMN last_attempt TIMESTAMP' );
+    }
 
     $content .= "<p>Updating from version pre-2.00 database ... success!</p>\n";
   }
