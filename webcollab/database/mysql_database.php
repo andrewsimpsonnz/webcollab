@@ -51,8 +51,13 @@ function db_connection() {
     error('Database error', 'No connection to database tables' );
   }
 
-  //set timezone  
-  if(! mysql_query("SET time_zone='".sprintf('%+02d:%02d', TZ, (TZ - floor(TZ ) )*60 )."'", $database_connection ) ) {
+  //set transaction mode for innodb
+  if(DATABASE_TYPE == 'mysql_innodb' ) {
+    db_query('SET AUTOCOMMIT = 1' );
+  }
+
+  //set timezone
+  if(! mysql_query("SET time_zone='".sprintf('%+02d:%02d', TZ, (TZ - floor(TZ) )*60 )."'", $database_connection ) ) {
     error("Database error", "Not able to set timezone" );
   }
 
@@ -69,11 +74,10 @@ function db_query( $query, $dieonerror=1 ) {
   if(! $database_connection ) db_connection();
 
   //do it
-  if( ! ($result = @mysql_query( $query, $database_connection ) ) ) {
-    $db_error_message = mysql_error($database_connection);
-
+  if( ! ($result = @mysql_query($query, $database_connection ) ) ) {
+    $db_error_message = mysql_error($database_connection );
     if($dieonerror == 1 ) {
-     error('Database query error', 'The following query :<br /><br /><b>'.$query.' </b><br /><br />Had the following error:<br /><b>'.mysql_error($database_connection).'</b>' );
+      error('Database query error', 'The following query :<br /><br /><b>'.$query.'</b><br /><br />Had the following error:<br /><b>'.mysql_error($database_connection).'</b>' );
     }
   }
 
@@ -92,7 +96,7 @@ function db_escape_string($string ) {
     db_connection();
   }
 
-  $result = mysql_real_escape_string($string, $database_connection );
+ $result = mysql_real_escape_string($string, $database_connection );
 
   return $result;
 }
@@ -177,9 +181,14 @@ return $result;
 //
 function db_begin() {
 
-  //not implemented with ISAM tables
+  global $database_connection;
 
-return TRUE;
+  //not used for ISAM tables
+  if(DATABASE_TYPE == 'mysql' ) return true;
+
+  $result = mysql_query('BEGIN' );
+
+return $result;
 }
 
 //
@@ -187,9 +196,14 @@ return TRUE;
 //
 function db_rollback() {
 
-  //not implemented with ISAM tables
+  global $database_connection;
 
-return TRUE;
+  //not used for ISAM tables
+  if(DATABASE_TYPE == 'mysql' ) return true;
+
+  $result = mysql_query('ROLLBACK' );
+
+return $result;
 }
 
 //
@@ -197,21 +211,27 @@ return TRUE;
 //
 function db_commit() {
 
-  //not implemented with ISAM tables
+  global $database_connection;
 
-return TRUE;
+  //not used for ISAM tables
+  if(DATABASE_TYPE == 'mysql' ) return true;
+
+  $result = mysql_query('COMMIT' );
+
+return $result;
 }
 
 //
 //sets the required session client encoding
 //
-function db_user_locale($encoding) {
+function db_user_locale($encoding ) {
 
   global $database_connection;
 
   if(! $database_connection ) db_connection();
 
   switch(strtoupper($encoding ) ) {
+
     case 'ISO-8859-1':
       $my_encoding = 'latin1';
       break;

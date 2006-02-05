@@ -33,15 +33,16 @@ if(! defined('DATABASE_TYPE' ) ) {
 switch(DATABASE_TYPE ) {
 
   case 'mysql':
-    include(BASE.'database/mysql_database.php' );
-    break;
-
   case 'mysql_innodb':
-    include(BASE.'database/mysql_innodb_database.php' );
+    include(BASE.'database/mysql_database.php' );
     break;
 
   case 'postgresql':
     include(BASE.'database/pgsql_database.php' );
+    break;
+
+  case 'mysqli':
+    include(BASE.'database/mysqli_database.php' );
     break;
 
   default:
