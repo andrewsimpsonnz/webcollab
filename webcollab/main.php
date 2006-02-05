@@ -35,7 +35,6 @@ create_top();
 
   include(BASE.'includes/mainmenu.php' );
   include(BASE.'forum/forum_menubox.php' );
-  include(BASE.'forum/forum_searchbox.php' );
   if(! GUEST){
     include(BASE.'tasks/task_menubox.php' );
   }
