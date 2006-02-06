@@ -93,6 +93,7 @@ require_once(BASE.'setup/security_setup.php' );
       }
       else {
         $db_character = '';
+      }
 
       //no database exists yet - try and create it...
       if( ! ($result = @mysql_query( 'CREATE DATABASE '.$database_name.$db_character, $database_connection ) ) ){
