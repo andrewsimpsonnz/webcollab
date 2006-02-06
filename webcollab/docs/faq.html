@@ -16,6 +16,8 @@
 <a href="#files">Uploading Files</a><br />
 <a href="#email">Email</a><br />
 <a href="#security">Security</a><br />
+<a href="#icalendar">iCalendar</a><br />
+<a href="#rss">RSS</a><br />
 <a href="#international">Internationalisation</a><br />
 <a href="#unicode">Unicode</a><br />
 <a href="#remote">Remote Databases</a><br />
@@ -105,6 +107,7 @@ ctype_space function.</dt>
 <dd>The ctype function is built into PHP, but some Linux distributions - notably Mandriva &amp;
 Suse - have a separate RPM package for 'php-ctype'.  It is a small package of about 10 kb, and
 needs to be installed.<br />
+<br />
 For FreeBSD you have to install the textproc/php4-ctype port.  This probably also applies to other
 *BSD's - comments &amp; confirmations from users please!
 </dd>
@@ -367,6 +370,35 @@ the web server user.</li>
 </ul>
 </dd>
 </dl>
+<h3><a name="icalendar">ICALENDAR</a></h3>
+<dl>
+<dt>1. What is iCalendar?</dt>
+<dd>iCalendar is a standard (RFC 2445) for calendar data exchange. The standard is also known as
+"iCal".<br />
+<br />
+It is implemented/supported by a large number of products, including the Apple iCal application,
+Chandler, Lotus Notes, ScheduleWorld, Korganizer, Mozilla Calendar (including Mozilla Sunbird),
+Mulberry, Ximian Evolution, Simple Groupware, Windows Calendar and, to an extent, Microsoft
+Outlook. For more information see the <a
+href="http://en.wikipedia.org/wiki/Icalendar">Wikipedia</a> entry<br />
+<br />
+WebCollab allows iCalendar files to be downloaded by users and stored on other applications. Look
+for the iCalendar text hyperlink on the top right of pages.<br />
+<br />
+WebCollab is compliant to RFC 2445 and RFC 2447.
+</dd>
+</dl>
+<h3><a name="rss">RSS</a></h3>
+<dl>
+<dt>1. Does WebCollab provide RSS feeds?</dt>
+<dd>Yes, two simple RSS 2.00 feeds are provided in the <i>[webcollab]/rss</i> directory.  Users will
+need to adapt and extend these basic feeds to suit their own purposes.  The scripts are simply
+written and well commented to assist user modifications.<br />
+<br />
+The WebCollab RSS is authenticated by HTTP Authentication.  A base .htaccess file is provided in
+the directory. Instructions for setting up HTTP authentication can be found on the Apache website.
+</dd>
+</dl>
 <h3><a name="international">INTERNATIONALISATION</a></h3>
 <dl>
 <dt>1. What character encoding does WebCollab use?  Or, what characters can be used with
@@ -374,10 +406,30 @@ WebCollab?</dt>
 <dd>The character encoding is set by the language file in use.  For instance, English, French &amp;
 German all use ISO-8859-1 encoding (this is also known as Latin 1 encoding).   WebCollab is fully
 internationalised and language files can be set up with any language encodings.<br />
-<br />  
-Note that the standard version of WebCollab is only designed for single byte language encodings.  For better
-internationalisation capability, the Unicode version of WebCollab should be used. Translations of multi-byte character
-encodings (Korean &amp; Japanese) are only available in the Unicode version.  
+<br />
+Note that the standard version of WebCollab is only designed for single byte language encodings.
+For better
+internationalisation capability, the Unicode version of WebCollab should be used. Translations of
+multi-byte character
+encodings (Korean &amp; Japanese) are only available in the Unicode version.
+</dd>
+<dt>2. How is internationalisation handled by the database?</dt>
+<dd>For MySQL the database is created with the default character set of the MySQL server. It is
+assumed that administrators will have set an appropriate default character for the likely
+database users. If the database character set is unsuitable, the file
+<i>[webcollab]/setup/setup_config.php</i> can be edited (before setup) to change the database
+character set.  Comments on this are given in the file.<br />
+<br />
+The WebCollab character set ('LOCALE' setting) must always match the language file in use, or
+some characters will be shown as garbage. The database character set does not need to exactly match
+the WebCollab character set, because the MySQL client connection can do encoding conversions on
+input and output. WebCollab will set the MySQL client connection to the appropriate conversion on
+start up (Note that if the two character sets are very different, some characters will obviously not
+convert).<br />
+<br />
+For PostgreSQL, the server is assumed to be using the defaults of MULE_INTERNAL, SQL_ASCII or UTF8.
+WebCollab sets the required encoding at the PostgreSQL client, and collating and sorting is done to
+the requested character set.
 </dd>
 </dl>
 <h3><a name="unicode">UNICODE</a></h3>
