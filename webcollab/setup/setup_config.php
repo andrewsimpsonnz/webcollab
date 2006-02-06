@@ -23,6 +23,7 @@
 
 LANGUAGE ENCODING OPTIONS
 
+
 - English, Brazilian Portuguese, Catalan, Danish, French, German, Italian, Spanish, Swedish
 
   define('CHARACTER_SET', "ISO-8859-1" );
@@ -54,6 +55,15 @@ LANGUAGE ENCODING OPTIONS
 
   define('CHARACTER_SET', "KOI8-R" );
   define('DATABASE_CHARACTER_SET', "koi8r" );
+
+- All languages
+
+  define('CHARACTER_SET', [as given above, eg: "ISO-8859-1"] );
+  define('DATABASE_CHARACTER_SET', "utf-8" );
+
+  With this option the MySQL server uses UTF-8, while the web interface uses the given character set (eg: ISO-8859-1).
+  The MySQL connection client will convert to and from the given character set during input and output. WebCollab
+  automatically sets the required character set in the MySQL connection client.
 
 */
 
