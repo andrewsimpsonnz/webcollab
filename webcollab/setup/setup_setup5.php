@@ -104,8 +104,6 @@ $content = "<?php\n".
 "         their web browsers, and viewing all the files.  (The default location given is NOT outside\n".
 "         the webserver root, but it makes first-time setup easier).\n".
 "    */\n\n".
-"//----------------------------------------------------------------------------------------------\n".
-"// Less important items below this line\n\n".
 "//-- Language --\n\n".
 "  // available locales are 'en' (English), 'es' (Spanish),  'fr' (French),    'ca' (Catalan)\n".
 "  //                       'de' (German),  'it' (Italian),  'bg' (Bulgarian), 'da' (Danish)\n".
@@ -118,8 +116,6 @@ $content = "<?php\n".
 "  //timezone offset from GMT/UTC (hours)\n".
 "  define('TZ', '".$data["timezone"]."' );\n\n".
 "//-- Email --\n\n".
-"  //If an error occurs, who do you want the error to be mailed to ?\n".
-"  define('EMAIL_ERROR', '' );\n\n".
 "  //enable email to send messages? (Values are 'Y' or 'N')\n".
 "  define('USE_EMAIL', '".$data["use_email"]."' );\n\n".
 "    //location of SMTP server (IP address or FQDN)\n".
@@ -131,12 +127,16 @@ $content = "<?php\n".
 "      //if using SMTP_AUTH give username & password\n".
 "      define('MAIL_USER', '' );\n".
 "      define('MAIL_PASSWORD', '' );\n\n".
+"//----------------------------------------------------------------------------------------------\n".
+"// Less important items below this line\n\n".
 "//-- MINOR CONFIG PARAMETERS --\n\n".
 "//-- These items need to be edited directly from this file --\n\n".
 "  //Style sheets (CSS) Note: Setup always uses 'default.css' stylesheet for CSS_MAIN. (Place your CSS into /css directory)\n".
 "  define('CSS_MAIN', 'default.css' );\n".
 "  define('CSS_CALENDAR', 'calendar.css' );\n".
 "  define('CSS_PRINT', 'print.css' );\n\n".
+"  //If an error occurs, who do you want the error to be mailed to ?\n".
+"  define('EMAIL_ERROR', '' );\n\n".
 "  //session timeout in hours\n".
 "  define('SESSION_TIMEOUT', 1 );\n\n".
 "  //number of days that new or updated tasks should be highlighted as 'New' or 'Updated'\n".

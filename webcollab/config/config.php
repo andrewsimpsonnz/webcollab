@@ -2,13 +2,9 @@
 /*
   $Id$
 
-  This is the main config page.
-  Items marked **!! need to be filled in - the others don't matter.
-
 */
 
 //------------------------------------------------------------------------------------------
-// Important parameters are between these dotted lines
 
 //ALLOWING WEB-BASED SETUP
 
@@ -17,11 +13,12 @@
   //** For security: change this to "N" **
   $WEB_CONFIG = "Y";
 
+//----------------------------------------------------------------------------------------------
+
 //BASE DIRECTORY
 
   //You need to add the full webservername and dir to WebCollab here. Example"
   // "http://www.your-url-here.com/backend/org/" (don't forget the tailing slash)
-  //**!!
   define('BASE_URL', "" );
 
   //The name of the site
@@ -30,18 +27,19 @@
   //The abbreviated name for the site (for use in email subject lines)
   define('ABBR_MANAGER_NAME',"WebCollab" );
 
+
+//----------------------------------------------------------------------------------------------
+
 //DATABASE OPTIONS
-  //**!!
+
   define('DATABASE_NAME', "" );
   define('DATABASE_USER', "" );
   define('DATABASE_PASSWORD', "" );
 
-//Database type (valid options are "mysql", "postgresql" and "mysql_innodb")
-  //**!!
+  //Database type (valid options are "mysql", "postgresql" and "mysql_innodb")
   define('DATABASE_TYPE', "mysql" );
 
-//Database host (usually "localhost")
-  //**!!
+  //Database host (usually "localhost")
   define('DATABASE_HOST', "localhost" );
 
   /*Note:
@@ -51,6 +49,9 @@
      - Start PostgreSQL postmaster with -i option
      - Change DATABASE_HOST as required
   */
+
+
+//----------------------------------------------------------------------------------------------
 
 //FILE UPLOADS
 
@@ -72,10 +73,10 @@
 
   */
 
-//----------------------------------------------------------------------------------------------
-// Less important items below this line
 
-//LANGUAGE FILES
+//----------------------------------------------------------------------------------------------
+
+//LANGUAGE
 
   // available locales are "en" (English), "es" (Spanish),  "fr" (French),    "ca" (Catalan),
   //                       "de" (German),  "it" (Italian),  "bg" (Bulgarian), "da" (Danish),
@@ -88,15 +89,14 @@
   define('LOCALE', "en" );
 
 
+//----------------------------------------------------------------------------------------------
+
 //TIMEZONE
   //timezone offset from GMT/UTC (hours)
   define('TZ', 0 );
 
-//EMAIL ADDRESS
 
-  //If an error occurs, who do you want the error to be mailed to ?
-  define('EMAIL_ERROR', "" );
-
+//----------------------------------------------------------------------------------------------
 
 //EMAIL CONFIGURATION
 
@@ -116,12 +116,18 @@
         define('MAIL_USER', "" );
         define('MAIL_PASSWORD', "" );
 
+//----------------------------------------------------------------------------------------------
+// Less important items below this line
+
 //MINOR CONFIG PARAMETERS
 
   //Style sheets (CSS) Note: Setup always uses 'default.css' stylesheet for CSS_MAIN. (Place your CSS into /css directory)
   define('CSS_MAIN', 'default.css' );
   define('CSS_CALENDAR', 'calendar.css' );
   define('CSS_PRINT', 'print.css' );
+
+  //If an error occurs, who do you want the error to be mailed to ?
+  define('EMAIL_ERROR', "" );
 
   //session timeout in hours
   define('SESSION_TIMEOUT', 1 );
@@ -145,7 +151,7 @@
   define('PRE', "" );
 
   //version info
-  define('WEBCOLLAB_VERSION', "1.80" );
+  define('WEBCOLLAB_VERSION', "2.00-beta" );
   define('UNICODE_VERSION', "N" );
 
 ?>
