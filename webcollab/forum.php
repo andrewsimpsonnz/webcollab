@@ -72,7 +72,7 @@ switch($_REQUEST['action'] ) {
 
   //display search box
   case 'search_box':
-    create_top($lang['info'] );
+    create_top($lang['info'], 0, 'string' );
     include(BASE.'includes/mainmenu.php');
     include(BASE.'forum/forum_menubox.php');
     goto_main();
