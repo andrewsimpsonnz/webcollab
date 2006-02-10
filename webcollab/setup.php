@@ -57,6 +57,8 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
   include_once(BASE.'includes/common.php' );
   include_once(BASE.'database/database.php' );
+  //add lang file to get character set right for safe_data()
+  include_once(BASE.'lang/lang.php' );
 
   $q = '';
   $username = safe_data($_POST['username']);
@@ -157,18 +159,11 @@ if(UNICODE_VERSION == 'Y' ) {
   }
 }
 
-if(! function_exists('ctype_space' ) ) {
-  error("The ctype library is missing from your version PHP.<br \>\n".
-        "This is a built-in library but some Linux distributions - notably Mandriva & Suse - and OpenBSD have a separate RPM package for 'php-ctype'.  It is a small package of about 10 kb, and needs to be installed.<br \>\n".
-        "For FreeBSD (and others?) install the textproc/php4-ctype port.<br \>\n" );
-}
-
-
 //check for initial install
 if(DATABASE_NAME == '' ) {
   //this is an initial install
- include(BASE.'setup/setup_setup1.php' );
- die;
+  include(BASE.'setup/setup_setup1.php' );
+  die;
 }
 
 //login box screen code
