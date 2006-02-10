@@ -31,13 +31,16 @@
 //
 function safe_data($body ) {
 
+  //remove excess whitespace
+  $body = trim($body);
+
   //return null for nothing input
-  if(ctype_space($body) ) {
+  if(strlen($body) == 0 ) {
     return '';
   }
 
-  //validate characters & remove whitespace
-  $body = trim(validate($body) );
+  //validate characters
+  $body = validate($body);
 
   //limit line length for single line entries
   if(strlen($body ) > 100 ) {
@@ -57,13 +60,16 @@ return $body;
 //
 function safe_data_long($body ) {
 
+  //remove excess whitespace
+  $body = trim($body);
+
   //return null for nothing input
-  if(ctype_space($body) ) {
+  if(strlen($body) == 0 ) {
     return '';
   }
 
-  //validate characters & remove whitespace
-  $body = trim(validate($body) );
+  //validate characters
+  $body = validate($body);
 
   //normalise line breaks from Windows & Mac to UNIX style '\n' 
   $body = str_replace("\r\n", "\n", $body );
@@ -86,8 +92,13 @@ function validate($body ) {
   }
 
   //allow only normal printing characters valid for the character set in use
-  if(! ctype_print($body) ) {
+  if(isset($validation_regex ) ) {
+    //character set regex in language file
     $body = preg_replace($validation_regex, '?', $body );
+  }
+  else {
+    //no character set defined --> ASCII only
+    $body = preg_replace('/[^\x09\x0a\x0d\x20-\x7e]/', '?', $body );
   }
 
   return $body;
@@ -131,7 +142,7 @@ function html_escape($body ) {
 //
 // single quotes in javascript fields are escaped
 // double quotes are changed to HTML (escaping won't work) 
-// 
+//
 function javascript_escape($body ) {
 
   $trans = array('"'=>'&quot;', "'"=>"\\'" );
@@ -144,7 +155,7 @@ function javascript_escape($body ) {
 //
 function html_links($body, $database_escape=0 ) {
 
-  if(ctype_space($body) ) {
+  if(strlen($body) == 0  ) {
     return '';
   }
   $body = preg_replace('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', "<a href=\"mailto:$0\">$0</a>", $body );

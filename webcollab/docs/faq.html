@@ -102,16 +102,7 @@ question) have been set in php.ini.</li>
 </dl>
 <h3><a name="startup">START UP PROBLEMS</a></h3>
 <dl>
-<dt>1. "Initial installation works, but logging in gives a error message about undefined
-ctype_space function.</dt>
-<dd>The ctype function is built into PHP, but some Linux distributions - notably Mandriva &amp;
-Suse - have a separate RPM package for 'php-ctype'.  It is a small package of about 10 kb, and
-needs to be installed.<br />
-<br />
-For FreeBSD you have to install the textproc/php4-ctype port.  This probably also applies to other
-*BSD's - comments &amp; confirmations from users please!
-</dd>
-<dt>2. "Initial installation works, but logging in as admin gives a blank
+<dt>1. "Initial installation works, but logging in as admin gives a blank
 screen."</dt>
 <dd>Check that PHP has your database extensions compiled in.  From the command
 line type 'php -m':<br />
@@ -145,13 +136,13 @@ Remove the semi-colon ';' from the module you want, and restart Apache. <br />
 Also - many  Linux distributions have separate packages (*.rpm, *.deb, etc)
 for the main PHP files and the MySQL/PostgreSQL PHP support.  You need to install the relevant
 module package as well.</dd>
-<dt>3. Setup says "Your version of PHP does not have support for MySQL..." or "Your version of PHP
+<dt>2. Setup says "Your version of PHP does not have support for MySQL..." or "Your version of PHP
 does not have support for PostgreSQL..." and then dies.</dt>
 <dd>This is the same as the problem above.</dd>
-<dt>4. "Can login, but the main page is not found (404 error)."</dt>
+<dt>3. "Can login, but the main page is not found (404 error)."</dt>
 <dd>Check that the the defined parameter BASE_URL is correctly stated in config.php.
  Did you remember to add the trailing slash "/" as the config file says?</dd>
-<dt>5. "Does WebCollab use cookies?"</dt>
+<dt>4. "Does WebCollab use cookies?"</dt>
 <dd>Yes, if possible. Cookies are preferred for session management, but aren't
 reliable with all browsers.<br />
 <br />

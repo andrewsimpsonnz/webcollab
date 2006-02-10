@@ -71,16 +71,16 @@ if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == '' ) {
 }
 else {
   //get session key from either a GET or POST
-  if(isset($_REQUEST['x']) && (strlen($_REQUEST['x'] ) == 32 ) && (ctype_xdigit($_REQUEST['x'] ) ) ) {
+  if(isset($_REQUEST['x']) && preg_match('/^[a-f\d]{32}$/i', $_REQUEST['x'] ) ) {
     $x = db_escape_string($_REQUEST['x']);
   }
   //check for existing variable
-  elseif(isset($session_key) && (strlen($session_key) == 32 ) && (ctype_xdigit($session_key ) ) ) {
+  elseif(isset($session_key) && preg_match('/^[a-f\d]{32}$/i', $session_key ) ) {
     $x = db_escape_string($session_key);
   }
   //nothing
-  else {   
-    error_setup('No session key' );  
+  else {
+    error_setup('No session key' );
   }
 
   //check for ip address
