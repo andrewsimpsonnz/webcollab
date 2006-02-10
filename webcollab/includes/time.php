@@ -76,8 +76,8 @@ function nicetime($timestamp ) {
 
   $time = substr($timestamp, 11, 5 );
 
-  //format is 2004-Aug-02 18:06 +1200 
-  return sprintf('%s-%s-%02d %s  %+03d00', $date_array[0], $month_array[(int)($date_array[1])], (int)$date_array[2], $time, TZ );
+  //format is 2004-Aug-02 18:06  +1200
+  return sprintf('%s-%s-%02d %s &nbsp;&nbsp;%+03d00', $date_array[0], $month_array[(int)($date_array[1])], (int)$date_array[2], $time, TZ );
 }
 
 
