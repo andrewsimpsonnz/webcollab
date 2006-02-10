@@ -59,7 +59,7 @@ function create_top_setup($title='' ) {
        "<head>\n".
        "<title>".$title."</title>\n".
        "<meta http-equiv=\"Pragma\" content=\"no-cache\">".
-       "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".CHARACTER_SET."\">\n".
+       "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".SETUP_CHARACTER_SET."\">\n".
        "<link rel=\"StyleSheet\" href=\"".BASE_CSS.SETUP_CSS."\" type=\"text/css\">\n".
        "</head>\n\n".
        "<body>\n";
