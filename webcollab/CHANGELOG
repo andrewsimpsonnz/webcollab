@@ -1,4 +1,14 @@
 WebCollab CVS
+*** 12 Febuary 2006
+  Andrew Simpson
+
+- partial application of advanced calendar patch by Manolis Stamatogiannakis (mstamat)
+
+- calendar now has colour coded projects
+
+- minor improvements to calendar engine and layout
+
+WebCollab CVS
 *** 4 Febuary 2006
   Andrew Simpson
 
@@ -6,7 +16,9 @@ WebCollab CVS
 
 - bugfix: dates not being adjusted correctly for timezones
 
-- web client timezone now checked in javascript
+- merge mysql and mysl_innodb files together
+
+- remove ctype functions (Some Linux distros bundle ctype separately)
 
 WebCollab CVS
 *** 1 Febuary 2006
