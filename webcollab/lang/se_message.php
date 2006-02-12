@@ -210,7 +210,9 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
  //taskgroups
     $lang['taskgroup_name']             = "Uppgiftgruppens namn:";
     $lang['taskgroup_description']      = "Kort beskrivning av uppgiftgruppen:";
-    $lang['add_new_taskgroup']          = "Lägg till en ny uppgiftgrupp";
+//**
+    $lang['add_taskgroup']              = "Lägg till en ny uppgiftgrupp";
+    $lang['add_new_taskgroup']              = "Lägg till en ny uppgiftgrupp";
     $lang['edit_taskgroup']             = "Redigera uppgiftgrupp";
     $lang['taskgroup_manage']           = "Skötsel av uppgiftgrupper";
     $lang['no_taskgroups']              = "Inga uppgiftgrupper definierade";
