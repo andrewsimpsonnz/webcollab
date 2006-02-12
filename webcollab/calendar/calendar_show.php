@@ -32,15 +32,19 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
-include_once(BASE.'lang/lang_long.php' );
-
 //secure variables
 $content = '';
 $no_access_project = array();
 $no_access_group   = array();
+$month_projects    = array();
 $allowed    = array();
 $task_dates = array();
- 
+
+//colour array for background highlights
+$colour = array('#EEE9E9', '#CD9B9B', '#FEE8D6', '#FFDAB9', '#CDB79E', '#EBC79E', '#EBC79E', '#FFDEAD', '#FFEBCD', '#FFAEB9', '#FFADB9', '#EEA9B8', '#EE799F', '#FFBBFF', '#EEAEEE', '#EAADEA', '#CC99CC', '#FDF8FF', '#9F79EE', '#FDF8FF', '#AAAAFF', '#CAE1FF', '#87CEFF', '#BFEFFF', '#BBFFFF', '#AFEEEE', '#ADEAEA', '#DBFEF8', '#DBE6E0', '#BDFCC9', '#CCFFCC', '#98FB98', '#FFFFE0', '#FFFFAA', '#EAEAAE', '#FFFCCF' );
+//randomise colour array
+shuffle($colour);
+
 //set selection default
 if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 ){
   $selection = ($_POST['selection']);
@@ -77,7 +81,7 @@ else {
 }
 if(isset($_POST['lastmonth']) && strlen($_POST['lastmonth']) > 0 ){
   $monthoffset = -1;
-}  
+}
 else {
   if(isset($_POST['nextmonth']) && strlen($_POST['nextmonth']) > 0 ) {
     $monthoffset = +1;
@@ -87,19 +91,21 @@ else {
   }
 }
 
+$adjusted_time = TIME_NOW - date('Z') + TZ*60*60;
+
 //set month
 if( @safe_integer($_POST['month']) ){
   $month = $_POST['month'];
 }
 else {
-  $month = date('n', TIME_NOW - date('Z') + TZ*60*60 );
+  $month = date('n', $adjusted_time );
 }
 //set year
 if( @safe_integer($_POST['year']) ){
   $year = $_POST['year'];
 }
 else {
-  $year = date('Y', TIME_NOW - date('Z') + TZ*60*60 );
+  $year = date('Y', $adjusted_time );
 }
 //Apply any calendar navigation
 $month += $monthoffset;
@@ -118,8 +124,8 @@ else {
 $year += $yearoffset;
 
 //set day, if applicable
-if($month == date('n', TIME_NOW - date('Z') + TZ*60*60 ) && $year == date('Y', TIME_NOW - date('Z') + TZ*60*60 ) ){
-  $today = date('j', TIME_NOW - date('Z') + TZ*60*60 );
+if($month == date('n', $adjusted_time ) && $year == date('Y', $adjusted_time ) ){
+  $today = date('j', $adjusted_time );
 }
 else {
   $today = 0;
@@ -168,19 +174,49 @@ for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 }
 
 //get all the days with projects/tasks due in selected month and year
-$q = db_query('SELECT DISTINCT '.$day_part.'deadline) FROM '.PRE.'tasks 
+$q = db_query('SELECT '.$day_part.'deadline) AS day, projectid FROM '.PRE.'tasks 
                       WHERE deadline >= \''.$year.'-'.$month.'-01\' 
                       AND deadline <= (CAST(\''.$year.'-'.$month.'-01\' AS DATE) + INTERVAL '.$delim.'1 MONTH'.$delim.') '.
                       $tail );
- 
+
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ){
-  $task_dates[$i] = (int)$row[0];
+  $task_dates[$i]     = (int)$row[0];
+  $month_projects[$i] = (int)$row[1];
 }
 
-//get the sort order for projects/tasks
-$q   = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
-$row = db_fetch_num($q, 0 );
-$order = array($tail.' AND parent=0 '.$row[0], $tail.' AND parent<>0 '.$row[1] );
+//remove duplicates from project array
+$month_projects = array_unique($month_projects);
+
+//assign a 'colour' to each project from the colour array
+foreach($month_projects as $var) {
+  $project_colour_array[$var] = current($colour );
+  if(next($colour) === false ) reset($colour );
+}
+
+//set the usergroup permissions on queries (Admin can see all)
+if(ADMIN ) {
+  $tail_view  = ' ';
+  $tail_group = ' ';
+}
+else {
+  $tail_view  = ' AND (globalaccess=\'f\' AND usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+                  OR globalaccess=\'t\'
+                  OR usergroupid=0) ';
+
+  $tail_group = ' WHERE private=0 OR (private=1 AND id IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')) ';
+}
+
+//sort order for table listing
+$suffix = $tail.$tail_view;
+
+if(substr(DATABASE_TYPE, 0, 5) == 'mysql' ) {
+  $suffix .= "IF(parent=0, 0, 1), name";
+}
+else {
+  $suffix .= "ORDER BY parent<>0, name";
+}
+
+$content .= "<span class=\"textlink\">[<a href=\"main.php?x=".$x."\">".$lang['main_menu']."</a>]</span>";
 
 $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
@@ -217,16 +253,10 @@ $content .= "</select></label></td>\n".
             "<option value=\"0\"".$s4.">".$lang['no_group']."</option>\n";
 
 //get all groups for option box
-$q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
+$q = db_query('SELECT id, name, private FROM '.PRE.'usergroups '.$tail_group.' ORDER BY name' );
 
 //usergroup input box fields
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
-
-  //usergroup test for privacy
-  if( (! ADMIN ) && ($row['private'] ) && ( ! in_array($row['id'], (array)$GID ) ) ) {
-  continue;
-  }
-
   $content .= "<option value=\"".$row['id']."\"";
 
   //highlight current selection
@@ -317,70 +347,62 @@ for($num = 1; $num <= $numdays; ++$num ) {
   //check if this date has projects/tasks
   if(in_array($num, (array)$task_dates ) ) {
     //rows exist for this date - get them!
-    //projects first, then tasks in order set by admin  
-    foreach($order as $suffix ) { 
-      $q = db_query('SELECT id, name, parent, status, usergroupid, globalaccess, projectid, deadline AS due, owner
-                            FROM '.PRE.'tasks 
-                            WHERE deadline=\''.$year.'-'.$month.'-'.$num.'\' 
-                            AND archive=0 '.$suffix );
+    $q = db_query('SELECT id, name, parent, status, projectid, completed
+                          FROM '.PRE.'tasks
+                          WHERE deadline>=\''.$year.'-'.$month.'-'.$num.'\'
+                          AND deadline <= (CAST(\''.$year.'-'.$month.'-'.$num.'\' AS DATE) + INTERVAL '.$delim.'24 HOUR'.$delim.')
+                          AND archive=0 '.$suffix );
 
-        for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
+      for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
 
-          //check for closed usergroups
-          if( ($row['globalaccess'] == 'f' ) && ($row['usergroupid'] != 0 ) && (! ADMIN ) && ($row['owner'] != UID ) ) {
+        //don't show tasks in private usergroup projects
+        if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project) ) {
+          $key = array_search($row['projectid'], $no_access_project );
 
-            if( ! in_array( $row['usergroupid'], (array)$GID ) ) {
-              continue;
-            }
+          if( ! in_array($no_access_group[$key], (array)$GID ) ) {
+            continue;
           }
-
-          //don't show tasks in private usergroup projects
-          if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project) ) {
-            $key = array_search($row['projectid'], $no_access_project );
-
-            if( ! in_array($no_access_group[$key], (array)$GID ) ) {
-              continue;
-            }
-          }
-
-          switch($row['status'] ) {
-            case 'notactive':
-            case 'cantcomplete':
-            case 'nolimit':
-              //don't show if not active
-              continue 2;
-              break;
-
-            default:
-              //active task or project
-              switch($row['parent'] ) {
-                case '0':
-                  //project
-                  //check if tasks are all complete
-                  if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND status<>\'done\' AND parent>0' ), 0, 0 ) == 0 ){
-                    $name = "<span class=\"green\"><span class=\"underline\">".$row['name']."</span>";
-                  }
-                  else {
-                    $name = "<span class=\"blue\">".$row['name'];
-                  }
-                  $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
-                            "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</span></a><br />\n";
-                  break;
-
-                default:
-                  //task
-                  if($row['status'] == "done" ) {
-                    $name = "<span class=\"green\">".$row['name'];
-                  }
-                  else {
-                    $name = "<span class=\"red\">".$row['name'];
-                  }
-                  $content .= "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
-                            "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</span></a><br />\n";
-                  break;
-              }
-            break;
         }
+
+        switch($row['status'] ) {
+          case 'notactive':
+          case 'cantcomplete':
+          case 'nolimit':
+            //don't show if not active
+            continue 2;
+            break;
+
+          default:
+            //active task or project
+            switch($row['parent'] ) {
+              case '0':
+                //project
+                //check if tasks are all complete
+                if($row['completed'] > 99 ){
+                  $name = "<b>".$row['name']."</b>&nbsp;<img src=\"images/tick.gif\" height=\"9\" width=\"9\" alt=\"tick\" />";
+                }
+                else {
+                  $name = "<b>".$row['name']."</b>";
+                }
+                $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."; text-decoration:underline\" >".
+                            "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
+                            "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</a></div>\n";
+                break;
+
+              default:
+                //task
+                if($row['status'] == "done" ) {
+                  $name = $row['name']."&nbsp;<img src=\"images/tick.gif\" height=\"9\" width=\"9\" alt=\"tick\" />";
+                }
+                else {
+                  $name = $row['name'];
+                }
+                $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."\">".
+                            "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
+                            "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</a></div>\n";
+                break;
+            }
+          break;
       }
     }
   }
@@ -396,8 +418,6 @@ for($i = 0; $i < $leadout_length; ++$i ) {
 
 $content .= "</tr>\n";
 $content .= "</table>\n</div>\n";
-$content .= "<div style=\"text-align: center; padding-top: 20px\">\n".
-            "<b>[<a href=\"main.php?x=".$x."\">".$calendar_key."<br />\n</div>\n";
 
 new_box($lang['calendar'], $content );
 
