@@ -210,7 +210,7 @@ else {
 $suffix = $tail.$tail_view;
 
 if(substr(DATABASE_TYPE, 0, 5) == 'mysql' ) {
-  $suffix .= "IF(parent=0, 0, 1), name";
+  $suffix .= "ORDER BY IF(parent=0, 0, 1), name";
 }
 else {
   $suffix .= "ORDER BY parent<>0, name";
