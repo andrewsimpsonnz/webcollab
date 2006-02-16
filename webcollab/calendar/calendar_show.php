@@ -34,11 +34,12 @@ if(! defined('UID' ) ) {
 
 //secure variables
 $content = '';
+$allowed    = array();
+$task_dates = array();
 $no_access_project = array();
 $no_access_group   = array();
 $month_projects    = array();
-$allowed    = array();
-$task_dates = array();
+$project_colour_array = array();
 
 //colour array for background highlights
 $colour = array('#EEE9E9', '#CD9B9B', '#FEE8D6', '#FFDAB9', '#CDB79E', '#EBC79E', '#EBC79E', '#FFDEAD', '#FFEBCD', '#FFAEB9', '#FFADB9', '#EEA9B8', '#EE799F', '#FFBBFF', '#EEAEEE', '#EAADEA', '#CC99CC', '#FDF8FF', '#9F79EE', '#FDF8FF', '#AAAAFF', '#CAE1FF', '#87CEFF', '#BFEFFF', '#BBFFFF', '#AFEEEE', '#ADEAEA', '#DBFEF8', '#DBE6E0', '#BDFCC9', '#CCFFCC', '#98FB98', '#FFFFE0', '#FFFFAA', '#EAEAAE', '#FFFCCF' );
@@ -179,18 +180,17 @@ $q = db_query('SELECT '.$day_part.'deadline) AS day, projectid FROM '.PRE.'tasks
                       AND deadline <= (CAST(\''.$year.'-'.$month.'-01\' AS DATE) + INTERVAL '.$delim.'1 MONTH'.$delim.') '.
                       $tail );
 
-for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ){
-  $task_dates[$i]     = (int)$row[0];
-  $month_projects[$i] = (int)$row[1];
-}
+for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 
-//remove duplicates from project array
-$month_projects = array_unique($month_projects);
+  if(! in_array($row[0], (array)$task_dates ) ) {
+    $task_dates[] = $row[0];
+  }
 
-//assign a 'colour' to each project from the colour array
-foreach($month_projects as $var) {
-  $project_colour_array[$var] = current($colour );
-  if(next($colour) === false ) reset($colour );
+  //assign a 'colour' to each project from the colour array
+  if(! isset($project_colour_array[($row[1])] ) ) {
+    $project_colour_array[($row[1])] = current($colour );
+    if(next($colour) === false ) reset($colour );
+  }
 }
 
 //set the usergroup permissions on queries (Admin can see all)
