@@ -42,10 +42,6 @@ if(! defined('UID' ) ) {
 //includes
 require_once(BASE.'includes/admin_config.php' );
 
-//** hooks for future development
-define('SMTP_PORT', 25 );
-define('TLS', 'N' );
-
 if( (SMTP_AUTH === 'Y') || (TLS === 'Y') ){
   include_once(BASE.'includes/smtp_auth.php' );
 }
