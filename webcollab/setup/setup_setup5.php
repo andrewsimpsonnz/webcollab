@@ -109,7 +109,7 @@ $content = "<?php\n".
 "  //                       'de' (German),  'it' (Italian),  'bg' (Bulgarian), 'da' (Danish)\n".
 "  //                       'ko' (Korean),  'pt-br' (Brazilian Portuguese),    'hu' (Hungarian)\n".
 "  //                       'ru' (Russian), 'ja' (Japanese), 'se' (Swedish)    'sr' (Serbian (Latin))\n".
-"  //                       'gr' (Greek),   'cs' (Czech),    'tr' (Turkish)\n".    
+"  //                       'gr' (Greek),   'cs' (Czech),    'tr' (Turkish)\n".
 "  //                       'zh-tw' (Traditional Chinese)    'zh-cn' (Simplified Chinese)\n".
 "  define('LOCALE', '".$data["locale"]."' );\n\n".
 "//-- Timezone --\n\n".
@@ -121,12 +121,16 @@ $content = "<?php\n".
 "    //location of SMTP server (IP address or FQDN)\n".
 "    define('SMTP_HOST', '".$data["smtp_host"]."' );\n\n".
 "    //mail transport (leave as SMTP for standard WebCollab)\n".
-"    define('MAIL_TRANSPORT', 'SMTP' );\n\n".  
+"    define('MAIL_TRANSPORT', 'SMTP' );\n".
+"    //SMTP port (leave as 25 for ordinary mailservers)\n".
+"    define('SMTP_PORT', 25 );\n\n".
 "    //use smtp auth? ('Y' or 'N')\n".
 "    define('SMTP_AUTH', 'N' );\n".
 "      //if using SMTP_AUTH give username & password\n".
 "      define('MAIL_USER', '' );\n".
-"      define('MAIL_PASSWORD', '' );\n\n".
+"      define('MAIL_PASSWORD', '' );\n".
+"      //use TLS encryption? (requires PHP 5.1+)\n".
+"      define('TLS', 'N' );\n\n".
 "//----------------------------------------------------------------------------------------------\n".
 "// Less important items below this line\n\n".
 "//-- MINOR CONFIG PARAMETERS --\n\n".

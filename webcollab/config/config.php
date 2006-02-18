@@ -110,11 +110,17 @@
       //mail transport (leave as SMTP for standard WebCollab)
       define('MAIL_TRANSPORT', "SMTP" );
 
+      //SMTP port (leave as 25 for ordinary mailservers)
+      define('SMTP_PORT', 25 );
+
       //use smtp auth? ('Y' or 'N')
       define('SMTP_AUTH', "N" );
         //if using SMTP_AUTH give username & password
         define('MAIL_USER', "" );
         define('MAIL_PASSWORD', "" );
+        //use TLS encryption? (requires PHP 5.1+)
+        define('TLS', 'N' );
+
 
 //----------------------------------------------------------------------------------------------
 // Less important items below this line
