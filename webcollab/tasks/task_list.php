@@ -261,8 +261,8 @@ function list_tasks($parent ) {
     //finish the line
     $this_content .= "</small>";
 
-    //recursive search if the subtask is listed in parent_array (it has children then)
-    if(in_array( $row['id'], $parent_array, FALSE) ) {
+    //recursive search if the subtask is listed as a key in parent_array (it has children then)
+    if(isset($parent_array[($row['id'])] ) ) {
       $this_content .= list_tasks( $row['id']);
       $this_content .= "\n</ul></li>\n";
     }
@@ -297,13 +297,13 @@ if(! ADMIN ) {
   if(db_result($q, 0, 0 ) < 1 ) {
     return;
   }
-}  
+}
 
 //find all parent-tasks and add them to an array, if we load the tasks we check if they have children and if not, then do not query
 $parent_query = db_query('SELECT DISTINCT parent FROM '.PRE.'tasks WHERE projectid='.$TASKID_ROW['projectid'] );
 $parent_array = array();
 for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; ++$i ) {
-  $parent_array[$i] = $row['parent'];
+  $parent_array[($row['parent'])] = $row['parent'];
 }
 
 //check to see if any tasks at this task level have the taskgroup descriptor set.

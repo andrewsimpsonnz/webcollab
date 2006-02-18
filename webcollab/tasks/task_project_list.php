@@ -48,7 +48,6 @@ function listTasks($projectid ) {
   $parent_array = array();
   $shown_array  = array();
   $shown_count  = 0;  //counter for $shown_array
-  $parent_count = 0;  //counter for $parent_array
   $task_count   = 0;  //counter for $task_array
 
   //search for uncompleted tasks by projectid
@@ -67,8 +66,8 @@ function listTasks($projectid ) {
 
     //if this is a subtask, store the parent id
     if($task_array[$task_count]['parent'] != $projectid ) {
-      $parent_array[$parent_count] = $task_array[$task_count]['parent'];
-      ++$parent_count;
+      //store parent as array key for faster searching
+      $parent_array[($task_array[$task_count]['parent'])] = 1;
     }
     ++$task_count;
 
@@ -91,7 +90,7 @@ function listTasks($projectid ) {
     ++$shown_count;
 
     //if this task has children (subtasks), iterate recursively to find them
-    if(in_array($task_array[$i]['id'], (array)$parent_array ) ) {
+    if(isset($parent_array[($task_array[$i]['id'])] ) ) {
       $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";
@@ -130,7 +129,7 @@ function find_children($parent ) {
     ++$shown_count;
 
     //if this task has children (subtasks), iterate recursively to find them
-    if(in_array($task_array[$i]['id'], (array)$parent_array ) ) {
+    if(isset($parent_array[($task_array[$i]['id'])] ) ) {
       $content .= find_children($task_array[$i]['id'] );
     }
     $content .= "</li>\n";

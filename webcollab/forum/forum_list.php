@@ -46,7 +46,6 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 
   $post_array   = array();
   $parent_array = array();
-  $parent_count = 0;
   $post_count   = 0;
 
   $q = db_query('SELECT '.PRE.'forum.text AS text,
@@ -105,8 +104,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 
     //if this is a subpost, store the parent id
     if($row['parent'] != 0 ) {
-      $parent_array[$parent_count] = $row['parent'];
-      ++$parent_count;
+      $parent_array[($row['parent'])] = $row['parent'];
     }
   }
 
@@ -120,7 +118,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
     $content .= $post_array[$i]['post'];
 
     //if this post has children (subposts), iterate recursively to find them
-    if(in_array($post_array[$i]['id'], (array)$parent_array ) ){
+    if(isset($parent_array[($post_array[$i]['id'])] ) ) {
       $content .= find_children($post_array[$i]['id'] );
     }
     $content .= "</li>\n";
@@ -146,7 +144,7 @@ function find_children($parent ) {
     $content .= $post_array[$i]['post'];
 
     //if this post has children (subposts), iterate recursively to find them
-    if(in_array($post_array[$i]['id'], $parent_array ) ){
+    if(isset($parent_array[($post_array[$i]['id'])] ) ){
       $content .= find_children($post_array[$i]['id'] );
     }
     $content .= "</li>\n";

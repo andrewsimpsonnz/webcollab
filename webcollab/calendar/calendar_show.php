@@ -182,9 +182,8 @@ $q = db_query('SELECT '.$day_part.'deadline) AS day, projectid FROM '.PRE.'tasks
 
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 
-  if(! in_array($row[0], (array)$task_dates ) ) {
-    $task_dates[] = $row[0];
-  }
+  //store date with task as array key
+  $task_dates[($row[0])] = $row[0];
 
   //assign a 'colour' to each project from the colour array
   if(! isset($project_colour_array[($row[1])] ) ) {
@@ -345,7 +344,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
   $content .= "><span class=\"daynum\">".$num."</span>";
 
   //check if this date has projects/tasks
-  if(in_array($num, (array)$task_dates ) ) {
+  if(isset($task_dates[$num] ) ) {
     //rows exist for this date - get them!
     $q = db_query('SELECT id, name, parent, status, projectid, completed
                           FROM '.PRE.'tasks
