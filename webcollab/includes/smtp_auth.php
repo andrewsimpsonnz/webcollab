@@ -134,6 +134,8 @@ function smtp_auth($connection, $cap) {
 
 function starttls($connection, $cap ) {
 
+  global $log;
+
   //check if crypto function exists...
   if(! function_exists('stream_socket_enable_crypto' ) ) {
     debug('This version of PHP cannot do STARTTLS negotiation' );
@@ -146,26 +148,30 @@ function starttls($connection, $cap ) {
 
   //issue STARTTLS verb...
   fputs($connection, "STARTTLS\r\n" );
-  $log .= 'C: STARTTLS'."\n";
+  $log .= "C: STARTTLS\n";
 
   if(strncmp('220', response(), 3 ) ) {
-    debug('Starting TLS...' );
+    debug();
   }
+
+  $log .= "Starting TLS...\n";
 
   //start TLS negotiation
   if(! @stream_socket_enable_crypto($connection, TRUE, STREAM_CRYPTO_METHOD_TLS_CLIENT ) ) {
     debug('TLS negotiation failed' );
   }
 
-  $log .= 'C: TLS success'; 
+  $log .= "C: TLS success\n"; 
   //do a new extended hello (EHLO) after successful negotiation (RFC 3207)
   fputs($connection, 'EHLO '.$_SERVER['SERVER_NAME']."\r\n" );
-  $log .= 'C: EHLO'.$_SERVER['SERVER_NAME']."\n";
+  $log .= 'C: EHLO '.$_SERVER['SERVER_NAME']."\n";
   $new_capability = response();
 
-  if(strncmp('250', $res, 3 ) ) { 
+  if(strncmp('250', $new_capability, 3 ) ) { 
     debug();
   }
+
+  $log .= "C: TLS negotiation completed\n";
 
   return $new_capability;
 }
