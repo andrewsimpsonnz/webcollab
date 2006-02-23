@@ -45,9 +45,8 @@ function find_tasks( $taskid, $projectid ) {
   $task_array   = array();
   $parent_array = array();
   $match_array  = array();
-  $parent_count = 0;
   $task_count = 0;
-  $index = 0; 
+  $index = 0;
 
   $q = db_query('SELECT id, parent FROM '.PRE.'tasks WHERE projectid='.$projectid );
 
@@ -58,10 +57,9 @@ function find_tasks( $taskid, $projectid ) {
     $task_array[$i]['parent'] = $row['parent'];
     ++$task_count;
 
-    //if this is a subtask, store the parent id 
+    //if this is a subtask, store the parent id
     if($row['parent'] != 0 ) {
-      $parent_array[$parent_count] = $row['parent'];
-      ++$parent_count;
+      $parent_array[($row['parent'])] = $row['parent'];
     }
   }
 
@@ -69,8 +67,8 @@ function find_tasks( $taskid, $projectid ) {
   $match_array[$index] = $taskid;
   ++$index;
 
-  //if selected task has children (subtasks), iterate recursively to find them 
-  if(in_array($taskid, (array)$parent_array ) ){
+  //if selected task has children (subtasks), iterate recursively to find them
+  if(isset($parent_array[($taskid)] ) ) {
     find_children($taskid);
   }
 
@@ -86,30 +84,30 @@ function find_children($parent ) {
 
   for($i=0 ; $i < $task_count ; ++$i ) {
 
-    if($task_array[$i]['parent'] != $parent ){
+    if($task_array[$i]['parent'] != $parent ) {
       continue;
     }
     $match_array[$index] = $task_array[$i]['id'];
     ++$index;
 
     //if this post has children (subtasks), iterate recursively to find them
-    if(in_array($task_array[$i]['id'], (array)$parent_array ) ){
+    if(isset($parent_array[($task_array[$i]['id'])] ) ) {
       find_children($task_array[$i]['id'] );
     }
   }
   return;
-}      
+}
 
 //
 // advanced database-wide task-delete !!
 //
 if(! @safe_integer($_REQUEST['taskid']) ) {
-  error('Task details', 'The taskid input is not valid' ); 
+  error('Task details', 'The taskid input is not valid' );
 }
 $taskid = $_REQUEST['taskid'];
 
 //get task and owner information
-$q = db_query('SELECT '.PRE.'tasks.parent AS parent,            
+$q = db_query('SELECT '.PRE.'tasks.parent AS parent,
                       '.PRE.'tasks.name AS name,
                       '.PRE.'tasks.text AS text,
                       '.PRE.'tasks.owner AS owner,
