@@ -6,6 +6,8 @@ WebCollab CVS
 
 - STARTTLS support for email now tested with PHP 5.1+
 
+- merge in Unicode support to email
+
 WebCollab CVS
 *** 12 Febuary 2006
   Andrew Simpson
@@ -32,7 +34,7 @@ WebCollab CVS
 *** 1 Febuary 2006
   Andrew Simpson
 
--prevent users cloning private projects to themselves
+- prevent users cloning private projects to themselves
 
 WebCollab CVS
 *** 22 January 2006
@@ -44,7 +46,7 @@ WebCollab CVS
 
 - UTF-8 set in database for iCalendar
 
-- minor improvements to JavaScript
+- minor improvements to JavaScript - also fixes bug #1405945
 
 - add RSS feeds
 
@@ -52,7 +54,7 @@ WebCollab CVS
 *** 17 January 2006
   Andrew Simpson
 
-- updated Hungarian translation (Credit: Sz�l Tam�)
+- updated Hungarian translation (Credit: Széll Tamás )
 
 WebCollab CVS
 *** 23 December 2005
@@ -298,7 +300,7 @@ WebCollab CVS
 *** 24 May 2005
   Andrew Simpson
 
-- Spanish language update (Credit: Alberto Vizca�o L�ez)
+- Spanish language update (Credit: Alberto Vizcaíno López )
 
 WebCollab CVS
 *** 21 May 2005
@@ -320,7 +322,7 @@ WebCollab CVS
 
 - optimise graphical bar function
 
-- change SQL in forum_menubox.php (problems with PostgeSQL 7.3.2) (Credit: Vajk�P�er)
+- change SQL in forum_menubox.php (problems with PostgeSQL 7.3.2) (Credit: Vajkó Péter)
 
 - provide better echo chunking in screen.php
 
@@ -378,7 +380,7 @@ WebCollab CVS
 *** 5 April 2005
   Andrew Simpson
 
-- Swedish translation added (Credit: G�an K�lqvist )
+- Swedish translation added (Credit: Göran Källqvist )
 
 - bugfix: Data validation could corrupt SQL strings (Bug #1176733) (Credit: Thomas Briggs)
 
@@ -424,7 +426,7 @@ WebCollab CVS
 *** 28 February 2005
   Andrew Simpson
 
-- added Hungarian translation (Credit: Alberto Vizca�o L�ez)
+- added Hungarian translation (Credit: Alberto Vizcaíno López )
 
 WebCollab CVS
 *** 21 February 2005
