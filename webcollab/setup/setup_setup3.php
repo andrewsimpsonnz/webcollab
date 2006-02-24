@@ -71,10 +71,10 @@ if(defined('DATABASE_NAME' ) && (DATABASE_NAME != '') && ($new_db === 'N' ) && (
 else {
   //this is a new install (or an edit from setup 4 )
   $db_name           = (isset($_POST['db_name']) )           ? $_POST['db_name']           : '';
-  $db_user           = (isset($_POST['db_user']) )           ? $_POST['db_user']           : '';  
+  $db_user           = (isset($_POST['db_user']) )           ? $_POST['db_user']           : '';
   $db_password       = (isset($_POST['db_password']) )       ? $_POST['db_password']       : '';
   $db_type           = (isset($_POST['db_type']) )           ? $_POST['db_type']           : 'mysql';
-  $db_host           = (isset($_POST['db_host']) )           ? $_POST['db_host']           : 'localhost';  
+  $db_host           = (isset($_POST['db_host']) )           ? $_POST['db_host']           : 'localhost';
   $base_url          = (isset($_POST['base_url']) )          ? $_POST['base_url']          : $server_url;
   $manager_name      = (isset($_POST['manager_name']) )      ? $_POST['manager_name']      : 'WebCollab Project Management';
   $abbr_manager_name = (isset($_POST['abbr_manager_name']) ) ? $_POST['abbr_manager_name'] : 'WebCollab';
@@ -150,95 +150,95 @@ $content .= "<tr><td></td><td><br />Location where uploaded files will be stored
             "<tr><th>File size:</th><td><input type=\"text\" name=\"file_maxsize\" value=\"".$file_maxsize."\" size=\"20\" /></td></tr>\n";
 
 //language settings
-$content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></tr>\n";
+$content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></tr>\n".
+            "<tr><td></td><td><br />Languages marked with * are only available in the Unicode versions</td></tr>\n".
+            "<tr><th>Language:</th><td><select name=\"locale\">\n";
 
-//initialise array with null values
-for( $i=0 ; $i < 25 ; ++$i ) {
-  $s[$i] = "";
+$locale_array = array('bg'   =>'Bulgarian',
+                      'ca'   =>'Catalan',
+                      'zh-tw'=>'*Chinese(Traditional)',
+                      'zh-cn'=>'*Chinese (Simplified)',
+                      'cs'   =>'Czech',
+                      'da'   =>'Danish',
+                      'en'   =>'English',
+                      'fr'   =>'French',
+                      'de'   =>'German',
+                      'gr'   =>'Greek',
+                      'hu'   =>'Hungarian',
+                      'it'   =>'Italian',
+                      'ja'   =>'*Japanese',
+                      'ko'   =>'*Korean',
+                      'pt-br'=>'Portuguese (Brazilian)',
+                      'ru'   =>'Russian',
+                      'es'   =>'Spanish',
+                      'sr'   =>'Serbian (Latin)',
+                      'sk'   =>'Slovak',
+                      'se'   =>'Swedish',
+                      'tr'   =>'Turkish' );
+
+foreach ($locale_array as $key => $value ) {
+  $content .= "<option value=\"".$key."\"";
+
+  if($locale == $key ) {
+    $content .= " selected=\"selected\" ";
+  }
+
+  $content .= ">".$value."</option>\n";
 }
 
-//select current value
-$option_array = array('bg', 'ca', 'zh-tw', 'zh-cn', 'cs', 'da', 'en', 'fr', 'de', 'gr', 'hu', 'it', 'ja', 'ko', 'pt-br', 'ru', 'es', 'sr', 'sk', 'se', 'tr' );
-$selected = array_search($locale, $option_array );
-$s[$selected] = " selected=\"selected\"";
-
-$content .= "<tr><td></td><td><br />Languages marked with * are only available in the Unicode versions</td></tr>\n";
-
-$content .= "<tr><th>Language:</th><td><select name=\"locale\">\n".
-            "<option value=\"bg\" ".   $s[0].">Bulgarian</option>\n".
-            "<option value=\"ca\" ".   $s[1].">Catalan</option>\n".
-            "<option value=\"zh-tw\" ".$s[2].">*Chinese (Traditional)</option>\n".
-            "<option value=\"zh-cn\" ".$s[3].">*Chinese (Simplified)</option>\n".
-            "<option value=\"cs\" ".   $s[4].">Czech</option>\n".
-            "<option value=\"da\" ".   $s[5].">Danish</option>\n".
-            "<option value=\"en\" ".   $s[6].">English</option>\n".
-            "<option value=\"fr\" ".   $s[7].">French</option>\n".
-            "<option value=\"de\" ".   $s[8].">German</option>\n".
-            "<option value=\"gr\" ".   $s[9].">Greek</option>\n".
-            "<option value=\"hu\" ".   $s[10].">Hungarian</option>\n".
-            "<option value=\"it\" ".   $s[11].">Italian</option>\n".
-            "<option value=\"ja\" ".   $s[12].">*Japanese</option>\n".
-            "<option value=\"ko\" "   .$s[13].">*Korean</option>\n".
-            "<option value=\"pt-br\" ".$s[14].">Portuguese (Brazilian)</option>\n".
-            "<option value=\"ru\" ".   $s[15].">Russian</option>\n". 
-            "<option value=\"es\" ".   $s[16].">Spanish</option>\n". 
-            "<option value=\"sr\" ".   $s[17].">Serbian (Latin)</option>\n".
-            "<option value=\"sk\" ".   $s[18].">Slovak</option>\n".
-            "<option value=\"se\" ".   $s[19].">Swedish</option>\n".
-            "<option value=\"tr\" ".   $s[20].">Turkish</option>\n".
-            "</select></td></tr>\n";
+$content .= "</select></td></tr>\n";
 
 //timezone setting
-$content .= "<tr><td></td><td><br /><br /><b><u>Timezone Setting</u></b></td></tr>\n";
+$content .= "<tr><td></td><td><br /><br /><b><u>Timezone Setting</u></b></td></tr>\n".
+            "<tr><td></td><td><br /></td></tr>\n".
+            "<tr><th>Timezone:</th><td><select name=\"timezone\">\n";
 
-//initialise array with null values  
-for( $i=0 ; $i < 35 ; $i++ ) {
-  $s[$i] = '';
+$time_array = array('-12'  => 'GMT -1200',
+                    '-11'  => 'GMT -1100',
+                    '-10'  => 'GMT -1000',
+                    '-9.5' => 'GMT -0930',
+                    '-9'   => 'GMT -0900',
+                    '-8'   => 'GMT -0800',
+                    '-7'   => 'GMT -0700',
+                    '-6'   => 'GMT -0600',
+                    '-5'   => 'GMT -0500',
+                    '-4'   => 'GMT -0400',
+                    '-3.5' => 'GMT -0330',
+                    '-3'   => 'GMT -0300',
+                    '-2'   => 'GMT -0200',
+                    '-1'   => 'GMT -0100',
+                    '0'   => 'GMT      ',
+                    '1'   => 'GMT +0100',
+                    '2'   => 'GMT +0200',
+                    '3'   => 'GMT +0300',
+                    '3.5' => 'GMT +0330',
+                    '4'   => 'GMT +0400',
+                    '4.5' => 'GMT +0430',
+                    '5'   => 'GMT +0500',
+                    '5.5' => 'GMT +0530',
+                    '6'   => 'GMT +0600',
+                    '6.5' => 'GMT +0630',
+                    '7'   => 'GMT +0700',
+                    '8'   => 'GMT +0800',
+                    '9'   => 'GMT +0900',
+                    '9.5' => 'GMT +0930',
+                    '10'  => 'GMT +1000',
+                    '10.5'=> 'GMT +1030',
+                    '11'  => 'GMT +1100',
+                    '11.5'=> 'GMT +1130',
+                    '12'  => 'GMT +1200',
+                    '13'  => 'GMT +1300' );
+
+foreach ($time_array as $key => $value ) {
+  $content .= "<option value=\"".$key."\"";
+
+  if($tz == $key ) {
+    $content .= " selected=\"selected\"";
+  }
+
+  $content .= ">".$value."</option>\n";
 }
-
-$time = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 8, 9, 9.5, 10, 10.5, 11, 11.5, 12, 13 );
-
-//select current value
-$s[(array_search($tz, $time) )] = " selected=\"selected\"";
-
-$content .=  "<tr><td></td><td><br /></td></tr>\n".
-             "<tr><th>Timezone:</th><td><select name=\"timezone\">\n".
-             "<option value=\"-12\"". $s[0]. ">GMT -1200</option>\n".
-             "<option value=\"-11\"". $s[1]. ">GMT -1100</option>\n".
-             "<option value=\"-10\"". $s[2]. ">GMT -1000</option>\n".
-             "<option value=\"-9.5\"".$s[3]. ">GMT -0930</option>\n".
-             "<option value=\"-9\"".  $s[4]. ">GMT -0900</option>\n".
-             "<option value=\"-8\"".  $s[5]. ">GMT -0800</option>\n".
-             "<option value=\"-7\"".  $s[6]. ">GMT -0700</option>\n".
-             "<option value=\"-6\"".  $s[7]. ">GMT -0600</option>\n".
-             "<option value=\"-5\"".  $s[8]. ">GMT -0500</option>\n".
-             "<option value=\"-4\"".  $s[9]. ">GMT -0400</option>\n".
-             "<option value=\"-3.5\"".$s[10].">GMT -0330</option>\n".
-             "<option value=\"-3\"".  $s[11].">GMT -0300</option>\n".
-             "<option value=\"-2\"".  $s[12].">GMT -0200</option>\n".
-             "<option value=\"-1\"".  $s[13].">GMT -0100</option>\n".
-             "<option value=\"0\"".   $s[14].">GMT</option>\n".
-             "<option value=\"1\"".   $s[15].">GMT +0100</option>\n".
-             "<option value=\"2\"".   $s[16].">GMT +0200</option>\n".
-             "<option value=\"3\"".   $s[17].">GMT +0300</option>\n".
-             "<option value=\"3.5\"". $s[18].">GMT +0330</option>\n".
-             "<option value=\"4\"".   $s[19].">GMT +0400</option>\n".
-             "<option value=\"4.5\"". $s[20].">GMT +0430</option>\n".
-             "<option value=\"5\"".   $s[21].">GMT +0500</option>\n".
-             "<option value=\"5.5\"". $s[22].">GMT +0530</option>\n".
-             "<option value=\"6\"".   $s[23].">GMT +0600</option>\n".
-             "<option value=\"6.5\"". $s[24].">GMT +0630</option>\n".
-             "<option value=\"7\"".   $s[25].">GMT +0700</option>\n".
-             "<option value=\"8\"".   $s[26].">GMT +0800</option>\n".
-             "<option value=\"9\"".   $s[27].">GMT +0900</option>\n".
-             "<option value=\"9.5\"". $s[28].">GMT +0930</option>\n".
-             "<option value=\"10\"".  $s[29].">GMT +1000</option>\n".
-             "<option value=\"10.5\"".$s[30].">GMT +1030</option>\n".
-             "<option value=\"11\"".  $s[31].">GMT +1100</option>\n".
-             "<option value=\"11.5\"".$s[32].">GMT +1130</option>\n".
-             "<option value=\"12\"".  $s[33].">GMT +1200</option>\n".
-             "<option value=\"13\"".  $s[34].">GMT +1300</option>\n".
-             "</select></td></tr>\n";
+$content .= "</select></td></tr>\n";
 
 //email settings
 if($use_email === 'N' ) {
