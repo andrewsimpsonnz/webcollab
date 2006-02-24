@@ -6,6 +6,7 @@
 
   WebCollab
   ---------------------------------------
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -45,31 +46,23 @@ function db_connection() {
   if( ! ($database_connection = @mysql_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD ) ) ) {
     error('No database connection',  'Sorry but there seems to be a problem in connecting to the database server');
   }
-  
+
   //select database
   if( ! @mysql_select_db(DATABASE_NAME, $database_connection ) ) {
     error('Database error', 'No connection to database tables' );
   }
-  
-  //get character set as MySQL encoding name  
-  $encoding = mysql_encoding();
-  
-  //set character set -- 1
-  if(! mysql_query("SET NAMES '".$encoding."'", $database_connection ) ) {
-    error("Database error", "Not able to set ".$encoding." client encoding" );
-  }
-  
-  //set character set -- 2
-  if(! mysql_query("SET CHARACTER SET ".$encoding, $database_connection ) ) {
-    error("Database error", "Not able to set CHARACTER SET : ".$encoding );
-  }
-  
-  //set timezone  
-  if(! mysql_query("SET time_zone='".sprintf('%+02d:00', TZ )."'", $database_connection ) ) {
-    error("Database error", "Not able to set timezone" );  
+
+  //set transaction mode for innodb
+  if(DATABASE_TYPE == 'mysql_innodb' ) {
+    db_query('SET AUTOCOMMIT = 1' );
   }
 
-  return;   
+  //set timezone
+  if(! mysql_query("SET time_zone='".sprintf('%+02d:%02d', TZ, (TZ - floor(TZ) )*60 )."'", $database_connection ) ) {
+    error("Database error", "Not able to set timezone" );
+  }
+
+  return;
 }
 
 //
@@ -80,7 +73,7 @@ function db_query( $query, $dieonerror=1 ) {
   global $database_connection, $db_name, $db_error_message, $db_content ;
   global $database_query_time, $database_query_count;
 
-  if( ! $database_connection ) db_connection();
+  if(! $database_connection ) db_connection();
 
   //start time
   list($usec, $sec) = explode(" ", microtime() );
@@ -127,15 +120,15 @@ function db_query( $query, $dieonerror=1 ) {
 // escapes special characters in a string for use in a SQL statement
 //
 function db_escape_string($string ) {
-  
+
   global $database_connection;
-   
+
   if(! $database_connection ) {
     db_connection();
   }
-  
-  $result = mysql_real_escape_string($string, $database_connection );
-    
+
+ $result = mysql_real_escape_string($string, $database_connection );
+
   return $result;
 }
 
@@ -219,9 +212,14 @@ return $result;
 //
 function db_begin() {
 
-  //not implemented with ISAM tables
+  global $database_connection;
 
-return TRUE;
+  //not used for ISAM tables
+  if(DATABASE_TYPE == 'mysql' ) return true;
+
+  $result = mysql_query('BEGIN' );
+
+return $result;
 }
 
 //
@@ -229,9 +227,14 @@ return TRUE;
 //
 function db_rollback() {
 
-  //not implemented with ISAM tables
+  global $database_connection;
 
-return TRUE;
+  //not used for ISAM tables
+  if(DATABASE_TYPE == 'mysql' ) return true;
+
+  $result = mysql_query('ROLLBACK' );
+
+return $result;
 }
 
 //
@@ -239,53 +242,72 @@ return TRUE;
 //
 function db_commit() {
 
-  //not implemented with ISAM tables
+  global $database_connection;
 
-return TRUE;
+  //not used for ISAM tables
+  if(DATABASE_TYPE == 'mysql' ) return true;
+
+  $result = mysql_query('COMMIT' );
+
+return $result;
 }
 
 //
-//sets the required client encoding to the mysql client
+//sets the required session client encoding
 //
-function mysql_encoding() {
+function db_user_locale($encoding ) {
 
-  switch(strtoupper(CHARACTER_SET ) ) {
+  global $database_connection;
+
+  if(! $database_connection ) db_connection();
+
+  switch(strtoupper($encoding ) ) {
 
     case 'ISO-8859-1':
       $my_encoding = 'latin1';
       break;
-   
+
     case 'UTF-8':
       $my_encoding = 'utf8';
       break; 
-                         
+
     case 'ISO-8859-2':
       $my_encoding = 'latin2';
       break;
-    
+
     case 'ISO-8859-7':
       $my_encoding = 'greek';
       break;
-    
+
     case 'ISO-8859-9':
       //ISO-8859-9 === latin5 in MySQL!!
       $my_encoding = 'latin5';
       break;
-    
+
      case 'KOI8-R':
       $my_encoding = 'koi8r';
       break;
-       
+
     case 'WINDOWS-1251':
       $my_encoding = 'cp1251';
       break;
 
-   default:  
+   default:
       $my_encoding = 'latin1';
-      break; 
-  }      
+      break;
+  }
 
-return $my_encoding;
+  //set character set -- 1
+  if(! mysql_query("SET NAMES '".$my_encoding."'", $database_connection ) ) {
+    error("Database error", "Not able to set ".$my_encoding." client encoding" );
+  }
+
+  //set character set -- 2
+  if(! mysql_query("SET CHARACTER SET ".$my_encoding, $database_connection ) ) {
+    error("Database error", "Not able to set CHARACTER SET : ".$my_encoding );
+  }
+
+  return true;
 }
 
 ?>
