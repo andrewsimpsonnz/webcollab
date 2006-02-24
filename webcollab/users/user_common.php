@@ -45,25 +45,19 @@ function user_locale($locale) {
   //get list of languages
   include_once(BASE.'lang/lang_list.php' );
 
-  //language list
-  $selection = array_keys($lang_list);
-
-  //initialise array with null values
-  for( $i=0 ; $i < 20 ; ++$i ) {
-    $s[$i] = "";
-  }
-
-  //highlight current language
-  $selected = array_search($locale, $selection );
-  $s[$selected] = " selected=\"selected\"";
-
   //start menu box
   $content .= "<tr><td>Language:</td><td><select name=\"locale\">\n";
-  $i = 0;
 
-  foreach($selection as $var ) {
-    $content .= "<option value=\"".$var."\" ".$s[$i].">".$lang_list[$var]."</option>\n";
-    ++$i;
+  foreach($lang_list as $key => $value ) {
+
+    $content .= "<option value=\"".$key."\" ";
+
+    //highlight current language
+    if($locale == $key) {
+      $content .= " selected=\"selected\"";
+    }
+
+    $content .= ">".$value."</option>\n";
   }
 
   $content .= "</select></td></tr>\n";
@@ -83,10 +77,7 @@ function user_locale_check($locale ) {
   //get list of languages
   include_once(BASE.'lang/lang_list.php' );
 
-  //language list
-  $available_lang = array_keys($lang_list);
-
-  if(array_search($locale, $available_lang ) === false ) {
+  if(! isset($lang_list[$locale ] ) ) {
     warning("User submit", "Language file ".$locale." does not exist" );
   }
 
