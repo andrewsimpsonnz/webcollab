@@ -156,8 +156,8 @@ CREATE TABLE config (
 	task_order VARCHAR(50)
 );
 
-CREATE TABLE login_attempt ( 
-	name VARCHAR(100) NOT NULL,                                               
+CREATE TABLE login_attempt (
+	name VARCHAR(100) NOT NULL,
 	ip VARCHAR(100) NOT NULL,
 	last_attempt TIMESTAMP NOT NULL
 );

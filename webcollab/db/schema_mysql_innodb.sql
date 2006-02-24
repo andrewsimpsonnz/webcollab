@@ -166,7 +166,7 @@ TYPE = InnoDB;
 
 
 CREATE TABLE login_attempt ( 
-	name VARCHAR(100) NOT NULL,                                               
+	name VARCHAR(100) NOT NULL,
 	ip VARCHAR(100) NOT NULL,
 	last_attempt TIMESTAMP NOT NULL
 )
