@@ -41,24 +41,15 @@ $usergroup_info =   "<ul><li>If you delete a usergroup all the related private f
 $user_info      =    "左のメニューから操作を選択してください。<br /><br />".
                       "Some quick hints:<br />".
                       "<ul>".
-                      //**
                       "<li>Private users can only be seen by members of the same usergroup.</li>\n".
                       "<li>Users have two stages of deleting, the second one is permanent.</li>\n".
                       "<li>A deleted user loses all his tasks but not his forum messages.</li>\n".
                       "<li>A permanently deleted user loses all.</li>\n".
-                      //"<li>You cannot permanently delete a user that still has forum items.</li>\n".
                       "<li>A deleted user keeps the record of tasks that they have seen, and will continue with that list upon revival.</li>\n".
                       "<li>ALL actions performed on a user will be emailed to the user.</li>\n".
                       "<li>Passwords are encrypted in the database. You can only set a new one.</li>\n".
                       "<li>Passwords are mailed only once to the user when set, so be careful where you mail them!</li>\n".
                       "<li>Users can edit themselves without admins knowing - this will save you time (and spam)</li>\n".
                       "</ul>\n";
-
-$calendar_key    =  "<i>メインメニューに戻る</i></a>]</b><br />\n".
-                      "<p><b><span class=\"underline\">カレンダーに鍵</span></b><br /><br />\n".
-                      "<span class=\"blue\">プロジェクト (未完了タスク)</span><br />\n".
-                      "<span class=\"green\"><span class=\"underline\">プロジェクト </span>(すべての完了済みタスク)</span><br />\n".
-                      "<span class=\"red\">タスク (未完了)</span><br />\n".
-                      "<span class=\"green\">タスク (完了済み)</span><br /></p>\n";
 
 ?>

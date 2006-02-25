@@ -30,6 +30,9 @@
 
 */
 
+//required language encodings
+define('CHARACTER_SET', 'UTF-8' );
+
 //dates
 $month_array = array (NULL, 'Ιαν', 'Φεβ', 'Μαρ', 'Απρ', 'Μαϊ', 'Ιουν', 'Ιουλ', 'Αυγ', 'Σεπ', 'Οκτ', 'Νοε', 'Δεκ' );
 $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ' );

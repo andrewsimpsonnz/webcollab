@@ -28,8 +28,8 @@
 
   Maintainer:
 
-  
   NOTE: This file is written in UTF-8 character set
+
 
 */
 $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y g:i' );
@@ -99,10 +99,10 @@ $delete_list =  "Proyecto: %1\$s\n".
 $title_welcome      = "Bievenido a ".ABBR_MANAGER_NAME;
 $email_welcome      = "Hola,\n\nBienvenido a: ".MANAGER_NAME." el  ".$email_date.".\n\n".
 			"Estas son unas notas para usuarios nuevos, la aplicacion todavia no esta bien traducida.\n\n".
-			"Antes de nada, est&aacute; es una herramienta de gestion de proyectos, la pantalla principal le mostrara los proyectos actualmente disponibles. ".
+			"Antes de nada, está es una herramienta de gestion de proyectos, la pantalla principal le mostrara los proyectos actualmente disponibles. ".
 			"Si hace click en uno de los proyectos se encontrara ud mismo en la parte de tareas. Aqui es donde el trabajo comienza..\n\n".
 			"Cada item que ud envia o tarea que edita sera mostrada los otros usuarios como 'nueva' o 'actualizada'. Esto tambien funciona en viceversa y ".
-			"lo habilita para enfocar rapidamente donde est&aacute; la actividad.\n\n".
+			"lo habilita para enfocar rapidamente donde está la actividad.\n\n".
 			"Ud tambien puede hacerse cargo o tomar propiedad de tareas y se encontrara habilitado para editar. Tambien recibira los envios al foro. ".
 			"Con el avance se su trabajo por favor edite el texto de sus tareas y el estado de tal manera que todos puedan mantener un seguimiento de su progreso. ".
 			"\n\nEspero que la herramienta sea de su agrado. Envie email a ".EMAIL_ADMIN." si tiene alguna duda.\n\n --Buena suerte!\n\n".
@@ -138,7 +138,7 @@ $title_revive       = ABBR_MANAGER_NAME.": Cuenta reactivada";
 $email_revive       = "Hola,\n\n ".MANAGER_NAME." le informa que su cuenta ha sido reactivada el  ".$email_date.".\n\n".
 			"Loginname: %1\$s\n".
 			"Username:  %2\$s\n\n".
-			"No podemos enviarle su clave porque est&aacute; encriptada. \n\n".
+			"No podemos enviarle su clave porque está encriptada. \n\n".
 			"Si olvido su password envie un email ".EMAIL_ADMIN." para solicitar un nuevo password.";
 
 

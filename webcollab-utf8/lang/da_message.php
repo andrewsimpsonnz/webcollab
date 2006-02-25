@@ -37,6 +37,9 @@
 
 */
 
+//required language encodings
+define('CHARACTER_SET', 'UTF-8' );
+
 //dates
 $month_array = array ( NULL, "Jan", "Feb", "Mar", "Apr", "Maj", "Juni", "Juli", "Aug", "Sep", "Okt", "Nov", "Dec" );
 $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');

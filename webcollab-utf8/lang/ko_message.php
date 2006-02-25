@@ -29,6 +29,9 @@
 
 */
 
+//required language encodings
+define('CHARACTER_SET', 'UTF-8' );
+
 //dates
 $month_array = array (NULL, "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" );
 $week_array = array('일', '월', '화', '수', '목', '금', '토' );

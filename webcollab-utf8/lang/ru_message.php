@@ -14,6 +14,8 @@
   NOTE: This file is written in UTF-8 character set
 
 */
+//required language encodings
+define('CHARACTER_SET', 'UTF-8' );
 
 //dates
 $month_array = array (NULL, 'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек' );

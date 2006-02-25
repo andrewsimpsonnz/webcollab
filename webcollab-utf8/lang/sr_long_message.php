@@ -43,24 +43,15 @@ $usergroup_info =   "<ul><li>Ukoliko obrišete korisniču grupu, sve poruke na p
 $user_info      =    "Molim vas odaberete vašu akciju sa menija na levoj strani.<br /><br />".
                       "Nekoliko jednostavnih saveta:<br />".
                       "<ul>".
-                      //**
                       "<li>Privatne korisnike mogu videti samo članovi koji su u istoj korisničkoj grupi.</li>\n".
                       "<li>Postoje dva stadijuma brisanja korisnika. Drugi stadijum brisanja je trajan.</li>\n".
                       "<li>Obrisan korisnik gubi sve svoje zadatke, ali ne i svoje poruke na forumima.</li>\n".
                       "<li>Trajno obrisan korisnik gubi sve.</li>\n".
-                      //"<li>You cannot permanently delete a user that still has forum items.</li>\n".
                       "<li>Obrisani korisnik zadržava popis zadataka koje je video, i taj popis ponovo koristi nakon 'oživljavnja'.</li>\n".
                       "<li>Informacije o SVIM akcijama izvršenim nad korisničkim nalogom će biti poslate vlasniku tog naloga u vidu e-pošte.</li>\n".
                       "<li>Šifre su nalaze u kriptovanom obliku u bazi podataka. Jedino možete postaviti novu šifru.</li>\n".
                       "<li>Šifre se samo jednom šalju korisniku preko e-pošte, pa budite oprezni gde ih šaljete!</li>\n".
                       "<li>Korisnici mogu sami da menjaju svoje podatke bez znanja administratora - ovo će vam uštedeti vreme (i spem)</li>\n".
                       "</ul>\n";
-
-$calendar_key    =  "<i>Nazad u glavni meni</i></a>]</b><br />\n".
-                      "<p><b><span class=\"underline\">Legenda kalendara</span></b><br /><br />\n".
-                      "<span class=\"blue\">Projekat (sa nezavršenim zadacima)</span><br />\n".
-                      "<span class=\"green\"><span class=\"underline\">Projekat </span>(svi zadaci završeni)</span><br />\n".
-                      "<span class=\"red\">Zadatak (nezavršen)</span><br />\n".
-                      "<span class=\"green\">Zadatak (završen)</span><br /></p>\n";
 
 ?>

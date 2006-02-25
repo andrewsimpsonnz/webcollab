@@ -31,6 +31,9 @@
 
 */
 
+//required language encodings
+define('CHARACTER_SET', 'UTF-8' );
+
 //dates
 $month_array = array ( NULL, "Gen", "Feb", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Dec" );
 $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');

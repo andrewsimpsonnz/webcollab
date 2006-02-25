@@ -50,19 +50,11 @@ $user_info      =    "Merci de sélectionner votre activité dans le menu à gau
                       "<li>Un utilisateur est effaçé en deux étapes, la seconde est permanente.</li>\n".
                       "<li>Un utilisateur effacé perd toutes ses tâches mais ses contributions aux forums sont conservées.</li>\n".
                       "<li>Un utilisateur détruit de manière permanente efface tout.</li>\n".
-                      //"<li>Vous ne pouvez pas effaçer de manière permanente un utilisateur qui dispose de contributions dans les forums.</li>\n".
                       "<li>Un utilisateur effacé conserve une trace de ses tâches sous forme de liste et peut les utiliser jusqu'à ce que cette liste soit vide.</li>\n".
                       "<li>TOUTE les actions effectuées sur un utilisateur lui sont confirmées par email.</li>\n".
                       "<li>Les mot de passes sont cryptés. On ne peut qu'en affecter un nouveau.</li>\n".
                       "<li>Les mot de passes sont envoyés par email seulement une fois. Merci d'être prudent sur leur lieu de stockage!</li>\n".
                       "<li>Un utilisateur peut s'éditer lui même sans que l'administrateur ne soit mis au courrant, cela économise du temps (et des emails)</li>\n".
                       "</ul>\n";
-
-$calendar_key    = "<i>Retour au menu principal</i></a>]</b><br />\n".
-                      "<p><b><span class=\"underline\">Légende du Calendrier</span></b><br /><br />\n".
-	              "<span class=\"blue\">Projet (avec tâches en cours)</span><br />\n".
-                      "<span class=\"green\"><span class=\"underline\">Projet </span>(toutes les tâches sont finies)</span><br />\n".
-                      "<span class=\"red\">tâche (en cours)</span><br />\n".
-	              "<span class=\"green\">tâche (finie)</span></p>\n";
 
 ?>

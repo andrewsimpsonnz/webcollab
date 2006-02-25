@@ -27,9 +27,9 @@
   Trnaslation: Daniel Lujan editado por Alberto Vizcaíno
 
   Maintainer: 
-  
+
   NOTE: This file is written in UTF-8 character set
-   
+
 */
 
 
@@ -39,7 +39,7 @@ $taskgroup_info = "<ul><li>Si elimina un grupo de tareas todas las tareas de su 
   "<li>Puede cambiar el nombre de la categoria sin interferir con las tareas.</li>\n".
   "<li>Dos grupos de tareas no pueden tener el mismo nombre.</li></ul>\n";
 
-$usergroup_info = "<ul><li>Si elimina un grupo de usuarios todos los env&iacute;os privados al foro relacionados seran eliminados tambien.</li>\n".
+$usergroup_info = "<ul><li>Si elimina un grupo de usuarios todos los envíos privados al foro relacionados seran eliminados tambien.</li>\n".
   "<li>Puede modificar el nombre del grupo de usuario sin que afecte a sus usuarios.</li>\n".
   "<li>Dos grupos de usuarios no pueden tener el mismo nombre.</li></ul>\n";
 
@@ -51,19 +51,11 @@ $user_info      = "Seleccione su accion desde el menu de la izquierda.<br /><br 
   "<li>Los usuarios se eliminan en dos etapas, la segunda es permanente.</li>\n".
   "<li>Un usuario eliminado pierde todas sus tareas pero no sus mensajes en el foro.</li>\n".
   "<li>Un usuario borrado de forma permanente pierde todo.</li>\n".
-  //"<li>No puede eliminar un usuario de modo permanente si este tiene itemsm en el foro.</li>\n".
   "<li>Un usuario borrado mantiene los registros de sus tareas que ha revisado, y continuara con estas despues de ser reactivado.</li>\n".
   "<li>TODAS las acciones ejecutadas sobre un usuario seran informadas al usuario por email.</li>\n".
   "<li>Los Passwords son encriptados en la base de datos. Solo se pueden asignar nuevos Passwords.</li>\n".
   "<li>Los Passwords son enviados por email al usuario solo una vez cuando se registra, sea cuidadoso cuando envia estos mails!</li>\n".
   "<li>Los usuarios pueden editar su cuenta sin conocimiento del administrador, esto ayuda a la gestion</li>\n".
   "</ul>\n";
-
-$calendar_key    = "<i>Volver al Menu Principal</i></a>]</b><br />\n".
-	"<p><b><span class=\"underline\">Claves (colores) para Calendario</span></b><br /><br />\n".
-	"<span class=\"blue\">Proyecto (con tareas incompletas)</span><br />\n".
-	"<span class=\"green\"><span class=\"underline\">Proyecto </span>(todas las tareas completas)</span><br />\n".
-	"<span class=\"red\">Tarea (no completada)</span><br />\n".
-	"<span class=\"green\">Tarea (completada)</span><br />\n";
 
 ?>

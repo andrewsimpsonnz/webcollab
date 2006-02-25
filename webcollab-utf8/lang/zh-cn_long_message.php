@@ -41,12 +41,10 @@ $usergroup_info =   "<ul><li>如果你删除一个使用者组别，所有相关
 $user_info      =    "请在左手面的选单选择你的行动<br /><br />".
                       "一些快速提示:<br />".
                       "<ul>".
-                      //**
                       "<li>私人使用者只可以被同一使用者组别的成员看见</li>\n".
                       "<li>删除使用者有两个程度，第二个是永久的</li>\n".
                       "<li>一个被删除的使用者会失去他的所有工作但不会失去他的讨论区信息</li>\n".
                       "<li>一个被永久删除的使用者会失去所有</li>\n".
-                      //"<li>You cannot permanently delete a user that still has forum items.</li>\n".
                       //"<li>A deleted user keeps the record of tasks that they have seen, and will continue with that list upon revival.</li>\n".
 					  //一个被删除的使用者所查阅的工作纪录会被保存，直到他被 revival
 					  "<li>一个被删除的使用者所查阅的工作纪录会被保存，直到他被 revival</li>\n".
@@ -55,12 +53,5 @@ $user_info      =    "请在左手面的选单选择你的行动<br /><br />".
                       "<li>密码只会于设定时被email 至使用者一次，所以请小心你email 了密码至那里!</li>\n".
                       "<li>使用者可以更改自己的资料--这样可以节省你的时间(和垃圾)</li>\n".
                       "</ul>\n";
-
-$calendar_key    =  "<i>返回主选单</i></a>]</b><br />\n".
-                      "<p><b><span class=\"underline\">月历的索引</span></b><br /><br />\n".
-                      "<span class=\"blue\">专案 (有未完成的工作)</span><br />\n".
-                      "<span class=\"green\"><span class=\"underline\">专案 </span>(所有工作已被完成)</span><br />\n".
-                      "<span class=\"red\">工作 (未完成的)</span><br />\n".
-                      "<span class=\"green\">工作 (已完成的)</span><br /></p>\n";
 
 ?>

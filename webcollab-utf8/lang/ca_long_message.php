@@ -50,19 +50,11 @@ $user_info      = "Seleccioni l'acció des del menú de l'esquerra.<br /><br />"
   "<li>Els usuaris s'eliminen en dues etapes, la segona és permanent.</li>\n".
   "<li>Un usuari eliminat perd totes les seves tasques però no els seus missatges del fòrum.</li>\n".
   "<li>Un usuari esborrat de forma permanent ho perd tot.</li>\n".
-  //"<li>No es pot eliminar un usuari permanentment si aquest té items al fòrum.</li>\n".
   "<li>Un usuari esborrat manté els registres de les seves tasques que ha revisat, i continuarà amb aquestes després de ser reactivat.</li>\n".
   "<li>TOTES les accions executades sobre un usuari seran informades a l'usuari per email.</li>\n".
   "<li>Les claus estan encriptades a la base de dades. Només pot establir un de nou.</li>\n".
   "<li>Les claus són enviades per email a l'usuari només una vegada quan l'usuari el registre, vagi amb cura quan envii aquests emails!</li>\n".
   "<li>Els usuaris poden editar el seu compte sense coneixement de l'administrador, això estalviarà els seu temps d'administració</li>\n".
   "</ul>\n";
-
-$calendar_key    = "<i>Retornar al Menú Principal</i></a>]</b><br />\n".
-        "<p><b><span class=\"underline\">Claus (colors) per al Calendari</span></b><br /><br />\n".
-        "<span class=\"blue\">Projecte (amb tasques incomplertes)</span><br />\n".
-        "<span class=\"green\"><span class=\"underline\">Projecte </span>(totes les tasques complertes)</span><br />\n".
-        "<span class=\"red\">Tasca (no completada)</span><br />\n".
-        "<span class=\"green\">Tasca (completada)</span><br /></p>\n";
 
 ?>

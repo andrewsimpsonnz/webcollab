@@ -26,35 +26,35 @@
 
   Translation: Eduardo Alvim <eduardoalvim at terra.com.br>
 
+  NOTE: This file is written in UTF-8 character set
+
 */
 
-$taskgroup_info =   "<ul><li>Se voc&ecirc; excluir um grupo de tarefas, todas as tarefas pertencentes a ele se tornar&atilde;o n&atilde;o-categorizadas..</li>\n".
-                      "<li>Voc&ecirc; pode alterar o nome de uma categoria sem interferir nas tarefas.</li>\n".
-                      "<li>Dois grupos de tarefas n&atilde;o podem ter nomes iguais.</li></ul>\n";
+$taskgroup_info =   "<ul><li>Se você excluir um grupo de tarefas, todas as tarefas pertencentes a ele se tornarão não-categorizadas..</li>\n".
+                      "<li>Você pode alterar o nome de uma categoria sem interferir nas tarefas.</li>\n".
+                      "<li>Dois grupos de tarefas não podem ter nomes iguais.</li></ul>\n";
 
-$usergroup_info =   "<ul><li>Se voc&ecirc; excluir um grupo de usu&aacute;rios, todas as mensagens particulares relacionadas a ele existentes nos f&oacute;runs tamb&eacute;m o ser&atilde;o.</li>\n".
-                      "<li>Grupos privativos de usu&aacute;rios s&oacute; podem ser enxergados por seus membros.</li>\n".
-                      "<li>Voc&ecirc; pode alterar o nome de um grupo de usu&aacute;rios sem interferir em seus membros.</li>\n".
-                      "<li>Dois grupos de usu&aacute;rios n&atilde;o podem ter nomes iguais.</li></ul>\n";
+$usergroup_info =   "<ul><li>Se você excluir um grupo de usuários, todas as mensagens particulares relacionadas a ele existentes nos fóruns também o serão.</li>\n".
+                      "<li>Grupos privativos de usuários só podem ser enxergados por seus membros.</li>\n".
+                      "<li>Você pode alterar o nome de um grupo de usuários sem interferir em seus membros.</li>\n".
+                      "<li>Dois grupos de usuários não podem ter nomes iguais.</li></ul>\n";
 
-$user_info      =    "Por favor, escolha o que fazer usando o menu &agrave; esquerda.<br /><br />".
-                      "Algumas dicas r&aacute;pidas:<br />".
+$user_info      =    "Por favor, escolha o que fazer usando o menu à esquerda.<br /><br />".
+                      "Algumas dicas rápidas:<br />".
                       "<ul>".
-                      //**
-                      "<li>Usu&aacute;rios privativos s&oacute; podem ser enxergados por membros do mesmo grupo de usu&aacute;rios.</li>\n".
-                      "<li>A exclus&atilde;o de usu&aacute;rios possui dois est&aacute;gios, sendo o segundo caracterizado por seu car&aacute;ter permanente.</li>\n".
-                      "<li>Um usu&aacute;rio que &eacute; exclu&iacute;do perde todas as suas tarefas, mas mant&eacute;m suas mensagens nos f&oacute;runs.</li>\n".
-                      "<li>Um usu&aacute;rio que &eacute; permanentemente exclu&iacute;do perde tudo.</li>\n".
-                      //"<li>Voc&ecirc; n&atilde;o pode excluir permanentemente um usu&aacute;rio que ainda possua ítens nos fóruns.</li>\n".
-                      "<li>Um usu&aacute;rio exclu&iacute;do mant&eacute;m o registro de suas tarefas j&aacute; realizadas, continuando com esta lista at&eacute; ser ressucitado.</li>\n".
-                      "<li>TODAS as a&ccedil;&otilde;es realizadas por um usu&aacute;rio ser&atilde;o notificadas ao pr&oacute;prio via e-mail.</li>\n".
-                      "<li>As senhas s&atilde;o encriptografadas no banco de dados. Voc&ecirc; s&oacute; pode registrar uma nova.</li>\n".
-                      "<li>As senhas s&oacute; s&atilde;o enviadas via e-mail uma &uacute;nica vez aos usu&aacute;rios, no momento em que s&atilde;o registradas. Portanto as envie para um endere&ccedil;o seguro!</li>\n".
-                      "<li>Os usu&aacute;rios podem se auto-editarem sem o conhecimento da administra&ccedil;&atilde;o - isso ir&aacute; economizar seu tempo</li>\n".
+                      "<li>Usuários privativos só podem ser enxergados por membros do mesmo grupo de usuários.</li>\n".
+                      "<li>A exclusão de usuários possui dois estágios, sendo o segundo caracterizado por seu caráter permanente.</li>\n".
+                      "<li>Um usuário que é excluído perde todas as suas tarefas, mas mantém suas mensagens nos fóruns.</li>\n".
+                      "<li>Um usuário que é permanentemente excluído perde tudo.</li>\n".
+                      "<li>Um usuário excluído mantém o registro de suas tarefas já realizadas, continuando com esta lista até ser ressucitado.</li>\n".
+                      "<li>TODAS as ações realizadas por um usuário serão notificadas ao próprio via e-mail.</li>\n".
+                      "<li>As senhas são encriptografadas no banco de dados. Você só pode registrar uma nova.</li>\n".
+                      "<li>As senhas só são enviadas via e-mail uma única vez aos usuários, no momento em que são registradas. Portanto as envie para um endereço seguro!</li>\n".
+                      "<li>Os usuários podem se auto-editarem sem o conhecimento da administração - isso irá economizar seu tempo</li>\n".
                       "</ul>\n";
 
 $calendar_key    =  "<i>Retornar ao Menu Principal</i></a>]</b><br />\n".
-                      "<p><b><span class=\"underline\">Legenda para o Calend&aacute;rio</span></b><br /><br />\n".
+                      "<p><b><span class=\"underline\">Legenda para o Calendário</span></b><br /><br />\n".
                       "<span class=\"blue\">Projeto (com tarefas incompletas)</span><br />\n".
                       "<span class=\"green\"><span class=\"underline\">Projeto </span>(todas as tarefas completas)</span><br />\n".
                       "<span class=\"red\">Tarefa (incompleta)</span><br />\n".

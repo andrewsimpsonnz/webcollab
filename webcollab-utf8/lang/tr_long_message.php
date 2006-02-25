@@ -42,24 +42,15 @@ $usergroup_info =   "<ul><li>Eğer bir kullanıcı grubunu silerseniz onunla ilg
 $user_info      =    "Lütfen soldaki menüden yapmak istediğiniz şeyi seçin.<br /><br />".
                       "Bazı çabuk ipuçları:<br />".
                       "<ul>".
-                      //**
                       "<li>Özel kullanıcılar sadece aynı grubun üyeleri tarafından görülebilirler.</li>\n".
                       "<li>Silme işlemi kullanıcılar için iki aşamalıdır. İkincisi kalıcıdır.</li>\n".
                       "<li>Silinen bir kullanıcı tüm görevlerini kaybeder fakat forum mesajları kalır.</li>\n".
                       "<li>Kalıcı olarak silinen bir kullanıcı her şeyini kaybeder.</li>\n".
-                      //"<li>Forumda hala bir şeyleri kalmış olan bir kullanıcıyı kalıcı olarak silemezsiniz.</li>\n".
                       "<li>Silinen bir kullanıcının görülmüş olan görev kayıtları kalır, tekrar başlarsa bu listeyle devam eder.</li>\n".
                       "<li>Bir kullanıcıyla ilgili TÜM eylemler kullanıcıya epostayla gönderilir.</li>\n".
                       "<li>Şifreler veritabanında şifrelenmiş durumdadır. Yeni bir şifre yaratmanız gerekiyor.</li>\n".
                       "<li>Şifreler koyuldukları zaman kullanıcıya epostayla sadece bir kez gönderilmektedir. Bu nedenle onları gönderirken dikkatli olun!</li>\n".
                       "<li>Kullanıcılar yöneticinin haberi olmadan kendi bilgilerini değiştirebilirler. Bu size zaman kazandırır ve spam'i engeller.</li>\n".
                       "</ul>\n";
-
-$calendar_key    =  "<i>Ana Menüye Dön</i></a>]</b><br />\n".
-                      "<p><b><span class=\"underline\">Renklerin anlamları</span></b><br /><br />\n".
-                      "<span class=\"blue\">Proje (tamamlanmamış görevler olan)</span><br />\n".
-                      "<span class=\"green\"><span class=\"underline\">Proje </span>(tüm görevleri tamamlanmış olan)</span><br />\n".
-                      "<span class=\"red\">Görev (tamamlanmamış)</span><br />\n".
-                      "<span class=\"green\">Görev (tamamlanmış)</span><br /></p>\n";
 
 ?>

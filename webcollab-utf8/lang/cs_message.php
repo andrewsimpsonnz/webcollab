@@ -30,6 +30,9 @@
 
 */
 
+//required language encodings
+define('CHARACTER_SET', 'UTF-8' );
+
 //dates
 $month_array = array (NULL, 'Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Lisopad', 'Prosinec' );
 $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );

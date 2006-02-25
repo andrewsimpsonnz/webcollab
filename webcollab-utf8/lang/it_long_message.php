@@ -26,11 +26,13 @@
 
   Maintainer: Raffaele Franzese <r.franzese@collaltosabino.net>
 
+  NOTE: This file is written in UTF-8 character set
+
 */
 
 
-$taskgroup_info =   "<ul><li>Se viene cancellato un taskgroup tutte le attivit&agrave; ad esso relative saranno poste come Non categorizzate.</li>\n".
-                      "<li>E' possibile modificare il nome di una categoria senza interferire con le attivit&agrave; ad essa associate.</li>\n".
+$taskgroup_info =   "<ul><li>Se viene cancellato un taskgroup tutte le attività ad esso relative saranno poste come Non categorizzate.</li>\n".
+                      "<li>E' possibile modificare il nome di una categoria senza interferire con le attività ad essa associate.</li>\n".
                       "<li>Due taskgroups non possono avere lo stesso nome.</li></ul>\n";
 
 $usergroup_info =   "<ul><li>Se viene cancellato uno usergroup tutti i relativi messaggi del forum privato saranno cancellati.</li>\n".
@@ -42,24 +44,15 @@ $usergroup_info =   "<ul><li>Se viene cancellato uno usergroup tutti i relativi 
 $user_info      =   "Seleziona un'azione dal menu di sinistra.<br /><br />".
                       "Alcune informazioni:<br />".
                       "<ul>".
-                      //**
                       "<li>Gli utenti privati possono essere visualizzati solo dagli utenti dello stesso usergroup.</li>\n".
-                      "<li>Gli utenti hanno due livelli di cancellazione, il secondo &egrave; definitivo.</li>\n".
+                      "<li>Gli utenti hanno due livelli di cancellazione, il secondo è definitivo.</li>\n".
                       "<li>Un utente cancellato perde tutti i suoi tasks ma non i messaggi del forum.</li>\n".
                       "<li>Un utente cancellato definitivamente perde tutto.</li>\n".
-                      //"<li>Non pu&ograve; essere cancellato definitivamente un utente che ha forum items.</li>\n".
-                      "<li>Un utente cancellato mantiene la registrazione delle attivit&agrave; che ha visualizzato e proceder� nel lavoro con questa lista dopo il suo ripristino.</li>\n".
+                      "<li>Un utente cancellato mantiene la registrazione delle attività che ha visualizzato e procederà nel lavoro con questa lista dopo il suo ripristino.</li>\n".
                       "<li>Tutte le azioni effettuate dall'utente sono inviate per email all'utente.</li>\n".
                       "<li>Tutte le Passwords sono crittate nel database. E' possibile solo inserirne una nuova.</li>\n".
                       "<li>Le Passwords sono inviate via email all'utente solo quando sono create!</li>\n".
                       "<li>Gli utenti possono modificare le proprie informazioni autonomamente</li>\n".
                       "</ul>\n";
-
-$calendar_key    =  "<i>Torna al Menu Principale</i></a>]</b><br />\n".
-                      "<p><b><span class=\"underline\">Key to Calendar</span></b><br /><br />\n".
-                      "<span class=\"blue\">Progetto (con attivit&agrave; non completate)</span><br />\n".
-                      "<span class=\"green\"><span class=\"underline\">Progetto </span>(attivit&agrave; completate)</span><br />\n".
-                      "<span class=\"red\">Attivit&agrave; (Non completate)</span><br />\n".
-                      "<span class=\"green\">Attivit&agrave; (completate)</span><br />\n";
 
 ?>

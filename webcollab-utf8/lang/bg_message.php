@@ -30,6 +30,9 @@
 
 */
 
+//required language encodings
+define('CHARACTER_SET', 'UTF-8' );
+
 //dates
 $month_array                              = array (NULL, "Яну", "Фев", "Мар", "Апр", "Май", "Юни", "Юли", "Авг", "Сеп", "Окт", "Ное", "Дек" );
 $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Чет', 'Пет', 'Съб' );

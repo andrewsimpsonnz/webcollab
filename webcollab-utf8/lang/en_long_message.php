@@ -46,19 +46,11 @@ $user_info      =    "Please select your action from the menu on the left.<br />
                       "<li>Users have two stages of deleting, the second one is permanent.</li>\n".
                       "<li>A deleted user loses all his tasks but not his forum messages.</li>\n".
                       "<li>A permanently deleted user loses all.</li>\n".
-                      //"<li>You cannot permanently delete a user that still has forum items.</li>\n".
                       "<li>A deleted user keeps the record of tasks that they have seen, and will continue with that list upon revival.</li>\n".
                       "<li>ALL actions performed on a user will be emailed to the user.</li>\n".
                       "<li>Passwords are encrypted in the database. You can only set a new one.</li>\n".
                       "<li>Passwords are mailed only once to the user when set, so be careful where you mail them!</li>\n".
                       "<li>Users can edit themselves without admins knowing - this will save you time (and spam)</li>\n".
                       "</ul>\n";
-
-$calendar_key    =  "<i>Return to Main Menu</i></a>]</b><br />\n".
-                      "<p><b><span class=\"underline\">Key to Calendar</span></b><br /><br />\n".
-                      "<span class=\"blue\">Project (with uncompleted tasks)</span><br />\n".
-                      "<span class=\"green\"><span class=\"underline\">Project </span>(all tasks completed)</span><br />\n".
-                      "<span class=\"red\">Task (not completed)</span><br />\n".
-                      "<span class=\"green\">Task (completed)</span><br /></p>\n";
 
 ?>

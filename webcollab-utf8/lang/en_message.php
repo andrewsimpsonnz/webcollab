@@ -27,12 +27,15 @@
 
 */
 
+//required language encodings
+define('CHARACTER_SET', 'UTF-8' );
+
 //dates
 $month_array = array (NULL, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' );
 $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
 
 //task states
- 
+
  //priorities
     $task_state['dontdo']               = "Don't do";
     $task_state['low']                  = "Low";
@@ -52,7 +55,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $task_state['planned_project']      = "Planned project (not active)";
     $task_state['no_deadline_project']  = "No deadline set";
     $task_state['active_project']       = "Active project";
-    
+
 //common items
     $lang['description']                = "Description";
     $lang['name']                       = "Name";
@@ -80,7 +83,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['error']                      = "Error";
     $lang['no_login']                   = "Access denied; incorrect login or password";
     $lang['redirect_sprt']              = "You will automatically return to Login after a %d second delay";
-    $lang['login_now']                  = "Please click here to return to Login now";   
+    $lang['login_now']                  = "Please click here to return to Login now";
     $lang['please_login']               = "Please log in";
     $lang['go']                         = "Go!";
 
@@ -102,11 +105,11 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['set_email_owner']            = "Always email owner with changes?";
     $lang['set_email_group']            = "Always email usergroup with changes?";
     $lang['project_listing_order']      = "Project listing order";
-    $lang['task_listing_order']         = "Task listing order"; 
+    $lang['task_listing_order']         = "Task listing order";
     $lang['configuration']              = "Configuration";
 
 //archive
-    $lang['archived_projects']          = "Archived Projects";    
+    $lang['archived_projects']          = "Archived Projects";
 
 //contacts
     $lang['firstname']                  = "Firstname:";
@@ -186,7 +189,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['calendar']                   = "Calendar";
     $lang['log_out']                    = "Log out";
     $lang['main_menu']                  = "Main menu";
-    $lang['archive']                    = "Archive";   
+    $lang['archive']                    = "Archive";
     $lang['user_homepage_sprt']         = "%s's homepage";
     $lang['missing_field_javascript']   = "Please enter a value for the missing field";
     $lang['invalid_date_javascript']    = "Please choose a valid calendar date";
@@ -235,7 +238,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['email']                      = "E-mail";
     $lang['admin']                      = "Admin";
     $lang['private_user']               = "Private user";
-    $lang['normal_user']                = "Normal user"; 
+    $lang['normal_user']                = "Normal user";
     $lang['is_admin']                   = "Is an admin?";
     $lang['is_guest']                   = "Is a guest?";
     $lang['guest']                      = "Guest user";
@@ -341,7 +344,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['javascript_archive_project'] = "This will archive project %s.  Are you sure?";
     $lang['archive_project']            = "Archive project";
     $lang['task_navigation']            = "Task navigation";
-    $lang['new_task']                   = "New task";    
+    $lang['new_task']                   = "New task";
     $lang['no_projects']                = "There are no projects to view";
     $lang['show_all_projects']          = "Show all projects";
     $lang['show_active_projects']       = "Show only active projects";

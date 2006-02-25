@@ -47,7 +47,6 @@ $user_info      =    "請在左手面的選單選擇你的行動<br /><br />".
                       "<li>刪除使用者有兩個程度，第二個是永久的</li>\n".
                       "<li>一個被刪除的使用者會失去他的所有工作但不會失去他的討論區信息</li>\n".
                       "<li>一個被永久刪除的使用者會失去所有</li>\n".
-                      //"<li>You cannot permanently delete a user that still has forum items.</li>\n".
                       //"<li>A deleted user keeps the record of tasks that they have seen, and will continue with that list upon revival.</li>\n".
 					  //一個被刪除的使用者所查閱的工作紀錄會被保存，直到他被 revival
 					  "<li>一個被刪除的使用者所查閱的工作紀錄會被保存，直到他被復活</li>\n".
@@ -56,12 +55,5 @@ $user_info      =    "請在左手面的選單選擇你的行動<br /><br />".
                       "<li>密碼只會於設定時被email 至使用者一次，所以請小心你email 了密碼至那裏!</li>\n".
                       "<li>使用者可以更改自己的資料--這樣可以節省你的時間(和垃圾)</li>\n".
                       "</ul>\n";
-
-$calendar_key    =  "<i>返回主選單</i></a>]</b><br />\n".
-                      "<p><b><span class=\"underline\">月曆的索引</span></b><br /><br />\n".
-                      "<span class=\"blue\">專案 (有未完成的工作)</span><br />\n".
-                      "<span class=\"green\"><span class=\"underline\">專案 </span>(所有工作已被完成)</span><br />\n".
-                      "<span class=\"red\">工作 (未完成的)</span><br />\n".
-                      "<span class=\"green\">工作 (已完成的)</span><br /></p>\n";
 
 ?>

@@ -46,19 +46,11 @@ $user_info      =    "prosím zvolete akci z menu zobrazeného na levo.<br /><br
                       "<li>Uživatelé mají dva stupně smazání, druhý stupeň je trvalý.</li>\n".
                       "<li>Smazaný uživatel ztrátí všechny svoje úlohy, kromně zpráv ve fóru (Úlohy nebudou ztraceny, pouze nebudou mít vlastníka).</li>\n".
                       "<li>Trvale smazaný uživatel ztratí vše (Úlohy nebudou ztraceny, pouze nebudou mít vlastníka).</li>\n".
-                      //"<li>You cannot permanently delete a user that still has forum items.</li>\n".
                       "<li>Smazaný uživatel drží záznamy úloh, a muže po obnovení pokračovat v jejich plnění.</li>\n".
                       "<li>Veškeré změny budou odeslány také danému uživateli.</li>\n".
                       "<li>Hesla jsou zakryptována v databázi. Je možné pouze vytvořit nové heslo.</li>\n".
                       "<li>Hesla jsou poslány pouze když jsou zadány, buďte opatrný na jakou adresu je zasíláte!</li>\n".
                       "<li>Uživatelé mohou částečně měnit svoje nastavení bez znalostí administrace.</li>\n".
                       "</ul>\n";
-
-$calendar_key    =  "<i>Návrat do hlavní nabídky</i></a>]</b><br />\n".
-                      "<p><b><span class=\"underline\">Vysvětlivky ke kalendáři</span></b><br /><br />\n".
-                      "<span class=\"blue\">Projekt (s nedokončenými úkoly)</span><br />\n".
-                      "<span class=\"green\"><span class=\"underline\">Projekt </span>(s dokončenými úkoly)</span><br />\n".
-                      "<span class=\"red\">Úkol (nedokončen)</span><br />\n".
-                      "<span class=\"green\">Úkol (dokončen)</span><br /></p>\n";
 
 ?>

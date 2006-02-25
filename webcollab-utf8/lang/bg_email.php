@@ -26,7 +26,7 @@
 
   Maintainer: Stoyan Dimitrov <stoyan at adiumdesign dot com>
 
-    
+
   NOTE: This file is written in UTF-8 character set
 
 */
