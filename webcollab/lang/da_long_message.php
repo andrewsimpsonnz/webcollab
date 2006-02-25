@@ -4,8 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  This file created 2003 by Andrew Simpson
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -25,12 +24,12 @@
   Language files (long messages) for 'da' (Danish)
 
   Maintainer:
-  
-  
+
+
   Translation by Jens Thomsen
-    
+
   NOTE: This file is written in ISO-8859-1 character set
-    
+
 */
 
 
@@ -49,19 +48,11 @@ $user_info      =    "Vælg handling i menuen til venstre.<br /><br />".
                       "<li>Brugere har to trin ved sletning, det andet er permanent.</li>\n".
                       "<li>En slettet bruger mister alle sine opgaver, men ikke meddelelser i forum.</li>\n".
                       "<li>En permanent sletter bruger mister alt.</li>\n".
-                      //"<li>Du kan ikke slettet en bruger permanent, som stadig har emner i forum.</li>\n".
                       "<li>En slettet bruger beholder sit opgavearkiv, og vil fortsætte med det arkiv ved genaktivering.</li>\n".
                       "<li>ALLE handlinger udført på en bruger vil blive e-mailed til brugeren.</li>\n".
                       "<li>Password bliver kodet i databasen. Du kan kun vælge et nyt.</li>\n".
                       "<li>Passwords bliver kun mailet en gang til brugeren, når de vælges, så vær omhyggelig med, hvor de sendes til!</li>\n".
                       "<li>Brugere kan selv ændre info uden administrators viden - Det sparer dig tid og spam.</li>\n".
                       "</ul>\n";
-
-$calendar_key    =  "<i>Tilbage til hovedmenu</i></a>]</b><br />\n".
-                      "<p><b><span class=\"underline\">Knap til kalender</span></b><br /><br />\n".
-                      "<span class=\"blue\">Projekter (med uafsluttede opgaver).</span><br />\n".
-                      "<span class=\"green\"><span class=\"underline\">Projekt </span>(alle opgaver afsluttet.)</span><br />\n".
-                      "<span class=\"red\">Opgave (ikke afsluttet)</span><br />\n".
-                      "<span class=\"green\">Opgave (afsluttet)</span><br /></p>\n";
 
 ?>

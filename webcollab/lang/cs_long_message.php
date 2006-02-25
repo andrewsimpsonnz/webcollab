@@ -4,8 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  This file created 2003 by Andrew Simpson
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -23,7 +22,7 @@
   ---------
 
   Translation: Lukas Moravek <moravekl at gmail.com>
-  
+
 */
 
 
@@ -43,19 +42,11 @@ $user_info      =    "prosím zvolete akci z menu zobrazeného na levo.<br /><br /
                       "<li>U¾ivatelé mají dva stupnì smazání, druhý stupeò je trvalý.</li>\n".
                       "<li>Smazaný u¾ivatel ztrátí v¹echny svoje úlohy, kromnì zpráv ve fóru (Úlohy nebudou ztraceny, pouze nebudou mít vlastníka).</li>\n".
                       "<li>Trvale smazaný u¾ivatel ztratí v¹e (Úlohy nebudou ztraceny, pouze nebudou mít vlastníka).</li>\n".
-                      //"<li>You cannot permanently delete a user that still has forum items.</li>\n".
                       "<li>Smazaný u¾ivatel dr¾í záznamy úloh, a mu¾e po obnovení pokraèovat v jejich plnìní.</li>\n".
                       "<li>Ve¹keré zmìny budou odeslány také danému u¾ivateli.</li>\n".
                       "<li>Hesla jsou zakryptována v databázi. Je mo¾né pouze vytvoøit nové heslo.</li>\n".
                       "<li>Hesla jsou poslány pouze kdy¾ jsou zadány, buïte opatrný na jakou adresu je zasíláte!</li>\n".
                       "<li>U¾ivatelé mohou èásteènì mìnit svoje nastavení bez znalostí administrace.</li>\n".
                       "</ul>\n";
-
-$calendar_key    =  "<i>Návrat do hlavní nabídky</i></a>]</b><br />\n".
-                      "<p><b><span class=\"underline\">Vysvìtlivky ke kalendáøi</span></b><br /><br />\n".
-                      "<span class=\"blue\">Projekt (s nedokonèenými úkoly)</span><br />\n".
-                      "<span class=\"green\"><span class=\"underline\">Projekt </span>(s dokonèenými úkoly)</span><br />\n".
-                      "<span class=\"red\">Úkol (nedokonèen)</span><br />\n".
-                      "<span class=\"green\">Úkol (dokonèen)</span><br /></p>\n";
 
 ?>

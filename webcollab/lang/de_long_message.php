@@ -4,8 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  This file created 2003 by Andrew Simpson
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -52,11 +51,5 @@ $user_info      =    "Bitte wählen sie ihre Aktion aus dem Menü links.<br /><br 
                       "<li>Nutzer können sich selbst bearbeiten, ohne daß die Administratoren das erfahren. Dies soll Zeit und Spam sparen.</li>\n".
                       "</ul>\n";
 
-$calendar_key    =  "<i>Zurück zum Hauptmenü</i></a>]</b><br />\n".
-                      "<p><b><span class=\"underline\">Hinweise zum Kalender</span></b><br /><br />\n".
-                      "<span class=\"blue\">Projekt (mit offenen Aufgaben)</span><br />\n".
-                      "<span class=\"green\"><span class=\"underline\">Projekt </span>(alle Aufgaben fertiggestellt)</span><br />\n".
-                      "<span class=\"red\">Aufgabe (offen)</span><br />\n".
-                      "<span class=\"green\">Aufgabe (fertiggestellt)</span><br />\n";
 
 ?>

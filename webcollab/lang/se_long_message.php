@@ -4,8 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  This file created 2005 by Göran Källqvist
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -41,12 +40,10 @@ $usergroup_info =   "<ul><li>När man raderar en användargrupp kommer alla tillhö
 $user_info      =    "Välj vad du vill göra i menyn till vänster.<br /><br />".
                       "Några korta tips:<br />".
                       "<ul>".
-                      //**
                       "<li>Privata användare kan bara ses av medlemmar i samma användargrupp.</li>\n".
                       "<li>Användare kan raderas i två steg, det andra är  permanent.</li>\n".
                       "<li>En raderad användare förlorar alla uppgifter men inte sina meddelanden i forumet.</li>\n".
                       "<li>En permanent raderad användare förlorar allt.</li>\n".
-                      //"<li>You cannot permanently delete a user that still has forum items.</li>\n".
                       "<li>En raderad användare behåller en lista över de uppgifter de har sett, och kommer att fortsätta med den listan när de återupplivas.</li>\n".
                       "<li>ALLA åtgärder mot en användare kommer att mejlas till användaren.</li>\n".
                       "<li>Lösenord krypteras i databasen. Du kan bara bestämma ett nytt.</li>\n".

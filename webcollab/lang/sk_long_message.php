@@ -4,8 +4,8 @@
 
   WebCollab
   ---------------------------------------
-  This file created 2005 by Stanislav Pekarèík;fredis@SoftHome.net
-  
+  This file created 2005 by Stanislav Pekarèík (fredis -at- SoftHome.net)
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -23,7 +23,7 @@
 
   Language files (long messages) for 'sk' (Slovenský)
 
-  Maintainer: 
+  Maintainer:
 
 */
 
@@ -39,12 +39,10 @@ $usergroup_info =   "<ul><li>Ak zru¹íte u¾ivateµskú skupinu v¹etky správy na jej
 $user_info      =    "Prosím zvoµte Va¹u akciu z menu vµavo.<br /><br />".
                       "Niektoré tipy:<br />".
                       "<ul>".
-                      //**
                       "<li>Privátny u¾ivatelia mô¾u vidie» len èlenov, korý sú v tej istej skupine.</li>\n".
                       "<li>Sú dve ¹tádia zru¹enia u¾ivateµa, druhé je trvalé.</li>\n".
                       "<li>Zru¹ený u¾ívateµ stráca v¹etky svoje úlohy, ale nie svoje správy na fóre.</li>\n".
                       "<li>Trvalo zru¹ený u¾ívateµ stráca v¹etko.</li>\n".
-                      //"<li>You cannot permanently delete a user that still has forum items.</li>\n".
                       "<li>Zru¹enému u¾ívateµovi ostáva zoznam úloh, a bude pokraèova» s týmto zoznamom po obnove.</li>\n".
                       "<li>Informácie o v¹etkých akciách vykonaných u¾ívateµom budú u¾ivateµovi poslané emailom.</li>\n".
                       "<li>Heslo je kryptované v databáze. Vy mô¾te len nastavi» nové.</li>\n".

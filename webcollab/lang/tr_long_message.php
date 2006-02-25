@@ -39,24 +39,15 @@ $usergroup_info =   "<ul><li>Eðer bir kullanýcý grubunu silerseniz onunla ilgili
 $user_info      =    "Lütfen soldaki menüden yapmak istediðiniz þeyi seçin.<br /><br />".
                       "Bazý çabuk ipuçlarý:<br />".
                       "<ul>".
-                      //**
                       "<li>Özel kullanýcýlar sadece ayný grubun üyeleri tarafýndan görülebilirler.</li>\n".
                       "<li>Silme iþlemi kullanýcýlar için iki aþamalýdýr. Ýkincisi kalýcýdýr.</li>\n".
                       "<li>Silinen bir kullanýcý tüm görevlerini kaybeder fakat forum mesajlarý kalýr.</li>\n".
                       "<li>Kalýcý olarak silinen bir kullanýcý her þeyini kaybeder.</li>\n".
-                      //"<li>Forumda hala bir þeyleri kalmýþ olan bir kullanýcýyý kalýcý olarak silemezsiniz.</li>\n".
                       "<li>Silinen bir kullanýcýnýn görülmüþ olan görev kayýtlarý kalýr, tekrar baþlarsa bu listeyle devam eder.</li>\n".
                       "<li>Bir kullanýcýyla ilgili TÜM eylemler kullanýcýya epostayla gönderilir.</li>\n".
                       "<li>Þifreler veritabanýnda þifrelenmiþ durumdadýr. Yeni bir þifre yaratmanýz gerekiyor.</li>\n".
                       "<li>Þifreler koyulduklarý zaman kullanýcýya epostayla sadece bir kez gönderilmektedir. Bu nedenle onlarý gönderirken dikkatli olun!</li>\n".
                       "<li>Kullanýcýlar yöneticinin haberi olmadan kendi bilgilerini deðiþtirebilirler. Bu size zaman kazandýrýr ve spam'i engeller.</li>\n".
                       "</ul>\n";
-
-$calendar_key    =  "<i>Ana Menüye Dön</i></a>]</b><br />\n".
-                      "<p><b><span class=\"underline\">Renklerin anlamlarý</span></b><br /><br />\n".
-                      "<span class=\"blue\">Proje (tamamlanmamýþ görevler olan)</span><br />\n".
-                      "<span class=\"green\"><span class=\"underline\">Proje </span>(tüm görevleri tamamlanmýþ olan)</span><br />\n".
-                      "<span class=\"red\">Görev (tamamlanmamýþ)</span><br />\n".
-                      "<span class=\"green\">Görev (tamamlanmýþ)</span><br /></p>\n";
 
 ?>
