@@ -143,8 +143,8 @@ $email_delete_task        = "Hola,\n\n".
 
 $delete_list              = "Projecte: %1\$s\n".
                             "Tasca:    %2\$s\n".
-                            "Estat:   %s3\$\n\n".
-                            "Text:\n%s4\$\n\n";
+                            "Estat:   %3\$s\n\n".
+                            "Text:\n%4\$s\n\n";
 
 
 //-----                
