@@ -26,10 +26,7 @@
 
 */
 
-//set character set encoding to be used
-if(! defined('CHARACTER_SET') )
-  define('CHARACTER_SET', 'UTF-8' );
-
+//set PHP internal encoding
 if(! mb_internal_encoding('UTF-8') ) {
   error("Internal encoding", "Unable to set UTF-8 encoding in PHP" );
 }
@@ -39,14 +36,16 @@ if(! mb_internal_encoding('UTF-8') ) {
 //
 function safe_data($body ) {
 
+  //remove excess whitespace
+  $body = trim($body);
+
   //return null for nothing input
-  if(ctype_space($body) ) {
+  if(strlen($body) == 0 ) {
     return '';
   }
 
-  //validate characters & remove whitespace
-  $body = trim(validate($body) );
-
+  //validate characters
+  $body = validate($body);
   //limit line length for single line entries
   //  strlen() is _much_ faster than mb_strlen() or mb_substr()
   if(strlen($body) > 100 )
@@ -63,13 +62,16 @@ return $body;
 //
 function safe_data_long($body ) {
 
+  //remove excess whitespace
+  $body = trim($body);
+
   //return null for nothing input
-  if(ctype_space($body) ) {
+  if(strlen($body) == 0 ) {
     return '';
   }
 
-  //validate characters & remove whitespace
-  $body = trim(validate($body) );
+  //validate characters
+  $body = validate($body);
 
   //normalise line breaks from Windows & Mac to UNIX style '\n'
   $body = str_replace("\r\n", "\n", $body );
@@ -165,7 +167,7 @@ function javascript_escape($body ) {
 //
 function html_links($body, $database_escape=0 ) {
 
-  if(ctype_space($body) ) {
+  if(strlen($body) == 0 ) {
     return '';
   }
   $body = preg_replace('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', "<a href=\"mailto:$0\">$0</a>", $body );
