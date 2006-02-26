@@ -46,7 +46,7 @@ CREATE TABLE "users" (
 	"private" smallint DEFAULT 0::int NOT NULL,
         "guest" smallint DEFAULT 0::int NOT NULL,
 	"deleted" boolean NOT NULL DEFAULT 'f'::bool,
-        "locale" varying(10) DEFAULT 'en'::text NOT NULL,
+        "locale" character varying(10) DEFAULT 'en'::text NOT NULL,
 	Constraint "users_pkey" Primary Key ("id")
 );
 CREATE INDEX users_fullname_idx ON users USING btree (fullname);
