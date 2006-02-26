@@ -54,8 +54,8 @@ $content .=
     "<tr align=\"left\"><td><b>Database type:</b></td> <td>\n".
     "<select name=\"database_type\">\n".
       "<option value=\"mysql\" selected=\"selected\" >mysql</option>\n".
-      "<option value=\"postgresql\">postgresql</option>\n".
       "<option value=\"mysql_innodb\">mysql with innodb</option>\n".
+      "<option value=\"postgresql\">postgresql</option>\n".
     "</select></td></tr>\n".
     "</table>\n".
   "<input type=\"submit\" value=\"Submit\" />\n".
