@@ -80,7 +80,7 @@ $content = "<?php\n".
 "  define('DATABASE_NAME', '".$data["db_name"]."' );\n".
 "  define('DATABASE_USER', '".$data["db_user"]."' );\n".
 "  define('DATABASE_PASSWORD', '".$data["db_password"]."' );\n\n".
-"  //Database type (usual valid options are 'mysql' and 'postgresql')\n".
+"  //Database type (valid options are 'mysql', 'postgresql' and 'mysql_innodb')\n".
 "  define('DATABASE_TYPE', '".$data["db_type"]."' );\n\n".
 "  //Database host (usually 'localhost')\n".
 "  define('DATABASE_HOST', '".$data["db_host"]."' );\n\n".
