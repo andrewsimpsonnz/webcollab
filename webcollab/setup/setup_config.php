@@ -59,7 +59,7 @@ LANGUAGE ENCODING OPTIONS
 - All languages
 
   define('SETUP_CHARACTER_SET', [as given above, eg: "ISO-8859-1"] );
-  define('DATABASE_SETUP_CHARACTER_SET', "utf-8" );
+  define('DATABASE_SETUP_CHARACTER_SET', "utf8" );
 
   With this option the MySQL server uses UTF-8, while the web interface uses the given character set (eg: ISO-8859-1).
   The MySQL connection client will convert to and from the given character set during input and output. WebCollab
