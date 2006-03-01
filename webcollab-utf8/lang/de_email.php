@@ -91,7 +91,7 @@ $email_delete_task        = "Hallo,\n\nIhre ".MANAGER_NAME."-Seite informiert si
 
 $delete_list =  "Projekt:  %1\$s\n".
                 "Aufgabe:  %2\$s\n".
-                "Status:   %s3\$\n\n".
+                "Status:   %3\$s\n\n".
                 "Text:\n%4\$s\n";
 
 
@@ -114,8 +114,8 @@ $email_welcome      = "Hallo,\n\nEs begrüßt sie die ".MANAGER_NAME."-Seite am 
 
 $title_user_change1 = ABBR_MANAGER_NAME.": Ihr Konto wurde von einem Administrator bearbeitet";
 $email_user_change1 = "Hallo,\n\nIhre ".MANAGER_NAME."-Seite informiert sie, dass ihr Konto am ".$email_date." bearbeitet worden ist von %1\$s ( %2\$s ) \n\n".
-			"Login:           %s3\$\n".
-			"Passwort:        %s4\$\n\n".
+			"Login:           %3\$s\n".
+			"Passwort:        %4\$s\n\n".
 			"Nutzergruppen: %5\$s".
 			"Name:            %6\$s\n\n".
 			"%7\$s";
