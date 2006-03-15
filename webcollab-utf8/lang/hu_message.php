@@ -177,14 +177,10 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['add_reply']                  = "Válasz hozzáadása";
     $lang['last_post_sprt']             = "Utolsó üzenet: %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']               = "Legutóbbi fórum üzenetek";
-//**
-    $lang['recent_posts']               = "Recent forum posts";
-//**
-    $lang['forum_search']               = "Forum search";
-//**
-    $lang['no_results']                 = "No results found for '%s'";
-//**
-    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+    $lang['recent_posts']               = "Legutóbbi fórum üzenetek";
+    $lang['forum_search']               = "Keresés a fórumokban";
+    $lang['no_results']                 = "Nem található a megadott a kifejezés: '%s'";
+    $lang['search_results']             = "A '%2\$s' kifejezésre %1\$s találat van.<br />Kilistázás a %3\$s.  elemtől a %4\$s. elemig";
 
  //includes
     $lang['report']                     = "Jelentés";
@@ -195,7 +191,6 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['calendar']                   = "Naptár";
     $lang['log_out']                    = "Kijelentkezés";
     $lang['main_menu']                  = "Főmenü";
-//**
     $lang['archive']                    = "Archívum";
     $lang['user_homepage_sprt']         = "%s oldala";
     $lang['missing_field_javascript']   = "Kérem adja mag a hiányzó mező adatait";
@@ -323,7 +318,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['email_new_owner']            = "Email küldése a változtatásokról az (új) tulajdonosnak?";
     $lang['email_group']                = "Email küldése a változtatásokról a felhasználói csoportnak?";
     $lang['add_new_project']            = "Új projekt hozzáadása";
-    $lang['uncategorised']              = "Bekategorizálatlan";
+    $lang['uncategorised']              = "Kategorizálatlan";
     $lang['due_sprt']                   = "%d napra mostantól";
     $lang['tomorrow']                   = "Holnapra";
     $lang['due_today']                  = "Mára";
@@ -410,7 +405,6 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['print_version']              = "Nyomtatható verzió";
     $lang['condensed_view']             = "Áttekintő nézet";
     $lang['full_view']                  = "Részletes nézet";
-//**
     $lang['icalendar']                  = "iCalendar";
 
 ?>

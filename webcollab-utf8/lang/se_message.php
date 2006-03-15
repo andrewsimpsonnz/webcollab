@@ -25,25 +25,26 @@
 
   Maintainer: Göran Källqvist <g.kallqvist@telia.com>
 
+
   NOTE: This file is written in UTF-8 character set
 
 */
 
 //required language encodings
-define('CHARACTER_SET', 'UTF-8' );
+define('CHARACTER_SET', "UTF-8" );
 
 //dates
 $month_array = array (NULL, 'Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec' );
-$week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
+$week_array = array('Sön', 'Mĺn', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
 
 //task states
 
  //priorities
     $task_state['dontdo']               = "Gör inget";
-    $task_state['low']                  = "Låg";
+    $task_state['low']                  = "Lĺg";
     $task_state['normal']               = "Normal";
     $task_state['high']                 = "Hög";
-    $task_state['yesterday']            = "Igår!";
+    $task_state['yesterday']            = "Igĺr!";
  //status
     $task_state['new']                  = "Ny";
     $task_state['planned']              = "Planerad (inte aktiv)";
@@ -65,7 +66,7 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['update']                     = "Uppdatera";
     $lang['submit_changes']             = "Skicka ändringar";
     $lang['continue']                   = "Fortsätt";
-    $lang['reset']                      = "Återställ";
+    $lang['reset']                      = "Ĺterställ";
     $lang['manage']                     = "Sköta";
     $lang['edit']                       = "Redigera";
     $lang['delete']                     = "Ta bort";
@@ -73,19 +74,19 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['confirm_del_javascript']     = " Bekräfta radering!";
     $lang['yes']                        = "Ja";
     $lang['no']                         = "Nej";
-    $lang['action']                     = "Åtgärd";
+    $lang['action']                     = "Ĺtgärd";
     $lang['task']                       = "Uppgift";
     $lang['tasks']                      = "Uppgifter";
     $lang['project']                    = "Projekt";
     $lang['info']                       = "Info";
     $lang['bytes']                      = " bytes";
-    $lang['select_instruct']            = "(Använd <ctrl> för att välja flera eller för att inte välja någon)";
-    $lang['member_groups']              = "Om användaren är med i någon grupp har de markerats";
+    $lang['select_instruct']            = "(Använd <ctrl> för att välja flera eller för att inte välja nĺgon)";
+    $lang['member_groups']              = "Om användaren är med i nĺgon grupp har de markerats";
     $lang['login']                      = "Logga in";
     $lang['error']                      = "Fel";
-    $lang['no_login']                   = "Åtkomst nekas. Fel användarnamn eller lösenord";
-    $lang['redirect_sprt']              = "Efter %d sekunders väntan kommer du automatiskt att återvända till inloggning";
-    $lang['login_now']                  = "Klicka här för att återvända till inloggning";   
+    $lang['no_login']                   = "Ĺtkomst nekas. Fel användarnamn eller lösenord";
+    $lang['redirect_sprt']              = "Efter %d sekunders väntan kommer du automatiskt att ĺtervända till inloggning";
+    $lang['login_now']                  = "Klicka här för att ĺtervända till inloggning";   
     $lang['please_login']               = "Var god logga in";
     $lang['go']                         = "Kör!";
 
@@ -99,11 +100,11 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['email_settings']             = "Email-rubriker";
     $lang['admin_email']                = "Epost-adress till administratör";
     $lang['email_reply']                = "Epost 'svar till'";
-    $lang['email_from']                 = "Epost 'från'";
+    $lang['email_from']                 = "Epost 'frĺn'";
     $lang['mailing_list']               = "Mejl-lista";
     $lang['default_checkbox']           = "Standardinställningar för Projekt/Uppgifter";
-    $lang['allow_globalaccess']         = "Tillåta tillgång till alla?";
-    $lang['allow_group_edit']           = "Tillåta alla i användargrupper att redigera?";
+    $lang['allow_globalaccess']         = "Tillĺta tillgĺng till alla?";
+    $lang['allow_group_edit']           = "Tillĺta alla i användargrupper att redigera?";
     $lang['set_email_owner']            = "Alltid mejla den ansvarige om förändringar?";
     $lang['set_email_group']            = "Alltid mejla användargruppen om förändringar?";
     $lang['project_listing_order']      = "Projekt listordning";
@@ -134,12 +135,12 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['show_contact']               = "Visa kontakter";
     $lang['edit_contact']               = "Redigera kontakter";
     $lang['contact_submit']             = "Spara kontakt";
-    $lang['contact_warn']               = "Det är otillräckliga uppgifter för att spara denna kontakt. Var god gå tillbaka och lägg åtminstone till för- och efternamn";
+    $lang['contact_warn']               = "Det är otillräckliga uppgifter för att spara denna kontakt. Var god gĺ tillbaka och lägg ĺtminstone till för- och efternamn";
 
  //files
     $lang['manage_files']               = "Ta hand om filer";
     $lang['no_files']                   = "Det finns inga inskickade filer att ta hand om";
-    $lang['no_file_uploads']            = "Servern på denna sajt tillåter inte att filer skickas in";
+    $lang['no_file_uploads']            = "Servern pĺ denna sajt tillĺter inte att filer skickas in";
     $lang['file']                       = "Fil:";
     $lang['uploader']                   = "Skickad av:";
     $lang['files_assoc_project']        = "Filer som hör till detta projekt";
@@ -151,18 +152,18 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['upload']                     = "Skicka";
     $lang['file_email_owner']           = "Mejla ansvarig om att en ny fil har skickats?";
     $lang['file_email_usergroup']       = "Mejla användargruppen om att en ny fil har skickats?";
-    $lang['max_file_sprt']              = "Filen som ska skickas får inte vara mer än %s kb stor.";
+    $lang['max_file_sprt']              = "Filen som ska skickas fĺr inte vara mer än %s kb stor.";
     $lang['file_submit']                = "Skicka fil";
     $lang['no_upload']                  = "Ingen fil skickades. Var god försök igen.";
     $lang['file_too_big_sprt']          = "Man kan skicka högst %s bytes.  Din fil var för stor och har tagits bort.";
-    $lang['del_file_javascript_sprt']   = "Är du säker på att du vill ta bort %s ?";
+    $lang['del_file_javascript_sprt']   = "Är du säker pĺ att du vill ta bort %s ?";
 
 
  //forum
     $lang['orig_message']               = "Ursprungligt inlägg:";
     $lang['post']                       = "Skicka det!";
     $lang['message']                    = "Inlägg:";
-    $lang['post_reply_sprt']            = "Skicka svar på ett inlägg från '%1\$s' om '%2\$s'";
+    $lang['post_reply_sprt']            = "Skicka svar pĺ ett inlägg frĺn '%1\$s' om '%2\$s'";
     $lang['post_message_sprt']          = "Skicka inlägg till: '%s'";
     $lang['forum_email_owner']          = "Mejla foruminlägg till ansvarig?";
     $lang['forum_email_usergroup']      = "Mejla foruminlägg till användargrupp?";
@@ -174,15 +175,10 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['no_message']                 = "Inget inlägg! Var god försök igen";
     $lang['add_reply']                  = "Lägg till svar";
     $lang['last_post_sprt']             = "Senaste inlägg %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-    $lang['recent_posts']               = "Aktuella foruminlägg";      
-//**
-    $lang['recent_posts']               = "Recent forum posts";
-//**
-    $lang['forum_search']               = "Forum search";
-//**
-    $lang['no_results']                 = "No results found for '%s'";
-//**
-    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+    $lang['recent_posts']               = "Aktuella foruminlägg";
+    $lang['forum_search']               = "Sök i forum";
+    $lang['no_results']                 = "Inga resultat hittade för '%s'";
+    $lang['search_results']             = "Hittade %1\$s resultat för '%2\$s'<br />Visar resultat %3\$s till %4\$s";
 
  //includes
     $lang['report']                     = "Rapport";
@@ -199,25 +195,24 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['invalid_date_javascript']    = "Var god välj ett giltigt datum";
     $lang['finish_date_javascript']     = "Angivet datum infaller efter projektets slutdatum!";
     $lang['security_manager']           = "Säkerhetshanterare";
-    $lang['session_timeout_sprt']       = "Åtkomst nekas; senaste åtgärd gjordes för %1\$d minuter sedan och maxtid är %2\$d minuter. Var god och <a href=\"%3\$sindex.php\">logga in igen</a>";
-    $lang['access_denied']              = "Åtkomst nekas";
-    $lang['private_usergroup']          = "Tyvärr. Detta är en privat användargrupp och du har inte åtkomsträttigheter.";
+    $lang['session_timeout_sprt']       = "Ĺtkomst nekas; senaste ĺtgärd gjordes för %1\$d minuter sedan och maxtid är %2\$d minuter. Var god och <a href=\"%3\$sindex.php\">logga in igen</a>";
+    $lang['access_denied']              = "Ĺtkomst nekas";
+    $lang['private_usergroup']          = "Tyvärr. Detta är en privat användargrupp och du har inte ĺtkomsträttigheter.";
     $lang['invalid_date']               = "Ogiltigt datum";
-    $lang['invalid_date_sprt']          = "Datumet %s är inte ett giltigt kalnderdatum (Kolla antal dagar i månaden).<br />Var god gå tillbaka och ange ett giltigt datum.";
+    $lang['invalid_date_sprt']          = "Datumet %s är inte ett giltigt kalnderdatum (Kolla antal dagar i mĺnaden).<br />Var god gĺ tillbaka och ange ett giltigt datum.";
 
 
  //taskgroups
     $lang['taskgroup_name']             = "Uppgiftgruppens namn:";
     $lang['taskgroup_description']      = "Kort beskrivning av uppgiftgruppen:";
-//**
-    $lang['add_taskgroup']              = "Lägg till en ny uppgiftgrupp";
-    $lang['add_new_taskgroup']              = "Lägg till en ny uppgiftgrupp";
+    $lang['add_taskgroup']              = "Lägg till en uppgiftgrupp";
+    $lang['add_new_taskgroup']          = "Lägg till en ny uppgiftgrupp";
     $lang['edit_taskgroup']             = "Redigera uppgiftgrupp";
     $lang['taskgroup_manage']           = "Skötsel av uppgiftgrupper";
     $lang['no_taskgroups']              = "Inga uppgiftgrupper definierade";
     $lang['manage_taskgroups']          = "Sköta uppgiftgrupper";
     $lang['taskgroups']                 = "Uppgiftgrupper";
-    $lang['taskgroup_dup_sprt']         = "Det finns redan en uppgiftgrupp som heter '%s'.  Var god gå tillbaka och välj ett annat namn.";
+    $lang['taskgroup_dup_sprt']         = "Det finns redan en uppgiftgrupp som heter '%s'.  Var god gĺ tillbaka och välj ett annat namn.";
     $lang['info_taskgroup_manage']      = "Information om uppgiftgrupper";
 
  //usergroups
@@ -232,7 +227,7 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['no_usergroups']              = "Inga användargrupper definierade";
     $lang['manage_usergroups']          = "Sköta användargrupper";
     $lang['usergroups']                 = "Användargrupper";
-    $lang['usergroup_dup_sprt']         = "Det finns redan en användargrupp som heter '%s'.  Var god gå tillbaka och välj ett annat namn.";
+    $lang['usergroup_dup_sprt']         = "Det finns redan en användargrupp som heter '%s'.  Var god gĺ tillbaka och välj ett annat namn.";
     $lang['info_usergroup_manage']      = "Information om användargrupp";
 
  //users
@@ -250,7 +245,7 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['user_info']                  = "Användarinformation";
     $lang['deleted_users']              = "Raderade användare";
     $lang['no_deleted_users']           = "Det finns inga raderade användare.";
-    $lang['revive']                     = "Återuppväck";
+    $lang['revive']                     = "Ĺteruppväck";
     $lang['permdel']                    = "Radera permanent";
     $lang['permdel_javascript_sprt']    = "Detta kommer att för gott ta bort alla poster och tillhörande uppgifter för användaren %s. Vill du verkligen det?";
     $lang['add_user']                   = "Lägg till användare";
@@ -258,18 +253,18 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['no_users']                   = "Det finns inga kända användare";
     $lang['users']                      = "Användare";
     $lang['existing_users']             = "Existerande användare";
-    $lang['private_profile']            = "Denna användare har en privat profil som du inte kan titta på.";
-    $lang['private_usergroup_profile']  = "(Denna användare är medlem i en privat användargrupp som du inte kan titta på)";
+    $lang['private_profile']            = "Denna användare har en privat profil som du inte kan titta pĺ.";
+    $lang['private_usergroup_profile']  = "(Denna användare är medlem i en privat användargrupp som du inte kan titta pĺ)";
     $lang['email_users']                = "Epost användare";
     $lang['select_usergroup']           = "Välj användargrupp:";
     $lang['subject']                    = "Ämne:";
-    $lang['message_sent_maillist']      = "Meddelandet kopieras också till mejllistan.";
+    $lang['message_sent_maillist']      = "Meddelandet kopieras ocksĺ till mejllistan.";
     $lang['who_online']                 = "Vilka är online?";
     $lang['edit_details']               = "Redigera användaruppgifter";
     $lang['show_details']               = "Visa användaruppgifter";
     $lang['user_deleted']               = "Denna användare har tagits bort!";
-    $lang['no_usergroup']               = "Användaren är inte medlem i någon användargrupp";
-    $lang['not_usergroup']              = "(Inte medlem i någon användargrupp)";
+    $lang['no_usergroup']               = "Användaren är inte medlem i nĺgon användargrupp";
+    $lang['not_usergroup']              = "(Inte medlem i nĺgon användargrupp)";
     $lang['no_password_change']         = "(Ditt befintliga lösenord har inte ändrats)";
     $lang['last_time_here']             = "Var här senast:";
     $lang['number_items_created']       = "Antal skapade artiklar:";
@@ -278,14 +273,14 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['number_tasks_completed']     = "Antal färdiga uppgifter:";
     $lang['number_forum']               = "Antal foruminlägg:";
     $lang['number_files']               = "Antal skickade filer:";
-    $lang['size_all_files']             = "Total storlek på skickade filer:";
+    $lang['size_all_files']             = "Total storlek pĺ skickade filer:";
     $lang['owned_tasks']                = "Ansvarig för uppgifter";
     $lang['invalid_email']              = "Ogiltig epost-adress";
-    $lang['invalid_email_given_sprt']   = "Epost-adressen '%s' är ogiltig.  Var god gå tillbaka och försök igen.";
+    $lang['invalid_email_given_sprt']   = "Epost-adressen '%s' är ogiltig.  Var god gĺ tillbaka och försök igen.";
     $lang['duplicate_user']             = "Användaren finns";
-    $lang['duplicate_change_user_sprt'] = "Användaren '%s' existerar redan.  Var god gå tillbaka och ändra ett namn.";
+    $lang['duplicate_change_user_sprt'] = "Användaren '%s' existerar redan.  Var god gĺ tillbaka och ändra ett namn.";
     $lang['value_missing']              = "Saknat värde";
-    $lang['field_sprt']                 = "Fältet '%s' saknar värde. Var god gå tillbaka och fyll i det.";
+    $lang['field_sprt']                 = "Fältet '%s' saknar värde. Var god gĺ tillbaka och fyll i det.";
     $lang['admin_priv']                 = "OBS: Du har tilldelats administratörsrättigheter.";
     $lang['manage_users']               = "Sköta användare";
     $lang['users_online']               = "Användare som är online";
@@ -302,7 +297,7 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['project_name']               = "Projektnamn";
     $lang['task_name']                  = "Uppgiftens namn";
     $lang['deadline']                   = "Slutdatum";
-    $lang['taken_from_parent']          = "(Taget från överordnad uppgift)";
+    $lang['taken_from_parent']          = "(Taget frĺn överordnad uppgift)";
     $lang['status']                     = "Status";
     $lang['task_owner']                 = "Ansvarig för uppgiften";
     $lang['project_owner']              = "Projektansvarig";
@@ -322,7 +317,7 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['email_group']                = "Mejla förändringarna till användargruppen?";
     $lang['add_new_project']            = "Lägg till ett nytt projekt";
     $lang['uncategorised']              = "Inte kategoriserat";
-    $lang['due_sprt']                   = "%d dagar från nu";
+    $lang['due_sprt']                   = "%d dagar frĺn nu";
     $lang['tomorrow']                   = "Imorgon";
     $lang['due_today']                  = "Beräknad idag";
     $lang['overdue_1']                  = "1 dag över tiden";
@@ -350,14 +345,14 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['archive_project']            = "Arkivera projekt";
     $lang['task_navigation']            = "Navigering i uppgift";
     $lang['new_task']                   = "Ny uppgift";    
-    $lang['no_projects']                = "Det finns inga projekt att titta på";
+    $lang['no_projects']                = "Det finns inga projekt att titta pĺ";
     $lang['show_all_projects']          = "Visa alla projekt";
     $lang['show_active_projects']       = "Visa bara aktiva projekt";
     $lang['project_hold_sprt']          = "Projektet pausat sedan %s";
     $lang['project_planned']            = "Planerat projekt";
     $lang['percent_sprt']               = "%d %% av uppgifterna är klara";
     $lang['project_no_deadline']        = "Detta projekt har inget slutdatum";
-    $lang['no_allowed_projects']        = "Du har inte tillåtelse att titta på något projekt";
+    $lang['no_allowed_projects']        = "Du har inte tillĺtelse att titta pĺ nĺgot projekt";
     $lang['projects']                   = "Projekt";
     $lang['percent_project_sprt']       = "Detta projekt är färdigt till %d %%";
     $lang['owned_by']                   = "Ansvarig:";
@@ -371,8 +366,8 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['task_not_accessible']        = "(Denna uppgift är bara tillgänglig för medlemmar i användargruppen)";
     $lang['project_not_in_usergroup']   = "Detta projekt tillhör ingen användargrupp och är tillgängligt för alla användare.";
     $lang['task_not_in_usergroup']      = "Denna uppgift tillhör ingen användargrupp och är tillgängligt för alla användare.";
-    $lang['usergroup_can_edit_project'] = "Detta projekt kan också redigeras av medlemmar i användargruppen.";
-    $lang['usergroup_can_edit_task']    = "Denna uppgift kan också redigeras av medlemmar i användargruppen.";
+    $lang['usergroup_can_edit_project'] = "Detta projekt kan ocksĺ redigeras av medlemmar i användargruppen.";
+    $lang['usergroup_can_edit_task']    = "Denna uppgift kan ocksĺ redigeras av medlemmar i användargruppen.";
     $lang['i_take_it']                  = "Jag tar den :-)";
     $lang['i_finished']                 = "Jag är färdig med den!";
     $lang['i_dont_want']                = "Jag vill inte ha den längre";
@@ -387,8 +382,8 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['todo_list']                  = "Att göra";
     $lang['summary_list']               = "Sammanfattning";
     $lang['task_submit']                = "Skicka uppgift";
-    $lang['not_owner']                  = "Åtkomst nekas. Antingen är du inte ansvarig eller så har du inte tillräckliga rättigheter";
-    $lang['missing_values']             = "Inte tillräckligt många värden. Gå tillbaka och försök igen";
+    $lang['not_owner']                  = "Ĺtkomst nekas. Antingen är du inte ansvarig eller sĺ har du inte tillräckliga rättigheter";
+    $lang['missing_values']             = "Inte tillräckligt mĺnga värden. Gĺ tillbaka och försök igen";
     $lang['future']                     = "Framtid";
     $lang['flags']                      = "Flaggor";
     $lang['owner']                      = "Ansvarig";
@@ -408,7 +403,6 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['print_version']              = "För utskrift";
     $lang['condensed_view']             = "Komprimerad vy";
     $lang['full_view']                  = "Fullständig vy";
-//**
     $lang['icalendar']                  = "iCalendar";
 
 ?>

@@ -25,7 +25,7 @@
   Language files for 'hu' (Hungarian)
 
   Translation: Széll Tamás
-  
+
   Maintainer: Széll Tamás
 
 */
@@ -40,7 +40,7 @@ $usergroup_info =   "<ul><li>Ha töröl egy feladatcsoportot, akkor minden hozz�
                       "<li>Egy felhasználói csoport nevét a felhsznlókkal való összeakadás nélkül megváltoztathatja.</li>\n".
                       "<li>Két felhasználói csoportnak nem lehet ugyanaz a neve.</li></ul>\n";
 
-$user_info      =    "Kérem válassza ki az utasítást a baloldali menübõl!<br /><br />".
+$user_info      =    "Kérem válassza ki az utasítást a baloldali menüből!<br /><br />".
                       "Néhány gyors tipp:<br />".
                       "<ul>".
                       "<li>A privát felhasználókat csak a felhasználói csoport tagjai láthatják.</li>\n".
@@ -48,10 +48,10 @@ $user_info      =    "Kérem válassza ki az utasítást a baloldali menübõl!<
                       "<li>Egy töröltfelhasználó elveszti a feladatait, de a fórum üzeneteit nem.</li>\n".
                       "<li>Egy véglegesen kitörölt felhasználó mindent elveszt.</li>\n".
                       "<li>Egy törölt felhasználó megtartja a látogatott feladatok listáját, és újjáélesztés után ezzel a listával folytatja.</li>\n".
-                      "<li>MINDEN, amit egy felhasználón mûvelnek el lesz küldve emailen a felhasználónak.</li>\n".
+                      "<li>MINDEN, amit egy felhasználón művelnek el lesz küldve emailen a felhasználónak.</li>\n".
                       "<li>A jelszavak titkosítva vannak az adatbázisban. Csak újat tudsz megadni.</li>\n".
-                      "<li>A jelszavakat csak egyszer, megadásukkor küldjük ki a felhasználónak, úgyhogy figyelemmel küldje el õket!</li>\n".
-                      "<li>A felhasználók szerkeszthetik beállításaikat az admin nélkül - így idõt (és levélszemetet) takarít meg</li>\n".
+                      "<li>A jelszavakat csak egyszer, megadásukkor küldjük ki a felhasználónak, úgyhogy figyelemmel küldje el őket!</li>\n".
+                      "<li>A felhasználók szerkeszthetik beállításaikat az admin nélkül - így időt (és levélszemetet) takarít meg</li>\n".
                       "</ul>\n";
 
 ?>

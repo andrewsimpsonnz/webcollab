@@ -25,10 +25,9 @@
   Language files for 'hu' (Hungarian)
 
   Translation: Széll Tamás
-  
+
   Maintainer: Széll Tamás
 
-  
   NOTE: This file is written in UTF-8 character set
 
 */
@@ -36,8 +35,8 @@
 // Get current date/time for emails in a preferred format eg: 01 Apr 2004 9:18 am NZDT  
 $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y \a\t g:i a T' );
 
-$title_file_post          = ABBR_MANAGER_NAME.": New file upload: %s";
-$email_file_post          = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy új fájlt töltött fel ".$email_date." dátummal a következõ: %1\$s.\n\n".
+$title_file_post          = ABBR_MANAGER_NAME.": Új feltöltött fájl: %s";
+$email_file_post          = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy új fájlt töltött fel ".$email_date." dátummal a következő: %1\$s.\n\n".
                             "Fájl:     %2\$s\n".
                             "Leírás:   %3\$s\n\n".
                             "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."\n";
@@ -47,7 +46,7 @@ $title_forum_post         = ABBR_MANAGER_NAME.": Új fórum üzenet: %s";
 $email_forum_post         = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy új fórum üzenet érkezett ".$email_date." dátummal %1\$s:\n\n----\n\n%2\$s által.\n\n----\n\n".
                            "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."\n";
 $email_forum_reply        = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy új fórum üzenet érkezett ".$email_date." dátummal %1\$s által.\n\n".
-                            "Ez egy válasz %2\$s elõzõ üzenetére.\n\n".
+                            "Ez egy válasz %2\$s előző üzenetére.\n\n".
                             "Eredeti üzenet:\n%3\$s\n\n".
                             "----\n\n".
                             "Új válasz:\n%4\$s\n\n".
@@ -116,12 +115,12 @@ $delete_list = "Projekt:  %1\$s\n".
 $title_welcome            = "Köszöntjük itt: ".ABBR_MANAGER_NAME;
 $email_welcome            = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap üdvözlete köztünk ;) ".$email_date." dátummal.\n\n".
                             "Mivel Ön egy új tag, itt leírunk néhány fontos dolgot, hogy megkezdhesse a munkát.\n\n".
-                            "Elõször is ez egy projekt-kezelõ eszköz, a fõképernyõn az elérhetõ projekteket fogja látni. ".
+                            "Először is ez egy projekt-kezelő eszköz, a főképernyőn az elérhető projekteket fogja látni. ".
                             "Ha a nevek egyikére kattint, akkor a feladatok résznél találja magát. Itt fog a munka egésze zajlani.\n\n".
                             "Minden elem amit bejegyez, vagy feladat amit szerkeszt 'új' vagy 'frissített' jelzéssel fog másoknak megjelenni. Ez kölcsönösen így van és ".
-                            "lehetõvé teszi, hogy könnyen megtaláljuk hol folyik aktívan a munka.\n\n".
-                            "Ezek mellett átvehetsz, vagy szerezhetsz tulajdonosi jogot a feladatokhoz és így szerkesztheted õket, illetve a hozzájuk tartozó fórum üzeneteket. ".
-                            "Ahogy halad a munkában, kérjük szerkessze a feladat szövegét és állapotát, így mindenki nyomon követheti a fejlõdést. ".
+                            "lehetővé teszi, hogy könnyen megtaláljuk hol folyik aktívan a munka.\n\n".
+                            "Ezek mellett átvehetsz, vagy szerezhetsz tulajdonosi jogot a feladatokhoz és így szerkesztheted őket, illetve a hozzájuk tartozó fórum üzeneteket. ".
+                            "Ahogy halad a munkában, kérjük szerkessze a feladat szövegét és állapotát, így mindenki nyomon követheti a fejlődést. ".
                             "\n\nCsak sok sikert tudunk kívánni, és írjon ide: ".EMAIL_ADMIN.", ha elakadna.\n\n --Sok szerencsét !\n\n".
                             "Felhasználó:  %1\$s\n".
                             "Jelszó:       %2\$s\n\n".
@@ -134,20 +133,20 @@ $title_user_change1       = ABBR_MANAGER_NAME.": Az Ön fiókját egy admin szer
 $email_user_change1       = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy az Ön fiókján változtatások történtek ekkor: ".$email_date.", %1\$s ( %2\$s ) által.\n\n".
                             "Felhasználó:  %3\$s\n".
                             "Jelszó:       %4\$s\n\n".
-                            "Csoporrtok:   %5\$s".
+                            "Csoportok:   %5\$s".
                             "Név:          %6\$s\n\n".
                             "%7\$s";
 
 $title_user_change2       = ABBR_MANAGER_NAME.": Fiók szerkesztve";
-$email_user_change2       = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap, amely megerõsíti, hogy Ön sikerrel változtatásokat hajtott végre a fiókján ".$email_date." dátummal.\n\n".
+$email_user_change2       = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap, amely megerősíti, hogy Ön sikerrel változtatásokat hajtott végre a fiókján ".$email_date." dátummal.\n\n".
                             "Felhasználó:  %1\$s\n".
                             "Jelszó:       %2\$s\n\n".
                             "Név:          %3\$s\n";
 
 $title_user_change3       = ABBR_MANAGER_NAME.": Fiók szerkesztve";
-$email_user_change3       = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap, amely megerõsíti, hogy Ön sikerrel változtatásokat hajtott végre a fiókján ".$email_date." dátummal.\n\n".
+$email_user_change3       = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap, amely megerősíti, hogy Ön sikerrel változtatásokat hajtott végre a fiókján ".$email_date." dátummal.\n\n".
                             "Felhasználó:  %1\$s\n".
-                            "A létezõ jelszava nem változott.\n\n".
+                            "A létező jelszava nem változott.\n\n".
                             "Név:  %2\$s\n";
 
 
