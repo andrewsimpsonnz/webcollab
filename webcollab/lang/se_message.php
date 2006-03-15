@@ -175,15 +175,10 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['no_message']                 = "Inget inlägg! Var god försök igen";
     $lang['add_reply']                  = "Lägg till svar";
     $lang['last_post_sprt']             = "Senaste inlägg %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-    $lang['recent_posts']               = "Aktuella foruminlägg";      
-//**
-    $lang['recent_posts']               = "Recent forum posts";
-//**
-    $lang['forum_search']               = "Forum search";
-//**
-    $lang['no_results']                 = "No results found for '%s'";
-//**
-    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+    $lang['recent_posts']               = "Aktuella foruminlägg";
+    $lang['forum_search']               = "Sök i forum";
+    $lang['no_results']                 = "Inga resultat hittade för '%s'";
+    $lang['search_results']             = "Hittade %1\$s resultat för '%2\$s'<br />Visar resultat %3\$s till %4\$s";
 
  //includes
     $lang['report']                     = "Rapport";
@@ -210,9 +205,8 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
  //taskgroups
     $lang['taskgroup_name']             = "Uppgiftgruppens namn:";
     $lang['taskgroup_description']      = "Kort beskrivning av uppgiftgruppen:";
-//**
-    $lang['add_taskgroup']              = "Lägg till en ny uppgiftgrupp";
-    $lang['add_new_taskgroup']              = "Lägg till en ny uppgiftgrupp";
+    $lang['add_taskgroup']              = "Lägg till en uppgiftgrupp";
+    $lang['add_new_taskgroup']          = "Lägg till en ny uppgiftgrupp";
     $lang['edit_taskgroup']             = "Redigera uppgiftgrupp";
     $lang['taskgroup_manage']           = "Skötsel av uppgiftgrupper";
     $lang['no_taskgroups']              = "Inga uppgiftgrupper definierade";
@@ -409,7 +403,6 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['print_version']              = "För utskrift";
     $lang['condensed_view']             = "Komprimerad vy";
     $lang['full_view']                  = "Fullständig vy";
-//**
     $lang['icalendar']                  = "iCalendar";
 
 ?>
