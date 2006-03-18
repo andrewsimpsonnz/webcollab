@@ -27,12 +27,13 @@
 
   Maintainer:
 
-  NOTE: This file is written in UTF-8 character set
-
 */
 
 //required language encodings
-define('CHARACTER_SET', 'UTF-8' );
+define('CHARACTER_SET', "ISO-8859-1" );
+
+//this is the regex for input validation filter used in common.php 
+$validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s";
 
 //dates
 $month_array = array ( NULL, "Jan", "Fev", "Mar", "Avr", "Mai", "Jui", "Jul", "Aou", "Sep", "Oct", "Nov", "Dec" );
@@ -177,14 +178,10 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['add_reply']                    = "Ajouter une réponse";
     $lang['last_post_sprt']               = "Dernier message %s"; //Note to translators: context is 'Last post 2004-Dec-22";
     $lang['recent_posts']                 = "Messages récents";
-//**
-    $lang['recent_posts']                 = "Recent forum posts";
-//**
-    $lang['forum_search']                 = "Forum search";
-//**
-    $lang['no_results']                   = "No results found for '%s'";
-//**
-    $lang['search_results']               = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+    $lang['recent_posts']                 = "Messages récents";
+    $lang['forum_search']                 = "Chercher dans les forums";
+    $lang['no_results']                   = "Aucun résultats pour '%s'";
+    $lang['search_results']               = "Trouvé %1\$s résultats pour '%2\$s'<br />Affiche résultats %3\$s à %4\$s";
 
  //includes
     $lang['report']                       = "Rapport";
@@ -244,12 +241,9 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['email']                        = "Courriel";
     $lang['admin']                        = "Admin";
     $lang['private_user']                 = "Utilisateur privé";
- //**
     $lang['normal_user']                  = "Utilisateur Normal";
     $lang['is_admin']                     = "Administrateur";
- //**
     $lang['is_guest']                     = "Invité";
- //**
     $lang['guest']                        = "Invité";
     $lang['user_info']                    = "Information utilisateur";
     $lang['deleted_users']                = "Utilisateurs effacés";
@@ -413,7 +407,7 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['print_version']                = "Version imprimable";
     $lang['condensed_view']               = "Vue réduite";
     $lang['full_view']                    = "Vue complète";
-//**
     $lang['icalendar']                    = "iCalendar";
+
 
 ?>
