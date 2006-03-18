@@ -28,7 +28,7 @@
 
   Maintainer: Széll Tamás
 
-  NOTE: This file is written in UTF-8 character set
+  NOTE: This file is written in ISO-8859-2 character set
 
 */
 
