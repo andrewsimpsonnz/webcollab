@@ -175,7 +175,7 @@ create_top($lang['login'], 1, 'username' );
 
 $content = "<div style=\"text-align:center\">";
 
-if( SITE_IMG != '' ) {
+if(SITE_IMG != '' ) {
   $content .=  "<img src=\"images/".SITE_IMG."\" /><br />";
 }
 else {
@@ -189,8 +189,8 @@ $content .= "<p>".$lang['please_login'].":</p>\n".
             "<tr align=\"left\" ><td>".$lang['password'].": </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
             "</table>\n".
             "<p>&nbsp;</p>\n".
-            "<p><input type=\"submit\" value=\"".$lang['login']."\" /></p>\n";
-  switch( DATABASE_TYPE ) {
+            "<p><input type=\"submit\" value=\"".$lang['login_action']."\" /></p>\n";
+  switch(DATABASE_TYPE ) {
   case 'postgresql':
     $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\" /></a></p>";
     break;

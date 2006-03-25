@@ -82,10 +82,10 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $lang['project']                    = "Projeto";
     $lang['info']                       = "Informação";
     $lang['bytes']                      = "bytes";
-    $lang['select_instruct']            = "(Pressione Ctrl para selecionar ou
-deselecionar mais de um)";
+    $lang['select_instruct']            = "(Pressione Ctrl para selecionar ou deselecionar mais de um)";
     $lang['member_groups']              = "O usuário é membro dos grupos realçados abaixo (caso hajam)";
     $lang['login']                      = "Login";
+    $lang['login_action']               = "Login";
     $lang['error']                      = "Erro";
     $lang['no_login']                   = "Acesso negado, verifique o nome de usuário e a senha";
     $lang['redirect_sprt']              = "Você será automaticamente redirecionado à página de Login em %d segundos";

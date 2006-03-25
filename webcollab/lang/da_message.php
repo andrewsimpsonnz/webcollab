@@ -93,6 +93,7 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['select_instruct']              = "(Brug ctrl til at vælge flere, eller til ingen at vælge)";
     $lang['member_groups']                = "Brugeren er medlem af de fremhævede grupper herunder (hvis nogen)";
     $lang['login']                        = "Login";
+    $lang['login_action']                 = "Login";
     $lang['error']                        = "Fejl";
     $lang['no_login']                     = "Adgang nægtet, ikke korrekt login eller password";
     $lang['redirect_sprt']                = "You will automatically return to Login after a %d second delay";

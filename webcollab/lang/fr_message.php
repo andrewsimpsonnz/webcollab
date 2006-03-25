@@ -84,6 +84,7 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['select_instruct']              = "(Utiliser CTRL pour faire multiple sélections ou aucune sélection)";
     $lang['member_groups']                = "L'utilisateur est membre du groupe indiqué en bas (s'il y en a un)";
     $lang['login']                        = "Connexion";
+    $lang['login_action']                 = "Connexion";
     $lang['error']                        = "Erreur";
     $lang['no_login']                     = "Accès refusé, utilisateur ou mot de passe incorrect";
     $lang['redirect_sprt']                = "Vous serez automatiquement redirigé vers l'écran de connexion<br />&nbsp;&nbsp;&nbsp;après un délais de %d secondes";

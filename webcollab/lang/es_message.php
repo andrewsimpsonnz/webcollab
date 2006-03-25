@@ -84,6 +84,7 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['select_instruct']              = "(Usar ctrl para seleccionar más, o para ninguno)";
     $lang['member_groups']                = "El usuario es miembro de los grupos resaltados debajo (si es de alguno)";
     $lang['login']                        = "LogIn";
+    $lang['login_action']                 = "LogIn";
     $lang['error']                        = "Error";
     $lang['no_login']                     = "Acceso denegado, login o password incorrectos";
     $lang['redirect_sprt']                = "Volvera a la ventana de identificacion en %d segundos";

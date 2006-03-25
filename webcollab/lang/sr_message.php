@@ -83,6 +83,7 @@ $week_array = array('Ned', 'Pon', 'Uto', 'Sre', 'Èet', 'Pet', 'Sub' );
     $lang['select_instruct']            = "(Dr¾ite ctrl da biste odabrali vi¹e; ili za prazan odabir)";
     $lang['member_groups']              = "Korisnik je èlan oznaèenih grupa ispod (ukoliko je uop¹te èlan neke grupe)";
     $lang['login']                      = "Korisnièko ime";
+    $lang['login_action']               = "Korisnièko ime";
     $lang['error']                      = "Gre¹ka";
     $lang['no_login']                   = "Pristup odbijen; netaèno korisnièko ime ili lozinka";
     $lang['redirect_sprt']              = "Automatski æete biti vraæeni nazad na prijavljivanje posel pauze od %d sekundi";
