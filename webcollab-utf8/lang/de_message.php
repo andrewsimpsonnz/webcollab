@@ -83,13 +83,14 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['select_instruct']             = "(Verwende Strg für Mehrfachauswahl oder um nichts auszuwählen)";
     $lang['member_groups']               = "Der Benutzer ist Mitglied in den markierten Gruppen (wenn es welche gibt).";
     $lang['login']                       = "Login";
+    $lang['login_action']                = "Login";
     $lang['error']                       = "Fehler";
     $lang['no_login']                    = "Zugriff verweigert, Benutzername oder Passwort falsch";
     $lang['redirect_sprt']               = "Sie gelangen automatisch zur Loginseite nach %d Sekunden";
     $lang['login_now']                   = "Bitte klicken sie hier, um jetzt zur Loginseite zurückzukehren";
     $lang['please_login']                = "Bitte melden Sie sich an";
     $lang['go']                          = "Los!";
-    
+
  //graphic items
     $lang['late_g']                      = "&nbsp;VERSPÄTET&nbsp;";
     $lang['new_g']                       = "&nbsp;NEU&nbsp;";

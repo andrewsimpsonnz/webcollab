@@ -83,6 +83,7 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['select_instruct']            = "(按住 ctrl 键来选择更多/小项目)";
     $lang['member_groups']              = "The user is a member of the highlighted groups below (if any)";
     $lang['login']                      = "登入";
+    $lang['login_action']               = "登入";
     $lang['error']                      = "错误";
     $lang['no_login']                   = "禁止查阅，不正确的登入名称或密码";
     $lang['redirect_sprt']              = "你将会于 %d 秒闲置后自动返回登入页";

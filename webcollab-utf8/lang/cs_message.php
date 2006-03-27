@@ -83,6 +83,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['select_instruct']            = "(Použijte CTRL k vybrání více položek, nebo žádné)";
     $lang['member_groups']              = "Uživatel je členem vysvícených skupin uvedených níže";
     $lang['login']                      = "Login";
+    $lang['login_action']               = "Login";
     $lang['error']                      = "Chyba";
     $lang['no_login']                   = "Přístup odepřen; špatné jeméno nebo heslo";
     $lang['redirect_sprt']              = "Automaticky budete přesměrovány na přihlašovací stránku za %d sekund";

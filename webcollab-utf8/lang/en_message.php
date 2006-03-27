@@ -80,6 +80,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['select_instruct']            = "(Use ctrl to select more; or to select none)";
     $lang['member_groups']              = "The user is a member of the highlighted groups below (if any)";
     $lang['login']                      = "Login";
+    $lang['login_action']               = "Login";
     $lang['error']                      = "Error";
     $lang['no_login']                   = "Access denied; incorrect login or password";
     $lang['redirect_sprt']              = "You will automatically return to Login after a %d second delay";

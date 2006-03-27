@@ -84,6 +84,7 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', 'Štv', 'Pi', 'So' );
     $lang['select_instruct']            = '(Použite ctrl pre výber viac položiek; alebo žiadnej)';
     $lang['member_groups']              = 'Uživateľ je člen dole zvýraznených skupín (ak je člen nejakej skupiny)';
     $lang['login']                      = 'Login';
+    $lang['login_action']               = "Login";
     $lang['error']                      = 'Chyba';
     $lang['no_login']                   = 'Prístup odmietnutý; neplatný login alebo heslo';
     $lang['redirect_sprt']              = 'Automatický návrat na login za %d sekúnd ';

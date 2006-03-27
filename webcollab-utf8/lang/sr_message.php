@@ -33,8 +33,7 @@
 define('CHARACTER_SET', 'UTF-8' );
 
 //dates
-$month_array = array (NULL, 'Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul',
-'Avg', 'Sep', 'Okt', 'Nov', 'Dec' );
+$month_array = array (NULL, 'Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Avg', 'Sep', 'Okt', 'Nov', 'Dec' );
 $week_array = array('Ned', 'Pon', 'Uto', 'Sre', 'Čet', 'Pet', 'Sub' );
 
 //task states
@@ -83,6 +82,7 @@ $week_array = array('Ned', 'Pon', 'Uto', 'Sre', 'Čet', 'Pet', 'Sub' );
     $lang['select_instruct']            = "(Držite ctrl da biste odabrali više; ili za prazan odabir)";
     $lang['member_groups']              = "Korisnik je član označenih grupa ispod (ukoliko je uopšte član neke grupe)";
     $lang['login']                      = "Korisničko ime";
+    $lang['login_action']               = "Korisničko ime";
     $lang['error']                      = "Greška";
     $lang['no_login']                   = "Pristup odbijen; netačno korisničko ime ili lozinka";
 

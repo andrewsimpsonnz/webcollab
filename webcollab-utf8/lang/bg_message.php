@@ -83,6 +83,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['select_instruct']              = " (С Ctrl се избират повече от една група)";
     $lang['member_groups']                = "Потребителят е член на показаните групи (ако има)";
     $lang['login']                        = "Вход";
+    $lang['login_action']                 = "Вход";
     $lang['error']                        = "Грешка";
     $lang['no_login']                     = "Достъпът отказан, грешно име или парола";
 //**
