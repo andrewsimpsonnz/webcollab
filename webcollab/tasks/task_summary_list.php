@@ -40,8 +40,7 @@ include_once(BASE.'tasks/task_common.php' );
 include_once(BASE.'includes/time.php' );
 
 //initialise variables
-$no_access_project[0] = 0;
-$no_access_group[0] = 0;
+$no_access_project = array();
 
 //
 // MAIN FUNCTION
@@ -50,7 +49,7 @@ $no_access_group[0] = 0;
 
 function project_summary( $tail, $depth=0, $equiv='' ) {
   global $x, $GID, $lang, $task_state;
-  global $no_access_project, $no_access_group;
+  global $no_access_project;
   global $sortby;
   global $epoch;
 
@@ -83,9 +82,10 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
     //don't show tasks in closed usergroup projects
-    if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project) ) {
-      $key = array_search($row['projectid'], $no_access_project );
-      if( ! in_array($no_access_group[$key], (array)$GID ) ) {
+    if( (! ADMIN ) && isset($no_access_project[($row['projectid'])] ) ) {
+
+      //$no_access_project[($row['projectid'])] == 'usergroupid' of project
+      if(! isset($GID[ ($no_access_project[($row['projectid'])] ) ] ) ) {
         continue;
       }
     }
@@ -359,8 +359,8 @@ $content .= "<b>".$lang['task']."</b></a></small></td></tr>";
 $q = db_query('SELECT id, usergroupid FROM '.PRE.'tasks WHERE parent=0 AND globalaccess=\'f\'' );
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
-  $no_access_project[$i] = $row[0];
-  $no_access_group[$i]   = $row[1];
+  //array key is projectid, array variable is usergroupid
+  $no_access_project[($row[0])] = $row[1];
 }
 
 $group_tail = 'WHERE archive=0'.usergroup_tail();

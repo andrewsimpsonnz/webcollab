@@ -107,7 +107,7 @@ else {
   $usergroups = "";
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ){
     //test for private usergroups
-    if( ($row['private']) && (! ADMIN ) && ( ! in_array($row['id'], (array)$GID ) ) ) {
+    if( ($row['private']) && (! ADMIN ) && ( ! isset($GID[($row['id'])] ) ) ) {
       $alert = "<br />".$lang['private_usergroup_profile'];
       continue;
     }
@@ -165,8 +165,8 @@ if( $tasks_owned + $projects_owned > 0 ) {
   $q = db_query('SELECT id, usergroupid FROM '.PRE.'tasks WHERE parent=0 AND globalaccess=\'f\'' );
 
   for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
-    $no_access_project[$i] = $row[0];
-    $no_access_group[$i] = $row[1];
+    //array key is projectid, array variable is usergroupid
+    $no_access_project[($row[0])] = $row[1];
   }
 
   //Get the number of tasks
@@ -178,16 +178,16 @@ if( $tasks_owned + $projects_owned > 0 ) {
     //check for private usergroups
     if( (! ADMIN ) && ($row['usergroupid'] != 0 ) && ($row['globalaccess'] == 'f' ) ) {
 
-      if( ! in_array( $row['usergroupid'], (array)$GID ) ){
+      if( ! isset($GID[($row['usergroupid'])] ) ) {
         continue;
       }
     }
 
     //don't show tasks in private usergroup projects
-    if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project ) ) {
-      $key = array_search($row['projectid'], $no_access_project );
+    if((! ADMIN ) && isset($no_access_project[($row['projectid'])] ) ) {
 
-        if( ! in_array($no_access_group[$key], (array)$GID ) ){
+        //$no_access_project[($row['projectid'])] == 'usergroupid' of project
+        if(! isset($GID[ ($no_access_project[($row['projectid'])] ) ] ) ) {
           continue;
         }
     }
@@ -224,4 +224,5 @@ if( $tasks_owned + $projects_owned > 0 ) {
   $content .= "</ul>";
   new_box($lang['owned_tasks'], $content );
 }
+
 ?>

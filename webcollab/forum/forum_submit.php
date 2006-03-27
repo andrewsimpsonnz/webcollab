@@ -186,7 +186,7 @@ ignore_user_abort(TRUE);
         default:
           //private post
           //check if the user does belong to that group
-          if((! ADMIN ) && ( ! in_array($usergroupid, (array)$GID ) ) ) {
+          if((! ADMIN ) && ( ! isset($GID[($usergroupid)] ) ) ) {
             error('Forum submit', 'You do not have enough rights to post in that forum' );
           }
 

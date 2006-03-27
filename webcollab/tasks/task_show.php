@@ -280,7 +280,7 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
 
   //check for owner or group access
   if((UID == $TASKID_ROW['owner'] ) ||
-     ($TASKID_ROW['groupaccess'] == "t") && (in_array($TASKID_ROW['usergroupid'], (array)$GID ) ) ) {
+     ($TASKID_ROW['groupaccess'] == "t") && (isset($GID[($TASKID_ROW['usergroupid'])] ) ) ) {
     $access = true;
   }
   else {

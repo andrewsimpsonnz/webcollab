@@ -44,8 +44,8 @@ $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       WHERE '.PRE.'usergroups.private=1');
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-  if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
-   $allowed[$i] = $row[1];
+  if(isset($GID[($row[0])] ) ) {
+    $allowed[($row[1])] = $row[1];
   }
 }
 
@@ -72,7 +72,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //check for private usergroups
   if(! ADMIN ) {
-    if( ($row['private'] ) && (! in_array( $row['id'], (array)$GID ) ) ) {
+    if( ($row['private'] ) && (! isset($GID[($row['id'])] ) ) ) {
       continue;
     }
   }
@@ -103,7 +103,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   for($j=0 ; $user_row = @db_fetch_array($users_q, $j ) ; ++$j ) {
 
     //check for private users
-    if((! ADMIN ) && ($row['private'] ) && (! in_array($row['id'], (array)$allowed ) ) ) {
+    if((! ADMIN ) && ($row['private'] ) && (! isset($allowed[($row['id'])] ) ) ) {
       continue;
     }
 

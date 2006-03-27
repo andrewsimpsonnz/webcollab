@@ -37,7 +37,6 @@ $content = '';
 $allowed    = array();
 $task_dates = array();
 $no_access_project = array();
-$no_access_group   = array();
 $month_projects    = array();
 $project_colour_array = array();
 
@@ -157,8 +156,8 @@ switch($selection ) {
 $q = db_query('SELECT id, usergroupid FROM '.PRE.'tasks WHERE parent=0 AND globalaccess=\'f\'' );
 
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-  $no_access_project[$i] = $row[0];
-  $no_access_group[$i] = $row[1];
+  //array key is projectid, array variable is usergroupid
+  $no_access_project[($row[0])] = $row[1];
 }
 
 //get list of common users in private usergroups that this user can view 
@@ -169,8 +168,8 @@ $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       WHERE '.PRE.'usergroups.private=1');
 
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-  if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
-   $allowed[$i] = $row[1];
+  if(isset($GID[($row[0])] ) ) {
+    $allowed[($row[1])] = $row[1];
   }
 }
 
@@ -233,7 +232,7 @@ $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //user test for privacy
-  if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ) {
+  if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) && ( ! isset($allowed[($row['id'])] ) ) ) {
     continue;
   }
 
@@ -355,10 +354,10 @@ for($num = 1; $num <= $numdays; ++$num ) {
       for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
 
         //don't show tasks in private usergroup projects
-        if( (! ADMIN ) && in_array($row['projectid'], (array)$no_access_project) ) {
-          $key = array_search($row['projectid'], $no_access_project );
+        if( (! ADMIN ) && isset($no_access_project[($row['projectid'])] ) ) {
 
-          if( ! in_array($no_access_group[$key], (array)$GID ) ) {
+          //$no_access_project[($row['projectid'])] == 'usergroupid' of project
+          if(! isset($GID[ ($no_access_project[($row['projectid'])] ) ] ) ) {
             continue;
           }
         }

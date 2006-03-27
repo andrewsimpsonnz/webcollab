@@ -40,7 +40,7 @@ include_once(BASE.'includes/time.php' );
 
 $content = '';
 $javascript = '';
-$allowed = array(); 
+$allowed = array();
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
@@ -50,8 +50,8 @@ $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       WHERE '.PRE.'usergroups.private=1');
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-  if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
-   $allowed[] = $row[1];
+  if(isset($GID[($row[0])] ) ) {
+   $allowed[($row[1])] = $row[1];
   }
 }
 
@@ -66,7 +66,7 @@ function user_access($owner, $usergroupid, $groupaccess ) {
     return true;
   }
   if(GUEST ){
-    return false;   
+    return false;
   }
   if($owner == UID ){
     return true;
@@ -75,7 +75,7 @@ function user_access($owner, $usergroupid, $groupaccess ) {
     return false;
   }
   if($groupaccess == 't' ) {
-    if(in_array($usergroupid, (array)$GID ) ) {
+    if(isset($GID[$usergroupid] ) ) {
       return true;
     }
   }
@@ -138,7 +138,7 @@ for( $i=0; $parent_row = @db_fetch_array($q, $i ); ++$i ) {
   //check for private usergroups
   if( (! ADMIN ) && ($parent_row['usergroupid'] != 0 ) && ($parent_row['globalaccess'] == 'f' ) ) {
 
-    if( ! in_array($parent_row['usergroupid'], (array)$GID ) ) {
+    if( ! isset($GID[($parent_row['usergroupid'])] ) ) {
       continue;
     }
   }
@@ -265,7 +265,7 @@ $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\
 for( $i=0 ; $user_row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //user test for privacy
-  if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
+  if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! isset($allowed[($user_row['id'])] ) ) ){
     continue;
   }
 
@@ -310,7 +310,7 @@ $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
 for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //usergroup test for privacy
-  if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
+  if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! isset($GID[($usergroup_row['id'])] ) ) ) {
     continue;
   }
 

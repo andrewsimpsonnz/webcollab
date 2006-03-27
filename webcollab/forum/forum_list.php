@@ -198,7 +198,7 @@ if($TASKID_ROW['usergroupid'] != 0 ) {
 
   $content = '';
 
-  if(in_array($TASKID_ROW['usergroupid'], (array)$GID ) || ADMIN ) {
+  if(isset($GID[($TASKID_ROW['usergroupid'])] ) || ADMIN ) {
 
     $content .= list_posts_from_task( $taskid, $TASKID_ROW['usergroupid'] );
     //add an option to add posts

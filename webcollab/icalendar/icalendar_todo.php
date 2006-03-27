@@ -138,7 +138,7 @@ $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid
                        WHERE '.PRE.'usergroups.userid='.$userid );
 
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-  if(in_array($row[0], (array)$GID ) ) {
+  if(isset($GID[($row[0])] ) ) {
     return true;
   }
 }

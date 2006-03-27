@@ -96,7 +96,7 @@ function user_access($taskid ) {
   }
   //if groupaccess is set, check user is in usergroup
   if($row[2] == 't' ) {
-    if(in_array($row[1], (array)$GID ) ) {
+    if(isset($GID[($row[1])] ) ) {
       return true;
     }
   }

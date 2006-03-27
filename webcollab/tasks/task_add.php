@@ -51,8 +51,8 @@ $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       WHERE '.PRE.'usergroups.private=1');
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-  if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
-   $allowed[] = $row[1];
+  if(isset($GID[($row[0])] ) ) {
+    $allowed[($row[1])] = $row[1];
   }
 }
 
@@ -136,7 +136,7 @@ if( @safe_integer($_GET['parentid']) ) {
   for( $i=0 ; $user_row = @db_fetch_array($q, $i ) ; ++$i) {
 
     //user test for privacy
-    if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ) {
+    if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && (! isset($allowed[($user_row['id'])] ) ) ) {
       continue;
     }
 
@@ -178,7 +178,7 @@ if( @safe_integer($_GET['parentid']) ) {
   for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
 
     //usergroup test for privacy
-    if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
+    if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! isset($GID[($usergroup_row['id'])] ) ) ) {
       continue;
     }
 
@@ -254,7 +254,7 @@ else {
   for( $i=0 ; $user_row = @db_fetch_array($q, $i) ; ++$i) {
 
     //user test for privacy
-    if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($user_row['id'], (array)$allowed ) ) ){
+    if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! isset($allowed[($user_row['id'])] ) ) ){
       continue;
     }
 
@@ -276,7 +276,7 @@ else {
   for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
 
     //usergroup test for privacy
-    if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! in_array($usergroup_row['id'], (array)$GID ) ) ) {
+    if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! isset($GID[($usergroup_row['id'])] ) ) ) {
       continue;
     }
 

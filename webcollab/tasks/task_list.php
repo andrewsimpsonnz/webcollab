@@ -94,9 +94,9 @@ function list_tasks($parent ) {
 
     //check the user has rights to view this project/task
     if(($row['globalaccess'] != 't' ) && ( $row['usergroupid'] != 0 ) && ($row['owner'] != UID ) && (! ADMIN ) ) {
-      if( ! in_array($row['usergroupid'], (array)$GID ) ) {
+      if( ! isset($GID[($row['usergroupid'])] ) ) {
         //do a recursive search if the subtask is listed in parent_array (it has children then)
-        if(in_array( $row['id'], $parent_array, FALSE) ) {
+        if(isset($parent_array[($row['id'])] ) ) {
           $this_content .= list_tasks( $row['id']);
           $this_content .= "\n</ul></li>\n";
         }
@@ -263,7 +263,7 @@ function list_tasks($parent ) {
 
     //recursive search if the subtask is listed as a key in parent_array (it has children then)
     if(isset($parent_array[($row['id'])] ) ) {
-      $this_content .= list_tasks( $row['id']);
+      $this_content .= list_tasks($row['id'] );
       $this_content .= "\n</ul></li>\n";
     }
     else{

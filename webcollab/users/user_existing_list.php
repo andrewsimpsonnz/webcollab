@@ -42,8 +42,8 @@ $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       WHERE '.PRE.'usergroups.private=1');
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-  if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
-   $allowed[] = $row[1];
+  if(isset($GID[($row[0])] ) ) {
+    $allowed[($row[1])] = $row[1];
   }
 }
 
@@ -63,7 +63,7 @@ $content = "<table class=\"celldata\">\n";
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //user test for privacy
-  if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
+  if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) && (! isset($allowed[($row['id'])] ) ) ){
     continue;
   }
 

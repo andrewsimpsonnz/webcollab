@@ -160,8 +160,8 @@ $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       WHERE '.PRE.'usergroups.private=1');
 
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-  if(in_array($row[0], (array)$GID ) && ! in_array($row[1], (array)$allowed ) ) {
-   $allowed[] = $row[1];
+  if(isset($GID[($row[0])] ) ) {
+   $allowed[($row[1])] = $row[1];
   }
 }
 
@@ -235,7 +235,7 @@ $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   //user test for privacy
-  if($row['private'] && ($row['id'] !=  UID ) && ( ! ADMIN ) && ( ! in_array($row['id'], (array)$allowed ) ) ){
+  if($row['private'] && ($row['id'] !=  UID ) && ( ! ADMIN ) && ( ! isset($allowed[($row['id'])] ) ) ){
     continue;
   }
 
@@ -260,7 +260,7 @@ $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   //usergroup test for privacy
-  if( ($row['private'] ) && ( ! in_array($row['id'], (array)$GID ) ) && (! ADMIN ) ) {
+  if( ($row['private'] ) && (! isset($GID[($row['id'])] ) ) && (! ADMIN ) ) {
     continue;
   }
 
@@ -343,7 +343,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 }
 
 if( $flag != 1 ) {
-  $content .= $lang['no_assigned']."\n";
+  $content .= "<p>".$lang['no_assigned']."</p>\n";
 }
 
 new_box( $lang['todo_list'], $content );

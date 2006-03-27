@@ -132,7 +132,7 @@ $q = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UI
 
 //list usergroups
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
-  $GID[$i] = $row[0];
+  $GID[($row[0])] = $row[0];
 }
 
 //update the "I was here" time

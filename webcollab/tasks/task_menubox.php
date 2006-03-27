@@ -60,7 +60,7 @@ if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
     //edit, delete rights
     if((ADMIN ) ||
        ($TASKID_ROW['owner'] == UID ) ||
-       (($TASKID_ROW['groupaccess'] == "t") && (in_array($TASKID_ROW['usergroupid'], (array)$GID ) ) ) ) {
+       (($TASKID_ROW['groupaccess'] == "t") && (isset($GID[($TASKID_ROW['usergroupid'])] ) ) ) ) {
 
       //edit
       $content .= "<a href=\"tasks.php?x=".$x."&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_".$TYPE]."</a><br />\n";
