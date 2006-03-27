@@ -1,4 +1,10 @@
 WebCollab CVS
+*** 26 March 2006
+  Andrew Simpson
+
+- speed up array searching by searching on hashed array keys
+
+WebCollab CVS
 *** 18 March 2006
   Andrew Simpson
 
