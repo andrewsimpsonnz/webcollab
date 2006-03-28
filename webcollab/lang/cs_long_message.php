@@ -4,7 +4,8 @@
 
   WebCollab
   ---------------------------------------
-
+  This file created 2003 by Andrew Simpson
+  
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -22,6 +23,10 @@
   ---------
 
   Translation: Lukas Moravek <moravekl at gmail.com>
+  Corection: Jirka Dutka <jirka at dutka.net>
+
+  
+  NOTE: This file is written in IS0-8859-2 character set
 
 */
 
