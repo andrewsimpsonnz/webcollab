@@ -35,7 +35,10 @@ if(! defined('UID' ) ) {
 include_once(BASE.'includes/time.php' );
 
 //initialise variables
-$list = '';
+$list   = '';
+$posted = 0;
+$count  = 1;
+$shown  = array();
 
 $m_strimwidth = (UNICODE_VERSION == 'Y' ) ? 'mb_strimwidth' : 'substr';
 
@@ -51,23 +54,40 @@ else {
 
 $q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
                       '.PRE.'forum.posted AS posted,
-                      MAX('.PRE.'forum.posted) AS recentpost,
                       '.PRE.'tasks.name AS taskname
                       FROM '.PRE.'forum 
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
                       WHERE '.PRE.'forum.posted > ( now()-INTERVAL '.$delim.NEW_TIME.' DAY'.$delim.')
                       '.$tail.'
                       GROUP BY '.PRE.'forum.taskid, posted, taskname
-                      ORDER BY posted DESC LIMIT 10' );
+                      ORDER BY posted DESC LIMIT 50' );
 
 //iterate for posts
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
+  //show each task only once
+  if(isset($shown[($row['taskid'])] ) ) {
+    continue;
+  }
+
   //date of latest post
-  $lastpost = $row['recentpost'];
+  if(! $posted ) {
+    $lastpost = $row['posted'];
+    $posted = true;
+  }
 
   //show it
   $list .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['taskid']."\">".$m_strimwidth($row['taskname'], 0, 25 )."</a><br />\n";
+
+  //record taskid to ensure we only show it once
+  $shown[($row['taskid'])] = 1;
+
+  //only show 10 items
+  if($count >= 10 ) {
+    break;
+  }
+  ++$count;
+
 }
 
 db_free_result($q );
