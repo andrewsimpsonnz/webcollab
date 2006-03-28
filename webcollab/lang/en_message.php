@@ -176,11 +176,8 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['add_reply']                  = "Add reply";
     $lang['last_post_sprt']             = "Last post %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']               = "Recent forum posts";
-//**
     $lang['forum_search']               = "Forum search";
-//**
     $lang['no_results']                 = "No results found for '%s'";
-//**
     $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
 
  //includes
@@ -405,6 +402,5 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['print_version']              = "Print version";
     $lang['condensed_view']             = "Condensed view";
     $lang['full_view']                  = "Full view";
-//**
     $lang['icalendar']                  = "iCalendar";
 ?>
