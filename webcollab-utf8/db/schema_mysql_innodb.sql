@@ -22,6 +22,7 @@ CREATE TABLE tasks (
         completed TINYINT NOT NULL DEFAULT 0,
         completion_time TIMESTAMP NOT NULL,
         archive TINYINT NOT NULL DEFAULT 0,
+        sequence INT UNSIGNED NOT NULL DEFAULT 0,
         INDEX (owner),
         INDEX (parent),
         INDEX (name(10)),
@@ -43,6 +44,7 @@ CREATE TABLE users (
 	private TINYINT NOT NULL DEFAULT 0,
         guest TINYINT NOT NULL DEFAULT 0,
 	deleted VARCHAR(5) NOT NULL DEFAULT 'f',
+        locale VARCHAR(10) NOT NULL DEFAULT 'en',
         INDEX (fullname(10))
 )
 TYPE = InnoDB
@@ -78,7 +80,7 @@ CREATE TABLE logins (
 	session_key VARCHAR(100) NOT NULL,
 	ip VARCHAR(100) NOT NULL,
 	lastaccess TIMESTAMP NOT NULL,
-        INDEX (session_key(35), user_id )
+        INDEX (session_key(10), user_id )
 )
 TYPE = InnoDB
 CHARACTER SET = utf8;
@@ -117,7 +119,8 @@ CREATE TABLE contacts (
 	email VARCHAR(100),
 	added_by INT UNSIGNED NOT NULL,
 	date TIMESTAMP NOT NULL,
-	user_id INT UNSIGNED NOT NULL
+	user_id INT UNSIGNED NOT NULL,
+        taskid INT UNSIGNED NOT NULL DEFAULT 0
 )
 TYPE = InnoDB
 CHARACTER SET = utf8;
