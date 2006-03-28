@@ -23,6 +23,7 @@
   ---------
 
   Translation: Lukas Moravek <moravekl at gmail.com>
+  Corection: Jirka Dutka <jirka at dutka.net>
   
   
   NOTE: This file is written in UTF-8 character set
@@ -30,7 +31,7 @@
 */
 
 // Get current date/time for emails in a preferred format eg: 01 Apr 2004 9:18 am NZDT  
-$email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y \a\t g:i a T' );
+$email_date = date("d. " )." ".$month_array_2p[(date("n" ) )]." ".date('Y \v h:i' );
 
 $title_file_post          = ABBR_MANAGER_NAME.": Nahrán nový soubor: %s";
 $email_file_post          = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že byl přidán nový soubor ".$email_date." uživatelem %1\$s.\n\n".
@@ -48,7 +49,7 @@ $email_forum_reply        = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že
                             "----\n\n".
                             "Opdpověd:\n%4\$s\n\n".
                             "----\n\n".
-                            "Prosím navštivte tuto web stránku více informací.\n\n".BASE_URL."\n";
+                            "Prosím navštivte tuto web stránku pro více informací.\n\n".BASE_URL."\n";
 
 
 $email_list =  "Projekt:  %1\$s\n".
@@ -56,11 +57,11 @@ $email_list =  "Projekt:  %1\$s\n".
                "Stav:   %3\$s\n".
                "Vlastník:    %4\$s ( %5\$s )\n".
                "Text:\n%6\$s\n\n".
-               "Prosím navštivte tuto web stránku více informací.\n\n".BASE_URL."\n";
+               "Prosím navštivte tuto web stránku pro více informací.\n\n".BASE_URL."\n";
 
 
-$title_takeover_project   = ABBR_MANAGER_NAME.": Váš projekt byl převzán";
-$title_takeover_task      = ABBR_MANAGER_NAME.": Váš úkol byl převzán";
+$title_takeover_project   = ABBR_MANAGER_NAME.": Váš projekt byl převzat";
+$title_takeover_task      = ABBR_MANAGER_NAME.": Váš úkol byl převzat";
 
 $email_takeover_task      = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že úkol, který jste vlastnil, byl převzat administrátorem ".$email_date.".\n\n";
 $email_takeover_project   = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že projekt, který jste vlastnil, byl převzat administrátorem ".$email_date.".\n\n";
@@ -83,8 +84,8 @@ $email_new_group_task     = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že
 $title_edit_owner_project = ABBR_MANAGER_NAME.": Váš projekt byl aktualizován";
 $title_edit_owner_task    = ABBR_MANAGER_NAME.": Váš úkol byl aktualizován";
 
-$email_edit_owner_project = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že a projekt který vlastníte byl změněn ".$email_date.".\n\nZde jsou podrobnosti:\n\n";
-$email_edit_owner_task    = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že a úkol který vlastníte byl změněn ".$email_date.".\n\nZde jsou podrobnosti:\n\n";
+$email_edit_owner_project = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že projekt který vlastníte byl změněn ".$email_date.".\n\nZde jsou podrobnosti:\n\n";
+$email_edit_owner_task    = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že úkol který vlastníte byl změněn ".$email_date.".\n\nZde jsou podrobnosti:\n\n";
 
 
 $title_edit_group_project = ABBR_MANAGER_NAME.": Aktualizovaný projekt";
@@ -116,16 +117,16 @@ $email_welcome            = "Dobrý den,\n\n ".MANAGER_NAME." Vás vítá v nás
                             //"First of all this is a project management tool, the main screen will show you the projects that are currently available. ".
                             "Hlavní stránka Vám zobrazí projekty, které jsou Vám dostupné ".
                             //"If you click on one of the names you will find yourself in the task's part. This is where all the work will go on.\n\n".
-                            "Pokud kliknete na jeden z projektů, octnete se v části úkolů daného projektju. Nyní můžete začít pracovat :-).\n\n".
+                            "Pokud kliknete na jeden z projektů, octnete se v části úkolů daného projektu. Nyní můžete začít pracovat :-).\n\n".
                             //Every item you post or task you edit will be shown to other users as 'new' or 'updated'. This also works vice-versa and ".
                             //"it enables you to quickly spot where the activity is
-                            "Každá zpráva nebo úloha, kterou změníte bebo vytvoříte, bude zobrazená ostatním uživatelům jako aktualizavná nebo nová. 
-                            Samozřejmě toto pracuje jako vice-versa a umožňuje rychle si všimnout aktivitu\n\n".
+                            "Každá zpráva nebo úloha, kterou změníte nebo vytvoříte, bude zobrazena ostatním uživatelům jako aktualizavná nebo nová. 
+                            Samozřejmě toto pracuje vice-versa a umožňuje rychle si všimnout aktivity\n\n".
                             //"You can also take or get ownership of tasks and you will find yourself able to edit them and all the forum posts belonging to it. ".
-                            "Můžete také převzít vlastníctvý úlohy, címž získáte právo ji spravovat, včetně fóra patřícího k ní. ".
+                            "Můžete také převzít vlastníctví úlohy, čímž získáte právo ji spravovat, včetně fóra patřícího k ní. ".
                             //"As you progress with your work please edit your task's text and status so that everybody can keep a track on your progress. ".
-                            "Jak budete pokračovat se svojí prací, prosím editujete text úlohy a stav tak, aby každý mohl mít povědomí o Vašem postupu. ".
-                            "\n\nNyní mě nezbývá něž Vám popřát mnoho úspěchů. V případě, že si nebude vědět rady pošlete email na ".EMAIL_ADMIN.".\n\n --Hodně štestí !\n\n".
+                            "Jak budete pokračovat se svou prací, prosím editujete text úlohy a stav tak, aby každý mohl mít povědomí o Vašem postupu. ".
+                            "\n\nNyní mi nezbývá než Vám popřát mnoho úspěchů. V případě, že si nebude vědět rady pošlete email na ".EMAIL_ADMIN.".\n\n --Hodně štestí !\n\n".
                             "Login / Přihlašovací jméno:       %1\$s\n".
                             "Heslo:                            %2\$s\n\n".
                             "skupina:                          %3\$s".
@@ -133,7 +134,7 @@ $email_welcome            = "Dobrý den,\n\n ".MANAGER_NAME." Vás vítá v nás
                             "Web stránka:                      ".BASE_URL."\n\n".
                             "%5\$s";
 
-$title_user_change1       = ABBR_MANAGER_NAME.": Váš učet byl změněn administrátorem";
+$title_user_change1       = ABBR_MANAGER_NAME.": Váš účet byl změněn administrátorem";
 $email_user_change1       = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že Váš účet byl změněn ".$email_date." uživatelem %1\$s ( %2\$s ) \n\n".
                             "Login / Přihlašovací jméno:     %3\$s\n".
                             "Heslo:                          %4\$s\n\n".
@@ -141,14 +142,14 @@ $email_user_change1       = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že
                             "Jméno:                          %6\$s\n\n".
                             "%7\$s";
 
-$title_user_change2       = ABBR_MANAGER_NAME.": Váš učet byl změněn";
-$email_user_change2       = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že jste uspěšně změnili nastavené Vášho účtu ".$email_date.".\n\n".
+$title_user_change2       = ABBR_MANAGER_NAME.": Váš účet byl změněn";
+$email_user_change2       = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že jste uspěšně změnili nastavené Vašeho účtu ".$email_date.".\n\n".
                             "Login / Přihlašovací jméno:     %1\$s\n".
                             "Heslo:                          %2\$s\n\n".
                             "Jméno:                          %3\$s\n";
 
-$title_user_change3       = ABBR_MANAGER_NAME.": Váš učet byl změněn";
-$email_user_change3       = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že jste uspěšně změnili nastavené Vášho účtu ".$email_date.".\n\n".
+$title_user_change3       = ABBR_MANAGER_NAME.": Váš účet byl změněn";
+$email_user_change3       = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že jste uspěšně změnili nastavené Vašeho účtu ".$email_date.".\n\n".
                             "Login / Přihlašovací jméno: %1\$s\n".
                             "Vaše heslo nebylo změněno.\n\n".
                             "Jméno:  %2\$s\n";
@@ -166,6 +167,6 @@ $email_revive             = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že
 $title_delete_user        = ABBR_MANAGER_NAME.": Účet zablokován.";
 $email_delete_user        = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že váš účet byl zablokován ".$email_date.".\n".
                             "Děkujeme Vám za veškerou vykonanou práci!\n\n".
-                            "Pokud máte námitku, nebo si myslíte že nastala chyba, napište email na ".EMAIL_ADMIN.".";
+                            "Pokud máte připomínky, nebo si myslíte že nastala chyba, napište email na ".EMAIL_ADMIN.".";
 
 ?>

@@ -23,6 +23,7 @@
   ---------
 
   Translation: Lukas Moravek <moravekl at gmail.com>
+  Corection: Jirka Dutka <jirka at dutka.net>
 
   
   NOTE: This file is written in UTF-8 character set
