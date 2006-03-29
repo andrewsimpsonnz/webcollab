@@ -9,13 +9,12 @@
 
   Language files for 'ru' (Russian)
 
-  Translation by Eugene N. Shilaev
-
   NOTE: This file is written in UTF-8 character set
 
 */
+
 //required language encodings
-define('CHARACTER_SET', 'UTF-8' );
+define('CHARACTER_SET', "UTF-8" );
 
 //dates
 $month_array = array (NULL, 'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек' );
@@ -71,7 +70,7 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['error']                      = "Ашипка";
     $lang['no_login']                   = "Доступ запрещен; неверное имя или пароль";
     $lang['redirect_sprt']              = "Вы автоматически вернетесь на страницу входа через %d секунд";
-    $lang['login_now']                  = "Нажмите здесь для возврата к регистрации";
+    $lang['login_now']                  = "Нажмите здесь для возврата к регистрации";   
     $lang['please_login']               = "Зарегистрируйтесь";
     $lang['go']                         = "Прыг!";
 
@@ -81,23 +80,24 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['updated_g']                  = "&nbsp;ОБНОВЛЕН&nbsp;";
 
 //admin config
-    $lang['admin_config']               = "Admin config";
+    $lang['admin_config']               = "Конфигурация";
     $lang['email_settings']             = "Настройка заголовков Email";
-    $lang['admin_email']                = "Admin email";
-    $lang['email_reply']                = "Email 'reply to'";
-    $lang['email_from']                 = "Email 'from'";
+    $lang['admin_email']                = "email Администратора";
+    $lang['email_reply']                = "Адрес Email для ответа";
+    $lang['email_from']                 = "Адрес Email в поле 'От'";
     $lang['mailing_list']               = "Лист рассылки";
-    $lang['default_checkbox']           = "Default checkbox settings for Project/Tasks";
+    $lang['default_checkbox']           = "Настройки по умолчанию для переключателей Проектов/Заданий";
     $lang['allow_globalaccess']         = "Разрешить общий доступ?";
     $lang['allow_group_edit']           = "Разрешить всем членам группы редактировать?";
-    $lang['set_email_owner']            = "Always email owner with changes?";
-    $lang['set_email_group']            = "Always email usergroup with changes?";
+    $lang['set_email_owner']            = "Всегда сообщать по email координатора/исполнителя?";
+    $lang['set_email_group']            = "Всегда сообщять по email группу пользователей при изменениях?";
+//**    
     $lang['project_listing_order']      = "Порядок сортировки проектов";
-    $lang['task_listing_order']         = "Порядок сортировки заданий";
+    $lang['task_listing_order']         = "Порядок сортировки заданий"; 
     $lang['configuration']              = "Конфигурация";
 
 //archive
-    $lang['archived_projects']          = "Архивные проекты";
+    $lang['archived_projects']          = "Архивные проекты";    
 
 //contacts
     $lang['firstname']                  = "Имя:";
@@ -128,9 +128,9 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['no_file_uploads']            = "Конфигурация сервера не позволяет осуществлять загрузку файлов";
     $lang['file']                       = "Файл:";
     $lang['uploader']                   = "Загрузил:";
-    $lang['files_assoc_project']        = "Файл прикрепоен к проекту:";
+    $lang['files_assoc_project']        = "Файл прикреплен к проекту:";
     $lang['files_assoc_task']           = "Файл прикреплен к заданию";
-    $lang['file_admin']                 = "File admin";
+    $lang['file_admin']                 = "Управление файлами";
     $lang['add_file']                   = "Добавить файл";
     $lang['files']                      = "Файлы";
     $lang['file_choose']                = "Файл для загрузки:";
@@ -161,12 +161,10 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['add_reply']                  = "Добавить ответ";
     $lang['last_post_sprt']             = "Последнее сообщение от %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']               = "Новое сообщение в форуме";
-//**
-    $lang['forum_search']               = "Forum search";
-//**
-    $lang['no_results']                 = "No results found for '%s'";
-//**
-    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+    $lang['recent_posts']               = "Recent forum posts";
+    $lang['forum_search']               = "Поиск в форуме";
+    $lang['no_results']                 = "Не найдено результатов для '%s'";
+    $lang['search_results']             = "Найдено %1\$s результатов для '%2\$s'<br />Showing results %3\$s to %4\$s";
 
  //includes
     $lang['report']                     = "Отчет";
@@ -191,17 +189,17 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
 
 
  //taskgroups
-    $lang['taskgroup_name']             = "Название рабочей группы:";
-    $lang['taskgroup_description']      = "Краткое описание рабочей группы:";
-    $lang['add_taskgroup']              = "Добавить рабочую группу";
-    $lang['add_new_taskgroup']          = "Добавить новуй рабочую группу";
-    $lang['edit_taskgroup']             = "Редактировать рабочую группу";
-    $lang['taskgroup_manage']           = "Управление рабочими группами";
+    $lang['taskgroup_name']             = "Название группы заданий:";
+    $lang['taskgroup_description']      = "Краткое описание группы заданий:";
+    $lang['add_taskgroup']              = "Добавить группу заданий";
+    $lang['add_new_taskgroup']          = "Добавить новую группу заданий";
+    $lang['edit_taskgroup']             = "Редактировать группу заданий";
+    $lang['taskgroup_manage']           = "Управление группами заданий";
     $lang['no_taskgroups']              = "Ни одной группы нет";
-    $lang['manage_taskgroups']          = "Рабочие группы: Управление";
-    $lang['taskgroups']                 = "Рабочие группы";
+    $lang['manage_taskgroups']          = "Группы заданий: Управление";
+    $lang['taskgroups']                 = "Группы заданий";
     $lang['taskgroup_dup_sprt']         = "Уже есть такая группа '%s'.  Вернитесь назад и выберите другое имя.";
-    $lang['info_taskgroup_manage']      = "Рабочая группа: Информация";
+    $lang['info_taskgroup_manage']      = "Группа заданий: Информация";
 
  //usergroups
     $lang['usergroup_name']             = "Название группы пользователей:";
@@ -226,7 +224,7 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['email']                      = "E-mail";
     $lang['admin']                      = "Администратор";
     $lang['private_user']               = "Засекречен";
-    $lang['normal_user']                = "Обычный пользователь";
+    $lang['normal_user']                = "Обычный пользователь"; 
     $lang['is_admin']                   = "Будет администратором?";
     $lang['is_guest']                   = "Будет гостем?";
     $lang['guest']                      = "Гость";
@@ -246,7 +244,7 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['email_users']                = "Письмо пользователю";
     $lang['select_usergroup']           = "Группы пользователей выбранные внизу:";
     $lang['subject']                    = "Тема:";
-    $lang['message_sent_maillist']      = "In all cases the message is also copied to the mailing list.";
+    $lang['message_sent_maillist']      = "Во всех случаях сообщение попадет в лист рассылки.";
     $lang['who_online']                 = "Кто в системе?";
     $lang['edit_details']               = "Изменить детальную информацию";
     $lang['show_details']               = "Показать детальную информацию";
@@ -285,14 +283,14 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['project_name']               = "Название проекта";
     $lang['task_name']                  = "Название задания";
     $lang['deadline']                   = "Дата завершения";
-    $lang['taken_from_parent']          = "(Taken from parent)";
+    $lang['taken_from_parent']          = "(взято из родительского)";
     $lang['status']                     = "Статус";
-    $lang['task_owner']                 = "Координатор задания";
+    $lang['task_owner']                 = "Исполнитель задания";
     $lang['project_owner']              = "Координатор проекта";
-    $lang['taskgroup']                  = "Рабочая группа";
+    $lang['taskgroup']                  = "Группа заданий";
     $lang['usergroup']                  = "Группа пользователей";
     $lang['nobody']                     = "Никто";
-    $lang['none']                       = "Ничего";
+    $lang['none']                       = "Нет";
     $lang['no_group']                   = "Нет группы";
     $lang['all_groups']                 = "Все группы";
     $lang['all_users']                  = "Все пользователи";
@@ -323,7 +321,7 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['quick_jump']                 = "Быстрый переход";
     $lang['no_edit']                    = "Вы не имеете никакого отношения к этому, а потому и редактировать не можете";
     $lang['uncategorised']              = "Uncategorised";
-    $lang['admin']                      = "Admin";
+    $lang['admin']                      = "Управление";
     $lang['global']                     = "Общие";
     $lang['delete_project']             = "Удалить проект";
     $lang['delete_task']                = "Удалить задание";
@@ -337,7 +335,7 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['show_all_projects']          = "Показать все проекты";
     $lang['show_active_projects']       = "Показать только проекты в работе";
     $lang['project_hold_sprt']          = "Проект ждет с %s";
-    $lang['project_planned']            = "Планируемые проекты";
+    $lang['project_planned']            = "Планируемый проект";
     $lang['percent_sprt']               = "%d%% задания выполнено";
     $lang['project_no_deadline']        = "Не установлен срок завершения проекта";
     $lang['no_allowed_projects']        = "Нет проектов что бы вам показать";
@@ -351,7 +349,7 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['project_accessible']         = "(Этот проект публично доступен всем пользователям)";
     $lang['task_accessible']            = "(Это задание публично доступно всем пользователям)";
     $lang['project_not_accessible']     = "(Этот проект доступен только членам группы)";
-    $lang['task_not_accessible']        = "(Это задание доступно только сленам группы)";
+    $lang['task_not_accessible']        = "(Это задание доступно только членам группы)";
     $lang['project_not_in_usergroup']   = "Этот проект не принадлежит какой-либо группе и доступен всем пользователям.";
     $lang['task_not_in_usergroup']      = "Это задание не принадлежит какой-либо группе и доступно всем пользователям.";
     $lang['usergroup_can_edit_project'] = "Этот проект может быть изменен только членами группы.";
@@ -370,9 +368,9 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['todo_list']                  = "Что нужно сделать";
     $lang['summary_list']               = "Обзор проектов";
     $lang['task_submit']                = "Задание: Подтверждение";
-    $lang['not_owner']                  = "Доступ запрещен. Либо Вы не координатор или у Вас недостаточно прав для доступа";
+    $lang['not_owner']                  = "Доступ запрещен. Либо Вы не координатор либо у Вас недостаточно прав для доступа";
     $lang['missing_values']             = "Не все поля заполнены; вернитесь назад и попробуйте еще раз";
-    $lang['future']                     = "Future";
+    $lang['future']                     = "Будущее";
     $lang['flags']                      = "Метки";
     $lang['owner']                      = "Координатор";
     $lang['group']                      = "Группа";
@@ -391,7 +389,6 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['print_version']              = "Версия для печати";
     $lang['condensed_view']             = "Свернуть";
     $lang['full_view']                  = "Развернуть";
-//**
     $lang['icalendar']                  = "iCalendar";
 
 ?>
