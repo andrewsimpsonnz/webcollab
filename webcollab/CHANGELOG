@@ -1,4 +1,16 @@
 WebCollab CVS
+*** 28 March 2006
+  Andrew Simpson
+
+- update Czech language (Credit: Lukas Moravek)
+
+- update Russian language (Credit: Eugene N. Shylaev)
+
+- bugfix: remove duplicate task listings in forum menubox
+
+- bugfix: correct last posted date in forum menubox
+
+WebCollab CVS
 *** 26 March 2006
   Andrew Simpson
 
