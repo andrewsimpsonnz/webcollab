@@ -23,7 +23,7 @@ $month_array = array (NULL, 'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Ав
 $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
 
 //task states
- 
+
  //priorities
     $task_state['dontdo']               = "Может быть когда-нибудь...";
     $task_state['low']                  = "Хотелось бы";
@@ -43,7 +43,7 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $task_state['planned_project']      = "Планируемый проект (работа стоит)";
     $task_state['no_deadline_project']  = "Не установлена дата завершения";
     $task_state['active_project']       = "Проект в работе";
-    
+
 //common items
     $lang['description']                = "Описание";
     $lang['name']                       = "Название";
@@ -75,7 +75,7 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['login_now']                  = "Нажмите здесь для возврата к регистрации";   
     $lang['please_login']               = "Зарегистрируйтесь";
     $lang['go']                         = "Прыг!";
-    
+
 //graphic items
     $lang['late_g']                     = "&nbsp;ЗАДЕРЖКА&nbsp;";
     $lang['new_g']                      = "&nbsp;НОВЫЙ&nbsp;";
@@ -85,8 +85,8 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['admin_config']               = "Конфигурация";
     $lang['email_settings']             = "Настройка заголовков Email";
     $lang['admin_email']                = "email Администратора";
-    $lang['email_reply']                = "Email 'reply to'";
-    $lang['email_from']                 = "Email 'from'";
+    $lang['email_reply']                = "Адрес Email для ответа";
+    $lang['email_from']                 = "Адрес Email в поле 'От'";
     $lang['mailing_list']               = "Лист рассылки";
     $lang['default_checkbox']           = "Настройки по умолчанию для переключателей Проектов/Заданий";
     $lang['allow_globalaccess']         = "Разрешить общий доступ?";
@@ -162,15 +162,11 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['no_message']                 = "Ничего нет, пусто! Вернитесь назад и поробуйте еще раз";
     $lang['add_reply']                  = "Добавить ответ";
     $lang['last_post_sprt']             = "Последнее сообщение от %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-    $lang['recent_posts']               = "Новое сообщение в форуме";      
-//**
+    $lang['recent_posts']               = "Новое сообщение в форуме";
     $lang['recent_posts']               = "Recent forum posts";
-//**
-    $lang['forum_search']               = "Forum search";
-//**
-    $lang['no_results']                 = "No results found for '%s'";
-//**
-    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+    $lang['forum_search']               = "Поиск в форуме";
+    $lang['no_results']                 = "Не найдено результатов для '%s'";
+    $lang['search_results']             = "Найдено %1\$s результатов для '%2\$s'<br />Showing results %3\$s to %4\$s";
 
  //includes
     $lang['report']                     = "Отчет";
@@ -374,9 +370,9 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['todo_list']                  = "Что нужно сделать";
     $lang['summary_list']               = "Обзор проектов";
     $lang['task_submit']                = "Задание: Подтверждение";
-    $lang['not_owner']                  = "Доступ запрещен. Либо Вы не координатор или у Вас недостаточно прав для доступа";
+    $lang['not_owner']                  = "Доступ запрещен. Либо Вы не координатор либо у Вас недостаточно прав для доступа";
     $lang['missing_values']             = "Не все поля заполнены; вернитесь назад и попробуйте еще раз";
-    $lang['future']                     = "Future";
+    $lang['future']                     = "Будущее";
     $lang['flags']                      = "Метки";
     $lang['owner']                      = "Координатор";
     $lang['group']                      = "Группа";
@@ -395,7 +391,6 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['print_version']              = "Версия для печати";
     $lang['condensed_view']             = "Свернуть";
     $lang['full_view']                  = "Развернуть";
-//**
     $lang['icalendar']                  = "iCalendar";
 
 ?>

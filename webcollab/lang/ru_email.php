@@ -42,11 +42,11 @@ $email_list =  "Проект:     %1\$s\n".
                "Пожалуйста, обратитесь к сайту ".BASE_URL." за более подробной информацией\n";
 
 
-$title_takeover_project   = ABBR_MANAGER_NAME.": Your project taken over";
-$title_takeover_task      = ABBR_MANAGER_NAME.": Your task taken over";
+$title_takeover_project   = ABBR_MANAGER_NAME.": Ваш проект передан";
+$title_takeover_task      = ABBR_MANAGER_NAME.": Ваше задание передано";
 
-$email_takeover_task      = "Hello,\n\nСистема ".MANAGER_NAME." информирует Вас о том, что a task you own has been taken over by an admin on ".$email_date.".\n\n";
-$email_takeover_project   = "Hello,\n\nСистема ".MANAGER_NAME." информирует Вас о том, что a project you own has been taken over by an admin on ".$email_date.".\n\n";
+$email_takeover_task      = "Hello,\n\nСистема ".MANAGER_NAME." информирует Вас о том, что Ваше задание было передано Администратором другому пользователю".$email_date.".\n\n";
+$email_takeover_project   = "Hello,\n\nСистема ".MANAGER_NAME." информирует Вас о том, что Ваш проект был передан Администратором другому пользователю".$email_date.".\n\n";
 
 
 $title_new_owner_project  = ABBR_MANAGER_NAME.": Новый проект для Вас";
