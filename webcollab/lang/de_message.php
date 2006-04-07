@@ -82,16 +82,16 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['info']                        = "Info";
     $lang['bytes']                       = " Bytes";
     $lang['select_instruct']             = "(Verwende Strg für Mehrfachauswahl oder um nichts auszuwählen)";
-    $lang['member_groups']               = "Der Benutzer ist Mitglied in den markierten Gruppen (wenn es welche gibt).";
+    $lang['member_groups']               = "Der Nutzer ist Mitglied in den markierten Gruppen (wenn es welche gibt).";
     $lang['login']                       = "Login";
     $lang['login_action']                = "Login";
     $lang['error']                       = "Fehler";
-    $lang['no_login']                    = "Zugriff verweigert, Benutzername oder Passwort falsch";
+    $lang['no_login']                    = "Zugriff verweigert, Nutzername oder Passwort falsch";
     $lang['redirect_sprt']               = "Sie gelangen automatisch zur Loginseite nach %d Sekunden";
     $lang['login_now']                   = "Bitte klicken sie hier, um jetzt zur Loginseite zurückzukehren";
     $lang['please_login']                = "Bitte melden Sie sich an";
     $lang['go']                          = "Los!";
-    
+
  //graphic items
     $lang['late_g']                      = "&nbsp;VERSPÄTET&nbsp;";
     $lang['new_g']                       = "&nbsp;NEU&nbsp;";
@@ -106,9 +106,9 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['mailing_list']                = "Mailingliste";
     $lang['default_checkbox']            = "Voreinstellung der Checkboxen für Projekte und Aufgaben";
     $lang['allow_globalaccess']          = "Erlaube globalen Zugriff?";
-    $lang['allow_group_edit']            = "Ist es allen Benutzern der Gruppe erlaubt, die Daten zu bearbeiten?";
+    $lang['allow_group_edit']            = "Ist es allen Nutzern der Gruppe erlaubt, die Daten zu bearbeiten?";
     $lang['set_email_owner']             = "Den Besitzer immer per Email über Veränderungen benachrichtigen?";
-    $lang['set_email_group']             = "Soll die Benutzergruppe immer bei Veränderungen benachrichtigt werden?";
+    $lang['set_email_group']             = "Soll die Nutzergruppe immer bei Veränderungen benachrichtigt werden?";
     $lang['project_listing_order']       = "Projektsortierung nach";
     $lang['task_listing_order']          = "Aufgabensortierung nach"; 
     $lang['configuration']               = "Konfiguration";
@@ -133,7 +133,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['del_contact']                 = "Kontakt löschen";
     $lang['contact_info']                = "Kontaktinformationen";
     $lang['contacts']                    = "Kontakte";
-    $lang['contact_add_info']            = "Wenn eine Firma angegeben wurde, erscheint der Firmenname anstelle des Benutzernamens.";
+    $lang['contact_add_info']            = "Wenn eine Firma angegeben wurde, erscheint der Firmenname anstelle des Nutzernamens.";
     $lang['show_contact']                = "Zeige Kontakte";
     $lang['edit_contact']                = "Bearbeite Kontakte";
     $lang['contact_submit']              = "Kontakt absenden";
@@ -171,21 +171,16 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['forum_email_usergroup']       = "Sende Forenbeitrag an Nutzergruppe?";
     $lang['reply']                       = "Antwort";
     $lang['new_post']                    = "Neue Nachricht";
-    $lang['public_user_forum']           = "Offenes Benutzerforum";
+    $lang['public_user_forum']           = "Offenes Nutzerforum";
     $lang['private_forum_sprt']          = "Privates Forum für Gruppe '%s' ";
     $lang['forum_submit']                = "Beitrag absenden";
     $lang['no_message']                  = "Keine Nachricht angegeben! Bitte gehen Sie zurück und versuchen Sie es noch einmal";
     $lang['add_reply']                   = "Antwort hinzufügen";
     $lang['last_post_sprt']              = "Letzter Beitrag %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-    $lang['recent_posts']                = "Neueste Beiträge";
-//**
-    $lang['recent_posts']                = "Recent forum posts";
-//**
-    $lang['forum_search']                = "Forum search";
-//**
-    $lang['no_results']                  = "No results found for '%s'";
-//**
-    $lang['search_results']              = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+    $lang['recent_posts']                = "Neue Forenbeiträge";
+    $lang['forum_search']                = "Suche im Forum";
+    $lang['no_results']                  = "Keine Treffer gefunden für '%s'";
+    $lang['search_results']              = "%1\$s Treffer für '%2\$s' gefunden<br />Zeige Treffer %3\$s bis %4\$s";
 
  //includes
     $lang['report']                      = "Report";
@@ -199,12 +194,12 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['archive']                     = "Archiv";
     $lang['user_homepage_sprt']          = "Startseite von %s";
     $lang['missing_field_javascript']    = "Bitte geben sie einen Wert in das leere Feld ein";
-    $lang['invalid_date_javascript']     = "Bitte ählen sie ein gültiges Kalenderdatum";
+    $lang['invalid_date_javascript']     = "Bitte wählen sie ein gültiges Kalenderdatum";
     $lang['finish_date_javascript']      = "Das angegebene Datum liegt nach dem Fertigstellungstermin des Projekts!";
     $lang['security_manager']            = "Sicherheitsverwaltung";
     $lang['session_timeout_sprt']        = "Zugriff verweigert, Ihre letzte Aktion war vor %d Minuten. %d Minuten bleibt eine Session ohne Aktion gültig, bitte neu <a href=\"%sindex.php\">anmelden</a>.";
     $lang['access_denied']               = "Zugriff verweigert";
-    $lang['private_usergroup']           = "Dieser Bereich geört zu einer privaten Benutzergruppe und sie haben keine Zugriffsrechte.";
+    $lang['private_usergroup']           = "Dieser Bereich gehört zu einer privaten Nutzergruppe und sie haben keine Zugriffsrechte.";
     $lang['invalid_date']                = "Ungültiges Datum";
     $lang['invalid_date_sprt']           = "Das Datum %s ist kein gültiges Kalenderdatum (Prüfen sie die Anzahl der Monatstage!). Bitte gehen sie zurück und geben sie eine neues Datum ein!";
 
@@ -220,7 +215,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['manage_taskgroups']           = "Aufgabengruppen verwalten";
     $lang['taskgroups']                  = "Aufgabengruppen";
     $lang['taskgroup_dup_sprt']          = "Es gibt bereits eine Aufgabenruppe '%s'. Bitte wählen sie einen neuen Namen.";
-    $lang['info_taskgroup_manage']       = "Informationen über Augabengruppenverwaltung";
+    $lang['info_taskgroup_manage']       = "Informationen über die Aufgabengruppenverwaltung";
 
  //usergroups
     $lang['usergroup_name']              = "Name der Nutzergruppe:";
@@ -235,7 +230,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['manage_usergroups']           = "Nutzergruppen verwalten";
     $lang['usergroups']                  = "Nutzergruppen";
     $lang['usergroup_dup_sprt']          = "Es gibt bereits eine Nutzergruppe '%s'. Bitte wählen sie einen neuen Namen.";
-    $lang['info_usergroup_manage']       = "Informationen über Nutzergruppenverwaltung";
+    $lang['info_usergroup_manage']       = "Informationen über die Nutzergruppenverwaltung";
 
  //users
     $lang['login_name']                  = "Loginname";
@@ -257,11 +252,11 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['permdel_javascript_sprt']     = "Hiermit werden dauerhaft alle Aufzeichnungen und zugeordneten Aufgaben des Nutzers %s löschen. Sind sie sicher?";
     $lang['add_user']                    = "Nutzer hinzufügen";
     $lang['edit_user']                   = "Nutzer bearbeiten";
-    $lang['no_users']                    = "Dem System sind keine Nutzer bekannt";
+    $lang['no_users']                    = "Dem System sind keine Nutzer bekannt.";
     $lang['users']                       = "Nutzer";
     $lang['existing_users']              = "Vorhandene Nutzer";
     $lang['private_profile']             = "Dieser Nutzer hat ein privates Profil, das von ihnen nicht eingesehen werden darf.";
-    $lang['private_usergroup_profile']   = "(Dieser Nutzer ist Mitglied einer privaten Nutzergruppe, welche nicht von ihnen eingesehen werden darf)";
+    $lang['private_usergroup_profile']   = "(Dieser Nutzer ist Mitglied einer privaten Nutzergruppe, welche nicht von ihnen eingesehen werden darf.)";
     $lang['email_users']                 = "Email an Nutzer";
     $lang['select_usergroup']            = "Folgende Nutzergruppe:";
     $lang['subject']                     = "Betreff:";
@@ -270,7 +265,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['edit_details']                = "Nutzerdetails bearbeiten";
     $lang['show_details']                = "Nutzerdetails anzeigen";
     $lang['user_deleted']                = "Dieser Nutzer wurde gelöscht!";
-    $lang['no_usergroup']                = "Dieser Nutzer ist kein Mitglied einer Nutzergruppe";
+    $lang['no_usergroup']                = "Dieser Nutzer ist kein Mitglied einer Nutzergruppe.";
     $lang['not_usergroup']               = "(Kein Mitglied einer Nutzergruppe)";
     $lang['no_password_change']          = "(Ihr bestehendes Passwort hat sich nicht verändert)";
     $lang['last_time_here']              = "Zum letzten Mal hier gesehen:";
@@ -321,7 +316,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['task_description']            = "Aufgabenbeschreibung";
     $lang['email_owner']                 = "Dem Eigentümer eine E-Mail mit den Änderungen schicken?";
     $lang['email_new_owner']             = "Dem (neuen) Eigentümer eine E-Mail mit den Änderungen schicken?";
-    $lang['email_group']                 = "Der Benutzergruppe eine E-Mail mit den Änderungen schicken?";
+    $lang['email_group']                 = "Der Nutzergruppe eine E-Mail mit den Änderungen schicken?";
     $lang['add_new_project']             = "Neues Projekt hinzufügen";
     $lang['uncategorised']               = "Nicht eingeordnet";
     $lang['due_sprt']                    = "In %d Tagen";
@@ -368,14 +363,14 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['completed_on']                = "Fertiggestellt am";
     $lang['modified_on']                 = "Verändert am";
     $lang['project_on_hold']             = "Projekt ist im Wartezustand";
-    $lang['project_accessible']          = "(Dieses Projekt ist öffentlich zugänglich für alle Benutzer)";
-    $lang['task_accessible']             = "(Diese Aufgabe ist öffentlich zugänglich für alle Benutzer)";
-    $lang['project_not_accessible']      = "(Dieses Projekt ist nur für Mitglieder der Benutzergruppe zugänglich)";
-    $lang['task_not_accessible']         = "(Diese Aufgabe ist nur für Mitglieder der Benutzergruppe zugänglich)";
-    $lang['project_not_in_usergroup']    = "Projekt keiner Benutzergruppe zugeordnet und für alle Benutzer zugänglich.";
-    $lang['task_not_in_usergroup']       = "Aufgabe keiner Benutzergruppe zugeordnet und für alle Benutzer zugänglich.";
-    $lang['usergroup_can_edit_project']  = "Dieses Projekt kann auch durch Mitglieder der Benutzergruppe bearbeitet werden.";
-    $lang['usergroup_can_edit_task']     = "Diese Aufgabe kann auch durch Mitglieder der Benutzergruppe bearbeitet werden.";
+    $lang['project_accessible']          = "(Dieses Projekt ist öffentlich zugänglich für alle Nutzer)";
+    $lang['task_accessible']             = "(Diese Aufgabe ist öffentlich zugänglich für alle Nutzer)";
+    $lang['project_not_accessible']      = "(Dieses Projekt ist nur für Mitglieder der Nutzergruppe zugänglich)";
+    $lang['task_not_accessible']         = "(Diese Aufgabe ist nur für Mitglieder der Nutzergruppe zugänglich)";
+    $lang['project_not_in_usergroup']    = "Projekt keiner Nutzergruppe zugeordnet und für alle Nutzer zugänglich.";
+    $lang['task_not_in_usergroup']       = "Aufgabe keiner Nutzergruppe zugeordnet und für alle Nutzer zugänglich.";
+    $lang['usergroup_can_edit_project']  = "Dieses Projekt kann auch durch Mitglieder der Nutzergruppe bearbeitet werden.";
+    $lang['usergroup_can_edit_task']     = "Diese Aufgabe kann auch durch Mitglieder der Nutzergruppe bearbeitet werden.";
     $lang['i_take_it']                   = "Ich übernehm' es :)";
     $lang['i_finished']                  = "Ich habe fertig!";
     $lang['i_dont_want']                 = "Ich habe die Schnauze voll";
@@ -386,7 +381,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['todo_list_for']               = "Aufgaben für: ";
     $lang['due_in_sprt']                 = " (Fällig in %d Tagen)";
     $lang['due_tomorrow']                = " (Morgen fällig)";
-    $lang['no_assigned']                 = "Es gibt keine unerledigten Aufgaben für diesen Benutzer.";
+    $lang['no_assigned']                 = "Es gibt keine unerledigten Aufgaben für diesen Nutzer.";
     $lang['todo_list']                   = "Aufgaben";
     $lang['summary_list']                = "Zusammenfassung";
     $lang['task_submit']                 = "Aufgabe senden";
@@ -396,7 +391,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['flags']                       = "Optionen";
     $lang['owner']                       = "Besitzer";
     $lang['group']                       = "Gruppe";
-    $lang['by_usergroup']                = " (durch Benutzergruppe)";
+    $lang['by_usergroup']                = " (durch Nutzergruppe)";
     $lang['by_taskgroup']                = " (durch Aufgabengruppe)";
     $lang['by_deadline']                 = " (nach Fertigstellungsdatum)";
     $lang['by_status']                   = " (nach Status)";
@@ -411,7 +406,6 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['print_version']               = "Druckversion";
     $lang['condensed_view']              = "Kurzansicht";
     $lang['full_view']                   = "Vollständige Ansicht";
-//**
     $lang['icalendar']                   = "iCalendar";
 
 ?>
