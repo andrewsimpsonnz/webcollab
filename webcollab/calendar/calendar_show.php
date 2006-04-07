@@ -251,7 +251,7 @@ $content .= "</select></label></td>\n".
             "<option value=\"0\"".$s4.">".$lang['no_group']."</option>\n";
 
 //get all groups for option box
-$q = db_query('SELECT id, name, private FROM '.PRE.'usergroups '.$tail_group.' ORDER BY name' );
+$q = db_query('SELECT id, name FROM '.PRE.'usergroups '.$tail_group.' ORDER BY name' );
 
 //usergroup input box fields
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
