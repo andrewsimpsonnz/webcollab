@@ -46,7 +46,8 @@ $q = db_query(icalendar_query(). icalendar_usergroup_tail() );
 
 //no rows ==> return
 if(db_numrows($q) < 1 ) {
-  return;
+  header('Location: '.BASE_URL.'main.php?x='.$x );
+  die;
 }
 
 //send headers to browser

@@ -41,22 +41,22 @@ $allowed  = '';
 $icalendar_id = md5(MANAGER_NAME.BASE_URL);
 
 //check validity of inputs
-if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 ) {
-  $selection = ($_POST['selection']);
+if(isset($_GET['selection']) && strlen($_GET['selection']) > 0 ) {
+  $selection = ($_GET['selection']);
 }
 else {
   $selection = 'user';
 }
 
-if( @safe_integer($_POST['userid']) ){
-  $userid = $_POST['userid'];
+if( @safe_integer($_GET['userid']) ){
+  $userid = $_GET['userid'];
 }
 else {
   $userid = (GUEST ) ? 0 : UID;
 }
 
-if( @safe_integer($_POST['groupid']) ) {
-  $groupid = $_POST['groupid'];
+if( @safe_integer($_GET['groupid']) ) {
+  $groupid = $_GET['groupid'];
 }
 else {
   $groupid = 0;
@@ -87,7 +87,8 @@ $q = db_query( icalendar_query().' AND '.PRE.'tasks.parent<>0 '.$tail. icalendar
 
 //no rows ==> return
 if(db_numrows($q) < 1 ) {
-  return;
+  header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=todo&userid='.$userid.'&groupid='.$groupid.'&selection='.$selection );
+  die;
 }
 
 //send headers to browser
@@ -128,7 +129,7 @@ if((UID == $userid ) || (ADMIN ) ) {
   return true;
 }
 
-if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE userid='.$userid.' AND private=1' ), 0, 0 ) == 0 ) {
+if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE id='.$userid.' AND private=1' ), 0, 0 ) == 0 ) {
   return true;
 }
 
