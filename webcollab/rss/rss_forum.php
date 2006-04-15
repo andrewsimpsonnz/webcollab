@@ -63,7 +63,7 @@ if($row['admin'] == 't' ) {
   $tail = ' ';
 }
 else {
-  $tail = 'WHERE ('.PRE.'usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$row['id'].') OR '.PRE.'usergroupid=0) ';
+  $tail = 'WHERE (usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$row['id'].') OR usergroupid=0) ';
 }
 
 if(! ($q = db_query('SELECT '.$epoch.'MAX(posted) ) AS last FROM '.PRE.'forum', 0 ) ) ) {

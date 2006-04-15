@@ -63,7 +63,7 @@ if($row['admin'] == 't' ) {
   $tail = ' ';
 }
 else {
-  $tail = 'AND ('.PRE.'usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$row['id'].') OR '.PRE.'usergroupid=0) ';
+  $tail = 'AND (usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$row['id'].') OR usergroupid=0) ';
 }
 
 if(! ($q = db_query('SELECT '.$epoch.'MAX(edited) ) AS last FROM '.PRE.'tasks', 0 ) ) ) {
@@ -108,7 +108,7 @@ if(! ($q = db_query('SELECT '.PRE.'tasks.id AS id,
                       '.PRE.'tasks.status AS status,
                       '.PRE.'tasks.name AS taskname
                       FROM '.PRE.'tasks
-                      WHERE tasks.parent<>0
+                      WHERE '.PRE.'tasks.parent<>0
                      '.$tail.'
                       ORDER BY '.PRE.'tasks.edited DESC LIMIT 50', 0 ) ) ) {
 

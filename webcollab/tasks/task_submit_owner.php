@@ -126,7 +126,7 @@ ignore_user_abort(TRUE);
         //if there was no previous owner do nothing!
         //there was a previous owner - inform the user that an admin has taken over his task
         if( ($row['id'] != 0 ) && (UID != $row['id'] ) ) {
-          $q = db_query('SELECT email FROM '.PRE.'users WHERE users.id='.$row['id'], 0 );
+          $q = db_query('SELECT email FROM '.PRE.'users WHERE id='.$row['id'], 0 );
           $email_address_old_owner = db_result( $q, 0, 0 );
 
           switch($row['parent'] ) {
