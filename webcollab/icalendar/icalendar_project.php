@@ -46,7 +46,7 @@ $taskid = $_GET['taskid'];
 //set database character set to UTF-8
 db_user_locale('UTF-8');
 
-if(db_result(db_query('SELECT COUNT(*) FROM tasks WHERE id='.$taskid.' AND parent=0' ), 0, 0 ) > 0 ) {
+if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$taskid.' AND parent=0' ), 0, 0 ) > 0 ) {
   //project - get all the tasks too...
   $type = 'tasks.projectid=';
   $id   = 'P';
@@ -62,9 +62,9 @@ $q = db_query(icalendar_query().' AND '.PRE.$type.$taskid. icalendar_usergroup_t
 
 //no rows ==> return
 if(db_numrows($q) < 1 ) {
-echo icalendar_query().' AND '.PRE.'tasks.projectid='.$taskid. icalendar_usergroup_tail();
-  return;
-} 
+  header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$taskid );
+  die;
+}
 
 //send headers to browser
 icalendar_header($id.$taskid );
