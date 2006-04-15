@@ -1,12 +1,12 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+
+  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -48,7 +48,7 @@ switch($_REQUEST['action'] ) {
       warning($lang['contact_submit'], $lang['contact_warn'] );
     }
 
-    if( @safe_integer($_POST['taskid']) ) { 
+    if( @safe_integer($_POST['taskid']) && $_POST['taskid'] != 0 ) {
 
       $taskid = $_POST['taskid'];
 
@@ -58,7 +58,7 @@ switch($_REQUEST['action'] ) {
       }
     }
     else {
-      $taskid = 0;  
+      $taskid = 0;
     }
 
     db_query( 'INSERT INTO '.PRE.'contacts(firstname,
@@ -144,7 +144,7 @@ switch($_REQUEST['action'] ) {
       usergroup_check($taskid);
     }
 
-    //delete the contact 
+    //delete the contact
     @db_query('DELETE FROM '.PRE.'contacts WHERE id='.$contactid );
     break;
 
