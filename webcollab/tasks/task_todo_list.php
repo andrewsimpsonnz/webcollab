@@ -166,22 +166,22 @@ for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 }
 
 //check validity of inputs
-if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 ) {
-  $selection = ($_POST['selection']);
+if(isset($_REQUEST['selection']) && strlen($_REQUEST['selection']) > 0 ) {
+  $selection = ($_REQUEST['selection']);
 }
 else {
   $selection = 'user';
 }
 
-if( @safe_integer($_POST['userid']) ){
-  $userid = $_POST['userid'];
+if( @safe_integer($_REQUEST['userid']) ){
+  $userid = $_REQUEST['userid'];
 }
 else {
   $userid = (GUEST ) ? 0 : UID;
 }
 
-if( @safe_integer($_POST['groupid']) ) {
-  $groupid = $_POST['groupid'];
+if( @safe_integer($_REQUEST['groupid']) ) {
+  $groupid = $_REQUEST['groupid'];
 }
 else {
   $groupid = 0;
