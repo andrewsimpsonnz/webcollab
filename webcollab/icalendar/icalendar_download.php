@@ -71,9 +71,9 @@ function icalendar_header($id ) {
 //
 
 function icalendar_vtodo($row) {
-  
+
   global $icalendar_id, $dtstamp;
-  
+
   $content = "BEGIN:VTODO\r\n".
              "UID\r\n".
              " :".$row['taskid']."-".$icalendar_id."\r\n".
@@ -101,12 +101,12 @@ function icalendar_vtodo($row) {
       $case = 'COMPLETED';
       break;
 
-    case 'active': 
+    case 'active':
       $case = 'IN-PROCESS';
       break;
 
     case 'cantcomplete':
-    case 'notactive': 
+    case 'notactive':
       $case = 'CANCELLED';
       break;
 
@@ -119,7 +119,7 @@ function icalendar_vtodo($row) {
   $content .= "STATUS\r\n".
               " :".$case."\r\n";
 
-  switch($row['priority'] ) {  
+  switch($row['priority'] ) {
     case 0:
       $case = '9';
       break;
@@ -157,7 +157,7 @@ function icalendar_vtodo($row) {
     $content.= "CATEGORIES\r\n".
     " :Task\r\n";
     if($row['parent'] == $row['projectid'] ) {
-      //task under project 
+      //task under project
       $content.= "RELATED-TO;RELTYPE=CHILD\r\n".
                  " :".$row['projectid']."-".$icalendar_id."\r\n";
     }
@@ -168,14 +168,14 @@ function icalendar_vtodo($row) {
     }
   }
 
-  //private 
+  //private
   if($row['globalaccess'] == 'f' && $row['usergroupid'] != 0 ) {
     $content.= "CLASS\r\n".
     " :PRIVATE\r\n";
   }
 
   $content .= "URL\r\n".
-              " :".BASE_URL."\r\n". 
+              " :".BASE_URL."\r\n".
               "END:VTODO\r\n";
 
   echo $content;

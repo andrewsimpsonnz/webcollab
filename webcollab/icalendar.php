@@ -3,7 +3,7 @@
   $Id$
 
   (c) 2004 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
-  
+
   WebCollab
   ---------------------------------------
   This program is free software; you can redistribute it and/or modify it under the
@@ -42,15 +42,15 @@ switch($_REQUEST['action'] ) {
   case 'todo':
     include(BASE.'icalendar/icalendar_todo.php' );
     break;
-  
-  case 'project':  
+
+  case 'project':
     include(BASE.'icalendar/icalendar_project.php' );
     break;
-    
+
   case 'all':
     include(BASE.'icalendar/icalendar_all.php' );
-    break; 
-  
+    break;
+
   //Error case
   default:
     error('Calendar action handler', 'Invalid request given' );
