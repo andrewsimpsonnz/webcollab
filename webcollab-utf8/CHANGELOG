@@ -1,4 +1,12 @@
 WebCollab CVS
+*** 30 March 2006
+  Andrew Simpson
+
+- UTF-8 version now fully merged into main WebCollab tree for 2.00 release
+
+- merge update language files from WebCollab
+
+WebCollab CVS
 *** 25 Febuary 2006
   Andrew Simpson
 
@@ -35,7 +43,7 @@ WebCollab CVS
 - merge to WebCollab CVS
 
 - fix minor variable error in calendar_show.php
-  
+
 WebCollab CVS
 *** 9 October 2005
   Andrew Simpson
