@@ -85,6 +85,7 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['member_groups']              = "A felhasználó az alább kiemelt csoportok tagja (ha van ilyen)";
     $lang['login']                      = "Bejelentkezés";
     $lang['login_action']               = "Bejelentkezés";
+    $lang['login_screen']               = "Bejelentkezés";
     $lang['error']                      = "Hiba";
     $lang['no_login']                   = "Belépés megtagadva; hibás felhasználói név vagy jelszó!";
     $lang['redirect_sprt']              = "Automatikusan vissza fog jutni a bejentkezéshez %d másodperc késleltetés után";

@@ -84,6 +84,7 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['member_groups']                = "L'usuari és membre dels grups resaltats a sota (si és d'algun)";
     $lang['login']                        = "Login";
     $lang['login_action']                 = "Login";
+    $lang['login_screen']                 = "Login";
     $lang['error']                        = "Error";
     $lang['no_login']                     = "Accès denegat, identificador o contrasenya incorrectes";
 //**

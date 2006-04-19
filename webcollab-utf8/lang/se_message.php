@@ -84,6 +84,7 @@ $week_array = array('Sön', 'Mĺn', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['member_groups']              = "Om användaren är med i nĺgon grupp har de markerats";
     $lang['login']                      = "Logga in";
     $lang['login_action']               = "Logga in";
+    $lang['login_screen']               = "Logga in";
     $lang['error']                      = "Fel";
     $lang['no_login']                   = "Ĺtkomst nekas. Fel användarnamn eller lösenord";
     $lang['redirect_sprt']              = "Efter %d sekunders väntan kommer du automatiskt att ĺtervända till inloggning";

@@ -83,6 +83,7 @@ $week_array = array('Ned', 'Pon', 'Uto', 'Sre', 'Čet', 'Pet', 'Sub' );
     $lang['member_groups']              = "Korisnik je član označenih grupa ispod (ukoliko je uopšte član neke grupe)";
     $lang['login']                      = "Korisničko ime";
     $lang['login_action']               = "Korisničko ime";
+    $lang['login_screen']               = "Korisničko ime";
     $lang['error']                      = "Greška";
     $lang['no_login']                   = "Pristup odbijen; netačno korisničko ime ili lozinka";
 

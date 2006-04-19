@@ -90,6 +90,7 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['member_groups']                = "Brugeren er medlem af de fremhævede grupper herunder (hvis nogen)";
     $lang['login']                        = "Login";
     $lang['login_action']                 = "Login";
+    $lang['login_screen']                 = "Login";
     $lang['error']                        = "Fejl";
     $lang['no_login']                     = "Adgang nægtet, ikke korrekt login eller password";
 //**

@@ -84,6 +84,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['member_groups']               = "Der Nutzer ist Mitglied in den markierten Gruppen (wenn es welche gibt).";
     $lang['login']                       = "Login";
     $lang['login_action']                = "Login";
+    $lang['login_screen']                = "Login";
     $lang['error']                       = "Fehler";
     $lang['no_login']                    = "Zugriff verweigert, Nutzername oder Passwort falsch";
     $lang['redirect_sprt']               = "Sie gelangen automatisch zur Loginseite nach %d Sekunden";

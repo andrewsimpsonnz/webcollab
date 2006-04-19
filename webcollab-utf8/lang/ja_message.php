@@ -83,6 +83,7 @@ $week_array = array('日', '月', '火', '水', '木', '金', '土' );
     $lang['member_groups']              = "The user is a member of the highlighted groups below (if any)";
     $lang['login']                      = "ログイン";
     $lang['login_action']               = "ログイン";
+    $lang['login_screen']               = "ログイン";
     $lang['error']                      = "エラー";
     $lang['no_login']                   = "Access denied; incorrect login or password";
 //**

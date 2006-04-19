@@ -82,6 +82,7 @@ $week_array = array('일', '월', '화', '수', '목', '금', '토' );
     $lang['member_groups']                = "이 사용자는 아래에 밝게 표시된 그룹의 멤버입니다(if any)";
     $lang['login']                        = "로그인";
     $lang['login_action']                 = "로그인";
+    $lang['login_screen']                 = "로그인";
     $lang['error']                        = "오류";
 //**
     $lang['redirect_sprt']                = "You will automatically return to Login after a %d second delay";

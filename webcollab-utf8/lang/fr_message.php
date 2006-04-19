@@ -30,7 +30,7 @@
 */
 
 //required language encodings
-define('CHARACTER_SET', "ISO-8859-1" );
+define('CHARACTER_SET', "UTF-8" );
 
 //this is the regex for input validation filter used in common.php 
 $validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s";
@@ -85,6 +85,7 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['member_groups']                = "L'utilisateur est membre du groupe indiqué en bas (s'il y en a un)";
     $lang['login']                        = "Connexion";
     $lang['login_action']                 = "Connexion";
+    $lang['login_screen']                 = "Connexion";
     $lang['error']                        = "Erreur";
     $lang['no_login']                     = "Accès refusé, utilisateur ou mot de passe incorrect";
     $lang['redirect_sprt']                = "Vous serez automatiquement redirigé vers l'écran de connexion<br />&nbsp;&nbsp;&nbsp;après un délais de %d secondes";
