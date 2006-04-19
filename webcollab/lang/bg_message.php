@@ -87,6 +87,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['member_groups']                = "Потребителят е член на показаните групи (ако има)";
     $lang['login']                        = "Вход";
     $lang['login_action']                 = "Вход";
+    $lang['login_screen']                 = "Вход";
     $lang['error']                        = "Грешка";
     $lang['no_login']                     = "Достъпът отказан, грешно име или парола";
 //**    

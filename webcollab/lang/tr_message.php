@@ -84,6 +84,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['member_groups']              = "Kullanýcý aþaðýda belirtilen gruplara üyedir (eðer varsa)";
     $lang['login']                      = "Login";
     $lang['login_action']               = "Login";
+    $lang['login_screen']               = "Login";
     $lang['error']                      = "Hata";
     $lang['no_login']                   = "Eriþim engellendi; yanlýþ kullanýcý adý ya da þifre";
     $lang['redirect_sprt']              = "%d saniye sonra otomatik olarak sisteme giriþ sayfasýna döneceksiniz";
