@@ -25,14 +25,14 @@
 
   Translation: Stanislav Pekarèík,fredis@SoftHome.net
 
-  Maintainer: 
+  Maintainer:
 */
 
 //required language encodings
 define('CHARACTER_SET', "ISO-8859-2" );
 
-//this is the regex for input validation filter used in common.php 
-$validation_regex = '/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s'; //ISO-8859-x 
+//this is the regex for input validation filter used in common.php
+$validation_regex = '/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s'; //ISO-8859-x
 
 //dates
 $month_array = array (NULL, 'Jan', 'Feb', 'Mar', 'Apr', 'Máj', 'Jún', 'Júl', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec' );
@@ -111,7 +111,7 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', '©tv', 'Pi', 'So' );
     $lang['set_email_owner']            = 'V¾dy posla» vlastníkovi email so zmenami?';
     $lang['set_email_group']            = 'V¾dy posla» uzivateµskej skupine email so zmenami?';
     $lang['project_listing_order']      = 'Zoznam projektov';
-    $lang['task_listing_order']         = 'Zoznam úloh'; 
+    $lang['task_listing_order']         = 'Zoznam úloh';
     $lang['configuration']              = 'Konfigurácia';
 
 //archive
@@ -128,7 +128,7 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', '©tv', 'Pi', 'So' );
     $lang['address']                    = 'Adresa:';
     $lang['postal']                     = 'PSÈ:';
     $lang['city']                       = 'Mesto:';
-    $lang['email']                      = 'Email:';
+    $lang['email_contact']              = 'Email:';
     $lang['notes']                      = 'Poznámka:';
     $lang['add_contact']                = 'Prida» kontakt';
     $lang['del_contact']                = 'Zmaza» kontakt';
@@ -187,11 +187,9 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', '©tv', 'Pi', 'So' );
     $lang['warning']                    = '<h1>Pardon!</h1><p>Teraz nie sme schopný vykona» Va¹u po¾iadavku. Prosím skúste neskôr.</p>';
     $lang['home_page']                  = 'Hlavná stránka';
     $lang['summary_page']               = 'Sumárny prehµad';
-    $lang['todo_list']                  = 'Zoznam úloh';
-    $lang['calendar']                   = 'Kalendár';
     $lang['log_out']                    = 'Odhlási»';
     $lang['main_menu']                  = 'Hlavné menu';
-    $lang['archive']                    = 'Archív';   
+    $lang['archive']                    = 'Archív';
     $lang['user_homepage_sprt']         = 'Hlavná stránka u¾ivateµa %s';
     $lang['missing_field_javascript']   = 'Prosím vypln»e hodnotu v prázdnom poli';
     $lang['invalid_date_javascript']    = 'Prosím vyberte platný kalendárny dátum';
@@ -199,7 +197,7 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', '©tv', 'Pi', 'So' );
     $lang['security_manager']           = 'Správca bezpeènosti';
     $lang['session_timeout_sprt']       = 'Prístup odopretý; posledná akcia bola pred %1$d minútami a timeout je %2$d minút; prosím <a href="%3$sindex.php">re-login</a>';
     $lang['access_denied']              = 'Prístup odopretý';
-    $lang['private_usergroup']          = 'Pardon; táto èas» je v privátnej skupine a Vy nemáte prístupové práva.';
+    $lang['private_usergroup_no_access']= 'Pardon; táto èas» je v privátnej skupine a Vy nemáte prístupové práva.';
     $lang['invalid_date']               = 'Neplatný dátum';
     $lang['invalid_date_sprt']          = 'Dátum %s nie je platný kalendáry dátum (Skontrolujte
 poèet dní v mesiaci).<br />Prosím vrá»te sa a zadajte platný dátum.';
@@ -240,7 +238,7 @@ poèet dní v mesiaci).<br />Prosím vrá»te sa a zadajte platný dátum.';
     $lang['email']                      = 'E-mail';
     $lang['admin']                      = 'Administrátor';
     $lang['private_user']               = 'Privátny u¾ivateµ';
-    $lang['normal_user']                = 'Normálny u¾ivateµ'; 
+    $lang['normal_user']                = 'Normálny u¾ivateµ';
     $lang['is_admin']                   = 'Je administrátor?';
     $lang['is_guest']                   = 'Je hos»?';
     $lang['guest']                      = 'Hos»';
@@ -337,8 +335,6 @@ poèet dní v mesiaci).<br />Prosím vrá»te sa a zadajte platný dátum.';
     $lang['clone_task']                 = 'Kopírova» úlohu';
     $lang['quick_jump']                 = 'Prejs» na';
     $lang['no_edit']                    = 'Nie ste vlastník polo¾ky a preto ju nemô¾ete editova»';
-    $lang['uncategorised']              = 'Nezaradený';
-    $lang['admin']                      = 'Administrátor';
     $lang['global']                     = 'Ostatní';
     $lang['delete_project']             = 'Zmaza» projekt';
     $lang['delete_task']                = 'Zmaza» úlohu';

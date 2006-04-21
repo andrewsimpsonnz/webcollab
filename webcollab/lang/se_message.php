@@ -30,8 +30,8 @@
 //required language encodings
 define('CHARACTER_SET', "ISO-8859-1" );
 
-//this is the regex for input validation filter used in common.php 
-$validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s"; //ISO-8859-x 
+//this is the regex for input validation filter used in common.php
+$validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s"; //ISO-8859-x
 
 //dates
 $month_array = array (NULL, 'Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec' );
@@ -88,7 +88,7 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['error']                      = "Fel";
     $lang['no_login']                   = "Åtkomst nekas. Fel användarnamn eller lösenord";
     $lang['redirect_sprt']              = "Efter %d sekunders väntan kommer du automatiskt att återvända till inloggning";
-    $lang['login_now']                  = "Klicka här för att återvända till inloggning";   
+    $lang['login_now']                  = "Klicka här för att återvända till inloggning";
     $lang['please_login']               = "Var god logga in";
     $lang['go']                         = "Kör!";
 
@@ -110,11 +110,11 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['set_email_owner']            = "Alltid mejla den ansvarige om förändringar?";
     $lang['set_email_group']            = "Alltid mejla användargruppen om förändringar?";
     $lang['project_listing_order']      = "Projekt listordning";
-    $lang['task_listing_order']         = "Uppgifter listordning"; 
+    $lang['task_listing_order']         = "Uppgifter listordning";
     $lang['configuration']              = "Konfigurering";
 
 //archive
-    $lang['archived_projects']          = "Arkiverade projekt";    
+    $lang['archived_projects']          = "Arkiverade projekt";
 
 //contacts
     $lang['firstname']                  = "Förnamn:";
@@ -127,7 +127,7 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['address']                    = "Adress:";
     $lang['postal']                     = "Postnummer:";
     $lang['city']                       = "Ort:";
-    $lang['email']                      = "Epost:";
+    $lang['email_contact']              = "Epost:";
     $lang['notes']                      = "Anmärkningar:";
     $lang['add_contact']                = "Lägg till kontakt";
     $lang['del_contact']                = "Ta bort kontakt";
@@ -187,11 +187,9 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['warning']                    = "<h1>Tyvärr!</h1><p>Vi kan inte ta emot din begäran just nu. Var god försök igen senare.</p>";
     $lang['home_page']                  = "Startsida";
     $lang['summary_page']               = "Sammanfattning";
-    $lang['todo_list']                  = "Att göra";
-    $lang['calendar']                   = "Kalender";
     $lang['log_out']                    = "Logga ut";
     $lang['main_menu']                  = "Huvudmeny";
-    $lang['archive']                    = "Arkiv";   
+    $lang['archive']                    = "Arkiv";
     $lang['user_homepage_sprt']         = "%ss startsida";
     $lang['missing_field_javascript']   = "Var god ange ett giltigt värde för det fält som saknas";
     $lang['invalid_date_javascript']    = "Var god välj ett giltigt datum";
@@ -199,7 +197,7 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['security_manager']           = "Säkerhetshanterare";
     $lang['session_timeout_sprt']       = "Åtkomst nekas; senaste åtgärd gjordes för %1\$d minuter sedan och maxtid är %2\$d minuter. Var god och <a href=\"%3\$sindex.php\">logga in igen</a>";
     $lang['access_denied']              = "Åtkomst nekas";
-    $lang['private_usergroup']          = "Tyvärr. Detta är en privat användargrupp och du har inte åtkomsträttigheter.";
+    $lang['private_usergroup_no_access']= "Tyvärr. Detta är en privat användargrupp och du har inte åtkomsträttigheter.";
     $lang['invalid_date']               = "Ogiltigt datum";
     $lang['invalid_date_sprt']          = "Datumet %s är inte ett giltigt kalnderdatum (Kolla antal dagar i månaden).<br />Var god gå tillbaka och ange ett giltigt datum.";
 
@@ -240,7 +238,7 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['email']                      = "E-post";
     $lang['admin']                      = "Administratör";
     $lang['private_user']               = "Privat användare";
-    $lang['normal_user']                = "Normal användare"; 
+    $lang['normal_user']                = "Normal användare";
     $lang['is_admin']                   = "Är administratör?";
     $lang['is_guest']                   = "Är gäst?";
     $lang['guest']                      = "Gästanvändare";
@@ -336,8 +334,6 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['clone_task']                 = "Klona uppgift";
     $lang['quick_jump']                 = "Snabbhopp";
     $lang['no_edit']                    = "Du har inte ansvaret för detta och kan därför inte redigera det";
-    $lang['uncategorised']              = "Inte kategoriserad";
-    $lang['admin']                      = "Administratör";
     $lang['global']                     = "Global";
     $lang['delete_project']             = "Ta bort projekt";
     $lang['delete_task']                = "Ta bort uppgift";
@@ -346,7 +342,7 @@ $week_array = array('Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['javascript_archive_project'] = "Detta kommer att arkivera projektet %s.  Är du säker?";
     $lang['archive_project']            = "Arkivera projekt";
     $lang['task_navigation']            = "Navigering i uppgift";
-    $lang['new_task']                   = "Ny uppgift";    
+    $lang['new_task']                   = "Ny uppgift";
     $lang['no_projects']                = "Det finns inga projekt att titta på";
     $lang['show_all_projects']          = "Visa alla projekt";
     $lang['show_active_projects']       = "Visa bara aktiva projekt";

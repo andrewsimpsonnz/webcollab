@@ -24,7 +24,7 @@
   Language files for 'cs' (Czech)
 
   Translation: Lukas Moravek <moravekl at gmail.com>
-  Corection: Jirka Dutka <jirka at dutka.net>
+  Correction: Jirka Dutka <jirka at dutka.net>
 
 
   NOTE: This file is written in UTF-8 character set
@@ -68,7 +68,6 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['update']                     = "Aktualizovat";
     $lang['submit_changes']             = "Potvrdit změny";
     $lang['continue']                   = "Pokračovat";
-    $lang['reset']                      = "Nastavit výchozí hodnoty";
     $lang['manage']                     = "Spravovat";
     $lang['edit']                       = "Upravit";
     $lang['delete']                     = "Smazat";
@@ -129,7 +128,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['address']                    = "Adresa:";
     $lang['postal']                     = "Poštovní směrovací číslo:";
     $lang['city']                       = "Město:";
-    $lang['email']                      = "Email:";
+    $lang['email_contact']              = "Email:";
     $lang['notes']                      = "Poznámka:";
     $lang['add_contact']                = "Přidat kontakt";
     $lang['del_contact']                = "Smazat kontakt";
@@ -189,8 +188,6 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['warning']                    = "<h1>Omlouváme se!</h1><p>V tuto chvíli nejsme schopní provést Váš požadavek. Prosím zkuste to později.</p>";
     $lang['home_page']                  = "Domácí stránka";
     $lang['summary_page']               = "Přehled";
-    $lang['todo_list']                  = "Úkoly";
-    $lang['calendar']                   = "Kalendář";
     $lang['log_out']                    = "Odhlásit";
     $lang['main_menu']                  = "Hlavní nabídka";
     $lang['archive']                    = "Archiv";
@@ -201,10 +198,9 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['security_manager']           = "Správce zabezpečení";
     $lang['session_timeout_sprt']       = "Přístup odepřen; Poslední aktivita byla před %1\$d minutami, časový limit je %2\$d minut; prosím <a href=\"%sindex.php\">přihlašte se</a>";
     $lang['access_denied']              = "Přístup odepřen";
-    $lang['private_usergroup']          = "Omlouváme se; tato oblast je privátní skupiny, nemáte dostatečná práva.";
+    $lang['private_usergroup_no_access']= "Omlouváme se; tato oblast je privátní skupiny, nemáte dostatečná práva.";
     $lang['invalid_date']               = "Špatně zadané datum";
     $lang['invalid_date_sprt']          = "Zadané datum %s není správné (Zkontrolujte počet dní v měsíci).<br />Prosím vraťte se zpět a zadejte správné datum.";
-
 
  //taskgroups
     $lang['taskgroup_name']             = "Název pracovní skupiny:";
@@ -338,8 +334,6 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['clone_task']                 = "Klonovat úkol";
     $lang['quick_jump']                 = "Přejít na";
     $lang['no_edit']                    = "Nejste vlastníkem položky proto ji nemůžete měnit";
-    $lang['uncategorised']              = "Nezařazený";
-    $lang['admin']                      = "Administrátor";
     $lang['global']                     = "Ostatní";
     $lang['delete_project']             = "Smazat projekt";
     $lang['delete_task']                = "Smazat úkol";

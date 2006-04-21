@@ -30,7 +30,7 @@
 //required language encodings
 define('CHARACTER_SET', "ISO-8859-1" );
 
-//this is the regex for input validation filter used in common.php 
+//this is the regex for input validation filter used in common.php
 $validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s";
 
 //dates
@@ -86,16 +86,16 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['login_screen']                 = "Login";
     $lang['error']                        = "Errore";
     $lang['no_login']                     = "Accesso negato, login o password errati";
-//**    
+//**
     $lang['redirect_sprt']                = "You will automatically return to Login after a %d second delay";
 //**
     $lang['login_now']                    = "Please click here to return to Login now";
     $lang['please_login']                 = "Identificazione utente";
 //for collaltosabino.net
 //  $lang['please_login']                 = "<span class="navy"><b>collaltosabino.net</b><br><span class="darkred"><b>*** Sistema di gestione progetti ***<br><br><span class="navy">Identificazione utente</b></span>";
-//**    
+//**
     $lang['go']                           = "Go!";
-    
+
 
 //graphic items
     $lang['late_g']                       = "&nbsp;IN RITARDO&nbsp;";
@@ -114,9 +114,9 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['allow_group_edit']             = "Allow all in usergroup to edit?";
     $lang['set_email_owner']              = "Always email owner with changes?";
     $lang['set_email_group']              = "Always email usergroup with changes?";
-//**    
+//**
     $lang['project_listing_order']        = "Project listing order";
-//**    
+//**
     $lang['task_listing_order']           = "Task listing order";
     $lang['configuration']                = "Configuration";
 
@@ -135,7 +135,7 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['address']                      = "Indirizzo:";
     $lang['postal']                       = "Codice postale:";
     $lang['city']                         = "Città:";
-    $lang['email']                        = "Email:";
+    $lang['email_contact']                = "Email:";
     $lang['notes']                        = "Note:";
     $lang['add_contact']                  = "Aggiungi contatto";
     $lang['del_contact']                  = "Cancella contatto";
@@ -206,8 +206,6 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['warning']                      = "<h1>Spiacente!</h1><p>Non è possibile processare la tua richiesta adesso. Riprova più tardi.</p>";
     $lang['home_page']                    = "Home page";
     $lang['summary_page']                 = "Pagina di riepilogo";
-    $lang['todo_list']                    = "Lista ToDo";
-    $lang['calendar']                     = "Calendario";
     $lang['log_out']                      = "Log out";
     $lang['main_menu']                    = "Menu principale";
 //**
@@ -219,7 +217,7 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['security_manager']             = "Gestore della sicurezza";
     $lang['session_timeout_sprt']         = "Accesso negato, l'ultima azione risale a %d minuti fa e il timeout è di %d minuti, prego effettuare <a href=\"%sindex.php\">re-login</a>";
     $lang['access_denied']                = "Accesso negato";
-    $lang['private_usergroup']            = "Spiacente, questa area si trova in un gruppo privato e tu non hai il permesso di accedervi.";
+    $lang['private_usergroup_no_access']  = "Spiacente, questa area si trova in un gruppo privato e tu non hai il permesso di accedervi.";
     $lang['invalid_date']                 = "Data non valida";
     $lang['invalid_date_sprt']            = "La data del %s non è una data valida del calendario (Controlla il numero di giorni nel mese).  Torna indietro e riprova.";
 
@@ -360,16 +358,14 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
 //**
     $lang['quick_jump']                   = "Quick Jump";
     $lang['no_edit']                      = "Non sei il proprietario di questo item e non puoi editarlo. Chiedi ad un admin o al proprietario dell'item di effettuare l'operazione.";
-    $lang['uncategorised']                = "Non categorizzata";
-    $lang['admin']                        = "Admin";
     $lang['global']                       = "Globale";
     $lang['delete_project']               = "Cancella progetto";
     $lang['delete_task']                  = "Cancella attività";
     $lang['project_options']              = "Opzioni del progetto";
     $lang['task_options']                 = "Opzioni dell'attività";
-//**    
+//**
     $lang['javascript_archive_project']   = "This will archive project %s.  Are you sure?";
-//**    
+//**
     $lang['archive_project']              = "Archive project";
     $lang['task_navigation']              = "Navigazione nelle attività";
 //**
@@ -430,9 +426,9 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['calendar']                     = "Calendario";
     $lang['normal_version']               = "Versione normale";
     $lang['print_version']                = "Versione stampabile";
-//**    
+//**
     $lang['condensed_view']               = "Condensed view";
-//**    
+//**
     $lang['full_view']                    = "Full view";
 //**
     $lang['icalendar']                    = "iCalendar";

@@ -64,7 +64,6 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $lang['update']                     = "Atualizar";
     $lang['submit_changes']             = "Enviar alterações";
     $lang['continue']                   = "Continuar";
-    $lang['reset']                      = "Reset";
     $lang['manage']                     = "Gerenciar";
     $lang['edit']                       = "Editar";
     $lang['delete']                     = "Excluir";
@@ -86,7 +85,7 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $lang['error']                      = "Erro";
     $lang['no_login']                   = "Acesso negado, verifique o nome de usuário e a senha";
     $lang['redirect_sprt']              = "Você será automaticamente redirecionado à página de Login em %d segundos";
-    $lang['login_now']                  = "Por favor, clique aqui para retornar à página de Login agora";   
+    $lang['login_now']                  = "Por favor, clique aqui para retornar à página de Login agora";
     $lang['please_login']               = "Entre, por favor";
     $lang['go']                         = "Vai!";
 
@@ -108,12 +107,11 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $lang['set_email_owner']            = "Sempre notificar responsável sobre mudanças?";
     $lang['set_email_group']            = "Sempre notificar grupo de usuários sobre mudanças?";
     $lang['project_listing_order']      = "Ordem de listagem dos projetos";
-    $lang['task_listing_order']         = "Ordem de listagem das tarefas"; 
+    $lang['task_listing_order']         = "Ordem de listagem das tarefas";
     $lang['configuration']              = "Configuração";
 
 //archive
-//**
-    $lang['archived_projects']          = "Projetos Arquivados";    
+    $lang['archived_projects']          = "Projetos Arquivados";
 
 //contacts
     $lang['firstname']                  = "Nome:";
@@ -126,7 +124,7 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $lang['address']                    = "Endereço:";
     $lang['postal']                     = "CEP:";
     $lang['city']                       = "Cidade:";
-    $lang['email']                      = "E-mail:";
+    $lang['email_contact']              = "E-mail:";
     $lang['notes']                      = "OBS:";
     $lang['add_contact']                = "Adicionar contato";
     $lang['del_contact']                = "Excluir contato";
@@ -176,23 +174,21 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $lang['no_message']                 = "Sem mensagens! Por favor, retorne e tente novamente";
     $lang['add_reply']                  = "Adicionar resposta";
     $lang['last_post_sprt']             = "Última postagem em %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-    $lang['recent_posts']               = "Postagens recentes no fórum"; 
+    $lang['recent_posts']               = "Postagens recentes no fórum";
 //**
-    $lang['recent_posts']                = "Recent forum posts";
+    $lang['recent_posts']               = "Recent forum posts";
 //**
-    $lang['forum_search']                = "Forum search";
+    $lang['forum_search']               = "Forum search";
 //**
-    $lang['no_results']                  = "No results found for '%s'";
+    $lang['no_results']                 = "No results found for '%s'";
 //**
-    $lang['search_results']              = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
 
  //includes
     $lang['report']                     = "Relatório";
     $lang['warning']                    = "<h1>Desculpe!</h1><p>Foi impossível processar sua solicitação no momento. Por favor, tente novamente mais tarde.</p>";
     $lang['home_page']                  = "Início";
     $lang['summary_page']               = "Sumário";
-    $lang['todo_list']                  = "À Fazer";
-    $lang['calendar']                   = "Calendário";
     $lang['log_out']                    = "Sair";
     $lang['main_menu']                  = "Menu Principal";
     $lang['archive']                    = "Arquivo";
@@ -203,10 +199,9 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $lang['security_manager']           = "Gerência de segurança";
     $lang['session_timeout_sprt']       = "Acesso negado, a última ação foi há %1\$d minutos e o intervalo de parada é de %2\$d minutos, por favor <a href=\"%3\$sindex.php\">entre</a> novamente";
     $lang['access_denied']              = "Acesso negado";
-    $lang['private_usergroup']          = "Desculpe, esta área é privativa de um grupo de usuários e você não tem direitos de acesso.";
+    $lang['private_usergroup_no_access']= "Desculpe, esta área é privativa de um grupo de usuários e você não tem direitos de acesso.";
     $lang['invalid_date']               = "Data inválida";
     $lang['invalid_date_sprt']          = "A data %s não existe no calendário (Verifique o número de dias no mês).<br/>Por favor, retorne e escolha outra data.";
-
 
  //taskgroups
     $lang['taskgroup_name']             = "Grupo de tarefas:";
@@ -244,7 +239,7 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $lang['email']                      = "E-mail";
     $lang['admin']                      = "Administração";
     $lang['private_user']               = "Usuário privativo";
-    $lang['normal_user']                = "Usuário normal"; 
+    $lang['normal_user']                = "Usuário normal";
     $lang['is_admin']                   = "Configurar como administrador?";
     $lang['is_guest']                   = "Configurar como visitante?";
     $lang['guest']                      = "Visitante";
@@ -338,11 +333,8 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $lang['add_project']                = "Adicionar projeto";
     $lang['clone_project']              = "Clonar projeto";
     $lang['clone_task']                 = "Clonar tarefa";
-//**
     $lang['quick_jump']                 = "Jogo rápido";
     $lang['no_edit']                    = "O ítem não está sob sua responsabilidade, portanto você não pode editá-lo";
-    $lang['uncategorised']              = "Não-categorizado";
-    $lang['admin']                      = "Administração";
     $lang['global']                     = "Global";
     $lang['delete_project']             = "Excluir projeto";
     $lang['delete_task']                = "Excluir tarefa";

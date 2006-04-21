@@ -15,7 +15,7 @@
 //required language encodings
 define('CHARACTER_SET', "KOI8-R" );
 
-//this is the regex for input validation filter used in common.php 
+//this is the regex for input validation filter used in common.php
 $validation_regex = "/([^\x09\x0a\x0d\x20-\xff])/s"; //KOI8-R
 
 //dates
@@ -73,7 +73,7 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['error']                      = "Ашипка";
     $lang['no_login']                   = "Доступ запрещен; неверное имя или пароль";
     $lang['redirect_sprt']              = "Вы автоматически вернетесь на страницу входа через %d секунд";
-    $lang['login_now']                  = "Нажмите здесь для возврата к регистрации";   
+    $lang['login_now']                  = "Нажмите здесь для возврата к регистрации";
     $lang['please_login']               = "Зарегистрируйтесь";
     $lang['go']                         = "Прыг!";
 
@@ -94,13 +94,12 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['allow_group_edit']           = "Разрешить всем членам группы редактировать?";
     $lang['set_email_owner']            = "Всегда сообщать по email координатора/исполнителя?";
     $lang['set_email_group']            = "Всегда сообщять по email группу пользователей при изменениях?";
-//**    
     $lang['project_listing_order']      = "Порядок сортировки проектов";
-    $lang['task_listing_order']         = "Порядок сортировки заданий"; 
+    $lang['task_listing_order']         = "Порядок сортировки заданий";
     $lang['configuration']              = "Конфигурация";
 
 //archive
-    $lang['archived_projects']          = "Архивные проекты";    
+    $lang['archived_projects']          = "Архивные проекты";
 
 //contacts
     $lang['firstname']                  = "Имя:";
@@ -113,7 +112,7 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['address']                    = "Адрес:";
     $lang['postal']                     = "Индекс:";
     $lang['city']                       = "Город:";
-    $lang['email']                      = "Email:";
+    $lang['email_contact']              = "Email:";
     $lang['notes']                      = "Прим:";
     $lang['add_contact']                = "Добавить контакт";
     $lang['del_contact']                = "Удалить контакт";
@@ -174,8 +173,6 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['warning']                    = "<h1>Извините!</h1><p>Мы не можем обслужить ваш запрос прямо сейчас. Поробуйте позже.</p>";
     $lang['home_page']                  = "Главная";
     $lang['summary_page']               = "Обзор";
-    $lang['todo_list']                  = "Что надо сделать";
-    $lang['calendar']                   = "Календарь";
     $lang['log_out']                    = "Выход";
     $lang['main_menu']                  = "Главное меню";
     $lang['archive']                    = "Архив";
@@ -186,10 +183,9 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['security_manager']           = "Управление безопасности";
     $lang['session_timeout_sprt']       = "Доступ запрещен; последнее действие было %1\$d минут назад, тайм-аут составил %2\$d минут; пожалуйста <a href=\"%3\$sindex.php\">зарегистрируйтесь</a>";
     $lang['access_denied']              = "Доступ запрещен";
-    $lang['private_usergroup']          = "Извините; этот раздел засекречен и Вы не имеете прав на доступ к нему.";
+    $lang['private_usergroup_no_access']= "Извините; этот раздел засекречен и Вы не имеете прав на доступ к нему.";
     $lang['invalid_date']               = "Неверная дата";
     $lang['invalid_date_sprt']          = "Дата %s, кажется, неверна (Проверьте количество дней в месяце).<br />Пожалуйста, вернитесь назад и введите дату.";
-
 
  //taskgroups
     $lang['taskgroup_name']             = "Название группы заданий:";
@@ -227,7 +223,7 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['email']                      = "E-mail";
     $lang['admin']                      = "Администратор";
     $lang['private_user']               = "Засекречен";
-    $lang['normal_user']                = "Обычный пользователь"; 
+    $lang['normal_user']                = "Обычный пользователь";
     $lang['is_admin']                   = "Будет администратором?";
     $lang['is_guest']                   = "Будет гостем?";
     $lang['guest']                      = "Гость";
@@ -323,8 +319,6 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['clone_task']                 = "Клонировать задание";
     $lang['quick_jump']                 = "Быстрый переход";
     $lang['no_edit']                    = "Вы не имеете никакого отношения к этому, а потому и редактировать не можете";
-    $lang['uncategorised']              = "Uncategorised";
-    $lang['admin']                      = "Управление";
     $lang['global']                     = "Общие";
     $lang['delete_project']             = "Удалить проект";
     $lang['delete_task']                = "Удалить задание";

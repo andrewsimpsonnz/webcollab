@@ -25,7 +25,7 @@
 
   Translation: Stanislav Pekarčík,fredis@SoftHome.net
 
-  Maintainer: 
+  Maintainer:
 
   NOTE: This file is written in UTF-8 character set
 
@@ -67,7 +67,6 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', 'Štv', 'Pi', 'So' );
     $lang['update']                     = 'Opraviť';
     $lang['submit_changes']             = 'Uložiť zmeny';
     $lang['continue']                   = 'Pokračovať';
-    $lang['reset']                      = 'Reset';
     $lang['manage']                     = 'Spravovať';
     $lang['edit']                       = 'Editovať';
     $lang['delete']                     = 'Zmazať';
@@ -111,7 +110,7 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', 'Štv', 'Pi', 'So' );
     $lang['set_email_owner']            = 'Vždy poslať vlastníkovi email so zmenami?';
     $lang['set_email_group']            = 'Vždy poslať uzivateľskej skupine email so zmenami?';
     $lang['project_listing_order']      = 'Zoznam projektov';
-    $lang['task_listing_order']         = 'Zoznam úloh'; 
+    $lang['task_listing_order']         = 'Zoznam úloh';
     $lang['configuration']              = 'Konfigurácia';
 
 //archive
@@ -128,7 +127,7 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', 'Štv', 'Pi', 'So' );
     $lang['address']                    = 'Adresa:';
     $lang['postal']                     = 'PSČ:';
     $lang['city']                       = 'Mesto:';
-    $lang['email']                      = 'Email:';
+    $lang['email_contact']              = 'Email:';
     $lang['notes']                      = 'Poznámka:';
     $lang['add_contact']                = 'Pridať kontakt';
     $lang['del_contact']                = 'Zmazať kontakt';
@@ -161,7 +160,6 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', 'Štv', 'Pi', 'So' );
     $lang['file_too_big_sprt']          = 'Maximálna veľkosť súboru je %s bytov.  Váš súbor bol väčšší a bol zrušený.';
     $lang['del_file_javascript_sprt']   = 'Naozaj vymazať %s ?';
 
-
  //forum
     $lang['orig_message']               = 'Originálna správa:';
     $lang['post']                       = 'Odoslať!';
@@ -182,16 +180,15 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', 'Štv', 'Pi', 'So' );
     $lang['forum_search']               = "Hľadať na fóre";
     $lang['no_results']                 = "Nenájdené výsledky pre '%s'";
     $lang['search_results']             = "Nájdené %1\$s výsledkov pre '%2\$s'<br />Ukázať výsledky %3\$s do %4\$s";
+
  //includes
     $lang['report']                     = 'Report';
     $lang['warning']                    = '<h1>Pardon!</h1><p>Teraz nie sme schopný vykonať Vašu požiadavku. Prosím skúste neskôr.</p>';
     $lang['home_page']                  = 'Hlavná stránka';
     $lang['summary_page']               = 'Sumárny prehľad';
-    $lang['todo_list']                  = 'Zoznam úloh';
-    $lang['calendar']                   = 'Kalendár';
     $lang['log_out']                    = 'Odhlásiť';
     $lang['main_menu']                  = 'Hlavné menu';
-    $lang['archive']                    = 'Archív';   
+    $lang['archive']                    = 'Archív';
     $lang['user_homepage_sprt']         = 'Hlavná stránka uživateľa %s';
     $lang['missing_field_javascript']   = 'Prosím vyplnťe hodnotu v prázdnom poli';
     $lang['invalid_date_javascript']    = 'Prosím vyberte platný kalendárny dátum';
@@ -199,7 +196,7 @@ $week_array = array('Ne', 'Po', 'Ut', 'Str', 'Štv', 'Pi', 'So' );
     $lang['security_manager']           = 'Správca bezpečnosti';
     $lang['session_timeout_sprt']       = 'Prístup odopretý; posledná akcia bola pred %1$d minútami a timeout je %2$d minút; prosím <a href="%3$sindex.php">re-login</a>';
     $lang['access_denied']              = 'Prístup odopretý';
-    $lang['private_usergroup']          = 'Pardon; táto časť je v privátnej skupine a Vy nemáte prístupové práva.';
+    $lang['private_usergroup_no_access']= 'Pardon; táto časť je v privátnej skupine a Vy nemáte prístupové práva.';
     $lang['invalid_date']               = 'Neplatný dátum';
     $lang['invalid_date_sprt']          = 'Dátum %s nie je platný kalendáry dátum (Skontrolujte
 počet dní v mesiaci).<br />Prosím vráťte sa a zadajte platný dátum.';
@@ -240,7 +237,7 @@ počet dní v mesiaci).<br />Prosím vráťte sa a zadajte platný dátum.';
     $lang['email']                      = 'E-mail';
     $lang['admin']                      = 'Administrátor';
     $lang['private_user']               = 'Privátny uživateľ';
-    $lang['normal_user']                = 'Normálny uživateľ'; 
+    $lang['normal_user']                = 'Normálny uživateľ';
     $lang['is_admin']                   = 'Je administrátor?';
     $lang['is_guest']                   = 'Je hosť?';
     $lang['guest']                      = 'Hosť';
@@ -337,8 +334,6 @@ počet dní v mesiaci).<br />Prosím vráťte sa a zadajte platný dátum.';
     $lang['clone_task']                 = 'Kopírovať úlohu';
     $lang['quick_jump']                 = 'Prejsť na';
     $lang['no_edit']                    = 'Nie ste vlastník položky a preto ju nemôžete editovať';
-    $lang['uncategorised']              = 'Nezaradený';
-    $lang['admin']                      = 'Administrátor';
     $lang['global']                     = 'Ostatní';
     $lang['delete_project']             = 'Zmazať projekt';
     $lang['delete_task']                = 'Zmazať úlohu';

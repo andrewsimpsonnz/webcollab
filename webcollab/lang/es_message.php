@@ -4,7 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -32,7 +32,7 @@
 //required language encodings
 define('CHARACTER_SET', "ISO-8859-1" );
 
-//this is the regex for input validation filter used in common.php 
+//this is the regex for input validation filter used in common.php
 $validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s";
 
 //dates
@@ -89,7 +89,7 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['error']                        = "Error";
     $lang['no_login']                     = "Acceso denegado, login o password incorrectos";
     $lang['redirect_sprt']                = "Volvera a la ventana de identificacion en %d segundos";
-    $lang['login_now']                    = "Pulse aqui para identificarse ahora";   
+    $lang['login_now']                    = "Pulse aqui para identificarse ahora";
     $lang['please_login']                 = "Bienvenido, por favor identifiquese";
     $lang['go']                           = "Ir a";
 
@@ -111,11 +111,11 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['set_email_owner']              = "Enviar siempre email al propietario con los cambios?";
     $lang['set_email_group']              = "Enviar siempre email al grupo de usuarios con los cambios?";
     $lang['project_listing_order']        = "Orden lista de proyectos";
-    $lang['task_listing_order']           = "Orden lista de tareas"; 
+    $lang['task_listing_order']           = "Orden lista de tareas";
     $lang['configuration']                = "Configuración";
 
 //archive
-    $lang['archived_projects']            = "Proyectos Archivados";    
+    $lang['archived_projects']            = "Proyectos Archivados";
 
 //contacts
     $lang['firstname']                    = "Nombre:";
@@ -128,7 +128,7 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['address']                      = "Direccion:";
     $lang['postal']                       = "Cod.Postal:";
     $lang['city']                         = "Ciudad:";
-    $lang['email']                        = "Email:";
+    $lang['email_contact']                = "Email:";
     $lang['notes']                        = "Notas:";
     $lang['add_contact']                  = "Agregar contacto";
     $lang['del_contact']                  = "Eliminar contacto";
@@ -161,7 +161,6 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['file_too_big_sprt']            = "El tamaño máximo permitido es %s bytes.  Su envío fue demasiado grande y ha sido eliminado.";
     $lang['del_file_javascript_sprt']     = "Esta seguro de eliminar %s ?";
 
-
  //forum
     $lang['orig_message']                 = "Mensaje original:";
     $lang['post']                         = "Publicar";
@@ -177,10 +176,10 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['forum_submit']                 = "Enviar al foro";
     $lang['no_message']                   = "No hay mensaje! Vuelva atrás y reintente.";
     $lang['add_reply']                    = "Agregar respuesta";
-//**  
+//**
     $lang['last_post_sprt']               = "Ultimo mensaje %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**   
-    $lang['recent_posts']                 = "Mensajes recientes";      
+//**
+    $lang['recent_posts']                 = "Mensajes recientes";
 //**
     $lang['recent_posts']                = "Recent forum posts";
 //**
@@ -189,17 +188,15 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['no_results']                  = "No results found for '%s'";
 //**
     $lang['search_results']              = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
-    
+
  //includes
     $lang['report']                       = "Informe";
     $lang['warning']                      = "<h1>Disculpe!</h1><p>No es posible procesar su solicitud ahora. Por favor reinténtelo más tarde.</p>";
     $lang['home_page']                    = "Principal";
     $lang['summary_page']                 = "Resumen";
-    $lang['todo_list']                    = "Pendiente";
-    $lang['calendar']                     = "Calendario";
     $lang['log_out']                      = "Salir";
     $lang['main_menu']                    = "Menu principal";
-    $lang['archive']                      = "Archivo";   
+    $lang['archive']                      = "Archivo";
     $lang['user_homepage_sprt']           = "Usuario: %s";
     $lang['missing_field_javascript']     = "Indique un valor para el dato nulo";
     $lang['invalid_date_javascript']      = "Elija una fecha valida";
@@ -207,7 +204,7 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['security_manager']             = "Gestión de Seguridad";
     $lang['session_timeout_sprt']         = "Acceo denegado, última acción fue %d minutos atrás y el tiempo de expiración es de %d minutos, por favor <a href=\"%sindex.php\">Ingrese</a>";
     $lang['access_denied']                = "Acceso denegado";
-    $lang['private_usergroup']            = "Disculpe, esta area es privada de un grupo y ud no tiene derecho de acceso.";
+    $lang['private_usergroup_no_access']  = "Disculpe, esta area es privada de un grupo y ud no tiene derecho de acceso.";
     $lang['invalid_date']                 = "Fecha inválida";
     $lang['invalid_date_sprt']            = "La fecha de %s no es una fecha calendario válida (Chequear el numero de día del mes), Por favor vuelva atrás e ingrese un fecha válida.";
 
@@ -248,7 +245,7 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['email']                        = "E-mail";
     $lang['admin']                        = "Administrador";
     $lang['private_user']                 = "Usuario privado?";
-    $lang['normal_user']                  = "Usuario?"; 
+    $lang['normal_user']                  = "Usuario?";
     $lang['is_admin']                     = "Administrador?";
     $lang['is_guest']                     = "Invitado?";
     $lang['guest']                        = "Invitado";
@@ -342,11 +339,9 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['add_subtask']                  = "Agregar sub-Tarea";
     $lang['add_project']                  = "Agregar Proyecto";
     $lang['clone_project']                = "Duplicar proyecto";
-    $lang['clone_task']                   = "Duplicar tarea"; 
+    $lang['clone_task']                   = "Duplicar tarea";
     $lang['quick_jump']                   = "Seleccion rapida";
     $lang['no_edit']                      = "No es propietario de este, no puede editarlo. Pida a un administrador, o al propietario de la tarea para que lo haga por Ud.";
-    $lang['uncategorised']                = "Sin categoria";
-    $lang['admin']                        = "Admin";
     $lang['global']                       = "Global";
     $lang['delete_project']               = "Borrar Proyecto";
     $lang['delete_task']                  = "Borrar Tarea";
@@ -355,7 +350,7 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['javascript_archive_project']   = "Esto archivara el proyecto %s.  Esta seguro?";
     $lang['archive_project']              = "Archivar proyecto";
     $lang['task_navigation']              = "Navegar tareas";
-    $lang['new_task']                     = "Nueva tarea";    
+    $lang['new_task']                     = "Nueva tarea";
     $lang['no_projects']                  = "Seleccione un proyecto";
     $lang['show_all_projects']            = "Mostrar todos los proyectos";
     $lang['show_active_projects']         = "Mostrar proyectos activos";

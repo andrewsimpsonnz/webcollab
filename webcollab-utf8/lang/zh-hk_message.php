@@ -66,7 +66,6 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['update']                     = "更新";
     $lang['submit_changes']             = "決定變更";
     $lang['continue']                   = "繼續";
-    $lang['reset']                      = "重設";
     $lang['manage']                     = "管理";
     $lang['edit']                       = "修改";
     $lang['delete']                     = "刪除";
@@ -127,7 +126,7 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['address']                    = "地址:";
     $lang['postal']                     = "郵政號碼:";
     $lang['city']                       = "城市:";
-    $lang['email']                      = "Email:";
+    $lang['email_contact']              = "Email:";
     $lang['notes']                      = "記事:";
     $lang['add_contact']                = "新增聯絡人";
     $lang['del_contact']                = "刪除聯絡人";
@@ -160,7 +159,6 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['file_too_big_sprt']          = "最大的上載檔案大小是 %s 位元組。  你上載的檔案太大所以被刪除了。";
     $lang['del_file_javascript_sprt']   = "你確定要刪除檔案 %s ?";
 
-
  //forum
     $lang['orig_message']               = "原始信息:";
     $lang['post']                       = "張貼!";
@@ -190,8 +188,6 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['warning']                    = "<h1>不好意思!</h1><p>我們現在未能處理你的要求，請稍後再試</p>";
     $lang['home_page']                  = "首頁";
     $lang['summary_page']               = "摘要資訊";
-    $lang['todo_list']                  = "待辦事項";
-    $lang['calendar']                   = "月曆";
     $lang['log_out']                    = "登出";
     $lang['main_menu']                  = "主選單";
     $lang['archive']                    = "封存";
@@ -202,10 +198,9 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['security_manager']           = "保安管理員";
     $lang['session_timeout_sprt']       = "禁止查閱; 最後一次行動在 %1\$d 分鐘前而且已逾時了 %2\$d 分鐘，請 <a href=\"%3\$sindex.php\">重新登入</a>";
     $lang['access_denied']              = "禁止查閱";
-    $lang['private_usergroup']          = "對不起; 這個是私人使用者組別的範圍而你未有查閱的權限";
+    $lang['private_usergroup_no_access']= "對不起; 這個是私人使用者組別的範圍而你未有查閱的權限";
     $lang['invalid_date']               = "無效的日期";
     $lang['invalid_date_sprt']          = "The date of %s is not a valid calendar date (Check the number of days in month).<br />Please go back and re-enter a valid date.";
-
 
  //taskgroups
     $lang['taskgroup_name']             = "工作組別名稱:";
@@ -339,8 +334,6 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['clone_task']                 = "複製工作";
     $lang['quick_jump']                 = "快速跳入";
     $lang['no_edit']                    = "你未擁有這項目所以不能修改它";
-    $lang['uncategorised']              = "未歸類";
-    $lang['admin']                      = "管理";
     $lang['global']                     = "Global";
     $lang['delete_project']             = "刪除專案";
     $lang['delete_task']                = "刪除工作";

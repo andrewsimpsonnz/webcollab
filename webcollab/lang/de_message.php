@@ -32,7 +32,7 @@
 //required language encodings
 define('CHARACTER_SET', "ISO-8859-1" );
 
-//this is the regex for input validation filter used in common.php 
+//this is the regex for input validation filter used in common.php
 $validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s";
 
 //dates
@@ -111,11 +111,11 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['set_email_owner']             = "Den Besitzer immer per Email über Veränderungen benachrichtigen?";
     $lang['set_email_group']             = "Soll die Nutzergruppe immer bei Veränderungen benachrichtigt werden?";
     $lang['project_listing_order']       = "Projektsortierung nach";
-    $lang['task_listing_order']          = "Aufgabensortierung nach"; 
+    $lang['task_listing_order']          = "Aufgabensortierung nach";
     $lang['configuration']               = "Konfiguration";
 
 //archive
-    $lang['archived_projects']           = "Archivierte Projekte";    
+    $lang['archived_projects']           = "Archivierte Projekte";
 
  //contacts
     $lang['firstname']                   = "Vorname:";
@@ -128,7 +128,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['address']                     = "Adresse:";
     $lang['postal']                      = "Postleitzahl:";
     $lang['city']                        = "Ort:";
-    $lang['email']                       = "Email:";
+    $lang['email_contact']               = "Email:";
     $lang['notes']                       = "Notizen:";
     $lang['add_contact']                 = "Kontakt hinzufügen";
     $lang['del_contact']                 = "Kontakt löschen";
@@ -188,8 +188,6 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['warning']                     = "<h1>Entschuldigung!</h1><P>Der Vorgang kann im Moment nicht abgearbeitet werden. Bitte versuchen Sie es später noch einmal.</p>";
     $lang['home_page']                   = "Startseite";
     $lang['summary_page']                = "Übersicht";
-    $lang['todo_list']                   = "Aufgaben";
-    $lang['calendar']                    = "Kalender";
     $lang['log_out']                     = "Abmelden";
     $lang['main_menu']                   = "Hauptmenü";
     $lang['archive']                     = "Archiv";
@@ -200,7 +198,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['security_manager']            = "Sicherheitsverwaltung";
     $lang['session_timeout_sprt']        = "Zugriff verweigert, Ihre letzte Aktion war vor %d Minuten. %d Minuten bleibt eine Session ohne Aktion gültig, bitte neu <a href=\"%sindex.php\">anmelden</a>.";
     $lang['access_denied']               = "Zugriff verweigert";
-    $lang['private_usergroup']           = "Dieser Bereich gehört zu einer privaten Nutzergruppe und sie haben keine Zugriffsrechte.";
+    $lang['private_usergroup_no_access'] = "Dieser Bereich gehört zu einer privaten Nutzergruppe und sie haben keine Zugriffsrechte.";
     $lang['invalid_date']                = "Ungültiges Datum";
     $lang['invalid_date_sprt']           = "Das Datum %s ist kein gültiges Kalenderdatum (Prüfen sie die Anzahl der Monatstage!). Bitte gehen sie zurück und geben sie eine neues Datum ein!";
 
@@ -335,10 +333,8 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['add_project']                 = "Projekt hinzufügen";
     $lang['clone_project']               = "Projekt klonen";
     $lang['clone_task']                  = "Aufgabe klonen";
-    $lang['quick_jump']                  = "Schnellauswahl"; 
+    $lang['quick_jump']                  = "Schnellauswahl";
     $lang['no_edit']                     = "Dieser Eintrag gehört ihnen nicht und deshalb dürfen sie ihn nicht bearbeiten. Fragen sie einen Administrator oder den Eigentümer, die Änderungen vorzunehmen.";
-    $lang['uncategorised']               = "Nicht eingeordnet";
-    $lang['admin']                       = "Admininstrator";
     $lang['global']                      = "Global";
     $lang['delete_project']              = "Projekt löschen";
     $lang['delete_task']                 = "Aufgabe löschen";
@@ -347,7 +343,7 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['javascript_archive_project']  = "Projekt %s wird archiviert.  Sind sie sicher?";
     $lang['archive_project']             = "Archiviere Projekt";
     $lang['task_navigation']             = "Aufgaben-Navigation";
-    $lang['new_task']                    = "Neue Aufgabe";    
+    $lang['new_task']                    = "Neue Aufgabe";
     $lang['no_projects']                 = "Es gibt keine Projekte in dieser Ansicht";
     $lang['show_all_projects']           = "Zeige alle Projekte";
     $lang['show_active_projects']        = "Zeige nur aktive Projekte";

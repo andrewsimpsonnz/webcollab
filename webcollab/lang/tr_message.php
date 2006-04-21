@@ -30,8 +30,8 @@
 //required language encodings
 define('CHARACTER_SET', "ISO-8859-9" );
 
-//this is the regex for input validation filter used in common.php 
-$validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s"; //ISO-8859-x 
+//this is the regex for input validation filter used in common.php
+$validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s"; //ISO-8859-x
 
 //dates
 $month_array = array (NULL, 'Oca', 'Þub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Aðu', 'Eyl', 'Eki', 'Kas', 'Ara' );
@@ -88,7 +88,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['error']                      = "Hata";
     $lang['no_login']                   = "Eriþim engellendi; yanlýþ kullanýcý adý ya da þifre";
     $lang['redirect_sprt']              = "%d saniye sonra otomatik olarak sisteme giriþ sayfasýna döneceksiniz";
-    $lang['login_now']                  = "Sisteme giriþ sayfasýna þimdi dönmek için lütfen buraya týklayýn";   
+    $lang['login_now']                  = "Sisteme giriþ sayfasýna þimdi dönmek için lütfen buraya týklayýn";
     $lang['please_login']               = "Lütfen sisteme girin";
     $lang['go']                         = "Git!";
 
@@ -110,11 +110,11 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['set_email_owner']            = "Sahibine deðiþiklikleri her zaman epostayla haber ver?";
     $lang['set_email_group']            = "Kullanýcý grubuna deðiþiklikleri her zaman epostayla haber ver?";
     $lang['project_listing_order']      = "Proje listeleme sýrasý";
-    $lang['task_listing_order']         = "Görev listeleme sýrasý"; 
+    $lang['task_listing_order']         = "Görev listeleme sýrasý";
     $lang['configuration']              = "Tanýmlamalar";
 
 //archive
-    $lang['archived_projects']          = "Arþivlenmiþ projeler";    
+    $lang['archived_projects']          = "Arþivlenmiþ projeler";
 
 //contacts
     $lang['firstname']                  = "Ad:";
@@ -127,7 +127,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['address']                    = "Adres:";
     $lang['postal']                     = "Posta kodu";
     $lang['city']                       = "Ýl:";
-    $lang['email']                      = "Eposta:";
+    $lang['email_contact']              = "Eposta:";
     $lang['notes']                      = "Notlar:";
     $lang['add_contact']                = "Kiþi ekle";
     $lang['del_contact']                = "Kiþi sil";
@@ -160,7 +160,6 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['file_too_big_sprt']          = "En fazla %s bayt yükleyebilirsiniz. Sizinki fazla büyüktü ve silindi.";
     $lang['del_file_javascript_sprt']   = "%s dosyasýný silmek istediðinizden emin misiniz?";
 
-
  //forum
     $lang['orig_message']               = "Orijinal mesaj:";
     $lang['post']                       = "Gönder!";
@@ -177,7 +176,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['no_message']                 = "Mesaj yok! Lütfen geri dönün ve tekrar deneyin";
     $lang['add_reply']                  = "Yanýt ekle";
     $lang['last_post_sprt']             = "Son mesaj: %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-    $lang['recent_posts']               = "Yakýn zamanda gönderilmiþ forum mesajlarý";      
+    $lang['recent_posts']               = "Yakýn zamanda gönderilmiþ forum mesajlarý";
 //**
     $lang['recent_posts']               = "Recent forum posts";
 //**
@@ -192,11 +191,9 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['warning']                    = "<h1>Özür dileriz!</h1><p>Þu anda isteðinizi yerine getiremiyoruz. Lütfen daha sonra tekrar deneyin.</p>";
     $lang['home_page']                  = "Ana sayfa";
     $lang['summary_page']               = "Özet sayfa";
-    $lang['todo_list']                  = "Yapýlacaklar listesi";
-    $lang['calendar']                   = "Takvim";
     $lang['log_out']                    = "Sistemden çýk";
     $lang['main_menu']                  = "Ana menü";
-    $lang['archive']                    = "Arþiv";   
+    $lang['archive']                    = "Arþiv";
     $lang['user_homepage_sprt']         = "kullanýcý ana sayfasý: %s";
     $lang['missing_field_javascript']   = "Lütfen eksik alana bir deðer girin";
     $lang['invalid_date_javascript']    = "Lütfen geçerli bir tarih seçin";
@@ -204,7 +201,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['security_manager']           = "Güvenlik yöneticisi";
     $lang['session_timeout_sprt']       = "Eriþim engellendi; son eylem %1\$d dakika önceydi ve zaman aþýmý %2\$d dakika olarak belirlenmiþ durumda. Lütfen yeniden <a href=\"%3\$sindex.php\">sisteme girin</a>";
     $lang['access_denied']              = "Eriþim engellendi";
-    $lang['private_usergroup']          = "Özür dileriz; bu alan özel bir kullanýcý grubundadýr ve eriþim izniniz yok.";
+    $lang['private_usergroup_no_access']= "Özür dileriz; bu alan özel bir kullanýcý grubundadýr ve eriþim izniniz yok.";
     $lang['invalid_date']               = "Geçersiz tarih";
     $lang['invalid_date_sprt']          = "%s geçerli bir tarih deðil (ay içindeki gün adedini kontrol edin).<br />Lütfen geri dönün ve geçerli bir tarih girin.";
 
@@ -245,7 +242,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['email']                      = "Eposta";
     $lang['admin']                      = "Yönetici";
     $lang['private_user']               = "Özel kullanýcý";
-    $lang['normal_user']                = "Normal kullanýcý"; 
+    $lang['normal_user']                = "Normal kullanýcý";
     $lang['is_admin']                   = "Yönetici mi?";
     $lang['is_guest']                   = "Misafir mi?";
     $lang['guest']                      = "Misafir kullanýcý";
@@ -341,8 +338,6 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['clone_task']                 = "Görevi klonla";
     $lang['quick_jump']                 = "Hýzlý menü";
     $lang['no_edit']                    = "Bu ögenin sahibi deðilsiniz ve onu deðiþtiremezsiniz";
-    $lang['uncategorised']              = "Kategoriye sokulmamýþ";
-    $lang['admin']                      = "Yönetici";
     $lang['global']                     = "Genel";
     $lang['delete_project']             = "Projeyi sil";
     $lang['delete_task']                = "Görevi sil";
@@ -351,7 +346,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['javascript_archive_project'] = "Bu iþlem %s projesini arþive kaldýracak. Emin misiniz?";
     $lang['archive_project']            = "Projeyi arþive kaldýr";
     $lang['task_navigation']            = "Görev navigasyon";
-    $lang['new_task']                   = "Yeni görev";    
+    $lang['new_task']                   = "Yeni görev";
     $lang['no_projects']                = "Bakýlacak proje yok";
     $lang['show_all_projects']          = "Tüm projeleri göster";
     $lang['show_active_projects']       = "Sadece aktif projeleri göster";

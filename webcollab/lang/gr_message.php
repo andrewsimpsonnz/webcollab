@@ -30,15 +30,15 @@
 //required language encodings
 define('CHARACTER_SET', "ISO-8859-7" );
 
-//this is the regex for input validation filter used in common.php 
-$validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s"; //ISO-8859-x 
+//this is the regex for input validation filter used in common.php
+$validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s"; //ISO-8859-x
 
 //dates
 $month_array = array (NULL, 'Ιαν', 'Φεβ', 'Μαρ', 'Απρ', 'Μαϊ', 'Ιουν', 'Ιουλ', 'Αυγ', 'Σεπ', 'Οκτ', 'Νοε', 'Δεκ' );
 $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ' );
 
 //task states
- 
+
  //priorities
     $task_state['dontdo']               = "Ακύρωσε";
     $task_state['low']                  = "Χαμηλή";
@@ -58,7 +58,7 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ' );
     $task_state['planned_project']      = "Project κανονισμένο (ανενεργή)";
     $task_state['no_deadline_project']  = "Δεν καθορίστηκε ημερομηνία παράδοσης";
     $task_state['active_project']       = "Ενεργό project";
-    
+
 //common items
     $lang['description']                = "Περιγραφή";
     $lang['name']                       = "Ονομα";
@@ -88,10 +88,10 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ' );
     $lang['error']                      = "Λάθος";
     $lang['no_login']                   = "Ανέφικτη σύνδεση; λανθασμένο username ή κωδικός";
     $lang['redirect_sprt']              = "Θα μεταφερθείτε αυτόματα στη σελίδα σύνδεσης μετά από %d δευτερόλεπτα καθυστέρησης";
-    $lang['login_now']                  = "Παρακαλώ επιλέξτε εδώ για να συνδεθείτε";   
+    $lang['login_now']                  = "Παρακαλώ επιλέξτε εδώ για να συνδεθείτε";
     $lang['please_login']               = "Παρακαλώ συνδεθείτε";
     $lang['go']                         = "Συνέχεια!";
-    
+
 //graphic items
     $lang['late_g']                     = "&nbsp;LATE&nbsp;";
     $lang['new_g']                      = "&nbsp;NEW&nbsp;";
@@ -110,11 +110,11 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ' );
     $lang['set_email_owner']            = "Πάντα να αποστέλλεται email στον υπεύθυνο με τις αλλαγές?";
     $lang['set_email_group']            = "Πάντα να αποστέλλεται email στις ομάδες χρηστών με τισ αλλαγές?";
     $lang['project_listing_order']      = "Σειρά εμφάνισης project";
-    $lang['task_listing_order']         = "Σειρά εμφάνιση λίστας εργασιών"; 
+    $lang['task_listing_order']         = "Σειρά εμφάνιση λίστας εργασιών";
     $lang['configuration']              = "Διαχείριση";
 
 //archive
-    $lang['archived_projects']          = "Αρχειποιημένα Projects";    
+    $lang['archived_projects']          = "Αρχειποιημένα Projects";
 
 //contacts
     $lang['firstname']                  = "Όνομα:";
@@ -127,7 +127,7 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ' );
     $lang['address']                    = "Διεύθυνση:";
     $lang['postal']                     = "ΤΚ:";
     $lang['city']                       = "Πόλη:";
-    $lang['email']                      = "Email:";
+    $lang['email_contact']              = "Email:";
     $lang['notes']                      = "Σημειώσεις:";
     $lang['add_contact']                = "Πρόσθεση επαφής";
     $lang['del_contact']                = "Διαγραφή επαφής";
@@ -177,7 +177,7 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ' );
     $lang['no_message']                 = "Δεν υπάρχει μήνυμα προσπαθείστε πάλι";
     $lang['add_reply']                  = "Προσθέστε απάντηση";
     $lang['last_post_sprt']             = "Τελευταία αποστολή %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-    $lang['recent_posts']               = "Τελευταίες αποστολές στο forum";      
+    $lang['recent_posts']               = "Τελευταίες αποστολές στο forum";
 //**
     $lang['recent_posts']               = "Recent forum posts";
 //**
@@ -192,11 +192,9 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ' );
     $lang['warning']                    = "<h1>Συγνώμη!</h1><p>Δεν μπορέσαμε να προωθήσουμε το αίτημα σας αυτή τη στιγμή. Παρακαλούμε προσπαθήστε αργότερα.</p>";
     $lang['home_page']                  = "Αρχική σελίδα";
     $lang['summary_page']               = "Σελίδα περίληψης";
-    $lang['todo_list']                  = "Λίστα εργασιών";
-    $lang['calendar']                   = "Ημερολόγιοr";
     $lang['log_out']                    = "Αποσύνδεση";
     $lang['main_menu']                  = "Κεντρικό μενού";
-    $lang['archive']                    = "Αρχείο";   
+    $lang['archive']                    = "Αρχείο";
     $lang['user_homepage_sprt']         = "%s's αρχική σελίδα";
     $lang['missing_field_javascript']   = "Παρακαλούμε δώστε μια τιμή στο κενό πεδίο";
     $lang['invalid_date_javascript']    = "Παρακαλούμε διαλέξτε μια έγκυρη ημερομηνία";
@@ -204,10 +202,9 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ' );
     $lang['security_manager']           = "Διαχειριστής ασφαλείας";
     $lang['session_timeout_sprt']       = "Απαγορεύεται η πρόσβαση; Η τελευταία ενέργεια ήταν %1\$d λεπτά πριν και ο χρόνος λήξης είναι %2\$d λεπτά; παρακαλώ <a href=\"%3\$sindex.php\">επανασυνδεθείτε</a>";
     $lang['access_denied']              = "Απαγορεύεται η πρόσβαση";
-    $lang['private_usergroup']          = "Λυπούμαστε; αυτή η περιοχή αφορά γκρουπ στο οποίο εσείς δεν έχετε δικαίωμα πρόσβασης.";
+    $lang['private_usergroup_no_access']= "Λυπούμαστε; αυτή η περιοχή αφορά γκρουπ στο οποίο εσείς δεν έχετε δικαίωμα πρόσβασης.";
     $lang['invalid_date']               = "Άκυρη ημερομηνία";
     $lang['invalid_date_sprt']          = "Η ημέρα του %s δεν είναι έγκυρη ημερομηνία (Ελέξτε τον αριθμό ημερών του μήνα).<br />Παρακαλούμε βάλτε μία έγκυρη ημερομηνία.";
-
 
  //taskgroups
     $lang['taskgroup_name']             = "Ονομασία γκρουπ εργασιών:";
@@ -245,7 +242,7 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ' );
     $lang['email']                      = "E-mail";
     $lang['admin']                      = "Διαχειριστής";
     $lang['private_user']               = "Ιδιωτικός χρήστης";
-    $lang['normal_user']                = "Κανονικός χρήστης"; 
+    $lang['normal_user']                = "Κανονικός χρήστης";
     $lang['is_admin']                   = "Είναι διαχειριστής?";
     $lang['is_guest']                   = "Είναι επισκέπτης?";
     $lang['guest']                      = "Επισκέπτης";
@@ -341,8 +338,6 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ' );
     $lang['clone_task']                 = "Κλωνοποίηση εργασίας";
     $lang['quick_jump']                 = "Γρήγορη μετάβαση";
     $lang['no_edit']                    = "Δεν σας ανήκει αυτό το γεγονός και δεν μπορείτε να το αλλάξετε";
-    $lang['uncategorised']              = "Μη κατηγοριοποιημένο";
-    $lang['admin']                      = "Διαχειριστής";
     $lang['global']                     = "Γενικό";
     $lang['delete_project']             = "Διαγραφή project";
     $lang['delete_task']                = "Διαγραφή εργασίας";
@@ -352,7 +347,7 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ' );
     $lang['archive_project']            = "Βάλτε το project στο αρχείο";
     $lang['task_navigation']            = "Είσοδος στην εργασία";
 //**
-    $lang['new_task']                   = "Νέα εργασία";    
+    $lang['new_task']                   = "Νέα εργασία";
     $lang['no_projects']                = "Δεν υπάρχουν projects για να δείτε";
     $lang['show_all_projects']          = "Εμφάνιση όλων των projects";
     $lang['show_active_projects']       = "Εμφάνιση μόνο των ενεργών projects";

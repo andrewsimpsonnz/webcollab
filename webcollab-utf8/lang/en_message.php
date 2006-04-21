@@ -63,7 +63,6 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['update']                     = "Update";
     $lang['submit_changes']             = "Submit changes";
     $lang['continue']                   = "Continue";
-    $lang['reset']                      = "Reset";
     $lang['manage']                     = "Manage";
     $lang['edit']                       = "Edit";
     $lang['delete']                     = "Delete";
@@ -124,7 +123,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['address']                    = "Address:";
     $lang['postal']                     = "Postal code:";
     $lang['city']                       = "City:";
-    $lang['email']                      = "Email:";
+    $lang['email_contact']              = "Email:";
     $lang['notes']                      = "Notes:";
     $lang['add_contact']                = "Add contact";
     $lang['del_contact']                = "Delete contact";
@@ -175,11 +174,8 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['add_reply']                  = "Add reply";
     $lang['last_post_sprt']             = "Last post %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']               = "Recent forum posts";
-//**
     $lang['forum_search']               = "Forum search";
-//**
     $lang['no_results']                 = "No results found for '%s'";
-//**
     $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
 
  //includes
@@ -187,8 +183,6 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['warning']                    = "<h1>Sorry!</h1><p>We are unable to process your request right now. Please try again later.</p>";
     $lang['home_page']                  = "Home page";
     $lang['summary_page']               = "Summary page";
-    $lang['todo_list']                  = "ToDo list";
-    $lang['calendar']                   = "Calendar";
     $lang['log_out']                    = "Log out";
     $lang['main_menu']                  = "Main menu";
     $lang['archive']                    = "Archive";
@@ -199,7 +193,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['security_manager']           = "Security manager";
     $lang['session_timeout_sprt']       = "Access denied; last action was %1\$d minutes ago and the timeout is %2\$d minutes; please <a href=\"%3\$sindex.php\">re-login</a>";
     $lang['access_denied']              = "Access denied";
-    $lang['private_usergroup']          = "Sorry; this area is in a private usergroup and you do not have access rights.";
+    $lang['private_usergroup_no_access']= "Sorry; this area is in a private usergroup and you do not have access rights.";
     $lang['invalid_date']               = "Invalid date";
     $lang['invalid_date_sprt']          = "The date of %s is not a valid calendar date (Check the number of days in month).<br />Please go back and re-enter a valid date.";
 
@@ -336,8 +330,6 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['clone_task']                 = "Clone task";
     $lang['quick_jump']                 = "Quick Jump";
     $lang['no_edit']                    = "You do not own this item and therefore you may not edit it";
-    $lang['uncategorised']              = "Uncategorised";
-    $lang['admin']                      = "Admin";
     $lang['global']                     = "Global";
     $lang['delete_project']             = "Delete project";
     $lang['delete_task']                = "Delete task";

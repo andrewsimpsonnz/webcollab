@@ -25,15 +25,15 @@
 
   Maintainer: Stoyan Dimitrov <stoyan at adiumdesign dot com>
 
-  
+
   NOTE: This file is written in Windows-1251 character set
-    
+
 */
 
 //required language encodings
 define('CHARACTER_SET', "Windows-1251" );
 
-//this is the regex for input validation filter used in common.php 
+//this is the regex for input validation filter used in common.php
 $validation_regex = "/([^\x09\x0a\x0d\x20-\x97\x99-\xff])/"; //Windows-1251 (http://www.microsoft.com/typography/unicode/1251.htm)
 
 //dates
@@ -90,12 +90,12 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['login_screen']                 = "Вход";
     $lang['error']                        = "Грешка";
     $lang['no_login']                     = "Достъпът отказан, грешно име или парола";
-//**    
+//**
     $lang['redirect_sprt']                = "You will automatically return to Login after a %d second delay";
 //**
-    $lang['login_now']                    = "Please click here to return to Login now";   
+    $lang['login_now']                    = "Please click here to return to Login now";
     $lang['please_login']                 = "Моля влезте";
-//**    
+//**
     $lang['go']                           = "Go!";
 //graphic items
     $lang['late_g']                       = "&nbsp;ЗАКЪСНЕНИЕ&nbsp;";
@@ -113,15 +113,15 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['allow_group_edit']             = "Позволи всеки в групата да променя";
     $lang['set_email_owner']              = "Винаги изпращай писмо на притежателя с промените";
     $lang['set_email_group']              = "Винаги изпращай писмо до групата с промените";
-//**    
+//**
     $lang['project_listing_order']        = "Project listing order";
-//**    
-    $lang['task_listing_order']           = "Task listing order"; 
+//**
+    $lang['task_listing_order']           = "Task listing order";
     $lang['configuration']                = "Configuration";
     $lang['configuration']                = "Конфигуриране";
 //archive
 //**
-    $lang['archived_projects']            = "Archived Projects";    
+    $lang['archived_projects']            = "Archived Projects";
 //contacts
     $lang['firstname']                    = "Име:";
     $lang['lastname']                     = "Фамилия:";
@@ -133,7 +133,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['address']                      = "Адрес:";
     $lang['postal']                       = "Пощенски код:";
     $lang['city']                         = "Град:";
-    $lang['email']                        = "Е-поща:";
+    $lang['email_contact']                = "Е-поща:";
     $lang['notes']                        = "Бележка:";
     $lang['add_contact']                  = "Добави контакт";
     $lang['del_contact']                  = "Изтрий контакт";
@@ -198,11 +198,10 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['home_page']                    = "Начало";
     $lang['summary_page']                 = "Съдържание";
     $lang['todo_list']                    = "Какво остава";
-    $lang['calendar']                     = "Календар";
     $lang['log_out']                      = "Изход";
     $lang['main_menu']                    = "Меню";
 //**
-    $lang['archive']                      = "Archive";   
+    $lang['archive']                      = "Archive";
     $lang['user_homepage_sprt']           = "Дейностите на <b>%s</b>";
     $lang['missing_field_javascript']     = "Моля въведете липсващата стойност!";
     $lang['invalid_date_javascript']      = "Моля изберете валидна календарна дата";
@@ -210,7 +209,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['security_manager']             = "Управление на сигурността";
     $lang['session_timeout_sprt']         = "Достъпът отказан, последното Ви действие е било преди %1\$d минути, а сесията Ви изтича за %2\$d минути, моля <a href=\"%3\$sindex.php\">влезте</a> отново";
     $lang['access_denied']                = "Достъпът отказан";
-    $lang['private_usergroup']            = "Грешка, тази част е на поверителна потребителска група, а Вие нямате права за достъп до нея.";
+    $lang['private_usergroup_no_access']  = "Грешка, тази част е на поверителна потребителска група, а Вие нямате права за достъп до нея.";
     $lang['invalid_date']                 = "Невалидна дата";
     $lang['invalid_date_sprt']            = "Датата '%s' е невалидна календарна дата (проверете броя на дните в месеца).<br />Моля върнете се и въведете правилна дата.";
 //taskgroups
@@ -248,7 +247,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['admin']                        = "Админ";
     $lang['private_user']                 = "Поверителен";
  //**
-    $lang['normal_user']                  = "Normal user"; 
+    $lang['normal_user']                  = "Normal user";
     $lang['is_admin']                     = "Администратор";
  //**
     $lang['is_guest']                     = "Is a guest?";
@@ -346,15 +345,14 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['quick_jump']                   = "Quick Jump";
     $lang['no_edit']                      = "Вие не сте притежател на този item и следователно не можете да го променяте";
     $lang['uncategorised']                = "<i>[без група]</i>";
-    $lang['admin']                        = "Админ";
     $lang['global']                       = "Глобален";
     $lang['delete_project']               = "Изтриване проект";
     $lang['delete_task']                  = "Изтриване задача";
     $lang['project_options']              = "Проекти";
     $lang['task_options']                 = "Настройки на задача";
-//**    
+//**
     $lang['javascript_archive_project']   = "This will archive project %s.  Are you sure?";
-//**    
+//**
     $lang['archive_project']              = "Archive project";
     $lang['task_navigation']              = "Задачи";
     $lang['new_task']                     = "New task";

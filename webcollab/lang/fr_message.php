@@ -67,7 +67,6 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['update']                       = "Actualiser";
     $lang['submit_changes']               = "Modifier";
     $lang['continue']                     = "Continue";
-    //$lang['reset']                        = "Reset";
     $lang['manage']                       = "Gérer";
     $lang['edit']                         = "Editer";
     $lang['delete']                       = "Effacer";
@@ -115,7 +114,6 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['configuration']                = "Configuration";
 
 //archive
-//**
     $lang['archived_projects']            = "Projets Archivés";
 
 //contacts
@@ -129,7 +127,7 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['address']                      = "Adresse:";
     $lang['postal']                       = "Code Postal:";
     $lang['city']                         = "Ville:";
-    $lang['email']                        = "Courriel:";
+    $lang['email_contact']                = "Courriel:";
     $lang['notes']                        = "Notes:";
     $lang['add_contact']                  = "Ajouter contact";
     $lang['del_contact']                  = "Effacer contact";
@@ -190,8 +188,6 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['warning']                      = "<h1>Désolé!</h1><p>Nous sommes incapable de procéder à votre requete actuellement. Merci de réessayez plus tard.</p>";
     $lang['home_page']                    = "Page Principale";
     $lang['summary_page']                 = "Sommaire";
-    $lang['todo_list']                    = "Liste à-faire";
-    $lang['calendar']                     = "Calendrier";
     $lang['log_out']                      = "Déconnection";
     $lang['main_menu']                    = "Menu Principal";
     $lang['archive']                      = "Archive";
@@ -202,7 +198,7 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['security_manager']             = "Gestion Securité";
     $lang['session_timeout_sprt']         = "Accés refusé, la dernière action a été faite il y à %1\$d minutes et la temps limite d'une session est de %2\$d minutes, merci de vous  <a href=\"%3\$sindex.php\">re-connecter</a>";
     $lang['access_denied']                = "Accès refusé";
-    $lang['private_usergroup']            = "Désolé, cette zone est réservée à un groupe d'utilisateurs  privé. Vous n'y avez pas accès.";
+    $lang['private_usergroup_no_access']  = "Désolé, cette zone est réservée à un groupe d'utilisateurs  privé. Vous n'y avez pas accès.";
     $lang['invalid_date']                 = "Date invalide";
     $lang['invalid_date_sprt']            = "La date %1\$s n'est pas une date correcte du calendrier (vérifier le nombre de jour dans le mois). Merci de revenir en arrière et d'entrer une date valide.";
 
@@ -339,8 +335,6 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['clone_task']                   = "Cloner la tâche";
     $lang['quick_jump']                   = "Accès Rapide";
     $lang['no_edit']                      = "Vous n'êtes pas propriétaire de cet élément et vous ne pouvez pas l'éditer. Demandez à l'administrateur, ou au propriétaire de ces tâches de le faire pour vous.";
-    $lang['uncategorised']                = "Non classé";
-    $lang['admin']                        = "Admin";
     $lang['global']                       = "Global";
     $lang['delete_project']               = "Détruire le projet";
     $lang['delete_task']                  = "Détruire la tâche";

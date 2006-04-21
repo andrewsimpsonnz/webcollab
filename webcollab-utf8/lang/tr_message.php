@@ -66,7 +66,6 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['update']                     = "Güncelle";
     $lang['submit_changes']             = "Değişiklikleri onayla";
     $lang['continue']                   = "Devam et";
-    $lang['reset']                      = "Sıfırla";
     $lang['manage']                     = "Yönet";
     $lang['edit']                       = "Değiştir";
     $lang['delete']                     = "Sil";
@@ -84,7 +83,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['member_groups']              = "Kullanıcı aşağıda belirtilen gruplara üyedir (eğer varsa)";
     $lang['login']                      = "Login";
     $lang['login_action']               = "Login";
-    $lang['login_screen']                 = "Login";
+    $lang['login_screen']               = "Login";
     $lang['error']                      = "Hata";
     $lang['no_login']                   = "Erişim engellendi; yanlış kullanıcı adı ya da şifre";
     $lang['redirect_sprt']              = "%d saniye sonra otomatik olarak sisteme giriş sayfasına döneceksiniz";
@@ -127,7 +126,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['address']                    = "Adres:";
     $lang['postal']                     = "Posta kodu";
     $lang['city']                       = "İl:";
-    $lang['email']                      = "Eposta:";
+    $lang['email_contact']              = "Eposta:";
     $lang['notes']                      = "Notlar:";
     $lang['add_contact']                = "Kişi ekle";
     $lang['del_contact']                = "Kişi sil";
@@ -160,7 +159,6 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['file_too_big_sprt']          = "En fazla %s bayt yükleyebilirsiniz. Sizinki fazla büyüktü ve silindi.";
     $lang['del_file_javascript_sprt']   = "%s dosyasını silmek istediğinizden emin misiniz?";
 
-
  //forum
     $lang['orig_message']               = "Orijinal mesaj:";
     $lang['post']                       = "Gönder!";
@@ -190,8 +188,6 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['warning']                    = "<h1>Özür dileriz!</h1><p>Şu anda isteğinizi yerine getiremiyoruz. Lütfen daha sonra tekrar deneyin.</p>";
     $lang['home_page']                  = "Ana sayfa";
     $lang['summary_page']               = "Özet sayfa";
-    $lang['todo_list']                  = "Yapılacaklar listesi";
-    $lang['calendar']                   = "Takvim";
     $lang['log_out']                    = "Sistemden çık";
     $lang['main_menu']                  = "Ana menü";
     $lang['archive']                    = "Arşiv";
@@ -202,10 +198,9 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['security_manager']           = "Güvenlik yöneticisi";
     $lang['session_timeout_sprt']       = "Erişim engellendi; son eylem %1\$d dakika önceydi ve zaman aşımı %2\$d dakika olarak belirlenmiş durumda. Lütfen yeniden <a href=\"%3\$sindex.php\">sisteme girin</a>";
     $lang['access_denied']              = "Erişim engellendi";
-    $lang['private_usergroup']          = "Özür dileriz; bu alan özel bir kullanıcı grubundadır ve erişim izniniz yok.";
+    $lang['private_usergroup_no_access']= "Özür dileriz; bu alan özel bir kullanıcı grubundadır ve erişim izniniz yok.";
     $lang['invalid_date']               = "Geçersiz tarih";
     $lang['invalid_date_sprt']          = "%s geçerli bir tarih değil (ay içindeki gün adedini kontrol edin).<br />Lütfen geri dönün ve geçerli bir tarih girin.";
-
 
  //taskgroups
     $lang['taskgroup_name']             = "Görev grubu adı:";
@@ -339,8 +334,6 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['clone_task']                 = "Görevi klonla";
     $lang['quick_jump']                 = "Hızlı menü";
     $lang['no_edit']                    = "Bu ögenin sahibi değilsiniz ve onu değiştiremezsiniz";
-    $lang['uncategorised']              = "Kategoriye sokulmamış";
-    $lang['admin']                      = "Yönetici";
     $lang['global']                     = "Genel";
     $lang['delete_project']             = "Projeyi sil";
     $lang['delete_task']                = "Görevi sil";

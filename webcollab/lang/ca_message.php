@@ -32,7 +32,7 @@
 //required language encodings
 define('CHARACTER_SET', "ISO-8859-1" );
 
-//this is the regex for input validation filter used in common.php 
+//this is the regex for input validation filter used in common.php
 $validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s"; //ISO-8859-x
 
 //dates
@@ -88,12 +88,12 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['login_screen']                 = "Login";
     $lang['error']                        = "Error";
     $lang['no_login']                     = "Accès denegat, identificador o contrasenya incorrectes";
-//**    
+//**
     $lang['redirect_sprt']                = "You will automatically return to Login after a %d second delay";
 //**
-    $lang['login_now']                    = "Please click here to return to Login now";   
+    $lang['login_now']                    = "Please click here to return to Login now";
     $lang['please_login']                 = "Benvingut, per favor identifiqui's";
-//**    
+//**
     $lang['go']                           = "Go!";
 
  //graphic items
@@ -113,16 +113,16 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['allow_group_edit']             = "Permetre a tothom del grup editar?";
     $lang['set_email_owner']              = "Sempre correu al propietari amb els canvis?";
     $lang['set_email_group']              = "Sempre correu al usergroup amb canvis?";
-//**    
+//**
     $lang['project_listing_order']        = "Project listing order";
-//**    
-    $lang['task_listing_order']           = "Task listing order"; 
+//**
+    $lang['task_listing_order']           = "Task listing order";
     $lang['configuration']                = "Configuració";
 
 //archive
 //**
-    $lang['archived_projects']            = "Archived Projects";    
-    
+    $lang['archived_projects']            = "Archived Projects";
+
 //contacts
     $lang['firstname']                    = "Nom:";
     $lang['lastname']                     = "Cognom:";
@@ -134,7 +134,7 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['address']                      = "Adreça:";
     $lang['postal']                       = "Cod. Postal:";
     $lang['city']                         = "Ciutat:";
-    $lang['email']                        = "Email:";
+    $lang['email_contact']                = "Email:";
     $lang['notes']                        = "Notes:";
     $lang['add_contact']                  = "Afegir contacte";
     $lang['del_contact']                  = "Esborrar contacte";
@@ -186,9 +186,9 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['forum_submit']                 = "Fòrum acceptar";
     $lang['no_message']                   = "No hi ha missatge! Torni enrera i reintenti.";
     $lang['add_reply']                    = "Afegir resposta";
-//**  
+//**
     $lang['last_post_sprt']               = "Last post %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**   
+//**
     $lang['recent_posts']                 = "Recent forum posts";
 //**
     $lang['recent_posts']                 = "Recent forum posts";
@@ -205,21 +205,20 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['home_page']                    = "Principal";
     $lang['summary_page']                 = "Resum";
     $lang['todo_list']                    = "ToDo llista";
-    $lang['calendar']                     = "Calendari";
     $lang['log_out']                      = "Sortir";
     $lang['main_menu']                    = "Menú principal";
-    $lang['archive']                      = "Archive";   
+    $lang['archive']                      = "Archive";
     $lang['user_homepage_sprt']           = "Usuari: %s";
-//**    
+//**
     $lang['missing_field_javascript']     = "Please enter a value for the missing field";
-//**    
+//**
     $lang['invalid_date_javascript']      = "Please choose a valid calendar date";
-//**    
+//**
     $lang['finish_date_javascript']       = "The entered date occurs after the project finish date!";
     $lang['security_manager']             = "Manegament de Seguretat";
     $lang['session_timeout_sprt']         = "Accès denegat, la última acció va ser fa %d i el temps d'expiració és de %d minuts, si us plau <a href=\"%sindex.php\">Identifiqui's</a>";
     $lang['access_denied']                = "Accés denegat";
-    $lang['private_usergroup']            = "Dispensi, aquesta àrea és privada d'un grup i vostè no té drets d'accés.";
+    $lang['private_usergroup_no_access']  = "Dispensi, aquesta àrea és privada d'un grup i vostè no té drets d'accés.";
     $lang['invalid_date']                 = "Data no vàlida";
     $lang['invalid_date_sprt']            = "La data de %s no és una data vélida del calendari (Comprovi el número de dia i de mes), Si us plau torni enrera i insereixi una data vàlida.";
 
@@ -262,7 +261,7 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
   //**
     $lang['private_user']                 = "Private user";
  //**
-    $lang['normal_user']                  = "Normal user"; 
+    $lang['normal_user']                  = "Normal user";
     $lang['is_admin']                     = "És admin?";
  //**
     $lang['is_guest']                     = "Is a guest?";
@@ -361,12 +360,10 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
  //**
     $lang['clone_project']                = "Clone project";
  //**
-    $lang['clone_task']                   = "Clone task"; 
+    $lang['clone_task']                   = "Clone task";
 //**
     $lang['quick_jump']                   = "Quick Jump";
     $lang['no_edit']                      = "No és propietari d'aquest, no pot editar-lo. Demani a un administrador, o al propietari de la tasca per a que ho faci per vostè.";
-    $lang['uncategorised']                = "No categoritzat";
-    $lang['admin']                        = "Admin";
     $lang['global']                       = "Global";
  //**
     $lang['delete_project']               = "Esborrar projecte";
@@ -378,11 +375,11 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['task_options']                 = "Tasca opcions";
  //**
     $lang['javascript_archive_project']   = "This will archive project %s.  Are you sure?";
-//**    
+//**
     $lang['archive_project']              = "Archive project";
     $lang['task_navigation']              = "Navegar tasques";
 //**
-    $lang['new_task']                     = "New task";    
+    $lang['new_task']                     = "New task";
     $lang['no_projects']                  = "No hi ha projecte per veure";
  //**
     $lang['show_all_projects']            = "Show all projects";
@@ -424,7 +421,6 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['due_in_sprt']                  = " (Acaba en %d dies)";
     $lang['due_tomorrow']                 = " (Acaba demá)";
     $lang['no_assigned']                  = "No hi ha tasques incomplertes d'aquest usuari.";
-    $lang['todo_list']                    = "Llista 'per-fer'";
     $lang['summary_list']                 = "Llista Resum";
     $lang['task_submit']                  = "Tasca ACCEPTAR";
     $lang['not_owner']                    = "Accès denegat, no és el propietari o no té drets suficients";
@@ -447,9 +443,9 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['calendar']                     = "Calendari";
     $lang['normal_version']               = "Normal version";
     $lang['print_version']                = "Print version";
-//**    
+//**
     $lang['condensed_view']               = "Condensed view";
-//**    
+//**
     $lang['full_view']                    = "Full view";
 //**
     $lang['icalendar']                    = "iCalendar";

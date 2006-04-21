@@ -34,7 +34,7 @@
 //required language encodings
 define('CHARACTER_SET', 'ISO-8859-2' );
 
-//this is the regex for input validation filter used in common.php 
+//this is the regex for input validation filter used in common.php
 $validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/"; //ISO-8859-x
 
 //dates
@@ -132,7 +132,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Èt', 'Pá', 'So' );
     $lang['address']                    = "Adresa:";
     $lang['postal']                     = "Po¹tovní smìrovací èíslo:";
     $lang['city']                       = "Mìsto:";
-    $lang['email']                      = "Email:";
+    $lang['email_contact']              = "Email:";
     $lang['notes']                      = "Poznámka:";
     $lang['add_contact']                = "Pøidat kontakt";
     $lang['del_contact']                = "Smazat kontakt";
@@ -193,7 +193,6 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Èt', 'Pá', 'So' );
     $lang['home_page']                  = "Domácí stránka";
     $lang['summary_page']               = "Pøehled";
     $lang['todo_list']                  = "Úkoly";
-    $lang['calendar']                   = "Kalendáø";
     $lang['log_out']                    = "Odhlásit";
     $lang['main_menu']                  = "Hlavní nabídka";
     $lang['archive']                    = "Archiv";
@@ -204,7 +203,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Èt', 'Pá', 'So' );
     $lang['security_manager']           = "Správce zabezpeèení";
     $lang['session_timeout_sprt']       = "Pøístup odepøen; Poslední aktivita byla pøed %1\$d minutami, èasový limit je %2\$d minut; prosím <a href=\"%sindex.php\">pøihla¹te se</a>";
     $lang['access_denied']              = "Pøístup odepøen";
-    $lang['private_usergroup']          = "Omlouváme se; tato oblast je privátní skupiny, nemáte dostateèná práva.";
+    $lang['private_usergroup_no_access']= "Omlouváme se; tato oblast je privátní skupiny, nemáte dostateèná práva.";
     $lang['invalid_date']               = "©patnì zadané datum";
     $lang['invalid_date_sprt']          = "Zadané datum %s není správné (Zkontrolujte poèet dní v mìsíci).<br />Prosím vra»te se zpìt a zadejte správné datum.";
 
@@ -341,8 +340,6 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Èt', 'Pá', 'So' );
     $lang['clone_task']                 = "Klonovat úkol";
     $lang['quick_jump']                 = "Pøejít na";
     $lang['no_edit']                    = "Nejste vlastníkem polo¾ky proto ji nemù¾ete mìnit";
-    $lang['uncategorised']              = "Nezaøazený";
-    $lang['admin']                      = "Administrátor";
     $lang['global']                     = "Ostatní";
     $lang['delete_project']             = "Smazat projekt";
     $lang['delete_task']                = "Smazat úkol";
@@ -386,7 +383,6 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Èt', 'Pá', 'So' );
     $lang['due_in_sprt']                = " (Bìhem %d dní)";
     $lang['due_tomorrow']               = " (Bìhem zítøka)";
     $lang['no_assigned']                = "®ádné nedokonèené úlohy pøiøazené tomuto u¾ivateli.";
-    $lang['todo_list']                  = "Úkoly";
     $lang['summary_list']               = "Souhrnný seznam";
     $lang['task_submit']                = "Potvrdit úkol";
     $lang['not_owner']                  = "Pøístup odepøen. Nejste vlastník, nebo nemáte dostateèná práva";
