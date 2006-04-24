@@ -159,6 +159,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['file_too_big_sprt']          = "The maximum upload size is %s bytes.  Your upload was too big and has been deleted.";
     $lang['del_file_javascript_sprt']   = "Are you sure you want to delete %s ?";
 
+
  //forum
     $lang['orig_message']               = "Original message:";
     $lang['post']                       = "Post it!";
@@ -185,8 +186,6 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['warning']                    = "<h1>Sorry!</h1><p>We are unable to process your request right now. Please try again later.</p>";
     $lang['home_page']                  = "Home page";
     $lang['summary_page']               = "Summary page";
-    $lang['todo_list']                  = "ToDo list";
-    $lang['calendar']                   = "Calendar";
     $lang['log_out']                    = "Log out";
     $lang['main_menu']                  = "Main menu";
     $lang['archive']                    = "Archive";
@@ -377,6 +376,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['due_in_sprt']                = " (Due in %d days)";
     $lang['due_tomorrow']               = " (Due tomorrow)";
     $lang['no_assigned']                = "There are no uncompleted tasks assigned to this user.";
+    $lang['todo_list']                  = "ToDo list";
     $lang['summary_list']               = "Summary list";
     $lang['task_submit']                = "Task submit";
     $lang['not_owner']                  = "Access denied. Either you are not the owner; or you do not have enough rights";
@@ -395,9 +395,11 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['note_clone']                 = "Note: The task will be cloned as a new project";
 
 //bits 'n' pieces
+    $lang['calendar']                   = "Calendar";
     $lang['normal_version']             = "Normal version";
     $lang['print_version']              = "Print version";
     $lang['condensed_view']             = "Condensed view";
     $lang['full_view']                  = "Full view";
     $lang['icalendar']                  = "iCalendar";
+
 ?>
