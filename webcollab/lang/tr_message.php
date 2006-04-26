@@ -83,7 +83,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['select_instruct']            = "(Daha fazla seçmek ya da hiçbirini seçmemek için ctrl tuþunu kullanýn)";
     $lang['member_groups']              = "Kullanýcý aþaðýda belirtilen gruplara üyedir (eðer varsa)";
     $lang['login']                      = "Login";
-    $lang['login_action']               = "Login";
+    $lang['login_action']               = "Sisteme gir";
     $lang['login_screen']               = "Login";
     $lang['error']                      = "Hata";
     $lang['no_login']                   = "Eriþim engellendi; yanlýþ kullanýcý adý ya da þifre";
@@ -177,14 +177,10 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['add_reply']                  = "Yanýt ekle";
     $lang['last_post_sprt']             = "Son mesaj: %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']               = "Yakýn zamanda gönderilmiþ forum mesajlarý";
-//**
-    $lang['recent_posts']               = "Recent forum posts";
-//**
-    $lang['forum_search']               = "Forum search";
-//**
-    $lang['no_results']                 = "No results found for '%s'";
-//**
-    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+    $lang['recent_posts']               = "Yeni forum mesajlarý";
+    $lang['forum_search']               = "Forum arama";
+    $lang['no_results']                 = "'%s' için sonuç bulunamadý";
+    $lang['search_results']             = "'%2\$s' için %1\$s sonuç bulundu<br />%3\$s - %4\$s arasýndaki sonuçlar görüntüleniyor";
 
  //includes
     $lang['report']                     = "Rapor";
@@ -405,7 +401,6 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['print_version']              = "Yazýcý sürümü";
     $lang['condensed_view']             = "Sýkýþtýrýlmýþ görünüm";
     $lang['full_view']                  = "Tam görünüm";
-//**
-    $lang['icalendar']                  = "iCalendar";
+    $lang['icalendar']                  = "iTakvim";
 
 ?>
