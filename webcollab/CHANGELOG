@@ -1,4 +1,28 @@
 WebCollab CVS
+*** 14 April 2006
+  Andrew Simpson
+
+- Update Turkish language (Credit: Aydin Gurel)
+
+WebCollab CVS
+*** 14 April 2006
+  Andrew Simpson
+
+- bugfix: Contacts with no taskid not working
+
+- bugfix: Database table prefix missing from some files (Bug #1468805)
+
+- bugfix: icalendar with nothing to ouput gives a blank screen
+
+- bugfix: Todo icalendar not setting username/usergroup properly
+
+WebCollab 2.00 (Wairere)
+*** 3 April 2006
+  Andrew Simpson
+
+- release
+
+WebCollab CVS
 *** 28 March 2006
   Andrew Simpson
 
