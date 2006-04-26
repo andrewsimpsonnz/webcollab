@@ -82,7 +82,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['select_instruct']            = "(Daha fazla seçmek ya da hiçbirini seçmemek için ctrl tuşunu kullanın)";
     $lang['member_groups']              = "Kullanıcı aşağıda belirtilen gruplara üyedir (eğer varsa)";
     $lang['login']                      = "Login";
-    $lang['login_action']               = "Login";
+    $lang['login_action']               = "Sisteme gir";
     $lang['login_screen']               = "Login";
     $lang['error']                      = "Hata";
     $lang['no_login']                   = "Erişim engellendi; yanlış kullanıcı adı ya da şifre";
@@ -176,12 +176,9 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['add_reply']                  = "Yanıt ekle";
     $lang['last_post_sprt']             = "Son mesaj: %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']               = "Yakın zamanda gönderilmiş forum mesajları";
-//**
-    $lang['forum_search']               = "Forum search";
-//**
-    $lang['no_results']                 = "No results found for '%s'";
-//**
-    $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+    $lang['forum_search']               = "Forum arama";
+    $lang['no_results']                 = "'%s' için sonuç bulunamadı";
+    $lang['search_results']             = "'%2\$s' için %1\$s sonuç bulundu<br />%3\$s - %4\$s arasındaki sonuçlar görüntüleniyor";
 
  //includes
     $lang['report']                     = "Rapor";
@@ -401,7 +398,6 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['print_version']              = "Yazıcı sürümü";
     $lang['condensed_view']             = "Sıkıştırılmış görünüm";
     $lang['full_view']                  = "Tam görünüm";
-//**
-    $lang['icalendar']                  = "iCalendar";
+    $lang['icalendar']                  = "iTakvim";
 
 ?>
