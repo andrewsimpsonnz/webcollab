@@ -69,7 +69,7 @@ $content =
         "<tr><td><i>".$lang['address']."</i></td><td><input type=\"text\" name=\"address\" value=\"".html_escape($row['address'])."\" size=\"30\" /></td></tr>\n".
         "<tr><td><i>".$lang['postal']."</i></td><td><input type=\"text\" name=\"postal\" value=\"".html_escape($row['postal'])."\" size=\"30\" /></td></tr>\n".
         "<tr><td><i>".$lang['city']."</i></td><td><input type=\"text\" name=\"city\" value=\"".html_escape($row['city'])."\" size=\"30\" /></td></tr>\n".
-        "<tr><td><i>".$lang['email']."</i></td><td><input type=\"text\" name=\"email\" value=\"".html_escape($row['email'])."\" size=\"30\" /></td></tr>\n".
+        "<tr><td><i>".$lang['email_contact']."</i></td><td><input type=\"text\" name=\"email\" value=\"".html_escape($row['email'])."\" size=\"30\" /></td></tr>\n".
     "</table>\n".
     "<p><i>".$lang['notes']."</i><br /><textarea  name=\"notes\" rows=\"6\" cols=\"50\">".$row['notes']."</textarea></p>\n";
 

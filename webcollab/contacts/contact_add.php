@@ -53,7 +53,7 @@ $content =
             "<tr><td><i>".$lang['address']."</i></td><td><input type=\"text\" name=\"address\" size=\"30\" /></td></tr>\n".
             "<tr><td><i>".$lang['postal']."</i></td><td><input type=\"text\" name=\"postal\" size=\"30\" /></td></tr>\n".
             "<tr><td><i>".$lang['city']."</i></td><td><input type=\"text\" name=\"city\" size=\"30\" /></td></tr>\n".
-            "<tr><td><i>".$lang['email']."</i></td><td><input type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".
+            "<tr><td><i>".$lang['email_contact']."</i></td><td><input type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".
           "</table>\n".
           "<p><i>".$lang['notes']."</i><br /><textarea name=\"notes\" rows=\"6\" cols=\"50\"></textarea></p>\n".
           "<p><input type=\"submit\" value=\"".$lang['add_contact']."\" /></p>\n".

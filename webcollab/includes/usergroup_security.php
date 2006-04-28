@@ -41,7 +41,7 @@ function usergroup_check($taskid ) {
   }
 
   $tail = ' AND (globalaccess=\'f\' AND usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
-            OR globalaccess=\'t\'   
+            OR globalaccess=\'t\'
             OR usergroupid=0
             OR owner='.UID.')';
 
@@ -51,7 +51,7 @@ function usergroup_check($taskid ) {
   }
 
   if(db_numrows($q ) < 1 ) {
-      warning($lang['access_denied'], $lang['private_usergroup'] );
+      warning($lang['access_denied'], $lang['private_usergroup_no_access'] );
   }
 
   $projectid = db_result($q, 0, 0 );
@@ -63,7 +63,7 @@ function usergroup_check($taskid ) {
     }
 
     if(db_result($q, 0, 0 ) < 1 ) {  
-      warning($lang['access_denied'], $lang['private_usergroup'] );
+      warning($lang['access_denied'], $lang['private_usergroup_no_access'] );
     }
   }
 
