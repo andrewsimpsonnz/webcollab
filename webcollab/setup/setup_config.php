@@ -9,7 +9,7 @@
   define('SETUP_CHARACTER_SET', "ISO-8859-1" );
 
   //MySQL database character set (Null entry of "" uses the system default)
-  define('DATABASE_SETUP_CHARACTER_SET', "" );
+  define('DATABASE_SETUP_CHARACTER_SET', "utf8" );
 
   //Style sheet (CSS) (Place your CSS into /css directory)
   define('SETUP_CSS', 'default.css' );
@@ -29,7 +29,7 @@ LANGUAGE ENCODING OPTIONS
   define('SETUP_SETUP_CHARACTER_SET', "ISO-8859-1" );
   define('DATABASE_SETUP_CHARACTER_SET', "ISO-8859-1" );
 
-- Czech, Hungarian, Serbian, Slovak
+- Czech, Hungarian, Serbian (latin), Slovak
 
   define('SETUP_CHARACTER_SET', "ISO-8859-2" );
   define('DATABASE_SETUP_CHARACTER_SET', "ISO-8859-2" );
@@ -39,14 +39,14 @@ LANGUAGE ENCODING OPTIONS
   define('SETUP_CHARACTER_SET', "ISO-8859-9" );
   define('DATABASE_SETUP_CHARACTER_SET', "latin5" );
 
-  (ISO-8859-9 === latin5 in MySQL)
+  (This is not a mistake: 'ISO-8859-9' is 'latin5' in MySQL)
 
 - Greek
 
   define('SETUP_CHARACTER_SET', "ISO-8859-7" );
   define('DATABASE_SETUP_CHARACTER_SET', "greek" );
 
-- Bulgarian
+- Bulgarian, Serbian (cyrillic)
 
   define('SETUP_CHARACTER_SET', "WINDOWS-1251" );
   define('DATABASE_SETUP_CHARACTER_SET', "cp1251" );
