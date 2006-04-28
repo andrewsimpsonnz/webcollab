@@ -100,8 +100,12 @@ switch(LOCALE_USER) {
     include(BASE.'lang/sk_email.php' );
     break;
 
-  case 'sr':
-    include(BASE.'lang/sr_email.php' );
+  case 'sr-cy':
+    include(BASE.'lang/sr-cy_email.php' );
+    break;
+
+  case 'sr-la':
+    include(BASE.'lang/sr-la_email.php' );
     break;
 
   case 'tr':
