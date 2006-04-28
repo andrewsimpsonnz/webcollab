@@ -85,17 +85,20 @@ switch($_REQUEST['action'] ) {
     if( ! ADMIN ){
       error('Authorisation failed', 'You have to be admin to do this' );
     }
+
     //check input has been provided
-    $input_array = array('name', 'fullname' );
-    foreach( $input_array as $var ) {
-      if(empty($_POST[$var]) ) {
-        warning( $lang['value_missing'], sprintf( $lang['field_sprt'], $var ) );
-      }
-      ${$var} = safe_data($_POST[$var]);
+    if(empty($_POST['name']) ) {
+      warning($lang['value_missing'], sprintf( $lang['field_sprt'], $lang['login_name'] ) );
     }
+    $name = safe_data($_POST['name']);
+
+    if(empty($_POST['fullname']) ) {
+      warning($lang['value_missing'], sprintf( $lang['field_sprt'], $lang['full_name'] ) );
+    }
+    $fullname = safe_data($_POST['fullname']);
 
     if(empty($_POST['password']) ) {
-      warning( $lang['value_missing'], sprintf( $lang['field_sprt'], 'password' ) );
+      warning( $lang['value_missing'], sprintf( $lang['field_sprt'], $lang['password'] ) );
     }
     $password_unclean = trim($_POST['password'] );
 
@@ -183,13 +186,15 @@ switch($_REQUEST['action'] ) {
   case 'submit_edit':
 
     //check input has been provided
-    $input_array = array('name', 'fullname' );
-    foreach($input_array as $var ) {
-      if(empty($_POST[$var]) ) {
-        warning($lang['value_missing'], sprintf($lang['field_sprt'], $var ) );
-      }
-      ${$var} = safe_data($_POST[$var]);
+    if(empty($_POST['name']) ) {
+      warning($lang['value_missing'], sprintf( $lang['field_sprt'], $lang['login_name'] ) );
     }
+    $name = safe_data($_POST['name']);
+
+    if(empty($_POST['fullname']) ) {
+      warning($lang['value_missing'], sprintf( $lang['field_sprt'], $lang['full_name'] ) );
+    }
+    $fullname = safe_data($_POST['fullname']);
 
     //get new password, if any
     $password_unclean = (empty($_POST['password']) ) ? '' : trim($_POST['password']);
