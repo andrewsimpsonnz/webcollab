@@ -88,8 +88,8 @@ require_once(BASE.'setup/security_setup.php' );
     //try and select the database
     if( ! @mysql_select_db( $database_name, $database_connection ) ) {
 
-      if(defined('DATABASE_CHARACTER_SET') && DATABASE_CHARACTER_SET != '' ) {
-        $db_character = ' CHARACTER SET '.DATABASE_CHARACTER_SET;
+      if(defined('DATABASE_SETUP_CHARACTER_SET') && DATABASE_SETUP_CHARACTER_SET != '' ) {
+        $db_character = ' CHARACTER SET '.DATABASE_SETUP_CHARACTER_SET;
       }
       else {
         $db_character = '';
