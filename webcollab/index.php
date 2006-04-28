@@ -98,8 +98,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
 
   //database query
   if( ! $q = @db_query($login_q, 0 ) ) {
-    sleep (2);
-    secure_error($lang['no_login'], 1 );
+    secure_error('Unable to connect to database.  Please try again later.' );
   }
 
   //no such user-password combination
@@ -171,7 +170,7 @@ if(isset($_COOKIE['webcollab_session'] ) && strlen($_COOKIE['webcollab_session']
   }
 }
 
-create_top($lang['login'], 1, 'username' );
+create_top($lang['login_screen'], 1, 'username' );
 
 $content = "<div style=\"text-align:center\">";
 
