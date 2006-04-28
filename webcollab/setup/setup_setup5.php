@@ -108,8 +108,9 @@ $content = "<?php\n".
 "  // available locales are 'en' (English), 'es' (Spanish),  'fr' (French),    'ca' (Catalan)\n".
 "  //                       'de' (German),  'it' (Italian),  'bg' (Bulgarian), 'da' (Danish)\n".
 "  //                       'ko' (Korean),  'pt-br' (Brazilian Portuguese),    'hu' (Hungarian)\n".
-"  //                       'ru' (Russian), 'ja' (Japanese), 'se' (Swedish)    'sr' (Serbian (Latin))\n".
-"  //                       'gr' (Greek),   'cs' (Czech),    'tr' (Turkish)\n".
+"  //                       'ru' (Russian), 'ja' (Japanese), 'se' (Swedish)    'sr-la' (Serbian (Latin))\n".
+"  //                       'sr-cy' Serbian (cyrillic)       'gr' (Greek),     'cs' (Czech)\n". 
+"  //                       'tr' (Turkish)\n".
 "  //                       'zh-tw' (Traditional Chinese)    'zh-cn' (Simplified Chinese)\n".
 "  define('LOCALE', '".$data["locale"]."' );\n\n".
 "//-- Timezone --\n\n".
@@ -121,40 +122,40 @@ $content = "<?php\n".
 "    //location of SMTP server (IP address or FQDN)\n".
 "    define('SMTP_HOST', '".$data["smtp_host"]."' );\n\n".
 "    //mail transport (leave as SMTP for standard WebCollab)\n".
-"    define('MAIL_TRANSPORT', 'SMTP' );\n".
+"    define('MAIL_TRANSPORT', '".SMTP_AUTH."' );\n".
 "    //SMTP port (leave as 25 for ordinary mailservers)\n".
-"    define('SMTP_PORT', 25 );\n\n".
+"    define('SMTP_PORT', ".SMTP_PORT." );\n\n".
 "    //use smtp auth? ('Y' or 'N')\n".
-"    define('SMTP_AUTH', 'N' );\n".
+"    define('SMTP_AUTH', '".SMTP_AUTH."' );\n".
 "      //if using SMTP_AUTH give username & password\n".
-"      define('MAIL_USER', '' );\n".
-"      define('MAIL_PASSWORD', '' );\n".
+"      define('MAIL_USER', '".MAIL_USER."' );\n".
+"      define('MAIL_PASSWORD', '".MAIL_PASSWORD."' );\n".
 "      //use TLS encryption? (requires PHP 5.1+)\n".
-"      define('TLS', 'N' );\n\n".
+"      define('TLS', '".TLS."' );\n\n".
 "//----------------------------------------------------------------------------------------------\n".
 "// Less important items below this line\n\n".
 "//-- MINOR CONFIG PARAMETERS --\n\n".
 "//-- These items need to be edited directly from this file --\n\n".
 "  //Style sheets (CSS) Note: Setup always uses 'default.css' stylesheet for CSS_MAIN. (Place your CSS into /css directory)\n".
-"  define('CSS_MAIN', 'default.css' );\n".
-"  define('CSS_CALENDAR', 'calendar.css' );\n".
-"  define('CSS_PRINT', 'print.css' );\n\n".
+"  define('CSS_MAIN', '".CSS_MAIN."' );\n".
+"  define('CSS_CALENDAR', '".CSS_CALENDAR."' );\n".
+"  define('CSS_PRINT', '".CSS_PRINT."' );\n\n".
 "  //If an error occurs, who do you want the error to be mailed to ?\n".
-"  define('EMAIL_ERROR', '' );\n\n".
+"  define('EMAIL_ERROR', '".EMAIL_ERROR."' );\n\n".
 "  //session timeout in hours\n".
-"  define('SESSION_TIMEOUT', 1 );\n\n".
+"  define('SESSION_TIMEOUT', ".SESSION_TIMEOUT." );\n\n".
 "  //number of days that new or updated tasks should be highlighted as 'New' or 'Updated'\n".
-"  define('NEW_TIME', 14 );\n\n".
+"  define('NEW_TIME', ".NEW_TIME." );\n\n".
 "  //custom image to replace the webcollab banner on splash page (base directory is /images)\n".
-"  define('SITE_IMG', '' );\n\n".
+"  define('SITE_IMG', '".SITE_IMG."' );\n\n".
 "  //show full debugging messages on the screen when errors occur (values are 'N', or 'Y')\n".
-"  define('DEBUG', 'N' );\n\n".
+"  define('DEBUG', '".DEBUG."' );\n\n".
 "  //Do not show full error message on the screen - just a 'sorry, try again' message (values are 'N', or 'Y')\n".
-"  define('NO_ERROR', 'N' );\n\n".
+"  define('NO_ERROR', '".NO_ERROR."' );\n\n".
 "  //Use external webserver authorisation to login (values are 'N', or 'Y')\n".
-"  define('WEB_AUTH', 'N' );\n\n".
-"  //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match)\n".  
-"  define('PRE', '' );\n\n".
+"  define('WEB_AUTH', '".WEB_AUTH."' );\n\n".
+"  //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match)\n".
+"  define('PRE', '".PRE."' );\n\n".
 "  //WebCollab version string\n".
 "  define('WEBCOLLAB_VERSION', '".SETUP_WEBCOLLAB_VERSION."');\n\n".
 "  define('UNICODE_VERSION', '".SETUP_UNICODE_VERSION."' );\n\n".
