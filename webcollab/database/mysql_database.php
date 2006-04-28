@@ -1,7 +1,7 @@
 <?php
 /*
   $Id$
-  
+
   (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
@@ -58,7 +58,7 @@ function db_connection() {
 
   //set timezone
   if(! mysql_query("SET time_zone='".sprintf('%+02d:%02d', TZ, (TZ - floor(TZ) )*60 )."'", $database_connection ) ) {
-    error("Database error", "Not able to set timezone" );
+    error("Database error", "Not able to set timezone. <br />Check that your version of MySQL is 4.1.3, or higher" );
   }
 
   return;
@@ -67,7 +67,7 @@ function db_connection() {
 //
 // Provides a safe way to do a query
 //
-function db_query( $query, $dieonerror=1 ) {
+function db_query( $query, $die_on_error=1 ) {
 
   global $database_connection, $db_error_message ;
 
@@ -76,7 +76,7 @@ function db_query( $query, $dieonerror=1 ) {
   //do it
   if( ! ($result = @mysql_query($query, $database_connection ) ) ) {
     $db_error_message = mysql_error($database_connection );
-    if($dieonerror == 1 ) {
+    if($die_on_error) {
       error('Database query error', 'The following query :<br /><br /><b>'.$query.'</b><br /><br />Had the following error:<br /><b>'.mysql_error($database_connection).'</b>' );
     }
   }
@@ -267,12 +267,12 @@ function db_user_locale($encoding ) {
   }
 
   //set character set -- 1
-  if(! mysql_query("SET NAMES '".$my_encoding."'", $database_connection ) ) {
+  if(! @mysql_query("SET NAMES '".$my_encoding."'", $database_connection ) ) {
     error("Database error", "Not able to set ".$my_encoding." client encoding" );
   }
 
   //set character set -- 2
-  if(! mysql_query("SET CHARACTER SET ".$my_encoding, $database_connection ) ) {
+  if(! @mysql_query("SET CHARACTER SET ".$my_encoding, $database_connection ) ) {
     error("Database error", "Not able to set CHARACTER SET : ".$my_encoding );
   }
 

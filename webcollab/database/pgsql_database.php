@@ -70,7 +70,7 @@ return;
 //
 // Provides a safe way to do a query
 //
-function db_query($query, $dieonerror=1 ) {
+function db_query($query, $die_on_error=1 ) {
 
   global $database_connection;
 
@@ -79,7 +79,7 @@ function db_query($query, $dieonerror=1 ) {
   //do it
   if( ! ($result = @pg_query($database_connection, $query ) ) ) {
 
-    if($dieonerror == 1 ) {
+    if($die_on_error) {
       error('Database query error', 'The following query :<br /><br /><b>'.$query.'</b><br /><br />Had the following error:<br /><b>'.pg_last_error($database_connection).'</b>' );
     }
   }
@@ -140,7 +140,7 @@ return $result_row;
 // last oid
 //
 function db_lastoid($seq_name ) {
-  
+
   //must be done after an insert, and within a transaction
   $result = db_query('SELECT CURRVAL(\''.$seq_name.'\') AS seq' );
   $lastoid = pg_fetch_result( $result, 0, 0 );
@@ -250,7 +250,7 @@ function db_user_locale($encoding ) {
   }
 
   //set client encoding to match character set in use
-  if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
+  if(@pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){
     error('Database client encoding', 'Cannot set PostgreSQL client encoding to the required '.$pg_encoding.'character set.' );
   }
   return true;
