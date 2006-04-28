@@ -1,8 +1,20 @@
 WebCollab CVS
-*** 14 April 2006
+*** 27 April 2006
   Andrew Simpson
 
-- Update Turkish language (Credit: Aydin Gurel)
+- update Serbian (latin) language (Credit: Branko Majic )
+
+- add Serbian (cyrillic) language (Credit: Branko Majic )
+
+- update Turkish language (Credit: Aydin Gurel )
+
+- bugfix: change to UTF-8 backend in MySQL (ISO-8859-1 default 'loses' some characters)
+
+- bugfix: database character set not being set propery on database build in setup
+
+- bugfix: Adding contact not in task fails (Bug #1473377)
+
+- keep minor settings in config file when re-running setup
 
 WebCollab CVS
 *** 14 April 2006
