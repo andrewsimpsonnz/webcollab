@@ -118,7 +118,7 @@ if( @safe_integer($_GET['parentid']) ) {
 
   //status
   $content .= "<tr><td>".$lang['status'].":</td> <td>\n".
-              "<select name=\"status\">\n".
+              "<select id=\"projectStatus\" name=\"status\">\n".
               "<option value=\"created\" selected=\"selected\" >".$task_state['new']."</option>\n".
               "<option value=\"notactive\" >".$task_state['planned']."</option>\n".
               "<option value=\"active\" >".$task_state['active']."</option>\n".

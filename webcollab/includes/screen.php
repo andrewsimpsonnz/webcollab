@@ -159,7 +159,8 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
                     "alert('".$lang['invalid_date_javascript']."');\n".
                     "return false;}\n".
                     "var finishDate = document.getElementById('projectDate').value;\n".
-                    "if(finishDate > 0 ){\n".
+                    "var statusType = document.getElementById('projectStatus').value;\n".
+                    "if(finishDate > 0 && statusType != 'cantcomplete'){\n".
                     "var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value, 0, 0, 0 )/1000;\n".
                     "if(inputDate - finishDate > 21600 ){\n".
                     "return confirm('".$lang['finish_date_javascript']."');} }\n".
