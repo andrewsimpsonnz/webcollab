@@ -78,13 +78,13 @@
 
 //LANGUAGE
 
-  // available locales are "en" (English), "es" (Spanish),  "fr" (French),    "ca" (Catalan),
-  //                       "de" (German),  "it" (Italian),  "bg" (Bulgarian), "da" (Danish),
-  //                       "ko" (Korean),  "pt-br" (Brazilian Portuguese),    "hu" (Hungarian),
-  //                       "ru" (Russian), "ja" (Japanese), "se" (Swedish)    "sr" (Serbian (Latin))
-  //                       "gr" (Greek),   "cz" (Czech),    "tr" (Turkish) 
-  //                       "zh-tw" (Traditional Chinese)    "zh-cn" (Simplified Chinese)
-  //                       "sk" (Slovak)
+  // available locales are 'en' (English), 'es' (Spanish),  'fr' (French),    'ca' (Catalan)
+  //                       'de' (German),  'it' (Italian),  'bg' (Bulgarian), 'da' (Danish)
+  //                       'ko' (Korean),  'pt-br' (Brazilian Portuguese),    'hu' (Hungarian)
+  //                       'ru' (Russian), 'ja' (Japanese), 'se' (Swedish)    'sr-la' (Serbian (Latin))
+  //                       'sr-cy' Serbian (cyrillic)       'gr' (Greek),     'cs' (Czech)
+  //                       'tr' (Turkish)
+  //                       'zh-tw' (Traditional Chinese)    'zh-cn' (Simplified Chinese)
 
   define('LOCALE', "en" );
 
