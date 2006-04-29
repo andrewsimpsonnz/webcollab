@@ -28,7 +28,6 @@
 
 */
 
-
 //security check
 if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
@@ -41,19 +40,6 @@ include_once(BASE.'includes/time.php' );
 $content = '';
 $javascript = '';
 $allowed = array();
-
-//get list of common users in private usergroups that this user can view 
-$q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
-                      '.PRE.'usergroups_users.userid AS userid 
-                      FROM '.PRE.'usergroups_users 
-                      LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
-                      WHERE '.PRE.'usergroups.private=1');
-
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-  if(isset($GID[($row[0])] ) ) {
-   $allowed[($row[1])] = $row[1];
-  }
-}
 
 //
 //check user access
@@ -91,6 +77,19 @@ $taskid = $_GET['taskid'];
 //can this user edit this task ?
 if( ! user_access($TASKID_ROW['owner'], $TASKID_ROW['usergroupid'], $TASKID_ROW['groupaccess'] ) ) {
   warning($lang['access_denied'], $lang['no_edit'] );
+}
+
+//get list of common users in private usergroups that this user can view 
+$q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
+                      '.PRE.'usergroups_users.userid AS userid 
+                      FROM '.PRE.'usergroups_users 
+                      LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
+                      WHERE '.PRE.'usergroups.private=1');
+
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+  if(isset($GID[($row[0])] ) ) {
+   $allowed[($row[1])] = $row[1];
+  }
 }
 
 //get project details - if any
@@ -160,17 +159,12 @@ $content .= "<tr><td>".$lang['deadline'].":</td><td>".date_select_from_timestamp
 
 //priority
 switch($TASKID_ROW['priority'] ) {
-    case 0:
+  case 0:
     $s1 = "selected=\"selected\""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
     break;
 
   case 1:
     $s1 = ""; $s2 = " selected=\"selected\""; $s3 = ""; $s4 =""; $s5 = "";
-    break;
-
-  case 2:
-  default:
-    $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\""; $s4 =""; $s5 = "";
     break;
 
   case 3:
@@ -179,6 +173,11 @@ switch($TASKID_ROW['priority'] ) {
 
   case 4:
     $s1 = ""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = " selected=\"selected\"";
+    break;
+
+  case 2:
+  default:
+    $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\""; $s4 =""; $s5 = "";
     break;
 }
 
@@ -246,7 +245,7 @@ switch($TASKID_ROW['parent'] ){
           break;
       }
       $content .= "<tr> <td>".$lang['status'].":</td> <td>\n".
-                   "<select name=\"status\">\n".
+                   "<select id=\"projectStatus\" name=\"status\">\n".
                    "<option value=\"created\"".$s1.">".$task_state['new']."</option>\n".
                    "<option value=\"notactive\"".$s2.">".$task_state['planned']."</option>\n".
                    "<option value=\"active\"".$s3.">".$task_state['active']."</option>\n".
@@ -279,7 +278,6 @@ for( $i=0 ; $user_row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 $content .= "</select></td></tr>\n";
 
-
 //show a selection box with the taskgroups
 //  (projects don't have taskgroups)
 if($TASKID_ROW['parent'] != 0 ) {
@@ -295,7 +293,7 @@ if($TASKID_ROW['parent'] != 0 ) {
 
     if($TASKID_ROW['taskgroupid'] == $taskgroup_row['id'] ) {
       $content .= " selected=\"selected\"";
-    }    
+    }
     $content .= ">".$taskgroup_row['name']."</option>\n";
   }
   $content .= "</select></td></tr>\n";
