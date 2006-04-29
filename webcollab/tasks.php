@@ -57,7 +57,6 @@ switch($_REQUEST['action'] ) {
     if(ADMIN ) {
       include(BASE.'taskgroups/taskgroup_menubox.php' );
       include(BASE.'usergroups/usergroup_menubox.php' );
-      //include(BASE.'admin/admin_config_menubox.php' );
       include(BASE.'files/file_menubox.php' );
     }
     include(BASE.'contacts/contact_menubox.php' );
