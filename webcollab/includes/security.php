@@ -73,7 +73,7 @@ if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS user_id,
                              '.$epoch.' now() ) AS now
                              FROM '.PRE.'logins
                              LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
-                             WHERE '.PRE.'logins.session_key=\''.$session_key.'\'', 0 ) ) ) {
+                             WHERE '.PRE.'logins.session_key=\''.$session_key.'\' LIMIT 1', 0 ) ) ) {
   error('Security manager', 'Database not able to verify session key');
 }
 
