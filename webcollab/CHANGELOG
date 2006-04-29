@@ -14,7 +14,11 @@ WebCollab CVS
 
 - bugfix: Adding contact not in task fails (Bug #1473377)
 
+- bugfix: Don't check date for 'on hold' (Bug #1439589)
+
 - keep minor settings in config file when re-running setup
+
+- set LIMIT 1 in security.php
 
 WebCollab CVS
 *** 14 April 2006
