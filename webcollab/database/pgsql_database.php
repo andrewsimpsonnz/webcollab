@@ -251,7 +251,7 @@ function db_user_locale($encoding ) {
 
   //set client encoding to match character set in use
   if(@pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){
-    error('Database client encoding', 'Cannot set PostgreSQL client encoding to the required '.$pg_encoding.'character set.' );
+    error('Database client encoding', 'Setting client encoding to '.$pg_encoding.' character set had the following error:<br />'.pg_last_error($database_connection) );
   }
   return true;
 }
