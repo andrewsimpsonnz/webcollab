@@ -85,27 +85,23 @@ require_once(BASE.'setup/security_setup.php' );
                     "User:     ".$database_user."<br />Password: ".$database_password."<br />" );
     }
 
-    //try and select the database
-    if( ! @mysql_select_db( $database_name, $database_connection ) ) {
+    if(defined('MYSQL_SETUP_CHARACTER_SET') && MYSQL_SETUP_CHARACTER_SET != '' ) {
+      $db_character = ' CHARACTER SET '.MYSQL_SETUP_CHARACTER_SET;
+    }
+    else {
+      $db_character = '';
+    }
 
-      if(defined('DATABASE_SETUP_CHARACTER_SET') && DATABASE_SETUP_CHARACTER_SET != '' ) {
-        $db_character = ' CHARACTER SET '.DATABASE_SETUP_CHARACTER_SET;
-      }
-      else {
-        $db_character = '';
-      }
+    //try and create database
+    if( ! ($result = @mysql_query('CREATE DATABASE IF NOT EXISTS '.$database_name.$db_character, $database_connection ) ) ){
+      error_setup("Connected successfully to the database server, but database creation had the following error: <br />".
+                            "<b>".mysql_error($database_connection)."</b><br /><br />".
+                            "The above error message was created by the MySQL database server." );
+    }
 
-      //no database exists yet - try and create it...
-      if( ! ($result = @mysql_query( 'CREATE DATABASE '.$database_name.$db_character, $database_connection ) ) ){
-        error_setup("Connected successfully to the database server, but database creation had the following error: <br />".
-                             "<b>".mysql_error($database_connection)."</b><br /><br />".
-                             "The above error message was created by the MySQL database server." );
-      }
-
-      //select the newly created database
-      if( ! @mysql_select_db( $database_name, $database_connection ) ){
-        error_setup("Created a new database, but not able to select the new database. Error message was: <br />".mysql_error($database_connection) );
-      }
+    //select the newly created database
+    if( ! @mysql_select_db( $database_name, $database_connection ) ){
+      error_setup("Created a new database, but not able to select the new database. Error message was: <br />".mysql_error($database_connection) );
     }
 
     if($database_type == 'mysql') {
@@ -170,8 +166,15 @@ require_once(BASE.'setup/security_setup.php' );
                     "Check user and password, then try creating the database manually and running setup again." );
       }
 
+      if(defined('PGSQL_SETUP_CHARACTER_SET') && PGSQL_SETUP_CHARACTER_SET != '' ) {
+        $db_character = " WITH ENCODING '".PGSQL_SETUP_CHARACTER_SET."'";
+      }
+      else {
+        $db_character = '';
+      }
+
       //create new database
-      if( ! ($result = @pg_query($database_connection, 'CREATE DATABASE '.$database_name ) ) ) {
+      if( ! ($result = @pg_query($database_connection, 'CREATE DATABASE '.$database_name.$db_character ) ) ) {
         error_setup("Connected to database, but the new database creation had the following error:<br />".pg_last_error($database_connection) );
       }
 
