@@ -19,7 +19,7 @@ if [ $DB_EXISTS = "1" ]; then
 fi
 
 # create the database
-createdb -U $1 $2
+createdb -U $1 -E UTF8 $2
 
 #insert the structure and data
 psql -U $1 $2 < ./schema_pgsql.sql

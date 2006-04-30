@@ -14,7 +14,7 @@ if [ $DB_EXISTS = "1" ]; then
 fi
 
 # create the database (an error will be output if database already exists)
-mysql -u$1 -p$3 -e"CREATE DATABASE $2;"
+mysql -u$1 -p$3 -e"CREATE DATABASE $2 CHARACTER SET utf8;"
 
 #insert the structure and data
 mysql $2 -vvv -u$1 -p$3 < ./schema_mysql.sql

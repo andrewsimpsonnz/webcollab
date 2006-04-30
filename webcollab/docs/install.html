@@ -133,7 +133,7 @@ mysql>
 <li>Create the database 'webcollab', and then quit the command mode.  Don't forget the semi-colon
 at the end of the first line!
 <pre class="screen">
-mysql> CREATE DATABASE webcollab;
+mysql> CREATE DATABASE webcollab CHARACTER SET utf8;
 Query OK, 1 row affected (0.05 sec)
 
 mysql> \q
@@ -222,7 +222,7 @@ database'webcollab' in this example).</li>
 <li>Enter the MySQL database command mode.  Make sure that your user_name has enough rights to
 make new databases.  Enter your password when prompted.
 <pre class="screen">
-# createdb -W -U user_name webcollab
+# createdb -W -E UTF8 -U user_name webcollab
 Enter password:
 =# CREATE DATABASE 'database name';
 =# \q
