@@ -10,21 +10,23 @@ WebCollab CVS
 
 - bugfix: change to UTF-8 backend in MySQL (ISO-8859-1 default 'loses' some characters)
 
-- bugfix: database character set not being set propery on database build in setup
-
-- bugfix: Adding contact not in task fails (Bug #1473377)
+- bugfix: database character set not being set properly on database build in setup
 
 - bugfix: Don't check date for 'on hold' (Bug #1439589)
+
+- bugfix: tasks doubling up in calendar with 00:00 GMT timezone
 
 - keep minor settings in config file when re-running setup
 
 - set LIMIT 1 in security.php
 
+- set backend PostgreSQL to UTF-8 in setup
+
 WebCollab CVS
 *** 14 April 2006
   Andrew Simpson
 
-- bugfix: Contacts with no taskid not working
+- bugfix: Adding contact not in task fails (Bug #1473377)
 
 - bugfix: Database table prefix missing from some files (Bug #1468805)
 
