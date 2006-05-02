@@ -41,8 +41,8 @@ require_once('path.php' );
 $database_connection = '';
 $delim = "'";
 $epoch = 'extract(epoch FROM ';
-$day_part = 'DATE_PART(\'day\', ';
-
+$day_part  = 'DATE_PART(\'day\', ';
+$date_type = 'TIMESTAMP';
 //
 // Makes a connection to the database
 //

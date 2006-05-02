@@ -32,7 +32,8 @@ require_once('path.php' );
 $database_connection = '';
 $delim = '';
 $epoch = 'UNIX_TIMESTAMP( ';
-$day_part = 'DAYOFMONTH( ';
+$day_part  = 'DAYOFMONTH( ';
+$date_type = 'DATETIME';
 
 //
 // connect to database
