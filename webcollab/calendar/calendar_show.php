@@ -175,8 +175,8 @@ for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 
 //get all the days with projects/tasks due in selected month and year
 $q = db_query('SELECT '.$day_part.'deadline) AS day, projectid FROM '.PRE.'tasks 
-                      WHERE deadline >= \''.$year.'-'.$month.'-01\' 
-                      AND deadline <= (CAST(\''.$year.'-'.$month.'-01\' AS DATE) + INTERVAL '.$delim.'1 MONTH'.$delim.') '.
+                      WHERE deadline BETWEEN \''.$year.'-'.$month.'-01 00:00:00\' 
+                      AND (CAST(\''.$year.'-'.$month.'-01 23:59:59\' AS '.$date_type.') + INTERVAL '.$delim.'1 MONTH'.$delim.')'.
                       $tail );
 
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
@@ -347,8 +347,8 @@ for($num = 1; $num <= $numdays; ++$num ) {
     //rows exist for this date - get them!
     $q = db_query('SELECT id, name, parent, status, projectid, completed
                           FROM '.PRE.'tasks
-                          WHERE deadline>=\''.$year.'-'.$month.'-'.$num.'\'
-                          AND deadline <= (CAST(\''.$year.'-'.$month.'-'.$num.'\' AS DATE) + INTERVAL '.$delim.'24 HOUR'.$delim.')
+                          WHERE deadline BETWEEN \''.$year.'-'.$month.'-'.$num.' 00:00:00\'
+                          AND \''.$year.'-'.$month.'-'.$num.' 23:59:59\'
                           AND archive=0 '.$suffix );
 
       for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
