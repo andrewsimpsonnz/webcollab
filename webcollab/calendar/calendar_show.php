@@ -135,7 +135,7 @@ else {
 switch($selection ) {
   case 'group':
     $userid = 0; $s1 = ""; $s2 = " selected=\"selected\""; $s3 = " checked=\"checked\""; $s4 = "";
-    $tail = "AND usergroupid=$groupid";
+    $tail = " AND usergroupid=".$groupid;
     if($groupid == 0 ){
       $s4 = " selected=\"selected\"";
     }
@@ -144,7 +144,7 @@ switch($selection ) {
   case 'user':
   default:
     $groupid = 0; $s1 = " checked=\"checked\""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
-    $tail = "AND owner=$userid";
+    $tail = " AND owner=".$userid;
     if($userid == 0 ){
       $tail = "";
       $s2 = " selected=\"selected\"";
@@ -176,7 +176,7 @@ for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 //get all the days with projects/tasks due in selected month and year
 $q = db_query('SELECT '.$day_part.'deadline) AS day, projectid FROM '.PRE.'tasks 
                       WHERE deadline BETWEEN \''.$year.'-'.$month.'-01 00:00:00\' 
-                      AND (CAST(\''.$year.'-'.$month.'-01 23:59:59\' AS '.$date_type.') + INTERVAL '.$delim.'1 MONTH'.$delim.')'.
+                      AND ('.$date_type.' \''.$year.'-'.$month.'-01 00:00:00\' + INTERVAL '.$delim.'1 MONTH'.$delim.')'.
                       $tail );
 
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {

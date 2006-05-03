@@ -33,7 +33,7 @@ $database_connection = '';
 $delim = '';
 $epoch = 'UNIX_TIMESTAMP( ';
 $day_part  = 'DAYOFMONTH( ';
-$date_type = 'DATETIME';
+$date_type = '';
 
 //
 // connect to database
