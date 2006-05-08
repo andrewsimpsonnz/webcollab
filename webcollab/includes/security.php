@@ -94,7 +94,7 @@ if((! $row['user_id'] ) || ($row['deleted'] == 't' ) ){
 }
 
 //set user locale - if applicable
-$locale = (UNICODE_VERSION == 'Y') ? $row['locale'] : LOCALE;
+$locale = ((UNICODE_VERSION == 'Y' ) && ($row['locale'] != '' ) ) ? $row['locale'] : LOCALE;
 define('LOCALE_USER', $locale );
 
 //get required language files
