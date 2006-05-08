@@ -255,8 +255,15 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
         $group = db_result(db_query('SELECT name FROM '.PRE.$grouptable.' WHERE id='.$row[$groupid].' LIMIT 1' ), 0, 0 );
     }
 
+    if( ($row['parent'] == 0 ) && ($depth >= 0 ) ) {
+      $projectrow = " class=\"projectrow\"";
+    }
+    else {
+      $projectrow = "";
+    }
+
     //Build up the page columns for display.  Starting with the flags
-    $result .= "<tr><td>".$f1."</td><td>".$f2."</td><td>".$f3."</td><td><small>";
+    $result .= "<tr".$projectrow."><td>".$f1."</td><td>".$f2."</td><td>".$f3."</td><td><small>";
 
     if($color != '' ) {
       $result .= "<span class=\"".$color."\">";

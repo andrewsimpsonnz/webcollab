@@ -79,6 +79,13 @@ TABLE.decoration {
   color : #000000;
 }
 
+/* Class for project row on summary page */
+TR.projectrow {
+  background : #dddddd;
+  border-bottom : 1px solid #333;
+  font-weight : bold;
+}
+
 TD {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
@@ -183,6 +190,8 @@ TD.greenbar {
   height : 4px;
   background : #008B45;
   color : #000000;
+  border-bottom : 1px solid #333333;
+  border-right : 1px solid #333333;
 }
 
 /* Red/orange progress bar */
@@ -190,9 +199,11 @@ TD.redbar {
   border-width : 0;
   border-collapse : collapse;
   white-space : nowrap;
-  height : 4px;
+  height : 5px;
   background : #FFA500;
   color : #000000;
+  border-bottom : 1px solid #333333;
+  border-right : 1px solid #333333;
 }
 
 /* Class for underlined text */
@@ -204,7 +215,7 @@ TD.redbar {
 .bottomtext {
   font-size : 10px;
   padding-top : 10px;
-  padding-left : 5px;
+  padding-left : 6px;
   padding-bottom : 10px;
   color : #1e4b79;
   background : transparent;
@@ -245,12 +256,14 @@ TD.redbar {
 /* Class for green text */
 .green {
   color : #006400;
+  font-weight : bold;
   background : transparent;
 }
 
 /* Class for orange text */
 .orange {
   color : #FFA500;
+  font-weight : bold;
   background : transparent;
 }
 
@@ -263,12 +276,14 @@ TD.redbar {
 /* Class for blue text */
 .blue {
   color : #0000FF;
+  font-weight : bold;
   background : transparent;
 }
 
 /* Class for red text */
 .red {
   color : #FF0000;
+  font-weight : bold;
   background : transparent;
 }
 
