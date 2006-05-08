@@ -111,7 +111,7 @@ function project_jump($taskid=0) {
     $content .= "<form id=\"ProjectQuickJump\" method=\"get\" action=\"tasks.php\">\n".
                 "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
                 "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n".
-                "<div><select name=\"taskid\">\n".
+                "<div><select name=\"taskid\" onchange=\"javascript:this.form.submit()\">\n".
                 "<option value=\"-1\">".$lang['quick_jump']."</option>\n";
 
     // loop through the data

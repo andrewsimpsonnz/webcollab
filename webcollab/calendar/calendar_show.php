@@ -221,8 +221,8 @@ $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n ".
             "<div style=\"text-align: center\">\n".
             "<table class=\"decoration\" style=\"margin-left: auto; margin-right: auto;\" cellpadding=\"5px\">\n".
-            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" name=\"selection\" id=\"users\"".$s1." /><label for=\"users\">".$lang['users']."</label>\n".
-            "<label for=\"users\"><select name=\"userid\">\n".
+            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" onchange=\"javascript:this.form.submit()\"name=\"selection\" id=\"users\"".$s1."/><label for=\"users\">".$lang['users']."</label>\n".
+            "<label for=\"users\"><select name=\"userid\" onchange=\"javascript:this.form.submit()\">\n".
             "<option value=\"0\"".$s2.">".$lang['all_users']."</option>\n";
 
 //get all users for option box
@@ -246,8 +246,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 }
 
 $content .= "</select></label></td>\n".
-            "<td><input type=\"radio\" value=\"group\" name=\"selection\" id=\"group\"".$s3." /><label for=\"group\">".$lang['usergroups']."</label>\n".
-            "<label for=\"group\"><select name=\"groupid\">\n".
+            "<td><input type=\"radio\" value=\"group\" name=\"selection\" onchange=\"javascript:this.form.submit()\" id=\"group\"".$s3." /><label for=\"group\">".$lang['usergroups']."</label>\n".
+            "<label for=\"group\"><select name=\"groupid\" onchange=\"javascript:this.form.submit()\">\n".
             "<option value=\"0\"".$s4.">".$lang['no_group']."</option>\n";
 
 //get all groups for option box
@@ -273,7 +273,7 @@ $content .= "<div style=\"text-align: center\">\n".
             "<table style=\"margin-left: auto; margin-right: auto\">\n".
             "<tr><td><input type=\"submit\" name=\"lastyear\" value=\"&lt;&lt;\" /></td>\n".
             "<td><input type=\"submit\" name=\"lastmonth\" value=\"&lt;\" /></td>\n".
-            "<td>\n<select name=\"month\">\n";
+            "<td>\n<select name=\"month\" onchange=\"javascript:this.form.submit()\">\n";
 
 for( $i=1; $i<13 ; ++$i ) {
   $content .= "<option value=\"".$i."\"";
@@ -286,7 +286,7 @@ for( $i=1; $i<13 ; ++$i ) {
 $content .=  "</select></td>\n";
 
 //year
-$content .= "<td><select name=\"year\">\n";
+$content .= "<td><select name=\"year\" onchange=\"javascript:this.form.submit()\">\n";
 for( $i=2001; $i<2011 ; ++$i ) {
   $content .= "<option value=\"".$i."\"";
 
