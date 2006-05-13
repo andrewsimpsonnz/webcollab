@@ -61,6 +61,16 @@ else {
   die;
 }
 
+if(UNICODE_VERSION == 'Y' ) {
+  //set the database encoding - get user preferred language files later
+  db_user_locale('UTF-8' );
+}
+else {
+  //set the database encoding & get the defined language files
+  require_once(BASE.'lang/lang.php' );
+  db_user_locale(CHARACTER_SET );
+}
+
 //seems okay at first, now go cross-checking with the known data from the database
 if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS user_id,
                              '.$epoch.' '.PRE.'logins.lastaccess) AS sec_lastaccess,
@@ -93,15 +103,16 @@ if((! $row['user_id'] ) || ($row['deleted'] == 't' ) ){
   error('Security manager', 'No valid user-id found');
 }
 
-//set user locale - if applicable
-$locale = ((UNICODE_VERSION == 'Y' ) && ($row['locale'] != '' ) ) ? $row['locale'] : LOCALE;
-define('LOCALE_USER', $locale );
+//set user locale in Unicode version
+if(UNICODE_VERSION == 'Y' ) {
 
-//get required language files
-require_once(BASE.'lang/lang.php' );
+  if($row['locale'] ) {
+    define('LOCALE_USER', $row['locale'] );
+  }
 
-//set the database encoding to match language
-db_user_locale(CHARACTER_SET );
+  //get required language files
+  require_once(BASE.'lang/lang.php' );
+}
 
 //check the last login time (there is an inactivity time limit set by SESSION_TIMEOUT)
 if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
