@@ -1,4 +1,18 @@
 WebCollab CVS
+*** 13 May 2006
+  Andrew Simpson
+
+- bugfix: username shown in wrong character set (Bug #1487456) (Credit: zmeuka)
+
+- CSS and javascript tweaks (Credit: Jiří Dutka)
+
+WebCollab (Greenlane)
+*** 4 May 2006
+  Andrew Simpson
+
+- release
+
+WebCollab CVS
 *** 27 April 2006
   Andrew Simpson
 
