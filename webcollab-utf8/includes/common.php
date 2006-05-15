@@ -86,8 +86,6 @@ return $body;
 
 function validate($body ) {
 
-  global $validation_regex;
-
   //we don't use magic_quotes
   if(get_magic_quotes_gpc() ) {
     $body = stripslashes($body );
