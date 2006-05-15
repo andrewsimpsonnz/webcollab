@@ -9,7 +9,11 @@
   define('SETUP_CHARACTER_SET', "UTF-8" );
 
   //database character set for MySQL
-  define('DATABASE_CHARACTER_SET', "utf8" );
+  define('MYSQL_SETUP_CHARACTER_SET', "utf8" );
+
+  //database character set for PostgreSQL
+  define('PGSQL_SETUP_CHARACTER_SET', "UTF8" );
+
 
   //Style sheets (CSS) (Place your CSS into /css directory)
   define('SETUP_CSS', 'default.css' );
