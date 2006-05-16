@@ -67,6 +67,7 @@ if(UNICODE_VERSION == 'Y' ) {
 }
 else {
   //set the database encoding & get the defined language files
+  define('LOCALE_USER', LOCALE );
   require_once(BASE.'lang/lang.php' );
   db_user_locale(CHARACTER_SET );
 }
@@ -106,8 +107,12 @@ if((! $row['user_id'] ) || ($row['deleted'] == 't' ) ){
 //set user locale in Unicode version
 if(UNICODE_VERSION == 'Y' ) {
 
+  //set user defined locale if requrired
   if($row['locale'] ) {
     define('LOCALE_USER', $row['locale'] );
+  }
+  else {
+    define('LOCALE_USER', LOCALE );
   }
 
   //get required language files
