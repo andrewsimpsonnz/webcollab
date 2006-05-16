@@ -36,7 +36,7 @@ include_once(BASE.'includes/usergroup_security.php' );
 
 //deny guest users
 if(GUEST ){
- warning($lang['access_denied'], $lang['not_owner'] );  
+ warning($lang['access_denied'], $lang['not_owner'] );
 }
 
 //secure variables
@@ -79,8 +79,8 @@ ignore_user_abort(TRUE);
             error($lang['file_submit'], "Missing a temporary folder" );
             break;
 
-          default: 
-            error($lang['file_submit'], "Unknown file upload error with error code ".$_FILES['userfile']['tmp_name'] );     
+          default:
+            error($lang['file_submit'], "Unknown file upload error with error code ".$_FILES['userfile']['tmp_name'] );
             break;
         }
       }
@@ -146,16 +146,16 @@ ignore_user_abort(TRUE);
       db_begin();
 
       //validate characters in filename
-      $filename = validate($_FILES['userfile']['name'] ); 
+      $filename = validate($_FILES['userfile']['name'] );
 
-      //limit file name to 200 characters - should be enough for any sensible(!) file name :-) 
+      //limit file name to 200 characters - should be enough for any sensible(!) file name :-)
       $filename = substr($filename, 0, 200 );
-      //strip illegal characters  
+      //strip illegal characters
       $filename = preg_replace('/[\x00-\x2a\x2f\x3a-\x3c\x3e-\x3f\x5c\x5e\x60\x7b-\x7e]|[\.]{2}/', '_', $filename );
-      
+
       //escape for database
       $db_filename = db_escape_string($filename );
-        
+
       //alter file database administration
       $q = db_query( "INSERT INTO ".PRE."files (filename,
                                             size,
@@ -172,7 +172,7 @@ ignore_user_abort(TRUE);
                                             $taskid,
                                             '".$mime."' )" );
 
-      //get last insert id 
+      //get last insert id
       $fileid = db_lastoid('files_id_seq' );
 
       //copy it
@@ -239,7 +239,7 @@ ignore_user_abort(TRUE);
         if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
           $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
         }
-        email($mail_list, sprintf($title_file_post, $task_row['name'] ), sprintf($email_file_post, UID_NAME, $_FILES['userfile']['name'], $message_unclean ) );
+        email($mail_list, sprintf($title_file_post, $task_row['name'] ), sprintf($email_file_post, UID_NAME, $_FILES['userfile']['name'], $message_unclean, 'index.php?taskid='.$taskid ) );
       }
 
       break;

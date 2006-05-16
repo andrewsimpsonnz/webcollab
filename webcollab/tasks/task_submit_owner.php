@@ -149,7 +149,7 @@ ignore_user_abort(TRUE);
 
           //send email
           $message = $email .
-                    sprintf($email_list, $name_project, $name_task, status($row['status'], $row['deadline']), UID_NAME, UID_EMAIL, $row['text'] );
+                    sprintf($email_list, $name_project, $name_task, status($row['status'], $row['deadline'] ), UID_NAME, UID_EMAIL, $row['text'], 'index.php?taskid='.$taskid );
           email( $email_address_old_owner, $title, $message );
         }
       }

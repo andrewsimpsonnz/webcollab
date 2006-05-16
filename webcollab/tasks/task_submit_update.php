@@ -266,7 +266,7 @@ if(isset($_POST['mailowner']) && ($_POST['mailowner'] === 'on') && ($owner != 0)
   $email_address_owner = db_result(db_query('SELECT email FROM '.PRE.'users WHERE id='.$owner.' LIMIT 1', 0), 0, 0 );
 
   $message = $email1 .
-              sprintf($email_list, $name_project, $name_task_unclean, status($status, $deadline), $name_owner, $email_owner, $text_unclean );
+              sprintf($email_list, $name_project, $name_task_unclean, status($status, $deadline), $name_owner, $email_owner, $text_unclean, 'index.php?taskid='.$taskid );
   email($email_address_owner, $title1, $message );
 }
 
@@ -276,7 +276,7 @@ if(isset($_POST['maillist']) && ($_POST['maillist'] === 'on') ) {
   include_once(BASE.'includes/email.php' );
 
   $message = sprintf($email2, $name_owner ).
-              sprintf($email_list, $name_project, $name_task_unclean, status($status, $deadline), $name_owner, $email_owner, $text_unclean );
+              sprintf($email_list, $name_project, $name_task_unclean, status($status, $deadline), $name_owner, $email_owner, $text_unclean, 'index.php?taskid='.$taskid );
 
   if($usergroupid != 0 ) {
     $q = db_query('SELECT '.PRE.'users.email

@@ -246,7 +246,7 @@ ignore_user_abort(TRUE);
         switch($parentid ) {
           case 0:
             //this is a new post
-            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_post, UID_NAME, $message_unclean) );
+            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_post, UID_NAME, $message_unclean, 'index.php?taskid='.$taskid ) );
             break;
 
           default:
@@ -263,7 +263,7 @@ ignore_user_abort(TRUE);
               $row['username'] = "----";
             }
 
-            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_reply, UID_NAME, $row['username'], $row['text'], $message_unclean ) );
+            email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_reply, UID_NAME, $row['username'], $row['text'], $message_unclean, 'index.php?taskid='.$taskid ) );
             break;
         }
       }
