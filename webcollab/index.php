@@ -61,6 +61,9 @@ function secure_error( $error = 'Login error', $redirect=0 ) {
   die;
 }
 
+//check and set taskid if required
+$taskid = (isset($_REQUEST['taskid']) && @safe_integer($_REQUEST['taskid']) ) ? $_REQUEST['taskid'] : 0;
+
 //valid login attempt ?
 if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['username']) > 0 && strlen($_POST['password']) > 0 )
     || (isset($_SERVER['REMOTE_USER'])  && (strlen($_SERVER['REMOTE_USER']) > 0 ) && WEB_AUTH === 'Y' ) ) {
@@ -150,7 +153,12 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
 
   //relocate the user to the main screen
   //(we use both URI session key and cookies initially - in case cookies don't work)
-  header('Location: '.BASE_URL.'main.php?x='.$session_key );
+  if($taskid == 0 ) {
+    header('Location: '.BASE_URL.'main.php?x='.$session_key );
+  }
+  else {
+    header('Location: '.BASE_URL.'tasks.php?x='.$session_key.'&action=show&taskid='.$taskid );
+  }
   die;
 }
 
@@ -164,8 +172,14 @@ if(isset($_COOKIE['webcollab_session'] ) && strlen($_COOKIE['webcollab_session']
   if(db_result(@db_query('SELECT COUNT(*) FROM '.PRE.'logins
                                  WHERE session_key=\''.safe_data($_COOKIE['webcollab_session']).'\'
                                  AND lastaccess > (now()-INTERVAL '.$delim.round(SESSION_TIMEOUT).' HOUR'.$delim.')', 0 ) ) == 1 ) {
+
     //relocate to main screen, and let security.php do further checking on session validity
-    header('Location: '.BASE_URL.'main.php?x=0');
+    if($taskid == 0 ) {
+      header('Location: '.BASE_URL.'main.php' );
+    }
+    else {
+      header('Location: '.BASE_URL.'tasks.php?action=show&taskid='.$taskid );
+    }
     die;
   }
 }
@@ -183,6 +197,7 @@ else {
 
 $content .= "<p>".$lang['please_login'].":</p>\n".
             "<form method=\"post\" action=\"index.php\">\n".
+            "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
             "<table style=\"margin-left:auto; margin-right:auto;\">\n".
             "<tr align=\"left\" ><td>".$lang['login'].": </td><td><input id=\"username\" type=\"text\" name=\"username\" value=\"\" size=\"30\" /></td></tr>\n".
             "<tr align=\"left\" ><td>".$lang['password'].": </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
