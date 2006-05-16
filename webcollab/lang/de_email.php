@@ -33,17 +33,22 @@ $email_date = date("d" ).". ".$month_array[(date("n" ) )]." ".date('Y \u\m g:i' 
 $title_file_post        = ABBR_MANAGER_NAME.": Neue Datei wurde hochgeladen: %s";
 $email_file_post        = "Hallo,\n\nIhre ".MANAGER_NAME."-Seite informiert sie, daß eine neue Datei hochgeladen wurde am ".$email_date." durch %1\$s.\n\n".
                           "Dateiname:    %2\$s\n".
-                          "Beschreibung: %3\$s";
+                          "Beschreibung: %3\$s\n\n".
+                          "Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n".BASE_URL."%4\$s\n";
 
 
 $title_forum_post        = ABBR_MANAGER_NAME.": Neuer Forenbeitrag: %s";
-$email_forum_post        = "Hallo,\n\nIhre ".MANAGER_NAME."-Seite informiert sie, daß seit ".$email_date." ein neuer Forenbeitrag vorliegt von %1\$s:\n\n----\n\n%2\$s\n\n----\n"; 
+$email_forum_post        = "Hallo,\n\nIhre ".MANAGER_NAME."-Seite informiert sie, daß seit ".$email_date." ein neuer Forenbeitrag vorliegt von %1\$s:\n\n".
+                           "----\n\n%2\$s\n\n----\n\n".
+                           "Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n".BASE_URL."%3\$s\n";
+
 $email_forum_reply       = "Hallo,\n\nIhre ".MANAGER_NAME."-Seite informiert sie, daß seit ".$email_date." ein neuer Forenbeitrag vorliegt von %1\$s.\n\n".
                            "Dieser beitrag ist eine Antwort auf einen früheren Beitrag von %2\$s.\n\n".
                            "Früherer Beitrag:\n %3\$s\n\n".
                            "----\n\n".
                            "Neuer Beitrag:\n%4\$s\n\n".
-                           "----\n\n";
+                           "----\n\n".
+                           "Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n".BASE_URL."%5\$s\n";
 
 
 
@@ -52,7 +57,7 @@ $email_list = "Projekt:  %1\$s\n".
               "Status:   %3\$s\n".
               "Besitzer: %4\$s ( %5\$s )\n".
               "Text:\n%6\$s\n\n".
-              "Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n".BASE_URL."\n";
+              "Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n".BASE_URL."%7\$s\n";
 
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Eins von Ihren Projekten ist übergeben worden";

@@ -39,37 +39,38 @@ $title_file_post        = ABBR_MANAGER_NAME.": New file upload: %s";
 $email_file_post        = "Hello,\n\n".
                           "This is the ".MANAGER_NAME." site informing you that a new file has been uploaded on ".$email_date." by %1\$s.\n\n".
                           "File:        %2\$s\n".
-                          "Description: %3\$s";
-
+                          "Description: %3\$s\n\n".
+                          "Dirigir-se al lloc web per a mes detalls.\n\n".
+                           BASE_URL."%4\$s\n";
 //-----
 $title_forum_post        = ABBR_MANAGER_NAME.": New forum post: %s";
 
 $email_forum_post        = "Hello,\n\n".
                            "This is the ".MANAGER_NAME." site informing you that a new forum post has been made on ".$email_date." by %1\$s:\n\n".
-                           "----\n\n".                           
+                           "----\n\n".
                            "%2\$s\n\n".
-                           "----\n\n".                           
+                           "----\n\n".
                            "Dirigir-se al lloc web per a mes detalls.\n\n".
-                           BASE_URL."\n";
-                            
+                           BASE_URL."%3\$s\n";
+
 $email_forum_reply       = "Hello,\n\n".
                            "This is the ".MANAGER_NAME." site informing you that a new forum post has been made on ".$email_date." by %1\$s.\n\n".
                            "This post is in reply to an earlier post by %2\$s.\n\n".
                            "Original post:\n %3\$s\n\n".
-                           "----\n\n".                           
+                           "----\n\n".
                            "New reply:\n%4\$s\n\n".
                            "----\n\n".
                            "Dirigir-se al lloc web per a mes detalls.\n\n".
-                           BASE_URL."\n";
+                           BASE_URL."%5\$s\n";
 
-//-----                           
+//-----
 $email_list              = "Projecte: %1\$s\n".
                            "Tasca:    %2\$s\n".
                            "Estat:    %3\$s\n".
                            "A càrreg:  %4\$s ( %5\$s )\n".
                            "Text:\n%6\$s\n\n".
                            "Dirigir-se al lloc web per a mes detalls.\n\n".
-                           BASE_URL."\n";
+                           BASE_URL."%7\$s\n";
 
 //-----
 $title_takeover_project   = ABBR_MANAGER_NAME.": El seu item ha estat reassignat";
@@ -81,14 +82,14 @@ $email_takeover_project   = "Hola,\n\n".
 $email_takeover_task      = "Hola,\n\n".
                             "Aquest ée ".MANAGER_NAME." lloc informant-li que un tasca al seu càrreg ha estat reassignada per l'administrador el ".$email_date.".\n\n";
 
-//-----                                                        
+//-----
 $title_new_owner_project  = ABBR_MANAGER_NAME.": Nou projecte per a vosté";
 $title_new_owner_task     = ABBR_MANAGER_NAME.": Nou tasca per a vosté";
 
 $email_new_owner_project  = "Hola,\n\n".
                             "Aquest es el ".MANAGER_NAME." lloc informant-li que un projecte seu (ara al seu càrreg) va ser canviat el ".$email_date.".\n\n".
                             "Aquí els detalls:\n\n";
-                            
+
 $email_new_owner_task     = "Hola,\n\n".
                             "Aquest es el ".MANAGER_NAME." lloc informant-li que un tasca seu (ara al seu càrreg) va ser canviat el ".$email_date.".\n\n".
                             "Aquí els detalls:\n\n";
@@ -147,7 +148,7 @@ $delete_list              = "Projecte: %1\$s\n".
                             "Text:\n%4\$s\n\n";
 
 
-//-----                
+//-----
 $title_welcome            = "Benvinguda a ".ABBR_MANAGER_NAME;
 
 $email_welcome            = "Hola,\n\nAquest és el lloc ".MANAGER_NAME." donant-li la benvinguda ;) el  ".$email_date.".\n\n".
@@ -167,7 +168,7 @@ $email_welcome            = "Hola,\n\nAquest és el lloc ".MANAGER_NAME." donant-
                             "%5\$s";
 
 
-//-----                        
+//-----
 $title_user_change1       = ABBR_MANAGER_NAME.": Edició del seu compte per un administrador";
 
 $email_user_change1       = "Hola,\n\n".

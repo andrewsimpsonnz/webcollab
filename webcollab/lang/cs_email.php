@@ -24,9 +24,6 @@
 
   Translation: Lukas Moravek <moravekl at gmail.com>
   Corection: Jirka Dutka <jirka at dutka.net>
-  
-  
-  NOTE: This file is written in UTF-8 character set
 
 */
 
@@ -37,19 +34,22 @@ $title_file_post          = ABBR_MANAGER_NAME.": Nahrán nový soubor: %s";
 $email_file_post          = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, ¾e byl pøidán nový soubor ".$email_date." u¾ivatelem %1\$s.\n\n".
                             "Soubor:        %2\$s\n".
                             "Popis: %3\$s\n\n".
-                            "Prosím nav¹tivte tuto web stránku pro více informací.\n\n".BASE_URL."\n";
+                            "Prosím nav¹tivte tuto web stránku pro více informací.\n\n".BASE_URL."%4\$s\n";
 
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Nový pøíspìvek ve fóru: %s";
-$email_forum_post         = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, ¾e byl vlo¾en nový pøíspìvek do fóra ".$email_date." u¾ivatelem %1\$s:\n\n----\n\n%2\$s\n\n----\n\n".
-                            "Prosím nav¹tivte tuto web stránku pro více informací.\n\n".BASE_URL."\n";
+$email_forum_post         = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, ¾e byl vlo¾en nový pøíspìvek do fóra ".$email_date." u¾ivatelem %1\$s:\n\n".
+                            "----\n\n".
+                            "%2\$s\n\n".
+                            "----\n\n".
+                            "Prosím nav¹tivte tuto web stránku pro více informací.\n\n".BASE_URL."%3\$s\n";
 $email_forum_reply        = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, ¾e byl vlo¾en nový pøíspìvek do fóra ".$email_date." u¾ivatelem %1\$s.\n\n".
                             "Tento pøíspìvek je odpovìdí na døívìj¹í pøíspìvek zaslaný %2\$s.\n\n".
                             "Pùvodní pøispìvek:\n%3\$s\n\n".
                             "----\n\n".
                             "Opdpovìd:\n%4\$s\n\n".
                             "----\n\n".
-                            "Prosím nav¹tivte tuto web stránku pro více informací.\n\n".BASE_URL."\n";
+                            "Prosím nav¹tivte tuto web stránku pro více informací.\n\n".BASE_URL."%5\$s\n";
 
 
 $email_list =  "Projekt:  %1\$s\n".
@@ -57,7 +57,7 @@ $email_list =  "Projekt:  %1\$s\n".
                "Stav:   %3\$s\n".
                "Vlastník:    %4\$s ( %5\$s )\n".
                "Text:\n%6\$s\n\n".
-               "Prosím nav¹tivte tuto web stránku pro více informací.\n\n".BASE_URL."\n";
+               "Prosím nav¹tivte tuto web stránku pro více informací.\n\n".BASE_URL."%7\$s\n";
 
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Vá¹ projekt byl pøevzat";
@@ -154,15 +154,12 @@ $email_user_change3       = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, ¾e js
                             "Va¹e heslo nebylo zmìnìno.\n\n".
                             "Jméno:  %2\$s\n";
 
-
 $title_revive             = ABBR_MANAGER_NAME.": Úèet odblokován";
 $email_revive             = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, ¾e vá¹ úèet byl odblokován ".$email_date.".\n\n".
                             "Login / Pøihla¹ovací jméno: %1\$s\n".
                             "Jméno:  %2\$s\n\n".
                             "Va¹e heslo Vám nemohlo být zasláno proto¾e je zakriptováno. \n\n".
                             "Pokud jste zapomìl va¹e heslo prosím napi¹e email na ".EMAIL_ADMIN.".";
-
-
 
 $title_delete_user        = ABBR_MANAGER_NAME.": Úèet zablokován.";
 $email_delete_user        = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, ¾e vá¹ úèet byl zablokován ".$email_date.".\n".
