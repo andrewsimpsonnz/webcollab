@@ -35,19 +35,22 @@ $title_file_post          = ABBR_MANAGER_NAME.": Novo arquivo enviado: %s";
 $email_file_post          = "Olá,\n\nAqui é o site ".MANAGER_NAME." informando-lhe que um novo arquivo foi enviado em ".$email_date." por %1\$s.\n\n".
                             "Arquivo:        %2\$s\n".
                             "Descrição: %3\$s\n\n".
-                            "Por favor, acesse o site para maiores detalhes.\n\n".BASE_URL."\n";
+                            "Por favor, acesse o site para maiores detalhes.\n\n".BASE_URL."%4\$s\n";
 
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Nova postagem no fórum: %s";
-$email_forum_post         = "Olá,\n\nAqui é o site ".MANAGER_NAME." informando-lhe que uma nova mensagem foi enviada para o fórum em ".$email_date." por %1\$s:\n\n----\n\n%2\$s\n\n----\n\n".
-                           "Por favor, acesse o site para maiores detalhes.\n\n".BASE_URL."\n";
+$email_forum_post         = "Olá,\n\nAqui é o site ".MANAGER_NAME." informando-lhe que uma nova mensagem foi enviada para o fórum em ".$email_date." por %1\$s:\n\n".
+                           "----\n\n".
+                           "%2\$s\n\n".
+                           "----\n\n".
+                           "Por favor, acesse o site para maiores detalhes.\n\n".BASE_URL."%3\$s\n";
 $email_forum_reply        = "Olá,\n\nAqui é o site ".MANAGER_NAME." informando-lhe que uma nova mensagem foi enviada para o fórum em ".$email_date." por %1\$s.\n\n".
                            "Trata-se de uma resposta à mensagem anterior enviada por %2\$s.\n\n".
                            "Mensagem original:\n%3\$s\n\n".
                            "----\n\n".
                            "Responder:\n%4\$s\n\n".
                            "----\n\n".
-                           "Por favor, acesse o site para maiores detalhes.\n\n".BASE_URL."\n";
+                           "Por favor, acesse o site para maiores detalhes.\n\n".BASE_URL."%5\$s\n";
 
 
 $email_list =  "Projeto:  %1\$s\n".
@@ -55,7 +58,7 @@ $email_list =  "Projeto:  %1\$s\n".
                "Status:   %3\$s\n".
                "Responsável:    %4\$s ( %5\$s )\n".
                "Texto:\n%6\$s\n\n".
-               "Por favor, acesse o site para maiores detalhes.\n\n".BASE_URL."\n";
+               "Por favor, acesse o site para maiores detalhes.\n\n".BASE_URL."%7\$s\n";
 
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Seu projeto foi assumido por outrem";

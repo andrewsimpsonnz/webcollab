@@ -36,16 +36,15 @@ $email_file_post          = "Haló,\n\n".
                             "To je ".MANAGER_NAME." stránka ktorá Vás informuje ¾e bol nahratý nový súbor dòa ".$email_date." od %1\$s.\n\n".
                             "Súbor:        %2\$s\n".
                             "Obsah: %3\$s\n\n".
-                            "Prosím nav¹tívte webstránku pre ïal¹ie informácie.\n\n".BASE_URL."\n";
-
+                            "Prosím nav¹tívte webstránku pre ïal¹ie informácie.\n\n".BASE_URL."%4\$s\n";
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Nová po¹ta na fóre: %s";
 $email_forum_post         = "Haló,\n\n".
                             "To je ".MANAGER_NAME." stránka ktorá Vás informuje, ¾e máte na fóre novú správu zo dòa ".$email_date." od %1\$s:\n\n".
                             "%2\$s\n\n".
                             "Prosím nav¹tívte webstránku pre viac detailov.\n\n".
-                            BASE_URL."\n";
-                            
+                            BASE_URL."%3\$s\n";
+
 $email_forum_reply        = "Haló,\n\n".
                             "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e máte
 na fóre novú správu zo dòa ".$email_date." od %1\$s.\n\n".
@@ -53,7 +52,7 @@ na fóre novú správu zo dòa ".$email_date." od %1\$s.\n\n".
                             "Orginálna správa:\n%3\$s\n\n".
                             "Nová odpoveï:\n%4\$s\n\n".
                             "Prosím nav¹tívte webstránku pre viac detailov.\n\n".
-                            BASE_URL."\n";
+                            BASE_URL."%5\$s\n";
 
 $email_list               = "Projekt:  %1\$s\n".
                             "Úloha:     %2\$s\n".
@@ -61,7 +60,7 @@ $email_list               = "Projekt:  %1\$s\n".
                             "Vlastník:    %4\$s ( %5\$s )\n".
                             "Text:\n%6\$s\n\n".
                             "Prosím nav¹tívte webstránku pre viac detailov.\n\n".
-                            BASE_URL."\n";
+                            BASE_URL."%7\$s\n";
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Vá¹ projekt bol prevzatý";
 $title_takeover_task      = ABBR_MANAGER_NAME.": Va¹a úloha bola prevzatá";

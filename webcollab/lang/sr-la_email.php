@@ -37,8 +37,7 @@ $email_file_post          = "Zdravo!\n\n".
                             "Fajl:  %2\$s\n".
                             "Opis:  %3\$s\n\n".
                             "Posetite sajt za vi¹e detalja.\n\n".
-                            BASE_URL."\n";
-
+                            BASE_URL."%4\$s\n";
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Nova poruka na forumu: %s";
 $email_forum_post         = "Zdravo!\n\n".
@@ -47,8 +46,8 @@ $email_forum_post         = "Zdravo!\n\n".
                             "%2\$s\n\n".
                             "----\n\n".
                             "Posetite sajt za vi¹e detalja.\n\n".
-                            BASE_URL."\n";
-                            
+                            BASE_URL."%3\$s\n";
+
 $email_forum_reply        = "Zdravo!\n\n".
                             "Ovo je sajt ".MANAGER_NAME." koji vas obave¹tava da je dana ".$email_date." postavljena nova poruka na forumu od strane korisnika %1\$s.\n\n".
                             "Ova poruka predstavlja odgovor na raniju poruku korisnika %2\$s.\n\n".
@@ -57,7 +56,7 @@ $email_forum_reply        = "Zdravo!\n\n".
                             "Novi odgovor:\n%4\$s\n\n".
                             "----\n\n".
                             "Posetite sajt za vi¹e detalja.\n\n".
-                            BASE_URL."\n";
+                            BASE_URL."%5\$s\n";
 
 $email_list               = "Projekat:  %1\$s\n".
                             "Zadatak:   %2\$s\n".
@@ -65,7 +64,7 @@ $email_list               = "Projekat:  %1\$s\n".
                             "Vlasnik:   %4\$s ( %5\$s )\n".
                             "Tekst:\n%6\$s\n\n".
                             "Posetite sajt za vi¹e detalja.\n\n".
-                            BASE_URL."\n";
+                            BASE_URL."%7\$s\n";
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Va¹ projekat je preuzet";
 $title_takeover_task      = ABBR_MANAGER_NAME.": Va¹ zadatak je preuzet";
