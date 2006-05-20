@@ -4,7 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  Thi file created 2003 by Andrew Simpson
+  This file created 2003
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -24,41 +24,45 @@
 
   Email text language files for 'da' (Danish)
 
-  Maintainer: 
-  
+  Maintainer:
+
   Translation by Jens Thomsen
-  
-  
+
   NOTE: This file is written in UTF-8 character set
+
 
 */
 
 // Get current date/time for emails in a preferred format eg: 01 Apr 2004 9:18 am NZDT  
 $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y \a\t g:i a T' );
 
-//**
 $title_file_post          = ABBR_MANAGER_NAME.": Indlæs ny fil: %s";
 $email_file_post          = "Hello,\n\nDette er ".MANAGER_NAME." Som informerer dig om at en ny file er blevet indlæst ".$email_date." af %1\$s.\n\n".
                             "File:        %2\$s\n".
-                            "Beskrivelse: %3\$s";
-
+                            "Beskrivelse: %3\$s\n\n".
+                            "Gå til hjemmesiden efter mere information.\n\n".BASE_URL."%4\$s\n";
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Ny post I forum: %s";
-$email_forum_post         = "Hallo,\n\nDette er ".MANAGER_NAME." informerer dig om at en ny post i forum er oprettet ".$email_date." af %1\$s:\n\n----\n\n%2\$s----\n\n"; 
+$email_forum_post         = "Hallo,\n\nDette er ".MANAGER_NAME." informerer dig om at en ny post i forum er oprettet ".$email_date." af %1\$s:\n\n".
+                            "----\n\n".
+                            "%2\$s".
+                            "\n\n----\n\n".
+                            "Gå til hjemmesiden efter mere information.\n\n".BASE_URL."%3\$s\n";
+
 $email_forum_reply        = "Hallo,\n\nDette er ".MANAGER_NAME." informerer dig om at en ny post i forum er blevet oprettet ".$email_date." af %1\$s.\n\n".
                             "denne post er et svar på en tidligere post %2\$s.\n\n".
                             "Original post:\n %3\$s\n\n".
                             "----\n".
                             "Nyt svar:\n%4\$s\n\n".
-                            "----\n";
+                            "----\n\n".
+                            "Gå til hjemmesiden efter mere information.\n\n".BASE_URL."%5\$s\n";
 
-$email_list               = "Projekt:  %s\n".
-                            "Opgave:     %s\n".
-                            "Status:   %s\n".
-                            "Ejer:    %s ( %s )\n".
-                            "Tekst:\n%s\n\n".
-                            "Gå til hjemmesiden efter mere information.\n\n".BASE_URL."\n";
-
+$email_list               = "Projekt:  %1\$s\n".
+                            "Opgave:     %2\$s\n".
+                            "Status:   %3\$s\n".
+                            "Ejer:    %4\$s ( %5\$s )\n".
+                            "Tekst:\n%6\$s\n\n".
+                            "Gå til hjemmesiden efter mere information.\n\n".BASE_URL."%7\$s\n";
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Dit projekt er overtaget";
 $title_takeover_task      = ABBR_MANAGER_NAME.": Din opgave er overtaget";

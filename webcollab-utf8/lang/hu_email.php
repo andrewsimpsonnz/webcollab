@@ -4,7 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  Thi file created 2003 by Andrew Simpson
+  This file created 2003
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -39,19 +39,19 @@ $title_file_post          = ABBR_MANAGER_NAME.": Új feltöltött fájl: %s";
 $email_file_post          = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy új fájlt töltött fel ".$email_date." dátummal a következő: %1\$s.\n\n".
                             "Fájl:     %2\$s\n".
                             "Leírás:   %3\$s\n\n".
-                            "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."\n";
+                            "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."%4\$s\n";
 
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Új fórum üzenet: %s";
 $email_forum_post         = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy új fórum üzenet érkezett ".$email_date." dátummal %1\$s:\n\n----\n\n%2\$s által.\n\n----\n\n".
-                           "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."\n";
+                           "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."%3\$s\n";
 $email_forum_reply        = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy új fórum üzenet érkezett ".$email_date." dátummal %1\$s által.\n\n".
                             "Ez egy válasz %2\$s előző üzenetére.\n\n".
                             "Eredeti üzenet:\n%3\$s\n\n".
                             "----\n\n".
                             "Új válasz:\n%4\$s\n\n".
                             "----\n\n".
-                            "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."\n";
+                            "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."%5\$s\n";
 
 
 $email_list =  "Projekt:    %1\$s\n".
@@ -59,7 +59,7 @@ $email_list =  "Projekt:    %1\$s\n".
                "Állapot:    %3\$s\n".
                "Tulajdonos: %4\$s ( %5\$s )\n".
                "Szöveg:\n%6\$s\n\n".
-               "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."\n";
+               "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."%7\$s\n";
 
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Az Ön projektjét átvették";

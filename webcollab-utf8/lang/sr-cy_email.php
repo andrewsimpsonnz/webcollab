@@ -4,7 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  Thi file created on April 2006 by Branko Majic
+  This file created on April 2006 by Branko Majic
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -26,6 +26,8 @@
 
   Maintainer: Branko Majic <branko.majic@gmail.com>
 
+  NOTE: This file is written in UTF-8 character set
+
 */
 
 // Get current date/time for emails in a preferred format eg: 01 Apr 2004 9:18 am NZDT  
@@ -37,7 +39,7 @@ $email_file_post          = "Здраво!\n\n".
                             "Фајл:  %2\$s\n".
                             "Опис:  %3\$s\n\n".
                             "Посетите сајт за више детаља.\n\n".
-                            BASE_URL."\n";
+                            BASE_URL."%4\$s\n";
 
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Нова порука на форуму: %s";
@@ -47,8 +49,8 @@ $email_forum_post         = "Здраво!\n\n".
                             "%2\$s\n\n".
                             "----\n\n".
                             "Посетите сајт за више детаља.\n\n".
-                            BASE_URL."\n";
-                            
+                            BASE_URL."%3\$s\n";
+
 $email_forum_reply        = "Здраво!\n\n".
                             "Ово је сајт ".MANAGER_NAME." који вас обавештава да је дана ".$email_date." постављена нова порука на форуму од стране корисника %1\$s.\n\n".
                             "Ова порука представља одговор на ранију поруку корисника %2\$s.\n\n".
@@ -57,7 +59,7 @@ $email_forum_reply        = "Здраво!\n\n".
                             "Нови одговор:\n%4\$s\n\n".
                             "----\n\n".
                             "Посетите сајт за више детаља.\n\n".
-                            BASE_URL."\n";
+                            BASE_URL."%5\$s\n";
 
 $email_list               = "Пројекат:  %1\$s\n".
                             "Задатак:   %2\$s\n".
@@ -65,7 +67,7 @@ $email_list               = "Пројекат:  %1\$s\n".
                             "Власник:   %4\$s ( %5\$s )\n".
                             "Текст:\n%6\$s\n\n".
                             "Посетите сајт за више детаља.\n\n".
-                            BASE_URL."\n";
+                            BASE_URL."%7\$s\n";
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Ваш пројекат је преузет";
 $title_takeover_task      = ABBR_MANAGER_NAME.": Ваш задатак је преузет";

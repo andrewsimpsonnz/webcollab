@@ -4,7 +4,6 @@
 
   WebCollab
   ---------------------------------------
-  Thi file created 2003 by Andrew Simpson
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -24,8 +23,7 @@
 
   Translation: Lukas Moravek <moravekl at gmail.com>
   Corection: Jirka Dutka <jirka at dutka.net>
-  
-  
+
   NOTE: This file is written in UTF-8 character set
 
 */
@@ -37,19 +35,22 @@ $title_file_post          = ABBR_MANAGER_NAME.": Nahrán nový soubor: %s";
 $email_file_post          = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že byl přidán nový soubor ".$email_date." uživatelem %1\$s.\n\n".
                             "Soubor:        %2\$s\n".
                             "Popis: %3\$s\n\n".
-                            "Prosím navštivte tuto web stránku pro více informací.\n\n".BASE_URL."\n";
+                            "Prosím navštivte tuto web stránku pro více informací.\n\n".BASE_URL."%4\$s\n";
 
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Nový příspěvek ve fóru: %s";
-$email_forum_post         = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že byl vložen nový příspěvek do fóra ".$email_date." uživatelem %1\$s:\n\n----\n\n%2\$s\n\n----\n\n".
-                            "Prosím navštivte tuto web stránku pro více informací.\n\n".BASE_URL."\n";
+$email_forum_post         = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že byl vložen nový příspěvek do fóra ".$email_date." uživatelem %1\$s:\n\n".
+                            "----\n\n".
+                            "%2\$s\n\n".
+                            "----\n\n".
+                            "Prosím navštivte tuto web stránku pro více informací.\n\n".BASE_URL."%3\$s\n";
 $email_forum_reply        = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že byl vložen nový příspěvek do fóra ".$email_date." uživatelem %1\$s.\n\n".
                             "Tento příspěvek je odpovědí na dřívější příspěvek zaslaný %2\$s.\n\n".
                             "Původní přispěvek:\n%3\$s\n\n".
                             "----\n\n".
                             "Opdpověd:\n%4\$s\n\n".
                             "----\n\n".
-                            "Prosím navštivte tuto web stránku pro více informací.\n\n".BASE_URL."\n";
+                            "Prosím navštivte tuto web stránku pro více informací.\n\n".BASE_URL."%5\$s\n";
 
 
 $email_list =  "Projekt:  %1\$s\n".
@@ -57,7 +58,7 @@ $email_list =  "Projekt:  %1\$s\n".
                "Stav:   %3\$s\n".
                "Vlastník:    %4\$s ( %5\$s )\n".
                "Text:\n%6\$s\n\n".
-               "Prosím navštivte tuto web stránku pro více informací.\n\n".BASE_URL."\n";
+               "Prosím navštivte tuto web stránku pro více informací.\n\n".BASE_URL."%7\$s\n";
 
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Váš projekt byl převzat";
@@ -154,15 +155,12 @@ $email_user_change3       = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že
                             "Vaše heslo nebylo změněno.\n\n".
                             "Jméno:  %2\$s\n";
 
-
 $title_revive             = ABBR_MANAGER_NAME.": Účet odblokován";
 $email_revive             = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že váš účet byl odblokován ".$email_date.".\n\n".
                             "Login / Přihlašovací jméno: %1\$s\n".
                             "Jméno:  %2\$s\n\n".
                             "Vaše heslo Vám nemohlo být zasláno protože je zakriptováno. \n\n".
                             "Pokud jste zapoměl vaše heslo prosím napiše email na ".EMAIL_ADMIN.".";
-
-
 
 $title_delete_user        = ABBR_MANAGER_NAME.": Účet zablokován.";
 $email_delete_user        = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, že váš účet byl zablokován ".$email_date.".\n".

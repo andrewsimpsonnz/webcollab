@@ -4,7 +4,7 @@
 
   WebCollab
   ----------------------------------------
-  This file created 2003 by Andrew Simpson
+  This file created 2003
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -35,26 +35,31 @@ $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y  g:i a' );
 $title_file_post          = ABBR_MANAGER_NAME.": Nuovo file inviato: %s";
 $email_file_post          = "Salve,\n\nIl sito ".MANAGER_NAME." ti informa che un nuovo file è stato inviato il ".$email_date." da %1\$s.\n\n".
                             "File:        %2\$s\n".
-                            "Descrizione: %3\$s";
-
+                            "Descrizione: %3\$s\n\n".
+                            "Vai al sito web per maggiori dettagli.\n\n".BASE_URL."%4\$s\n";
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Nuovo messaggio nel forum: %s";
-$email_forum_post         = "Salve,\n\nIl sito ".MANAGER_NAME." ti informa che un nuovo messaggio nel forum è stato creato il ".$email_date." da %1\$s:----\n\n%2\$s\n\n----\n\n"; 
+$email_forum_post         = "Salve,\n\nIl sito ".MANAGER_NAME." ti informa che un nuovo messaggio nel forum è stato creato il ".$email_date." da %1\$s:\n\n".
+                            "----\n\n".
+                            "%2\$s\n\n".
+                            "----\n\n".
+                            "Vai al sito web per maggiori dettagli.\n\n".BASE_URL."%3\$s\n";
+
 $email_forum_reply        = "Salve,\n\nIl sito ".MANAGER_NAME." ti informa che un nuovo messaggio nel forum è stato creato il ".$email_date." da %1\$s.\n\n".
                             "Questo messaggio è una risposta ad un precedente messaggio di %2\$s.\n\n".
                             "Messaggio originale:\n %3\$s\n\n".
                             "----\n\n".
                             "Nuova risposta:\n%4\$s\n\n".
-                            "----\n\n";
+                            "----\n\n".
+                            "Vai al sito web per maggiori dettagli.\n\n".BASE_URL."%5\$s\n";
 
+$email_list               = "Progetto:     %1\$s\n".
+                            "Attività:     %2\$s\n".
+                            "Stato:        %3\$s\n".
+                            "Proprietario: %4\$s ( %5\$s )\n".
+                            "Testo:\n%6\$s\n\n".
+                            "Vai al sito web per maggiori dettagli.\n\n".BASE_URL."%7\$s\n";
 
-$email_list               = "Progetto:     %s\n".
-                            "Attività:     %s\n".
-                            "Stato:        %s\n".
-                            "Proprietario: %s ( %s )\n".
-                            "Testo:\n%s\n\n".
-                            "Vai al sito web per maggiori dettagli.\n\n".BASE_URL."\n";
-            
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Il tuo progetto è stato acquisito";
 $title_takeover_task      = ABBR_MANAGER_NAME.": La tua attività è stata acquisita";

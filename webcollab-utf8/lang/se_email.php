@@ -4,7 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  Thi file created 2005 by Göran Källqvist
+  This file created 2005 by Göran Källqvist
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -26,7 +26,6 @@
 
   Maintainer: Göran Källqvist <g.kallqvist@telia.com>
 
-  
   NOTE: This file is written in UTF-8 character set
 
 */
@@ -38,19 +37,21 @@ $title_file_post          = ABBR_MANAGER_NAME.": Ny fil skickad: %s";
 $email_file_post          = "Hej!\n\nDet är ".MANAGER_NAME." sajten som meddelar att det laddats ner en ny fil ".$email_date." av %1\$s.\n\n".
                             "Fil:         %2\$s\n".
                             "Beskrivning: %3\$s\n\n".
-                            "Gå till sajten för ytterligare detaljer.\n\n".BASE_URL."\n";
+                            "Gå till sajten för ytterligare detaljer.\n\n".BASE_URL."%4\$s\n";
 
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Nytt inlägg på forumet: %s";
-$email_forum_post         = "Hej!\n\nDet är ".MANAGER_NAME." sajten som meddelar att det gjorts ett nytt inlägg på forumet ".$email_date." av %1\$s:\n\n----\n\n%2\$s\n\n----\n\n".
-                            "Gå till sajten för ytterligare detaljer.\n\n".BASE_URL."\n";
+$email_forum_post         = "Hej!\n\nDet är ".MANAGER_NAME." sajten som meddelar att det gjorts ett nytt inlägg på forumet ".$email_date." av %1\$s:\n\n----\n\n".
+                            "%2\$s\n\n".
+                            "----\n\n".
+                            "Gå till sajten för ytterligare detaljer.\n\n".BASE_URL."%3\$s\n";
 $email_forum_reply        = "Hej!\n\nDet är ".MANAGER_NAME." sajten som meddelar att det gjorts ett nytt inlägg på forumet ".$email_date." av %1\$s.\n\n".
                             "Detta inlägg är svar på ett tidigare inlägg av %2\$s.\n\n".
                             "Ursprungligt inlägg:\n%3\$s\n\n".
                             "----\n\n".
                             "Nytt svar:\n%4\$s\n\n".
                             "----\n\n".
-                            "Gå till sajten för ytterligare detaljer.\n\n".BASE_URL."\n";
+                            "Gå till sajten för ytterligare detaljer.\n\n".BASE_URL."%5\$s\n";
 
 
 $email_list =  "Projekt:  %1\$s\n".
@@ -58,7 +59,7 @@ $email_list =  "Projekt:  %1\$s\n".
                "Status:   %3\$s\n".
                "Ansvarig:    %4\$s ( %5\$s )\n".
                "Text:\n%6\$s\n\n".
-               "Gå till sajten för ytterligare detaljer.\n\n".BASE_URL."\n";
+               "Gå till sajten för ytterligare detaljer.\n\n".BASE_URL."%7\$s\n";
 
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Ditt projekt har tagits över";

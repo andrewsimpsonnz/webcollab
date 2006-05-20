@@ -4,6 +4,7 @@
 
   WebCollab
   ---------------------------------------
+  This file created 2003 by Pierre Jean
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -23,9 +24,9 @@
 
   Email text language files for 'fr' (French/Français)
 
-  Translation: Pierre Jean/Olivier Chaussavoine / Julien Dupont
+  Translation: Olivier Chaussavoine / Julien Dupont
 
-  Maintainer:
+  Maintainer: Julien Dupont
 
   NOTE: This file is written in UTF-8 character set
 
@@ -36,23 +37,30 @@ $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y g:i a' );
 $title_file_post          = ABBR_MANAGER_NAME.": Nouveau Fichier ajouté: %s";
 $email_file_post          = "Bonjour,\n\nC'est le site ".MANAGER_NAME." qui vous informe qu'un nouveau fichier a été ajouté le ".$email_date." par %1\$s.\n\n".
                             "Fichier:        %2\$s\n".
-                            "Description: %3\$s";
+                            "Description: %3\$s\n\n".
+                            "Merci de consulter le site pour plus de détails.\n\n".BASE_URL."%4\$s\n";
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Nouveau message: %s";
-$email_forum_post         = "Bonjour,\n\nC'est le site ".MANAGER_NAME." qui vous informe qu'un nouveau message a été ajouté le ".$email_date." par %1\$s:\n\n----\n\n%2\$s\n\n----\n\n";
+$email_forum_post         = "Bonjour,\n\nC'est le site ".MANAGER_NAME." qui vous informe qu'un nouveau message a été ajouté le ".$email_date." par %1\$s:\n\n".
+                            "----\n\n".
+                            "%2\$s\n\n".
+                            "----\n\n".
+                            "Merci de consulter le site pour plus de détails.\n\n".BASE_URL."%3\$s\n";
+
 $email_forum_reply        = "Bonjour,\n\nC'est le site ".MANAGER_NAME." qui vous informe qu'un nouveau message a été ajouté le ".$email_date." par %1\$s.\n\n".
                            "Ce message est en réponse à un message précédent de %2\$s.\n\n".
                            "Message original:\n %3\$s\n\n".
                             "----\n\n".
                            "Nouvelle réponse:\n%4\$s\n\n".
-                            "----\n\n";
+                            "----\n\n".
+                            "Merci de consulter le site pour plus de détails.\n\n".BASE_URL."%5\$s\n";
 
 $email_list               = "Projet: %1\$s\n".
                             "Tâche:  %2\$s\n".
                             "Statut: %3\$s\n".
                             "Propriétaire: %4\$s ( %5\$s )\n".
                             "Texte:\n%6\$s\n\n".
-                            "Merci de consulter le site pour plus de détails.\n\n".BASE_URL."\n";
+                            "Merci de consulter le site pour plus de détails.\n\n".BASE_URL."%7\$s\n";
 
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Votre projet a été affecté"; // You item taken over

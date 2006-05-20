@@ -25,7 +25,6 @@
 
   Translation: Aydin Gurel <aydin.gurel at gmail.com>
 
-  
   NOTE: This file is written in UTF-8 character set
 
 */
@@ -37,27 +36,29 @@ $title_file_post          = ABBR_MANAGER_NAME.": Yeni yüklenen dosya: %s";
 $email_file_post          = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde %1\$s tarafından yeni bir dosyanın yüklendiğini haber veriyor.\n\n".
                             "Dosya:        %2\$s\n".
                             "Tanımı: %3\$s\n\n".
-                            "Daha detaylı bilgi için lütfen web sitesine gidin.\n\n".BASE_URL."\n";
+                            "Daha detaylı bilgi için lütfen web sitesine gidin.\n\n".BASE_URL."%4\$s\n";
 
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Yeni forum mesajı: %s";
-$email_forum_post         = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde %1\$s tarafından yeni bir forum mesajı gönderildiğini haber veriyor:\n\n----\n\n%2\$s\n\n----\n\n".
-                            "Daha detaylı bilgi için lütfen web sitesine gidin.\n\n".BASE_URL."\n";
+$email_forum_post         = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde %1\$s tarafından yeni bir forum mesajı gönderildiğini haber veriyor:\n\n".
+                            "----\n\n".
+                            "%2\$s\n\n".
+                            "----\n\n".
+                            "Daha detaylı bilgi için lütfen web sitesine gidin.\n\n".BASE_URL."%3\$s\n";
 $email_forum_reply        = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde %1\$s tarafından yeni bir forum mesajı gönderildiğini haber veriyor.\n\n".
                             "Bu mesaj %2\$s tarafından daha önce gönderilen bir mesaja yanıt niteliğinde.\n\n".
                             "Orijinal mesaj:\n%3\$s\n\n".
                             "----\n\n".
                             "Yeni yanıt:\n%4\$s\n\n".
                             "----\n\n".
-                            "Daha detaylı bilgi için lütfen web sitesine gidin.\n\n".BASE_URL."\n";
-
+                            "Daha detaylı bilgi için lütfen web sitesine gidin.\n\n".BASE_URL."%5\$s\n";
 
 $email_list =  "Proje:  %1\$s\n".
                "Görev:     %2\$s\n".
                "Durum:   %3\$s\n".
                "Sahibi:    %4\$s ( %5\$s )\n".
                "Yazı:\n%6\$s\n\n".
-               "Daha detaylı bilgi için lütfen web sitesine gidin.\n\n".BASE_URL."\n";
+               "Daha detaylı bilgi için lütfen web sitesine gidin.\n\n".BASE_URL."%7\$s\n";
 
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Projeniz sizden alındı";

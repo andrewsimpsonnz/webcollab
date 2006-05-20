@@ -37,17 +37,17 @@ $title_file_post        = ABBR_MANAGER_NAME.": アップロードされた新規
 $email_file_post        = "Hello,\n\nThis is the ".MANAGER_NAME." site informing you that a new file has been uploaded on ".$email_date." by %1\$s.\n\n".
                           "ファイル:        %2\$s\n".
 			  "説明: %3\$s\n\n".
-                          "より詳しい情報はウェブサイトに移動してください。\n\n".BASE_URL."\n";
+                          "より詳しい情報はウェブサイトに移動してください。\n\n".BASE_URL."%4\$s\n";
 
 
 $title_forum_post        = ABBR_MANAGER_NAME.": フォーラムに新規投稿: %s";
 $email_forum_post        = "Hello,\n\nThis is the ".MANAGER_NAME." site informing you that a new forum post has been made on ".$email_date." by %1\$s:\n\n%2\$s\n\n".
-                           "より詳しい情報はウェブサイトに移動してください。\n\n".BASE_URL."\n";
+                           "より詳しい情報はウェブサイトに移動してください。\n\n".BASE_URL."%3\$s\n";
 $email_forum_reply       = "Hello,\n\nThis is the ".MANAGER_NAME." site informing you that a new forum post has been made on ".$email_date." by %1\$s.\n\n".
                            "This post is in reply to an earlier post by %2\$s.\n\n".
                            "元投稿:\n%3\$s\n\n".
                            "新規返信:\n%4\$s\n\n".
-                           "より詳しい情報はウェブサイトに移動してください。\n\n".BASE_URL."\n";
+                           "より詳しい情報はウェブサイトに移動してください。\n\n".BASE_URL."%5\$s\n";
 
 
 $email_list =  "プロジェクト:  %1\$s\n".
@@ -55,7 +55,7 @@ $email_list =  "プロジェクト:  %1\$s\n".
                "状況:          %3\$s\n".
                "所有者:        %4\$s ( %5\$s )\n".
                "テキスト:\n%6\$s\n\n".
-               "より詳しい情報はウェブサイトに移動してください。\n\n".BASE_URL."\n";
+               "より詳しい情報はウェブサイトに移動してください。\n\n".BASE_URL."%7\$s\n";
 
 
 $title_takeover_project  = ABBR_MANAGER_NAME.": Your project taken over";

@@ -4,6 +4,7 @@
 
   WebCollab
   ---------------------------------------
+  This file created 2003
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -40,8 +41,9 @@ $title_file_post        = ABBR_MANAGER_NAME.": New file upload: %s";
 $email_file_post        = "Hello,\n\n".
                           "This is the ".MANAGER_NAME." site informing you that a new file has been uploaded on ".$email_date." by %1\$s.\n\n".
                           "File:        %2\$s\n".
-                          "Description: %3\$s";
-
+                          "Description: %3\$s\n\n".
+                          "Dirigir-se al lloc web per a mes detalls.\n\n".
+                           BASE_URL."%4\$s\n";
 //-----
 $title_forum_post        = ABBR_MANAGER_NAME.": New forum post: %s";
 
@@ -51,7 +53,7 @@ $email_forum_post        = "Hello,\n\n".
                            "%2\$s\n\n".
                            "----\n\n".
                            "Dirigir-se al lloc web per a mes detalls.\n\n".
-                           BASE_URL."\n";
+                           BASE_URL."%3\$s\n";
 
 $email_forum_reply       = "Hello,\n\n".
                            "This is the ".MANAGER_NAME." site informing you that a new forum post has been made on ".$email_date." by %1\$s.\n\n".
@@ -61,7 +63,7 @@ $email_forum_reply       = "Hello,\n\n".
                            "New reply:\n%4\$s\n\n".
                            "----\n\n".
                            "Dirigir-se al lloc web per a mes detalls.\n\n".
-                           BASE_URL."\n";
+                           BASE_URL."%5\$s\n";
 
 //-----
 $email_list              = "Projecte: %1\$s\n".
@@ -70,7 +72,7 @@ $email_list              = "Projecte: %1\$s\n".
                            "A càrreg:  %4\$s ( %5\$s )\n".
                            "Text:\n%6\$s\n\n".
                            "Dirigir-se al lloc web per a mes detalls.\n\n".
-                           BASE_URL."\n";
+                           BASE_URL."%7\$s\n";
 
 //-----
 $title_takeover_project   = ABBR_MANAGER_NAME.": El seu item ha estat reassignat";

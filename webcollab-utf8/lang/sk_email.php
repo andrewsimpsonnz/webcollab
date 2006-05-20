@@ -4,7 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  Thi file created 2005 Stanislav Pekarčík, fredis@SoftHome.net
+  This file created 2005 Stanislav Pekarčík, fredis@SoftHome.net
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -24,7 +24,7 @@
   Email text language files for 'sk' (Slovenský)
 
 
-  Maintainer: 
+  Maintainer:
 
   NOTE: This file is written in UTF-8 character set
 
@@ -38,16 +38,15 @@ $email_file_post          = "Haló,\n\n".
                             "To je ".MANAGER_NAME." stránka ktorá Vás informuje že bol nahratý nový súbor dňa ".$email_date." od %1\$s.\n\n".
                             "Súbor:        %2\$s\n".
                             "Obsah: %3\$s\n\n".
-                            "Prosím navštívte webstránku pre ďalšie informácie.\n\n".BASE_URL."\n";
-
+                            "Prosím navštívte webstránku pre ďalšie informácie.\n\n".BASE_URL."%4\$s\n";
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Nová pošta na fóre: %s";
 $email_forum_post         = "Haló,\n\n".
                             "To je ".MANAGER_NAME." stránka ktorá Vás informuje, že máte na fóre novú správu zo dňa ".$email_date." od %1\$s:\n\n".
                             "%2\$s\n\n".
                             "Prosím navštívte webstránku pre viac detailov.\n\n".
-                            BASE_URL."\n";
-                            
+                            BASE_URL."%3\$s\n";
+
 $email_forum_reply        = "Haló,\n\n".
                             "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, že máte
 na fóre novú správu zo dňa ".$email_date." od %1\$s.\n\n".
@@ -55,7 +54,7 @@ na fóre novú správu zo dňa ".$email_date." od %1\$s.\n\n".
                             "Orginálna správa:\n%3\$s\n\n".
                             "Nová odpoveď:\n%4\$s\n\n".
                             "Prosím navštívte webstránku pre viac detailov.\n\n".
-                            BASE_URL."\n";
+                            BASE_URL."%5\$s\n";
 
 $email_list               = "Projekt:  %1\$s\n".
                             "Úloha:     %2\$s\n".
@@ -63,7 +62,7 @@ $email_list               = "Projekt:  %1\$s\n".
                             "Vlastník:    %4\$s ( %5\$s )\n".
                             "Text:\n%6\$s\n\n".
                             "Prosím navštívte webstránku pre viac detailov.\n\n".
-                            BASE_URL."\n";
+                            BASE_URL."%7\$s\n";
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Váš projekt bol prevzatý";
 $title_takeover_task      = ABBR_MANAGER_NAME.": Vaša úloha bola prevzatá";

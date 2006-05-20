@@ -4,7 +4,6 @@
 
   WebCollab
   ---------------------------------------
-  This file created 2003 by Andrew Simpson
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -37,17 +36,24 @@ $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y g:i' );
 $title_file_post        = ABBR_MANAGER_NAME.": Nuevo archivo disponible: %s";
 $email_file_post        = "Hola,\n\nEl sitio ".MANAGER_NAME." un nuevo archivo cargado el ".$email_date." por %1\$s.\n\n".
                           "Archivo:        %2\$s\n".
-                          "Descripcion: %3\$s";
+                          "Descripcion: %3\$s".
+                          "Dirigirse al sitio web para mas detalles.\n\n".BASE_URL."%4\$s\n";
 
 
 $title_forum_post        = ABBR_MANAGER_NAME.": New forum post: %s";
-$email_forum_post        = "Hola,\n\nEl sitio ".MANAGER_NAME." le informa de un nuevo mensaje en el foro ".$email_date." por %1\$s:\n\n----\n\n%2\$s\n\n----\n\n"; 
+$email_forum_post        = "Hola,\n\nEl sitio ".MANAGER_NAME." le informa de un nuevo mensaje en el foro ".$email_date." por %1\$s:\n\n".
+                           "----\n\n".
+                           "%2\$s\n\n".
+                           "----\n\n".
+                           "Dirigirse al sitio web para mas detalles.\n\n".BASE_URL."%3\$s\n";
+
 $email_forum_reply       = "Hola,\n\nEl sitio ".MANAGER_NAME." le informa de un nuevo mensaje en el foro ".$email_date." por %1\$s.\n\n".
                            "Este mensaje es una respuesta a %2\$s.\n\n".
                            "Mensaje original:\n %3\$s\n\n".
                            "----\n\n".
                            "Nueva respuesta:\n%4\$s\n\n".
-                           "----\n\n";
+                           "----\n\n".
+                           "Dirigirse al sitio web para mas detalles.\n\n".BASE_URL."%5\$s\n";
 
 
 $email_list = "Proyecto: %1\$s\n".
@@ -55,7 +61,7 @@ $email_list = "Proyecto: %1\$s\n".
               "Estado:   %3\$s\n".
               "A cargo:  %4\$s ( %5\$s )\n".
               "Texto:\n%6\$s\n\n".
-              "Dirigirse al sitio web para mas detalles.\n\n".BASE_URL."\n";
+              "Dirigirse al sitio web para mas detalles.\n\n".BASE_URL."%7\$s\n";
 
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Su item ha sido reasignado";

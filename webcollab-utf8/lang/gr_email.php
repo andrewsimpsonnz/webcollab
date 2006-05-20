@@ -4,7 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  This file created 2003 by Andrew Simpson
+  This file created 2003
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -28,7 +28,6 @@
 
   Maintainer:Nico <designext at users.sourceforge.net>
 
-  
   NOTE: This file is written in UTF-8 character set
 
 */
@@ -37,25 +36,31 @@ $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y g:i' );
 $title_file_post        = ABBR_MANAGER_NAME.": Νέο αρχείο διαθέσιμο: %s";
 $email_file_post        = "Hola,\n\nEl sitio ".MANAGER_NAME." ένα νέο αρχείο φορτώθηκε την  ".$email_date." por %1\$s.\n\n".
                           "Αρχείο:        %2\$s\n".
-                          "Περιγραφή: %3\$s";
+                          "Περιγραφή: %3\$s\n\n".
+                          "Απευθυνθείτε στη σελίδα για περισσότερες πληροφορίες.\n\n".BASE_URL."%4\$s\n";
 
 
 $title_forum_post        = ABBR_MANAGER_NAME.": Νέα αποστολή στο forum: %s";
-$email_forum_post        = "Γειά σας,\n\nΗ σελίδα ".MANAGER_NAME." σας ενημερώνει οτι υπάρχει  μια νέα καταχώρηση στο forum".$email_date." από %1\$s:\n\n----\n\n%2\$s\n\n----\n"; 
+$email_forum_post        = "Γειά σας,\n\nΗ σελίδα ".MANAGER_NAME." σας ενημερώνει οτι υπάρχει  μια νέα καταχώρηση στο forum".$email_date." από %1\$s:\n\n".
+                           "----\n\n".
+                           "%2\$s\n\n".
+                           "----\n\n".
+                          "Απευθυνθείτε στη σελίδα για περισσότερες πληροφορίες.\n\n".BASE_URL."%3\$s\n";
+
 $email_forum_reply       = "Γειά σας,\n\nΗ σελίδα  ".MANAGER_NAME." σας ενημερώνει οτι υπάρχει ένα νέο μήνυμα στο forum".$email_date." από %1\$s.\n\n".
                            "Αυτό το μήνυμα είναι μία απάντηση στο %2\$s.\n\n".
                            "Αρχικό μήνυμα:\n %3\$s\n\n".
                            "----\n\n".
                            "Νέα απάντηση:\n%4\$s\n\n".
-                           "----\n\n";
-
+                           "----\n\n".
+                           "Απευθυνθείτε στη σελίδα για περισσότερες πληροφορίες.\n\n".BASE_URL."%5\$s\n";
 
 $email_list = "Project: %1\$s\n".
               "Εργασία:    %2\$s\n".
               "Στάδιο:   %3\$s\n".
               "Υπεύθυνος:  %4\$s ( %5\$s )\n".
               "Κείμενο:\n%6\$s\n\n".
-              "Απευθυνθείτε στη σελίδα για περισσότερες πληροφορίες.\n\n".BASE_URL."\n";
+              "Απευθυνθείτε στη σελίδα για περισσότερες πληροφορίες.\n\n".BASE_URL."%7\$s\n";
 
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Το γεγονός σας επαναπροσδιορήστηκε";
