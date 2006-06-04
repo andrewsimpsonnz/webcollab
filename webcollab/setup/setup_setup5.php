@@ -36,6 +36,7 @@ foreach($array as $var ) {
     error_setup("Variable ".$var." is not set");
   }
   $data[$var] = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ) : $_POST[$var];
+  $data[$var] = str_replace("'", "\'", $data[$var] );
 }
 
 //non-essential values
@@ -47,11 +48,12 @@ foreach($array as $var ) {
   }
   else {
     $data[$var] = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ) : $_POST[$var];
+    $data[$var] = str_replace("'", "\'", $data[$var] );
   }
 }
 
-//convert Windows backslash (\) to Unix forward slash (/) 
-$filebase = str_replace("\\", "/", $data["file_base"] ); 
+//convert Windows backslash (\) to Unix forward slash (/)
+$filebase = str_replace("\\", "/", $data["file_base"] );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
