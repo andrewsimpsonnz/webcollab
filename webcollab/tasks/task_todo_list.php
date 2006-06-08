@@ -215,8 +215,8 @@ switch($selection ) {
 }
 
   $content  .= "<div style=\"text-align : right\"><span class=\"textlink\">\n".
-               "[<a href=\"icalendar.php?x=".$x."&amp;action=todo&amp;selection=".$selection."&amp;userid=".$userid."&amp;groupid=".$groupid."\">".$lang['icalendar']."</a>]\n".
-               "</span></div>";
+               "<a href=\"icalendar.php?x=".$x."&amp;action=todo&amp;selection=".$selection."&amp;userid=".$userid."&amp;groupid=".$groupid."\" title=\"".$lang['icalendar']."\">".
+               "<img src=\"images/calendar_link.png\" alt=\"".$lang['icalendar']."\" width=\"16\" height=\"16\" /></a>\n</span></div>\n";
 
 
 $content .= "<form method=\"post\" action=\"tasks.php\">\n".

@@ -333,7 +333,8 @@ if(isset($_GET['action']) && $_GET['action'] == 'summary_print' ) {
   $content  = "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=".$sortby."\">".$lang['normal_version']."</a>]</span></p>";
 }
 else {
-  $content  = "<div style=\"text-align: right\"><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary_print&amp;sortby=".$sortby."\">".$lang['print_version']."</a>]</span></div>";
+  $content  = "<div style=\"text-align: right\"><span class=\"textlink\"><a href=\"tasks.php?x=".$x."&amp;action=summary_print&amp;sortby=".$sortby."\" title=\"".$lang['print_version']."\">".
+              "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a></span></div>";
 }
 
 $content .= "<table>\n";

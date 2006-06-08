@@ -237,7 +237,7 @@ if(db_numrows($q) < 1 ) {
 }
 
 //text link for 'active' switch
-$content .= "<table style=\"width : 98%\"><tr><td>\n".
+$content .= "<table><tr><td>\n".
             "<span class=\"textlink\">";
 if($active_only ) {
   $content .= "[<a href=\"main.php?x=".$x."&amp;active=0&amp;condensed=".$condensed."\">".$lang['show_all_projects']."</a>]";
@@ -260,8 +260,10 @@ if($action === "project_print" ) {
 }
 else {
   $content  .= "</span></td>\n<td style=\"text-align : right\"><span class=\"textlink\">".
-               "[<a href=\"icalendar.php?x=".$x."&amp;action=all\">".$lang['icalendar']."</a>]&nbsp;".
-               "[<a href=\"tasks.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."&amp;action=project_print\">".$lang['print_version']."</a>]";
+               "<a href=\"icalendar.php?x=".$x."&amp;action=all\" title=\"".$lang['icalendar']."\">".
+               "<img src=\"images/calendar_link.png\" alt=\"".$lang['icalendar']."\" width=\"16\" height=\"16\" /></a>&nbsp;&nbsp;&nbsp;".
+               "<a href=\"tasks.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."&amp;action=project_print\" title=\"".$lang['print_version']."\">".
+               "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a>";
 }
 $content .= "</span></td></tr>\n</table>\n";
 
@@ -344,7 +346,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
     case 'active':
     default:
       $content .= sprintf($lang['percent_sprt'], $row['completed'] )."<br />\n";
-      $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )." ";
+      $content .= "<img src=\"images/time.png\" height=\"16\" width=\"16\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )." ";
       $state = ($row['due'] - TIME_NOW )/86400 ;
       if($state > 1 ) {
         $content .=  "(".sprintf($lang['due_sprt'], ceil((real)$state) ).")\n";
