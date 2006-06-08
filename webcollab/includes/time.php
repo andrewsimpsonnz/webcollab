@@ -131,8 +131,8 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   $content .=  "</select>\n".
                "<a href=\"#\" onclick=\"window.open".
                "('calendar.php?x=".$x."&amp;action=date&amp;month=".$month."&amp;year=".$year."','',".
-               "'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,dependent=yes,innerWidth=400,innerHeight=350')\">".
-               $lang['calendar']."</a>\n";
+               "'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,dependent=yes,innerWidth=400,innerHeight=350')\" title=\"".$lang['calendar']."\">".
+               "<img src=\"images/calendar.png\" alt=\"".$lang['calendar']."\" width=\"16\" height=\"16\" /></a>\n";
 
  return $content;
 }
