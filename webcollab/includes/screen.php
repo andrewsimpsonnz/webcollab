@@ -133,6 +133,8 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
       break;
   }
 
+  $content .= "<link rel=\"icon\" type=\"image/png\" href=\"images/group.png\" />";
+
   //javascript scripts
   if($cursor || $check || $date || $calendar ) {
     $content .=     "<script type=\"text/javascript\">\n";
