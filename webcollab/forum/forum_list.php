@@ -203,7 +203,7 @@ if($TASKID_ROW['usergroupid'] != 0 ) {
     $content .= list_posts_from_task( $taskid, $TASKID_ROW['usergroupid'] );
     //add an option to add posts
     if($TASKID_ROW['archive'] == 0 ){
-      $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."&amp;usergroupid=".$TASKID_ROW['usergroupid']."&amp;\">".$lang['new_post']."</a>]</span>";
+      $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."&amp;usergroupid=".$TASKID_ROW['usergroupid']."&amp;\">".$lang['new_post']."</a>]</span>\n";
     }
     //get usergroup
     $usergroup_name = db_result(db_query("SELECT name FROM ".PRE."usergroups WHERE id=".$TASKID_ROW['usergroupid'] ), 0, 0 );
