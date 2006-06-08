@@ -377,26 +377,26 @@ for($num = 1; $num <= $numdays; ++$num ) {
                 //project
                 //check if tasks are all complete
                 if($row['completed'] > 99 ){
-                  $name = "<b>".$row['name']."</b>&nbsp;<img src=\"images/tick.gif\" height=\"9\" width=\"9\" alt=\"tick\" />";
+                  $name = "<b>".$row['name']."</b>&nbsp;<img src=\"images/lightbulb.png\" height=\"16\" width=\"16\" alt=\"tick\" />";
                 }
                 else {
                   $name = "<b>".$row['name']."</b>";
                 }
                 $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."; text-decoration:underline\" >".
-                            "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
+                            "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" />".
                             "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</a></div>\n";
                 break;
 
               default:
                 //task
                 if($row['status'] == "done" ) {
-                  $name = $row['name']."&nbsp;<img src=\"images/tick.gif\" height=\"9\" width=\"9\" alt=\"tick\" />";
+                  $name = $row['name']."&nbsp;<img src=\"images/lightbulb.png\" height=\"16\" width=\"16\" alt=\"tick\" />";
                 }
                 else {
                   $name = $row['name'];
                 }
                 $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."\">".
-                            "<img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".
+                            "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" />".
                             "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</a></div>\n";
                 break;
             }

@@ -163,7 +163,6 @@ function list_tasks($parent ) {
       switch($seen_test ) {
         case 0:
           //new and never visited by this user
-          //$alert_content .= "<img border=\"0\" src=\"images/new.gif\" height=\"12\" width=\"31\" alt =\"new\" />";
           $alert_content .= "<span class=\"new\">".$lang['new_g']."</span>&nbsp;";
           break;
 
@@ -174,18 +173,17 @@ function list_tasks($parent ) {
           $seen = db_result($seenq, 0, 0 );
           if( ($seen - $row['edited'] ) < 0 ) {
             //edited
-            //$alert_content .= "<img border=\"0\" src=\"images/updated.gif\" height=\"12\" width=\"60\" alt=\"updated\" /> &nbsp;";
             $alert_content .= "<span class=\"updated\">".$lang['updated_g']."</span>&nbsp;";
           }
 
           //are there forum changes ?
           if($seen - $row['lastpost'] < 0 ) {
-            $alert_content .= "<img src=\"images/message.gif\" height=\"10\" width=\"14\" alt=\"message\" /> &nbsp;";
+            $alert_content .= "<img src=\"images/comments.png\" height=\"16\" width=\"16\" alt=\"message\" /> &nbsp;";
           }
 
           //are there file upload changes ?
           if($seen - $row['lastfileupload'] < 0 ) {
-            $alert_content .= "<img src=\"images/file.gif\" height=\"11\" width=\"11\" alt=\"file\" /> &nbsp;";
+            $alert_content .= "<img src=\"images/disk_multiple.png\" height=\"16\" width=\"16\" alt=\"file\" /> &nbsp;";
           }
           break;
        }
