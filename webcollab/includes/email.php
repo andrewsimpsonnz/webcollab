@@ -77,9 +77,7 @@ function email($to, $subject, $message ) {
     debug("Unable to open TCP/IP connection.\n\nReported socket error: ".$errno." ".$errstr."\n");
 
   //sometimes the SMTP server takes a little longer to respond
-  // Windows does not have support for this timeout function before PHP ver 4.3.0
-  if(function_exists('socket_set_timeout') )
-    @socket_set_timeout($connection, 10, 0 );
+  stream_set_timeout($connection, 10, 0 );
 
   if(strncmp('220', response(), 3 ) ) {
     debug();
@@ -482,7 +480,7 @@ function response() {
 
    if(DEBUG === 'Y' ) {
      $time_out = '';
-     $meta = @socket_get_status($connection);
+     $meta = stream_get_meta_data($connection);
 
      if($meta['timed_out'] ) {
        $time_out = '<br /><br />Socket timeout has occurred';
