@@ -1,4 +1,10 @@
 WebCollab CVS
+*** 12 July 2006
+  Andrew Simpson
+
+- update deprecated PHP functions in email.php to current functions
+
+WebCollab CVS
 *** 8 June 2006
   Andrew Simpson
 
