@@ -125,6 +125,10 @@ switch($locale ) {
     include(BASE.'lang/zh-hk_message.php' );
     break;
 
+  case 'zh-tw':
+    include(BASE.'lang/zh-tw_message.php' );
+    break;
+
   case 'zh-cn':
     include(BASE.'lang/zh-cn_message.php' );
     break;

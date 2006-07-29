@@ -113,7 +113,7 @@ $content = "<?php\n".
 "  //                       'ru' (Russian), 'ja' (Japanese), 'se' (Swedish)    'sr-la' (Serbian (Latin))\n".
 "  //                       'sr-cy' Serbian (cyrillic)       'gr' (Greek),     'cs' (Czech)\n". 
 "  //                       'tr' (Turkish)\n".
-"  //                       'zh-tw' (Traditional Chinese)    'zh-cn' (Simplified Chinese)\n".
+"  //                       'zh-tw' (Traditional Chinese)    'zh-hk' (Simplified Chinese)\n".
 "  define('LOCALE', '".$data["locale"]."' );\n\n".
 "//-- Timezone --\n\n".
 "  //timezone offset from GMT/UTC (hours)\n".

@@ -84,7 +84,7 @@
   //                       'ru' (Russian), 'ja' (Japanese), 'se' (Swedish)    'sr-la' (Serbian (Latin))
   //                       'sr-cy' Serbian (cyrillic)       'gr' (Greek),     'cs' (Czech)
   //                       'tr' (Turkish)
-  //                       'zh-tw' (Traditional Chinese)    'zh-cn' (Simplified Chinese)
+  //                       'zh-tw' (Traditional Chinese)    'zh-hk' (Simplified Chinese)
 
   define('LOCALE', "en" );
 

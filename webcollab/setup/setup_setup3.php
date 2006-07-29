@@ -157,7 +157,7 @@ $content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></
 $locale_array = array('bg'   =>'Bulgarian',
                       'ca'   =>'Catalan',
                       'zh-tw'=>'*Chinese(Traditional)',
-                      'zh-cn'=>'*Chinese (Simplified)',
+                      'zh-hk'=>'*Chinese (Simplified)',
                       'cs'   =>'Czech',
                       'da'   =>'Danish',
                       'en'   =>'English',
