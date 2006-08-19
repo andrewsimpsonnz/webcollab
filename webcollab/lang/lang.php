@@ -109,6 +109,10 @@ switch($locale ) {
     include(BASE.'lang/sk_message.php' );
     break;
 
+  case 'sl':
+    include(BASE.'lang/sl_message.php' );
+    break;
+
   case 'sr-cy':
     include(BASE.'lang/sr-cy_message.php' );
     break;
