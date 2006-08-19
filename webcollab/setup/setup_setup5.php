@@ -107,13 +107,29 @@ $content = "<?php\n".
 "         the webserver root, but it makes first-time setup easier).\n".
 "    */\n\n".
 "//-- Language --\n\n".
-"  // available locales are 'en' (English), 'es' (Spanish),  'fr' (French),    'ca' (Catalan)\n".
-"  //                       'de' (German),  'it' (Italian),  'bg' (Bulgarian), 'da' (Danish)\n".
-"  //                       'ko' (Korean),  'pt-br' (Brazilian Portuguese),    'hu' (Hungarian)\n".
-"  //                       'ru' (Russian), 'ja' (Japanese), 'se' (Swedish)    'sr-la' (Serbian (Latin))\n".
-"  //                       'sr-cy' Serbian (cyrillic)       'gr' (Greek),     'cs' (Czech)\n". 
-"  //                       'tr' (Turkish)\n".
-"  //                       'zh-tw' (Traditional Chinese)    'zh-hk' (Simplified Chinese)\n".
+"    /* Available locales are\n".
+"          'en'    (English)\n".
+"          'bg'    (Bulgarian)\n".
+"          'ca'    (Catalan)\n".
+"          'cs'    (Czech)\n".
+"          'da'    (Danish)\n".
+"          'de'    (German)\n".
+"          'es'    (Spanish)\n".
+"          'fr'    (French)\n".
+"          'gr'    (Greek)\n".
+"          'hu'    (Hungarian)\n".
+"          'it'    (Italian)\n".
+"          'ja'    (Japanese)\n".
+"          'ko'    (Korean)\n".
+"          'pt-br' (Brazilian Portuguese)\n".
+"          'ru'    (Russian)\n".
+"          'se'    (Swedish)\n".
+"          'sk'    (Slovakian)\n".
+"          'sl'    (Slovenian)\n".
+"          'sr-la' (Serbian (Latin))      'sr-cy' (Serbian (cyrillic))\n".
+"          'tr'    (Turkish)\n".
+"          'zh-tw' (Traditional Chinese)  'zh-hk' (Simplified Chinese)\n".
+"    */\n\n".
 "  define('LOCALE', '".$data["locale"]."' );\n\n".
 "//-- Timezone --\n\n".
 "  //timezone offset from GMT/UTC (hours)\n".
