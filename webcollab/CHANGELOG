@@ -1,4 +1,14 @@
 WebCollab CVS
+*** 31 August 2006
+  Andrew Simpson
+
+- bugfix: no deadline projects check date on tasks (Bug #1548017) (Credit: Mikael Nilsson)
+
+- remove html_escape(), and add box_shorten()
+
+- minor edits
+
+WebCollab CVS
 *** 19 August 2006
   Andrew Simpson
 
