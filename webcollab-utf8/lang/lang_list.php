@@ -48,10 +48,11 @@ $lang_list['pt-br'] = 'Português (Br)';
 $lang_list['ru']    = 'русский';
 $lang_list['se']    = 'Svenska';
 $lang_list['sk']    = 'Slovenský';
+$lang_list['sl']    = 'Slovenščina';
 $lang_list['sr-cy'] = 'Српски';
 $lang_list['sr-la'] = 'Srpski';
 $lang_list['tr']    = 'Türkçe';
-$lang_list['zh-cn'] = 'Chinese (Traditional)';
+$lang_list['zh-tw'] = 'Chinese (Traditional)';
 $lang_list['zh-hk'] = 'Chinese (Simplified)';
 
 ?>
