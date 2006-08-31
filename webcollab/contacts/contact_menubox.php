@@ -40,12 +40,10 @@ $company = '';
 if(UNICODE_VERSION == 'Y' ) {
   $m_substr     = 'mb_substr';
   $m_strtoupper = 'mb_strtoupper';
-  $m_strimwidth = 'mb_strimwidth';
 }
 else {
   $m_substr     = 'substr';
   $m_strtoupper = 'strtoupper';
-  $m_strimwidth = 'substr';
 }
 
 if( @safe_integer($_GET['taskid']) ) {
@@ -75,14 +73,14 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   if( $row['company'] != '' ) {
      if ($row['company'] != $company ){
-       $content .= $m_strimwidth($row['company'], 0, 30 )."<br />";
+       $content .= box_shorten($row['company'] )."<br />";
      }
-     $show = $m_strimwidth($row['lastname'], 0, 30 ).", ".$m_strtoupper($m_substr($row['firstname'], 0, 1 ) ).".";
+     $show = box_shorten($row['lastname'] ).", ".$m_strtoupper($m_substr($row['firstname'], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=".$x."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
      $company =  $row['company'];
    }
    else {
-     $show = $m_strimwidth($row['lastname'], 0, 30 ).", ".$m_strtoupper($m_substr($row['firstname'], 0, 1 ) ).".";
+     $show = box_shorten($row['lastname'] ).", ".$m_strtoupper($m_substr($row['firstname'], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=".$x."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
    }
 }

@@ -67,8 +67,8 @@ $content =  "<form method=\"post\" action=\"users.php\">\n".
               "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
               "<input type=\"hidden\" name=\"userid\" value=\"$userid\" /></fieldset>\n".
               "<table class=\"celldata\">".
-              "<tr><td>".$lang['login_name'].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".html_escape($row['name'])."\" /></td></tr>\n".
-              "<tr><td>".$lang['full_name'].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" value=\"".html_escape($row['fullname'])."\" /></td></tr>\n".
+              "<tr><td>".$lang['login_name'].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row['name']."\" /></td></tr>\n".
+              "<tr><td>".$lang['full_name'].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" value=\"".$row['fullname']."\" /></td></tr>\n".
               "<tr><td>".$lang['password'].":</td><td><input type=\"text\" name=\"password\" size=\"30\" value=\"\" /></td><td><small><i>".$lang['blank_for_current_password']."</i></small></td></tr>\n".
               "<tr><td>".$lang['email'].":</td><td><input type=\"text\" name=\"email\" size=\"30\" value=\"".$row['email']."\" /></td></tr>\n";
 

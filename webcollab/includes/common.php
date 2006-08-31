@@ -106,11 +106,14 @@ function validate($body ) {
 
 function clean_up($body ) {
 
+  //change '&' to '&amp;' except when part of an entity, or already changed
+  $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
+  //convert quotes to HTML for XHTML compliance
+  $body = strtr($body, array('"'=>'&quot;', "'"=>'&apos;') );
+
   //prevent SQL injection
   $body = db_escape_string($body );
 
-  //change '&' to '&amp;' except when part of an entity, or already changed
-  $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
   //use HTML encoding, or add escapes '\' for characters that could be used for xss <script> or SQL injection attacks
   $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '+'=>'\+', '-'=>'\-', '='=>'\=', '%'=>'&#037;' );
   $body  = strtr($body, $trans );
@@ -130,13 +133,26 @@ function safe_integer($integer ) {
 }
 
 //
-// single and double quotes in HTML edit fields are changed to HTML encoding (addslashes doesn't work for HTML)
+// shorten a character string to 20 characters (to fit a small box)
 //
-function html_escape($body ) {
+function box_shorten($body){
 
-  $trans = array('"'=>'&quot;', "'"=>'&apos;' );
+  //translate html entities
+  $body = html_entity_decode($body, ENT_QUOTES );
 
-  return strtr($body, $trans );
+  //shorten line to fit box
+  $body = substr($body, 0, 20 );
+
+  //remove any truncated numeric entities at the line end
+  $body = preg_replace('/&#[\d]{0,5}$/', '', $body );
+  //change '&' to '&amp;' except when part of an entity, or already changed
+  $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
+
+  //use HTML encoding for characters that could be used for xss <script>
+  $trans = array('<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', "'"=>'&apos;' );
+  $body  = strtr($body, $trans );
+
+  return $body;
 }
 
 //
@@ -145,9 +161,12 @@ function html_escape($body ) {
 //
 function javascript_escape($body ) {
 
-  $trans = array('"'=>'&quot;', "'"=>"\\'" );
+  //convert HTML
+  $body = strtr($body, array('&apos;'=>"'") );
+  //escape quotes
+  $body = strtr($body, array("'"=>"\\'" ) );
 
-  return strtr($body, $trans );
+  return $body;
 }
 
 //
