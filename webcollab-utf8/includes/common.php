@@ -48,8 +48,9 @@ function safe_data($body ) {
   $body = validate($body);
   //limit line length for single line entries
   //  strlen() is _much_ faster than mb_strlen() or mb_substr()
-  if(strlen($body) > 100 )
+  if(strlen($body) > 100 ) {
     $body = mb_substr($body, 0, 100 );
+  }
 
   //clean up for database
   $body = clean_up($body );
@@ -91,12 +92,6 @@ function validate($body ) {
     $body = stripslashes($body );
   }
 
-  //decode decimal HTML entities added by web browser
-  //(convert up to U+10000)
-  $body = preg_replace('/&#\d{2,5};/e', "mb_decode_numericentity('$0', array(0x0, 0x10000, 0, 0xfffff) )", $body );
-  //decode hex HTML entities added by web browser
-  $body = preg_replace('/&#x([a-fA-F0-7]{2,8});/e', "mb_decode_numericentity('&#'.hexdec('$1').';', array(0x0, 0x10000, 0, 0xfffff) )", $body );
-
   $max   = mb_strlen($body);
   $clean = '';
   //this ugly size limiting hack is because preg_match_all() crashes on very long strings...
@@ -119,10 +114,16 @@ function validate($body ) {
 
 function clean_up($body ) {
 
+  //change '&' to '&amp;' except when part of an entity, or already changed
+  $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
+  //convert quotes to HTML for XHTML compliance
+  $body = strtr($body, array('"'=>'&quot;', "'"=>'&apos;') );
+
   //prevent SQL injection
   $body = db_escape_string($body );
+
   //use HTML encoding, or add escapes '\' for characters that could be used for xss <script> or SQL injection attacks
-  $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '+'=>'\+', '-'=>'\-', '='=>'\=', '%'=>'&#037;', '&'=>'&amp;' );
+  $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '+'=>'\+', '-'=>'\-', '='=>'\=', '%'=>'&#037;' );
   $body  = strtr($body, $trans );
 
   return $body;
@@ -140,13 +141,37 @@ function safe_integer($integer ) {
 }
 
 //
+// shorten a character string to 20 characters (to fit a small box)
+//
+function box_shorten($body){
+
+  //translate html entities
+  $body = html_entity_decode($body, ENT_QUOTES );
+
+  //shorten line to fit box
+  $body = mb_strimwidth($body, 0, 20, '..' );
+
+  //change '&' to '&amp;' except when part of an entity, or already changed
+  $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
+
+  //use HTML encoding for characters that could be used for xss <script>
+  $trans = array('<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', "'"=>'&apos;' );
+  $body  = strtr($body, $trans );
+
+  return $body;
+}
+
+//
 // single and double quotes in HTML edit fields are changed to HTML encoding (addslashes doesn't work for HTML)
 //
 function html_escape($body ) {
 
-  $trans = array('"'=>'&quot;', "'"=>'&apos;' );
+  //convert HTML
+  $body = strtr($body, array('&apos;'=>"'") );
+  //escape quotes
+  $body = strtr($body, array("'"=>"\\'" ) );
 
-  return strtr($body, $trans );
+  return $body;
 }
 
 //
