@@ -78,15 +78,38 @@ if( @safe_integer($_GET['parentid']) ) {
   $parentid = $_GET['parentid'];
 
   //get info about the parent of this task
-  $q = db_query('SELECT name, deadline, status, owner, parent, projectid, usergroupid, globalaccess, taskgroupid 
-                       FROM '.PRE.'tasks WHERE id='.$parentid );
+  $q = db_query('SELECT name,
+                        deadline,
+                        '.$epoch.'deadline) AS epoch_deadline,
+                        status,
+                        owner,
+                        parent,
+                        projectid,
+                        usergroupid,
+                        globalaccess, taskgroupid 
+                        FROM '.PRE.'tasks WHERE id='.$parentid.' LIMIT 1' );
 
   if( ! $parent_row = db_fetch_array($q, 0 ) ) {
     error('Task add', 'No parent for taskid' );
   }
 
-  //add the project deadline (plus GMT offset) for the javascript
-  $project_deadline = db_result(db_query('SELECT '.$epoch.'deadline) FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ) ) + TZ*60*60;
+  switch ($parent_row['status'] ) {
+
+    case 'created':
+    case 'active':
+      //add the project deadline (plus GMT offset) for the javascript
+      $project_deadline = $parent_row['epoch_deadline'] + TZ*60*60;
+      break;
+
+    case 'notactive':
+    case 'cantcomplete':
+    case 'done':
+    case 'nolimit':
+    default:
+      //don't check project deadline with inactive parents
+      $project_deadline = -1;
+      break;
+  }
 
   $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" />\n"; 
 
@@ -95,14 +118,14 @@ if( @safe_integer($_GET['parentid']) ) {
               "<table class=\"celldata\">\n";
 
   //show project name
-  if( $parent_row['projectid'] == $parentid) {
-    $project = $parent_row['name'];
+  if($parent_row['projectid'] == $parentid ) {
+    $project_name = $parent_row['name'];
   }
   else {
-    $project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ), 0, 0 );
+    $project_name = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ), 0, 0 );
   }
 
-  $content .= "<tr><td>".$lang['project'] .":</td> <td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$parent_row['projectid']."\">".$project."</a></td></tr>\n";
+  $content .= "<tr><td>".$lang['project'] .":</td> <td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$parent_row['projectid']."\">".$project_name."</a></td></tr>\n";
 
   //check if task has a parent task
   if( $parent_row['parent'] != 0 ) {
@@ -224,6 +247,7 @@ else {
 
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"0\" />\n".
               "<input type=\"hidden\" name=\"projectid\" value=\"0\" />\n".
+              //disable project date check in javascript
               "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"-1\" />\n".
               //taskgroup - we don't have this for projects
               "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n".
