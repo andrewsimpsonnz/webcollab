@@ -92,11 +92,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   }
 }
 
-//get project details - if any
-$q = db_query('SELECT name, '.$epoch.'deadline) AS deadline FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'].' LIMIT 1' );
-$project_row = db_fetch_array($q, 0 );
-
-//all okay show task info
+//start showing task info
 $content .= "<form method=\"post\" action=\"tasks.php\" onsubmit= \"return dateCheck()\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"submit_update\" />\n ".
@@ -110,15 +106,39 @@ switch($TYPE) {
                 "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n ".
                 "<table class=\"celldata\">\n".
                 "<tr><td>".$lang['creation_time']."</td><td>".nicedate($TASKID_ROW['created'] )."</td></tr>\n".
-                "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" value=\"".html_escape($TASKID_ROW['name'])."\" /></td></tr>\n";
+                "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" value=\"".$TASKID_ROW['name']."\" /></td></tr>\n";
     break;
 
   case 'task':
-    //show project finish date for javascript
-    $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".($project_row['deadline'] + TZ*60*60 )."\" /></fieldset>\n".
+    //get parent details
+    $q = db_query('SELECT '.$epoch.'deadline) AS epoch_deadline, status FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['parent'].' LIMIT 1' );
+    $parent_row = db_fetch_array($q, 0 );
+
+    switch ($parent_row['status'] ) {
+      case 'created':
+      case 'active':
+        //add the project deadline (plus GMT offset) for the javascript
+        $project_deadline = $parent_row['epoch_deadline'] + TZ*60*60;
+        break;
+
+      case 'notactive':
+      case 'cantcomplete':
+      case 'done':
+      case 'nolimit':
+      default:
+        //don't check project deadline with inactive parents
+        $project_deadline = -1;
+        break;
+    }
+
+    //get project name
+    $project_name = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'].' LIMIT 1' ), 0, 0 );
+
+    //show project finish date for javascript & other details
+    $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" /></fieldset>\n".
                  "<table class=\"celldata\">\n".
                  "<tr><td>".$lang['creation_time']."</td><td>".nicedate($TASKID_ROW['created'] )."</td></tr>\n".
-                 "<tr><td>".$lang['project'] .":</td><td><a href=\"tasks.php?x=".$x."&amp;action=show&taskid=".$TASKID_ROW['projectid']."\">".$project_row['name']."</a></td></tr>\n";
+                 "<tr><td>".$lang['project'] .":</td><td><a href=\"tasks.php?x=".$x."&amp;action=show&taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></td></tr>\n";
     break;
 }
 
@@ -133,26 +153,26 @@ $content .= ">".$lang['no_reparent']."</option>\n";
 
 $q = db_query('SELECT id, name, usergroupid, globalaccess FROM '.PRE.'tasks WHERE id<>'.$taskid.' AND archive=0 ORDER BY name');
 
-for( $i=0; $parent_row = @db_fetch_array($q, $i ); ++$i ) {
+for( $i=0; $reparent_row = @db_fetch_array($q, $i ); ++$i ) {
   //check for private usergroups
-  if( (! ADMIN ) && ($parent_row['usergroupid'] != 0 ) && ($parent_row['globalaccess'] == 'f' ) ) {
+  if( (! ADMIN ) && ($reparent_row['usergroupid'] != 0 ) && ($reparent_row['globalaccess'] == 'f' ) ) {
 
-    if( ! isset($GID[($parent_row['usergroupid'])] ) ) {
+    if( ! isset($GID[($reparent_row['usergroupid'])] ) ) {
       continue;
     }
   }
-  $content .= "<option value=\"".$parent_row['id']."\"";
+  $content .= "<option value=\"".$reparent_row['id']."\"";
 
-  if($TASKID_ROW['parent'] == $parent_row['id'] ) {
+  if($TASKID_ROW['parent'] == $reparent_row['id'] ) {
     $content .= " selected=\"selected\"";
   }
-  $content .= ">".$parent_row['name']."</option>\n";
+  $content .= ">".$reparent_row['name']."</option>\n";
 }
 $content .="</select></td></tr>\n";
 
 //show task (if applicable)
 if($TASKID_ROW['parent'] != 0 ){
-  $content .= "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" value=\"".html_escape($TASKID_ROW['name'])."\" /></td></tr>\n";
+  $content .= "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" value=\"".$TASKID_ROW['name']."\" /></td></tr>\n";
 }
 //deadline
 $content .= "<tr><td>".$lang['deadline'].":</td><td>".date_select_from_timestamp($TASKID_ROW['deadline'])."</td></tr>\n";
