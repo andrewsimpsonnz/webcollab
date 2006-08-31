@@ -232,7 +232,7 @@ $content .= "<form method=\"post\" action=\"tasks.php\">\n".
 $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname');
 
 //user input box fields
-for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
+for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //user test for privacy
   if($row['private'] && ($row['id'] !=  UID ) && ( ! ADMIN ) && ( ! isset($allowed[($row['id'])] ) ) ){
@@ -242,7 +242,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   $content .= "<option value=\"".$row['id']."\"";
 
   //highlight current selection
-  if( $row['id'] == $userid ){
+  if($row['id'] == $userid ){
     $content .= " selected=\"selected\"";
   }
   $content .= ">".$row['fullname']."</option>\n";

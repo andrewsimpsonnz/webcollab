@@ -78,7 +78,7 @@ if(isset($_GET['action']) && $_GET['action'] === "show_print" ) {
 else {
   //show print tag
   $content .= "<div style=\"text-align : right\"><span class=\"textlink\">".
-              "<a href=\"icalendar.php?x=".$x."&amp;action=project&amp;taskid=".$taskid." title=\"".$lang['icalendar']."\">".
+              "<a href=\"icalendar.php?x=".$x."&amp;action=project&amp;taskid=".$taskid."\" title=\"".$lang['icalendar']."\">".
               "<img src=\"images/calendar_link.png\" alt=\"".$lang['icalendar']."\" width=\"16\" height=\"16\" /></a>&nbsp;&nbsp;&nbsp;".
               "<a href=\"tasks.php?x=".$x."&amp;action=show_print&amp;taskid=".$taskid."\" title= \"".$lang['print_version']."\">".
               "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a></span></div>\n";

@@ -210,7 +210,7 @@ function list_tasks($parent ) {
 
 
     //merge all info about a task
-    $this_content .= $alert_content."<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a>&nbsp;$status_content";
+    $this_content .= $alert_content."<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a>&nbsp;".$status_content;
     $this_content .= "<small>";
 
     //add username if task is taken
