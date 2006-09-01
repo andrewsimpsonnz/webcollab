@@ -61,19 +61,19 @@ if(empty($_REQUEST['string'] ) || strlen(trim($_REQUEST['string'] ) ) == 0 ) {
 }
 
 $string = safe_data($_REQUEST['string'] );
-//escaped string for database
-$db_string = strtr($string, array('%'=>'\%', '_'=>'\_' ) );
 
-//valid string for screen display
-$valid_string = validate($_REQUEST['string'] );
-$valid_string = substr($valid_string, 0, 100 );
+//1. Escaped string for database
+  $db_string = strtr($string, array('%'=>'\%', '_'=>'\_' ) );
 
-//convert to HTML and line breaks to match common.php conversion 
-$trans = array('<'=>'&lt;', '>'=>'&gt;', '%'=>'&#037;', "\r"=>'', "\n"=>'' );
-$valid_string = strtr($valid_string, $trans );
+//2. Valid string for screen display
+  $valid_string = validate($_REQUEST['string'] );
+  $valid_string = substr($valid_string, 0, 100 );
+  //convert to HTML and line breaks to match common.php conversion 
+  $trans = array('&'=>'&amp;', '<'=>'&lt;', '>'=>'&gt;', '%'=>'&#037;', "\r"=>'', "\n"=>'','"'=>'&quot;', "'"=>'&apos;' );
+  $valid_string = strtr($valid_string, $trans );
 
-//quote for regex terms
-$preg_string = preg_quote($valid_string, '/' );
+//3. Quoted string for regex terms
+  $preg_string = preg_quote($valid_string, '/' );
 
 if(! is_numeric($_REQUEST['start']) ) {
   error('Forum search', 'Not a valid integer' );
@@ -139,7 +139,7 @@ $q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
                       'ORDER BY posted DESC LIMIT '.($max - $min).' OFFSET '.$min );
 
 $content .= "<table class=\"celldata\">\n".
-            "<tr><td>".sprintf($lang['search_results'], $total, $string, ($min + 1), $max )."<br /><br />\n";
+            "<tr><td>".sprintf($lang['search_results'], $total, $valid_string, ($min + 1), $max )."<br /><br />\n";
 
 $content .= "<ul>\n";
 
