@@ -44,12 +44,12 @@ if( ! @safe_integer($_GET['fileid']) ){
 $fileid = $_GET['fileid'];
 
 //get the files info
-if( ! ($q = db_query('SELECT fileid, filename, size, mime, taskid FROM '.PRE.'files WHERE id='.$fileid, 0 ) ) )  {
+if( ! ($q = db_query('SELECT fileid, filename, size, mime, taskid FROM '.PRE.'files WHERE id='.$fileid.' LIMIT 1', 0 ) ) )  {
   error('Download file', 'There was an error in the data query');
 }
 
 if( ! $row = db_fetch_array( $q, 0) ) {
-  error('Download file', 'Invalid fileid given' );   
+  error('Download file', 'Invalid fileid given' );
 }
 
 //check usergroup security

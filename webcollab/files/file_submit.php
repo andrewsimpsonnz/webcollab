@@ -201,7 +201,7 @@ ignore_user_abort(TRUE);
                             '.PRE.'users.email AS email
                             FROM '.PRE.'tasks
                             LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.owner='.PRE.'users.id)
-                            WHERE '.PRE.'tasks.id='.$taskid );
+                            WHERE '.PRE.'tasks.id='.$taskid.' LIMIT 1' );
 
       $task_row = db_fetch_array($q, 0 );
 
