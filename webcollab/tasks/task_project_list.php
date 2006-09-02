@@ -171,6 +171,7 @@ if(! $condensed) {
                         parent,
                         projectid,
                         status,
+                        priority,
                         '.$epoch.' deadline ) AS due
                         FROM '.PRE.'tasks
                         WHERE status<>\'done\'
@@ -220,6 +221,7 @@ $q = db_query('SELECT id,
                       deadline,
                       status,
                       '.$epoch.' deadline) AS due,
+                      priority,
                       finished_time,
                       completion_time,
                       completed
