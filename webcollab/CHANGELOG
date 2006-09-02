@@ -1,4 +1,14 @@
 WebCollab CVS
+*** 2 September 2006
+  Andrew Simpson
+
+- optimise code in task list
+
+- show taskgroups in ToDo list (Feature Request #1459281)
+
+- bugfix: Add 'priority' to order by sequences
+
+WebCollab CVS
 *** 31 August 2006
   Andrew Simpson
 
@@ -13,6 +23,7 @@ WebCollab CVS
   Andrew Simpson
 
 - add Slovenian language translation (Credit: Sašo Stanojev)
+
 - improve formatting of config files
 
 WebCollab CVS
