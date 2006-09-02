@@ -44,9 +44,9 @@ $content = '';
 //
 function list_tasks($parent ) {
 
-  global $x, $parentid, $parent_array, $epoch, $lang;
-  global $taskgroup_flag, $task_state;
-  global $no_group, $task_order, $GID;
+  global $x, $parentid, $parent_array;
+  global $task_state, $lang, $epoch, $GID;
+  global $no_group, $task_order;
 
   //init values
   $taskgroup_flag = NULL;
@@ -91,15 +91,15 @@ function list_tasks($parent ) {
         //do a recursive search if the subtask is listed in parent_array (it has children then)
         if(isset($parent_array[($row['id'])] ) ) {
           $this_content .= list_tasks( $row['id']);
-          $this_content .= "\n</ul></li>\n";
+          $this_content .= "</ul></li>\n";
         }
         continue;
       }
     }
 
-    //check if we have taskgroups to display on first item
+    //check if we have taskgroups to display on first item (and if this is the first layer of tasks)
     if($taskgroup_flag === NULL) {
-      if(($parent == $parentid ) && ($row['taskgroupid'] > 0 ) ) {
+      if(($parent == $parentid ) && ($row['taskgroupid'] ) ) {
         $this_content  .= '';
         $taskgroup_flag = 1;
       }
@@ -109,8 +109,8 @@ function list_tasks($parent ) {
       }
     }
 
-    //check if there are taskgroups set, and if this is the first layer of tasks
-    if(($taskgroup_flag ) && ($parent == $parentid ) ) {
+    //check if there are taskgroups set
+    if($taskgroup_flag ) {
 
       //check if taskgroup has changed from last iteration
       if($stored_groupid !== $row['taskgroupid'] ) {
@@ -262,9 +262,9 @@ function list_tasks($parent ) {
     //recursive search if the subtask is listed as a key in parent_array (it has children then)
     if(isset($parent_array[($row['id'])] ) ) {
       $this_content .= list_tasks($row['id'] );
-      $this_content .= "\n</ul></li>\n";
+      $this_content .= "</ul></li>\n";
     }
-    else{
+    else {
       $this_content .= "</li>\n";
     }
   }
@@ -319,7 +319,7 @@ $content .= list_tasks($parentid );
 //if there is output, then show it
 if($content ){
   //finish off the closing </ul>
-  $content .= "\n</ul>\n";
+  $content .= "</ul>\n";
   new_box( $lang['tasks'], $content );
 }
 
