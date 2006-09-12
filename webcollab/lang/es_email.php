@@ -34,8 +34,10 @@ $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y g:i' );
 $title_file_post        = ABBR_MANAGER_NAME.": Nuevo archivo disponible: %s";
 $email_file_post        = "Hola,\n\nEl sitio ".MANAGER_NAME." un nuevo archivo cargado el ".$email_date." por %1\$s.\n\n".
                           "Archivo:        %2\$s\n".
-                          "Descripcion: %3\$s".
-                          "Dirigirse al sitio web para mas detalles.\n\n".BASE_URL."%4\$s\n";
+                          "Descripcion: %3\$s\n\n".
+                          "Proyecto:    %4\$s\n".
+                          "Tarea:       %5\$s\n\n".
+                          "Dirigirse al sitio web para mas detalles.\n\n".BASE_URL."%6\$s\n";
 
 
 $title_forum_post        = ABBR_MANAGER_NAME.": New forum post: %s";

@@ -34,7 +34,9 @@ $title_file_post        = ABBR_MANAGER_NAME.": Neue Datei wurde hochgeladen: %s"
 $email_file_post        = "Hallo,\n\nIhre ".MANAGER_NAME."-Seite informiert sie, daﬂ eine neue Datei hochgeladen wurde am ".$email_date." durch %1\$s.\n\n".
                           "Dateiname:    %2\$s\n".
                           "Beschreibung: %3\$s\n\n".
-                          "Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n".BASE_URL."%4\$s\n";
+                          "Projekt:      %4\$s\n".
+                          "Aufgabe:      %5\$s\n\n".
+                          "Besuchen Sie die Website, wenn Sie mehr wissen wollen.\n\n".BASE_URL."%6\$s\n";
 
 
 $title_forum_post        = ABBR_MANAGER_NAME.": Neuer Forenbeitrag: %s";

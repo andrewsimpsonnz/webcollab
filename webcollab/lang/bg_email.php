@@ -41,7 +41,9 @@ $title_file_post            = ABBR_MANAGER_NAME . ": Качване на нов файл: %s";
 $email_file_post            = $email_commom_header . " от %1\$s бе качен нов файл.\n\n".
                                 "Файл:        %2\$s\n".
                                 "Описание:    %3\$s\n\n".
-                                "Моля посетете web-страницата за повече информация.\n\n" . BASE_URL . "%4\$s\n";
+                                "Проект:      %4\$s\n".
+                                "Задача:      %5\$s\n\n".
+                                "Моля посетете web-страницата за повече информация.\n\n" . BASE_URL . "%6\$s\n";
 
 
 $title_forum_post           = ABBR_MANAGER_NAME . ": Ново съобщени от форумите: %s";

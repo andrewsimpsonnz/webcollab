@@ -36,7 +36,9 @@ $email_file_post          = "Haló,\n\n".
                             "To je ".MANAGER_NAME." stránka ktorá Vás informuje ¾e bol nahratý nový súbor dòa ".$email_date." od %1\$s.\n\n".
                             "Súbor:        %2\$s\n".
                             "Obsah: %3\$s\n\n".
-                            "Prosím nav¹tívte webstránku pre ïal¹ie informácie.\n\n".BASE_URL."%4\$s\n";
+                            "Projekt:      %4\$s\n".
+                            "Úloha:        %5\$s\n\n".
+                            "Prosím nav¹tívte webstránku pre ïal¹ie informácie.\n\n".BASE_URL."%6\$s\n";
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Nová po¹ta na fóre: %s";
 $email_forum_post         = "Haló,\n\n".

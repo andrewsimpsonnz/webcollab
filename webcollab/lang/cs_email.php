@@ -34,7 +34,9 @@ $title_file_post          = ABBR_MANAGER_NAME.": Nahrán nový soubor: %s";
 $email_file_post          = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, ¾e byl pøidán nový soubor ".$email_date." u¾ivatelem %1\$s.\n\n".
                             "Soubor:        %2\$s\n".
                             "Popis: %3\$s\n\n".
-                            "Prosím nav¹tivte tuto web stránku pro více informací.\n\n".BASE_URL."%4\$s\n";
+                            "Projekt:       %4\$s\n".
+                            "Úkol:          %5\$s\\nn".
+                            "Prosím nav¹tivte tuto web stránku pro více informací.\n\n".BASE_URL."%6\$s\n";
 
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Nový pøíspìvek ve fóru: %s";

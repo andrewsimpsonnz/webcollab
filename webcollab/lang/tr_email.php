@@ -34,7 +34,9 @@ $title_file_post          = ABBR_MANAGER_NAME.": Yeni yüklenen dosya: %s";
 $email_file_post          = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde %1\$s tarafýndan yeni bir dosyanýn yüklendiðini haber veriyor.\n\n".
                             "Dosya:        %2\$s\n".
                             "Tanýmý: %3\$s\n\n".
-                            "Daha detaylý bilgi için lütfen web sitesine gidin.\n\n".BASE_URL."%4\$s\n";
+                            "Proje:        %4\$s\n".
+                            "Görev:        %5\$s\n\n".
+                            "Daha detaylý bilgi için lütfen web sitesine gidin.\n\n".BASE_URL."%6\$s\n";
 
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Yeni forum mesajý: %s";

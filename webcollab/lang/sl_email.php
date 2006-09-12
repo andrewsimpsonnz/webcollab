@@ -36,8 +36,10 @@ $email_file_post          = "Pozdravljeni!\n\n".
                             "Spleti¹èe ".MANAGER_NAME.", vas obve¹èa, da je dne ".$email_date." novo datoteko dodal uporabnik %1\$s.\n\n".
                             "Datoteka:  %2\$s\n".
                             "Opis:  %3\$s\n\n".
+                            "Projekt:  %4\$s\n".
+                            "Naloga:   %5\$s\n\n".
                             "Obi¹èite stran za veè informacij.\n\n".
-                            BASE_URL."\n";
+                            BASE_URL."%6\$s\n";
 
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Novo sporoèilo na forumu: %s";
@@ -47,8 +49,8 @@ $email_forum_post         = "Pozdravljeni!\n\n".
                             "%2\$s\n\n".
                             "----\n\n".
                             "Obi¹èite stran za veè informacij.\n\n".
-                            BASE_URL."\n";
-                            
+                            BASE_URL."%3\$s\n";
+
 $email_forum_reply        = "Pozdravljeni!\n\n".
                             "Spleti¹èe ".MANAGER_NAME.", vas obve¹èa, da je dne".$email_date." novo sporoèilo na forumu dodal uporabnik %1\$s.\n\n".
                             "To sporoèilo je odgovor na prej¹nje sporoèilo uporabnika %2\$s.\n\n".
@@ -57,7 +59,7 @@ $email_forum_reply        = "Pozdravljeni!\n\n".
                             "Novo sporoèilo:\n%4\$s\n\n".
                             "----\n\n".
                             "Obi¹èite stran za veè informacij.\n\n".
-                            BASE_URL."\n";
+                            BASE_URL."%5\$s\n";
 
 $email_list               = "Projekt:  %1\$s\n".
                             "Naloga:   %2\$s\n".
@@ -65,7 +67,7 @@ $email_list               = "Projekt:  %1\$s\n".
                             "Lastnik:   %4\$s ( %5\$s )\n".
                             "Besedilo:\n%6\$s\n\n".
                             "Obi¹èite stran za veè informacij.\n\n".
-                            BASE_URL."\n";
+                            BASE_URL."%7\$s\n";
 
 $title_takeover_project   = ABBR_MANAGER_NAME.": Va¹ projekt je prevzet";
 $title_takeover_task      = ABBR_MANAGER_NAME.": Va¹a naloga je prevzeta";

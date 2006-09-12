@@ -39,7 +39,9 @@ $title_file_post          = ABBR_MANAGER_NAME.": Új feltöltött fájl: %s";
 $email_file_post          = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy új fájlt töltött fel ".$email_date." dátummal a következõ: %1\$s.\n\n".
                             "Fájl:     %2\$s\n".
                             "Leírás:   %3\$s\n\n".
-                            "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."%4\$s\n";
+                            "Projekt:  %4\$s\n".
+                            "Feladat:  %5\$s\n\n".
+                            "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."%6\$s\n";
 
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Új fórum üzenet: %s";

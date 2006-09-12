@@ -35,7 +35,9 @@ $title_file_post          = ABBR_MANAGER_NAME.": Ny fil skickad: %s";
 $email_file_post          = "Hej!\n\nDet är ".MANAGER_NAME." sajten som meddelar att det laddats ner en ny fil ".$email_date." av %1\$s.\n\n".
                             "Fil:         %2\$s\n".
                             "Beskrivning: %3\$s\n\n".
-                            "Gå till sajten för ytterligare detaljer.\n\n".BASE_URL."%4\$s\n";
+                            "Projekt:     %4\$s\n".
+                            "Uppgift:     %5\$s\n\n".
+                            "Gå till sajten för ytterligare detaljer.\n\n".BASE_URL."%6\$s\n";
 
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Nytt inlägg på forumet: %s";

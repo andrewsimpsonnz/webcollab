@@ -37,7 +37,9 @@ $title_file_post          = ABBR_MANAGER_NAME.": Indlæs ny fil: %s";
 $email_file_post          = "Hello,\n\nDette er ".MANAGER_NAME." Som informerer dig om at en ny file er blevet indlæst ".$email_date." af %1\$s.\n\n".
                             "File:        %2\$s\n".
                             "Beskrivelse: %3\$s\n\n".
-                            "Gå til hjemmesiden efter mere information.\n\n".BASE_URL."%4\$s\n";
+                            "Projekt:     %4\$s\n".
+                            "Opgave:      %5\$s\n\n".
+                            "Gå til hjemmesiden efter mere information.\n\n".BASE_URL."%6\$s\n";
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Ny post I forum: %s";
 $email_forum_post         = "Hallo,\n\nDette er ".MANAGER_NAME." informerer dig om at en ny post i forum er oprettet ".$email_date." af %1\$s:\n\n".

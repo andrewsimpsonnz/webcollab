@@ -35,7 +35,9 @@ $title_file_post          = ABBR_MANAGER_NAME.": Novo arquivo enviado: %s";
 $email_file_post          = "Olá,\n\nAqui é o site ".MANAGER_NAME." informando-lhe que um novo arquivo foi enviado em ".$email_date." por %1\$s.\n\n".
                             "Arquivo:        %2\$s\n".
                             "Descrição: %3\$s\n\n".
-                            "Por favor, acesse o site para maiores detalhes.\n\n".BASE_URL."%4\$s\n";
+                            "Projeto:   %4\$s\n".
+                            "Tarefa:    %5\$s\n\n".
+                            "Por favor, acesse o site para maiores detalhes.\n\n".BASE_URL."%6\$s\n";
 
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Nova postagem no fórum: %s";

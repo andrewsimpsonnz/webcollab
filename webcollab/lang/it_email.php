@@ -34,7 +34,9 @@ $title_file_post          = ABBR_MANAGER_NAME.": Nuovo file inviato: %s";
 $email_file_post          = "Salve,\n\nIl sito ".MANAGER_NAME." ti informa che un nuovo file è stato inviato il ".$email_date." da %1\$s.\n\n".
                             "File:        %2\$s\n".
                             "Descrizione: %3\$s\n\n".
-                            "Vai al sito web per maggiori dettagli.\n\n".BASE_URL."%4\$s\n";
+                            "Progetto:    %4\$s\n".
+                            "Attività:    %5\$s\n\n".
+                            "Vai al sito web per maggiori dettagli.\n\n".BASE_URL."%6\$s\n";
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Nuovo messaggio nel forum: %s";
 $email_forum_post         = "Salve,\n\nIl sito ".MANAGER_NAME." ti informa che un nuovo messaggio nel forum è stato creato il ".$email_date." da %1\$s:\n\n".

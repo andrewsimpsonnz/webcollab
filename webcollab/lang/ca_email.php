@@ -40,8 +40,10 @@ $email_file_post        = "Hello,\n\n".
                           "This is the ".MANAGER_NAME." site informing you that a new file has been uploaded on ".$email_date." by %1\$s.\n\n".
                           "File:        %2\$s\n".
                           "Description: %3\$s\n\n".
+                          "Projecte:    %4\$s\n".
+                          "Tasca:       %5\$s\n\n".
                           "Dirigir-se al lloc web per a mes detalls.\n\n".
-                           BASE_URL."%4\$s\n";
+                           BASE_URL."%6\$s\n";
 //-----
 $title_forum_post        = ABBR_MANAGER_NAME.": New forum post: %s";
 

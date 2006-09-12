@@ -198,12 +198,15 @@ ignore_user_abort(TRUE);
       //get task data
       $q = db_query('SELECT '.PRE.'tasks.name AS name,
                             '.PRE.'tasks.usergroupid AS usergroupid,
+                            '.PRE.'tasks.projectid AS projectid,
                             '.PRE.'users.email AS email
                             FROM '.PRE.'tasks
                             LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.owner='.PRE.'users.id)
                             WHERE '.PRE.'tasks.id='.$taskid.' LIMIT 1' );
 
       $task_row = db_fetch_array($q, 0 );
+
+      $project = db_result(db_query('SELECT name FROM tasks WHERE id='.$task_row['projectid'].' LIMIT 1' ), 0, 0 );
 
       //set owner's email
       if($task_row['email'] && $mail_owner ) {
@@ -239,7 +242,7 @@ ignore_user_abort(TRUE);
         if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
           $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
         }
-        email($mail_list, sprintf($title_file_post, $task_row['name'] ), sprintf($email_file_post, UID_NAME, $_FILES['userfile']['name'], $message_unclean, 'index.php?taskid='.$taskid ) );
+        email($mail_list, sprintf($title_file_post, $task_row['name'] ), sprintf($email_file_post, UID_NAME, $_FILES['userfile']['name'], $message_unclean, $project, $task_row['name'], 'index.php?taskid='.$taskid ) );
       }
 
       break;
