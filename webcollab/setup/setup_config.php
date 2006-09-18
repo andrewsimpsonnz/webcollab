@@ -37,14 +37,14 @@ LANGUAGE ENCODING OPTIONS
   automatically sets the required character set in the MySQL/PGSQL connection client.
 
 
-- English, Brazilian Portuguese, Catalan, Danish, French, German, Italian, Spanish, Swedish
+- English, Brazilian Portuguese, Catalan, Danish, French, German, Italian, Norwegian, Spanish, Swedish
 
   define('SETUP_SETUP_CHARACTER_SET', "ISO-8859-1" );
 
   define('MYSQL_SETUP_CHARACTER_SET', "ISO-8859-1" );
   define('PGSQL_SETUP_CHARACTER_SET', "LATIN1" );
 
-- Czech, Hungarian, Serbian (latin), Slovak
+- Czech, Hungarian, Serbian (latin), Slovak, Slovenian
 
   define('SETUP_CHARACTER_SET', "ISO-8859-2" );
 

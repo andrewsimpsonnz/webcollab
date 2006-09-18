@@ -93,6 +93,10 @@ switch($locale ) {
     include(BASE.'lang/ko_message.php' );
     break;
 
+  case 'no':
+    include(BASE.'lang/no_message.php' );
+    break;
+
   case 'pt-br':
     include(BASE.'lang/pt-br_message.php' );
     break;

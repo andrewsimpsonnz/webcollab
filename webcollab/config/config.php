@@ -91,6 +91,7 @@
           'it'    (Italian)
           'ja'    (Japanese)
           'ko'    (Korean)
+          'no'    (Norwegian)
           'pt-br' (Brazilian Portuguese)
           'ru'    (Russian)
           'se'    (Swedish)
