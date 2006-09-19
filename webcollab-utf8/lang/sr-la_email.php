@@ -38,8 +38,10 @@ $email_file_post          = "Zdravo!\n\n".
                             "Ovo je sajt ".MANAGER_NAME." koji vas obaveštava da je dana ".$email_date." dodat novi fajl od strane korisnika %1\$s.\n\n".
                             "Fajl:  %2\$s\n".
                             "Opis:  %3\$s\n\n".
+                            "Projekat:  %4\$s\n".
+                            "Zadatak:   %5\$s\n\n".
                             "Posetite sajt za više detalja.\n\n".
-                            BASE_URL."%4\$s\n";
+                            BASE_URL."%6\$s\n";
 
 $title_forum_post         = ABBR_MANAGER_NAME.": Nova poruka na forumu: %s";
 $email_forum_post         = "Zdravo!\n\n".

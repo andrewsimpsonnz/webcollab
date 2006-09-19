@@ -37,7 +37,9 @@ $title_file_post        = ABBR_MANAGER_NAME.": Νέο αρχείο διαθέσ�
 $email_file_post        = "Hola,\n\nEl sitio ".MANAGER_NAME." ένα νέο αρχείο φορτώθηκε την  ".$email_date." por %1\$s.\n\n".
                           "Αρχείο:        %2\$s\n".
                           "Περιγραφή: %3\$s\n\n".
-                          "Απευθυνθείτε στη σελίδα για περισσότερες πληροφορίες.\n\n".BASE_URL."%4\$s\n";
+                          "Project:       %4\$s\n".
+                          "Εργασία:       %5\$s\n\n".
+                          "Απευθυνθείτε στη σελίδα για περισσότερες πληροφορίες.\n\n".BASE_URL."%6\$s\n";
 
 
 $title_forum_post        = ABBR_MANAGER_NAME.": Νέα αποστολή στο forum: %s";

@@ -36,18 +36,20 @@ $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y \a\t g:i a 
 $title_file_post        = ABBR_MANAGER_NAME.": 업로드된 파일: %s";
 $email_file_post        = "안녕하세요,\n\n이 메일은 ".MANAGER_NAME."에서  %1\$s 사용자가 ".$email_date."  에 업로드한 새로운 파일에 대한 정보입니다.\n\n".
                           "파일:        %2\$s\n".
-			  "설명:        %3\$s\n\n".
-                          "세부적인 설명에 대해서는 웹 사이트를 방문하십시오.\n\n".BASE_URL."\n";
+                          "설명:        %3\$s\n\n".
+                          "프로젝트:     %4\$s\n".
+                          "작업:        %5\$s\n\n".
+                          "세부적인 설명에 대해서는 웹 사이트를 방문하십시오.\n\n".BASE_URL."%6\$s\n";
 
 
 $title_forum_post        = ABBR_MANAGER_NAME.": 새로이 올라온 포럼 글: %s";
 $email_forum_post        = "안녕하세요 ,\n\n이 메일은 ".MANAGER_NAME." 에서 %1\$s 사용자가 ".$email_date."에 만든 새로운 포럼 내용에 대한 정보입니다:\n\n%2\$s\n\n".
-                           "세부적인 사항은 다음 웹 사이트에 방문하십시오.\n\n".BASE_URL."\n";
+                           "세부적인 사항은 다음 웹 사이트에 방문하십시오.\n\n".BASE_URL."%3\$s\n";
 $email_forum_reply       = "안녕하세요,\n\n이 메일은 ".MANAGER_NAME."에서 %1\$s 가 ".$email_date."에 생성한 새로운 포럼 글 내용에 대한 정보입니다.\n\n".
                            "이 글은 이전에 올린 %2\$s 에 올린 글에 대한 답글입니다.\n\n".
                            "원래 글:\n%3\$s\n\n".
                            "새로운 답글:\n%4\$s\n\n".
-                           "좀더 세부적인 사항에 대해서는 웹사이트를 방문하십시오.\n\n".BASE_URL."\n";
+                           "좀더 세부적인 사항에 대해서는 웹사이트를 방문하십시오.\n\n".BASE_URL."%5\$s\n";
 
 
 $email_list =  "프로젝트:  %1\$s\n".
@@ -55,7 +57,7 @@ $email_list =  "프로젝트:  %1\$s\n".
                "상태:   %3\$s\n".
                "소유자:    %4\$s ( %5\$s )\n".
                "내용:\n%6\$s\n\n".
-               "세부적인 사항에 대해서는 웹 사이트를 방문하십시오.\n\n".BASE_URL."\n";
+               "세부적인 사항에 대해서는 웹 사이트를 방문하십시오.\n\n".BASE_URL."%7\$s\n";
 
 
 $title_takeover_project  = ABBR_MANAGER_NAME.": 인계 받은 프로젝트";

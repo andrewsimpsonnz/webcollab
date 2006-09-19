@@ -36,8 +36,10 @@ $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y \a\t g:i a 
 $title_file_post        = ABBR_MANAGER_NAME.": アップロードされた新規ファイル: %s";
 $email_file_post        = "Hello,\n\nThis is the ".MANAGER_NAME." site informing you that a new file has been uploaded on ".$email_date." by %1\$s.\n\n".
                           "ファイル:        %2\$s\n".
-			  "説明: %3\$s\n\n".
-                          "より詳しい情報はウェブサイトに移動してください。\n\n".BASE_URL."%4\$s\n";
+                          "説明: %3\$s\n\n".
+                          "プロジェクト:     %4\$s\n".
+                          "タスク:          %5\$s\n\n".
+                          "より詳しい情報はウェブサイトに移動してください。\n\n".BASE_URL."%6\$s\n";
 
 
 $title_forum_post        = ABBR_MANAGER_NAME.": フォーラムに新規投稿: %s";

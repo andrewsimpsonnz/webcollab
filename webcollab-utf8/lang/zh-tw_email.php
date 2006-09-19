@@ -37,8 +37,10 @@ $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y \a\t g:i a 
 $title_file_post        = ABBR_MANAGER_NAME.": 新上傳的檔案: %s";
 $email_file_post        = "你好，\n\n這是由『".MANAGER_NAME."』所發出的通知信。有一個新的檔案已經在 ".$email_date." 的時候由 %1\$s.上傳了\n\n".
                           "檔名：        %2\$s\n".
-			  "檔案敘述： %3\$s\n\n".
-                          "請回到網站以取得更多細節。\n\n".BASE_URL."%4\$s\n";
+                          "檔案敘述： %3\$s\n\n".
+                          "專案：        %4\$s\n".
+                          "工作項目：     %5\$s\n\n".
+                          "請回到網站以取得更多細節。\n\n".BASE_URL."%6\$s\n";
 
 
 $title_forum_post        = ABBR_MANAGER_NAME.": 新的文章發表：%s";
