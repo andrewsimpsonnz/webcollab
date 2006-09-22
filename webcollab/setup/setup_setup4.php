@@ -87,6 +87,11 @@ $content .= "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />\n";
 
 
+//add leading slash to url - if necessary
+if(substr(trim($data["base_url"] ), -1 ) != '/' ) {
+  $data["base_url"] = trim($data["base_url"] ).'/';
+}
+
 //set variables
 $status = "<font color=\"green\"><b>OK !</b></font>";
 $url = parse_url($data["base_url"]);
@@ -112,12 +117,6 @@ switch ($url["scheme"] ){
           $flag = $flag + 1;
           break;
         }
-        if( ! strpos($line, "301" ) === FALSE ) {
-          //301 - moved permanently
-          $status = "<font color=\"blue\"><b>Have you added the trailing slash ( e.g. ".$url["path"]."/ )?</b></font>";
-          $flag = $flag + 1;
-          break;
-        }
         $line = fgets($fp, 2048 );
       }
     fclose($fp);
@@ -130,7 +129,7 @@ switch ($url["scheme"] ){
       }
       else {
         $status = "<font color=\"blue\"><b>No connection: Not able to verify URL</b></font>";
-      }  
+      }
       $flag = $flag + 1;
     }
     break;
@@ -255,7 +254,7 @@ $status = "<font color=\"green\"><b>OK !</b></font>";
 
 if($data["use_email"] === "Y" && $data["smtp_host"] != "" ) {
 
-  if($fp = fsockopen($data["smtp_host"], 25, $errno, $errstr, 5 ) ) {
+  if($fp = @fsockopen($data["smtp_host"], 25, $errno, $errstr, 5 ) ) {
     //this function may not work in Windows (prefix with '@')
     @socket_set_timeout($fp, 1 );
     //socket successfully opened - clean up & close
