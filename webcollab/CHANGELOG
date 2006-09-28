@@ -1,4 +1,12 @@
 WebCollab CVS
+*** 26 September 2006
+  Andrew Simpson
+
+- bugfix: Improve timezone setting on database (Bug #1561923) (Credit: michellapointe - Michel Lapointe)
+
+- bugfix: Setup does not add trailing slash (/) to BASE_URL (Bug #1563249) (Credit: michellapointe - Michel Lapointe)
+
+WebCollab CVS
 *** 16 September 2006
   Andrew Simpson
 
