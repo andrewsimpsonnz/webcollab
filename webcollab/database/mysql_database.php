@@ -58,7 +58,8 @@ function db_connection() {
   }
 
   //set timezone
-  if(! mysql_query("SET time_zone='".sprintf('%+02d:%02d', TZ, (TZ - floor(TZ) )*60 )."'", $database_connection ) ) {
+  if(! mysql_query("SET time_zone='".sprintf('%+d:%02d', (int)TZ, (TZ - floor(TZ) )*60 )."'",
+$database_connection ) ) {
     error("Database error", "Not able to set timezone. <br />Check that your version of MySQL is 4.1.3, or higher" );
   }
 
