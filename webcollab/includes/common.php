@@ -182,7 +182,7 @@ function html_links($body, $database_escape=0 ) {
   //data being submitted to a database needs ('$0') part escaped
   $escape = ($database_escape ) ? '\\' : '';
 
-  $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s]+)/i', "<a href=\"$0\" onclick=\"window.open(".$escape."'$0".$escape."'); return false\">$0</a>", $body );
+  $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s\t\n]+)/i', "<a href=\"$0\" onclick=\"window.open(".$escape."'$0".$escape."'); return false\">$0</a>", $body );
   return $body;
 }
 
