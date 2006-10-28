@@ -1,0 +1,5 @@
+AuthType Basic
+AuthName "WebCollab"
+AuthUserFile /etc/apache/passwd/passwords
+AuthGroupFile /etc/apache/passwd/groups
+Require group GroupName
