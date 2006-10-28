@@ -260,13 +260,16 @@ if(isset($_POST['maillist']) && $_POST['maillist'] === 'on' ) {
   }
 }
 
-//don't use the default break-out sequence but go to or the parent's page of the project
+//go back to the project page
 if($parentid != 0 ) {
+  //new task
   header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$parentid );
   die;
 }
 else {
-  header('Location: '.BASE_URL.'main.php?x='.$x );
+  //new project
+  header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$taskid );
   die;
 }
+
 ?>
