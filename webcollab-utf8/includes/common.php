@@ -162,19 +162,6 @@ function box_shorten($body){
 }
 
 //
-// single and double quotes in HTML edit fields are changed to HTML encoding (addslashes doesn't work for HTML)
-//
-function html_escape($body ) {
-
-  //convert HTML
-  $body = strtr($body, array('&apos;'=>"'") );
-  //escape quotes
-  $body = strtr($body, array("'"=>"\\'" ) );
-
-  return $body;
-}
-
-//
 // single quotes in javascript fields are escaped
 // double quotes are changed to HTML (escaping won't work)
 //
@@ -198,7 +185,7 @@ function html_links($body, $database_escape=0 ) {
   //data being submitted to a database needs ('$0') part escaped
   $escape = ($database_escape ) ? '\\' : '';
 
-  $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s]+)/i', "<a href=\"$0\" onclick=\"window.open(".$escape."'$0".$escape."'); return false\">$0</a>", $body );
+  $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s\n\t]+)/i', "<a href=\"$0\" onclick=\"window.open(".$escape."'$0".$escape."'); return false\">$0</a>", $body );
   return $body;
 }
 
