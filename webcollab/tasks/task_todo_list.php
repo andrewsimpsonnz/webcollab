@@ -355,7 +355,7 @@ $q = db_query('SELECT   '.PRE.'tasks.id AS id,
                         WHERE parent<>0
                         AND (status=\'created\' OR status=\'active\')
                         '.$type.$tail.
-                        'ORDER BY'.$no_group.' group_name,'.$task_order );
+                        'ORDER BY '.$no_group.' group_name,'.$task_order );
 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
