@@ -143,18 +143,18 @@ For testing a new character set use:
    $validation_regex = '/([^\x00-\xff])/s';
 
 
-Making the Translation Active
-=============================
+Making the Translation Available to WebCollab
+=============================================
 
-To make the translation active, three files in /lang need to be altered:
+To make the translation active, the following files need to be altered:
+
+In /lang:
 
 1. To 'lang.php', add the line below to the existing list:
 
     case "xx":
     include(BASE."lang/xx_message.php" );
     break;
-
-   (Change xx to suit your language!)
 
 2.  To 'lang_long.php', add the line below to the existing list:
 
@@ -167,4 +167,40 @@ To make the translation active, three files in /lang need to be altered:
     case "xx":
     include(BASE."lang/xx_email.php" );
     break;
+
+
+Making the Translation Appear in Setup
+======================================
+
+To make the translation appear in the automated setup:
+
+1. Look for the following lines (about halfway through file) in /setup/setup3.php:
+
+    $locale_array = array('bg'   =>'Bulgarian',
+                          'ca'   =>'Catalan',
+                          'zh-tw'=>'*Chinese(Traditional)',
+                          'zh-cn'=>'*Chinese (Simplified)',
+                          'cs'   =>'Czech',
+                          'da'   =>'Danish',
+                          'en'   =>'English',
+                          'fr'   =>'French',
+                          'de'   =>'German',
+                          'gr'   =>'Greek',
+                          'hu'   =>'Hungarian',
+                          'it'   =>'Italian',
+                          'ja'   =>'*Japanese',
+                          'ko'   =>'*Korean',
+                          'nl'   =>'Dutch',
+                          'pt-br'=>'Portuguese (Brazilian)',
+                          'ru'   =>'Russian',
+                          'es'   =>'Spanish',
+                          'sr-la'=>'Serbian (Latin)',
+                          'sr-cy'=>'Serbian (Cyrillic)',
+                          'sk'   =>'Slovak',
+                          'se'   =>'Swedish',
+                          'tr'   =>'Turkish' );
+
+2. Add your translation as:
+
+    'xx'  => 'My language name',
 
