@@ -78,7 +78,8 @@
 
 //LANGUAGE
 
-  /* available locales are 'en'    (English)
+  /* available locales are 
+          'en'    (English)
           'bg'    (Bulgarian)
           'ca'    (Catalan)
           'cs'    (Czech)
@@ -92,6 +93,7 @@
           'ja'    (Japanese)
           'ko'    (Korean)
           'no'    (Norwegian)
+          'nl'    (Dutch)
           'pt-br' (Brazilian Portuguese)
           'ru'    (Russian)
           'se'    (Swedish)
