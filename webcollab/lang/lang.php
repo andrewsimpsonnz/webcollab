@@ -97,6 +97,10 @@ switch($locale ) {
     include(BASE.'lang/nl_message.php' );
     break;
 
+  case 'no':
+    include(BASE.'lang/no_message.php' );
+    break;
+
   case 'pt-br':
     include(BASE.'lang/pt-br_message.php' );
     break;
@@ -113,6 +117,10 @@ switch($locale ) {
     include(BASE.'lang/sk_message.php' );
     break;
 
+  case 'sl':
+    include(BASE.'lang/sl_message.php' );
+    break;
+
   case 'sr-cy':
     include(BASE.'lang/sr-cy_message.php' );
     break;
@@ -127,6 +135,10 @@ switch($locale ) {
 
   case 'zh-hk':
     include(BASE.'lang/zh-hk_message.php' );
+    break;
+
+  case 'zh-tw':
+    include(BASE.'lang/zh-tw_message.php' );
     break;
 
   case 'zh-cn':

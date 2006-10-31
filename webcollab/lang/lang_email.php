@@ -88,6 +88,10 @@ switch(LOCALE_USER) {
     include(BASE.'lang/nl_email.php' );
     break;
 
+  case 'no':
+    include(BASE.'lang/no_email.php' );
+    break;
+
   case 'pt-br':
     include(BASE.'lang/pt-br_email.php' );
     break;
@@ -104,6 +108,10 @@ switch(LOCALE_USER) {
     include(BASE.'lang/sk_email.php' );
     break;
 
+  case 'sl':
+    include(BASE.'lang/sl_email.php' );
+    break;
+
   case 'sr-cy':
     include(BASE.'lang/sr-cy_email.php' );
     break;
@@ -118,6 +126,10 @@ switch(LOCALE_USER) {
 
   case 'zh-hk':
     include(BASE.'lang/zh-hk_email.php' );
+    break;
+
+  case 'zh-tw':
+    include(BASE.'lang/zh-tw_email.php' );
     break;
 
   case 'zh-cn':

@@ -154,29 +154,31 @@ $content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></
             "<tr><td></td><td><br />Languages marked with * are only available in the Unicode versions</td></tr>\n".
             "<tr><th>Language:</th><td><select name=\"locale\">\n";
 
-$locale_array = array('bg'   =>'Bulgarian',
-                      'ca'   =>'Catalan',
-                      'zh-tw'=>'*Chinese(Traditional)',
-                      'zh-cn'=>'*Chinese (Simplified)',
-                      'cs'   =>'Czech',
-                      'da'   =>'Danish',
-                      'nl'   =>'Dutch',
-                      'en'   =>'English',
-                      'fr'   =>'French',
-                      'de'   =>'German',
-                      'gr'   =>'Greek',
-                      'hu'   =>'Hungarian',
-                      'it'   =>'Italian',
-                      'ja'   =>'*Japanese',
-                      'ko'   =>'*Korean',
-                      'pt-br'=>'Portuguese (Brazilian)',
-                      'ru'   =>'Russian',
-                      'es'   =>'Spanish',
-                      'sr-la'=>'Serbian (Latin)',
-                      'sr-cy'=>'Serbian (Cyrillic)',
-                      'sk'   =>'Slovak',
-                      'se'   =>'Swedish',
-                      'tr'   =>'Turkish' );
+$locale_array = array('bg'   => 'Bulgarian',
+                      'ca'   => 'Catalan',
+                      'zh-tw'=> '*Chinese(Traditional)',
+                      'zh-hk'=> '*Chinese (Simplified)',
+                      'cs'   => 'Czech',
+                      'da'   => 'Danish',
+                      'nl'   => 'Dutch',
+                      'en'   => 'English',
+                      'fr'   => 'French',
+                      'de'   => 'German',
+                      'gr'   => 'Greek',
+                      'hu'   => 'Hungarian',
+                      'it'   => 'Italian',
+                      'ja'   => '*Japanese',
+                      'ko'   => '*Korean',
+                      'no'   => 'Norwegian',
+                      'pt-br'=> 'Portuguese (Brazilian)',
+                      'ru'   => 'Russian',
+                      'es'   => 'Spanish',
+                      'sr-la'=> 'Serbian (Latin)',
+                      'sr-cy'=> 'Serbian (Cyrillic)',
+                      'sk'   => 'Slovak',
+                      'sl'   => 'Slovenian',
+                      'se'   => 'Swedish',
+                      'tr'   => 'Turkish' );
 
 foreach ($locale_array as $key => $value ) {
   $content .= "<option value=\"".$key."\"";
@@ -266,4 +268,3 @@ new_box_setup( "Setup - Stage 3 of 5 : Configuration", $content, 'boxdata', 'tab
 create_bottom_setup();
 
 ?>
-

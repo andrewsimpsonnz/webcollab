@@ -88,6 +88,10 @@ switch(LOCALE_USER ) {
     include(BASE.'lang/nl_long_message.php' );
     break;
 
+  case 'no':
+    include(BASE.'lang/no_long_message.php' );
+    break;
+
   case 'pt-br':
     include(BASE.'lang/pt-br_long_message.php' );
     break;
@@ -102,6 +106,10 @@ switch(LOCALE_USER ) {
 
   case 'sk':
     include(BASE.'lang/sk_long_message.php' );
+    break;
+
+  case 'sl':
+    include(BASE.'lang/sl_long_message.php' );
     break;
 
   case 'sr-cy':
@@ -120,6 +128,10 @@ switch(LOCALE_USER ) {
     include(BASE.'lang/zh-hk_long_message.php' );
     break;
 
+  case 'zh-tw':
+    include(BASE.'lang/zh-tw_long_message.php' );
+    break;
+
   case 'zh-cn':
     include(BASE.'lang/zh-cn_long_message.php' );
     break;
@@ -130,5 +142,4 @@ switch(LOCALE_USER ) {
 }
 
 ?>
-
 
