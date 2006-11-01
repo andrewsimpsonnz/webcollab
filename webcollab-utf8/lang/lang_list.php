@@ -36,6 +36,7 @@ $lang_list['ca']    = 'Català';
 $lang_list['cs']    = 'Čeština';
 $lang_list['da']    = 'Dansk';
 $lang_list['de']    = 'Deutsch';
+$lang_list['nl']    = 'Dutch';
 $lang_list['en']    = 'English';
 $lang_list['es']    = 'Español';
 $lang_list['fr']    = 'Français';
