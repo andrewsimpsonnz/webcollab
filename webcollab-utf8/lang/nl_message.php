@@ -61,7 +61,7 @@ $week_array = array('Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Zat' );
 //common items
     $lang['description']                = "Beschrijving";
     $lang['name']                       = "Naam";
-    $lang['add']                        = "Toevogen";
+    $lang['add']                        = "Toevoegen";
     $lang['update']                     = "Bijwerken";
     $lang['submit_changes']             = "Wijzigingen indienen";
     $lang['continue']                   = "Doorgaan";
