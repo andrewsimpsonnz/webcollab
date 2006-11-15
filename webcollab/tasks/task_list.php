@@ -38,26 +38,26 @@ include_once(BASE.'tasks/task_common.php' );
 
 //init values
 $content = '';
-
 //
 // Functionalised recursive query
 //
 function list_tasks($parent ) {
 
-  global $x, $parentid, $parent_array;
-  global $task_state, $lang, $epoch, $GID;
-  global $no_group, $task_order;
+  global $x, $parentid, $parent_array, $epoch, $lang;
+  global $taskgroup_flag, $task_state, $ul_flag;
+  global $no_group, $task_order, $GID;
 
+  $status = isset( $_REQUEST['status'] ) ? $_REQUEST['status'] : "active";
   //init values
-  $taskgroup_flag = NULL;
-  $stored_groupid = NULL;
-  $this_content   = '';
-
+  $stored_groupname = NULL;
+  $this_content = '';
+  $ul_flag = 0;
+ 
   //query to get the children for this taskid
   $q = db_query('SELECT '.PRE.'tasks.id AS id,
                   '.PRE.'tasks.name AS name,
                   '.PRE.'tasks.status AS status,
-                  '.PRE.'tasks.finished_time AS finished_time,
+                '.PRE.'tasks.finished_time AS finished_time,
                   '.$epoch.' '.PRE.'tasks.deadline) AS due,
                   '.$epoch.' '.PRE.'tasks.edited) AS edited,
                   '.$epoch.' '.PRE.'tasks.lastforumpost) AS lastpost,
@@ -65,25 +65,32 @@ function list_tasks($parent ) {
                   '.PRE.'tasks.globalaccess AS globalaccess,
                   '.PRE.'tasks.usergroupid AS usergroupid,
                   '.PRE.'tasks.owner AS owner,
-                  '.PRE.'tasks.priority AS priority,
-                  '.PRE.'users.id AS userid,
                   '.PRE.'users.fullname AS username,
-                  '.PRE.'taskgroups.id AS taskgroupid,
-                  '.PRE.'taskgroups.name AS group_name,
-                  '.PRE.'taskgroups.description AS group_description
+                  '.PRE.'users.id AS userid,
+                  '.PRE.'taskgroups.name AS groupname,
+                  '.PRE.'taskgroups.description AS groupdescription
                   FROM '.PRE.'tasks
                   LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
                   LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid)
-                  WHERE '.PRE.'tasks.parent='.$parent.'
-                  ORDER BY '.$no_group.' group_name, '.$task_order );
+                  WHERE '.PRE.'tasks.parent='.$parent.' and '.PRE.'tasks.status="'. mysql_real_escape_string( $status ) .'"
+                  ORDER BY '.$no_group.' groupname, '.$task_order );
 
   //check for any tasks.  If no tasks end recursive function
   if(db_numrows($q) < 1 ) {
-    return;
+    return "No Tasks Found";
+  }
+
+  //determine if the first line will be a task listing or a taskgroup name
+  //if it's a taskgroup name we don't need to set the leading <ul>
+  if( ($taskgroup_flag == 1 ) && ($parent == $parentid ) ) {
+    $this_content .= '';
+  }
+  else {
+    $this_content .= "<ul>";
   }
 
   //show all tasks
-  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
+  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
     //check the user has rights to view this project/task
     if(($row['globalaccess'] != 't' ) && ( $row['usergroupid'] != 0 ) && ($row['owner'] != UID ) && (! ADMIN ) ) {
@@ -91,57 +98,53 @@ function list_tasks($parent ) {
         //do a recursive search if the subtask is listed in parent_array (it has children then)
         if(isset($parent_array[($row['id'])] ) ) {
           $this_content .= list_tasks( $row['id']);
-          $this_content .= "</ul></li>\n";
+          $this_content .= "\n</ul></li>\n";
         }
         continue;
       }
     }
 
-    //check if we have taskgroups to display on first item (and if this is the first layer of tasks)
-    if($taskgroup_flag === NULL) {
-      if(($parent == $parentid ) && ($row['taskgroupid'] ) ) {
-        $this_content  .= '';
-        $taskgroup_flag = 1;
+    //check if there are taskgroups set, and if this is the first layer of tasks
+    if( ($taskgroup_flag == 1 ) && ($parent == $parentid ) ) {
+
+      //set taskgroup name, or 'Uncategorised' if none
+      if( $row['groupname'] == NULL ) {
+        $groupname = $lang['uncategorised'];
       }
       else {
-        $this_content  .= "<ul>\n";
-        $taskgroup_flag = 0;
+        $groupname = $row['groupname'];
       }
-    }
-
-    //check if there are taskgroups set
-    if($taskgroup_flag ) {
 
       //check if taskgroup has changed from last iteration
-      if($stored_groupid !== $row['taskgroupid'] ) {
+      if($stored_groupname != $groupname ) {
 
         //don't need </ul> before first taskgroup heading (no <ul> is set)
-        if($stored_groupid !== NULL ) {
+        if($stored_groupname != NULL ) {
           $this_content .= "</ul>\n";
         }
 
-        $this_content .= "<p><b>";
+        //show taskgroup name
+        $this_content .= "<p><b>".$groupname."</b>";
 
-        //set taskgroup name, or 'Uncategorised' if none
-        if(! $row['group_name']) {
-          $this_content .= $lang['uncategorised']."</b>";
-        }
-        else {
-          $this_content .= $row['group_name']."</b>";
-          //add taskgroup description
-          if($row['group_description']) {
-            $this_content .=  "&nbsp;<i>( ".$row['group_description']." )</i>";
-          }
+        //add taskgroup description
+        if($row['groupdescription'] != NULL ) {
+          $this_content .=  "&nbsp;<i>( ".$row['groupdescription']." )</i>";
         }
 
-        $this_content .= "</p>\n<ul>\n";
+        $this_content .= "</p>\n";
+        $this_content .= "<ul>\n";
 
-        //store current taskgroupid
-        $stored_groupid = $row['taskgroupid'];
+        //store current groupname
+        $stored_groupname = $groupname;
       }
     }
 
-    $this_content  .= "<li>";
+    //tell main progam we have set <ul> (and that we have output to display)
+    $ul_flag = 1;
+
+    $alert_content = '';
+    $status_content = '';
+    $this_content .= "<li>";
 
     //have you seen this task yet ?
     $seen_test = db_result(db_query('SELECT COUNT(*) FROM '.PRE.'seen WHERE taskid='.$row['id'].' AND userid='.UID.' LIMIT 1' ), 0, 0);
@@ -160,7 +163,8 @@ function list_tasks($parent ) {
       switch($seen_test ) {
         case 0:
           //new and never visited by this user
-          $this_content .= "<span class=\"new\">".$lang['new_g']."</span>&nbsp;";
+          //$alert_content .= "<img border=\"0\" src=\"images/new.gif\" height=\"12\" width=\"31\" alt =\"new\" />";
+          $alert_content .= "<span class=\"new\">".$lang['new_g']."</span>&nbsp;";
           break;
 
         default:
@@ -168,49 +172,47 @@ function list_tasks($parent ) {
 
           //check if edited since last visit
           $seen = db_result($seenq, 0, 0 );
-          if(($seen - $row['edited'] ) < 0 ) {
+          if( ($seen - $row['edited'] ) < 0 ) {
             //edited
-            $this_content .= "<span class=\"updated\">".$lang['updated_g']."</span>&nbsp;";
+            //$alert_content .= "<img border=\"0\" src=\"images/updated.gif\" height=\"12\" width=\"60\" alt=\"updated\" /> &nbsp;";
+            $alert_content .= "<span class=\"updated\">".$lang['updated_g']."</span>&nbsp;";
           }
 
           //are there forum changes ?
           if($seen - $row['lastpost'] < 0 ) {
-            $this_content .= "<img src=\"images/comments.png\" height=\"16\" width=\"16\" alt=\"message\" /> &nbsp;";
+            $alert_content .= "<img src=\"images/message.gif\" height=\"10\" width=\"14\" alt=\"message\" /> &nbsp;";
           }
 
           //are there file upload changes ?
           if($seen - $row['lastfileupload'] < 0 ) {
-            $this_content .= "<img src=\"images/disk_multiple.png\" height=\"16\" width=\"16\" alt=\"file\" /> &nbsp;";
+            $alert_content .= "<img src=\"images/file.gif\" height=\"11\" width=\"11\" alt=\"file\" /> &nbsp;";
           }
           break;
        }
     }
 
-    $this_content .= "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a>&nbsp;";
-
     //status
     switch($row['status'] ) {
       case "done":
-        $this_content .= "<span class=\"green\">(".$task_state['completed']." ".nicedate($row['finished_time']).")</span>";
+        $status_content="<span class=\"green\">(".$task_state['completed']." ".nicedate($row['finished_time']).")</span>";
         break;
 
       case "active":
-        $this_content .= "<span class=\"orange\">(".$task_state['active'].")</span>";
+        $status_content="<span class=\"orange\">(".$task_state['active'].")</span>";
         break;
 
       case "notactive":
-        $this_content .= "<span class=\"grey\">(".$task_state['planned'].")</span>";
+        $status_content="<span class=\"grey\">(".$task_state['planned'].")</span>";
         break;
 
       case "cantcomplete":
-        $this_content .= "<span class=\"blue\">(".$task_state['cantcomplete']." ".nicedate($row['finished_time']).")</span>";
+        $status_content="<span class=\"blue\">(".$task_state['cantcomplete']." ".nicedate($row['finished_time']).")</span>";
         break;
-
-      default:
-        break;
-
     }
 
+
+    //merge all info about a task
+    $this_content .= $alert_content."<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a>&nbsp;$status_content";
     $this_content .= "<small>";
 
     //add username if task is taken
@@ -218,7 +220,7 @@ function list_tasks($parent ) {
       $this_content .= "&nbsp;[<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a>]&nbsp;";
     }
     else {
-      $this_content .= "&nbsp;[".$lang['nobody']."]&nbsp;";
+      $this_content .= "&nbsp;";
     }
 
     //add number of days to a task over here
@@ -262,9 +264,9 @@ function list_tasks($parent ) {
     //recursive search if the subtask is listed as a key in parent_array (it has children then)
     if(isset($parent_array[($row['id'])] ) ) {
       $this_content .= list_tasks($row['id'] );
-      $this_content .= "</ul></li>\n";
+      $this_content .= "\n</ul></li>\n";
     }
-    else {
+    else{
       $this_content .= "</li>\n";
     }
   }
@@ -304,6 +306,15 @@ for( $i=0 ; $row = @db_fetch_array($parent_query, $i ) ; ++$i ) {
   $parent_array[($row['parent'])] = $row['parent'];
 }
 
+//check to see if any tasks at this task level have the taskgroup descriptor set.
+//Use this later to toggle the taskgroup headings.
+if( db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent='.$parentid.' AND taskgroupid<>0 LIMIT 1' ), 0, 0 ) > 0 ) {
+  $taskgroup_flag = 1;
+}
+else {
+  $taskgroup_flag = 0;
+}
+
 //force mysql to put 'uncategorised' items at the bottom of the listing
 $no_group = '';
 if(substr(DATABASE_TYPE, 0, 5) == 'mysql' ) {
@@ -314,13 +325,50 @@ if(substr(DATABASE_TYPE, 0, 5) == 'mysql' ) {
 $task_order = db_result(db_query('SELECT task_order FROM '.PRE.'config' ), 0, 0 );
 $task_order = str_replace('ORDER BY', '', $task_order );
 
-$content .= list_tasks($parentid );
+$content  = list_tasks($parentid );
 
 //if there is output, then show it
-if($content ){
+if($ul_flag == 1 ) {
   //finish off the closing </ul>
-  $content .= "</ul>\n";
-  new_box( $lang['tasks'], $content );
+  if( $content == "" ) {
+  	$content .= "No tasks found";
+  }
+  $content .= "\n</ul>\n";
 }
 
+
+/**
+ * Create the menu to view different plan status codes
+ * query to get the number of items for each status
+ */
+	$status = isset( $_REQUEST['status'] ) ? $_REQUEST['status'] : "active";
+	$num_active = db_query('SELECT count(*)
+    	FROM '.PRE.'tasks
+        WHERE '.PRE.'tasks.parent>='.$taskid.' and '.PRE.'tasks.status="active"' );
+	$num_active = db_fetch_array( $num_active );
+	$num_active = $num_active['count(*)'];
+	
+	$num_planned = db_query('SELECT count(*)
+    	FROM '.PRE.'tasks
+        WHERE '.PRE.'tasks.parent>='.$taskid.' and '.PRE.'tasks.status="planned"' );
+	$num_planned = db_fetch_array( $num_planned );
+	$num_planned = $num_planned['count(*)'];
+	
+	$num_planned = db_query('SELECT count(*)
+    	FROM '.PRE.'tasks
+        WHERE '.PRE.'tasks.parent>='.$taskid.' and '.PRE.'tasks.status="planned"' );
+	$num_planned = db_fetch_array( $num_planned );
+	$num_planned = $num_planned['count(*)'];
+  
+  
+  $content .= "
+  </td></tr>
+  <tr style=\"border: 0px; border-top-color:#FFFFFF\"><td>
+  <span class=\"textlink\"><div style=\"text-align: center; background: white; border: 0px;\">
+  [<a href='?action=show&amp;taskid=$taskid&amp;status=active'>Active</a> : $num_active] &nbsp;
+  [<a href='?action=show&amp;taskid=$taskid&amp;status=notactive'>Planned</a> : $num_planned] &nbsp;
+  [<a href='?action=show&amp;taskid=$taskid&amp;status=notactive'>On Hold</a>] &nbsp;
+  [<a href='?action=show&amp;taskid=$taskid&amp;status=done'>Done</a>]</div></span>";
+  
+  new_box( $lang['tasks'], $content );
 ?>
