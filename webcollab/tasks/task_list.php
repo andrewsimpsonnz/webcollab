@@ -306,4 +306,51 @@ if($ul_flag == 1 ){
   new_box( $lang["tasks"], $content );
 }
 
+/**
+ * Create the menu to view different plan status codes
+ * query to get the number of items for each status
+ */
+	$status = isset( $_REQUEST['status'] ) ? $_REQUEST['status'] : "active";
+	
+	$num_active = db_query('SELECT count(*) as numfound
+    	FROM '.PRE.'tasks
+        WHERE '.PRE.'tasks.parent>='.$taskid.' and '.PRE.'tasks.status="active"' );
+	$num_active = db_fetch_array( $num_active );
+	$num_active = $num_active['numfound'];
+	
+	$num_planned = db_query('SELECT count(*) as numfound
+    	FROM '.PRE.'tasks
+        WHERE '.PRE.'tasks.parent>='.$taskid.' and '.PRE.'tasks.status="planned"' );
+	$num_planned = db_fetch_array( $num_planned );
+	$num_planned = $num_planned['numfound'];
+	
+	$num_planned = db_query('SELECT count(*) as numfound
+    	FROM '.PRE.'tasks
+        WHERE '.PRE.'tasks.parent>='.$taskid.' and '.PRE.'tasks.status="planned"' );
+	$num_planned = db_fetch_array( $num_planned );
+	$num_planned = $num_planned['numfound'];
+	
+	$num_done = db_query('SELECT count(*) as numfound
+    	FROM '.PRE.'tasks
+        WHERE '.PRE.'tasks.parent>='.$taskid.' and '.PRE.'tasks.status="done"' );
+	$num_done = db_fetch_array( $num_done );
+	$num_done = $num_done['numfound'];
+	
+	$num_notactive = db_query('SELECT count(*) as numfound
+    	FROM '.PRE.'tasks
+        WHERE '.PRE.'tasks.parent>='.$taskid.' and '.PRE.'tasks.status="notactive"' );
+	$num_notactive = db_fetch_array( $num_notactive );
+	$num_notactive = $num_notactive['numfound'];	
+  
+  
+  $content .= "
+  </td></tr>
+  <tr style=\"border: 0px; border-top-color:#FFFFFF\"><td>
+  <span class=\"textlink\"><div style=\"text-align: center; background: white; border: 0px;\">
+  [<a href='?action=show&amp;taskid=$taskid&amp;status=active'>Active</a> : $num_active] &nbsp;
+  [<a href='?action=show&amp;taskid=$taskid&amp;status=notactive'>Planned</a> : $num_planned] &nbsp;
+  [<a href='?action=show&amp;taskid=$taskid&amp;status=notactive'>On Hold</a>] &nbsp;
+  [<a href='?action=show&amp;taskid=$taskid&amp;status=done'>Done</a> : $num_done]</div></span>";
+  
+  new_box( $lang['tasks'], $content );
 ?>
