@@ -101,9 +101,7 @@ function db_escape_string($string ) {
 //
 function db_numrows($q ) {
 
-  $result = pg_num_rows($q );
-
-return $result;
+  return pg_num_rows($q );
 }
 
 //
@@ -111,9 +109,7 @@ return $result;
 //
 function db_result($q, $row=0, $field=0 ) {
 
-  $result = pg_fetch_result($q, $row, $field );
-
-return $result;
+  return pg_fetch_result($q, $row, $field );
 }
 
 //
@@ -121,9 +117,7 @@ return $result;
 //
 function db_fetch_array($q, $row=0 ) {
 
-  $result_row = pg_fetch_array($q, $row, PGSQL_ASSOC );
-
-return $result_row;
+  return pg_fetch_array($q, $row, PGSQL_ASSOC );
 }
 
 //
@@ -131,9 +125,7 @@ return $result_row;
 //
 function db_fetch_num($q, $row=0 ) {
 
-  $result_row = pg_fetch_row($q, $row );
-
-return $result_row;
+  return pg_fetch_row($q, $row );
 }
 
 //
@@ -143,9 +135,8 @@ function db_lastoid($seq_name ) {
 
   //must be done after an insert, and within a transaction
   $result = db_query('SELECT CURRVAL(\''.$seq_name.'\') AS seq' );
-  $lastoid = pg_fetch_result( $result, 0, 0 );
 
-return $lastoid;
+  return pg_fetch_result( $result, 0, 0 );
 }
 
 //
@@ -154,7 +145,7 @@ return $lastoid;
 function db_data_seek($q ) {
   //nothing happens here!
 
-return TRUE;
+  return TRUE;
 }
 
 //
@@ -164,9 +155,7 @@ function db_free_result($q ){
 
   global $database_connection;
 
-  $result = pg_free_result($q );
-
-return $result;
+  return pg_free_result($q );
 }
 
 //
@@ -176,9 +165,7 @@ function db_begin() {
 
   global $database_connection;
 
-  $result = pg_query($database_connection, 'BEGIN WORK' );
-
-return $result;
+  return pg_query($database_connection, 'BEGIN WORK' );
 }
 
 //
@@ -188,9 +175,7 @@ function db_rollback() {
 
   global $database_connection;
 
-  $result = pg_query($database_connection, 'ROLLBACK WORK' );
-
-return $result;
+  return pg_query($database_connection, 'ROLLBACK WORK' );
 }
 
 //
@@ -200,9 +185,7 @@ function db_commit() {
 
   global $database_connection;
 
-  $result = pg_query($database_connection, 'COMMIT WORK' );
-
-return $result;
+  return pg_query($database_connection, 'COMMIT WORK' );
 }
 
 //
