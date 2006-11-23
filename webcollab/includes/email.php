@@ -480,10 +480,13 @@ function response() {
 
    if(DEBUG === 'Y' ) {
      $time_out = '';
-     $meta = stream_get_meta_data($connection);
 
-     if($meta['timed_out'] ) {
-       $time_out = '<br /><br />Socket timeout has occurred';
+     if($connection ) {
+       $meta = stream_get_meta_data($connection);
+
+       if($meta['timed_out'] ) {
+         $time_out = '<br /><br />Socket timeout has occurred';
+       }
      }
      //we don't use error() because email may not work!
      warning('Email error debug', nl2br($log).$message.$time_out );
