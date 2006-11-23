@@ -24,8 +24,6 @@
 
   Creates a singular interface for mysqli database access.
 
-  Note:  This file is experimental since I have not got the mysqli extension installed.
-
 */
 
 require_once('path.php' );
@@ -34,23 +32,29 @@ require_once('path.php' );
 $database_connection = '';
 $delim = '';
 $epoch = 'UNIX_TIMESTAMP( ';
-$day_part = 'DAYOFMONTH( ';
+$day_part  = 'DAYOFMONTH( ';
+$date_type = '';
 
 //
 // connect to database
 //
 function db_connection() {
 
-  global $database_connection;
+  global $database_connection, $db_error_message;
 
   //make connection
-  if( ! ($database_connection = @mysqli_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME ) ) )
+  if( ! ($database_connection = @mysqli_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME ) ) ) {
+    $db_error_message = mysqli_connect_error();
     error('No database connection',  'Sorry but there seems to be a problem in connecting to the database server');
   }
 
-  //set timezone  
-  if(! mysqli_query("SET time_zone='".sprintf($database_connection, '%+02d:%02d', TZ, (TZ - floor(TZ ) )*60 )."'" ) ) {
-    error("Database error", "Not able to set timezone" );
+  //set transaction mode for innodb
+  @mysqli_autocommit($database_connection, true );
+
+  //set timezone
+  if(! mysqli_query($database_connection, "SET time_zone='".sprintf('%+d:%02d', (int)TZ, (TZ - floor(TZ) )*60 )."'" ) ) {
+    $db_error_message = mysqli_error($database_connection);
+    error("Database error", "Not able to set timezone. <br />Check that your version of MySQL is 4.1.3, or higher" );
   }
 
   return;
@@ -59,7 +63,7 @@ function db_connection() {
 //
 // Provides a safe way to do a query
 //
-function db_query( $query, $dieonerror=1 ) {
+function db_query($query, $die_on_error=1 ) {
 
   global $database_connection, $db_error_message ;
 
@@ -69,8 +73,8 @@ function db_query( $query, $dieonerror=1 ) {
   if( ! ($result = @mysqli_query($database_connection, $query, MYSQLI_STORE_RESULT ) ) ) {
     $db_error_message = mysqli_error($database_connection);
 
-    if($dieonerror == 1 ) {
-     error('Database query error', 'The following query :<br /><br /><b>'.$query.' </b><br /><br />Had the following error:<br /><b>'.mysqli_error($database_connection).'</b>' );
+    if($die_on_error ) {
+      error('Database query error', 'The following query :<br /><br /><b>'.$query.' </b><br /><br />Had the following error:<br /><b>'.mysqli_error($database_connection).'</b>' );
     }
   }
 
@@ -85,13 +89,9 @@ function db_escape_string($string ) {
 
   global $database_connection;
 
-  if(! $database_connection ) {
-    db_connection();
-  }
+  if(! $database_connection ) db_connection();
 
-  $result = mysqli_real_escape_string($database_connection, $string,);
-
-  return $result;
+  return mysqli_real_escape_string($database_connection, $string );
 }
 
 //
@@ -99,9 +99,7 @@ function db_escape_string($string ) {
 //
 function db_numrows($q ) {
 
-  $result = mysqli_num_rows($q );
-
-return $result;
+  return mysqli_num_rows($q );
 }
 
 //
@@ -109,13 +107,11 @@ return $result;
 //
 function db_result($q, $row=0, $field=0 ) {
 
-  if($row > 0 ) {
-    mysqli_data_seek($q, $row );
-  }
+  if($row > 0 ) mysqli_data_seek($q, $row );
 
-  $result_row = mysqli_fetch_array($q, MYSQL_NUM );
+  $result_row = mysqli_fetch_array($q, MYSQLI_NUM );
 
-return $result_row[$field];
+  return $result_row[$field];
 }
 
 //
@@ -123,7 +119,9 @@ return $result_row[$field];
 //
 function db_fetch_array($q, $row=0 ) {
 
-  $result_row = mysqli_fetch_array($q, MYSQL_ASSOC );
+  $result_row = mysqli_fetch_array($q, MYSQLI_ASSOC );
+
+  if($result_row === NULL ) return false;
 
 return $result_row;
 }
@@ -133,7 +131,9 @@ return $result_row;
 //
 function db_fetch_num($q, $row=0 ) {
 
-  $result_row = mysqli_fetch_array($q, MYSQL_NUM );
+  $result_row = mysqli_fetch_array($q, MYSQLI_NUM );
+
+  if($result_row === NULL ) return false;
 
 return $result_row;
 }
@@ -145,9 +145,7 @@ function db_lastoid($seq ) {
 
   global $database_connection;
 
-  $lastoid = mysqli_insert_id($database_connection );
-
-return $lastoid;
+  return mysqli_insert_id($database_connection );
 }
 
 //
@@ -155,12 +153,9 @@ return $lastoid;
 //
 function db_data_seek($q ) {
 
-  if(mysqli_num_rows($q ) == 0 )
-    return TRUE;
+  if(mysqli_num_rows($q ) == 0 ) return true;
 
-  $result = mysqli_data_seek($q, 0 );
-
-return $result;
+  return mysqli_data_seek($q, 0 );
 }
 
 //
@@ -168,9 +163,7 @@ return $result;
 //
 function db_free_result($q ) {
 
-  $result = mysqli_free_result($q );
-
-return $result;
+  return mysqli_free_result($q );
 }
 
 //
@@ -178,9 +171,9 @@ return $result;
 //
 function db_begin() {
 
-  //not implemented with ISAM tables
+  global $database_connection;
 
-return TRUE;
+  return @mysqli_query($database_connection, 'START TRANSACTION' );
 }
 
 //
@@ -188,9 +181,9 @@ return TRUE;
 //
 function db_rollback() {
 
-  //not implemented with ISAM tables
+  global $database_connection;
 
-return TRUE;
+  return @mysqli_rollback($database_connection );
 }
 
 //
@@ -198,21 +191,22 @@ return TRUE;
 //
 function db_commit() {
 
-  //not implemented with ISAM tables
+  global $database_connection;
 
-return TRUE;
+  return @mysqli_commit($database_connection );
 }
 
 //
 //sets the required session client encoding
 //
-function db_user_locale($encoding) {
+function db_user_locale($encoding ) {
 
-  global $database_connection;
+  global $database_connection, $db_error_message;
 
   if(! $database_connection ) db_connection();
 
   switch(strtoupper($encoding ) ) {
+
     case 'ISO-8859-1':
       $my_encoding = 'latin1';
       break;
@@ -248,12 +242,14 @@ function db_user_locale($encoding) {
   }
 
   //set character set -- 1
-  if(! mysqli_query($database_connection , "SET NAMES '".$my_encoding."'" ) ) {
+  if(! @mysqli_query($database_connection, "SET NAMES '".$my_encoding."'" ) ) {
+    $db_error_message = mysqli_error($database_connection);
     error("Database error", "Not able to set ".$my_encoding." client encoding" );
   }
 
   //set character set -- 2
-  if(! mysqli_query($database_connection , "SET CHARACTER SET ".$my_encoding ) ) {
+  if(! @mysqli_query($database_connection, "SET CHARACTER SET ".$my_encoding ) ) {
+    $db_error_message = mysqli_error($database_connection);
     error("Database error", "Not able to set CHARACTER SET : ".$my_encoding );
   }
 
