@@ -40,7 +40,7 @@ $date_type = '';
 //
 function db_connection() {
 
-  global $database_connection;
+  global $database_connection, $db_error_message;
 
   //make connection
   if( ! ($database_connection = @mysql_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD ) ) ) {
@@ -49,7 +49,8 @@ function db_connection() {
 
   //select database
   if( ! @mysql_select_db(DATABASE_NAME, $database_connection ) ) {
-    error('Database error', 'No connection to database tables' );
+    $db_error_message = mysql_error($database_connection );
+    error('Database error', 'Not able to select database tables' );
   }
 
   //set transaction mode for innodb
@@ -58,8 +59,8 @@ function db_connection() {
   }
 
   //set timezone
-  if(! mysql_query("SET time_zone='".sprintf('%+d:%02d', (int)TZ, (TZ - floor(TZ) )*60 )."'",
-$database_connection ) ) {
+  if(! mysql_query("SET time_zone='".sprintf('%+d:%02d', (int)TZ, (TZ - floor(TZ) )*60 )."'", $database_connection ) ) {
+    $db_error_message = mysql_error($database_connection );
     error("Database error", "Not able to set timezone. <br />Check that your version of MySQL is 4.1.3, or higher" );
   }
 
@@ -69,9 +70,9 @@ $database_connection ) ) {
 //
 // Provides a safe way to do a query
 //
-function db_query( $query, $die_on_error=1 ) {
+function db_query($query, $die_on_error=1 ) {
 
-  global $database_connection, $db_error_message ;
+  global $database_connection, $db_error_message;
 
   if(! $database_connection ) db_connection();
 
@@ -94,13 +95,9 @@ function db_escape_string($string ) {
 
   global $database_connection;
 
-  if(! $database_connection ) {
-    db_connection();
-  }
+  if(! $database_connection ) db_connection();
 
- $result = mysql_real_escape_string($string, $database_connection );
-
-  return $result;
+  return mysql_real_escape_string($string, $database_connection );
 }
 
 //
@@ -108,9 +105,7 @@ function db_escape_string($string ) {
 //
 function db_numrows($q ) {
 
-  $result = mysql_num_rows($q );
-
-return $result;
+ return mysql_num_rows($q );
 }
 
 //
@@ -118,9 +113,7 @@ return $result;
 //
 function db_result($q, $row=0, $field=0 ) {
 
-  $result = mysql_result($q, $row, $field );
-
-return $result;
+  return mysql_result($q, $row, $field );
 }
 
 //
@@ -128,9 +121,7 @@ return $result;
 //
 function db_fetch_array($q, $row=0 ) {
 
-  $result_row = mysql_fetch_array($q, MYSQL_ASSOC );
-
-return $result_row;
+ return mysql_fetch_array($q, MYSQL_ASSOC );
 }
 
 //
@@ -138,9 +129,7 @@ return $result_row;
 //
 function db_fetch_num($q, $row=0 ) {
 
-  $result_row = mysql_fetch_row($q );
-
-return $result_row;
+  return mysql_fetch_row($q );
 }
 
 //
@@ -150,9 +139,7 @@ function db_lastoid($seq ) {
 
   global $database_connection;
 
-  $lastoid = mysql_insert_id($database_connection );
-
-return $lastoid;
+  return mysql_insert_id($database_connection );
 }
 
 //
@@ -160,12 +147,9 @@ return $lastoid;
 //
 function db_data_seek($q ) {
 
-  if(mysql_num_rows($q ) == 0 )
-    return TRUE;
+  if(mysql_num_rows($q ) == 0 ) return true;
 
-  $result = mysql_data_seek($q, 0 );
-
-return $result;
+  return mysql_data_seek($q, 0 );
 }
 
 //
@@ -173,9 +157,7 @@ return $result;
 //
 function db_free_result($q ) {
 
-  $result = mysql_free_result($q );
-
-return $result;
+  return mysql_free_result($q );
 }
 
 //
@@ -188,9 +170,7 @@ function db_begin() {
   //not used for ISAM tables
   if(DATABASE_TYPE == 'mysql' ) return true;
 
-  $result = mysql_query('BEGIN' );
-
-return $result;
+  return mysql_query('BEGIN' );
 }
 
 //
@@ -203,9 +183,7 @@ function db_rollback() {
   //not used for ISAM tables
   if(DATABASE_TYPE == 'mysql' ) return true;
 
-  $result = mysql_query('ROLLBACK' );
-
-return $result;
+  return mysql_query('ROLLBACK' );
 }
 
 //
@@ -218,9 +196,7 @@ function db_commit() {
   //not used for ISAM tables
   if(DATABASE_TYPE == 'mysql' ) return true;
 
-  $result = mysql_query('COMMIT' );
-
-return $result;
+  return mysql_query('COMMIT' );
 }
 
 //
@@ -228,7 +204,7 @@ return $result;
 //
 function db_user_locale($encoding ) {
 
-  global $database_connection;
+  global $database_connection, $db_error_message;
 
   if(! $database_connection ) db_connection();
 
@@ -270,11 +246,13 @@ function db_user_locale($encoding ) {
 
   //set character set -- 1
   if(! @mysql_query("SET NAMES '".$my_encoding."'", $database_connection ) ) {
+    $db_error_message = mysql_error($database_connection );
     error("Database error", "Not able to set ".$my_encoding." client encoding" );
   }
 
   //set character set -- 2
   if(! @mysql_query("SET CHARACTER SET ".$my_encoding, $database_connection ) ) {
+    $db_error_message = mysql_error($database_connection );
     error("Database error", "Not able to set CHARACTER SET : ".$my_encoding );
   }
 
