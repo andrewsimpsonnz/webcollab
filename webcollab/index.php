@@ -211,6 +211,7 @@ $content .= "<p>".$lang['please_login'].":</p>\n".
 
   case 'mysql':
   case 'mysql_innodb':
+  case 'mysqli':
     $content .= "<p><a href=\"http://www.mysql.com\"><img src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\" /></a></p>\n";
     break;
 
