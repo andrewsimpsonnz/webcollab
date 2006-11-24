@@ -60,22 +60,26 @@ if(empty($_REQUEST['string'] ) || strlen(trim($_REQUEST['string'] ) ) == 0 ) {
   die;
 }
 
-$string = safe_data($_REQUEST['string'] );
+//1. Safe string
+  $string = safe_data($_REQUEST['string'] );
 
-//1. Escaped string for database
+//2. Escaped string for database
   $db_string = strtr($string, array('%'=>'\%', '_'=>'\_' ) );
 
-//2. Valid string for screen display
+//3. Valid string for screen display
   $valid_string = validate($_REQUEST['string'] );
   $valid_string = substr($valid_string, 0, 100 );
   //convert to HTML and line breaks to match common.php conversion 
   $trans = array('&'=>'&amp;', '<'=>'&lt;', '>'=>'&gt;', '%'=>'&#037;', "\r"=>'', "\n"=>'','"'=>'&quot;', "'"=>'&apos;' );
   $valid_string = strtr($valid_string, $trans );
 
-//3. Quoted string for regex terms
-  $preg_string = preg_quote($valid_string, '/' );
+//4. Quoted string for regex terms
+  $preg_string = preg_quote($string, '/' );
 
-if(! is_numeric($_REQUEST['start']) ) {
+//5. Search string for URL
+  $url_string = htmlspecialchars( urlencode($_REQUEST['string'] ) );
+
+if(! safe_integer($_REQUEST['start']) ) {
   error('Forum search', 'Not a valid integer' );
 }
 $start = $_REQUEST['start'];
@@ -145,7 +149,7 @@ $content .= "<ul>\n";
 
 //search terms for regex
 $replacement = '<span class="red"><b>$0</b></span>';
-$search      = (UNICODE_VERSION) ? '/'.$preg_string.'/isu' : '/'.$preg_string.'/is';
+$search      = (UNICODE_VERSION == 'Y' ) ? '/'.$preg_string.'/isu' : '/'.$preg_string.'/is';
 
 //iterate for posts
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -155,7 +159,12 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
               "[<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".preg_replace($search, $replacement, $row['username'] )."</a>]&nbsp;".
               "(".nicetime($row['posted']).")<br />\n";
 
-  $content .= nl2br(preg_replace($search, $replacement, $row['text'] ) )."</li>\n";
+  //remove WebCollab added tags (links and email)
+  $text = preg_replace('/<a.[^<]+>|<\a>/', '', $row['text'] );
+  //highlight search text
+  $text = preg_replace($search, $replacement, $text);
+
+  $content .= nl2br($text )."</li>\n";
 }
 
 $content .= "</ul>\n";
@@ -187,7 +196,7 @@ if($min > 0 || $max < $total ) {
     }
     else {
       //hyperlink for other pages 
-      $content .= "&nbsp;&nbsp;<span class=\"underline\"><a href=\"forum.php?x=".$x."&amp;action=search&amp;start=".$i."&amp;string=".$string."\">".intval($i/10 + 1)."</a></span>&nbsp;&nbsp;\n";
+      $content .= "&nbsp;&nbsp;<span class=\"underline\"><a href=\"forum.php?x=".$x."&amp;action=search&amp;start=".$i."&amp;string=".$url_string."\">".intval($i/10 + 1)."</a></span>&nbsp;&nbsp;\n";
     }
   }
   $content .= "</td>\n";
