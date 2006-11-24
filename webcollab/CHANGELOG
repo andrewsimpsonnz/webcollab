@@ -4,6 +4,8 @@ WebCollab SVN
 
 - add mysqli support for PHP5
 
+- bugfixes to forum search
+
 WebCollab 2.10a
 *** 8 November 2006
   Andrew Simpson
