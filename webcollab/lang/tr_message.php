@@ -66,7 +66,6 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['update']                     = "Güncelle";
     $lang['submit_changes']             = "Deðiþiklikleri onayla";
     $lang['continue']                   = "Devam et";
-    $lang['reset']                      = "Sýfýrla";
     $lang['manage']                     = "Yönet";
     $lang['edit']                       = "Deðiþtir";
     $lang['delete']                     = "Sil";
@@ -86,7 +85,6 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['login_action']               = "Sisteme gir";
     $lang['login_screen']               = "Giriþ";
     $lang['error']                      = "Hata";
-    $lang['no_login']                   = "Eriþim engellendi; yanlýþ kullanýcý adý ya da þifre";
     $lang['redirect_sprt']              = "%d saniye sonra otomatik olarak sisteme giriþ sayfasýna döneceksiniz";
     $lang['login_now']                  = "Sisteme giriþ sayfasýna þimdi dönmek için lütfen buraya týklayýn";
     $lang['please_login']               = "Lütfen sisteme girin";
@@ -157,14 +155,14 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['max_file_sprt']              = "Yüklenecek dosyanýn boyutu %s kb'tan az olmalý.";
     $lang['file_submit']                = "Dosya onayla";
     $lang['no_upload']                  = "Hiç dosya yüklenmedi. Lütfen geri dönün ve tekrar deneyin.";
-    $lang['file_too_big_sprt']          = "En fazla %s bayt yükleyebilirsiniz. Sizinki fazla büyüktü ve silindi.";
+    $lang['file_too_big_sprt']          = "En fazla %s bayt yükleyebilirsiniz. Dosyanýz fazla büyüktü ve silindi.";
     $lang['del_file_javascript_sprt']   = "%s dosyasýný silmek istediðinizden emin misiniz?";
 
  //forum
     $lang['orig_message']               = "Orijinal mesaj:";
     $lang['post']                       = "Gönder!";
     $lang['message']                    = "Mesaj:";
-    $lang['post_reply_sprt']            = "'%1\$s' kullanýcýsýndan gelen '%2\$s' konulu mesaja yanýt gönder";
+    $lang['post_reply_sprt']            = "'%1\$s' kullanýcýsýndan gelen '%2\$s' '%2\$s' konulu mesaja yanýt gönder";
     $lang['post_message_sprt']          = "'%s': bu kullanýcýya mesaj gönder";
     $lang['forum_email_owner']          = "Forum mesajýný sahibine epostayla gönder?";
     $lang['forum_email_usergroup']      = "Forum mesajýný kullanýcý grubuna epostayla gönder?";
@@ -177,7 +175,6 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['add_reply']                  = "Yanýt ekle";
     $lang['last_post_sprt']             = "Son mesaj: %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']               = "Yakýn zamanda gönderilmiþ forum mesajlarý";
-    $lang['recent_posts']               = "Yeni forum mesajlarý";
     $lang['forum_search']               = "Forum arama";
     $lang['no_results']                 = "'%s' için sonuç bulunamadý";
     $lang['search_results']             = "'%2\$s' için %1\$s sonuç bulundu<br />%3\$s - %4\$s arasýndaki sonuçlar görüntüleniyor";
@@ -200,7 +197,6 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['private_usergroup_no_access']= "Özür dileriz; bu alan özel bir kullanýcý grubundadýr ve eriþim izniniz yok.";
     $lang['invalid_date']               = "Geçersiz tarih";
     $lang['invalid_date_sprt']          = "%s geçerli bir tarih deðil (ay içindeki gün adedini kontrol edin).<br />Lütfen geri dönün ve geçerli bir tarih girin.";
-
 
  //taskgroups
     $lang['taskgroup_name']             = "Görev grubu adý:";
@@ -316,7 +312,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['email_new_owner']            = "(Yeni) sahibine deðiþiklikleri bildiren bir eposta gönderilsin mi?";
     $lang['email_group']                = "Kullanýcý grubuna deðiþiklikleri bildiren bir eposta gönderilsin mi?";
     $lang['add_new_project']            = "Yeni bir proje ekle";
-    $lang['uncategorised']              = "Kategoriye sokulmamamýþ";
+    $lang['uncategorised']              = "Kategoriye sokulmamýþ";
     $lang['due_sprt']                   = "%d gün içinde";
     $lang['tomorrow']                   = "Yarýn";
     $lang['due_today']                  = "En son bugün";
