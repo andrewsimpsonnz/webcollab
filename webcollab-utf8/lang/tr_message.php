@@ -155,7 +155,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['max_file_sprt']              = "Yüklenecek dosyanın boyutu %s kb'tan az olmalı.";
     $lang['file_submit']                = "Dosya onayla";
     $lang['no_upload']                  = "Hiç dosya yüklenmedi. Lütfen geri dönün ve tekrar deneyin.";
-    $lang['file_too_big_sprt']          = "En fazla %s bayt yükleyebilirsiniz. Sizinki fazla büyüktü ve silindi.";
+    $lang['file_too_big_sprt']          = "En fazla %s bayt yükleyebilirsiniz. Dosyanız fazla büyüktü ve silindi.";
     $lang['del_file_javascript_sprt']   = "%s dosyasını silmek istediğinizden emin misiniz?";
 
  //forum
@@ -312,7 +312,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['email_new_owner']            = "(Yeni) sahibine değişiklikleri bildiren bir eposta gönderilsin mi?";
     $lang['email_group']                = "Kullanıcı grubuna değişiklikleri bildiren bir eposta gönderilsin mi?";
     $lang['add_new_project']            = "Yeni bir proje ekle";
-    $lang['uncategorised']              = "Kategoriye sokulmamamış";
+    $lang['uncategorised']              = "Kategoriye sokulmamış";
     $lang['due_sprt']                   = "%d gün içinde";
     $lang['tomorrow']                   = "Yarın";
     $lang['due_today']                  = "En son bugün";
