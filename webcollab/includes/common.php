@@ -137,8 +137,8 @@ function safe_integer($integer ) {
 //
 function box_shorten($body){
 
-  //translate html entities
-  $body = html_entity_decode($body, ENT_QUOTES );
+  //translate html entities before shortening
+  $body = strtr($body, array('&quot;'=>'"', '&apos;'=>"'", '&lt;'=>'<', '&gt;'=>'>', '&amp;'=>'&' ) );
 
   //shorten line to fit box
   $body = substr($body, 0, 20 );
