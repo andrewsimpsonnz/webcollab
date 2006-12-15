@@ -382,9 +382,10 @@ for($num = 1; $num <= $numdays; ++$num ) {
                 else {
                   $name = "<b>".$row['name']."</b>";
                 }
-                $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."; text-decoration:underline\" >".
-                            "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" />".
-                            "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</a></div>\n";
+                $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."\" >".
+                            "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
+                            "<span style=\"text-decoration:underline\">".
+                            "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</a></span></div>\n";
                 break;
 
               default:
@@ -396,7 +397,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
                   $name = $row['name'];
                 }
                 $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."\">".
-                            "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" />".
+                            "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
                             "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</a></div>\n";
                 break;
             }
