@@ -48,7 +48,8 @@ if( @safe_integer($_GET['taskid']) ) {
 
     case '0':
       //project
-      $content .= "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".box_shorten($TASKID_ROW['name'])."<br />\n";
+      $content .= "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
+                   box_shorten($TASKID_ROW['name'])."<br />\n";
       break;
 
     case ($TASKID_ROW['projectid'] ):
@@ -59,7 +60,8 @@ if( @safe_integer($_GET['taskid']) ) {
 
       $content .= "&nbsp; <a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a><br />\n".
                   "<small><b>".$lang['task'].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".box_shorten($TASKID_ROW['name'])."<br />\n";
+                  "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
+                  box_shorten($TASKID_ROW['name'])."<br />\n";
       break;
 
     default:
@@ -74,7 +76,8 @@ if( @safe_integer($_GET['taskid']) ) {
                   "<small><b>".$lang['parent_task'].":</b></small><br />\n".
                   "&nbsp; <a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$TASKID_ROW['parent']."\">".$parent_name."</a><br />\n".
                   "<small><b>".$lang['task'].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" />".$TASKID_ROW['name']."<br />\n";
+                  "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
+                  $TASKID_ROW['name']."<br />\n";
       break;
 
   }
@@ -103,7 +106,8 @@ elseif( @safe_integer($_GET['parentid']) ){
     case '0':
       //new task under project
       $content .= "<small><b>".$lang['task'].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>".$lang['new_task']."</i><br />\n";
+                  "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
+                  "<i>".$lang['new_task']."</i><br />\n";
       break;
 
     default:
@@ -111,7 +115,8 @@ elseif( @safe_integer($_GET['parentid']) ){
       $content .= "<small><b>".$lang['parent_task'].":</b></small><br />\n".
                   "&nbsp; <a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$parentid."\">".$row['name']."</a><br />\n".
                   "<small><b>".$lang['task'].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/arrow.gif\" height=\"8\" width=\"7\" alt=\"arrow\" /><i>".$lang['new_task']."</i><br />\n";
+                  "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
+                  "<i>".$lang['new_task']."</i><br />\n";
       break;
 
   }
