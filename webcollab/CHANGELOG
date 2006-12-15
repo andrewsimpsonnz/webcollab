@@ -1,4 +1,12 @@
 WebCollab SVN
+*** 15 December 2006
+  Andrew Simpson
+
+- minor CSS in-line improvements to calendar and task_navigate
+
+- bugfix: arrow.gif missing from release 2.10a (Bug #1615934) (Credit: Anonymous)
+
+WebCollab SVN
 *** 23 November 2006
   Andrew Simpson
 
