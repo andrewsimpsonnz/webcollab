@@ -98,6 +98,8 @@ $content = "<?php\n".
 "  define('FILE_BASE', '".$filebase."' );\n\n".
 "  //max file size in bytes\n".
 "  define('FILE_MAXSIZE', '".$data["file_maxsize"]."' );\n\n".
+"  //number of file upload boxes to show\n".
+"  define('NUM_FILE_UPLOADS', 3 );\n\n".
 "    /*Note:\n".
 "      1. Make sure the file_base directory exists, and is writeable by the webserver, or you\n".
 "         will not be able to upload any files.\n".

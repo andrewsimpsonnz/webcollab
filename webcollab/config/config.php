@@ -61,6 +61,9 @@
   //max uploaded file size in bytes (2 Mb is the default)
   define('FILE_MAXSIZE', 2000000 );
 
+  //number of file upload boxes to show
+  define('NUM_FILE_UPLOADS', 3 );
+
   /*Note:
     1. Make sure the file_base directory exists, and is writeable by the webserver, or you
        won't be able to upload any files.
