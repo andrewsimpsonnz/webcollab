@@ -41,6 +41,7 @@ if(GUEST ){
 
 //secure variables
 $mail_list = array();
+$upload_success_flag = false;
 
 //update or insert ?
 if(empty($_REQUEST['action']) ){
@@ -55,41 +56,7 @@ ignore_user_abort(TRUE);
     //handle a file upload
     case 'submit_upload':
 
-      //check if there was an upload
-      if( ! is_uploaded_file($_FILES['userfile']['tmp_name'] ) ) {
-        //no file upload occurred
-        switch($_FILES['userfile']['error'] ) {
-          case 1:
-            error($lang['file_submit'], "The uploaded file exceeds the upload_max_filesize directive in php.ini" );
-            break;
-
-          case 2:
-            error($lang['file_submit'], "The uploaded file exceeds maximum allowed file size" );
-            break;
-
-          case 3:
-            warning($lang['file_submit'], "The uploaded file was only partially uploaded" );
-            break;
-
-          case 4:
-            warning($lang['file_submit'], $lang['no_upload'] );
-            break;
-
-          case 6:
-            error($lang['file_submit'], "Missing a temporary folder" );
-            break;
-
-          default:
-            error($lang['file_submit'], "Unknown file upload error with error code ".$_FILES['userfile']['tmp_name'] );
-            break;
-        }
-      }
-
       if(! @safe_integer($_POST['taskid']) ) {
-        //delete any upload before invoking the error function
-        if(is_uploaded_file( $_FILES['userfile']['tmp_name'] ) ) {
-          unlink( $_FILES['userfile']['tmp_name'] );
-        }
         error('File submit', 'Not a valid taskid');
       }
 
@@ -97,6 +64,14 @@ ignore_user_abort(TRUE);
       $description = safe_data_long($_POST['description'] );
       //make email adresses and web links clickable
       $description = html_links($description, 1 );
+
+      //check usergroup security
+      $taskid = usergroup_check($taskid );
+
+      //check the destination directory is writeable by the webserver
+      if( ! is_writable(FILE_BASE.'/' ) ) {
+        error('Configuration error', 'The upload directory does not have write permissions set properly, or the directory does not exist.  File upload has not been accepted.');
+      }
 
       $input_array = array('mail_owner', 'mail_group' );
       foreach($input_array as $var ) {
@@ -108,143 +83,190 @@ ignore_user_abort(TRUE);
         }
       }
 
-      //check usergroup security
-      $taskid = usergroup_check($taskid );
+      //get data for email - if required
+      if($mail_owner || $mail_group ) {
 
-      //check the destination directory is writeable by the webserver
-      if( ! is_writable(FILE_BASE.'/' ) ) {
-        unlink($_FILES['userfile']['tmp_name'] );
-        error('Configuration error', 'The upload directory does not have write permissions set properly, or the directory does not exist.  File upload has not been accepted.');
-      }
+        //get task data
+        $q = db_query('SELECT '.PRE.'tasks.name AS name,
+                              '.PRE.'tasks.usergroupid AS usergroupid,
+                              '.PRE.'tasks.projectid AS projectid,
+                              '.PRE.'users.email AS email
+                              FROM '.PRE.'tasks
+                              LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.owner='.PRE.'users.id)
+                              WHERE '.PRE.'tasks.id='.$taskid.' LIMIT 1' );
 
-      //check for zero length files
-      if($_FILES['userfile']['size'] == 0 ) {
-        unlink($_FILES['userfile']['tmp_name'] );
-        warning($lang['file_submit'], $lang['no_upload'] );
-      }
+        $task_row = db_fetch_array($q, 0 );
 
-      //check for ridiculous uploads
-      if($_FILES['userfile']['size'] > FILE_MAXSIZE ) {
-        unlink($_FILES['userfile']['tmp_name'] );
-        warning($lang['file_submit'], sprintf( $lang['file_too_big_sprt'], FILE_MAXSIZE ) );
-      }
+        $project = db_result(db_query('SELECT name FROM tasks WHERE id='.$task_row['projectid'].' LIMIT 1' ), 0, 0 );
 
-      //check for dangerous file uploads
-     if(preg_match('/\.(php|php3|php4|js|asp)$/', $_FILES['userfile']['name'] ) ) {
-            unlink($_FILES['userfile']['tmp_name'] );
-            error('File submit', 'The file types .php, .php3, .php4, .js and .asp are not acceptable for security reasons. You must either rename or compress the file.');
-      }
+        //set owner's email
+        if($task_row['email'] && $mail_owner ) {
+          $mail_list[] = $task_row['email'];
+        }
 
-      if(empty($_FILES['userfile']['type']) || $_FILES['userfile']['type'] == '' ) {
-        $mime = "application/octet-stream";
-      }
-      else {
-        $mime = $_FILES['userfile']['type'];
-      }
+        //if usergroup set, add the user list
+        if($task_row['usergroupid'] && $mail_group ){
+          $q = db_query('SELECT '.PRE.'users.email
+                                FROM '.PRE.'users
+                                LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
+                                WHERE '.PRE.'usergroups_users.usergroupid='.$task_row['usergroupid'].
+                                ' AND '.PRE.'users.deleted=\'f\'' );
 
-      //okay accept file
-      db_begin();
-
-      //validate characters in filename
-      $filename = validate($_FILES['userfile']['name'] );
-
-      //limit file name to 200 characters - should be enough for any sensible(!) file name :-)
-      $filename = substr($filename, 0, 200 );
-      //strip illegal characters
-      $filename = preg_replace('/[\x00-\x2a\x2f\x3a-\x3c\x3e-\x3f\x5c\x5e\x60\x7b-\x7e]|[\.]{2}/', '_', $filename );
-
-      //escape for database
-      $db_filename = db_escape_string($filename );
-
-      //alter file database administration
-      $q = db_query( "INSERT INTO ".PRE."files (filename,
-                                            size,
-                                            description,
-                                            uploaded,
-                                            uploader,
-                                            taskid,
-                                            mime )
-                                    VALUES ('$db_filename',
-                                            ".$_FILES['userfile']['size'].",
-                                            '$description',
-                                            now(),
-                                            ".UID.",
-                                            $taskid,
-                                            '".$mime."' )" );
-
-      //get last insert id
-      $fileid = db_lastoid('files_id_seq' );
-
-      //copy it
-      if( ! move_uploaded_file( $_FILES['userfile']['tmp_name'], FILE_BASE.'/'.$fileid.'__'.$filename ) ) {
-        db_query('DELETE FROM '.PRE.'files WHERE id='.$fileid );
-        unlink($_FILES['userfile']['tmp_name'] );
-        db_rollback();
-        error('File submit', 'Internal error: The file cannot be moved to filebase directory, deleting upload' );
-      }
-
-      //set the fileid in the database
-      db_query('UPDATE '.PRE.'files SET fileid='.$fileid.' WHERE id='.$fileid );
-
-      //alter task lastfileupload
-      db_query('UPDATE '.PRE.'tasks SET lastfileupload=now() WHERE id='.$taskid );
-
-      //make the file non-executable for security
-      chmod(FILE_BASE.'/'.$fileid.'__'.$filename, 0644 );
-
-      //success!
-      db_commit();
-
-      //get task data
-      $q = db_query('SELECT '.PRE.'tasks.name AS name,
-                            '.PRE.'tasks.usergroupid AS usergroupid,
-                            '.PRE.'tasks.projectid AS projectid,
-                            '.PRE.'users.email AS email
-                            FROM '.PRE.'tasks
-                            LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.owner='.PRE.'users.id)
-                            WHERE '.PRE.'tasks.id='.$taskid.' LIMIT 1' );
-
-      $task_row = db_fetch_array($q, 0 );
-
-      $project = db_result(db_query('SELECT name FROM tasks WHERE id='.$task_row['projectid'].' LIMIT 1' ), 0, 0 );
-
-      //set owner's email
-      if($task_row['email'] && $mail_owner ) {
-        $mail_list[] = $task_row['email'];
-      }
-
-      //if usergroup set, add the user list
-      if($task_row['usergroupid'] && $mail_group ){
-        $q = db_query('SELECT '.PRE.'users.email
-                              FROM '.PRE.'users
-                              LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
-                              WHERE '.PRE.'usergroups_users.usergroupid='.$task_row['usergroupid'].
-                              ' AND '.PRE.'users.deleted=\'f\'' );
-
-        for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-          $mail_list[] = $row[0];
+          for( $j=0 ; $row = @db_fetch_num($q, $j ) ; ++$j ) {
+            $mail_list[] = $row[0];
+          }
         }
       }
 
-      //do we need to email?
-      if(sizeof($mail_list) > 0 ){
-        include_once(BASE.'includes/email.php' );
-        include_once(BASE.'lang/lang_email.php' );
+      //now start looking at each uploaded file...
+      for($i = 0; $i < NUM_FILE_UPLOADS; ++$i ) {
 
-        $message_unclean = $_POST['description'];
-
-        //get rid of magic_quotes - it is not required here
-        if(get_magic_quotes_gpc() ) {
-          $message_unclean = stripslashes($message_unclean );
+        //check if there was an upload
+        if( ! is_uploaded_file($_FILES['userfile']['tmp_name'][$i] ) ) {
+          //no file upload occurred
+          continue;
         }
 
-        //get & add the mailing list
-        if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
-          $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
+        //check for any uploading errors
+        switch($_FILES['userfile']['error'][$i] ) {
+          case 0:
+            //normal upload
+            break;
+
+          case 1:
+            error($lang['file_submit'], "Uploaded file ".($i+1)." exceeds the upload_max_filesize directive in php.ini" );
+            break;
+
+          case 2:
+            error($lang['file_submit'], "Uploaded file ".($i+1)." exceeds maximum allowed file size" );
+            break;
+
+          case 3:
+            warning($lang['file_submit'], "Uploaded file ".($i+1)." was only partially uploaded" );
+            break;
+
+          case 4:
+            warning($lang['file_submit'], $lang['no_upload'] );
+            break;
+
+          case 6:
+            error($lang['file_submit'], "Missing a temporary folder" );
+            break;
+
+          case 7:
+              error($lang['file_submit'], "Failed to write file to disk" );
+              break;
+
+          case 8:
+              error($lang['file_submit'], "File upload stopped by extension" );
+              break;
+
+            default:
+              error($lang['file_submit'], "Unknown file upload error on file ".($i+1)." with error code ".$_FILES['userfile']['error'][$i] );
+              break;
         }
-        email($mail_list, sprintf($title_file_post, $task_row['name'] ), sprintf($email_file_post, UID_NAME, $_FILES['userfile']['name'], $message_unclean, $project, $task_row['name'], 'index.php?taskid='.$taskid ) );
+
+        //check for zero length files
+        if($_FILES['userfile']['size'][$i] == 0 ) {
+          unlink($_FILES['userfile']['tmp_name'][$i] );
+          warning($lang['file_submit'], $lang['no_upload'] );
+        }
+
+        //check for ridiculous uploads
+        if($_FILES['userfile']['size'][$i] > FILE_MAXSIZE ) {
+          unlink($_FILES['userfile']['tmp_name'][$i] );
+          warning($lang['file_submit'], sprintf( $lang['file_too_big_sprt'], FILE_MAXSIZE ) );
+        }
+
+        //check for dangerous file uploads
+      if(preg_match('/\.(php|php3|php4|js|asp)$/', $_FILES['userfile']['name'][$i] ) ) {
+              unlink($_FILES['userfile']['tmp_name'][$i] );
+              error('File submit', 'The file types .php, .php3, .php4, .js and .asp are not acceptable for security reasons. You must either rename or compress the file.');
+        }
+
+        if(empty($_FILES['userfile']['type'][$i] ) || $_FILES['userfile']['type'][$i] == '' ) {
+          $mime = "application/octet-stream";
+        }
+        else {
+          $mime = $_FILES['userfile']['type'][$i];
+        }
+
+        //okay accept file
+        db_begin();
+
+        //validate characters in filename
+        $filename = validate($_FILES['userfile']['name'][$i] );
+
+        //limit file name to 200 characters - should be enough for any sensible(!) file name :-)
+        $filename = substr($filename, 0, 200 );
+        //strip illegal characters
+        $filename = preg_replace('/[\x00-\x2a\x2f\x3a-\x3c\x3e-\x3f\x5c\x5e\x60\x7b-\x7e]|[\.]{2}/', '_', $filename );
+
+        //escape for database
+        $db_filename = db_escape_string($filename );
+
+        //alter file database administration
+        $q = db_query( "INSERT INTO ".PRE."files (filename,
+                                              size,
+                                              description,
+                                              uploaded,
+                                              uploader,
+                                              taskid,
+                                              mime )
+                                      VALUES ('$db_filename',
+                                              ".$_FILES['userfile']['size'][$i].",
+                                              '$description',
+                                              now(),
+                                              ".UID.",
+                                              $taskid,
+                                              '".$mime."' )" );
+
+        //get last insert id
+        $fileid = db_lastoid('files_id_seq' );
+
+        //copy it
+        if( ! move_uploaded_file( $_FILES['userfile']['tmp_name'][$i], FILE_BASE.'/'.$fileid.'__'.$filename ) ) {
+          db_query('DELETE FROM '.PRE.'files WHERE id='.$fileid );
+          unlink($_FILES['userfile']['tmp_name'][$i] );
+          db_rollback();
+          error('File submit', 'Internal error: The file cannot be moved to filebase directory, deleting upload' );
+        }
+
+        //set the fileid in the database
+        db_query('UPDATE '.PRE.'files SET fileid='.$fileid.' WHERE id='.$fileid );
+
+        //alter task lastfileupload
+        db_query('UPDATE '.PRE.'tasks SET lastfileupload=now() WHERE id='.$taskid );
+
+        //make the file non-executable for security
+        chmod(FILE_BASE.'/'.$fileid.'__'.$filename, 0644 );
+
+        //success!
+        db_commit();
+
+        //do we need to email?
+        if(sizeof($mail_list) > 0 ){
+          include_once(BASE.'includes/email.php' );
+          include_once(BASE.'lang/lang_email.php' );
+
+          $message_unclean = $_POST['description'];
+
+          //get rid of magic_quotes - it is not required here
+          if(get_magic_quotes_gpc() ) {
+            $message_unclean = stripslashes($message_unclean );
+          }
+
+          //get & add the mailing list
+          if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
+            $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
+          }
+          email($mail_list, sprintf($title_file_post, $task_row['name'] ), sprintf($email_file_post, UID_NAME, $_FILES['userfile']['name'][$i], $message_unclean, $project, $task_row['name'], 'index.php?taskid='.$taskid ) );
+        }
+
+        //record at least one succesful file upload
+        $upload_success_flag = true;
       }
-
+      if( ! $upload_success_flag ) warning($lang['file_submit'], $lang['no_upload'] );
       break;
 
     case 'submit_del':
