@@ -44,6 +44,64 @@ include_once(BASE.'tasks/task_submit.php' );
 //secure variables
 $usergroup_mail = array();
 
+
+
+function reparent_child_check($taskid, $new_parentid, $projectid) {
+
+  global $task_array, $parent_array, $task_count;
+
+  $task_array   = array();
+  $parent_array = array();
+  $task_count = 0;
+  $state = false;
+
+  $q = db_query('SELECT id, parent FROM '.PRE.'tasks WHERE projectid='.$projectid );
+
+  for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
+
+    //put values into array
+    $task_array[$i]['id'] = $row['id'];
+    $task_array[$i]['parent'] = $row['parent'];
+    ++$task_count;
+
+    //if this is a subtask, store the parent id
+    if($row['parent'] != 0 ) {
+      $parent_array[($row['parent'])] = $row['parent'];
+    }
+  }
+
+  //if selected task has children (subtasks), iterate recursively to find them
+  if(isset($parent_array[($taskid)] ) ) {
+    $state = find_children($taskid, $new_parentid );
+  }
+  return $state;
+}
+
+//
+// List subtasks (recursive function)
+//
+function find_children($parent, $new_parentid ) {
+
+  global $task_array, $parent_array, $task_count;
+
+  for($i=0 ; $i < $task_count ; ++$i ) {
+
+    if($task_array[$i]['parent'] != $parent ) {
+      continue;
+    }
+
+    //see if new parentid is an existing child
+    if($new_parentid = $task_array[$i]['id'] ) return true;
+
+    //if this post has children (subtasks), iterate recursively to find them
+    if(isset($parent_array[($task_array[$i]['id'])] ) ) {
+      find_children($task_array[$i]['id'] );
+    }
+  }
+  return false;
+}
+
+
 //
 // Recursive function to find chldren tasks and reset their projectid's
 //
@@ -180,8 +238,8 @@ if($row['parent'] != $parentid ) {
     $projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$parentid.' LIMIT 1' ), 0, 0 );
   }
 
-  //can't put a project onto it's own tasks
-  if(($projectid == $row['projectid'] ) && ($row['parent'] == 0 ) ){
+  //can't put a project onto it's own tasks _OR_ re-parent a task under it's own children
+  if((($projectid == $row['projectid'] ) && ($row['parent'] == 0 ) ) || reparent_child_check($taskid, $parentid, $projectid ) ) {
     //do nothing
   }
   else {
