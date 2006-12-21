@@ -2,6 +2,8 @@ WebCollab SVN
 *** 15 December 2006
   Andrew Simpson
 
+- refactor code to allow for multiple file uploads
+
 - minor CSS in-line improvements to calendar and task_navigate
 
 - bugfix: arrow.gif missing from release 2.10a (Bug #1615934) (Credit: Anonymous)
