@@ -121,7 +121,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
     case 'cantcomplete':
       $content .= "<i>".sprintf($lang['project_hold_sprt'], nicetime($row['finished_time']) )."</i><br />\n";
-      $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )."<br />\n";
+      $content .= "<img src=\"images/time.png\" height=\"16\" width=\"16\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )."<br />\n";
       break;
 
     case 'notactive':
@@ -136,7 +136,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
     case 'active':
     default:
       $content .= sprintf($lang['percent_sprt'], $row['completed'] )."<br />\n";
-      $content .= "<img src=\"images/clock.gif\" height=\"9\" width=\"9\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )."<br />";
+      $content .= "<img src=\"images/time.png\" height=\"16\" width=\"16\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )."<br />";
       break;
   }
   if(ADMIN || UID == $row['owner'] ){
