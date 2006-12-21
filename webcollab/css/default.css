@@ -3,7 +3,7 @@ BODY {
   font-size : 12px;
   margin : 0;
   padding : 0;
-  background : #6085AC;
+  background-color : #6085AC;
   color : #000000;
 }
 
@@ -74,14 +74,14 @@ TABLE.celldata {
 
 /* Table with grey highlight background */
 TABLE.decoration {
-  background: #dddddd;
+  background-color: #dddddd;
   border: solid black 1px;
   color : #000000;
 }
 
 /* Class for project row on summary page */
 TR.projectrow {
-  background : #dddddd;
+  background-color : #dddddd;
   border-bottom : 1px solid #333;
   font-weight : bold;
 }
@@ -97,7 +97,7 @@ TD.masthead {
   padding-top : 4px;
   padding-left : 3px;
   height : 20px;
-  background : #000000;
+  background-color : #000000;
   color : #EEEEEE;
 }
 
@@ -108,7 +108,7 @@ TD.boxhead {
   border-width : 0;
   border-collapse : collapse;
   padding : 3px;
-  background : #1e4b79;
+  background-color : #1e4b79;
   color : #ffffff;
 }
 
@@ -118,7 +118,7 @@ TD.boxmenu {
   border-width : 0;
   border-collapse : collapse;
   padding : 3px;
-  background : #ffffff;
+  background-color : #ffffff;
   color : #000000;
 }
 
@@ -131,7 +131,7 @@ TD.boxdata {
   padding-left : 5px;
   padding-right : 15px;
   padding-bottom : 20px;
-  background : #ffffff;
+  background-color : #ffffff;
   color : #000000;
 }
 
@@ -146,7 +146,7 @@ TD.boxdata2 {
   padding-left : 5px;
   padding-right : 15px;
   padding-bottom : 5px;
-  background : #ffffff;
+  background-color : #ffffff;
   color : #000000;
 }
 
@@ -159,7 +159,7 @@ TD.projectlist {
   padding-left : 35px;
   padding-right : 15px;
   padding-bottom : 20px;
-  background : #ffffff;
+  background-color : #ffffff;
   color : #000000;
 }
 
@@ -172,13 +172,13 @@ TD.grouplist {
   padding-left : 5px;
   padding-right : 5px;
   padding-bottom : 5px;
-  background : #ffffff;
+  background-color : #ffffff;
   color : #000000;
 }
 
 /* Cell with grey background */
 TD.textbackground {
-  background : #eeeeee;
+  background-color : #eeeeee;
   color : #000000;
 }
 
@@ -188,7 +188,7 @@ TD.greenbar {
   border-collapse : collapse;
   white-space : nowrap;
   height : 4px;
-  background : #008B45;
+  background-color : #008B45;
   color : #000000;
 }
 
@@ -198,7 +198,7 @@ TD.redbar {
   border-collapse : collapse;
   white-space : nowrap;
   height : 5px;
-  background : #FFA500;
+  background-color : #FFA500;
   color : #000000;
 }
 
@@ -214,7 +214,7 @@ TD.redbar {
   padding-left : 6px;
   padding-bottom : 10px;
   color : #1e4b79;
-  background : transparent;
+  background-color : transparent;
 }
 
 /* Font for text based hyperlinks in [brackets] */
@@ -228,7 +228,7 @@ TD.redbar {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 9px;
   font-weight : bold;
-  background : #FF0000;
+  background-color : #FF0000;
   color : #FFFFFF;
 }
 
@@ -237,7 +237,7 @@ TD.redbar {
   font-size : 9px;
   font-weight : bold;
   font-style : italic;
-  background : #00FF7F;
+  background-color : #00FF7F;
   color : #000000;
 }
 
@@ -253,50 +253,50 @@ TD.redbar {
 .green {
   color : #006400;
   font-weight : bold;
-  background : transparent;
+  background-color : transparent;
 }
 
 /* Class for orange text */
 .orange {
   color : #FFA500;
   font-weight : bold;
-  background : transparent;
+  background-color : transparent;
 }
 
 /* Class for grey text */
 .grey {
   color : #BEBEBE;
-  background : transparent;
+  background-color : transparent;
 }
 
 /* Class for blue text */
 .blue {
   color : #0000FF;
   font-weight : bold;
-  background : transparent;
+  background-color : transparent;
 }
 
 /* Class for red text */
 .red {
   color : #FF0000;
   font-weight : bold;
-  background : transparent;
+  background-color : transparent;
 }
 
 a:link {
   color : #003399;
-  background : transparent;
+  background-color : transparent;
   text-decoration : none;
 }
 
 a:visited {
   color : #003399;
-  background : transparent;
+  background-color : transparent;
   text-decoration : none;
 }
 
 a:hover {
   color : #cc0000;
-  background : transparent;
+  background-color : transparent;
   text-decoration : none;
 }
