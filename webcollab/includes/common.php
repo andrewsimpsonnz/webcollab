@@ -180,9 +180,9 @@ function html_links($body, $database_escape=0 ) {
   $body = preg_replace('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', "<a href=\"mailto:$0\">$0</a>", $body );
 
   //data being submitted to a database needs ('$0') part escaped
-  $escape = ($database_escape ) ? '\\' : '';
+  $quote = ($database_escape ) ? db_escape_string("'") : "'";
 
-  $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s\t\n]+)/i', "<a href=\"$0\" onclick=\"window.open(".$escape."'$0".$escape."'); return false\">$0</a>", $body );
+  $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s\t\n]+)/i', "<a href=\"$0\" onclick=\"window.open(".$quote."$0".$quote."); return false\">$0</a>", $body );
   return $body;
 }
 
