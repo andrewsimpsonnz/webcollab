@@ -64,8 +64,9 @@ require_once(BASE.'setup/security_setup.php' );
     $database_host = 'localhost';
   }
 
-  if(preg_match('/[^A-Z0-9_$]/i', $database_name ) ){
-    error_setup("Database names can only consist of alphanumeric characters, '_' (underscore), and '$'."); 
+  if(preg_match('/[^A-Z0-9_\-$]/i', $database_name ) ){
+    error_setup("Database names can only consist of alphanumeric characters, '_' (underscore), and '$'.<br />".
+                "The '-' (dash) should only be used in the domain name part of remote databases." );
   }
 
   switch ($database_type) {
