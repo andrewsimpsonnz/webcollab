@@ -92,30 +92,36 @@ function validate($body ) {
     $body = stripslashes($body );
   }
 
-  $max   = mb_strlen($body);
-  $clean = '';
-  //this ugly size limiting hack is because preg_match_all() crashes on very long strings...
-  for($i=0; $i < $max; $i=($i+1000) ) {
+  //check for control characters or multibyte UTF-8
+  if(preg_match('/[^\x09\x0a\x0d\x20-\x7e]/', $body ) ) {
 
-    $part = mb_substr($body, $i, 1000 );
+    //scan the multibyte characters for malformed UTF-8
+    $max   = mb_strlen($body);
+    $clean = '';
+    //this ugly size limiting hack is because preg_match_all() crashes on very long strings...
+    for($i=0; $i < $max; $i=($i+1000) ) {
 
-    //allow only normal UTF-8 characters up to U+10000, which is the limit of 3 byte characters
-    // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )
-    preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                         // ASCII characters
-                  '|[\xc2-\xdf][\x80-\xbf]'.                            // 2-byte UTF-8 (except overly longs)
-                  '|\xe0[\xa0-\xbf][\x80-\xbf]'.                        // 3 byte (except overly longs)
-                  '|[\xe1-\xec\xee\xef][\x80-\xbf]{2}'.                 // 3 byte (except overly longs)
-                  '|\xed[\x80-\x9f][\x80-\xbf])+/', $part, $ar );       // 3 byte (except UTF-16 surrogates)
+      $part = mb_substr($body, $i, 1000 );
 
-    $clean .= join('?', $ar[0] );
+      //allow only normal UTF-8 characters up to U+10000, which is the limit of 3 byte characters
+      // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )
+      preg_match_all('/([\x09\x0a\x0d\x20-\x7e]'.                         // ASCII characters
+                    '|[\xc2-\xdf][\x80-\xbf]'.                            // 2-byte UTF-8 (except overly longs)
+                    '|\xe0[\xa0-\xbf][\x80-\xbf]'.                        // 3 byte (except overly longs)
+                    '|[\xe1-\xec\xee\xef][\x80-\xbf]{2}'.                 // 3 byte (except overly longs)
+                    '|\xed[\x80-\x9f][\x80-\xbf])+/', $part, $ar );       // 3 byte (except UTF-16 surrogates)
+
+      $clean .= join('?', $ar[0] );
+    }
+    return $clean;
   }
-  return $clean;
+  return $body;
 }
 
 function clean_up($body ) {
 
   //change '&' to '&amp;' except when part of an entity, or already changed
-  $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
+  $body = preg_replace('/&(?!amp;)/', '&amp;', $body );
   //convert quotes to HTML for XHTML compliance
   $body = strtr($body, array('"'=>'&quot;', "'"=>'&apos;') );
 
@@ -146,16 +152,13 @@ function safe_integer($integer ) {
 function box_shorten($body){
 
   //translate html entities before shortening
-  $body = strtr($body, array('&quot;'=>'"', '&apos;'=>"'", '&lt;'=>'<', '&gt;'=>'>', '&amp;'=>'&' ) );
+  $body = strtr($body, array('&quot;'=>'"', '&apos;'=>"'", '&lt;'=>'<', '&gt;'=>'>', '&amp;'=>'&', '&#037;'=>'%' ) );
 
   //shorten line to fit box
   $body = mb_strimwidth($body, 0, 20, '..' );
 
-  //change '&' to '&amp;' except when part of an entity, or already changed
-  $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
-
   //use HTML encoding for characters that could be used for xss <script>
-  $trans = array('<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', "'"=>'&apos;' );
+  $trans = array('<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', "'"=>'&apos;', '%'=>'&#037;' );
   $body  = strtr($body, $trans );
 
   return $body;
@@ -183,9 +186,9 @@ function html_links($body, $database_escape=0 ) {
   $body = preg_replace('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', "<a href=\"mailto:$0\">$0</a>", $body );
 
   //data being submitted to a database needs ('$0') part escaped
-  $escape = ($database_escape ) ? '\\' : '';
+  $quote = ($database_escape ) ? db_escape_string("'") : "'";
 
-  $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s\n\t]+)/i', "<a href=\"$0\" onclick=\"window.open(".$escape."'$0".$escape."'); return false\">$0</a>", $body );
+  $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s\n\t]+)/i', "<a href=\"$0\" onclick=\"window.open(".$quote."$0".$quote."); return false\">$0</a>", $body );
   return $body;
 }
 
