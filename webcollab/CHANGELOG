@@ -1,4 +1,16 @@
 WebCollab SVN
+*** 26 December 2006
+  Andrew Simpson
+
+- bugfix: clock.gif missing from archive_list and project_list
+
+- bugfix for Internet Explorer:  Change HTML entity for apostrophe from &apos; to &#039;
+
+- bugfix: allow dash ('-') in MySQL database build (not strictly legal, but some database providers require it)
+
+- improvements to character validation in UTF-8 version
+
+WebCollab SVN
 *** 15 December 2006
   Andrew Simpson
 
