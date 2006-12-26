@@ -109,7 +109,7 @@ function clean_up($body ) {
   //change '&' to '&amp;' except when part of an entity, or already changed
   $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
   //convert quotes to HTML for XHTML compliance
-  $body = strtr($body, array('"'=>'&quot;', "'"=>'&apos;') );
+  $body = strtr($body, array('"'=>'&quot;', "'"=>'&#039;') );
 
   //prevent SQL injection
   $body = db_escape_string($body );
@@ -138,7 +138,7 @@ function safe_integer($integer ) {
 function box_shorten($body){
 
   //translate html entities before shortening
-  $body = strtr($body, array('&quot;'=>'"', '&apos;'=>"'", '&lt;'=>'<', '&gt;'=>'>', '&amp;'=>'&' ) );
+  $body = strtr($body, array('&quot;'=>'"', '&#039;'=>"'", '&lt;'=>'<', '&gt;'=>'>', '&amp;'=>'&' ) );
 
   //shorten line to fit box
   $body = substr($body, 0, 20 );
@@ -149,7 +149,7 @@ function box_shorten($body){
   $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
 
   //use HTML encoding for characters that could be used for xss <script>
-  $trans = array('<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', "'"=>'&apos;' );
+  $trans = array('<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', "'"=>'&#039;' );
   $body  = strtr($body, $trans );
 
   return $body;
@@ -157,12 +157,12 @@ function box_shorten($body){
 
 //
 // single quotes in javascript fields are escaped
-// double quotes are changed to HTML (escaping won't work) 
+// double quotes are left as HTML (escaping won't work) 
 //
 function javascript_escape($body ) {
 
   //convert HTML
-  $body = strtr($body, array('&apos;'=>"'") );
+  $body = strtr($body, array('&#039;'=>"'") );
   //escape quotes
   $body = strtr($body, array("'"=>"\\'" ) );
 

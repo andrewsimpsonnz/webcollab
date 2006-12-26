@@ -242,7 +242,7 @@ debug		Debug!
 function & clean($text ) {
 
   //characters previously escaped/encoded to avoid SQL injection/CSS attacks are reinstated.
-  $trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=', '&apos;'=>"'" );
+  $trans = array('\;'=>';', '\('=>'(', '\)'=>')', '\+'=>'+', '\-'=>'-', '\='=>'=', '&#039;'=>"'" );
   $text  = strtr($text, $trans );
 
   $text  = @html_entity_decode($text, ENT_QUOTES , CHARACTER_SET );
