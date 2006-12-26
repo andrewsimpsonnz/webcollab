@@ -113,7 +113,7 @@ function validate($body ) {
 
       $clean .= join('?', $ar[0] );
     }
-    return $clean;
+    $body = $clean;
   }
   return $body;
 }
@@ -123,7 +123,7 @@ function clean_up($body ) {
   //change '&' to '&amp;' except when part of an entity, or already changed
   $body = preg_replace('/&(?!amp;)/', '&amp;', $body );
   //convert quotes to HTML for XHTML compliance
-  $body = strtr($body, array('"'=>'&quot;', "'"=>'&apos;') );
+  $body = strtr($body, array('"'=>'&quot;', "'"=>'&#039;') );
 
   //prevent SQL injection
   $body = db_escape_string($body );
@@ -152,13 +152,13 @@ function safe_integer($integer ) {
 function box_shorten($body){
 
   //translate html entities before shortening
-  $body = strtr($body, array('&quot;'=>'"', '&apos;'=>"'", '&lt;'=>'<', '&gt;'=>'>', '&amp;'=>'&', '&#037;'=>'%' ) );
+  $body = strtr($body, array('&quot;'=>'"', '&#039;'=>"'", '&lt;'=>'<', '&gt;'=>'>', '&amp;'=>'&', '&#037;'=>'%' ) );
 
   //shorten line to fit box
   $body = mb_strimwidth($body, 0, 20, '..' );
 
   //use HTML encoding for characters that could be used for xss <script>
-  $trans = array('<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', "'"=>'&apos;', '%'=>'&#037;' );
+  $trans = array('<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', "'"=>'&#039;', '%'=>'&#037;' );
   $body  = strtr($body, $trans );
 
   return $body;
@@ -166,13 +166,16 @@ function box_shorten($body){
 
 //
 // single quotes in javascript fields are escaped
-// double quotes are changed to HTML (escaping won't work)
+// double quotes are left as HTML (escaping won't work)
 //
 function javascript_escape($body ) {
 
-  $trans = array('"'=>'&quot;', "'"=>"\\'" );
+  //convert HTML
+  $body = strtr($body, array('&#039;'=>"'") );
+  //escape quotes
+  $body = strtr($body, array("'"=>"\\'" ) );
 
-  return strtr($body, $trans );
+  return $body;
 }
 
 //
