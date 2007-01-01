@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -48,9 +48,8 @@ if(db_numrows($q) == 0 ) {
   return;
 }
 
-$content =
-            "<table class=\"celldata\">\n".
-              "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th></tr>\n";
+$content =  "<table class=\"celldata\">\n".
+            "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th></tr>\n";
 
 //show all taskgroups
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -61,7 +60,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 }
 
-$content .=   "</table>\n".
+$content .= "</table>\n".
             "<p><span class=\"textlink\">[<a href=\"taskgroups.php?x=".$x."&amp;action=add\">".$lang['add']."</a>]</span></p>\n";
 
 new_box( $lang['manage_taskgroups'], $content, 'boxdata2' );
@@ -70,6 +69,5 @@ new_box( $lang['manage_taskgroups'], $content, 'boxdata2' );
 include_once(BASE.'lang/lang_long.php' );
 $content = $taskgroup_info;
 new_box( $lang['info_taskgroup_manage'], $content );
-
 
 ?>

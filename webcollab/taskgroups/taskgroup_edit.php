@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -49,10 +49,9 @@ if(! ($q = db_query('SELECT * FROM '.PRE.'taskgroups WHERE id='.$taskgroupid, 0 
 
 if(! ($row = db_fetch_array( $q, 0 ) ) ) {
   error('Taskgroup edit', 'Taskgroup does not exist' );
-}  
+}
 
-$content =
-            "<form method=\"post\" action=\"taskgroups.php\">\n".
+$content =  "<form method=\"post\" action=\"taskgroups.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"taskgroupid\" value=\"".$taskgroupid."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" /></fieldset>\n".

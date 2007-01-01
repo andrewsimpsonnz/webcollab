@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -108,12 +108,12 @@ else {
     error_setup('No valid session exists' );
   }
 
-  if(! ( $row = db_fetch_array($q, 0) ) ) {
+  if(! ( $row = db_fetch_array($q, 0 ) ) ) {
     error_setup('Error while fetching users data');
   }
 
   //if database table LEFT JOIN gives no rows will get NULL here
-  if($row['user_id'] == NULL ){
+  if($row['user_id'] == NULL ) {
     error_setup('No valid user-id found');
   }
 
@@ -122,7 +122,7 @@ else {
     error_setup('You need to be an administrator to use this function' );
   }
 
-  //check the last logintime (there is a 10 min limit)
+  //check the last login time (there is a 10 min limit)
   if( ($row['now'] - $row['sec_lastaccess']) > 600 ) {
     db_query('UPDATE '.PRE.'logins SET session_key=\'xxxx\' WHERE user_id='.$row['user_id'] );
     error_setup('Security timeout of 10 minutes has occurred on this session.' );

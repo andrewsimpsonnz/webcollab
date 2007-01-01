@@ -2,11 +2,10 @@
 /*
   $Id$
 
- (c) 2005 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+ (c) 2005 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
-  This file created 2003 by Andrew Simpson.
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;

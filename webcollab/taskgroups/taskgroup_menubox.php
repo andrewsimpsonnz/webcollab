@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -39,6 +39,6 @@ if(! ADMIN ) {
 $content = "<a href=\"taskgroups.php?x=".$x."&amp;action=add\">".$lang['add']."</a><br />\n".
            "<a href=\"taskgroups.php?x=".$x."&amp;action=manage\">".$lang['manage']."</a><br />\n";
 
-new_box( $lang['taskgroups'], $content, 'boxmenu' );
+new_box($lang['taskgroups'], $content, 'boxmenu' );
 
 ?>
