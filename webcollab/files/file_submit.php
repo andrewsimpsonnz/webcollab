@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -117,6 +117,8 @@ ignore_user_abort(TRUE);
           }
         }
       }
+
+      if( ! defined('NUM_FILE_UPLOADS' ) ) ? define('NUM_FILE_UPLOADS', 3 );
 
       //now start looking at each uploaded file...
       for($i = 0; $i < NUM_FILE_UPLOADS; ++$i ) {

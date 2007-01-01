@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -31,13 +31,13 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
-include_once(BASE.'includes/time.php' );
-
-$content = '';
-
 if(! ADMIN ) {
   error('Access denied', 'This feature is only for admins' );
 }
+
+include_once(BASE.'includes/time.php' );
+
+$content = '';
 
 //get the files from this task
 $q = db_query('SELECT '.PRE.'files.id AS id,
@@ -84,7 +84,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
     $content .= "<tr><td>".$lang['description'].":</td><td><small><i>".nl2br($row['description'])."</i></small></td></tr>\n";
   }
   //blank line to end
-  $content .= "<tr><td>&nbsp;</td></tr>\n";    
+  $content .= "<tr><td>&nbsp;</td></tr>\n";
 
 }
 

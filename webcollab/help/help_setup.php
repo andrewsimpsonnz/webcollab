@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -44,10 +44,10 @@ switch($_GET['lang'] ) {
 switch($_GET['type'] ) {
 
   case 'setup2':
-    include_once(BASE.'help/'.$lang_prefix.'_help_setup2.php');    
+    include_once(BASE.'help/'.$lang_prefix.'_help_setup2.php');
     break;
 
-  case 'setup3':   
+  case 'setup3':
     include_once(BASE.'help/'.$lang_prefix.'_help_setup3.php');
     break;
 

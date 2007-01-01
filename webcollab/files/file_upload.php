@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -52,6 +52,8 @@ $taskid = $_GET['taskid'];
 
 //check usergroup security
 $taskid = usergroup_check($taskid );
+
+if( ! defined('NUM_FILE_UPLOADS' ) ) ? define('NUM_FILE_UPLOADS', 3 );
 
 $content =  "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"files.php\">\n".
               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
