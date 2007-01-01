@@ -2,11 +2,11 @@
 /*
   $Id$
 
-  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
-  
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -49,27 +49,27 @@ if($row['taskid'] > 0 ) {
 
 $content =
     "<table class=\"celldata\">\n".
-       "<tr><td><i>".$lang['firstname']."</i></td><td>".$row['firstname']."</td></tr>\n".
-       "<tr><td><i>".$lang['lastname']."</i></td><td>".$row['lastname']."</td></tr>\n".
-       "<tr><td><i>".$lang['company']."</i></td><td>".$row['company']."</td></tr>\n".
-       "<tr><td><i>".$lang['home_phone']."</i></td><td>".$row['tel_home']."</td></tr>\n".
-       "<tr><td><i>".$lang['mobile']."</i></td><td>".$row['gsm']."</td></tr>\n".
-       "<tr><td><i>".$lang['bus_phone']."</i></td><td>".$row['tel_business']."</td></tr>\n".
-       "<tr><td><i>".$lang['fax']."</i></td><td>".$row['fax']."</td></tr>\n".
-       "<tr><td><i>".$lang['address']."</i></td><td>".$row['address']."</td></tr>\n".
-       "<tr><td><i>".$lang['postal']."</i></td><td>".$row['postal']."</td></tr>\n".
-       "<tr><td><i>".$lang['city']."</i></td><td>".$row['city']."</td></tr>\n".
-       "<tr><td><i>".$lang['email']."</i></td><td><a href=\"mailto:".$row['email']."\">".$row['email']."</a></td></tr>\n".
+    "<tr><td><i>".$lang['firstname']."</i></td><td>".$row['firstname']."</td></tr>\n".
+    "<tr><td><i>".$lang['lastname']."</i></td><td>".$row['lastname']."</td></tr>\n".
+    "<tr><td><i>".$lang['company']."</i></td><td>".$row['company']."</td></tr>\n".
+    "<tr><td><i>".$lang['home_phone']."</i></td><td>".$row['tel_home']."</td></tr>\n".
+    "<tr><td><i>".$lang['mobile']."</i></td><td>".$row['gsm']."</td></tr>\n".
+    "<tr><td><i>".$lang['bus_phone']."</i></td><td>".$row['tel_business']."</td></tr>\n".
+    "<tr><td><i>".$lang['fax']."</i></td><td>".$row['fax']."</td></tr>\n".
+    "<tr><td><i>".$lang['address']."</i></td><td>".$row['address']."</td></tr>\n".
+    "<tr><td><i>".$lang['postal']."</i></td><td>".$row['postal']."</td></tr>\n".
+    "<tr><td><i>".$lang['city']."</i></td><td>".$row['city']."</td></tr>\n".
+    "<tr><td><i>".$lang['email']."</i></td><td><a href=\"mailto:".$row['email']."\">".$row['email']."</a></td></tr>\n".
     "</table>\n".
     "<p><i>".$lang['notes']."</i><br />".nl2br(html_links($row['notes'] ) )."</p>\n";
 
 if(! GUEST ){
   $content .=
     "<form method=\"post\" action=\"contacts.php\" >\n".
-      "<fieldset><input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
-      "<input type=\"hidden\" name=\"contactid\" value=\"".$row['id']."\" />\n".
-      "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
-      "<input type=\"submit\" value=\"".$lang['edit_contact']."\" /></fieldset>\n".
+    "<fieldset><input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
+    "<input type=\"hidden\" name=\"contactid\" value=\"".$row['id']."\" />\n".
+    "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+    "<input type=\"submit\" value=\"".$lang['edit_contact']."\" /></fieldset>\n".
    "</form>";
   }
 

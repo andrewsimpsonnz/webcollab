@@ -1,8 +1,8 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -34,15 +34,15 @@ switch(DATABASE_TYPE ) {
 
   case 'mysql':
   case 'mysql_innodb':
-    include(BASE.'database/mysql_database.php' );
+    require(BASE.'database/mysql_database.php' );
     break;
 
   case 'postgresql':
-    include(BASE.'database/pgsql_database.php' );
+    require(BASE.'database/pgsql_database.php' );
     break;
 
   case 'mysqli':
-    include(BASE.'database/mysqli_database.php' );
+    require(BASE.'database/mysqli_database.php' );
     break;
 
   default:
