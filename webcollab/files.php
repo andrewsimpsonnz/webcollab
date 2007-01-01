@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -74,7 +74,7 @@ switch($_REQUEST['action'] ) {
     create_bottom();
     break;
 
-  //Error case
+  //error case
   default:
     error('File action handler', 'Invalid request given' );
     break;

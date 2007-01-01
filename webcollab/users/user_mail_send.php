@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -38,7 +38,7 @@ include_once(BASE.'includes/email.php' );
 
 //only for admins
 if( ! ADMIN ) {
-  error( 'Not permitted', 'This function is for admins only' );
+  error('Not permitted', 'This function is for admins only' );
 }
 
 //initialise variables

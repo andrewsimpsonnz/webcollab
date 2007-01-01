@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -44,14 +44,14 @@ if( ! ADMIN ) {
 //start form data
 $content .=
         "<form method=\"post\" action=\"users.php\">\n".
-          "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
-          "<input type=\"hidden\" name=\"action\" value=\"submit_email\" /></fieldset>\n".
-          "<table class=\"celldata\">\n".
-          "<tr><td></td><td>\n".
-          "<table class=\"decoration\" cellpadding=\"5px\">\n".
-          "<tr><td><input type=\"radio\" value=\"all\" name=\"group\" id=\"all\" checked=\"checked\" /><label for=\"all\">".$lang['all_users']."</label></td>\n".
-          "<td><input type=\"radio\" value=\"maillist\" name=\"group\" id=\"maillist\" /><label for=\"maillist\">".$lang['mailing_list']."</label></td>\n".
-          "<td><input type=\"radio\" value=\"group\" name=\"group\" id=\"group\" /><label for=\"group\">".$lang['select_usergroup']."</label></td></tr>\n";
+        "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+        "<input type=\"hidden\" name=\"action\" value=\"submit_email\" /></fieldset>\n".
+        "<table class=\"celldata\">\n".
+        "<tr><td></td><td>\n".
+        "<table class=\"decoration\" cellpadding=\"5px\">\n".
+        "<tr><td><input type=\"radio\" value=\"all\" name=\"group\" id=\"all\" checked=\"checked\" /><label for=\"all\">".$lang['all_users']."</label></td>\n".
+        "<td><input type=\"radio\" value=\"maillist\" name=\"group\" id=\"maillist\" /><label for=\"maillist\">".$lang['mailing_list']."</label></td>\n".
+        "<td><input type=\"radio\" value=\"group\" name=\"group\" id=\"group\" /><label for=\"group\">".$lang['select_usergroup']."</label></td></tr>\n";
 
 //add user-groups
 $q = db_query('SELECT name, id FROM '.PRE.'usergroups ORDER BY name' );

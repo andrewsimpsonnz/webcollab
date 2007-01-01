@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -51,7 +51,7 @@ switch($_REQUEST['action'] ) {
     include(BASE.'icalendar/icalendar_all.php' );
     break;
 
-  //Error case
+  //error case
   default:
     error('Calendar action handler', 'Invalid request given' );
     break;

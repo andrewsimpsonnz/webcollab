@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -86,7 +86,7 @@ else {
 if($row['guest'] == 1 ) {
   $content .= "<tr><td>".$lang['guest'].":</td><td>".$lang['yes']."</td></tr>\n";
 }
-else{
+else {
   $content .= "<tr><td>".$lang['guest'].":</td><td>".$lang['no']."</td></tr>\n";
 }
 

@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -63,14 +63,14 @@ if( ! ($row = db_fetch_array($q , 0 ) ) ) {
 
 //show data
 $content =  "<form method=\"post\" action=\"users.php\">\n".
-              "<fieldset><input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
-              "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
-              "<input type=\"hidden\" name=\"userid\" value=\"$userid\" /></fieldset>\n".
-              "<table class=\"celldata\">".
-              "<tr><td>".$lang['login_name'].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row['name']."\" /></td></tr>\n".
-              "<tr><td>".$lang['full_name'].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" value=\"".$row['fullname']."\" /></td></tr>\n".
-              "<tr><td>".$lang['password'].":</td><td><input type=\"text\" name=\"password\" size=\"30\" value=\"\" /></td><td><small><i>".$lang['blank_for_current_password']."</i></small></td></tr>\n".
-              "<tr><td>".$lang['email'].":</td><td><input type=\"text\" name=\"email\" size=\"30\" value=\"".$row['email']."\" /></td></tr>\n";
+            "<fieldset><input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
+            "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+            "<input type=\"hidden\" name=\"userid\" value=\"$userid\" /></fieldset>\n".
+            "<table class=\"celldata\">".
+            "<tr><td>".$lang['login_name'].":</td><td><input type=\"text\" name=\"name\" size=\"30\" value=\"".$row['name']."\" /></td></tr>\n".
+            "<tr><td>".$lang['full_name'].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" value=\"".$row['fullname']."\" /></td></tr>\n".
+            "<tr><td>".$lang['password'].":</td><td><input type=\"text\" name=\"password\" size=\"30\" value=\"\" /></td><td><small><i>".$lang['blank_for_current_password']."</i></small></td></tr>\n".
+            "<tr><td>".$lang['email'].":</td><td><input type=\"text\" name=\"email\" size=\"30\" value=\"".$row['email']."\" /></td></tr>\n";
 
 $content .=  user_locale(LOCALE_USER);
 
