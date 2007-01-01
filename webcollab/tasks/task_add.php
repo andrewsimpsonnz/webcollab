@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -40,7 +40,7 @@ $javascript = '';
 $allowed = array(); 
 
 if(GUEST ) {
- warning($lang['access_denied'], $lang['not_owner'] );  
+ warning($lang['access_denied'], $lang['not_owner'] );
 }
 
 //get list of common users in private usergroups that this user can view 
