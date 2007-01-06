@@ -166,6 +166,11 @@ function icalendar_vtodo($row) {
        $content.= "RELATED-TO;RELTYPE=CHILD\r\n".
                   " :".$row['parent']."-".$icalendar_id."\r\n";
     }
+
+    $task_complete = ($row['status'] == 'done' ) ? 100 : 0;
+    $content .= "PERCENT-COMPLETE\r\n".
+                " :".$task_complete."\r\n";
+
   }
 
   //private
