@@ -1,4 +1,14 @@
 WebCollab SVN
+*** 7 January 2007
+  Andrew Simpson
+
+- use mb_encode_mimeheader() for email if available
+
+- merge common.php, UTF-8 and single byte versions
+
+- bugfix: add PROJECT-COMPLETE to tasks in icalendar downloads
+
+WebCollab SVN
 *** 26 December 2006
   Andrew Simpson
 
