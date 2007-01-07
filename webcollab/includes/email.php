@@ -291,32 +291,13 @@ function & message($message, & $email_encode, & $message_charset, & $body, $bit8
           $message_charset = CHARACTER_SET;
           $email_encode = 'quoted-printable';
 
-          // replace high ascii, control and = characters (RFC 2045)
+          //replace high ascii, control and = characters (RFC 2045)
           $message = preg_replace('/([\000-\010\013\014\016-\037\075\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $message);
           //replace spaces and tabs when it's the last character on a line (RFC 2045)
           $message = preg_replace('/([\011\040])\n/e', "'='.sprintf('%02X', ord('\\1')).'\n'", $message);
-
-          //break up any lines longer than 76 characters with soft line breaks " =\r\n" (RFC 2045)
-          //(end of line \n gets changed to \r\n after explode)
-          $wrapped_message = '';
-          while(strlen($message ) > 73 ) {
-            //don't split line around coded character (eg. '=20' == <space>)
-            $pos = strrpos(substr($message, (73 - 3 ), 3 ), '=' );
-
-            if($pos === false ) {
-              //no coded characters in split zone - safe to split here
-              $split = 73;
-            }
-            else {
-              //encoded characters within split zone - adjust to avoid splitting encoded word
-              $split = (73 - 3 ) + $pos;
-            }
-
-            $wrapped_message .= substr($message, 0, $split)."=\n";
-            $message = substr($message, $split );
-          }
-          //output any remaining line (will be less than 73 characters long)
-          $message = $wrapped_message.$message;
+          //limit lines to 73 characters and avoiding splitting line around encoded characters (RFC 2045)
+          preg_match_all('/.{1,73}[^=][0-9A-Fa-f]{0,2}/', $message, $lines );
+          $message = join("=\n", $lines[0] );
           break;
       }
       break;
@@ -401,38 +382,38 @@ function header_encoding($header_type, $header, $header_suffix='' ) {
       break;
 
     case true:
-      //encode line with 'quoted-printable' (RFC 2045 / RFC 2047)
-      if(function_exists('mb_encode_mimeheader' ) ) {
-        $header_lines = $header_type . mb_encode_mimeheader($header, CHARACTER_SET, 'Q', "\r\n\t" ) . $header_suffix;
+      if(UNICODE_VERSION == 'Y') {
+        //base64 encoding to RFC 2047 (because we cannot split 'quoted printable' multibyte characters across different lines)
+        $header_lines = $header_type . mb_encode_mimeheader($header, CHARACTER_SET, 'B', "\r\n\t" ) . $header_suffix;
       }
       else {
-        //PHP equivalent code for quoted printable conversion
-        // replace high ascii, control, =, ?, <tab> and <space> characters (RFC 2045)
-        $line = preg_replace('/([\000-\010\011\013\014\016-\037\040\075\077\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $header);
-        $s = $header_type;
-        //break into lines no longer than 76 characters including '?' and '=' (RFC 2047)
-        $max_len = 76 - strlen(CHARACTER_SET ) - 8;
-
-        while(strlen($line ) > $max_len ) {
-          //don't split line around coded character (eg. '=20' == <space>)
-          $pos = strrpos(substr($line, ($max_len - 3 ), 3 ), '=' );
-
-          if($pos === false ) {
-            //no coded characters in split zone - safe to split here
-            $split = $max_len;
-          }
-          else {
-            //encoded characters within split zone - adjust to avoid splitting encoded word
-            $split = ($max_len - 3 ) + $pos;
-          }
-
-          $header_lines[] = $s.'=?'.CHARACTER_SET.'?Q?'.substr($line, 0, $split).'?=';
-          $line = substr($line, $split );
-          //start additional lines with <space> (RFC 2047)
-          $s = ' ';
+        //encode line with 'quoted-printable' (RFC 2045 / RFC 2047)
+        if(function_exists('mb_encode_mimeheader' ) ) {
+          $header_lines = $header_type . mb_encode_mimeheader($header, CHARACTER_SET, 'Q', "\r\n\t" ) . $header_suffix;
         }
-        //output any remaining line (will be less than $max_len characters long)
-        $header_lines[] = $s.'=?'.CHARACTER_SET.'?Q?'.$line.'?= '.$header_suffix;
+        else {
+          //PHP equivalent code for quoted printable conversion
+          // replace high ascii, control, =, ?, <tab> and <space> characters (RFC 2045)
+          $header = preg_replace('/([\000-\010\011\013\014\016-\037\040\075\077\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $header);
+          //break into lines no longer than 76 characters including '?' and '=' (RFC 2047)
+          //don't split line around coded character (eg. '=20' == <space>)
+          $pattern = '/.{1,'. (76 - strlen(CHARACTER_SET ) - 8 ) .'}[^=][0-9A-Fa-f]{0,2}/';
+          preg_match_all($pattern, $header, $lines );
+
+          //added required codes to the lines
+          $max = sizeof($lines[0] );
+          //first line has header type
+          $s = $header_type;
+
+          for( $i = 0; $i < $max; ++$i ) {
+            $header_lines[] = $s.'=?'.CHARACTER_SET.'?Q?'.$lines[0][$i].'?=';
+            //additional lines start with white space
+            $s = "\t";
+          }
+          //last line has header suffix
+          $max = sizeof($header_lines);
+          $header_lines[($max-1)] = $header_lines[($max-1)].$header_suffix;
+        }
       }
       break;
   }
