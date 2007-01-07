@@ -26,6 +26,13 @@
 
 */
 
+if(UNICODE_VERSION == 'Y') {
+  //set PHP internal encoding
+  if(! mb_internal_encoding('UTF-8') ) {
+    error("Internal encoding", "Unable to set UTF-8 encoding in PHP" );
+  }
+}
+
 //
 // Input validation (single line input)
 //
@@ -44,7 +51,8 @@ function safe_data($body ) {
 
   //limit line length for single line entries
   if(strlen($body ) > 100 ) {
-    $body = substr($body, 0, 100 );
+    $m_substr = (UNICODE_VERSION == 'Y' ) ? 'mb_substr' : 'substr';
+    $body = $m_substr($body, 0, 100 );
   }
 
   //remove line breaks (not allowed in single lines!)
@@ -75,7 +83,8 @@ function safe_data_long($body ) {
   $body = str_replace("\r\n", "\n", $body );
   $body = str_replace("\r", "\n", $body );
   //break up long non-wrap words
-  $body = preg_replace("/[^\s\n\t]{100}/", "$0\n", $body );
+  $pattern_modifier = (UNICODE_VERSION == 'Y' ) ? 'u' : '';
+  $body = preg_replace("/[^\s\n\t]{100}/".$pattern_modifier, "$0\n", $body );
 
   $body = clean_up($body);
 
@@ -91,14 +100,46 @@ function validate($body ) {
     $body = stripslashes($body );
   }
 
-  //allow only normal printing characters valid for the character set in use
-  if(isset($validation_regex ) ) {
-    //character set regex in language file
-    $body = preg_replace($validation_regex, '?', $body );
+  //limit size to reasonable levels
+  if(strlen($body ) > 10000 ) {
+    $body = substr($body, 0, 10000 );
+  }
+
+  if(UNICODE_VERSION == 'Y' ) {
+    //check for control characters or multibyte UTF-8
+    if(preg_match('/[^\x09\x0A\x0D\x20-\x7E]/', $body ) ) {
+      //scan the multibyte characters for malformed UTF-8
+      $max   = mb_strlen($body);
+      $clean = '';
+      //this size limiting hack is because preg_match_all() has match limits...
+      for($i=0; $i < $max; $i=($i+1000) ) {
+
+        $part = mb_substr($body, $i, 1000 );
+
+        //allow only normal UTF-8 characters up to U+10000, which is the limit of 3 byte characters
+        // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )
+        preg_match_all('/([\x09\x0A\x0D\x20-\x7E]'.                         // ASCII characters
+                      '|[\xC2-\xDF][\x80-\xBF]'.                            // 2-byte UTF-8 (except overly longs)
+                      '|\xE0[\xA0-\xBF][\x80-\xBF]'.                        // 3 byte (except overly longs)
+                      '|[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}'.                 // 3 byte (except overly longs)
+                      '|\xED[\x80-\x9F][\x80-\xBF])+/', $part, $ar );       // 3 byte (except UTF-16 surrogates)
+
+        $clean .= join('?', $ar[0] );
+      }
+      $body = $clean;
+      }
   }
   else {
-    //no character set defined --> ASCII only
-    $body = preg_replace('/[^\x09\x0a\x0d\x20-\x7e]/', '?', $body );
+    //Single byte validation regex
+    // allow only normal printing characters valid for the character set in use
+    if(isset($validation_regex ) ) {
+      //character set regex in language file
+      $body = preg_replace($validation_regex, '?', $body );
+    }
+    else {
+      //no character set defined --> ASCII only
+      $body = preg_replace('/[^\x09\x0a\x0d\x20-\x7e]/', '?', $body );
+    }
   }
 
   return $body;
