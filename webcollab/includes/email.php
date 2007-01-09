@@ -263,7 +263,7 @@ function & message($message, & $email_encode, & $message_charset, & $body, $bit8
   //clean up message
   $message = clean($message );
 
-  //normalise end-of-lines (\r\n, \r ) in message body to \n - and change back to \r\n later
+  //normalise end-of-lines (\r\n, \r, \n ) in message body to \n - change back to \r\n later
   $message = str_replace("\r\n", "\n", $message );
   $message = str_replace("\r", "\n", $message );
 
@@ -271,34 +271,53 @@ function & message($message, & $email_encode, & $message_charset, & $body, $bit8
   $message = $message."\n";
 
   //check if message contains high bit ascii characters and set encoding to match mailer capabilities
-  switch(preg_match('/([\177-\377])/', $message ) ) {
+  switch(preg_match('/([\x7F-\xFF])/', $message ) ) {
   case true:
-      //we have special characters
-      switch($bit8 ) {
-        case true:
-          //mail server has said it can do 8bit
-          $email_encode = '8bit';
-          $body = ' BODY=8BITMIME';
-          $message_charset = CHARACTER_SET;
+    //we have special characters
+    switch($bit8 ) {
+      case true:
+        //mail server has said it can do 8bit
+        $email_encode = '8bit';
+        $message_charset = CHARACTER_SET;
+        $body = ' BODY=8BITMIME';
 
-          //break up any lines longer than 998 bytes (RFC 821)
-          $message = wordwrap($message, 998, "\n", 1 );
-          break;
+        //break up any lines longer than 998 bytes (RFC 821)
+        $message = wordwrap($message, 998, "\n", 1 );
+        break;
 
-        case false:
-          //old mail server - can only do 7bit mail
-          $body = '';
-          $message_charset = CHARACTER_SET;
-          $email_encode = 'quoted-printable';
+      case false:
+        //old mail server - can only do 7bit mail
+        $email_encode = 'quoted-printable';
+        $message_charset = CHARACTER_SET;
+        $body = '';
 
-          //replace high ascii, control and = characters (RFC 2045)
-          $message = preg_replace('/([\000-\010\013\014\016-\037\075\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $message);
-          //replace spaces and tabs when it's the last character on a line (RFC 2045)
-          $message = preg_replace('/([\011\040])\n/e', "'='.sprintf('%02X', ord('\\1')).'\n'", $message);
-          //limit lines to 73 characters and avoiding splitting line around encoded characters (RFC 2045)
-          preg_match_all('/.{1,73}[^=][0-9A-Fa-f]{0,2}/', $message, $lines );
-          $message = join("=\n", $lines[0] );
-          break;
+        //replace high ascii, control and = characters (RFC 2045)
+        $message = preg_replace('/([\x00-\x08\x0B\x0C\x0E-\x1F\x3D\x7F-\xFF])/e', "'='.sprintf('%02X', ord('\\1'))", $message);
+
+        //break into lines no longer than 76 characters including '=' at line end (RFC 2045)
+        $max_len = 72;
+        $line = '';
+
+        while(strlen($message ) > $max_len ) {
+          //check for '=' in ultimate or penultimate character (coded characters in split zone) (RFC 2045)
+          $pos = strpos(substr($message, ($max_len - 2 ), 2 ), '=' );
+
+          if($pos === false ) {
+            //no coded characters in split zone - safe to split at $max_len
+            $split = $max_len;
+          }
+          else {
+            //encoded characters close to $max_len - adjust to avoid splitting encoded word
+            $split = ($max_len - 2 ) + $pos;
+          }
+          $line    = $line . substr($message, 0, $split)."=\n";
+          $message = substr($message, $split );
+        }
+        //output any remaining line (will be less than $max_len characters long)
+        $message = $line . $message."\n";
+        //replace spaces and tabs when it's the last character on a line (RFC 2045)
+        $message = preg_replace('/([\x09\x20])=\n/e', "'='.sprintf('%02X', ord('\\1')).'=\n'", $message);
+        break;
       }
       break;
 
@@ -375,7 +394,7 @@ return $headers;
 function header_encoding($header_type, $header, $header_suffix='' ) {
 
   //encode subject with 'printed-quotable' if high ASCII characters are present
-  switch(preg_match('/([\177-\377])/', $header ) ) {
+  switch(preg_match('/([\x7F-\xFF])/', $header ) ) {
     case false:
       //no encoding required
       $header_lines = array(substr($header_type .$header .$header_suffix, 0, 985 ) );
@@ -394,10 +413,10 @@ function header_encoding($header_type, $header, $header_suffix='' ) {
         else {
           //PHP equivalent code for quoted printable conversion
           // replace high ascii, control, =, ?, <tab> and <space> characters (RFC 2045)
-          $header = preg_replace('/([\000-\010\011\013\014\016-\037\040\075\077\177-\377])/e', "'='.sprintf('%02X', ord('\\1'))", $header);
+          $header = preg_replace('/([\x00-\x08\x09\x0B\x0C\x0E-\x1F\x20\x3D\x3F\x7F-\xFF])/e', "'='.sprintf('%02X', ord('\\1'))", $header);
           //break into lines no longer than 76 characters including '?' and '=' (RFC 2047)
           //don't split line around coded character (eg. '=20' == <space>)
-          $pattern = '/.{1,'. (76 - strlen(CHARACTER_SET ) - 8 ) .'}[^=][0-9A-Fa-f]{0,2}/';
+          $pattern = '/.{1,'. (75 - strlen(CHARACTER_SET ) - 8 ) .'}[^=][^=]/';
           preg_match_all($pattern, $header, $lines );
 
           //added required codes to the lines
