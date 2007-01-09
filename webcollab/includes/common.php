@@ -122,7 +122,7 @@ function validate($body ) {
                       '|[\xC2-\xDF][\x80-\xBF]'.                            // 2-byte UTF-8 (except overly longs)
                       '|\xE0[\xA0-\xBF][\x80-\xBF]'.                        // 3 byte (except overly longs)
                       '|[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}'.                 // 3 byte (except overly longs)
-                      '|\xED[\x80-\x9F][\x80-\xBF])+/', $part, $ar );       // 3 byte (except UTF-16 surrogates)
+                      '|\xED[\x80-\x9F][\x80-\xBF])+/S', $part, $ar );       // 3 byte (except UTF-16 surrogates)
 
         $clean .= join('?', $ar[0] );
       }
@@ -138,7 +138,7 @@ function validate($body ) {
     }
     else {
       //no character set defined --> ASCII only
-      $body = preg_replace('/[^\x09\x0a\x0d\x20-\x7e]/', '?', $body );
+      $body = preg_replace('/[^\x09\x0A\x0D\x20-\x7E]/', '?', $body );
     }
   }
 
