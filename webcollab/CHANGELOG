@@ -4,9 +4,13 @@ WebCollab SVN
 
 - use mb_encode_mimeheader() for email if available
 
+- bugfixes to quoted-printable in email
+
 - merge common.php, UTF-8 and single byte versions
 
 - bugfix: add PROJECT-COMPLETE to tasks in icalendar downloads
+
+- bugfix: add missing database prefix in file_submit.php (Bug #1630440) (Credit: Anonymous)
 
 WebCollab SVN
 *** 26 December 2006
