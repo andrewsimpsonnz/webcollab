@@ -97,7 +97,7 @@ ignore_user_abort(TRUE);
 
         $task_row = db_fetch_array($q, 0 );
 
-        $project = db_result(db_query('SELECT name FROM tasks WHERE id='.$task_row['projectid'].' LIMIT 1' ), 0, 0 );
+        $project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$task_row['projectid'].' LIMIT 1' ), 0, 0 );
 
         //set owner's email
         if($task_row['email'] && $mail_owner ) {
