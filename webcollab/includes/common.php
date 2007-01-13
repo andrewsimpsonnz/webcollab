@@ -102,14 +102,14 @@ function validate($body ) {
 
   if(UNICODE_VERSION == 'Y' ) {
     $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.             //ASCII
-                          '|[\x00-x7F][\x80-\xBF]+'.                          //continuation with no start
-                          '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*'.            //illegal two byte, plus reject more than three bytes
-                          '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.    //well formed two byte only
-                          '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/',  //well formed three byte only
-                          '?', $body );
+                         '|[\x00-\x7F][\x80-\xBF]+'.                          //continuation with no start
+                         '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*'.             //illegal two byte, plus reject more than three bytes
+                         '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.     //well formed two byte only
+                         '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/',  //well formed three byte only
+                         '?', $body );
 
     $body = preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]'.                       //exclude overlongs
-                          '|\xED[\xA0-\xBF][\x80-\xBF]/','?', $body );        //exclude surrogates
+                         '|\xED[\xA0-\xBF][\x80-\xBF]/','?', $body );         //exclude surrogates
   }
   else {
     //Single byte validation regex
