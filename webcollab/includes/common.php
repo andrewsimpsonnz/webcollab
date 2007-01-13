@@ -100,34 +100,16 @@ function validate($body ) {
     $body = stripslashes($body );
   }
 
-  //limit size to reasonable levels
-  if(strlen($body ) > 10000 ) {
-    $body = substr($body, 0, 10000 );
-  }
-
   if(UNICODE_VERSION == 'Y' ) {
-    //check for control characters or multibyte UTF-8
-    if(preg_match('/[^\x09\x0A\x0D\x20-\x7E]/', $body ) ) {
-      //scan the multibyte characters for malformed UTF-8
-      $max   = mb_strlen($body);
-      $clean = '';
-      //this size limiting hack is because preg_match_all() has match limits...
-      for($i=0; $i < $max; $i=($i+1000) ) {
+    $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.             //ASCII
+                          '|[\x00-x7F][\x80-\xBF]+'.                          //continuation with no start
+                          '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*'.            //illegal two byte, plus reject more than three bytes
+                          '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.    //well formed two byte only
+                          '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/',  //well formed three byte only
+                          '?', $body );
 
-        $part = mb_substr($body, $i, 1000 );
-
-        //allow only normal UTF-8 characters up to U+10000, which is the limit of 3 byte characters
-        // (Neither MySQL nor PostgreSQL will accept UTF-8 characters beyond U+10000 )
-        preg_match_all('/([\x09\x0A\x0D\x20-\x7E]'.                         // ASCII characters
-                      '|[\xC2-\xDF][\x80-\xBF]'.                            // 2-byte UTF-8 (except overly longs)
-                      '|\xE0[\xA0-\xBF][\x80-\xBF]'.                        // 3 byte (except overly longs)
-                      '|[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}'.                 // 3 byte (except overly longs)
-                      '|\xED[\x80-\x9F][\x80-\xBF])+/S', $part, $ar );       // 3 byte (except UTF-16 surrogates)
-
-        $clean .= join('?', $ar[0] );
-      }
-      $body = $clean;
-      }
+    $body = preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]'.                       //exclude overlongs
+                          '|\xED[\xA0-\xBF][\x80-\xBF]/','?', $body );        //exclude surrogates
   }
   else {
     //Single byte validation regex
