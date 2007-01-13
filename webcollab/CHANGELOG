@@ -1,4 +1,12 @@
 WebCollab SVN
+*** 12 January 2007
+  Andrew Simpson
+
+- refactor and optimise email.php
+
+- improved validation algorithm for UTF-8
+
+WebCollab SVN
 *** 7 January 2007
   Andrew Simpson
 
