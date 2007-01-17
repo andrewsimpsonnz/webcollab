@@ -236,6 +236,14 @@ function db_user_locale($encoding ) {
   if(@pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){
     error('Database client encoding', 'Setting client encoding to '.$pg_encoding.' character set had the following error:<br />'.pg_last_error($database_connection) );
   }
+
+  //set PHP internal encoding
+  if(UNICODE_VERSION == 'Y' ) {
+    if(! mb_internal_encoding('UTF-8' ) ) {
+      error("Internal encoding", "Unable to set UTF-8 encoding in PHP" );
+    }
+  }
+
   return true;
 }
 

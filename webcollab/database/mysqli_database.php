@@ -253,6 +253,13 @@ function db_user_locale($encoding ) {
     error("Database error", "Not able to set CHARACTER SET : ".$my_encoding );
   }
 
+  //set PHP internal encoding
+  if(UNICODE_VERSION == 'Y' ) {
+    if(! mb_internal_encoding('UTF-8' ) ) {
+      error("Internal encoding", "Unable to set UTF-8 encoding in PHP" );
+    }
+  }
+
   return true;
 }
 
