@@ -37,14 +37,20 @@ if(! defined('UID' ) ) {
 $content = '';
 $company = '';
 
-if(UNICODE_VERSION == 'Y' ) {
-  $m_substr     = 'mb_substr';
-  $m_strtoupper = 'mb_strtoupper';
+$m_substr = (UNICODE_VERSION == 'Y' ) ? 'mb_substr' : 'substr';
+
+//function to capitalise first letter
+function safe_strtoupper($string ){
+
+  if(function_exists('mb_strtoupper' ) ) {
+    $string = mb_strtoupper($string, CHARACTER_SET );
+  }
+  else {
+    $string = strtoupper($string );
+  }
+  return $string;
 }
-else {
-  $m_substr     = 'substr';
-  $m_strtoupper = 'strtoupper';
-}
+//--
 
 if( @safe_integer($_GET['taskid']) ) {
 
@@ -75,12 +81,12 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
      if ($row['company'] != $company ){
        $content .= box_shorten($row['company'] )."<br />";
      }
-     $show = box_shorten($row['lastname'] ).", ".$m_strtoupper($m_substr($row['firstname'], 0, 1 ) ).".";
+     $show = box_shorten($row['lastname'] ).", ".safe_strtoupper($m_substr($row['firstname'], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=".$x."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
      $company =  $row['company'];
    }
    else {
-     $show = box_shorten($row['lastname'] ).", ".$m_strtoupper($m_substr($row['firstname'], 0, 1 ) ).".";
+     $show = box_shorten($row['lastname'] ).", ".safe_strtoupper($m_substr($row['firstname'], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=".$x."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
    }
 }
