@@ -26,13 +26,6 @@
 
 */
 
-if(UNICODE_VERSION == 'Y') {
-  //set PHP internal encoding
-  if(! mb_internal_encoding('UTF-8') ) {
-    error("Internal encoding", "Unable to set UTF-8 encoding in PHP" );
-  }
-}
-
 //
 // Input validation (single line input)
 //
@@ -101,27 +94,21 @@ function validate($body ) {
   }
 
   if(UNICODE_VERSION == 'Y' ) {
-    $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.             //ASCII
-                         '|[\x00-\x7F][\x80-\xBF]+'.                          //continuation with no start
-                         '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*'.             //illegal two byte, plus reject more than three bytes
-                         '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.     //well formed two byte only
-                         '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/',  //well formed three byte only
-                         '?', $body );
+    $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.            //ASCII
+                        '|[\x00-\x7F][\x80-\xBF]+'.                          //continuation with no start
+                        '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*'.             //illegal two byte, plus reject more than three bytes
+                        '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.     //well formed two byte only
+                        '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',  //well formed three byte only
+                        '?', $body );
 
-    $body = preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]'.                       //exclude overlongs
-                         '|\xED[\xA0-\xBF][\x80-\xBF]/','?', $body );         //exclude surrogates
+    $body = preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]'.                      //exclude overlongs
+                         '|\xED[\xA0-\xBF][\x80-\xBF]/S','?', $body );       //exclude surrogates
   }
   else {
     //Single byte validation regex
     // allow only normal printing characters valid for the character set in use
-    if(isset($validation_regex ) ) {
-      //character set regex in language file
-      $body = preg_replace($validation_regex, '?', $body );
-    }
-    else {
-      //no character set defined --> ASCII only
-      $body = preg_replace('/[^\x09\x0A\x0D\x20-\x7E]/', '?', $body );
-    }
+    // character set regex in language file
+    $body = preg_replace($validation_regex, '?', $body );
   }
 
   return $body;
@@ -131,6 +118,7 @@ function clean_up($body ) {
 
   //change '&' to '&amp;' except when part of an entity, or already changed
   $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
+
   //convert quotes to HTML for XHTML compliance
   $body = strtr($body, array('"'=>'&quot;', "'"=>'&#039;') );
 
@@ -164,12 +152,16 @@ function box_shorten($body){
   $body = strtr($body, array('&quot;'=>'"', '&#039;'=>"'", '&lt;'=>'<', '&gt;'=>'>', '&amp;'=>'&' ) );
 
   //shorten line to fit box
-  $body = substr($body, 0, 20 );
-
-  //remove any truncated numeric entities at the line end
-  $body = preg_replace('/&#[\d]{0,5}$/', '', $body );
-  //change '&' to '&amp;' except when part of an entity, or already changed
-  $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
+  if(UNICODE_VERSION == 'Y' ) {
+    $body = mb_substr($body, 0, 20 );
+  }
+  else {
+    $body = substr($body, 0, 20 );
+    //remove any truncated numeric entities at the line end
+    $body = preg_replace('/&#[\d]{0,5}$/', '', $body );
+    //change '&' to '&amp;' except when part of an entity, or already changed
+    $body = preg_replace('/&(?!(#[\d]{2,5};))/', '&amp;', $body );
+  }
 
   //use HTML encoding for characters that could be used for xss <script>
   $trans = array('<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', "'"=>'&#039;' );
