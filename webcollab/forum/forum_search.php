@@ -110,8 +110,8 @@ $q = db_query('SELECT COUNT(*)
                       FROM '.PRE.'forum
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
                       LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
-                      WHERE '.PRE.'forum.text '.$like.' \'%'.$db_string.'%\'
-                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' \'%'.$db_string.'%\')'
+                      WHERE ('.PRE.'forum.text '.$like.' \'%'.$db_string.'%\'
+                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' \'%'.$db_string.'%\') )'
                       .$tail );
 
 $total = db_result($q, 0, 0 );
@@ -137,8 +137,8 @@ $q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
                       FROM '.PRE.'forum 
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
                       LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
-                      WHERE '.PRE.'forum.text '.$like.' \'%'.$db_string.'%\'
-                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' \'%'.$db_string.'%\')'
+                      WHERE ('.PRE.'forum.text '.$like.' \'%'.$db_string.'%\'
+                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' \'%'.$db_string.'%\') )'
                       .$tail.
                       'ORDER BY posted DESC LIMIT '.($max - $min).' OFFSET '.$min );
 
