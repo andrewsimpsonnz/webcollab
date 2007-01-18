@@ -44,7 +44,7 @@ function create_top_setup($title='' ) {
   else {
     $topbuild = 1;
   }
-  
+
   //we don't want any caching of these pages
   header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
   header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -55,7 +55,7 @@ function create_top_setup($title='' ) {
 
   echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n".
        "<html>\n\n".
-       "<!-- (c) 2002 - 2006 Andrew Simpson -->\n\n".
+       "<!-- (c) 2002 - 2007 Andrew Simpson -->\n\n".
        "<head>\n".
        "<title>".$title."</title>\n".
        "<meta http-equiv=\"Pragma\" content=\"no-cache\">".
