@@ -72,7 +72,7 @@ $content =  "<form method=\"post\" action=\"users.php\">\n".
             "<tr><td>".$lang['password'].":</td><td><input type=\"text\" name=\"password\" size=\"30\" value=\"\" /></td><td><small><i>".$lang['blank_for_current_password']."</i></small></td></tr>\n".
             "<tr><td>".$lang['email'].":</td><td><input type=\"text\" name=\"email\" size=\"30\" value=\"".$row['email']."\" /></td></tr>\n";
 
-$content .=  user_locale(LOCALE_USER);
+$content .=  user_locale($row['locale'] );
 
 //dangerous action!
 if(ADMIN ) {
@@ -117,7 +117,7 @@ if(ADMIN ) {
 
   for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; ++$i) {
 
-    $found = 0;
+    $found = false;
     $content .= "<option value=\"".$usergroup_row['id']."\"";
 
     //loop all groups the user is in and tag the ones he is in
@@ -126,13 +126,13 @@ if(ADMIN ) {
 
       if($usergroups_users_row['usergroupid'] == $usergroup_row['id'] ) {
         $content .= " selected=\"selected\">";
-        $found = 1;
+        $found = true;
         break;
       }
     }
 
     //if not found then end the option tag normally
-    if($found == 0 ) {
+    if(! $found ) {
       $content .= " >";
     }
 
