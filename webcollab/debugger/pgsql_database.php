@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2006 Andrew Simpson <andrew.simpson at paradise.net.nz>  
+  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>  
 
   WebCollab
   ---------------------------------------
@@ -41,9 +41,8 @@ require_once('path.php' );
 $database_connection = '';
 $delim = "'";
 $epoch = 'extract(epoch FROM ';
-$day_part = 'DATE_PART(\'day\', ';
-$interval = '';
-
+$day_part  = 'DATE_PART(\'day\', ';
+$date_type = 'TIMESTAMP';
 //
 // Makes a connection to the database
 //
@@ -71,7 +70,7 @@ return;
 //
 // Provides a safe way to do a query
 //
-function db_query($query, $dieonerror=1 ) {
+function db_query($query, $die_on_error=1 ) {
 
   global $database_connection;
   global $database_query_time, $database_query_count, $db_content;
@@ -82,12 +81,12 @@ function db_query($query, $dieonerror=1 ) {
   //start time
   list($usec, $sec) = explode(" ", microtime() );
   $starttime = ((float)$usec + (float)$sec );
-      
+
   //do it
   if( ! ($result = @pg_query($database_connection, $query ) ) ) {
 
-    if($dieonerror==1)
-      error("Database query error", "The following query :<br /><br /><b> $query </b><br /><br />Had the following error:<br /><b>".pg_last_error($database_connection)."</b>" );
+    if($die_on_error) {
+      error('Database query error', 'The following query :<br /><br /><b>'.$query.'</b><br /><br />Had the following error:<br /><b>'.pg_last_error($database_connection).'</b>' );
   }
   //count queries
   ++$database_query_count;
@@ -106,7 +105,7 @@ function db_query($query, $dieonerror=1 ) {
     for( $i=0 ; $row = @db_fetch_num($db_opt, $i ) ; ++$i) {
         $db_content .= "<tr><td>".$row[0]."</td></tr>\n";
     }
-    $db_content .= "<tr><td>".sprintf("This query took %d µseconds", ($this_query_time * 1000000 ) )."</td></tr>\n".
+    $db_content .= "<tr><td>".sprintf("This query took %d seconds", ($this_query_time * 1000000 ) )."</td></tr>\n".
                    "</table>\n".
                    "<br /><hr></div>";
   }
@@ -128,9 +127,7 @@ function db_escape_string($string ) {
 //
 function db_numrows($q ) {
 
-  $result = pg_num_rows($q );
-
-return $result;
+  return pg_num_rows($q );
 }
 
 //
@@ -138,9 +135,7 @@ return $result;
 //
 function db_result($q, $row=0, $field=0 ) {
 
-  $result = pg_fetch_result($q, $row, $field );
-
-return $result;
+  return pg_fetch_result($q, $row, $field );
 }
 
 //
@@ -148,9 +143,7 @@ return $result;
 //
 function db_fetch_array($q, $row=0 ) {
 
-  $result_row = pg_fetch_array($q, $row, PGSQL_ASSOC );
-
-return $result_row;
+  return pg_fetch_array($q, $row, PGSQL_ASSOC );
 }
 
 //
@@ -158,21 +151,18 @@ return $result_row;
 //
 function db_fetch_num($q, $row=0 ) {
 
-  $result_row = pg_fetch_row($q, $row );
-
-return $result_row;
+  return pg_fetch_row($q, $row );
 }
 
 //
 // last oid
 //
 function db_lastoid($seq_name ) {
-  
+
   //must be done after an insert, and within a transaction
   $result = db_query('SELECT CURRVAL(\''.$seq_name.'\') AS seq' );
-  $lastoid = pg_fetch_result( $result, 0, 0 );
 
-return $lastoid;
+  return pg_fetch_result( $result, 0, 0 );
 }
 
 //
@@ -181,7 +171,7 @@ return $lastoid;
 function db_data_seek($q ) {
   //nothing happens here!
 
-return TRUE;
+  return TRUE;
 }
 
 //
@@ -191,9 +181,7 @@ function db_free_result($q ){
 
   global $database_connection;
 
-  $result = pg_free_result($q );
-
-return $result;
+  return pg_free_result($q );
 }
 
 //
@@ -203,9 +191,7 @@ function db_begin() {
 
   global $database_connection;
 
-  $result = pg_query($database_connection, 'BEGIN WORK' );
-
-return $result;
+  return pg_query($database_connection, 'BEGIN WORK' );
 }
 
 //
@@ -215,9 +201,7 @@ function db_rollback() {
 
   global $database_connection;
 
-  $result = pg_query($database_connection, 'ROLLBACK WORK' );
-
-return $result;
+  return pg_query($database_connection, 'ROLLBACK WORK' );
 }
 
 //
@@ -227,9 +211,7 @@ function db_commit() {
 
   global $database_connection;
 
-  $result = pg_query($database_connection, 'COMMIT WORK' );
-
-return $result;
+  return pg_query($database_connection, 'COMMIT WORK' );
 }
 
 //
@@ -277,9 +259,17 @@ function db_user_locale($encoding ) {
   }
 
   //set client encoding to match character set in use
-  if(pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){ 
-    error('Database client encoding', 'Cannot set PostgreSQL client encoding to the required '.$pg_encoding.'character set.' );
+  if(@pg_set_client_encoding($database_connection, $pg_encoding ) == -1 ){
+    error('Database client encoding', 'Setting client encoding to '.$pg_encoding.' character set had the following error:<br />'.pg_last_error($database_connection) );
   }
+
+  //set PHP internal encoding
+  if(UNICODE_VERSION == 'Y' ) {
+    if(! mb_internal_encoding('UTF-8' ) ) {
+      error("Internal encoding", "Unable to set UTF-8 encoding in PHP" );
+    }
+  }
+
   return true;
 }
 

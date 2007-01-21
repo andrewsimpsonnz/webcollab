@@ -1,13 +1,14 @@
 <?php
 /*
   $Id$
-  
-  (c) 2002 - 2005 Andrew Simpson <andrew.simpson at paradise.net.nz>
+
+  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
-  Parts of this file originally written for Core APM by Dennis Fleurbaaij 2001/2002.
- 
+
+  Concept based on file originally written for Core Lan Org by Dennis Fleurbaaij 2001.
+
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -57,12 +58,6 @@
   create_bottom();
 */
 
-require_once('path.php' );
-require_once(BASE.'path_config.php' );
-
-require_once(BASE_CONFIG.'config.php' );
-include_once(BASE.'lang/lang.php' );
-
 //
 // Creates the initial window
 //
@@ -70,14 +65,14 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
 
   global $lang, $top_done, $bottom_text;
   global $utime_before, $stime_before;
-  
+
   //only build top once...
   //  (we don't use headers_sent() 'cause it seems to be buggy in PHP5)
   if(isset($top_done) && $top_done == 1 ){
     return;
   }
   $top_done = 1;
-     
+
   //first of all record our loading time
   //list($usec, $sec)=explode(" ", microtime());
   //$loadtime = ( (float)$usec + (float)$sec );
@@ -102,29 +97,29 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
   header('Cache-Control: post-check=0, pre-check=0', false);
   header('Pragma: no-cache');
   header('Content-Type: text/html; charset='.CHARACTER_SET );
-  
+
   //do a refresh if required
   if($redirect_time != 0) {
     header('Refresh: $redirect_time; url='.BASE_URL.'index.php' );
   }
-  
+
   $content =        "<!DOCTYPE html PUBLIC\n".
                     "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
                     "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n".
                     "<html>\n\n".
                     "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
                     "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
-                    "<!-- (c) 2002-2005 Andrew Simpson -->\n\n".
+                    "<!-- (c) 2002-2007 Andrew Simpson for WebCollab -->\n\n".
                     "<head>\n";
 
   if( $title == '' ) {
     $title = MANAGER_NAME;
   }
-  
+
   $content .=       "<title>".$title."</title>\n".
                     "<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".
                     "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".CHARACTER_SET."\" />\n";
-  
+
   //do a refresh if required
   if($redirect_time != 0) {
     $content .=     "<meta http-equiv=\"Refresh\" content=\"".$redirect_time.";url=".BASE_URL."index.php\" />\n";
@@ -134,58 +129,63 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
     case 2: //print
       $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_PRINT."\" type=\"text/css\" />\n";
       break;
-    
+
     case 3: //calendar
       $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_MAIN."\" type=\"text/css\" />\n";
       $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_CALENDAR."\" type=\"text/css\" />\n";
       break;
-       
+
     case 0: //main window + menu sidebar
     case 1: //single main window (no menu sidebar)
-    default:            
+    default:
       $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_MAIN."\" type=\"text/css\" />\n";
-      break;         
+      break;
   }
-  
+
+  $content .= "<link rel=\"icon\" type=\"image/png\" href=\"images/group.png\" />\n";
+
   //javascript scripts
   if($cursor || $check || $date || $calendar ) {
-    $content .=     "<script type=\"text/javascript\">\n".
-                    "<!-- \n";
+    $content .=     "<script type=\"text/javascript\">\n";
+
     if($cursor){
-      $content .=   "function placeCursor() {document.getElementById('".$cursor."').focus();}\n";
+      $content .=   "function placeCursor() {document.getElementById('".$cursor."').focus()}\n";
     }
-       
+
     if($check){
       $content .=   "function fieldCheck(){\n".
-                    "if(document.getElementById('".$check."').value===\"\"){\n".
+                    "var field = document.getElementById('".$check."').value;\n".
+                    "if(field.length == 0){\n".
                     "alert('".$lang['missing_field_javascript']."');\n".
                     "document.getElementById('".$check."').focus();\n".
                     "return false;}\n".
-                    "}\n";
+                    "return true;}\n";
     }
     if($date) {
       $content .=   "function dateCheck() {\n".
-                    "var daysMonth = new Array(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 );\n". 
+                    "if(!fieldCheck()){\n".
+                    "return false;}\n".
+                    "var daysMonth = new Array(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 );\n".
                     "if(document.getElementById('day').value > daysMonth[(document.getElementById('month').value-1)] ){\n".
                     "alert('".$lang['invalid_date_javascript']."');\n".
-                    "return false;}\n". 
+                    "return false;}\n".
                     "var finishDate = document.getElementById('projectDate').value;\n".
-                    "if(finishDate > 0 ){\n".
+                    "var statusType = document.getElementById('projectStatus').value;\n".
+                    "if(finishDate > 0 && (statusType != 'cantcomplete' && statusType != 'notactive')){\n".
                     "var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value, 0, 0, 0 )/1000;\n".
                     "if(inputDate - finishDate > 21600 ){\n".
-                    "return confirm('".$lang['finish_date_javascript']."');} }\n".     
+                    "return confirm('".$lang['finish_date_javascript']."');} }\n".
                     "}\n";
     }
-    if($calendar) {      
-      $content .=   "function dateSet(dayIndex, monthIndex, yearIndex) {\n".  
+    if($calendar) {
+      $content .=   "function dateSet(dayIndex, monthIndex, yearIndex) {\n".
                     "if(window.opener && !window.opener.closed) {\n".
                     "window.opener.document.getElementById('day').selectedIndex=dayIndex;\n".
                     "window.opener.document.getElementById('month').selectedIndex=monthIndex;\n".
                     "window.opener.document.getElementById('year').selectedIndex=yearIndex;}\n".
                     "}\n";
-    }  
-    $content .=     " // -->\n".
-                    "</script>\n".
+    }
+    $content .=     "</script>\n".
                     "</head>\n\n";
     if($cursor) {
       $content .=   "<body onload=\"placeCursor()\">\n";
@@ -240,7 +240,7 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
   //flush buffer
   echo $content; 
   //echo "Initial memory value: ".memory_get_usage()."<br />";
-    
+
   return;
 }
 
@@ -259,7 +259,7 @@ function new_box($title, $content, $style="boxdata", $size="tablebox" ) {
         //"This box memory value: ".memory_get_usage()."</td></tr>\n".
         "</table>\n".
         "<!-- end -->\n";
-                    
+
   return;
 }
 
@@ -267,7 +267,7 @@ function new_box($title, $content, $style="boxdata", $size="tablebox" ) {
 // End the left frame and go the the right one
 //
 function goto_main() {
-  
+
   echo "\n</td><td align=\"center\">\n";
   return;
 }
@@ -298,9 +298,9 @@ function create_bottom() {
   $stime_elapsed = ($stime_after - $stime_before);
   
   $time_content = "<div style=\"text-align: center\">\n".
-                  sprintf("Elapsed PHP user time: %d µseconds", $utime_elapsed )."<br />".
-                  sprintf("Elapsed PHP system time: %d µseconds", $stime_elapsed )."<br />".
-                  sprintf("Elapsed database time: %d µseconds", ($database_query_time * 1000000 ) )."<br />".
+                  sprintf("Elapsed PHP user time: %d seconds", $utime_elapsed )."<br />".
+                  sprintf("Elapsed PHP system time: %d seconds", $stime_elapsed )."<br />".
+                  sprintf("Elapsed database time: %d seconds", ($database_query_time * 1000000 ) )."<br />".
                   sprintf("Dayabase query count: %d", $database_query_count)."</div><br />\n";
   
   new_box("Timing information", $time_content );                
@@ -311,22 +311,21 @@ function create_bottom() {
     case 0: //no bottom text
       $align = '';
       break;
-      
+
     case 1:
       $align = "style=\"text-align: left\"";
       break;
-      
+
     case 2:
     default:
       $align = "style=\"text-align: center\"";
       break;
  }
- 
-  //shows the logo
-  if($bottom_text) {
-    $content .= "<div class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\"onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2005</div>\n";
-  }     
-  
+
+ //shows the logo
+ if($bottom_text) {
+   $content .= "<div class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2007</div>\n";
+ }
   //end xml parsing
   $content .= "</body>\n</html>\n";
   echo $content;
