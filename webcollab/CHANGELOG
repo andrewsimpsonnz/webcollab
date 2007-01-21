@@ -1,4 +1,16 @@
 WebCollab SVN
+*** 21 January 2007
+  Andrew Simpson
+
+-bugfix: (Unicode) User edit shows admin's language Bug #1640545) (Credit: Paul Ebermann - epaul )
+
+WebCollab SVN
+*** 18 January 2007
+  Andrew Simpson
+
+- bugfix: Forum search shows private posts (Bug #1637457) (Credit: jouwnaan )
+
+WebCollab SVN
 *** 12 January 2007
   Andrew Simpson
 
