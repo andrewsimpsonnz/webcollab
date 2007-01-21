@@ -165,7 +165,7 @@ function starttls($connection, $cap ) {
   //do a new extended hello (EHLO) after successful negotiation (RFC 3207)
   fputs($connection, 'EHLO '.$_SERVER['SERVER_NAME']."\r\n" );
   $log .= 'C: EHLO '.$_SERVER['SERVER_NAME']."\n";
-  $new_capability = response();
+  $new_capability = strtoupper(response() );
 
   if(strncmp('250', $new_capability, 3 ) ) { 
     debug();
