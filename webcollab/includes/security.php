@@ -64,6 +64,10 @@ else {
 if(UNICODE_VERSION == 'Y' ) {
   //set the database encoding - get user preferred language files later
   db_user_locale('UTF-8' );
+  //set PHP internal encoding
+  if(! mb_internal_encoding('UTF-8' ) ) {
+    error("Internal encoding", "Unable to set UTF-8 encoding in PHP" );
+  }
 }
 else {
   //set the database encoding & get the defined language files
