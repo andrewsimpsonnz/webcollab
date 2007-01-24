@@ -65,6 +65,10 @@ switch($locale ) {
     include(BASE.'lang/de_message.php' );
     break;
 
+  case 'eo':
+    include(BASE.'lang/eo_message.php' );
+    break;
+
   case 'es':
     include(BASE.'lang/es_message.php' );
     break;

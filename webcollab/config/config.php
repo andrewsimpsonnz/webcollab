@@ -88,6 +88,7 @@
           'cs'    (Czech)
           'da'    (Danish)
           'de'    (German)
+          'eo'    (Esperanto)
           'es'    (Spanish)
           'fr'    (French)
           'gr'    (Greek)
