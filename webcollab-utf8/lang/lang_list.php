@@ -39,6 +39,7 @@ $lang_list['de']    = 'Deutsch';
 $lang_list['nl']    = 'Dutch';
 $lang_list['en']    = 'English';
 $lang_list['es']    = 'Español';
+$lang_list['eo']    = 'Esperanto';
 $lang_list['fr']    = 'Français';
 $lang_list['gr']    = 'Ελληνικά';
 $lang_list['hu']    = 'Magyar';
