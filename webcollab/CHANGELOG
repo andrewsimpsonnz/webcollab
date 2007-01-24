@@ -2,7 +2,9 @@ WebCollab SVN
 *** 21 January 2007
   Andrew Simpson
 
--bugfix: (Unicode) User edit shows admin's language Bug #1640545) (Credit: Paul Ebermann - epaul )
+- added Esperanto translation (Credit: Paul Ebermann - epaul )
+
+- bugfix: (Unicode) User edit shows admin's language Bug #1640545) (Credit: Paul Ebermann - epaul )
 
 WebCollab SVN
 *** 18 January 2007
