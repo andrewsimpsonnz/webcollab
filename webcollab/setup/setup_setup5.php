@@ -116,6 +116,7 @@ $content = "<?php\n".
 "          'cs'    (Czech)\n".
 "          'da'    (Danish)\n".
 "          'de'    (German)\n".
+"          'eo'    (Esperanto)\n".
 "          'es'    (Spanish)\n".
 "          'fr'    (French)\n".
 "          'gr'    (Greek)\n".
