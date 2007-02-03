@@ -29,11 +29,12 @@
 
 */
 
+
 //required language encodings
-define('CHARACTER_SET', "ISO-8859-1" );
+define('CHARACTER_SET', 'ISO-8859-1' );
 
 //this is the regex for input validation filter used in common.php
-$validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s";
+$validation_regex = "/([^\x09\x0A\x0D\x20-\x7E\xA0-\xFF])/"; //ISO-8859-x
 
 //dates
 $month_array = array ( NULL, "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" );
@@ -67,7 +68,6 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['update']                       = "Actualizar";
     $lang['submit_changes']               = "Enviar cambios";
     $lang['continue']                     = "Continuar";
-    $lang['reset']                        = "Reset";
     $lang['manage']                       = "Gestionar";
     $lang['edit']                         = "Editar";
     $lang['delete']                       = "Borrar";
@@ -161,6 +161,7 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['file_too_big_sprt']            = "El tamaño máximo permitido es %s bytes.  Su envío fue demasiado grande y ha sido eliminado.";
     $lang['del_file_javascript_sprt']     = "Esta seguro de eliminar %s ?";
 
+
  //forum
     $lang['orig_message']                 = "Mensaje original:";
     $lang['post']                         = "Publicar";
@@ -176,18 +177,11 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['forum_submit']                 = "Enviar al foro";
     $lang['no_message']                   = "No hay mensaje! Vuelva atrás y reintente.";
     $lang['add_reply']                    = "Agregar respuesta";
-//**
     $lang['last_post_sprt']               = "Ultimo mensaje %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**
     $lang['recent_posts']                 = "Mensajes recientes";
-//**
-    $lang['recent_posts']                = "Recent forum posts";
-//**
-    $lang['forum_search']                = "Forum search";
-//**
-    $lang['no_results']                  = "No results found for '%s'";
-//**
-    $lang['search_results']              = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+    $lang['forum_search']                 = "Buscar en el foro";
+    $lang['no_results']                   = "No se encuentra '%s'";
+    $lang['search_results']               = "Encontrados %1\$s resultados para '%2\$s'<br />Mostrando %3\$s resultados de %4\$s";
 
  //includes
     $lang['report']                       = "Informe";
@@ -260,9 +254,8 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['no_users']                     = "No hay usuarios conocidos del sistema";
     $lang['users']                        = "Usuarios";
     $lang['existing_users']               = "Usuarios existentes";
- //**
-    $lang['private_profile']              = "Este usuario tiene un perfil privado que no puedes consultar.";
-    $lang['private_usergroup_profile']    = "(Este usuario es miembro de grupos privados que no puedes consultar)";
+    $lang['private_profile']              = "Usuario con un perfil privado que no puedes consultar.";
+    $lang['private_usergroup_profile']    = "(Usuario miembro de grupos privados que no puedes consultar)";
     $lang['email_users']                  = "Usuarios de correo";
     $lang['select_usergroup']             = "Grupo de usuario seleccionado de abajo:";
     $lang['subject']                      = "Asunto:";
@@ -301,8 +294,8 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['priority']                     = "Prioridad";
     $lang['parent_task']                  = "Tarea padre";
     $lang['creation_time']                = "Creado en fecha";
-    $lang['project_name']                 = "Nombre del proyecto";
     $lang['by_sprt']                      = "%1\$s por %2\$s"; //Note to translators: context is 'Creation time: <date> by <user>'
+    $lang['project_name']                 = "Nombre del proyecto";
     $lang['task_name']                    = "Nombre de tarea";
     $lang['deadline']                     = "Fecha tope";
     $lang['taken_from_parent']            = "(Tomado desde el padre)";
@@ -411,7 +404,6 @@ $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
     $lang['print_version']                = "Version para imprimir";
     $lang['condensed_view']               = "Vista agrupada";
     $lang['full_view']                    = "Vista completa";
-//**
-    $lang['icalendar']                    = "iCalendar";
+    $lang['icalendar']                    = "iCalendario";
 
 ?>
