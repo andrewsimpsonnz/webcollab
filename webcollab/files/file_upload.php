@@ -53,7 +53,9 @@ $taskid = $_GET['taskid'];
 //check usergroup security
 $taskid = usergroup_check($taskid );
 
-if( ! defined('NUM_FILE_UPLOADS' ) ) ? define('NUM_FILE_UPLOADS', 3 );
+if( ! defined('NUM_FILE_UPLOADS' ) ) {
+  define('NUM_FILE_UPLOADS', 3 );
+}
 
 $content =  "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"files.php\">\n".
               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
