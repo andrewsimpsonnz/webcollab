@@ -108,7 +108,7 @@ CREATE TABLE contacts (
 	address VARCHAR(100),
 	postal VARCHAR(100),
 	city VARCHAR(100),
-	notes VARCHAR(100),
+	notes TEXT,
 	email VARCHAR(100),
 	added_by INT UNSIGNED NOT NULL,
 	date TIMESTAMP NOT NULL,

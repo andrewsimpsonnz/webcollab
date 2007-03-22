@@ -122,7 +122,7 @@ CREATE TABLE "contacts" (
 	"address" character varying(100),
 	"postal" character varying(100),
 	"city" character varying(100),
-	"notes" character varying(100),
+	"notes" text,
 	"email" character varying(100),
 	"added_by" integer NOT NULL,
 	"date" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
