@@ -91,11 +91,11 @@ function find_children($parent, $new_parentid ) {
     }
 
     //see if new parentid is an existing child
-    if($new_parentid = $task_array[$i]['id'] ) return true;
+    if($new_parentid == $task_array[$i]['id'] ) return true;
 
-    //if this post has children (subtasks), iterate recursively to find them
+    //if this task has children (subtasks), iterate recursively to find them
     if(isset($parent_array[($task_array[$i]['id'])] ) ) {
-      find_children($task_array[$i]['id'] );
+      find_children($task_array[$i]['id'], $new_parentid );
     }
   }
   return false;
