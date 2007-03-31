@@ -135,12 +135,12 @@ Every character set needs a validation filter that WebCollab uses to reject ille
 characters.  This is the one for ISO-8859-1 (and most other ISO-8859-x character sets):
 
     //this is the regex for input validation filter used in common.php
-    $validation_regex = "/([^\x09\x0a\x0d\x20-\x7e\xa0-\xff])/s"; //ISO-8859-x
+    define('VALIDATION_REGEX', "/([^\x09\x0A\x0D\x20-\x7E\xA0-\xFF])/" ); //ISO-8859-x
 
 For testing a new character set use:
 
    //this is the regex for input validation filter that allows all 8 bit bytes to pass!
-   $validation_regex = '/([^\x00-\xff])/s';
+   $validation_regex = '/([^\x00-\xFF])/s';
 
 
 Making the Translation Available to WebCollab
