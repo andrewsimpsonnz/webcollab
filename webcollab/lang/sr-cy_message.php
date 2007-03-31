@@ -31,7 +31,7 @@
 define('CHARACTER_SET', "Windows-1251" );
 
 //this is the regex for input validation filter used in common.php
-$validation_regex = "/([^\x09\x0a\x0d\x20-\x97\x99-\xff])/"; //Windows-1251 (http://www.microsoft.com/typography/unicode/1251.htm)
+define('VALIDATION_REGEX', "/([^\x09\x0A\x0D\x20-\x97\x99-\xFF])/" ); //Windows-1251 (http://www.microsoft.com/typography/unicode/1251.htm)
 
 //dates
 $month_array = array (NULL, 'Јан', 'Феб', 'Мар', 'Апр', 'Мај', 'Јун', 'Јул', 'Авг', 'Сеп', 'Окт', 'Нов', 'Дец' );

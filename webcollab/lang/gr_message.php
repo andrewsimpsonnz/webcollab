@@ -31,7 +31,7 @@
 define('CHARACTER_SET', "ISO-8859-7" );
 
 //this is the regex for input validation filter used in common.php
-$validation_regex = "/([\x00-\x08\x10\x0B\x0C\x0E-\x19\xAE\xD2\xFF])"; //ISO-8859-7
+define('VALIDATION_REGEX', '/([\x00-\x08\x10\x0B\x0C\x0E-\x19\xAE\xD2\xFF])/' ); //ISO-8859-7
 
 
 //dates

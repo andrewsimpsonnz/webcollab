@@ -33,7 +33,7 @@
 define('CHARACTER_SET', "ISO-8859-3" );
 
 //this is the regex for input validation filter used in common.php
-$validation_regex = '/([\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F\xA5\xAE\xBE\xC3\xD0\xE3\xF0])/'; //ISO-8859-3
+define('VALIDATION_REGEX', '/([\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F\xA5\xAE\xBE\xC3\xD0\xE3\xF0])/' ); //ISO-8859-3
 
 //dates
 $month_array = array ( NULL, "Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aýg", "Sep", "Okt", "Nov", "Dec" );
