@@ -91,7 +91,7 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
 
   //do a refresh if required
   if($redirect_time != 0) {
-    header('Refresh: $redirect_time; url='.BASE_URL.'index.php' );
+    header('Refresh: '.$redirect_time.'; url='.BASE_URL.'index.php' );
   }
 
   $content =        "<!DOCTYPE html PUBLIC\n".
