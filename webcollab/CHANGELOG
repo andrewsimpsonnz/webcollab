@@ -1,4 +1,12 @@
 WebCollab SVN
+*** 31 March 2007
+  Andrew Simpson
+
+- bugfix: patch #1691353 to fix bugs in task_submit_update (Credit: Peter Kjellerstedt - pkj )
+
+- bugfix: header refresh string incorrect in screen.php (Credit: jaygeeboy )
+
+WebCollab SVN
 *** 21 March 2007
   Andrew Simpson
 
