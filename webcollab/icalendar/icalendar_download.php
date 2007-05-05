@@ -31,6 +31,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+
+define('VEVENT', 'Y');
+
 //
 // Send out iCalendar header
 //
@@ -57,68 +60,44 @@ function icalendar_header($id ) {
   header('Content-Disposition: attachment; filename="'.ABBR_MANAGER_NAME.'-'.$id.'-'.date('Ymd').'-1.ics"');
 
   echo  "BEGIN:VCALENDAR\r\n".
-        "VERSION\r\n".
-        " :2.0\r\n".
-        "PRODID\r\n".
-        " :-//WebCollab iCalendar V1.0//EN\r\n".
+        "VERSION:2.0\r\n".
+        "PRODID:-//WebCollab iCalendar V2.0//EN\r\n".
+        "CALSCALE:GREGORIAN\r\n".
         "METHOD:PUBLISH\r\n";
 
   return;
 }
 
 //
-// Send out a vtodo set
+// Send out a VTODO or VEVENT
 //
 
-function icalendar_vtodo($row) {
+function icalendar_body($row) {
 
   global $icalendar_id, $dtstamp;
 
-  $content = "BEGIN:VTODO\r\n".
-             "UID\r\n".
-             " :".$row['taskid']."-".$icalendar_id."\r\n".
-             "SUMMARY\r\n".
-             " :".icalendar_text_format($row['name'] )."\r\n".
-             "DESCRIPTION\r\n".
-             " :".icalendar_text_format($row['text'] )."\r\n".
-             "CREATED;VALUE=DATE\r\n".
-             " :".icalendar_date($row['created'])."\r\n".
-             "LAST-MODIFIED;VALUE=DATE\r\n".
-             " :".icalendar_date($row['edited'])."\r\n".
-             "DUE;VALUE=DATE\r\n".
-             " :".icalendar_date($row['deadline'])."\r\n".
-             "DTSTAMP\r\n".
-             " :".$dtstamp."\r\n".
-             "DTSTART;VALUE=DATE\r\n".
-             " :".icalendar_date($row['created'])."\r\n".
-             "ORGANIZER;CN=\"".$row['fullname']."\"\r\n".
-             " :MAILTO:".$row['email']."\r\n".
-             "SEQUENCE\r\n".
-             " :".$row['sequence']."\r\n";
-
-  switch($row['status'] ) {
-    case 'done':
-      $case = 'COMPLETED';
-      break;
-
-    case 'active':
-      $case = 'IN-PROCESS';
-      break;
-
-    case 'cantcomplete':
-    case 'notactive':
-      $case = 'CANCELLED';
-      break;
-
-    case 'created':
-    default:
-      $case = 'NEEDS-ACTION';
-      break;
+  if(VEVENT == 'Y' ) {
+    $content = "BEGIN:VEVENT\r\n";
+  }
+  else {
+    $content = "BEGIN:VTODO\r\n";
   }
 
-  $content .= "STATUS\r\n".
-              " :".$case."\r\n";
+  $content .= "UID:".$row['taskid']."-".$icalendar_id."\r\n".
+              "SUMMARY:\r\n ".icalendar_text_format($row['name'] )."\r\n".
+              "DESCRIPTION:\r\n ".icalendar_text_format($row['text'] )."\r\n".
+              "CREATED:".icalendar_datetime($row['created_utc'])."Z\r\n".
+              "LAST-MODIFIED:".icalendar_datetime($row['edited_utc'])."Z\r\n".
+              "DTSTAMP:".$dtstamp."\r\n".
+              "ORGANIZER;CN=\"".$row['fullname'].":MAILTO:".$row['email']."\r\n".
+              "SEQUENCE:".$row['sequence']."\r\n";
 
+  //private
+  if($row['globalaccess'] == 'f' && $row['usergroupid'] != 0 ) {
+    $content.= "CLASS:PRIVATE\r\n";
+  }
+
+  //priority
   switch($row['priority'] ) {
     case 0:
       $case = '9';
@@ -142,51 +121,138 @@ function icalendar_vtodo($row) {
       break;
   }
 
-  $content .= "PRIORITY\r\n".
-              " :".$case."\r\n";
+  $content .= "PRIORITY:".$case."\r\n";
 
-  if($row['parent'] == 0 )  {
-    //project
-    $content.= "CATEGORIES\r\n".
-    " :Project\r\n";
-    $content .= "PERCENT-COMPLETE\r\n".
-                " :".intval($row['completed'])."\r\n";
+  //get the specific parts for a VTODO or VEVENT
+  if(VEVENT == 'Y' ) {
+    $content .= icalendar_vevent($row );
   }
   else {
-    //task ==> show relationships
-    $content.= "CATEGORIES\r\n".
-    " :Task\r\n";
-    if($row['parent'] == $row['projectid'] ) {
-      //task under project
-      $content.= "RELATED-TO;RELTYPE=CHILD\r\n".
-                 " :".$row['projectid']."-".$icalendar_id."\r\n";
-    }
-    else {
-       //sub task
-       $content.= "RELATED-TO;RELTYPE=CHILD\r\n".
-                  " :".$row['parent']."-".$icalendar_id."\r\n";
-    }
-
-    $task_complete = ($row['status'] == 'done' ) ? 100 : 0;
-    $content .= "PERCENT-COMPLETE\r\n".
-                " :".$task_complete."\r\n";
-
+    $content .= icalendar_vtodo($row );
   }
-
-  //private
-  if($row['globalaccess'] == 'f' && $row['usergroupid'] != 0 ) {
-    $content.= "CLASS\r\n".
-    " :PRIVATE\r\n";
-  }
-
-  $content .= "URL\r\n".
-              " :".BASE_URL."\r\n".
-              "END:VTODO\r\n";
 
   echo $content;
 
   return;
 }
+
+//
+// Send out a vtodo set
+//
+
+function icalendar_vtodo($row) {
+
+  global $icalendar_id;
+
+  //deadline
+  $content =  "DUE;VALUE=DATE:".icalendar_date($row['deadline_date'])."\r\n".
+              "DTSTART:".icalendar_datetime($row['created_utc'])."Z\r\n";
+
+  //status
+  switch($row['status'] ) {
+    case 'done':
+      $case = 'COMPLETED';
+      break;
+
+    case 'active':
+      $case = 'IN-PROCESS';
+      break;
+
+    case 'cantcomplete':
+    case 'notactive':
+      $case = 'CANCELLED';
+      break;
+
+    case 'created':
+    default:
+      $case = 'NEEDS-ACTION';
+      break;
+  }
+
+  $content .= "STATUS:".$case."\r\n";
+
+  if($row['parent'] == 0 )  {
+    //project
+    $content .= "CATEGORIES:Project\r\n";
+
+    $content .= "PERCENT-COMPLETE:".intval($row['completed'])."\r\n";
+  }
+  else {
+    //task ==> show relationships
+    $content .= "CATEGORIES:Task\r\n";
+    if($row['parent'] == $row['projectid'] ) {
+      //task under project
+      $content .= "RELATED-TO;RELTYPE=CHILD:".$row['projectid']."-".$icalendar_id."\r\n";
+    }
+    else {
+       //sub task
+       $content .= "RELATED-TO;RELTYPE=CHILD:".$row['parent']."-".$icalendar_id."\r\n";
+    }
+
+    $task_complete = ($row['status'] == 'done' ) ? 100 : 0;
+    $content .= "PERCENT-COMPLETE:".$task_complete."\r\n";
+  }
+
+  //private
+  if($row['globalaccess'] == 'f' && $row['usergroupid'] != 0 ) {
+    $content .= "CLASS:PRIVATE\r\n";
+  }
+
+  $content .= "URL:".BASE_URL."\r\n".
+              "END:VTODO\r\n";
+
+  return $content;
+}
+
+
+//
+// Send out a vevent set
+//
+
+function icalendar_vevent($row) {
+
+  global $icalendar_id;
+
+  //deadline
+  $content = "DTSTART;VALUE=DATE:".icalendar_date($row['deadline_date'])."\r\n".
+             "DTEND;VALUE=DATE:".icalendar_date($row['deadline_date_end'])."\r\n";
+
+  //status
+  switch($row['status'] ) {
+    case 'done':
+      $content = "STATUS:FINAL\r\n";
+      break;
+
+    case 'cantcomplete':
+    case 'notactive':
+      $content .= "STATUS:CANCELLED\r\n";
+      break;
+  }
+
+  if($row['parent'] == 0 )  {
+    //project
+    $content .= "CATEGORIES:Project\r\n";
+  }
+  else {
+    //task ==> show relationships
+    $content .= "CATEGORIES:Task\r\n";
+    if($row['parent'] == $row['projectid'] ) {
+      //task under project
+      $content .= "RELATED-TO;RELTYPE=CHILD:".$row['projectid']."-".$icalendar_id."\r\n";
+    }
+    else {
+       //sub task
+       $content .= "RELATED-TO;RELTYPE=CHILD:".$row['parent']."-".$icalendar_id."\r\n";
+    }
+  }
+
+  $content .= "TRANSP:TRANSPARENT\r\n".
+              "URL:".BASE_URL."\r\n".
+              "END:VEVENT\r\n";
+
+  return $content;
+}
+
 
 //
 // End of file
@@ -208,8 +274,8 @@ function icalendar_text_format($string ) {
   //convert line breaks
   $string = strtr($string, array("\n"=>'\n' ) );
 
-  //word wrap at 75 octets with '[space]\r\n'
-  $string = wordwrap($string, 75, " \r\n", 1 );
+  //word wrap at 75 octets with '\r\n[space]'
+  $string = wordwrap($string, 75, "\r\n ", 1 );
 
   return $string;
 }
@@ -220,12 +286,15 @@ function icalendar_text_format($string ) {
 
 function icalendar_date($timestamp ) {
 
-  $date_array = explode('-', substr($timestamp, 0, 10) );
+  //format is 20040803 for 3 August 2002 input as '2002-08-03 12:35:00'
+  return strtr(substr($timestamp, 0, 10), array('-'=>'' ) ); 
+}
 
-  //format is 20040803 for 3 August 2002
-  $date = $date_array[0].$date_array[1].$date_array[2];
 
-  return $date;
+function icalendar_datetime($timestamp ) {
+
+  //format is 20040803T123500 for 3 August 2002 12:35am input as '2002-08-03 12:35:00'
+  return strtr(substr($timestamp, 0, 19 ), array('-'=>'', ' '=>'T', ':'=>'' ) );
 }
 
 ?>
