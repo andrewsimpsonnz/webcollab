@@ -72,7 +72,7 @@ icalendar_header($id.$taskid );
 for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
   //add vtodo
-  icalendar_vtodo($row);
+  icalendar_body($row);
 }
 
 //end of file

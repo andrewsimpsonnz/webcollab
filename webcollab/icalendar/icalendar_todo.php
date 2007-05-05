@@ -106,13 +106,13 @@ for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
       continue;
     }
 
-    icalendar_vtodo(db_fetch_array($project_q, 0) );
+    icalendar_body(db_fetch_array($project_q, 0) );
 
     $projects[] = $row['projectid'];
   }
 
   //add vtodo
-  icalendar_vtodo($row);
+  icalendar_body($row);
 }
 
 //end of file
