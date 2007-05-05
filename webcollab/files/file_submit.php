@@ -204,26 +204,26 @@ ignore_user_abort(TRUE);
         //limit file name to 200 characters - should be enough for any sensible(!) file name :-)
         $filename = substr($filename, 0, 200 );
         //strip illegal characters
-        $filename = preg_replace('/[\x00-\x2a\x2f\x3a-\x3c\x3e-\x3f\x5c\x5e\x60\x7b-\x7e]|[\.]{2}/', '_', $filename );
+        $filename = preg_replace('/[\x00-\x2A\x2F\x3A-\x3C\x3E-\x3F\x5C\x5E\x60\x7B-\x7E]|[\.]{2}/', '_', $filename );
 
         //escape for database
         $db_filename = db_escape_string($filename );
 
         //alter file database administration
-        $q = db_query( "INSERT INTO ".PRE."files (filename,
-                                              size,
-                                              description,
-                                              uploaded,
-                                              uploader,
-                                              taskid,
-                                              mime )
-                                      VALUES ('$db_filename',
-                                              ".$_FILES['userfile']['size'][$i].",
-                                              '$description',
-                                              now(),
-                                              ".UID.",
-                                              $taskid,
-                                              '".$mime."' )" );
+        db_query( "INSERT INTO ".PRE."files (filename,
+                                            size,
+                                            description,
+                                            uploaded,
+                                            uploader,
+                                            taskid,
+                                            mime )
+                                    VALUES ('".$db_filename."',
+                                            ".$_FILES['userfile']['size'][$i].",
+                                            '$description',
+                                            now(),
+                                            ".UID.",
+                                            ".$taskid.",
+                                            '".$mime."' )" );
 
         //get last insert id
         $fileid = db_lastoid('files_id_seq' );
