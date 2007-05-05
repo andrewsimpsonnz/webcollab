@@ -45,7 +45,8 @@ function date_to_datetime($day, $month, $year ) {
   }
 
   //format is 2004-08-02 00:00:00
-  return sprintf('%04d-%02d-%02d 00:00:00', $year, $month, $day );
+    // The hour is set to 2.00am (instead of 12.00am) to accommodate config changes of +/-1 hour with daylight saving
+  return sprintf('%04d-%02d-%02d 02:00:00', $year, $month, $day );
 }
 
 //
