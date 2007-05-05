@@ -1,4 +1,12 @@
 WebCollab SVN
+*** 5 May 2007
+  Andrew Simpson
+
+- bugfix: Daylight saving causes tasks to shift by one day (Bug #1592679 (Credit: Bob Solomon)
+
+- Add VEVENT to iCalendar for Google, Outlook compatibility
+
+WebCollab SVN
 *** 31 March 2007
   Andrew Simpson
 
