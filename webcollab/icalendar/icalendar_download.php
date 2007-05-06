@@ -84,12 +84,12 @@ function icalendar_body($row) {
   }
 
   $content .= "UID:".$row['taskid']."-".$icalendar_id."\r\n".
-              "SUMMARY:\r\n ".icalendar_text_format($row['name'] )."\r\n".
-              "DESCRIPTION:\r\n ".icalendar_text_format($row['text'] )."\r\n".
+              "SUMMARY:".icalendar_text_format($row['name'] )."\r\n".
+              "DESCRIPTION:".icalendar_text_format($row['text'] )."\r\n".
               "CREATED:".icalendar_datetime($row['created_utc'])."Z\r\n".
               "LAST-MODIFIED:".icalendar_datetime($row['edited_utc'])."Z\r\n".
               "DTSTAMP:".$dtstamp."\r\n".
-              "ORGANIZER;CN=\"".$row['fullname'].":MAILTO:".$row['email']."\r\n".
+              "ORGANIZER;CN=\"".$row['fullname']."\":MAILTO:".$row['email']."\r\n".
               "SEQUENCE:".$row['sequence']."\r\n";
 
   //private
