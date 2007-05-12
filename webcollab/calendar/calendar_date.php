@@ -165,7 +165,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
   $content .= "<td class=\"datecell\" style=\"height: 15px\">\n";
 
   //Note: This assumes the first year in dropdown box is 2001
-  $content .= "<a href='#' onclick=\"dateSet(".($num-1).",".($month-1).",".($year-2001).")\"><span class=\"daynum\">".$num."</span></a>".
+  $content .= "<a href='#' onclick=\"dateSet(".($num-1).",".($month-1).",".($year-2001)."); window.close();\"><spanclass=\"daynum\">".$num."</span></a>".
               "</td>\n";
   ++$i;
 }
