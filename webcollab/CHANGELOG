@@ -1,8 +1,14 @@
 WebCollab SVN
+*** 16 May 2007
+  Andrew Simpson
+
+- bugfix: completion date updates after completion (Credit : Pablo Felip - takerna)
+
+WebCollab SVN
 *** 12 May 2007
   Andrew Simpson
 
-- javascript window close to calendar date (Credit: Will Shattuck)
+- add javascript window close to calendar date (Credit: Will Shattuck)
 
 WebCollab SVN
 *** 5 May 2007
