@@ -210,7 +210,6 @@ db_query('UPDATE '.PRE.'tasks
       edited=now(),
       owner='.$owner.',
       deadline=\''.$deadline.'\',
-      finished_time=now(),
       priority='.$priority.',
       taskgroupid='.$taskgroupid.',
       usergroupid='.$usergroupid.',
