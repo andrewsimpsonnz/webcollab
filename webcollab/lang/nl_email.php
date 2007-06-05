@@ -159,10 +159,10 @@ $email_welcome            = "Hallo,\n\nDit is een bericht van ".MANAGER_NAME." s
 $title_user_change1       = ABBR_MANAGER_NAME.": Uw account is door een beheerder gewijzigd";
 $email_user_change1       = "Hallo,\n\n".
                             "Dit is een bericht van ".MANAGER_NAME." site. Uw account is op ".$email_date." gewijzigd door %1\$s ( %2\$s ) \n\n".
-                            "Login:             %1\$s\n".
-                            "Wachtwoord:        %2\$s\n\n".
-                            "Gebruikersgroepen: %3\$s".
-                            "Naam:              %4\$s\n".
+                            "Login:             %3\$s\n".
+                            "Wachtwoord:        %4\$s\n\n".
+                            "Gebruikersgroepen: %5\$s".
+                            "Naam:              %6\$s\n".
                             "%7\$s";
 
 $title_user_change2         = ABBR_MANAGER_NAME.": Uw account is gewijzigd";
@@ -170,14 +170,14 @@ $email_user_change2         = "Hallo,\n\n".
                             "Dit is een bericht van ".MANAGER_NAME." site. U heeft met succes uw account gewijzigd op ".$email_date.".\n\n".
                             "Login:             %1\$s\n".
                             "Wachtwoord:        %2\$s\n\n".
-                            "Naam:              %4\$s\n".
+                            "Naam:              %3\$s\n".
 
 $title_user_change3         = ABBR_MANAGER_NAME.": Uw account is gewijzigd";
 $email_user_change3         = "Hallo,\n\n".
                             "Dit is een bericht van ".MANAGER_NAME." site. U heeft met succes uw account gewijzigd op ".$email_date.".\n\n".
                             "Login:             %1\$s\n".
                             "Uw bestaande wachtwoord is niet gewijzigd.\n\n".
-                            "Naam:              %4\$s\n".
+                            "Naam:              %2\$s\n".
 
 $title_revive               = ABBR_MANAGER_NAME.": Account opnieuw geactiveerd";
 $email_revive               = "Hallo,\n\n".
