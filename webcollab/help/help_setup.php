@@ -30,9 +30,12 @@ require_once('path.php' );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 
-//setup files are not yet internationalised 
-  //this option is for future development
+//language select
 switch($_GET['lang'] ) {
+
+  case 'nl':
+    $lang_prefix = 'nl';
+    break;
 
   case 'en':
   default:

@@ -85,6 +85,19 @@ switch($locale ) {
     }
     break;
 
+  case 'nl':
+    switch($help_type ) {
+      case 'admin':
+        header('Location: '.BASE_URL.'help/nl_help_admin.php#'.$help_item );
+        break;
+
+      case 'help':
+      default:
+        header('Location: '.BASE_URL.'help/nl_help.php#'.$help_item );
+        break;
+    }
+    break;
+
   case 'ru':
     switch($help_type ) {
       case 'admin':
@@ -126,3 +139,4 @@ switch($locale ) {
 }
 
 ?>
+
