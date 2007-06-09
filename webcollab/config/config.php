@@ -163,7 +163,7 @@
   //number of days that new or updated tasks should be highlighted as 'New' or 'Updated'
   define('NEW_TIME', 14 );
 
-  //custom image to replace the webcollab banner on splash page (base directory is /images)
+  //custom image to replace the webcollab banner on splash page (base directory is [webcollab]/images)
   define('SITE_IMG', "" );
 
   //show full debugging messages on the screen when errors occur (values are "N", or "Y")
@@ -171,6 +171,9 @@
 
   //Don't show full error message on the screen - just a 'sorry, try again' message (values are "N", or "Y")
   define('NO_ERROR', "N" );
+
+  //Use VEVENT for iCalendar instead of VTODO - works for Google Calendar and others (values are "N", or "Y")
+  define('VEVENT', "N");
 
   //Use external webserver authorisation to login (values are "N", or "Y")
   define('WEB_AUTH', "N" );
