@@ -31,9 +31,6 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
-
-define('VEVENT', 'Y');
-
 //
 // Send out iCalendar header
 //
