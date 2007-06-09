@@ -333,6 +333,16 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     $content .= "<p>Updating from version pre-2.00 database ... success!</p>\n";
   }
 
+  //update version 2.00 -> 2.20
+  $q = db_query("SELECT EXTRACT(HOUR FROM deadline) AS hour FROM ".PRE."tasks" );
+  $row = db_fetch_array($q, 0 );
+
+  if($row < 1 ) {
+
+    db_query('UPDATE '.PRE.'tasks SET deadline=(deadline+INTERVAL '.$delim.'2 HOUR'.$delim.')' );
+  }
+
+
   if( ! $content ) {
     $content .= "<p>No database updates were required.</p>\n";
   }
