@@ -30,11 +30,15 @@ if( ! isset($WEB_CONFIG ) ) {
   $WEB_CONFIG = 'N';
 }
 
+//set language
+$lang = isset($_REQUEST['lang'] ) ? $_REQUEST['lang'] : 'en';
+
 require_once('path.php' );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 require_once(BASE.'setup/setup_config.php' );
 
+include_once(BASE.'lang/lang_setup.php' );
 include_once(BASE.'setup/screen_setup.php' );
 include_once(BASE.'includes/common.php' );
 include_once(BASE.'database/database.php' );
@@ -59,15 +63,8 @@ $x  = 0;
 $admin = 0;
 $row = array();
 
-//security checks
-if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
-  error_setup('Current configuration file does not allow web-based setup' );
-  die;
-}
-
 if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == '' ) {
   //this is a first install
-  $x = '';
 }
 else {
   //get session key from either a GET or POST
@@ -93,9 +90,9 @@ else {
   }
 
   //seems okay at first, now go cross-checking with the known data from the database
-  if( ! ($q = db_query('SELECT '.PRE.'logins.user_id AS user_id, 
+  if( ! ($q = db_query('SELECT '.PRE.'logins.user_id AS user_id,
                                '.PRE.'logins.lastaccess AS lastaccess,
-                               '.PRE.'users.admin AS admin, 
+                               '.PRE.'users.admin AS admin,
                                '.$epoch.' now() ) AS now,
                                '.$epoch.' lastaccess) AS sec_lastaccess
                                FROM '.PRE.'logins
@@ -130,6 +127,7 @@ else {
 
   //update the 'I was here' time
   db_query('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.$x.'\' AND user_id='.$row['user_id'] );
+
 }
 
 //for compatability in common.php
