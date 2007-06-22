@@ -29,6 +29,12 @@ require_once('path.php' );
 
 require_once(BASE.'setup/security_setup.php' );
 
+//security checks
+if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
+  error_setup($lang_setup['no_config'] );
+  die;
+}
+
 //essential values - must be present
 $array = array('db_name', 'db_user', 'db_type', 'db_host', 'base_url', 'locale', 'timezone' );
 foreach($array as $var ) {
@@ -40,7 +46,7 @@ foreach($array as $var ) {
 }
 
 //non-essential values
-$array = array('manager_name', 'abbr_manager_name', 'db_password', 'file_base', 'file_maxsize', 'use_email', 'smtp_host', 'new_db' );
+$array = array('manager_name', 'abbr_manager_name', 'db_password', 'file_base', 'file_maxsize', 'use_email', 'smtp_host', 'new_db', 'db_connect' );
 
 foreach($array as $var ) {
   if(! isset($_POST[$var]) ) {
@@ -174,6 +180,8 @@ $content = "<?php\n".
 "  define('DEBUG', '".DEBUG."' );\n\n".
 "  //Do not show full error message on the screen - just a 'sorry, try again' message (values are 'N', or 'Y')\n".
 "  define('NO_ERROR', '".NO_ERROR."' );\n\n".
+"  //Use VEVENT for iCalendar instead of VTODO - works for Google Calendar and others (values are 'N', or 'Y')\n".
+"  define('VEVENT', 'N');\n\n".
 "  //Use external webserver authorisation to login (values are 'N', or 'Y')\n".
 "  define('WEB_AUTH', '".WEB_AUTH."' );\n\n".
 "  //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match)\n".
@@ -194,26 +202,94 @@ if(! $handle = @fopen(BASE_CONFIG.'config.php', 'w' ) ) {
    exit;
  }
 
-//show success message
-create_top_setup("Setup Screen" );
+create_top_setup($lang_setup['setup5_banner1'] );
 
-$content = "<div align='center'>\n".
-            "<p>Setup is complete!</p>\n".
-            "<p>The configuration information has been saved to '[webcollab]/config/config.php'. ".
-            "This file can edited with a text editor to make further changes to configuration.</p>\n".
-            "<p>For best security on *nix operating systems, remember to remove the world writeable permissions from
-'config.php'.</p>\n".
-            "<p>Please press the button to finish configuration, and login to WebCollab...</p>\n";
+//do we have a new database?
+if(isset($data['new_db'] ) && ($data['new_db'] == 'Y' ) ) {
 
-if($data["new_db"] == "Y" ) {
-  $content .= "<p><b>You have a new database. Your default login and password are 'admin' and 'admin123'</b></p>\n";
+  //generate variables to set new session key
+  $ip = $_SERVER['REMOTE_ADDR'];
+  $x  = md5(mt_rand().$ip );
+
+  switch($data["db_type"]) {
+
+    case 'mysql':
+    case 'mysql_innodb':
+      //make connection
+      if( ! ($database_connection = @mysql_connect($data["db_host"], $data["db_user"], $data["db_password"] ) ) ) {
+        abort();
+      }
+
+      //select database
+      if( ! @mysql_select_db($data["db_name"], $database_connection ) ) {
+        abort();
+      }
+
+      //set the new session key in the new database
+      @mysql_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$x.'\', \''.$ip.'\', now() )', $database_connection );
+      break;
+
+    case 'postgresql':
+      //make connection
+      if( ! ($database_connection = @pg_connect($data["db_host"].' user='.$data["db_user"].' dbname='.$data["db_user"].' password='. $data["db_password"]) ) ) {
+        abort();
+      }
+
+      //set the new session key in the new database
+      @pg_query($database_connection, 'INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$x.'\', \''.$ip.'\', now() )' );
+      break;
+
+    default:
+      abort();
+      break;
+  }
+
+  //next form with new session key in place
+  $content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
+              "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+              "<input type=\"hidden\" name=\"action\" value=\"setup6\" />\n".
+              "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" />\n".
+              "<div align=\"center\"><p>".$lang_setup['setup5_writing']."</p><br />\n".
+              "<input type=\"submit\" value=\"".$lang_setup['setup5_continue']."\" /></div>\n".
+              "</form>\n";
+
+    new_box_setup($lang_setup['setup5_banner1'], $content, 'boxdata', 'singlebox' );
+    create_bottom_setup();
+    die;
+
 }
-$content .=  "<p><form name='inputform' method='post' action='index.php'>\n".
-             "<input type='submit' value='Finish' />\n".
-             "</form></p>\n".
-             "</div>\n";
 
-new_box_setup("Setup - Stage 5 of 5", $content, 'boxdata', 'singlebox' );
+//existing database has been reconfigured...
+$content = "<div align='center'>\n".$lang_setup['setup5_complete']."\n";
 
+$content .= "<p><form name='inputform' method='post' action='index.php'>\n".
+            "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+            "<input type='submit' value='".$lang_setup['finish']."' />\n".
+            "</form></p>\n".
+            "</div>\n";
+
+new_box_setup($lang_setup['setup5_banner2'], $content, 'boxdata', 'singlebox' );
 create_bottom_setup();
+
+//
+// New database - and not able to connect
+//
+//
+function abort() {
+
+  $content = "<div align='center'>\n".
+              "<p>".$lang_setup['setup5_write']."</p>\n".
+              "<p><b>".$lang_setup['setup5_no_db']."</p>\n";
+
+  $content .= "<p><form name='inputform' method='post' action='index.php'>\n".
+              "<input type='submit' value='".$lang_setup['finish']."' />\n".
+              "</form></p>\n".
+              "</div>\n";
+
+  new_box_setup($lang_setup['setup5_banner3'], $content, 'boxdata', 'singlebox' );
+
+  create_bottom_setup();
+  die;
+}
+
 ?>
