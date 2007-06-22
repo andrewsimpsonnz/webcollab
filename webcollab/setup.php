@@ -29,6 +29,9 @@
 //set initial safe values
 $WEB_CONFIG = "N";
 
+//set language
+$lang = isset($_REQUEST['lang'] ) ? $_REQUEST['lang'] : 'en';
+
 //includes
 require_once('path.php' );
 require_once(BASE.'setup/setup_config.php');
@@ -57,7 +60,9 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
   include_once(BASE.'includes/common.php' );
   include_once(BASE.'database/database.php' );
-  //add lang file to get character set right for safe_data()
+  include_once(BASE.'lang/lang_setup.php' );
+
+  //add character set right for safe_data() and database connection
   include_once(BASE.'lang/lang.php' );
 
   $q = '';
@@ -141,21 +146,19 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
 //security checks
 if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
-  secure_error("Current configuration file does not allow web-based setup." );
+  secure_error($lang_setup['no_config'] );
   die;
 }
 
 //version check
 if(version_compare(PHP_VERSION, '4.3.0' ) == -1 ) {
-  secure_error("WebCollab needs PHP version 4.3.0, or higher.  This version is ".PHP_VERSION );
+  secure_error($lang_setup['min_version'] );
 }
 
 if(UNICODE_VERSION == 'Y' ) {
   //check that UTF-8 character encoding can be used
   if(! function_exists('mb_internal_encoding') ) {
-    error("Unable to set UTF-8 encoding in PHP.<br \>\n".
-          "The PHP installed on this server does not appear to have the multi-byte string (mb_string) library enabled.<br />\n".
-          "This library is essential for using UTF-8 with WebCollab" );
+    error($lang_setup['no_mbstring'] );
   }
 }
 
@@ -167,20 +170,20 @@ if(DATABASE_NAME == '' ) {
 }
 
 //login box screen code
-create_top_setup('Login' );
+create_top_setup($lang_setup['setup_banner'] );
 
-$content = "<p>Admin login is required for setup:</p>\n".
+$content = "<p>".$lang_setup['require_login']."</p>\n".
            "<form name=\"inputform\" method=\"post\" action=\"setup.php\">\n".
-             "<table border=\"0\">\n".
-               "<tr><td>Login: </td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
-               "<tr><td>Password: </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
-             "</table>\n".
-             "<div align=\"center\">\n".
-             "<p><input type=\"submit\" value=\"Login\" /></p>\n".
-             "</div></form>\n";
+           "<table border=\"0\">\n".
+           "<tr><td>".$lang_setup['login']."</td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
+           "<tr><td>".$lang_setup['password']."</td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
+           "</table>\n".
+           "<div align=\"center\">\n".
+           "<p><input type=\"submit\" value=\"Login\" /></p>\n".
+           "</div></form>\n";
 
 //set box options
-new_box_setup('Login', $content, 'boxdata', 'singlebox' );
+new_box_setup($lang_setup['setup_banner'], $content, 'boxdata', 'singlebox' );
 
 create_bottom_setup();
 
