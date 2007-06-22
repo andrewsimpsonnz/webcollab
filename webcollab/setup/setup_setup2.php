@@ -29,39 +29,44 @@ require_once('path.php' );
 
 require_once(BASE.'setup/security_setup.php' );
 
-create_top_setup("Setup Screen" );
+//security checks
+if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
+  error_setup($lang_setup['no_config'] );
+  die;
+}
 
-$content = "<p><b>Setup - Stage 2 of 5 : Database Setup</b></p>\n";
+create_top_setup($lang_setup['setup2_banner'] );
+
+$content =  "<p><b>".$lang_setup['setup2_banner']."</b></p>\n";
 
 $content .= "<table style=\"width : 98%\"><tr><td>\n".
-            "<span class=\"textlink\">[<a href=\"help/en_help_setup2.php?type=setup2&amp;lang=en\" onclick=\"window.open('help/en_help_setup2.php?type=setup2&amp;lang=en'); return false\"><i>Help me with this form</a></i>]</span>\n".
+            "<span class=\"textlink\">[<a href=\"help/en_help_setup2.php?type=setup2&amp;lang=".$lang."\" onclick=\"window.open('help/en_help_setup2.php?type=setup2&amp;lang=".$lang."'); return false\"><i>".$lang_setup['help']."</a></i>]</span>\n".
             "</td></tr>\n</table>\n";
 
-$content .=
-"<form method=\"post\" action=\"setup_handler.php\">\n".
-  "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
-  "<input type=\"hidden\" name=\"action\" value=\"build\" />\n".
-  "<p>Please enter database details.  The database user given here must be able to create databases.<br />\n".
-  "(If desired, you can change the database user to a less privileged user in the next screen entry).</p>\n".
-  "<table class=\"celldata\">\n".
-    "<tr><td></td><td><br />The details for your database are:</td></tr>\n".
-    "<tr align=\"left\"><td><b>Your database name: </b></td><td><input type=\"text\" name=\"database_name\" size=\"30\" /></td></tr>\n".
-    "<tr><td></td><td>&nbsp;</td></tr>\n".
-    "<tr align=\"left\"><td><b>Database user: </b></td><td><input type=\"text\" name=\"database_user\" size=\"30\" /></td></tr>\n".
-    "<tr align=\"left\"><td><b>Database password: </b></td><td><input type=\"text\" name=\"database_password\" size=\"30\" /></td></tr>\n".
-    "<tr><td></td><td>&nbsp;</td></tr>\n".
-    "<tr align=\"left\"><td><b>Database host: </b></td><td><input type=\"text\" name=\"database_host\" value=\"localhost\" size=\"15\" /></td></tr>\n".
-    "<tr align=\"left\"><td><b>Database type:</b></td> <td>\n".
-    "<select name=\"database_type\">\n".
-      "<option value=\"mysql\" selected=\"selected\" >mysql</option>\n".
-      "<option value=\"mysql_innodb\">mysql with innodb</option>\n".
-      "<option value=\"postgresql\">postgresql</option>\n".
-    "</select></td></tr>\n".
-    "</table>\n".
-  "<input type=\"submit\" value=\"Submit\" />\n".
-"</form>\n";
+$content .= "<form method=\"post\" action=\"setup_handler.php\">\n".
+            "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+            "<input type=\"hidden\" name=\"action\" value=\"build\" />\n".
+            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" />\n".
+            "<p>".$lang_setup['setup2_db_details1']."</p>\n".
+            "<table class=\"celldata\">\n".
+            "<tr><td></td><td><br />".$lang_setup['setup2_db_details2']."</td></tr>\n".
+            "<tr align=\"left\"><td><b>".$lang_setup['setup2_db_name']."</b></td><td><input type=\"text\" name=\"database_name\" size=\"30\" /></td></tr>\n".
+            "<tr><td></td><td>&nbsp;</td></tr>\n".
+            "<tr align=\"left\"><td><b>".$lang_setup['db_user']."</b></td><td><input type=\"text\" name=\"database_user\" size=\"30\" /></td></tr>\n".
+            "<tr align=\"left\"><td><b>".$lang_setup['db_password']."</b></td><td><input type=\"text\" name=\"database_password\" size=\"30\" /></td></tr>\n".
+            "<tr><td></td><td>&nbsp;</td></tr>\n".
+            "<tr align=\"left\"><td><b>".$lang_setup['db_host']."</b></td><td><input type=\"text\" name=\"database_host\" value=\"localhost\" size=\"15\" /></td></tr>\n".
+            "<tr align=\"left\"><td><b>".$lang_setup['db_type']."</b></td> <td>\n".
+            "<select name=\"database_type\">\n".
+            "<option value=\"mysql\" selected=\"selected\" >mysql</option>\n".
+            "<option value=\"mysql_innodb\">mysql with innodb</option>\n".
+            "<option value=\"postgresql\">postgresql</option>\n".
+            "</select></td></tr>\n".
+            "</table>\n".
+            "<input type=\"submit\" value=\"".$lang_setup['submit']."\" />\n".
+            "</form>\n";
 
-new_box_setup("Setup - Stage 2 of 5", $content, 'boxdata', 'tablebox' );
+new_box_setup( $lang_setup['setup2_banner'], $content, 'boxdata', 'tablebox' );
 
 create_bottom_setup();
 ?>

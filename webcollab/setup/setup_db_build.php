@@ -36,7 +36,7 @@ require_once(BASE.'setup/security_setup.php' );
 
   //check the required variables were input
   $input_array = array('database_name', 'database_user', 'database_type' );
-  $message_array =array("'Your database name'", "'Database user'", "'Database type'" );
+  $message_array = array("'Your database name'", "'Database user'", "'Database type'" );
   $i = 0;
   foreach( $input_array as $var) {
     if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
@@ -65,8 +65,7 @@ require_once(BASE.'setup/security_setup.php' );
   }
 
   if(preg_match('/[^A-Z0-9_\-$]/i', $database_name ) ){
-    error_setup("Database names can only consist of alphanumeric characters, '_' (underscore), and '$'.<br />".
-                "The '-' (dash) should only be used in the domain name part of remote databases." );
+    error_setup($lang_setup['setupdb_name_error'] );
   }
 
   switch ($database_type) {
@@ -75,15 +74,11 @@ require_once(BASE.'setup/security_setup.php' );
   case 'mysql_innodb':
     //check we can do mysql functions!!
     if( ! extension_loaded('mysql' ) ){
-      error_setup( "Your version of PHP does not have support for MySQL<br /><br />".
-                   "Check that MySQL support is installed, and the MySQL extension is enabled in the 'php.ini' configuration file<br /><br />".
-                   "Refer to the FAQ document for more information." );
+      error_setup($lang_setup['setupdb_no_mysql'] );
     }
     //connect to database server
     if( ! ( $database_connection = @mysql_connect( $database_host, $database_user, $database_password ) ) ) {
-      error_setup( "Cannot connect to a database server at ".$database_host."<br /><br />".
-                    "Check that your specified user and password are correct, and that a MySQL database is running on ".$database_host.".<br /><br />".
-                    "User:     ".$database_user."<br />Password: ".$database_password."<br />" );
+      error_setup( sprintf($lang_setup['setupdb_no_db_mysql'], $database_host, $database_host, $database_user, $database_password ) );
     }
 
     if(defined('MYSQL_SETUP_CHARACTER_SET') && MYSQL_SETUP_CHARACTER_SET != '' ) {
@@ -152,8 +147,7 @@ require_once(BASE.'setup/security_setup.php' );
   case 'postgresql':
     //check we can do pgsql functions!!
     if( ! extension_loaded('pgsql' ) ) {
-      error_setup( "Your version of PHP does not have support for PostgreSQL<br /><br />".
-                   "Check that PostgreSQL support is compiled in, and enabled in php.ini config file<br />" );
+      error_setup($lang_setup['setupdb_no_pgsql'] );
     }
 
     if( ! ( $database_connection = @pg_connect( 'user='.$database_user.' dbname='.$database_name.' password='.$database_password ) ) ) {
@@ -161,10 +155,7 @@ require_once(BASE.'setup/security_setup.php' );
 
       //connect to database server with standard 'template1' database
       if( ! ( $database_connection = @pg_connect( 'user='.$database_user.' dbname=template1 password='.$database_password ) ) ) {
-        error_setup("Cannot connect to the database server at $database_host<br />".
-                    "No existing database, and cannot connect to PostgreSQL with standard 'template1' database to create a new database.<br /><br />".
-                    "User:     $database_user<br />Password: $database_password<br /><br />".
-                    "Check user and password, then try creating the database manually and running setup again." );
+        error_setup(sprintf($lang_setup['setupdb_no_db_pgsql'], $database_host, $database_user, $database_password ) );
       }
 
       if(defined('PGSQL_SETUP_CHARACTER_SET') && PGSQL_SETUP_CHARACTER_SET != '' ) {
@@ -230,14 +221,10 @@ require_once(BASE.'setup/security_setup.php' );
 
   //check if config file can be written to
   if( ! is_writable(BASE_CONFIG.'config.php' ) ) {
-    error_setup( "<p>Creating a new database for WebCollab ... success!</p>\n".
-                 "<p>Your database has been successfully setup.</p>\n".
-                 "<p>The config file (config.php) exists, but the webserver does not have permissions to write to it.<br /><br />\n".
-                 "You can either:<ul>\n<li>Change the file permissions to allow the webserver to write to the file 'config.php'</li>\n".
-                 "<li>Continue with a manual configuration by editing the file directly.</li></p>\n" );
+    error_setup($lang_setup['setupdb_no_config'] );
   }
 
-create_top_setup("Database Setup" );
+create_top_setup($lang_setup['setupdb_banner'] );
 
 $content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
             "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
@@ -248,12 +235,12 @@ $content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
             "<input type=\"hidden\" name=\"db_name\" value=\"".$database_name."\" />\n".
             "<input type=\"hidden\" name=\"db_type\" value=\"".$database_type."\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n".
-            "<div align=\"center\"><p>Creating a new database for WebCollab ... success!</p>\n".
-            "<p>Your new database has been successfully created.</p><br />\n".
-            "<input type=\"submit\" value=\"Continue to configuration\" /></div>\n".
+            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" />\n".
+            "<div align=\"center\">".$lang_setup['setupdb_done']."\n".
+            "<input type=\"submit\" value=\"".$lang_setupdb['setupdb_continue']."\" /></div>\n".
             "</form>\n";
 
-new_box_setup( "Setup - Stage 3 of 5 : Database Creation", $content, 'boxdata', 'singlebox' );
+new_box_setup($lang_setup['setupdb_banner'], $content, 'boxdata', 'singlebox' );
 create_bottom_setup();
 
 ?>

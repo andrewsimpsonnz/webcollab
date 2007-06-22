@@ -29,9 +29,15 @@ require_once('path.php' );
 
 require_once(BASE.'setup/security_setup.php' );
 
+//security checks
+if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
+  error_setup($lang_setup['no_config'] );
+  die;
+}
+
 //check config can be written
 if( ! is_writeable(BASE_CONFIG.'config.php' ) ) {
-  error_setup('Configuration file needs to be made writeable by the webserver to proceed.');
+  error_setup($lang_setup['setup3_no_config'] );
 }
 
 if(isset($_POST['new_db']) && $_POST['new_db'] === 'N' ) {
@@ -86,36 +92,37 @@ else {
   $smtp_host         = (isset($_POST['smtp_host']) )         ? $_POST['smtp_host']         : 'localhost';
 }
 
-create_top_setup('Setup Screen' );
+create_top_setup($lang_setup['setup3_banner'] );
 
 $content  = '';
 
 $content .= "<table style=\"width : 98%\"><tr><td>\n".
-            "<span class=\"textlink\">[<a href=\"help/en_help_setup3.php?type=setup3&amp;lang=en\" onclick=\"window.open('help/en_help_setup3.php?type=setup3&amp;lang=en'); return false\"><i>Help me with this form</i></a>]</span>\n".
+            "<span class=\"textlink\">[<a href=\"help/en_help_setup3.php?type=setup3&amp;lang=".$lang."\" onclick=\"window.open('help/en_help_setup3.php?type=setup3&amp;lang=".$lang."'); return false\"><i>".$lang_setup['help']."</i></a>]</span>\n".
             "</td></tr>\n</table>\n";
 
 $content .= "<form method=\"post\" action=\"setup_handler.php\">".
             "<input type=\"hidden\" name=\"action\" value=\"setup4\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"$new_db\" />\n".
+            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" />\n".
             "<table border=\"0\">";
 
 //basic settings
-$content .= "<tr><td></td><td><br /><b><u>Basic Settings</u></b></td></tr>\n".
-            "<tr><td></td><td><br />Base URL address of site. (Don't forget the trailing slash - e.g. http://mydomain.com/webcollab/).</td></tr>\n".
-            "<tr><th>Site address:</th><td><input type=\"text\" name=\"base_url\" value=\"".$base_url."\" size=\"50\" /></td></tr>\n";
+$content .= "<tr><td></td><td><br /><b><u>".$lang_setup['setup3_basic']."</u></b></td></tr>\n".
+            "<tr><td></td><td><br />".$lang_setup['setup3_URL']."</td></tr>\n".
+            "<tr><th>".$lang_setup['setup3_address']."</th><td><input type=\"text\" name=\"base_url\" value=\"".$base_url."\" size=\"50\" /></td></tr>\n";
 
-$content .= "<tr><td></td><td><br />The name of the site</td></tr>\n".
-            "<tr><th>Site name:</th><td><input type=\"text\" name=\"manager_name\" value=\"".$manager_name."\" size=\"50\" /></td></tr>\n";
+$content .= "<tr><td></td><td><br />".$lang_setup['setup3_name1']."</td></tr>\n".
+            "<tr><th>".$lang_setup['setup3_name2']."</th><td><input type=\"text\" name=\"manager_name\" value=\"".$manager_name."\" size=\"50\" /></td></tr>\n";
 
-$content .= "<tr><td></td><td><br />An abbreviated name of the site for emails</td></tr>\n".
-            "<tr><th>Abbreviated site name:</th><td><input type=\"text\" name=\"abbr_manager_name\" value=\"".$abbr_manager_name."\" size=\"30\" /></td></tr>\n";
+$content .= "<tr><td></td><td><br />".$lang_setup['setup3_name3']."</td></tr>\n".
+            "<tr><th>".$lang_setup['setup3_name4']."</th><td><input type=\"text\" name=\"abbr_manager_name\" value=\"".$abbr_manager_name."\" size=\"30\" /></td></tr>\n";
 
 //database settings
-$content .= "<tr><td></td><td><br /><br /><b><u>Database Settings</u></b><br /><br /></td></tr>\n".
-            "<tr><th>Database name:</th><td><input type=\"text\" name=\"db_name\" value=\"".$db_name."\" size=\"30\" /></td></tr>\n".
-            "<tr><th>Database user:</th><td><input type=\"text\" name=\"db_user\" value=\"".$db_user."\" size=\"30\" /></td></tr>\n".
-            "<tr><th>Database password:</th><td><input type=\"text\" name=\"db_password\" value=\"".$db_password."\" size=\"30\" /></td></tr>\n";
+$content .= "<tr><td></td><td><br /><br /><b><u>".$lang_setup['setup3_db']."</u></b><br /><br /></td></tr>\n".
+            "<tr><th>".$lang_setup['db_name']."</th><td><input type=\"text\" name=\"db_name\" value=\"".$db_name."\" size=\"30\" /></td></tr>\n".
+            "<tr><th>".$lang_setup['db_user']."</th><td><input type=\"text\" name=\"db_user\" value=\"".$db_user."\" size=\"30\" /></td></tr>\n".
+            "<tr><th>".$lang_setup['db_password']."</th><td><input type=\"text\" name=\"db_password\" value=\"".$db_password."\" size=\"30\" /></td></tr>\n";
 
 switch($db_type){
 
@@ -133,26 +140,26 @@ switch($db_type){
     break;
 }
 
-$content .= "<tr><th>Database type:</th><td><select name=\"db_type\">\n".
+$content .= "<tr><th>".$lang_setup['db_type']."</th><td><select name=\"db_type\">\n".
              "<option value=\"mysql\"".$s1.">mysql</option>\n".
              "<option value=\"postgresql\"".$s2.">postgresql</option>\n".
              "<option value=\"mysql_innodb\"".$s3.">mysql with innodb</option>\n".
              "</select></td></tr>\n".
-             "<tr><th>Database host:</th><td><input type=\"text\" name=\"db_host\" value=\"".$db_host."\" size=\"30\" /></td></tr>\n";
+             "<tr><th>".$lang_setup['db_host']."</th><td><input type=\"text\" name=\"db_host\" value=\"".$db_host."\" size=\"30\" /></td></tr>\n";
 
 //file settings
-$content .= "<tr><td></td><td><br /><br /><b><u>File Upload Settings</u></b></td></tr>\n";
+$content .= "<tr><td></td><td><br /><br /><b><u>".$lang_setup['setup3_file1']."</u></b></td></tr>\n";
 
-$content .= "<tr><td></td><td><br />Location where uploaded files will be stored</td></tr>\n".
-            "<tr><th>File location:</th><td><input type=\"text\" name=\"file_base\" value=\"".$file_base."\" size=\"50\" /></td></tr>\n".
+$content .= "<tr><td></td><td><br />".$lang_setup['setup3_file2']."</td></tr>\n".
+            "<tr><th>".$lang_setup['file_location']."</th><td><input type=\"text\" name=\"file_base\" value=\"".$file_base."\" size=\"50\" /></td></tr>\n".
 
-            "<tr><td></td><td><br />Maximum size of file that can be uploaded (bytes)</td></tr>\n".
-            "<tr><th>File size:</th><td><input type=\"text\" name=\"file_maxsize\" value=\"".$file_maxsize."\" size=\"20\" /></td></tr>\n";
+            "<tr><td></td><td><br />".$lang_setup['setup3_file3']."</td></tr>\n".
+            "<tr><th>".$lang_setup['file_size']."</th><td><input type=\"text\" name=\"file_maxsize\" value=\"".$file_maxsize."\" size=\"20\" /></td></tr>\n";
 
 //language settings
-$content .= "<tr><td></td><td><br /><br /><b><u>Language Settings</u></b></td></tr>\n".
-            "<tr><td></td><td><br />Languages marked with * are only available in the Unicode versions</td></tr>\n".
-            "<tr><th>Language:</th><td><select name=\"locale\">\n";
+$content .= "<tr><td></td><td><br /><br /><b><u>".$lang_setup['setup3_language1']."</u></b></td></tr>\n".
+            "<tr><td></td><td><br />".$lang_setup['setup3_language2']."</td></tr>\n".
+            "<tr><th>".$lang_setup['language']."</th><td><select name=\"locale\">\n";
 
 $locale_array = array('bg'   => 'Bulgarian',
                       'ca'   => 'Catalan',
@@ -194,7 +201,7 @@ foreach ($locale_array as $key => $value ) {
 $content .= "</select></td></tr>\n";
 
 //timezone setting
-$content .= "<tr><td></td><td><br /><br /><b><u>Timezone Setting</u></b></td></tr>\n".
+$content .= "<tr><td></td><td><br /><br /><b><u>".$lang_setup['setup3_timezone']."</u></b></td></tr>\n".
             "<tr><td></td><td><br /></td></tr>\n".
             "<tr><th>Timezone:</th><td><select name=\"timezone\">\n";
 
@@ -254,19 +261,19 @@ else {
   $setting = "checked";
 }
 
-$content .= "<tr><td></td><td><br /><br /><b><u>Email Settings</u></b></td></tr>\n".
+$content .= "<tr><td></td><td><br /><br /><b><u>".$lang_setup['setup3_email']."</u></b></td></tr>\n".
             "<tr><td></td><td><br /></td></tr>\n".
-            "<tr><th>Use email?</th><td><input type=\"checkbox\" name=\"use_email\" ".$setting."  /></td></tr>\n";
+            "<tr><th>".$lang_setup['use_email']."</th><td><input type=\"checkbox\" name=\"use_email\" ".$setting."  /></td></tr>\n";
 
-$content .= "<tr><td></td><td><br /><br /><i>SMTP host is required if email is enabled</i></tr>\n".
-            "<tr><th><i>SMTP Host:</i></th><td><input type=\"text\" name=\"smtp_host\" value=\"".$smtp_host."\" size=\"50\" /></td></tr>\n";
+$content .= "<tr><td></td><td><br /><br /><i>".$lang_setup['setup3_smtp']."</i></tr>\n".
+            "<tr><th><i>".$lang_setup['smtp_host']."</i></th><td><input type=\"text\" name=\"smtp_host\" value=\"".$smtp_host."\" size=\"50\" /></td></tr>\n";
 
 $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
-             "<tr><td></td><td><input type=\"submit\" value=\"Submit\" /></td></tr>\n".
+             "<tr><td></td><td><input type=\"submit\" value=\"".$lang_setup['submit']."\" /></td></tr>\n".
              "</table>\n".
              "</form>\n";
 
-new_box_setup( "Setup - Stage 3 of 5 : Configuration", $content, 'boxdata', 'tablebox' );
+new_box_setup($lang_setup['setup3_banner'], $content, 'boxdata', 'tablebox' );
 create_bottom_setup();
 
 ?>

@@ -29,42 +29,46 @@ require_once('path.php' );
 
 require_once(BASE.'setup/security_setup.php' );
 
+//security checks
+if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
+  error_setup($lang_setup['no_config'] );
+  die;
+}
+
 $content = '';
 
-create_top_setup('Setup Screen' );
+create_top_setup($lang_setup['setup1_banner'] );
 
 //warn if config file cannot be written
 if( ! is_writable(BASE_CONFIG.'config.php' ) ) {
-  $content .=  "<p><b>The webserver does not have permissions to write to the config file (/config/config.php).</p>".
-                "<p>You can make a new database, but setup will not be able proceed and write to the config file.</p>\n".
-                "<p>To allow setup to alter the config file you can either:<ul>\n".
-                "<li>Change the file permissions to allow the webserver to write to the file '/config/config.php'</li>\n".
-                "<li>Do a manual configuration by editing the file directly.</li>\n</ul></b></p>\n";
+  $content .=  $lang_setup['setup1_no_permission'];
 }
 
 //input form
 $content .=    "<form method=\"post\" action=\"setup_handler.php\">\n".
-                "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
-                "<input type=\"hidden\" name=\"action\" value=\"setup2\" />\n".
-                "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n";
+               "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+               "<input type=\"hidden\" name=\"action\" value=\"setup2\" />\n".
+               "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n".
+               "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" />\n";
 
 if(defined('DATABASE_NAME') && DATABASE_NAME != '' ) {
-  $content .= "<p>A database is already specified in the configuration file.  Do you wish to create a new database?</p>\n";
+  $content .= $lang_setup['setup1_db_exists'];
 }
 else{
-  $content .= "<p>A database is required to be created for WebCollab to operate.  Do you wish to create a database now?</p>\n";
+  $content .= $lang_setup['setup1_no_db'];
 }
 
-$content .=   "<div align=\"center\"><input type=\"submit\" value=\"Yes\" /></div>\n".
+$content .=   "<div align=\"center\"><input type=\"submit\" value=\"".$lang_setup['yes']."\" /></div>\n".
                "</form>\n".
                "<form method=\"post\" action=\"setup_handler.php\">\n".
                "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
                "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
                "<input type=\"hidden\" name=\"new_db\" value=\"N\" />\n".
-               "<br /><div align=\"center\"><input type=\"submit\" value=\"No\" /></div>\n".
+               "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" />\n".
+               "<br /><div align=\"center\"><input type=\"submit\" value=\"".$lang_setup['no']."\" /></div>\n".
                "</form>\n";
 
-new_box_setup( "Setup - Stage 1 of 5 : Database Configuration Option", $content, 'boxdata', 'singlebox' );
+new_box_setup($lang_setup['setup1_banner'], $content, 'boxdata', 'singlebox' );
 create_bottom_setup();
 
 ?>
