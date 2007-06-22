@@ -33,7 +33,7 @@ require_once(BASE.'setup/setup_config.php' );
 //
 // Creates the inital window, and sets some vars. This _HAS_ to be the first function because of the header() calls
 //
-function create_top_setup($title='' ) {
+function create_top_setup($title='', $check=0 ) {
 
   global $topbuild;
 
@@ -60,10 +60,29 @@ function create_top_setup($title='' ) {
        "<title>".$title."</title>\n".
        "<meta http-equiv=\"Pragma\" content=\"no-cache\">".
        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".SETUP_CHARACTER_SET."\">\n".
-       "<link rel=\"StyleSheet\" href=\"".BASE_CSS.SETUP_CSS."\" type=\"text/css\">\n".
-       "</head>\n\n".
+       "<link rel=\"StyleSheet\" href=\"".BASE_CSS.SETUP_CSS."\" type=\"text/css\">\n";
+
+  //javascript scripts
+  if($check ) {
+    echo "<script type=\"text/javascript\">\n".
+         "function fieldCheck(){\n".
+         "var user = document.getElementById('user');\n".
+         "var pass1 = document.getElementById('password');\n".
+         "var pass2 = document.getElementById('password_check');\n".
+         "if (user.length == 0 || pass1.length == 0 || pass2.length == 0 ) {\n".
+         "alert('Please enter the missing field' );\n".
+         "return false;\n".
+         "}\n".
+         "if (pass1.value != pass2.value ) {\n".
+         "alert('Passwords do not match!');\n".
+         "return false;\n".
+         "}}\n".
+         "</script>\n";
+ }
+
+ echo  "</head>\n\n".
        "<body>\n";
-  
+
   //create the main table
   echo "\n<!-- start main table -->\n".
        "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">\n";
