@@ -55,6 +55,14 @@ switch($_REQUEST['action'] ) {
     include(BASE.'setup/setup_setup5.php' );
     break;
 
+  case 'setup6':
+    include(BASE.'setup/setup_setup6.php' );
+    break;
+
+  case 'setup7':
+    include(BASE.'setup/setup_setup7.php' );
+    break;
+
   case 'build':
     include(BASE.'setup/setup_db_build.php' );
     break;
