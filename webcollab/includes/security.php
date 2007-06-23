@@ -155,6 +155,12 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
   $GID[($row[0])] = $row[0];
 }
 
+//get site names
+$q = db_query('SELECT manager_name, abbr_manager_name FROM '.PRE.'site_name' );
+$row = @db_fetch_num($q, 0 );
+@define('MANAGER_NAME',   $row[0] );
+@define('ABBR_MANAGER_NAME', $row[1] );
+
 //update the "I was here" time
 db_query('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.$session_key.'\' AND user_id='.UID );
 
