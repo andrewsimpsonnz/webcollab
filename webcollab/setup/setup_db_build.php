@@ -81,15 +81,8 @@ require_once(BASE.'setup/security_setup.php' );
       error_setup( sprintf($lang_setup['setupdb_no_db_mysql'], $database_host, $database_host, $database_user, $database_password ) );
     }
 
-    if(defined('MYSQL_SETUP_CHARACTER_SET') && MYSQL_SETUP_CHARACTER_SET != '' ) {
-      $db_character = ' CHARACTER SET '.MYSQL_SETUP_CHARACTER_SET;
-    }
-    else {
-      $db_character = '';
-    }
-
     //try and create database
-    if( ! ($result = @mysql_query('CREATE DATABASE IF NOT EXISTS '.$database_name.$db_character, $database_connection ) ) ){
+    if( ! ($result = @mysql_query('CREATE DATABASE IF NOT EXISTS '.$database_name.' CHARACTER SET utf8', $database_connection ) ) ){
       error_setup("Connected successfully to the database server, but database creation had the following error: <br />".
                             "<b>".mysql_error($database_connection)."</b><br /><br />".
                             "The above error message was created by the MySQL database server." );
@@ -158,15 +151,8 @@ require_once(BASE.'setup/security_setup.php' );
         error_setup(sprintf($lang_setup['setupdb_no_db_pgsql'], $database_host, $database_user, $database_password ) );
       }
 
-      if(defined('PGSQL_SETUP_CHARACTER_SET') && PGSQL_SETUP_CHARACTER_SET != '' ) {
-        $db_character = " WITH ENCODING '".PGSQL_SETUP_CHARACTER_SET."'";
-      }
-      else {
-        $db_character = '';
-      }
-
       //create new database
-      if( ! ($result = @pg_query($database_connection, 'CREATE DATABASE '.$database_name.$db_character ) ) ) {
+      if( ! ($result = @pg_query($database_connection, 'CREATE DATABASE '.$database_name.' WITH ENCODING \'UTF8\'' ) ) ) {
         error_setup("Connected to database, but the new database creation had the following error:<br />".pg_last_error($database_connection) );
       }
 
@@ -227,7 +213,7 @@ require_once(BASE.'setup/security_setup.php' );
 create_top_setup($lang_setup['setupdb_banner'] );
 
 $content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
-            "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
             "<input type=\"hidden\" name=\"db_host\" value=\"".$database_host."\" />\n".
             "<input type=\"hidden\" name=\"db_user\" value=\"".$database_user."\" />\n".
@@ -235,7 +221,7 @@ $content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
             "<input type=\"hidden\" name=\"db_name\" value=\"".$database_name."\" />\n".
             "<input type=\"hidden\" name=\"db_type\" value=\"".$database_type."\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n".
-            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" />\n".
+            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n".
             "<div align=\"center\">".$lang_setup['setupdb_done']."\n".
             "<input type=\"submit\" value=\"".$lang_setupdb['setupdb_continue']."\" /></div>\n".
             "</form>\n";
