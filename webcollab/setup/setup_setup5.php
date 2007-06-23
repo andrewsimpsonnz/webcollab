@@ -80,10 +80,6 @@ $content = "<?php\n".
 "  //You need to add the full webserver name and directory to WebCollab here. For example:\n".
 "  //'http://www.your-url-here.com/backend/org/' (do not forget the tailing slash)\n".
 "  define('BASE_URL', '".$data["base_url"]."' );\n\n".
-"  //The name of the site\n".
-"  define('MANAGER_NAME', '".$data["manager_name"]."' );\n\n".
-"  //The abbreviated name for the site (for use in email subject lines)\n".
-"  define('ABBR_MANAGER_NAME', '".$data["abbr_manager_name"]."' );\n\n".
 "//-- Database parameters --\n\n".
 "  define('DATABASE_NAME', '".$data["db_name"]."' );\n".
 "  define('DATABASE_USER', '".$data["db_user"]."' );\n".
@@ -211,32 +207,24 @@ if(isset($data['new_db'] ) && ($data['new_db'] == 'Y' ) ) {
   $ip = $_SERVER['REMOTE_ADDR'];
   $x  = md5(mt_rand().$ip );
 
+  //make database connection
+  db_setup_connect($data);
+
   switch($data["db_type"]) {
 
     case 'mysql':
     case 'mysql_innodb':
-      //make connection
-      if( ! ($database_connection = @mysql_connect($data["db_host"], $data["db_user"], $data["db_password"] ) ) ) {
-        abort();
-      }
-
-      //select database
-      if( ! @mysql_select_db($data["db_name"], $database_connection ) ) {
-        abort();
-      }
-
       //set the new session key in the new database
-      @mysql_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$x.'\', \''.$ip.'\', now() )', $database_connection );
+      if( ! @mysql_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$x.'\', \''.$ip.'\', now() )', $db_setup_connection ) ) {
+        abort();
+      }
       break;
 
     case 'postgresql':
-      //make connection
-      if( ! ($database_connection = @pg_connect($data["db_host"].' user='.$data["db_user"].' dbname='.$data["db_user"].' password='. $data["db_password"]) ) ) {
+      //set the new session key in the new database
+      if( ! @pg_query($db_setup_connection, 'INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$x.'\', \''.$ip.'\', now() )' ) ) {
         abort();
       }
-
-      //set the new session key in the new database
-      @pg_query($database_connection, 'INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$x.'\', \''.$ip.'\', now() )' );
       break;
 
     default:
@@ -244,11 +232,14 @@ if(isset($data['new_db'] ) && ($data['new_db'] == 'Y' ) ) {
       break;
   }
 
+  //update the site names in the database
+  site_name($data);
+
   //next form with new session key in place
   $content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
-              "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"setup6\" />\n".
-              "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" />\n".
+              "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n".
               "<div align=\"center\"><p>".$lang_setup['setup5_writing']."</p><br />\n".
               "<input type=\"submit\" value=\"".$lang_setup['setup5_continue']."\" /></div>\n".
               "</form>\n";
@@ -260,6 +251,12 @@ if(isset($data['new_db'] ) && ($data['new_db'] == 'Y' ) ) {
 }
 
 //existing database has been reconfigured...
+
+//make database connection
+db_setup_connect($data);
+//update the site names in the database
+site_name($data);
+
 $content = "<div align='center'>\n".$lang_setup['setup5_complete']."\n";
 
 $content .= "<p><form name='inputform' method='post' action='index.php'>\n".
@@ -272,13 +269,102 @@ new_box_setup($lang_setup['setup5_banner2'], $content, 'boxdata', 'singlebox' );
 create_bottom_setup();
 
 //
+// Connect to the database
+//
+
+function db_setup_connect($data ) {
+
+global $db_setup_connection;
+
+ switch($data["db_type"]) {
+
+    case 'mysql':
+    case 'mysql_innodb':
+      //make connection
+      if( ! ($db_setup_connection = @mysql_connect($data["db_host"], $data["db_user"], $data["db_password"] ) ) ) {
+        abort();
+      }
+
+      //select database
+      if( ! @mysql_select_db($data["db_name"], $db_setup_connection ) ) {
+        abort();
+      }
+      break;
+
+    case 'postgresql':
+
+      //set host string correctly
+      $host = ($data["db_host"] != 'localhost' ) ? 'host='.$data["db_host"]: '';
+
+      //make connection
+      if( ! ($db_setup_connection = @pg_connect($host.' user='.$data["db_user"].' dbname='.$data["db_name"].' password='. $data["db_password"]) ) ) {
+       abort();
+      }
+      break;
+
+    default:
+      abort();
+      break;
+  }
+  return;
+}
+
+//
+// Add the site names to the database
+//
+
+function site_name($data ) {
+
+global $db_setup_connection;
+
+  switch($data["db_type"]) {
+
+    case 'mysql':
+    case 'mysql_innodb':
+      //set character set -- 1
+      if(! @mysql_query("SET NAMES 'utf8'", $db_setup_connection ) ) {
+        setup_error("Setting client encoding to UTF-8 character set had the following error:<br />".mysql_error($db_setup_connection ) );
+      }
+      //set character set -- 2
+      if(! @mysql_query("SET CHARACTER SET utf8", $db_setup_connection ) ) {
+        setup_error("Setting client encoding to UTF-8 character set had the following error:<br />".mysql_error($db_setup_connection) );
+      }
+
+      //update the site names in the database
+      mysql_query("TRUNCATE TABLE ".PRE."site_name", $db_setup_connection );
+      mysql_query("INSERT INTO ".PRE."site_name( manager_name, abbr_manager_name )  VALUES('".$data["manager_name"]."','".$data["abbr_manager_name"]."'", $db_setup_connection );
+
+      break;
+
+    case 'postgresql':
+      //set correct encoding
+      if(@pg_set_client_encoding($db_setup_connection, 'UNICODE' ) == -1 ){
+        setup_error('Setting client encoding to UTF-8 character set had the following error:<br />'.pg_last_error($db_setup_connection) );
+      }
+
+      //update the site names in the database
+      pg_query($db_setup_connection, "TRUNCATE TABLE ".PRE."site_name" );
+      pg_query($db_setup_connection, "INSERT INTO ".PRE."site_name( manager_name, abbr_manager_name )  VALUES('".$data["manager_name"]."','".$data["abbr_manager_name"]."')" );
+
+      break;
+
+    default:
+      abort();
+      break;
+  }
+  return;
+}
+
+//
 // New database - and not able to connect
 //
-//
+
 function abort() {
 
+  global $lang_setup;
+
   $content = "<div align='center'>\n".
-              "<p>".$lang_setup['setup5_write']."</p>\n".
+              "<p>".$lang_setup['setup5_writing']."</p>\n".
               "<p><b>".$lang_setup['setup5_no_db']."</p>\n";
 
   $content .= "<p><form name='inputform' method='post' action='index.php'>\n".
