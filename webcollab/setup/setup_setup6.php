@@ -38,16 +38,16 @@ $content .= "<table style=\"width : 98%\"><tr><td>\n".
             "</td></tr>\n</table>\n";
 
 $content .= "<form method=\"post\" action=\"setup_handler.php\" onsubmit=\"return fieldCheck()\">".
-            "<input type=\"hidden\" name=\"action\" value=\"setup7\" />\n".
+            "<fieldset><input type=\"hidden\" name=\"action\" value=\"setup7\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"new_config\" value=\"Y\" />\n".
-            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" />\n".
+            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n".
             "<table border=\"0\">";
 
 //user settings
 $content .= "<tr><td></td><td><br /><b><u>".$lang_setup['setup6_title']."</u></b></td></tr>\n".
             "<tr><td></td><td><br />".$lang_setup['setup6_admin_user1']."</td></tr>\n".
-            "<tr><th>".$lang_setup['setup6_admin_user2']."</th><td><input type=\"text\" id=\"user\" name=\"admin_user\" value=\"Admin\" size=\"20\" /></td></tr>\n";
+            "<tr><th>".$lang_setup['setup6_admin_user2']."</th><td><input type=\"text\" id=\"user\" name=\"admin_user\" value=\"admin\" size=\"20\" /></td></tr>\n";
 
 $content .= "<tr><td></td><td><br />".$lang_setup['setup6_admin_pass1']."</td></tr>\n".
             "<tr><th>".$lang_setup['setup6_admin_pass2']."</th><td><input type=\"password\" id=\"password\" name=\"admin_password\" value=\"\" size=\"20\" /></td></tr>\n";
