@@ -172,8 +172,17 @@ CREATE TABLE login_attempt (
 )
 TYPE = InnoDB;
 
+CREATE TABLE site_name (
+	manager_name VARCHAR(100),
+	abbr_manager_name VARCHAR(100)
+);
+TYPE = InnoDB;
+
 INSERT INTO users ( id, name, fullname, password, email, admin, deleted )
 VALUES( 1, 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );
 
 INSERT INTO config ( globalaccess, groupaccess, project_order, task_order )
 VALUES( 'checked', '', 'ORDER BY name', 'ORDER BY name' );
+
+INSERT INTO site_name ( manager_name, abbr_manager_name )
+VALUES( 'WebCollab Project Management', 'WebCollab' );
