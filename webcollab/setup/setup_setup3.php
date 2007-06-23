@@ -101,14 +101,14 @@ $content .= "<table style=\"width : 98%\"><tr><td>\n".
             "</td></tr>\n</table>\n";
 
 $content .= "<form method=\"post\" action=\"setup_handler.php\">".
-            "<input type=\"hidden\" name=\"action\" value=\"setup4\" />\n".
+            "<fieldset><input type=\"hidden\" name=\"action\" value=\"setup4\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"$new_db\" />\n".
-            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" />\n".
+            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n".
             "<table border=\"0\">";
 
 //basic settings
-$content .= "<tr><td></td><td><br /><b><u>".$lang_setup['setup3_basic']."</u></b></td></tr>\n".
+$content .= "<tr><td></td><td><br /><b><span class=\"underline\">".$lang_setup['setup3_basic']."</span></b></td></tr>\n".
             "<tr><td></td><td><br />".$lang_setup['setup3_URL']."</td></tr>\n".
             "<tr><th>".$lang_setup['setup3_address']."</th><td><input type=\"text\" name=\"base_url\" value=\"".$base_url."\" size=\"50\" /></td></tr>\n";
 
@@ -119,7 +119,7 @@ $content .= "<tr><td></td><td><br />".$lang_setup['setup3_name3']."</td></tr>\n"
             "<tr><th>".$lang_setup['setup3_name4']."</th><td><input type=\"text\" name=\"abbr_manager_name\" value=\"".$abbr_manager_name."\" size=\"30\" /></td></tr>\n";
 
 //database settings
-$content .= "<tr><td></td><td><br /><br /><b><u>".$lang_setup['setup3_db']."</u></b><br /><br /></td></tr>\n".
+$content .= "<tr><td></td><td><br /><br /><b><span class=\"underline\">".$lang_setup['setup3_db']."</span></b><br /><br /></td></tr>\n".
             "<tr><th>".$lang_setup['db_name']."</th><td><input type=\"text\" name=\"db_name\" value=\"".$db_name."\" size=\"30\" /></td></tr>\n".
             "<tr><th>".$lang_setup['db_user']."</th><td><input type=\"text\" name=\"db_user\" value=\"".$db_user."\" size=\"30\" /></td></tr>\n".
             "<tr><th>".$lang_setup['db_password']."</th><td><input type=\"text\" name=\"db_password\" value=\"".$db_password."\" size=\"30\" /></td></tr>\n";
@@ -148,7 +148,7 @@ $content .= "<tr><th>".$lang_setup['db_type']."</th><td><select name=\"db_type\"
              "<tr><th>".$lang_setup['db_host']."</th><td><input type=\"text\" name=\"db_host\" value=\"".$db_host."\" size=\"30\" /></td></tr>\n";
 
 //file settings
-$content .= "<tr><td></td><td><br /><br /><b><u>".$lang_setup['setup3_file1']."</u></b></td></tr>\n";
+$content .= "<tr><td></td><td><br /><br /><b><span class=\"underline\">".$lang_setup['setup3_file1']."</span></b></td></tr>\n";
 
 $content .= "<tr><td></td><td><br />".$lang_setup['setup3_file2']."</td></tr>\n".
             "<tr><th>".$lang_setup['file_location']."</th><td><input type=\"text\" name=\"file_base\" value=\"".$file_base."\" size=\"50\" /></td></tr>\n".
@@ -157,7 +157,7 @@ $content .= "<tr><td></td><td><br />".$lang_setup['setup3_file2']."</td></tr>\n"
             "<tr><th>".$lang_setup['file_size']."</th><td><input type=\"text\" name=\"file_maxsize\" value=\"".$file_maxsize."\" size=\"20\" /></td></tr>\n";
 
 //language settings
-$content .= "<tr><td></td><td><br /><br /><b><u>".$lang_setup['setup3_language1']."</u></b></td></tr>\n".
+$content .= "<tr><td></td><td><br /><br /><b><span class=\"underline\">".$lang_setup['setup3_language1']."</span></b></td></tr>\n".
             "<tr><td></td><td><br />".$lang_setup['setup3_language2']."</td></tr>\n".
             "<tr><th>".$lang_setup['language']."</th><td><select name=\"locale\">\n";
 
@@ -201,7 +201,7 @@ foreach ($locale_array as $key => $value ) {
 $content .= "</select></td></tr>\n";
 
 //timezone setting
-$content .= "<tr><td></td><td><br /><br /><b><u>".$lang_setup['setup3_timezone']."</u></b></td></tr>\n".
+$content .= "<tr><td></td><td><br /><br /><b><span class=\"underline\">".$lang_setup['setup3_timezone']."</span></b></td></tr>\n".
             "<tr><td></td><td><br /></td></tr>\n".
             "<tr><th>Timezone:</th><td><select name=\"timezone\">\n";
 
@@ -261,7 +261,7 @@ else {
   $setting = "checked";
 }
 
-$content .= "<tr><td></td><td><br /><br /><b><u>".$lang_setup['setup3_email']."</u></b></td></tr>\n".
+$content .= "<tr><td></td><td><br /><br /><b><span class=\"underline\">".$lang_setup['setup3_email']."</span></b></td></tr>\n".
             "<tr><td></td><td><br /></td></tr>\n".
             "<tr><th>".$lang_setup['use_email']."</th><td><input type=\"checkbox\" name=\"use_email\" ".$setting."  /></td></tr>\n";
 
