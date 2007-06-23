@@ -210,7 +210,7 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
       break;
 
     case 1: //single main window (no menu sidebar)
-    case 3: //calendar  
+    case 3: //calendar
       $content .=   "<tr valign=\"top\"><td class=\"masthead\">";
       if(defined('UID_NAME' ) ) {
         $content .= '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
@@ -229,7 +229,7 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
   }
 
   //flush buffer
-  echo $content; 
+  echo $content;
 
   return;
 }
