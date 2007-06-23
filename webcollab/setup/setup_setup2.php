@@ -44,9 +44,9 @@ $content .= "<table style=\"width : 98%\"><tr><td>\n".
             "</td></tr>\n</table>\n";
 
 $content .= "<form method=\"post\" action=\"setup_handler.php\">\n".
-            "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"build\" />\n".
-            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" />\n".
+            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n".
             "<p>".$lang_setup['setup2_db_details1']."</p>\n".
             "<table class=\"celldata\">\n".
             "<tr><td></td><td><br />".$lang_setup['setup2_db_details2']."</td></tr>\n".
