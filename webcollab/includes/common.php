@@ -91,7 +91,7 @@ function validate($body ) {
     $body = stripslashes($body );
   }
 
-  if(UNICODE_VERSION == 'Y' ) {
+  if(UNICODE_VERSION == 'Y' || defined('SETUP_CHARACTER_SET' ) ) {
 
     $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.          //ASCII
                          '|[\x00-\x7F][\x80-\xBF]+'.                       //continuation with no start
