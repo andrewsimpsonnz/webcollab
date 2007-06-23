@@ -46,10 +46,10 @@ if( ! is_writable(BASE_CONFIG.'config.php' ) ) {
 
 //input form
 $content .=    "<form method=\"post\" action=\"setup_handler.php\">\n".
-               "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
                "<input type=\"hidden\" name=\"action\" value=\"setup2\" />\n".
                "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n".
-               "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" />\n";
+               "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n";
 
 if(defined('DATABASE_NAME') && DATABASE_NAME != '' ) {
   $content .= $lang_setup['setup1_db_exists'];
@@ -58,13 +58,13 @@ else{
   $content .= $lang_setup['setup1_no_db'];
 }
 
-$content .=   "<div align=\"center\"><input type=\"submit\" value=\"".$lang_setup['yes']."\" /></div>\n".
+$content .=    "<div align=\"center\"><input type=\"submit\" value=\"".$lang_setup['yes']."\" /></div>\n".
                "</form>\n".
                "<form method=\"post\" action=\"setup_handler.php\">\n".
-               "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
                "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
                "<input type=\"hidden\" name=\"new_db\" value=\"N\" />\n".
-               "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" />\n".
+               "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n".
                "<br /><div align=\"center\"><input type=\"submit\" value=\"".$lang_setup['no']."\" /></div>\n".
                "</form>\n";
 
