@@ -36,6 +36,7 @@ $lang = isset($_REQUEST['lang'] ) ? $_REQUEST['lang'] : 'en';
 require_once('path.php' );
 require_once(BASE.'setup/setup_config.php');
 
+include_once(BASE.'lang/lang_setup.php' );
 include_once(BASE.'setup/screen_setup.php' );
 
 //
@@ -62,14 +63,13 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   include_once(BASE.'database/database.php' );
   include_once(BASE.'lang/lang_setup.php' );
 
-  //add character set right for safe_data() and database connection
-  include_once(BASE.'lang/lang.php' );
-
+  //initialise variables
   $q = '';
+  $flag_attempt = FALSE;
+
   $username = safe_data($_POST['username']);
   //encrypt password
   $md5pass = md5($_POST['password'] );
-  $flag_attempt = FALSE;
 
   //no ip (possible?)
   if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
@@ -81,7 +81,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   }
 
   //set character set & connect to database
-  db_user_locale(CHARACTER_SET);
+  db_user_locale('UTF-8' );
 
   //limit login attempts if post-1.60 database is being used
   if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {
@@ -173,13 +173,13 @@ if(DATABASE_NAME == '' ) {
 create_top_setup($lang_setup['setup_banner'] );
 
 $content = "<p>".$lang_setup['require_login']."</p>\n".
-           "<form name=\"inputform\" method=\"post\" action=\"setup.php\">\n".
+           "<form method=\"post\" action=\"setup.php\">\n".
            "<table border=\"0\">\n".
            "<tr><td>".$lang_setup['login']."</td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
            "<tr><td>".$lang_setup['password']."</td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
            "</table>\n".
            "<div align=\"center\">\n".
-           "<p><input type=\"submit\" value=\"Login\" /></p>\n".
+           "<p><input type=\"submit\" value=\"".$lang_setup['submit']."\" /></p>\n".
            "</div></form>\n";
 
 //set box options
