@@ -53,14 +53,17 @@ function create_top_setup($title='', $check=0 ) {
   header("Pragma: no-cache");
 
 
-  echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n".
+  echo "<!DOCTYPE html PUBLIC\n".
+       "\"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n".
+       "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n".
        "<html>\n\n".
        "<!-- (c) 2002 - 2007 Andrew Simpson -->\n\n".
        "<head>\n".
        "<title>".$title."</title>\n".
-       "<meta http-equiv=\"Pragma\" content=\"no-cache\">".
-       "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".SETUP_CHARACTER_SET."\">\n".
-       "<link rel=\"StyleSheet\" href=\"".BASE_CSS.SETUP_CSS."\" type=\"text/css\">\n";
+       "<meta http-equiv=\"Pragma\" content=\"no-cache\" />".
+       "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n".
+       "<link rel=\"StyleSheet\" href=\"".BASE_CSS.SETUP_CSS."\" type=\"text/css\" />\n".
+       "<link rel=\"icon\" type=\"image/png\" href=\"images/group.png\" />\n";
 
   //javascript scripts
   if($check ) {
@@ -85,13 +88,13 @@ function create_top_setup($title='', $check=0 ) {
 
   //create the main table
   echo "\n<!-- start main table -->\n".
-       "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" align=\"center\">\n";
+       "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n";
 
   //create the masthead part of the main window
   echo "<tr>\n<td>".
        "<div class=\"masthead\">".
        "</div></td></tr>\n".
-       "<tr valign=\"top\"><td width=\"100%\" align=\"center\">";
+       "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";
 
   return;
 }
