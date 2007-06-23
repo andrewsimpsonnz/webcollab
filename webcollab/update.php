@@ -334,12 +334,41 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   }
 
   //update version 2.00 -> 2.20
-  $q = db_query("SELECT EXTRACT(HOUR FROM deadline) AS hour FROM ".PRE."tasks" );
-  $row = db_fetch_array($q, 0 );
+  if(! (db_query('SELECT * FROM '.PRE.'site_name', 0 ) ) ) {
 
-  if($row < 1 ) {
+    if(! defined('MANAGER_NAME') )      define('MANAGER_NAME', 'WebCollab Project Management' );
+    if(! defined('ABBR_MANAGER_NAME') ) define('ABBR_MANAGER_NAME', 'WebCollab' );
 
+    switch (DATABASE_TYPE) {
+      case 'mysql':
+        db_query('CREATE TABLE '.PRE.'site_name (manager_name VARCHAR(100),
+                                                 abbr_manager_name VARCHAR(100)' );
+        break;
+
+      case 'mysql_innodb':
+        db_query('CREATE TABLE '.PRE.'site_name (manager_name VARCHAR(100),
+                                                 abbr_manager_name VARCHAR(100) )
+                                               TYPE = innoDB' );
+        break;
+
+
+      case 'postgresql':
+        db_query('CREATE TABLE "'.PRE.'site_name" ("manager_name" character varying(100),
+                                                   "abbr_manager_name" character varying(100) )' );
+        break;
+
+      default:
+        error('Database type not specified in config file.' );
+        break;
+    }
+
+    //update the new table
+    db_query("UPDATE ".PRE."site_name SET manager_name='".MANAGER_NAME."', abbr_manager_name='".ABBR_MANAGER_NAME."'" );
+
+    //update deadline hours
     db_query('UPDATE '.PRE.'tasks SET deadline=(deadline+INTERVAL '.$delim.'2 HOUR'.$delim.')' );
+
+    $content .= "<p>Updating from version pre-2.20 database ... success!</p>\n";
   }
 
 
