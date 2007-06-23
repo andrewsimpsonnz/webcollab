@@ -80,7 +80,7 @@ $content .= "<table border=\"0\">\n".
 
 //output essential values for POST
 foreach($array_essential as $var ) {
-$content .= "<input type=\"hidden\" name=\"".$var."\" value=\"".$data[$var]."\" />\n";
+$content .= "<fieldset><input type=\"hidden\" name=\"".$var."\" value=\"".$data[$var]."\" />\n";
 }
 
 //output optional values for POST
@@ -91,7 +91,7 @@ $content .= "<input type=\"hidden\" name=\"".$var."\" value=\"".$data[$var]."\" 
 $content .= "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"setup5\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />\n".
-            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" />\n";
+            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n";
 
 
 //add leading slash to url - if necessary
@@ -304,7 +304,7 @@ $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
 //form for 'try again' button
 $content .= "<tr><td></td><td>\n".
             "<form method=\"post\" action=\"setup_handler.php\">\n".
-            "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
+            "<fieldset><input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />\n".
             "<input type=\"hidden\" name=\"edit\" value=\"Y\" />".
@@ -318,7 +318,7 @@ $content .= "<input type=\"hidden\" name=\"".$var."\" value=\"".$data[$var]."\" 
 
 //output optional values for POST
 foreach($array_optional as $var ) {
-$content .= "<input type=\"hidden\" name=\"".$var."\" value=\"".$data[$var]."\" />\n";
+$content .= "<input type=\"hidden\" name=\"".$var."\" value=\"".$data[$var]."\" /></fieldset>\n";
 }
 
 //show 'try again' button
