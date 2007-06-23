@@ -128,6 +128,12 @@ else {
   //update the 'I was here' time
   db_query('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.$x.'\' AND user_id='.$row['user_id'] );
 
+  //get site names
+  $q = db_query('SELECT * FROM '.PRE.'site_name' );
+  $row = @db_fetch_num($q, 0 );
+  @define('MANAGER_NAME',   $row[0] );
+  @define('ABBR_MANAGER_NAME', $row[1] );
+
 }
 
 //for compatability in common.php
