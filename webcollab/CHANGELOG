@@ -1,4 +1,22 @@
 WebCollab SVN
+*** 4 July 2007
+  Andrew Simpson
+
+- allow deadline to be changed on cloned projects
+
+WebCollab SVN
+*** 24 June 2007
+  Andrew Simpson
+
+- add admin user setup to main setup program
+
+- convert setup program to UTF-8 for better internationalisation
+
+- shift configuration items to database for better internationalisation
+
+- update setup program to XHTML
+
+WebCollab SVN
 *** 9 June 2007
   Andrew Simpson
 
