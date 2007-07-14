@@ -32,6 +32,8 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+include_once(BASE.'includes/time.php' );
+
 //guests shouldn't get here
 if(GUEST ) {
   warning($lang['access_denied'], $lang['not_owner'] );
@@ -58,6 +60,7 @@ $row = db_fetch_array($q, 0 );
 if($row['parent'] == 0 ){
   $content .= "<tr><td>".$lang['project_cloned']."</td><td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$taskid."\">".$row['name']."</a></td></tr>\n".
               "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
+              "<tr><td>".$lang['deadline'].":</td> <td>".date_select()."</td></tr>\n".
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang['add_project']."\" /></p>".
               "</form>\n";
@@ -69,6 +72,7 @@ else{
   $content .= "<tr><td>".$lang['task_cloned']."</td><td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$taskid."\">".$row['name']."</a></td></tr>\n".
               "<tr><td colspan=\"2\"><i>".$lang['note_clone']."</i></td><tr>\n".
               "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
+              "<tr><td>".$lang['deadline'].":</td> <td>".date_select()."</td></tr>\n".
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang['add_project']."\" onclick=\"return fieldCheck()\" /</p>".
               "</form>\n";
