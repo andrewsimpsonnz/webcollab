@@ -46,7 +46,6 @@ CREATE TABLE users (
         INDEX (fullname(10))
 );
 
-
 CREATE TABLE usergroups (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(100) NOT NULL,
@@ -67,7 +66,6 @@ CREATE TABLE forum (
         INDEX (posted)
 );
 
-
 CREATE TABLE logins (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	user_id INT UNSIGNED NOT NULL,
@@ -76,7 +74,6 @@ CREATE TABLE logins (
 	lastaccess TIMESTAMP NOT NULL,
         INDEX (session_key(10), user_id )
 );
-
 
 CREATE TABLE seen (
 	taskid INT UNSIGNED NOT NULL,
@@ -91,7 +88,6 @@ CREATE TABLE taskgroups (
 	description VARCHAR(255),
         INDEX (name(10))
 );
-
 
 CREATE TABLE contacts (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -113,12 +109,10 @@ CREATE TABLE contacts (
         taskid INT UNSIGNED NOT NULL DEFAULT 0
 );
 
-
 CREATE TABLE contacts_tasks (
 	contact_id INT,
 	task_id INT
 );
-
 
 CREATE TABLE files (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -132,7 +126,6 @@ CREATE TABLE files (
 	taskid INT UNSIGNED NOT NULL,
 	INDEX (taskid)
 );
-
 
 CREATE TABLE usergroups_users (
 	usergroupid INT UNSIGNED NOT NULL,
