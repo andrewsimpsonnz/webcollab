@@ -44,7 +44,7 @@ $content =  "<form method=\"post\" action=\"users.php\">\n".
             "<table class=\"celldata\">\n".
             "<tr><td>".$lang['login_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
             "<tr><td>".$lang['full_name'].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" /></td></tr>\n".
-            "<tr><td>".$lang['password'].":</td><td><input type=\"text\" name=\"password\" size=\"30\" /></td></tr>\n".
+            "<tr><td>".$lang['password'].":</td><td><input type=\"".PASS_STYLE."\" name=\"password\" size=\"30\" /></td></tr>\n".
             "<tr><td>".$lang['email'].":</td><td><input type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".
             user_locale(LOCALE).
             "<tr><td>&nbsp;</td></tr>\n".
