@@ -101,7 +101,7 @@ $content = "<?php\n".
 "  //max file size in bytes\n".
 "  define('FILE_MAXSIZE', '".$data["file_maxsize"]."' );\n\n".
 "  //number of file upload boxes to show\n".
-"  define('NUM_FILE_UPLOADS', 3 );\n\n".
+"  define('NUM_FILE_UPLOADS', '".NUM_FILE_UPLOADS."' );\n\n".
 "    /*Note:\n".
 "      1. Make sure the file_base directory exists, and is writeable by the webserver, or you\n".
 "         will not be able to upload any files.\n".
@@ -177,9 +177,11 @@ $content = "<?php\n".
 "  //Do not show full error message on the screen - just a 'sorry, try again' message (values are 'N', or 'Y')\n".
 "  define('NO_ERROR', '".NO_ERROR."' );\n\n".
 "  //Use VEVENT for iCalendar instead of VTODO - works for Google Calendar and others (values are 'N', or 'Y')\n".
-"  define('VEVENT', 'N');\n\n".
+"  define('VEVENT', '".VEVENT."' );\n\n".
 "  //Use external webserver authorisation to login (values are 'N', or 'Y')\n".
 "  define('WEB_AUTH', '".WEB_AUTH."' );\n\n".
+"  //Show passwords in user edit screens as plain text or hidden ('****') (values are 'text', or 'password')\n".
+"  define('PASS_STYLE', '".PASS_STYLE."' );\n\n".
 "  //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match)\n".
 "  define('PRE', '".PRE."' );\n\n".
 "  //WebCollab version string\n".
@@ -323,11 +325,11 @@ global $db_setup_connection;
     case 'mysql_innodb':
       //set character set -- 1
       if(! @mysql_query("SET NAMES 'utf8'", $db_setup_connection ) ) {
-        setup_error("Setting client encoding to UTF-8 character set had the following error:<br />".mysql_error($db_setup_connection ) );
+        error_setup("Setting client encoding to UTF-8 character set had the following error:<br />".mysql_error($db_setup_connection ) );
       }
       //set character set -- 2
       if(! @mysql_query("SET CHARACTER SET utf8", $db_setup_connection ) ) {
-        setup_error("Setting client encoding to UTF-8 character set had the following error:<br />".mysql_error($db_setup_connection) );
+        error_setup("Setting client encoding to UTF-8 character set had the following error:<br />".mysql_error($db_setup_connection) );
       }
 
       //update the site names in the database
@@ -339,7 +341,7 @@ global $db_setup_connection;
     case 'postgresql':
       //set correct encoding
       if(@pg_set_client_encoding($db_setup_connection, 'UNICODE' ) == -1 ){
-        setup_error('Setting client encoding to UTF-8 character set had the following error:<br />'.pg_last_error($db_setup_connection) );
+        error_setup('Setting client encoding to UTF-8 character set had the following error:<br />'.pg_last_error($db_setup_connection) );
       }
 
       //update the site names in the database
