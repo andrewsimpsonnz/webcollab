@@ -33,7 +33,6 @@ CREATE TABLE tasks (
 )
 TYPE = InnoDB;
 
-
 CREATE TABLE users (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(200) NOT NULL,
@@ -80,7 +79,6 @@ CREATE TABLE logins (
         INDEX (session_key(10), user_id )
 )
 TYPE = InnoDB;
-
 
 CREATE TABLE seen (
 	taskid INT UNSIGNED NOT NULL,
@@ -164,7 +162,6 @@ CREATE TABLE config (
 )
 TYPE = InnoDB;
 
-
 CREATE TABLE login_attempt ( 
 	name VARCHAR(100) NOT NULL,
 	ip VARCHAR(100) NOT NULL,
@@ -175,7 +172,7 @@ TYPE = InnoDB;
 CREATE TABLE site_name (
 	manager_name VARCHAR(100),
 	abbr_manager_name VARCHAR(100)
-);
+)
 TYPE = InnoDB;
 
 INSERT INTO users ( id, name, fullname, password, email, admin, deleted )
