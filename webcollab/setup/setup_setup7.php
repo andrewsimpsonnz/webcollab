@@ -47,12 +47,12 @@ foreach($array_essential as $var ) {
 
 //check for valid email
 if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $admin_email ) ) || (strlen(trim($admin_email) ) > 200 ) ) {
-  setup_error('Invalid email address given' );
+  error_setup('Invalid email address given' );
 }
 
 //verify passwords
 if(! $admin_password == $admin_password_check ) {
-  setup_error('Password check failed' );
+  error_setup('Password check failed' );
 }
 
 //update the database
