@@ -178,6 +178,9 @@
   //Use external webserver authorisation to login (values are "N", or "Y")
   define('WEB_AUTH', "N" );
 
+  //Show passwords in user edit screens as plain text or hidden ('****') (values are "text", or "password")
+  define('PASS_STYLE', "text" );
+
   //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match) 
   define('PRE', "" );
 
