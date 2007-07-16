@@ -70,10 +70,14 @@ if(db_numrows($q ) != 0 ) {
     //file part
     $content .= "<tr><td><a href=\"files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a> <small>(".$row['size'].$lang['bytes'].") </small>";
 
-    //owners of the file and admins have a "delete" option
+    //owners of the file and admins have a "delete" and "update" option
     if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['uploader'] ) ) {
-      $content .= "&nbsp;<span class=\"textlink\">[<a href=\"files.php?x=".$x."&amp;action=submit_del&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\" onclick=\"return confirm('".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename'] ) )."' )\">".$lang['del']."</a>]</span></td></tr>\n";
-    } 
+      $content .= "&nbsp;<span class=\"textlink\">".
+                  "[<a href=\"files.php?x=".$x."&amp;action=submit_del&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\" ".
+                  "onclick=\"return confirm('".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename'] ) )."' )\">".$lang['del']."</a>]".
+                  "&nbsp;[<a href=\"files.php?x=".$x."&amp;action=update&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['update']."</a>]".
+                  "</span></td></tr>\n";
+    }
     else {
       $content .= "</td></tr>\n";
     }
