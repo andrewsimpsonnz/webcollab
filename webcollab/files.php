@@ -59,8 +59,18 @@ switch($_REQUEST['action'] ) {
     create_bottom();
     break;
 
+  //update a file
+  case 'update':
+    create_top($lang['file_choose'], 0, 'userfile', 'userfile' );
+    include(BASE.'includes/mainmenu.php' );
+    goto_main();
+    include(BASE.'files/file_update.php' );
+    create_bottom();
+    break;
+
   case 'submit_del':
   case 'submit_upload':
+  case 'submit_update':
     include(BASE.'files/file_submit.php' );
     break;
 
