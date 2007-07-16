@@ -1,4 +1,12 @@
 WebCollab SVN
+
+- allow configurable hidden or plain password (Feature Request #1638725)
+
+- allow updating of uploaded files (Feature Request #1024362)
+
+- bugfix: variable names in admin_config.php overwriting existing variables
+
+WebCollab SVN
 *** 4 July 2007
   Andrew Simpson
 
