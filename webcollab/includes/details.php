@@ -39,12 +39,12 @@ if(! @safe_integer($_REQUEST['taskid']) ) {
 $taskid = $_REQUEST['taskid'];
 
 //get task details
-if(! ($q = @db_query('SELECT * FROM '.PRE.'tasks WHERE id='.$taskid.' LIMIT 1', 0 ) ) ) {
+if(! ($q_detail = @db_query('SELECT * FROM '.PRE.'tasks WHERE id='.$taskid.' LIMIT 1', 0 ) ) ) {
   error('Task details', 'There was an error in the data query.' );
 }
 
 //get the data
-if( ! $TASKID_ROW = @db_fetch_array($q, 0) ) {
+if( ! $TASKID_ROW = @db_fetch_array($q_detail, 0) ) {
   error('Task details', 'The requested item has either been deleted, or is now invalid.');
 }
 
@@ -56,6 +56,6 @@ else {
 }
 
 //free memory
-db_free_result($q );
+db_free_result($q_detail );
 
 ?>

@@ -49,7 +49,7 @@ define('DEFAULT_GROUP',  $row['usergroup'] );
 //mailing list
 $q = db_query('SELECT DISTINCT email FROM '.PRE.'maillist' );
 
-for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+for($i_admin=0 ; $row = @db_fetch_num($q, $i_admin ) ; ++$i_admin ) {
   $EMAIL_MAILINGLIST[] = $row[0];
 }
 
