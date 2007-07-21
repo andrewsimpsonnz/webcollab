@@ -378,6 +378,13 @@ for the iCalendar text hyperlink on the top right of pages.<br />
 <br />
 WebCollab is compliant to RFC 2445 and RFC 2447.
 </dd>
+<dt>2. The iCalendar file produced by WebCollab does not work Google Calendar (and others)?</dt>
+<dd>At the time of writing Google Calendar does not support the VTODO tag specified in RFC 2445 and
+ RFC 2447.<br />
+A work around is to change the parameter VEVENT from 'N' to 'Y' in the configuration file 
+<i>[webcollab]/config/config.php</i>.  WebCollab will then create iCalendar files using the VEVENT
+tags, which are compatible with Google Calendar.
+</dd>
 </dl>
 <h3><a name="rss">RSS</a></h3>
 <dl>
@@ -387,7 +394,8 @@ need to adapt and extend these basic feeds to suit their own purposes.  The scri
 written and well commented to assist user modifications.<br />
 <br />
 The WebCollab RSS is authenticated by HTTP Authentication.  A base .htaccess file is provided in
-the directory. Instructions for setting up HTTP authentication can be found on the Apache website.
+the directory <i>[webcollab]/rss</i>. Instructions for setting up HTTP authentication can be found on
+ the <a href="http://httpd.apache.org/docs/2.2/howto/htaccess.html">Apache website.</a>
 </dd>
 </dl>
 <h3><a name="international">INTERNATIONALISATION</a></h3>
