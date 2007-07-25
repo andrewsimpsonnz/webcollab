@@ -20,13 +20,13 @@ Maintainer: NOTE: This file is written in UTF-8 character set
 */
 $taskgroup_info = "<ul><li>Si elimina un grupo de tareas todas las tareas de su propiedad quedaran sin clasificar.</li>\n".
 //**
-"<li>Los grupos de usuarios privados son visibles solamente a miembros de esos grupos privados.</li>\n".
-"<li>Puede cambiar el nombre de la categoria sin que afecte a las tareas.</li>\n".
+"<li>Los grupos de usuarios privados son visibles sólamente a miembros de esos grupos privados.</li>\n".
+"<li>Puede cambiar el nombre de la categoría sin que afecte a las tareas.</li>\n".
 "<li>Dos grupos de tareas no pueden tener el mismo nombre.</li></ul>\n";
-$usergroup_info = "<ul><li>Si elimina un grupo de usuarios, todos los envíos privados al foro relacionados seran eliminados tambien.</li>\n".
+$usergroup_info = "<ul><li>Si elimina un grupo de usuarios, todos los envíos privados al foro relacionados serán eliminados tambien.</li>\n".
 "<li>Puede modificar el nombre del grupo de usuario sin que afecte a sus usuarios.</li>\n".
 "<li>Dos grupos de usuarios no pueden tener el mismo nombre.</li></ul>\n";
-$user_info = "Seleccione su accion desde el menu de la izquierda.<br /><br />".
+$user_info = "Seleccione su acción desde el menu de la izquierda.<br /><br />".
 "Algunas cosideraciones:<br />".
 "<ul>".
 //**
@@ -34,10 +34,10 @@ $user_info = "Seleccione su accion desde el menu de la izquierda.<br /><br />".
 "<li>Los usuarios se eliminan en dos etapas, la segunda es permanente.</li>\n".
 "<li>Un usuario eliminado pierde todas sus tareas pero no sus mensajes en el foro.</li>\n".
 "<li>Un usuario borrado de forma permanente pierde todo.</li>\n".
-"<li>Un usuario borrado mantiene los registros de sus tareas que ha revisado, y continuara con estas despues de ser reactivado.</li>\n".
-"<li>TODAS las acciones ejecutadas sobre un usuario seran informadas al usuario por email.</li>\n".
+"<li>Un usuario borrado mantiene los registros de sus tareas que ha revisado, y continuará con estas despues de ser reactivado.</li>\n".
+"<li>TODAS las acciones ejecutadas sobre un usuario seran informadas al usuario por correo electrónico.</li>\n".
 "<li>Las claves están encriptadas en la base de datos. Se pueden asignar nuevas claves pero no recuperar las antiguas.</li>\n".
 "<li>Las claves se envian por email al usuario cuando se registra, sea cuidadoso con los correos de las claves!</li>\n".
-"<li>Para agilizar la gestion, los usuarios pueden editar su cuenta sin conocimiento del administrador</li>\n".
+"<li>Para agilizar la gestión, los usuarios pueden editar su cuenta sin conocimiento del administrador</li>\n".
 "</ul>\n";
 ?>
