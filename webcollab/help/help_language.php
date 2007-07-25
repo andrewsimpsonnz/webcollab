@@ -33,18 +33,10 @@ require_once(BASE_CONFIG.'config.php' );
 
 $help_item = $_GET['item'];
 $help_type = $_GET['type'];
+$help_lang = $_GET['lang'];
 
-if(defined('LOCALE_USER' ) ) {
-  $locale = LOCALE_USER;
-}
-elseif(defined('LOCALE' ) ) {
-  $locale = LOCALE;
-}
-else {
-  die('Config file not loaded properly for languages' );
-}
 
-switch($locale ) {
+switch($help_lang ) {
 
   case 'bg':
     switch($help_type ) {
