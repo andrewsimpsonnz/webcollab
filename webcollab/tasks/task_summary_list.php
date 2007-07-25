@@ -338,7 +338,7 @@ else {
 }
 
 $content .= "<table>\n";
-$content .= "<tr><td colspan=\"3\"><small><a href=\"help/help_language.php?item=summarypage&amp;type=help\" onclick=\"window.open('help/help_language.php?item=summarypage&amp;type=help'); return false\"><b>".$lang['flags']."</b></a></small></td><td><small>";
+$content .= "<tr><td colspan=\"3\"><small><a href=\"help/help_language.php?item=summarypage&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=summarypage&amp;type=help&amp;lang=".LOCALE_USER."'); return false\"><b>".$lang['flags']."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=deadline\">";
 $content .= "<b>".$lang['deadline']."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=status\">";

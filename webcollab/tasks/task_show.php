@@ -225,18 +225,18 @@ if($TASKID_ROW['parent'] != 0 ) {
 
   switch($TASKID_ROW['taskgroupid'] ){
     case 0:
-      $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help'); return false\">".$lang['taskgroup']."</a>: </td><td>".$lang['none']."</td></tr>\n";
+      $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['taskgroup']."</a>: </td><td>".$lang['none']."</td></tr>\n";
       break;
 
     default:
-      $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help'); return false\">".$lang['taskgroup']."</a>: </td><td>".$row['taskgroup_name']."</td></tr>\n";
+      $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['taskgroup']."</a>: </td><td>".$row['taskgroup_name']."</td></tr>\n";
       break;
   }
 }
 
 //show the usergroupid
 if( $TASKID_ROW['usergroupid'] != 0 ) {
-  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help'); return false\">".$lang['usergroup']."</a>: </td><td>".$row['usergroup_name']." ";
+  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td><td>".$row['usergroup_name']." ";
 
   switch($TASKID_ROW['globalaccess'] ){
     case 't':
@@ -254,7 +254,7 @@ if( $TASKID_ROW['usergroupid'] != 0 ) {
   }
 }
 else {
-  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help'); return false\">".$lang['usergroup']."</a>: </td><td>".$lang[$TYPE."_not_in_usergroup"]."</td></tr>\n";
+  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td><td>".$lang[$TYPE."_not_in_usergroup"]."</td></tr>\n";
 }
 
 $content .= "</table>\n";

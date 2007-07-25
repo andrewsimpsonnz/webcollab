@@ -177,7 +177,7 @@ if( @safe_integer($_GET['parentid']) ) {
   //get all taskgroups in order to show a task owner
   $q = db_query('SELECT id, name FROM '.PRE.'taskgroups ORDER BY name');
 
-  $content .= "<tr> <td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help'); return false\">".$lang['taskgroup']."</a>: </td> <td><select name=\"taskgroupid\">\n";
+  $content .= "<tr> <td><a href=\"help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."'); return false\">".$lang['taskgroup']."</a>: </td> <td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
   for( $i=0 ; $taskgroup_row = @db_fetch_array($q, $i ) ; ++$i) {
@@ -195,7 +195,7 @@ if( @safe_integer($_GET['parentid']) ) {
   //show all the groups
   $q = db_query( 'SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
 
-  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help'); return false\">".$lang['usergroup']."</a>: </td> <td><select name=\"usergroupid\">\n";
+  $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td> <td><select name=\"usergroupid\">\n";
   $content .= "<option value=\"0\">".$lang['all_groups']."</option>\n";
 
   for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -225,8 +225,8 @@ if( @safe_integer($_GET['parentid']) ) {
   }
 
   $content .= "</select></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help'); return false\">".$lang['all_users_view']."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$globalaccess." /></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".DEFAULT_EDIT." /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['all_users_view']."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$globalaccess." /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".DEFAULT_EDIT." /></td></tr>\n".
 
               "<tr> <td>".$lang['task_description']."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
 
@@ -294,7 +294,7 @@ else {
 
   //show all the groups
   $q = db_query( 'SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
-  $content .= "<tr> <td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help'); return false\">".$lang['usergroup']."</a>: </td> <td><select name=\"usergroupid\">\n".
+  $content .= "<tr> <td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td> <td><select name=\"usergroupid\">\n".
               "<option value=\"0\">".$lang['all_groups']."</option>\n";
 
   for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -307,8 +307,8 @@ else {
     $content .= "<option value=\"".$usergroup_row['id']."\">".$usergroup_row['name']."</option>\n";
   }
   $content .= "</select></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help'); return false\">".$lang['all_users_view']."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".DEFAULT_ACCESS." /></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".DEFAULT_EDIT." /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['all_users_view']."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".DEFAULT_ACCESS." /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".DEFAULT_EDIT." /></td></tr>\n".
 
               "<tr> <td>".$lang['project_description']."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
 

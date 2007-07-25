@@ -302,7 +302,7 @@ $content .= "</select></td></tr>\n";
 //  (projects don't have taskgroups)
 if($TASKID_ROW['parent'] != 0 ) {
 
-  $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help'); return false\">".$lang['taskgroup']."</a>: </td> <td><select name=\"taskgroupid\">\n";
+  $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['taskgroup']."</a>: </td> <td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
   $q = db_query('SELECT id, name FROM '.PRE.'taskgroups ORDER BY name' );
@@ -320,7 +320,7 @@ if($TASKID_ROW['parent'] != 0 ) {
 }
 
 //show all user-groups
-$content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help'); return false\">".$lang['usergroup']."</a>: </td> <td><select name=\"usergroupid\">\n";
+$content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td> <td><select name=\"usergroupid\">\n";
 $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
 $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
@@ -348,8 +348,8 @@ $content .= "</select></td></tr>\n";
 $global = ($TASKID_ROW['globalaccess'] == 't' ) ? "checked=\"checked\"" : '';
 $group  = ($TASKID_ROW['groupaccess']  == 't' ) ? "checked=\"checked\"" : '';
 
-$content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help'); return false\">".$lang['all_users_view']."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" ".$global." /></td></tr>\n".
-             "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$group." /></td></tr>\n".
+$content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['all_users_view']."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" ".$global." /></td></tr>\n".
+             "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$group." /></td></tr>\n".
 
              "<tr><td>".$lang[$TYPE."_description"]."</td> <td><textarea name=\"text\" rows=\"5\" cols=\"60\">".$TASKID_ROW['text']."</textarea></td> </tr>\n".
 
