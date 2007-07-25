@@ -33,6 +33,10 @@ require_once(BASE_CONFIG.'config.php' );
 //language select
 switch($_GET['lang'] ) {
 
+  case 'es':
+    $lang_prefix = 'es';
+    break;
+
   case 'nl':
     $lang_prefix = 'nl';
     break;
