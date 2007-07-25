@@ -17,10 +17,13 @@ Language files for 'es' (Spanish)
 Translation: Original de Daniel Lujan actualizado por Alberto Vizcaíno (www.alvizlo.es)
 Maintainer:
 */
+
 //required language encodings
 define('CHARACTER_SET', "ISO-8859-1" );
+
 //this is the regex for input validation filter used in common.php
 define('VALIDATION_REGEX', "/([^\x09\x0A\x0D\x20-\x7E\xA0-\xFF])/" ); //ISO-8859-x
+
 //dates
 $month_array = array ( NULL, "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" );
 $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
@@ -238,7 +241,7 @@ $lang['user_deleted'] = "Este usuarios ha sido borrado!";
 $lang['no_usergroup'] = "Este usuario no es miembro de ningún grupo de usuarios";
 $lang['not_usergroup'] = "(no forma parte de un grupo de usuarios)";
 $lang['no_password_change'] = "(Su clave actual NO ha cambiado)";
-$lang['last_time_here'] = "Última vez visto por aquí:";
+$lang['last_time_here'] = "última vez visto por aquí:";
 $lang['number_items_created'] = "Número de items creados:";
 $lang['number_projects_owned'] = "Número de proyectos propios:";
 $lang['number_tasks_owned'] = "Número de tareas propias:";
@@ -279,13 +282,14 @@ $lang['none'] = "Ninguno";
 $lang['no_group'] = "Sin grupo";
 $lang['all_groups'] = "Todos los grupos";
 $lang['all_users'] = "Todos los usuarios";
-$lang['all_users_view'] = "Todos los usuarios pueden ver esta tarea?";
+$lang['all_users_view'] = "Abierto a todos los usuarios?";
 $lang['group_edit'] = "Cualquier miembro del grupo puede editar?";
 $lang['project_description'] = "Descripción del proyecto";
 $lang['task_description'] = "Descripción de la tarea";
 $lang['email_owner'] = "Enviar un email al propietario con los cambios?";
 $lang['email_new_owner'] = "Enviar un email al (nuevo) propietario con los cambios?";
-$lang['email_group'] = "Enviar un email al usergroup con los cambios?";
+$lang['email_group'] = "Enviar un email al grupo de usuarios con los
+cambios?";
 $lang['add_new_project'] = "Agregar un nuevo proyecto";
 $lang['uncategorised'] = "Sin categoría";
 $lang['due_sprt'] = "%d días desde ahora";
