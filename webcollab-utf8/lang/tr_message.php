@@ -85,6 +85,7 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['login_action']               = "Sisteme gir";
     $lang['login_screen']               = "Giriş";
     $lang['error']                      = "Hata";
+    $lang['no_login']                   = "Lütfen sisteme girin";
     $lang['redirect_sprt']              = "%d saniye sonra otomatik olarak sisteme giriş sayfasına döneceksiniz";
     $lang['login_now']                  = "Sisteme giriş sayfasına şimdi dönmek için lütfen buraya tıklayın";
     $lang['please_login']               = "Lütfen sisteme girin";
