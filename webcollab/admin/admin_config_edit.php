@@ -59,9 +59,9 @@ if(USE_EMAIL === 'Y' ){
 
   //email addresses
   $content .=
-            "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin\" onclick=\"window.open('help/help_language.php?item=admin&amp;type=admin'); return false\" >".$lang['admin_email']."</a>:</td><td><input type=\"text\" name=\"email_admin\" value=\"".$row['email_admin']."\" size=\"30\" /></td></tr>\n".
-            "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin\" onclick=\"window.open('help/help_language.php?item=reply&amp;type=admin'); return false\">".$lang['email_reply']."</a>:</td><td><input type=\"text\" name=\"reply_to\" value=\"".$row['reply_to']."\" size=\"30\" /></td></tr>\n".
-            "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin\" onclick=\"window.open('help/help_language.php?item=from&amp;type=admin'); return false\">".$lang['email_from']."</a>:</td><td><input type=\"text\" name=\"from\" value=\"".$row['email_from']."\" size=\"30\" /></td></tr>\n";
+            "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\" >".$lang['admin_email']."</a>:</td><td><input type=\"text\" name=\"email_admin\" value=\"".$row['email_admin']."\" size=\"30\" /></td></tr>\n".
+            "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_reply']."</a>:</td><td><input type=\"text\" name=\"reply_to\" value=\"".$row['reply_to']."\" size=\"30\" /></td></tr>\n".
+            "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_from']."</a>:</td><td><input type=\"text\" name=\"from\" value=\"".$row['email_from']."\" size=\"30\" /></td></tr>\n";
 
   //get mailing list
   $q = db_query('SELECT DISTINCT email FROM '.PRE.'maillist' );
@@ -70,7 +70,7 @@ if(USE_EMAIL === 'Y' ){
     $maillist .= $row_mail['email']."\n";
   }
 
-  $content .= "<tr><td><a href=\"help/help_language.php?item=list&amp;type=admin\" onclick=\"window.open('help/help_language.php?item=list&amp;type=admin'); return false\">".$lang['mailing_list']."</a>: </td><td><textarea name=\"email\" rows=\"5\" cols=\"30\">".$maillist."</textarea></td></tr>\n".
+  $content .= "<tr><td><a href=\"help/help_language.php?item=list&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=list&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['mailing_list']."</a>: </td><td><textarea name=\"email\" rows=\"5\" cols=\"30\">".$maillist."</textarea></td></tr>\n".
                "</table>\n".
                "<table class=\"celldata\" >\n";
 }
