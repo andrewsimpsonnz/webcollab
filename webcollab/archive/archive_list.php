@@ -69,8 +69,10 @@ if(isset($_GET['action']) && $_GET['action'] == "archive_print" ) {
   $content  .= "[<a href=\"archive.php?x=".$x."&amp;action=list\">".$lang['normal_version']."</a>]\n";
 }
 else {
-  $content  .= "<table style=\"width: 98%\"><tr><td style=\"text-align: right\"><span class=\"textlink\">[<a href=\"archive.php?x=".$x."&amp;action=archive_print\">".$lang['print_version']."</a>]";
-  $content .= "</span></td></tr>\n</table>\n";
+  $content  .= "<table style=\"width: 98%\"><tr><td style=\"text-align: right\">\n".
+               "<a href=\"archive.php?x=".$x."&amp;action=archive_print\" title= \"".$lang['print_version']."\">".
+               "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a>\n".
+               "</td></tr>\n</table>\n";
 }
 
 //setup main table
