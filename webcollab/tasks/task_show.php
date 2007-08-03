@@ -68,8 +68,9 @@ if( ! ($row = db_fetch_array($q, 0 ) ) ) {
 }
 
 //mark this as seen in seen ;)
-@db_query('DELETE FROM '.PRE.'seen WHERE userid='.UID.' AND taskid='.$taskid, 0);
-db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$taskid.', now() )' );
+if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'seen WHERE userid='.UID.' AND taskid='.$taskid ), 0, 0 ) == 0 ) {
+  db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$taskid.', now() )' );
+}
 
 //text link for 'printer friendly' page
 if(isset($_GET['action']) && $_GET['action'] === "show_print" ) {
@@ -77,11 +78,11 @@ if(isset($_GET['action']) && $_GET['action'] === "show_print" ) {
 }
 else {
   //show print tag
-  $content .= "<div style=\"text-align : right\"><span class=\"textlink\">".
+  $content .= "<div style=\"text-align : right\">".
               "<a href=\"icalendar.php?x=".$x."&amp;action=project&amp;taskid=".$taskid."\" title=\"".$lang['icalendar']."\">".
               "<img src=\"images/calendar_link.png\" alt=\"".$lang['icalendar']."\" width=\"16\" height=\"16\" /></a>&nbsp;&nbsp;&nbsp;".
               "<a href=\"tasks.php?x=".$x."&amp;action=show_print&amp;taskid=".$taskid."\" title= \"".$lang['print_version']."\">".
-              "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a></span></div>\n";
+              "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a></div>\n";
   //show 'project jump' select box
   $content .= project_jump($taskid);
 }
