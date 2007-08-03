@@ -77,7 +77,7 @@ function db_query($query, $die_on_error=1 ) {
 
   if(! $database_connection ) db_connection();
     //set initial value
-  
+
   //start time
   list($usec, $sec) = explode(" ", microtime() );
   $starttime = ((float)$usec + (float)$sec );
@@ -87,22 +87,23 @@ function db_query($query, $die_on_error=1 ) {
 
     if($die_on_error) {
       error('Database query error', 'The following query :<br /><br /><b>'.$query.'</b><br /><br />Had the following error:<br /><b>'.pg_last_error($database_connection).'</b>' );
+    }
   }
   //count queries
   ++$database_query_count;
-  
+
   //add query time to global query time
   list($usec, $sec ) = explode(" ", microtime() );
   $this_query_time = ((float)$usec + (float)$sec ) - $starttime;
   $database_query_time += $this_query_time;
-        
+
   if(substr($query, 0, 6 ) == "SELECT" ) {
     //show the preformance and optimisations
     $db_opt = pg_query($database_connection, "EXPLAIN ".$query.";" );
     $db_content .= "<div align=\"left\">".nl2br($query )."<br /><br />\n".
                 "<table border=\"1\" >\n";
 
-    for( $i=0 ; $row = @db_fetch_num($db_opt, $i ) ; ++$i) {
+    for( $i=0 ; $row = @db_fetch_num($db_opt, $i ) ; ++$i ) {
         $db_content .= "<tr><td>".$row[0]."</td></tr>\n";
     }
     $db_content .= "<tr><td>".sprintf("This query took %d seconds", ($this_query_time * 1000000 ) )."</td></tr>\n".
