@@ -40,13 +40,13 @@ create_top_setup($lang_setup['setup2_banner'] );
 $content =  "<p><b>".$lang_setup['setup2_banner']."</b></p>\n";
 
 $content .= "<table style=\"width : 98%\"><tr><td>\n".
-            "<span class=\"textlink\">[<a href=\"help/en_help_setup2.php?type=setup2&amp;lang=".$lang."\" onclick=\"window.open('help/en_help_setup2.php?type=setup2&amp;lang=".$lang."'); return false\"><i>".$lang_setup['help']."</a></i>]</span>\n".
+            "<span class=\"textlink\">[<a href=\"help/help_setup.php?type=setup2&amp;lang=".$locale_setup."\" onclick=\"window.open('help/help_setup.php?type=setup2&amp;lang=".$locale_setup."'); return false\"><i>".$lang_setup['help']."</a></i>]</span>\n".
             "</td></tr>\n</table>\n";
 
 $content .= "<form method=\"post\" action=\"setup_handler.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"build\" />\n".
-            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n".
+            "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
             "<p>".$lang_setup['setup2_db_details1']."</p>\n".
             "<table class=\"celldata\">\n".
             "<tr><td></td><td><br />".$lang_setup['setup2_db_details2']."</td></tr>\n".
@@ -60,8 +60,13 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\">\n".
             "<select name=\"database_type\">\n".
             "<option value=\"mysql\" selected=\"selected\" >mysql</option>\n".
             "<option value=\"mysql_innodb\">mysql with innodb</option>\n".
-            "<option value=\"postgresql\">postgresql</option>\n".
-            "</select></td></tr>\n".
+            "<option value=\"postgresql\">postgresql</option>\n";
+
+if(extension_loaded('mysqli' ) ) {
+  $content .= "<option value=\"mysqli\">mysqli (innodb)</option>\n";
+}
+
+$content .= "</select></td></tr>\n".
             "</table>\n".
             "<input type=\"submit\" value=\"".$lang_setup['submit']."\" />\n".
             "</form>\n";
