@@ -34,14 +34,14 @@ create_top_setup($lang_setup['setup6_banner'], 1 );
 $content  = '';
 
 $content .= "<table style=\"width : 98%\"><tr><td>\n".
-            "<span class=\"textlink\">[<a href=\"help/en_help_setup6.php?type=setup6&amp;lang=".$lang."\" onclick=\"window.open('help/en_help_setup6.php?type=setup6&amp;lang=".$lang."'); return false\"><i>".$lang_setup['help']."</i></a>]</span>\n".
+            "<span class=\"textlink\">[<a href=\"help/help_setup.php?type=setup6&amp;lang=".$locale_setup."\" onclick=\"window.open('help/help_setup.php?type=setup6&amp;lang=".$locale_setup."'); return false\"><i>".$lang_setup['help']."</i></a>]</span>\n".
             "</td></tr>\n</table>\n";
 
 $content .= "<form method=\"post\" action=\"setup_handler.php\" onsubmit=\"return fieldCheck()\">".
             "<fieldset><input type=\"hidden\" name=\"action\" value=\"setup7\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"new_config\" value=\"Y\" />\n".
-            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n".
+            "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
             "<table border=\"0\">";
 
 //user settings
