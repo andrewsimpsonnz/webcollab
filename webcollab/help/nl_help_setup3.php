@@ -31,7 +31,7 @@ require_once("path.php" );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 
-define('CHARACTER_SET', 'ISO-8859-1' );
+define('CHARACTER_SET', 'UTF-8' );
 
 include_once(BASE."includes/screen.php" );
 

@@ -31,80 +31,80 @@ include_once(BASE."includes/screen.php" );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 
-define('CHARACTER_SET', 'ISO-8859-1' );
+define('CHARACTER_SET', 'UTF-8' );
 
-create_top("Hjälp", 1 );
+create_top("HjÃ¤lp", 1 );
 
 $content = "
 <a name=\"usergroup\"></a>
-<p><b>Användargrupper:</b></p>
-<p>De flesta projekt eller uppgifter omfattar en grupp användare som arbetar tillsammans om ett speciellt område.  En användargrupp är en grupp av användare som delar ett gemensamt arbetsområde.  Epost skickas till användargruppen istället för bara till en enskild användare.</p>
-<p>Användargrupper kan också utnyttjas för att kontrollera tillgängligheten.  Åtkomst kan begränsas till bara användargruppen, och då kan inte andra användare se projektet/uppgiften och kommer heller inte att komma åt dem.  Inskränkning av tillgängligheten kan tillämpas på projekt- eller uppgiftsnivå genom att använda kryssrutan \"Skall alla användare kunna se denna uppgift?\".</p>
-<p>När det är tillämpligt kan användargrupper också få ett eget forum för varje uppgift och projekt.</p>
+<p><b>AnvÃ¤ndargrupper:</b></p>
+<p>De flesta projekt eller uppgifter omfattar en grupp anvÃ¤ndare som arbetar tillsammans om ett speciellt omrÃ¥de.  En anvÃ¤ndargrupp Ã¤r en grupp av anvÃ¤ndare som delar ett gemensamt arbetsomrÃ¥de.  Epost skickas till anvÃ¤ndargruppen istÃ¤llet fÃ¶r bara till en enskild anvÃ¤ndare.</p>
+<p>AnvÃ¤ndargrupper kan ocksÃ¥ utnyttjas fÃ¶r att kontrollera tillgÃ¤ngligheten.  Ã…tkomst kan begrÃ¤nsas till bara anvÃ¤ndargruppen, och dÃ¥ kan inte andra anvÃ¤ndare se projektet/uppgiften och kommer heller inte att komma Ã¥t dem.  InskrÃ¤nkning av tillgÃ¤ngligheten kan tillÃ¤mpas pÃ¥ projekt- eller uppgiftsnivÃ¥ genom att anvÃ¤nda kryssrutan \"Skall alla anvÃ¤ndare kunna se denna uppgift?\".</p>
+<p>NÃ¤r det Ã¤r tillÃ¤mpligt kan anvÃ¤ndargrupper ocksÃ¥ fÃ¥ ett eget forum fÃ¶r varje uppgift och projekt.</p>
 <br /> 
 <a name=\"taskgroup\"></a>
 <p><b>Uppgiftgrupper:</b></p>
-<p>För en förstagångsanvändare är det inte lätt att se skillnaden mellan uppgiftgrupper och användargrupper.
-Men skillnaden är betydande. Användargrupper kontrollerar tillgängligheten och informationsflödet. Uppgiftgrupper finns bara för att göra uppgiftslistorna mer läsbara.</p>
-<p>När ett projekt vuxit så mycket att det har flera uppgifter kan listan verka lång och oläslig.  Genom att lägga uppgifter i en uppgiftgrupp blir listan automatiskt grupperad i undersektioner (efter uppgiftgrupp) och därmed mycket mer läsbar. Uppgifter som inte har någon uppgiftgrupp kommer att grupperas under 'Inte kategoriserad'.</p>
-<p>För att sammanfatta:  Om inga uppgifter i ett projekt tillhör en uppgiftgrupp blir uppgiftslistan lång. Om åtminstone en uppgift har tilldelats en uppgiftgrupp kommer alla uppgifter att listas efter uppgiftgrupp.</p>
+<p>FÃ¶r en fÃ¶rstagÃ¥ngsanvÃ¤ndare Ã¤r det inte lÃ¤tt att se skillnaden mellan uppgiftgrupper och anvÃ¤ndargrupper.
+Men skillnaden Ã¤r betydande. AnvÃ¤ndargrupper kontrollerar tillgÃ¤ngligheten och informationsflÃ¶det. Uppgiftgrupper finns bara fÃ¶r att gÃ¶ra uppgiftslistorna mer lÃ¤sbara.</p>
+<p>NÃ¤r ett projekt vuxit sÃ¥ mycket att det har flera uppgifter kan listan verka lÃ¥ng och olÃ¤slig.  Genom att lÃ¤gga uppgifter i en uppgiftgrupp blir listan automatiskt grupperad i undersektioner (efter uppgiftgrupp) och dÃ¤rmed mycket mer lÃ¤sbar. Uppgifter som inte har nÃ¥gon uppgiftgrupp kommer att grupperas under 'Inte kategoriserad'.</p>
+<p>FÃ¶r att sammanfatta:  Om inga uppgifter i ett projekt tillhÃ¶r en uppgiftgrupp blir uppgiftslistan lÃ¥ng. Om Ã¥tminstone en uppgift har tilldelats en uppgiftgrupp kommer alla uppgifter att listas efter uppgiftgrupp.</p>
 <br />
 <a name=\"globalaccess\"></a>
-<p><b>Ska alla användare kunna se denna uppgift?</b></p>
-<p>Denna kryssruta gör att man kan begränsa tillgängligheten så att bara medlemmar i den valda användargruppen kan titta på uppgiften/projektet. När rutan är ikryssad kan alla användare titta på projektet/uppgiften. När den inte är ifylld kan bara medlemmar i användargruppen titta.</p>
-<p>För uppgifter: Användare som inte är med den valda användargruppen kommer att kunna se uppgifterna i projektlistan, men kommer inte att komma åt dem.</p>
-<p>För projekt: Användare som inte är med i den valda användargruppen kommer inte att kunna se projektet eller tillhörande uppgifter i något fönster</p>
-<p>Om ingen avändargrupp är vald har kryssrutan ingen effekt.</p>
+<p><b>Ska alla anvÃ¤ndare kunna se denna uppgift?</b></p>
+<p>Denna kryssruta gÃ¶r att man kan begrÃ¤nsa tillgÃ¤ngligheten sÃ¥ att bara medlemmar i den valda anvÃ¤ndargruppen kan titta pÃ¥ uppgiften/projektet. NÃ¤r rutan Ã¤r ikryssad kan alla anvÃ¤ndare titta pÃ¥ projektet/uppgiften. NÃ¤r den inte Ã¤r ifylld kan bara medlemmar i anvÃ¤ndargruppen titta.</p>
+<p>FÃ¶r uppgifter: AnvÃ¤ndare som inte Ã¤r med den valda anvÃ¤ndargruppen kommer att kunna se uppgifterna i projektlistan, men kommer inte att komma Ã¥t dem.</p>
+<p>FÃ¶r projekt: AnvÃ¤ndare som inte Ã¤r med i den valda anvÃ¤ndargruppen kommer inte att kunna se projektet eller tillhÃ¶rande uppgifter i nÃ¥got fÃ¶nster</p>
+<p>Om ingen avÃ¤ndargrupp Ã¤r vald har kryssrutan ingen effekt.</p>
 <a name=\"groupaccess\"><br /></a>
-<p><b>Ska alla i användargruppen kunna redigera?</b></p>
-<p>Denna kryssruta tillåter alla medlemmar i en användargrupp att redigera uppgiften/projektet. När rutan är ikryssad kan alla medlemmar i användargruppen redigera denna punkt. Om rutan inte är ikryssad kan bara den ansvarige redigera denna uppgift.</p>
-<p>Om ingen avändargrupp är vald har kryssrutan ingen effekt.</p>
+<p><b>Ska alla i anvÃ¤ndargruppen kunna redigera?</b></p>
+<p>Denna kryssruta tillÃ¥ter alla medlemmar i en anvÃ¤ndargrupp att redigera uppgiften/projektet. NÃ¤r rutan Ã¤r ikryssad kan alla medlemmar i anvÃ¤ndargruppen redigera denna punkt. Om rutan inte Ã¤r ikryssad kan bara den ansvarige redigera denna uppgift.</p>
+<p>Om ingen avÃ¤ndargrupp Ã¤r vald har kryssrutan ingen effekt.</p>
 <br />
 <a name=\"summarypage\"></a>
 <p><b>Sammanfattning:</b></p>
-<p>Sammanfattningssidan innehåller sex kolumner som kort visar vad som pågår i varje uppgift.</p>
+<p>Sammanfattningssidan innehÃ¥ller sex kolumner som kort visar vad som pÃ¥gÃ¥r i varje uppgift.</p>
 <ul>
 <li><b>Flaggor</b>:
-visar om det är något nytt för denna uppgift.
-Möjligheterna är:
+visar om det Ã¤r nÃ¥got nytt fÃ¶r denna uppgift.
+MÃ¶jligheterna Ã¤r:
 <ul>
 <li><b>C</b>:<br />
 visar att uppgiften skapats (Created)<br /></li>
 <li><b>M</b>:<br />
-visar att uppgiften har ändrats (Modified)<br /></li>
+visar att uppgiften har Ã¤ndrats (Modified)<br /></li>
 <li><b>P</b>:<br />
-visar att det finns ett inlägg Postat till uppgiftens forum<br /></li>
+visar att det finns ett inlÃ¤gg Postat till uppgiftens forum<br /></li>
 <li><b>F</b>:<br />
 visar att en Fil skickats till denna uppgift<br /></li>
 </ul>
-Om det finns någon flagga kan man klicka på den för att visa tillhörande uppgift.<br /></li>
+Om det finns nÃ¥gon flagga kan man klicka pÃ¥ den fÃ¶r att visa tillhÃ¶rande uppgift.<br /></li>
 <li><b>Slutdatum</b>:<br />
-visar när uppgiften ska vara färdig.<br />
-Om datum skrivs i <span class=\"red\">rött</span>, är uppgiften över tiden, och om datum skrivs i <span class=\"green\">grönt</span>,
-ska uppgiften vara färdig idag<br /></li>
+visar nÃ¤r uppgiften ska vara fÃ¤rdig.<br />
+Om datum skrivs i <span class=\"red\">rÃ¶tt</span>, Ã¤r uppgiften Ã¶ver tiden, och om datum skrivs i <span class=\"green\">grÃ¶nt</span>,
+ska uppgiften vara fÃ¤rdig idag<br /></li>
 <li><b>Status</b>:<br />
-visar status för denna punkt:
+visar status fÃ¶r denna punkt:
 <ul>
 <li><b>Planerad</b>:<br />
-visar att uppgiften nyligen skapats men (medvetet) inte schemalagts ännu</li>
+visar att uppgiften nyligen skapats men (medvetet) inte schemalagts Ã¤nnu</li>
 <li><b>Ny</b>:<br />
-visar att uppgiften nyligen skapats och väntar på resurser så att den kan startas</li>
+visar att uppgiften nyligen skapats och vÃ¤ntar pÃ¥ resurser sÃ¥ att den kan startas</li>
 <li><span class=\"blue\">Pausad</span>:<br />
-visar att arbetet med uppgiften har stoppats i väntan på någon yttre händelse</li>
+visar att arbetet med uppgiften har stoppats i vÃ¤ntan pÃ¥ nÃ¥gon yttre hÃ¤ndelse</li>
 <li><span class=\"orange\">Aktiv</span>:<br />
 visar att det arbetas med uppgiften</li>
 <li><span class=\"green\">Klar</span>:<br />
-visar att uppgiften är färdig<br /></li>
+visar att uppgiften Ã¤r fÃ¤rdig<br /></li>
 </ul>
 </li>
 <li><b>Ansvarig</b>:<br />
-visar vem som har tilldelats uppgiften. Man kan klicka på namnet för att se fler uppgifter om den personen.<br /></li>
+visar vem som har tilldelats uppgiften. Man kan klicka pÃ¥ namnet fÃ¶r att se fler uppgifter om den personen.<br /></li>
 <li><b>Grupp</b>:<br />
-visar antingen den användargrupp eller uppgiftgrupp som uppgiften tillhör. Om man klickar på kolumnens överskrift skiftar man mellan de två olika grupperna.<br /></li>
+visar antingen den anvÃ¤ndargrupp eller uppgiftgrupp som uppgiften tillhÃ¶r. Om man klickar pÃ¥ kolumnens Ã¶verskrift skiftar man mellan de tvÃ¥ olika grupperna.<br /></li>
 <li><b>Uppgift</b>:<br />
-visar uppgiftens namn. Man kan klicka på namnet för att se fler uppgifter.</li>
+visar uppgiftens namn. Man kan klicka pÃ¥ namnet fÃ¶r att se fler uppgifter.</li>
 </ul>
 ";
-  new_box("Hjälp", $content );
+  new_box("HjÃ¤lp", $content );
   create_bottom();
 ?>

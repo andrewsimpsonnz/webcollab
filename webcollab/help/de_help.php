@@ -24,7 +24,7 @@
 
   Translation by: Michael Bunk
 
-  NOTE: This file is written in ISO-8859-1 character set
+  NOTE: This file is written in UTF-8 character set
 
 */
 
@@ -33,7 +33,7 @@ require_once("path.php" );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 
-define('CHARACTER_SET', 'ISO-8859-1' );
+define('CHARACTER_SET', 'UTF-8' );
 
 include_once(BASE."includes/screen.php" );
 
@@ -43,26 +43,26 @@ $content = "
 <a name=\"usergroup\"></a>
 <p><b>Nutzergruppen:</b></p>
 Die meisten Projekte oder Aufgaben haben eine Gruppe von Nutzern, die in einem bestimmten Bereich zusammenarbeiten.
-Eine Nutzergruppe ist eine Gruppe von Nutzern, die einen ähnlichen Arbeitsbereich gemeinsam haben.
-Benachrichtigungsemails können an Nutzergruppen gesendet werden, anstatt nur an einen einzelnen
+Eine Nutzergruppe ist eine Gruppe von Nutzern, die einen Ã¤hnlichen Arbeitsbereich gemeinsam haben.
+Benachrichtigungsemails kÃ¶nnen an Nutzergruppen gesendet werden, anstatt nur an einen einzelnen
 Nutzer.
 </p>
-<p>Nutzergruppen können auch dazu verwendet werden, die Zugriffsrechte zu kontrollieren. Der Zugriff kann auf
-die Nutzergruppe beschränkt werden. In einem solchen Fall werden andere Nutzer nicht in der Lage sein,
-die eingeschränkten Projekte oder Aufgaben zu sehen oder darauf zuzugreifen. Die Zugriffsbeschränkung
-kann mit der Checkbox &quot;Können alle Nutzer diese Aufgabe einsehen?&quot; auf Projekt- oder Aufgabenebene
+<p>Nutzergruppen kÃ¶nnen auch dazu verwendet werden, die Zugriffsrechte zu kontrollieren. Der Zugriff kann auf
+die Nutzergruppe beschrÃ¤nkt werden. In einem solchen Fall werden andere Nutzer nicht in der Lage sein,
+die eingeschrÃ¤nkten Projekte oder Aufgaben zu sehen oder darauf zuzugreifen. Die ZugriffsbeschrÃ¤nkung
+kann mit der Checkbox &quot;KÃ¶nnen alle Nutzer diese Aufgabe einsehen?&quot; auf Projekt- oder Aufgabenebene
 eingestellt werden.
 </p>
-<p>Wenn möglich, erhalten Nutzergruppen auch ihr eigenes privates Forum zu jeder Aufgabe und jedem Projekt.
+<p>Wenn mÃ¶glich, erhalten Nutzergruppen auch ihr eigenes privates Forum zu jeder Aufgabe und jedem Projekt.
 </p>
 <a name=\"taskgroup\"></a>
 <p><b>Aufgabengruppen:</b></p>
 <p>Der Unterschied zwischen Aufgabengruppen und Nutzergruppen ist nicht offensichtlich, aber markant.
-Nutzergruppen kontrollieren Zugriff und Informationsfluß; Aufgabengruppen machen die Aufgabenliste einfach nur besser lesbar.
+Nutzergruppen kontrollieren Zugriff und InformationsfluÃŸ; Aufgabengruppen machen die Aufgabenliste einfach nur besser lesbar.
 </p>
 <p>Wenn ein Projekt viele Unteraufgaben hat, kann die Liste lang und unlesbar werden.
 Durch das Zuweisen einer Aufgabengruppe an die jeweiligen Aufgaben, werden sie in der
-Liste automatisch in Absätze nach Aufgabengruppen gruppiert. Aufgaben ohne Aufgabengruppe
+Liste automatisch in AbsÃ¤tze nach Aufgabengruppen gruppiert. Aufgaben ohne Aufgabengruppe
 werden unter der Gruppe 'Nicht eingeordnet' einsortiert.
 </p>
 <p>Wenn keine Aufgabe in einem Projekt eine Aufgabengruppe zugeordnet bekommen hat, werden die Aufgaben
@@ -70,33 +70,33 @@ in einer langen Liste angezeigt. Wenn eine Aufgabe einer Aufgabengruppe zugeordn
 werden alle Aufgaben nach Aufgabengruppe sortiert angezeigt.
 </p>
 <a name=\"globalaccess\"></a>
-<p><b>Können alle Nutzer diese Aufgabe einsehen?</b></p>
-<p>Dieses Auswahlfeld erlaubt es, das Einsehen von Aufgaben oder Projekten auf Mitglieder der gewählten
-Nutzergruppe einzuschränken. Wenn das Auswahlfeld deaktiviert ist, dürfen alle Nutzer die
+<p><b>KÃ¶nnen alle Nutzer diese Aufgabe einsehen?</b></p>
+<p>Dieses Auswahlfeld erlaubt es, das Einsehen von Aufgaben oder Projekten auf Mitglieder der gewÃ¤hlten
+Nutzergruppe einzuschrÃ¤nken. Wenn das Auswahlfeld deaktiviert ist, dÃ¼rfen alle Nutzer die
 Aufgabe oder das Projekt einsehen.
 </p>
-<p>Bei Aufgaben: Nutzer, die nicht in der Nutzergruppe sind, können die Aufgabe in der Projektanzeige sehen, aber
-können sie nicht einsehen.
+<p>Bei Aufgaben: Nutzer, die nicht in der Nutzergruppe sind, kÃ¶nnen die Aufgabe in der Projektanzeige sehen, aber
+kÃ¶nnen sie nicht einsehen.
 </p>
-<p>Bei Projekten: Nutzer, die nicht in der Nutzergruppe sind, bekommen das Projekt oder zugehörige Aufgaben
+<p>Bei Projekten: Nutzer, die nicht in der Nutzergruppe sind, bekommen das Projekt oder zugehÃ¶rige Aufgaben
 nicht zu sehen.
 </p>
-<p>Wenn keine Nutzergruppe für die Aufgabe oder das Projekt festgelegt wurde, hat dieses Auswahlfeld keinen
+<p>Wenn keine Nutzergruppe fÃ¼r die Aufgabe oder das Projekt festgelegt wurde, hat dieses Auswahlfeld keinen
 Effekt.
 </p>
 <a name=\"groupaccess\"></a>
 <p><b>Kann jeder in der Benutzergruppe bearbeiten?</b></p>
 Dieses Auswahlfeld erlaubt es allen Mitgliedern einer Nutzergruppe, ein Projekt oder eine Aufgabe zu bearbeiten.
-Wenn dieses Auswahlfeld aktiviert ist, können alle Mitglieder der Nutzergruppe bearbeiten. Ist es deaktiviert,
-darf nur der Eigentümer bearbeiten.
+Wenn dieses Auswahlfeld aktiviert ist, kÃ¶nnen alle Mitglieder der Nutzergruppe bearbeiten. Ist es deaktiviert,
+darf nur der EigentÃ¼mer bearbeiten.
 </p>
 <p>Wenn keine Nutzergruppe festgelegt wurde, hat dieses Auswahlfeld keinen Effekt.
 <a name=\"summarypage\"></a>
-<p><b>übersichtsseite:</b></p>
-<p>Die übersichtsseite enthält 6 Spalten, die kurz zusammenfassen, was mit jeder Aufgabe vor sich geht.
+<p><b>Ã¼bersichtsseite:</b></p>
+<p>Die Ã¼bersichtsseite enthÃ¤lt 6 Spalten, die kurz zusammenfassen, was mit jeder Aufgabe vor sich geht.
 <ul>
 <li><b>Optionen</b>:<br />
-Zeigt an, daß an dieser Aufgabe etwas neu ist.
+Zeigt an, daÃŸ an dieser Aufgabe etwas neu ist.
 Die Zeichen bedeuten:
 <ul>
 <li><b>C</b>:<br />
@@ -108,12 +108,12 @@ neue Mitteilung (posting) im Forum der Aufgabe</li>
 <li><b>F</b>:<br />
 Datei (file) wurde hochgeladen</li>
 </ul>
-Durch Klicken auf die Zeichen, gelangt man zur dazugehörigen Aufgabe.</li>
+Durch Klicken auf die Zeichen, gelangt man zur dazugehÃ¶rigen Aufgabe.</li>
 <li><b>Fertigstellungszeitpunkt</b>:<br />
-Zeigt an, wann eine Aufgabe fertiggestellt sein muß.
+Zeigt an, wann eine Aufgabe fertiggestellt sein muÃŸ.
 Wenn das Datum in <span class=\"red\">rot</span> erscheint,
-ist die Aufgabe überfällig; wenn die Aufgabe <span class=\"green\">grün</span> erscheint,
-ist die Aufgabe heute fällig</li>
+ist die Aufgabe Ã¼berfÃ¤llig; wenn die Aufgabe <span class=\"green\">grÃ¼n</span> erscheint,
+ist die Aufgabe heute fÃ¤llig</li>
 <li><b>Zustand</b>:<br />
 zeigt den Arbeitsstatus der Aufgabe an:
 <ul>
@@ -132,9 +132,9 @@ an der Aufgabe wird gearbeitet</li>
 Die Aufgabe wurde fertiggestellt.</li>
 </ul>
 </li>
-<li><b>Eigentümer</b>:<br />
+<li><b>EigentÃ¼mer</b>:<br />
 Zeigt an, wem die Aufgabe zugewiesen wurde.
-Man kann auf den Namen klicken, um mehr über die Person herauszufinden.</li>
+Man kann auf den Namen klicken, um mehr Ã¼ber die Person herauszufinden.</li>
 <li><b>Gruppe</b>:<br />
 Nutzergruppe oder Aufgabengruppe der Aufgabe.
 Mit Klick auf dem Spaltenkopf wird zwischen den beiden Ansichten umgeschalten.</li>

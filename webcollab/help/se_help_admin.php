@@ -22,7 +22,7 @@
 
   Help files for 'se' (Swedish)
 
-  Maintainer: Göran Källqvist <g.kallqvist@telia.com>
+  Maintainer: GÃ¶ran KÃ¤llqvist <g.kallqvist@telia.com>
 
 */
 
@@ -31,45 +31,45 @@ require_once("path.php" );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 
-define('CHARACTER_SET', 'ISO-8859-1' );
+define('CHARACTER_SET', 'UTF-8' );
 
 include_once(BASE."includes/screen.php" );
 
-create_top("Hjälp", 1 );
+create_top("HjÃ¤lp", 1 );
 
 $content = "
 	<a name=\"admin\"></a>
-	<p><b>Epost-adress till administratör:</b></p>
-	<p>Detta är epost-adressen till administratören, som har hand om sajtens dagliga skötsel.
+	<p><b>Epost-adress till administratÃ¶r:</b></p>
+	<p>Detta Ã¤r epost-adressen till administratÃ¶ren, som har hand om sajtens dagliga skÃ¶tsel.
 	</p>
-	<p>Automatiska mail från sajten, i synnerhet när de handlar om användarnas konton, kommer att uppge denna adress som kontaktperson.
+	<p>Automatiska mail frÃ¥n sajten, i synnerhet nÃ¤r de handlar om anvÃ¤ndarnas konton, kommer att uppge denna adress som kontaktperson.
 	</p>
-	<p>Adressen skall alltid fyllas i.  Om du är tveksam skriv in din egen epost-adress här!
+	<p>Adressen skall alltid fyllas i.  Om du Ã¤r tveksam skriv in din egen epost-adress hÃ¤r!
 	</p>
 	<a name=\"reply\"></a>
 	<p><b>Epost 'svar till':</b></p>
-	<p>Fältet 'svar till' för mejl från denna sajt.
+	<p>FÃ¤ltet 'svar till' fÃ¶r mejl frÃ¥n denna sajt.
 	</p>
-	<p>Om du är osäker sätt den till samma som administratörens epost-adress.
+	<p>Om du Ã¤r osÃ¤ker sÃ¤tt den till samma som administratÃ¶rens epost-adress.
 	</p>
 	<a name=\"from\"></a>
-	<p><b>Epost 'från':</b></p>
-	<p>Fältet 'från' i mejl från denna sajt.
+	<p><b>Epost 'frÃ¥n':</b></p>
+	<p>FÃ¤ltet 'frÃ¥n' i mejl frÃ¥n denna sajt.
 	</p>
-	<p>Om du är osäker sätt den till samma som administratörens epost-adress.
+	<p>Om du Ã¤r osÃ¤ker sÃ¤tt den till samma som administratÃ¶rens epost-adress.
 	</p>
 	<a name=\"list\"></a>
 	<p><b>Mejl-lista:</b></p>
-	<p>När mejl skickas till användargruppen kommer de också att skickas till de epost-adresser som anges här.  Vitsen med det är att hålla projektledarna ajour.
+	<p>NÃ¤r mejl skickas till anvÃ¤ndargruppen kommer de ocksÃ¥ att skickas till de epost-adresser som anges hÃ¤r.  Vitsen med det Ã¤r att hÃ¥lla projektledarna ajour.
 	</p>
-	<p>För att mejl skall skickas till användargruppen måste kryssrutan 'skicka till användargrupp' i Lägg till (eller redigera) projekt/uppgift vara ifylld.</p>
-	<p>Detta kan göras med standardinställningen nedan eller genom att användaren fyller i rutan manuellt.
+	<p>FÃ¶r att mejl skall skickas till anvÃ¤ndargruppen mÃ¥ste kryssrutan 'skicka till anvÃ¤ndargrupp' i LÃ¤gg till (eller redigera) projekt/uppgift vara ifylld.</p>
+	<p>Detta kan gÃ¶ras med standardinstÃ¤llningen nedan eller genom att anvÃ¤ndaren fyller i rutan manuellt.
 	</p>
-	<p>Observera att användare kan åsidosätta standardinställningarna genom att manuellt ta bort krysset i rutan.
+	<p>Observera att anvÃ¤ndare kan Ã¥sidosÃ¤tta standardinstÃ¤llningarna genom att manuellt ta bort krysset i rutan.
 	</p>
-	<p>Att markera en användargrupp som privat påverkar inte mejl-listan.</p>
+	<p>Att markera en anvÃ¤ndargrupp som privat pÃ¥verkar inte mejl-listan.</p>
 	";
 
-  new_box( "Hjälp", $content );
+  new_box( "HjÃ¤lp", $content );
   create_bottom();
 ?>

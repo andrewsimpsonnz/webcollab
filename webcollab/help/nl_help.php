@@ -32,7 +32,7 @@ require_once("path.php" );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 
-define('CHARACTER_SET', 'ISO-8859-1' );
+define('CHARACTER_SET', 'UTF-8' );
 
 include_once(BASE."includes/screen.php" );
 
@@ -49,7 +49,7 @@ $content = "
 <p><b>Taak groepen:</b></p>
 <p>Het verschil tussen Taak groepen en Gebruikers groepen is voor nieuwe gebruikers misschien niet direct duidelijk. Echter, Gebruikers groepen bepalen de toegang en informatie stroom, Taak groepen zijn meer bedoeld om taakoverzichten duidelijker te maken.</p>
 <p>Wanneer een project groeit en er meerdere sub-taken zijn, kan het taakoverzicht lang en onoverzichtelijk worden. Door taken samen te voegen in een Taak groep, wordt het taakoverzicht automatisch in secties (per Taak groep) gegroepeerd en is dan veel overzichtelijker. Taken die niet aan een Taak groep toegewezen zijn, worden onder de sectie 'Zonder categorie' weergegeven.</p>
-<p>Kortom: als de taken in een project niet toegewezen zijn aan een Taak groep, wordt het taakoverzicht erg lang. Als tenminste één taak aan een Taak groep is toegewezen, worden alle taken weergegeven per Taak groep.</p>
+<p>Kortom: als de taken in een project niet toegewezen zijn aan een Taak groep, wordt het taakoverzicht erg lang. Als tenminste Ã©Ã©n taak aan een Taak groep is toegewezen, worden alle taken weergegeven per Taak groep.</p>
 <br />
 <a name=\"globalaccess\"></a>
 <p><b>Aan alle gebruikers tonen?</b></p>
