@@ -1,4 +1,16 @@
 WebCollab SVN
+*** 4 August 2007
+  Andrew Simpson
+
+- make provision for mysqli in setup
+
+- make provision for mysqli in update.php
+
+- refactor SQL query in task_show.php for efficiency
+
+- prevent single admin users removing their admin rights
+
+WebCollab SVN
 *** 25 July 2007
   Andrew Simpson
 
