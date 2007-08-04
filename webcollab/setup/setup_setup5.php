@@ -241,7 +241,7 @@ if(isset($data['new_db'] ) && ($data['new_db'] == 'Y' ) ) {
   $content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"setup6\" />\n".
-              "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n".
+              "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
               "<div align=\"center\"><p>".$lang_setup['setup5_writing']."</p><br />\n".
               "<input type=\"submit\" value=\"".$lang_setup['setup5_continue']."\" /></div>\n".
               "</form>\n";
@@ -284,12 +284,19 @@ global $db_setup_connection;
     case 'mysql_innodb':
       //make connection
       if( ! ($db_setup_connection = @mysql_connect($data["db_host"], $data["db_user"], $data["db_password"] ) ) ) {
-        abort();
+        abort("Not able to connect to database server:<br />".mysql_error($db_setup_connection) );
       }
 
       //select database
       if( ! @mysql_select_db($data["db_name"], $db_setup_connection ) ) {
-        abort();
+        abort("Not able to select database:<br />". mysql_error($db_setup_connection) );
+      }
+      break;
+
+    case 'mysqli':
+      //make connection
+      if( ! ($db_setup_connection = @mysqli_connect($data["db_host"], $data["db_user"], $data["db_password"], $data["db_name"] ) ) ) {
+        abort("Not able to connect to database server:<br />".mysqli_error($db_setup_connection));
       }
       break;
 
@@ -300,12 +307,12 @@ global $db_setup_connection;
 
       //make connection
       if( ! ($db_setup_connection = @pg_connect($host.' user='.$data["db_user"].' dbname='.$data["db_name"].' password='. $data["db_password"]) ) ) {
-       abort();
+       abort("Not able to connect to database server:<br />".pg_last_error($db_setup_connection));
       }
       break;
 
     default:
-      abort();
+      abort("Not a valid database type" );
       break;
   }
   return;
@@ -338,6 +345,22 @@ global $db_setup_connection;
 
       break;
 
+    case 'mysqli':
+      //set character set -- 1
+      if(! @mysqli_query($db_setup_connection, "SET NAMES 'utf8'" ) ) {
+        error_setup("Setting client encoding to UTF-8 character set had the following error:<br />".mysqli_error($db_setup_connection ) );
+      }
+      //set character set -- 2
+      if(! @mysqli_query($db_setup_connection, "SET CHARACTER SET utf8" ) ) {
+        error_setup("Setting client encoding to UTF-8 character set had the following error:<br />".mysqli_error($db_setup_connection) );
+      }
+
+      //update the site names in the database
+      mysqli_query($db_setup_connection, "TRUNCATE TABLE ".PRE."site_name" );
+      mysqli_query($db_setup_connection, "INSERT INTO ".PRE."site_name( manager_name, abbr_manager_name )  VALUES('".$data["manager_name"]."','".$data["abbr_manager_name"]."'" );
+
+      break;
+
     case 'postgresql':
       //set correct encoding
       if(@pg_set_client_encoding($db_setup_connection, 'UNICODE' ) == -1 ){
@@ -351,7 +374,7 @@ global $db_setup_connection;
       break;
 
     default:
-      abort();
+      abort("Not a valid database type" );
       break;
   }
   return;
@@ -361,7 +384,7 @@ global $db_setup_connection;
 // New database - and not able to connect
 //
 
-function abort() {
+function abort($message ) {
 
   global $lang_setup;
 
@@ -375,6 +398,11 @@ function abort() {
               "</div>\n";
 
   new_box_setup($lang_setup['setup5_banner3'], $content, 'boxdata', 'singlebox' );
+
+  if(DEBUG == 'Y' ) {
+
+    new_box_setup('Debugging info', $message, 'boxdata', 'singlebox' );
+  }
 
   create_bottom_setup();
   die;
