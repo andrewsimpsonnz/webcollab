@@ -51,11 +51,21 @@ switch($_GET['lang'] ) {
 switch($_GET['type'] ) {
 
   case 'setup2':
-    include_once(BASE.'help/'.$lang_prefix.'_help_setup2.php');
+    if(is_readable(BASE.'help/'.$lang_prefix.'_help_setup2.php') ) {
+      include_once(BASE.'help/'.$lang_prefix.'_help_setup2.php');
+    }
+    else {
+      include_once(BASE.'help/en_help_setup2.php');
+    }
     break;
 
   case 'setup3':
-    include_once(BASE.'help/'.$lang_prefix.'_help_setup3.php');
+    if(is_readable(BASE.'help/'.$lang_prefix.'_help_setup3.php') ) {
+      include_once(BASE.'help/'.$lang_prefix.'_help_setup3.php');
+    }
+    else {
+      include_once(BASE.'help/en_help_setup3.php');
+    }
     break;
 
   default:
