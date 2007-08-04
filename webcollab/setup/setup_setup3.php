@@ -97,14 +97,14 @@ create_top_setup($lang_setup['setup3_banner'] );
 $content  = '';
 
 $content .= "<table style=\"width : 98%\"><tr><td>\n".
-            "<span class=\"textlink\">[<a href=\"help/en_help_setup3.php?type=setup3&amp;lang=".$lang."\" onclick=\"window.open('help/en_help_setup3.php?type=setup3&amp;lang=".$lang."'); return false\"><i>".$lang_setup['help']."</i></a>]</span>\n".
+            "<span class=\"textlink\">[<a href=\"help/help_setup.php?type=setup3&amp;lang=".$locale_setup."\" onclick=\"window.open('help/help_setup.php?type=setup3&amp;lang=".$locale_setup."'); return false\"><i>".$lang_setup['help']."</i></a>]</span>\n".
             "</td></tr>\n</table>\n";
 
 $content .= "<form method=\"post\" action=\"setup_handler.php\">".
             "<fieldset><input type=\"hidden\" name=\"action\" value=\"setup4\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"$new_db\" />\n".
-            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n".
+            "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
             "<table border=\"0\">";
 
 //basic settings
@@ -127,23 +127,31 @@ $content .= "<tr><td></td><td><br /><br /><b><span class=\"underline\">".$lang_s
 switch($db_type){
 
   case 'postgresql':
-    $s1 = ""; $s2 = " selected=\"selected\""; $s3 = "";
+    $s1 = ""; $s2 = " selected=\"selected\""; $s3 = ""; $s4 = "";
     break;
 
   case 'mysql_innodb':
-    $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\"";
+    $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\""; $s4 = "";
+    break;
+
+  case 'mysqli':
+  default:
+    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
     break;
 
   case 'mysql':
   default:
-    $s1 = " selected=\"selected\""; $s2 = ""; $s3 = "";
+    $s1 = " selected=\"selected\""; $s2 = ""; $s3 = ""; $s4 = "";
     break;
+
+
 }
 
 $content .= "<tr><th>".$lang_setup['db_type']."</th><td><select name=\"db_type\">\n".
              "<option value=\"mysql\"".$s1.">mysql</option>\n".
              "<option value=\"postgresql\"".$s2.">postgresql</option>\n".
              "<option value=\"mysql_innodb\"".$s3.">mysql with innodb</option>\n".
+             "<option value=\"mysqli\"".$s4.">mysqli (innodb)</option>\n".
              "</select></td></tr>\n".
              "<tr><th>".$lang_setup['db_host']."</th><td><input type=\"text\" name=\"db_host\" value=\"".$db_host."\" size=\"30\" /></td></tr>\n";
 
