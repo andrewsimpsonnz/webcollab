@@ -137,6 +137,68 @@ require_once(BASE.'setup/security_setup.php' );
     }
     break;
 
+  case 'mysqli':
+    //check we can do mysqli functions!!
+    if( ! extension_loaded('mysqli' ) ){
+      error_setup($lang_setup['setupdb_no_mysql'] );
+    }
+    //connect to database server
+    if( ! ($database_connection = @mysqli_connect( $database_host, $database_user, $database_password ) ) ) {
+      $db_error_message = mysqli_connect_error();
+      error_setup(sprintf($lang_setup['setupdb_no_db_mysql'], $database_host, $database_user, $database_password ) );
+    }
+
+    //try and create database
+    if( ! ($result = @mysqli_query($database_connection, 'CREATE DATABASE IF NOT EXISTS '.$database_name.' CHARACTER SET utf8' ) ) ){
+      error_setup("Connected successfully to the database server, but database creation had the following error: <br />".
+                            "<b>".mysqli_error($database_connection)."</b><br /><br />".
+                            "The above error message was created by the MySQL database server." );
+    }
+
+    //select the newly created database
+    if( ! @mysqli_select_db($database_connection, $database_name ) ){
+      error_setup("Created a new database, but not able to select the new database. Error message was: <br />".mysqli_error($database_connection) );
+    }
+
+    $db_schema = 'db/schema_mysql_innodb.sql';
+
+    //sanity check
+    if( ! is_readable($db_schema ) ) {
+      error_setup("Database schema is missing.  Check that the file [webcollab]/db/".$db_schema." exists and is readable by the webserver." );
+    }
+
+    //open schema file
+    if( ! $handle = fopen($db_schema, 'r' ) ) {
+      error_setup("Not able to read database schema file." );
+    }
+
+    //input the file
+    $schema = fread($handle, filesize($db_schema ) );
+    fclose($handle );
+
+    //roughly separate schema into individual table setups
+    $schema_array = explode(';', $schema );
+
+    //clean up the leading & trailing whitespaces, and remove any null strings
+    $max = sizeof($schema_array );
+    $j = 0;
+    for($i=0 ; $i < $max ; ++$i ) {
+      if(strlen($input = trim($schema_array[$i] ) ) > 0 ) {
+        $table_array[$j] = $input;
+        ++$j;
+      }
+    }
+
+    //create each table
+    foreach($table_array as $table ){
+      if( ! ($result = @mysqli_query($database_connection, $table ) ) ) {
+        error_setup("The database table creation had the following error:<br /><br /> ".
+                            "<b>".mysqli_error($database_connection)."</b><br /><br /> ".
+                            "The above error message was created by the MySQL database server." );
+      }
+    }
+    break;
+
   case 'postgresql':
     //check we can do pgsql functions!!
     if( ! extension_loaded('pgsql' ) ) {
@@ -221,7 +283,7 @@ $content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
             "<input type=\"hidden\" name=\"db_name\" value=\"".$database_name."\" />\n".
             "<input type=\"hidden\" name=\"db_type\" value=\"".$database_type."\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n".
-            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n".
+            "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
             "<div align=\"center\">".$lang_setup['setupdb_done']."\n".
             "<input type=\"submit\" value=\"".$lang_setupdb['setupdb_continue']."\" /></div>\n".
             "</form>\n";
