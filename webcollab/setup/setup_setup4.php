@@ -91,7 +91,7 @@ $content .= "<input type=\"hidden\" name=\"".$var."\" value=\"".$data[$var]."\" 
 $content .= "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"setup5\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />\n".
-            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n";
+            "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n";
 
 
 //add leading slash to url - if necessary
@@ -182,6 +182,28 @@ switch($data["db_type"]) {
             $status = "<font color=\"red\"><b>".$lang_setup['setup4_no_db']."</b></font>";
             $flag = $flag + 10;
           }
+        }
+      }
+    }
+    break;
+
+  case "mysqli":
+    //check we can do mysql functions!!
+    if( ! function_exists('mysqli_connect' ) ) {
+      $status = "<font color=\"red\"><b>".$lang_setup['setup4_no_mysql']."</b></font>";
+      $flag = $flag + 10;
+    }
+    else {
+      //check for legal naming
+      if(preg_match('/[^A-Z0-9_$\-]/i', $data["db_user"] ) ) {
+        $status = "<font color=\"red\"><b>".$lang_setup['setupdb_name_error']."</b></font>";
+        $flag = $flag + 10;
+      }
+      else {
+        //connect to db
+        if( ! ($database_connection = @mysqli_connect( $data["db_host"], $data["db_user"], $data["db_password"], $data["db_name"] ) ) ) {
+          $status = "<font color=\"red\"><b>".$lang_setup['setup4_no_server']."</b></font>";
+          $flag = $flag + 10;
         }
       }
     }
@@ -308,7 +330,7 @@ $content .= "<tr><td></td><td>\n".
             "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />\n".
             "<input type=\"hidden\" name=\"edit\" value=\"Y\" />".
-            "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" />\n";
+            "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" />\n";
 
 
 //output essential values for POST
