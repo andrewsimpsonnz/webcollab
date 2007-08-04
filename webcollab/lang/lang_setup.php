@@ -26,7 +26,10 @@
 
 */
 
-switch($lang ) {
+//initialise variables
+$lang_setup = array();
+
+switch($locale_setup ) {
 
   case 'en':
     include(BASE.'lang/en_setup.php' );
