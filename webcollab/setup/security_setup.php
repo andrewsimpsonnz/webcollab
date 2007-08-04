@@ -30,13 +30,13 @@ if( ! isset($WEB_CONFIG ) ) {
   $WEB_CONFIG = 'N';
 }
 
-//set language
-$lang = isset($_REQUEST['lang'] ) ? $_REQUEST['lang'] : 'en';
-
 require_once('path.php' );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 require_once(BASE.'setup/setup_config.php' );
+
+//set language
+$locale_setup = isset($_REQUEST['lang'] ) ? $_REQUEST['lang'] : LOCALE;
 
 include_once(BASE.'lang/lang_setup.php' );
 include_once(BASE.'setup/screen_setup.php' );
