@@ -142,6 +142,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
         break;
 
       case 'mysql_innodb':
+      case 'mysqli':
         db_query('CREATE TABLE '.PRE.'login_attempt ( name VARCHAR(100) NOT NULL,
                                                ip VARCHAR(100) NOT NULL,
                                                last_attempt DATETIME NOT NULL)
@@ -180,6 +181,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     switch (DATABASE_TYPE) {
       case 'mysql':
       case 'mysql_innodb':
+      case 'mysqli':
         $date_type = 'DATETIME';
         break;
 
@@ -240,6 +242,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     switch (DATABASE_TYPE) {
       case 'mysql':
       case 'mysql_innodb':
+      case 'mysqli':
         $integer = 'TINYINT';
         break;
 
@@ -277,6 +280,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     switch (DATABASE_TYPE) {
       case 'mysql':
       case 'mysql_innodb':
+      case 'mysqli':
         db_query('ALTER TABLE '.PRE.'files CHANGE COLUMN oid fileid INT' );
         break;
 
@@ -314,7 +318,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     db_query('UPDATE '.PRE.'tasks SET sequence=0' );
 
     //change 'datetime' columns to 'timestamp'
-    if((DATABASE_TYPE == 'mysql' ) || (DATABASE_TYPE == 'mysql_innodb' ) ) {
+    if((DATABASE_TYPE == 'mysql' ) || (DATABASE_TYPE == 'mysql_innodb' ) || (DATABASE_TYPE == 'mysqli' ) ) {
       db_query('ALTER TABLE '.PRE.'tasks MODIFY COLUMN created TIMESTAMP' );
       db_query('ALTER TABLE '.PRE.'tasks MODIFY COLUMN edited TIMESTAMP' );
       db_query('ALTER TABLE '.PRE.'tasks MODIFY COLUMN finished_time TIMESTAMP' );
@@ -346,11 +350,11 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
         break;
 
       case 'mysql_innodb':
+      case 'mysqli':
         db_query('CREATE TABLE '.PRE.'site_name (manager_name VARCHAR(100),
                                                  abbr_manager_name VARCHAR(100) )
-                                               TYPE = innoDB' );
+                                                 TYPE = innoDB' );
         break;
-
 
       case 'postgresql':
         db_query('CREATE TABLE "'.PRE.'site_name" ("manager_name" character varying(100),
