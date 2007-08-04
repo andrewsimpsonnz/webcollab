@@ -49,7 +49,7 @@ $content .=    "<form method=\"post\" action=\"setup_handler.php\">\n".
                "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
                "<input type=\"hidden\" name=\"action\" value=\"setup2\" />\n".
                "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n".
-               "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n";
+               "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n";
 
 if(defined('DATABASE_NAME') && DATABASE_NAME != '' ) {
   $content .= $lang_setup['setup1_db_exists'];
@@ -64,7 +64,7 @@ $content .=    "<div align=\"center\"><input type=\"submit\" value=\"".$lang_set
                "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
                "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
                "<input type=\"hidden\" name=\"new_db\" value=\"N\" />\n".
-               "<input type=\"hidden\" name=\"lang\" value=\"".$lang."\" /></fieldset>\n".
+               "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
                "<br /><div align=\"center\"><input type=\"submit\" value=\"".$lang_setup['no']."\" /></div>\n".
                "</form>\n";
 
