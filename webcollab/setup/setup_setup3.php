@@ -73,6 +73,7 @@ if(defined('DATABASE_NAME' ) && (DATABASE_NAME != '') && ($new_db === 'N' ) && (
   $tz                = (TZ != '' )                ? TZ                : (int)date('Z')/3600;
   $use_email         = (USE_EMAIL != '' )         ? USE_EMAIL         : 'Y';
   $smtp_host         = (SMTP_HOST != '' )         ? SMTP_HOST         : 'localhost';
+
 }
 else {
   //this is a new install (or an edit from setup 4 )
