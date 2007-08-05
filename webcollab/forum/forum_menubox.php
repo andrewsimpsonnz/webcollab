@@ -40,8 +40,6 @@ $posted = 0;
 $count  = 1;
 $shown  = array();
 
-$m_strimwidth = (UNICODE_VERSION == 'Y' ) ? 'mb_strimwidth' : 'substr';
-
 //set the usergroup permissions on queries (Admin can see all)
 if(ADMIN ) {
   $tail = ' ';
@@ -77,7 +75,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 
   //show it
-  $list .= "<a href=\"tasks.php?x=$x&amp;action=show&amp;taskid=".$row['taskid']."\">".$m_strimwidth($row['taskname'], 0, 25 )."</a><br />\n";
+  $list .= "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['taskid']."\">".box_shorten($row['taskname'], 25 )."</a><br />\n";
 
   //record taskid to ensure we only show it once
   $shown[($row['taskid'])] = 1;
