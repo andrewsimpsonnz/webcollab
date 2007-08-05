@@ -68,9 +68,8 @@ if( ! ($row = db_fetch_array($q, 0 ) ) ) {
 }
 
 //mark this as seen in seen ;)
-if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'seen WHERE userid='.UID.' AND taskid='.$taskid ), 0, 0 ) == 0 ) {
-  db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$taskid.', now() )' );
-}
+@db_query('DELETE FROM '.PRE.'seen WHERE userid='.UID.' AND taskid='.$taskid, 0);
+db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$taskid.', now() )' );
 
 //text link for 'printer friendly' page
 if(isset($_GET['action']) && $_GET['action'] === "show_print" ) {
