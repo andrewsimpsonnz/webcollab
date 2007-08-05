@@ -6,9 +6,7 @@ WebCollab SVN
 
 - make provision for mysqli in update.php
 
-- refactor SQL query in task_show.php for efficiency
-
-- prevent single admin users removing their admin rights
+- minor bugfixing
 
 WebCollab SVN
 *** 25 July 2007
