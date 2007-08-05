@@ -58,6 +58,31 @@ foreach($array as $var ) {
   }
 }
 
+//these values should all be defined as constants in the existing config file...
+$array = array('NUM_FILE_UPLOADS' => 3,
+               'MAIL_TRANSPORT' => 'SMTP', 'SMTP_PORT' => 25, 'MAIL_USER' => '', 'MAIL_PASSWORD' => '', 'TLS' => 'N',
+               'CSS_MAIN' => 'default.css', 'CSS_CALENDAR' => 'calendar.css', 'CSS_PRINT' => 'print.css',
+               'EMAIL_ERROR'  => '',
+               'SESSION_TIME' => 1,
+               'NEW_TIME'     => 14,
+               'SITE_IMG'     => '',
+               'DEBUG'        => 'N',
+               'NO_ERROR'     => 'N',
+               'VEVENT'       => 'N',
+               'WEB_AUTH'     => 'N',
+               'PASS_STYLE'   => 'text',
+               'PRE'          => '' );
+
+//get array of constant's names
+$constants = array_keys($array);
+
+//add any missing constants
+foreach($constants as $var ) {
+  if(! defined($var) ) {
+    define($var, $array[$var] );
+  }
+}
+
 //convert Windows backslash (\) to Unix forward slash (/)
 $filebase = str_replace("\\", "/", $data["file_base"] );
 
@@ -146,7 +171,7 @@ $content = "<?php\n".
 "    //location of SMTP server (IP address or FQDN)\n".
 "    define('SMTP_HOST', '".$data["smtp_host"]."' );\n\n".
 "    //mail transport (leave as SMTP for standard WebCollab)\n".
-"    define('MAIL_TRANSPORT', '".SMTP_AUTH."' );\n".
+"    define('MAIL_TRANSPORT', '".MAIL_TRANSPORT."' );\n".
 "    //SMTP port (leave as 25 for ordinary mailservers)\n".
 "    define('SMTP_PORT', ".SMTP_PORT." );\n\n".
 "    //use smtp auth? ('Y' or 'N')\n".
@@ -340,8 +365,7 @@ global $db_setup_connection;
       }
 
       //update the site names in the database
-      mysql_query("TRUNCATE TABLE ".PRE."site_name", $db_setup_connection );
-      mysql_query("INSERT INTO ".PRE."site_name( manager_name, abbr_manager_name )  VALUES('".$data["manager_name"]."','".$data["abbr_manager_name"]."'", $db_setup_connection );
+      mysql_query("UPDATE ".PRE."site_name SET manager_name='".$data["manager_name"]."', abbr_manager_name='".$data["abbr_manager_name"]."'", $db_setup_connection );
 
       break;
 
@@ -356,8 +380,7 @@ global $db_setup_connection;
       }
 
       //update the site names in the database
-      mysqli_query($db_setup_connection, "TRUNCATE TABLE ".PRE."site_name" );
-      mysqli_query($db_setup_connection, "INSERT INTO ".PRE."site_name( manager_name, abbr_manager_name )  VALUES('".$data["manager_name"]."','".$data["abbr_manager_name"]."'" );
+      mysqli_query($db_setup_connection, "UPDATE ".PRE."site_name SET manager_name='".$data["manager_name"]."', abbr_manager_name='".$data["abbr_manager_name"]."'" );
 
       break;
 
@@ -368,8 +391,7 @@ global $db_setup_connection;
       }
 
       //update the site names in the database
-      pg_query($db_setup_connection, "TRUNCATE TABLE ".PRE."site_name" );
-      pg_query($db_setup_connection, "INSERT INTO ".PRE."site_name( manager_name, abbr_manager_name )  VALUES('".$data["manager_name"]."','".$data["abbr_manager_name"]."')" );
+      pg_query($db_setup_connection, "UPDATE ".PRE."site_name SET manager_name='".$data["manager_name"]."', abbr_manager_name='".$data["abbr_manager_name"]."'" );
 
       break;
 
