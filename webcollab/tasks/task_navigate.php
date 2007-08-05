@@ -77,7 +77,7 @@ if( @safe_integer($_GET['taskid']) ) {
                   "&nbsp; <a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$TASKID_ROW['parent']."\">".$parent_name."</a><br />\n".
                   "<small><b>".$lang['task'].":</b></small><br />\n".
                   "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
-                  $TASKID_ROW['name']."<br />\n";
+                  box_shorten($TASKID_ROW['name'])."<br />\n";
       break;
 
   }
