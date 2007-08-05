@@ -44,8 +44,12 @@ function safe_data($body ) {
 
   //limit line length for single line entries
   if(strlen($body ) > 100 ) {
-    $m_substr = (UNICODE_VERSION == 'Y' ) ? 'mb_substr' : 'substr';
-    $body = $m_substr($body, 0, 100 );
+    if(UNICODE_VERSION == 'Y' ) {
+      $body  = mb_strimwidth($body, 0, 100, '...' );
+    }
+    else {
+      $body = substr($body, 0, 100 );
+    }
   }
 
   //remove line breaks (not allowed in single lines!)
@@ -147,17 +151,17 @@ function safe_integer($integer ) {
 //
 // shorten a character string to 20 characters (to fit a small box)
 //
-function box_shorten($body){
+function box_shorten($body, $len=20 ){
 
   //translate html entities before shortening
   $body = strtr($body, array('&quot;'=>'"', '&#039;'=>"'", '&lt;'=>'<', '&gt;'=>'>', '&amp;'=>'&' ) );
 
   //shorten line to fit box
   if(UNICODE_VERSION == 'Y' ) {
-    $body = mb_substr($body, 0, 20 );
+    $body  = mb_strimwidth($body, 0, $len, '...' );
   }
   else {
-    $body = substr($body, 0, 20 );
+    $body = substr($body, 0, $len );
     //remove any truncated numeric entities at the line end
     $body = preg_replace('/&#[\d]{0,5}$/', '', $body );
     //change '&' to '&amp;' except when part of an entity, or already changed
