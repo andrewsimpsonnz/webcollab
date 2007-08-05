@@ -157,11 +157,6 @@ switch($_REQUEST['action'] ) {
       }
     }
 
-    //for backward compatibility
-    if( ! defined('NUM_FILE_UPLOADS' ) ) {
-      define('NUM_FILE_UPLOADS', 3 );
-    }
-
     //update only does one file, upload does multiple files
     $upload_count = ($file_update_flag ) ? 1 : NUM_FILE_UPLOADS;
 
