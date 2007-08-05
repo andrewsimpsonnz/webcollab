@@ -21,12 +21,6 @@
   // "http://www.your-url-here.com/backend/org/" (don't forget the tailing slash)
   define('BASE_URL', "" );
 
-  //The name of the site
-  define('MANAGER_NAME', "WebCollab Project Management" );
-
-  //The abbreviated name for the site (for use in email subject lines)
-  define('ABBR_MANAGER_NAME',"WebCollab" );
-
 
 //----------------------------------------------------------------------------------------------
 
