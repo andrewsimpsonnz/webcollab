@@ -90,26 +90,21 @@ if(ADMIN ) {
   }
 
   //normal user
-  $s1 = "checked=\"checked\""; $s2 = ""; $s3 = ""; $keep_admin = "";
+  $s1 = "checked=\"checked\""; $s2 = ""; $s3 = "";
 
   //admin user
   if($row['admin'] == 't' ) {
-    $s1 = ""; $s2 = "checked=\"checked\""; $s3 = ""; $keep_admin = "";
-
-    //if the system has only one admin we don't let them remove their admin rights...!!
-    if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE admin=\'t\'' ), 0, 0 ) == 1 ) {
-      $keep_admin = " disabled=\"disabled\"";
-    }
+    $s1 = ""; $s2 = "checked=\"checked\""; $s3 = "";
   }
 
   //guest user
   if($row['guest'] == 1 ) {
-    $s1 = ""; $s2 = ""; $s3 = "checked=\"checked\""; $keep_admin = "";
+    $s1 = ""; $s2 = ""; $s3 = "checked=\"checked\"";
   }
 
-   $content .= "<tr><td><label for=\"normal\">".$lang['normal_user'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"normal\" id=\"normal\" ".$s1.$keep_admin." /></td></tr>\n".
-               "<tr><td><label for=\"admin\">".$lang['is_admin'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"admin\" id=\"admin\" ".$s2.$keep_admin." /></td></tr>\n".
-               "<tr><td><label for=\"guest\">".$lang['is_guest'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"guest\" id=\"guest\" ".$s3.$keep_admin." /></td></tr>\n";
+   $content .= "<tr><td><label for=\"normal\">".$lang['normal_user'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"normal\" id=\"normal\" ".$s1." /></td></tr>\n".
+               "<tr><td><label for=\"admin\">".$lang['is_admin'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"admin\" id=\"admin\" ".$s2." /></td></tr>\n".
+               "<tr><td><label for=\"guest\">".$lang['is_guest'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"guest\" id=\"guest\" ".$s3." /></td></tr>\n";
 
   //add blank line
   $content .= "<tr><td>&nbsp;</td></tr>\n";
