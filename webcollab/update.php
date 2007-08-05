@@ -346,7 +346,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     switch (DATABASE_TYPE) {
       case 'mysql':
         db_query('CREATE TABLE '.PRE.'site_name (manager_name VARCHAR(100),
-                                                 abbr_manager_name VARCHAR(100)' );
+                                                 abbr_manager_name VARCHAR(100) )' );
         break;
 
       case 'mysql_innodb':
@@ -367,7 +367,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     }
 
     //update the new table
-    db_query("UPDATE ".PRE."site_name SET manager_name='".MANAGER_NAME."', abbr_manager_name='".ABBR_MANAGER_NAME."'" );
+    db_query("INSERT INTO ".PRE."site_name (manager_name, abbr_manager_name)  VALUES('".ABBR_MANAGER_NAME."','".ABBR_MANAGER_NAME."'" );
 
     //update deadline hours
     db_query('UPDATE '.PRE.'tasks SET deadline=(deadline+INTERVAL '.$delim.'2 HOUR'.$delim.')' );
