@@ -41,6 +41,10 @@ switch($_GET['lang'] ) {
     $lang_prefix = 'nl';
     break;
 
+  case 'pt-br':
+    $lang_prefix = 'pt-br';
+    break;
+
   case 'en':
   default:
     $lang_prefix = 'en';
