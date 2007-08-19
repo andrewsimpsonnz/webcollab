@@ -1,7 +1,13 @@
+Hints and Directions for Translators
+====================================
+
+Please contact me <andrew.simpson at paradise.net.nz> for any help you need.
+
+
 Files
 =====
 
-There are three message translation files in this directory:
+There are three message translation files in this directory ([webcollab]/lang):
 
     xx_message.php
 
@@ -9,11 +15,19 @@ There are three message translation files in this directory:
 
     xx_email.php
 
-For the keen translators there are two help files in /help:
+There is also now a translation file for the setup program in this directory:
+
+    xx_setup.php
+
+For the keen translators there are also help files in [webcollab]/help:
 
     xx_help_admin.php
 
     xx_help.php
+
+    xx_setup2.php
+
+    xx_setup3.php
 
 
 General Arrangement
@@ -120,8 +134,8 @@ This code must appear in the xx_message.php file
     define('CHARACTER_SET', "ISO-8859-1" );
 
 "ISO-8859-1" is the character encoding that is used in the translation file.  It can be
-any generally accepted IANA character set (e.g. iso-8859-1, cp-1252, koi8-r).  This value
-is passed on to the web browser.
+any generally accepted IANA character set (e.g. ISO-8859-1, CP-1252, KOI8-R, etc).  This
+value is passed on to the web browser.
 
 Please use single-byte character sets with standard WebCollab.  The Unicode version of
 WebCollab will work better with multi-byte character sets (e.g. utf-8, euc_kr, gb2312).
@@ -148,25 +162,48 @@ Making the Translation Available to WebCollab
 
 To make the translation active, the following files need to be altered:
 
-In /lang:
+In [webcollab]/lang directory:
 
-1. To 'lang.php', add the line below to the existing list:
+1. To the 'lang.php' file, add the line below to the existing list of languages:
 
     case "xx":
     include(BASE."lang/xx_message.php" );
     break;
 
-2.  To 'lang_long.php', add the line below to the existing list:
+2.  To the 'lang_long.php' file, add the line below to the existing list of languages:
 
     case "xx":
     include(BASE."lang/xx_long_message.php" );
     break;
 
-3.  To 'lang_email.php', add the line below to the existing list:
+3.  To the 'lang_email.php' file, add the line below to the existing list of languages:
 
     case "xx":
     include(BASE."lang/xx_email.php" );
     break;
+
+4. To the 'lang_setup.php' file, add the line below to the existing list of languages:
+
+    case "xx":
+    include(BASE."lang/xx_setup.php" );
+    break;
+
+
+In the [webcollab]/help directory:
+
+1. To the 'help_language.php' file, add the line below to the existing list of languages:
+
+    case 'xx':
+    $lang_prefix = 'xx';
+    break;
+
+2.  To the 'help_setup.php' file, add the line below to the existing list of languages:
+
+    case 'xx':
+    $lang_prefix = 'xx';
+   break;
+
+
 
 
 Making the Translation Appear in Setup
@@ -174,7 +211,7 @@ Making the Translation Appear in Setup
 
 To make the translation appear in the automated setup:
 
-1. Look for the following lines (about halfway through file) in /setup/setup3.php:
+1. Look for the following lines (about halfway through file) in [webcollab]/setup/setup3.php:
 
     $locale_array = array('bg'   =>'Bulgarian',
                           'ca'   =>'Catalan',
