@@ -243,19 +243,25 @@ if(isset($data['new_db'] ) && ($data['new_db'] == 'Y' ) ) {
     case 'mysql_innodb':
       //set the new session key in the new database
       if( ! @mysql_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$x.'\', \''.$ip.'\', now() )', $db_setup_connection ) ) {
-        abort();
+        abort("MySQL query failed:<br />". mysql_error($db_setup_connection) );
+      }
+      break;
+
+    case 'mysqli':
+      if( ! @mysqli_query($db_setup_connection, 'INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$x.'\', \''.$ip.'\', now() )' ) ) {
+        abort("MySQLi query failed:<br />".mysqli_error($db_setup_connection) );
       }
       break;
 
     case 'postgresql':
       //set the new session key in the new database
       if( ! @pg_query($db_setup_connection, 'INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$x.'\', \''.$ip.'\', now() )' ) ) {
-        abort();
+        abort("Postgresql query failed:<br />".pg_last_error($db_setup_connection) );
       }
       break;
 
     default:
-      abort();
+      abort('Not a valid database');
       break;
   }
 
@@ -321,7 +327,7 @@ global $db_setup_connection;
     case 'mysqli':
       //make connection
       if( ! ($db_setup_connection = @mysqli_connect($data["db_host"], $data["db_user"], $data["db_password"], $data["db_name"] ) ) ) {
-        abort("Not able to connect to database server:<br />".mysqli_error($db_setup_connection));
+        abort("Not able to connect to database server:<br />".mysqli_error($db_setup_connection) );
       }
       break;
 
@@ -332,7 +338,7 @@ global $db_setup_connection;
 
       //make connection
       if( ! ($db_setup_connection = @pg_connect($host.' user='.$data["db_user"].' dbname='.$data["db_name"].' password='. $data["db_password"]) ) ) {
-       abort("Not able to connect to database server:<br />".pg_last_error($db_setup_connection));
+       abort("Not able to connect to database server:<br />".pg_last_error($db_setup_connection) );
       }
       break;
 
