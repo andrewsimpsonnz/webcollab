@@ -28,6 +28,8 @@
 
   Translation by Kenneth Aar
 
+  Edited and updated by Rune Thelen, 26.09.2007
+
   NOTE: This file is written in ISO-8859-1 character set
 
 
@@ -38,7 +40,7 @@ $email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y \a\t g:i a 
 
 $title_file_post        = ABBR_MANAGER_NAME.": Ny fil er lagt inn: %s";
 
-$email_file_post        = "Hei,\n\nDette er en automatisk varsling fra ".MANAGER_NAME." som informerer om at en ny fil er lagt inn ".$email_date." af %1\$s.\n\n".
+$email_file_post        = "Hei,\n\nDette er en automatisk varsling fra ".MANAGER_NAME." med informasjon om at en ny fil er lagt inn ".$email_date." af %1\$s.\n\n".
                           "Fil:        %2\$s\n".
                           "Beskrivelse: %3\$s\n\n".
                           "Prosjekt:   %4\$s\n".
@@ -47,14 +49,14 @@ $email_file_post        = "Hei,\n\nDette er en automatisk varsling fra ".MANAGER
                           BASE_URL."%6\$s\n";
 
 $title_forum_post        = ABBR_MANAGER_NAME.": Ny post I forum: %s";
-$email_forum_post        = "Hei,\n\nDette er en automatisk varsling fra ".MANAGER_NAME." som informerer om at det er kommet et nytt innlegg i forumet".$email_date." af %1\$s:\n\n".
+$email_forum_post        = "Hei,\n\nDette er en automatisk varsling fra ".MANAGER_NAME." med informasjon om at det er kommet et nytt innlegg i forumet".$email_date." af %1\$s:\n\n".
                            "----\n\n".
                            "%2\$s".
                            "----\n\n".
                            "Gå til hjemmesiden for mer informasjon.\n\n".
                            BASE_URL."%3\$s\n";
 
-$email_forum_reply       = "Hei,\n\nDette er en automatisk varsling fra ".MANAGER_NAME." som informerer om at det er kommet et nytt innlegg i forumet".$email_date." af %1\$s.\n\n".
+$email_forum_reply       = "Hei,\n\nDette er en automatisk varsling fra ".MANAGER_NAME." med informasjon om at det er kommet et nytt innlegg i forumet".$email_date." af %1\$s.\n\n".
                            "dette innlegget er et svar på et tidligere innlegg %2\$s.\n\n".
                            "Opprinnelig innlegg:\n %3\$s\n\n".
                             "----\n\n".
@@ -126,9 +128,9 @@ $email_welcome      = "Hei,\n\nDette er ".MANAGER_NAME." som ønsker deg velkomme
 			"Siden du er ny, vil jeg forklare et par ting, slik at du  raskt kan komme i gang\n\n".
 			"For det første, dette er et prosjektstyringsverktøy, hovedsiden viser deg de prosjekter som det jobbes med for øyeblikket. ".
 			"Dersom du klikker på et av navnene, vil du finne deg selv i oppgave-delen. Det er her alt arbeidet vil foregå.\n\n".
-			"Hvert emne du sender eller opgave du redigerer vil bli vist til andre brukere som 'ny' eller 'oppdatert'. Det virker også omvendt".
+			"Hvert emne du sender eller oppgave du redigerer vil bli vist til andre brukere som 'ny' eller 'oppdatert'. Tilsvarende blir vist for deg om andre lager oppgaver".
 			"det hjelper deg til raskt å finne ut hva som skjer.\n\n".
-			"Du kan også ta eller få eierskap til oppgaver, og du vil finne deg selv i stand til å redigere de, samt alle poster i forumet, som tilhører opgaven. ".
+			"Du kan også ta eller få eierskap til oppgaver, og du vil finne deg selv i stand til å redigere dem, samt alle poster i forumet, som tilhører oppgaven. ".
 			"Når du jobber med med noe, husk å rediger dine oppgave tekster og status, slik at andre kan se hva du jobber med og hvordan prosjektet går fremover.  ".
 			"\n\nSend en epost til: ".EMAIL_ADMIN." dersom du sitter fast\n\n --Lykke til!\n\n".
 			"Logg inn:      %1\$s\n".
@@ -160,17 +162,17 @@ $email_user_change3 = "Hei,\n\nDette er ".MANAGER_NAME." som bekrefter, at du ha
 
 
 $title_revive       = ABBR_MANAGER_NAME.": Konto gjenopprettet";
-$email_revive       = "Hei,\n\nDette er ".MANAGER_NAME." som bekrefter at din konto er blittt gjennopprettet på ".$email_date.".\n\n".
+$email_revive       = "Hei,\n\nDette er ".MANAGER_NAME." som bekrefter at din konto er blitt gjennopprettet på ".$email_date.".\n\n".
 			"Innloggings navn: %1\$s\n".
 			"Brukernavn:  %2\$s\n\n".
 			"Vi kan ikke sende deg ditt passord fordi det er kryptert. \n\n".
-			"Dersom du har glemt ditt passord, sen epost til ".EMAIL_ADMIN." for å få et nytt passord.";
+			"Dersom du har glemt ditt passord, send epost til ".EMAIL_ADMIN." for å få et nytt passord.";
 
 
 
 $title_delete_user  = ABBR_MANAGER_NAME.": Konto deaktivert.";
 $email_delete_user  = "Hei,\n\nDette er ".MANAGER_NAME." som varsler om at din konto er deaktivert".$email_date."\n\n".
 			"Takk for samarbeidet!\n\n".
-			"Dersom det er noen som er glemt gi beskjed snarest til  ".EMAIL_ADMIN."\$s.";
+			"Dersom det er noe eller noen som er glemt gi beskjed snarest til  ".EMAIL_ADMIN."\$s.";
 
 ?>
