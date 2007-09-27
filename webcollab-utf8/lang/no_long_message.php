@@ -26,19 +26,22 @@
 
   Maintainer:
 
+
   Translation by Kenneth Aar
+
+  Edited and updated by Rune Thelen (26.09.2007)
 
   NOTE: This file is written in UTF-8 character set
 
 */
 
 
-$taskgroup_info =   "<ul><li>Hvis du sletter en oppgavegruppe, vil alle oppgaver i den bli endret til ikke-kategoriseret</li>\n".
-                      "<li>Du kan endre navn på en kategori uten å påvirke på oppgaver</li>\n".
+$taskgroup_info =   "<ul><li>Hvis du sletter en oppgavegruppe, vil alle oppgaver i den bli endret til ikke-kategorisert</li>\n".
+                      "<li>Du kan endre navn på en kategori uten å påvirke oppgaver</li>\n".
                       "<li>To oppgavegrupper kan ikke ha samme navn</li></ul>\n";
 
 $usergroup_info =   "<ul><li>Hvis du sletter en brukergruppe vil alle tilhørende private forum-poster bli slettet</li>\n".
-                      "<li>Du kan endre navnet på en brukergruppe uten på påvirke på brukerene i den.</li>\n".
+                      "<li>Du kan endre navnet på en brukergruppe uten å påvirke brukerene i den.</li>\n".
                       "<li>To brukergrupper kan ikke ha samme navn.</li></ul>\n";
 
 $user_info      =    "Velg handling i menyen til venstre.<br /><br />".

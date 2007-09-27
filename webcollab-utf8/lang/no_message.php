@@ -28,13 +28,18 @@
 
   Translation by Kenneth Aar
 
+  Editing and updating by Rune Thelen (26.09.2007)
+
   NOTE: This file is written in UTF-8 character set
 
 
 */
 
 //required language encodings
-define('CHARACTER_SET', "UTF-8" );
+define('CHARACTER_SET', "ISO-8859-1" );
+
+//this is the regex for input validation filter used in common.php 
+define('VALIDATION_REGEX', '/([^\x09\x0A\x0D\x20-\x7E\xA0-\xFF])/' );
 
 //dates
 $month_array = array ( NULL, "Jan", "Feb", "Mar", "Apr", "Mai", "Juni", "Juli", "Aug", "Sep", "Okt", "Nov", "Des" );
@@ -42,18 +47,18 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
 
 //task states
  //priorities
-    $task_state['dontdo']                 = "Ikke utfør";
-    $task_state['low']                    = "Lav";
-    $task_state['normal']                 = "Normal";
-    $task_state['high']                   = "Høy";
-    $task_state['yesterday']              = "Igår!";
+    $task_state['dontdo']                 = " Ikke utfør";
+    $task_state['low']                    = " Lav";
+    $task_state['normal']                 = " Normal";
+    $task_state['high']                   = " Høy";
+    $task_state['yesterday']              = " Igår!";
  //status
-    $task_state['new']                    = "Ny";
-    $task_state['planned']                = "Planlagt (ikke aktiv)";
-    $task_state['active']                 = "Aktiv (Jobbes med)";
-    $task_state['cantcomplete']           = "Aventende";
-    $task_state['completed']              = "Fullført";
-    $task_state['done']                   = "Utført";
+    $task_state['new']                    = " Ny";
+    $task_state['planned']                = " Planlagt (ikke aktiv)";
+    $task_state['active']                 = " Aktiv (Jobbes med)";
+    $task_state['cantcomplete']           = " Aventende";
+    $task_state['completed']              = " Fullført";
+    $task_state['done']                   = " Utført";
     $task_state['task_planned']           = " Planlagt";
     $task_state['task_active']            = " Aktiv";
  //project states
@@ -115,7 +120,7 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['configuration']                = "Konfigurasjon";
 
 //archive
-    $lang['archived_projects']            = "Arkiverete prosjekter";
+    $lang['archived_projects']            = "Arkiverte prosjekter";
 
 //contacts
     $lang['firstname']                    = "Fornavn:";
@@ -138,7 +143,7 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['show_contact']                 = "Vis kontakter";
     $lang['edit_contact']                 = "Rediger kontakter";
     $lang['contact_submit']               = "Send kontakt";
-    $lang['contact_warn']                 = "Ufullstendige opplysninger, gå tilbake og tilføy i det minste et fornavn og et etternavn";
+    $lang['contact_warn']                 = "Ufullstendige opplysninger, gå tilbake og tilføy minst fornavn og etternavn";
 
  //files
     $lang['manage_files']                 = "Organiser filer";
@@ -148,7 +153,7 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['uploader']                     = "Opplaster:";
     $lang['files_assoc_project']          = "Filer tilknyttet dette prosjektet";
     $lang['files_assoc_task']             = "Filer tilknyttet denne oppgaven";
-    $lang['file_admin']                   = "Fil administrasjon";
+    $lang['file_admin']                   = "Filadministrasjon";
     $lang['add_file']                     = "Legg til fil";
     $lang['files']                        = "Filer";
     $lang['file_choose']                  = "Fil som skal lastes opp:";
@@ -195,7 +200,7 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['log_out']                      = "Logg ut";
     $lang['main_menu']                    = "Hovedmeny";
     $lang['archive']                      = "Arkiv";
-    $lang['user_homepage_sprt']           = "%s's hjemmeside";
+    $lang['user_homepage_sprt']           = "%s's arbeidsside";
     $lang['missing_field_javascript']     = "Du har glemt å fylle ut et felt";
     $lang['invalid_date_javascript']      = "Du har valgt en ugyldig dato.";
     $lang['finish_date_javascript']       = "Valgt dato er etter prosjektets sluttdato!";
@@ -213,7 +218,7 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['add_new_taskgroup']            = "Legg til en ny oppgavegruppe";
     $lang['edit_taskgroup']               = "Rediger oppgavegruppe";
     $lang['taskgroup_manage']             = "Oppgavegruppe konfigurasjon";
-    $lang['no_taskgroups']                = "Ingen oppgavegruppe defineret";
+    $lang['no_taskgroups']                = "Ingen oppgavegruppe definert";
     $lang['manage_taskgroups']            = "Administer oppgavegruppe";
     $lang['taskgroups']                   = "Oppgavegruppe";
     $lang['taskgroup_dup_sprt']           = "Det finnes allerede en oppgavegruppe med navnet '%s'.  Vær så vennlig og gå tilbake og velg et nytt navn.";
@@ -228,7 +233,7 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['add_new_usergroup']            = "Tilføy en ny brukergruppe";
     $lang['edit_usergroup']               = "Rediger brukergruppe";
     $lang['usergroup_manage']             = "Brukergruppe management";
-    $lang['no_usergroups']                = "Ingen brukergruppe er defineret";
+    $lang['no_usergroups']                = "Ingen brukergruppe er definert";
     $lang['manage_usergroups']            = "Administrer brukergrupper";
     $lang['usergroups']                   = "Brukergrupper";
     $lang['usergroup_dup_sprt']           = "Det er allerede en brukergruppe med navnet '%s'.  Vær så vennlig at gå tilbake og velg et nytt navn.";
@@ -248,10 +253,10 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['is_guest']                     = "Er gjest?";
     $lang['guest']                        = "Gjestebruker";
     $lang['user_info']                    = "Brukerinformasjon";
-    $lang['deleted_users']                = "Sletttede brukere";
+    $lang['deleted_users']                = "Slettede brukere";
     $lang['no_deleted_users']             = "Der er ingen slettede brukere.";
     $lang['revive']                       = "Gjennopprett";
-    $lang['permdel']                      = "Slett for godt";
+    $lang['permdel']                      = "Slette permanent";
     $lang['permdel_javascript_sprt']      = "Dette vil slette all brukeraktivitet og tilknyttede oppgaver for %s. Vil du virkelig gjøre dette?";
     $lang['add_user']                     = "Legg til bruker";
     $lang['edit_user']                    = "Rediger en bruker";
@@ -264,10 +269,10 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['select_usergroup']             = "Brukergruppe valgt fra nedenstående:";
     $lang['subject']                      = "Emne:";
     $lang['message_sent_maillist']        = "I alle tilfeller blir beskjeden også kopieret til epostlisten.";
-    $lang['who_online']                   = "Hvem er logget på nå?";
+    $lang['who_online']                   = "Påloggede brukere?";
     $lang['edit_details']                 = "Rediger brukerdetaljer";
     $lang['show_details']                 = "Vis brukerdetaljer";
-    $lang['user_deleted']                 = "Denne bruker er blitt slettet!";
+    $lang['user_deleted']                 = "Denne brukeren er slettet!";
     $lang['no_usergroup']                 = "Brukeren er ikke medlem av noen brukergruppe";
     $lang['not_usergroup']                = "(Ikke medlem av noen brukergruppe)";
     $lang['no_password_change']           = "(Ditt nåværende passord er ikke endret)";
@@ -326,7 +331,7 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['tomorrow']                     = "I morgen";
     $lang['due_today']                    = "Frist i dag";
     $lang['overdue_1']                    = "1 dag overskredet";
-    $lang['overdue_sprt']                 = "%d dage overskredet";
+    $lang['overdue_sprt']                 = "%d dager overskredet";
     $lang['edit_task']                    = "Rediger oppgave";
     $lang['edit_project']                 = "Rediger prosjekt";
     $lang['no_reparent']                  = "Ingen (et topnivå prosjekt)";
@@ -348,14 +353,14 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['archive_project']              = "Arkivprosjekt";
     $lang['task_navigation']              = "Oppgave navigasjon";
     $lang['new_task']                     = "Ny oppgave";
-    $lang['no_projects']                  = "Der er ingen prosjekter å vise";
+    $lang['no_projects']                  = "Du har ingen aktive prosjekter";
     $lang['show_all_projects']            = "Vis alle prosjekter";
     $lang['show_active_projects']         = "Vis kun aktive prosjekter";
     $lang['project_hold_sprt']            = "Prosjekt avventer siden %s";
     $lang['project_planned']              = "Planlagt prosjekt";
     $lang['percent_sprt']                 = "%d%% av oppgavene er utført";
     $lang['project_no_deadline']          = "Ingen frist angitt for dette prosjektet";
-    $lang['no_allowed_projects']          = "Der er ingen prosjekter, som du har tillatelse til å se";
+    $lang['no_allowed_projects']          = "Det er ingen prosjekter, som du har tillatelse til å se";
     $lang['projects']                     = "Prosjekter";
     $lang['percent_project_sprt']         = "Dette prosjekt er %d%% fullført";
     $lang['owned_by']                     = "Eies av";
@@ -365,15 +370,15 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['project_on_hold']              = "Prosjekt avventer";
     $lang['project_accessible']           = "(Dette prosjektet er offentligt tilgjengelig for alle brukere)";
     $lang['task_accessible']              = "(Denne oppgaven er offentlig tilgjengelig for alle brukere)";
-    $lang['project_not_accessible']       = "(Dette prosjekt er ikke tilgjengeligt for medlemmerne av brukergruppen)";
-    $lang['task_not_accessible']          = "(Denne oppgaven er ikke tilgjengelig for medlemmer av brukergruppen)";
+    $lang['project_not_accessible']       = "(Dette prosjekt er ikke tilgjengelig for andre enn medlemmerne av brukergruppen)";
+    $lang['task_not_accessible']          = "(Denne oppgaven er ikke tilgjengelig for andre enn medlemmer av brukergruppen)";
     $lang['project_not_in_usergroup']     = "Dette prosjekt er ikke del av en brukergruppen og er tilgjengelig for alle brukere.";
     $lang['task_not_in_usergroup']        = "Denne oppgaven er ikke del av en brukergruppen og er tilgjengelig for alle brukere.";
-    $lang['usergroup_can_edit_project']   = "Dette prosjekt kan også redigeres av brukergruppens medlemmer.";
-    $lang['usergroup_can_edit_task']      = "Denne oppgaven kan også redigeres av brukergruppens medlemmer.";
+    $lang['usergroup_can_edit_project']   = "Dette prosjekt kan redigeres av alle brukergruppens medlemmer.";
+    $lang['usergroup_can_edit_task']      = "Denne oppgaven kan redigeres av alle brukergruppens medlemmer.";
     $lang['i_take_it']                    = "Jeg tar den :)";
     $lang['i_finished']                   = "Jeg avslutter den!";
-    $lang['i_dont_want']                  = "Jeg ønsker ikke å ha denne mer";
+    $lang['i_dont_want']                  = "Jeg ønsker ikke å være del av denne mer";
     $lang['take_over_project']            = "Overta prosjekt";
     $lang['take_over_task']               = "Overta oppgave";
     $lang['task_info']                    = "Oppgaveinformasjon";
