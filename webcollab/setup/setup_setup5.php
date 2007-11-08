@@ -58,6 +58,20 @@ foreach($array as $var ) {
   }
 }
 
+//site name values
+$array = array('manager_name', 'abbr_manager_name' );
+
+foreach($array as $var ) {
+  if(! isset($_POST[$var]) ) {
+    $data[$var] = '';
+  }
+  else {
+    //strip magic quotes, do database escape later
+    $data[$var] = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ) : $_POST[$var];
+  }
+}
+
+
 //these values should all be defined as constants in the existing config file...
 $array = array('NUM_FILE_UPLOADS' => 3,
                'MAIL_TRANSPORT' => 'SMTP', 'SMTP_PORT' => 25, 'MAIL_USER' => '', 'MAIL_PASSWORD' => '', 'TLS' => 'N',
@@ -371,7 +385,7 @@ global $db_setup_connection;
       }
 
       //update the site names in the database
-      mysql_query("UPDATE ".PRE."site_name SET manager_name='".$data["manager_name"]."', abbr_manager_name='".$data["abbr_manager_name"]."'", $db_setup_connection );
+      mysql_query("UPDATE ".PRE."site_name SET manager_name='".mysql_real_escape_string($data["manager_name"] )."', abbr_manager_name='".mysql_real_escape_string($data["abbr_manager_name"] )."'", $db_setup_connection );
 
       break;
 
@@ -386,7 +400,7 @@ global $db_setup_connection;
       }
 
       //update the site names in the database
-      mysqli_query($db_setup_connection, "UPDATE ".PRE."site_name SET manager_name='".$data["manager_name"]."', abbr_manager_name='".$data["abbr_manager_name"]."'" );
+      mysqli_query($db_setup_connection, "UPDATE ".PRE."site_name SET manager_name='".mysqli_real_escape_string($data["manager_name"] )."', abbr_manager_name='".mysqli_real_escape_string($data["abbr_manager_name"] )."'" );
 
       break;
 
@@ -397,7 +411,7 @@ global $db_setup_connection;
       }
 
       //update the site names in the database
-      pg_query($db_setup_connection, "UPDATE ".PRE."site_name SET manager_name='".$data["manager_name"]."', abbr_manager_name='".$data["abbr_manager_name"]."'" );
+      pg_query($db_setup_connection, "UPDATE ".PRE."site_name SET manager_name='".pg_escape_string($data["manager_name"] )."', abbr_manager_name='".pg_escape_string($data["abbr_manager_name"] )."'" );
 
       break;
 
