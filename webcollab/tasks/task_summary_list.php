@@ -48,7 +48,7 @@ $no_access_project = array();
 
 
 function project_summary( $tail, $depth=0, $equiv='' ) {
-  global $x, $GID, $lang, $task_state;
+  global $x, $GID, $lang, $task_state, $task_priority;
   global $no_access_project;
   global $sortby;
   global $epoch;
@@ -58,6 +58,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
                          '.PRE.'tasks.name AS taskname,
                          '.PRE.'tasks.deadline AS deadline,
                          '.PRE.'tasks.status AS status,
+                         '.PRE.'tasks.priority AS priority,
                          '.PRE.'tasks.owner AS owner,
                          '.PRE.'tasks.taskgroupid AS taskgroupid,
                          '.PRE.'tasks.usergroupid AS usergroupid,
@@ -209,6 +210,82 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
       }
     }
 
+    //priority column
+    if( ($row['parent'] == 0 ) ) {
+
+      switch($row['priority'] ) {
+        case 0:
+          $date = '';
+          $priority =  $task_state['dontdo'];
+          break;
+
+        case 1:
+          $date = '';
+          $priority =  $task_state['low'];
+          break;
+
+        case 2:
+          $date = '';
+          $priority =  "<span class=\"blue\">".$task_state['normal']."</span>";
+          break;
+
+        case 3:
+          $date = '';
+          $priority =  "<span class=\"orange\">".$task_state['high']."</span>";
+          break;
+
+        case 4:
+          $date = '';
+          $priority =  "<span class=\"red\">".$task_state['yesterday']."</span>";
+          break;
+
+        default:
+          $date = nicedate($row['normal'] );
+          if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND priority<>2 AND parent<>0 LIMIT 1' ), 0, 0 ) == 0 ) {
+            $color = 'green';
+            $priority = $task_state['normal'];
+          }
+          else {
+            $priority = $lang['project'] ;
+          }
+          break;
+      }
+    }
+    else {
+
+      switch( $row['priority'] ) {
+        case 0:
+          $date = nicedate($row['deadline'] );
+          $priority =  $task_state['dontdo'];
+          break;
+
+        case 1:
+          $date = nicedate($row['deadline'] );
+          $priority =  $task_state['low'];
+          break;
+
+        case 2:
+          $date = nicedate($row['deadline'] );
+          $priority =  "<span class=\"green\">".$task_state['normal']."</span>";
+          break;
+
+        case 3:
+          $date = '';
+          $priority =  "<span class=\"orange\">".$task_state['high']."</span>";
+          break;
+
+        case 4:
+          $date = '';
+          $priority =  "<span class=\"red\">".$task_state['yesterday']."</span>";
+          break;
+
+        default:
+          $date = nicedate($row['deadline'] );
+          $priority =  "<span class=\"orange\">".$row['priority']."</span>";
+          break;
+      }
+    }
+
     //owner column
     if( $row['owner'] == 0 ) {
       switch( $row['status'] ) {
@@ -282,7 +359,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
     }
 
     //Then add the status, owner and group columns
-    $result .= "</small></td><td>".$status."</td><td>".$owner."</td><td>".$group."</td><td>";
+    $result .= "</small></td><td>".$status."</td><td>".$priority."</td><td>".$owner."</td><td>".$group."</td><td>";
 
     //Tab out children tasks
     for($j=1; $j < $depth; ++$j ) $result .= "&nbsp;&nbsp;&nbsp;";
@@ -329,6 +406,7 @@ else {
 }
 
 //text link for 'printer friendly' page
+
 if(isset($_GET['action']) && $_GET['action'] == 'summary_print' ) {
   $content  = "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=".$sortby."\">".$lang['normal_version']."</a>]</span></p>";
 }
@@ -343,6 +421,8 @@ $content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=deadline
 $content .= "<b>".$lang['deadline']."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=status\">";
 $content .= "<b>".$lang['status']."</b></a></small></td><td><small>";
+$content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=priority\">";
+$content .= "<b>".$lang['priority']."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=owner\">";
 $content .= "<b>".$lang['owner']."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=";
@@ -383,6 +463,11 @@ switch($sortby ) {
   case 'status':
     $content .= project_summary($group_tail.' ORDER BY status,deadline,taskname', -1 );
     $suffix = $lang['by_status'];
+    break;
+
+  case 'priority':
+    $content .= project_summary($group_tail.' ORDER BY priority,status,deadline,taskname', -1 );
+    $suffix = $lang['by_priority'];
     break;
 
   case 'owner':
