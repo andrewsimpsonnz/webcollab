@@ -92,6 +92,7 @@
           'ko'    (Korean)
           'no'    (Norwegian)
           'nl'    (Dutch)
+          'pl'    (Polish)
           'pt-br' (Brazilian Portuguese)
           'ru'    (Russian)
           'se'    (Swedish)
