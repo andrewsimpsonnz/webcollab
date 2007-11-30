@@ -375,6 +375,36 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     $content .= "<p>Updating from version pre-2.20 database ... success!</p>\n";
   }
 
+  //update version 2.20 -> 2.30
+  if(! (db_query('SELECT edited FROM '.PRE.'forum', 0 ) ) ) {
+
+    //set parameters for appropriate for database
+    switch (DATABASE_TYPE) {
+      case 'mysql':
+      case 'mysql_innodb':
+      case 'mysqli':
+        $date_type = 'DATETIME';
+        break;
+
+      case 'postgresql':
+        $date_type = 'timestamp with time zone';
+        break;
+
+      default:
+        error('Database type not specified in config file.' );
+        break;
+    }
+
+    //add edited to forum table
+    db_query('ALTER TABLE '.PRE.'forum ADD COLUMN edited '.$date_type );
+
+    //add sequence for forum
+    db_query('ALTER TABLE '.PRE.'forum ADD COLUMN sequence INT' );
+    db_query('ALTER TABLE '.PRE.'forum ALTER COLUMN sequence SET DEFAULT 0' );
+    db_query('UPDATE '.PRE.'forum SET sequence=0' );
+
+    $content .= "<p>Updating from version pre-2.30 database ... success!</p>\n";
+  }
 
   if( ! $content ) {
     $content .= "<p>No database updates were required.</p>\n";
