@@ -54,10 +54,28 @@ switch($_REQUEST['action'] ) {
     create_bottom();
     break;
 
-  //submit to poster engine
-  case 'submit_del':
+  //edit a forum post/reply
+  case 'edit':
+    create_top($lang['add_reply'], 0, 'text', 'text' );
+    include(BASE.'includes/mainmenu.php');
+    goto_main();
+    include(BASE.'forum/forum_edit.php');
+    create_bottom();
+    break;
+
+  //submit add
   case 'submit_add':
-    include(BASE.'forum/forum_submit.php');
+    include(BASE.'forum/forum_submit_add.php');
+    break;
+
+  //submit edit
+  case 'submit_edit':
+    include(BASE.'forum/forum_submit_edit.php');
+    break;
+
+  //submit delete
+  case 'submit_del':
+    include(BASE.'forum/forum_submit_delete.php');
     break;
 
   //search
