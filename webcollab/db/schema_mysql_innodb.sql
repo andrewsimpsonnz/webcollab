@@ -19,17 +19,17 @@ CREATE TABLE tasks (
 	globalaccess VARCHAR(5) NOT NULL DEFAULT 't',
 	groupaccess VARCHAR(5) NOT NULL DEFAULT 'f',
 	lastfileupload TIMESTAMP NOT NULL,
-        completed TINYINT NOT NULL DEFAULT 0,
-        completion_time TIMESTAMP NOT NULL,
-        archive TINYINT NOT NULL DEFAULT 0,
-        sequence INT UNSIGNED NOT NULL DEFAULT 0,
-        INDEX (owner),
-        INDEX (parent),
-        INDEX (name(10)),
-        INDEX (projectid),
-        INDEX (taskgroupid),
-        INDEX (deadline),
-        INDEX (status)
+	completed TINYINT NOT NULL DEFAULT 0,
+	completion_time TIMESTAMP NOT NULL,
+	archive TINYINT NOT NULL DEFAULT 0,
+	sequence INT UNSIGNED NOT NULL DEFAULT 0,
+	INDEX (owner),
+	INDEX (parent),
+	INDEX (name(10)),
+	INDEX (projectid),
+	INDEX (taskgroupid),
+	INDEX (deadline),
+	INDEX (status)
 )
 TYPE = InnoDB;
 
@@ -41,9 +41,9 @@ CREATE TABLE users (
 	email VARCHAR(200) NOT NULL,
 	admin VARCHAR(5) NOT NULL DEFAULT 'f',
 	private TINYINT NOT NULL DEFAULT 0,
-        guest TINYINT NOT NULL DEFAULT 0,
+	guest TINYINT NOT NULL DEFAULT 0,
 	deleted VARCHAR(5) NOT NULL DEFAULT 'f',
-        locale VARCHAR(10) NOT NULL DEFAULT 'en',
+	locale VARCHAR(10) NOT NULL DEFAULT 'en',
         INDEX (fullname(10))
 )
 TYPE = InnoDB;
@@ -62,11 +62,13 @@ CREATE TABLE forum (
 	parent INT UNSIGNED NOT NULL,
 	taskid INT UNSIGNED NOT NULL,
 	posted TIMESTAMP NOT NULL,
+	edited TIMESTAMP NOT NULL,
 	text TEXT,
 	userid INT UNSIGNED NOT NULL,
 	usergroupid INT UNSIGNED NOT NULL,
-        INDEX (taskid),
-        INDEX (posted)
+	sequence INT UNSIGNED NOT NULL DEFAULT 0,
+	INDEX (taskid),
+	INDEX (posted)
 )
 TYPE = InnoDB;
 
@@ -76,7 +78,7 @@ CREATE TABLE logins (
 	session_key VARCHAR(100) NOT NULL,
 	ip VARCHAR(100) NOT NULL,
 	lastaccess TIMESTAMP NOT NULL,
-        INDEX (session_key(10), user_id )
+	INDEX (session_key(10), user_id )
 )
 TYPE = InnoDB;
 
@@ -92,7 +94,7 @@ CREATE TABLE taskgroups (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(100) NOT NULL,
 	description VARCHAR(255),
-        INDEX (name(10))
+	INDEX (name(10))
 )
 TYPE = InnoDB;
 

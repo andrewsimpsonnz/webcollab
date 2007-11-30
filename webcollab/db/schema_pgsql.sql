@@ -20,10 +20,10 @@ CREATE TABLE "tasks" (
 	"globalaccess" boolean NOT NULL DEFAULT 't',
 	"groupaccess" boolean NOT NULL DEFAULT 'f',
 	"lastfileupload" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
-        "completed" integer DEFAULT 0::int NOT NULL,
-        "completion_time" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
-        "archive" smallint DEFAULT 0::int NOT NULL,
-        "sequence" integer DEFAULT 0::int NOT NULL,
+	"completed" integer DEFAULT 0::int NOT NULL,
+	"completion_time" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
+	"archive" smallint DEFAULT 0::int NOT NULL,
+	"sequence" integer DEFAULT 0::int NOT NULL,
 	Constraint "tasks_pkey" Primary Key ("id")
 );
 CREATE INDEX tasks_owner_idx ON tasks USING btree ("owner");
@@ -69,9 +69,11 @@ CREATE TABLE "forum" (
 	"parent" integer NOT NULL,
 	"taskid" integer NOT NULL,
 	"posted" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
+	"edited" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
 	"text" text,
 	"userid" integer NOT NULL,
 	"usergroupid" integer NOT NULL,
+	"sequence" integer DEFAULT 0::int NOT NULL,
 	Constraint "forum_pkey" Primary Key ("id")
 );
 CREATE INDEX forum_taskid_idx ON forum USING btree (taskid);
@@ -127,7 +129,7 @@ CREATE TABLE "contacts" (
 	"added_by" integer NOT NULL,
 	"date" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
 	"user_id" integer NOT NULL,
-        "taskid" integer DEFAULT 0::int NOT NULL,
+	"taskid" integer DEFAULT 0::int NOT NULL,
 	Constraint "contacts_pkey" Primary Key ("id")
 );
 
