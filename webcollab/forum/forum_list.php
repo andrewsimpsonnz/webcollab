@@ -51,6 +51,8 @@ function list_posts_from_task( $taskid, $usergroupid ) {
   $q = db_query('SELECT '.PRE.'forum.text AS text,
                         '.PRE.'forum.id AS id,
                         '.PRE.'forum.posted AS posted,
+                        '.PRE.'forum.edited AS edited,
+                        '.PRE.'forum.sequence AS sequence,
                         '.PRE.'forum.userid AS postowner,
                         '.PRE.'users.id AS userid,
                         '.PRE.'users.fullname AS fullname,
@@ -70,6 +72,10 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
+    //initialise
+    $this_post = '';
+    $suffix    = '';
+
     //put values into array
     $post_array[$i]['id'] = $row['id'];
     $post_array[$i]['parent'] = $row['parent'];
@@ -81,11 +87,16 @@ function list_posts_from_task( $taskid, $usergroupid ) {
     else {
       $this_post = "<li><small><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".$row['fullname']."</a>";
     }
-    $this_post .= "&nbsp;(".nicetime( $row['posted']).")</small>";
+    $this_post .= "&nbsp;(".nicetime( $row['posted']).")</small>\n";
 
     //owners of the thread, owners of the post and admins have a "delete" option
     if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['postowner'] ) ) {
-      $this_post .= " <span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=submit_del&amp;postid=".$row['id']."&amp;taskid=".$taskid."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."' )\">".$lang['del']."</a>]</span>";
+      $this_post .= "<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=submit_del&amp;postid=".$row['id']."&amp;taskid=".$taskid."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."' )\">".$lang['del']."</a>]</span>\n";
+    }
+
+    //owners of the post have an "update" option
+    if( UID == $row['postowner'] ) {
+      $this_post .= "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=edit&amp;postid=".$row['id']."\">".$lang['update']."</a>]</span>\n";
     }
 
     //add reply button
@@ -99,7 +110,11 @@ function list_posts_from_task( $taskid, $usergroupid ) {
       $this_post .= "\">".$lang['reply']."</a>]</span>\n";
     }
 
-    $post_array[$i]['post'] = $this_post."<br />\n".nl2br($row['text'] )."\n";
+    if($row['sequence'] > 0 ) {
+      $suffix = "<br /><br/><small>(Edited ".nicetime( $row['edited']).")</small>\n";
+    }
+
+    $post_array[$i]['post'] = $this_post."<br />\n".nl2br($row['text'] ).$suffix."\n";
     ++$post_count;
 
     //if this is a subpost, store the parent id
