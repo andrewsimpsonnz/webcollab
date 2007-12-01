@@ -398,6 +398,8 @@ $week_array = array('Ned', 'Pon', 'Uto', 'Sre', 'Čet', 'Pet', 'Sub' );
     $lang['by_deadline']                = " (po krajnjem roku)";
     $lang['by_status']                  = " (po stanju)";
     $lang['by_owner']                   = " (po vlasniku)";
+//** needs translation
+    $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "Projekat koji treba klonirati :";
     $lang['task_cloned']                = "Zadatak koji treba klonirati :";
     $lang['note_clone']                 = "Primedba: Zadatak će biti kloniran kao novi projekat";

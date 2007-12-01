@@ -394,6 +394,8 @@ $week_array = array('日', '月', '火', '水', '木', '金', '土' );
     $lang['by_deadline']                = " (デッドラインで)";
     $lang['by_status']                  = " (状況で)";
     $lang['by_owner']                   = " (所有者で)";
+//** needs translation
+    $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "プロジェクトを複製しました :";
     $lang['task_cloned']                = "タスクを複製しました :";
     $lang['note_clone']                 = "注: タスクは新しいプロジェクトとして複製されるでしょう。";

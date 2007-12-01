@@ -391,6 +391,8 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['by_deadline']                = " (podle termínu ukončení)";
     $lang['by_status']                  = " (podle statusu)";
     $lang['by_owner']                   = " (podle vlastníka)";
+//** needs translation
+    $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "Projekt ke klonovaní :";
     $lang['task_cloned']                = "Úkol ke klonování :";
     $lang['note_clone']                 = "Poznámka: Úkol bude naklonován jako nový projekt";

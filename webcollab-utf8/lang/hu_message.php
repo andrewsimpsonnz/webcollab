@@ -391,6 +391,8 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['by_deadline']                = " (határidő által)";
     $lang['by_status']                  = " (állapot által)";
     $lang['by_owner']                   = " (tulajdonos által)";
+//** needs translation
+    $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "Klónozandó projekt :";
     $lang['task_cloned']                = "Klónozandó feladat :";
     $lang['note_clone']                 = "Megjegyzés: A feladat egy új projektként lesz klónozva";

@@ -158,11 +158,11 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 
     $lang['no_upload']                  = "Δεν ανέβηκε κανένα αρχείο.  Προσπαθείστε πάλι.";
     $lang['file_too_big_sprt']          = "Το μέγιστο μέγεθος προς ανέβασμα είναι %s bytes.  Το ανέβασμα σας ήταν μεγαλύτερο από το επιτρεπόμενο και για αυτό ακυρώθηκε.";
     $lang['del_file_javascript_sprt']   = "Σίγουρα θέλετε να σβήσετε %s ?";
-//**
+//** needs translation
     $lang['forum_search']               = "Forum search";
-//**
+//** needs translation
     $lang['no_results']                 = "No results found for '%s'";
-//**
+//** needs translation
     $lang['search_results']             = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
 
  //forum
@@ -392,6 +392,8 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 
     $lang['by_deadline']                = " (κατά ημερομηνία παράδοσης)";
     $lang['by_status']                  = " (κατά σταδίου)";
     $lang['by_owner']                   = " (κατά υπευθύνου)";
+//** needs translation
+    $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "Το project κλωνοποιήθηκε :";
     $lang['task_cloned']                = "Εργασία προς κλωνοποίηση:";
     $lang['note_clone']                 = "ΑΝΑΚΟΙΝΩΣΗ: Η εργασία θα μετατραπεί σε νέο project";
@@ -402,7 +404,7 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 
     $lang['print_version']              = "Έκδοση εκτύπωσης";
     $lang['condensed_view']             = "Τμηματική προβολή";
     $lang['full_view']                  = "Ολοκληρωμένη προβολή";
-//**
+//** needs translation
     $lang['icalendar']                  = "iCalendar";
 
 ?>

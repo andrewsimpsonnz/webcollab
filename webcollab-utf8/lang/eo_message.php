@@ -389,6 +389,8 @@ $week_array = array('Di','Lu','Ma','Me','Ĵa','Ve','Sa');
     $lang['by_deadline']                 = " (laŭ limdato)";
     $lang['by_status']                   = " (laŭ stato)";
     $lang['by_owner']                    = " (laŭ posedanto)";
+//** needs translation
+    $lang['by_priority']                 = " (by priority)";
     $lang['project_cloned']              = "Kopienda projekto: ";
     $lang['task_cloned']                 = "Kopienda tasko: ";
     $lang['note_clone']                  = "Rimarko: Tiu tasko aperos kiel nova projekto.";

@@ -407,6 +407,8 @@ $week_array = array('일', '월', '화', '수', '목', '금', '토' );
     $lang['by_deadline']                  = " (마감일로)";
     $lang['by_status']                    = " (상태로)";
     $lang['by_owner']                     = " (소유자로)";
+//** needs translation
+    $lang['by_priority']                  = " (by priority)";
     $lang['project_cloned']               = "복사된 프로젝트 :";
     $lang['task_cloned']                  = "복사된 작업: ";
     $lang['note_clone']                   = "주의: 이 작업은 새로운 프로젝트로 복사될 것입니다";

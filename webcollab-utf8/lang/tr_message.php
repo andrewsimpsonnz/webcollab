@@ -388,6 +388,8 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['by_deadline']                = " (son bitiş tarihi göre)";
     $lang['by_status']                  = " (duruma göre)";
     $lang['by_owner']                   = " (sahibine göre)";
+//** needs translation
+    $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "Klonlanacak proje :";
     $lang['task_cloned']                = "Klonlanacak görev :";
     $lang['note_clone']                 = "Not: Görev yeni bir proje olarak klonlanacaktır";

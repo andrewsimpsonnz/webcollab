@@ -387,6 +387,8 @@ $week_array = array('Nie', 'Pon', 'Wto', 'Śro', 'Czw', 'Pią', 'Sob' );
     $lang['by_deadline']                = " (po terminach zakończenia)";
     $lang['by_status']                  = " (poprzez status)";
     $lang['by_owner']                   = " (po właścicielu)";
+    $lang['by_priority']                = " (po priorytecie)";
+//** needs translation
     $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "Projekt do sklonowania:";
     $lang['task_cloned']                = "Zadanie do sklonowania:";

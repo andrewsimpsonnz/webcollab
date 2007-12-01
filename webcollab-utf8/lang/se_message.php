@@ -389,6 +389,8 @@ $week_array = array('Sön', 'Mĺn', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['by_deadline']                = " (efter slutdatum)";
     $lang['by_status']                  = " (efter status)";
     $lang['by_owner']                   = " (efter ansvarig)";
+//** needs translation
+    $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "Projekt som ska klonas:";
     $lang['task_cloned']                = "Uppgift som ska klonas:";
     $lang['note_clone']                 = "Obs: Uppgiften kommer att klonas som ett nytt projekt";

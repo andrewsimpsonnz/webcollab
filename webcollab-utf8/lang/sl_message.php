@@ -390,6 +390,8 @@ $week_array = array('Ned', 'Pon', 'Tor', 'Sre', 'Čet', 'Pet', 'Sob' );
     $lang['by_deadline']                = " (po končnem roku)";
     $lang['by_status']                  = " (po stanju)";
     $lang['by_owner']                   = " (po lastniku)";
+  //** needs translation
+    $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "Projekt, ki ga je potrebno podvojiti:";
     $lang['task_cloned']                = "Naloga, ki jo je potrebno podvojiti:";
     $lang['note_clone']                 = "Opomba: Naloga bo podvojena kot nov projekt";

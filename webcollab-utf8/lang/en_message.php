@@ -387,6 +387,7 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['by_deadline']                = " (by deadline)";
     $lang['by_status']                  = " (by status)";
     $lang['by_owner']                   = " (by owner)";
+    $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "Project to be cloned :";
     $lang['task_cloned']                = "Task to be cloned :";
     $lang['note_clone']                 = "Note: The task will be cloned as a new project";

@@ -86,12 +86,12 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['login_screen']                 = "Вход";
     $lang['error']                        = "Грешка";
     $lang['no_login']                     = "Достъпът отказан, грешно име или парола";
-//**
+//** needs translation
     $lang['redirect_sprt']                = "You will automatically return to Login after a %d second delay";
-//**
+//** needs translation
     $lang['login_now']                    = "Please click here to return to Login now";
     $lang['please_login']                 = "Моля влезте";
-//**
+//** needs translation
     $lang['go']                           = "Go!";
 //graphic items
     $lang['late_g']                       = "&nbsp;ЗАКЪСНЕНИЕ&nbsp;";
@@ -109,14 +109,14 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['allow_group_edit']             = "Позволи всеки в групата да променя";
     $lang['set_email_owner']              = "Винаги изпращай писмо на притежателя с промените";
     $lang['set_email_group']              = "Винаги изпращай писмо до групата с промените";
-//**
+//** needs translation
     $lang['project_listing_order']        = "Project listing order";
-//**
+//** needs translation
     $lang['task_listing_order']           = "Task listing order";
     $lang['configuration']                = "Configuration";
     $lang['configuration']                = "Конфигуриране";
 //archive
-//**
+//** needs translation
     $lang['archived_projects']            = "Archived Projects";
 //contacts
     $lang['firstname']                    = "Име:";
@@ -175,15 +175,15 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['forum_submit']                 = "[Forum submit]";
     $lang['no_message']                   = "Няма съобщение! Моля, върнете се обратно и пробвайте пак";
     $lang['add_reply']                    = "Добави отговор";
-//**
+//** needs translation
     $lang['last_post_sprt']               = "Last post %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**
+//** needs translation
     $lang['recent_posts']                 = "Recent forum posts";
-//**
+//** needs translation
     $lang['forum_search']                 = "Forum search";
-//**
+//** needs translation
     $lang['no_results']                   = "No results found for '%s'";
-//**
+//** needs translation
     $lang['search_results']               = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
 
 //includes
@@ -193,7 +193,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['summary_page']                 = "Съдържание";
     $lang['log_out']                      = "Изход";
     $lang['main_menu']                    = "Меню";
-//**
+//** needs translation
     $lang['archive']                      = "Archive";
     $lang['user_homepage_sprt']           = "Дейностите на <b>%s</b>";
     $lang['missing_field_javascript']     = "Моля въведете липсващата стойност!";
@@ -239,12 +239,12 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['email']                        = "е-Поща";
     $lang['admin']                        = "Админ";
     $lang['private_user']                 = "Поверителен";
- //**
+ //** needs translation
     $lang['normal_user']                  = "Normal user";
     $lang['is_admin']                     = "Администратор";
- //**
+ //** needs translation
     $lang['is_guest']                     = "Is a guest?";
- //**
+ //** needs translation
     $lang['guest']                        = "Guest user";
     $lang['user_info']                    = "Инфо за потребителя";
     $lang['deleted_users']                = "Изтрити потребители";
@@ -334,7 +334,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['add_project']                  = "Добави проект";
     $lang['clone_project']                = "Копиране на проект";
     $lang['clone_task']                   = "Копиране на задача";
-//**
+//** needs translation
     $lang['quick_jump']                   = "Quick Jump";
     $lang['no_edit']                      = "Вие не сте притежател на този item и следователно не можете да го променяте";
     $lang['uncategorised']                = "<i>[без група]</i>";
@@ -343,9 +343,9 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['delete_task']                  = "Изтриване задача";
     $lang['project_options']              = "Проекти";
     $lang['task_options']                 = "Настройки на задача";
-//**
+//** needs translation
     $lang['javascript_archive_project']   = "This will archive project %s.  Are you sure?";
-//**
+//** needs translation
     $lang['archive_project']              = "Archive project";
     $lang['task_navigation']              = "Задачи";
     $lang['new_task']                     = "New task";
@@ -397,6 +397,8 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['by_deadline']                  = " (по краен срок)";
     $lang['by_status']                    = " (по статус)";
     $lang['by_owner']                     = " (по притежател)";
+//** needs translation
+    $lang['by_priority']                  = " (by priority)";
     $lang['project_cloned']               = "Име на копирания проект:";
     $lang['task_cloned']                  = "Име на копираната задача:";
     $lang['note_clone']                   = "Забележка: Задачата ще бъде копирана като нов проект";
@@ -404,11 +406,11 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['calendar']                     = "Календар";
     $lang['normal_version']               = "Нормална версия";
     $lang['print_version']                = "Версия за печат";
-//**
+//** needs translation
     $lang['condensed_view']               = "Condensed view";
-//**
+//** needs translation
     $lang['full_view']                    = "Full view";
-//**
+//** needs translation
     $lang['icalendar']                    = "iCalendar";
 
 ?>

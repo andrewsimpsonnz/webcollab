@@ -372,6 +372,8 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['by_deadline']                = " (по датам завершения)";
     $lang['by_status']                  = " (по статусу)";
     $lang['by_owner']                   = " (по координатору)";
+//** needs translation
+    $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "Проект для клонирования :";
     $lang['task_cloned']                = "Задание для клонирования :";
     $lang['note_clone']                 = "Внимание: задание будет клонировано как новый проект";

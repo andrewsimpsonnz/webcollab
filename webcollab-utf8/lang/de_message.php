@@ -391,6 +391,8 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['by_deadline']                 = " (nach Fertigstellungsdatum)";
     $lang['by_status']                   = " (nach Status)";
     $lang['by_owner']                    = " (nach Eigentümer)";
+//** needs translation
+    $lang['by_priority']                 = " (by priority)";
     $lang['project_cloned']              = "Zu klonendes Projekt: ";
     $lang['task_cloned']                 = "Zu klonende Aufgabe: ";
     $lang['note_clone']                  = "Bemerkung: Die Aufgabe wird als neues Projekt erscheinen";

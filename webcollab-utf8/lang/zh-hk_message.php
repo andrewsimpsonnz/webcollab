@@ -391,6 +391,8 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['by_deadline']                = " (以最後限期排列)";
     $lang['by_status']                  = " (以狀況排列)";
     $lang['by_owner']                   = " (以擁有者排列)";
+//** needs translation
+    $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "將會被複的專案 :";
     $lang['task_cloned']                = "將會被複製的工作 :";
     $lang['note_clone']                 = "注意:這個工作會被複製成一個新的專案";

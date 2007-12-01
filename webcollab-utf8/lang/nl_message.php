@@ -389,6 +389,8 @@ $week_array = array('Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Zat' );
     $lang['by_deadline']                = " (op einddatum)";
     $lang['by_status']                  = " (op status)";
     $lang['by_owner']                   = " (op eigenaar)";
+//** needs translation
+    $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "Te klonen projekt :";
     $lang['task_cloned']                = "Te klonen taak :";
     $lang['note_clone']                 = "Let op: De taak wordt gekloond als nieuw projekt";
