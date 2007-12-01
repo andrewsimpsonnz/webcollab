@@ -404,6 +404,8 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Ч
     $lang['by_deadline']                  = " (по краен срок)";
     $lang['by_status']                    = " (по статус)";
     $lang['by_owner']                     = " (по притежател)";
+//** needs translation
+    $lang['by_priority']                  = " (by priority)";
     $lang['project_cloned']               = "Име на копирания проект:";
     $lang['task_cloned']                  = "Име на копираната задача:";
     $lang['note_clone']                   = "Забележка: Задачата ще бъде копирана като нов проект";

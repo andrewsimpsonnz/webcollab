@@ -409,6 +409,8 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['by_deadline']                  = " (ved frist)";
     $lang['by_status']                    = " (ved status)";
     $lang['by_owner']                     = " (ved ejer)";
+//** needs translation
+    $lang['by_priority']                  = " (by priority)";
     $lang['project_cloned']               = "Projekt skal klones :";
     $lang['task_cloned']                  = "Opgave skal klones:";
     $lang['note_clone']                   = "Bemærk: Opgaven vil blive klonet som et nyt projekt";

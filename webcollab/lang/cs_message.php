@@ -24,7 +24,7 @@
   Language files for 'cs' (Czech)
 
   Translation: Lukas Moravek <moravekl at gmail.com>
-  Corection: Jirka Dutka <jirka at dutka.net>
+  Correction: Jirka Dutka <jirka at dutka.net>
 
 
   NOTE: This file is written in ISO-8859-2 character set
@@ -396,6 +396,8 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Èt', 'Pá', 'So' );
     $lang['by_deadline']                = " (podle termínu ukonèení)";
     $lang['by_status']                  = " (podle statusu)";
     $lang['by_owner']                   = " (podle vlastníka)";
+//** needs translation
+    $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "Projekt ke klonovaní :";
     $lang['task_cloned']                = "Úkol ke klonování :";
     $lang['note_clone']                 = "Poznámka: Úkol bude naklonován jako nový projekt";

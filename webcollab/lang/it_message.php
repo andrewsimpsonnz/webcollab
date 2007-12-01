@@ -418,6 +418,8 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['by_deadline']                  = " (per scadenza)";
     $lang['by_status']                    = " (per stato)";
     $lang['by_owner']                     = " (per proprietario)";
+//** needs translation
+    $lang['by_priority']                  = " (by priority)";
     $lang['project_cloned']               = "Progetto da clonare:";
     $lang['task_cloned']                  = "Attività da clonare:";
     $lang['note_clone']                   = "Nota: L'attività sarà clonata come un nuovo progetto";

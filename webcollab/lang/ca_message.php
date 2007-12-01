@@ -434,6 +434,8 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['by_deadline']                  = " (per límit)";
     $lang['by_status']                    = " (per estat)";
     $lang['by_owner']                     = " (per propietari)";
+//** needs translation
+    $lang['by_priority']                  = " (by priority)";
  //**
     $lang['project_cloned']               = "Project to be cloned :";
     $lang['task_cloned']                  = "Task to be cloned :";

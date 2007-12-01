@@ -392,6 +392,8 @@ poèet dní v mesiaci).<br />Prosím vrá»te sa a zadajte platný dátum.';
     $lang['by_deadline']                = ' (podµa hranièného termínu)';
     $lang['by_status']                  = ' (podµa stavu)';
     $lang['by_owner']                   = ' (podµa vlastníka)';
+//** needs translation
+    $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = 'Projekt, ktorý bude klonovaný :';
     $lang['task_cloned']                = 'Úloha, ktorá bude klonovaná :';
     $lang['note_clone']                 = 'Poznámka: Úloha bude klonovaná ako nový projekt';

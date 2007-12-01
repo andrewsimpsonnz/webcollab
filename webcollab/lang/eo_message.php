@@ -25,7 +25,7 @@
 
   Translation: Paul Ebermann 
 
-  NOTE: This file is written in UTF-8 character set
+  NOTE: This file is written in ISO-8859-3 character set
 
 */
 
@@ -392,6 +392,8 @@ $week_array = array('Di','Lu','Ma','Me','¬a','Ve','Sa');
     $lang['by_deadline']                 = " (laý limdato)";
     $lang['by_status']                   = " (laý stato)";
     $lang['by_owner']                    = " (laý posedanto)";
+//** needs translation
+    $lang['by_priority']                 = " (by priority)";
     $lang['project_cloned']              = "Kopienda projekto: ";
     $lang['task_cloned']                 = "Kopienda tasko: ";
     $lang['note_clone']                  = "Rimarko: Tiu tasko aperos kiel nova projekto.";

@@ -367,6 +367,8 @@ $lang['by_taskgroup'] = " (por grupo de tareas)";
 $lang['by_deadline'] = " (por límite)";
 $lang['by_status'] = " (por estado)";
 $lang['by_owner'] = " (por propietario)";
+//** needs translation
+$lang['by_priority'] = " (by priority)";
 $lang['project_cloned'] = "Proyecto a duplicar :";
 $lang['task_cloned'] = "Tarea a duplicar :";
 $lang['note_clone'] = "Nota: la tarea se duplicara como un nuevo proyecto";

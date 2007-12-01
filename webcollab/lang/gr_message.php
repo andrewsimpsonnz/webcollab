@@ -397,6 +397,8 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ' );
     $lang['by_deadline']                = " (κατά ημερομηνία παράδοσης)";
     $lang['by_status']                  = " (κατά σταδίου)";
     $lang['by_owner']                   = " (κατά υπευθύνου)";
+//** needs translation
+    $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "Το project κλωνοποιήθηκε :";
     $lang['task_cloned']                = "Εργασία προς κλωνοποίηση:";
     $lang['note_clone']                 = "ΑΝΑΚΟΙΝΩΣΗ: Η εργασία θα μετατραπεί σε νέο project";
