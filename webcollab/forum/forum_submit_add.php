@@ -101,7 +101,7 @@ switch($usergroupid ) {
 
     db_begin();
     db_query ('INSERT INTO '.PRE.'forum(parent, taskid, posted, edited, text, userid, usergroupid, sequence)
-                                      VALUES ('.$parentid.', '.$taskid.', now(), \''.$text.'\', '.UID.', '.$usergroupid.', 0)' );
+                                      VALUES ('.$parentid.', '.$taskid.', now(), now(), \''.$text.'\', '.UID.', '.$usergroupid.', 0)' );
     break;
 
 }
