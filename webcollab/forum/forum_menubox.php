@@ -51,14 +51,14 @@ else {
 }
 
 $q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
-                      '.PRE.'forum.posted AS posted,
+                      '.PRE.'forum.edited AS last_edit,
                       '.PRE.'tasks.name AS taskname
-                      FROM '.PRE.'forum 
+                      FROM '.PRE.'forum
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
-                      WHERE '.PRE.'forum.posted > ( now()-INTERVAL '.$delim.NEW_TIME.' DAY'.$delim.')
+                      WHERE '.PRE.'forum.edited > ( now()-INTERVAL '.$delim.NEW_TIME.' DAY'.$delim.')
                       '.$tail.'
-                      GROUP BY '.PRE.'forum.taskid, posted, taskname
-                      ORDER BY posted DESC LIMIT 50' );
+                      GROUP BY '.PRE.'forum.taskid, last_edit, taskname
+                      ORDER BY last_edit DESC LIMIT 50' );
 
 //iterate for posts
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -70,7 +70,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //date of latest post
   if(! $posted ) {
-    $lastpost = $row['posted'];
+    $lastpost = $row['last_edit'];
     $posted = true;
   }
 
