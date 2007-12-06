@@ -95,7 +95,7 @@ function validate($body ) {
     $body = stripslashes($body );
   }
 
-  if(UNICODE_VERSION == 'Y' || defined('SETUP_CHARACTER_SET' ) ) {
+  if(UNICODE_VERSION == 'Y' || defined('SETUP_CHARACTER_SET' ) || defined('RSS' ) ) {
 
     $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.          //ASCII
                          '|[\x00-\x7F][\x80-\xBF]+'.                       //continuation with no start
@@ -190,19 +190,29 @@ function javascript_escape($body ) {
 }
 
 //
-// make web addresses and email addresses clickable
+// add bbcode tags functionality
 //
-function html_links($body, $database_escape=0 ) {
+function bbcode($body ) {
 
   if(strlen($body) == 0  ) {
     return '';
   }
-  $body = preg_replace('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', "<a href=\"mailto:$0\">$0</a>", $body );
 
-  //data being submitted to a database needs ('$0') part escaped
-  $quote = ($database_escape ) ? db_escape_string("'") : "'";
+  if(! strpos($body, '@' ) === false ) {
+    //email links
+    $body = preg_replace('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', "<a href=\"mailto:$0\">$0</a>", $body );
+  }
 
-  $body = preg_replace('/((http|ftp)+(s)?:\/\/[^\s\t\n]+)/i', "<a href=\"$0\" onclick=\"window.open(".$quote."$0".$quote."); return false\">$0</a>", $body );
+  //bbcode tags
+  if(! strpos($body, '[/' ) === false ) {
+    $body = preg_replace('#\[i\](.+?)\[/i\]#i', "<i>$1</i>", $body );
+    $body = preg_replace('#\[b\](.+?)\[/b\]#i', "<b>$1</b>", $body );
+    $body = preg_replace('#\[u\](.+?)\[/u\]#i', "<span style=\"text-decoration: underline;\">$1</span>", $body );
+    $body = preg_replace('#\[quote\](.+?)\[/quote\]#i', "<blockquote><p>$1</p></blockquote>", $body );
+    $body = preg_replace('#\[code\](.+?)\[/code\]#i', "<pre>$1</pre>", $body );
+    $body = preg_replace('#\[color=(red|blue|green|yellow)\](.+?)\[/color\]#i', "<span style=\"color:$1\">$2</span>", $body );
+    $body = preg_replace('#\[url\]((http|ftp)+(s)?:\/\/[^\s\t\n]+?)\[/url\]#i', "<a href=\"$1\" onclick=\"window.open('$1'); return false\">$1</a>", $body );
+  }
   return $body;
 }
 
