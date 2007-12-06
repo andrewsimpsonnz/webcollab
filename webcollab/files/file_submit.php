@@ -101,8 +101,6 @@ switch($_REQUEST['action'] ) {
     $taskid = $_POST['taskid'];
 
     $description = safe_data_long($_POST['description'] );
-    //make email adresses and web links clickable
-    $description = html_links($description, 1 );
 
     //check usergroup security
     $taskid = usergroup_check($taskid );
