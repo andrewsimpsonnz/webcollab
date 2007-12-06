@@ -101,7 +101,7 @@ $content .= "<b>".$TASKID_ROW['name']."</b><br /><br /></td></tr>\n";
 //show text
 $content .= "<tr><td class=\"textbackground\" style=\"width: 95%\">\n";
 
-$content .= nl2br(html_links($TASKID_ROW['text'] ) );
+$content .= nl2br(bbcode($TASKID_ROW['text'] ) );
 $content .= "</td></tr></table>\n";
 
 //start of info table
