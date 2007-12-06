@@ -30,6 +30,17 @@ require_once('path.php');
 require_once(BASE.'includes/security.php' );
 include_once(BASE.'includes/screen.php' );
 
+//make active projects 'sticky'
+if(isset($_GET['active_only'] ) ) {
+  $cookie = ($_GET['active_only']) ? 1 : 0;
+  setcookie('webcollab_active_only', $cookie );
+}
+//make condensed projects sticky'
+if(isset($_GET['condensed'] ) ) {
+  $cookie = ($_GET['condensed']) ? 1 : 0;
+  setcookie('webcollab_condensed', $cookie );
+}
+
 //start of page
 create_top();
 
