@@ -149,9 +149,22 @@ $project_print = 0;
 $task_uncompleted = array();
 $task_projectid   = array();
 
-$active_only = (isset($_GET['active']) )    ? $_GET['active']    : 0;
-$condensed   = (isset($_GET['condensed']) ) ? $_GET['condensed'] : 0;
-$action      = (isset($_GET['action']) )    ? $_GET['action']    : 0;
+$action = (isset($_GET['action']) ) ? $_GET['action'] : 0;
+
+//set 'active' and 'condensed' 
+$array = array('active_only', 'condensed' );
+foreach($array as $var ) {
+
+  if(isset($_GET[$var] ) ) {
+    $$var = $_GET[$var];
+  }
+  elseif(isset($_COOKIE['webcollab_'.$var]) ) {
+    $$var = $_COOKIE['webcollab_'.$var];
+  }
+  else {
+    $$var = 0;
+  }
+}
 
 //get config order for sorting
 $q   = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
@@ -242,29 +255,29 @@ if(db_numrows($q) < 1 ) {
 $content .= "<table style=\"width : 100%\"><tr><td>\n".
             "<span class=\"textlink\">";
 if($active_only ) {
-  $content .= "[<a href=\"main.php?x=".$x."&amp;active=0&amp;condensed=".$condensed."\">".$lang['show_all_projects']."</a>]";
+  $content .= "[<a href=\"main.php?x=".$x."&amp;active_only=0&amp;condensed=".$condensed."\">".$lang['show_all_projects']."</a>]";
 }
 else {
-  $content .= "[<a href=\"main.php?x=".$x."&amp;active=1&amp;condensed=".$condensed."\">".$lang['show_active_projects']."</a>]";
+  $content .= "[<a href=\"main.php?x=".$x."&amp;active_only=1&amp;condensed=".$condensed."\">".$lang['show_active_projects']."</a>]";
 }
 
 //text link for 'condensed' switch
 if($condensed ) {
-  $content .= "&nbsp;[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=0"."\">".$lang['full_view']."</a>]";
+  $content .= "&nbsp;[<a href=\"main.php?x=".$x."&amp;active_only=".$active_only."&amp;condensed=0"."\">".$lang['full_view']."</a>]";
 }
 else {
-  $content .= "&nbsp;[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=1"."\">".$lang['condensed_view']."</a>]";
+  $content .= "&nbsp;[<a href=\"main.php?x=".$x."&amp;active_only=".$active_only."&amp;condensed=1"."\">".$lang['condensed_view']."</a>]";
 }
 
 //text link for 'printer friendly' page
 if($action === "project_print" ) {
-  $content  .= "\n[<a href=\"main.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."\">".$lang['normal_version']."</a>]";
+  $content  .= "\n[<a href=\"main.php?x=".$x."&amp;active_only=".$active_only."&amp;condensed=".$condensed."\">".$lang['normal_version']."</a>]";
 }
 else {
   $content  .= "</span></td>\n<td style=\"text-align : right\">".
                "<a href=\"icalendar.php?x=".$x."&amp;action=all\" title=\"".$lang['icalendar']."\">".
                "<img src=\"images/calendar_link.png\" alt=\"".$lang['icalendar']."\" width=\"16\" height=\"16\" /></a>&nbsp;&nbsp;&nbsp;".
-               "<a href=\"tasks.php?x=".$x."&amp;active=".$active_only."&amp;condensed=".$condensed."&amp;action=project_print\" title=\"".$lang['print_version']."\">".
+               "<a href=\"tasks.php?x=".$x."&amp;active_only=".$active_only."&amp;condensed=".$condensed."&amp;action=project_print\" title=\"".$lang['print_version']."\">".
                "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a>";
 }
 $content .= "</td></tr>\n</table>\n";
