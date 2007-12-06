@@ -87,7 +87,7 @@ if(db_numrows($q ) != 0 ) {
 
     //show description
     if( $row['description'] != '' ) {
-      $content .= "<tr><td><small><i>".nl2br($row['description'])."</i></small></td></tr>\n";
+      $content .= "<tr><td><small><i>".nl2br(bbcode($row['description'] ) )."</i></small></td></tr>\n";
     }
     //padding for next entry
     $content .= "<tr><td>&nbsp;</td></tr>\n";
