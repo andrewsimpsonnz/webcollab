@@ -110,11 +110,12 @@ function list_posts_from_task( $taskid, $usergroupid ) {
       $this_post .= "\">".$lang['reply']."</a>]</span>\n";
     }
 
+    //mark if this an edited post
     if($row['sequence'] > 0 ) {
-      $suffix = "<br /><br/><small>(Edited ".nicetime( $row['edited']).")</small>\n";
+      $suffix = "<br /><img src=\"images/script_edit.png\" alt=\"\" />&nbsp;<small>--&nbsp;".nicetime( $row['edited'])."</small>";
     }
 
-    $post_array[$i]['post'] = $this_post."<br />\n".nl2br($row['text'] ).$suffix."\n";
+    $post_array[$i]['post'] = $this_post."<br />\n".nl2br(bbcode($row['text'] ) ).$suffix."\n";
     ++$post_count;
 
     //if this is a subpost, store the parent id
