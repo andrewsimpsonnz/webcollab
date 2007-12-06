@@ -52,9 +52,6 @@ if(empty($_POST['text'] ) ) {
 
 $text = safe_data_long($_POST['text'] );
 
-//make email adresses and web links clickable
-$text = html_links($text, 1 );
-
 if(isset($_POST['mail_owner'] ) && ($_POST['mail_owner'] === 'on' ) ) {
   $mail_owner = true;
 }
