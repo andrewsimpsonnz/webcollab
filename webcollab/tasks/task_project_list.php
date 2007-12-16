@@ -149,17 +149,17 @@ $project_print = 0;
 $task_uncompleted = array();
 $task_projectid   = array();
 
-$action = (isset($_GET['action']) ) ? $_GET['action'] : 0;
+$action = (isset($_GET['action']) && ($_GET['action'] ) ) ? 1 : 0;
 
 //set 'active' and 'condensed' 
 $array = array('active_only', 'condensed' );
 foreach($array as $var ) {
 
   if(isset($_GET[$var] ) ) {
-    $$var = $_GET[$var];
+    $$var = ($_GET[$var] ) ? 1 : 0;
   }
   elseif(isset($_COOKIE['webcollab_'.$var]) ) {
-    $$var = $_COOKIE['webcollab_'.$var];
+    $$var = ($_COOKIE['webcollab_'.$var] ) ? 1 : 0;
   }
   else {
     $$var = 0;
