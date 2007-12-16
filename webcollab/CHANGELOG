@@ -1,9 +1,12 @@
+WebCollab SVN
+*** 6 December 2007
+  Andrew Simpson
 
+- add bbcode to description fields
 
+- make 'active_only' and 'condensed' sticky on homepage 
 
-
-
-
+- improvements and bugfixing to RSS
 
 WebCollab SVN
 *** 2 December 2007
