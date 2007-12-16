@@ -61,7 +61,7 @@ $content =
     "<tr><td><i>".$lang['city']."</i></td><td>".$row['city']."</td></tr>\n".
     "<tr><td><i>".$lang['email']."</i></td><td><a href=\"mailto:".$row['email']."\">".$row['email']."</a></td></tr>\n".
     "</table>\n".
-    "<p><i>".$lang['notes']."</i><br />".nl2br(html_links($row['notes'] ) )."</p>\n";
+    "<p><i>".$lang['notes']."</i><br />".nl2br(bbcode($row['notes'] ) )."</p>\n";
 
 if(! GUEST ){
   $content .=
