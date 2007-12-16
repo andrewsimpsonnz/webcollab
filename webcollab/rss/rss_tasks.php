@@ -29,45 +29,23 @@
 require_once('path.php' );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
+require_once(BASE.'rss/rss_common.php' );
 
 include_once(BASE.'includes/common.php');
 include_once(BASE.'database/database.php');
 
 //secure variables
 $content = '';
-$found = false;
 
-//valid login attempt ?
-if(! isset($_SERVER['REMOTE_USER']) || (strlen($_SERVER['REMOTE_USER']) == 0 ) ) {
-  header("HTTP/1.0 401 Unauthorized");
+//HTTP login
+if(! rss_login() ) {
+  header("HTTP/1.0 401 Unauthorized", true, 401 );
   die;
 }
 
-if( ! ($q = @db_query('SELECT id, admin FROM '.PRE.'users WHERE name=\''.safe_data($_SERVER['REMOTE_USER'] ).'\' AND deleted=\'f\'', 0 ) ) ) {
-  header("HTTP/1.0 401 Unauthorized");
-  die;
-}
-
-if( @db_numrows($q) < 1 ) {
-  header("HTTP/1.0 401 Unauthorized");
-  die;
-}
-
-if(! ($row = @db_fetch_array($q, 0 ) ) ) {
-  header("HTTP/1.0 401 Unauthorized");
-  die;
-}
-
-//set the usergroup permissions on queries (Admin can see all)
-if($row['admin'] == 't' ) {
-  $tail = ' ';
-}
-else {
-  $tail = 'AND (usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$row['id'].') OR usergroupid=0) ';
-}
-
+//get time of last modified task
 if(! ($q = db_query('SELECT '.$epoch.'MAX(edited) ) AS last FROM '.PRE.'tasks', 0 ) ) ) {
-  header("HTTP/1.0 500 Internal Server Error");
+  header("HTTP/1.0 500 Internal Server Error", true, 500 );
   die;
 }
 
@@ -78,32 +56,32 @@ else {
   $last_mod = gmmktime();
 }
 
-//get the request headers
-$headers = apache_request_headers();
-
-//search the headers for 'If-Modified-Since' string
-foreach($headers as $header=>$value ) {
-
-  if(strpos(strtolower($header), 'if-modified-since' ) === false ) {
-    continue;
-  }
-
-  //found header --> get the time value
-  $last_read = strtotime($value );
-  //prior to PHP 5.1.0 a failure is '-1', later versions give 'false'
-  if($last_read === -1 || $last_read === false ) {
-    break;
-  }
-  if($last_read - $last_mod > 0 ) {
-    header("HTTP/1.0 304 Not modified");
-    die;
-  }
-  break;
-}
+//check when last request was made
+rss_last_mod($last_mod);
 
 //xml uses UTF-8 exclusively - tell the database to use UTF-8 too.
 db_user_locale('UTF-8');
 
+//get site names
+if(! ($q = db_query('SELECT * FROM site_name', 0 ) ) ) {
+
+  header("HTTP/1.0 500 Internal Server Error", true, 500 );
+  die;
+}
+
+$row = @db_fetch_array($q, 0 );
+$manager_name      = $row['manager_name'];
+$abbr_manager_name = $row['abbr_manager_name'];
+
+//set the usergroup permissions on queries (Admin can see all)
+if(ADMIN ) {
+  $tail = ' ';
+}
+else {
+  $tail = 'WHERE (usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$row['id'].') OR usergroupid=0) ';
+}
+
+//main query
 if(! ($q = db_query('SELECT '.PRE.'tasks.id AS id,
                       '.PRE.'tasks.status AS status,
                       '.PRE.'tasks.name AS taskname
@@ -112,34 +90,16 @@ if(! ($q = db_query('SELECT '.PRE.'tasks.id AS id,
                      '.$tail.'
                       ORDER BY '.PRE.'tasks.edited DESC LIMIT 50', 0 ) ) ) {
 
-  header("HTTP/1.0 500 Internal Server Error");
+  header("HTTP/1.0 500 Internal Server Error", true, 500 );
   die;
 }
 
-//use compressed output (if web browser supports it) _and_ zlib.output_compression is not already enabled
-if( ! ini_get('zlib.output_compression') ) {
-  ob_start('ob_gzhandler' );
-}
-
-//send the headers describing the xml
-header('Content-Type: text/xml; charset=UTF-8' );
+//start xml feed
+$content = rss_start($last_mod, $manager_name, $abbr_manager_name );
 
 //set constants
 $gmdate = gmdate('D, d M Y H:i:s');
-$guid   = md5(MANAGER_NAME.BASE_URL);
-
-
-echo  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n".
-      "<rss version=\"2.0\">\n".
-      "<channel>\n".
-      "<title>".ABBR_MANAGER_NAME."</title>\n".
-      "<link>".BASE_URL."</link>\n".
-      "<description>".MANAGER_NAME."</description>\n".
-      "<language>en-us</language>\n".
-      "<ttl>60</ttl>\n".
-      "<lastBuildDate>".$gmdate." GMT</lastBuildDate>\n".
-      "<generator>WebCollab 2.00</generator>\n";
-
+$guid   = md5($manager_name.BASE_URL);
 
 //html encode '<' and '>' tags in text to suit RSS 2.00
 $trans = array('<'=>'&lt;', '>'=>'&gt;' );
@@ -175,17 +135,16 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   $content .= "<item>\n".
               "<title>".strtr($row['taskname'], $trans )." - ".$status."</title>\n".
-              "<link>".BASE_URL."</link>\n".
+              "<link>".BASE_URL."index.php?taskid=".$row['id']."</link>\n".
               "<pubDate>".$gmdate."</pubDate>\n".
               "<guid isPermaLink=\"false\">".$row['id']."-".$guid."</guid>\n".
               "</item>\n";
 }
 
-$content .= "</channel>\n".
-            "</rss>\n";
+//end xml
+$content .= rss_end();
 
-//replace all occurrences of '&' that aren't part of &lt;, &gt;, &amp; or a unicode entity 
-$content = preg_replace('/&(?!([l|g]t|#[\d]{2,5}|amp);)/', '&amp;', $content );
+$content .= rss_clean($content );
 
 echo $content;
 
