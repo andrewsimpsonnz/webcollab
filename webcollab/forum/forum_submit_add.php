@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id: forum_submit.php 1704 2007-01-01 06:09:52Z andrewsimpson $
+  $Id: forum_submit.php 1704 2008-01-01 06:09:52Z andrewsimpson $
 
-  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------

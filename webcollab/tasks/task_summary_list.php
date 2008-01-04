@@ -4,7 +4,7 @@
   $Id$
 
   (c) 2002 Marshall Rose (attributed)
-  (c) 2002 - 2007 Andrew Simpson
+  (c) 2002 - 2008 Andrew Simpson
 
   WebCollab
   ---------------------------------------

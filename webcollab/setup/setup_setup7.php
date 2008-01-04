@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id: setup_setup5.php 1737 2007-01-24 08:16:45Z andrewsimpson $
+  $Id: setup_setup5.php 1737 2008-01-24 08:16:45Z andrewsimpson $
 
-  (c) 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------

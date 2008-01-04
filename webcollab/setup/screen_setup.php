@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -57,7 +57,7 @@ function create_top_setup($title='', $check=0 ) {
        "\"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n".
        "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n".
        "<html>\n\n".
-       "<!-- (c) 2002 - 2007 Andrew Simpson -->\n\n".
+       "<!-- (c) 2002 - 2008 Andrew Simpson -->\n\n".
        "<head>\n".
        "<title>".$title."</title>\n".
        "<meta http-equiv=\"Pragma\" content=\"no-cache\" />".

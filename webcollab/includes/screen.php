@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -100,7 +100,7 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
                     "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n\n".
                     "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
                     "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
-                    "<!-- (c) 2002-2007 Andrew Simpson for WebCollab -->\n\n".
+                    "<!-- (c) 2002-2008 Andrew Simpson for WebCollab -->\n\n".
                     "<head>\n";
 
   if( $title == '' ) {
@@ -290,7 +290,7 @@ function create_bottom() {
 
  //shows the logo
  if($bottom_text) {
-   $content .= "<div class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2007</div>\n";
+   $content .= "<div class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2008</div>\n";
  }
   //end xml parsing
   $content .= "</body>\n</html>\n";

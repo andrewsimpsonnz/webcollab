@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id: rss_forum.php 1706 2007-01-01 06:13:00Z andrewsimpson $
+  $Id: rss_forum.php 1706 2008-01-01 06:13:00Z andrewsimpson $
 
-  (c) 2007 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2008 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
