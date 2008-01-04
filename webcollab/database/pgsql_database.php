@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>  
+  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>  
 
   WebCollab
   ---------------------------------------
@@ -217,6 +217,10 @@ function db_user_locale($encoding ) {
 
     case 'ISO-8859-9':
       $pg_encoding = 'LATIN5';
+      break;
+
+    case 'ISO-8859-15':
+      $pg_encoding = 'LATIN9';
       break;
 
     case 'KOI8-R':
