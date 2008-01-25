@@ -170,6 +170,9 @@
   //Use VEVENT for iCalendar instead of VTODO - works for Google Calendar and others (values are "N", or "Y")
   define('VEVENT', "N");
 
+  //Start day of week on calendar (Sun = 0, Mon = 1, Tue = 2, Wed = 3, etc) 
+  define('START_DAY', 0 );
+
   //Use external webserver authorisation to login (values are "N", or "Y")
   define('WEB_AUTH', "N" );
 

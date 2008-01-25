@@ -140,15 +140,22 @@ $content .= "<div style=\"text-align: center\">\n".
 
 //weekdays
 $content .= "<tr align=\"center\" valign=\"middle\">\n";
-foreach($week_array as $value) {
-  $content .= "<td class=\"weekcell\" style=\"width: 20px\"><b>$value</b></td>\n";
+for ($i = 0; $i < 7; ++$i ) {
+  $day_number = $i + START_DAY;
+  if( $day_number > 6 ) {
+    $day_number = $day_number - 7;
+  }
+  $content .= "<td class=\"weekcell\" style=\"width: 20px\"><b>".$week_array[$day_number]."</b></td>\n";
 }
 $content .= "</tr>\n";
 
 //show lead in to dates
 $content .= "<tr align=\"left\" valign=\"top\">\n";
 
-$dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) );
+$dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ) - START_DAY;
+if( $dayone < 0 ) {
+  $dayone = $dayone + 7;
+}
 
 for ($i = 0; $i < $dayone; ++$i ) {
   $content .= "<td class=\"datecell\" style=\"height: 15px\">&nbsp;</td>\n";

@@ -83,6 +83,7 @@ $array = array('NUM_FILE_UPLOADS' => 3,
                'DEBUG'        => 'N',
                'NO_ERROR'     => 'N',
                'VEVENT'       => 'N',
+               'START_DAY'    =>  0,
                'WEB_AUTH'     => 'N',
                'PASS_STYLE'   => 'text',
                'PRE'          => '' );
@@ -218,6 +219,8 @@ $content = "<?php\n".
 "  define('NO_ERROR', '".NO_ERROR."' );\n\n".
 "  //Use VEVENT for iCalendar instead of VTODO - works for Google Calendar and others (values are 'N', or 'Y')\n".
 "  define('VEVENT', '".VEVENT."' );\n\n".
+"  //Start day of week on calendar (Sun = 0, Mon = 1, Tue = 2, Wed = 3, etc)\n";
+"  define('START_DAY', ".START_DAY." );\n\n";
 "  //Use external webserver authorisation to login (values are 'N', or 'Y')\n".
 "  define('WEB_AUTH', '".WEB_AUTH."' );\n\n".
 "  //Show passwords in user edit screens as plain text or hidden ('****') (values are 'text', or 'password')\n".
