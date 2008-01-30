@@ -25,8 +25,6 @@
 
   Translation: Eduardo Alvim <eduardoalvim at gmail.com>
 
-  NOTE: This file is written in UTF-8 character set
-
 */
 //required language encodings
 define('CHARACTER_SET', 'UTF-8' );
@@ -385,13 +383,12 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $lang['flags']                      = "Bandeiras";
     $lang['owner']                      = "Responsável";
     $lang['group']                      = "Equipe";
-    $lang['by_usergroup']               = "(por equipe)";
-    $lang['by_taskgroup']               = "(por grupo de tarefas)";
-    $lang['by_deadline']                = "(por prazo)";
-    $lang['by_status']                  = "(por status)";
-    $lang['by_owner']                   = "(por responsável)";
-//** needs translation
-    $lang['by_priority']                = " (by priority)";
+    $lang['by_usergroup']               = " (por equipe)";
+    $lang['by_taskgroup']               = " (por grupo de tarefas)";
+    $lang['by_deadline']                = " (por prazo)";
+    $lang['by_status']                  = " (por status)";
+    $lang['by_owner']                   = " (por responsável)";
+    $lang['by_priority']                = " (por prioridade)";
     $lang['project_cloned']             = "Projeto a ser clonado:";
     $lang['task_cloned']                = "Tarefa a ser clonada:";
     $lang['note_clone']                 = "Obs: Essa tarefa será clonada como um novo projeto";
