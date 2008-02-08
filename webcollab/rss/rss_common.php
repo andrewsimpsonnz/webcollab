@@ -45,21 +45,18 @@ function rss_login() {
     header("HTTP/1.0 401 Unauthorized", true, 401 );
     die;
   }
-/*
-  if( ! ($q = @db_query('SELECT id, admin FROM '.PRE.'users WHERE name=\'admin\' AND deleted=\'f\'', 0 ) ) ) {
-    header("HTTP/1.0 401 Unauthorized");
-    die;
-  }
-*/
-  if( @db_numrows($q) == 0 ) {
+
+  if(db_numrows($q) != 1 ) {
     header("HTTP/1.0 401 Unauthorized", true, 401 );
     die;
   }
 
-  if(! ($row = @db_fetch_array($q, 0 ) ) ) {
+  if(! ($row = db_fetch_array($q, 0 ) ) ) {
     header("HTTP/1.0 401 Unauthorized", true, 401 );
     die;
   }
+
+  define('UID', $row['id'] );
 
   if($row['admin'] == 't' ) {
     define('ADMIN', 1 );
@@ -105,6 +102,24 @@ return;
 }
 
 //
+// SQL tail for user access rights
+//
+
+function rss_usergroup_tail() {
+
+  //set the usergroup permissions on queries (Admin can see all)
+  if(ADMIN ) {
+    $tail = ' ';
+  }
+  else {
+    $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+              OR '.PRE.'tasks.globalaccess=\'t\'
+              OR '.PRE.'tasks.usergroupid=0) ';
+  }
+  return $tail;
+}
+
+//
 // Start the RSS xml feed headers
 //
 
@@ -131,7 +146,28 @@ function rss_start($last_mod, $manager_name, $abbr_manager_name ) {
               "<description>".$manager_name."</description>\n".
               "<ttl>60</ttl>\n".
               "<lastBuildDate>".gmdate('D, d M Y H:i:s')." GMT</lastBuildDate>\n".
-              "<generator>WebCollab 2.20</generator>\n";
+              "<generator>WebCollab 2.30</generator>\n";
+
+return $content;
+}
+
+//
+// Clean up the xml feed
+//
+
+function rss_bbcode($content ) {
+
+  //bbcode tags (using HTML entities to suit RSS)
+  if(! strpos($content, '[/' ) === false ) {
+    $content = preg_replace('#\[i\](.+?)\[/i\]#i', "&lt;i&gt;$1&lt;/i&gt;", $content );
+    $content = preg_replace('#\[b\](.+?)\[/b\]#i', "&lt;b&gt;$1&lt;/b&gt;", $content );
+    $content = preg_replace('#\[u\](.+?)\[/u\]#i', "&lt;span style=\"text-decoration: underline;\"&gt;$1&lt;/span&gt;", $content );
+    $content = preg_replace('#\[quote\](.+?)\[/quote\]#i', "&lt;blockquote&gt;&lt;p&gt;$1&lt;/p&gt;&lt;/blockquote&gt;", $content );
+    $content = preg_replace('#\[code\](.+?)\[/code\]#i', "&lt;pre&gt;$1&lt;/pre&gt;", $content );
+    $content = preg_replace('#\[color=(red|blue|green|yellow)\](.+?)\[/color\]#i', "&lt;span style=\"color:$1\"&gt;$2&lt;/span&gt;", $content );
+    $content = preg_replace('#\[url\]((http|ftp)+(s)?:\/\/[a-z0-9./-_~]+?)\[/url\]#i', "&lt;a href=\"$1\" &gt;$1&lt;/a&gt;", $content );
+    $content = preg_replace('#\[img\]([a-z0-9./\-_~]+)\[/img\]#i', "$1", $content );
+  }
 
 return $content;
 }
@@ -148,16 +184,5 @@ function rss_end() {
 return $content;
 }
 
-//
-// Clean up the xml feed
-//
-
-function rss_clean($content) {
-
-  //replace all occurrences of '&' that aren't part of &lt;, &gt;, &amp; or a unicode entity 
-  $content = preg_replace('/&(?!([l|g]t|#[\d]{2,5}|amp);)/', '&amp;', $content );
-
-return $content;
-}
 
 ?>
