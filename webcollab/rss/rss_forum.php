@@ -43,9 +43,9 @@ if(! rss_login() ) {
   die;
 }
 
-
 //check when page was last modified
 if(! ($q = db_query('SELECT '.$epoch.'MAX(posted) ) AS last FROM '.PRE.'forum', 0 ) ) ) {
+
   header("HTTP/1.0 500 Internal Server Error", true, 500 );
   die;
 }
@@ -73,13 +73,8 @@ $row = @db_fetch_array($q, 0 );
 $manager_name      = $row['manager_name'];
 $abbr_manager_name = $row['abbr_manager_name'];
 
-//set the usergroup permissions on queries (Admin can see all)
-if(ADMIN ) {
-  $tail = ' ';
-}
-else {
-  $tail = 'WHERE (usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$row['id'].') OR usergroupid=0) ';
-}
+//set the usergroup permissions on queries
+$tail = rss_usergroup_tail();
 
 //main query
 if(! ($q = db_query('SELECT '.PRE.'forum.id AS forumid,
@@ -102,18 +97,15 @@ if(! ($q = db_query('SELECT '.PRE.'forum.id AS forumid,
 $content = rss_start($last_mod, $manager_name, $abbr_manager_name );
 
 //set constants
-$gmdate = gmdate('D, d M Y H:i:s');
+$gmdate = gmdate('D, d M Y H:i:s').' GMT';
 $guid   = md5($manager_name.BASE_URL);
-
-//html encode '<' and '>' tags in text to suit RSS 2.00
-$trans = array('<'=>'&lt;', '>'=>'&gt;' );
 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   $content .= "<item>\n".
-              "<title>".strtr($row['taskname'], $trans )." - ".$row['fullname']."</title>\n".
+              "<title>".$row['taskname']." - ".$row['fullname']."</title>\n".
               "<link>".BASE_URL."index.php?taskid=".$row['taskid']."</link>\n".
-              "<description>".strtr($row['text'], $trans )."</description>\n".
+              "<description>".rss_bbcode($row['text'] )."</description>\n".
               "<pubDate>".$gmdate."</pubDate>\n".
               "<guid isPermaLink=\"false\">".$row['forumid']."-".$guid."</guid>\n".
               "</item>\n";
@@ -121,8 +113,6 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 //end xml
 $content .= rss_end();
-
-$content .= rss_clean($content );
 
 echo $content;
 
