@@ -73,17 +73,13 @@ $row = @db_fetch_array($q, 0 );
 $manager_name      = $row['manager_name'];
 $abbr_manager_name = $row['abbr_manager_name'];
 
-//set the usergroup permissions on queries (Admin can see all)
-if(ADMIN ) {
-  $tail = ' ';
-}
-else {
-  $tail = 'WHERE (usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$row['id'].') OR usergroupid=0) ';
-}
+//set the usergroup permissions on queries
+$tail = rss_usergroup_tail();
 
 //main query
 if(! ($q = db_query('SELECT '.PRE.'tasks.id AS id,
                       '.PRE.'tasks.status AS status,
+                      '.PRE.'tasks.text AS text,
                       '.PRE.'tasks.name AS taskname
                       FROM '.PRE.'tasks
                       WHERE '.PRE.'tasks.parent<>0
@@ -98,11 +94,8 @@ if(! ($q = db_query('SELECT '.PRE.'tasks.id AS id,
 $content = rss_start($last_mod, $manager_name, $abbr_manager_name );
 
 //set constants
-$gmdate = gmdate('D, d M Y H:i:s');
+$gmdate = gmdate('D, d M Y H:i:s').' GMT';
 $guid   = md5($manager_name.BASE_URL);
-
-//html encode '<' and '>' tags in text to suit RSS 2.00
-$trans = array('<'=>'&lt;', '>'=>'&gt;' );
 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
@@ -134,8 +127,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 
   $content .= "<item>\n".
-              "<title>".strtr($row['taskname'], $trans )." - ".$status."</title>\n".
+              "<title>".$row['taskname']." - ".$status."</title>\n".
               "<link>".BASE_URL."index.php?taskid=".$row['id']."</link>\n".
+              "<description>".rss_bbcode($row['text'] )."</description>\n".
               "<pubDate>".$gmdate."</pubDate>\n".
               "<guid isPermaLink=\"false\">".$row['id']."-".$guid."</guid>\n".
               "</item>\n";
@@ -143,8 +137,6 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 //end xml
 $content .= rss_end();
-
-$content .= rss_clean($content );
 
 echo $content;
 
