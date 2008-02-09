@@ -34,26 +34,26 @@ function rss_login() {
 
   //valid login attempt ?
   if(! isset($_SERVER['REMOTE_USER']) || (strlen($_SERVER['REMOTE_USER']) == 0 ) ) {
-    header("HTTP/1.0 401 Unauthorized", true, 401 );
-    die;
+
+  rss_error('401', 'Login 1');
   }
 
   //used to get UTF-8 in common.php
   define('RSS', '1' );
 
   if( ! ($q = @db_query('SELECT id, admin FROM '.PRE.'users WHERE name=\''.safe_data($_SERVER['REMOTE_USER'] ).'\' AND deleted=\'f\'', 0 ) ) ) {
-    header("HTTP/1.0 401 Unauthorized", true, 401 );
-    die;
+
+  rss_error('401');
   }
 
   if(db_numrows($q) != 1 ) {
-    header("HTTP/1.0 401 Unauthorized", true, 401 );
-    die;
+
+  rss_error('401', 'Login 2');
   }
 
   if(! ($row = db_fetch_array($q, 0 ) ) ) {
-    header("HTTP/1.0 401 Unauthorized", true, 401 );
-    die;
+
+  rss_error('401', 'Login 3');
   }
 
   define('UID', $row['id'] );
@@ -102,24 +102,6 @@ return;
 }
 
 //
-// SQL tail for user access rights
-//
-
-function rss_usergroup_tail() {
-
-  //set the usergroup permissions on queries (Admin can see all)
-  if(ADMIN ) {
-    $tail = ' ';
-  }
-  else {
-    $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
-              OR '.PRE.'tasks.globalaccess=\'t\'
-              OR '.PRE.'tasks.usergroupid=0) ';
-  }
-  return $tail;
-}
-
-//
 // Start the RSS xml feed headers
 //
 
@@ -149,6 +131,16 @@ function rss_start($last_mod, $manager_name, $abbr_manager_name ) {
               "<generator>WebCollab 2.30</generator>\n";
 
 return $content;
+}
+
+//
+// Take a database timestamp and make it RFC 2822 format
+//
+function rss_time($timestamp ) {
+
+  //format is Saturday, 09 February 2008 12:10:45 +1300
+  return date('D, d M Y h:i:s', $timestamp ).sprintf(' %+03d00', TZ );
+
 }
 
 //
@@ -184,5 +176,26 @@ function rss_end() {
 return $content;
 }
 
+function rss_error($code, $num=0 ) {
+
+  if(DEBUG == 'Y' ) {
+    error("RSS Error", "Error number ".$code."<br />Break ".$num );
+  }
+
+  switch ($code ) {
+
+    case '401':
+      header("HTTP/1.0 401 Unauthorized", true, 401 );
+      break;
+
+    case '500':
+    default:
+      header("HTTP/1.0 500 Internal Server Error", true, 500 );
+      break;
+  }
+
+  //end program
+  die;
+}
 
 ?>
