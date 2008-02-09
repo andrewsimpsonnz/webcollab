@@ -39,14 +39,14 @@ $content = '';
 
 //HTTP login
 if(! rss_login() ) {
-  header("HTTP/1.0 401 Unauthorized", true, 401 );
-  die;
+
+  rss_error('401', 'Tasks 1' );
 }
 
 //get time of last modified task
 if(! ($q = db_query('SELECT '.$epoch.'MAX(edited) ) AS last FROM '.PRE.'tasks', 0 ) ) ) {
-  header("HTTP/1.0 500 Internal Server Error", true, 500 );
-  die;
+
+  rss_error('500', 'Tasks 1' );
 }
 
 if(db_numrows($q) > 0 ) {
@@ -65,37 +65,42 @@ db_user_locale('UTF-8');
 //get site names
 if(! ($q = db_query('SELECT * FROM site_name', 0 ) ) ) {
 
-  header("HTTP/1.0 500 Internal Server Error", true, 500 );
-  die;
+  rss_error('500', 'Tasks 3' );
 }
 
 $row = @db_fetch_array($q, 0 );
 $manager_name      = $row['manager_name'];
 $abbr_manager_name = $row['abbr_manager_name'];
 
-//set the usergroup permissions on queries
-$tail = rss_usergroup_tail();
+//set the usergroup permissions on queries (Admin can see all)
+if(ADMIN ) {
+  $tail = ' ';
+}
+else {
+  $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+            OR '.PRE.'tasks.globalaccess=\'t\'
+            OR '.PRE.'tasks.usergroupid=0) ';
+}
 
 //main query
 if(! ($q = db_query('SELECT '.PRE.'tasks.id AS id,
-                      '.PRE.'tasks.status AS status,
-                      '.PRE.'tasks.text AS text,
-                      '.PRE.'tasks.name AS taskname
-                      FROM '.PRE.'tasks
-                      WHERE '.PRE.'tasks.parent<>0
-                     '.$tail.'
-                      ORDER BY '.PRE.'tasks.edited DESC LIMIT 50', 0 ) ) ) {
+                            '.PRE.'tasks.status AS status,
+                            '.$epoch.' '.PRE.'tasks.edited) AS edited,
+                            '.PRE.'tasks.text AS text,
+                            '.PRE.'tasks.name AS taskname
+                            FROM '.PRE.'tasks
+                            WHERE '.PRE.'tasks.parent<>0
+                          '.$tail.'
+                            ORDER BY '.PRE.'tasks.edited DESC', 0 ) ) ) {
 
-  header("HTTP/1.0 500 Internal Server Error", true, 500 );
-  die;
+  rss_error('500', 'Tasks 4' );
 }
 
 //start xml feed
 $content = rss_start($last_mod, $manager_name, $abbr_manager_name );
 
 //set constants
-$gmdate = gmdate('D, d M Y H:i:s').' GMT';
-$guid   = md5($manager_name.BASE_URL);
+$guid = md5($manager_name.BASE_URL);
 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
@@ -130,7 +135,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
               "<title>".$row['taskname']." - ".$status."</title>\n".
               "<link>".BASE_URL."index.php?taskid=".$row['id']."</link>\n".
               "<description>".rss_bbcode($row['text'] )."</description>\n".
-              "<pubDate>".$gmdate."</pubDate>\n".
+              "<pubDate>".rss_time($row['edited'] )."</pubDate>\n".
               "<guid isPermaLink=\"false\">".$row['id']."-".$guid."</guid>\n".
               "</item>\n";
 }
