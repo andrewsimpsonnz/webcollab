@@ -39,15 +39,13 @@ $content = '';
 
 //HTTP login
 if(! rss_login() ) {
-  header("HTTP/1.0 401 Unauthorized", true, 401 );
-  die;
+  rss_error('401', 'Forum 1' );
 }
 
 //check when page was last modified
 if(! ($q = db_query('SELECT '.$epoch.'MAX(posted) ) AS last FROM '.PRE.'forum', 0 ) ) ) {
 
-  header("HTTP/1.0 500 Internal Server Error", true, 500 );
-  die;
+  rss_error('500', 'Forum 2' );
 }
 
 if(db_numrows($q) > 0 ) {
@@ -66,39 +64,44 @@ db_user_locale('UTF-8');
 //get site names
 if(! ($q = db_query('SELECT * FROM site_name', 0 ) ) ) {
 
-  header("HTTP/1.0 500 Internal Server Error", true, 500 );
-  die;
+  rss_error('500', 'Forum 3' );
 }
+
 $row = @db_fetch_array($q, 0 );
 $manager_name      = $row['manager_name'];
 $abbr_manager_name = $row['abbr_manager_name'];
 
-//set the usergroup permissions on queries
-$tail = rss_usergroup_tail();
+//set the usergroup permissions on queries (Admin can see all)
+if(ADMIN ) {
+  $tail = ' ';
+}
+else {
+  $tail = ' WHERE ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+            OR '.PRE.'tasks.globalaccess=\'t\'
+            OR '.PRE.'tasks.usergroupid=0) ';
+}
 
 //main query
 if(! ($q = db_query('SELECT '.PRE.'forum.id AS forumid,
-                      '.PRE.'forum.text AS text,
-                      '.PRE.'forum.posted AS posted,
-                      '.PRE.'users.fullname AS fullname,
-                      '.PRE.'tasks.id AS taskid,
-                      '.PRE.'tasks.name AS taskname
-                      FROM '.PRE.'forum
-                      LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
-                      LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid) 
-                     '.$tail.'
-                      ORDER BY '.PRE.'forum.posted DESC LIMIT 50', 0 ) ) ) {
+                            '.PRE.'forum.text AS text,
+                            '.$epoch.' '.PRE.'forum.posted) AS posted,
+                            '.PRE.'users.fullname AS fullname,
+                            '.PRE.'tasks.id AS taskid,
+                            '.PRE.'tasks.name AS taskname
+                            FROM '.PRE.'forum
+                            LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
+                            LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid) 
+                          '.$tail.'
+                            ORDER BY '.PRE.'forum.posted DESC', 0 ) ) ) {
 
-  header("HTTP/1.0 500 Internal Server Error", true, 500 );
-  die;
+  rss_error('500', 'Forum 4' );
 }
 
 //start xml feed
 $content = rss_start($last_mod, $manager_name, $abbr_manager_name );
 
 //set constants
-$gmdate = gmdate('D, d M Y H:i:s').' GMT';
-$guid   = md5($manager_name.BASE_URL);
+$guid = md5($manager_name.BASE_URL);
 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
@@ -106,7 +109,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
               "<title>".$row['taskname']." - ".$row['fullname']."</title>\n".
               "<link>".BASE_URL."index.php?taskid=".$row['taskid']."</link>\n".
               "<description>".rss_bbcode($row['text'] )."</description>\n".
-              "<pubDate>".$gmdate."</pubDate>\n".
+              "<pubDate>".rss_time($row['posted'] )."</pubDate>\n".
               "<guid isPermaLink=\"false\">".$row['forumid']."-".$guid."</guid>\n".
               "</item>\n";
 }
