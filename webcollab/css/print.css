@@ -16,9 +16,19 @@ LI LI {
   list-style-type: circle;
 }
 
-/* CSS hack for XHTML strict */
 IMG {
+  /* CSS hack for XHTML strict */
   border-width : 0;
+  /* limit uploaded images */ 
+  max-width: 500px;
+  max-height: 500px;
+}
+
+/* CSS hack to hide hidden input fields */
+FIELDSET {
+   border: none;
+   margin: 0;
+   padding: 0;
 }
 
 TABLE {
