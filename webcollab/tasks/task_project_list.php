@@ -270,7 +270,8 @@ else {
 }
 
 //text link for 'printer friendly' page
-if($action === "project_print" ) {
+if($action == 1 ) {
+
   $content  .= "\n[<a href=\"main.php?x=".$x."&amp;active_only=".$active_only."&amp;condensed=".$condensed."\">".$lang['normal_version']."</a>]";
 }
 else {
