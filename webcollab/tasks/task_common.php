@@ -55,7 +55,7 @@ function percent_complete($taskid ) {
     return 0;
   }
 
-  return round(($tasks_completed / ($total_tasks ) ) * 100 );  
+  return round(($tasks_completed / ($total_tasks ) ) * 100 );
 }
 
 //
