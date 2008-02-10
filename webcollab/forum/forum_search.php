@@ -159,12 +159,10 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
               "[<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".preg_replace($search, $replacement, $row['username'] )."</a>]&nbsp;".
               "(".nicetime($row['posted']).")<br />\n";
 
-  //remove WebCollab added tags (links and email)
-  $text = preg_replace('/<a.[^<]+>|<\a>/', '', $row['text'] );
   //highlight search text
-  $text = preg_replace($search, $replacement, $text);
+  $text = preg_replace($search, $replacement,  $row['text']);
 
-  $content .= nl2br($text )."</li>\n";
+  $content .= nl2br(bbcode($text ) )."</li>\n";
 }
 
 $content .= "</ul>\n";
