@@ -72,12 +72,13 @@ return;
 //
 function db_query($query, $die_on_error=1 ) {
 
-  global $database_connection;
+  global $database_connection, $db_error_message;
 
   if(! $database_connection ) db_connection();
 
   //do it
   if( ! ($result = @pg_query($database_connection, $query ) ) ) {
+    $db_error_message = pg_last_error($database_connection);
 
     if($die_on_error) {
       error('Database query error', 'The following query :<br /><br /><b>'.$query.'</b><br /><br />Had the following error:<br /><b>'.pg_last_error($database_connection).'</b>' );
