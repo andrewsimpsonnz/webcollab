@@ -39,13 +39,13 @@ $content = '';
 
 //HTTP login
 if(! rss_login() ) {
-  rss_error('401', 'Forum 1' );
+  rss_error('401', 'Forum login' );
 }
 
 //check when page was last modified
 if(! ($q = db_query('SELECT '.$epoch.'MAX(posted) ) AS last FROM '.PRE.'forum', 0 ) ) ) {
 
-  rss_error('500', 'Forum 2' );
+  rss_error('500', 'Forum last edit' );
 }
 
 if(db_numrows($q) > 0 ) {
@@ -64,7 +64,7 @@ db_user_locale('UTF-8');
 //get site names
 if(! ($q = db_query('SELECT * FROM site_name', 0 ) ) ) {
 
-  rss_error('500', 'Forum 3' );
+  rss_error('500', 'Forum site name' );
 }
 
 $row = @db_fetch_array($q, 0 );
@@ -94,7 +94,7 @@ if(! ($q = db_query('SELECT '.PRE.'forum.id AS forumid,
                           '.$tail.'
                             ORDER BY '.PRE.'forum.posted DESC', 0 ) ) ) {
 
-  rss_error('500', 'Forum 4' );
+  rss_error('500', 'Forum query' );
 }
 
 //start xml feed

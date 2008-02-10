@@ -40,13 +40,13 @@ $content = '';
 //HTTP login
 if(! rss_login() ) {
 
-  rss_error('401', 'Tasks 1' );
+  rss_error('401', 'Tasks login' );
 }
 
 //get time of last modified task
 if(! ($q = db_query('SELECT '.$epoch.'MAX(edited) ) AS last FROM '.PRE.'tasks', 0 ) ) ) {
 
-  rss_error('500', 'Tasks 1' );
+  rss_error('500', 'Tasks last edit' );
 }
 
 if(db_numrows($q) > 0 ) {
@@ -65,7 +65,7 @@ db_user_locale('UTF-8');
 //get site names
 if(! ($q = db_query('SELECT * FROM site_name', 0 ) ) ) {
 
-  rss_error('500', 'Tasks 3' );
+  rss_error('500', 'Tasks site name' );
 }
 
 $row = @db_fetch_array($q, 0 );
@@ -93,7 +93,7 @@ if(! ($q = db_query('SELECT '.PRE.'tasks.id AS id,
                           '.$tail.'
                             ORDER BY '.PRE.'tasks.edited DESC', 0 ) ) ) {
 
-  rss_error('500', 'Tasks 4' );
+  rss_error('500', 'Tasks query' );
 }
 
 //start xml feed
