@@ -1,4 +1,14 @@
 WebCollab SVN
+*** 10 Febuary 2008
+  Andrew Simpson
+
+- bugfixes to RSS code
+
+- add RSS for projects and files
+
+- add RSS autodiscovery (optional) 
+
+WebCollab SVN
 *** 27 January 2008
   Andrew Simpson
 
