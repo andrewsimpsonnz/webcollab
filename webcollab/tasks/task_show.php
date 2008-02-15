@@ -86,17 +86,17 @@ else {
   $content .= project_jump($taskid);
 }
 
+//start of header table
+$content .= "<table width=\"98%\">\n";
+
 //percentage_completed gauge if this is a project
 if( $TASKID_ROW['parent'] == 0 ) {
-  $content .= sprintf( $lang['percent_project_sprt'], $TASKID_ROW['completed'] )."\n";
-  $content .= show_percent( $TASKID_ROW['completed'] );
+  $content .= "<tr><td>".sprintf( $lang['percent_project_sprt'], $TASKID_ROW['completed'] )."</td></tr>\n";
+  $content .= "<tr><td>".show_percent( $TASKID_ROW['completed'] )."</td></tr>\n";
 }
 
-//start of header table
-$content .= "<table width=\"98%\"><tr><td>\n";
-
 //project/task name
-$content .= "<b>".$TASKID_ROW['name']."</b><br /><br /></td></tr>\n";
+$content .= "<tr><td><b>".$TASKID_ROW['name']."</b><br /><br /></td></tr>\n";
 
 //show text
 $content .= "<tr><td class=\"textbackground\" style=\"width: 95%\">\n";
