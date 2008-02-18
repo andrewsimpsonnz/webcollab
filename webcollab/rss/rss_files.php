@@ -107,7 +107,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<item>\n".
               "<title>".$row['taskname']." - ".$row['filename']."</title>\n".
               "<link>".BASE_URL."index.php?taskid=".$row['taskid']."</link>\n".
-              "<description>".rss_bbcode($row['text'] )."</description>\n".
+              "<description>".rss_bbcode($row['description'] )."</description>\n".
               "<pubDate>".rss_time($row['uploaded'])."</pubDate>\n".
               "<guid isPermaLink=\"false\">".$row['id']."-".$guid."</guid>\n".
               "</item>\n";
