@@ -219,8 +219,8 @@ $content = "<?php\n".
 "  define('NO_ERROR', '".NO_ERROR."' );\n\n".
 "  //Use VEVENT for iCalendar instead of VTODO - works for Google Calendar and others (values are 'N', or 'Y')\n".
 "  define('VEVENT', '".VEVENT."' );\n\n".
-"  //Start day of week on calendar (Sun = 0, Mon = 1, Tue = 2, Wed = 3, etc)\n";
-"  define('START_DAY', ".START_DAY." );\n\n";
+"  //Start day of week on calendar (Sun = 0, Mon = 1, Tue = 2, Wed = 3, etc)\n".
+"  define('START_DAY', ".START_DAY." );\n\n".
 "  //Use external webserver authorisation to login (values are 'N', or 'Y')\n".
 "  define('WEB_AUTH', '".WEB_AUTH."' );\n\n".
 "  //Show passwords in user edit screens as plain text or hidden ('****') (values are 'text', or 'password')\n".
@@ -404,7 +404,7 @@ global $db_setup_connection;
       }
 
       //update the site names in the database
-      mysqli_query($db_setup_connection, "UPDATE ".PRE."site_name SET manager_name='".mysqli_real_escape_string($data["manager_name"] )."', abbr_manager_name='".mysqli_real_escape_string($data["abbr_manager_name"] )."'" );
+      mysqli_query($db_setup_connection, "UPDATE ".PRE."site_name SET manager_name='".mysqli_real_escape_string($db_setup_connection, $data["manager_name"] )."', abbr_manager_name='".mysqli_real_escape_string($db_setup_connection, $data["abbr_manager_name"] )."'" );
 
       break;
 
