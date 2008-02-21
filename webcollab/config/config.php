@@ -183,7 +183,7 @@
   define('PRE', "" );
 
   //version info
-  define('WEBCOLLAB_VERSION', "2.00-beta" );
+  define('WEBCOLLAB_VERSION', "2.30" );
   define('UNICODE_VERSION', "N" );
 
 ?>
