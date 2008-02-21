@@ -9,7 +9,7 @@
   define('SETUP_CSS', 'default.css' );
 
   //version info
-  define('SETUP_WEBCOLLAB_VERSION', "2.01" );
+  define('SETUP_WEBCOLLAB_VERSION', "2.30" );
   define('SETUP_UNICODE_VERSION', "N" );
 
 ?>
