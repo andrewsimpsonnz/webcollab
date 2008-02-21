@@ -19,17 +19,17 @@ CREATE TABLE tasks (
 	globalaccess VARCHAR(5) NOT NULL DEFAULT 't',
 	groupaccess VARCHAR(5) NOT NULL DEFAULT 'f',
 	lastfileupload TIMESTAMP NOT NULL,
-        completed TINYINT NOT NULL DEFAULT 0,
-        completion_time TIMESTAMP NOT NULL,
-        archive TINYINT NOT NULL DEFAULT 0,
-        sequence INT UNSIGNED NOT NULL DEFAULT 0,
-        INDEX (owner),
-        INDEX (parent),
-        INDEX (name(10)),
-        INDEX (projectid),
-        INDEX (taskgroupid),
-        INDEX (deadline),
-        INDEX (status)
+	completed TINYINT NOT NULL DEFAULT 0,
+	completion_time TIMESTAMP NOT NULL,
+	archive TINYINT NOT NULL DEFAULT 0,
+	sequence INT UNSIGNED NOT NULL DEFAULT 0,
+	INDEX (owner),
+	INDEX (parent),
+	INDEX (name(10)),
+	INDEX (projectid),
+	INDEX (taskgroupid),
+	INDEX (deadline),
+	INDEX (status)
 )
 CHARACTER SET = utf8;
 
@@ -41,10 +41,10 @@ CREATE TABLE users (
 	email VARCHAR(200) NOT NULL,
 	admin VARCHAR(5) NOT NULL DEFAULT 'f',
 	private TINYINT NOT NULL DEFAULT 0,
-        guest TINYINT NOT NULL DEFAULT 0,
+	guest TINYINT NOT NULL DEFAULT 0,
 	deleted VARCHAR(5) NOT NULL DEFAULT 'f',
-        locale VARCHAR(10) NOT NULL DEFAULT 'en',
-        INDEX (fullname(10))
+	locale VARCHAR(10) NOT NULL DEFAULT 'en',
+	INDEX (fullname(10))
 )
 CHARACTER SET = utf8;
 
@@ -53,7 +53,7 @@ CREATE TABLE usergroups (
 	name VARCHAR(100) NOT NULL,
 	description VARCHAR(255),
 	private TINYINT NOT NULL DEFAULT 0,
-        INDEX (name(10))
+	INDEX (name(10))
 )
 CHARACTER SET = utf8;
 
@@ -62,11 +62,13 @@ CREATE TABLE forum (
 	parent INT UNSIGNED NOT NULL,
 	taskid INT UNSIGNED NOT NULL,
 	posted TIMESTAMP NOT NULL,
+	edited TIMESTAMP NOT NULL,
 	text TEXT,
 	userid INT UNSIGNED NOT NULL,
 	usergroupid INT UNSIGNED NOT NULL,
-        INDEX (taskid),
-        INDEX (posted)
+	sequence INT UNSIGNED NOT NULL DEFAULT 0,
+	INDEX (taskid),
+	INDEX (posted)
 )
 CHARACTER SET = utf8;
 
@@ -76,7 +78,7 @@ CREATE TABLE logins (
 	session_key VARCHAR(100) NOT NULL,
 	ip VARCHAR(100) NOT NULL,
 	lastaccess TIMESTAMP NOT NULL,
-        INDEX (session_key(10), user_id )
+	INDEX (session_key(10), user_id )
 )
 CHARACTER SET = utf8;
 
@@ -92,7 +94,7 @@ CREATE TABLE taskgroups (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(100) NOT NULL,
 	description VARCHAR(255),
-        INDEX (name(10))
+	INDEX (name(10))
 )
 CHARACTER SET = utf8;
 
@@ -113,7 +115,7 @@ CREATE TABLE contacts (
 	added_by INT UNSIGNED NOT NULL,
 	date TIMESTAMP NOT NULL,
 	user_id INT UNSIGNED NOT NULL,
-        taskid INT UNSIGNED NOT NULL DEFAULT 0
+	taskid INT UNSIGNED NOT NULL DEFAULT 0
 
 )
 CHARACTER SET = utf8;
@@ -170,8 +172,17 @@ CREATE TABLE login_attempt (
 )
 CHARACTER SET = utf8;
 
+CREATE TABLE site_name (
+	manager_name VARCHAR(100),
+	abbr_manager_name VARCHAR(100)
+)
+CHARACTER SET = utf8;
+
 INSERT INTO users ( id, name, fullname, password, email, admin, deleted )
 VALUES( 1, 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );
 
 INSERT INTO config ( globalaccess, groupaccess, project_order, task_order )
 VALUES( 'checked', '', 'ORDER BY name', 'ORDER BY name' );
+
+INSERT INTO site_name ( manager_name, abbr_manager_name )
+VALUES( 'WebCollab Project Management', 'WebCollab' );
