@@ -159,7 +159,7 @@ if(version_compare(PHP_VERSION, '4.3.0' ) == -1 ) {
 if(UNICODE_VERSION == 'Y' ) {
   //check that UTF-8 character encoding can be used
   if(! function_exists('mb_internal_encoding') ) {
-    error($lang_setup['no_mbstring'] );
+    secure_error($lang_setup['no_mbstring'] );
   }
 }
 
