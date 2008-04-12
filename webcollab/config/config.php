@@ -93,6 +93,7 @@
           'no'    (Norwegian)
           'nl'    (Dutch)
           'pl'    (Polish)
+          'pt'    (Portuguese)
           'pt-br' (Brazilian Portuguese)
           'ru'    (Russian)
           'se'    (Swedish)
