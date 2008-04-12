@@ -100,6 +100,10 @@ switch(LOCALE_USER ) {
     include(BASE.'lang/pl_long_message.php' );
     break;
 
+  case 'pt':
+    include(BASE.'lang/pt_long_message.php' );
+    break;
+
   case 'pt-br':
     include(BASE.'lang/pt-br_long_message.php' );
     break;
