@@ -30,7 +30,7 @@
 
 
 $taskgroup_info =   "<ul><li>If you delete a taskgroup all tasks belonging to it will be set to uncategorised.</li>\n".
-                      "<li>You can change the name of a category without interfering with the tasks.</li>\n".
+                      "<li>You can change the name of a taskgroup without interfering with the tasks.</li>\n".
                       "<li>Two taskgroups cannot have the same name.</li></ul>\n";
 
 $usergroup_info =   "<ul><li>If you delete a usergroup all the related private forum posts will be deleted too.</li>\n".
