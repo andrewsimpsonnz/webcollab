@@ -168,6 +168,7 @@ $content = "<?php\n".
 "          'ko'    (Korean)\n".
 "          'no'    (Norwegian)\n".
 "          'pl'    (Polish)\n".
+"          'pt'    (Portuguese)\n".
 "          'pt-br' (Brazilian Portuguese)\n".
 "          'ru'    (Russian)\n".
 "          'se'    (Swedish)\n".
