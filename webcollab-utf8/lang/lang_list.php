@@ -48,6 +48,7 @@ $lang_list['ja']    = '日本語';
 $lang_list['ko']    = '한국어';
 $lang_list['no']    = 'Norwegian';
 $lang_list['pl']    = 'Polski';
+$lang_list['pt']    = 'Português';
 $lang_list['pt-br'] = 'Português (Br)';
 $lang_list['ru']    = 'русский';
 $lang_list['se']    = 'Svenska';
