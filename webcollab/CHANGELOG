@@ -1,4 +1,10 @@
 WebCollab SVN
+*** 25 April 2008
+  Andrew Simpson
+
+- bugfix: admin_config include missing in user and file submit
+
+WebCollab SVN
 *** 14 April 2008
   Andrew Simpson
 
