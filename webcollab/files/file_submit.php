@@ -33,7 +33,8 @@ if(! defined('UID' ) ) {
 
 //includes
 include_once(BASE.'includes/usergroup_security.php' );
-        include_once(BASE.'includes/email.php' );
+include_once(BASE.'includes/admin_config.php' );
+include_once(BASE.'includes/email.php' );
 
 //deny guest users
 if(GUEST ){
