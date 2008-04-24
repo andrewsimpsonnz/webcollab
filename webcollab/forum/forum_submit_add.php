@@ -142,7 +142,7 @@ if(sizeof($mail_list) > 0 ){
 
   //get rid of magic_quotes - it is not required here
   if(get_magic_quotes_gpc() ){
-    $message_unclean = stripslashes($message_unclean );  
+    $message_unclean = stripslashes($message_unclean );
   }
   //get & add the mailing list
   if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
