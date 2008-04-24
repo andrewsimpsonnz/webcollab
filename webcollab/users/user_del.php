@@ -31,13 +31,15 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
-//includes
-include_once(BASE.'includes/email.php' );
-
 //admins only
 if(! ADMIN ){
   error('Unauthorised access', 'This function is for admins only.' );
 }
+
+//includes
+include_once(BASE.'includes/admin_config.php' );
+include_once(BASE.'includes/email.php' );
+include_once(BASE.'lang/lang_email.php' );
 
 //get some stupid errors
 if(! @safe_integer($_GET['userid']) ) {
@@ -102,7 +104,6 @@ switch($_GET['action'] ){
        $email = db_result($q, 0, 0 );
 
        //mail the user that he/she had been deleted
-       include_once(BASE.'lang/lang_email.php' );
        email($email, $title_delete_user, $email_delete_user );
      }
     break;
