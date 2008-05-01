@@ -1,4 +1,16 @@
 WebCollab SVN
+*** 27 April 2008
+  Andrew Simpson
+
+- bugfix: max upload file size not shown as integer in HTML code
+
+- check max file size in php.ini during setup.
+
+- show file sizes in Gb, Mb & kb and bytes
+
+- make improvements to input validation
+
+WebCollab SVN
 *** 25 April 2008
   Andrew Simpson
 
