@@ -68,7 +68,7 @@ if(db_numrows($q ) != 0 ) {
   for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
     //file part
-    $content .= "<tr><td><a href=\"files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a> <small>(".$row['size'].$lang['bytes'].") </small>";
+    $content .= "<tr><td><a href=\"files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a> <small>(".nice_size($row['size'] ).") </small>";
 
     //owners of the file and admins have a "delete" and "update" option
     if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['uploader'] ) ) {
