@@ -73,7 +73,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //file part
   $content .= "<tr><td>".$lang['task'].":</td><td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['task_id']."\">".$row['task_name']."</a></td></tr>\n".
-              "<tr><td>".$lang['file']."</td><td><a href=\"files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a>&nbsp;<small>(".$row['size'].$lang['bytes'].")&nbsp;</small>".
+              "<tr><td>".$lang['file']."</td><td><a href=\"files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a>&nbsp;<small>(".nice_size($row['size'] ).")&nbsp;</small>".
               //delete option
               "<span class=\"textlink\">[<a href=\"files.php?x=".$x."&amp;action=submit_del&amp;fileid=".$row['id']."&amp;taskid=-1\" onclick=\"return confirm( '".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename']) )."' )\">".$lang['del']."</a>]</span></td></tr>\n".
               //user part
