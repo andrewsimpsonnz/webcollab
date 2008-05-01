@@ -122,17 +122,34 @@ function validate($body ) {
 function clean_up($body ) {
 
   //change '&' to '&amp;' except when part of an entity, or already changed
-  $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
+  if(! strpos($body, '&' ) === false ) {
+    $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
+  }
 
-  //convert quotes to HTML for XHTML compliance
-  $body = strtr($body, array('"'=>'&quot;', "'"=>'&#039;') );
+  //change ';' to &#059;' except when part of an entity
+  if(! strpos($body, ';' ) === false ) {
+    $body = preg_replace('/(?<!&#[\d]{3}|&#[\d]{4}|&#[\d]{5}|&amp|&gt|&lt|&quot);/', '&#059;', $body );
+  }
+
+  //use HTML for characters that could be used for xss <script> or SQL injection attacks
+  // also convert quotes to HTML for XHTML compliance
+  $trans = array('<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', '%'=>'&#037;', "'"=>'&#039;', '*'=>'&#042;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;' );
+  $body  = strtr($body, $trans );
 
   //prevent SQL injection
   $body = db_escape_string($body );
 
-  //use HTML encoding, or add escapes '\' for characters that could be used for xss <script> or SQL injection attacks
-  $trans = array(';'=>'\;', '<'=>'&lt;', '>'=>'&gt;', '+'=>'\+', '-'=>'\-', '='=>'\=', '%'=>'&#037;' );
-  $body  = strtr($body, $trans );
+  return $body;
+}
+
+//
+// Reverses the HTML entities added in clean_up()
+//
+function html_clean($body ){
+
+  $trans = array( '&amp;'=>'&', '&quot;'=>'"', '&lt;'=>'<', '&gt;'=>'>', '&#037;'=>'%', '&#039;'=>"'", '&#042;'=>'*', '&#043;'=>'+', '&#045;'=>'-', '&#059;'=>';', '&#061;'=>'=', );
+
+  $body = strtr($body, $trans );
 
   return $body;
 }
@@ -154,7 +171,7 @@ function safe_integer($integer ) {
 function box_shorten($body, $len=20 ){
 
   //translate html entities before shortening
-  $body = strtr($body, array('&quot;'=>'"', '&#039;'=>"'", '&lt;'=>'<', '&gt;'=>'>', '&amp;'=>'&' ) );
+  $body = html_clean($body );
 
   //shorten line to fit box
   if(UNICODE_VERSION == 'Y' ) {
@@ -215,6 +232,33 @@ function bbcode($body ) {
     $body = preg_replace('#\[img\](http(s)?:\/\/([a-z0-9./\-_~])+?\.(jpg|jpeg|gif|png))\[/img\]#i', "<img src=\"$1\" alt=\"\"/>", $body );
   }
   return $body;
+}
+
+//
+// Nice format for file size
+//
+
+function nice_size($size ) {
+
+  global $lang;
+
+  if(! $size ) {
+    $size = 0;
+  }
+  elseif($size > (1043741824 ) ) {
+    $size = sprintf('%.2f Gb', ($size/(1043741824 ) ) );
+  }
+  elseif($size > (1048576 ) ) {
+    $size = sprintf('%.2f Mb', ($size/(1048576 ) ) );
+  }
+  elseif($size > 1024 ) {
+    $size = (sprintf('%d kb', $size/(1024 ) ) );
+  }
+  else {
+    $size .= $lang['bytes'];
+  }
+
+  return $size;
 }
 
 //
