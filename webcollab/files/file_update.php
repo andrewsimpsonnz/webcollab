@@ -63,7 +63,7 @@ $content =  "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"fil
               "<input type=\"hidden\" name=\"action\" value=\"submit_update\" />\n".
               "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
               "<input type=\"hidden\" name=\"old_fileid\" value=\"".$fileid."\" />\n".
-              "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"FILE_MAXSIZE\" /></fieldset>\n".
+              "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"".FILE_MAXSIZE."\" /></fieldset>\n".
               "<table class=\"celldata\">\n".
               "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" /></td></tr>\n".
               "<tr><td>".$lang['description'].":</td> <td><textarea name=\"description\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
