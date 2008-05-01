@@ -145,12 +145,9 @@ $content .=   "<tr><td>".$lang['number_forum']."</td><td>".$row."</td></tr>\n";
 $q   = db_query('SELECT COUNT(size), SUM(size) FROM '.PRE.'files WHERE uploader='.$userid );
 $row = db_fetch_num($q, 0 );
 $content .=   "<tr><td>".$lang['number_files']."</td><td>".$row[0]."</td></tr>\n";
-$size = $row[1];
 
-if($size == '') {
-  $size = 0;
-}
-$content .=   "<tr><td>".$lang['size_all_files']."</td><td>".$size.$lang['bytes']."</td></tr>\n".
+//show files
+$content .=   "<tr><td>".$lang['size_all_files']."</td><td>".nice_size($row[1] )."</td></tr>\n".
             "</table>";
 
 new_box($lang['user_info'], $content );
