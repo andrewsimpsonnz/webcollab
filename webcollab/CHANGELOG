@@ -1,4 +1,12 @@
 WebCollab SVN
+*** 8 May 2008
+  Andrew Simpson
+
+- bugfix quoted-printable should be hex, not decimal
+
+- improvements to input validation
+
+WebCollab SVN
 *** 27 April 2008
   Andrew Simpson
 
