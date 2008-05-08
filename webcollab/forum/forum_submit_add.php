@@ -138,7 +138,7 @@ if(sizeof($mail_list) > 0 ){
   include_once(BASE.'includes/email.php' );
   include_once(BASE.'lang/lang_email.php' );
 
-  $message_unclean = $_POST['text'];
+  $message_unclean = validate($_POST['text'] );
 
   //get rid of magic_quotes - it is not required here
   if(get_magic_quotes_gpc() ){
