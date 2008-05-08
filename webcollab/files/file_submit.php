@@ -290,7 +290,7 @@ switch($_REQUEST['action'] ) {
         include_once(BASE.'includes/email.php' );
         include_once(BASE.'lang/lang_email.php' );
 
-        $message_unclean = $_POST['description'];
+        $message_unclean = validate($_POST['description'] );
 
         //get rid of magic_quotes - it is not required here
         if(get_magic_quotes_gpc() ) {
