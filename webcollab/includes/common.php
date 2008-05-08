@@ -54,8 +54,10 @@ function safe_data($body ) {
 
   //remove line breaks (not allowed in single lines!)
   $body = strtr($body, array("\r"=>' ', "\n"=>' ' ) );
-
-  $body = clean_up($body);
+  //add HTML entities
+  $body = html_clean_up($body);
+  //prevent SQL injection
+  $body = db_escape_string($body );
 
 return $body;
 }
@@ -82,8 +84,10 @@ function safe_data_long($body ) {
   //break up long non-wrap words
   $pattern_modifier = (UNICODE_VERSION == 'Y' ) ? 'u' : '';
   $body = preg_replace("/[^\s\n\t]{100}/".$pattern_modifier, "$0\n", $body );
-
-  $body = clean_up($body);
+  //add HTML entities
+  $body = html_clean_up($body);
+  //prevent SQL injection
+  $body = db_escape_string($body );
 
 return $body;
 }
@@ -119,37 +123,22 @@ function validate($body ) {
   return $body;
 }
 
-function clean_up($body ) {
+function html_clean_up($body ) {
 
-  //change '&' to '&amp;' except when part of an entity, or already changed
-  if(! strpos($body, '&' ) === false ) {
-    $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
+  if(version_compare(PHP_VERSION, '5.2.3', '>=' ) ) {
+    $body = htmlspecialchars($body, ENT_QUOTES, CHARACTER_SET, false );
+
   }
-
-  //change ';' to &#059;' except when part of an entity
-  if(! strpos($body, ';' ) === false ) {
-    $body = preg_replace('/(?<!&#[\d]{3}|&#[\d]{4}|&#[\d]{5}|&amp|&gt|&lt|&quot);/', '&#059;', $body );
+  else {
+    //change '&' to '&amp;' except when part of an entity, or already changed
+    if(! strpos($body, '&' ) === false ) {
+      $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
+    }
+    //use HTML for characters that could be used for xss <script>
+    //  also convert quotes to HTML for XHTML compliance
+    $trans = array('<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', "'"=>'&#039;' );
+    $body  = strtr($body, $trans );
   }
-
-  //use HTML for characters that could be used for xss <script> or SQL injection attacks
-  // also convert quotes to HTML for XHTML compliance
-  $trans = array('<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', '%'=>'&#037;', "'"=>'&#039;', '*'=>'&#042;', '+'=>'&#043;', '-'=>'&#045;', '='=>'&#061;' );
-  $body  = strtr($body, $trans );
-
-  //prevent SQL injection
-  $body = db_escape_string($body );
-
-  return $body;
-}
-
-//
-// Reverses the HTML entities added in clean_up()
-//
-function html_clean($body ){
-
-  $trans = array( '&amp;'=>'&', '&quot;'=>'"', '&lt;'=>'<', '&gt;'=>'>', '&#037;'=>'%', '&#039;'=>"'", '&#042;'=>'*', '&#043;'=>'+', '&#045;'=>'-', '&#059;'=>';', '&#061;'=>'=', );
-
-  $body = strtr($body, $trans );
 
   return $body;
 }
@@ -170,8 +159,8 @@ function safe_integer($integer ) {
 //
 function box_shorten($body, $len=20 ){
 
-  //translate html entities before shortening
-  $body = html_clean($body );
+  //translate HTML entities before shortening
+  $body = html_entity_decode($body, ENT_QUOTES, CHARACTER_SET );
 
   //shorten line to fit box
   if(UNICODE_VERSION == 'Y' ) {
@@ -186,8 +175,7 @@ function box_shorten($body, $len=20 ){
   }
 
   //use HTML encoding for characters that could be used for xss <script>
-  $trans = array('<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', "'"=>'&#039;' );
-  $body  = strtr($body, $trans );
+  $body  = html_clean_up($body);
 
   return $body;
 }
@@ -240,22 +228,20 @@ function bbcode($body ) {
 
 function nice_size($size ) {
 
-  global $lang;
-
   if(! $size ) {
     $size = 0;
   }
   elseif($size > (1043741824 ) ) {
-    $size = sprintf('%.2f Gb', ($size/(1043741824 ) ) );
+    $size = sprintf('%.2f GB', ($size/(1043741824 ) ) );
   }
   elseif($size > (1048576 ) ) {
-    $size = sprintf('%.2f Mb', ($size/(1048576 ) ) );
+    $size = sprintf('%.2f MB', ($size/(1048576 ) ) );
   }
   elseif($size > 1024 ) {
-    $size = (sprintf('%d kb', $size/(1024 ) ) );
+    $size = (sprintf('%d kB', $size/(1024 ) ) );
   }
   else {
-    $size .= $lang['bytes'];
+    $size .= ' B';
   }
 
   return $size;
