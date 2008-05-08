@@ -293,8 +293,7 @@ switch($parentid ){
     $title1 = $title_edit_owner_task;
     $email2 = $email_edit_group_task;
     $title2 = $title_edit_group_task;
-    //get rid of magic_quotes - it is not required here
-    $name_task_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['name'] ) : $_POST['name'];
+    $name_task_unclean = validate($_POST['name'] );
     break;
 }
 
@@ -312,8 +311,8 @@ switch($owner ) {
     break;
   }
 
-  //get rid of magic_quotes - it is not required here
-  $text_unclean = (get_magic_quotes_gpc() ) ? stripslashes($_POST['text'] ) : $_POST['text'];
+  //unclean text
+  $text_unclean = validate($_POST['text'] );
 
 //email owner ?
 if(isset($_POST['mailowner']) && ($_POST['mailowner'] === 'on') && ($owner != 0) ) {
