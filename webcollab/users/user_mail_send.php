@@ -55,76 +55,70 @@ if(empty($_POST['message'] ) ){
 }
 
 //normalise embedded line breaks to '\n' and then wordwrap
-$message_unclean = $_POST['message'];
+$message_unclean = validate($_POST['message'] );
 $message_unclean = str_replace("\r\n", "\n", $message_unclean );
 $message_unclean = str_replace("\r", "\n", $message_unclean );
 $message_unclean = wordwrap($message_unclean, 100 );
 
 //subject
 if(isset($_POST['subject'] ) ) {
-  $subject_unclean = $_POST['subject'];
+  $subject_unclean = validate($_POST['subject'] );
 }
 else {
   $subject_unclean = '';
 }
 
-//get rid of magic_quotes - it is not required here
-if(get_magic_quotes_gpc() ) {
-  $message_unclean = stripslashes($message_unclean );
-  $subject_unclean = stripslashes($subject_unclean );
-}
+//what do you want to send today =]
+switch($_POST['group'] ) {
 
-  //what do you want to send today =]
-  switch($_POST['group'] ) {
+  case 'all':
+    //select all users
+    $q = db_query('SELECT email FROM '.PRE.'users WHERE deleted=\'f\'' );
 
-    case 'all':
-      //select all users
-      $q = db_query('SELECT email FROM '.PRE.'users WHERE deleted=\'f\'' );
+    for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
+      $address_array[$i] = $row[0];
+    }
+    break;
 
-      for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
-        $address_array[$i] = $row[0];
-      }
-      break;
+  case 'group':
+    //check if any usergroups have been sent
+    if(! empty($_POST['usergroup'] ) ){
+      $max = sizeof($_POST['usergroup'] );
+    }
+    else {
+      warning($lang['admin_email'], $lang['no_usergroups'] );
+    }
+    (array)$usergroup = $_POST['usergroup'];
 
-    case 'group':
-      //check if any usergroups have been sent
-      if(! empty($_POST['usergroup'] ) ){
-        $max = sizeof($_POST['usergroup'] );
-      }
-      else {
-        warning($lang['admin_email'], $lang['no_usergroups'] );
-      }
-      (array)$usergroup = $_POST['usergroup'];
+    //initialise address_array counter
+    $k = 0;
 
-      //initialise address_array counter
-      $k = 0;
+    //loop through chosen usergroups
+    for($i=0 ; $i < $max ; ++$i ){
+      //check for security, then get users for each usergroup
+      if(isset($usergroup[$i] ) && safe_integer($usergroup[$i] ) ){
+        $q = db_query('SELECT '.PRE.'users.email
+                        FROM '.PRE.'usergroups_users
+                        LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'usergroups_users.userid)
+                        WHERE '.PRE.'usergroups_users.usergroupid='.$usergroup[$i].'
+                        AND '.PRE.'users.deleted=\'f\'' );
 
-      //loop through chosen usergroups
-      for($i=0 ; $i < $max ; ++$i ){
-        //check for security, then get users for each usergroup
-        if(isset($usergroup[$i] ) && safe_integer($usergroup[$i] ) ){
-          $q = db_query('SELECT '.PRE.'users.email
-                          FROM '.PRE.'usergroups_users
-                          LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'usergroups_users.userid)
-                          WHERE '.PRE.'usergroups_users.usergroupid='.$usergroup[$i].'
-                          AND '.PRE.'users.deleted=\'f\'' );
-
-          //loop through result rows and add users to the list
-          for($j = 0 ; $row = @db_fetch_num($q, $j ) ; ++$j ){
-            $address_array[$k] = $row[0];
-            ++$k;
-          }
+        //loop through result rows and add users to the list
+        for($j = 0 ; $row = @db_fetch_num($q, $j ) ; ++$j ){
+          $address_array[$k] = $row[0];
+          ++$k;
         }
       }
-      break;
+    }
+    break;
 
-    case 'maillist':
-      //mailing list is added in below for every case - we don't specifically add it in here
-      break;
+  case 'maillist':
+    //mailing list is added in below for every case - we don't specifically add it in here
+    break;
 
-    default:
-      error('Admin email', 'No group or user descriptor is set' );
-      break;
+  default:
+    error('Admin email', 'No group or user descriptor is set' );
+    break;
 }
 
 if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
