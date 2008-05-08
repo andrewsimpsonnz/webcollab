@@ -38,7 +38,7 @@ include_once(BASE.'includes/usergroup_security.php' );
 $fp = '';
 
 if( ! @safe_integer($_GET['fileid']) ){
-  return;
+  error('Download file', 'Not a valid fileid' );
 }
 
 $fileid = $_GET['fileid'];
