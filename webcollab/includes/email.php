@@ -243,8 +243,6 @@ debug		Debug!
 function & clean($text ) {
 
   //characters previously escaped/encoded to avoid SQL injection/CSS attacks are reinstated.
-  $text = html_clean($text );
-
   $text = @html_entity_decode($text, ENT_QUOTES , CHARACTER_SET );
 
   //remove any dangerous tags that exist
@@ -288,7 +286,7 @@ function & message($message, & $email_encode, & $message_charset, & $body, $bit8
           $body = '';
 
           //replace high ascii, control and = characters (RFC 2045)
-          $message = preg_replace('/([\x00-\x08\x0B\x0C\x0E-\x1F\x3D\x7F-\xFF])/e', "'='.sprintf('%02X', ord('\\1'))", $message);
+          $message = preg_replace('/([\x00-\x08\x0B\x0C\x0E-\x1F\x3D\x7F-\xFF])/e', "'='.sprintf('%02X', strtoupper(dechex(ord('\\1'))))", $message);
 
           //break into lines no longer than 76 characters including '=' at line end (RFC 2045)
           $message = preg_replace ('/(.{1,72}[^=\n][^=\n])/s', '\\1'."=\n", $message );
@@ -386,7 +384,7 @@ function header_encoding($header_type, $header, $header_suffix='' ) {
       else {
         //PHP code for quoted printable conversion to RFC 2047
         // replace high ascii, control, =, ?, <tab> and <space> characters (RFC 2047)
-        $header = preg_replace('/([\x00-\x08\x09\x0B\x0C\x0E-\x1F\x20\x3D\x3F\x7F-\xFF])/e', "'='.sprintf('%02X', ord('\\1'))", $header);
+        $header = preg_replace('/([\x00-\x08\x09\x0B\x0C\x0E-\x1F\x20\x3D\x3F\x7F-\xFF])/e', "'='.sprintf('%02X', strtoupper(dechex(ord('\\1'))))", $header);
 
         //break into lines no longer than 76 characters including '?' and '=' (RFC 2047)
         //don't split line around coded character (eg. '=20' == <space>)
