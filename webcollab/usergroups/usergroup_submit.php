@@ -48,7 +48,7 @@ switch($_REQUEST['action'] ) {
   //delete a usergroup
   case 'submit_del':
 
-    if(! @safe_data($_GET['usergroupid']) ) {
+    if(! @safe_integer($_GET['usergroupid']) ) {
       error('Usergroup submit', 'Not a valid value for usergroupid' );
     }
 
