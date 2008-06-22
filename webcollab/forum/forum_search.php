@@ -66,18 +66,17 @@ if(empty($_REQUEST['string'] ) || strlen(trim($_REQUEST['string'] ) ) == 0 ) {
 //2. Escaped string for database
   $db_string = strtr($string, array('%'=>'\%', '_'=>'\_' ) );
 
-//3. Valid string for screen display
-  $valid_string = validate($_REQUEST['string'] );
-  $valid_string = substr($valid_string, 0, 100 );
-  //convert to HTML and line breaks to match common.php conversion 
-  $trans = array('&'=>'&amp;', '<'=>'&lt;', '>'=>'&gt;', '%'=>'&#037;', "\r"=>'', "\n"=>'','"'=>'&quot;', "'"=>'&apos;' );
-  $valid_string = strtr($valid_string, $trans );
+//3. Valid string for screen display (no database escaping applied)
+  $valid_string = trim(validate($_REQUEST['string'] ) );
+  $valid_string = strtr($valid_string, array("\r"=>'', "\n"=>'' ) );
+  $valid_string = (UNICODE_VERSION == 'Y' ) ? mb_strimwidth($valid_string, 0, 100, '' ) : substr($valid_string, 0, 100 );
+  $valid_string = html_clean_up($valid_string );
 
 //4. Quoted string for regex terms
   $preg_string = preg_quote($string, '/' );
 
 //5. Search string for URL
-  $url_string = htmlspecialchars( urlencode($_REQUEST['string'] ) );
+  $url_string = html_clean_up(urlencode($_REQUEST['string'] ) );
 
 if(! safe_integer($_REQUEST['start']) ) {
   error('Forum search', 'Not a valid integer' );
