@@ -256,10 +256,50 @@ if( ! is_writable($filebase) ) {
   $flag = $flag + 1;
 }
 
-//file settings
+//file directory settings
 $content .= "<tr><td></td><td><br /><br /><b><u>".$lang_setup['setup3_file1']."</u></b></td></tr>\n".
-            "<tr><th>".$lang_setup['file_location']."</th><td>".$filebase."</td><td>".$status."</td></tr>\n".
-            "<tr><th>".$lang_setup['file_size']."</th><td>".$data["file_maxsize"]."</td></tr>\n";
+            "<tr><th>".$lang_setup['file_location']."</th><td>".$filebase."</td><td>".$status."</td></tr>\n";
+
+$status = "<font color=\"green\"><b>".$lang_setup['setup4_ok']."</b></font>";
+
+//check max file size
+$file_php_max = ini_get('upload_max_filesize' );
+
+//check and allow for G, M or K suffixes
+if(preg_match('/[GKM]/i', $file_php_max, $suffix ) ) {
+
+  preg_match('/[0-9]/', $file_php_max, $numeric );
+
+  $file_php_max = $numeric[0];
+
+  switch ($suffix[0] ) {
+    case 'g':
+    case 'G':
+      $file_php_max *= 1024 * 1024 * 1024;
+      break;
+
+    case 'm':
+    case 'M':
+      $file_php_max *= 1024 * 1024;
+      break;
+
+    case 'k':
+    case 'K':
+      $file_php_max *= 1024 ;
+      break;
+
+    default:
+    //do nothing
+    break;
+  }
+}
+
+if ($data["file_maxsize"] > $file_php_max ) {
+  $status = "<font color=\"blue\"><b>".sprintf($lang_setup['setup4_max_file'], $file_php_max )."</b></font>";
+  $flag = $flag + 1;
+}
+
+$content .= "<tr><th>".$lang_setup['file_size']."</th><td>".$data["file_maxsize"]."</td><td>".$status."</td></tr>\n";
 
 $status = "<font color=\"green\"><b>".$lang_setup['setup4_ok']."</b></font>";
 
