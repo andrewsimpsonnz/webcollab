@@ -31,7 +31,8 @@ CREATE TABLE tasks (
 	INDEX (deadline),
 	INDEX (status)
 )
-TYPE = InnoDB;
+TYPE = InnoDB
+CHARACTER SET = utf8;
 
 CREATE TABLE users (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -46,7 +47,8 @@ CREATE TABLE users (
 	locale VARCHAR(10) NOT NULL DEFAULT 'en',
         INDEX (fullname(10))
 )
-TYPE = InnoDB;
+TYPE = InnoDB
+CHARACTER SET = utf8;
 
 CREATE TABLE usergroups (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -55,7 +57,8 @@ CREATE TABLE usergroups (
 	private TINYINT NOT NULL DEFAULT 0,
 	INDEX (name(10))
 )
-TYPE = InnoDB;
+TYPE = InnoDB
+CHARACTER SET = utf8;
 
 CREATE TABLE forum (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -70,7 +73,8 @@ CREATE TABLE forum (
 	INDEX (taskid),
 	INDEX (posted)
 )
-TYPE = InnoDB;
+TYPE = InnoDB
+CHARACTER SET = utf8;
 
 CREATE TABLE logins (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -80,7 +84,8 @@ CREATE TABLE logins (
 	lastaccess TIMESTAMP NOT NULL,
 	INDEX (session_key(10), user_id )
 )
-TYPE = InnoDB;
+TYPE = InnoDB
+CHARACTER SET = utf8;
 
 CREATE TABLE seen (
 	taskid INT UNSIGNED NOT NULL,
@@ -88,7 +93,8 @@ CREATE TABLE seen (
 	time TIMESTAMP NOT NULL,
 	INDEX (taskid, userid)
 )
-TYPE = InnoDB;
+TYPE = InnoDB
+CHARACTER SET = utf8;
 
 CREATE TABLE taskgroups (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -96,7 +102,8 @@ CREATE TABLE taskgroups (
 	description VARCHAR(255),
 	INDEX (name(10))
 )
-TYPE = InnoDB;
+TYPE = InnoDB
+CHARACTER SET = utf8;
 
 CREATE TABLE contacts (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -117,13 +124,15 @@ CREATE TABLE contacts (
 	user_id INT UNSIGNED NOT NULL,
         taskid INT UNSIGNED NOT NULL DEFAULT 0
 )
-TYPE = InnoDB;
+TYPE = InnoDB
+CHARACTER SET = utf8;
 
 CREATE TABLE contacts_tasks (
 	contact_id INT,
 	task_id INT
 )
-TYPE = InnoDB;
+TYPE = InnoDB
+CHARACTER SET = utf8;
 
 CREATE TABLE files (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -137,19 +146,22 @@ CREATE TABLE files (
 	taskid INT UNSIGNED NOT NULL,
 	INDEX (taskid)
 )
-TYPE = InnoDB;
+TYPE = InnoDB
+CHARACTER SET = utf8;
 
 CREATE TABLE usergroups_users (
 	usergroupid INT UNSIGNED NOT NULL,
 	userid INT UNSIGNED NOT NULL,
 	INDEX (userid, usergroupid)
 )
-TYPE = InnoDB;
+TYPE = InnoDB
+CHARACTER SET = utf8;
 
 CREATE TABLE maillist (
 	email VARCHAR(200)
 )
-TYPE = InnoDB;
+TYPE = InnoDB
+CHARACTER SET = utf8;
 
 CREATE TABLE config (
 	email_admin VARCHAR(200),
@@ -162,20 +174,23 @@ CREATE TABLE config (
 	project_order VARCHAR(200),
 	task_order VARCHAR(200)
 )
-TYPE = InnoDB;
+TYPE = InnoDB
+CHARACTER SET = utf8;
 
 CREATE TABLE login_attempt ( 
 	name VARCHAR(100) NOT NULL,
 	ip VARCHAR(100) NOT NULL,
 	last_attempt TIMESTAMP NOT NULL
 )
-TYPE = InnoDB;
+TYPE = InnoDB
+CHARACTER SET = utf8;
 
 CREATE TABLE site_name (
 	manager_name VARCHAR(100),
 	abbr_manager_name VARCHAR(100)
 )
-TYPE = InnoDB;
+TYPE = InnoDB
+CHARACTER SET = utf8;
 
 INSERT INTO users ( id, name, fullname, password, email, admin, deleted )
 VALUES( 1, 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );
