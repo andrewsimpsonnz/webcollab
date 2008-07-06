@@ -184,7 +184,7 @@
   define('PRE', "" );
 
   //version info
-  define('WEBCOLLAB_VERSION', "2.30" );
+  define('WEBCOLLAB_VERSION', "2.31" );
   define('UNICODE_VERSION', "N" );
 
 ?>
