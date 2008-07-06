@@ -30,7 +30,8 @@ CREATE TABLE tasks (
 	INDEX (taskgroupid),
 	INDEX (deadline),
 	INDEX (status)
-);
+)
+CHARACTER SET = utf8;
 
 CREATE TABLE users (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -44,7 +45,8 @@ CREATE TABLE users (
 	deleted VARCHAR(5) NOT NULL DEFAULT 'f',
 	locale VARCHAR(10) NOT NULL DEFAULT 'en',
 	INDEX (fullname(10))
-);
+)
+CHARACTER SET = utf8;
 
 CREATE TABLE usergroups (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -52,7 +54,8 @@ CREATE TABLE usergroups (
 	description VARCHAR(255),
 	private TINYINT NOT NULL DEFAULT 0,
 	INDEX (name(10))
-);
+)
+CHARACTER SET = utf8;
 
 CREATE TABLE forum (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -66,7 +69,8 @@ CREATE TABLE forum (
 	sequence INT UNSIGNED NOT NULL DEFAULT 0,
 	INDEX (taskid),
 	INDEX (posted)
-);
+)
+CHARACTER SET = utf8;
 
 CREATE TABLE logins (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -75,21 +79,24 @@ CREATE TABLE logins (
 	ip VARCHAR(100) NOT NULL,
 	lastaccess TIMESTAMP NOT NULL,
 	INDEX (session_key(10), user_id )
-);
+)
+CHARACTER SET = utf8;
 
 CREATE TABLE seen (
 	taskid INT UNSIGNED NOT NULL,
 	userid INT UNSIGNED NOT NULL,
 	time TIMESTAMP NOT NULL,
 	INDEX (taskid, userid)
-);
+)
+CHARACTER SET = utf8;
 
 CREATE TABLE taskgroups (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(100) NOT NULL,
 	description VARCHAR(255),
 	INDEX (name(10))
-);
+)
+CHARACTER SET = utf8;
 
 CREATE TABLE contacts (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -109,12 +116,15 @@ CREATE TABLE contacts (
 	date TIMESTAMP NOT NULL,
 	user_id INT UNSIGNED NOT NULL,
 	taskid INT UNSIGNED NOT NULL DEFAULT 0
-);
+
+)
+CHARACTER SET = utf8;
 
 CREATE TABLE contacts_tasks (
 	contact_id INT,
 	task_id INT
-);
+)
+CHARACTER SET = utf8;
 
 CREATE TABLE files (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -127,17 +137,20 @@ CREATE TABLE files (
 	mime VARCHAR(50),
 	taskid INT UNSIGNED NOT NULL,
 	INDEX (taskid)
-);
+)
+CHARACTER SET = utf8;
 
 CREATE TABLE usergroups_users (
 	usergroupid INT UNSIGNED NOT NULL,
 	userid INT UNSIGNED NOT NULL,
 	INDEX (userid, usergroupid)
-);
+)
+CHARACTER SET = utf8;
 
 CREATE TABLE maillist (
 	email VARCHAR(200)
-);
+)
+CHARACTER SET = utf8;
 
 CREATE TABLE config (
 	email_admin VARCHAR(200),
@@ -149,18 +162,21 @@ CREATE TABLE config (
 	usergroup VARCHAR(50),
 	project_order VARCHAR(50),
 	task_order VARCHAR(50)
-);
+)
+CHARACTER SET = utf8;
 
 CREATE TABLE login_attempt (
 	name VARCHAR(100) NOT NULL,
 	ip VARCHAR(100) NOT NULL,
 	last_attempt TIMESTAMP NOT NULL
-);
+)
+CHARACTER SET = utf8;
 
 CREATE TABLE site_name (
 	manager_name VARCHAR(100),
 	abbr_manager_name VARCHAR(100)
-);
+)
+CHARACTER SET = utf8;
 
 INSERT INTO users ( id, name, fullname, password, email, admin, deleted )
 VALUES( 1, 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );
