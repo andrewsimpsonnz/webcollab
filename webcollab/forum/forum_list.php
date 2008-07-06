@@ -61,7 +61,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
                         LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
                         WHERE '.PRE.'forum.taskid='.$taskid.'
                         AND '.PRE.'forum.usergroupid='.$usergroupid.'
-                        ORDER BY '.PRE.'forum.posted' );
+                        ORDER BY '.PRE.'forum.posted SORT BY DESC' );
 
   //check for any posts
   if(db_numrows($q ) < 1 ){
@@ -152,7 +152,8 @@ function find_children($parent ) {
 
   $content = "<ul>\n";
 
-  for($i=0 ; $i < $post_count ; ++$i ) {
+  //find children posts in reverse order to stored array (natural ascending)
+  for($i = ($post_count - 1 ) ; $i >= 0 ; --$i ) {
 
     if($post_array[$i]['parent'] != $parent ){
       continue;
