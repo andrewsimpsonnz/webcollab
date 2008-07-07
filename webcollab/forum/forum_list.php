@@ -61,7 +61,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
                         LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
                         WHERE '.PRE.'forum.taskid='.$taskid.'
                         AND '.PRE.'forum.usergroupid='.$usergroupid.'
-                        ORDER BY '.PRE.'forum.posted SORT BY DESC' );
+                        ORDER BY '.PRE.'forum.posted DESC' );
 
   //check for any posts
   if(db_numrows($q ) < 1 ){
