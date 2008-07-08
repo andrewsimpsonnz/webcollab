@@ -287,7 +287,7 @@ $content .=  "</select></td>\n";
 
 //year
 $content .= "<td><select name=\"year\" onchange=\"javascript:this.form.submit()\">\n";
-for( $i=2001; $i<2011 ; ++$i ) {
+for( $i=2001; $i<2015 ; ++$i ) {
   $content .= "<option value=\"".$i."\"";
 
   if( $year == $i ) {
