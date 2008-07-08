@@ -67,14 +67,16 @@ else {
 }
 
 //get the taskid
-$q = db_query('SELECT taskid FROM '.PRE.'forum WHERE userid='.UID.' AND id='.$postid );
-
-$taskid = db_result($q, 0, 0 );
+$q = db_query('SELECT taskid, parent FROM '.PRE.'forum WHERE userid='.UID.' AND id='.$postid );
 
 //check for editing rights
 if(db_numrows($q ) == 0 ) {
   error('Forum submit', 'You are not authorised to edit that post.' );
 }
+
+$row = db_fetch_array($q, 0 );
+$taskid   = $row['taskid'];
+$parentid = $row['parent'];
 
 //update the post
 db_begin();
