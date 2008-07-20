@@ -41,13 +41,14 @@ include_once(BASE.'includes/time.php' );
 function listTasks($projectid ) {
 
   global $task_uncompleted, $task_projectid;
-  global $task_array, $parent_array, $shown_array, $shown_count, $task_count;
+  global $task_array, $parent_array, $shown_array, $task_count;
+
 
   //initialise variables
   $task_array   = array();
   $parent_array = array();
   $shown_array  = array();
-  $shown_count  = 0;  //counter for $shown_array
+  $check_array  = array();
   $task_count   = 0;  //counter for $task_array
 
   //search for uncompleted tasks by projectid
@@ -63,6 +64,9 @@ function listTasks($projectid ) {
     $task_array[$task_count]['id']     = $task_uncompleted[($key)]['id'];
     $task_array[$task_count]['parent'] = $task_uncompleted[($key)]['parent'];
     $task_array[$task_count]['task']   = $task_uncompleted[($key)]['task'];
+
+    //used to check for orphaned subtasks
+    $check_array[($task_array[$task_count]['id'])] = 1;
 
     //if this is a subtask, store the parent id
     if($task_array[$task_count]['parent'] != $projectid ) {
@@ -80,14 +84,21 @@ function listTasks($projectid ) {
   //iteration for main tasks
   for($i=0 ; $i < $task_count ; ++$i ){
 
-    //ignore subtasks in this iteration
-    if($task_array[$i]['parent'] != $projectid ){
+    //ignore items already shown
+    if(isset($shown_array[($task_array[$i]['id'])]) ) {
       continue;
     }
+
+    //ignore subtasks in this iteration, unless parent is not listed to be shown
+    if(($task_array[$i]['parent'] != $projectid ) && (isset($check_array[($task_array[$i]['parent'])] ) ) )  {
+      continue;
+    }
+
     //show line
     $content .= $task_array[$i]['task'];
-    $shown_array[$shown_count] = $task_array[$i]['id'];
-    ++$shown_count;
+
+    //add to shown array
+    $shown_array[($task_array[$i]['id'])] = 1;
 
     //if this task has children (subtasks), iterate recursively to find them
     if(isset($parent_array[($task_array[$i]['id'])] ) ) {
@@ -96,14 +107,6 @@ function listTasks($projectid ) {
     $content .= "</li>\n";
   }
 
-  //look for any orphaned tasks, and show them too
-  if($task_count != $shown_count ) {
-    for($i=0 ; $i < $task_count ; ++$i ) {
-      if(! in_array($task_array[$i]['id'], (array)$shown_array ) ) {
-        $content .= $task_array[$i]['task']."</li>\n";
-      }
-    }
-  }
   $content .= "</ul>\n";
 
   return $content;
@@ -114,9 +117,10 @@ function listTasks($projectid ) {
 //
 function find_children($parent ) {
 
-  global $task_array, $parent_array, $shown_array, $task_count, $shown_count;
+  global $task_array, $parent_array, $shown_array, $task_count;
 
-  $content = "<ul>\n";
+  $content_flag = 0;
+  $content = "\n<ul>\n";
 
   for($i=0 ; $i < $task_count ; ++$i ) {
 
@@ -124,9 +128,18 @@ function find_children($parent ) {
     if($task_array[$i]['parent'] != $parent ){
       continue;
     }
+
+    if(isset($shown_array[($task_array[$i]['id'])]) ) {
+      continue;
+    }
+
     $content .= $task_array[$i]['task'];
-    $shown_array[$shown_count] = $task_array[$i]['id'];
-    ++$shown_count;
+
+    //we have content to show
+    $content_flag = 1;
+
+    //add to shown array, so that we don't show it again!
+    $shown_array[($task_array[$i]['id'])] = 1;
 
     //if this task has children (subtasks), iterate recursively to find them
     if(isset($parent_array[($task_array[$i]['id'])] ) ) {
@@ -135,6 +148,11 @@ function find_children($parent ) {
     $content .= "</li>\n";
   }
   $content .= "</ul>\n";
+
+  if(! $content_flag ) {
+    $content = '';
+  }
+
   return $content;
 }
 
@@ -201,18 +219,18 @@ if(! $condensed) {
     //add suffix information
     switch( $row[4] ) {
       case 'cantcomplete':
-        $suffix = "</a> &nbsp;<b><i>".$task_state['cantcomplete']."</i></b><br />\n";
+        $suffix = "</a> &nbsp;<b><i>".$task_state['cantcomplete']."</i></b><br />";
         break;
 
       case 'notactive':
-        $suffix = "</a> &nbsp;<i>".$task_state['task_planned']."</i><br />\n";
+        $suffix = "</a> &nbsp;<i>".$task_state['task_planned']."</i><br />";
         break;
 
       default:
         $suffix = '</a>';
         //check if late
         if( (TIME_NOW - $row[6]) >= 86400 ) {
-          $suffix = "</a> &nbsp;<span class=\"late\">".$lang['late_g']."</span><br />\n";
+          $suffix = "</a> &nbsp;<span class=\"late\">".$lang['late_g']."</span><br />";
         }
         break;
     }
