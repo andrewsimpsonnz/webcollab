@@ -1,10 +1,18 @@
 WebCollab SVN
+*** 23 July 2008
+  Andrew Simpson
+
+- bugfix: HTML sometimes invalid with nested tasks and taskgroups in ToDo
+
+- better handling of orphaned tasks in task_project_list and task_todo_list
+
+WebCollab SVN
 *** 6 July 2008
   Andrew Simpson
 
 - show forum posts with newest first (Credit: KoPoJIb)
 
-- database tables to UTF-8
+- change database tables to UTF-8
 
 WebCollab SVN
 *** 8 May 2008
