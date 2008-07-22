@@ -49,7 +49,6 @@ function listTasks($projectid ) {
   $shown_array    = array();
   $check_array    = array();
   $task_count     = 0;  //counter for $task_array
-  $stored_groupid = NULL;
 
   //search for uncompleted tasks by projectid
   $task_key = array_keys((array)$task_projectid, $projectid );
@@ -85,7 +84,9 @@ function listTasks($projectid ) {
   //check if we have taskgroups
   if($task_array[0]['group_id'] ) {
     $content = '';
+    $stored_groupid = '';
     $taskgroup_flag = 1;
+    $taskgroup_initial_flag = 1;
   }
   else {
     $content = "<ul>\n";
@@ -109,10 +110,10 @@ function listTasks($projectid ) {
     if($taskgroup_flag ) {
 
       //check if taskgroup has changed from last iteration
-      if($stored_groupid != $task_array[$i]['group_id'] ) {
+      if(($stored_groupid != $task_array[$i]['group_id'] ) || $taskgroup_initial_flag ) {
 
         //don't need </ul> before first taskgroup heading (no <ul> is set)
-        if($stored_groupid !== NULL ) {
+        if( ! $taskgroup_initial_flag ) {
           $content .= "</ul>\n";
         }
 
@@ -132,8 +133,9 @@ function listTasks($projectid ) {
 
         $content .= "</p>\n<ul>\n";
 
-        //store current groupid
+        //store current groupid & clear initial flag
         $stored_groupid = $task_array[$i]['group_id'];
+        $taskgroup_initial_flag = 0;
       }
     }
 
