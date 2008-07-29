@@ -135,7 +135,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 
     //if this post has children (subposts), iterate recursively to find them
     if(isset($parent_array[($post_array[$i]['id'])] ) ) {
-      $content .= find_children($post_array[$i]['id'] );
+      $content .= find_forum_children($post_array[$i]['id'] );
     }
     $content .= "</li>\n";
   }
@@ -146,7 +146,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 //
 // List subposts (recursive function)
 //
-function find_children($parent ) {
+function find_forum_children($parent ) {
 
   global $post_array, $parent_array, $post_count;
 
@@ -162,7 +162,7 @@ function find_children($parent ) {
 
     //if this post has children (subposts), iterate recursively to find them
     if(isset($parent_array[($post_array[$i]['id'])] ) ){
-      $content .= find_children($post_array[$i]['id'] );
+      $content .= find_forum_children($post_array[$i]['id'] );
     }
     $content .= "</li>\n";
   }
