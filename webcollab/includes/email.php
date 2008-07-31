@@ -286,7 +286,7 @@ function & message($message, & $email_encode, & $message_charset, & $body, $bit8
           $body = '';
 
           //replace high ascii, control and = characters (RFC 2045)
-          $message = preg_replace('/([\x00-\x08\x0B\x0C\x0E-\x1F\x3D\x7F-\xFF])/e', "'='.sprintf('%02X', strtoupper(dechex(ord('\\1'))))", $message);
+          $message = preg_replace('/([\x00-\x08\x0B\x0C\x0E-\x1F\x3D\x7F-\xFF])/e', "'='.sprintf('%02X', strtoupper(ord('\\1')))", $message);
 
           //break into lines no longer than 76 characters including '=' at line end (RFC 2045)
           $message = preg_replace ('/(.{1,72}[^=\n][^=\n])/s', '\\1'."=\n", $message );
