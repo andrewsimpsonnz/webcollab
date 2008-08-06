@@ -48,7 +48,7 @@ if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
 
   $taskid = $_GET['taskid'];
 
-  require_once(BASE.'includes/details.php' );
+  include_once(BASE.'includes/details.php' );
 
   //don't show options for archived projects
   if($TASKID_ROW['archive'] == 0 ) {

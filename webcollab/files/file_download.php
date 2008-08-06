@@ -32,7 +32,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
-include_once(BASE.'includes/usergroup_security.php' );
+require_once(BASE.'includes/usergroup_security.php' );
 
 //set variables
 $fp = '';

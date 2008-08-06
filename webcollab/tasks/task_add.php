@@ -31,7 +31,7 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
-require_once(BASE.'includes/admin_config.php' );
+include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/time.php' );
 
 //secure vars

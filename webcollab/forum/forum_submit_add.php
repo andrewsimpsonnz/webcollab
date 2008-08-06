@@ -32,9 +32,8 @@ if(! defined('UID' ) ) {
 }
 
 //includes
-require_once(BASE.'includes/admin_config.php');
 require_once(BASE.'includes/usergroup_security.php' );
-
+include_once(BASE.'includes/admin_config.php');
 
 //secure variables
 $mail_list = array();
@@ -136,6 +135,7 @@ if($task_row['usergroupid'] && $mail_group ){
 //do we need to email?
 if(sizeof($mail_list) > 0 ){
   include_once(BASE.'includes/email.php' );
+  include_once(BASE.'includes/time.php' );
   include_once(BASE.'lang/lang_email.php' );
 
   $message_unclean = validate($_POST['text'] );

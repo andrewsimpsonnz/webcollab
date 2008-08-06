@@ -32,9 +32,9 @@ if(! defined('UID' ) ) {
 }
 
 //includes
-require_once(BASE.'includes/details.php' );
+require_once(BASE.'includes/usergroup_security.php' );
+include_once(BASE.'includes/details.php' );
 include_once(BASE.'includes/time.php' );
-include_once(BASE.'includes/usergroup_security.php' );
 
 //
 // Recursive function for listing all posts of a task

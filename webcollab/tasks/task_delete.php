@@ -32,7 +32,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
-require_once(BASE.'includes/admin_config.php' );
+include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'tasks/task_common.php' );
 
 //

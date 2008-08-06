@@ -32,8 +32,8 @@ if(! defined('UID' ) ) {
 }
 
 //includes
-require_once(BASE.'includes/admin_config.php' );
 require_once(BASE.'includes/usergroup_security.php' );
+include_once(BASE.'includes/admin_config.php' );
 
 //secure vars
 $content = '';

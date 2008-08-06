@@ -32,9 +32,8 @@ if(! defined('UID' ) ) {
 }
 
 //includes
-include_once(BASE.'includes/usergroup_security.php' );
+require_once(BASE.'includes/usergroup_security.php' );
 include_once(BASE.'includes/admin_config.php' );
-include_once(BASE.'includes/email.php' );
 
 //deny guest users
 if(GUEST ){
@@ -288,6 +287,7 @@ switch($_REQUEST['action'] ) {
       //do we need to email?
       if(sizeof($mail_list) > 0 ) {
         include_once(BASE.'includes/email.php' );
+        include_once(BASE.'includes/time.php' );
         include_once(BASE.'lang/lang_email.php' );
 
         $message_unclean = validate($_POST['description'] );

@@ -40,7 +40,7 @@ if( @safe_integer($_GET['taskid']) ) {
 
   $taskid = $_GET['taskid'];
 
-  require_once(BASE.'includes/details.php' );
+  include_once(BASE.'includes/details.php' );
 
   $content .= "<small><b>".$lang['project'].":</b></small><br />\n";
 
