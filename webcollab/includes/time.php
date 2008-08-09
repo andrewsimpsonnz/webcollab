@@ -61,7 +61,7 @@ function nicedate($timestamp ) {
   $date_array = explode('-', substr($timestamp, 0, 10) );
 
   //format is 2004-Aug-02
-  return $date_array[0].'-'.$month_array[(int)($date_array[1])].'-'.$date_array[2];
+  return sprintf('%04d-%s-%02d', $date_array[0], $month_array[(int)($date_array[1])], $date_array[2] );
 }
 
 //
@@ -90,9 +90,9 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
 
   //filter for no date set
   if($day == -1 || $month == -1 || $year == -1 ) {
-    $day   = date('d', TIME_NOW - date('Z') + TZ*60*60 );
-    $month = date('m', TIME_NOW - date('Z') + TZ*60*60 );
-    $year  = date('Y', TIME_NOW - date('Z') + TZ*60*60 );
+    $day   = date('d', TIME_NOW - date('Z') + TZ * 3600 );
+    $month = date('m', TIME_NOW - date('Z') + TZ * 3600 );
+    $year  = date('Y', TIME_NOW - date('Z') + TZ * 3600 );
   }
 
   //day
