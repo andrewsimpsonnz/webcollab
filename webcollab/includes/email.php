@@ -107,6 +107,7 @@ function email($to, $subject, $message ) {
   //see if server is offering 8bit mime capability & pipelining
   if( ! strpos($capability, '8BITMIME' ) === false ) {
     $bit8 = true;
+    $log .= "8BITMIME is available...\n";
   }
 
   if( ! strpos($capability, 'PIPELINING' ) === false ) {
@@ -260,9 +261,9 @@ function & message($message, & $email_encode, & $message_charset, & $body, $bit8
   //clean up message
   $message = clean($message );
 
-  //normalise end-of-lines (\r\n, \r, \n ) in message body to \n - and change to \r\n later
+  //normalise end-of-lines (\r\n, \r, \n ) in message body to \r\n (RFC 2821)
   $message = str_replace("\r\n", "\n", $message );
-  $message = str_replace("\r", "\n", $message );
+  $message = strtr($message, array("\n" => "\r\n", "\r" => "\r\n" ) );
 
   //check if message contains high bit ascii characters and set encoding to match mailer capabilities
   switch(preg_match('/([\x7F-\xFF])/', $message ) ) {
@@ -274,9 +275,6 @@ function & message($message, & $email_encode, & $message_charset, & $body, $bit8
           $email_encode = '8bit';
           $message_charset = CHARACTER_SET;
           $body = ' BODY=8BITMIME';
-
-          //break up any lines longer than 998 bytes (RFC 821)
-          $message = wordwrap($message, 998, "\n", 1 );
           break;
 
         case false:
@@ -286,13 +284,14 @@ function & message($message, & $email_encode, & $message_charset, & $body, $bit8
           $body = '';
 
           //replace high ascii, control and = characters (RFC 2045)
-          $message = preg_replace('/([\x00-\x08\x0B\x0C\x0E-\x1F\x3D\x7F-\xFF])/e', "'='.sprintf('%02X', strtoupper(ord('\\1')))", $message);
+          $message = preg_replace('/([\x00-\x08\x0B\x0C\x0E-\x1F\x3D\x7F-\xFF])/e', "sprintf('=%02X', ord('\\1'))", $message);
 
           //break into lines no longer than 76 characters including '=' at line end (RFC 2045)
-          $message = preg_replace ('/(.{1,72}[^=\n][^=\n])/s', '\\1'."=\n", $message );
+          $message = preg_replace ('/(.{1,72}[^=\n][^=\n])/', '\\1'."=\r\n", $message );
 
           //replace spaces and tabs when it's the last character on a line (RFC 2045)
-          $message  = strtr($message, array("\t=\n" => "=09=\n", " =\n" => "=20=\n" ) );
+          $message  = strtr($message, array("\t=\r\n" => "=09=\r\n", " =\r\n" => "=20=\r\n" ) );
+
           break;
         }
       break;
@@ -302,15 +301,13 @@ function & message($message, & $email_encode, & $message_charset, & $body, $bit8
       $email_encode = '7bit';
       $message_charset = 'us-ascii';
       $body = '';
-      //break up any lines longer than 998 bytes (RFC 821)
-      $message = wordwrap($message, 998, "\n", 1 );
       break;
   }
 
+  //break up any lines longer than 998 bytes (RFC 2821)
+  $message = wordwrap($message, 998, "\r\n", true );
   //lines starting with "." get an additional "." added. (RFC 2821 - 4.5.2)
   $message = preg_replace('/^[\.]/m', '..', $message );
-  //change line endings to \r\n (RFC2821)
-  $message = str_replace("\n", "\r\n", $message );
 
 return $message;
 }
@@ -332,19 +329,13 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   $subject = substr($subject, 0, 500 );
   //reinstate any HTML in subject back to text
   $subject =& clean($subject );
-  //get rid of any line breaks (\r\n, \n, \r) in subject line
+  //get rid of any line breaks (\r\n, \n, \r) in subject line (RFC 2045)
   $subject = str_replace(array("\r\n", "\r", "\n"), ' ', $subject );
 
   //now the prepare the 'to' header
-  $line   = 'To: '.join(', ', (array)$to );
-  //lines longer than 998 characters are broken up to separate lines (RFC 821)
+  // lines longer than 998 characters are broken up to separate lines (RFC 2821)
   // (end long line with \r\n, and begin new line with \t)
-  while(strlen($line ) > 990 ) {
-    $pos = strrpos(substr($line, 0, 990 ), ' ' );
-    $headers .= substr($line, 0, $pos )."\r\n\t";
-    $line = substr($line, $pos + 1 );
-  }
-  $headers .= $line."\r\n";
+  $headers .= 'To: '.wordwrap(join(', ', (array)$to ), 990, "\r\n\t", false ) ."\r\n";
 
   //assemble remaining message headers (RFC 821 / RFC 2045)
   $headers .= header_encoding('From: ', ABBR_MANAGER_NAME, '<'.$from.'>' )."\r\n".
@@ -355,7 +346,7 @@ function headers($to, $subject, $email_encode, $message_charset ) {
               "X-Priority: 3\r\n".
               "X-Sender: ".$reply_to."\r\n".
               "Return-Path: <".$reply_to.">\r\n".
-              "Mime-Version: 1.0\r\n".
+              "MIME-Version: 1.0\r\n".
               "Content-Type: text/plain; charset=".$message_charset."\r\n".
               "Content-Transfer-Encoding: ".$email_encode."\r\n".
               "\r\n";
@@ -367,29 +358,30 @@ return $headers;
 //function to encode mail headers with 'quoted printable'
 //
 
-function header_encoding($header_type, $header, $header_suffix='' ) {
+function header_encoding($header_type, $header ) {
 
   //encode subject with 'base64' or'printed-quotable' if high ASCII characters are present
   switch(preg_match('/([\x7F-\xFF])/', $header ) ) {
     case false:
       //no encoding required
-      $header_lines = $header_type .$header .$header_suffix;
+      $header_lines = $header_type .$header;
       break;
 
     case true:
       if(function_exists('mb_encode_mimeheader') ) {
         //base64 encoding to RFC 2047 (because we cannot split 'quoted printable' multibyte characters across different lines)
-        $header_lines = $header_type . mb_encode_mimeheader($header, CHARACTER_SET, 'B', "\r\n\t" ) . $header_suffix;
+        $header_lines = $header_type . mb_encode_mimeheader($header, CHARACTER_SET, 'B', "\r\n\t" );
       }
       else {
         //PHP code for quoted printable conversion to RFC 2047
         // replace high ascii, control, =, ?, <tab> and <space> characters (RFC 2047)
-        $header = preg_replace('/([\x00-\x08\x09\x0B\x0C\x0E-\x1F\x20\x3D\x3F\x7F-\xFF])/e', "'='.sprintf('%02X', strtoupper(dechex(ord('\\1'))))", $header);
+        $header = preg_replace('/([\x00-\x08\x09\x0B\x0C\x0E-\x1F\x20\x3D\x3F\x7F-\xFF])/e', "sprintf('=%02X', ord('\\1'))", $header);
 
         //break into lines no longer than 76 characters including '?' and '=' (RFC 2047)
         //don't split line around coded character (eg. '=20' == <space>)
-        $pattern = '/(.{1,'. (75 - strlen(CHARACTER_SET ) - 8 ) .'}[^=][^=])/';
-        $header_lines = $header_type . preg_replace($pattern, "=?".CHARACTER_SET."?Q?".'\\1'."?=\r\n\t", $header ) . $header_suffix ;
+        $pattern = '/(.{1,'. (75 - strlen(CHARACTER_SET ) - 8 ) .'}[^=][^=])/e';
+        $replace = "'=?'.CHARACTER_SET.'?Q?'.'\\1'.'?=\r\n\t'";
+        $header_lines = $header_type . preg_replace($pattern, $replace, $header ) ;
       }
       break;
   }
@@ -404,10 +396,10 @@ function response() {
 
   global $connection, $log;
 
-  $res = '';
+  $response = '';
 
   while($str = fgets($connection, 256 ) ) {
-    $res .= $str;
+    $response .= $str;
     $log .= 'S : '.$str;
 
     //<space> after three digit code indicates this is last line of data ("-" for more lines)
@@ -416,7 +408,7 @@ function response() {
     }
   }
 
-  return $res;
+  return $response;
 }
 
 
