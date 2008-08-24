@@ -28,8 +28,10 @@
 
 */
 
-// Get current date/time for emails in a preferred format eg: 01 Apr 2004 9:18 am NZDT  
-$email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y \a\t g:i a T' );
+// Get current date/time in prefered timezone
+$ltime = TIME_NOW - date('Z') + TZ * 3600;
+//format is 1.04.2004 09:18 +1200
+$email_date = sprintf('%s %s %s %+03d00', date('Y', $ltime ), $month_array[(date('n', $ltime ))], date('d H:i', $ltime ), TZ );
 
 $title_file_post          = ABBR_MANAGER_NAME.": New file upload: %s";
 $email_file_post          = "Hello,\n\n".

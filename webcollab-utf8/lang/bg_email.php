@@ -33,7 +33,12 @@
 
 // Get current date/time for emails in a preferred format eg: 01 Apr 2004 9:18 am NZDT
 
-$email_date                 = date("d" ) . ". " . $month_array[(date("n" ) )] . " " . date('Y в H:i T' );
+// Get current date/time in prefered timezone
+$ltime = TIME_NOW - date('Z') + TZ * 3600;
+//format is 04. Apr 2008 в 9:13 +1200
+$email_date = sprintf('%s. %s %s в %s %+03d00', date('d', $ltime ), $month_array[(date('n', $ltime ) )], date('Y', $ltime ), date('H:i', $ltime ), TZ );
+
+//$email_date                 = date("d" ) . ". " . $month_array[(date("n" ) )] . " " . date('Y в H:i T' );
 
 $email_commom_header       =   "    Здравейте,\n\n    Това писмо е от страницата на " . MANAGER_NAME . ", информиращо Ви за това, че на " . $email_date;
 

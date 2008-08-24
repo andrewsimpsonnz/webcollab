@@ -32,7 +32,12 @@
 
 */
 
-$email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y g:i a' );
+// Get current date/time in prefered timezone
+$ltime = TIME_NOW - date('Z') + TZ * 3600;
+//format is 01 Apr 2004 09 h 18 +1200
+$email_date = sprintf('%s %s %s h %s %+03d00', date('j', $ltime ), $month_array[(date('n', $ltime ))], date('Y G', $ltime ), date('i', $ltime ),TZ );
+
+//$email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y g:i a' );
 
 $title_file_post          = ABBR_MANAGER_NAME.": Nouveau Fichier ajouté: %s";
 $email_file_post          = "Bonjour,\n\nC'est le site ".MANAGER_NAME." qui vous informe qu'un nouveau fichier a été ajouté le ".$email_date." par %1\$s.\n\n".

@@ -31,7 +31,13 @@
   NOTE: This file is written in UTF-8 character set
 
 */
-$email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y g:i' );
+
+// Get current date/time in prefered timezone
+$ltime = TIME_NOW - date('Z') + TZ * 3600;
+//format is 2004 Apr 01 09:18 +1200
+$email_date = sprintf('%s %s %s %+03d00', date('Y', $ltime ), $month_array[(date('n', $ltime ) )], date('d H:i', $ltime ), TZ );
+
+//$email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y g:i' );
 
 $title_file_post        = ABBR_MANAGER_NAME.": Νέο αρχείο διαθέσιμο: %s";
 $email_file_post        = "Hola,\n\nEl sitio ".MANAGER_NAME." ένα νέο αρχείο φορτώθηκε την  ".$email_date." por %1\$s.\n\n".

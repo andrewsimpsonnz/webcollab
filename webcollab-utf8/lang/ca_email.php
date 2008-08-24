@@ -32,8 +32,11 @@
 
 */
 
-// Get current date/time for emails in a preferred format
-$email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y g:i a ' );
+// Get current date/time in prefered timezone
+$ltime = TIME_NOW - date('Z') + TZ * 3600;
+$email_date = sprintf('%s %s %s %+03d00', date('Y', $ltime ), $month_array[(date('n', $ltime ) )], date('d H:i', $ltime ), TZ );
+
+//$email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y g:i a ' );
 
 //-----
 $title_file_post        = ABBR_MANAGER_NAME.": New file upload: %s";
