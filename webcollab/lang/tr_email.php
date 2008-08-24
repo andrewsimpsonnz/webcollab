@@ -27,8 +27,13 @@
 
 */
 
+// Get current date/time in prefered timezone
+$ltime = TIME_NOW - date('Z') + TZ * 3600;
+//format is 1 Nis 2004 09:18 +1200
+$email_date = sprintf('%s %s %s, %s %+03d00', date('j', $ltime ), $month_array[(date('n', $ltime ) )], date('Y H:i', $ltime ), date('H:i', $ltime ), TZ );
+
 // Get current date/time for emails in a preferred format eg: 1 Nis 2004, 21:18
-$email_date = date("j" )." ".$month_array[(date("n" ) )]." ".date('Y, H:i' );
+//$email_date = date("j" )." ".$month_array[(date("n" ) )]." ".date('Y, H:i' );
 
 $title_file_post          = ABBR_MANAGER_NAME.": Yeni yüklenen dosya: %s";
 $email_file_post          = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde %1\$s tarafýndan yeni bir dosyanýn yüklendiðini haber veriyor.\n\n".

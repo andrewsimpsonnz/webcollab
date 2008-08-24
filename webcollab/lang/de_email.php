@@ -28,7 +28,13 @@
   Maintainer: Michael Bunk <micha137 at users.sourceforge.net>
 
 */
-$email_date = date("d" ).". ".$month_array[(date("n" ) )]." ".date('Y \u\m g:i' );
+
+// Get current date/time in prefered timezone
+$ltime = TIME_NOW - date('Z') + TZ * 3600;
+//format is 04. Apr 2008 um 9:13 +1200
+$email_date = sprintf('%s. %s %s um %s %+03d00', date('d', $ltime ), $month_array[(date('n', $ltime ) )], date('Y', $ltime ), date('H:i', $ltime), TZ );
+
+//$email_date = date("d" ).". ".$month_array[(date("n" ) )]." ".date('Y \u\m g:i' );
 
 $title_file_post        = ABBR_MANAGER_NAME.": Neue Datei wurde hochgeladen: %s";
 $email_file_post        = "Hallo,\n\nIhre ".MANAGER_NAME."-Seite informiert sie, daﬂ eine neue Datei hochgeladen wurde am ".$email_date." durch %1\$s.\n\n".

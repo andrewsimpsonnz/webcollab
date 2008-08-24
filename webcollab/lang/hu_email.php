@@ -32,8 +32,10 @@
 
 */
 
-// Get current date/time for emails in a preferred format eg: 01 Apr 2004 9:18 am NZDT  
-$email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y \a\t g:i a T' );
+// Get current date/time in prefered timezone
+$ltime = TIME_NOW - date('Z') + TZ * 3600;
+//format is 2004 Apr 01 09:18 +1200
+$email_date = sprintf('%s %s %s %+03d00', date('Y', $ltime ), $month_array[(date('n', $ltime ) )], date('d H:i', $ltime ), TZ );
 
 $title_file_post          = ABBR_MANAGER_NAME.": Új feltöltött fájl: %s";
 $email_file_post          = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy új fájlt töltött fel ".$email_date." dátummal a következõ: %1\$s.\n\n".

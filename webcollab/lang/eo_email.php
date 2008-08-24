@@ -31,7 +31,12 @@
   NOTE: This file is written in UTF-8 character set
 
 */
-$email_date = date("d" ).". ".$month_array[(date("n" ) )]." ".date('Y \u\m g:i' );
+
+// Get current date/time in prefered timezone
+$ltime = TIME_NOW - date('Z') + TZ * 3600;
+$email_date = sprintf('%s. %s. %s um %s %+03d00', date('d', $ltime ), $month_array[(date('n', $ltime ) )], date('Y', $ltime ), date('H:i', $ltime), TZ );
+
+//$email_date = date("d" ).". ".$month_array[(date("n" ) )]." ".date('Y \u\m g:i' );
 
 $title_file_post        = ABBR_MANAGER_NAME.": Nova dosiero estis alþutita: %s";
 $email_file_post        = "Saluton, \n\nvia ".MANAGER_NAME."-sistemo informas vin, ke alþutiøis nova dosiero je ".$email_date." de %1\$s.\n\n".

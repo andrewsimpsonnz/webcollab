@@ -27,8 +27,12 @@
 
 */
 
-// Get current date/time for emails in a preferred format eg: 01 Apr 2004 9:18 am NZDT  
-$email_date = date("d. " )." ".$month_array_2p[(date("n" ) )]." ".date('Y \v h:i' );
+// Get current date/time in prefered timezone
+$ltime = TIME_NOW - date('Z') + TZ * 3600;
+//format is 04. Apr 2008 v 9:13 +1200
+$email_date = sprintf('%s. %s  %s v %s %+03d00', date('d', $ltime ), $month_array_2p[(date('n', $ltime ) )], date('Y', $ltime ), date('H:i', $ltime ),TZ );
+
+//$email_date = date("d. " )." ".$month_array_2p[(date("n" ) )]." ".date('Y \v h:i' );
 
 $title_file_post          = ABBR_MANAGER_NAME.": Nahrán nový soubor: %s";
 $email_file_post          = "Dobrý den,\n\n".MANAGER_NAME." Vás informuje, ¾e byl pøidán nový soubor ".$email_date." u¾ivatelem %1\$s.\n\n".
