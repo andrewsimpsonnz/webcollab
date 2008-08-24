@@ -161,7 +161,9 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
       $content .=   "function dateCheck() {\n".
                     "if(!fieldCheck()){\n".
                     "return false;}\n".
-                    "var daysMonth = new Array(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 );\n".
+                    "var daysMonth = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 );\n".
+                    "if(document.getElementById('year').value % 4 == 0 ){\n".
+                    "daysMonth[1] = 29;}\n".
                     "if(document.getElementById('day').value > daysMonth[(document.getElementById('month').value-1)] ){\n".
                     "alert('".$lang['invalid_date_javascript']."');\n".
                     "return false;}\n".
