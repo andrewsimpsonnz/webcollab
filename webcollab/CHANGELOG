@@ -1,3 +1,21 @@
+WebCollab SVN
+*** 24 August 2008
+  Andrew Simpson
+
+- bugfix: revert earlier quoted-printable (fix was buggy)
+
+- minor improvements to email.php
+
+- bugfix: poor language handling of dates in emails improved
+
+- Javascript date check extended to handle leap years
+
+WebCollab SVN
+*** 25 July 2008
+  Andrew Simpson
+
+- task_list.php rewritten to remove recursive function
+
 WebCollab 2.31 - Aberdeen
 *** 24 July 2008
   Andrew Simpson
