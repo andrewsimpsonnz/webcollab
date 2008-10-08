@@ -53,9 +53,9 @@ $content .= "<tr><td></td><td><br />".$lang_setup['setup6_admin_check']."</td></
 
 if(USE_EMAIL == 'Y' ) {
 
-//email settings
-$content .= "<tr><td></td><td><br />".$lang_setup['setup6_email1']."</td></tr>\n".
-            "<tr><th>".$lang_setup['setup6_email2']."</th><td><input type=\"text\" id=\"email\" name=\"admin_email\" value=\"\" size=\"30\" /></td></tr>\n";
+  //email settings
+  $content .= "<tr><td></td><td><br />".$lang_setup['setup6_email1']."</td></tr>\n".
+              "<tr><th>".$lang_setup['setup6_email2']."</th><td><input type=\"text\" id=\"email\" name=\"admin_email\" value=\"\" size=\"30\" /></td></tr>\n";
 }
 
 $content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
