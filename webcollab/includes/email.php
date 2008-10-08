@@ -400,7 +400,7 @@ function response() {
 
   while($str = fgets($connection, 256 ) ) {
     $response .= $str;
-    $log .= 'S : '.$str;
+    $log .= 'S: '.$str;
 
     //<space> after three digit code indicates this is last line of data ("-" for more lines)
     if(strpos($str, ' ' ) == 3 ) {
