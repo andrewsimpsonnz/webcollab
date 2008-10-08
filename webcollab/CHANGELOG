@@ -1,4 +1,10 @@
 WebCollab SVN
+*** 8 October 2008
+  Andrew Simpson
+
+- bugfix: No email selection causes error in setup (Bug #2142273) (Credit: Hayesha Somarathne - hayeshais)
+
+WebCollab SVN
 *** 24 August 2008
   Andrew Simpson
 
