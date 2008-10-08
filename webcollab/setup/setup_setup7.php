@@ -34,8 +34,8 @@ require_once(BASE.'database/database.php' );
 ignore_user_abort(TRUE);
 
 //essential values - must be present
-$array_essential = array('admin_user', 'admin_password', 'admin_password_check', 'admin_email' );
-$array_error     = array('admin_user' => 'username', 'admin_password' => 'password', 'admin_password_check' => 'password', 'admin_email' => 'email' );
+$array_essential = array('admin_user', 'admin_password', 'admin_password_check' );
+$array_error     = array('admin_user' => 'username', 'admin_password' => 'password', 'admin_password_check' => 'password' );
 
 foreach($array_essential as $var ) {
   if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
@@ -45,14 +45,26 @@ foreach($array_essential as $var ) {
   $$var = db_escape_string($$var );
 }
 
-//check for valid email
-if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $admin_email ) ) || (strlen(trim($admin_email) ) > 200 ) ) {
-  error_setup('Invalid email address given' );
-}
-
 //verify passwords
 if(! $admin_password == $admin_password_check ) {
   error_setup('Password check failed' );
+}
+
+//check for valid email
+if(USE_EMAIL == 'Y' ) {
+
+  if(! isset($_POST['admin_email']) || $_POST['admin_email'] == NULL ) {
+    error_setup("The value for email is not set");
+  }
+
+  if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $_POST['admin_email'] ) ) || (strlen(trim($_POST['admin_email']) ) > 200 ) ) {
+    error_setup('Invalid email address given' );
+  }
+
+  $admin_email = $_POST['admin_email'];
+}
+else {
+  $admin_email = NULL;
 }
 
 //update the database
