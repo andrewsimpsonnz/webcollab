@@ -166,15 +166,8 @@ if($parentid != 0 ) {
 //you have already seen this item, no need to announce it to you
 db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES('.UID.', '.$taskid.', now() )');
 
-//set completed percentage project record
-$percent_completed = percent_complete($projectid );
-db_query('UPDATE '.PRE.'tasks SET completed='.$percent_completed.' WHERE id='.$projectid );
-
-//for completed project set the completion time
-if($percent_completed == 100 ){
-  $completion_time = db_result(db_query('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid='.$projectid ), 0, 0 );
-  db_query('UPDATE '.PRE.'tasks SET completion_time=\''.$completion_time.'\' WHERE id='.$projectid );
-}
+//adjust completion status in project
+adjust_completion($projectid );
 
 //transaction complete
 db_commit();
