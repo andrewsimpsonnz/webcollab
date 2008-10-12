@@ -1,4 +1,16 @@
 WebCollab SVN
+*** 11 October 2008
+  Andrew Simpson
+
+- automate year selection box range in calendar*.php and time.php
+
+- remove duplicate code for completion update and provide function in task_submit.php
+
+- make adjustments to status in task_submit_update.php when project status changes
+
+- task_add.php inherits status from project
+
+WebCollab SVN
 *** 8 October 2008
   Andrew Simpson
 
