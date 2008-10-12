@@ -269,8 +269,9 @@ function error($box_title, $error ) {
 
   if((EMAIL_ERROR != NULL ) || (DEBUG === 'Y' ) ) {
 
-    $uid_name = defined('UID_NAME') ? UID_NAME : '';
-    $uid_email = defined('UID_EMAIL') ? UID_EMAIL : '';
+    $uid_name     = defined('UID_NAME') ? UID_NAME : '';
+    $uid_email    = defined('UID_EMAIL') ? UID_EMAIL : '';
+    $manager_name = defined('MANAGER_NAME') ? MANAGER_NAME : 'WebCollab';
 
     //get the post vars
     ob_start();
