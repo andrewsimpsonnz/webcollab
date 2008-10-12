@@ -140,13 +140,37 @@ if( @safe_integer($_GET['parentid']) ) {
   $content .= $priority_select_box;
 
   //status
+  // tasks inherit status from parent
+  $s1=''; $s2=''; $s3=''; $s4='';
+  switch ($parent_row['status'] ) {
+
+    case 'notactive':
+      $s2 = "selected=\"selected\" ";
+      break;
+
+    case 'cantcomplete':
+      $s3 = "selected=\"selected\" ";
+      break;
+
+    case 'done':
+      $s4 = "selected=\"selected\" ";
+      break;
+
+    case 'created':
+    case 'nolimit':
+    case 'active':
+    default:
+      $s1 = "selected=\"selected\" ";
+      break;
+  }
+
   $content .= "<tr><td>".$lang['status'].":</td> <td>\n".
               "<select id=\"projectStatus\" name=\"status\">\n".
-              "<option value=\"created\" selected=\"selected\" >".$task_state['new']."</option>\n".
-              "<option value=\"notactive\" >".$task_state['planned']."</option>\n".
+              "<option value=\"created\" ".$s1.">".$task_state['new']."</option>\n".
+              "<option value=\"notactive\" ".$s2.">".$task_state['planned']."</option>\n".
               "<option value=\"active\" >".$task_state['active']."</option>\n".
-              "<option value=\"cantcomplete\" >".$task_state['cantcomplete']."</option>\n".
-              "<option value=\"done\" >".$task_state['completed']."</option>\n".
+              "<option value=\"cantcomplete\" ".$s3.">".$task_state['cantcomplete']."</option>\n".
+              "<option value=\"done\" ".$s4.">".$task_state['completed']."</option>\n".
               "</select></td></tr>";
 
 
