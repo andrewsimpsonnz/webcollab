@@ -126,24 +126,6 @@ function reparent_children($task_id ) {
 return;
 }
 
-//
-// Adjust and set completion status
-//
-
-function adjust_completion($projectid ) {
-
-  //set completed percentage project record
-  $percent_completed = percent_complete($projectid );
-  db_query('UPDATE '.PRE.'tasks SET completed='.$percent_completed.' WHERE id='.$projectid );
-
-  //for completed project set the completion time
-  if($percent_completed == 100 ){
-    $completion_time = db_result(db_query('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid='.$projectid ), 0, 0 );
-    db_query('UPDATE '.PRE.'tasks SET completion_time=\''.$completion_time.'\' WHERE id='.$projectid );
-  }
-  return;
-}
-
 //MAIN PROGRAM
 if(empty($_POST['name']) ){
   warning($lang['task_submit'], $lang['missing_values'] );
@@ -237,13 +219,18 @@ if($row['parent'] != $parentid ) {
     $projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$parentid.' LIMIT 1' ), 0, 0 );
   }
 
+  //no deadline project changing to tasks goes to 'new'
+  if(($parentid > 0 ) && ($previous_status == 'nolimit' ) ) {
+    $status = 'created';
+  }
+
   //can't put a project onto it's own tasks _OR_ re-parent a task under it's own children
   if((($projectid == $row['projectid'] ) && ($row['parent'] == 0 ) ) || reparent_child_check($taskid, $parentid, $projectid ) ) {
     //do nothing
   }
   else {
     //update this task, then recursively search for children tasks and reparent them too.
-    db_query('UPDATE '.PRE.'tasks SET projectid='.$projectid.', parent='.$parentid.' WHERE id='.$taskid );
+    db_query('UPDATE '.PRE.'tasks SET projectid='.$projectid.', parent='.$parentid.', status=\''.$status.'\' WHERE id='.$taskid );
     reparent_children($taskid );
   }
 
@@ -251,23 +238,29 @@ if($row['parent'] != $parentid ) {
   adjust_completion($old_projectid );
 }
 
-//make adjustments for child tasks
+//make adjustments for child tasks to match project status
 if($parentid == 0 ) {
-  switch($status ) {
-    case 'cantcomplete':
-    case 'notactive':
-      //inactive project, then set the uncompleted child tasks to inactive too
-      db_query('UPDATE '.PRE.'tasks SET status=\''.$status.'\' WHERE projectid='.$projectid.' AND (status=\'active\' OR status=\'created\')' );
-      break;
+  $project_status = $status;
+}
+else {
+  $project_status = db_result(db_query('SELECT status FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 );
+}
 
-    case 'new':
-    case 'active':
-      //if reinstated project, set inactive child tasks to new
-      if($previous_status == 'cantcomplete' || $previous_status == 'notactive' ) {
-        db_query('UPDATE '.PRE.'tasks SET status=\'created\' WHERE projectid='.$projectid.' AND parent<>0 AND status=\''.$previous_status.'\'' );
-      }
-      break;
-  }
+switch($project_status ) {
+  case 'cantcomplete':
+  case 'notactive':
+    //inactive project, then set the uncompleted child tasks to inactive too
+    db_query('UPDATE '.PRE.'tasks SET status=\''.$project_status.'\' WHERE projectid='.$projectid.' AND (status=\'active\' OR status=\'created\')' );
+    break;
+
+  case 'new':
+  case 'active':
+  default:
+    //if reinstated project, set previously inactive child tasks to 'new'
+    if($previous_status == 'cantcomplete' || $previous_status == 'notactive' ) {
+      db_query('UPDATE '.PRE.'tasks SET status=\'created\' WHERE projectid='.$projectid.' AND parent<>0 AND status=\''.$previous_status.'\'' );
+    }
+    break;
 }
 
 //adjust completion status in project
