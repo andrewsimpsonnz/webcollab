@@ -286,8 +286,11 @@ for( $i=1; $i<13 ; ++$i ) {
 $content .=  "</select></td>\n";
 
 //year
+$min_year = date('Y', TIME_NOW - date('Z') + TZ*60*60 ) - 5;
+$max_year = date('Y', TIME_NOW - date('Z') + TZ*60*60 ) + 10;
+
 $content .= "<td><select name=\"year\" onchange=\"javascript:this.form.submit()\">\n";
-for( $i=2001; $i<2015 ; ++$i ) {
+for( $i = $min_year; $i < $max_year ; ++$i ) {
   $content .= "<option value=\"".$i."\"";
 
   if( $year == $i ) {
