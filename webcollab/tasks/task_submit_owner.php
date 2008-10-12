@@ -68,15 +68,8 @@ ignore_user_abort(TRUE);
       //if all tasks are completed, then mark the project as 'done'
       $projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$taskid ), 0, 0 );
 
-      //set completed percentage project record
-      $percent_completed = percent_complete($projectid );
-      db_query('UPDATE '.PRE.'tasks SET completed='.$percent_completed.' WHERE id='.$projectid );
-
-      //for completed project set the completion time
-      if($percent_completed == 100 ){
-        $completion_time = db_result(db_query('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid='.$projectid ), 0, 0 );
-        db_query('UPDATE '.PRE.'tasks SET completion_time=\''.$completion_time.'\' WHERE id='.$projectid );
-      }
+      //adjust completion status in project
+      adjust_completion($projectid );
 
       break;
 
