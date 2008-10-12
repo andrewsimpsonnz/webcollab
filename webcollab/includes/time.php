@@ -120,8 +120,11 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   $content .=  "</select>\n";
 
   //year
+  $min_year = date('Y', TIME_NOW - date('Z') + TZ*60*60 ) - 5;
+  $max_year = date('Y', TIME_NOW - date('Z') + TZ*60*60 ) + 10;
+
   $content .= "<select id=\"year\" name=\"year\">\n";
-  for($i=2001; $i<2015 ; ++$i ) {
+  for($i = $min_year; $i < $max_year ; ++$i ) {
     $content .= "<option value=\"".$i."\"";
 
     if($year == $i )
