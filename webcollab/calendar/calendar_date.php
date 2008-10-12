@@ -91,8 +91,10 @@ else {
 $year += $yearoffset;
 
 //set upper and lower limits
-$year = ($year < 2001 ) ? 2001 : $year;
-$year = ($year > 2015 ) ? 2015 : $year;
+$min_year = date('Y', TIME_NOW - date('Z') + TZ*60*60 ) - 5;
+$max_year = date('Y', TIME_NOW - date('Z') + TZ*60*60 ) + 10;
+$year = ($year < $min_year ) ? $min_year : $year;
+$year = ($year > $max_year ) ? $max_year : $year;
 
 $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
@@ -115,7 +117,7 @@ $content .=  "</select></td>\n";
 
 //year
 $content .= "<td><select name=\"year\">\n";
-for($i=2001; $i<2015 ; ++$i ) {
+for($i = $min_year; $i < $max_year ; ++$i ) {
   $content .= "<option value=\"".$i."\"";
 
   if( $year == $i ) {
@@ -171,8 +173,8 @@ for($num = 1; $num <= $numdays; ++$num ) {
   }
   $content .= "<td class=\"datecell\" style=\"height: 15px\">\n";
 
-  //Note: This assumes the first year in dropdown box is 2001
-  $content .= "<a href='#' onclick=\"dateSet(".($num-1).",".($month-1).",".($year-2001)."); window.close();\"><spanclass=\"daynum\">".$num."</span></a>".
+  //Note: This assumes the first year in dropdown box is $min_year
+  $content .= "<a href='#' onclick=\"dateSet(".($num-1).",".($month-1).",".($year-$min_year)."); window.close();\"><spanclass=\"daynum\">".$num."</span></a>".
               "</td>\n";
   ++$i;
 }
