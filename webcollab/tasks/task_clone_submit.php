@@ -37,6 +37,7 @@ if(GUEST ) {
 }
 
 include_once(BASE.'tasks/task_common.php' );
+include_once(BASE.'tasks/task_submit.php' );
 
 //
 // Recursive function to create new project structure
@@ -243,15 +244,8 @@ $new_taskid = add($taskid, 0, $name, $delta_deadline );
 //now get new projectid to set completion percentage
 $new_projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$new_taskid ), 0, 0 ); 
 
-//set completed percentage project record
-$percent_completed = round(percent_complete($new_projectid ) );
-db_query('UPDATE '.PRE.'tasks SET completed='.$percent_completed.' WHERE id='.$new_projectid );
-
-//for completed project set the completion time
-if($percent_completed == 100 ){
-  $completion_time = db_result(db_query('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid='.$new_projectid ), 0, 0 );
-  db_query('UPDATE '.PRE.'tasks SET completion_time=\''.$completion_time.'\' WHERE id='.$new_projectid );
-}
+//adjust completion status in new project
+adjust_completion($new_projectid );
 
 //end transaction
 db_commit();
