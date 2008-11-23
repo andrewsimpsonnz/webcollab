@@ -215,27 +215,27 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
 
       switch($row['priority'] ) {
         case 0:
-          $date = '';
+          $date = nicedate($row['deadline'] );
           $priority =  $task_state['dontdo'];
           break;
 
         case 1:
-          $date = '';
+          $date = nicedate($row['deadline'] );
           $priority =  $task_state['low'];
           break;
 
         case 2:
-          $date = '';
+          $date = nicedate($row['deadline'] );
           $priority =  "<span class=\"blue\">".$task_state['normal']."</span>";
           break;
 
         case 3:
-          $date = '';
+          $date = nicedate($row['deadline'] );
           $priority =  "<span class=\"orange\">".$task_state['high']."</span>";
           break;
 
         case 4:
-          $date = '';
+          $date = nicedate($row['deadline'] );
           $priority =  "<span class=\"red\">".$task_state['yesterday']."</span>";
           break;
 
@@ -270,12 +270,12 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
           break;
 
         case 3:
-          $date = '';
+          $date = nicedate($row['deadline'] );
           $priority =  "<span class=\"orange\">".$task_state['high']."</span>";
           break;
 
         case 4:
-          $date = '';
+          $date = nicedate($row['deadline'] );
           $priority =  "<span class=\"red\">".$task_state['yesterday']."</span>";
           break;
 
