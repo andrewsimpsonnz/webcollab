@@ -242,15 +242,15 @@ function db_user_locale($encoding ) {
   }
 
   //set character set -- 1
-  if(! @mysqli_query($database_connection, "SET NAMES '".$my_encoding."'" ) ) {
-    $db_error_message = mysqli_error($database_connection);
-    error("Database error", "Not able to set ".$my_encoding." client encoding" );
-  }
-
-  //set character set -- 2
   if(! @mysqli_query($database_connection, "SET CHARACTER SET ".$my_encoding ) ) {
     $db_error_message = mysqli_error($database_connection);
     error("Database error", "Not able to set CHARACTER SET : ".$my_encoding );
+  }
+
+  //set character set -- 2
+  if(! @mysqli_query($database_connection, "SET NAMES '".$my_encoding."'" ) ) {
+    $db_error_message = mysqli_error($database_connection);
+    error("Database error", "Not able to set ".$my_encoding." client encoding" );
   }
 
   return true;
