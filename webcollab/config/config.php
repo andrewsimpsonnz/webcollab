@@ -125,7 +125,7 @@
       //location of SMTP server (ip address or FQDN)
       define('SMTP_HOST', "localhost" );
 
-      //mail transport (leave as SMTP for standard WebCollab)
+      //mail transport (SMTP for standard mailserver, or PHPMAIL for PHP mail() )
       define('MAIL_TRANSPORT', "SMTP" );
 
       //SMTP port (leave as 25 for ordinary mailservers)
