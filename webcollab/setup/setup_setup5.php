@@ -187,7 +187,7 @@ $content = "<?php\n".
 "  define('USE_EMAIL', '".$data["use_email"]."' );\n\n".
 "    //location of SMTP server (IP address or FQDN)\n".
 "    define('SMTP_HOST', '".$data["smtp_host"]."' );\n\n".
-"    //mail transport (leave as SMTP for standard WebCollab)\n".
+"    //mail transport (SMTP for standard mailserver, or PHPMAIL for PHP mail() )\n".
 "    define('MAIL_TRANSPORT', '".MAIL_TRANSPORT."' );\n".
 "    //SMTP port (leave as 25 for ordinary mailservers)\n".
 "    define('SMTP_PORT', ".SMTP_PORT." );\n\n".
