@@ -1,4 +1,22 @@
 WebCollab SVN
+*** 20 December 2008
+  Andrew Simpson
+
+- include PHP mail() as option (Feature Request #2419923) (Udi - Udi86)
+
+- minor bugfixes and improvements to email
+
+- remove session cookie after login error
+
+WebCollab SVN
+*** 20 November 2008
+  Andrew Simpson
+
+- bugfix: change order of character set commands in MySQL (Bug #2311347) (Credit: Udi - Udi86)
+
+- bugfix: missing deadlines in task summary (Bug #2310683) (Credit: Udi - Udi86)
+
+WebCollab SVN
 *** 11 October 2008
   Andrew Simpson
 
