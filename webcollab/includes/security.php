@@ -57,6 +57,7 @@ elseif(isset($_REQUEST['x'] ) && preg_match('/^[a-f\d]{32}$/i', $_REQUEST['x'] )
 }
 else {
   //return to login screen
+  setcookie('webcollab_session', '' );
   header("Location: ".BASE_URL."index.php");
   die;
 }
@@ -94,6 +95,7 @@ if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS user_id,
 
 if(db_numrows($q) != 1 ) {
   //return to login screen
+  setcookie('webcollab_session', '' );
   header('Location: '.BASE_URL.'index.php');
   die;
 }
