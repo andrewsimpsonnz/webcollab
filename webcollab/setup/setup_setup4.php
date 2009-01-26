@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -231,7 +231,7 @@ switch($data["db_type"]) {
     break;
 
   default:
-    $status = "<font color=\"red\"><b>Database type ".$data["db_type"]." does not exist</b></font>";
+    $status = "<font color=\"red\"><b>".sprintf($lang_setup['setup4_wrong_db'], $data["db_type"] )."</b></font>";
     $flag = $flag + 10;
     break;
 
@@ -307,7 +307,7 @@ $status = "<font color=\"green\"><b>".$lang_setup['setup4_ok']."</b></font>";
 if( (! is_readable(BASE."lang/".$data["locale"]."_message.php" ) )
   || (! is_readable(BASE."lang/".$data["locale"]."_long_message.php" ) )
   || (! is_readable(BASE."lang/".$data["locale"]."_email.php" ) ) ) {
-  $status = "<font color=\"red\"><b>Language file either does not exist, or file has been moved!</b></font>";
+  $status = "<font color=\"red\"><b>".$lang_setup['setup4_no_lang']."</b></font>";
   $flag = $flag + 10;
 }
 
@@ -316,12 +316,12 @@ $content .= "<tr><td></td><td><br /><br /><b><u>".$lang_setup['setup3_language1'
             "<tr><th>".$lang_setup['language']."</th><td>".$data["locale"]."</td><td>".$status."</td></tr>\n".
             "<tr><td></td><td><br /><br /><b><u>".$lang_setup['setup3_timezone']."</u></b></td></tr>\n".
             "<tr><th>".$lang_setup['timezone']."</th><td>".$data["timezone"]."</td></tr>\n".
-            "<tr><td></td><td><br /><br /><b><u>Email Settings</u></b><br /></td></tr>\n".
+            "<tr><td></td><td><br /><br /><b><u>".$lang_setup['setup3_email']."</u></b><br /></td></tr>\n".
             "<tr><th>".$lang_setup['use_email']."</th><td>".$data["use_email"]."</td></tr>\n";
 
 $status = "<font color=\"green\"><b>".$lang_setup['setup4_ok']."</b></font>";
 
-if($data["use_email"] === "Y" && $data["smtp_host"] != "" ) {
+if($data["use_email"] === "Y" && $data["smtp_host"] != "" && MAIL_TRANSPORT == 'SMTP' ) {
 
   if($fp = @fsockopen($data["smtp_host"], 25, $errno, $errstr, 5 ) ) {
     //this function may not work in Windows (prefix with '@')
