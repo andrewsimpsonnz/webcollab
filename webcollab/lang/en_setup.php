@@ -152,10 +152,12 @@ define('SETUP_CHARACTER_SET', "UTF-8" );
     $lang_setup['setup4_url5']         = "Cannot recognise URL: Try adding 'http://' prefix?";
     $lang_setup['setup4_no_mysql']     = "Fatal error: PHP does not have support for MySQL";
     $lang_setup['setup4_no_pgsql']     = "Fatal error: PHP does not have support for PostgreSQL";
+    $lang_setup['setup4_wrong_db']     = "Database type %1\$s does not exist";
     $lang_setup['setup4_no_server']    = "Can't connect to specified database server!";
     $lang_setup['setup4_no_db']        = "Can't connect to specified database table!";
     $lang_setup['setup4_no_dir']       = "Directory either does not exist, or is not writable!";
     $lang_setup['setup4_max_file']     = "File size exceeds limit of %1\$s bytes set in php.ini";
+    $lang_setup['setup4_no_lang']      = "Language file either does not exist, or file has been moved!";
     $lang_setup['setup4_no_mail']      = "Not able to verify mail server";
     $lang_setup['setup4_no_smtp']      = "SMTP Host must be specified!";
 
