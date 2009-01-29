@@ -86,7 +86,8 @@ $array = array('NUM_FILE_UPLOADS' => 3,
                'START_DAY'    =>  0,
                'WEB_AUTH'     => 'N',
                'PASS_STYLE'   => 'text',
-               'PRE'          => '' );
+               'PRE'          => '',
+               'RSS_AUTODISCOVERY' => 'N' );
 
 //get array of constant's names
 $constants = array_keys($array);
@@ -200,34 +201,42 @@ $content = "<?php\n".
 "      define('TLS', '".TLS."' );\n\n".
 "//----------------------------------------------------------------------------------------------\n".
 "// Less important items below this line\n\n".
-"//-- MINOR CONFIG PARAMETERS --\n\n".
 "//-- These items need to be edited directly from this file --\n\n".
+"//STYLE AND APPEARANCE\n\n".
 "  //Style sheets (CSS) Note: Setup always uses 'default.css' stylesheet for CSS_MAIN. (Place your CSS into /css directory)\n".
 "  define('CSS_MAIN', '".CSS_MAIN."' );\n".
 "  define('CSS_CALENDAR', '".CSS_CALENDAR."' );\n".
 "  define('CSS_PRINT', '".CSS_PRINT."' );\n\n".
-"  //If an error occurs, who do you want the error to be mailed to ?\n".
-"  define('EMAIL_ERROR', '".EMAIL_ERROR."' );\n\n".
-"  //session timeout in hours\n".
-"  define('SESSION_TIMEOUT', ".SESSION_TIMEOUT." );\n\n".
-"  //number of days that new or updated tasks should be highlighted as 'New' or 'Updated'\n".
-"  define('NEW_TIME', ".NEW_TIME." );\n\n".
 "  //custom image to replace the webcollab banner on splash page (base directory is /images)\n".
 "  define('SITE_IMG', '".SITE_IMG."' );\n\n".
-"  //show full debugging messages on the screen when errors occur (values are 'N', or 'Y')\n".
-"  define('DEBUG', '".DEBUG."' );\n\n".
-"  //Do not show full error message on the screen - just a 'sorry, try again' message (values are 'N', or 'Y')\n".
-"  define('NO_ERROR', '".NO_ERROR."' );\n\n".
-"  //Use VEVENT for iCalendar instead of VTODO - works for Google Calendar and others (values are 'N', or 'Y')\n".
-"  define('VEVENT', '".VEVENT."' );\n\n".
+"  //number of days that new or updated tasks should be highlighted as 'New' or 'Updated'\n".
+"  define('NEW_TIME', ".NEW_TIME." );\n\n".
+"//CALENDAR CONTROLS\n\n".
 "  //Start day of week on calendar (Sun = 0, Mon = 1, Tue = 2, Wed = 3, etc)\n".
 "  define('START_DAY', ".START_DAY." );\n\n".
+"  //Use VEVENT for iCalendar instead of VTODO - works for Google Calendar and others (values are 'N', or 'Y')\n".
+"  define('VEVENT', '".VEVENT."' );\n\n".
+"//RSS\n\n".
+"  //enable autodiscovery of rss feeds by web browser\n".
+"  define('RSS_AUTODISCOVERY', '".RSS_AUTODISCOVERY."' );\n\n".
+"//LOGIN CONTROLS\n\n".
+"  //session timeout in hours\n".
+"  define('SESSION_TIMEOUT', ".SESSION_TIMEOUT." );\n\n".
 "  //Use external webserver authorisation to login (values are 'N', or 'Y')\n".
 "  define('WEB_AUTH', '".WEB_AUTH."' );\n\n".
 "  //Show passwords in user edit screens as plain text or hidden ('****') (values are 'text', or 'password')\n".
 "  define('PASS_STYLE', '".PASS_STYLE."' );\n\n".
+"//ERROR DEBUGGER\n\n".
+"  //If an error occurs, who do you want the error to be mailed to ?\n".
+"  define('EMAIL_ERROR', '".EMAIL_ERROR."' );\n\n".
+"  //show full debugging messages on the screen when errors occur (values are 'N', or 'Y')\n".
+"  define('DEBUG', '".DEBUG."' );\n\n".
+"  //Do not show full error message on the screen - just a 'sorry, try again' message (values are 'N', or 'Y')\n".
+"  define('NO_ERROR', '".NO_ERROR."' );\n\n".
+"//DATABASE\n\n".
 "  //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match)\n".
 "  define('PRE', '".PRE."' );\n\n".
+"//WEBCOLLAB VERSION\n\n".
 "  //WebCollab version string\n".
 "  define('WEBCOLLAB_VERSION', '".SETUP_WEBCOLLAB_VERSION."');\n\n".
 "  define('UNICODE_VERSION', '".SETUP_UNICODE_VERSION."' );\n\n".
