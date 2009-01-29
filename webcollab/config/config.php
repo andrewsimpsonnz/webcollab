@@ -143,36 +143,38 @@
 //----------------------------------------------------------------------------------------------
 // Less important items below this line
 
-//MINOR CONFIG PARAMETERS
+//-- These items need to be edited directly from this file --
+
+//STYLE AND APPEARANCE
 
   //Style sheets (CSS) Note: Setup always uses 'default.css' stylesheet for CSS_MAIN. (Place your CSS into /css directory)
   define('CSS_MAIN', 'default.css' );
   define('CSS_CALENDAR', 'calendar.css' );
   define('CSS_PRINT', 'print.css' );
 
-  //If an error occurs, who do you want the error to be mailed to ?
-  define('EMAIL_ERROR', "" );
-
-  //session timeout in hours
-  define('SESSION_TIMEOUT', 1 );
+  //custom image to replace the webcollab banner on splash page (base directory is [webcollab]/images)
+  define('SITE_IMG', "" );
 
   //number of days that new or updated tasks should be highlighted as 'New' or 'Updated'
   define('NEW_TIME', 14 );
 
-  //custom image to replace the webcollab banner on splash page (base directory is [webcollab]/images)
-  define('SITE_IMG', "" );
+//CALENDAR CONTROLS
 
-  //show full debugging messages on the screen when errors occur (values are "N", or "Y")
-  define('DEBUG', "N" );
-
-  //Don't show full error message on the screen - just a 'sorry, try again' message (values are "N", or "Y")
-  define('NO_ERROR', "N" );
+  //Start day of week on calendar (Sun = 0, Mon = 1, Tue = 2, Wed = 3, etc) 
+  define('START_DAY', 0 );
 
   //Use VEVENT for iCalendar instead of VTODO - works for Google Calendar and others (values are "N", or "Y")
   define('VEVENT', "N");
 
-  //Start day of week on calendar (Sun = 0, Mon = 1, Tue = 2, Wed = 3, etc) 
-  define('START_DAY', 0 );
+//RSS
+
+  //enable autodiscovery of rss feeds by web browser
+  define('RSS_AUTODISCOVERY', 'N' );
+
+//LOGIN CONTROLS
+
+  //session timeout in hours
+  define('SESSION_TIMEOUT', 1 );
 
   //Use external webserver authorisation to login (values are "N", or "Y")
   define('WEB_AUTH', "N" );
@@ -180,8 +182,23 @@
   //Show passwords in user edit screens as plain text or hidden ('****') (values are "text", or "password")
   define('PASS_STYLE', "text" );
 
+//ERROR DEBUGGER
+
+  //If an error occurs, who do you want the error to be mailed to ?
+  define('EMAIL_ERROR', "" );
+
+  //show full debugging messages on the screen when errors occur (values are "N", or "Y")
+  define('DEBUG', "N" );
+
+  //Don't show full error message on the screen - just a 'sorry, try again' message (values are "N", or "Y")
+  define('NO_ERROR', "N" );
+
+//DATABASE
+
   //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match) 
   define('PRE', "" );
+
+//WEBCOLLAB VERSION
 
   //version info
   define('WEBCOLLAB_VERSION', "2.40" );
