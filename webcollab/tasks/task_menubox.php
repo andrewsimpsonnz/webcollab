@@ -80,7 +80,7 @@ if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
     //clone
     $content .= "<a href=\"tasks.php?x=".$x."&amp;action=clone&amp;taskid=".$taskid."\">".$lang["clone_".$TYPE]."</a><br />\n";
     //global header
-    $content .= "<br /><small><b>".$lang['global'].":</b></small><br />\n";
+    $content .= "<small><b>".$lang['global'].":</b></small><br />\n";
     //add task
     $content .= "<a href=\"tasks.php?x=".$x."&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a><br />\n";
   }
