@@ -110,7 +110,7 @@ define('FILE_BASE', "/var/www/html/webcollab/files/filebase" );
 </ol>
 <p>The database upgrades (if required) are backwardly compatible and do not affect stored data.  However, as with all
 upgrades, backing up your data is a sensible precaution.<br />
-Database upgrades are required on pre-1.40, pre-1.60 and pre-1.70 databases.</p>
+Note: Database upgrades are required for all pre-2.20 databases.</p>
 <h3><a name="mysql">MANUAL SETUP FOR MYSQL</a></h3>
 <h4>1. Database Setup and Customisation:</h4>
 <p><b>Note</b>: If you are using Linux, you can automate database creation and populating
@@ -125,10 +125,13 @@ make new databases.  Enter your password when prompted.
 <pre class="screen"># mysql -u user_name -p
 Enter password:
 Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 114 to server version: 3.23.54
+Your MySQL connection id is 14
+Server version: 5.0.32-Debian_7etch8-log Debian etch distribution
+
 Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
 
 mysql>
+
 </pre></li>
 <li>Create the database 'webcollab', and then quit the command mode.  Don't forget the semi-colon
 at the end of the first line!
@@ -148,7 +151,7 @@ database.</li>
 <li>For a *nix system navigate to your web server root directory.  Enter your password again when
 prompted.
 <pre class="screen">
-#mysql -u user_name -p webcollab<./webcollab-*.**/db/schema_mysql.sql
+#mysql -u user_name -p webcollab < ./webcollab-*.**/db/schema_mysql.sql
 </pre></li>
 <li>If you are installing to a Windows system, then from the command prompt, work your way into the
 "webcollab/db" folder.  Then, run the following command:

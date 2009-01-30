@@ -1,23 +1,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <title>WebCollab Frequently Asked Questions</title>
   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
  <link rel="StyleSheet" href="doc.css" type="text/css" />
 </head>
-
 <body>
-<h1><a name="top">WebCollab Frequently Asked Questions (FAQ)</a></h1>
-<h3>FAQ INDEX</h3>
+<h2>Frequently Asked Questions</h2>
+<h3><a name="top">FAQ INDEX</a></h3>
 <p><a href="#setup">Setup Problems</a><br />
 <a href="#startup">Startup Problems</a><br />
 <a href="#custom">Customising WebCollab</a><br />
 <a href="#tuning">Performance Tuning</a><br />
 <a href="#files">Uploading Files</a><br />
+<a href="#rss">RSS Feeds</a><br />
+<a href="#icalendar">iCalendar</a><br />
 <a href="#email">Email</a><br />
 <a href="#security">Security</a><br />
-<a href="#icalendar">iCalendar</a><br />
-<a href="#rss">RSS</a><br />
 <a href="#international">Internationalisation</a><br />
 <a href="#unicode">Unicode</a><br />
 <a href="#remote">Remote Databases</a><br />
@@ -28,457 +27,607 @@
 </p>
 <h3><a name="setup">SETUP PROBLEMS</a></h3>
 <dl>
-<dt>1. Setup program says that database can be created, but cannot write to the config file.</dt>
-<dd>The web server does not/cannot have permissions to write to the config file.  You need to make
-the
-config file world-writable.  The config file is <i>[webcollab]/config/config.php</i>.
-<pre class="screen">
-#chmod 666 config.php
-</pre>
+<dt>1. Setup program says that database can be created,
+but cannot write to the config file.</dt>
+<dd>The web server does not/cannot have permissions to
+write to the config file. You need to make
+the config file world-writable. The config file is <i>[webcollab]/config/config.php</i>.
+<pre class="screen">#chmod 666 config.php<br /></pre>
 For security, reinstate afterwards with:
-<pre class="screen">
-#chmod 664 config.php
-</pre>
+<pre class="screen">#chmod 664 config.php<br /></pre>
 </dd>
-<dt>2. How to upgrade from an earlier version of WebCollab?</dt>
-<dd>Refer to the INSTALLATION file.  Briefly, all versions are upgradable by adding the new files. 
-Versions pre-1.40, pre-1.60 and pre-1.70 need to have the database upgraded with the by pointing
-your web browser at <i>[webcollab]/update.php</i>.</dd>
-<dt>3. All the documentation mentions the Apache web server. Can we use Microsoft IIS instead?</dt>
-<dd>WebCollab is not tested nor supported on Microsoft IIS.  That said, we have had successful
-reports of WebCollab running on Microsoft IIS (Windows Server 2003 and Windows Server 2000).<br
-/><br />
-Here is how one Windows user got it working:<br /><br />
+<dt>2. How to upgrade from an earlier version of
+WebCollab?</dt>
+<dd>Refer to the INSTALLATION file. Briefly, all versions
+are upgradable by adding the new files. Versions pre-1.40, pre-1.60,
+pre-1.70, pre-2.00 and pre- 2.20 need to have the database upgraded
+with the by
+pointing your web browser at <i>[webcollab]/update.php</i>.</dd>
+<dt>3. All the documentation mentions the Apache web
+server. Can we use Microsoft IIS instead?</dt>
+<dd>WebCollab is not tested nor supported on Microsoft
+IIS. That said, we have had successful
+reports of WebCollab running on Microsoft IIS (Windows Server 2003 and
+Windows Server 2000).<br />
+<br />
+Here is how one Windows user got it working:<br />
+<br />
 <ol>
-<li>PHP and Mysql were previously installed and working for other apps.</li>
-<li>Used Internet Services Manager to create website with Frontpage extensions.</li>
+<li>PHP and Mysql were previously installed and
+working for other apps.</li>
+<li>Used Internet Services Manager to create website
+with Frontpage extensions.</li>
 <li>Unzipped Webcollab to website folder.</li>
-<li>Gave the default anonymous IUSR_servername write rights to config.php.</li>
-<li>Completed the setup page ignoring the invalid url error. I used the root user to create the
+<li>Gave the default anonymous IUSR_servername write
+rights to config.php.</li>
+<li>Completed the setup page ignoring the invalid url
+error. I used the root user to create the
 database and also the user for setup.</li>
-<li>Since for some reason I couldn't get it to work for the root user I created a new user with full
-rights to the database. I then edited the config.php file to reflect the change of user and
+<li>Since for some reason I couldn't get it to work
+for the root user I created a new user with full
+rights to the database. I then edited the config.php file to reflect
+the change of user and
 password.</li>
-<li>Removed the default anonymous IUSR_servername write rights to config.php.</li>
-<li>Using the Internet Services Manager I restarted IIS.</li>
+<li>Removed the default anonymous IUSR_servername
+write rights to config.php.</li>
+<li>Using the Internet Services Manager I restarted
+IIS.</li>
 <li>Logged in and it was working.</li>
 </ol>
 </dd>
-<dt>4. How do you install the mb_string library (for the Unicode version of WebCollab) on Windows?</dt>
+<dt>4. How do you install the mb_string library (for the
+Unicode version of WebCollab) on Windows?</dt>
 <dd>
 <ol>
-<li>If you have only downloaded the "short" version of PHP (Named like 'php-4.3.10-installer.exe'),
+<li>If you have only downloaded the "short" version
+of PHP (Named like 'php-4.3.10-installer.exe'),
 then download the full version (Named like 'php-4.3.10-Win32.zip').</li>
 <li>Unzip the full version into a directory</li>
-<li>Find php_mbstring.dll in your unzipped full version directory (For example:
+<li>Find php_mbstring.dll in your unzipped full
+version directory (For example:
 c:\php-4.3.10-Win32\extensions).</li>
-<li>Copy php_mbstring.dll across to your working php\extensions directory</li>
-<li>Use Notepad (or similar text editor) to open your php.ini file.</li>
+<li>Copy php_mbstring.dll across to your working
+php\extensions directory</li>
+<li>Use Notepad (or similar text editor) to open your
+php.ini file.</li>
 <li>Change the extension_dir line to read:<br />
-<pre class="screen">
-extension_dir = "c:\php\extensions\"  
-</pre>
+<pre class="screen">extension_dir = "c:\php\extensions\" <br /></pre>
 (or whatever your extensions directory is called)</li>
 <li>Remove the semi-colon on line:
-<pre class="screen">
- ; extension=php_mbstring.dll
-</pre></li>
+<pre class="screen"> ; extension=php_mbstring.dll<br /></pre>
+</li>
 <li>Save the file, and restart Apache.</li>
 </ol>
 </dd>
-<dt>4. How do you install the mb_string library (for the Unicode version of WebCollab) on
+<dt>4. How do you install the mb_string library (for the
+Unicode version of WebCollab) on
 Linux?</dt>
 <dd>
 <ul>
-<li>Some Linux distributions, such as Debian and derivatives, already have mb_strings
- compiled into PHP.</li>
-<li>Some Linux distributions, notably Suse, Mandriva &amp; Fedora have a separate RPM package for
+<li>Some Linux distributions, such as Debian and
+derivatives, already have mb_strings compiled into PHP.</li>
+<li>Some Linux distributions, notably Suse, Mandriva
+&amp; Fedora have a separate RPM package for
 mb_strings that needs to be installed.</li>
-<li>For compiling from source, you need to ensure that PHP has been compiled with the
-'--enable-mbstring=all' option set, and that the module enabling lines (see previous
+<li>For compiling from source, you need to ensure
+that PHP has been compiled with the
+'--enable-mbstring=all' option set, and that the module enabling lines
+(see previous
 question) have been set in php.ini.</li>
 </ul>
-</dd> 
+</dd>
 </dl>
 <h3><a name="startup">START UP PROBLEMS</a></h3>
 <dl>
-<dt>1. "Initial installation works, but logging in as admin gives a blank
+<dt>1. "Initial installation works, but logging in gives
+a error message about undefined
+ctype_space function.</dt>
+<dd>The ctype function is built into PHP, but some Linux
+distributions - notably Mandriva &amp;
+Suse - have a separate RPM package for 'php-ctype'. It is a small
+package of about 10 kb, and
+needs to be installed.<br />
+For FreeBSD you have to install the textproc/php4-ctype port.<br />
+(The requirement for ctype functions was removed with WebCollab 2.00,
+and later versions). </dd>
+<dt>2. "Initial installation works, but logging in as
+admin gives a blank
 screen."</dt>
-<dd>Check that PHP has your database extensions compiled in.  From the command
+<dd>Check that PHP has your database extensions compiled
+in. From the command
 line type 'php -m':<br />
 <br />
-<pre class="screen">
-# php -m
-Running PHP 4.2.2
-Zend Engine v1.2.0, Copyright (c) 1998-2002 Zend Technologies
-
-[PHP Modules]
-mysql
+<pre class="screen"># php -m<br />Running PHP 4.2.2<br />Zend Engine v1.2.0, Copyright (c) 1998-2002 Zend Technologies<br /><br />[PHP Modules]<br />mysql<br />pgsql<br /><br />[Zend Modules]<br /><br />#<br /></pre>
+<br />
+Look for mysql and/or pgsql as required in the modules listing that
+follows.<br />
+<br />
+Most likely cause is that the default file for php.ini has the mysql or
 pgsql
-
-[Zend Modules]
-
-#
-</pre>
+module line commented out. Look for lines in php.ini like this:<br />
 <br />
-Look for mysql and/or pgsql as required in the modules listing that follows.<br />
+<pre class="screen">;extension=mysql.so<br />;extension=pgsql.so<br /></pre>
 <br />
-Most likely cause is that the default file for php.ini has the mysql or pgsql
-module line commented out.  Look for lines in php.ini like this:<br />
+Remove the semi-colon ';' from the module you want, and restart Apache.
 <br />
-<pre class="screen">
-;extension=mysql.so
-;extension=pgsql.so
-</pre>
 <br />
-Remove the semi-colon ';' from the module you want, and restart Apache. <br />
-<br />
-Also - many  Linux distributions have separate packages (*.rpm, *.deb, etc)
-for the main PHP files and the MySQL/PostgreSQL PHP support.  You need to install the relevant
+Also - many Linux distributions have separate packages (*.rpm, *.deb,
+etc)
+for the main PHP files and the MySQL/PostgreSQL PHP support. You need
+to install the relevant
 module package as well.</dd>
-<dt>2. Setup says "Your version of PHP does not have support for MySQL..." or "Your version of PHP
+<dt>3. Setup says "Your version of PHP does not have
+support for MySQL..." or "Your version of PHP
 does not have support for PostgreSQL..." and then dies.</dt>
 <dd>This is the same as the problem above.</dd>
-<dt>3. "Can login, but the main page is not found (404 error)."</dt>
-<dd>Check that the the defined parameter BASE_URL is correctly stated in config.php.
- Did you remember to add the trailing slash "/" as the config file says?</dd>
-<dt>4. "Does WebCollab use cookies?"</dt>
-<dd>Yes, if possible. Cookies are preferred for session management, but aren't
+<dt>4. "Can login, but the main page is not found (404
+error)."</dt>
+<dd>Check that the the defined parameter BASE_URL is
+correctly stated in config.php. Did you remember to add the trailing
+slash "/" as the config file says?</dd>
+<dt>5. In Suse Linux 10 (and above) attempting to run
+setup gives an error about direct access not
+allowed.</dt>
+<dd>Note: This is fixed in Webcollab 2.00 and later.<br />
+<br />
+For some reason Suse have changed the default php.ini file. This causes
+problems for
+WebCollab because the include_path parameter is changed.<br />
+<br />
+Edit the <i>[webcollab]/path.php</i> file to look like
+this:<br />
+<pre class="screen">&lt;?php<br /><br />ini_set('include_path', '.' );<br /><br />define('BASE', '' );<br /><br />?&gt;<br /></pre>
+The line starting 'ini_set' is new and has been added to the file.
+Nothing else is changed.<br />
+The fix will be immediate; no need to restart, or reboot any services.<br />
+</dd>
+<dt>5. "Does WebCollab use cookies?"</dt>
+<dd>Yes, if possible. Cookies are preferred for session
+management, but aren't
 reliable with all browsers.<br />
 <br />
-Webcollab attempts to set a session cookie at the login.  Additionally it
-uses encoded URI's at this stage, also for session management.  If the session cookie is found to be
-successful (i.e. the user's browser accepts the cookie), the encoded URI's are dropped. Otherwise
+Webcollab attempts to set a session cookie at the login. Additionally
+it
+uses encoded URI's at this stage, also for session management. If the
+session cookie is found to be
+successful (i.e. the user's browser accepts the cookie), the encoded
+URI's are dropped. Otherwise
 session management with encoded URI is continued.<br />
 <br />
-The session cookie lasts only as long as the current session.  The cookie is automatically deleted
+The session cookie lasts only as long as the current session. The
+cookie is automatically deleted
 when either the browser is closed, or the user logs out.</dd>
-<dt>5. "Does Magic Quotes need to be set 'on' or 'off' in php.ini?"</dt>
-<dd>WebCollab does not use the Magic Quotes function in PHP.  If magic quotes is enabled,
-WebCollab will override it.  After input data is validated and normalised, the data is properly
+<dt>5. "Does Magic Quotes need to be set 'on' or 'off' in
+php.ini?"</dt>
+<dd>WebCollab does not use the Magic Quotes function in
+PHP. If magic quotes is enabled,
+WebCollab will override it. After input data is validated and
+normalised, the data is properly
 escaped before submission to the database.</dd>
 <dt>6. "Does Register Globals need to be 'on' in php.ini?"</dt>
-<dd>Software written for early versions of PHP (prior to version 4.1.0) often required Register
-Globals to properly receive input data. However for important security reasons Register Globals has
-defaulted to 'off' since PHP 4.2.0.  WebCollab does not require Register Globals.  You should
-always leave Register Globals 'off', unless it is specifically required to be 'on' for other
+<dd>Software written for early versions of PHP (prior to
+version 4.1.0) often required Register
+Globals to properly receive input data. However for important security
+reasons Register Globals has
+defaulted to 'off' since PHP 4.2.0. WebCollab does not require Register
+Globals. You should
+always leave Register Globals 'off', unless it is specifically required
+to be 'on' for other
 scripts.</dd>
 </dl>
 <h3><a name="custom">CUSTOMISING WEBCOLLAB</a></h3>
 <dl>
-<dt>1. Can the 'Done', 'Active', 'On Hold' etc, labels be changed?</dt>
-<dd>Yes, all the parameters are defined in the language files in <i>[webcollab]/lang/</i> directory.
+<dt>1. Can the 'Done', 'Active', 'On Hold' etc, labels be
+changed?</dt>
+<dd>Yes, all the parameters are defined in the language
+files in <i>[webcollab]/lang/</i> directory.
 They can be easily changed to suit.<br />
 <br />
-Alternatively, a new customised language file can be set up and defined in the redirection files
-<i>[webcollab]/lang/lang.php, [webcollab]/lang/lang_long.php
+Alternatively, a new customised language file can be set up and defined
+in the redirection files <i>[webcollab]/lang/lang.php,
+[webcollab]/lang/lang_long.php
 and [webcollab]/lang/lang_email.php</i></dd>
 <dt>2. Can the splash screen image be changed?</dt>
-<dd>Yes, add the new image to <i>[webcollab]/images/</i> directory and set the SITE_IMG parameter in
-<i>[webcollab]/config/config.php</i></dd>
+<dd>Yes, add the new image to <i>[webcollab]/images/</i>
+directory and set the SITE_IMG parameter in <i>[webcollab]/config/config.php</i></dd>
 <dt>3. Can background colours and text styles be changed?</dt>
-<dd>Yes, see the style sheets the directory <i>[webcollab]/css/</i>. The default style sheet is
-<i>default.css</i> with the other style sheets <i>calendar.css</i> and <i>print.css</i> being
-for additional styles calendar and printing options respectively.  The names of style sheets can be
-defined in  <i>[webcollab]/config/config.php</i></dd>
-<dt>4. Can external web server authorisation be used instead of the login screen.</dt>
-<dd>Yes, set the WEB_AUTH parameter to "Y" in <i>[webcollab]/config/config.php</i>.  Username is
+<dd>Yes, see the style sheets the directory <i>[webcollab]/css/</i>.
+The default style sheet is <i>default.css</i> with the
+other style sheets <i>calendar.css</i> and <i>print.css</i>
+being
+for additional styles calendar and printing options respectively. The
+names of style sheets can be
+defined in <i>[webcollab]/config/config.php</i></dd>
+<dt>4. Can external web server authorisation be used
+instead of the login screen.</dt>
+<dd>Yes, set the WEB_AUTH parameter to "Y" in <i>[webcollab]/config/config.php</i>.
+Username is
 taken from the REMOTE_USER environment variable set by Apache.</dd>
 <dt>5. What web browsers is WebCollab compatible with?</dt>
-<dd>WebCollab is valid XHTML 1.0 (Strict) and uses CSS1 cascading style sheets.  Some Javascript is
-used, but this is not essential.  This means WebCollab is compatible with most contemporary web
+<dd>WebCollab is valid XHTML 1.0 (Strict) and uses CSS1
+cascading style sheets. Some Javascript is
+used, but this is not essential. This means WebCollab is compatible
+with most contemporary web
 browsers.</dd>
-<dt>6. My ISP only gives me one database with my account.  Can WebCollab share a database with
+<dt>6. My ISP only gives me one database with my account.
+Can WebCollab share a database with
 another application, or applications?</dt>
-<dd>Yes, the easiest way is to manually add a unique prefix to the all the table names SQL in
-<i>[webcollab]/db</i> directory.  A suitable prefix might be 'webcollab_'.  After that the tables
-can be created by running setup, or by doing a manual SQL creation (see the INSTALL file).  Finally, the
-line in <i>[webcollab]/config/config.php</i> that reads 'define("PRE", "" )' needs to be altered
-accordingly. For the example above, this would become 'define("PRE", "webcollab_" )'.</dd>
+<dd>Yes, the easiest way is to manually add a unique
+prefix to the all the table names SQL in <i>[webcollab]/db</i>
+directory. A suitable prefix might be 'webcollab_'. After that the
+tables
+can be created by running setup, or by doing a manual SQL creation (see
+the INSTALL file). Finally, the
+line in <i>[webcollab]/config/config.php</i> that reads
+'define("PRE", "" )' needs to be altered
+accordingly. For the example above, this would become 'define("PRE",
+"webcollab_" )'.</dd>
 </dl>
 <h3><a name="tuning">PERFORMANCE TUNING</a></h3>
 <dl>
 <dt>1. Can output buffering be used to speed up WebCollab?</dt>
-<dd>WebCollab is normally very fast.  Most bottlenecks are caused by database performance rather
+<dd>WebCollab is normally very fast. Most bottlenecks are
+caused by database performance rather
 than PHP throughput.<br />
 <br />
-The <i>[webcollab]/includes/screen.php</i> file contains 'commented out' code for compressed output
-buffering with ob_handler().  When this is enabled the output to the browser will be 'gzipped'
-before transmission, providing the browser is capable of accepting gzipped HTML - and most are. 
-However, there is a downside to this form of output buffering: Compression does not start until
-<span style="text-decoration: underline">all</span> the page is rendered by the web server.  This creates a noticeably
+The <i>[webcollab]/includes/screen.php</i> file contains
+'commented out' code for compressed output
+buffering with ob_handler(). When this is enabled the output to the
+browser will be 'gzipped'
+before transmission, providing the browser is capable of accepting
+gzipped HTML - and most are. However, there is a downside to this form
+of output buffering: Compression does not start until <span style="text-decoration: underline;">all</span> the
+page is rendered by the web server. This creates a noticeably
 high latency in page
 loading; for this reason the code has been 'commented out' in WebCollab.<br />
 <br />
-The preferred method of output buffering is with zlib.output_compression set in php.ini. Refer to <a
-href="http://www.php.net/manual/en/ref.zlib.php#ini.zlib.output-compression">PHP
-Manual</a> for more information.  The downside of this option is that zlib.output_compression is not
-available on all versions or flavours of PHP.  
-</dd>
+The preferred method of output buffering is with
+zlib.output_compression set in php.ini. Refer to <a href="http://www.php.net/manual/en/ref.zlib.php#ini.zlib.output-compression">PHP
+Manual</a> for more information. The downside of this option is
+that zlib.output_compression is not
+available on all versions or flavours of PHP. </dd>
 <dt>2. Is caching worthwhile?</dt>
-<dd>WebCollab uses a modular codebase with a high reuse factor.  Compiler caches will work well with
-WebCollab.  Ioncube PHP Accelerator has proven very compatible with WebCollab; eAccelerator/Turck MMCache and
+<dd>WebCollab uses a modular codebase with a high reuse
+factor. Compiler caches will work well with
+WebCollab. Ioncube PHP Accelerator has proven very compatible with
+WebCollab; eAccelerator/Turck MMCache and
 Zend products should also work well.</dd>
 </dl>
 <h3><a name="files">UPLOADING FILES</a></h3>
 <dl>
-<dt>1. Error message about directory not writable when uploading files with the file upload
+<dt>1. Error message about directory not writable when
+uploading files with the file upload
 feature.</dt>
-<dd>For Linux and *nix: Make sure the <i>[webcollab]/files/filebase</i> directory is writable by the
-web server. This means the directory should be either owned by the web server user (usually apache,
+<dd>For Linux and *nix: Make sure the <i>[webcollab]/files/filebase</i>
+directory is writable by the
+web server. This means the directory should be either owned by the web
+server user (usually apache,
 www or www-data) or the directory must be world-writable.<br />
 <br />
-Use 'chmod 777 filebase' from the files directory, and preferably move the directory outside the
+Use 'chmod 666 filebase' from the files directory, and preferably move
+the directory outside the
 web server root - see item 3 below.</dd>
-<dt>2. File upload gives message about server configuration not allowing uploads.</dt>
-<dd>Check that the PHP configuration file, php.ini, is set to allow file uploads. Check that
+<dt>2. File upload gives message about server
+configuration not allowing uploads.</dt>
+<dd>Check that the PHP configuration file, php.ini, is
+set to allow file uploads. Check that
 'file_uploads = On', or file uploads cannot work.</dd>
 <dt>3. Increasing the file upload limit for bigger files.</dt>
-<dd>There are three configuration files that the control the upload file size:
-<ol> 
-<li>The FILE_MAXSIZE parameter in <i>[webcollab]/config/config.php</i>.  This can be changed by the
+<dd>There are three configuration files that the control
+the upload file size:
+<ol>
+<li>The FILE_MAXSIZE parameter in <i>[webcollab]/config/config.php</i>.
+This can be changed by the
 setup program, or by manual edit of the file.<br />
-<pre class="screen">
-//max uploaded file size in bytes (2 Mb is the default)
-define('FILE_MAXSIZE', 2000000 );
-</pre>
-The default file size limit is 2 Mb.</li> 
-<li>There are settings in Apache which you may need to change. In particular this affects large file
-uploads. On Red Hat Linux this setting is very low by default, you can change the limit by adding or
-editing a lines in Apache's httpd.conf with the upload size in bytes (different operating systems
+<pre class="screen">//max uploaded file size in bytes (2 Mb is the default)<br />define('FILE_MAXSIZE', 2000000 );<br /></pre>
+The default file size limit is 2 Mb.</li>
+<li>There are settings in Apache which you may need
+to change. In particular this affects large file
+uploads. On Red Hat Linux this setting is very low by default, you can
+change the limit by adding or
+editing a lines in Apache's httpd.conf with the upload size in bytes
+(different operating systems
 may have these files in different locations):<br />
-<pre class="screen">
-&lt;Files  *.php&gt;
-   SetOutputFilter PHP
-   SetInputFilter PHP
-   LimitRequestBody 10485760
-&lt;/Files&gt;   
-</pre>
+<pre class="screen">&lt;Files *.php&gt;<br /> SetOutputFilter PHP<br /> SetInputFilter PHP<br /> LimitRequestBody 10485760<br />&lt;/Files&gt; <br /></pre>
 The size limit in this example is 10 Mb (10,485,760 bytes)</li>
-<li>PHP also has two more byte limits, which you can set in php.ini, and sometimes in a .htaccess
+<li>PHP also has two more byte limits, which you can
+set in php.ini, and sometimes in a .htaccess
 file:<br />
-<pre class="screen">
-php_value upload_max_filesize 20000000
-php_value post_max_size 20000000
-</pre>
+<pre class="screen">php_value upload_max_filesize 20000000<br />php_value post_max_size 20000000<br /></pre>
 The default size limit is 2 Mb.</li>
 </ol>
 </dd>
-<dt>4. Certain types of downloaded files are corrupted, or an error message occurs about
-'Unrecognised file type'.  WebCollab may give an error message of 'Files action handler: No request
+<dt>4. Certain types of downloaded files are corrupted,
+or an error message occurs about
+'Unrecognised file type'. WebCollab may give an error message of 'Files
+action handler: No request
 given'</dt>
-<dd>This is caused by the uploaded file type not having an appropriate entry in the webservers Mime
+<dd>This is caused by the uploaded file type not having
+an appropriate entry in the webservers Mime
 Type file (In Linux this file is normally <i>/etc/mime.types</i>).<br />
-The list of registered mime types is available at <a
-href="http://www.iana.org/assignments/media-types/" >IANA</a>.  If in doubt choose
-'application/octet-stream', which is the mime type for generic binary data.<br />
-If you do not have access to the mime types file, a .htaccess file can be used with AddType (See
+The list of registered mime types is available at <a href="http://www.iana.org/assignments/media-types/">IANA</a>.
+If in doubt choose
+'application/octet-stream', which is the mime type for generic binary
+data.<br />
+If you do not have access to the mime types file, a .htaccess file can
+be used with AddType (See
 Apache documentation for detail).</dd>
 <dt>5. File upload security.</dt>
-<dd>If you use the default <i>[webcollab]/files/filebase</i> directory, it is possible for users to
-navigate to the directory with their browsers and view the files present.  WebCollab has the
-<i>[webcollab]/files/filebase</i> directory protected by a index.html file and .htaccess file.
-For this to be effective, .htaccess files do need to be enabled in the Apache configuration.<br />
+<dd>If you use the default <i>[webcollab]/files/filebase</i>
+directory, it is possible for users to
+navigate to the directory with their browsers and view the files
+present. WebCollab has the <i>[webcollab]/files/filebase</i>
+directory protected by a index.html file and .htaccess file.
+For this to be effective, .htaccess files do need to be enabled in the
+Apache configuration.<br />
 <br />
-Ideally, for good security move the file upload directory to outside the web server root
-directory.  WebCollab can accommodate an upload directory in any location of the local
-file system - not just the web server root directory.  Make sure the chosen directory is writable by
+Ideally, for good security move the file upload directory to outside
+the web server root
+directory. WebCollab can accommodate an upload directory in any
+location of the local
+file system - not just the web server root directory. Make sure the
+chosen directory is writable by
 the user that normally runs the web server. </dd>
+</dl>
+<h3><a name="rss">RSS Feeds</a></h3>
+<dl>
+<dt>1. How do you enable RSS feeds in WebCollab?</dt>
+<dd>Because WebCollab has access control for each user
+the RSS feed also has to be password protected. This is unlike normal
+RSS feeds that are essentially free access.<br />
+<br />
+The password access for the RSS feeds is controlled using the <i>.htaccess</i>
+(hypertext access) function provided by the Apache webserver. This
+function is enabled by providing an <i>.htaccess</i> file
+in the <i>[webcollab]/rss/</i> directory. Here is a sample
+<i>.htaccess</i> file:
+<pre class="screen">AuthType Basic<br />AuthName "WebCollab"<br />AuthUserFile /etc/apache/passwd/passwords<br />AuthGroupFile /etc/apache/passwd/groups<br />Require group GroupName</pre>
+The usernames and passwords need to be setup in the named file, which
+in this example is <i>/etc/apache/passwd/passwords</i>.
+The usernames in this file also need to match the existing usernames in
+the WebCollab database. More information on setting up this file is
+given in the <a href="http://httpd.apache.org/docs/2.2/howto/htaccess.html">Apache
+website documentation</a><br />
+<br />
+Once this is set up correctly, users can connect a RSS feeder <i>with
+authentication</i> to the following WebCollab feeds:<br />
+<ul>
+<li><i>[webcollab]/rss/rss_forum.php</i></li>
+<li><i>[webcollab]/rss/rss_tasks.php</i></li>
+</ul>
+For RSS readers that do not support password authentication, the username and password can be 
+given with the URL.  The syntax for this is given in
+<a href="http://www.faqs.org/rfcs/rfc1738.html">RFC 1738</a>:<br />
+<pre class="screen">http://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;url-path&gt;
+</pre>
+For a typical Webcollab setup at mysite.webcollab.com with this might be:
+<pre class="screen">http://username:password@http://mysite.webcollab.com:80/rss/rss_projects.php</pre>
+</dd>
+</dl>
+<h3><a name="icalendar">iCalendar</a></h3>
+<dl>
+<dt>1. What is iCalendar?</dt>
+<dd>iCalendar is a standard (<a href="http://www.ietf.org/rfc/rfc2445.txt">RFC 2445</a>)
+for calendar data exchange. In WebCollab 'iCalendar' icons are provided
+on the top right of most task pages. Clicking on this icon will create
+a downloadable file in the iCalendar format. This file can then be
+loaded into other compatible calendar software. </dd>
+<dt>2. WebCollab iCalendar won't work with some other
+third party applications.</dt>
+<dd>WebCollab uses <i>To-do (VTODO)</i>
+element to describe tasks and projects. Some calendar projects only
+recognise the <i>Events (VEVENT)</i> element.<br />
+<br />
+Changing the VEVENT parameter in <i>[webcollab]/config/config.php</i>
+the file to 'Y' will force WebCollab to produce files with VEVENT
+instead of VTODO.
+</dd>
 </dl>
 <h3><a name="email">EMAIL SETUP</a></h3>
 <dl>
 <dt>1. How does email work in WebCollab?</dt>
-<dd>Early versions of WebCollab used the mail() function call in PHP.  In most cases it worked, but
-it did prove troublesome with some SMTP servers.<br />
-<br />
-WebCollab now uses the standard SMTP protocol over TCP/IP to 'talk' to a mail server.  The mail
-server can be remote or local.  Internally mail is handled by a purpose written SMTP mailer that is
+<dd>WebCollab preferably uses the standard SMTP protocol over TCP/IP to 'talk' to
+a mail server. The mail
+server can be remote or local.  WebCollab handles the mail interaction by a purpose
+written SMTP mailer that is
 compliant to RFC 821 (RFC 2821), RFC 822 (RFC2822), et al.<br />
 <br />
 In <i>[webcollab]/config/config.php</i>:<br />
 <br />
 SMTP_HOST = DNS name or IP address of the SMTP server</dd>
-<dt>2. My SMTP server needs me to use SMTP AUTH before accepting mail!</dt>
-<dd>If SMTP AUTH is enabled in the config file, WebCollab will automatically login with 'plain',
-'login' or 'CRAM-MD5' authorisation.  The required auth format is automatically detected.<br />
+<dt>2. My SMTP server needs me to use SMTP AUTH before
+accepting mail!</dt>
+<dd>If SMTP AUTH is enabled in the config file, WebCollab
+will automatically login with 'plain',
+'login' or 'CRAM-MD5' authorisation. The required auth format is
+automatically detected.<br />
 <br />
-You need to set your login name and password in the <i>[webcollab]/config/config.php</i> file.<br />
+You need to set your login name and password in the <i>[webcollab]/config/config.php</i>
+file.<br />
 <br />
-WebCollab complies to RFC 2195 (CRAM-MD5), RFC 2554 (SMTP AUTH) and RFC 2595 (auth plain).</dd>
-<dt>3. Can WebCollab handle non US-ASCII characters (i.e. Languages other than US English)?</dt>
-<dd>For languages with more than "US-ASCII" characters (e.g.: French, German, Spanish etc),
-WebCollab attempts to send emails in 8 bit format.  This is accepted by almost all mail servers. 
-Sendmail, for instance, has had 8 bit support since 1993.<br />
+WebCollab complies to RFC 2195 (CRAM-MD5), RFC 2554 (SMTP AUTH) and RFC
+2595 (auth plain).</dd>
+<dt>3. Can WebCollab handle non US-ASCII characters (i.e.
+Languages other than US English)?</dt>
+<dd>For languages with more than "US-ASCII" characters
+(e.g.: French, German, Spanish etc),
+WebCollab attempts to send emails in 8 bit format. This is accepted by
+almost all mail servers. Sendmail, for instance, has had 8 bit support
+since 1993.<br />
 <br />
-If the upstream SMTP server does not advertise support for 8 bit mail, WebCollab reverts to
-'quoted-printable' encoding.  This follows the requirements of RFC 1652 (8BITMIME), RFC 1869
-(Extended EHLO), RFC 2045 (quoted-printable), and RFC 2047 (8 bit extensions).</dd>   
-<dt>4. Common problems getting email to work.</dt>
-<dd><ul>
-<li>Check the mailserver set in config is the correct address and can be accessed by the web server.
- This is a particularly common problem.  If during setup configuration the setup program gives a
+If the upstream SMTP server does not advertise support for 8 bit mail,
+WebCollab reverts to
+'quoted-printable' encoding. This follows the requirements of RFC 1652
+(8BITMIME), RFC 1869
+(Extended EHLO), RFC 2045 (quoted-printable), and RFC 2047 (8 bit
+extensions).</dd>
+<dt>4. Can the PHP mail() function be used instead?</dt>
+<dd> Some servers, notably Windows servers, do not have access to a SMTP mail server.
+ These sites will generally allow mail access with the PHP mail() function<br />
+<br />
+To enable the PHP mail() function in WebCollab change the mail transport definintion in
+the <i>[webcollab]/config/config.php</i> file:
+<pre class="screen">
+//mail transport (SMTP for standard mailserver, or PHPMAIL for PHP mail() )
+define('MAIL_TRANSPORT', "PHPMAIL" );
+</pre>
+The PHP mail() function is not as fully featured as the WebCollab SMTP built-in, and may not work
+reliably with all systems.</dd>
+<dt>5. Common problems getting email to work.</dt>
+<dd>
+<ul>
+<li>Check the mailserver set in config is the correct
+address and can be accessed by the web server. This is a particularly
+common problem. If during setup configuration the setup program gives a
 warning error, you do not have the right mailserver address.</li>
-<li>As an Admin go into 'Admin config' menu and make sure the return addresses are set for email. 
-These must be valid return addresses for the email server you are using.  Incorrect or lack of any
-address in Admin config, will usually cause the server to reject emails from WebCollab</li>
-<li>For SMTP AUTH the return address must be valid for for the username / password combination.</li>
+<li>As an Admin go into 'Admin config' menu and make
+sure the return addresses are set for email. These must be valid return
+addresses for the email server you are using. Incorrect or lack of any
+address in Admin config, will usually cause the server to reject emails
+from WebCollab</li>
+<li>For SMTP AUTH the return address must be valid
+for for the username / password combination.</li>
 </ul>
 </dd>
-<dt>5. What is the mailing list (mentioned in Admin Email), and how does it work?</dt>
-<dd>The mailing list is set up in Admin Config, which can only be accessed by an admin.<br />
+<dt>5. What is the mailing list (mentioned in Admin
+Email), and how does it work?</dt>
+<dd>The mailing list is set up in Admin Config, which can
+only be accessed by an admin.<br />
 <br />
-Every email sent by WebCollab (except user details) is also sent to the mailing list.  Users on the
-mailing list will then get a lot of mail, but they will be fully abreast of the site workings.   
-</dd>
+Every email sent by WebCollab (except user details) is also sent to the
+mailing list. Users on the
+mailing list will then get a lot of mail, but they will be fully
+abreast of the site workings. </dd>
 </dl>
 <h3><a name="security">SECURITY</a></h3>
 <dl>
-<dt>1. What are practical measures to increase site security?</dt>
-<dd>
-WebCollab has been coded with strong security measures.  In practical use WebCollab security has
+<dt>1. What are practical measures to increase site
+security?</dt>
+<dd>WebCollab has been coded with strong security
+measures. In practical use WebCollab security has
 proven to be very robust.<br />
 <br />
 Practical measures to enhance security include:<br />
 <br />
 <ul>
-<li>Shift the uploaded file directory to outside the web server root.  WebCollab can write to
-anywhere in the file system. Check that the web server has write permissions for the chosen
-directory. This prevents uses uploading files, then navigating to the upload directory with a
+<li>Shift the uploaded file directory to outside the
+web server root. WebCollab can write to
+anywhere in the file system. Check that the web server has write
+permissions for the chosen
+directory. This prevents uses uploading files, then navigating to the
+upload directory with a
 browser and executing the file.</li>
-<li>Shift the config file out of the webserver directories.  You will need to alter the file
-[webcollab]/path_config.php and add the new path to the include_path directive in php.ini.</li>
- <li>Shift the program files out of the webserver directories.  You will need to alter the file
-[webcollab]/path.php and add the new path to the include_path directive in php.ini.</li>
-<li>Use a non-root user for the database.  The database user should have minimal privileges, and not
+<li>Shift the config file out of the webserver
+directories. You will need to alter the file
+[webcollab]/path_config.php and add the new path to the include_path
+directive in php.ini.</li>
+<li>Shift the program files out of the webserver
+directories. You will need to alter the file
+[webcollab]/path.php and add the new path to the include_path directive
+in php.ini.</li>
+<li>Use a non-root user for the database. The
+database user should have minimal privileges, and not
 be able to create and/or delete tables.</li>
-<li>Make sure that Apache configuration allows .htaccess files to set &lt;Limit&gt; in WebCollab
-directory. WebCollab uses .htaccess files extensively to protect subdirectories.</li>
-<li>Make sure the file <i>[webcollab]/config/config.php</i> is not world writable and not owned by
+<li>Make sure that Apache configuration allows
+.htaccess files to set &lt;Limit&gt; in WebCollab
+directory. WebCollab uses .htaccess files extensively to protect
+subdirectories.</li>
+<li>Make sure the file <i>[webcollab]/config/config.php</i>
+is not world writable and not owned by
 the web server user.</li>
 <li>Use an SSL layer for access with WebCollab.</li>
-<li>Delete unnecessary files.  For instance the <i>[webcollab]/setup</i> directory and
-<i>[webcollab]/update.php</i>.</li>
+<li>Delete unnecessary files. For instance the <i>[webcollab]/setup</i>
+directory and <i>[webcollab]/update.php</i>.</li>
 </ul>
-</dd>
-</dl>
-<h3><a name="icalendar">ICALENDAR</a></h3>
-<dl>
-<dt>1. What is iCalendar?</dt>
-<dd>iCalendar is a standard (RFC 2445) for calendar data exchange. The standard is also known as
-"iCal".<br />
-<br />
-It is implemented/supported by a large number of products, including the Apple iCal application,
-Chandler, Lotus Notes, ScheduleWorld, Korganizer, Mozilla Calendar (including Mozilla Sunbird),
-Mulberry, Ximian Evolution, Simple Groupware, Windows Calendar and, to an extent, Microsoft
-Outlook. For more information see the <a
-href="http://en.wikipedia.org/wiki/Icalendar">Wikipedia</a> entry<br />
-<br />
-WebCollab allows iCalendar files to be downloaded by users and stored on other applications. Look
-for the iCalendar text hyperlink on the top right of pages.<br />
-<br />
-WebCollab is compliant to RFC 2445 and RFC 2447.
-</dd>
-<dt>2. The iCalendar file produced by WebCollab does not work Google Calendar (and others)?</dt>
-<dd>At the time of writing Google Calendar does not support the VTODO tag specified in RFC 2445 and
- RFC 2447.<br />
-A work around is to change the parameter VEVENT from 'N' to 'Y' in the configuration file 
-<i>[webcollab]/config/config.php</i>.  WebCollab will then create iCalendar files using the VEVENT
-tags, which are compatible with Google Calendar.
-</dd>
-</dl>
-<h3><a name="rss">RSS</a></h3>
-<dl>
-<dt>1. Does WebCollab provide RSS feeds?</dt>
-<dd>Yes, two simple RSS 2.00 feeds are provided in the <i>[webcollab]/rss</i> directory.  Users will
-need to adapt and extend these basic feeds to suit their own purposes.  The scripts are simply
-written and well commented to assist user modifications.<br />
-<br />
-The WebCollab RSS is authenticated by HTTP Authentication.  A base .htaccess file is provided in
-the directory <i>[webcollab]/rss</i>. Instructions for setting up HTTP authentication can be found on
- the <a href="http://httpd.apache.org/docs/2.2/howto/htaccess.html">Apache website.</a>
 </dd>
 </dl>
 <h3><a name="international">INTERNATIONALISATION</a></h3>
 <dl>
-<dt>1. What character encoding does WebCollab use?  Or, what characters can be used with
+<dt>1. What character encoding does WebCollab use? Or,
+what characters can be used with
 WebCollab?</dt>
-<dd>The character encoding is set by the language file in use.  For instance, English, French &amp;
-German all use ISO-8859-1 encoding (this is also known as Latin 1 encoding).   WebCollab is fully
-internationalised and language files can be set up with any language encodings.<br />
+<dd>The character encoding is set by the language file in
+use. For instance, English, French &amp;
+German all use ISO-8859-1 encoding (this is also known as Latin 1
+encoding). WebCollab is fully
+internationalised and language files can be set up with any language
+encodings.<br />
 <br />
-Note that the standard version of WebCollab is only designed for single byte language encodings.
-For better
-internationalisation capability, the Unicode version of WebCollab should be used. Translations of
-multi-byte character
-encodings (Korean &amp; Japanese) are only available in the Unicode version.
-</dd>
-<dt>2. How is internationalisation handled by the database?</dt>
-<dd>For MySQL the database is created with the default character set of the MySQL server. It is
-assumed that administrators will have set an appropriate default character for the likely
-database users. If the database character set is unsuitable, the file
-<i>[webcollab]/setup/setup_config.php</i> can be edited (before setup) to change the database
-character set.  Comments on this are given in the file.<br />
-<br />
-The WebCollab character set ('LOCALE' setting) must always match the language file in use, or
-some characters will be shown as garbage. The database character set does not need to exactly match
-the WebCollab character set, because the MySQL client connection can do encoding conversions on
-input and output. WebCollab will set the MySQL client connection to the appropriate conversion on
-start up (Note that if the two character sets are very different, some characters will obviously not
-convert).<br />
-<br />
-For PostgreSQL, the server is assumed to be using the defaults of MULE_INTERNAL, SQL_ASCII or UTF8.
-WebCollab sets the required encoding at the PostgreSQL client, and collating and sorting is done to
-the requested character set.
-</dd>
+Note that the standard version of WebCollab is only designed for single
+byte language encodings. For better
+internationalisation capability, the Unicode version of WebCollab
+should be used. Translations of multi-byte character
+encodings (Korean &amp; Japanese) are only available in the Unicode
+version. </dd>
 </dl>
 <h3><a name="unicode">UNICODE</a></h3>
 <dl>
-<dt>1. What is the Unicode version, and why is it relevant?</dt>
-<dd>The standard WebCollab package uses a single byte character set specific to the
-language being used. This parameter is set in the xx-message.php language files
+<dt>1. What is the Unicode version, and why is it
+relevant?</dt>
+<dd>The standard WebCollab package uses a single byte
+character set specific to the
+language being used. This parameter is set in the xx-message.php
+language files
 in the [webcollab]/lang directory.<br />
-<br/>
-This method has two major disadvantages: Because it is single byte, only 255
-different characters are possible (this is a problem with Chinese, Japanese for
-instance).  Secondly, differing character sets cannot be mixed in a single application.<br/>
-<br/>
-This Unicode version of WebCollab converts the localisation to Unicode (UTF-8),
-which natively supports over 650 languages.  Chinese, Japanese and European languages, for
-instance, can be displayed simulataneously on the same screen.
-</dd>
-<dt>2. Why is Unicode simply not included into the standard version of WebCollab?</dt>
-<dd>Traditionally, PHP has been criticised for poor Unicode support.  Later versions (post PHP
-4.3.0) have Unicode support, but the required multi-byte strings library is not compiled in by
-default.  Additionally, MySQL database does not support Unicode prior to MySQL 4.1, and
-databases pre-4.1 are still in mainstream usage. PostgreSQL, by comparision, does have good Unicode
+<br />
+This method has two major disadvantages: Because it is single byte,
+only 255
+different characters are possible (this is a problem with Chinese,
+Japanese for
+instance). Secondly, differing character sets cannot be mixed in a
+single application.<br />
+<br />
+This Unicode version of WebCollab converts the localisation to Unicode
+(UTF-8),
+which natively supports over 650 languages. Chinese, Japanese and
+European languages, for
+instance, can be displayed simulataneously on the same screen. </dd>
+<dt>2. Why is Unicode simply not included into the
+standard version of WebCollab?</dt>
+<dd>Traditionally, PHP has been criticised for poor
+Unicode support. Later versions (post PHP
+4.3.0) have Unicode support, but the required multi-byte strings
+library is not compiled in by
+default. Additionally, MySQL database does not support Unicode prior to
+MySQL 4.1, and
+databases pre-4.1 are still in mainstream usage. PostgreSQL, by
+comparision, does have good Unicode
 support.<br />
 <br />
-These two items make including Unicode into the standard version difficult at the present time. 
-However, for later PHP and MySQL versions the Unicode version is superior.  
-</dd>
-<dt>2. What is required for the Unicode version of WebCollab?</dt>
+These two items make including Unicode into the standard version
+difficult at the present time. However, for later PHP and MySQL
+versions the Unicode version is superior. </dd>
+<dt>2. What is required for the Unicode version of
+WebCollab?</dt>
 <dd>
 <ul>
 <li>PHP versions 4.3.0, and higher.</li>
-<li>MySQL 4.1, and higher - or PostgreSQL 7.2, and higher.</li>   
-<li>The optional multibyte strings library (mb_library) in PHP <span style="text-decoration: underline">must</span> be
-installed and
- enabled.</li>
+<li>MySQL 4.1.3, and higher - or PostgreSQL 7.2, and
+higher.</li>
+<li>The optional multibyte strings library
+(mb_library) in PHP <span style="text-decoration: underline;">must</span>
+be
+installed and enabled.</li>
 </ul>
-</dd> 
+</dd>
 </dl>
 <h3><a name="remote">REMOTE DATABASE</a></h3>
 <dl>
 <dt>1. Why can't remote databases be used with PostgreSQL?</dt>
-<dd>Since version 6.3 (March 1998) PostgreSQL uses UNIX domain sockets by default. TCP port will NOT
-be opened by default. The TCP option can be enabled with the '-i' flag to postmaster and it's
+<dd>Since version 6.3 (March 1998) PostgreSQL uses UNIX
+domain sockets by default. TCP port will NOT
+be opened by default. The TCP option can be enabled with the '-i' flag
+to postmaster and it's
 meaning is: "listen on TCP/ IP sockets as well as Unix domain sockets".<br />
 <br />
-Usually the pg_hba.conf (PostgreSQL config file) also needs to be edited to allow TCP/IP
+Usually the pg_hba.conf (PostgreSQL config file) also needs to be
+edited to allow TCP/IP
 connections.<br />
 <br />
-Changing DATABASE_HOST in <i>config.php</i> from "localhost" to anything else (including
-127.0.0.1) without reconfiguring PostgreSQL will <span style="text-decoration: underline">always</span> prevent
+Changing DATABASE_HOST in <i>config.php</i> from
+"localhost" to anything else (including
+127.0.0.1) without reconfiguring PostgreSQL will <span style="text-decoration: underline;">always</span>
+prevent
 WebCollab from connecting
 to the database.</dd>
 </dl>
@@ -487,98 +636,146 @@ to the database.</dd>
 <dt>1. What are the database types in the config file?</dt>
 <dd>
 <table>
-<tr><td>postgresql</td><td>=&gt; PostgreSQL abstraction layer</td></tr>
-<tr><td>mysql</td><td>=&gt; standard MySQL abstraction layer</td></tr>
-<tr><td>mysql_innodb</td><td>=&gt; MySQL abstraction layer with innodb transaction
-support</td></tr>
+<tbody>
+<tr>
+<td>postgresql</td>
+<td>=&gt; PostgreSQL abstraction layer</td>
+</tr>
+<tr>
+<td>mysql</td>
+<td>=&gt; standard MySQL abstraction layer</td>
+</tr>
+<tr>
+<td>mysql_innodb</td>
+<td>=&gt; MySQL abstraction layer with innodb
+transaction
+support</td>
+</tr>
+<tr>
+<td>mysqli</td>
+<td>=&gt; improved MySQL abstraction layer with innodb
+transaction
+support</td>
+</tr>
+</tbody>
 </table>
+Support for 'mysqli' is optional in PHP, but appears to be the default in PHP 5.3 onwards.   
 </dd>
-<dt>2. PHP5 is bundled with SQLite.  Why doesn't WebCollab support this too?</dt>
-<dd>At present SQLite does not have sufficient date/time functions to work with the WebCollab
+<dt>2. PHP 5 is bundled with SQLite. Why doesn't WebCollab
+support this too?</dt>
+<dd>At present SQLite does not have sufficient date/time
+functions to work with the WebCollab
 code.</dd>
 </dl>
 <h3><a name="transactions">TRANSACTIONS</a></h3>
 <dl>
 <dt>1. Are database transactions used?</dt>
-<dd>The PostgreSQL abstraction layer always uses transactions because:
+<dd>The PostgreSQL abstraction layer always uses
+transactions because:
 <ul>
-<li>They provide better data security in the event of power failure or hardware/software crashes
-during database write operations.  Incomplete data is not witten to the database,  and data
+<li>They provide better data security in the event of
+power failure or hardware/software crashes
+during database write operations. Incomplete data is not written to the
+database, and data
 corruption or loss is avoided.</li>
-<li>Without transactions it is possible for two users to alter the same data simultaneously, leading
-to data corruption.  With transactions this is prevented by design.</li> 
+<li>Without transactions it is possible for two users
+to alter the same data simultaneously, leading
+to data corruption. With transactions this is prevented by design.</li>
 </ul>
 <br />
 The mysql_innodb abstraction layer also uses transactions.<br />
 <br />
-For MySQL version 4.0, and above, innodb database support is enabled by default.  For these
-versions (and configured 3.23.xx versions) it is recommended that the database be created with
-the mysql_innodb database creation script, and the mysql_innodb abstraction layer is used.<br />
+For MySQL version 4.0, and above, innodb database support is enabled by
+default. For this reason
+versions it is recommended that the
+database be created with
+the mysql_innodb database creation script, and the mysql_innodb
+abstraction layer is used.<br />
 <br />
-For MySQL version 3.23.xx the database server <span style="text-decoration: underline">must</span> first be correctly
-configured to allow innodb databases to be used.  See the on line MySQL manual for more details:<br />
-<a href="http://www.mysql.com/doc/en/InnoDB_in_MySQL_3.23.html">
-http://www.mysql.com/doc/en/InnoDB_in_MySQL_3.23.html</a>
+For MySQL version 3.23.xx the database server <span style="text-decoration: underline;">must</span> first
+be correctly
+configured to allow innodb databases to be used. See the on line MySQL
+manual for more details:<br />
+<a href="http://www.mysql.com/doc/en/InnoDB_in_MySQL_3.23.html">http://www.mysql.com/doc/en/InnoDB_in_MySQL_3.23.html</a>
 </dd>
 </dl>
 <h3><a name="backup">DATABASE BACKUP</a></h3>
 <dl>
 <dt>1. Can the database be backed up?</dt>
-<dd>Two UNIX based shell scripts are provided in <i>[webcollab]/db</i> directory for backing up
+<dd>Two UNIX based shell scripts are provided in <i>[webcollab]/db</i>
+directory for backing up
 WebCollab databases.<br />
 <br />
 MySQL:<br />
 <br />
-<pre class="screen">
-# dump_mysql.sh
-</pre>
-&nbsp;&nbsp;&nbsp;Usage: dump_mysql.sh &nbsp;&lt;database user&gt;&nbsp;&lt;database
+<pre class="screen"># dump_mysql.sh<br /></pre>
+&nbsp;&nbsp;&nbsp;Usage: dump_mysql.sh
+&nbsp;&lt;database user&gt;&nbsp;&lt;database
 name&gt;&nbsp;&lt;database password&gt;<br />
 <br />
 PostgreSQL:<br />
 <br />
-<pre class="screen">
-# dump_postgresql.sh
-</pre>
-&nbsp;&nbsp;&nbsp;Usage: dump_postgresql.sh &nbsp;&lt;database name&gt;<br />
+<pre class="screen"># dump_postgresql.sh<br /></pre>
+&nbsp;&nbsp;&nbsp;Usage: dump_postgresql.sh
+&nbsp;&lt;database name&gt;<br />
 <br />
-Both dump into a plain text file.  They can be automated with a cron job and emailed to a back
+Both dump into a plain text file. They can be automated with a cron job
+and emailed to a back
 up machine at regular intervals. </dd>
 </dl>
 <h3><a name="translation">TRANSLATIONS</a></h3>
 <dl>
-<dt>1. Can I translate WebCollab text messages to my language? And how do I do it?</dt>
-<dd>The message translation files are in the <i>[webcollab]/lang</i> directory.  Using English as an
+<dt>1. Can I translate WebCollab text messages to my
+language? And how do I do it?</dt>
+<dd>The message translation files are in the <i>[webcollab]/lang</i>
+directory. Using English as an
 example, there are three main files:
 <ol>
-<li><i>en_message.php</i> - message strings used in the program.</li>
-<li><i>en_long_message.php</i> - long text descriptions used in a few screens.</li>
-<li><i>en_email.php</i> - text used in the automated emails.</li>
+<li><i>en_message.php</i> - message
+strings used in the program.</li>
+<li><i>en_long_message.php</i> - long
+text descriptions used in a few screens.</li>
+<li><i>en_email.php</i> - text used in
+the automated emails.</li>
 </ol>
-Each file contains a single string per line, with an <i>id</i> on the left hand side. For
-example:<br /><br />
-"planned" => "Planned (not active)"<br /><br />
-Translate the right hand side to your language.  Save the file (replacing 'en' with your
-language).<br /><br />
-The 'help' files are similar, but are mostly written in HTML text.  They are found in the
-<i>[webcollab]/help</i> directory.<br /><br />
-Please send a copy of your translation for inclusion in the main program. 
-</dd>
-<dt>2. How do I install the translation files that I've written?</dt>
+Each file contains a single string per line, with an <i>id</i>
+on the left hand side. For
+example:<br />
+<br />
+"planned" =&gt; "Planned (not active)"<br />
+<br />
+Translate the right hand side to your language. Save the file
+(replacing 'en' with your
+language).<br />
+<br />
+The 'help' files are similar, but are mostly written in HTML text. They
+are found in the <i>[webcollab]/help</i> directory.<br />
+<br />
+Please send a copy of your translation for inclusion in the main
+program. </dd>
+<dt>2. How do I install the translation files that I've
+written?</dt>
 <dd>Either:<br />
 <ul>
-<li>Manually add the new files to the switch statements in <i>[webcollab]/lang.php,
+<li>Manually add the new files to the switch
+statements in <i>[webcollab]/lang.php,
 [webcollab]/lang_long.php &amp; [webcollab]/lang_email.php</i>.
- If you have some PHP programming experience, the correct format in the files will be obvious;
+If you have some PHP programming experience, the correct format in the
+files will be obvious;
 or;</li>
-<li>Send the translated files to the author (andrewsimpson@users.sourceforge.net). I am happy to check files and update
+<li>Send the translated files to the author (email
+address in files). I am happy to check files and update
 the other program files to match.</li>
 </ul>
-Final step is to alter the locale in the <i>[webcollab]/config/config file</i>.</dd>
-<dt>3. The translation file for my language still has some English phrases, or is out of date!</dt>
-<dd>Some translations have been offered by translators who do not wish to maintain them, or often I have been unable
-to contact the maintainer by email for updating.<br /><br />
-For these reasons, updates from others are welcomed.</dd> 
+Final step is to alter the locale in the <i>[webcollab]/config/config
+file</i>.</dd>
+<dt>3. The translation file for my language still has
+some English phrases, or is out of date!</dt>
+<dd>Some translations have been offered by translators
+who do not wish to maintain them, or often I have been unable
+to contact the maintainer by email for updating.<br />
+<br />
+For these reasons, updates from others are welcomed.</dd>
 </dl>
 </body>
 </html>
