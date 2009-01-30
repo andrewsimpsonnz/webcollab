@@ -2,7 +2,7 @@
 /*
   $Id: rss_forum.php 1706 2008-01-01 06:13:00Z andrewsimpson $
 
-  (c) 2008 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2008 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -105,7 +105,7 @@ return;
 // Start the RSS xml feed headers
 //
 
-function rss_start($last_mod, $manager_name, $abbr_manager_name ) {
+function rss_start($last_mod, $manager_name, $abbr_manager_name, $filename ) {
 
   /*
   //use compressed output (if web browser supports it) _and_ zlib.output_compression is not already enabled
@@ -121,14 +121,15 @@ function rss_start($last_mod, $manager_name, $abbr_manager_name ) {
   header('Content-Type: text/xml; charset=UTF-8' );
 
   $content =  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n".
-              "<rss version=\"2.0\">\n".
+              "<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n".
               "<channel>\n".
+              "<atom:link href=\"".BASE_URL."rss/".$filename."\" rel=\"self\" type=\"application/rss+xml\" />\n".
               "<title>".$abbr_manager_name."</title>\n".
               "<link>".BASE_URL."</link>\n".
               "<description>".$manager_name."</description>\n".
               "<ttl>60</ttl>\n".
               "<lastBuildDate>".gmdate('D, d M Y H:i:s')." GMT</lastBuildDate>\n".
-              "<generator>WebCollab 2.30</generator>\n";
+              "<generator>WebCollab 2.40</generator>\n";
 
 return $content;
 }
@@ -176,10 +177,10 @@ function rss_end() {
 return $content;
 }
 
-function rss_error($code, $num=0 ) {
+function rss_error($code, $message='' ) {
 
   if(DEBUG == 'Y' ) {
-    error("RSS Error", "Error number ".$code."<br />Break ".$num );
+    error("RSS Error", "Error number ".$code."<br />".$message );
   }
 
   switch ($code ) {

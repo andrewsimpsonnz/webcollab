@@ -2,7 +2,7 @@
 /*
   $Id: rss_tasks.php 1924 2008-02-08 07:30:23Z andrewsimpson $
 
-  (c) 2005 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2005 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -97,8 +97,10 @@ if(! ($q = db_query('SELECT '.PRE.'tasks.id AS id,
   rss_error('500', 'Project query' );
 }
 
+$filename = basename(__FILE__ );
+
 //start xml feed
-$content = rss_start($last_mod, $manager_name, $abbr_manager_name );
+$content = rss_start($last_mod, $manager_name, $abbr_manager_name, $filename );
 
 //set constants
 $guid = md5($manager_name.BASE_URL);

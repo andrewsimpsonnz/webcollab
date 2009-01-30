@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2005 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2005 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -97,8 +97,10 @@ if(! ($q = db_query('SELECT '.PRE.'forum.id AS forumid,
   rss_error('500', 'Forum query' );
 }
 
+$filename = basename(__FILE__ );
+
 //start xml feed
-$content = rss_start($last_mod, $manager_name, $abbr_manager_name );
+$content = rss_start($last_mod, $manager_name, $abbr_manager_name, $filename );
 
 //set constants
 $guid = md5($manager_name.BASE_URL);
