@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -99,7 +99,7 @@ function validate($body ) {
     $body = stripslashes($body );
   }
 
-  if(UNICODE_VERSION == 'Y' || defined('SETUP_CHARACTER_SET' ) || defined('RSS' ) ) {
+  if(UNICODE_VERSION == 'Y' || defined('SETUP' ) || defined('RSS' ) ) {
 
     $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.          //ASCII
                          '|[\x00-\x7F][\x80-\xBF]+'.                       //continuation with no start
@@ -160,7 +160,7 @@ function safe_integer($integer ) {
 function box_shorten($body, $len=20 ){
 
   //translate HTML entities before shortening
-  $body = html_entity_decode($body, ENT_QUOTES, CHARACTER_SET );
+  $body = @html_entity_decode($body, ENT_QUOTES, CHARACTER_SET );
 
   //shorten line to fit box
   if(UNICODE_VERSION == 'Y' ) {
