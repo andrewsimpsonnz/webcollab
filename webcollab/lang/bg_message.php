@@ -32,6 +32,8 @@
 
 //required language encodings
 define('CHARACTER_SET', "Windows-1251" );
+//xml language identifier
+define('XML_LANG', "bg" );
 
 //this is the regex for input validation filter used in common.php
 define('VALIDATION_REGEX', "/([^\x09\x0A\x0D\x20-\x97\x99-\xFF])/" ); //Windows-1251 (http://www.microsoft.com/typography/unicode/1251.htm)
