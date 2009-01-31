@@ -32,6 +32,7 @@ require_once(BASE_CONFIG.'config.php' );
 define('CHARACTER_SET', 'UTF-8' );
 
 include_once(BASE."includes/screen.php" );
+define('XML_LANG', "es" );
 
 create_top("Help for Setup 2", 1 );
 

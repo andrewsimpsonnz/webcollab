@@ -34,6 +34,7 @@ require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 
 define('CHARACTER_SET', 'UTF-8' );
+define('XML_LANG', "bg" );
 
 include_once(BASE . "includes/screen.php" );
 
