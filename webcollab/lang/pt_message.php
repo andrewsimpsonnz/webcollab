@@ -29,6 +29,9 @@
 //required language encodings
 define('CHARACTER_SET', 'ISO-8859-1' );
 
+//xml language identifier
+define('XML_LANG', "pt" );
+
 //dates
 $month_array = array (NULL, 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' );
 $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );

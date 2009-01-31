@@ -15,6 +15,9 @@
 //required language encodings
 define('CHARACTER_SET', "KOI8-R" );
 
+//xml language identifier
+define('XML_LANG', "ru" );
+
 //this is the regex for input validation filter used in common.php
 define('VALIDATION_REGEX', "/([^\x09\x0A\x0D\x20-\xFF])/" );  //KOI8-R
 
