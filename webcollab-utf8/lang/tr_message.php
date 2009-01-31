@@ -32,6 +32,7 @@
 
 //required language encodings
 define('CHARACTER_SET', 'UTF-8' );
+define('XML_LANG', "tr" );
 
 //dates
 $month_array = array (NULL, 'Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara' );

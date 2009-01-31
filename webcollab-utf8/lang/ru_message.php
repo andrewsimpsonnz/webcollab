@@ -15,6 +15,7 @@
 
 //required language encodings
 define('CHARACTER_SET', "UTF-8" );
+define('XML_LANG', "ru" );
 
 //dates
 $month_array = array (NULL, 'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек' );

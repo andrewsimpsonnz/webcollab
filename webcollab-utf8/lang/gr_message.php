@@ -32,6 +32,7 @@
 
 //required language encodings
 define('CHARACTER_SET', 'UTF-8' );
+define('XML_LANG', "gr" );
 
 //dates
 $month_array = array (NULL, 'Ιαν', 'Φεβ', 'Μαρ', 'Απρ', 'Μαϊ', 'Ιουν', 'Ιουλ', 'Αυγ', 'Σεπ', 'Οκτ', 'Νοε', 'Δεκ' );

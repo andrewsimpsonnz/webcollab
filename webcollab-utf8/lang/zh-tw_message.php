@@ -34,6 +34,7 @@
 
 //required language encodings
 define('CHARACTER_SET', 'UTF-8' );
+define('XML_LANG', "zh" );
 
 //dates
 $month_array = array (NULL, '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月' );
