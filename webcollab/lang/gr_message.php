@@ -30,9 +30,11 @@
 //required language encodings
 define('CHARACTER_SET', "ISO-8859-7" );
 
+//xml language identifier
+define('XML_LANG', "gr" );
+
 //this is the regex for input validation filter used in common.php
 define('VALIDATION_REGEX', '/([\x00-\x08\x10\x0B\x0C\x0E-\x19\xAE\xD2\xFF])/' ); //ISO-8859-7
-
 
 //dates
 $month_array = array (NULL, 'Ιαν', 'Φεβ', 'Μαρ', 'Απρ', 'Μαϊ', 'Ιουν', 'Ιουλ', 'Αυγ', 'Σεπ', 'Οκτ', 'Νοε', 'Δεκ' );

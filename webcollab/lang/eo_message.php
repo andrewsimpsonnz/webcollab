@@ -32,6 +32,9 @@
 //required language encodings
 define('CHARACTER_SET', "ISO-8859-3" );
 
+//xml language identifier
+define('XML_LANG', "eo" );
+
 //this is the regex for input validation filter used in common.php
 define('VALIDATION_REGEX', '/([\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F\xA5\xAE\xBE\xC3\xD0\xE3\xF0])/' ); //ISO-8859-3
 
