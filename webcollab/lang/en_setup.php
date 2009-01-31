@@ -27,8 +27,7 @@
 
 */
 
-//required language encodings (must be UTF-8 for setup)
-define('SETUP_CHARACTER_SET', "UTF-8" );
+//NOTE: Language encodings must be UTF-8 for setup
 
 //common
     $lang_setup['yes']                 = "Yes";
