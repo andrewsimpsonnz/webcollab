@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -29,6 +29,9 @@
 if( ! isset($WEB_CONFIG ) ) {
   $WEB_CONFIG = 'N';
 }
+
+//used in common.php
+define('SETUP', '1' );
 
 require_once('path.php' );
 require_once(BASE.'path_config.php' );
