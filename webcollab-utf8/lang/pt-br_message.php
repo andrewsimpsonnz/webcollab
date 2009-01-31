@@ -28,6 +28,7 @@
 */
 //required language encodings
 define('CHARACTER_SET', 'UTF-8' );
+define('XML_LANG', "pt" );
 
 //dates
 $month_array = array (NULL, 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' );

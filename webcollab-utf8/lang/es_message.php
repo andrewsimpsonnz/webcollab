@@ -20,6 +20,8 @@ NOTE: This file is written in UTF-8 character set
 */
 //required language encodings
 define('CHARACTER_SET', 'UTF-8' );
+define('XML_LANG', "es" );
+
 //dates
 $month_array = array ( NULL, "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" );
 $week_array = array('Dom','Lun','Mar','Mie','Jue','Vie','Sab');
