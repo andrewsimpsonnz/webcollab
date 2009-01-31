@@ -95,7 +95,7 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
   $content =        "<!DOCTYPE html PUBLIC\n".
                     "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
                     "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n".
-                    "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n\n".
+                    "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"".XML_LANG."\" lang=\"".XML_LANG."\">\n\n".
                     "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
                     "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
                     "<!-- (c) 2002-2009 Andrew Simpson for WebCollab -->\n\n".
