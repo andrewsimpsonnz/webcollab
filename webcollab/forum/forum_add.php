@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -37,6 +37,10 @@ include_once(BASE.'includes/admin_config.php' );
 
 //secure vars
 $content = '';
+
+if((GUEST == true ) && (GUEST_LOCKED != 'N' ) ) {
+    warning($lang['access_denied'], 'Guests are not permitted to post in forums' );
+}
 
 if(! @safe_integer($_REQUEST['usergroupid']) ){
   $usergroupid = 0;
@@ -107,7 +111,7 @@ $content .=   "<tr><td>".$lang['message']."</td><td><textarea id=\"text\" name=\
               "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER." /></td></tr>\n".
               "<tr><td><label for=\"usergroup\">".$lang['forum_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP." /></td></tr>\n".
               "</table>\n".
-              "<p><input type=\"submit\" value=\"".$lang['post']."\" onclick=\"return fieldCheck()\" /></p>".
+              "<p><input type=\"submit\" value=\"".$lang['post']."\" onclick=\"return fieldCheck('text')\" /></p>".
               "</form>\n";
 
 //show a reply or a new-post box

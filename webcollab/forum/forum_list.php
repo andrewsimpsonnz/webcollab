@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -101,13 +101,15 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 
     //add reply button
     if($TASKID_ROW['archive'] == 0 ){
-      $this_post .= "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=".$row['id']."&amp;taskid=".$taskid;
+      if((GUEST == false ) || ((GUEST == true ) && (GUEST_LOCKED == 'N' ) ) ){
+        $this_post .= "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=".$row['id']."&amp;taskid=".$taskid;
 
-      //if this is a post to a private forum then announce it to the poster-engine
-      if($usergroupid != 0 ) {
-        $this_post .= "&amp;usergroupid=".$usergroupid;
+        //if this is a post to a private forum then announce it to the poster-engine
+        if($usergroupid != 0 ) {
+          $this_post .= "&amp;usergroupid=".$usergroupid;
+        }
+        $this_post .= "\">".$lang['reply']."</a>]</span>\n";
       }
-      $this_post .= "\">".$lang['reply']."</a>]</span>\n";
     }
 
     //mark if this an edited post
@@ -198,7 +200,9 @@ if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) )
   $content .= list_posts_from_task( $taskid, 0 );
   //add an option to add posts
   if($TASKID_ROW['archive'] == 0 ) {
-    $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."\">".$lang['new_post']."</a>]</span>";
+    if((GUEST == false ) || ((GUEST == true ) && (GUEST_LOCKED == 'N' ) ) ){
+      $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."\">".$lang['new_post']."</a>]</span>";
+    }
   }
   //show it
   new_box($lang['public_user_forum'], $content, 'boxdata2' );
@@ -220,7 +224,9 @@ if($TASKID_ROW['usergroupid'] != 0 ) {
     $content .= list_posts_from_task( $taskid, $TASKID_ROW['usergroupid'] );
     //add an option to add posts
     if($TASKID_ROW['archive'] == 0 ){
-      $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."&amp;usergroupid=".$TASKID_ROW['usergroupid']."&amp;\">".$lang['new_post']."</a>]</span>\n";
+      if((GUEST == false ) || ((GUEST == true ) && (GUEST_LOCKED == 'N' ) ) ){
+        $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."&amp;usergroupid=".$TASKID_ROW['usergroupid']."&amp;\">".$lang['new_post']."</a>]</span>\n";
+      }
     }
     //get usergroup
     $usergroup_name = db_result(db_query("SELECT name FROM ".PRE."usergroups WHERE id=".$TASKID_ROW['usergroupid'].' LIMIT 1' ), 0, 0 );

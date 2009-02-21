@@ -2,7 +2,7 @@
 /*
   $Id: forum_submit.php 1704 2008-01-01 06:09:52Z andrewsimpson $
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -37,6 +37,10 @@ include_once(BASE.'includes/admin_config.php');
 
 //secure variables
 $mail_list = array();
+
+if((GUEST) && (GUEST_LOCKED != 'N' ) ){
+  warning($lang['access_denied'], 'Guests are not permitted to post in forums' );
+}
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
