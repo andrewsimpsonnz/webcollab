@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -76,18 +76,19 @@ foreach($array as $var ) {
 $array = array('NUM_FILE_UPLOADS' => 3,
                'MAIL_TRANSPORT' => 'SMTP', 'SMTP_PORT' => 25, 'MAIL_USER' => '', 'MAIL_PASSWORD' => '', 'TLS' => 'N',
                'CSS_MAIN' => 'default.css', 'CSS_CALENDAR' => 'calendar.css', 'CSS_PRINT' => 'print.css',
-               'EMAIL_ERROR'  => '',
-               'SESSION_TIME' => 1,
-               'NEW_TIME'     => 14,
                'SITE_IMG'     => '',
-               'DEBUG'        => 'N',
-               'NO_ERROR'     => 'N',
-               'VEVENT'       => 'N',
+               'NEW_TIME'     => 14,
                'START_DAY'    =>  0,
+               'VEVENT'       => 'N',
+               'RSS_AUTODISCOVERY' => 'N',
+               'SESSION_TIMEOUT'   => 1,
                'WEB_AUTH'     => 'N',
                'PASS_STYLE'   => 'text',
-               'PRE'          => '',
-               'RSS_AUTODISCOVERY' => 'N' );
+               'GUEST_LOCKED' => 'N',
+               'EMAIL_ERROR'  => '',
+               'DEBUG'        => 'N',
+               'NO_ERROR'     => 'N',
+               'PRE'          => '' );
 
 //get array of constant's names
 $constants = array_keys($array);
@@ -226,6 +227,8 @@ $content = "<?php\n".
 "  define('WEB_AUTH', '".WEB_AUTH."' );\n\n".
 "  //Show passwords in user edit screens as plain text or hidden ('****') (values are 'text', or 'password')\n".
 "  define('PASS_STYLE', '".PASS_STYLE."' );\n\n".
+"  //Stop GUEST users from changing their login details or posting in the forums (values are 'N', or 'Y')\n".
+"  define('GUEST_LOCKED', '".GUEST_LOCKED."' );\n\n".
 "//ERROR DEBUGGER\n\n".
 "  //If an error occurs, who do you want the error to be mailed to ?\n".
 "  define('EMAIL_ERROR', '".EMAIL_ERROR."' );\n\n".
