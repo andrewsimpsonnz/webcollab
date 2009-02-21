@@ -61,7 +61,11 @@
 //
 // Creates the initial window
 //
-function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $calendar=0, $redirect_time=0 ) {
+//function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $calendar=0, $redirect_time=0 ) {
+
+function create_top($title='', $page_type=0, $include_javascript=0, $check_field=0, $redirect_time=0 ) {
+
+
 
   global $lang, $top_done, $bottom_text;
 
@@ -140,61 +144,24 @@ function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $cale
 
   $content .= "<link rel=\"icon\" type=\"image/png\" href=\"".BASE."images/group.png\" />\n";
 
-  //javascript scripts
-  if($cursor || $check || $date || $calendar ) {
-    $content .=     "<script type=\"text/javascript\">\n";
+  if($include_javascript ) {
 
-    if($cursor){
-      $content .=   "function placeCursor() {document.getElementById('".$cursor."').focus()}\n";
-    }
+    $content .= "<script type=\"text/javascript\">\n".
+                "var text = { AlertField : \"".$lang['missing_field_javascript']."\",\n".
+                "             InvalidDate : \"".$lang['invalid_date_javascript']."\",\n".
+                "             FinishDate : \"".$lang['finish_date_javascript']."\"}\n".
+                "</script>\n";
 
-    if($check){
-      $content .=   "function fieldCheck(){\n".
-                    "var field = document.getElementById('".$check."').value;\n".
-                    "if(field.length == 0){\n".
-                    "alert('".$lang['missing_field_javascript']."');\n".
-                    "document.getElementById('".$check."').focus();\n".
-                    "return false;}\n".
-                    "return true;}\n";
-    }
-    if($date) {
-      $content .=   "function dateCheck() {\n".
-                    "if(!fieldCheck()){\n".
-                    "return false;}\n".
-                    "var daysMonth = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 );\n".
-                    "if(document.getElementById('year').value % 4 == 0 ){\n".
-                    "daysMonth[1] = 29;}\n".
-                    "if(document.getElementById('day').value > daysMonth[(document.getElementById('month').value-1)] ){\n".
-                    "alert('".$lang['invalid_date_javascript']."');\n".
-                    "return false;}\n".
-                    "var finishDate = document.getElementById('projectDate').value;\n".
-                    "var statusType = document.getElementById('projectStatus').value;\n".
-                    "if(finishDate > 0 && (statusType != 'cantcomplete' && statusType != 'notactive')){\n".
-                    "var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value, 0, 0, 0 )/1000;\n".
-                    "if(inputDate - finishDate > 21600 ){\n".
-                    "return confirm('".$lang['finish_date_javascript']."');} }\n".
-                    "}\n";
-    }
-    if($calendar) {
-      $content .=   "function dateSet(dayIndex, monthIndex, yearIndex) {\n".
-                    "if(window.opener && !window.opener.closed) {\n".
-                    "window.opener.document.getElementById('day').selectedIndex=dayIndex;\n".
-                    "window.opener.document.getElementById('month').selectedIndex=monthIndex;\n".
-                    "window.opener.document.getElementById('year').selectedIndex=yearIndex;}\n".
-                    "}\n";
-    }
-    $content .=     "</script>\n".
-                    "</head>\n\n";
-    if($cursor) {
-      $content .=   "<body onload=\"placeCursor()\">\n";
-    }
-    else {
-      $content .=   "<body>\n";
-    }
+    $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n";
+  }
+
+  if($include_javascript && $check_field ) {
+    $content .= "</head>\n\n".
+                "<body onload=\"placeCursor('".$check_field."')\">\n";
   }
   else {
-    $content .=     "</head>\n\n".
-                    "<body>\n";
+    $content .= "</head>\n\n".
+                "<body>\n";
   }
 
   //create the main table
