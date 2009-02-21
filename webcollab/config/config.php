@@ -182,6 +182,9 @@
   //Show passwords in user edit screens as plain text or hidden ('****') (values are "text", or "password")
   define('PASS_STYLE', "text" );
 
+  //Stop GUEST users from changing their login details or posting in the forums (values are "N", or "Y")
+  define('GUEST_LOCKED', "N" );
+
 //ERROR DEBUGGER
 
   //If an error occurs, who do you want the error to be mailed to ?
