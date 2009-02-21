@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
    WebCollab
   ---------------------------------------
@@ -47,7 +47,7 @@ switch($_REQUEST['action'] ) {
 
   //add a forum post/reply
   case 'add':
-    create_top($lang['add_reply'], 0, 'text', 'text' );
+    create_top($lang['add_reply'], 0, 1, 'text' );
     include(BASE.'includes/mainmenu.php');
     goto_main();
     include(BASE.'forum/forum_add.php');
@@ -56,7 +56,7 @@ switch($_REQUEST['action'] ) {
 
   //edit a forum post/reply
   case 'edit':
-    create_top($lang['add_reply'], 0, 'text', 'text' );
+    create_top($lang['add_reply'], 0, 1, 'text' );
     include(BASE.'includes/mainmenu.php');
     goto_main();
     include(BASE.'forum/forum_edit.php');
@@ -90,7 +90,7 @@ switch($_REQUEST['action'] ) {
 
   //display search box
   case 'search_box':
-    create_top($lang['info'], 0, 'string' );
+    create_top($lang['info'], 0, 1, 'string' );
     include(BASE.'includes/mainmenu.php');
     include(BASE.'forum/forum_menubox.php');
     goto_main();
