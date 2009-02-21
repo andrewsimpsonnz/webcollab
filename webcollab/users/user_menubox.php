@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -37,15 +37,20 @@ $content = '';
 if(ADMIN ) {
   $content .= "<a href=\"users.php?x=".$x."&amp;action=add\">".$lang['add']."</a><br />\n";
 }
+
 $content .= "<a href=\"users.php?x=".$x."&amp;action=manage\">".$lang['manage']."</a><br />\n";
 
 if((ADMIN) && (USE_EMAIL != 'N') ){
   $content .= "<a href=\"users.php?x=".$x."&amp;action=email\">".$lang['email_users']."</a><br />\n";
 }
 
-$content .= "<a href=\"users.php?x=".$x."&amp;action=showonline\">".$lang['who_online']."</a><br />\n".
-            "<a href=\"users.php?x=".$x."&amp;action=edit&amp;userid=".UID."\">".$lang['edit_details']."</a><br />\n".
-            "<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".UID."\">".$lang['show_details']."</a><br />\n";
+$content .= "<a href=\"users.php?x=".$x."&amp;action=showonline\">".$lang['who_online']."</a><br />\n";
+
+if((GUEST == false ) || ((GUEST == true ) && (GUEST_LOCKED == 'N' ) ) ){
+  $content .= "<a href=\"users.php?x=".$x."&amp;action=edit&amp;userid=".UID."\">".$lang['edit_details']."</a><br />\n";
+}
+
+$content .= "<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".UID."\">".$lang['show_details']."</a><br />\n";
 
 //show it
 new_box($lang['users'], $content, 'boxmenu' );

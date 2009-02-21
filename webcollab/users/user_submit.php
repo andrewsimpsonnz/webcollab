@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -185,6 +185,10 @@ switch($_REQUEST['action'] ) {
 
   //edit a user
   case 'submit_edit':
+
+    if((GUEST) && (GUEST_LOCKED != 'N' ) ){
+      warning($lang['access_denied'], 'Guests are not permitted to modify details' );
+    }
 
     //check input has been provided
     if(empty($_POST['name']) ) {

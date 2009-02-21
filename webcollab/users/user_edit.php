@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,6 +35,10 @@ include_once(BASE.'users/user_common.php' );
 
 //secure vars
 $userid = '';
+
+if((GUEST) && (GUEST_LOCKED != 'N' ) ){
+  warning($lang['access_denied'], 'Guests are not permitted to modify details' );
+}
 
 //is an admin everything can be queried otherwise only yourself can be queried
 if(ADMIN ) {
