@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -52,7 +52,7 @@ switch($_REQUEST['action'] ) {
 
   //gives a window and some options to do to the poor 'old contact manager
   case 'add':
-    create_top($lang['add_contact'], 0, 'firstname' );
+    create_top($lang['add_contact'], 0, 1, 'firstname' );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'contacts/contact_menubox.php' );
     goto_main();
