@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -74,7 +74,7 @@ else{
               "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
               "<tr><td>".$lang['deadline'].":</td> <td>".date_select()."</td></tr>\n".
               "</table>\n".
-              "<p><input type=\"submit\" value=\"".$lang['add_project']."\" onclick=\"return fieldCheck()\" /</p>".
+              "<p><input type=\"submit\" value=\"".$lang['add_project']."\" onclick=\"return fieldCheck('name')\" /</p>".
               "</form>\n";
 
   new_box( $lang['add_task'], $content );
