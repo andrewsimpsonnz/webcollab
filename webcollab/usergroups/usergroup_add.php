@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -56,7 +56,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 $content .= "</select><small><i>".$lang['select_instruct']."</i></small></td></tr>\n".
             "</table>\n".
-            "<p><input type=\"submit\" value=\"".$lang['add_usergroup']."\" onclick=\"return fieldCheck()\" /></p>".
+            "<p><input type=\"submit\" value=\"".$lang['add_usergroup']."\" onclick=\"return fieldCheck('name')\" /></p>".
             "</form>\n";
 
 new_box($lang['add_new_usergroup'], $content );
