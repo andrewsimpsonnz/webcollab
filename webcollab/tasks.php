@@ -49,7 +49,7 @@ switch($_REQUEST['action'] ) {
       die;
     }
 
-    create_top($lang['task_info']);
+    create_top($lang['task_info'], 0, 1 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'tasks/task_navigate.php' );
     if(! GUEST )
