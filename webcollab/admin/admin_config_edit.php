@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2003 - 20089 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -85,11 +85,11 @@ $content .= "<tr><td><label for=\"access\">".$lang['allow_globalaccess']."</labe
 
 //set default selection for project listing
 switch($row['project_order']){
-  case 'ORDER BY due ASC, name':
+  case 'ORDER BY due ASC, priority DESC, name':
     $s1 = ""; $s2 = " selected=\"selected\""; $s3 = "";
     break;
 
-  case 'ORDER BY priority DESC, name':
+  case 'ORDER BY priority DESC, due ASC, name':
     $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\"";
     break;
 
@@ -109,11 +109,11 @@ $content .= "<tr><td>".$lang['project_listing_order'].":</td><td>\n".
 
 //set default selection for task listing
 switch($row['task_order']){
-  case 'ORDER BY due ASC, name':
+  case 'ORDER BY due ASC, priority DESC, name':
     $s1 = ""; $s2 = " selected=\"selected\""; $s3 = "";
     break;
 
-  case 'ORDER BY priority DESC, name':
+  case 'ORDER BY priority DESC, due ASC, name':
     $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\"";
     break;
 

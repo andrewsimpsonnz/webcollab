@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -86,11 +86,11 @@ else {
 
 switch($project_order) {
   case 'deadline':
-    $project_list = 'ORDER BY due ASC, name';
+    $project_list = 'ORDER BY due ASC, priority DESC, name';
     break;
 
   case 'priority':
-    $project_list = 'ORDER BY priority DESC, name';
+    $project_list = 'ORDER BY priority DESC, due ASC, name';
     break;
 
   default:
@@ -108,11 +108,11 @@ else {
 
 switch($task_order) {
   case 'deadline':
-    $task_list = 'ORDER BY due ASC, name';
+    $task_list = 'ORDER BY due ASC, priority DESC, name';
     break;
 
   case 'priority':
-    $task_list = 'ORDER BY priority DESC, name';
+    $task_list = 'ORDER BY priority DESC, due ASC, name';
     break;
 
   default:
