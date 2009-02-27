@@ -36,6 +36,9 @@ require_once(BASE.'includes/usergroup_security.php' );
 include_once(BASE.'includes/details.php' );
 include_once(BASE.'includes/time.php' );
 
+$m_strlen = (UNICODE_VERSION == 'Y' ) ? 'mb_strlen' : 'strlen';
+$m_substr = (UNICODE_VERSION == 'Y' ) ? 'mb_substr' : 'substr';
+
 //
 // Recursive function for listing all posts of a task
 //
@@ -43,10 +46,12 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 
   global $x, $lang, $TASKID_ROW, $epoch;
   global $post_array, $parent_array, $post_count;
+  global $m_strlen, $m_substr;
 
   $post_array   = array();
   $parent_array = array();
   $post_count   = 0;
+  $post_char_limit = 500;
 
   $q = db_query('SELECT '.PRE.'forum.text AS text,
                         '.PRE.'forum.id AS id,
@@ -112,12 +117,41 @@ function list_posts_from_task( $taskid, $usergroupid ) {
       }
     }
 
-    //mark if this an edited post
-    if($row['sequence'] > 0 ) {
-      $suffix = "<br /><img src=\"images/script_edit.png\" alt=\"\" />&nbsp;<small>--&nbsp;".nicetime( $row['edited'])."</small>";
+    $this_post .= "<br />\n";
+
+    $raw_post = nl2br(bbcode($row['text'] ) );
+
+    //check for long posts, and provide dropdown box
+    if($m_strlen($raw_post ) > $post_char_limit) {
+      //rough cut to fit, then look for word boundaries for better cut
+      $first_cut  = $m_substr($raw_post, 0, ($post_char_limit + 20 ) );
+      $last_space_pos = strrpos($first_cut, ' ' );
+
+      //adjust to suit word boundary if possible
+      if(($last_space_pos === false ) || ($last_space_pos > ($post_char_limit - 20 ) ) ) {
+        $post_char_limit = $last_space_pos;
+      }
+      $body1 = substr($raw_post, 0, ($post_char_limit + 1 ) );
+      $body2 = substr($raw_post, ($post_char_limit + 1 ) );
+
+      $this_post .= "<span style=\"display:inline;\">".$body1."</span>".
+                    "<span id=\"dot_".$row['id']."\" style=\"display:inline;\">...</span>".
+                    "<span id=\"post_".$row['id']."\" style=\"display:none;\">".$body2."</span>&nbsp;&nbsp;".
+                    "<img src=\"images/book_next.png\" id=\"img_dn_".$row['id']."\" style=\"display:inline;\" alt=\"\" ".
+                    "onclick=\"postToggle('dot_".$row['id']."', 'post_".$row['id']."', 'img_dn_".$row['id']."', 'img_up_".$row['id']."'); return false;\" />".
+                    "<img src=\"images/arrow_up.png\" id=\"img_up_".$row['id']."\" style=\"display:none;\" alt=\"\" ".
+                    "onclick=\"postToggle('dot_".$row['id']."', 'post_".$row['id']."', 'img_dn_".$row['id']."', 'img_up_".$row['id']."'); return false;\" />";
+    }
+    else{
+      $this_post .= $raw_post;
     }
 
-    $post_array[$i]['post'] = $this_post."<br />\n".nl2br(bbcode($row['text'] ) ).$suffix."\n";
+    //mark if this an edited post
+    if($row['sequence'] > 0 ) {
+      $this_post .= "<br /><img src=\"images/note_edit.png\" alt=\"\" />&nbsp;<small>--&nbsp;".nicetime( $row['edited'])."</small>";
+    }
+
+    $post_array[$i]['post'] = $this_post."\n";
     ++$post_count;
 
     //if this is a subpost, store the parent id
