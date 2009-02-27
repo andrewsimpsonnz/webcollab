@@ -106,7 +106,7 @@ switch($TYPE) {
                 "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n ".
                 "<table class=\"celldata\">\n".
                 "<tr><td>".$lang['creation_time']."</td><td>".nicedate($TASKID_ROW['created'] )."</td></tr>\n".
-                "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" value=\"".$TASKID_ROW['name']."\" /></td></tr>\n";
+                "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"60\" value=\"".$TASKID_ROW['name']."\" /></td></tr>\n";
     break;
 
   case 'task':
@@ -351,7 +351,7 @@ $group  = ($TASKID_ROW['groupaccess']  == 't' ) ? "checked=\"checked\"" : '';
 $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['all_users_view']."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" ".$global." /></td></tr>\n".
              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$group." /></td></tr>\n".
 
-             "<tr><td>".$lang[$TYPE."_description"]."</td> <td><textarea name=\"text\" rows=\"5\" cols=\"60\">".$TASKID_ROW['text']."</textarea></td> </tr>\n".
+             "<tr><td>".$lang[$TYPE."_description"]."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\">".$TASKID_ROW['text']."</textarea></td> </tr>\n".
 
              //do we need to email ?
              "<tr><td><label for=\"mailowner\">".$lang['email_new_owner']."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".DEFAULT_OWNER." /></td></tr>\n".
