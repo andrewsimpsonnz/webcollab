@@ -53,19 +53,19 @@ $taskid = $_GET['taskid'];
 //check usergroup security
 $taskid = usergroup_check($taskid );
 
-$content =  "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"files.php\">\n".
+$content =    "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"files.php\">\n".
               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"submit_upload\" />\n".
               "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
               "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"".FILE_MAXSIZE."\" /></fieldset>\n".
               "<table class=\"celldata\">\n".
-              "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" /></td></tr>\n";
+              "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" size=\"60\" /></td></tr>\n";
 
 for( $i = 1; $i < NUM_FILE_UPLOADS; ++$i ) {
-  $content .= "<tr><td></td><td><input type=\"file\" name=\"userfile[]\" /></td></tr>\n";
+  $content .= "<tr><td></td><td><input type=\"file\" name=\"userfile[]\" size=\"60\" /></td></tr>\n";
 }
 
-$content .=   "<tr><td>".$lang['description'].":</td> <td><textarea name=\"description\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
+$content .=   "<tr><td>".$lang['description'].":</td> <td><textarea name=\"description\" rows=\"25\" cols=\"88\"></textarea></td></tr>\n".
               "<tr><td></td><td>".sprintf( $lang['max_file_sprt'], FILE_MAXSIZE/1000 )."</td></tr>\n".
               "</table>\n".
               "<table class=\"celldata\">\n".
@@ -73,7 +73,7 @@ $content .=   "<tr><td>".$lang['description'].":</td> <td><textarea name=\"descr
               "<tr><td><label for=\"usergroup\">".$lang['file_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP." /></td></tr>\n".
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang['upload']."\" onclick=\"return fieldCheck('userfile')\" /></p>\n".
-            "</form>\n";
+              "</form>\n";
 
 new_box($lang['add_file'], $content );
 
