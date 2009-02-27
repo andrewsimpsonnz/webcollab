@@ -67,7 +67,7 @@ $content .=  "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />".
 
 //build up the text-entry part
 $content .=   "<table>\n".
-              "<tr><td>".$lang['message']."</td><td><textarea id=\"text\" name=\"text\" rows=\"10\" cols=\"60\">".$row['text']."</textarea></td></tr>\n".
+              "<tr><td>".$lang['message']."</td><td><textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\">".$row['text']."</textarea></td></tr>\n".
               "</table>\n".
               "<table class=\"celldata\">\n".
               "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER." /></td></tr>\n".
