@@ -46,3 +46,19 @@ function dateSet(dayIndex, monthIndex, yearIndex) {
     window.opener.document.getElementById('month').selectedIndex=monthIndex;
     window.opener.document.getElementById('year').selectedIndex=yearIndex;}
 }
+
+function postToggle(ellipis, post2, image1, image2 ) {
+  if(document.getElementById(post2).style.display == "none") {
+    document.getElementById(post2).style.display = "inline";
+    document.getElementById(ellipis).style.display = "none";
+    document.getElementById(image1).style.display = "none";
+    document.getElementById(image2).style.display = "inline";
+  }
+  else {
+    document.getElementById(post2).style.display = "none";
+    document.getElementById(ellipis).style.display = "inline";
+    document.getElementById(image1).style.display = "inline";
+    document.getElementById(image2).style.display = "none";
+  }
+  return true;
+}
