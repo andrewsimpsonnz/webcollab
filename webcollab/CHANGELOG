@@ -1,4 +1,44 @@
 WebCollab SVN
+*** 28 February 2009
+  Andrew Simpson
+
+- change secondary sort orders in admin_config_submit.php (Credit: wangzhijun2005 - Luke Wang )
+
+- update textarea sizes on screen (Credit: Atanacius / wangzhijun2005 - Luke Wang )
+
+WebCollab SVN
+*** 22 February 2009
+  Andrew Simpson
+
+- shift javascript to separate file
+
+- add GUEST_LOCKED to config (Feature Request: Kopojib )
+
+- add drop down for long posts in forums (Feature Request: Atanacius / Rasyr66 )
+
+- change cut algorithm for box shorten in common.php
+
+WebCollab 2.40 - Avocado
+*** 6 February 2009
+  Andrew Simpson
+
+- release
+
+WebCollab SVN
+*** 31 January 2009
+  Andrew Simpson
+
+- add RSS autodiscovery option in config files
+
+- RSS changes to recommendations of W3C feed validator
+
+- minor improvements to RSS
+
+- rearrange configuration file for better readability
+
+- add XML_LANG to language files
+
+WebCollab SVN
 *** 20 December 2008
   Andrew Simpson
 
