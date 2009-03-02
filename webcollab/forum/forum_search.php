@@ -179,7 +179,7 @@ if($min > 0 || $max < $total ) {
 
   if($min > 0 ) {
     //show left arrow
-    $content .= "<tr><td><input style=\"float:left\" type=\"submit\" name=\"backward\" value=\"&lt;&lt;\" /></td>\n";
+    $content .= "<tr><td><input style=\"float:left\" type=\"image\" name=\"backward\" value=\"&lt;&lt;\" src=\"images/resultset_previous.png\"/></td>\n";
   }
 
   $content .= "<td>\n";
@@ -200,7 +200,7 @@ if($min > 0 || $max < $total ) {
 
   if($max < $total ) {
     //show right arrow
-    $content .= "<td ><input style=\"float:right\" type=\"submit\" name=\"forward\" value=\"&gt;&gt;\" /></td>\n";
+    $content .= "<td ><input style=\"float:right\" type=\"image\" name=\"forward\" value=\"&gt;&gt;\" src=\"images/resultset_next.png\" /></td>\n";
   }
 
   $content .= "</tr></table></form>\n";
