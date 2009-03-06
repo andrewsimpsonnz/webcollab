@@ -29,6 +29,9 @@
 
 //NOTE: Language encodings must be UTF-8 for setup
 
+//required language encodings
+define('CHARACTER_SET', "UTF-8" );
+
 //common
     $lang_setup['yes']                 = "Yes";
     $lang_setup['no']                  = "No";
@@ -57,6 +60,7 @@
     $lang_setup['require_login']       = "Admin login is required for setup:";
     $lang_setup['login']               = "Login:";
     $lang_setup['password']            = "Password:";
+    $lang_setup['language']            = "Language:";
     $lang_setup['setup_banner']        = "Login";
 
 //setup1
