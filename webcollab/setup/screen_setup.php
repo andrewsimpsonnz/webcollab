@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -57,7 +57,7 @@ function create_top_setup($title='', $check=0 ) {
        "\"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n".
        "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n".
        "<html>\n\n".
-       "<!-- (c) 2002 - 2008 Andrew Simpson -->\n\n".
+       "<!-- (c) 2002 - 2009 Andrew Simpson -->\n\n".
        "<head>\n".
        "<title>".$title."</title>\n".
        "<meta http-equiv=\"Pragma\" content=\"no-cache\" />".
@@ -68,19 +68,11 @@ function create_top_setup($title='', $check=0 ) {
   //javascript scripts
   if($check ) {
     echo "<script type=\"text/javascript\">\n".
-         "function fieldCheck(){\n".
-         "var user = document.getElementById('user');\n".
-         "var pass1 = document.getElementById('password');\n".
-         "var pass2 = document.getElementById('password_check');\n".
-         "if (user.length == 0 || pass1.length == 0 || pass2.length == 0 ) {\n".
-         "alert('Please enter the missing field' );\n".
-         "return false;\n".
-         "}\n".
-         "if (pass1.value != pass2.value ) {\n".
-         "alert('Passwords do not match!');\n".
-         "return false;\n".
-         "}}\n".
+         "var text = { AlertField : \"".'Please enter the missing field'."\",\n".
+         "             PassMatch : \"".'Passwords do not match!'."\",\n".
          "</script>\n";
+
+    echo "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab-setup.js\"></script>\n";
  }
 
  echo  "</head>\n\n".
