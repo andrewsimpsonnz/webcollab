@@ -30,15 +30,22 @@ require_once('path.php');
 require_once(BASE.'includes/security.php' );
 include_once(BASE.'includes/screen.php' );
 
-//make active projects 'sticky'
-if(isset($_GET['active_only'] ) ) {
-  $cookie = ($_GET['active_only']) ? 1 : 0;
-  setcookie('webcollab_active_only', $cookie );
-}
-//make condensed projects sticky'
-if(isset($_GET['condensed'] ) ) {
-  $cookie = ($_GET['condensed']) ? 1 : 0;
-  setcookie('webcollab_condensed', $cookie );
+//make active projects and condensed projects 'sticky' with a persistent cookie
+if(isset($_GET['active_only'] ) || isset($_GET['condensed'] ) ) {
+  if(isset($_GET['active_only'] ) ) {
+    $cookie_array['active_only'] = ($_GET['active_only']) ? 1 : 0;
+  }
+  if(isset($_GET['condensed'] ) ) {
+    $cookie_array['condensed'] = ($_GET['condensed']) ? 1 : 0;
+  }
+
+  //sort into an array and implode
+  foreach($cookie_array as $key => $value ) {
+    $cookie_array_value[] = $key.'='.$value;
+  }
+  //key1=value1:key2=value2 , etc
+  $cookie_value = implode(':', $cookie_array_value );
+  setcookie('webcollab_sticky', $cookie_value, (time() + 86400*365*10 ) );
 }
 
 //start of page
