@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -177,11 +177,32 @@ $content = "<p>".$lang_setup['require_login']."</p>\n".
            "<form method=\"post\" action=\"setup.php\">\n".
            "<table border=\"0\">\n".
            "<tr><td>".$lang_setup['login']."</td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
-           "<tr><td>".$lang_setup['password']."</td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
-           "</table>\n".
-           "<div align=\"center\">\n".
-           "<p><input type=\"submit\" value=\"".$lang_setup['submit']."\" /></p>\n".
-           "</div></form>\n";
+           "<tr><td>".$lang_setup['password']."</td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n";
+
+$locale_array = array('en'   => 'English',
+                      'nl'   => 'Dutch (Help files only) ',
+                      'pt'   => 'Portuguese (Help files only)',
+                      'pt-br'=> 'Portuguese (Brazilian) (Help files only)',
+                      'es'   => 'Spanish (Help files only)' );
+
+$content .= "<tr><td>".$lang_setup['language']."</td><td>\n".
+            "<select name=\"lang\">\n";
+
+foreach ($locale_array as $key => $value ) {
+  $content .= "<option value=\"".$key."\"";
+
+  if($locale_setup == $key ) {
+    $content .= " selected=\"selected\" ";
+  }
+
+  $content .= ">".$value."</option>\n";
+}
+
+$content .= "</select></td></tr>\n".
+            "</table>\n".
+            "<div align=\"center\">\n".
+            "<p><input type=\"submit\" value=\"".$lang_setup['submit']."\" /></p>\n".
+            "</div></form>\n";
 
 //set box options
 new_box_setup($lang_setup['setup_banner'], $content, 'boxdata', 'singlebox' );
