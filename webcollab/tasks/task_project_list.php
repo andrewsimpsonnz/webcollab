@@ -169,15 +169,25 @@ $task_projectid   = array();
 
 $action = (isset($_GET['action']) && ($_GET['action'] ) ) ? 1 : 0;
 
-//set 'active' and 'condensed' 
-$array = array('active_only', 'condensed' );
-foreach($array as $var ) {
+//set 'active' and 'condensed' from cookies
+if(isset($_COOKIE['webcollab_sticky'] ) ) {
+  //format is key1=value1:key2=value2 , etc
+  $cookie_var = explode(':', $_COOKIE['webcollab_sticky'] );
+
+  foreach($cookie_var as $key_pair ) {
+    $var = explode('=', $key_pair );
+    $cookie_array[($var[0])] = $var[1];
+  }
+}
+
+//set 'active and 'condensed' from cookie or GET
+foreach(array('active_only', 'condensed' ) as $var ) {
 
   if(isset($_GET[$var] ) ) {
     $$var = ($_GET[$var] ) ? 1 : 0;
   }
-  elseif(isset($_COOKIE['webcollab_'.$var]) ) {
-    $$var = ($_COOKIE['webcollab_'.$var] ) ? 1 : 0;
+  elseif(isset($cookie_array ) ) {
+    $$var = ($cookie_array[$var] ) ? 1 : 0;
   }
   else {
     $$var = 0;
