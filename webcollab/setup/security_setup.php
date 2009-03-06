@@ -30,9 +30,6 @@ if( ! isset($WEB_CONFIG ) ) {
   $WEB_CONFIG = 'N';
 }
 
-//used in common.php
-define('SETUP', '1' );
-
 require_once('path.php' );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
