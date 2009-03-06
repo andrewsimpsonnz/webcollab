@@ -99,7 +99,7 @@ function validate($body ) {
     $body = stripslashes($body );
   }
 
-  if(UNICODE_VERSION == 'Y' || defined('SETUP' ) || defined('RSS' ) ) {
+  if(UNICODE_VERSION == 'Y' || CHARACTER_SET == 'UTF-8' ) {
 
     $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.          //ASCII
                          '|[\x00-\x7F][\x80-\xBF]+'.                       //continuation with no start
@@ -159,23 +159,22 @@ function safe_integer($integer ) {
 //
 function box_shorten($body, $len=20 ){
 
-  //translate HTML entities before shortening
-  $body = @html_entity_decode($body, ENT_QUOTES, CHARACTER_SET );
+  $m_strlen = (UNICODE_VERSION == 'Y' ) ? 'mb_strlen' : 'strlen';
+  $m_substr = (UNICODE_VERSION == 'Y' ) ? 'mb_substr' : 'substr';
 
-  //shorten line to fit box
-  if(UNICODE_VERSION == 'Y' ) {
-    $body  = mb_strimwidth($body, 0, $len, '...' );
-  }
-  else {
+  if($m_strlen($body ) > $len ) {
+
+    //rough cut to fit, then look for word boundaries for better cut
+    $first_cut  = $m_substr($body, 0, ($len + 5 ) );
+    $last_space_pos = strrpos($first_cut, ' ' );
+
+    //adjust to suit word boundary if possible
+    if(($last_space_pos === false ) || ($last_space_pos > ($len - 5 ) ) ) {
+      $len = $last_space_pos;
+    }
     $body = substr($body, 0, $len );
-    //remove any truncated numeric entities at the line end
-    $body = preg_replace('/&#[\d]{0,5}$/', '', $body );
-    //change '&' to '&amp;' except when part of an entity, or already changed
-    $body = preg_replace('/&(?!(#[\d]{2,5};))/', '&amp;', $body );
+    $body .= ' ...';
   }
-
-  //use HTML encoding for characters that could be used for xss <script>
-  $body  = html_clean_up($body);
 
   return $body;
 }
