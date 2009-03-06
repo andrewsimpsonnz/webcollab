@@ -6,6 +6,18 @@ WebCollab SVN
 
 - update textarea sizes on screen (Credit: Atanacius / wangzhijun2005 - Luke Wang )
 
+- bugfix: re-edit on setup fails
+
+- improvement to box_shorten() in common.php
+
+- provide persistent cookie for condensed and active views
+
+- improvements to setup_screen (move javascript to separate file)
+
+- add button images to forum search results
+
+- add language selection to setup
+
 WebCollab SVN
 *** 22 February 2009
   Andrew Simpson
