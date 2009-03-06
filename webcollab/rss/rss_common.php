@@ -39,7 +39,7 @@ function rss_login() {
   }
 
   //used to get UTF-8 in common.php
-  define('RSS', '1' );
+  define('CHARACTER_SET', 'UTF-8' );
 
   if( ! ($q = @db_query('SELECT id, admin FROM '.PRE.'users WHERE name=\''.safe_data($_SERVER['REMOTE_USER'] ).'\' AND deleted=\'f\'', 0 ) ) ) {
 
