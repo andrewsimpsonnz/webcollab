@@ -91,7 +91,6 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
     //encrypt password
     $md5pass = md5($_POST['password'] );
 
-
     //construct login query
     $login_q = 'SELECT id FROM '.PRE.'users WHERE password=\''.$md5pass.'\' AND name=\''.$username.'\' AND deleted=\'f\'';
   }
@@ -148,7 +147,13 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
   db_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES (\''.$user_id.'\', \''.$session_key.'\', \''.$ip.'\', now() )' );
 
   //try and set a session cookie (if the browser will let us)
-  setcookie('webcollab_session', $session_key );
+  if(version_compare(PHP_VERSION, '5.2.0', '>=' ) ) {
+    //use HTTP only to reduce XSS attacks (only in PHP 5.2.0+ )
+    setcookie('webcollab_session', $session_key, 0, '/', '', false, true );
+  }
+  else {
+    setcookie('webcollab_session', $session_key );
+  }
   //(No need to record an error here if unsuccessful: the code will revert to URI session keys)
 
   //relocate the user to the main screen
