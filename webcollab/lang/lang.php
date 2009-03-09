@@ -26,7 +26,10 @@
 
 */
 
-if(defined('LOCALE_USER' ) ) {
+if(isset($locale_setup ) ) {
+  $locale = $locale_setup;
+}
+elseif(defined('LOCALE_USER' ) ) {
   $locale = LOCALE_USER;
 }
 elseif(defined('LOCALE' ) ) {
