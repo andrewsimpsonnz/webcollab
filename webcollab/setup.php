@@ -29,16 +29,18 @@
 //set initial safe values
 $WEB_CONFIG = "N";
 
-//includes
+//set language
+if(isset($_REQUEST['lang'] ) ) {
+  $locale_setup = $_REQUEST['lang'];
+}
+
+//get includes
 require_once('path.php' );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 require_once(BASE.'setup/setup_config.php');
-
-//set language
-$locale_setup = isset($_REQUEST['lang'] ) ? $_REQUEST['lang'] : LOCALE;
-
-include_once(BASE.'lang/lang_setup.php' );
+include_once(BASE.'lang/lang.php' );
+include_once(BASE.'lang/lang_setup2.php' );
 include_once(BASE.'setup/screen_setup.php' );
 
 //
@@ -82,7 +84,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   }
 
   //set character set & connect to database
-  db_user_locale('UTF-8' );
+  db_user_locale(CHARACTER_SET );
 
   //limit login attempts if post-1.60 database is being used
   if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {
@@ -125,7 +127,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   //user is okay log him/her in
 
   //create session key
-  $session_key = md5(mt_rand() );
+  $session_key = md5(mt_rand().$ip );
 
   //remove the old login information
   @db_query('DELETE FROM '.PRE.'logins WHERE user_id='.$user_id );
@@ -137,7 +139,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   db_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess )
                        VALUES(\''.$user_id.'\', \''.$session_key.'\', \''.$ip.'\', now() )' );
 
-  include_once(BASE.'setup/setup_setup1.php' );
+  header('Location: '.BASE_URL.'setup_handler.php?x='.$session_key.'&action=setup1&lang='.$locale_setup );
   die;
 }
 
@@ -147,37 +149,46 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
 //security checks
 if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
-  secure_error($lang_setup['no_config'] );
+  secure_error($lang['no_config'] );
   die;
 }
 
 //version check
 if(version_compare(PHP_VERSION, '4.3.0' ) == -1 ) {
-  secure_error($lang_setup['min_version'] );
+  secure_error($lang['min_version'] );
 }
 
 if(UNICODE_VERSION == 'Y' ) {
   //check that UTF-8 character encoding can be used
   if(! function_exists('mb_internal_encoding') ) {
-    secure_error($lang_setup['no_mbstring'] );
+    secure_error($lang['no_mbstring'] );
   }
 }
 
 //check for initial install
-if(DATABASE_NAME == '' ) {
+if((DATABASE_NAME == '' ) && isset($_POST['status'] ) && ($_POST['status'] == 'submitted' ) ) {
   //this is an initial install
-  include(BASE.'setup/setup_setup1.php' );
+  header('Location: '.BASE_URL.'setup_handler.php?action=setup1&lang='.$locale_setup );
   die;
 }
 
 //login box screen code
-create_top_setup($lang_setup['setup_banner'] );
+create_top_setup($lang['setup_banner'] );
 
-$content = "<p>".$lang_setup['require_login']."</p>\n".
-           "<form method=\"post\" action=\"setup.php\">\n".
-           "<table border=\"0\">\n".
-           "<tr><td>".$lang_setup['login']."</td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
-           "<tr><td>".$lang_setup['password']."</td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n";
+if(DATABASE_NAME == '' ) {
+
+  $content = "<form method=\"post\" action=\"setup.php\">\n".
+             "<fieldset><input type=\"hidden\" name=\"status\" value=\"submitted\" /></fieldset>\n".
+             "<table border=\"0\">\n";
+}
+else {
+
+  $content = "<p>".$lang['require_login']."</p>\n".
+             "<form method=\"post\" action=\"setup.php\">\n".
+             "<table border=\"0\">\n".
+             "<tr><td>".$lang['login']."</td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
+              "<tr><td>".$lang['password']."</td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n";
+}
 
 $locale_array = array('en'   => 'English',
                       'nl'   => 'Dutch (Help files only) ',
@@ -185,7 +196,7 @@ $locale_array = array('en'   => 'English',
                       'pt-br'=> 'Portuguese (Brazilian) (Help files only)',
                       'es'   => 'Spanish (Help files only)' );
 
-$content .= "<tr><td>".$lang_setup['language']."</td><td>\n".
+$content .= "<tr><td>".$lang['language']."</td><td>\n".
             "<select name=\"lang\">\n";
 
 foreach ($locale_array as $key => $value ) {
@@ -201,11 +212,11 @@ foreach ($locale_array as $key => $value ) {
 $content .= "</select></td></tr>\n".
             "</table>\n".
             "<div align=\"center\">\n".
-            "<p><input type=\"submit\" value=\"".$lang_setup['submit']."\" /></p>\n".
+            "<p><input type=\"submit\" value=\"".$lang['submit']."\" /></p>\n".
             "</div></form>\n";
 
 //set box options
-new_box_setup($lang_setup['setup_banner'], $content, 'boxdata', 'singlebox' );
+new_box_setup($lang['setup_banner'], $content, 'boxdata', 'singlebox' );
 
 create_bottom_setup();
 
