@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -39,7 +39,11 @@ if( ! isset($_REQUEST['action']) ){
 //what do you want to task today =]
 switch($_REQUEST['action'] ) {
 
-  case 'setup2':
+case 'setup1':
+    include(BASE.'setup/setup_setup1.php' );
+    break;
+
+case 'setup2':
     include(BASE.'setup/setup_setup2.php' );
     break;
 
