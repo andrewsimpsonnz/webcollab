@@ -1,4 +1,18 @@
 WebCollab SVN
+*** 9 March 2009
+  Andrew Simpson
+
+- bugfix: Portuguese language file not working
+
+- bugfix: setup edit not working with passwords in all languages
+
+- bugfix: setup6 not correctly setting passwords in all languages
+
+- bugfix: character set handling in setup is poor
+
+- create new language files in setup to overcome above problems
+
+WebCollab SVN
 *** 28 February 2009
   Andrew Simpson
 
