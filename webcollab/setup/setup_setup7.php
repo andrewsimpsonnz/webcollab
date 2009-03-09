@@ -2,7 +2,7 @@
 /*
   $Id: setup_setup5.php 1737 2008-01-24 08:16:45Z andrewsimpson $
 
-  (c) 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2008 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -27,8 +27,17 @@
 */
 
 //get includes
+require_once('path.php' );
+require_once(BASE.'path_config.php' );
+require_once(BASE_CONFIG.'config.php' );
+require_once(BASE.'setup/setup_config.php' );
+
+//set language
+$locale_setup = LOCALE;
+
+include_once(BASE.'lang/lang.php' );
+include_once(BASE.'lang/lang_setup2.php' );
 require_once(BASE.'setup/security_setup.php' );
-require_once(BASE.'database/database.php' );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
@@ -41,9 +50,11 @@ foreach($array_essential as $var ) {
   if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
     error_setup("The value for ".$array_error[$var]." is not set");
   }
-  $$var = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ) : $_POST[$var];
-  $$var = db_escape_string($$var );
+  $$var = $_POST[$var];
 }
+
+//clean up admin_user
+$admin_user = safe_data($admin_user );
 
 //verify passwords
 if(! $admin_password == $admin_password_check ) {
@@ -67,20 +78,23 @@ else {
   $admin_email = NULL;
 }
 
+//set the database encoding
+db_user_locale(CHARACTER_SET );
+
 //update the database
 db_query("UPDATE ".PRE."users SET name='".$admin_user."', password='".md5($admin_password )."', email='".$admin_email."' WHERE id=1;" );
 
 //show success message
-create_top_setup($lang_setup['setup7_banner'] );
+create_top_setup($lang['setup7_banner'] );
 
-$content = "<div align='center'>\n".$lang_setup['setup5_complete']."\n";
+$content = "<div align='center'>\n".$lang['setup5_complete']."\n";
 
 $content .=  "<p><form name='inputform' method='post' action='index.php'>\n".
-             "<input type='submit' value='".$lang_setup['finish']."' />\n".
+             "<input type='submit' value='".$lang['finish']."' />\n".
              "</form></p>\n".
              "</div>\n";
 
-new_box_setup($lang_setup['setup7_banner'], $content, 'boxdata', 'singlebox' );
+new_box_setup($lang['setup7_banner'], $content, 'boxdata', 'singlebox' );
 
 create_bottom_setup();
 
