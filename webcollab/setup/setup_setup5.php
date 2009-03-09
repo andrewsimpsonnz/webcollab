@@ -25,8 +25,18 @@
   Write setup to config
 
 */
-require_once('path.php' );
 
+//set language
+if(isset($_REQUEST['lang'] ) ) {
+  $locale_setup = $_REQUEST['lang'];
+}
+
+//get includes
+require_once('path.php' );
+require_once(BASE.'path_config.php' );
+require_once(BASE_CONFIG.'config.php' );
+require_once(BASE.'setup/setup_config.php' );
+include_once(BASE.'lang/lang_setup1.php' );
 require_once(BASE.'setup/security_setup.php' );
 
 //security checks
@@ -42,7 +52,6 @@ foreach($array as $var ) {
     error_setup("Variable ".$var." is not set");
   }
   $data[$var] = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ) : $_POST[$var];
-  $data[$var] = str_replace("'", "\'", $data[$var] );
 }
 
 //non-essential values
@@ -54,23 +63,8 @@ foreach($array as $var ) {
   }
   else {
     $data[$var] = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ) : $_POST[$var];
-    $data[$var] = str_replace("'", "\'", $data[$var] );
   }
 }
-
-//site name values
-$array = array('manager_name', 'abbr_manager_name' );
-
-foreach($array as $var ) {
-  if(! isset($_POST[$var]) ) {
-    $data[$var] = '';
-  }
-  else {
-    //strip magic quotes, do database escape later
-    $data[$var] = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ) : $_POST[$var];
-  }
-}
-
 
 //these values should all be defined as constants in the existing config file...
 $array = array('NUM_FILE_UPLOADS' => 3,
