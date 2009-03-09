@@ -56,12 +56,12 @@ function create_top_setup($title='', $check=0 ) {
   echo "<!DOCTYPE html PUBLIC\n".
        "\"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n".
        "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n".
-       "<html>\n\n".
+       "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"".XML_LANG."\" lang=\"".XML_LANG."\">\n\n".
        "<!-- (c) 2002 - 2009 Andrew Simpson -->\n\n".
        "<head>\n".
        "<title>".$title."</title>\n".
        "<meta http-equiv=\"Pragma\" content=\"no-cache\" />".
-       "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n".
+       "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".CHARACTER_SET."\" />\n".
        "<link rel=\"StyleSheet\" href=\"".BASE_CSS.SETUP_CSS."\" type=\"text/css\" />\n".
        "<link rel=\"icon\" type=\"image/png\" href=\"images/group.png\" />\n";
 
