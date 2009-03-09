@@ -26,8 +26,17 @@
 
 */
 
-require_once('path.php' );
+//set language
+if(isset($_REQUEST['lang'] ) ) {
+  $locale_setup = $_REQUEST['lang'];
+}
 
+//get includes
+require_once('path.php' );
+require_once(BASE.'path_config.php' );
+require_once(BASE_CONFIG.'config.php' );
+require_once(BASE.'setup/setup_config.php' );
+include_once(BASE.'lang/lang_setup1.php' );
 require_once(BASE.'setup/security_setup.php' );
 
 //security checks
