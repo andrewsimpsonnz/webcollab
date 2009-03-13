@@ -67,14 +67,16 @@ else{
   $content .= $lang_setup['setup1_no_db'];
 }
 
-$content .=    "<div align=\"center\"><input type=\"submit\" value=\"".$lang_setup['yes']."\" /></div>\n".
+$content .=    "<p style=\"text-align:center\">".
+               "<input type=\"submit\" value=\"".$lang_setup['yes']."\" /></p>\n".
                "</form>\n".
                "<form method=\"post\" action=\"setup_handler.php\">\n".
                "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
                "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
                "<input type=\"hidden\" name=\"new_db\" value=\"N\" />\n".
                "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
-               "<br /><div align=\"center\"><input type=\"submit\" value=\"".$lang_setup['no']."\" /></div>\n".
+               "<p style=\"text-align:center\">".
+               "<input type=\"submit\" value=\"".$lang_setup['no']."\" /></p>\n".
                "</form>\n";
 
 new_box_setup($lang_setup['setup1_banner'], $content, 'boxdata', 'singlebox' );
