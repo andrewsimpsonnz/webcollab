@@ -1,0 +1,224 @@
+BODY {
+  font-family : "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12px;
+  margin : 0;
+  padding : 0;
+  background-color : #6085AC;
+  color : #000000;
+}
+
+/* CSS hack to hide hidden input fields */
+FIELDSET {
+   border: none;
+   margin: 0;
+   padding: 0;
+}
+
+TABLE {
+  border-width : 0;
+  padding : 0;
+}
+
+/* Global container box */
+TABLE.main {
+  margin-left : auto;
+  margin-right : auto;
+  border-width : 0;
+  border-collapse : collapse;
+  padding : 0;
+  width : 100%;
+}
+
+/* Box outline for login screen
+  - reduced width
+  - aligned centre
+*/
+TABLE.singlebox {
+  margin-left : auto;
+  margin-right : auto;
+  width : 400px;
+  border: 1px solid #000000;
+  padding : 0;
+}
+
+/* Standard table box */
+TABLE.tablebox {
+  margin-left : auto;
+  margin-right : auto;
+  width : 97%;
+  border: 1px solid #000000;
+  padding : 0;
+}
+
+/* Table for use in data cells */
+TABLE.celldata {
+  margin-left : 0;
+  margin-top : 5px;
+  margin-bottom : 20px;
+  border-width: 0;
+  padding : 0;
+}
+
+TD {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12px;
+}
+
+/* Masthead band to top of page */
+TD.masthead {
+  text-align : left;
+  padding-top : 4px;
+  padding-left : 3px;
+  height : 20px;
+  background-color : #000000;
+  color : #EEEEEE;
+}
+
+/* Box head styling */
+TD.boxhead {
+  font-weight : bold;
+  text-align : left;
+  border-width : 0;
+  border-collapse : collapse;
+  padding : 3px;
+  background-color : #1e4b79;
+  color : #ffffff;
+}
+
+/* Box content styling for info boxes */
+TD.boxdata {
+  text-align : left;
+  border-width : 0;
+  border-collapse : collapse;
+  padding-top : 10px;
+  padding-left : 5px;
+  padding-right : 15px;
+  padding-bottom : 20px;
+  background-color : #ffffff;
+  color : #000000;
+}
+
+/* Variation on 'boxdata'
+  - bottom padding reduced
+  - top padding increased
+*/
+TD.boxdata2 {
+  text-align : left;
+  border-width : 0;
+  border-collapse : collapse;
+  padding-top : 20px;
+  padding-left : 5px;
+  padding-right : 15px;
+  padding-bottom : 5px;
+  background-color : #ffffff;
+  color : #000000;
+}
+
+/* Variation on 'boxdata2'
+  - top padding increased
+*/
+
+TD.boxdata3 {
+  text-align : left;
+  border-width : 0;
+  border-collapse : collapse;
+  padding-top : 40px;
+  padding-left : 5px;
+  padding-right : 15px;
+  padding-bottom : 5px;
+  background-color : #ffffff;
+  color : #000000;
+}
+
+TH.boxdata2 {
+  text-align : left;
+  border-width : 0;
+  border-collapse : collapse;
+  padding-top : 20px;
+  padding-left : 5px;
+  padding-right : 15px;
+  padding-bottom : 5px;
+  background-color : #ffffff;
+  color : #000000;
+}
+
+TH.boxdata3 {
+  text-align : left;
+  border-width : 0;
+  border-collapse : collapse;
+  padding-top : 40px;
+  padding-left : 5px;
+  padding-right : 15px;
+  padding-bottom : 5px;
+  background-color : #ffffff;
+  color : #000000;
+}
+
+
+/* Class for underlined text */
+.underline {
+  text-decoration: underline;
+}
+
+/* Class for text at page bottom */ 
+.bottomtext {
+  font-size : 10px;
+  padding-top : 10px;
+  padding-left : 6px;
+  padding-bottom : 10px;
+  color : #1e4b79;
+  background-color : transparent;
+}
+
+/* Font for text based hyperlinks in [brackets] */
+.textlink {
+  font-size : 10px;
+  font-weight : bold;
+}
+
+
+/* Class for green text */
+.green {
+  color : #006400;
+  font-weight : bold;
+  background-color : transparent;
+}
+
+/* Class for orange text */
+.orange {
+  color : #FFA500;
+  font-weight : bold;
+  background-color : transparent;
+}
+
+/* Class for blue text */
+.blue {
+  color : #0000FF;
+  font-weight : bold;
+  background-color : transparent;
+}
+
+/* Class for red text */
+.red {
+  color : #FF0000;
+  font-weight : bold;
+  background-color : transparent;
+}
+
+a:link {
+  color : #003399;
+  background-color : transparent;
+  text-decoration : none;
+}
+
+a:visited {
+  color : #003399;
+  background-color : transparent;
+  text-decoration : none;
+}
+
+a:hover {
+  color : #cc0000;
+  background-color : transparent;
+  text-decoration : none;
+}
