@@ -54,8 +54,8 @@ function create_top_setup($title='', $check=0 ) {
 
 
   echo "<!DOCTYPE html PUBLIC\n".
-       "\"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n".
-       "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n".
+       "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
+       "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n".
        "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"".XML_LANG."\" lang=\"".XML_LANG."\">\n\n".
        "<!-- (c) 2002 - 2009 Andrew Simpson -->\n\n".
        "<head>\n".
@@ -68,8 +68,9 @@ function create_top_setup($title='', $check=0 ) {
   //javascript scripts
   if($check ) {
     echo "<script type=\"text/javascript\">\n".
-         "var text = { AlertField : \"".'Please enter the missing field'."\",\n".
-         "             PassMatch : \"".'Passwords do not match!'."\",\n".
+         "var text = { AlertField : \"".$lang['setup_js_alert_field']."\",\n".
+         "             PassMatch : \"".$lang['setup_js_pass_match']."\",\n".
+         "             EmailMiss :\"".$lang['setup_js_email_miss']."\" }\n".
          "</script>\n";
 
     echo "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab-setup.js\"></script>\n";
