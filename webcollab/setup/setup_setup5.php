@@ -147,32 +147,13 @@ $content = "<?php\n".
 "         the webserver root, but it makes first-time setup easier).\n".
 "    */\n\n".
 "//-- Language --\n\n".
-"    /* Available locales are\n".
-"          'en'    (English)\n".
-"          'bg'    (Bulgarian)\n".
-"          'ca'    (Catalan)\n".
-"          'cs'    (Czech)\n".
-"          'da'    (Danish)\n".
-"          'de'    (German)\n".
-"          'eo'    (Esperanto)\n".
-"          'es'    (Spanish)\n".
-"          'fr'    (French)\n".
-"          'gr'    (Greek)\n".
-"          'hu'    (Hungarian)\n".
-"          'it'    (Italian)\n".
-"          'ja'    (Japanese)\n".
-"          'ko'    (Korean)\n".
-"          'no'    (Norwegian)\n".
-"          'pl'    (Polish)\n".
-"          'pt'    (Portuguese)\n".
-"          'pt-br' (Brazilian Portuguese)\n".
-"          'ru'    (Russian)\n".
-"          'se'    (Swedish)\n".
-"          'sk'    (Slovakian)\n".
-"          'sl'    (Slovenian)\n".
-"          'sr-la' (Serbian (Latin))      'sr-cy' (Serbian (cyrillic))\n".
-"          'tr'    (Turkish)\n".
-"          'zh-tw' (Traditional Chinese)  'zh-hk' (Simplified Chinese)\n".
+"    /* Available locales are\n";
+
+foreach ($locale_array as $key => $value ) {
+  $content .= "          '".$key."'    (".$value.")\n";
+}
+
+$content .=
 "    */\n\n".
 "  define('LOCALE', '".$data["locale"]."' );\n\n".
 "//-- Timezone --\n\n".
@@ -294,13 +275,14 @@ if(isset($data['new_db'] ) && ($data['new_db'] == 'Y' ) ) {
   site_name($data);
 
   //next form with new session key in place
-  $content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
-              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
-              "<input type=\"hidden\" name=\"action\" value=\"setup6\" />\n".
-              "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
-              "<div align=\"center\"><p>".$lang_setup['setup5_writing']."</p><br />\n".
-              "<input type=\"submit\" value=\"".$lang_setup['setup5_continue']."\" /></div>\n".
-              "</form>\n";
+  $content = "<p style=\"text-align:center\">".$lang_setup['setup5_writing']."</p>\n".
+             "<form method=\"post\" action=\"setup_handler.php\">\n".
+             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+             "<input type=\"hidden\" name=\"action\" value=\"setup6\" />\n".
+             "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
+             "<p style=\"text-align:center\">".
+             "<input type=\"submit\" value=\"".$lang_setup['setup5_continue']."\" /></p>\n".
+             "</form>\n";
 
     new_box_setup($lang_setup['setup5_banner1'], $content, 'boxdata', 'singlebox' );
     create_bottom_setup();
@@ -315,13 +297,12 @@ db_setup_connect($data);
 //update the site names in the database
 site_name($data);
 
-$content = "<div align='center'>\n".$lang_setup['setup5_complete']."\n";
-
-$content .= "<p><form name='inputform' method='post' action='index.php'>\n".
-            "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
-            "<input type='submit' value='".$lang_setup['finish']."' />\n".
-            "</form></p>\n".
-            "</div>\n";
+$content = $lang_setup['setup5_complete']."\n".
+           "<form method='post' action='index.php'>\n".
+           "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" /></fieldset>\n".
+           "<p style=\"text-align:center\">".
+           "<input type='submit' value='".$lang_setup['finish']."' /></p>\n".
+           "</form>\n";
 
 new_box_setup($lang_setup['setup5_banner2'], $content, 'boxdata', 'singlebox' );
 create_bottom_setup();
@@ -441,14 +422,13 @@ function abort($message ) {
 
   global $lang_setup;
 
-  $content = "<div align='center'>\n".
-              "<p>".$lang_setup['setup5_writing']."</p>\n".
-              "<p><b>".$lang_setup['setup5_no_db']."</p>\n";
+  $content = "<p>".$lang_setup['setup5_writing']."</p>\n".
+             $lang_setup['setup5_no_db']."\n";
 
-  $content .= "<p><form name='inputform' method='post' action='index.php'>\n".
-              "<input type='submit' value='".$lang_setup['finish']."' />\n".
-              "</form></p>\n".
-              "</div>\n";
+  $content .= "<form method='post' action='index.php'>\n".
+              "<p style=\"text-align:center\">".
+              "<input type='submit' value='".$lang_setup['finish']."' /></p>\n".
+              "</form>\n";
 
   new_box_setup($lang_setup['setup5_banner3'], $content, 'boxdata', 'singlebox' );
 
