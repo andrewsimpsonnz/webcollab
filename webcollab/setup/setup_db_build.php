@@ -293,8 +293,8 @@ $content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
             "<input type=\"hidden\" name=\"db_type\" value=\"".$database_type."\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n".
             "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
-            "<div align=\"center\">".$lang_setup['setupdb_done']."\n".
-            "<input type=\"submit\" value=\"".$lang_setupdb['setupdb_continue']."\" /></div>\n".
+            "<p style=\"text-align:center\">".$lang_setup['setupdb_done']."</p>\n".
+            "<p style=\"text-align:center\"><input type=\"submit\" value=\"".$lang_setupdb['setupdb_continue']."\" /></p>\n".
             "</form>\n";
 
 new_box_setup($lang_setup['setupdb_banner'], $content, 'boxdata', 'singlebox' );
