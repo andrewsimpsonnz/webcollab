@@ -190,16 +190,10 @@ else {
               "<tr><td>".$lang['password']."</td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n";
 }
 
-$locale_array = array('en'   => 'English',
-                      'nl'   => 'Dutch (Help files only) ',
-                      'pt'   => 'Portuguese (Help files only)',
-                      'pt-br'=> 'Portuguese (Brazilian) (Help files only)',
-                      'es'   => 'Spanish (Help files only)' );
-
 $content .= "<tr><td>".$lang['language']."</td><td>\n".
             "<select name=\"lang\">\n";
 
-foreach ($locale_array as $key => $value ) {
+foreach ($setup_language as $key => $value ) {
   $content .= "<option value=\"".$key."\"";
 
   if($locale_setup == $key ) {
@@ -211,9 +205,9 @@ foreach ($locale_array as $key => $value ) {
 
 $content .= "</select></td></tr>\n".
             "</table>\n".
-            "<div align=\"center\">\n".
-            "<p><input type=\"submit\" value=\"".$lang['submit']."\" /></p>\n".
-            "</div></form>\n";
+            "<p style=\"text-align:center\">\n".
+            "<input type=\"submit\" value=\"".$lang['submit']."\" /></p>\n".
+            "</form>\n";
 
 //set box options
 new_box_setup($lang['setup_banner'], $content, 'boxdata', 'singlebox' );
