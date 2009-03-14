@@ -115,7 +115,7 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\">".
             "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"$new_db\" />\n".
             "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
-            "<table style=\"celldata\" >";
+            "<table class=\"celldata\" >";
 
 //basic settings
 $content .= "<tr><td></td><th class=\"boxdata2\"><span class=\"underline\">".$lang_setup['setup3_basic']."</span></th></tr>\n".

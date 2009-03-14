@@ -82,7 +82,7 @@ $flag = 0;
 
 create_top_setup($lang_setup['setup4_banner'] );
 
-$content .= "<table style=\"celldata\">\n".
+$content .= "<table class=\"celldata\">\n".
             "<tr><td>\n";
 
 
