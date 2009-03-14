@@ -193,7 +193,7 @@ define('XML_LANG', "en" );
                                          "<p>For best security on *nix operating systems, remember to remove the world writeable permissions from 'config.php'.</p>\n".
                                          "<p>Please press the button to finish configuration, and login to WebCollab...</p>\n";
 
-    $lang_setup['setup5_no_db']        = "<b>The setup program could not connect to the database. ".
+    $lang_setup['setup5_no_db']        = "<p><b>The setup program could not connect to the database. ".
                                          "Your default login and password will be 'admin' and 'admin123' when the database is connected.</b></p>\n".
                                          "<p>The configuration information has been saved to '[webcollab]/config/config.php'. ".
                                          "This file can edited with a text editor to make further changes to configuration.</p>\n".
