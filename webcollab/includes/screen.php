@@ -61,7 +61,6 @@
 //
 // Creates the initial window
 //
-//function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $calendar=0, $redirect_time=0 ) {
 
 function create_top($title='', $page_type=0, $include_javascript=0, $check_field=0, $redirect_time=0 ) {
 
