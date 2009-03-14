@@ -66,5 +66,10 @@
                                          "This file can edited with a text editor to make further changes to configuration.</p>\n".
                                          "<p>For best security on *nix operating systems, remember to remove the world writeable permissions from 'config.php'.</p>\n".
                                          "<p>Please press the button to finish configuration, and login to WebCollab...</p>\n";
+//screen javascript
+
+    $lang['setup_js_alert_field']      = "Please enter the missing field";
+    $lang['setup_js_pass_match']       = "Passwords do not match!";
+    $lang['setup_js_email_miss']       = "Please enter a correct email address";
 
 ?>
