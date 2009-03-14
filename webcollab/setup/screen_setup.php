@@ -35,7 +35,7 @@ require_once(BASE.'setup/setup_config.php' );
 //
 function create_top_setup($title='', $check=0 ) {
 
-  global $topbuild;
+  global $topbuild, $lang;
 
   //don't rebuild the top again if already built
   if( $topbuild == 1 ) {
