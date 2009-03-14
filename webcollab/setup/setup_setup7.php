@@ -87,12 +87,12 @@ db_query("UPDATE ".PRE."users SET name='".$admin_user."', password='".md5($admin
 //show success message
 create_top_setup($lang['setup7_banner'] );
 
-$content = "<div align='center'>\n".$lang['setup5_complete']."\n";
+$content = "<div style=\"text-align:center\">\n".$lang['setup5_complete']."</div>\n";
 
-$content .=  "<p><form name='inputform' method='post' action='index.php'>\n".
-             "<input type='submit' value='".$lang['finish']."' />\n".
-             "</form></p>\n".
-             "</div>\n";
+$content .= "<form  method='post' action='index.php'>\n".
+            "<p style=\"text-align:center\">\n".
+            "<input type='submit' value='".$lang['finish']."' /></p>\n".
+            "</form>\n";
 
 new_box_setup($lang['setup7_banner'], $content, 'boxdata', 'singlebox' );
 

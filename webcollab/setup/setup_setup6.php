@@ -48,28 +48,31 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\" onsubmit=\"retur
             "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
             "<input type=\"hidden\" name=\"new_config\" value=\"Y\" />\n".
             "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
-            "<table border=\"0\">";
+            "<table class=\"celldata\">";
 
 //user settings
-$content .= "<tr><td></td><td><br /><b><u>".$lang['setup6_title']."</u></b></td></tr>\n".
-            "<tr><td></td><td><br />".$lang['setup6_admin_user1']."</td></tr>\n".
-            "<tr><th>".$lang['setup6_admin_user2']."</th><td><input type=\"text\" id=\"user\" name=\"admin_user\" value=\"admin\" size=\"20\" /></td></tr>\n";
+$content .= "<tr><td></td><th class=\"boxdata2\"><span class=\"underline\">".$lang['setup6_title']."</span></th></tr>\n".
+            "<tr><td></td><td class=\"boxdata2\">".$lang['setup6_admin_user1']."</td></tr>\n".
+            "<tr><th>".$lang['setup6_admin_user2']."</th>".
+            "<td><input type=\"text\" id=\"user\" name=\"admin_user\" value=\"admin\" size=\"20\" /></td></tr>\n";
 
-$content .= "<tr><td></td><td><br />".$lang['setup6_admin_pass1']."</td></tr>\n".
-            "<tr><th>".$lang['setup6_admin_pass2']."</th><td><input type=\"password\" id=\"password\" name=\"admin_password\" value=\"\" size=\"20\" /></td></tr>\n";
+$content .= "<tr><td></td><td class=\"boxdata2\">".$lang['setup6_admin_pass1']."</td></tr>\n".
+            "<tr><th>".$lang['setup6_admin_pass2']."</th>".
+            "<td><input type=\"password\" id=\"password\" name=\"admin_password\" value=\"\" size=\"20\" /></td></tr>\n";
 
-$content .= "<tr><td></td><td><br />".$lang['setup6_admin_check']."</td></tr>\n".
-            "<tr><th>".$lang['setup6_admin_pass2']."</th><td><input type=\"password\" id=\"password_check\" name=\"admin_password_check\" value=\"\" size=\"20\" /></td></tr>\n";
+$content .= "<tr><td></td><td class=\"boxdata2\">".$lang['setup6_admin_check']."</td></tr>\n".
+            "<tr><th>".$lang['setup6_admin_pass2']."</th>".
+            "<td><input type=\"password\" id=\"password_check\" name=\"admin_password_check\" value=\"\" size=\"20\" /></td></tr>\n";
 
 if(USE_EMAIL == 'Y' ) {
 
   //email settings
-  $content .= "<tr><td></td><td><br />".$lang['setup6_email1']."</td></tr>\n".
-              "<tr><th>".$lang['setup6_email2']."</th><td><input type=\"text\" id=\"email\" name=\"admin_email\" value=\"\" size=\"30\" /></td></tr>\n";
+  $content .= "<tr><td></td><td class=\"boxdata2\">".$lang['setup6_email1']."</td></tr>\n".
+              "<tr><th>".$lang['setup6_email2']."</th>".
+              "<td><input type=\"text\" id=\"email\" name=\"admin_email\" value=\"\" size=\"30\" /></td></tr>\n";
 }
 
-$content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
-            "<tr><td></td><td><input type=\"submit\" value=\"".$lang['submit']."\" /></td></tr>\n".
+$content .= "<tr><td></td><td class=\"boxdata3\"><input type=\"submit\" value=\"".$lang['submit']."\" /></td></tr>\n".
             "</table>\n".
             "</form>\n";
 
