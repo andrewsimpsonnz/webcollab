@@ -33,6 +33,7 @@
 
     $lang['submit']                    = "Submit";
     $lang['finish']                    = "Finish";
+    $lang['no_config']                 = "Current configuration file does not allow web-based setup";
 
 //setup
     $lang['min_version']               = "WebCollab needs PHP version 4.3.0, or higher.  This version is ".PHP_VERSION;
