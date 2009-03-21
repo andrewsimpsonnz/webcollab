@@ -105,7 +105,7 @@ return;
 // Start the RSS xml feed headers
 //
 
-function rss_start($last_mod, $manager_name, $abbr_manager_name, $filename ) {
+function rss_start($last_mod, $filename ) {
 
   /*
   //use compressed output (if web browser supports it) _and_ zlib.output_compression is not already enabled
@@ -124,9 +124,9 @@ function rss_start($last_mod, $manager_name, $abbr_manager_name, $filename ) {
               "<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n".
               "<channel>\n".
               "<atom:link href=\"".BASE_URL."rss/".$filename."\" rel=\"self\" type=\"application/rss+xml\" />\n".
-              "<title>".$abbr_manager_name."</title>\n".
+              "<title>".ABBR_MANAGER_NAME."</title>\n".
               "<link>".BASE_URL."</link>\n".
-              "<description>".$manager_name."</description>\n".
+              "<description>".MANAGER_NAME."</description>\n".
               "<ttl>60</ttl>\n".
               "<lastBuildDate>".gmdate('D, d M Y H:i:s')." GMT</lastBuildDate>\n".
               "<generator>WebCollab 2.40</generator>\n";

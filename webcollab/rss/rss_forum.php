@@ -68,8 +68,8 @@ if(! ($q = db_query('SELECT * FROM site_name', 0 ) ) ) {
 }
 
 $row = @db_fetch_array($q, 0 );
-$manager_name      = $row['manager_name'];
-$abbr_manager_name = $row['abbr_manager_name'];
+define('MANAGER_NAME', $row['manager_name'] );
+define('ABBR_MANAGER_NAME', $row['abbr_manager_name'] );
 
 //set the usergroup permissions on queries (Admin can see all)
 if(ADMIN ) {
@@ -100,10 +100,10 @@ if(! ($q = db_query('SELECT '.PRE.'forum.id AS forumid,
 $filename = basename(__FILE__ );
 
 //start xml feed
-$content = rss_start($last_mod, $manager_name, $abbr_manager_name, $filename );
+$content = rss_start($last_mod, $filename );
 
 //set constants
-$guid = md5($manager_name.BASE_URL);
+$guid = md5(MANAGER_NAME . BASE_URL);
 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
