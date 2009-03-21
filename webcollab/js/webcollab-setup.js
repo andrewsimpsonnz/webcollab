@@ -9,12 +9,20 @@ function fieldCheck(){
   var user = document.getElementById('user');
   var pass1 = document.getElementById('password');
   var pass2 = document.getElementById('password_check');
-  if (user.length == 0 || pass1.length == 0 || pass2.length == 0 ) {
-    alert('Please enter the missing field' );
+  var email = document.getElementById('email');
+  if (user.length === 0 || pass1.length === 0 || pass2.length === 0 ) {
+    alert(text.AlertField );
     return false;
   }
   if (pass1.value != pass2.value ) {
-    alert('Passwords do not match!');
+    alert(text.PassMatch );
   return false;
   }
+  with(email) {
+    if (value.indexOf('@') == -1 || value.lastIndexOf('.') == -1) {
+      alert(text.EmailMiss );
+      return false;
+    }
+  }
+  return true;
 }
