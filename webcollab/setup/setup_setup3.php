@@ -130,7 +130,7 @@ $content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_name3']."
 
 //database settings
 $content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".$lang_setup['setup3_db']."</span></th></tr>\n".
-            "<tr><th class=\"boxdata3\">".$lang_setup['db_name']."</th><td><input type=\"text\" name=\"db_name\" value=\"".$db_name."\" size=\"30\" /></td></tr>\n".
+            "<tr><th class=\"boxdata2\">".$lang_setup['db_name']."</th><td><input type=\"text\" name=\"db_name\" value=\"".$db_name."\" size=\"30\" /></td></tr>\n".
             "<tr><th>".$lang_setup['db_user']."</th><td><input type=\"text\" name=\"db_user\" value=\"".$db_user."\" size=\"30\" /></td></tr>\n".
             "<tr><th>".$lang_setup['db_password']."</th><td><input type=\"text\" name=\"db_password\" value=\"".$db_password."\" size=\"30\" /></td></tr>\n";
 
@@ -167,7 +167,8 @@ $content .= "<tr><th>".$lang_setup['db_type']."</th><td><select name=\"db_type\"
              "<td><input type=\"text\" name=\"db_host\" value=\"".$db_host."\" size=\"30\" /></td></tr>\n";
 
 //file settings
-$content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".$lang_setup['setup3_file1']."</span></th></tr>\n";
+$content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".
+            $lang_setup['setup3_file1']."</span></th></tr>\n";
 
 $content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_file2']."</td></tr>\n".
             "<tr><th>".$lang_setup['file_location']."</th>".
@@ -178,7 +179,8 @@ $content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_file2']."
             "<td><input type=\"text\" name=\"file_maxsize\" value=\"".$file_maxsize."\" size=\"20\" /></td></tr>\n";
 
 //language settings
-$content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".$lang_setup['setup3_language1']."</span></th></tr>\n".
+$content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".
+            $lang_setup['setup3_language1']."</span></th></tr>\n".
             "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_language2']."</td></tr>\n".
             "<tr><th>".$lang_setup['language']."</th><td><select name=\"locale\">\n";
 
@@ -195,7 +197,8 @@ foreach ($locale_array as $key => $value ) {
 $content .= "</select></td></tr>\n";
 
 //timezone setting
-$content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".$lang_setup['setup3_timezone']."</span></th></tr>\n".
+$content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".
+            $lang_setup['setup3_timezone']."</span></th></tr>\n".
             "<tr><td></td><td class=\"boxdata2\"></td></tr>\n".
             "<tr><th>Timezone:</th><td><select name=\"timezone\">\n";
 

@@ -85,7 +85,6 @@ create_top_setup($lang_setup['setup4_banner'] );
 $content .= "<table class=\"celldata\">\n".
             "<tr><td>\n";
 
-
 //add leading slash to url - if necessary
 if(substr(trim($data["base_url"] ), -1 ) != '/' ) {
   $data["base_url"] = trim($data["base_url"] ).'/';
