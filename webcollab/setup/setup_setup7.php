@@ -84,6 +84,8 @@ db_user_locale(CHARACTER_SET );
 //update the database
 db_query("UPDATE ".PRE."users SET name='".$admin_user."', password='".md5($admin_password )."', email='".$admin_email."' WHERE id=1;" );
 
+db_query("UPDATE ".PRE."config SET email_admin='".$admin_email."';" );
+
 //show success message
 create_top_setup($lang['setup7_banner'] );
 
