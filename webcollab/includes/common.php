@@ -246,6 +246,17 @@ function nice_size($size ) {
   return $size;
 }
 
+function token_check($token ) {
+
+  if($token !== OLD_TOKEN ) {
+    db_query('UPDATE '.PRE.'logins SET session_key=\'XXXX\' WHERE user_id='.UID );
+    setcookie('webcollab_session', '' );
+    error("Invalid session", "Possible XSS session hijacking detected.  Session termininated." );
+  }
+
+  return true;
+}
+
 //
 // Builds up an error screen
 //
