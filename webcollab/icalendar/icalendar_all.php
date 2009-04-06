@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2005 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -46,7 +46,7 @@ $q = db_query(icalendar_query(). icalendar_usergroup_tail() );
 
 //no rows ==> return
 if(db_numrows($q) < 1 ) {
-  header('Location: '.BASE_URL.'main.php?x='.$x );
+  header('Location: '.BASE_URL.'main.php?x='.X );
   die;
 }
 

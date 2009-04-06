@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2005 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -87,7 +87,7 @@ $q = db_query( icalendar_query().' AND '.PRE.'tasks.parent<>0 '.$tail. icalendar
 
 //no rows ==> return
 if(db_numrows($q) < 1 ) {
-  header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=todo&userid='.$userid.'&groupid='.$groupid.'&selection='.$selection );
+  header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=todo&userid='.$userid.'&groupid='.$groupid.'&selection='.$selection );
   die;
 }
 
