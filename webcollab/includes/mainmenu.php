@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,13 +35,13 @@ if(! defined('UID' ) ) {
 $content = '';
 
 //create content
-$content .= "<a href=\"main.php?x=".$x."\">".$lang['home_page']."</a><br />\n".
-            "<a href=\"tasks.php?x=".$x."&amp;action=summary\">".$lang['summary_page']."</a><br />\n".
-            "<a href=\"tasks.php?x=".$x."&amp;action=todo\">".$lang['todo_list']."</a><br />\n".
-            "<a href=\"calendar.php?x=".$x."&amp;action=show\">".$lang['calendar']."</a><br />\n".
-            "<a href=\"forum.php?x=".$x."&amp;action=search_box\">".$lang['forum_search']."</a><br />\n".
-            "<a href=\"archive.php?x=".$x."&amp;action=list\">".$lang['archive']."</a><br />\n".
-            "<a href=\"logout.php?x=".$x."\">".$lang['log_out']."</a><br />\n";
+$content .= "<a href=\"main.php?x=".X."\">".$lang['home_page']."</a><br />\n".
+            "<a href=\"tasks.php?x=".X."&amp;action=summary\">".$lang['summary_page']."</a><br />\n".
+            "<a href=\"tasks.php?x=".X."&amp;action=todo\">".$lang['todo_list']."</a><br />\n".
+            "<a href=\"calendar.php?x=".X."&amp;action=show\">".$lang['calendar']."</a><br />\n".
+            "<a href=\"forum.php?x=".X."&amp;action=search_box\">".$lang['forum_search']."</a><br />\n".
+            "<a href=\"archive.php?x=".X."&amp;action=list\">".$lang['archive']."</a><br />\n".
+            "<a href=\"logout.php?x=".X."\">".$lang['log_out']."</a><br />\n";
 
 //show
 new_box( $lang['main_menu'], $content, 'boxmenu' );

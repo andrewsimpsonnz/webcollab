@@ -86,7 +86,7 @@ function nicetime($timestamp ) {
 //generate a HTML drop down box for date
 //
 function date_select($day=-1, $month=-1, $year=-1 ) {
-  global $lang, $month_array, $x;
+  global $lang, $month_array;
 
   //filter for no date set
   if($day == -1 || $month == -1 || $year == -1 ) {
@@ -134,7 +134,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   }
   $content .=  "</select>\n".
                "<a href=\"#\" onclick=\"window.open".
-               "('calendar.php?x=".$x."&amp;action=date&amp;month=".$month."&amp;year=".$year."','',".
+               "('calendar.php?x=".X."&amp;action=date&amp;month=".$month."&amp;year=".$year."','',".
                "'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,dependent=yes,innerWidth=400,innerHeight=350')\" title=\"".$lang['calendar']."\">".
                "<img src=\"images/calendar.png\" alt=\"".$lang['calendar']."\" width=\"16\" height=\"16\" /></a>\n";
 
