@@ -126,10 +126,13 @@ $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
 token_check($token );
 
 //check input
-if(! @safe_integer($_POST['postid']) ) {
-  error('Forum submit', 'Postid not valid' );
+$input_array = array('postid', 'taskid' );
+foreach($input_array as $var ) {
+  if(! @safe_integer($_POST[$var]) ){
+    error('Forum delete', "Variable $var is not set" );
+  }
+  ${$var} = $_POST[$var];
 }
-$postid = $_POST['postid'];
 
 //initialise
 $allowed = false;
@@ -160,6 +163,6 @@ else {
 }
 
 //go back to where this request came from
-header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=show&taskid='.$_POST['taskid'] );
+header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=show&taskid='.$taskid );
 
 ?>
