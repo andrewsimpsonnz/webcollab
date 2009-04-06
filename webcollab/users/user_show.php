@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -216,7 +216,7 @@ if( $tasks_owned + $projects_owned > 0 ) {
     }
 
     //show the task
-    $content .= "<li><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a> ".$status_content."</li>\n";
+    $content .= "<li><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a> ".$status_content."</li>\n";
   }
   $content .= "</ul>";
   new_box($lang['owned_tasks'], $content );

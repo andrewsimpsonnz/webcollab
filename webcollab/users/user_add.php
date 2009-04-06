@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -40,7 +40,8 @@ if(! ADMIN ){
 
 $content =  "<form method=\"post\" action=\"users.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n".
-            "<input type=\"hidden\" name=\"x\" value=\"".$x."\" /></fieldset>\n".
+            "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+            "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
             "<table class=\"celldata\">\n".
             "<tr><td>".$lang['login_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
             "<tr><td>".$lang['full_name'].":</td><td><input type=\"text\" name=\"fullname\" size=\"30\" /></td></tr>\n".

@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -51,6 +51,10 @@ $userid = $_GET['userid'];
 if(empty($_GET['action'] ) ){
   error('User delete', 'No action specified' );
 }
+
+//check for valid form token
+$token = (isset($_GET['token']) : (safe_data($_GET['token']) ? null;
+token_check($token );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
@@ -114,6 +118,6 @@ switch($_GET['action'] ){
 
 }
 
-header('Location: '.BASE_URL.'users.php?x='.$x.'&action=manage');
+header('Location: '.BASE_URL.'users.php?x='.X.'&action=manage');
 
 ?>

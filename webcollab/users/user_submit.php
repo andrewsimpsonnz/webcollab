@@ -54,10 +54,15 @@ switch($_REQUEST['action'] ) {
   //revive a user
   case 'revive':
 
+    //check for valid form token
+    $token = (isset($_GET['token'])) ? (safe_data($_GET['token'])) : null;
+    token_check($token );
+
     //only for the admins
     if(! ADMIN ){
       error('Authorisation failed', 'You have to be admin to do this' );
     }
+
     if(! @safe_integer($_GET['userid']) ){
       error('User submit', 'No userid was specified.' );
     }
@@ -81,6 +86,10 @@ switch($_REQUEST['action'] ) {
 
   //add a user
   case 'submit_insert':
+
+    //check for valid form token
+    $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+    token_check($token );
 
     //only for the l33t
     if( ! ADMIN ){
@@ -189,6 +198,10 @@ switch($_REQUEST['action'] ) {
     if((GUEST) && (GUEST_LOCKED != 'N' ) ){
       warning($lang['access_denied'], 'Guests are not permitted to modify details' );
     }
+
+    //check for valid form token
+    $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+    token_check($token );
 
     //check input has been provided
     if(empty($_POST['name']) ) {
@@ -373,11 +386,11 @@ switch($_REQUEST['action'] ) {
 }
 
 if(ADMIN ) {
-  header("Location: ".BASE_URL."users.php?x=".$x."&action=manage" );
+  header("Location: ".BASE_URL."users.php?x=".X."&action=manage" );
   die;
 }
 else {
-  header("Location: ".BASE_URL."users.php?x=".$x."&action=show&userid=".UID );
+  header("Location: ".BASE_URL."users.php?x=".X."&action=show&userid=".UID );
   die;
 }
 

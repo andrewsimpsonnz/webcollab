@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -68,7 +68,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 
   //show output
-  $content .= "<tr><td><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
+  $content .= "<tr><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
 }
 
 $content .= "<tr><td style=\"white-space:nowrap\"colspan=\"2\">&nbsp;</td></tr>\n";
@@ -92,7 +92,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 
   //show output
-  $content .= "<tr><td><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
+  $content .= "<tr><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
 
 }
 $content .= "</table>\n";

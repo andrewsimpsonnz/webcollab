@@ -44,7 +44,8 @@ if( ! ADMIN ) {
 //start form data
 $content .=
         "<form method=\"post\" action=\"users.php\">\n".
-        "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+        "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+        "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
         "<input type=\"hidden\" name=\"action\" value=\"submit_email\" /></fieldset>\n".
         "<table class=\"celldata\">\n".
         "<tr><td></td><td>\n".

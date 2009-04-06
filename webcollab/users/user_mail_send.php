@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -43,6 +43,10 @@ if( ! ADMIN ) {
 
 //initialise variables
 $address_array = array();
+
+//check for valid form token
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+token_check($token );
 
 // send to users or groups?
 if(empty($_POST['group']) ){
@@ -131,5 +135,5 @@ if(sizeof($address_array ) != 0 ) {
 }
 
 //all done: warp back to main screen (Aye, aye captain).
-header('Location: '.BASE_URL.'main.php?x='.$x );
+header('Location: '.BASE_URL.'main.php?x='.X );
 ?>
