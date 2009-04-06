@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -255,12 +255,12 @@ if(isset($_POST['maillist']) && $_POST['maillist'] === 'on' ) {
 //go back to the project page
 if($parentid != 0 ) {
   //new task
-  header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$parentid );
+  header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=show&taskid='.$parentid );
   die;
 }
 else {
   //new project
-  header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$taskid );
+  header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=show&taskid='.$taskid );
   die;
 }
 

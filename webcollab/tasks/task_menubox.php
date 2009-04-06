@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -63,30 +63,37 @@ if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
        (($TASKID_ROW['groupaccess'] == "t") && (isset($GID[($TASKID_ROW['usergroupid'])] ) ) ) ) {
 
       //edit
-      $content .= "<a href=\"tasks.php?x=".$x."&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_".$TYPE]."</a><br />\n";
+      $content .= "<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_".$TYPE]."</a><br />\n";
 
       //delete
       if((ADMIN ) || ($TASKID_ROW['owner'] == UID ) ) { 
-        $content .= "<a href=\"tasks.php?x=".$x."&amp;action=delete&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang["delete_$TYPE"]."</a><br />\n";
+        $content .= "<a href=\"javascript:void(document.getElementById('delete_task').submit())\" onclick=\"return confirm( '".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang["delete_$TYPE"]."</a><br />\n";
+
+        $content .= "<form id=\"delete_task\" method=\"post\" action=\"tasks.php\">\n".
+                    "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+                    "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
+                    "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
+                    "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+                    "</form>\n";
       }
 
       //archive project
       if((ADMIN ) || ($TASKID_ROW['owner'] == UID ) ) {
         if(($TYPE == 'project' ) && ($TASKID_ROW['archive'] == 0 ) ) {
-          $content .= "<a href=\"archive.php?x=".$x."&amp;action=submit_archive&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang['javascript_archive_project'], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang['archive_project']."</a><br />\n";
+          $content .= "<a href=\"archive.php?x=".X."&amp;action=submit_archive&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang['javascript_archive_project'], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang['archive_project']."</a><br />\n";
         }
       }
     }
     //clone
-    $content .= "<a href=\"tasks.php?x=".$x."&amp;action=clone&amp;taskid=".$taskid."\">".$lang["clone_".$TYPE]."</a><br />\n";
+    $content .= "<a href=\"tasks.php?x=".X."&amp;action=clone&amp;taskid=".$taskid."\">".$lang["clone_".$TYPE]."</a><br />\n";
     //global header
     $content .= "<small><b>".$lang['global'].":</b></small><br />\n";
     //add task
-    $content .= "<a href=\"tasks.php?x=".$x."&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a><br />\n";
+    $content .= "<a href=\"tasks.php?x=".X."&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a><br />\n";
   }
 }
 //add project
-$content .= "<a href=\"tasks.php?x=".$x."&amp;action=add\">".$lang['add_project']."</a><br />\n";
+$content .= "<a href=\"tasks.php?x=".X."&amp;action=add\">".$lang['add_project']."</a><br />\n";
 
 new_box( $lang[$menu_type."_options"], $content, 'boxmenu' );
 

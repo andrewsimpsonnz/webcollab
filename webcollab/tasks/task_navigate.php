@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -58,7 +58,7 @@ if( @safe_integer($_GET['taskid']) ) {
       //get project name (limited to 20 characters)
       $project_name = box_shorten(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] ), 0, 0 ) );
 
-      $content .= "&nbsp; <a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a><br />\n".
+      $content .= "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a><br />\n".
                   "<small><b>".$lang['task'].":</b></small><br />\n".
                   "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
                   box_shorten($TASKID_ROW['name'])."<br />\n";
@@ -72,9 +72,9 @@ if( @safe_integer($_GET['taskid']) ) {
       //get parent name
       $parent_name = box_shorten(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['parent'] ), 0, 0 ) );
 
-      $content .= "&nbsp; <a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a><br />\n".
+      $content .= "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a><br />\n".
                   "<small><b>".$lang['parent_task'].":</b></small><br />\n".
-                  "&nbsp; <a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$TASKID_ROW['parent']."\">".$parent_name."</a><br />\n".
+                  "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['parent']."\">".$parent_name."</a><br />\n".
                   "<small><b>".$lang['task'].":</b></small><br />\n".
                   "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
                   box_shorten($TASKID_ROW['name'])."<br />\n";
@@ -99,7 +99,7 @@ elseif( @safe_integer($_GET['parentid']) ){
   $project_name = box_shorten(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$row['projectid'] ), 0, 0 ) );
 
   $content .= "<small><b>".$lang['project'].":</b></small><br />\n".
-              "&nbsp; <a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['projectid']."\">".$project_name."</a><br />\n";
+              "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['projectid']."\">".$project_name."</a><br />\n";
 
   switch( $row['parent'] ) {
 
@@ -113,7 +113,7 @@ elseif( @safe_integer($_GET['parentid']) ){
     default:
       //new task with parent task
       $content .= "<small><b>".$lang['parent_task'].":</b></small><br />\n".
-                  "&nbsp; <a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$parentid."\">".$row['name']."</a><br />\n".
+                  "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parentid."\">".$row['name']."</a><br />\n".
                   "<small><b>".$lang['task'].":</b></small><br />\n".
                   "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
                   "<i>".$lang['new_task']."</i><br />\n";

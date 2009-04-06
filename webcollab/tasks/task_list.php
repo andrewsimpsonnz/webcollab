@@ -159,7 +159,7 @@ function find_task_children($parent ) {
 
 function task_state($key ) {
 
-  global $task_array, $lang, $task_state, $epoch, $x;
+  global $task_array, $lang, $task_state, $epoch;
 
   $content = '<li>';
 
@@ -205,7 +205,7 @@ function task_state($key ) {
     }
   }
 
-  $content .= "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$task_array[$key]['id']."\">".
+  $content .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$task_array[$key]['id']."\">".
                $task_array[$key]['name']."</a>&nbsp;";
 
   //status
@@ -234,7 +234,7 @@ function task_state($key ) {
 
   //add username if task is taken
   if($task_array[$key]['userid'] ) {
-    $content .= "&nbsp;[<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$task_array[$key]['userid']."\">".
+    $content .= "&nbsp;[<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$task_array[$key]['userid']."\">".
                  $task_array[$key]['username']."</a>]&nbsp;";
   }
   else {

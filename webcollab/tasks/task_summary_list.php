@@ -4,7 +4,7 @@
   $Id$
 
   (c) 2002 Marshall Rose (attributed)
-  (c) 2002 - 2008 Andrew Simpson
+  (c) 2002 - 2009 Andrew Simpson
 
   WebCollab
   ---------------------------------------
@@ -48,7 +48,7 @@ $no_access_project = array();
 
 
 function project_summary( $tail, $depth=0, $equiv='' ) {
-  global $x, $GID, $lang, $task_state, $task_priority;
+  global $GID, $lang, $task_state, $task_priority;
   global $no_access_project;
   global $sortby;
   global $epoch;
@@ -103,7 +103,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
     }
 
     //flags column
-    $alink = "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">";
+    $alink = "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\">";
 
     if( (db_numrows($seenq ) ) < 1 ) {
       $f1 = $alink.'C</a>';
@@ -302,7 +302,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
     }
     else {
       $owner = db_result(db_query('SELECT fullname FROM '.PRE.'users WHERE id='.$row['owner'],' LIMIT 1' ), 0, 0  );
-      $owner = "<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['owner']."\">".$owner."</a>";
+      $owner = "<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['owner']."\">".$owner."</a>";
     }
 
     //group column
@@ -408,24 +408,24 @@ else {
 //text link for 'printer friendly' page
 
 if(isset($_GET['action']) && $_GET['action'] == 'summary_print' ) {
-  $content  = "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=".$sortby."\">".$lang['normal_version']."</a>]</span></p>";
+  $content  = "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=".$sortby."\">".$lang['normal_version']."</a>]</span></p>";
 }
 else {
-  $content  = "<div style=\"text-align: right\"><span class=\"textlink\"><a href=\"tasks.php?x=".$x."&amp;action=summary_print&amp;sortby=".$sortby."\" title=\"".$lang['print_version']."\">".
+  $content  = "<div style=\"text-align: right\"><span class=\"textlink\"><a href=\"tasks.php?x=".X."&amp;action=summary_print&amp;sortby=".$sortby."\" title=\"".$lang['print_version']."\">".
               "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a></span></div>";
 }
 
 $content .= "<table>\n";
 $content .= "<tr><td colspan=\"3\"><small><a href=\"help/help_language.php?item=summarypage&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=summarypage&amp;type=help&amp;lang=".LOCALE_USER."'); return false\"><b>".$lang['flags']."</b></a></small></td><td><small>";
-$content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=deadline\">";
+$content .= "<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=deadline\">";
 $content .= "<b>".$lang['deadline']."</b></a></small></td><td><small>";
-$content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=status\">";
+$content .= "<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=status\">";
 $content .= "<b>".$lang['status']."</b></a></small></td><td><small>";
-$content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=priority\">";
+$content .= "<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=priority\">";
 $content .= "<b>".$lang['priority']."</b></a></small></td><td><small>";
-$content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=owner\">";
+$content .= "<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=owner\">";
 $content .= "<b>".$lang['owner']."</b></a></small></td><td><small>";
-$content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=";
+$content .= "<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=";
 
 switch($sortby ) {
   case 'taskgroupid':
@@ -440,7 +440,7 @@ switch($sortby ) {
 
 $content .= "\">";
 $content .= "<b>".$lang['group']."</b></a></small></td><td><small>";
-$content .= "<a href=\"tasks.php?x=".$x."&amp;action=summary&amp;sortby=taskname\">";
+$content .= "<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=taskname\">";
 $content .= "<b>".$lang['task']."</b></a></small></td></tr>";
 
 //get list of private projects and put them in an array for later use

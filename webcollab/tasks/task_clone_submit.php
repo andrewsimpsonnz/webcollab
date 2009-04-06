@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
    WebCollab
   ---------------------------------------
@@ -250,6 +250,6 @@ adjust_completion($new_projectid );
 //end transaction
 db_commit();
 
-header('Location: '.BASE_URL.'main.php?x='.$x );
+header('Location: '.BASE_URL.'main.php?x='.X );
 die;
 ?>

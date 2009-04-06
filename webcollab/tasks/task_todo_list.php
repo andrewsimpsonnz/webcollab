@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -231,22 +231,22 @@ for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 }
 
 //check validity of inputs
-if(isset($_REQUEST['selection']) && strlen($_REQUEST['selection']) > 0 ) {
-  $selection = ($_REQUEST['selection']);
+if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 ) {
+  $selection = safe_data($_POST['selection']);
 }
 else {
   $selection = 'user';
 }
 
-if( @safe_integer($_REQUEST['userid']) ){
-  $userid = $_REQUEST['userid'];
+if( @safe_integer($_POST['userid']) ){
+  $userid = $_POST['userid'];
 }
 else {
   $userid = (GUEST ) ? 0 : UID;
 }
 
-if( @safe_integer($_REQUEST['groupid']) ) {
-  $groupid = $_REQUEST['groupid'];
+if( @safe_integer($_POST['groupid']) ) {
+  $groupid = $_POST['groupid'];
 }
 else {
   $groupid = 0;
@@ -254,7 +254,7 @@ else {
 
 // check if there are projects
 if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent=0' ), 0, 0 ) < 1 ) {
-  $content = "<div style=\"text-align : center\"><a href=\"tasks.php?x=".$x."&amp;action=add\">".$lang['add']."</a></div>\n";
+  $content = "<div style=\"text-align : center\"><a href=\"tasks.php?x=".X."&amp;action=add\">".$lang['add']."</a></div>\n";
   new_box( $lang['no_projects'], $content );
   return;
 }
@@ -280,12 +280,12 @@ switch($selection ) {
 }
 
   $content  .= "<div style=\"text-align : right\"><span class=\"textlink\">\n".
-               "<a href=\"icalendar.php?x=".$x."&amp;action=todo&amp;selection=".$selection."&amp;userid=".$userid."&amp;groupid=".$groupid."\" title=\"".$lang['icalendar']."\">".
+               "<a href=\"icalendar.php?x=".X."&amp;action=todo&amp;selection=".$selection."&amp;userid=".$userid."&amp;groupid=".$groupid."\" title=\"".$lang['icalendar']."\">".
                "<img src=\"images/calendar_link.png\" alt=\"".$lang['icalendar']."\" width=\"16\" height=\"16\" /></a>\n</span></div>\n";
 
 
 $content .= "<form method=\"post\" action=\"tasks.php\">\n".
-            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"todo\" /></fieldset>\n ".
             "<table class=\"decoration\" cellpadding=\"5px\">\n".
             "<tr align=\"left\"><td>".$lang['todo_list_for']."</td>".
@@ -386,7 +386,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $task_uncompleted[$i]['group_name']        = $row['group_name'];
   $task_uncompleted[$i]['group_description'] = $row['group_description'];
 
-  $this_task = "<li><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
+  $this_task = "<li><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row[ "id" ]."\">";
 
   //add highlighting if deadline is due
   $state = ceil( ($row['due'] - TIME_NOW )/86400 );

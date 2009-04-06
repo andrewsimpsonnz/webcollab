@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -42,19 +42,23 @@ include_once(BASE.'tasks/task_submit.php' );
 
 
 //update or insert ?
-if(empty($_REQUEST['action']) ){
+if(empty($_POST['action']) ){
   error('Task submit', 'No request given' );
 }
 
-if(! @safe_integer($_GET['taskid']) ){
+//check for valid form token
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+token_check($token );
+
+if(! @safe_integer($_POST['taskid']) ){
   error('Task submit', 'No taskid given' );
 }
-$taskid = $_GET['taskid'];
+$taskid = $_POST['taskid'];
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
-  switch($_REQUEST['action'] ) {
+  switch($_POST['action'] ) {
 
     //mark it as completed!
     case 'done':
@@ -149,6 +153,6 @@ ignore_user_abort(TRUE);
       break;
 }
 
-header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$taskid );
+header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=show&taskid='.$taskid );
 
 ?>

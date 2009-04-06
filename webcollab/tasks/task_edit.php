@@ -94,8 +94,9 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 
 //start showing task info
 $content .= "<form method=\"post\" action=\"tasks.php\" onsubmit= \"return dateCheck('name')\">\n".
-            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
-            "<input type=\"hidden\" name=\"action\" value=\"submit_update\" />\n ".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+            "<input type=\"hidden\" name=\"action\" value=\"submit_update\" />\n".
+            "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
             "<input type=\"hidden\" name=\"taskid\" value=\"".$TASKID_ROW['id']."\" />\n";
 
 //select either project or task for text
@@ -138,7 +139,7 @@ switch($TYPE) {
     $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" /></fieldset>\n".
                  "<table class=\"celldata\">\n".
                  "<tr><td>".$lang['creation_time']."</td><td>".nicedate($TASKID_ROW['created'] )."</td></tr>\n".
-                 "<tr><td>".$lang['project'] .":</td><td><a href=\"tasks.php?x=".$x."&amp;action=show&taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></td></tr>\n";
+                 "<tr><td>".$lang['project'] .":</td><td><a href=\"tasks.php?x=".X."&amp;action=show&taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></td></tr>\n";
     break;
 }
 
@@ -364,9 +365,10 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
 
 //delete options
 $content .= "<br /><br />\n<form method=\"post\" action=\"tasks.php\">\n".
-             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />".
+             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />".
              "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
              "<input type=\"hidden\" name=\"taskid\" value=\"".$TASKID_ROW['id']."\" />\n".
+             "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
              "<input type=\"submit\" value=\"".$lang["delete_".$TYPE]."\" onclick=\"return confirm('".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\" /></fieldset>\n".
              "</form>\n";
 

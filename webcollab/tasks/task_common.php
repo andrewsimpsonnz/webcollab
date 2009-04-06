@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -85,7 +85,7 @@ function show_percent($percent=0 ) {
 //
 function project_jump($taskid=0) {
 
-  global $x, $lang, $GID;
+  global $lang, $GID;
 
   $content = '';
 
@@ -109,7 +109,7 @@ function project_jump($taskid=0) {
 
     // Prepare the form
     $content .= "<form id=\"ProjectQuickJump\" method=\"get\" action=\"tasks.php\">\n".
-                "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+                "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
                 "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n".
                 "<div><select name=\"taskid\" onchange=\"javascript:this.form.submit()\">\n".
                 "<option value=\"-1\">".$lang['quick_jump']."</option>\n";

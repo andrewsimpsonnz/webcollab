@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -246,7 +246,7 @@ if(! $condensed) {
     }
 
   //task details
-  $task_uncompleted[$i]['task'] = "<li><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row[0]."\">".$row[1].$suffix;
+  $task_uncompleted[$i]['task'] = "<li><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row[0]."\">".$row[1].$suffix;
 
   //record projectid
   $task_projectid[$i] = $row[3];
@@ -274,7 +274,7 @@ $q = db_query('SELECT id,
 
 //check if there are projects
 if(db_numrows($q) < 1 ) {
-  $content .= "<div style=\"text-align : center\"><a href=\"tasks.php?x=".$x."&amp;action=add\">".$lang['add_project']."</a></div>\n";
+  $content .= "<div style=\"text-align : center\"><a href=\"tasks.php?x=".X."&amp;action=add\">".$lang['add_project']."</a></div>\n";
   new_box($lang['no_projects'], $content );
   return;
 }
@@ -283,30 +283,30 @@ if(db_numrows($q) < 1 ) {
 $content .= "<table style=\"width : 100%\"><tr><td>\n".
             "<span class=\"textlink\">";
 if($active_only ) {
-  $content .= "[<a href=\"main.php?x=".$x."&amp;active_only=0&amp;condensed=".$condensed."\">".$lang['show_all_projects']."</a>]";
+  $content .= "[<a href=\"main.php?x=".X."&amp;active_only=0&amp;condensed=".$condensed."\">".$lang['show_all_projects']."</a>]";
 }
 else {
-  $content .= "[<a href=\"main.php?x=".$x."&amp;active_only=1&amp;condensed=".$condensed."\">".$lang['show_active_projects']."</a>]";
+  $content .= "[<a href=\"main.php?x=".X."&amp;active_only=1&amp;condensed=".$condensed."\">".$lang['show_active_projects']."</a>]";
 }
 
 //text link for 'condensed' switch
 if($condensed ) {
-  $content .= "&nbsp;[<a href=\"main.php?x=".$x."&amp;active_only=".$active_only."&amp;condensed=0"."\">".$lang['full_view']."</a>]";
+  $content .= "&nbsp;[<a href=\"main.php?x=".X."&amp;active_only=".$active_only."&amp;condensed=0"."\">".$lang['full_view']."</a>]";
 }
 else {
-  $content .= "&nbsp;[<a href=\"main.php?x=".$x."&amp;active_only=".$active_only."&amp;condensed=1"."\">".$lang['condensed_view']."</a>]";
+  $content .= "&nbsp;[<a href=\"main.php?x=".X."&amp;active_only=".$active_only."&amp;condensed=1"."\">".$lang['condensed_view']."</a>]";
 }
 
 //text link for 'printer friendly' page
 if($action == 1 ) {
 
-  $content  .= "\n[<a href=\"main.php?x=".$x."&amp;active_only=".$active_only."&amp;condensed=".$condensed."\">".$lang['normal_version']."</a>]";
+  $content  .= "\n[<a href=\"main.php?x=".X."&amp;active_only=".$active_only."&amp;condensed=".$condensed."\">".$lang['normal_version']."</a>]";
 }
 else {
   $content  .= "</span></td>\n<td style=\"text-align : right\">".
-               "<a href=\"icalendar.php?x=".$x."&amp;action=all\" title=\"".$lang['icalendar']."\">".
+               "<a href=\"icalendar.php?x=".X."&amp;action=all\" title=\"".$lang['icalendar']."\">".
                "<img src=\"images/calendar_link.png\" alt=\"".$lang['icalendar']."\" width=\"16\" height=\"16\" /></a>&nbsp;&nbsp;&nbsp;".
-               "<a href=\"tasks.php?x=".$x."&amp;active_only=".$active_only."&amp;condensed=".$condensed."&amp;action=project_print\" title=\"".$lang['print_version']."\">".
+               "<a href=\"tasks.php?x=".X."&amp;active_only=".$active_only."&amp;condensed=".$condensed."&amp;action=project_print\" title=\"".$lang['print_version']."\">".
                "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a>";
 }
 $content .= "</td></tr>\n</table>\n";
@@ -357,7 +357,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   $content .= "<tr><td class=\"projectlist\">\n";
 
   //show name and a link
-  $content .= "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['name']."</b></a>\n";
+  $content .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['name']."</b></a>\n";
 
   // Show a nice %-of-tasks-completed bar
   $content .= show_percent($row['completed'] );

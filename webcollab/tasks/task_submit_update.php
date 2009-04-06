@@ -127,6 +127,12 @@ return;
 }
 
 //MAIN PROGRAM
+
+//check for valid form token
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+token_check($token );
+
+//check for task name
 if(empty($_POST['name']) ){
   warning($lang['task_submit'], $lang['missing_values'] );
 }
@@ -349,6 +355,6 @@ if(isset($_POST['maillist']) && ($_POST['maillist'] === 'on') ) {
   }
 }
 
-header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$taskid );
+header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=show&taskid='.$taskid );
 
 ?>

@@ -67,7 +67,7 @@ $priority_select_box = "<tr><td>".$lang['priority'].":</td> <td>\n".
                        "</select>\n</td></tr>\n";
 
 $content .= "<form method=\"post\" action=\"tasks.php\" onsubmit=\"return dateCheck('name')\" >\n";
-$content .= "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ";
+$content .= "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n ";
 $content .= "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n ";
 
 //this is split up in 2 parts for readabilities' sake
@@ -125,11 +125,11 @@ if( @safe_integer($_GET['parentid']) ) {
     $project_name = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ), 0, 0 );
   }
 
-  $content .= "<tr><td>".$lang['project'] .":</td> <td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$parent_row['projectid']."\">".$project_name."</a></td></tr>\n";
+  $content .= "<tr><td>".$lang['project'] .":</td> <td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parent_row['projectid']."\">".$project_name."</a></td></tr>\n";
 
   //check if task has a parent task
   if( $parent_row['parent'] != 0 ) {
-    $content .= "<tr><td>".$lang['parent_task'].":</td> <td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$parent_row['parent']."\">".$parent_row['name']."</a></td> </tr>\n";
+    $content .= "<tr><td>".$lang['parent_task'].":</td> <td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parent_row['parent']."\">".$parent_row['name']."</a></td> </tr>\n";
   }
   $content .= "<tr><td>".$lang['creation_time'].":</td> <td>".nicetime(date('Y-m-d H:i:s', TIME_NOW - date('Z') + TZ*60*60 ) )."</td> </tr>\n".
               "<tr><td>".$lang['task_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"60\" /></td> </tr>\n".

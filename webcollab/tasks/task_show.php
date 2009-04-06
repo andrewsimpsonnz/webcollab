@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -73,14 +73,14 @@ db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$task
 
 //text link for 'printer friendly' page
 if(isset($_GET['action']) && $_GET['action'] === "show_print" ) {
-  $content  .= "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$taskid."\">".$lang['normal_version']."</a>]</span></p>";
+  $content  .= "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$taskid."\">".$lang['normal_version']."</a>]</span></p>";
 }
 else {
   //show print tag
   $content .= "<div style=\"text-align : right\">".
-              "<a href=\"icalendar.php?x=".$x."&amp;action=project&amp;taskid=".$taskid."\" title=\"".$lang['icalendar']."\">".
+              "<a href=\"icalendar.php?x=".X."&amp;action=project&amp;taskid=".$taskid."\" title=\"".$lang['icalendar']."\">".
               "<img src=\"images/calendar_link.png\" alt=\"".$lang['icalendar']."\" width=\"16\" height=\"16\" /></a>&nbsp;&nbsp;&nbsp;".
-              "<a href=\"tasks.php?x=".$x."&amp;action=show_print&amp;taskid=".$taskid."\" title= \"".$lang['print_version']."\">".
+              "<a href=\"tasks.php?x=".X."&amp;action=show_print&amp;taskid=".$taskid."\" title= \"".$lang['print_version']."\">".
               "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a></div>\n";
   //show 'project jump' select box
   $content .= project_jump($taskid);
@@ -111,7 +111,7 @@ $content .= "<table class=\"celldata\">\n";
 if( $TASKID_ROW['owner'] == 0 ) {
   $content .= "<tr><td>".$lang['owned_by'].":</td><td>".$lang['nobody']."</td></tr>\n";
 } else {
-  $content .= "<tr><td>".$lang['owned_by'].": </td><td><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$TASKID_ROW['owner']."\">".$row['fullname']."</a></td></tr>\n";
+  $content .= "<tr><td>".$lang['owned_by'].": </td><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$TASKID_ROW['owner']."\">".$row['fullname']."</a></td></tr>\n";
 }
 
 //get creator information (null if creator has been deleted!)
@@ -121,7 +121,7 @@ if($creator == NULL ) {
   $content .= nicedate($TASKID_ROW['created']);
 }
 else {
-  $content .= sprintf($lang['by_sprt'], nicedate($row['created']), "<a href=\"users.php?x=$x&amp;action=show&amp;userid=".$TASKID_ROW['creator']."\">".$creator."</a>");
+  $content .= sprintf($lang['by_sprt'], nicedate($row['created']), "<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$TASKID_ROW['creator']."\">".$creator."</a>");
 }
 $content .= "</td></tr>\n";
 
@@ -262,22 +262,46 @@ $content .= "</table>\n";
 //if this is an archived task, or you are a GUEST user, then no user functions are available
 if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
 
+  $form1 = "<form id=\"meown\" method=\"post\" action=\"tasks.php\">\n".
+           "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+           "<input type=\"hidden\" name=\"action\" value=\"meown\" />\n".
+           "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
+           "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+           "</form>\n";
+
+  $form2 = "<form id=\"done\" method=\"post\" action=\"tasks.php\">\n".
+           "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+           "<input type=\"hidden\" name=\"action\" value=\"done\" />\n".
+           "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
+           "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+           "</form>\n";
+
+  $form3 = "<form id=\"deown\" method=\"post\" action=\"tasks.php\">\n".
+           "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+           "<input type=\"hidden\" name=\"action\" value=\"deown\" />\n".
+           "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
+           "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+           "</form>\n";
+
+  $this_form = '';
+
   $content .= "<div style=\"text-align : center\"><span class=\"textlink\">\n";
 
   //set add function
   switch($TYPE){
     case 'project':
-      $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a>]&nbsp;\n";
+      $content .= "[<a href=\"tasks.php?x=".X."&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a>]&nbsp;\n";
       break;
 
     case 'task':
-      $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_subtask']."</a>]&nbsp;\n";
+      $content .= "[<a href=\"tasks.php?x=".X."&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_subtask']."</a>]&nbsp;\n";
       break;
   }
 
   //unowned task ==> [I'll take it!] button
   if($TASKID_ROW['owner'] == 0 ) {
-    $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=meown&amp;taskid=".$taskid."\">".$lang['i_take_it']."</a>]&nbsp;\n";
+    $content .= "[<a href=\"javascript:void(document.getElementById('meown').submit())\">".sprintf($lang['i_take_it'] )."</a>]\n";
+    $this_form .= $form1;
   }
 
   //check for owner or group access
@@ -291,25 +315,29 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
 
   //admin - owner - groupaccess  ==> [edit] button
   if((ADMIN ) || ($access ) ) {
-    $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
+    $content .= "<span class=\"textlink\">".
+                "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n".
+                "</span>\n";
   }
 
   //(owner - groupaccess) & (uncompleted task)  ==> [I finished it] button
   if(($access ) && ($TASKID_ROW['status'] != 'done' ) && ($TASKID_ROW['parent'] != 0 ) ) {
-    $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=done&amp;taskid=".$taskid."\">".$lang['i_finished']."</a>]&nbsp;\n";
+    $content .= "[<a href=\"javascript:void(document.getElementById('done').submit())\">".$lang['i_finished']."</a>]&nbsp;\n";
+    $this_form .= $form2;
   }
 
   //(owner) & (uncompleted task)==> [I don't want it anymore] button
   if(UID == $TASKID_ROW['owner'] && ($TASKID_ROW['status'] != 'done' ) ) {
-    $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=deown&amp;taskid=".$taskid."\">".$lang['i_dont_want']."</a>]&nbsp;\n";
+    $content .= "[<a href=\"javascript:void(document.getElementById('deown').submit())\">".$lang['i_dont_want']."</a>]&nbsp;\n";
+    $this_form .= $form3;
   }
 
   //(admin) & (not owner) & (has owner) & (uncompleted task) ==> [Take over task] button
   if((ADMIN ) && (UID != $TASKID_ROW['owner'] ) && ($TASKID_ROW['owner'] != 0 ) && ($TASKID_ROW['status'] != 'done' ) ) {
-    $content .= "[<a href=\"tasks.php?x=".$x."&amp;action=meown&amp;taskid=".$taskid."\">".sprintf($lang["take_over_".$TYPE] )."</a>]\n";
+    $content .= "[<a href=\"javascript:void(document.getElementById('meown').submit())\">".sprintf($lang["take_over_".$TYPE] )."</a>]\n";
+    $this_form .= $form1;
   }
-
-  $content .= "</span></div>\n";
+  $content .= "</span></div>\n".$this_form;
 }
 
 new_box( $title, $content, 'boxdata2' );

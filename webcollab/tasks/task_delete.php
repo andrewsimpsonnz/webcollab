@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -99,12 +99,18 @@ function find_children($parent ) {
 }
 
 //
-// advanced database-wide task-delete !!
+// MAIN PROGRAM
 //
-if(! @safe_integer($_REQUEST['taskid']) ) {
+
+//check for valid form token
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+token_check($token );
+
+//check for valid taskid
+if(! @safe_integer($_POST['taskid']) ) {
   error('Task details', 'The taskid input is not valid' );
 }
-$taskid = $_REQUEST['taskid'];
+$taskid = $_POST['taskid'];
 
 //get task and owner information
 $q = db_query('SELECT '.PRE.'tasks.parent AS parent,
@@ -242,16 +248,16 @@ if(($row['owner'] != 0 ) && (UID != $row['owner']) ) {
 
 //return to appropriate location
 if($row['archive'] == 1 ){
-  header('Location: '.BASE_URL.'archive.php?x='.$x.'&action=list' );
+  header('Location: '.BASE_URL.'archive.php?x='.X.'&action=list' );
   die;
 }
 
 if($row['parent'] == 0 ) {
-  header('Location: '.BASE_URL.'main.php?x='.$x );
+  header('Location: '.BASE_URL.'main.php?x='.X );
   die;
 }
 else{
-  header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$row['parent'] );
+  header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=show&taskid='.$row['parent'] );
   die;
 }
 
