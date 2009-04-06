@@ -87,6 +87,7 @@ CREATE TABLE "logins" (
 	"session_key" character varying(100) NOT NULL,
 	"ip" character varying(100) NOT NULL,
 	"lastaccess" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
+  "token" character varying(50),
 	Constraint "logins_pkey" Primary Key ("id")
 );
 CREATE INDEX logins_session_key_idx ON logins USING btree (session_key);
@@ -150,7 +151,7 @@ CREATE TABLE "files" (
 	"description" text,
 	"uploaded" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
 	"uploader" integer NOT NULL,
-	"mime" character varying(50),
+	"mime" character varying(200),
 	"taskid" integer NOT NULL,
 	Constraint "files_pkey" Primary Key ("id")
 );

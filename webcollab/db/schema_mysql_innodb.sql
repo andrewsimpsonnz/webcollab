@@ -82,6 +82,7 @@ CREATE TABLE logins (
 	session_key VARCHAR(100) NOT NULL,
 	ip VARCHAR(100) NOT NULL,
 	lastaccess TIMESTAMP NOT NULL,
+  token VARCHAR(50),
 	INDEX (session_key(10), user_id )
 )
 TYPE = InnoDB
@@ -142,7 +143,7 @@ CREATE TABLE files (
 	description TEXT,
 	uploaded TIMESTAMP NOT NULL,
 	uploader INT UNSIGNED NOT NULL,
-	mime VARCHAR(50),
+	mime VARCHAR(200),
 	taskid INT UNSIGNED NOT NULL,
 	INDEX (taskid)
 )
