@@ -54,8 +54,9 @@ $taskid = $_GET['taskid'];
 $taskid = usergroup_check($taskid );
 
 $content =    "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"files.php\">\n".
-              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"submit_upload\" />\n".
+              "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
               "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
               "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"".FILE_MAXSIZE."\" /></fieldset>\n".
               "<table class=\"celldata\">\n".

@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -72,12 +72,27 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 
   //file part
-  $content .= "<tr><td>".$lang['task'].":</td><td><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['task_id']."\">".$row['task_name']."</a></td></tr>\n".
-              "<tr><td>".$lang['file']."</td><td><a href=\"files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a>&nbsp;<small>(".nice_size($row['size'] ).")&nbsp;</small>".
+  $content .= "<tr><td>".$lang['task'].":</td><td>".
+              "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['task_id']."\">".$row['task_name']."</a>".
+              "</td></tr>\n".
+              "<tr><td>".$lang['file']."</td><td>".
+              "<a href=\"files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."\"". "onclick=\"window.open('files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a>".
+              "&nbsp;<small>(".nice_size($row['size'] ).")&nbsp;</small>".
               //delete option
-              "<span class=\"textlink\">[<a href=\"files.php?x=".$x."&amp;action=submit_del&amp;fileid=".$row['id']."&amp;taskid=-1\" onclick=\"return confirm( '".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename']) )."' )\">".$lang['del']."</a>]</span></td></tr>\n".
+              "<span class=\"textlink\">[<a href=\"javascript:void(document.getElementById('delete_file').submit())\"".
+              "onclick=\"return confirm( '".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename']) )."' )\">".$lang['del']."</a>]</span></td></tr>\n".
               //user part
-              "<tr><td>".$lang['uploader']." </td><td><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")</td></tr>\n";
+              "<tr><td>".$lang['uploader']." </td><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")</td>\n";
+
+  $content .= "<td><form id=\"delete_file\" method=\"post\" action=\"files.php\">\n".
+              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+              "<input type=\"hidden\" name=\"action\" value=\"submit_del\" />\n".
+              "<input type=\"hidden\" name=\"fileid\" value=\"".$row['id']."\" />\n".
+              "<input type=\"hidden\" name=\"taskid\" value=\"-1\" />\n".
+              "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+              "</form>\n".
+              "</td></tr>\n";
+
 
   //show description
   if( $row['description'] != '' ) {

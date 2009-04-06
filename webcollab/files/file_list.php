@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -68,22 +68,31 @@ if(db_numrows($q ) != 0 ) {
   for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
     //file part
-    $content .= "<tr><td><a href=\"files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".$x."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a> <small>(".nice_size($row['size'] ).") </small>";
+    $content .= "<tr><td><a href=\"files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a> <small>(".nice_size($row['size'] ).") </small>";
 
     //owners of the file and admins have a "delete" and "update" option
     if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['uploader'] ) ) {
+
       $content .= "&nbsp;<span class=\"textlink\">".
-                  "[<a href=\"files.php?x=".$x."&amp;action=submit_del&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\" ".
-                  "onclick=\"return confirm('".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename'] ) )."' )\">".$lang['del']."</a>]".
-                  "&nbsp;[<a href=\"files.php?x=".$x."&amp;action=update&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['update']."</a>]".
-                  "</span></td></tr>\n";
+                  "[<a href=\"javascript:void(document.getElementById('delete_file').submit())\"".
+                  " onclick=\"return confirm('".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename'] ) )."' )\">".$lang['del']."</a>]".
+                  "&nbsp;[<a href=\"files.php?x=".X."&amp;action=update&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['update']."</a>]</span></td>\n";
+
+      $content .= "<td><form id=\"delete_file\" method=\"post\" action=\"files.php\">\n".
+                  "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+                  "<input type=\"hidden\" name=\"action\" value=\"submit_del\" />\n".
+                  "<input type=\"hidden\" name=\"fileid\" value=\"".$row['id']."\" />\n".
+                  "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
+                  "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+                  "</form>\n".
+                  "</td></tr>\n";
     }
     else {
       $content .= "</td></tr>\n";
     }
 
     //user part
-    $content .= "<tr><td>".$lang['uploader']." <a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")</td></tr>\n";
+    $content .= "<tr><td>".$lang['uploader']." <a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")</td></tr>\n";
 
     //show description
     if( $row['description'] != '' ) {
@@ -96,7 +105,7 @@ if(db_numrows($q ) != 0 ) {
 }
 
 if((! GUEST ) && ($TASKID_ROW['archive'] == 0) ){
-  $content .= "<span class=\"textlink\">[<a href=\"files.php?x=".$x."&amp;taskid=".$taskid."&amp;action=upload\">".$lang['add_file']."</a>]</span>";
+  $content .= "<span class=\"textlink\">[<a href=\"files.php?x=".X."&amp;taskid=".$taskid."&amp;action=upload\">".$lang['add_file']."</a>]</span>";
 }
 
 new_box($lang['files_assoc_'.$TYPE], $content, 'boxdata2' );

@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -45,6 +45,10 @@ $mail_list = array();
 $upload_success_flag = false;
 $file_update_flag = false;
 
+//check for valid form token
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+token_check($token );
+
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
@@ -82,11 +86,18 @@ function file_delete($fileid ) {
 //MAIN PROGRAM
 
 //update or insert ?
-if(empty($_REQUEST['action']) ){
+if(empty($_POST['action']) ){
   error('File submit', 'No action given' );
 }
 
-switch($_REQUEST['action'] ) {
+if(isset($_POST['taskid'] ) && ($_POST['taskid'] == -1 || safe_integer($_POST['taskid'] ) ) ) {
+  $taskid = $_POST['taskid'];
+}
+else {
+  error("Invalid value", "Invalid value for taskid" );
+}
+
+switch($_POST['action'] ) {
 
   //handle a file upload
   case 'submit_update':
@@ -328,12 +339,12 @@ switch($_REQUEST['action'] ) {
 
   case 'submit_del':
 
-    if( ! @safe_integer($_GET['fileid']) ) {
+    if( ! @safe_integer($_POST['fileid']) ) {
       error('File submit', 'Not a valid fileid' );
     }
 
     //do the file delete for the file
-    file_delete($_GET['fileid'] );
+    file_delete($_POST['fileid'] );
     break;
 
   default:
@@ -341,12 +352,12 @@ switch($_REQUEST['action'] ) {
   break;
 }
 
-if(isset($_GET['taskid']) && $_GET['taskid'] == -1 ) { //can only occur from files.php --> file_admin.php --> delete
-  header('Location: '.BASE_URL.'files.php?x='.$x.'&action=admin' );
+if($taskid == -1 ) { //can only occur from files.php --> file_admin.php --> delete
+  header('Location: '.BASE_URL.'files.php?x='.X.'&action=admin' );
   die;
 }
 else {
-  header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$_REQUEST['taskid'] );
+  header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=show&taskid='.$taskid );
   die;
 }
 

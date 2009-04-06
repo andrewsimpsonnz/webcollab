@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -40,7 +40,7 @@ if(! ADMIN ){
 $content = '';
 
 //add an option to admin files
-$content .= "<a href=\"files.php?x=".$x."&amp;action=admin\">".$lang['file_admin']."</a><br />\n";
+$content .= "<a href=\"files.php?x=".X."&amp;action=admin\">".$lang['file_admin']."</a><br />\n";
 
 //show it
 new_box( $lang['files'], $content, 'boxmenu' );
