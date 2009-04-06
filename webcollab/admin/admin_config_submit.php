@@ -37,6 +37,10 @@ if( ! ADMIN ){
   error('Not permitted', 'This function is for admins only' );
 }
 
+//check for valid form token
+$token = (isset($_POST['token']) : (safe_data($_POST['token']) ? null;
+token_check($token );
+
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
@@ -78,7 +82,7 @@ foreach($input_array as $var ) {
 }
 
 if(isset($_POST['project_order'] ) ){
-  $project_order = $_POST['project_order'];
+  $project_order = safe_data($_POST['project_order'] );
 }
 else {
   $project_order = '';
@@ -100,7 +104,7 @@ switch($project_order) {
 }
 
 if(isset($_POST['task_order'] ) ){
-  $task_order = $_POST['task_order'];
+  $task_order = safe_data($_POST['task_order'] );
 }
 else {
   $task_order = '';
@@ -134,7 +138,7 @@ db_query('UPDATE '.PRE.'config SET email_admin=\''.$email_admin.'\',
 
 //if no email end here
 if(USE_EMAIL !== 'Y' ){
-  header('Location: '.BASE_URL.'main.php?x='.$x );
+  header('Location: '.BASE_URL.'main.php?x='.X );
   die;
 }
 
@@ -159,6 +163,6 @@ if((preg_match_all('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $in
 }
 //all done!
 
-header('Location: '.BASE_URL.'main.php?x='.$x );
+header('Location: '.BASE_URL.'main.php?x='.X );
 
 ?>

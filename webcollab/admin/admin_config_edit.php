@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 20089 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -44,8 +44,9 @@ $maillist = '';
 //start form data
 $content .=
           "<form method=\"post\" action=\"admin.php\">\n".
-          "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
-          "<input type=\"hidden\" name=\"action\" value=\"submit\" /></fieldset>\n".
+          "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+          "<input type=\"hidden\" name=\"action\" value=\"submit\" />\n".
+          "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
           "<table class=\"celldata\" >\n";
 
 //get config data
