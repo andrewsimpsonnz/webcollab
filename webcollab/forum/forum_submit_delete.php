@@ -2,7 +2,7 @@
 /*
   $Id: forum_submit.php 1704 2008-01-01 06:09:52Z andrewsimpson $
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -121,11 +121,15 @@ function delete_messages($postid ) {
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
+//check for valid form token
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+token_check($token );
+
 //check input
-if(! @safe_integer($_GET['postid']) ) {
+if(! @safe_integer($_POST['postid']) ) {
   error('Forum submit', 'Postid not valid' );
 }
-$postid = $_GET['postid'];
+$postid = $_POST['postid'];
 
 //initialise
 $allowed = false;
@@ -156,6 +160,6 @@ else {
 }
 
 //go back to where this request came from
-header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$_REQUEST['taskid'] );
+header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=show&taskid='.$_POST['taskid'] );
 
 ?>

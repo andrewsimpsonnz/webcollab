@@ -69,9 +69,10 @@ $taskname = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$taskid
 
 $content .= "<form method=\"post\" action=\"forum.php\">\n";
 //set some hidden values
-$content .=  "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />".
+$content .=  "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />".
              "<input type=\"hidden\" name=\"action\" value=\"submit_add\" />\n".
              "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
+             "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
              "<input type=\"hidden\" name=\"usergroupid\" value=\"".$usergroupid."\" />\n";
 
 //find out some of the parent's data

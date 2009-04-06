@@ -44,7 +44,7 @@ $m_substr = (UNICODE_VERSION == 'Y' ) ? 'mb_substr' : 'substr';
 //
 function list_posts_from_task( $taskid, $usergroupid ) {
 
-  global $x, $lang, $TASKID_ROW, $epoch;
+  global $lang, $TASKID_ROW, $epoch;
   global $post_array, $parent_array, $post_count;
   global $m_strlen, $m_substr;
 
@@ -90,24 +90,35 @@ function list_posts_from_task( $taskid, $usergroupid ) {
       $this_post = "<li><small>----";
     }
     else {
-      $this_post = "<li><small><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".$row['fullname']."</a>";
+      $this_post = "<li><small><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".$row['fullname']."</a>";
     }
     $this_post .= "&nbsp;(".nicetime( $row['posted']).")</small>\n";
 
     //owners of the thread, owners of the post and admins have a "delete" option
     if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['postowner'] ) ) {
-      $this_post .= "<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=submit_del&amp;postid=".$row['id']."&amp;taskid=".$taskid."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."' )\">".$lang['del']."</a>]</span>\n";
-    }
+      $this_post .= "<span class=\"textlink\">[<a href=\"javascript:void(document.getElementById('delete_post').submit())\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."' )\">".$lang['del']."</a>]</span>\n";
+
+      $this_form = "<form id=\"delete_post\" method=\"post\" action=\"forum.php\">\n".
+                   "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+                   "<input type=\"hidden\" name=\"action\" value=\"submit_del\" />\n".
+                   "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
+                   "<input type=\"hidden\" name=\"postid\" value=\"".$row['id']."\" />\n".
+                   "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+                   "</form>\n";
+   }
+   else {
+     $this_form = '';
+   }
 
     //owners of the post have an "update" option
     if( UID == $row['postowner'] ) {
-      $this_post .= "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=edit&amp;postid=".$row['id']."\">".$lang['update']."</a>]</span>\n";
+      $this_post .= "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=".X."&amp;action=edit&amp;postid=".$row['id']."\">".$lang['update']."</a>]</span>\n";
     }
 
     //add reply button
     if($TASKID_ROW['archive'] == 0 ){
       if((GUEST == false ) || ((GUEST == true ) && (GUEST_LOCKED == 'N' ) ) ){
-        $this_post .= "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=".$row['id']."&amp;taskid=".$taskid;
+        $this_post .= "&nbsp;<span class=\"textlink\">[<a href=\"forum.php?x=".X."&amp;action=add&amp;parentid=".$row['id']."&amp;taskid=".$taskid;
 
         //if this is a post to a private forum then announce it to the poster-engine
         if($usergroupid != 0 ) {
@@ -117,7 +128,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
       }
     }
 
-    $this_post .= "<br />\n";
+    $this_post .= $this_form."<br />\n";
 
     $raw_post = nl2br(bbcode($row['text'] ) );
 
@@ -235,7 +246,7 @@ if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) )
   //add an option to add posts
   if($TASKID_ROW['archive'] == 0 ) {
     if((GUEST == false ) || ((GUEST == true ) && (GUEST_LOCKED == 'N' ) ) ){
-      $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."\">".$lang['new_post']."</a>]</span>";
+      $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".X."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."\">".$lang['new_post']."</a>]</span>";
     }
   }
   //show it
@@ -259,7 +270,7 @@ if($TASKID_ROW['usergroupid'] != 0 ) {
     //add an option to add posts
     if($TASKID_ROW['archive'] == 0 ){
       if((GUEST == false ) || ((GUEST == true ) && (GUEST_LOCKED == 'N' ) ) ){
-        $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".$x."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."&amp;usergroupid=".$TASKID_ROW['usergroupid']."&amp;\">".$lang['new_post']."</a>]</span>\n";
+        $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".X."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."&amp;usergroupid=".$TASKID_ROW['usergroupid']."&amp;\">".$lang['new_post']."</a>]</span>\n";
       }
     }
     //get usergroup

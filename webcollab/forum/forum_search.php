@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2005 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,10 +35,10 @@ include_once(BASE.'includes/time.php' );
 
 function search_input() {
 
-  global $x, $lang;
+  global $lang;
 
   $content = "<form method=\"post\" action=\"forum.php\" >\n".
-             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
+             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n ".
              "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
              "<input type=\"hidden\" name=\"start\" value=\"0\" /></fieldset>\n".
              "<input id=\"name\" type=\"text\" name=\"string\" size=\"30\" />\n".
@@ -154,8 +154,8 @@ $search      = (UNICODE_VERSION == 'Y' ) ? '/'.$preg_string.'/isu' : '/'.$preg_s
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //show it
-  $content .= "<li><a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['taskid']."\">".$row['taskname']."</a>&nbsp;". 
-              "[<a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$row['userid']."\">".preg_replace($search, $replacement, $row['username'] )."</a>]&nbsp;".
+  $content .= "<li><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['taskid']."\">".$row['taskname']."</a>&nbsp;". 
+              "[<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".preg_replace($search, $replacement, $row['username'] )."</a>]&nbsp;".
               "(".nicetime($row['posted']).")<br />\n";
 
   //highlight search text
@@ -171,7 +171,7 @@ db_free_result($q );
 if($min > 0 || $max < $total ) {
 
   $content .= "<form method=\"post\" action=\"forum.php\">\n".
-              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
               "<input type=\"hidden\" name=\"string\" value=\"".$valid_string."\" />\n".
               "<input type=\"hidden\" name=\"start\" value=\"".$min."\" /></fieldset>\n".
@@ -193,7 +193,7 @@ if($min > 0 || $max < $total ) {
     }
     else {
       //hyperlink for other pages 
-      $content .= "&nbsp;&nbsp;<span class=\"underline\"><a href=\"forum.php?x=".$x."&amp;action=search&amp;start=".$i."&amp;string=".$url_string."\">".intval($i/10 + 1)."</a></span>&nbsp;&nbsp;\n";
+      $content .= "&nbsp;&nbsp;<span class=\"underline\"><a href=\"forum.php?x=".X."&amp;action=search&amp;start=".$i."&amp;string=".$url_string."\">".intval($i/10 + 1)."</a></span>&nbsp;&nbsp;\n";
     }
   }
   $content .= "</td>\n";

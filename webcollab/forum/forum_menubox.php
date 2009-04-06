@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -75,7 +75,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 
   //show it
-  $list .= "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['taskid']."\">".box_shorten($row['taskname'], 25 )."</a><br />\n";
+  $list .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['taskid']."\">".box_shorten($row['taskname'], 25 )."</a><br />\n";
 
   //record taskid to ensure we only show it once
   $shown[($row['taskid'])] = 1;

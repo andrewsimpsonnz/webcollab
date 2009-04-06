@@ -61,9 +61,10 @@ $row = db_fetch_array($q, 0 );
 
 $content .= "<form method=\"post\" action=\"forum.php\">\n";
 //set some hidden values
-$content .=  "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />".
+$content .=  "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
              "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
-             "<input type=\"hidden\" name=\"postid\" value=\"".$postid."\" /></fieldset>\n";
+             "<input type=\"hidden\" name=\"postid\" value=\"".$postid."\" />\n".
+             "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n";
 
 //build up the text-entry part
 $content .=   "<table>\n".
