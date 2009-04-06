@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -39,7 +39,7 @@ $taskid = ( @safe_integer($_GET['taskid']) ) ? $_GET['taskid'] : 0 ;
 
 $content =
         "<form method=\"post\" action=\"contacts.php\">\n".
-          "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+          "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
           "<input type=\"hidden\" name=\"action\" value=\"submit_add\" />\n".
           "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" /></fieldset>\n".
           "<table class=\"celldata\">\n".

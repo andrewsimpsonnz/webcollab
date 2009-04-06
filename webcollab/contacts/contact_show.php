@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -68,7 +68,7 @@ if(! GUEST ){
     "<form method=\"post\" action=\"contacts.php\" >\n".
     "<fieldset><input type=\"hidden\" name=\"action\" value=\"edit\" />\n".
     "<input type=\"hidden\" name=\"contactid\" value=\"".$row['id']."\" />\n".
-    "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+    "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
     "<input type=\"submit\" value=\"".$lang['edit_contact']."\" /></fieldset>\n".
    "</form>";
   }

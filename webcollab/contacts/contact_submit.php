@@ -155,11 +155,11 @@ switch($_REQUEST['action'] ) {
 }
 
 if($taskid ) {
-  header('Location: '.BASE_URL.'tasks.php?x='.$x.'&action=show&taskid='.$taskid );
+  header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=show&taskid='.$taskid );
   die;
 }
 else {
-  header('Location: '.BASE_URL.'main.php?x='.$x );
+  header('Location: '.BASE_URL.'main.php?x='.X );
   die;
 }
 

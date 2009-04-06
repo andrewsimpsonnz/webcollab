@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -57,7 +57,7 @@ $content =
     "<form method=\"post\" action=\"contacts.php\">\n".
       "<fieldset><input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"$contactid\" />\n".
-      "<input type=\"hidden\" name=\"x\" value=\"".$x."\" /></fieldset>\n".
+      "<input type=\"hidden\" name=\"x\" value=\"".X."\" /></fieldset>\n".
       "<table class=\"celldata\">\n".
         "<tr><td><i>".$lang['firstname']."</i></td><td><input type=\"text\" name=\"firstname\" value=\"".$row['firstname']."\"size=\"30\" /></td></tr>\n".
         "<tr><td><i>".$lang['lastname']."</i></td><td><input type=\"text\" name=\"lastname\" value=\"".$row['lastname']."\" size=\"30\" /></td></tr>\n".
@@ -81,7 +81,7 @@ $content .=
 //delete options
 $content .=
       "<form method=\"post\" action=\"contacts.php\">\n".
-      "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+      "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
       "<input type=\"hidden\" name=\"action\" value=\"submit_delete\" />\n".
       "<input type=\"hidden\" name=\"contactid\" value=\"".$contactid."\" /></fieldset>\n".
       "<p><input type=\"submit\" value=\"".$lang['del_contact']."\" onclick=\"return confirm('".$lang['confirm_del_javascript']."')\" />\n".

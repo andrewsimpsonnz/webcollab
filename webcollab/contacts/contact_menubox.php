@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -72,12 +72,12 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
        $content .= box_shorten($row['company'] )."<br />";
      }
      $show = box_shorten($row['lastname'] ).", ".$m_strtoupper($m_substr($row['firstname'], 0, 1 ) ).".";
-     $content .= "<a href=\"contacts.php?x=".$x."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
+     $content .= "<a href=\"contacts.php?x=".X."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
      $company =  $row['company'];
    }
    else {
      $show = box_shorten($row['lastname'] ).", ".$m_strtoupper($m_substr($row['firstname'], 0, 1 ) ).".";
-     $content .= "<a href=\"contacts.php?x=".$x."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
+     $content .= "<a href=\"contacts.php?x=".X."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
    }
 }
 
@@ -87,7 +87,7 @@ $content .= "<br />\n";
 
 //the add button
 if(! GUEST ){
-  $content .= "<span class=\"textlink\">[<a href=\"contacts.php?x=".$x."&amp;action=add".$add."\">".$lang['add_contact']."</a>]</span>\n";
+  $content .= "<span class=\"textlink\">[<a href=\"contacts.php?x=".X."&amp;action=add".$add."\">".$lang['add_contact']."</a>]</span>\n";
 }
 
 //show the box
