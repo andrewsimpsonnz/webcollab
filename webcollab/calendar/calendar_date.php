@@ -97,7 +97,7 @@ $year = ($year < $min_year ) ? $min_year : $year;
 $year = ($year > $max_year ) ? $max_year : $year;
 
 $content .= "<form method=\"post\" action=\"calendar.php\">\n".
-            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"date\" /></fieldset>\n ".
             "<div style=\"text-align: center\">\n".
             "<table class=\"decoration\" style=\"margin-left: auto; margin-right: auto;\">\n".

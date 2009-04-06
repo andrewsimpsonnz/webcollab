@@ -47,7 +47,7 @@ shuffle($colour);
 
 //set selection default
 if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 ){
-  $selection = ($_POST['selection']);
+  $selection = safe_data($_POST['selection']);
 }
 else {
   $selection = 'user';
@@ -214,10 +214,10 @@ else {
   $suffix .= "ORDER BY parent<>0, name";
 }
 
-$content .= "<span class=\"textlink\">[<a href=\"main.php?x=".$x."\">".$lang['main_menu']."</a>]</span>";
+$content .= "<span class=\"textlink\">[<a href=\"main.php?x=".X."\">".$lang['main_menu']."</a>]</span>";
 
 $content .= "<form method=\"post\" action=\"calendar.php\">\n".
-            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n ".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n ".
             "<div style=\"text-align: center\">\n".
             "<table class=\"decoration\" style=\"margin-left: auto; margin-right: auto;\" cellpadding=\"5px\">\n".
@@ -395,7 +395,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
                 $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."\" >".
                             "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
                             "<span style=\"text-decoration:underline\">".
-                            "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</a></span></div>\n";
+                            "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</a></span></div>\n";
                 break;
 
               default:
@@ -408,7 +408,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
                 }
                 $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."\">".
                             "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
-                            "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</a></div>\n";
+                            "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</a></div>\n";
                 break;
             }
           break;
