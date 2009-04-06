@@ -50,10 +50,12 @@ if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
 //$session_key can be from either a GET, POST or COOKIE - check for cookie first
 if(isset($_COOKIE['webcollab_session'] ) && preg_match('/^[a-f\d]{32}$/i', $_COOKIE['webcollab_session'] ) ) {
   $session_key = db_escape_string($_COOKIE['webcollab_session'] );
+  define('X', 0 );
 }
 elseif(isset($_REQUEST['x'] ) && preg_match('/^[a-f\d]{32}$/i', $_REQUEST['x'] ) ) {
   $session_key = db_escape_string($_REQUEST['x']);
   $x = $_REQUEST['x'];
+  define('X', $x );
 }
 else {
   //return to login screen
@@ -79,6 +81,7 @@ else {
 
 //seems okay at first, now go cross-checking with the known data from the database
 if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS user_id,
+                             '.PRE.'logins.token AS token,
                              '.$epoch.' '.PRE.'logins.lastaccess) AS sec_lastaccess,
                              '.PRE.'users.email AS email,
                              '.PRE.'users.admin AS admin,
@@ -139,6 +142,7 @@ define('UID',   $row['user_id'] );
 define('GUEST', $row['guest'] );
 define('UID_NAME',  $row['fullname'] );
 define('UID_EMAIL', $row['email'] );
+define('OLD_TOKEN', $row['token'] );
 
 if($row['admin'] == 't' ) {
   define('ADMIN', 1 );
@@ -163,8 +167,14 @@ $row = @db_fetch_num($q, 0 );
 @define('MANAGER_NAME',   $row[0] );
 @define('ABBR_MANAGER_NAME', $row[1] );
 
+//generate new token
+$token = dechex(mt_rand(1, 10000 ) );
+define('TOKEN', $token );
+
 //update the "I was here" time
-db_query('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.$session_key.'\' AND user_id='.UID );
+db_query('UPDATE '.PRE.'logins SET lastaccess=now(),
+                                   token=\''.$token.'\'
+                                   WHERE session_key=\''.$session_key.'\' AND user_id='.UID );
 
 // this gives:
 //
@@ -174,7 +184,9 @@ db_query('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.$sessi
 // ADMIN [0,1] = is the user an admin ?
 // GUEST [0,1] = is the user a guest?
 // $GID[]      = array of user's groups
-// TIME_NOW    = UNIX epoch time now (seconds since 1 Jan 1970) 
+// TIME_NOW    = UNIX epoch time now (seconds since 1 Jan 1970)
+// OLD_TOKEN   = security form token from last post form
+// TOKEN       = new (current) token
 //
 // and of course, access !!
 
