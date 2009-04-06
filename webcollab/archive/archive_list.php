@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -66,11 +66,11 @@ if(db_numrows($q) < 1 ) {
 
 //text link for 'printer friendly' page
 if(isset($_GET['action']) && $_GET['action'] == "archive_print" ) {
-  $content  .= "[<a href=\"archive.php?x=".$x."&amp;action=list\">".$lang['normal_version']."</a>]\n";
+  $content  .= "[<a href=\"archive.php?x=".X."&amp;action=list\">".$lang['normal_version']."</a>]\n";
 }
 else {
   $content  .= "<table style=\"width: 98%\"><tr><td style=\"text-align: right\">\n".
-               "<a href=\"archive.php?x=".$x."&amp;action=archive_print\" title= \"".$lang['print_version']."\">".
+               "<a href=\"archive.php?x=".X."&amp;action=archive_print\" title= \"".$lang['print_version']."\">".
                "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a>\n".
                "</td></tr>\n</table>\n";
 }
@@ -112,7 +112,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<tr><td class=\"projectlist\">\n";
 
   //show name and a link
-  $content .= "<a href=\"tasks.php?x=".$x."&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['name']."</b></a><br />\n";
+  $content .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['name']."</b></a><br />\n";
 
   //give some details of status
   switch($project_status ) {
@@ -144,8 +144,17 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   if(ADMIN || UID == $row['owner'] ){
 
     $content .= "<span class=\"textlink\">".
-                "[<a href=\"tasks.php?x=".$x."&amp;action=delete&amp;taskid=".$row['id']."\" onclick=\"return confirm( '".sprintf($lang["del_javascript_project_sprt"], javascript_escape($row['name'] ) )."')\">".$lang['del']."</a>]&nbsp;&nbsp;&nbsp;&nbsp;\n".
-                "[<a href=\"archive.php?x=".$x."&amp;action=submit_restore&amp;taskid=".$row['id']."\">".$lang['revive']."</a>]</span>\n";
+                "[<a href=\"javascript:void(document.getElementById('delete').submit())\" onclick=\"return confirm( '".sprintf($lang["del_javascript_project_sprt"], javascript_escape($row['name'] ) )."')\">".$lang['del']."</a>]&nbsp;&nbsp;&nbsp;&nbsp;\n";
+
+
+    $content .= "[<a href=\"archive.php?x=".X."&amp;action=submit_restore&amp;taskid=".$row['id']."\">".$lang['revive']."</a>]</span>\n";
+
+    $content .= "</td><td><form id=\"delete\" method=\"post\" action=\"tasks.php\">\n".
+                "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+                "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
+                "<input type=\"hidden\" name=\"taskid\" value=\"".$row['id']."\" />\n".
+                "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+                "</form>\n";
   }
   //end list
   $content .= "</td></tr>\n";

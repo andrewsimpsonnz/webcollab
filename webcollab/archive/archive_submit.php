@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -34,7 +34,6 @@ if(! defined('UID' ) ) {
 if(! @safe_integer($_GET['taskid']) ) {
   error('Archive submit', 'Not a valid taskid' );
 }
-
 $taskid = $_GET['taskid'];
 
 //check if the user has enough rights
@@ -50,7 +49,7 @@ switch($_REQUEST['action'] ) {
     //do the archiving
     db_query('UPDATE '.PRE.'tasks SET archive=1 WHERE projectid='.$projectid );
 
-    header('Location: '.BASE_URL.'main.php?x='.$x );
+    header('Location: '.BASE_URL.'main.php?x='.X );
     die;
     break;
 
@@ -58,7 +57,7 @@ switch($_REQUEST['action'] ) {
     //do the restore
     db_query('UPDATE '.PRE.'tasks SET archive=0 WHERE projectid='.$projectid );
 
-    header('Location: '.BASE_URL.'archive.php?x='.$x.'&action=list' );
+    header('Location: '.BASE_URL.'archive.php?x='.X.'&action=list' );
     die;
     break;
 
