@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,6 +35,10 @@ if(! defined('UID' ) ) {
 if(! ADMIN) {
   error('Unauthorised access', 'This function is for admins only.' );
 }
+
+//check for valid form token
+$token = (isset($_REQUEST['token'])) ? (safe_data($_REQUEST['token'])) : null;
+token_check($token );
 
 if(empty($_REQUEST['action']) ) {
   error('Taskgroups submit', 'No action given' );
@@ -108,6 +112,6 @@ switch($_REQUEST['action'] ) {
     break;
 }
 
-header('Location: '.BASE_URL.'taskgroups.php?x='.$x.'&action=manage');
+header('Location: '.BASE_URL.'taskgroups.php?x='.X.'&action=manage');
 
 ?>
