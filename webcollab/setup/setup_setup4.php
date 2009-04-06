@@ -368,7 +368,7 @@ $content .= "<input type=\"hidden\" name=\"".$var."\" value=\"".$data[$var]."\" 
 }
 
 //show 'write to file' button
-$content .= "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+$content .= "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"setup5\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />\n".
             "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
@@ -380,7 +380,7 @@ $content .= "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
 $content .= "<tr><td></td><td class=\"boxdata3\">\n".
             "<form method=\"post\" action=\"setup_handler.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
-            "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+            "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$data["new_db"]."\" />\n".
             "<input type=\"hidden\" name=\"edit\" value=\"Y\" />".
             "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" />\n";

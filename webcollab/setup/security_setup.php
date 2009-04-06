@@ -70,10 +70,12 @@ else {
   //get session key from either a GET or POST
   if(isset($_REQUEST['x']) && preg_match('/^[a-f\d]{32}$/i', $_REQUEST['x'] ) ) {
     $x = db_escape_string($_REQUEST['x']);
+    define('X', $x );
   }
   //check for existing variable
   elseif(isset($session_key) && preg_match('/^[a-f\d]{32}$/i', $session_key ) ) {
     $x = db_escape_string($session_key);
+    define('X', $x );
   }
   //nothing
   else {
@@ -97,7 +99,7 @@ else {
                                '.$epoch.' lastaccess) AS sec_lastaccess
                                FROM '.PRE.'logins
                                LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
-                               WHERE '.PRE.'logins.session_key=\''.$x.'\'', 0 ) ) ) {
+                               WHERE '.PRE.'logins.session_key=\''.X.'\'', 0 ) ) ) {
     error_setup('Database not able to verify session key');
   }
 
@@ -126,7 +128,7 @@ else {
   }
 
   //update the 'I was here' time
-  db_query('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.$x.'\' AND user_id='.$row['user_id'] );
+  db_query('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.X.'\' AND user_id='.$row['user_id'] );
 
   //get site names
   $q = db_query('SELECT * FROM '.PRE.'site_name' );

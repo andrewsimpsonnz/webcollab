@@ -237,8 +237,8 @@ create_top_setup($lang_setup['setup5_banner1'] );
 if(isset($data['new_db'] ) && ($data['new_db'] == 'Y' ) ) {
 
   //generate variables to set new session key
-  $ip = $_SERVER['REMOTE_ADDR'];
-  $x  = md5(mt_rand().$ip );
+  $ip   = $_SERVER['REMOTE_ADDR'];
+  $xnew = md5(mt_rand().$ip );
 
   //make database connection
   db_setup_connect($data);
@@ -248,20 +248,20 @@ if(isset($data['new_db'] ) && ($data['new_db'] == 'Y' ) ) {
     case 'mysql':
     case 'mysql_innodb':
       //set the new session key in the new database
-      if( ! @mysql_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$x.'\', \''.$ip.'\', now() )', $db_setup_connection ) ) {
+      if( ! @mysql_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$xnew.'\', \''.$ip.'\', now() )', $db_setup_connection ) ) {
         abort("MySQL query failed:<br />". mysql_error($db_setup_connection) );
       }
       break;
 
     case 'mysqli':
-      if( ! @mysqli_query($db_setup_connection, 'INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$x.'\', \''.$ip.'\', now() )' ) ) {
+      if( ! @mysqli_query($db_setup_connection, 'INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$xnew.'\', \''.$ip.'\', now() )' ) ) {
         abort("MySQLi query failed:<br />".mysqli_error($db_setup_connection) );
       }
       break;
 
     case 'postgresql':
       //set the new session key in the new database
-      if( ! @pg_query($db_setup_connection, 'INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$x.'\', \''.$ip.'\', now() )' ) ) {
+      if( ! @pg_query($db_setup_connection, 'INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$xnew.'\', \''.$ip.'\', now() )' ) ) {
         abort("Postgresql query failed:<br />".pg_last_error($db_setup_connection) );
       }
       break;
@@ -277,7 +277,7 @@ if(isset($data['new_db'] ) && ($data['new_db'] == 'Y' ) ) {
   //next form with new session key in place
   $content = "<p style=\"text-align:center\">".$lang_setup['setup5_writing']."</p>\n".
              "<form method=\"post\" action=\"setup_handler.php\">\n".
-             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$xnew."\" />\n".
              "<input type=\"hidden\" name=\"action\" value=\"setup6\" />\n".
              "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
              "<p style=\"text-align:center\">".
@@ -299,7 +299,6 @@ site_name($data);
 
 $content = $lang_setup['setup5_complete']."\n".
            "<form method='post' action='index.php'>\n".
-           "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" /></fieldset>\n".
            "<p style=\"text-align:center\">".
            "<input type='submit' value='".$lang_setup['finish']."' /></p>\n".
            "</form>\n";

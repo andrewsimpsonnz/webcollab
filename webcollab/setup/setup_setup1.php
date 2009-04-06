@@ -55,7 +55,7 @@ if( ! is_writable(BASE_CONFIG.'config.php' ) ) {
 
 //input form
 $content .=    "<form method=\"post\" action=\"setup_handler.php\">\n".
-               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
                "<input type=\"hidden\" name=\"action\" value=\"setup2\" />\n".
                "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n".
                "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n";
@@ -71,7 +71,7 @@ $content .=    "<p style=\"text-align:center\">".
                "<input type=\"submit\" value=\"".$lang_setup['yes']."\" /></p>\n".
                "</form>\n".
                "<form method=\"post\" action=\"setup_handler.php\">\n".
-               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
                "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
                "<input type=\"hidden\" name=\"new_db\" value=\"N\" />\n".
                "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".

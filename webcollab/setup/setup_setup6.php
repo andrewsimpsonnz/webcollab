@@ -45,7 +45,7 @@ $content  = '';
 
 $content .= "<form method=\"post\" action=\"setup_handler.php\" onsubmit=\"return fieldCheck()\">".
             "<fieldset><input type=\"hidden\" name=\"action\" value=\"setup7\" />\n".
-            "<input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+            "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"new_config\" value=\"Y\" />\n".
             "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
             "<table class=\"celldata\">";

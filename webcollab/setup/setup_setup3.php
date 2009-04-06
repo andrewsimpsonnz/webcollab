@@ -112,8 +112,8 @@ $content .= "<table style=\"width : 98%\"><tr><td>\n".
 
 $content .= "<form method=\"post\" action=\"setup_handler.php\">".
             "<fieldset><input type=\"hidden\" name=\"action\" value=\"setup4\" />\n".
-            "<input type=\"hidden\" name=\"x\" value=\"$x\" />\n".
-            "<input type=\"hidden\" name=\"new_db\" value=\"$new_db\" />\n".
+            "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+            "<input type=\"hidden\" name=\"new_db\" value=\"".$new_db."\" />\n".
             "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
             "<table class=\"celldata\" >";
 

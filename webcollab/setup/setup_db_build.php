@@ -284,7 +284,7 @@ require_once(BASE.'setup/security_setup.php' );
 create_top_setup($lang_setup['setupdb_banner'] );
 
 $content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
-            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
             "<input type=\"hidden\" name=\"db_host\" value=\"".$database_host."\" />\n".
             "<input type=\"hidden\" name=\"db_user\" value=\"".$database_user."\" />\n".
