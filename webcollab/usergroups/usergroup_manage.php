@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -57,7 +57,7 @@ if(db_numrows($q) == 0 ) {
   $content = "<p>".$lang['no_usergroups']."</p>\n";
 
   if(ADMIN) {
-    $content .= "<span class=\"textlink\"><a href=\"usergroups.php?x=".$x."&amp;action=add\">[".$lang['add']."]</a></span>\n";
+    $content .= "<span class=\"textlink\"><a href=\"usergroups.php?x=".X."&amp;action=add\">[".$lang['add']."]</a></span>\n";
   }
 
   new_box($lang['usergroup_manage'], $content );
@@ -84,8 +84,8 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
               "<tr><td class=\"grouplist\"><b>".$row['name']."</b></td><td class=\"grouplist\"><i>".$row['description']."</i></td><td style=\"text-align: center\">".$private."</td>\n";
 
   if(ADMIN) {
-    $content .= "<td><span class=\"textlink\"><a href=\"usergroups.php?x=".$x."&amp;action=submit_del&amp;usergroupid=".$row['id']."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">[".$lang['del']."]</a></span>&nbsp;".
-                "<span class=\"textlink\"><a href=\"usergroups.php?x=".$x."&amp;action=edit&amp;usergroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td>";
+    $content .= "<td><span class=\"textlink\"><a href=\"usergroups.php?x=".X."&amp;token=".TOKEN."&amp;action=submit_del&amp;usergroupid=".$row['id']."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">[".$lang['del']."]</a></span>&nbsp;".
+                "<span class=\"textlink\"><a href=\"usergroups.php?x=".X."&amp;action=edit&amp;usergroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td>";
   }
 
   $content .= "</tr>\n";
@@ -107,7 +107,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
       continue;
     }
 
-    $content .= "<tr><td style=\"text-align:left\" colspan=\"3\"><small><a href=\"users.php?x=".$x."&amp;action=show&amp;userid=".$user_row['id']."\">".$user_row['fullname']."</a></small></td></tr>\n";
+    $content .= "<tr><td style=\"text-align:left\" colspan=\"3\"><small><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$user_row['id']."\">".$user_row['fullname']."</a></small></td></tr>\n";
   }
 
   $content .=   "<tr><td colspan=\"3\">&nbsp;</td></tr>\n";
@@ -120,7 +120,7 @@ $content .=   "</table>\n";
 
 //admin can add a usergroup
 if(ADMIN) {
-  $content .= "<p><span class=\"textlink\">[<a href=\"usergroups.php?x=".$x."&amp;action=add\">".$lang['add']."</a>]</span></p>\n";
+  $content .= "<p><span class=\"textlink\">[<a href=\"usergroups.php?x=".X."&amp;action=add\">".$lang['add']."</a>]</span></p>\n";
 }
 else {
   //check if no usergroups visible to this user

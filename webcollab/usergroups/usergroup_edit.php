@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -60,9 +60,10 @@ else {
 }
 
 $content = "<form method=\"post\" action=\"usergroups.php\">\n".
-           "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$x."\" />\n".
+           "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
            "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
-           "<input type=\"hidden\" name=\"usergroupid\" value=\"".$usergroupid."\" /></fieldset>\n".
+           "<input type=\"hidden\" name=\"usergroupid\" value=\"".$usergroupid."\" />\n".
+           "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
            "<table class=\"celldata\">\n".
            "<tr><td>".$lang['usergroup_name']."</td><td><input type=\"text\" name=\"name\" value=\"".$row['name']."\" size=\"30\" /></td></tr>\n".
            "<tr><td>".$lang['usergroup_description']."</td><td><input type=\"text\" name=\"description\" value=\"".$row['description']."\" size=\"30\" /></td></tr>\n".

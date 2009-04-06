@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -48,6 +48,10 @@ switch($_REQUEST['action'] ) {
   //delete a usergroup
   case 'submit_del':
 
+    //check for valid form token
+    $token = (isset($_GET['token'])) ? (safe_data($_GET['token'])) : null;
+    token_check($token );
+
     if(! @safe_integer($_GET['usergroupid']) ) {
       error('Usergroup submit', 'Not a valid value for usergroupid' );
     }
@@ -73,6 +77,10 @@ switch($_REQUEST['action'] ) {
 
   //insert a new usergroup
   case 'submit_insert':
+
+    //check for valid form token
+    $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+    token_check($token );
 
     if(empty($_POST['name'] ) ) {
       warning($lang['value_missing'], sprintf($lang['field_sprt'], $lang['usergroup_name'] ) );
@@ -115,6 +123,10 @@ switch($_REQUEST['action'] ) {
 
   //edit a usergroup
   case 'submit_edit':
+
+    //check for valid form token
+    $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+    token_check($token );
 
     if(! @safe_integer($_POST['usergroupid'] ) ){
       error('Usergroup submit', 'Not a valid value for usergroupid' );
@@ -161,6 +173,6 @@ switch($_REQUEST['action'] ) {
     break;
 }
 
-header('Location: '.BASE_URL.'usergroups.php?x='.$x.'&action=manage');
+header('Location: '.BASE_URL.'usergroups.php?x='.X.'&action=manage');
 
 ?>

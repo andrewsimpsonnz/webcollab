@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -34,10 +34,10 @@ if(! defined('UID' ) ) {
 $content = '';
 
 if(ADMIN ) {
-  $content .= "<a href=\"usergroups.php?x=".$x."&amp;action=add\">".$lang['add']."</a><br />\n";
+  $content .= "<a href=\"usergroups.php?x=".X."&amp;action=add\">".$lang['add']."</a><br />\n";
 }
 
-$content .= "<a href=\"usergroups.php?x=".$x."&amp;action=manage\">".$lang['manage']."</a><br />\n";
+$content .= "<a href=\"usergroups.php?x=".X."&amp;action=manage\">".$lang['manage']."</a><br />\n";
 
 new_box( $lang['usergroups'], $content, 'boxmenu' );
 
