@@ -57,25 +57,13 @@ if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
     //header
     $content .= "<small><b>".$lang['admin'].":</b></small><br />\n";
 
-    //edit, delete rights
+    //edit rights
     if((ADMIN ) ||
        ($TASKID_ROW['owner'] == UID ) ||
        (($TASKID_ROW['groupaccess'] == "t") && (isset($GID[($TASKID_ROW['usergroupid'])] ) ) ) ) {
 
       //edit
       $content .= "<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_".$TYPE]."</a><br />\n";
-
-      //delete
-      if((ADMIN ) || ($TASKID_ROW['owner'] == UID ) ) { 
-        $content .= "<a href=\"javascript:void(document.getElementById('delete_task').submit())\" onclick=\"return confirm( '".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang["delete_$TYPE"]."</a><br />\n";
-
-        $content .= "<form id=\"delete_task\" method=\"post\" action=\"tasks.php\">\n".
-                    "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
-                    "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
-                    "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
-                    "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-                    "</form>\n";
-      }
 
       //archive project
       if((ADMIN ) || ($TASKID_ROW['owner'] == UID ) ) {

@@ -364,13 +364,16 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
              "</form>\n";
 
 //delete options
-$content .= "<br /><br />\n<form method=\"post\" action=\"tasks.php\">\n".
-             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />".
-             "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
-             "<input type=\"hidden\" name=\"taskid\" value=\"".$TASKID_ROW['id']."\" />\n".
-             "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
-             "<input type=\"submit\" value=\"".$lang["delete_".$TYPE]."\" onclick=\"return confirm('".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\" /></fieldset>\n".
-             "</form>\n";
+if((ADMIN ) || ($TASKID_ROW['owner'] == UID ) ) { 
+
+  $content .= "<form method=\"post\" action=\"tasks.php\">\n".
+              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />".
+              "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
+              "<input type=\"hidden\" name=\"taskid\" value=\"".$TASKID_ROW['id']."\" />\n".
+              "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+              "<p><input type=\"submit\" value=\"".$lang["delete_".$TYPE]."\" onclick=\"return confirm('".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\" /></p>\n".
+              "</form>\n";
+}
 
 new_box($lang["edit_".$TYPE], $content );
 
