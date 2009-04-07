@@ -36,27 +36,28 @@ if( ! ADMIN ) {
   error('Unauthorised access', 'This function is for admins only.' );
 }
 
-if(empty($_REQUEST['action'] ) ) {
+if(empty($_POST['action'] ) ) {
   error('Usergroups submit', 'No action given' );
 }
+
+//check for valid form token
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+token_check($token );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
-switch($_REQUEST['action'] ) {
+switch($_POST['action'] ) {
 
   //delete a usergroup
   case 'submit_del':
 
-    //check for valid form token
-    $token = (isset($_GET['token'])) ? (safe_data($_GET['token'])) : null;
-    token_check($token );
 
-    if(! @safe_integer($_GET['usergroupid']) ) {
+    if(! @safe_integer($_POST['usergroupid']) ) {
       error('Usergroup submit', 'Not a valid value for usergroupid' );
     }
 
-    $usergroupid = $_GET['usergroupid'];
+    $usergroupid = $_POST['usergroupid'];
 
     db_begin();
 

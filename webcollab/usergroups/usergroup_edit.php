@@ -95,6 +95,14 @@ for( $i=0 ; $user_row = @db_fetch_array($user_q, $i ) ; ++$i ) {
 $content .=  "</select><small><i>".$lang['select_instruct']."</i></small></td></tr>\n".
              "</table>\n".
              "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" /></p>\n".
+             "</form>\n".
+             "<form method=\"post\" action=\"usergroups.php\" ".
+             "onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">\n".
+             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+             "<input type=\"hidden\" name=\"action\" value=\"submit_del\" />\n".
+             "<input type=\"hidden\" name=\"usergroupid\" value=\"".$usergroupid."\" />\n".
+             "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+             "<p><input type=\"submit\" value=\"".$lang['delete']."\" /></p>\n".
              "</form>\n";
 
 new_box( $lang['edit_usergroup'], $content );

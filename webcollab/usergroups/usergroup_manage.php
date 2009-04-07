@@ -84,7 +84,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
               "<tr><td class=\"grouplist\"><b>".$row['name']."</b></td><td class=\"grouplist\"><i>".$row['description']."</i></td><td style=\"text-align: center\">".$private."</td>\n";
 
   if(ADMIN) {
-    $content .= "<td><span class=\"textlink\"><a href=\"usergroups.php?x=".X."&amp;token=".TOKEN."&amp;action=submit_del&amp;usergroupid=".$row['id']."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">[".$lang['del']."]</a></span>&nbsp;".
+    $content .= "<td><span class=\"textlink\">".
                 "<span class=\"textlink\"><a href=\"usergroups.php?x=".X."&amp;action=edit&amp;usergroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td>";
   }
 
