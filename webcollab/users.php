@@ -97,6 +97,16 @@ switch($_REQUEST['action'] ) {
     create_bottom();
     break;
 
+  //edit delete
+  case 'edit_del':
+    create_top($lang['edit_user'] );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'users/user_menubox.php' );
+    goto_main();
+    include(BASE.'users/user_edit_del.php' );
+    create_bottom();
+    break;
+
   //admin email
   case 'email':
     create_top($lang['email'] );
