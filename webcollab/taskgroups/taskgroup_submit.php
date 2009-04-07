@@ -36,26 +36,26 @@ if(! ADMIN) {
   error('Unauthorised access', 'This function is for admins only.' );
 }
 
-//check for valid form token
-$token = (isset($_REQUEST['token'])) ? (safe_data($_REQUEST['token'])) : null;
-token_check($token );
-
-if(empty($_REQUEST['action']) ) {
+if(empty($_POST['action']) ) {
   error('Taskgroups submit', 'No action given' );
 }
+
+//check for valid form token
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+token_check($token );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);  
 
-switch($_REQUEST['action'] ) {
+switch($_POST['action'] ) {
 
   //delete a taskgroup
   case 'submit_del':
 
-    if(! @safe_integer($_GET['taskgroupid']) ) {
+    if(! @safe_integer($_POST['taskgroupid']) ) {
       error('Taskgroup submit', 'Not a valid value for taskgroupid' );
     }
-    $taskgroupid = $_GET['taskgroupid'];
+    $taskgroupid = $_POST['taskgroupid'];
 
     //if taskgroup exists we can delete it :)
     if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'taskgroups WHERE id='.$taskgroupid ), 0, 0 ) ) {

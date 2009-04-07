@@ -42,7 +42,7 @@ $q = db_query('SELECT * FROM '.PRE.'taskgroups ORDER BY name' );
 //nothing here yet
 if(db_numrows($q) == 0 ) {
   $content = "<p>".$lang['no_taskgroups']."</p>\n".
-             "<span class=\"textlink\"><a href=\"taskgroups.php?x=".X."&amp;token=".TOKEN."&amp;action=add\">[".$lang['add']."]</a></span>\n";
+             "<span class=\"textlink\"><a href=\"taskgroups.php?x=".X."&amp;action=add\">[".$lang['add']."]</a></span>\n";
 
   new_box($lang['taskgroup_manage'], $content );
   return;
@@ -55,13 +55,12 @@ $content =  "<table class=\"celldata\">\n".
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<tr><td colspan=\"3\"><hr /></td></tr>\n".
               "<tr><td class=\"grouplist\"><b>".$row['name']."</b></td><td class=\"grouplist\"><i>".$row['description']."</i></td>".
-              "<td class=\"grouplist\"><span class=\"textlink\"><a href=\"taskgroups.php?x=".X."&amp;token=".TOKEN."&amp;action=submit_del&amp;taskgroupid=".$row['id']."\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">[".$lang['del']."]</a></span>&nbsp;".
-              "<span class=\"textlink\"><a href=\"taskgroups.php?x=".X."&amp;token=".TOKEN."&amp;action=edit&amp;taskgroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td></tr>";
+              "<td class=\"grouplist\"><span class=\"textlink\"><a href=\"taskgroups.php?x=".X."&amp;action=edit&amp;taskgroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td></tr>";
 
 }
 
 $content .= "</table>\n".
-            "<p><span class=\"textlink\">[<a href=\"taskgroups.php?x=".X."&amp;token=".TOKEN."&amp;action=add\">".$lang['add']."</a>]</span></p>\n";
+            "<p><span class=\"textlink\">[<a href=\"taskgroups.php?x=".X."&amp;action=add\">".$lang['add']."</a>]</span></p>\n";
 
 new_box( $lang['manage_taskgroups'], $content, 'boxdata2' );
 

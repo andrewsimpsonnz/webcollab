@@ -61,7 +61,14 @@ $content =  "<form method=\"post\" action=\"taskgroups.php\">\n".
             "<tr><td>".$lang['taskgroup_description']."</td><td><input type=\"text\" name=\"description\" value=\"".$row['description']." \"size=\"30\" /></td></tr>\n".
             "</table>\n".
             "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" /></p>\n".
-            "</form>\n";
+            "</form>\n".
+            "<form method=\"post\" action=\"taskgroups.php\" ".
+            "onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">\n".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+            "<input type=\"hidden\" name=\"taskgroupid\" value=\"".$taskgroupid."\" />\n".
+            "<input type=\"hidden\" name=\"action\" value=\"submit_del\" />\n".
+            "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+            "<p><input type=\"submit\" value=\"".$lang['delete']."\" /></p>\n";
 
 new_box($lang['edit_taskgroup'], $content );
 
