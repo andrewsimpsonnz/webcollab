@@ -74,7 +74,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
     //prevent admins deleting themselves....!
     if($row['id'] != UID ) {
-      $content .= "[<a href=\"users.php?x=".X."&amp;token=".TOKEN."&amp;userid=".$row['id']."&amp;action=del\">".$lang['del']."</a>]&nbsp;";
+      $content .= "[<a href=\"users.php?x=".X."&amp;userid=".$row['id']."&amp;action=edit_del\">".$lang['del']."</a>]&nbsp;";
     }
     $content .= "[<a href=\"users.php?x=".X."&amp;userid=".$row['id']."&amp;action=edit\">".$lang['edit']."</a>]</span></td>";
   }

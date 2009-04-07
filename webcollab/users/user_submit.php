@@ -42,32 +42,32 @@ $usergroup_names = '';
 $admin_state = '';
 
 //update or insert ?
-if(empty($_REQUEST['action']) ) {
+if(empty($_POST['action']) ) {
   error('User submit', 'No request given' );
 }
+
+//check for valid form token
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+token_check($token );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
-switch($_REQUEST['action'] ) {
+switch($_POST['action'] ) {
 
   //revive a user
   case 'revive':
-
-    //check for valid form token
-    $token = (isset($_GET['token'])) ? (safe_data($_GET['token'])) : null;
-    token_check($token );
 
     //only for the admins
     if(! ADMIN ){
       error('Authorisation failed', 'You have to be admin to do this' );
     }
 
-    if(! @safe_integer($_GET['userid']) ){
+    if(! @safe_integer($_POST['userid']) ){
       error('User submit', 'No userid was specified.' );
     }
 
-    $userid = $_GET['userid'];
+    $userid = $_POST['userid'];
 
     if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE deleted=\'t\' AND id='.$userid ), 0, 0 ) ) {
       //undelete
@@ -86,10 +86,6 @@ switch($_REQUEST['action'] ) {
 
   //add a user
   case 'submit_insert':
-
-    //check for valid form token
-    $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-    token_check($token );
 
     //only for the l33t
     if( ! ADMIN ){
@@ -198,10 +194,6 @@ switch($_REQUEST['action'] ) {
     if((GUEST) && (GUEST_LOCKED != 'N' ) ){
       warning($lang['access_denied'], 'Guests are not permitted to modify details' );
     }
-
-    //check for valid form token
-    $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-    token_check($token );
 
     //check input has been provided
     if(empty($_POST['name']) ) {

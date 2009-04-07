@@ -51,14 +51,8 @@ $content = "<table class=\"celldata\">\n";
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<tr><td class=\"grouplist\"><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>\n".
-              "<td><span class=\"textlink\">";
-
-  //if this user has NO tasks owned then we can delete him forever :)
-  if( ! db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner='.$row['id'] ), 0, 0 ) ) {
-    $content .= "[<a href=\"users.php?x=".X."&amp;token=".TOKEN."&amp;action=permdel&amp;userid=".$row['id']."\" onclick=\"return confirm( '".sprintf($lang['permdel_javascript_sprt'], javascript_escape($row['fullname'] ) )."' )\">".$lang['permdel']." </a>]&nbsp;";
-  }
-
-  $content .= "[<a href=\"users.php?x=".X."&amp;token=".TOKEN."&amp;action=revive&amp;userid=".$row['id']."\">".$lang['revive']."</a>]".
+              "<td><span class=\"textlink\">".
+              "[<a href=\"users.php?x=".X."&amp;action=edit_del&amp;userid=".$row['id']."\">".$lang['edit']."</a>]".
               "</span></td></tr>\n";
 }
 

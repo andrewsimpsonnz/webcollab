@@ -42,24 +42,24 @@ include_once(BASE.'includes/email.php' );
 include_once(BASE.'lang/lang_email.php' );
 
 //get some stupid errors
-if(! @safe_integer($_GET['userid']) ) {
+if(! @safe_integer($_POST['userid']) ) {
   error('User delete', 'No userid specified' );
 }
 
-$userid = $_GET['userid'];
+$userid = $_POST['userid'];
 
-if(empty($_GET['action'] ) ){
+if(empty($_POST['action'] ) ){
   error('User delete', 'No action specified' );
 }
 
 //check for valid form token
-$token = (isset($_GET['token']) : (safe_data($_GET['token']) ? null;
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
 token_check($token );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
 
-switch($_GET['action'] ){
+switch($_POST['action'] ){
 
   case 'permdel':
 
