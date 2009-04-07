@@ -138,23 +138,30 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
     case 'active':
     default:
       $content .= sprintf($lang['percent_sprt'], $row['completed'] )."<br />\n";
-      $content .= "<img src=\"images/time.png\" height=\"16\" width=\"16\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )."<br />";
+      $content .= "<img src=\"images/time.png\" height=\"16\" width=\"16\" alt=\"clock\" /> &nbsp; ".nicedate( $row['deadline'] )."\n";
       break;
   }
+
   if(ADMIN || UID == $row['owner'] ){
 
-    $content .= "<span class=\"textlink\">".
-                "[<a href=\"javascript:void(document.getElementById('delete').submit())\" onclick=\"return confirm( '".sprintf($lang["del_javascript_project_sprt"], javascript_escape($row['name'] ) )."')\">".$lang['del']."</a>]&nbsp;&nbsp;&nbsp;&nbsp;\n";
-
-
-    $content .= "[<a href=\"archive.php?x=".X."&amp;action=submit_restore&amp;taskid=".$row['id']."\">".$lang['revive']."</a>]</span>\n";
-
-    $content .= "</td><td><form id=\"delete\" method=\"post\" action=\"tasks.php\">\n".
+    $content .= "<table>\n".
+                "<tr><td><form method=\"post\" action=\"tasks.php\" ".
+                "onclick=\"return confirm( '".sprintf($lang["del_javascript_project_sprt"], javascript_escape($row['name'] ) )."')\">\n".
                 "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
                 "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
                 "<input type=\"hidden\" name=\"taskid\" value=\"".$row['id']."\" />\n".
                 "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-                "</form>\n";
+                "<p><input type=\"submit\" value=\"".$lang['delete']."\" /></p>\n".
+                "</form>\n".
+                "</td>\n".
+                "<td><form method=\"post\" action=\"archive.php\">\n".
+                "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+                "<input type=\"hidden\" name=\"action\" value=\"submit_restore\" />\n".
+                "<input type=\"hidden\" name=\"taskid\" value=\"".$row['id']."\" /></fieldset>\n".
+                "<p><input type=\"submit\" value=\"".$lang['revive']."\" /></p>\n".
+                "</form>\n".
+                "</td></tr>\n".
+                "</table>\n";
   }
   //end list
   $content .= "</td></tr>\n";

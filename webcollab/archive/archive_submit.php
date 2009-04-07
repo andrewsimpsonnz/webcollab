@@ -31,10 +31,10 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
-if(! @safe_integer($_GET['taskid']) ) {
+if(! @safe_integer($_REQUEST['taskid']) ) {
   error('Archive submit', 'Not a valid taskid' );
 }
-$taskid = $_GET['taskid'];
+$taskid = $_REQUEST['taskid'];
 
 //check if the user has enough rights
 if( ( ! ADMIN ) && (db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$taskid.' AND owner='.UID ), 0, 0 ) < 1) ){
