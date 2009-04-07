@@ -48,6 +48,7 @@ $postid = $_REQUEST['postid'];
 
 //find out the tasks' name
 $q = db_query('SELECT '.PRE.'forum.text AS text,
+                      '.PRE.'tasks.id AS taskid,
                       '.PRE.'tasks.name AS name
                       FROM '.PRE.'forum
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
@@ -61,21 +62,31 @@ $row = db_fetch_array($q, 0 );
 
 $content .= "<form method=\"post\" action=\"forum.php\">\n";
 //set some hidden values
-$content .=  "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
-             "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
-             "<input type=\"hidden\" name=\"postid\" value=\"".$postid."\" />\n".
-             "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n";
+$content .= "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+            "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
+            "<input type=\"hidden\" name=\"postid\" value=\"".$postid."\" />\n".
+            "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n";
 
 //build up the text-entry part
-$content .=   "<table>\n".
-              "<tr><td>".$lang['message']."</td><td><textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\">".$row['text']."</textarea></td></tr>\n".
-              "</table>\n".
-              "<table class=\"celldata\">\n".
-              "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER." /></td></tr>\n".
-              "<tr><td><label for=\"usergroup\">".$lang['forum_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP." /></td></tr>\n".
-              "</table>\n".
-              "<p><input type=\"submit\" value=\"".$lang['post']."\" onclick=\"return fieldCheck('text')\" /></p>".
-              "</form>\n";
+$content .= "<table>\n".
+            "<tr><td>".$lang['message']."</td><td><textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\">".$row['text']."</textarea></td></tr>\n".
+            "</table>\n".
+            "<table class=\"celldata\">\n".
+            "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER." /></td></tr>\n".
+            "<tr><td><label for=\"usergroup\">".$lang['forum_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP." /></td></tr>\n".
+            "</table>\n".
+            "<p><input type=\"submit\" value=\"".$lang['post']."\" onclick=\"return fieldCheck('text')\" /></p>".
+            "</form>\n";
+
+$content .= "<form id=\"delete_post\" method=\"post\" action=\"forum.php\"".
+            "onclick=\"return confirm( '".$lang['confirm_del_javascript']."' )\">\n".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+            "<input type=\"hidden\" name=\"action\" value=\"submit_del\" />\n".
+            "<input type=\"hidden\" name=\"taskid\" value=\"".$row['taskid']."\" />\n".
+            "<input type=\"hidden\" name=\"postid\" value=\"".$postid."\" />\n".
+            "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+            "<p><input type=\"submit\" value=\"".$lang['delete']."\" /></p>".
+            "</form>\n";
 
 new_box(sprintf($lang['post_message_sprt'], $row['name'] ), $content );
 

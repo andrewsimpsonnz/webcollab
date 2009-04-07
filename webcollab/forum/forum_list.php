@@ -96,19 +96,8 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 
     //owners of the thread, owners of the post and admins have a "delete" option
     if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['postowner'] ) ) {
-      $this_post .= "<span class=\"textlink\">[<a href=\"javascript:void(document.getElementById('delete_post').submit())\" onclick=\"return confirm( '".$lang['confirm_del_javascript']."' )\">".$lang['del']."</a>]</span>\n";
-
-      $this_form = "<form id=\"delete_post\" method=\"post\" action=\"forum.php\">\n".
-                   "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
-                   "<input type=\"hidden\" name=\"action\" value=\"submit_del\" />\n".
-                   "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
-                   "<input type=\"hidden\" name=\"postid\" value=\"".$row['id']."\" />\n".
-                   "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-                   "</form>\n";
-   }
-   else {
-     $this_form = '';
-   }
+      $this_post .= "<span class=\"textlink\">[<a href=\"forum.php?x=".X."&amp;action=edit&amp;postid=".$row['id']."\" >".$lang['del']."</a>]</span>\n";
+    }
 
     //owners of the post have an "update" option
     if( UID == $row['postowner'] ) {
@@ -128,7 +117,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
       }
     }
 
-    $this_post .= $this_form."<br />\n";
+    $this_post .= "<br />\n";
 
     $raw_post = nl2br(bbcode($row['text'] ) );
 
