@@ -74,8 +74,7 @@ if(db_numrows($q ) != 0 ) {
     if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['uploader'] ) ) {
 
       $content .= "&nbsp;<span class=\"textlink\">".
-                  "[<a href=\"javascript:void(document.getElementById('delete_file').submit())\"".
-                  " onclick=\"return confirm('".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename'] ) )."' )\">".$lang['del']."</a>]".
+                  "[<a href=\"files.php?x=".X."&amp;action=update&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['del']."</a>]".
                   "&nbsp;[<a href=\"files.php?x=".X."&amp;action=update&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['update']."</a>]</span></td>\n";
 
       $content .= "<td><form id=\"delete_file\" method=\"post\" action=\"files.php\">\n".

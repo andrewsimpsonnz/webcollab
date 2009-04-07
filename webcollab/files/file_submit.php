@@ -90,11 +90,18 @@ if(empty($_POST['action']) ){
   error('File submit', 'No action given' );
 }
 
-if(isset($_POST['taskid'] ) && ($_POST['taskid'] == -1 || safe_integer($_POST['taskid'] ) ) ) {
+if(isset($_POST['taskid'] ) &&  safe_integer($_POST['taskid'] ) ) {
   $taskid = $_POST['taskid'];
 }
 else {
   error("Invalid value", "Invalid value for taskid" );
+}
+
+if(isset($_POST['return'] ) ) {
+  $return = 1;
+}
+else {
+  $return = 0;
 }
 
 switch($_POST['action'] ) {
@@ -352,7 +359,7 @@ switch($_POST['action'] ) {
   break;
 }
 
-if($taskid == -1 ) { //can only occur from files.php --> file_admin.php --> delete
+if($return == 1 ) { //can only occur from files.php --> file_admin.php --> delete
   header('Location: '.BASE_URL.'files.php?x='.X.'&action=admin' );
   die;
 }
