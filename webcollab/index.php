@@ -147,12 +147,13 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
   db_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES (\''.$user_id.'\', \''.$session_key.'\', \''.$ip.'\', now() )' );
 
   //try and set a session cookie (if the browser will let us)
+  $url = parse_url(BASE_URL );
   if(version_compare(PHP_VERSION, '5.2.0', '>=' ) ) {
     //use HTTP only to reduce XSS attacks (only in PHP 5.2.0+ )
-    setcookie('webcollab_session', $session_key, 0, '/', '', false, true );
+    setcookie('webcollab_session', $session_key, 0, $url['path'], $url['host'], false, true );
   }
   else {
-    setcookie('webcollab_session', $session_key );
+    setcookie('webcollab_session', $session_key, 0, $url['path'], $url['host'] );
   }
   //(No need to record an error here if unsuccessful: the code will revert to URI session keys)
 
