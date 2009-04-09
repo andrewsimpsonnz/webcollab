@@ -1,4 +1,20 @@
 WebCollab SVN
+*** 9 April 2009
+  Andrew Simpson
+
+- bugfix: Mime field not long enough for very long mime types (Bug #2721728 )
+
+- change session key variable to constant
+
+- add user_del_edit.php file
+
+- move [delete] buttons to edit pages
+
+- add security token for form pages
+
+- improve security for cookie leakage in index.php
+
+WebCollab SVN
 *** 9 March 2009
   Andrew Simpson
 
