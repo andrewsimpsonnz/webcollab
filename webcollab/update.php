@@ -406,6 +406,17 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     $content .= "<p>Updating from version pre-2.30 database ... success!</p>\n";
   }
 
+  //update version 2.40 -> 2.50
+  if(! (db_query('SELECT token FROM '.PRE.'logins', 0 ) ) ) {
+
+    //add new column for token
+    db_query('ALTER TABLE '.PRE.'logins ADD COLUMN token VARCHAR(100)' );
+    //increase mime column to 200 characters
+    db_query('ALTER TABLE '.PRE.'files ALTER COLUMN mime TYPE VARCHAR(200)' );
+
+    $content .= "<p>Updating from version pre-2.50 database ... success!</p>\n";
+  }
+
   if( ! $content ) {
     $content .= "<p>No database updates were required.</p>\n";
   }
