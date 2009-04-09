@@ -56,12 +56,15 @@ if( ! @safe_integer($_GET['fileid']) ) {
 $fileid = $_GET['fileid'];
 
 $return = 0;
-if(isset($_GET['admin']) ) {
+if(isset($_GET['admin']) && $_GET['admin'] == 1 ) {
   $return = 1;
 }
 
 //check usergroup security
 $taskid = usergroup_check($taskid );
+
+//get filename
+$filename = db_result(db_query('SELECT filename FROM '.PRE.'files WHERE id='.$fileid ), 0, 0 );
 
 //update file
 $content =  "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"files.php\">\n".
@@ -72,6 +75,7 @@ $content =  "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"fil
             "<input type=\"hidden\" name=\"old_fileid\" value=\"".$fileid."\" />\n".
             "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"".FILE_MAXSIZE."\" /></fieldset>\n".
             "<table class=\"celldata\">\n".
+            "<tr><td>".$lang['file']."</td><th>".$filename."</th></tr>\n".
             "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" size=\"60\"  /></td></tr>\n".
             "<tr><td>".$lang['description'].":</td> <td><textarea name=\"description\" rows=\"25\" cols=\"88\"></textarea></td></tr>\n".
             "<tr><td></td><td>".sprintf( $lang['max_file_sprt'], FILE_MAXSIZE/1000 )."</td></tr>\n".

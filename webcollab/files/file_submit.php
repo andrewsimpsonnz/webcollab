@@ -53,7 +53,7 @@ else {
 }
 
 $return = 0;
-if(isset($_POST['return'] ) ) {
+if(isset($_POST['return'] ) && $_POST['return'] == 1 ) {
   $return = 1;
 }
 
