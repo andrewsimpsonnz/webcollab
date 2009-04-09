@@ -2,7 +2,7 @@
 /*
   $Id: user_edit.php 2172 2009-04-06 07:30:53Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -22,7 +22,7 @@
   Function:
   ---------
 
-  User edit
+  User edit delete
 
 */
 
@@ -31,10 +31,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
-include_once(BASE.'users/user_common.php' );
-
 //secure vars
 $userid = '';
+$content = '';
 
 //admins only
 if(! ADMIN ){
@@ -63,6 +62,7 @@ $content = "<table class=\"celldata\">\n".
 
 if($row['deleted'] == 'f' ) {
 
+  //existing user
   $content .= "<form method=\"post\" action=\"users.php\">\n".
               "<fieldset><input type=\"hidden\" name=\"action\" value=\"del\" />\n".
               "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
@@ -73,14 +73,14 @@ if($row['deleted'] == 'f' ) {
 }
 else { //deleted user
 
-    //revive
-    $content .= "<form method=\"post\" action=\"users.php\">\n".
-                "<fieldset><input type=\"hidden\" name=\"action\" value=\"revive\" />\n".
-                "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
-                "<input type=\"hidden\" name=\"userid\" value=\"$userid\" />\n".
-                "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-                "<p><input type=\"submit\" value=\"".$lang['revive']."\" /></p>\n".
-                "</form>\n";
+  //revive
+  $content .= "<form method=\"post\" action=\"users.php\">\n".
+              "<fieldset><input type=\"hidden\" name=\"action\" value=\"revive\" />\n".
+              "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+              "<input type=\"hidden\" name=\"userid\" value=\"$userid\" />\n".
+              "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+              "<p><input type=\"submit\" value=\"".$lang['revive']."\" /></p>\n".
+              "</form>\n";
 
   //if this user has NO tasks owned then we can delete him forever :)
   if(! db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner='.$row['id'] ), 0, 0 ) ) {
