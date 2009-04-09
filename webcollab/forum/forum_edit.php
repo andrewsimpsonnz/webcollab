@@ -78,6 +78,7 @@ $content .= "<table>\n".
             "<p><input type=\"submit\" value=\"".$lang['post']."\" onclick=\"return fieldCheck('text')\" /></p>".
             "</form>\n";
 
+//delete button
 $content .= "<form id=\"delete_post\" method=\"post\" action=\"forum.php\"".
             "onclick=\"return confirm( '".$lang['confirm_del_javascript']."' )\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
