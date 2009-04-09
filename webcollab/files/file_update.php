@@ -55,11 +55,9 @@ if( ! @safe_integer($_GET['fileid']) ) {
 }
 $fileid = $_GET['fileid'];
 
+$return = 0;
 if(isset($_GET['admin']) ) {
   $return = 1;
-}
-else {
-$return = 0;
 }
 
 //check usergroup security

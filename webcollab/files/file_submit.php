@@ -45,6 +45,18 @@ $mail_list = array();
 $upload_success_flag = false;
 $file_update_flag = false;
 
+if(isset($_POST['taskid'] ) &&  safe_integer($_POST['taskid'] ) ) {
+  $taskid = $_POST['taskid'];
+}
+else {
+  error("Invalid value", "Invalid value for taskid" );
+}
+
+$return = 0;
+if(isset($_POST['return'] ) ) {
+  $return = 1;
+}
+
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
 token_check($token );
@@ -88,20 +100,6 @@ function file_delete($fileid ) {
 //update or insert ?
 if(empty($_POST['action']) ){
   error('File submit', 'No action given' );
-}
-
-if(isset($_POST['taskid'] ) &&  safe_integer($_POST['taskid'] ) ) {
-  $taskid = $_POST['taskid'];
-}
-else {
-  error("Invalid value", "Invalid value for taskid" );
-}
-
-if(isset($_POST['return'] ) ) {
-  $return = 1;
-}
-else {
-  $return = 0;
 }
 
 switch($_POST['action'] ) {
