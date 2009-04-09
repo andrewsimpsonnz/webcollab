@@ -78,7 +78,7 @@ CREATE TABLE logins (
 	session_key VARCHAR(100) NOT NULL,
 	ip VARCHAR(100) NOT NULL,
 	lastaccess TIMESTAMP NOT NULL,
-  token VARCHAR(50),
+  token VARCHAR(100),
 	INDEX (session_key(10), user_id )
 )
 CHARACTER SET = utf8;
