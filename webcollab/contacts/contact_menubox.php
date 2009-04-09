@@ -60,7 +60,7 @@ else {
 }
 
 //get all contacts
-if(! ($q = db_query('SELECT id, firstname, lastname, company FROM '.PRE.'contacts '.$tail.' ORDER BY company, lastname' ) ) );
+if(! ($q = db_query('SELECT id, firstname, lastname, company FROM '.PRE.'contacts '.$tail.' ORDER BY company, lastname' ) ) ) {
   error('Contact menubox', 'There was an error in the data query.' );
 }
 
