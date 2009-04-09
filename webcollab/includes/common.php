@@ -249,9 +249,7 @@ function nice_size($size ) {
 function token_check($token ) {
 
   if($token !== OLD_TOKEN ) {
-    db_query('UPDATE '.PRE.'logins SET session_key=\'XXXX\' WHERE user_id='.UID );
-    setcookie('webcollab_session', '' );
-    error("Invalid session", "Possible XSS session hijacking detected.  Session termininated." );
+    error("Invalid session", "Possible session hijacking detected." );
   }
 
   return true;
