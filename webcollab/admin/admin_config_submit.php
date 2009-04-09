@@ -38,7 +38,7 @@ if( ! ADMIN ){
 }
 
 //check for valid form token
-$token = (isset($_POST['token']) : (safe_data($_POST['token']) ? null;
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
 token_check($token );
 
 //if user aborts, let the script carry onto the end
