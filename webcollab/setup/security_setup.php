@@ -65,6 +65,7 @@ $row = array();
 
 if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == '' ) {
   //this is a first install
+  define('X', 0 );
 }
 else {
   //get session key from either a GET or POST
