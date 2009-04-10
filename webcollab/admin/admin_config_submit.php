@@ -56,7 +56,7 @@ if(USE_EMAIL === 'Y' ){
     if(! empty($_POST[$var]) ) {
       $input = validate($_POST[$var] );
       if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $input, $match ) ) || (strlen(trim($input) ) > 200 ) ) {
-        warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST[$var] ) );
+        warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], safe_data($_POST[$var] ) ) );
       }
       ${$var} = db_escape_string($match[0] );
     }
