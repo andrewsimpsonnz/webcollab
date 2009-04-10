@@ -31,6 +31,7 @@ $q   = '';
 $ip  = '';
 $x   = 0;
 $session_key = 'xxxx';
+$token = 'xxxx';
 $content = '';
 $row = array();
 $GID = array();
@@ -80,7 +81,7 @@ else {
 }
 
 //seems okay at first, now go cross-checking with the known data from the database
-if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS user_id,
+if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS userid,
                              '.PRE.'logins.token AS token,
                              '.$epoch.' '.PRE.'logins.lastaccess) AS sec_lastaccess,
                              '.PRE.'users.email AS email,
@@ -109,7 +110,7 @@ if( ! ( $row = db_fetch_array($q, 0) ) ) {
 
 //if database table LEFT JOIN gives no rows will get NULL here
 //  also check for deleted users
-if((! $row['user_id'] ) || ($row['deleted'] == 't' ) ){
+if((! $row['userid'] ) || ($row['deleted'] == 't' ) ){
   error('Security manager', 'No valid user-id found');
 }
 
@@ -130,19 +131,22 @@ if(UNICODE_VERSION == 'Y' ) {
 
 //check the last login time (there is an inactivity time limit set by SESSION_TIMEOUT)
 if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
-  db_query('UPDATE '.PRE.'logins SET session_key=\'xxxx\' WHERE user_id='.$row['user_id'] );
+  db_query('UPDATE '.PRE.'logins SET session_key=\'xxxx\' WHERE user_id='.$row['userid'] );
   setcookie('webcollab_session', '' );
   warning( $lang['security_manager'], sprintf($lang['session_timeout_sprt'],
             round(($row['now'] - $row['sec_lastaccess'] )/60), SESSION_TIMEOUT*60, BASE_URL ) );
 }
 
-//all data seems okay !!
+//generate new token
+$token = md5(mt_rand() );
+define('TOKEN', $token );
 
-define('UID',   $row['user_id'] );
-define('GUEST', $row['guest'] );
-define('UID_NAME',  $row['fullname'] );
-define('UID_EMAIL', $row['email'] );
-define('OLD_TOKEN', $row['token'] );
+//update the "I was here" time
+db_query('UPDATE '.PRE.'logins SET lastaccess=now(),
+                                   token=\''.$token.'\'
+                                   WHERE session_key=\''.$session_key.'\' AND user_id='.$row['userid'] );
+
+//all data seems okay !!
 
 if($row['admin'] == 't' ) {
   define('ADMIN', 1 );
@@ -151,6 +155,12 @@ else {
   define('ADMIN', 0 );
 }
 
+//set constants
+define('UID',   $row['userid'] );
+define('GUEST', $row['guest'] );
+define('UID_NAME',  $row['fullname'] );
+define('UID_EMAIL', $row['email'] );
+define('OLD_TOKEN', $row['token'] );
 define('TIME_NOW', $row['now'] );
 
 //get usergroups of user
@@ -167,15 +177,6 @@ $row = @db_fetch_num($q, 0 );
 @define('MANAGER_NAME',   $row[0] );
 @define('ABBR_MANAGER_NAME', $row[1] );
 
-//generate new token
-$token = dechex(mt_rand(1, 10000 ) );
-define('TOKEN', $token );
-
-//update the "I was here" time
-db_query('UPDATE '.PRE.'logins SET lastaccess=now(),
-                                   token=\''.$token.'\'
-                                   WHERE session_key=\''.$session_key.'\' AND user_id='.UID );
-
 // this gives:
 //
 // UID_NAME    = users's full name
@@ -184,9 +185,9 @@ db_query('UPDATE '.PRE.'logins SET lastaccess=now(),
 // ADMIN [0,1] = is the user an admin ?
 // GUEST [0,1] = is the user a guest?
 // $GID[]      = array of user's groups
-// TIME_NOW    = UNIX epoch time now (seconds since 1 Jan 1970)
 // OLD_TOKEN   = security form token from last post form
 // TOKEN       = new (current) token
+// TIME_NOW    = UNIX epoch time now (seconds since 1 Jan 1970)
 //
 // and of course, access !!
 
