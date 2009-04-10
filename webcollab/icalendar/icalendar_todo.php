@@ -42,7 +42,7 @@ $icalendar_id = md5(MANAGER_NAME.BASE_URL);
 
 //check validity of inputs
 if(isset($_GET['selection']) && strlen($_GET['selection']) > 0 ) {
-  $selection = ($_GET['selection']);
+  $selection = safe_data($_GET['selection']);
 }
 else {
   $selection = 'user';
