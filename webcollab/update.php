@@ -411,8 +411,25 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
     //add new column for token
     db_query('ALTER TABLE '.PRE.'logins ADD COLUMN token VARCHAR(100)' );
-    //increase mime column to 200 characters
-    db_query('ALTER TABLE '.PRE.'files ALTER COLUMN mime TYPE VARCHAR(200)' );
+
+    //set parameters for appropriate for database
+    switch (DATABASE_TYPE) {
+      case 'mysql':
+      case 'mysql_innodb':
+      case 'mysqli':
+        //increase mime column to 200 characters
+        db_query('ALTER TABLE '.PRE.'files MODIFY COLUMN mime VARCHAR(200)' );
+        break;
+
+      case 'postgresql':
+        //increase mime column to 200 characters
+        db_query('ALTER TABLE '.PRE.'files ALTER COLUMN mime TYPE VARCHAR(200)' );
+        break;
+
+      default:
+        error('Database type not specified in config file.' );
+        break;
+    }
 
     $content .= "<p>Updating from version pre-2.50 database ... success!</p>\n";
   }
