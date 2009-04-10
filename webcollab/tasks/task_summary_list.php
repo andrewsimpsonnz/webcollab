@@ -399,7 +399,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
 // MAIN PROGRAM starts here
 //
 if(isset($_GET['sortby']) ) {
-  $sortby = $_GET['sortby'];
+  $sortby = safe_data($_GET['sortby'] );
 }
 else {
   $sortby = '';
