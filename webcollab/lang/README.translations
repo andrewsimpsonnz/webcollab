@@ -15,9 +15,16 @@ There are three message translation files in this directory ([webcollab]/lang):
 
     xx_email.php
 
-There is also now a translation file for the setup program in this directory:
+There is also now two translation files for the setup program in this directory:
 
-    xx_setup.php
+    xx_setup1.php
+
+    xx_setup2.php
+
+    (setup1 is always in UTF-8 character set, while setup2 is the same character set
+    as used for the language e.g. UTF-8, ISO-8859-1.  This is to ensure that entered
+    logins, site names and passwords are in the same character sets as ordinarily
+    used).
 
 For the keen translators there are also help files in [webcollab]/help:
 
@@ -211,7 +218,7 @@ Making the Translation Appear in Setup
 
 To make the translation appear in the automated setup:
 
-1. Look for the following lines (about halfway through file) in [webcollab]/setup/setup3.php:
+1. Look for the following lines in [webcollab]/setup/setup_config.php:
 
     $locale_array = array('bg'   =>'Bulgarian',
                           'ca'   =>'Catalan',
@@ -240,4 +247,13 @@ To make the translation appear in the automated setup:
 2. Add your translation as:
 
     'xx'  => 'My language name',
+
+3. There is a similar 'array' for the setup language:
+
+    $setup_language = array('en'   => 'English',
+                            'nl'   => 'Dutch (Help files only) ',
+                            'pt'   => 'Portuguese (Help files only)',
+                            'pt-br'=> 'Portuguese (Brazilian) (Help files only)',
+                            'es'   => 'Spanish (Help files only)' );
+
 
