@@ -204,7 +204,7 @@
 //WEBCOLLAB VERSION
 
   //version info
-  define('WEBCOLLAB_VERSION', "2.40" );
+  define('WEBCOLLAB_VERSION', "2.50" );
   define('UNICODE_VERSION', "Y" );
 
 ?>
