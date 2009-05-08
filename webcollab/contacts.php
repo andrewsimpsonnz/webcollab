@@ -61,7 +61,7 @@ switch($_REQUEST['action'] ) {
     break;
 
   case 'edit':
-    create_top($lang['edit_contact']);
+    create_top($lang['edit_contact'], 0, 1 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'contacts/contact_menubox.php' );
     goto_main();
