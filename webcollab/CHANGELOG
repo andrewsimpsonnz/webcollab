@@ -1,3 +1,11 @@
+WebCollab SVN
+*** 9 May 2009
+  Andrew Simpson
+
+- javascript impovements
+
+- bugfix: popup calendar triggers security token (Reporter: William Yodlowsky)
+
 WebCollab - Billy Goat
 *** 16 April 2009
   Andrew Simpson
@@ -8,8 +16,6 @@ WebCollab SVN
 *** 14 April 2009
   Andrew Simpson
 
-- security fix: Secunia Advisory SA34568 addressed
-
 - update Czech translations (Credit: Milan Horák)
 
 - fix htmlspecialchars() warning with ISO 8859-2
@@ -17,6 +23,8 @@ WebCollab SVN
 WebCollab SVN
 *** 9 April 2009
   Andrew Simpson
+
+- security fix: Secunia Advisory SA34568 addressed
 
 - bugfix: Mime field not long enough for very long mime types (Bug #2721728 )
 
