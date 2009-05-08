@@ -146,12 +146,12 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
     $content .= "<table>\n".
                 "<tr><td><form method=\"post\" action=\"tasks.php\" ".
-                "onclick=\"return confirm( '".sprintf($lang["del_javascript_project_sprt"], javascript_escape($row['name'] ) )."')\">\n".
+                "onsubmit=\"return confirm( '".sprintf($lang["del_javascript_project_sprt"], javascript_escape($row['name'] ) )."')\">\n".
                 "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
                 "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
                 "<input type=\"hidden\" name=\"taskid\" value=\"".$row['id']."\" />\n".
                 "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-                "<p><input type=\"submit\" value=\"".$lang['delete']."\" /></p>\n".
+                "<p><input type=\"submit\" value=\"".$lang['delete']."\"/></p>\n".
                 "</form>\n".
                 "</td>\n".
                 "<td><form method=\"post\" action=\"archive.php\">\n".
