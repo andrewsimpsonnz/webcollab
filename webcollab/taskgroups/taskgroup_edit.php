@@ -51,7 +51,8 @@ if(! ($row = db_fetch_array( $q, 0 ) ) ) {
   error('Taskgroup edit', 'Taskgroup does not exist' );
 }
 
-$content =  "<form method=\"post\" action=\"taskgroups.php\">\n".
+$content =  "<form method=\"post\" action=\"taskgroups.php\" ".
+            "onsubmit=\"return confirm( '".$lang['confirm_del_javascript']."')\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"taskgroupid\" value=\"".$taskgroupid."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
@@ -62,13 +63,12 @@ $content =  "<form method=\"post\" action=\"taskgroups.php\">\n".
             "</table>\n".
             "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" /></p>\n".
             "</form>\n".
-            "<form method=\"post\" action=\"taskgroups.php\" ".
-            "onclick=\"return confirm( '".$lang['confirm_del_javascript']."')\">\n".
+            "<form method=\"post\" action=\"taskgroups.php\" >\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"taskgroupid\" value=\"".$taskgroupid."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"submit_del\" />\n".
             "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-            "<p><input type=\"submit\" value=\"".$lang['delete']."\" /></p>\n";
+            "<p><input type=\"submit\" value=\"".$lang['delete']."\"/></p>\n";
 
 new_box($lang['edit_taskgroup'], $content );
 
