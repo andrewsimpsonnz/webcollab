@@ -96,8 +96,11 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 $content .= "<form method=\"post\" action=\"tasks.php\" onsubmit= \"return dateCheck('name')\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"submit_update\" />\n".
-            "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
-            "<input type=\"hidden\" name=\"taskid\" value=\"".$TASKID_ROW['id']."\" />\n";
+            "<input type=\"hidden\" id=\"token\" name=\"token\" value=\"".TOKEN."\" />\n".
+            "<input type=\"hidden\" name=\"taskid\" value=\"".$TASKID_ROW['id']."\" />\n".
+            "<input type=\"hidden\" id=\"alert_field\" name=\"alert1\" value=\"".$lang['missing_field_javascript']."\" />\n".
+            "<input type=\"hidden\" id=\"alert_date\" name=\"alert2\" value=\"".$lang['invalid_date_javascript']."\" />\n".
+            "<input type=\"hidden\" id=\"alert_finish\" name=\"alert3\" value=\"".$lang['finish_date_javascript']."\" />\n";
 
 //select either project or task for text
 switch($TYPE) {
@@ -366,12 +369,13 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
 //delete options
 if((ADMIN ) || ($TASKID_ROW['owner'] == UID ) ) { 
 
-  $content .= "<form method=\"post\" action=\"tasks.php\">\n".
+  $content .= "<form method=\"post\" action=\"tasks.php\" ".
+              "onsubmit=\"return confirm('".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\">\n".
               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />".
               "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
               "<input type=\"hidden\" name=\"taskid\" value=\"".$TASKID_ROW['id']."\" />\n".
               "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-              "<p><input type=\"submit\" value=\"".$lang["delete_".$TYPE]."\" onclick=\"return confirm('".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\" /></p>\n".
+              "<p><input type=\"submit\" value=\"".$lang["delete_".$TYPE]."\" /></p>\n".
               "</form>\n";
 }
 

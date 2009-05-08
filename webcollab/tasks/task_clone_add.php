@@ -47,10 +47,12 @@ $taskid = $_GET['taskid'];
 
 $content = '';
 
-$content .= "<form method=\"post\" action=\"tasks.php\">\n".
+$content .= "<form method=\"post\" action=\"tasks.php\" onsubmit=\"return fieldCheck('name')\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"submit_clone\" />\n ".
-            "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" /></fieldset>\n".
+            "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
+            "<input type=\"hidden\" id=\"token\" name=\"token\" value=\"".TOKEN."\" />\n".
+            "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n".
             "<table class=\"celldata\">\n";
 
 $q = db_query('SELECT name, parent FROM '.PRE.'tasks WHERE id='.$taskid );
@@ -74,7 +76,7 @@ else{
               "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
               "<tr><td>".$lang['deadline'].":</td> <td>".date_select()."</td></tr>\n".
               "</table>\n".
-              "<p><input type=\"submit\" value=\"".$lang['add_project']."\" onclick=\"return fieldCheck('name')\" /</p>".
+              "<p><input type=\"submit\" value=\"".$lang['add_project']."\"/</p>".
               "</form>\n";
 
   new_box( $lang['add_task'], $content );
