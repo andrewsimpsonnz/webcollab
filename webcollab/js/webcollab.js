@@ -9,12 +9,28 @@ function placeCursor(cursor){
   document.getElementById(cursor).focus();
 }
 
-function fieldCheck(check){
-  var field = document.getElementById(check).value;
-  if(field.length === 0){
-    alert(text.AlertField);
-    document.getElementById(check).focus();
-    return false;
+function fieldCheck(){
+  var error = 0;
+  for(var i = 0; i < arguments.length; i++ ) {
+    var field = document.getElementById(arguments[i]).value;
+    var id = document.getElementById(arguments[i]).id;
+    if(field.length === 0) {
+      document.getElementById(arguments[i]).focus();
+      document.getElementById(arguments[i]).style.background='#FFFF94';
+      error = 1;
+    }
+    if(id == 'email' ) {
+      if(field.indexOf('@') == -1 || field.lastIndexOf('.') == -1) {
+        document.getElementById('email').focus();
+        document.getElementById('email').style.background='#FFB3B3';
+        alert(document.getElementById('alert_email').value);
+        return false;
+      }
+    }
+  }
+  if(error == 1  ) {
+      alert(document.getElementById('alert_field').value);
+      return false;
   }
   return true;
 }
@@ -27,38 +43,44 @@ function dateCheck(check) {
   if(document.getElementById('year').value % 4 === 0 ){
     daysMonth[1] = 29;}
   if(document.getElementById('day').value > daysMonth[(document.getElementById('month').value-1)] ){
-    alert(text.InvalidDate);
+    alert(document.getElementById('alert_date').value);
     return false;
   }
   var finishDate = document.getElementById('projectDate').value;
-  var statusType = document.getElementById('projectStatus').value;
-  if(finishDate > 0 && (statusType != 'cantcomplete' && statusType != 'notactive')){
-    var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value, 0, 0, 0 )/1000;
-    if(inputDate - finishDate > 21600 ){
-      return confirm(text.FinishDate);
+  if(finishDate > 0 ) {
+    var statusType = document.getElementById('projectStatus').value;
+    if(statusType != 'cantcomplete' && statusType != 'notactive') {
+      var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value, 0, 0, 0 )/1000;
+      if(inputDate - finishDate > 21600 ){
+        return confirm(document.getElementById('alert_finish').value);
+      }
     }
   }
+  return true;
 }
 
-function dateSet(dayIndex, monthIndex, yearIndex) {
+function dateSet(dayIndex, monthIndex, yearIndex, token) {
   if(window.opener && !window.opener.closed) {
-    window.opener.document.getElementById('day').selectedIndex=dayIndex;
-    window.opener.document.getElementById('month').selectedIndex=monthIndex;
-    window.opener.document.getElementById('year').selectedIndex=yearIndex;}
+    window.opener.document.getElementById('day').selectedIndex = dayIndex;
+    window.opener.document.getElementById('month').selectedIndex = monthIndex;
+    window.opener.document.getElementById('year').selectedIndex = yearIndex;
+    window.opener.document.getElementById('token').value = token;
+  }
+  return true;
 }
 
 function postToggle(ellipis, post2, image1, image2 ) {
-  if(document.getElementById(post2).style.display == "none") {
-    document.getElementById(post2).style.display = "inline";
-    document.getElementById(ellipis).style.display = "none";
-    document.getElementById(image1).style.display = "none";
-    document.getElementById(image2).style.display = "inline";
+  if(document.getElementById(post2).style.display == 'none') {
+    document.getElementById(post2).style.display = 'inline';
+    document.getElementById(ellipis).style.display = 'none';
+    document.getElementById(image1).style.display = 'none';
+    document.getElementById(image2).style.display = 'inline';
   }
   else {
-    document.getElementById(post2).style.display = "none";
-    document.getElementById(ellipis).style.display = "inline";
-    document.getElementById(image1).style.display = "inline";
-    document.getElementById(image2).style.display = "none";
+    document.getElementById(post2).style.display = 'none';
+    document.getElementById(ellipis).style.display = 'inline';
+    document.getElementById(image1).style.display = 'inline';
+    document.getElementById(image2).style.display = 'none';
   }
   return true;
 }
