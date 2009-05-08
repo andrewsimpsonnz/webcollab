@@ -86,13 +86,13 @@ else { //deleted user
   //if this user has NO tasks owned then we can delete him forever :)
   if(! db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner='.$row['id'] ), 0, 0 ) ) {
     //permdel
-    $content .= "<form method=\"post\" action=\"users.php\"".
-                " onclick=\"return confirm( '".sprintf($lang['permdel_javascript_sprt'], javascript_escape($row['fullname'] ) )."' )\">\n".
+    $content .= "<form method=\"post\" action=\"users.php\" ".
+                "onsubmit=\"return confirm( '".sprintf($lang['permdel_javascript_sprt'], javascript_escape($row['fullname'] ) )."' )\">\n".
                 "<fieldset><input type=\"hidden\" name=\"action\" value=\"permdel\" />\n".
                 "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
                 "<input type=\"hidden\" name=\"userid\" value=\"$userid\" />\n".
                 "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-                "<p><input type=\"submit\" value=\"".$lang['permdel']."\" /></p>\n".
+                "<p><input type=\"submit\" value=\"".$lang['permdel']."\"/></p>\n".
                 "</form>\n";
   }
 }
