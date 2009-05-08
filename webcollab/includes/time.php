@@ -153,7 +153,7 @@ function date_select_from_timestamp($timestamp='' ) {
   $date_array = explode('-', substr($timestamp, 0, 10 ) );
 
   //show line
-  return date_select($date_array[2], $date_array[1], $date_array[0] );
+  return date_select((int)$date_array[2], (int)$date_array[1], $date_array[0] );
 }
 
 ?>
