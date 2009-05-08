@@ -67,13 +67,14 @@ $taskid = usergroup_check($taskid );
 //find out the tasks' name
 $taskname = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$taskid ), 0, 0 );
 
-$content .= "<form method=\"post\" action=\"forum.php\">\n";
+$content .= "<form method=\"post\" action=\"forum.php\" onsubmit=\"return fieldCheck('text')\">\n";
 //set some hidden values
 $content .=  "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />".
              "<input type=\"hidden\" name=\"action\" value=\"submit_add\" />\n".
              "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
              "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
-             "<input type=\"hidden\" name=\"usergroupid\" value=\"".$usergroupid."\" />\n";
+             "<input type=\"hidden\" name=\"usergroupid\" value=\"".$usergroupid."\" />\n".
+             "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" />\n";
 
 //find out some of the parent's data
 if($parentid != 0 ) {
@@ -112,7 +113,7 @@ $content .=   "<tr><td>".$lang['message']."</td><td><textarea id=\"text\" name=\
               "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER." /></td></tr>\n".
               "<tr><td><label for=\"usergroup\">".$lang['forum_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP." /></td></tr>\n".
               "</table>\n".
-              "<p><input type=\"submit\" value=\"".$lang['post']."\" onclick=\"return fieldCheck('text')\" /></p>".
+              "<p><input type=\"submit\" value=\"".$lang['post']."\" /></p>".
               "</form>\n";
 
 //show a reply or a new-post box
