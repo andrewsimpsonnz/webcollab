@@ -144,13 +144,6 @@ function create_top($title='', $page_type=0, $include_javascript=0, $check_field
   $content .= "<link rel=\"icon\" type=\"image/png\" href=\"".BASE."images/group.png\" />\n";
 
   if($include_javascript ) {
-
-    $content .= "<script type=\"text/javascript\">\n".
-                "var text = { AlertField : \"".$lang['missing_field_javascript']."\",\n".
-                "             InvalidDate : \"".$lang['invalid_date_javascript']."\",\n".
-                "             FinishDate : \"".$lang['finish_date_javascript']."\"}\n".
-                "</script>\n";
-
     $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n";
   }
 
