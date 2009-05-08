@@ -81,7 +81,7 @@ $content .= "<table>\n".
 
 //delete button
 $content .= "<form id=\"delete_post\" method=\"post\" action=\"forum.php\" ".
-            "onclick=\"return confirm( '".$lang['confirm_del_javascript']."' )\" />\n".
+            "onclick=\"return confirm( '".$lang['confirm_del_javascript']."' )\" >\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"submit_del\" />\n".
             "<input type=\"hidden\" name=\"taskid\" value=\"".$row['taskid']."\" />\n".
