@@ -1,10 +1,18 @@
 WebCollab SVN
+*** 23 May 2009
+  Andrew Simpson
+
+- javascript impovements
+
+- more fixes to bug #2793641
+
+WebCollab SVN
 *** 9 May 2009
   Andrew Simpson
 
 - javascript impovements
 
-- bugfix: popup calendar triggers security token (Reporter: William Yodlowsky)
+- bugfix: popup calendar triggers security token (Reporter: William Yodlowsky) - also bug #2793641
 
 WebCollab - Billy Goat
 *** 16 April 2009
