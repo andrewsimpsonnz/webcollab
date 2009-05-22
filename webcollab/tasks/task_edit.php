@@ -93,7 +93,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 }
 
 //start showing task info
-$content .= "<form method=\"post\" action=\"tasks.php\" onsubmit= \"return dateCheck('name')\">\n".
+$content .= "<form method=\"post\" action=\"tasks.php\" onsubmit= \"return fieldCheck('name') && dateCheck()\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"submit_update\" />\n".
             "<input type=\"hidden\" id=\"token\" name=\"token\" value=\"".TOKEN."\" />\n".

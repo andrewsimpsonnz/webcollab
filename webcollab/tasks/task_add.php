@@ -66,7 +66,7 @@ $priority_select_box = "<tr><td>".$lang['priority'].":</td> <td>\n".
                        "<option value=\"4\">".$task_state['yesterday']."</option>\n".
                        "</select>\n</td></tr>\n";
 
-$content .= "<form method=\"post\" action=\"tasks.php\" onsubmit=\"return dateCheck('name')\" >\n".
+$content .= "<form method=\"post\" action=\"tasks.php\" onsubmit=\"return fieldCheck('name') && dateCheck();\" >\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n".
             "<input type=\"hidden\" id=\"token\" name=\"token\" value=\"".TOKEN."\" />\n".
