@@ -38,7 +38,8 @@ if(! ADMIN ){
   error('Unauthorised access', 'This function is for admins only.' );
 }
 
-$content =  "<form method=\"post\" action=\"users.php\" onsubmit=\"return fieldCheck('email', 'pass', 'full', 'name' )\">\n".
+$content =  "<form method=\"post\" action=\"users.php\" ".
+            "onsubmit=\"return fieldCheck('email', 'pass', 'full', 'name') && emailCheck('email')\">\n".
             "<fieldset><input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".

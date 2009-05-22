@@ -66,7 +66,8 @@ if( ! ($row = db_fetch_array($q , 0 ) ) ) {
 }
 
 //show data
-$content =  "<form method=\"post\" action=\"users.php\" onsubmit=\"return fieldCheck('email', 'full', 'name' )\">\n".
+$content =  "<form method=\"post\" action=\"users.php\" ".
+            "onsubmit=\"return fieldCheck('email', 'full', 'name' ) && emailCheck('email')\">\n".
             "<fieldset><input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"userid\" value=\"$userid\" />\n".
