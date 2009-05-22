@@ -41,28 +41,27 @@ if( ! ADMIN ) {
 $content = '';
 $maillist = '';
 
-//start form data
-$content .=
-          "<form method=\"post\" action=\"admin.php\">\n".
-          "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
-          "<input type=\"hidden\" name=\"action\" value=\"submit\" />\n".
-          "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-          "<table class=\"celldata\" >\n";
-
 //get config data
 $q = db_query('SELECT * FROM '.PRE.'config' );
 $row = db_fetch_array( $q, 0 );
 
 if(USE_EMAIL === 'Y' ){
 
-  $content .=
-            "<tr><td style=\"white-space : nowrap\" colspan=\"2\"><b>".$lang['email_settings']."</b><br /><br /></td></tr>\n";
+  //start form data
+  $content .= "<form method=\"post\" action=\"admin.php\" ".
+              "onsubmit=\"return emailCheck('from', 'reply', 'admin' )\" >\n".
+              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+              "<input type=\"hidden\" name=\"action\" value=\"submit\" />\n".
+              "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+              "<input type=\"hidden\" id=\"alert_email\" name=\"alert\" value=\"".$lang['invalid_email']."\" />\n".
+              "<table class=\"celldata\" >\n";
+
+  $content .= "<tr><td style=\"white-space : nowrap\" colspan=\"2\"><b>".$lang['email_settings']."</b><br /><br /></td></tr>\n";
 
   //email addresses
-  $content .=
-            "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\" >".$lang['admin_email']."</a>:</td><td><input type=\"text\" name=\"email_admin\" value=\"".$row['email_admin']."\" size=\"30\" /></td></tr>\n".
-            "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_reply']."</a>:</td><td><input type=\"text\" name=\"reply_to\" value=\"".$row['reply_to']."\" size=\"30\" /></td></tr>\n".
-            "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_from']."</a>:</td><td><input type=\"text\" name=\"from\" value=\"".$row['email_from']."\" size=\"30\" /></td></tr>\n";
+  $content .= "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\" >".$lang['admin_email']."</a>:</td><td><input type=\"text\" id=\"admin\" name=\"email_admin\" value=\"".$row['email_admin']."\" size=\"30\" /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_reply']."</a>:</td><td><input type=\"text\" id=\"reply\" name=\"reply_to\" value=\"".$row['reply_to']."\" size=\"30\" /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_from']."</a>:</td><td><input type=\"text\" id=\"from\" name=\"from\" value=\"".$row['email_from']."\" size=\"30\" /></td></tr>\n";
 
   //get mailing list
   $q = db_query('SELECT DISTINCT email FROM '.PRE.'maillist' );
@@ -74,6 +73,15 @@ if(USE_EMAIL === 'Y' ){
   $content .= "<tr><td><a href=\"help/help_language.php?item=list&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=list&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['mailing_list']."</a>: </td><td><textarea name=\"email\" rows=\"5\" cols=\"30\">".$maillist."</textarea></td></tr>\n".
                "</table>\n".
                "<table class=\"celldata\" >\n";
+}
+else {
+  //start form data (no javascript)
+  $content .= "<form method=\"post\" action=\"admin.php\">\n".
+              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+              "<input type=\"hidden\" name=\"action\" value=\"submit\" />\n".
+              "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+              "<table class=\"celldata\" >\n";
+
 }
 
 $content .= "<tr><td colspan=\"2\"><b>".$lang['default_checkbox']."</b><br /><br /></td></tr>\n";
