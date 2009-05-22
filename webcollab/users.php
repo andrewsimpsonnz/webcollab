@@ -79,7 +79,7 @@ switch($_REQUEST['action'] ) {
 
   //Add a user
   case 'add':
-    create_top($lang['add_user'], 0, 1, 'name' );
+    create_top($lang['add_user'], 0, 2, 'name' );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'users/user_menubox.php' );
     goto_main();

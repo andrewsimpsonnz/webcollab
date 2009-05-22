@@ -53,7 +53,7 @@ switch( $_REQUEST['action'] ) {
 
   //add a usergroup
   case 'add':
-    create_top($lang['add_new_usergroup'], 0, 1, 'name' );
+    create_top($lang['add_new_usergroup'], 0, 2, 'name' );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'usergroups/usergroup_menubox.php' );
     goto_main();

@@ -44,7 +44,7 @@ if( ! isset($_REQUEST['action'] ) ) {
 switch ($_REQUEST['action'] ) {
 
   case 'admin':
-    create_top($lang['admin_config'] );
+    create_top($lang['admin_config'] , 0, 2, 'admin' );
     include(BASE.'includes/mainmenu.php' );
     goto_main();
     include(BASE.'admin/admin_config_edit.php' );

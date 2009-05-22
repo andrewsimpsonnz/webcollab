@@ -52,7 +52,7 @@ switch($_REQUEST['action'] ) {
 
   //gives a window and some options to do to the poor 'old contact manager
   case 'add':
-    create_top($lang['add_contact'], 0, 1, 'firstname' );
+    create_top($lang['add_contact'], 0, 2, 'firstname' );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'contacts/contact_menubox.php' );
     goto_main();

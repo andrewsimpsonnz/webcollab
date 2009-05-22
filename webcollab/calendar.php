@@ -47,7 +47,7 @@ switch($_REQUEST['action'] ) {
     break;
 
   case 'date':
-    create_top( $lang['calendar'], 3, 1 );
+    create_top( $lang['calendar'], 3, 3 );
     include(BASE.'calendar/calendar_date.php' );
     create_bottom();
     break;

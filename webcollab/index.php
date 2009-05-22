@@ -190,7 +190,7 @@ if(isset($_COOKIE['webcollab_session'] ) && strlen($_COOKIE['webcollab_session']
   }
 }
 
-create_top($lang['login_screen'], 1, 1, 'username' );
+create_top($lang['login_screen'], 1, 2, 'username' );
 
 $content = "<div style=\"text-align:center\">";
 
