@@ -5,24 +5,56 @@
   Javascript function library for WebCollab setup
 */
 
-function fieldCheck(){
-  var user = document.getElementById('user');
-  var pass1 = document.getElementById('password');
-  var pass2 = document.getElementById('password_check');
-  var email = document.getElementById('email');
-  if (user.length === 0 || pass1.length === 0 || pass2.length === 0 ) {
-    alert(text.AlertField );
+function userCheck(){
+  var error = 0;
+  for(var i = 0; i < arguments.length; i++ ) {
+    var field = document.getElementById(arguments[i]).value;
+    var id = document.getElementById(arguments[i]).id;
+    if(field.length === 0) {
+      document.getElementById(arguments[i]).focus();
+      document.getElementById(arguments[i]).style.background='#FFFF94';
+      error = 1;
+    }
+    if (id == 'password' ) {
+      var pass1 = field;
+    }
+    if (id == 'password_check' ) {
+      var pass2 = field;
+    }
+    if(id == 'email' ) {
+      if(field.indexOf('@') == -1 || field.lastIndexOf('.') == -1) {
+        document.getElementById('email').focus();
+        document.getElementById('email').style.background='#FFB3B3';
+        alert(document.getElementById('alert_email').value);
+        return false;
+      }
+    }
+  }
+  if(error == 1  ) {
+      alert(document.getElementById('alert_field').value);
+      return false;
+  }
+  if (pass1 != pass2 ) {
+    alert(document.getElementById('pass_match').value);
     return false;
   }
-  if (pass1.value != pass2.value ) {
-    alert(text.PassMatch );
-  return false;
-  }
-  with(email) {
-    if (value.indexOf('@') == -1 || value.lastIndexOf('.') == -1) {
-      alert(text.EmailMiss );
-      return false;
+  return true;
+}
+
+function fieldCheck(){
+  var error = 0;
+  for(var i = 0; i < arguments.length; i++ ) {
+    var field = document.getElementById(arguments[i]).value;
+    var id = document.getElementById(arguments[i]).id;
+    if(field.length === 0) {
+      document.getElementById(arguments[i]).focus();
+      document.getElementById(arguments[i]).style.background='#FFFF94';
+      error = 1;
     }
+  }
+  if(error == 1  ) {
+      alert(document.getElementById('alert_field').value);
+      return false;
   }
   return true;
 }
