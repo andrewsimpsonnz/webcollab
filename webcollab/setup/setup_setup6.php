@@ -43,11 +43,14 @@ create_top_setup($lang['setup6_banner'], 1 );
 
 $content  = '';
 
-$content .= "<form method=\"post\" action=\"setup_handler.php\" onsubmit=\"return fieldCheck()\">".
+$content .= "<form method=\"post\" action=\"setup_handler.php\">".
             "<fieldset><input type=\"hidden\" name=\"action\" value=\"setup7\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"new_config\" value=\"Y\" />\n".
-            "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
+            "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" />\n".
+            "<input type=\"hidden\" id=\"alert_field\" name=\"alert1\" value=\"".$lang['setup_js_alert_field']."\" />\n".
+            "<input type=\"hidden\" id=\"pass_match\" name=\"alert2\" value=\"".$lang['setup_js_pass_match']."\" />\n".
+            "<input type=\"hidden\" id=\"alert_email\" name=\"alert3\" value=\"".$lang['setup_js_email_miss']."\" /></fieldset>\n".
             "<table class=\"celldata\">";
 
 //user settings
@@ -70,11 +73,19 @@ if(USE_EMAIL == 'Y' ) {
   $content .= "<tr><td></td><td class=\"boxdata2\">".$lang['setup6_email1']."</td></tr>\n".
               "<tr><th>".$lang['setup6_email2']."</th>".
               "<td><input type=\"text\" id=\"email\" name=\"admin_email\" value=\"\" size=\"30\" /></td></tr>\n";
+
+  $content .= "<tr><td></td><td class=\"boxdata3\"><input type=\"submit\" value=\"".$lang['submit']."\" ".
+              "onclick=\"return userCheck('password_check', 'password', 'user' 'email')\"/></td></tr>\n";
+
+}
+else {
+
+  $content .= "<tr><td></td><td class=\"boxdata3\"><input type=\"submit\" value=\"".$lang['submit']."\" ".
+              "onclick=\"return userCheck('password_check', 'password', 'user')\"/></td></tr>\n";
 }
 
-$content .= "<tr><td></td><td class=\"boxdata3\"><input type=\"submit\" value=\"".$lang['submit']."\" /></td></tr>\n".
-            "</table>\n".
-            "</form>\n";
+$content .=   "</table>\n".
+              "</form>\n";
 
 new_box_setup($lang['setup6_banner'], $content, 'boxdata', 'tablebox' );
 

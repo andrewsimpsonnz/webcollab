@@ -35,14 +35,11 @@ require_once(BASE.'setup/setup_config.php' );
 //
 function create_top_setup($title='', $check=0 ) {
 
-  global $topbuild, $lang;
+  global $lang;
 
-  //don't rebuild the top again if already built
-  if( $topbuild == 1 ) {
+  //only build top once...
+  if(headers_sent() ) {
     return;
-  }
-  else {
-    $topbuild = 1;
   }
 
   //we don't want any caching of these pages
@@ -67,12 +64,6 @@ function create_top_setup($title='', $check=0 ) {
 
   //javascript scripts
   if($check ) {
-    echo "<script type=\"text/javascript\">\n".
-         "var text = { AlertField : \"".$lang['setup_js_alert_field']."\",\n".
-         "             PassMatch : \"".$lang['setup_js_pass_match']."\",\n".
-         "             EmailMiss :\"".$lang['setup_js_email_miss']."\" }\n".
-         "</script>\n";
-
     echo "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab-setup.js\"></script>\n";
  }
 
