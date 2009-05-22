@@ -10,35 +10,42 @@ function placeCursor(cursor){
 }
 
 function fieldCheck(){
-  var error = 0;
+  var fieldError = 0;
   for(var i = 0; i < arguments.length; i++ ) {
     var field = document.getElementById(arguments[i]).value;
-    var id = document.getElementById(arguments[i]).id;
+    var idField = document.getElementById(arguments[i]).id;
     if(field.length === 0) {
       document.getElementById(arguments[i]).focus();
       document.getElementById(arguments[i]).style.background='#FFFF94';
-      error = 1;
-    }
-    if(id == 'email' ) {
-      if(field.indexOf('@') == -1 || field.lastIndexOf('.') == -1) {
-        document.getElementById('email').focus();
-        document.getElementById('email').style.background='#FFB3B3';
-        alert(document.getElementById('alert_email').value);
-        return false;
-      }
+      fieldError = 1;
     }
   }
-  if(error == 1  ) {
-      alert(document.getElementById('alert_field').value);
-      return false;
+  if(fieldError == 1) {
+    alert(document.getElementById('alert_field').value);
+    return false;
   }
   return true;
 }
 
-function dateCheck(check) {
-  if(!fieldCheck(check)){
+function emailCheck() {
+  var emailError = 0;
+  for(var j = 0; j < arguments.length; j++ ) {
+    var email = document.getElementById(arguments[j]).value;
+    var idEmail = document.getElementById(arguments[j]).id;
+    if(email.indexOf('@') == -1 || email.lastIndexOf('.') == -1) {
+      document.getElementById(idEmail).focus();
+      document.getElementById(idEmail).style.background='#FFB3B3';
+      emailError = 1;
+    }
+  }
+  if(emailError == 1) {
+    alert(document.getElementById('alert_email').value);
     return false;
   }
+  return true;
+}
+
+function dateCheck() {
   var daysMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
   if(document.getElementById('year').value % 4 === 0 ){
     daysMonth[1] = 29;}
@@ -64,6 +71,13 @@ function dateSet(dayIndex, monthIndex, yearIndex, token) {
     window.opener.document.getElementById('day').selectedIndex = dayIndex;
     window.opener.document.getElementById('month').selectedIndex = monthIndex;
     window.opener.document.getElementById('year').selectedIndex = yearIndex;
+    window.opener.document.getElementById('token').value = token;
+  }
+  return true;
+}
+
+function placeToken(token) {
+  if(window.opener && !window.opener.closed) {
     window.opener.document.getElementById('token').value = token;
   }
   return true;
