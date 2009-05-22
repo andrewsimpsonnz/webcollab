@@ -66,7 +66,7 @@ function create_top($title='', $page_type=0, $include_javascript=0, $check_field
 
 
 
-  global $lang, $top_done, $bottom_text;
+  global $lang, $bottom_text;
 
   //only build top once...
   if(headers_sent() ) {
@@ -143,20 +143,38 @@ function create_top($title='', $page_type=0, $include_javascript=0, $check_field
 
   $content .= "<link rel=\"icon\" type=\"image/png\" href=\"".BASE."images/group.png\" />\n";
 
-  if($include_javascript ) {
-    $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n";
+  switch($include_javascript ) {
+
+    case 1:
+       //loads javascript file
+       $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
+                  "</head>\n\n".
+                  "<body>\n";
+       break;
+
+    case 2:
+      //loads javascript file and highlights cursor...
+      $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
+                  "</head>\n\n".
+                  "<body onload=\"placeCursor('".$check_field."')\">\n";
+      break;
+
+    case 3:
+      //loads javascript file and resets the token...
+      $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
+                  "</head>\n\n".
+                  "<body onload=\"placeToken('".TOKEN."')\">\n";
+      break;
+
+    case 0:
+    default:
+      //no javascript loaded
+      $content .= "</head>\n\n".
+                  "<body>\n";
+      break;
   }
 
-  if($include_javascript && $check_field ) {
-    $content .= "</head>\n\n".
-                "<body onload=\"placeCursor('".$check_field."')\">\n";
-  }
-  else {
-    $content .= "</head>\n\n".
-                "<body>\n";
-  }
-
-  //create the main table
+   //create the main table
   $content .=       "<!-- start main table -->\n".
                     "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n";
 
