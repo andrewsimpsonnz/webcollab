@@ -126,12 +126,12 @@ $email_welcome            = "Dobrý den,\n\n ".MANAGER_NAME." Vás vítá v nástroji
                             "Pokud kliknete na jeden z projektù, octnete se v èásti úkolù daného projektu. Nyní mù¾ete zaèít pracovat :-).\n\n".
                             //Every item you post or task you edit will be shown to other users as 'new' or 'updated'. This also works vice-versa and ".
                             //"it enables you to quickly spot where the activity is
-                            "Ka¾dá zpráva nebo úloha, kterou zmìníte nebo vytvoøíte, bude zobrazena ostatním u¾ivatelùm jako aktualizovaná nebo nová. 
+                            "Ka¾dá polo¾ka, kterou ode¹lete nebo úkol, který zmìníte bude zobrazena ostatním u¾ivatelùm jako aktualizovaná nebo nová. 
                             Samozøejmì toto funguje i naopak a umo¾òuje rychle si v¹imnout aktivity\n\n".
                             //"You can also take or get ownership of tasks and you will find yourself able to edit them and all the forum posts belonging to it. ".
-                            "Mù¾ete také pøevzít vlastnictví úlohy, èím¾ získáte právo ji spravovat, vèetnì fóra patøícího k ní. ".
+                            "Mù¾ete také pøevzít vlastnictví úkolu, èím¾ získáte právo jej spravovat, vèetnì fóra patøícího k nìmu. ".
                             //"As you progress with your work please edit your task's text and status so that everybody can keep a track on your progress. ".
-                            "Jak budete pokraèovat se svou prací, prosím editujte text úlohy a stav tak, aby ka¾dý mohl mít povìdomí o Va¹em postupu. ".
+                            "Jak budete pokraèovat se svou prací, prosím editujte text úkolu a jeho stav tak, aby ka¾dý mohl mít povìdomí o Va¹em postupu. ".
                             "\n\nNyní mi nezbývá ne¾ Vám popøát mnoho úspìchù. V pøípadì, ¾e si nebude vìdìt rady po¹lete email na ".EMAIL_ADMIN.".\n\n --Hodnì ¹testí !\n\n".
                             "Login / Pøihla¹ovací jméno:       %1\$s\n".
                             "Heslo:                            %2\$s\n\n".
