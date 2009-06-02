@@ -89,7 +89,7 @@ switch($_REQUEST['action'] ) {
 
   //Edit a user
   case 'edit':
-    create_top($lang['edit_user'] );
+    create_top($lang['edit_user'], 0, 2, 'name' );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'users/user_menubox.php' );
     goto_main();
