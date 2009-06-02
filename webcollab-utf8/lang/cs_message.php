@@ -24,8 +24,8 @@
   Language files for 'cs' (Czech)
 
   Translation: Lukas Moravek <moravekl at gmail.com>
-  Correction: Jirka Dutka <jirka at dutka.net>
-
+  Corrections: Jirka Dutka <jirka at dutka.net>
+  Corrections: Milan Horák <strangeril at users.sourceforge.net>
 
   NOTE: This file is written in UTF-8 character set
 
@@ -52,7 +52,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $task_state['new']                  = "Nový";
     $task_state['planned']              = "Plánovaný (neaktivní)";
     $task_state['active']               = "Aktivní (pracuje se na něm)";
-    $task_state['cantcomplete']         = "Pozastaven";
+    $task_state['cantcomplete']         = "Pozastavený";
     $task_state['completed']            = "Dokončený";
     $task_state['done']                 = "Hotový";
     $task_state['task_planned']         = " Plánovaný";
@@ -83,19 +83,19 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['info']                       = "Informace";
     $lang['bytes']                      = " bytů";
     $lang['select_instruct']            = "(Použijte CTRL k vybrání více položek, nebo žádné)";
-    $lang['member_groups']              = "Uživatel je členem vysvícených skupin uvedených níže";
+    $lang['member_groups']              = "Uživatel je členem zvýrazněných skupin uvedených níže";
     $lang['login']                      = "Login";
     $lang['login_action']               = "Login";
     $lang['login_screen']               = "Login";
     $lang['error']                      = "Chyba";
     $lang['no_login']                   = "Přístup odepřen; špatné jméno nebo heslo";
-    $lang['redirect_sprt']              = "Automaticky budete přesměrováni na přihlašovací stránku za %d sekund";
+    $lang['redirect_sprt']              = "Budete automaticky přesměrováni na přihlašovací stránku za %d sekund";
     $lang['login_now']                  = "Prosím klikněte zde pro přihlášení";
     $lang['please_login']               = "Prosím přihlašte se";
     $lang['go']                         = "Přejít";
 
 //graphic items
-    $lang['late_g']                     = "&nbsp;Zpožděn&nbsp;";
+    $lang['late_g']                     = "&nbsp;Zpožděný&nbsp;";
     $lang['new_g']                      = "&nbsp;Nový&nbsp;";
     $lang['updated_g']                  = "&nbsp;Aktualizovaný&nbsp;";
 
@@ -136,7 +136,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['contact_info']               = "Informace o kontaktu";
     $lang['contacts']                   = "Kontakty";
     $lang['contact_add_info']           = "Jestliže bude zadán název společnosti, jméno společnosti bude zobrazeno místo jména osoby.";
-    $lang['show_contact']               = "Zobrazit kontaky";
+    $lang['show_contact']               = "Zobrazit kontakt";
     $lang['edit_contact']               = "Editovat kontakt";
     $lang['contact_submit']             = "Potvrdit kontakt";
     $lang['contact_warn']               = "Nedostatek údaju pro přidání kontaktu; prosím vraťte se zpět a zadejte alespoň jméno a příjmení";
@@ -156,7 +156,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['upload']                     = "Přidat";
     $lang['file_email_owner']           = "Oznámit vlastníkovi projektu nový soubor?";
     $lang['file_email_usergroup']       = "Oznámit skupině nový soubor?";
-    $lang['max_file_sprt']              = "Soubor musí být menší než %s kb.";
+    $lang['max_file_sprt']              = "Soubor musí být menší než %s kB.";
     $lang['file_submit']                = "Potvrdit soubor";
     $lang['no_upload']                  = "Žádný soubor nebyl nahrán.  Prosím vraťte se zpět a zkuste to znovu.";
     $lang['file_too_big_sprt']          = "Maximální velikost souboru může být %s bytů.  Váš soubor byl příliš velký a byl smazán.";
@@ -167,8 +167,8 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['orig_message']               = "Původní zpráva:";
     $lang['post']                       = "Odeslat";
     $lang['message']                    = "Zpráva:";
-    $lang['post_reply_sprt']            = "poslat odpoveď na zprávu od '%1\$s' o '%2\$s'";
-    $lang['post_message_sprt']          = "Poslat zpávu: '%s'";
+    $lang['post_reply_sprt']            = "Poslat odpověď na zprávu od '%1\$s' o '%2\$s'";
+    $lang['post_message_sprt']          = "Poslat zprávu: '%s'";
     $lang['forum_email_owner']          = "Poslat příspěvek vlastníkovi projektu?";
     $lang['forum_email_usergroup']      = "Poslat příspěvek skupině?";
     $lang['reply']                      = "Odpovědět";
@@ -176,13 +176,13 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['public_user_forum']          = "Veřejné fórum";
     $lang['private_forum_sprt']         = "Privátní fórum pro skupinu: %s";
     $lang['forum_submit']               = "Potvrdit fórum";
-    $lang['no_message']                 = "Žádné zprávý! Prosím vraťte se zpět a zkuste to znovu";
+    $lang['no_message']                 = "Žádné zprávy! Prosím vraťte se zpět a zkuste to znovu";
     $lang['add_reply']                  = "Přidat zprávu";
     $lang['last_post_sprt']             = "Poslední příspěvek: %s"; //Note to translators: context is 'Last post 2004-Dec-22'
     $lang['recent_posts']               = "Nedávné příspěvky ve fóru";
     $lang['forum_search']               = "Hledat ve fóru";
-    $lang['no_results']                 = "Nebyli nalezeny žádné záznamy pro '%s'";
-    $lang['search_results']             = "Nalezeno %1\$s záznmů pro '%2\$s'<br />Zobrazeny záznamy od %3\$s. až %4\$s.";
+    $lang['no_results']                 = "Nebyly nalezeny žádné záznamy pro '%s'";
+    $lang['search_results']             = "Nalezeno %1\$s záznamů pro '%2\$s'<br />Zobrazeny záznamy od %3\$s. až %4\$s.";
 
  //includes
     $lang['report']                     = "Report";
@@ -204,17 +204,17 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['invalid_date_sprt']          = "Zadané datum %s není správné (Zkontrolujte počet dní v měsíci).<br />Prosím vraťte se zpět a zadejte správné datum.";
 
  //taskgroups
-    $lang['taskgroup_name']             = "Název pracovní skupiny:";
-    $lang['taskgroup_description']      = "Popis pracovní skupiny:";
-    $lang['add_taskgroup']              = "Přidat pracovní skupinu";
-    $lang['add_new_taskgroup']          = "Přidat novou pracovní skupinu";
-    $lang['edit_taskgroup']             = "Editovat pracovní skupinu";
-    $lang['taskgroup_manage']           = "Správa pracovní skupiny";
-    $lang['no_taskgroups']              = "Žádná pracovní skupina není definována";
-    $lang['manage_taskgroups']          = "Spravovat pracovní skupiny";
-    $lang['taskgroups']                 = "Pracovní skupina";
-    $lang['taskgroup_dup_sprt']         = "Pracovní skupina '%s' existuje.  Prosím vraťte se zpět a zvolte jiný název.";
-    $lang['info_taskgroup_manage']      = "Info pro správu pracovních skupin";
+    $lang['taskgroup_name']             = "Název skupiny úkolů:";
+    $lang['taskgroup_description']      = "Popis skupiny úkolů:";
+    $lang['add_taskgroup']              = "Přidat skupinu úkolů";
+    $lang['add_new_taskgroup']          = "Přidat novou skupinu úkolů";
+    $lang['edit_taskgroup']             = "Upravit skupinu úkolů";
+    $lang['taskgroup_manage']           = "Správa skupiny úkolů";
+    $lang['no_taskgroups']              = "Žádná skupina úkolů není definována";
+    $lang['manage_taskgroups']          = "Spravovat skupiny úkolů";
+    $lang['taskgroups']                 = "Skupiny úkolů";
+    $lang['taskgroup_dup_sprt']         = "Skupina úkolů '%s' existuje.  Prosím vraťte se zpět a zvolte jiný název.";
+    $lang['info_taskgroup_manage']      = "Info pro správu skupin úkolů";
 
  //usergroups
     $lang['usergroup_name']             = "Název skupiny:";
@@ -248,14 +248,14 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['no_deleted_users']           = "Žádní smazaní uživatelé.";
     $lang['revive']                     = "Oživit";
     $lang['permdel']                    = "Smazat na trvalo";
-    $lang['permdel_javascript_sprt']    = "Tímto smažete veškeré záznamy uživatele %s včetně přidružených úloh (projektů). Opravdu chcete pokračovat?";
+    $lang['permdel_javascript_sprt']    = "Tímto smažete veškeré záznamy uživatele %s včetně přidružených úkolů (projektů). Opravdu chcete pokračovat?";
     $lang['add_user']                   = "Přidat uživatele";
     $lang['edit_user']                  = "Editovat uživatele";
-    $lang['no_users']                   = "Žádní uživatelé nejsou zNo users are známý systému";
+    $lang['no_users']                   = "Žádní uživatelé nejsou známy systému";
     $lang['users']                      = "Uživatel";
     $lang['existing_users']             = "Seznam uživatelů";
     $lang['private_profile']            = "Tento uživatel má privátní profil, který nemůže být Vámi zobrazen.";
-    $lang['private_usergroup_profile']  = "(Tetno uživatel je členem privátní skupiny, která a nemůže být Vámi zobrazena)";
+    $lang['private_usergroup_profile']  = "(Tento uživatel je členem privátní skupiny, která a nemůže být Vámi zobrazena)";
     $lang['email_users']                = "Poslat email";
     $lang['select_usergroup']           = "Skupinu/y uvedenou níže:";
     $lang['subject']                    = "Předmět:";
@@ -271,18 +271,18 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['number_items_created']       = "Počet vytvořených položek:";
     $lang['number_projects_owned']      = "Počet vlastněných projektů:";
     $lang['number_tasks_owned']         = "Počet vlastněných úkolů:";
-    $lang['number_tasks_completed']     = "Počet dokončených úloh:";
+    $lang['number_tasks_completed']     = "Počet dokončených úkolů:";
     $lang['number_forum']               = "Počet příspěvků ve fóru:";
     $lang['number_files']               = "Počet nahraných souborů:";
     $lang['size_all_files']             = "Celková velikost všech vlastněných souborů:";
-    $lang['owned_tasks']                = "Vlastněné úlohy";
+    $lang['owned_tasks']                = "Vlastněné úkoly";
     $lang['invalid_email']              = "Neplatná emailová adresa";
     $lang['invalid_email_given_sprt']   = "Emailová adresa '%s' je nesprávně zadaná.  Prosím vraťte se zpět a zkuste to znovu.";
     $lang['duplicate_user']             = "Duplikovat uživatele";
     $lang['duplicate_change_user_sprt'] = "Uživatel '%s' existuje.  prosím vraťte se zpět a změnte jméno.";
     $lang['value_missing']              = "Chybí hodnota";
     $lang['field_sprt']                 = "Pole pro '%s' není zadáno. Prosím vraťte se zpět a doplňte údaje.";
-    $lang['admin_priv']                 = "NOTE: You have been granted administrator privileges. -- NOTE: Přiělil jste administrátorské práva";
+    $lang['admin_priv']                 = "NOTE: You have been granted administrator privileges. -- NOTE: Byla Vám přidělena administrátorská práva";
     $lang['manage_users']               = "Spravovat uživatele";
     $lang['users_online']               = "Přihlášení uživatelé";
     $lang['online']                     = "Poslední uživatelé (Přihlášení před méně než 60 minutami)";
@@ -292,17 +292,17 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
   //tasks
     $lang['add_new_task']               = "Přidat nový úkol";
     $lang['priority']                   = "Priorita";
-    $lang['parent_task']                = "Předchůdce";
+    $lang['parent_task']                = "Nadřazený úkol";
     $lang['creation_time']              = "Datum zadání";
     $lang['by_sprt']                    = "%1\$s uživatelem %2\$s"; //Note to translators: context is 'Creation time: <date> by <user>'
     $lang['project_name']               = "Název projektu";
     $lang['task_name']                  = "Název úkolu";
     $lang['deadline']                   = "Termín ukončení";
-    $lang['taken_from_parent']          = "(Převzatý od předchůdce)";
+    $lang['taken_from_parent']          = "(Převzatý od nadřazeného úkolu)";
     $lang['status']                     = "Stav";
     $lang['task_owner']                 = "Vlastník úkolu";
     $lang['project_owner']              = "Vlastník projektu";
-    $lang['taskgroup']                  = "Pracovní skupina";
+    $lang['taskgroup']                  = "Skupina úkolů";
     $lang['usergroup']                  = "Skupina";
     $lang['nobody']                     = "Nikdo";
     $lang['none']                       = "Žádná";
@@ -367,7 +367,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['task_not_in_usergroup']      = "Tento úkol není ve vlastnictví žádné skupiny a je přístupný všem uživatelům.";
     $lang['usergroup_can_edit_project'] = "Tento projekt může být editován pouze členy skupiny.";
     $lang['usergroup_can_edit_task']    = "Tento úkol může být editován pouze členy skupiny.";
-    $lang['i_take_it']                  = "Převezít";
+    $lang['i_take_it']                  = "Převzít";
     $lang['i_finished']                 = "Dokončeno";
     $lang['i_dont_want']                = "Přenechat";
     $lang['take_over_project']          = "Převzít vlastnictví nad projektem";
@@ -377,7 +377,7 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['todo_list_for']              = "Seznam úkolů pro: ";
     $lang['due_in_sprt']                = " (Během %d dní)";
     $lang['due_tomorrow']               = " (Během zítřka)";
-    $lang['no_assigned']                = "Žádné nedokončené úlohy přiřazené tomuto uživateli.";
+    $lang['no_assigned']                = "Žádné nedokončené úkoly přiřazené tomuto uživateli.";
     $lang['todo_list']                  = "Úkoly";
     $lang['summary_list']               = "Souhrnný seznam";
     $lang['task_submit']                = "Potvrdit úkol";
@@ -388,13 +388,13 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['owner']                      = "Vlastník";
     $lang['group']                      = "Skupina";
     $lang['by_usergroup']               = " (podle skupiny)";
-    $lang['by_taskgroup']               = " (podle praconí skupiny)";
+    $lang['by_taskgroup']               = " (podle skupiny úkolů)";
     $lang['by_deadline']                = " (podle termínu ukončení)";
     $lang['by_status']                  = " (podle statusu)";
     $lang['by_owner']                   = " (podle vlastníka)";
 //** needs translation
     $lang['by_priority']                = " (by priority)";
-    $lang['project_cloned']             = "Projekt ke klonovaní :";
+    $lang['project_cloned']             = "Projekt ke klonování :";
     $lang['task_cloned']                = "Úkol ke klonování :";
     $lang['note_clone']                 = "Poznámka: Úkol bude naklonován jako nový projekt";
 
