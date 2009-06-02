@@ -195,10 +195,10 @@ create_top($lang['login_screen'], 1, 2, 'username' );
 $content = "<div style=\"text-align:center\">";
 
 if(SITE_IMG != '' ) {
-  $content .=  "<img src=\"images/".SITE_IMG."\" /><br />";
+  $content .=  "<img src=\"images/".SITE_IMG."\" alt=\"WebCollab logo\" /><br />";
 }
 else {
-  $content .=  "<img src=\"images/webcollab_logo.jpg\" alt=\"WebCollab logo\" /><br />";
+  $content .=  "<img src=\"images/webcollab.png\" alt=\"WebCollab logo\" /><br />";
 }
 
 $content .= "<p>".$lang['please_login'].":</p>\n".
