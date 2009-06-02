@@ -215,8 +215,9 @@ function bbcode($body ) {
     $body = preg_replace('#\[quote\](.+?)\[/quote\]#i', "<blockquote><p>$1</p></blockquote>", $body );
     $body = preg_replace('#\[code\](.+?)\[/code\]#i', "<pre>$1</pre>", $body );
     $body = preg_replace('#\[color=(red|blue|green|yellow)\](.+?)\[/color\]#i', "<span style=\"color:$1\">$2</span>", $body );
-    $body = preg_replace('#\[url\]((http|ftp)+(s)?:\/\/[a-z0-9./-_~]+?)\[/url\]#i', "<a href=\"$1\" onclick=\"window.open('$1'); return false\">$1</a>", $body );
-    $body = preg_replace('#\[img\](http(s)?:\/\/([a-z0-9./\-_~])+?\.(jpg|jpeg|gif|png))\[/img\]#i', "<img src=\"$1\" alt=\"\"/>", $body );
+    $body = preg_replace('#\[url\]((http|ftp)+(s)?:\/\/[a-z0-9\-_~/@:?=&;+\#.]+)\[/url\]#i', "<a href=\"$1\" onclick=\"window.open('$1'); return false\">$1</a>", $body );
+    $body = preg_replace('#\[url=((http|ftp)+(s)?:\/\/([a-z0-9\-_~.]+[.][a-z]{2,6})[a-z0-9\-_~/@:?=&;+\#.%]*)\](.+?)\[/url\]#i', "<a href=\"$1\" onclick=\"window.open('$1'); return false\">$5</a> [$4]", $body );
+    $body = preg_replace('#\[img\](http(s)?:\/\/([a-z0-9\-_~/.])+?\.(jpg|jpeg|gif|png))\[/img\]#i', "<img src=\"$1\" alt=\"\"/>", $body );
   }
   return $body;
 }
@@ -240,7 +241,7 @@ function nice_size($size ) {
     $size = (sprintf('%d kB', $size/(1024 ) ) );
   }
   else {
-    $size .= ' B';
+    $size = (sprintf('%d B', $size ) );
   }
 
   return $size;
