@@ -89,7 +89,7 @@ $content =  "<form method=\"post\" enctype=\"multipart/form-data\" action=\"file
             "</form>\n";
 
 //delete file
-$content .= "<form id=\"delete_file\" method=\"post\" action=\"files.php\" onsubmit=\"return confirm( '".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename']) )."' )\">\n".
+$content .= "<form id=\"delete_file\" method=\"post\" action=\"files.php\" onsubmit=\"return confirm( '".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($filename ) )."' )\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"submit_del\" />\n".
             "<input type=\"hidden\" name=\"fileid\" value=\"".$fileid."\" />\n".
