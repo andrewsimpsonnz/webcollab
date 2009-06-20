@@ -32,7 +32,7 @@ function emailCheck() {
   for(var j = 0; j < arguments.length; j++ ) {
     var email = document.getElementById(arguments[j]).value;
     var idEmail = document.getElementById(arguments[j]).id;
-    if(email.indexOf('@') == -1 || email.lastIndexOf('.') == -1) {
+    if(email.indexOf('@') == -1 || email.lastIndexOf('.') < 2) {
       document.getElementById(idEmail).focus();
       document.getElementById(idEmail).style.background='#FFB3B3';
       emailError = 1;

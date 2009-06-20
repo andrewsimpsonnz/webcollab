@@ -22,7 +22,7 @@ function userCheck(){
       var pass2 = field;
     }
     if(id == 'email' ) {
-      if(field.indexOf('@') == -1 || field.lastIndexOf('.') == -1) {
+      if(field.indexOf('@') == -1 || field.lastIndexOf('.') < 2) {
         document.getElementById('email').focus();
         document.getElementById('email').style.background='#FFB3B3';
         alert(document.getElementById('alert_email').value);
