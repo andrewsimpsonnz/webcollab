@@ -70,7 +70,7 @@ foreach($array as $var ) {
 $array = array('NUM_FILE_UPLOADS' => 3,
                'MAIL_TRANSPORT' => 'SMTP', 'SMTP_PORT' => 25, 'MAIL_USER' => '', 'MAIL_PASSWORD' => '', 'TLS' => 'N',
                'CSS_MAIN' => 'default.css', 'CSS_CALENDAR' => 'calendar.css', 'CSS_PRINT' => 'print.css',
-               'SITE_IMG'     => '',
+               'SITE_IMG'     => 'webcollab.png',
                'NEW_TIME'     => 14,
                'START_DAY'    =>  0,
                'VEVENT'       => 'N',
