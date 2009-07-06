@@ -75,7 +75,7 @@ if(USE_EMAIL == 'Y' ) {
               "<td><input type=\"text\" id=\"email\" name=\"admin_email\" value=\"\" size=\"30\" /></td></tr>\n";
 
   $content .= "<tr><td></td><td class=\"boxdata3\"><input type=\"submit\" value=\"".$lang['submit']."\" ".
-              "onclick=\"return userCheck('password_check', 'password', 'user' 'email')\"/></td></tr>\n";
+              "onclick=\"return userCheck('password_check', 'password', 'user', 'email')\"/></td></tr>\n";
 
 }
 else {
