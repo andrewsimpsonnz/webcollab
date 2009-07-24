@@ -58,6 +58,9 @@
   //number of file upload boxes to show
   define('NUM_FILE_UPLOADS', 3 );
 
+  //downloaded files to be 'inline' or 'attachment'
+  define('FILE_DOWNLOAD', 'inline' );
+
   /*Note:
     1. Make sure the file_base directory exists, and is writeable by the webserver, or you
        won't be able to upload any files.
@@ -153,7 +156,7 @@
   define('CSS_PRINT', 'print.css' );
 
   //custom image to replace the webcollab banner on splash page (base directory is [webcollab]/images)
-  define('SITE_IMG', "" );
+  define('SITE_IMG', "webcollab.png" );
 
   //number of days that new or updated tasks should be highlighted as 'New' or 'Updated'
   define('NEW_TIME', 14 );
