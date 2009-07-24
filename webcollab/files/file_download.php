@@ -66,11 +66,11 @@ if( ! ($fp = @fopen( FILE_BASE.'/'.$row['fileid'].'__'.($row['filename']), 'rb' 
 }
 
 //get rid of some problematic system settings
-@ob_end_clean();
+while(@ob_end_clean() );
 @ini_set('zlib.output_compression', 'Off');
 
 //uncomment the line below if PHP script timeout occurs before download finishes
-//@set_time_limit(0);
+@set_time_limit(0);
 
 //these headers are for IE 6
 header('Pragma: public');
@@ -78,13 +78,40 @@ header('Cache-Control: no-store, max-age=0, no-cache, must-revalidate');
 header('Cache-Control: post-check=0, pre-check=0', false);
 header('Cache-control: private');
 
+if(! defined('FILE_DOWNLOAD' ) ) {
+  define('FILE_DOWNLOAD', 'inline' );
+}
+
 //send the headers describing the file type
-header('Content-Type: '.$row['mime']);
-header('Content-Disposition: inline; filename='.$row['filename']);
-header('Content_Length: '.$row['size'] );
+switch (FILE_DOWNLOAD ) {
+
+  case 'attachment':
+    header("Content-Type: application/octet-stream");
+    header('Content-Disposition: attachment; filename="'.$row['filename'].'"');
+    header("Content-Transfer-Encoding: binary\n");
+    header('Content_Length: '.$row['size'] );
+    break;
+
+  case 'inline':
+  default:
+    header('Content-Type: '.$row['mime']);
+    header('Content-Disposition: inline; filename='.$row['filename']);
+    header('Content_Length: '.$row['size'] );
+    break;
+}
 
 //send it
-fpassthru($fp);
+//fpassthru($fp);
+
+if(connection_status() != 0 ) exit;
+
+while((! feof($fp ) ) && (connection_status() == 0 ) ) {
+  print(fread($fp, 1024*8 ) );
+  flush();
+}
+
+fclose ($fp);
+
 //don't send any more characters (would corrupt data in download)
 exit;
 ?>
