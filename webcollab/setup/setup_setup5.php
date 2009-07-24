@@ -67,7 +67,7 @@ foreach($array as $var ) {
 }
 
 //these values should all be defined as constants in the existing config file...
-$array = array('NUM_FILE_UPLOADS' => 3,
+$array = array('NUM_FILE_UPLOADS' => 3, 'FILE_DOWNLOAD' => 'inline',
                'MAIL_TRANSPORT' => 'SMTP', 'SMTP_PORT' => 25, 'MAIL_USER' => '', 'MAIL_PASSWORD' => '', 'TLS' => 'N',
                'CSS_MAIN' => 'default.css', 'CSS_CALENDAR' => 'calendar.css', 'CSS_PRINT' => 'print.css',
                'SITE_IMG'     => 'webcollab.png',
@@ -138,6 +138,8 @@ $content = "<?php\n".
 "  define('FILE_MAXSIZE', '".$data["file_maxsize"]."' );\n\n".
 "  //number of file upload boxes to show\n".
 "  define('NUM_FILE_UPLOADS', '".NUM_FILE_UPLOADS."' );\n\n".
+"  //downloaded files to be 'inline' or 'attachment'\n".
+"  define('FILE_DOWNLOAD', '".FILE_DOWNLOAD."' );\n\n".
 "    /*Note:\n".
 "      1. Make sure the file_base directory exists, and is writeable by the webserver, or you\n".
 "         will not be able to upload any files.\n".
