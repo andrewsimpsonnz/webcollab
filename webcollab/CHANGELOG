@@ -1,4 +1,12 @@
 WebCollab SVN
+*** 24 July 2009
+  Andrew Simpson
+
+- improve file download script
+
+- make allowance for inline/attachment downloads
+
+WebCollab SVN
 *** 2 June 2009
   Andrew Simpson
 
