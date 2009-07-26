@@ -188,8 +188,13 @@ if(! user_access($taskid ) ){
 //begin transaction
 db_begin();
 
-//get existing status
-$previous_status = db_result(db_query('SELECT status FROM '.PRE.'tasks WHERE id='.$taskid.' LIMIT 1' ), 0, 0 );
+//get existing projectid, parent and status from the database
+$q = db_query('SELECT projectid, parent, status FROM '.PRE.'tasks WHERE id='.$taskid.' LIMIT 1' );
+$row = db_fetch_array($q, 0 );
+$old_projectid = $row['projectid'];
+$old_status    = $row['status'];
+$old_parentid  = $row['parent'];
+$projectid     = $old_projectid;
 
 //change the info
 db_query('UPDATE '.PRE.'tasks
@@ -207,16 +212,9 @@ db_query('UPDATE '.PRE.'tasks
       sequence=sequence+1
       WHERE id='.$taskid );
 
-//get existing projectid and parent from the database
-$q = db_query('SELECT projectid, parent FROM '.PRE.'tasks WHERE id='.$taskid.' LIMIT 1' );
-$row = db_fetch_array($q, 0 );
-$projectid = $row['projectid'];
-
 //if the user has chosen to reparent, then do it now
 //(we do this after the main update, then if anything breaks, the database is not corrupted)
-if($row['parent'] != $parentid ) {
-  //first we store the old details
-  $old_projectid = $projectid;
+if($old_parentid != $parentid ) {
   //now we set the new projectid
   if($parentid == 0 ) {
     $projectid = $taskid;
@@ -226,12 +224,12 @@ if($row['parent'] != $parentid ) {
   }
 
   //no deadline project changing to tasks goes to 'new'
-  if(($parentid > 0 ) && ($previous_status == 'nolimit' ) ) {
+  if(($parentid > 0 ) && ($old_status == 'nolimit' ) ) {
     $status = 'created';
   }
 
   //can't put a project onto it's own tasks _OR_ re-parent a task under it's own children
-  if((($projectid == $row['projectid'] ) && ($row['parent'] == 0 ) ) || reparent_child_check($taskid, $parentid, $projectid ) ) {
+  if((($projectid == $old_projectid ) && ($old_parentid == 0 ) ) || reparent_child_check($taskid, $parentid, $projectid ) ) {
     //do nothing
   }
   else {
@@ -246,27 +244,23 @@ if($row['parent'] != $parentid ) {
 
 //make adjustments for child tasks to match project status
 if($parentid == 0 ) {
-  $project_status = $status;
-}
-else {
-  $project_status = db_result(db_query('SELECT status FROM '.PRE.'tasks WHERE id='.$projectid ), 0, 0 );
-}
 
-switch($project_status ) {
-  case 'cantcomplete':
-  case 'notactive':
-    //inactive project, then set the uncompleted child tasks to inactive too
-    db_query('UPDATE '.PRE.'tasks SET status=\''.$project_status.'\' WHERE projectid='.$projectid.' AND (status=\'active\' OR status=\'created\')' );
-    break;
+  switch($status ) {
+    case 'cantcomplete':
+    case 'notactive':
+      //inactive project, then set the uncompleted child tasks to inactive too
+      db_query('UPDATE '.PRE.'tasks SET status=\''.$status.'\' WHERE projectid='.$projectid.' AND (status=\'active\' OR status=\'created\')' );
+      break;
 
-  case 'new':
-  case 'active':
-  default:
-    //if reinstated project, set previously inactive child tasks to 'new'
-    if($previous_status == 'cantcomplete' || $previous_status == 'notactive' ) {
-      db_query('UPDATE '.PRE.'tasks SET status=\'created\' WHERE projectid='.$projectid.' AND parent<>0 AND status=\''.$previous_status.'\'' );
-    }
-    break;
+    case 'new':
+    case 'active':
+    default:
+      //if reinstated project, set previously inactive child tasks to 'new'
+      if($old_status == 'cantcomplete' || $old_status == 'notactive' ) {
+        db_query('UPDATE '.PRE.'tasks SET status=\'created\' WHERE projectid='.$projectid.' AND parent<>0 AND status=\''.$old_status.'\'' );
+      }
+      break;
+  }
 }
 
 //adjust completion status in project
