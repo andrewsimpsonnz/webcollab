@@ -6,6 +6,10 @@ WebCollab SVN
 
 - make allowance for inline/attachment downloads
 
+- improve session cookie deletion
+
+- bugfix: project on-hold to active transition bug (Reporter: Eduardo Alvim)
+
 WebCollab SVN
 *** 2 June 2009
   Andrew Simpson
