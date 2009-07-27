@@ -60,7 +60,7 @@ elseif(isset($_REQUEST['x'] ) && preg_match('/^[a-f\d]{32}$/i', $_REQUEST['x'] )
 }
 else {
   //return to login screen
-  setcookie('webcollab_session', '' );
+  clear_cookie();
   header("Location: ".BASE_URL."index.php");
   die;
 }
@@ -99,7 +99,7 @@ if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS userid,
 
 if(db_numrows($q) != 1 ) {
   //return to login screen
-  setcookie('webcollab_session', '' );
+  clear_cookie();
   header('Location: '.BASE_URL.'index.php');
   die;
 }
@@ -132,7 +132,7 @@ if(UNICODE_VERSION == 'Y' ) {
 //check the last login time (there is an inactivity time limit set by SESSION_TIMEOUT)
 if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
   db_query('UPDATE '.PRE.'logins SET session_key=\'xxxx\' WHERE user_id='.$row['userid'] );
-  setcookie('webcollab_session', '' );
+  clear_cookie();
   warning( $lang['security_manager'], sprintf($lang['session_timeout_sprt'],
             round(($row['now'] - $row['sec_lastaccess'] )/60), SESSION_TIMEOUT*60, BASE_URL ) );
 }
