@@ -259,12 +259,32 @@ function nice_size($size ) {
   return $size;
 }
 
+//
+// Check security token still valid
+//
+
 function token_check($token ) {
 
   if((! preg_match('/^[a-f\d]{32}$/i', $token ) ) || $token !== OLD_TOKEN ) {
     error("Invalid session", "Possible session hijacking detected." );
   }
 
+  return true;
+}
+
+//
+// Clear session cookie
+//
+
+function clear_cookie() {
+
+  $url = parse_url(BASE_URL );
+  if(version_compare(PHP_VERSION, '5.2.0', '>=' ) ) {
+    setcookie('webcollab_session', false, 0, $url['path'], $url['host'], false, true );
+  }
+  else {
+    setcookie('webcollab_session', false, 0, $url['path'], $url['host'] );
+  }
   return true;
 }
 
