@@ -32,7 +32,7 @@ require_once(BASE.'includes/security.php' );
 //log the user out by nulling their session key to an illegal key
 //record preserved to allow time of last login to be recorded
 db_query('UPDATE '.PRE.'logins SET session_key=\'XXXX\' WHERE user_id='.UID );
-setcookie('webcollab_session', '' );
+clear_cookie();
 
 header('Location: '.BASE_URL.'index.php' );
 

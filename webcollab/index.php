@@ -188,6 +188,7 @@ if(isset($_COOKIE['webcollab_session'] ) && strlen($_COOKIE['webcollab_session']
     }
     die;
   }
+  clear_cookie();
 }
 
 create_top($lang['login_screen'], 1, 2, 'username' );
