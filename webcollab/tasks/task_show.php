@@ -55,11 +55,13 @@ $q = db_query('SELECT '.PRE.'tasks.created AS created,
                       '.PRE.'tasks.completion_time AS completion,
                       '.PRE.'users.fullname AS fullname,
                       '.PRE.'taskgroups.name AS taskgroup_name,
-                      '.PRE.'usergroups.name AS usergroup_name
+                      '.PRE.'usergroups.name AS usergroup_name,
+                      '.$epoch.' '.PRE.'seen.time) AS last_seen
                       FROM '.PRE.'tasks
                       LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
                       LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid)
                       LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'tasks.usergroupid)
+                      LEFT JOIN '.PRE.'seen ON ('.PRE.'tasks.id='.PRE.'seen.taskid AND '.PRE.'seen.userid='.UID.')
                       WHERE '.PRE.'tasks.id='.$taskid.' LIMIT 1' );
 
 //get the data
@@ -68,8 +70,12 @@ if( ! ($row = db_fetch_array($q, 0 ) ) ) {
 }
 
 //mark this as seen in seen ;)
-@db_query('DELETE FROM '.PRE.'seen WHERE userid='.UID.' AND taskid='.$taskid, 0);
-db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$taskid.', now() )' );
+if($row['last_seen'] ) {
+  db_query('UPDATE '.PRE.'seen SET time=now() WHERE taskid='.$taskid.' AND userid='.UID );
+}
+else {
+  db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$taskid.', now() )' );
+}
 
 //text link for 'printer friendly' page
 if(isset($_GET['action']) && $_GET['action'] === "show_print" ) {
