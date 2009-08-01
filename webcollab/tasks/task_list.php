@@ -62,7 +62,6 @@ function listTasks($parentid ) {
 
   //iteration for main tasks
   for($i=0 ; $i < $task_count ; ++$i ) {
-
     //ignore subtasks in this iteration
     if(($task_array[$i]['parent'] != $parentid ) )  {
       continue;
@@ -159,47 +158,42 @@ function find_task_children($parent ) {
 
 function task_state($key ) {
 
-  global $task_array, $lang, $task_state, $epoch;
+  global $task_array, $lang, $task_state;
 
   $content = '<li>';
 
-  //have you seen this task yet ?
-  $q = db_query('SELECT COUNT(*) FROM '.PRE.'seen WHERE taskid='.$task_array[$key]['id'].' AND userid='.UID.' LIMIT 1' );
-  $last_seen = db_result($q, 0, 0 );
-
   //don't show alert content for changes more than NEW_TIME (in seconds)
   $max = max($task_array[$key]['edited'], $task_array[$key]['lastpost'], $task_array[$key]['lastfileupload'] );
-  if((TIME_NOW - $max ) > 86400 * NEW_TIME ) {
 
+  //have you seen this task yet ?
+  if((TIME_NOW - $max ) > 86400 * NEW_TIME ) {
     //if task is over limit in NEW_TIME and still not looked at by you, mark it as seen, and move on...
-    if( $last_seen < 1 ) {
+    if(! $task_array[$key]['last_seen'] ) {
       db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$task_array[$key]['id'].', now() ) ' );
     }
   }
   //task has changed since last seen - show the changes to you
   else {
 
-    if(! $last_seen ) {
+    if(! $task_array[$key]['last_seen'] ) {
       //new and never visited by this user
       $content .= "<span class=\"new\">".$lang['new_g']."</span>&nbsp;";
     }
     else {
-      $q = db_query('SELECT '.$epoch.' time) FROM '.PRE.'seen WHERE taskid='.$task_array[$key]['id'].' AND userid='.UID.' LIMIT 1' );
-      $seen = db_result($q, 0, 0 );
 
       //check if edited since last visit
-      if(($seen - $task_array[$key]['edited'] ) < 0 ) {
+      if(($task_array[$key]['last_seen'] - $task_array[$key]['edited'] ) < 0 ) {
         //edited
         $content .= "<span class=\"updated\">".$lang['updated_g']."</span>&nbsp;";
       }
 
       //are there forum changes ?
-      if($seen - $task_array[$key]['lastpost'] < 0 ) {
+      if($task_array[$key]['last_seen'] - $task_array[$key]['lastpost'] < 0 ) {
         $content .= "<img src=\"images/comments.png\" height=\"16\" width=\"16\" alt=\"message\" /> &nbsp;";
       }
 
       //are there file upload changes ?
-      if($seen - $task_array[$key]['lastfileupload'] < 0 ) {
+      if($task_array[$key]['last_seen'] - $task_array[$key]['lastfileupload'] < 0 ) {
         $content .= "<img src=\"images/disk_multiple.png\" height=\"16\" width=\"16\" alt=\"file\" /> &nbsp;";
       }
     }
@@ -336,10 +330,12 @@ $q = db_query('SELECT '.PRE.'tasks.id AS id,
                 '.PRE.'users.fullname AS username,
                 '.PRE.'taskgroups.id AS group_id,
                 '.PRE.'taskgroups.name AS group_name,
-                '.PRE.'taskgroups.description AS group_description
+                '.PRE.'taskgroups.description AS group_description,
+                '.$epoch.' '.PRE.'seen.time) AS last_seen
                 FROM '.PRE.'tasks
                 LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
                 LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid)
+                LEFT JOIN '.PRE.'seen ON ('.PRE.'tasks.id='.PRE.'seen.taskid AND '.PRE.'seen.userid='.UID.')
                 WHERE '.PRE.'tasks.projectid='.$projectid.
                 $tail.
                 'ORDER BY '.$no_group.' group_name, '.$task_order );
