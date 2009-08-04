@@ -29,7 +29,7 @@ CREATE TABLE tasks (
 	INDEX (projectid),
 	INDEX (taskgroupid),
 	INDEX (deadline),
-	INDEX (status)
+	INDEX (status, parent)
 )
 CHARACTER SET = utf8;
 
@@ -68,7 +68,7 @@ CREATE TABLE forum (
 	usergroupid INT UNSIGNED NOT NULL,
 	sequence INT UNSIGNED NOT NULL DEFAULT 0,
 	INDEX (taskid),
-	INDEX (posted)
+	INDEX (edited)
 )
 CHARACTER SET = utf8;
 
@@ -79,7 +79,8 @@ CREATE TABLE logins (
 	ip VARCHAR(100) NOT NULL,
 	lastaccess TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   token VARCHAR(100),
-	INDEX (session_key(10), user_id )
+	INDEX (session_key(10), user_id ),
+  INDEX (lastaccess)
 )
 CHARACTER SET = utf8;
 

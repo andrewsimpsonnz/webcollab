@@ -32,7 +32,7 @@ CREATE INDEX tasks_name_idx ON tasks USING btree (name);
 CREATE INDEX tasks_projectid_idx ON tasks USING btree (projectid);
 CREATE INDEX tasks_taskgroupid_idx ON tasks USING btree (taskgroupid);
 CREATE INDEX tasks_deadline_idx ON tasks USING btree (deadline);
-CREATE INDEX tasks_status_idx ON tasks USING btree (status);
+CREATE INDEX tasks_status_idx ON tasks USING btree (status, parent);
 
 
 CREATE SEQUENCE "users_id_seq" start 1 increment 1 maxvalue 2147483647 minvalue 1 cache 1;
@@ -44,9 +44,9 @@ CREATE TABLE "users" (
 	"email" character varying(200) NOT NULL,
 	"admin" boolean NOT NULL DEFAULT 'f'::bool,
 	"private" smallint DEFAULT 0::int NOT NULL,
-        "guest" smallint DEFAULT 0::int NOT NULL,
+  "guest" smallint DEFAULT 0::int NOT NULL,
 	"deleted" boolean NOT NULL DEFAULT 'f'::bool,
-        "locale" character varying(10) DEFAULT 'en'::text NOT NULL,
+  "locale" character varying(10) DEFAULT 'en'::text NOT NULL,
 	Constraint "users_pkey" Primary Key ("id")
 );
 CREATE INDEX users_fullname_idx ON users USING btree (fullname);
@@ -77,7 +77,7 @@ CREATE TABLE "forum" (
 	Constraint "forum_pkey" Primary Key ("id")
 );
 CREATE INDEX forum_taskid_idx ON forum USING btree (taskid);
-CREATE INDEX forum_posted_idx ON forum USING btree (posted);
+CREATE INDEX forum_edited_idx ON forum USING btree (edited);
 
 
 CREATE SEQUENCE "logins_id_seq" start 1 increment 1 maxvalue 2147483647 minvalue 1 cache 1;
@@ -92,6 +92,7 @@ CREATE TABLE "logins" (
 );
 CREATE INDEX logins_session_key_idx ON logins USING btree (session_key);
 CREATE INDEX logins_user_id_session_key_idx ON logins USING btree (session_key, user_id);
+CREATE INDEX logins_lastaccess_idx ON logins USING btree (lastaccess);
 
 
 CREATE TABLE "seen" (

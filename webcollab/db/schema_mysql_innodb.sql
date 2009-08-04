@@ -29,7 +29,7 @@ CREATE TABLE tasks (
 	INDEX (projectid),
 	INDEX (taskgroupid),
 	INDEX (deadline),
-	INDEX (status)
+	INDEX (status, parent)
 )
 TYPE = InnoDB
 CHARACTER SET = utf8;
@@ -45,7 +45,7 @@ CREATE TABLE users (
 	guest TINYINT NOT NULL DEFAULT 0,
 	deleted VARCHAR(5) NOT NULL DEFAULT 'f',
 	locale VARCHAR(10) NOT NULL DEFAULT 'en',
-        INDEX (fullname(10))
+  INDEX (fullname(10))
 )
 TYPE = InnoDB
 CHARACTER SET = utf8;
@@ -71,7 +71,7 @@ CREATE TABLE forum (
 	usergroupid INT UNSIGNED NOT NULL,
 	sequence INT UNSIGNED NOT NULL DEFAULT 0,
 	INDEX (taskid),
-	INDEX (posted)
+	INDEX (edited)
 )
 TYPE = InnoDB
 CHARACTER SET = utf8;
@@ -83,7 +83,8 @@ CREATE TABLE logins (
 	ip VARCHAR(100) NOT NULL,
 	lastaccess TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   token VARCHAR(100),
-	INDEX (session_key(10), user_id )
+	INDEX (session_key(10), user_id ),
+  INDEX (lastaccess)
 )
 TYPE = InnoDB
 CHARACTER SET = utf8;
