@@ -85,7 +85,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   if(ADMIN) {
     $content .= "<td><span class=\"textlink\">".
-                "<span class=\"textlink\"><a href=\"usergroups.php?x=".X."&amp;action=edit&amp;usergroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td>";
+                "<a href=\"usergroups.php?x=".X."&amp;action=edit&amp;usergroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td>";
   }
 
   $content .= "</tr>\n";
