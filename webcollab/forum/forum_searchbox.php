@@ -37,8 +37,8 @@ $content = "<br />".
            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
            "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
            "<input type=\"hidden\" name=\"start\" value=\"0\" /></fieldset>\n".
-           "<input type=\"text\" id=\"string\" name=\"string\" size=\"30\" />\n".
-           "<a href=\"javascript:void(document.getElementById('ForumSearch').submit())\"><small>".$lang['go']."</small></a>\n".
+           "<div><input type=\"text\" id=\"string\" name=\"string\" size=\"30\" />\n".
+           "<a href=\"javascript:void(document.getElementById('ForumSearch').submit())\"><small>".$lang['go']."</small></a></div>\n".
            "</form>";
 
  new_box($lang['forum_search'], $content );
