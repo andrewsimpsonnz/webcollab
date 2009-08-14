@@ -220,7 +220,7 @@ $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n ".
             "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n ".
             "<div style=\"text-align: center\">\n".
-            "<table class=\"decoration\" style=\"margin-left: auto; margin-right: auto;\" cellpadding=\"5px\">\n".
+            "<table class=\"decoration\" style=\"margin-left: auto; margin-right: auto;\" cellpadding=\"5\">\n".
             "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" onchange=\"javascript:this.form.submit()\"name=\"selection\" id=\"users\"".$s1."/><label for=\"users\">".$lang['users']."</label>\n".
             "<label for=\"users\"><select name=\"userid\" onchange=\"javascript:this.form.submit()\">\n".
             "<option value=\"0\"".$s2.">".$lang['all_users']."</option>\n";
@@ -308,7 +308,7 @@ $numdays = date('t', mktime(0, 0, 0, $month, 1, $year ) );
 
 //main calendar table
 $content .= "<div style=\"text-align: center\">\n".
-            "<table class=\"outline\" cellspacing=\"0\" border=\"1px\" width=\"97%\">\n<tr>\n".
+            "<table class=\"outline\" cellspacing=\"0\" border=\"1\" width=\"97%\">\n<tr>\n".
             "<td colspan=\"7\" class=\"monthcell\" align=\"center\" valign=\"middle\"><b>".$month_array[(int)$month]."</b>\n</td>\n".
             "</tr>\n";
 
@@ -319,7 +319,7 @@ for ($i = 0; $i < 7; ++$i ) {
   if( $day_number > 6 ) {
     $day_number = $day_number - 7;
   }
-  $content .= "<td class=\"weekcell\" style=\"width: 20px\"><b>".$week_array[$day_number]."</b></td>\n";
+  $content .= "<td class=\"weekcell\" style=\"width: 20\"><b>".$week_array[$day_number]."</b></td>\n";
 }
 $content .= "</tr>\n";
 
