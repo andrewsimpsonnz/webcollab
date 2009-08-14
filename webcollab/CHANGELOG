@@ -1,4 +1,10 @@
 WebCollab SVN
+*** 4 August 2009
+  Andrew Simpson
+
+- simplify database calls for seen table in task_list
+
+WebCollab SVN
 *** 24 July 2009
   Andrew Simpson
 
