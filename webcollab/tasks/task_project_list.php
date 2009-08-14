@@ -316,7 +316,7 @@ $content .= "<table>\n";
 
 //show 'project jump' select box
 if($action !== 'project_print') {
-  $content .= "<tr><td class=\"projectlist\" style=\"padding-bottom : 0px\">\n".project_jump(0)."</td></tr>\n";
+  $content .= "<tr><td class=\"projectlist\" style=\"padding-bottom : 0\">\n".project_jump(0)."</td></tr>\n";
 }
 
 //show all projects

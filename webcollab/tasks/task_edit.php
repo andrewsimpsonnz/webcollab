@@ -142,7 +142,7 @@ switch($TYPE) {
     $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" /></fieldset>\n".
                  "<table class=\"celldata\">\n".
                  "<tr><td>".$lang['creation_time']."</td><td>".nicedate($TASKID_ROW['created'] )."</td></tr>\n".
-                 "<tr><td>".$lang['project'] .":</td><td><a href=\"tasks.php?x=".X."&amp;action=show&taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></td></tr>\n";
+                 "<tr><td>".$lang['project'] .":</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></td></tr>\n";
     break;
 }
 

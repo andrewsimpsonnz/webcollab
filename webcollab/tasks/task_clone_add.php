@@ -72,11 +72,11 @@ if($row['parent'] == 0 ){
 }
 else{
   $content .= "<tr><td>".$lang['task_cloned']."</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$taskid."\">".$row['name']."</a></td></tr>\n".
-              "<tr><td colspan=\"2\"><i>".$lang['note_clone']."</i></td><tr>\n".
+              "<tr><td colspan=\"2\"><i>".$lang['note_clone']."</i></td></tr>\n".
               "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
               "<tr><td>".$lang['deadline'].":</td> <td>".date_select()."</td></tr>\n".
               "</table>\n".
-              "<p><input type=\"submit\" value=\"".$lang['add_project']."\"/</p>".
+              "<p><input type=\"submit\" value=\"".$lang['add_project']."\"/></p>".
               "</form>\n";
 
   new_box( $lang['add_task'], $content );
