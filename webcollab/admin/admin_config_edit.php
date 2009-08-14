@@ -52,8 +52,8 @@ if(USE_EMAIL === 'Y' ){
               "onsubmit=\"return emailCheck('from', 'reply', 'admin' )\" >\n".
               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"submit\" />\n".
-              "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-              "<input type=\"hidden\" id=\"alert_email\" name=\"alert\" value=\"".$lang['invalid_email']."\" />\n".
+              "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
+              "<input type=\"hidden\" id=\"alert_email\" name=\"alert\" value=\"".$lang['invalid_email']."\" /></fieldset>\n".
               "<table class=\"celldata\" >\n";
 
   $content .= "<tr><td style=\"white-space : nowrap\" colspan=\"2\"><b>".$lang['email_settings']."</b><br /><br /></td></tr>\n";
