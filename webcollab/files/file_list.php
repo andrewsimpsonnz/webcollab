@@ -75,16 +75,8 @@ if(db_numrows($q ) != 0 ) {
 
       $content .= "&nbsp;<span class=\"textlink\">".
                   "[<a href=\"files.php?x=".X."&amp;action=update&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['del']."</a>]".
-                  "&nbsp;[<a href=\"files.php?x=".X."&amp;action=update&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['update']."</a>]</span></td>\n";
+                  "&nbsp;[<a href=\"files.php?x=".X."&amp;action=update&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['update']."</a>]</span></td></tr>\n";
 
-      $content .= "<td><form id=\"delete_file\" method=\"post\" action=\"files.php\">\n".
-                  "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
-                  "<input type=\"hidden\" name=\"action\" value=\"submit_del\" />\n".
-                  "<input type=\"hidden\" name=\"fileid\" value=\"".$row['id']."\" />\n".
-                  "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
-                  "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-                  "</form>\n".
-                  "</td></tr>\n";
     }
     else {
       $content .= "</td></tr>\n";
