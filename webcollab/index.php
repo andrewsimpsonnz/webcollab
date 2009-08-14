@@ -204,7 +204,7 @@ else {
 
 $content .= "<p>".$lang['please_login'].":</p>\n".
             "<form method=\"post\" action=\"index.php\">\n".
-            "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
+            "<fieldset><input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" /></fieldset>\n".
             "<table style=\"margin-left:auto; margin-right:auto;\">\n".
             "<tr align=\"left\" ><td>".$lang['login'].": </td><td><input id=\"username\" type=\"text\" name=\"username\" value=\"\" size=\"30\" /></td></tr>\n".
             "<tr align=\"left\" ><td>".$lang['password'].": </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
