@@ -68,7 +68,8 @@ $content =  "<form method=\"post\" action=\"taskgroups.php\" ".
             "<input type=\"hidden\" name=\"taskgroupid\" value=\"".$taskgroupid."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"submit_del\" />\n".
             "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-            "<p><input type=\"submit\" value=\"".$lang['delete']."\"/></p>\n";
+            "<p><input type=\"submit\" value=\"".$lang['delete']."\"/></p>\n".
+            "</form>\n";
 
 new_box($lang['edit_taskgroup'], $content );
 
