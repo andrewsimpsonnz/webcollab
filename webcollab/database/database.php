@@ -45,6 +45,11 @@ switch(DATABASE_TYPE ) {
     require(BASE.'database/mysqli_database.php' );
     break;
 
+  case 'mysql_pdo':
+  case 'postgresql_pdo':
+    require(BASE.'database/pdo_database.php' );
+    break;
+
   default:
     die('No database type specified in configuration file' );
     break;
