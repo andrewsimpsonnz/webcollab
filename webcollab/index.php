@@ -61,8 +61,9 @@ function secure_error( $error = 'Login error', $redirect=0 ) {
   die;
 }
 
-//check and set taskid if required
-$taskid = (isset($_REQUEST['taskid']) && @safe_integer($_REQUEST['taskid']) ) ? $_REQUEST['taskid'] : 0;
+//check and set taskid & nologin if required
+$taskid  = (isset($_GET['taskid']) && @safe_integer($_GET['taskid']) ) ? $_GET['taskid'] : 0;
+$nologin = (isset($_GET['nologin']) ) ? 1 : 0;
 
 //valid login attempt ?
 if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['username']) > 0 && strlen($_POST['password']) > 0 )
@@ -169,7 +170,8 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
 }
 
 //allow for continuation of session if a valid cookie is already set
-if(isset($_COOKIE['webcollab_session'] ) && strlen($_COOKIE['webcollab_session'] ) == 32 ) {
+// if 'nologin' is set we have just been rejected by security.php
+if(isset($_COOKIE['webcollab_session'] ) && preg_match('/^[a-f\d]{32}$/i', $_COOKIE['webcollab_session'] ) && (! $nologin ) ) {
 
   include_once 'includes/common.php';
   include_once 'database/database.php';
@@ -188,7 +190,6 @@ if(isset($_COOKIE['webcollab_session'] ) && strlen($_COOKIE['webcollab_session']
     }
     die;
   }
-  clear_cookie();
 }
 
 create_top($lang['login_screen'], 1, 2, 'username' );
@@ -213,12 +214,14 @@ $content .= "<p>".$lang['please_login'].":</p>\n".
             "<p><input type=\"submit\" value=\"".$lang['login_action']."\" /></p>\n";
   switch(DATABASE_TYPE ) {
   case 'postgresql':
+  case 'postgresql_pdo':
     $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\" /></a></p>";
     break;
 
   case 'mysql':
   case 'mysql_innodb':
   case 'mysqli':
+  case 'mysql_pdo':
     $content .= "<p><a href=\"http://www.mysql.com\"><img src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\" /></a></p>\n";
     break;
 
