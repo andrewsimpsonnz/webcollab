@@ -273,22 +273,6 @@ function token_check($token ) {
 }
 
 //
-// Clear session cookie
-//
-
-function clear_cookie() {
-
-  $url = parse_url(BASE_URL );
-  if(version_compare(PHP_VERSION, '5.2.0', '>=' ) ) {
-    setcookie('webcollab_session', false, 0, $url['path'], $url['host'], false, true );
-  }
-  else {
-    setcookie('webcollab_session', false, 0, $url['path'], $url['host'] );
-  }
-  return true;
-}
-
-//
 // Builds up an error screen
 //
 function error($box_title, $error ) {
@@ -321,7 +305,7 @@ function error($box_title, $error ) {
     ob_end_clean();
 
     //email to the error address
-    $message = "Hello,\n This is the ".MANAGER_NAME." site and I have an error :/  \n".
+    $message = "Hello,\n This is the ".$manager_name." site and I have an error :/  \n".
             "\n\n".
             "Error message: ".$error."\n".
             "Database message: ".$db_error_message."\n".
