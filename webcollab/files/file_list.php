@@ -60,7 +60,7 @@ $q = db_query('SELECT '.PRE.'files.id AS id,
                         WHERE '.PRE.'files.taskid='.$taskid.'
                         ORDER BY uploaded' );
 
-if(db_numrows($q ) != 0 ) {
+if(db_numrows($q ) > 0 ) {
 
   $content .= "<table>\n";
 
@@ -74,7 +74,7 @@ if(db_numrows($q ) != 0 ) {
     if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['uploader'] ) ) {
 
       $content .= "&nbsp;<span class=\"textlink\">".
-                  "[<a href=\"files.php?x=".X."&amp;action=update&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['del']."</a>]".
+                  "[<a href=\"files.php?x=".X."&amp;action=delete&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['del']."</a>]".
                   "&nbsp;[<a href=\"files.php?x=".X."&amp;action=update&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['update']."</a>]</span></td></tr>\n";
 
     }

@@ -45,26 +45,38 @@ if( ! (bool)ini_get('file_uploads' ) ) {
   warning($lang['error'], $lang['no_file_uploads'] );
 }
 
-if( ! @safe_integer($_GET['taskid']) ) {
+if((! isset($_GET['taskid'] ) ) || (! @safe_integer($_GET['taskid'] ) ) ) {
   error('File upload', 'Not a valid taskid');
 }
 $taskid = $_GET['taskid'];
 
-if( ! @safe_integer($_GET['fileid']) ) {
+if((! isset($_GET['fileid'] ) ) || (! @safe_integer($_GET['fileid'] ) ) ) {
   error('File upload', 'Not a valid fileid');
 }
 $fileid = $_GET['fileid'];
 
-$return = 0;
 if(isset($_GET['admin']) && $_GET['admin'] == 1 ) {
   $return = 1;
+}
+else {
+  $return = 0;
+}
+
+//disable main form when deleting
+if(isset($_GET['action']) && $_GET['action'] == 'delete' ) {
+  $s = " disabled=\"disabled\"";
+}
+else {
+  $s = 0;
 }
 
 //check usergroup security
 $taskid = usergroup_check($taskid );
 
-//get filename
-$filename = db_result(db_query('SELECT filename FROM '.PRE.'files WHERE id='.$fileid ), 0, 0 );
+$q = db_query('SELECT filename, description FROM '.PRE.'files WHERE id='.$fileid.' LIMIT 1' );
+if( ! $row = db_fetch_array($q, 0 ) ) {
+  error('Edit file', 'File info missing' );
+}
 
 //update file
 $content =  "<form method=\"post\" enctype=\"multipart/form-data\" action=\"files.php\" onsubmit=\"return fieldCheck('userfile')\">\n".
@@ -76,20 +88,20 @@ $content =  "<form method=\"post\" enctype=\"multipart/form-data\" action=\"file
             "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"".FILE_MAXSIZE."\" />\n".
             "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n".
             "<table class=\"celldata\">\n".
-            "<tr><td>".$lang['file']."</td><th>".$filename."</th></tr>\n".
-            "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" size=\"60\"  /></td></tr>\n".
-            "<tr><td>".$lang['description'].":</td> <td><textarea name=\"description\" rows=\"25\" cols=\"88\"></textarea></td></tr>\n".
+            "<tr><td>".$lang['file']."</td><th>".$row['filename']."</th></tr>\n".
+            "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" size=\"60\" ".$s."/></td></tr>\n".
+            "<tr><td>".$lang['description'].":</td> <td><textarea name=\"description\" rows=\"25\" cols=\"88\"".$s.">".$row['description']."</textarea></td></tr>\n".
             "<tr><td></td><td>".sprintf( $lang['max_file_sprt'], FILE_MAXSIZE/1000 )."</td></tr>\n".
             "</table>\n".
             "<table class=\"celldata\">\n".
-            "<tr><td><label for=\"owner\">".$lang['file_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER." /></td></tr>\n".
-            "<tr><td><label for=\"usergroup\">".$lang['file_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP." /></td></tr>\n".
+            "<tr><td><label for=\"owner\">".$lang['file_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER.$s."/></td></tr>\n".
+            "<tr><td><label for=\"usergroup\">".$lang['file_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP.$s."/></td></tr>\n".
             "</table>\n".
-            "<p><input type=\"submit\" value=\"".$lang['upload']."\" /></p>\n".
+            "<p><input type=\"submit\" value=\"".$lang['upload']."\"".$s."/></p>\n".
             "</form>\n";
 
 //delete file
-$content .= "<form id=\"delete_file\" method=\"post\" action=\"files.php\" onsubmit=\"return confirm( '".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($filename ) )."' )\">\n".
+$content .= "<form id=\"delete_file\" method=\"post\" action=\"files.php\" onsubmit=\"return confirm( '".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename'] ) )."' )\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"submit_del\" />\n".
             "<input type=\"hidden\" name=\"fileid\" value=\"".$fileid."\" />\n".
