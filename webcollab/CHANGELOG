@@ -1,4 +1,20 @@
 WebCollab SVN
+*** 22 August 2009
+  Andrew Simpson
+
+- Bug #2839397 - suppress file permission error message
+
+- reduce database calls by removing unnecessary db_numrow() calls
+
+- remove potential race condition index.php / security.php login failure
+
+WebCollab SVN
+*** 14 August 2009
+  Andrew Simpson
+
+- html corrections and validation
+
+WebCollab SVN
 *** 4 August 2009
   Andrew Simpson
 
