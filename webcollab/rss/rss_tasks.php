@@ -49,10 +49,7 @@ if(! ($q = db_query('SELECT '.$epoch.'MAX(edited) ) AS last FROM '.PRE.'tasks', 
   rss_error('500', 'Tasks last edit' );
 }
 
-if(db_numrows($q) > 0 ) {
-  $last_mod  = db_result($q, 0, 0 );
-}
-else {
+if(! $last_mod  = db_result($q, 0, 0 ) ) {
   $last_mod = gmmktime();
 }
 

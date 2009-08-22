@@ -48,10 +48,7 @@ if(! ($q = db_query('SELECT '.$epoch.'MAX(posted) ) AS last FROM '.PRE.'forum', 
   rss_error('500', 'File last modified');
 }
 
-if(db_numrows($q) > 0 ) {
-  $last_mod  = db_result($q, 0, 0 );
-}
-else {
+if (! $last_mod = db_result($q, 0, 0 ) ) {
   $last_mod = gmmktime();
 }
 

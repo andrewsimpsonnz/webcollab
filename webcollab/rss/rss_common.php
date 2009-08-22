@@ -34,26 +34,18 @@ function rss_login() {
 
   //valid login attempt ?
   if(! isset($_SERVER['REMOTE_USER']) || (strlen($_SERVER['REMOTE_USER']) == 0 ) ) {
-
-  rss_error('401', 'Login no authorisation');
+    rss_error('401', 'Login no authorisation');
   }
 
   //used to get UTF-8 in common.php
   define('CHARACTER_SET', 'UTF-8' );
 
   if( ! ($q = @db_query('SELECT id, admin FROM '.PRE.'users WHERE name=\''.safe_data($_SERVER['REMOTE_USER'] ).'\' AND deleted=\'f\'', 0 ) ) ) {
-
-  rss_error('401', 'Login user select' );
-  }
-
-  if(db_numrows($q) != 1 ) {
-
-  rss_error('401', 'Login no user found');
+    rss_error('401', 'Login user select' );
   }
 
   if(! ($row = db_fetch_array($q, 0 ) ) ) {
-
-  rss_error('401', 'Login query error');
+    rss_error('401', 'Login query error');
   }
 
   define('UID', $row['id'] );
