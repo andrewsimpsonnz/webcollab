@@ -92,24 +92,14 @@ if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS userid,
                              '.$epoch.' now() ) AS now
                              FROM '.PRE.'logins
                              LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
-                             WHERE '.PRE.'logins.session_key=\''.$session_key.'\' LIMIT 1', 0 ) ) ) {
+                             WHERE '.PRE.'logins.session_key=\''.$session_key.'\' AND users.deleted=\'f\' LIMIT 1', 0 ) ) ) {
   error('Security manager', 'Database not able to verify session key');
 }
 
-if(db_numrows($q) < 1 ) {
+if( ! ( $row = db_fetch_array($q, 0) ) ) {
   //return to login screen
   header('Location: '.BASE_URL.'index.php?nologin=1');
   die;
-}
-
-if( ! ( $row = db_fetch_array($q, 0) ) ) {
-  error('Security manager', 'Error while fetching user data');
-}
-
-//if database table LEFT JOIN gives no rows will get NULL here
-//  also check for deleted users
-if((! $row['userid'] ) || ($row['deleted'] == 't' ) ){
-  error('Security manager', 'No valid user-id found');
 }
 
 //set user locale in Unicode version

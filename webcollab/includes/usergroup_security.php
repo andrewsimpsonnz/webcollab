@@ -50,11 +50,9 @@ function usergroup_check($taskid ) {
     error('Usergroup security', 'There was an error in the data query.' );
   }
 
-  if(db_numrows($q ) < 1 ) {
-      warning($lang['access_denied'], $lang['private_usergroup_no_access'] );
+  if(! $projectid = db_result($q, 0, 0 ) ) {
+    warning($lang['access_denied'], $lang['private_usergroup_no_access'] );
   }
-
-  $projectid = db_result($q, 0, 0 );
 
   //if this is a task, then get project data  
   if($projectid != $taskid ) {
