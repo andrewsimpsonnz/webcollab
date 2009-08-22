@@ -90,7 +90,7 @@ function copy_across($taskid, $new_parent, $name, $delta_deadline ) {
     $q = db_query('SELECT * FROM '.PRE.'tasks WHERE id='.$taskid.$tail );
 
     //check if this was a private usergroup task
-    if(db_numrows($q) == 0 ) {
+    if(! $row = db_fetch_array($q, 0 ) ) {
       //topmost task is private - no point proceeding
       if($new_parent == 0 ) {
         error("Task clone", "You do not have sufficient rights to clone this task" );
@@ -100,8 +100,6 @@ function copy_across($taskid, $new_parent, $name, $delta_deadline ) {
         return false;
       }
     }
-
-    $row = db_fetch_array($q, 0 );
 
     //set values
     if($new_parent != 0 ) {
@@ -220,12 +218,11 @@ if(! $q = @db_query('SELECT projectid, deadline FROM '.PRE.'tasks WHERE id='.$ta
   error('Task clone', 'There was an error in the data query.' );
 }
 
-if(db_numrows($q ) == 0 ) {
+//get the projectid & old deadline
+if(! $row = @db_fetch_num($q, $i ) ) {
   error('Task clone', 'The project to be cloned has either been deleted, or is now invalid.');
 }
 
-//get the projectid & old deadline
-$row = @db_fetch_num($q, $i );
 $projectid = $row[0];
 $deadline_array = explode('-', substr($row[1], 0, 10) );
 
