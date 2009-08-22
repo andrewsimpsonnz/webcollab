@@ -68,10 +68,13 @@ switch($_REQUEST['action'] ) {
     create_bottom();
     break;
 
-  case 'submit_del':
-  case 'submit_upload':
-  case 'submit_update':
-    include(BASE.'files/file_submit.php' );
+  //delete a file
+  case 'delete':
+    create_top($lang['file_choose'] );
+    include(BASE.'includes/mainmenu.php' );
+    goto_main();
+    include(BASE.'files/file_update.php' );
+    create_bottom();
     break;
 
   //admin files
@@ -82,6 +85,12 @@ switch($_REQUEST['action'] ) {
     goto_main();
     include(BASE.'files/file_admin.php' );
     create_bottom();
+    break;
+
+  case 'submit_del':
+  case 'submit_upload':
+  case 'submit_update':
+    include(BASE.'files/file_submit.php' );
     break;
 
   //error case

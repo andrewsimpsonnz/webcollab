@@ -63,6 +63,15 @@ switch($_REQUEST['action'] ) {
     create_bottom();
     break;
 
+  //delete a forum post/reply
+  case 'delete':
+    create_top($lang['add_reply'] );
+    include(BASE.'includes/mainmenu.php');
+    goto_main();
+    include(BASE.'forum/forum_edit.php');
+    create_bottom();
+    break;
+
   //submit add
   case 'submit_add':
     include(BASE.'forum/forum_submit_add.php');
