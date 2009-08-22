@@ -113,7 +113,7 @@ function reparent_children($task_id ) {
   //find the children tasks - if any
   $q = db_query('SELECT id FROM '.PRE.'tasks WHERE parent='.$task_id );
 
-  if(db_numrows($q ) == 0){
+  if(db_numrows($q ) < 1 ){
     return;
   }
 
