@@ -41,10 +41,19 @@ if((GUEST) && (GUEST_LOCKED != 'N' ) ){
   warning($lang['access_denied'], 'Guests are not permitted to post in forums' );
 }
 
-if(! @safe_integer($_REQUEST['postid']) ) {
+if((! isset($_REQUEST['postid'] ) )  || (! @safe_integer($_REQUEST['postid']) ) ) {
   error('Forum edit', 'Not a valid value for postid');
 }
 $postid = $_REQUEST['postid'];
+
+//disable main form when deleting
+if(isset($_REQUEST['action'] ) && $_REQUEST['action'] == 'delete' ) {
+  $s = " disabled=\"disabled\"";
+}
+else {
+  $s = '';
+}
+
 
 //find out the tasks' name
 $q = db_query('SELECT '.PRE.'forum.text AS text,
@@ -52,13 +61,11 @@ $q = db_query('SELECT '.PRE.'forum.text AS text,
                       '.PRE.'tasks.name AS name
                       FROM '.PRE.'forum
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
-                      WHERE '.PRE.'forum.userid='.UID.' AND '.PRE.'forum.id='.$postid );
+                      WHERE '.PRE.'forum.userid='.UID.' AND '.PRE.'forum.id='.$postid.' LIMIT 1' );
 
-if(db_numrows($q) == 0 ) {
+if(! $row = db_fetch_array($q, 0 ) ) {
   error('Forum edit', 'You are not authorised to edit that post.');
 }
-
-$row = db_fetch_array($q, 0 );
 
 $content .= "<form method=\"post\" action=\"forum.php\" onsubmit=\"return fieldCheck('text')\">\n";
 //set some hidden values
@@ -70,13 +77,13 @@ $content .= "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
 
 //build up the text-entry part
 $content .= "<table>\n".
-            "<tr><td>".$lang['message']."</td><td><textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\">".$row['text']."</textarea></td></tr>\n".
+            "<tr><td>".$lang['message']."</td><td><textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\"".$s.">".$row['text']."</textarea></td></tr>\n".
             "</table>\n".
             "<table class=\"celldata\">\n".
-            "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER." /></td></tr>\n".
-            "<tr><td><label for=\"usergroup\">".$lang['forum_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP." /></td></tr>\n".
+            "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER.$s." /></td></tr>\n".
+            "<tr><td><label for=\"usergroup\">".$lang['forum_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP.$s." /></td></tr>\n".
             "</table>\n".
-            "<p><input type=\"submit\" value=\"".$lang['post']."\" /></p>".
+            "<p><input type=\"submit\" value=\"".$lang['post']."\"".$s." /></p>".
             "</form>\n";
 
 //delete button
@@ -87,7 +94,7 @@ $content .= "<form id=\"delete_post\" method=\"post\" action=\"forum.php\" ".
             "<input type=\"hidden\" name=\"taskid\" value=\"".$row['taskid']."\" />\n".
             "<input type=\"hidden\" name=\"postid\" value=\"".$postid."\" />\n".
             "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-            "<p><input type=\"submit\" value=\"".$lang['delete']."\"></p>".
+            "<p><input type=\"submit\" value=\"".$lang['delete']."\" /></p>".
             "</form>\n";
 
 new_box(sprintf($lang['post_message_sprt'], $row['name'] ), $content );

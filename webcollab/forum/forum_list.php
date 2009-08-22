@@ -96,7 +96,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 
     //owners of the thread, owners of the post and admins have a "delete" option
     if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['postowner'] ) ) {
-      $this_post .= "<span class=\"textlink\">[<a href=\"forum.php?x=".X."&amp;action=edit&amp;postid=".$row['id']."\" >".$lang['del']."</a>]</span>\n";
+      $this_post .= "<span class=\"textlink\">[<a href=\"forum.php?x=".X."&amp;action=delete&amp;postid=".$row['id']."\" >".$lang['del']."</a>]</span>\n";
     }
 
     //owners of the post have an "update" option
