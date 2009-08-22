@@ -74,11 +74,10 @@ else {
 $q = db_query('SELECT taskid, parent FROM '.PRE.'forum WHERE userid='.UID.' AND id='.$postid );
 
 //check for editing rights
-if(db_numrows($q ) == 0 ) {
+if(! $row = db_fetch_array($q, 0 ) ) {
   error('Forum submit', 'You are not authorised to edit that post.' );
 }
 
-$row = db_fetch_array($q, 0 );
 $taskid   = $row['taskid'];
 $parentid = $row['parent'];
 
