@@ -78,15 +78,14 @@ function file_delete($fileid ) {
                                 LEFT JOIN '.PRE.'tasks ON ('.PRE.'files.taskid='.PRE.'tasks.id)
                                 WHERE '.PRE.'files.id='.$fileid );
 
-  if(db_numrows($q ) != 0 ) {
-    //show it
-    $row = @db_fetch_array($q, 0 );
+  //show it
+  if($row = @db_fetch_array($q, 0 ) {
     //owners of the file and admins can delete files
     if( (ADMIN ) || (UID == $row['owner'] ) || (UID == $row['uploader'] ) ) {
 
       //delete file from disk
       if(file_exists(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] ) ) {
-        unlink(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] );
+        @unlink(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] );
       }
       //delete record of file
       db_query('DELETE FROM '.PRE.'files WHERE fileid='.$row['fileid'] );
