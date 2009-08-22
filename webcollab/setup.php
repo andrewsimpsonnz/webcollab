@@ -114,14 +114,9 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   }
 
   //no such user-password combination
-  if( @db_numrows($q) < 1 ) {
-      sleep(2);
-      secure_error("Not a valid username, or password" );
-  }
-
-  //no user-id
   if( ! ($user_id = @db_result($q, 0, 0) ) ) {
-    secure_error("Unknown user id");
+    sleep(2);
+    secure_error("Not a valid username, or password" );
   }
 
   //user is okay log him/her in

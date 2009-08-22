@@ -105,7 +105,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
   }
 
   //no such user-password combination
-  if( @db_numrows($q) < 1 ) {
+  if( ! ($user_id = @db_result($q, 0, 0) ) ) {
 
     //count the number of recent failed login attempts
     if( ! $q = @db_query('SELECT COUNT(*) FROM '.PRE.'login_attempt
@@ -127,11 +127,6 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
     //wait 2 seconds then record an error
     sleep (2);
     secure_error($lang['no_login'], 1 );
-  }
-
-  //no user-id
-  if( ! ($user_id = @db_result($q, 0, 0) ) ) {
-    secure_error('Unknown user id', 1 );
   }
 
   //user is okay log him/her in
