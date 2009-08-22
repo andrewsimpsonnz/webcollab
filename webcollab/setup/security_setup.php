@@ -104,17 +104,8 @@ else {
     error_setup('Database not able to verify session key');
   }
 
-  if(db_numrows($q) != 1 ) {
-    error_setup('No valid session exists' );
-  }
-
   if(! ( $row = db_fetch_array($q, 0 ) ) ) {
-    error_setup('Error while fetching users data');
-  }
-
-  //if database table LEFT JOIN gives no rows will get NULL here
-  if($row['user_id'] == NULL ) {
-    error_setup('No valid user-id found');
+    error_setup('No valid session exists');
   }
 
   //check rights
