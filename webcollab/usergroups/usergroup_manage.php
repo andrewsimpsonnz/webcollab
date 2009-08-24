@@ -52,18 +52,6 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 //get the usergroup info
 $q = db_query('SELECT * FROM '.PRE.'usergroups ORDER BY name' );
 
-//nothing here yet
-if(db_numrows($q) == 0 ) {
-  $content = "<p>".$lang['no_usergroups']."</p>\n";
-
-  if(ADMIN) {
-    $content .= "<span class=\"textlink\"><a href=\"usergroups.php?x=".X."&amp;action=add\">[".$lang['add']."]</a></span>\n";
-  }
-
-  new_box($lang['usergroup_manage'], $content );
-  return;
-}
-
 $content =  "<table class=\"celldata\">\n".
             "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th><th>".$lang['private_usergroup']."</th></tr>\n";
 
@@ -129,7 +117,19 @@ else {
   }
 }
 
-new_box($lang['manage_usergroups'], $content, "boxdata2" );
+//nothing here yet
+if($i == 0 ) {
+  $content = "<p>".$lang['no_usergroups']."</p>\n";
+
+  if(ADMIN) {
+    $content .= "<span class=\"textlink\"><a href=\"usergroups.php?x=".X."&amp;action=add\">[".$lang['add']."]</a></span>\n";
+  }
+
+  new_box($lang['usergroup_manage'], $content );
+}
+else {
+  new_box($lang['manage_usergroups'], $content, "boxdata2" );
+}
 
 //admin gets some user notes
 if(ADMIN ) {
