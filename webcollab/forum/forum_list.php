@@ -68,11 +68,6 @@ function list_posts_from_task( $taskid, $usergroupid ) {
                         AND '.PRE.'forum.usergroupid='.$usergroupid.'
                         ORDER BY '.PRE.'forum.posted DESC' );
 
-  //check for any posts
-  if(db_numrows($q ) < 1 ){
-    return;
-  }
-
   $content = "<ul>\n";
 
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -158,6 +153,12 @@ function list_posts_from_task( $taskid, $usergroupid ) {
     if($row['parent'] != 0 ) {
       $parent_array[($row['parent'])] = $row['parent'];
     }
+  }
+
+  if($i == 0 ) {
+    //no posts were found in the database
+    $content = '';
+    return $content;
   }
 
   //iteration for first level posts
