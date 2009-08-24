@@ -47,17 +47,10 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   }
 }
 
-//query
-$q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' ORDER by fullname' );
-
-//check for enough users
-if(db_numrows($q) < 1 ) {
-  $content = "<small>".$lang['no_users']."</small>";
-  new_box($lang['users'], $content );
-  return;
-}
-
 $content = "<table style=\"text-align:left\">\n";
+
+//query users
+$q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' ORDER by fullname' );
 
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -68,12 +61,17 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 
   $content .= "<tr><td><small><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".wordwrap($row['fullname'], 30,  "<br />", 1 )."</a></small></td></tr>\n";
-
 }
-
 $content .= "</table>";
 
-//show it
-new_box($lang['existing_users'], $content, 'boxmenu' );
+//check for enough users
+if($i == 1 ) {
+  $content = "<small>".$lang['no_users']."</small>";
+  new_box($lang['users'], $content );
+}
+else {
+  //show it
+  new_box($lang['existing_users'], $content, 'boxmenu' );
+}
 
 ?>

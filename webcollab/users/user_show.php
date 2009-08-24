@@ -98,23 +98,27 @@ $q = db_query('SELECT '.PRE.'usergroups.id AS id,
                       LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.usergroupid='.PRE.'usergroups.id)
                       WHERE '.PRE.'usergroups_users.userid='.$row['id'] );
 
-if(db_numrows($q) < 1 ) {
-  $content .= "<tr><td>".$lang['usergroups'].":</td><td>".$lang['no_usergroup']."</td></tr>\n";
+$content .= "<tr><td>".$lang['usergroups'].": </td><td>";
+$alert = '';
+$usergroups = '';
+$group_content = '';
+for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ){
+  //test for private usergroups
+  if( ($row['private']) && (! ADMIN ) && ( ! isset($GID[($row['id'])] ) ) ) {
+    $alert = "<br />".$lang['private_usergroup_profile'];
+    continue;
+  }
+  $usergroups .= ($usergroups != '' ) ? ",&nbsp;".$row['name'] : $row['name'];
+}
+$group_content .= $usergroups.$alert;
+$group_content .= "</td></tr>\n";
+
+//check if any usergroups were found
+if($i == 0 ) {
+  $content .= $lang['no_usergroup']."</td></tr>\n";
 }
 else {
-  $content .= "<tr><td>".$lang['usergroups'].": </td><td>";
-  $alert = "";
-  $usergroups = "";
-  for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ){
-    //test for private usergroups
-    if( ($row['private']) && (! ADMIN ) && ( ! isset($GID[($row['id'])] ) ) ) {
-      $alert = "<br />".$lang['private_usergroup_profile'];
-      continue;
-    }
-    $usergroups .= ($usergroups != '' ) ? ",&nbsp;".$row['name'] : $row['name'];
-  }
-  $content .= $usergroups.$alert;
-  $content .= "</td></tr>\n";
+  $content .= $group_content;
 }
 
 //get the last login time of a user

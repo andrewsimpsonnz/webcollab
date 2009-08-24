@@ -50,13 +50,6 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 //query
 $q = db_query('SELECT * FROM '.PRE.'users WHERE deleted=\'f\' ORDER by fullname' );
 
-//check for enough users
-if(db_numrows($q) < 1 ) {
-  $content = "<small>".$lang['no_users']."</small>";
-  new_box($lang['users'], $content );
-  return;
-}
-
 $content = "<table class=\"celldata\">\n";
 
 //show them
@@ -82,6 +75,11 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 }
 
 $content .= "</table>\n";
+
+//check for enough users
+if($i == 0 ) {
+  $content = "<small>".$lang['no_users']."</small>";
+}
 
 //admin can add a user
 if(ADMIN) {

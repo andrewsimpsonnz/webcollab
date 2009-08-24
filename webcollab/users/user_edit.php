@@ -35,6 +35,7 @@ include_once(BASE.'users/user_common.php' );
 
 //secure vars
 $userid = '';
+$usergroups_users_array = array();
 
 if((GUEST) && (GUEST_LOCKED != 'N' ) ){
   warning($lang['access_denied'], 'Guests are not permitted to modify details' );
@@ -49,11 +50,17 @@ if(ADMIN ) {
   }
   $userid = $_REQUEST['userid'];
 
-  //query for user
+  //query for the groups that this user is in
+  $q = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$userid );
+
+  //put groups in an array
+  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
+    $usergroups_users_array[] = $row['usergroupid'];
+  }
+
+  //also query for user
   $q = db_query('SELECT * FROM '.PRE.'users WHERE id='.$userid );
 
-  //also query for the groups that this user is in
-  $usergroups_users_q = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$userid );
 }
 else {
   //user
@@ -62,7 +69,7 @@ else {
 
 //fetch data
 if( ! ($row = db_fetch_array($q , 0 ) ) ) {
-  error('Database result', 'Error in retrieving user-data from database' );
+  error('Database result', 'Error in retrieving user data from database' );
 }
 
 //show data
@@ -129,27 +136,13 @@ if(ADMIN ) {
               "<td colspan=\"2\"><select name=\"usergroup[]\" multiple=\"multiple\" size=\"4\">\n";
 
   for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; ++$i) {
-
-    $found = false;
     $content .= "<option value=\"".$usergroup_row['id']."\"";
 
-    //loop all groups the user is in and tag the ones he is in
-    @db_data_seek( $usergroups_users_q ); //reset mysql internal pointer each cycle
-    for($j=0 ; $usergroups_users_row = @db_fetch_array($usergroups_users_q, $j ) ; ++$j) {
-
-      if($usergroups_users_row['usergroupid'] == $usergroup_row['id'] ) {
-        $content .= " selected=\"selected\">";
-        $found = true;
-        break;
-      }
+    //highlight occupied groups
+    if(in_array($usergroup_row['id'], $usergroups_users_array ) ) {
+      $content .= " selected=\"selected\"";
     }
-
-    //if not found then end the option tag normally
-    if(! $found ) {
-      $content .= " >";
-    }
-
-    $content .= $usergroup_row['name']."</option>";
+    $content .= " >".$usergroup_row['name']."</option>";
   }
   $content .= "</select><small><i>".$lang['select_instruct']."</i></small></td></tr>\n";
 }
