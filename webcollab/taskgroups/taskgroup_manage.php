@@ -39,15 +39,6 @@ if( ! ADMIN ){
 //get the info
 $q = db_query('SELECT * FROM '.PRE.'taskgroups ORDER BY name' );
 
-//nothing here yet
-if(db_numrows($q) == 0 ) {
-  $content = "<p>".$lang['no_taskgroups']."</p>\n".
-             "<span class=\"textlink\"><a href=\"taskgroups.php?x=".X."&amp;action=add\">[".$lang['add']."]</a></span>\n";
-
-  new_box($lang['taskgroup_manage'], $content );
-  return;
-}
-
 $content =  "<table class=\"celldata\">\n".
             "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th></tr>\n";
 
@@ -62,7 +53,17 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 $content .= "</table>\n".
             "<p><span class=\"textlink\">[<a href=\"taskgroups.php?x=".X."&amp;action=add\">".$lang['add']."</a>]</span></p>\n";
 
-new_box( $lang['manage_taskgroups'], $content, 'boxdata2' );
+
+//nothing here yet
+if($i == 0 ) {
+  $content = "<p>".$lang['no_taskgroups']."</p>\n".
+             "<span class=\"textlink\"><a href=\"taskgroups.php?x=".X."&amp;action=add\">[".$lang['add']."]</a></span>\n";
+
+  new_box($lang['taskgroup_manage'], $content );
+}
+else {
+  new_box( $lang['manage_taskgroups'], $content, 'boxdata2' );
+}
 
 //admin gets some user notes
 include_once(BASE.'lang/lang_long.php' );
