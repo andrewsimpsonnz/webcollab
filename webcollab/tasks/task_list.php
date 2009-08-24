@@ -340,10 +340,6 @@ $q = db_query('SELECT '.PRE.'tasks.id AS id,
                 $tail.
                 'ORDER BY '.$no_group.' group_name, '.$task_order );
 
-if(db_numrows($q) < 1 ) {
-  return;
-}
-
 for( $i=0 ; $task_array[$i] = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //if this is a subtask, store the parent id
@@ -356,8 +352,12 @@ for( $i=0 ; $task_array[$i] = @db_fetch_array($q, $i ) ; ++$i ) {
 
 db_free_result($q);
 
-$content = listTasks($parentid );
+if($i > 0 ) {
+  //we have tasks showing in the database
 
-new_box($lang['tasks'], $content );
+  $content = listTasks($parentid );
+
+  new_box($lang['tasks'], $content );
+}
 
 ?>

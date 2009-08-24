@@ -108,22 +108,18 @@ function find_children($parent, $new_parentid ) {
 
 function reparent_children($task_id ) {
 
-   global $projectid;
+  global $projectid;
 
   //find the children tasks - if any
   $q = db_query('SELECT id FROM '.PRE.'tasks WHERE parent='.$task_id );
 
-  if(db_numrows($q ) < 1 ){
-    return;
+  for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+    db_query('UPDATE '.PRE.'tasks SET projectid='.$projectid.' WHERE id='.$row[0] );
+    //recursion to find anymore children
+    reparent_children($row[0] );
   }
 
-   for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-     db_query('UPDATE '.PRE.'tasks SET projectid='.$projectid.' WHERE id='.$row[0] );
-     //recursion to find anymore children
-     reparent_children($row[0] );
-   }
-
-return;
+  return;
 }
 
 //MAIN PROGRAM

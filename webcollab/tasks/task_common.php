@@ -104,33 +104,34 @@ function project_jump($taskid=0) {
                         .$tail.
                         'ORDER BY name' );
 
-  //check if there are projects
-  if(db_numrows($q) > 0 ){
+  // Prepare the form
+  $content .= "<form id=\"ProjectQuickJump\" method=\"get\" action=\"tasks.php\">\n".
+              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+              "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n".
+              "<div><select name=\"taskid\" onchange=\"javascript:this.form.submit()\">\n".
+              "<option value=\"-1\">".$lang['quick_jump']."</option>\n";
 
-    // Prepare the form
-    $content .= "<form id=\"ProjectQuickJump\" method=\"get\" action=\"tasks.php\">\n".
-                "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
-                "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n".
-                "<div><select name=\"taskid\" onchange=\"javascript:this.form.submit()\">\n".
-                "<option value=\"-1\">".$lang['quick_jump']."</option>\n";
+  // loop through the data
+  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ){
 
-    // loop through the data
-    for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ){
-
-      $content .= "<option value=\"".$row["id"]."\"";
-      if($taskid == $row['id']) {
-        $content .= " selected=\"selected\"";
-      }
-      $content .= ">".$row['name']."</option>\n";
+    $content .= "<option value=\"".$row["id"]."\"";
+    if($taskid == $row['id']) {
+      $content .= " selected=\"selected\"";
     }
+    $content .= ">".$row['name']."</option>\n";
+  }
 
   // wrap up the select and the submit
   $content .= "</select>\n".
               "<a href=\"javascript:void(document.getElementById('ProjectQuickJump').submit())\"><small>".$lang['go']."</small></a></div>\n".
               "</form>\n";
-  }
 
   db_free_result($q );
+
+  //check if there were any results
+  if($i == 0 ) {
+    $content = '';
+  }
 
   return $content;
 }

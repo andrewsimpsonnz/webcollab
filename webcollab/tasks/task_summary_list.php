@@ -72,15 +72,10 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
                          FROM '.PRE.'tasks
                          '.$tail );
 
-  // if no result, then do nothing
-  if(db_numrows($q) < 1 ) {
-    return '';
-  }
-
   //reset variables
   $result = '';
 
-  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
+  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
     //don't show tasks in closed usergroup projects
     if( (! ADMIN ) && isset($no_access_project[($row['projectid'])] ) ) {

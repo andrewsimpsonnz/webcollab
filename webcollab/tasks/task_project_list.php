@@ -272,13 +272,6 @@ $q = db_query('SELECT id,
                       .$tail
                       .$project_order );
 
-//check if there are projects
-if(db_numrows($q) < 1 ) {
-  $content .= "<div style=\"text-align : center\"><a href=\"tasks.php?x=".X."&amp;action=add\">".$lang['add_project']."</a></div>\n";
-  new_box($lang['no_projects'], $content );
-  return;
-}
-
 //text link for 'active' switch
 $content .= "<table style=\"width : 100%\"><tr><td>\n".
             "<span class=\"textlink\">";
@@ -426,10 +419,16 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
 $content .= "</table>\n";
 
-if($flag != 1 ) {
-  $content .= "<div style=\"text-align : center\">".$lang['no_allowed_projects']."</div>\n";
+//check if there are projects
+if($i == 0 ) {
+  $content = "<div style=\"text-align : center\"><a href=\"tasks.php?x=".X."&amp;action=add\">".$lang['add_project']."</a></div>\n";
+  new_box($lang['no_projects'], $content );
 }
-
-new_box($lang['projects'], $content );
+else {
+  if($flag != 1 ) {
+    $content .= "<div style=\"text-align : center\">".$lang['no_allowed_projects']."</div>\n";
+  }
+  new_box($lang['projects'], $content );
+}
 
 ?>
