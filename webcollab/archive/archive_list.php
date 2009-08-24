@@ -36,7 +36,6 @@ include_once(BASE.'includes/time.php' );
 
 //some inital values
 $content = '';
-$flag = 0;
 $archive_print = 0;
 
 //set the usergroup permissions on queries
@@ -57,13 +56,6 @@ $q = db_query('SELECT id,
                       .$tail.
                       'ORDER BY name' );
 
-//check if there are projects
-if(db_numrows($q) < 1 ) {
-  $content .= "<div style=\"text-align : center\">".$lang['no_allowed_projects']."</div>\n";
-  new_box($lang['no_projects'], $content );
-  return;
-}
-
 //text link for 'printer friendly' page
 if(isset($_GET['action']) && $_GET['action'] == "archive_print" ) {
   $content  .= "[<a href=\"archive.php?x=".X."&amp;action=list\">".$lang['normal_version']."</a>]\n";
@@ -80,6 +72,11 @@ $content .= "<table>\n";
 
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
+
+  if($i > 0 ) { 
+    //not the first line, need to add a divider
+    $content .= "<tr><td style=\"padding-left: 30px\"><hr /></td></tr>\n";
+  }
 
   //set project status
   $project_status = $row['status'];
@@ -100,13 +97,6 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
       }
       break;
   }
-
-  if($flag == 1 ) {
-    $content .= "<tr><td style=\"padding-left: 30px\"><hr /></td></tr>\n";
-  }
-
-  //to indicate that there are viewable projects
-  $flag = 1;
 
   //start list
   $content .= "<tr><td class=\"projectlist\">\n";
@@ -169,10 +159,15 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 $content .= "</table>\n";
 
-if($flag != 1 ){
-  $content .= "<div style=\"text-align : center\">".$lang['no_allowed_projects']."</div>\n";
-}
+if($i == 0 ) {
+  //no projects found in database
+  $content = "<div style=\"text-align : center\">".$lang['no_allowed_projects']."</div>\n";
+  new_box($lang['no_projects'], $content );
 
-new_box($lang['archived_projects'], $content );
+}
+else {
+  //show projects found
+  new_box($lang['archived_projects'], $content );
+}
 
 ?>
