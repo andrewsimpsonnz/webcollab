@@ -49,7 +49,7 @@ $content .=
         "<input type=\"hidden\" name=\"action\" value=\"submit_email\" /></fieldset>\n".
         "<table class=\"celldata\">\n".
         "<tr><td></td><td>\n".
-        "<table class=\"decoration\" cellpadding=\"5px\" >\n".
+        "<table class=\"decoration\" cellpadding=\"5\" >\n".
         "<tr><td><input type=\"radio\" value=\"all\" name=\"group\" id=\"all\" checked=\"checked\" /><label for=\"all\">".$lang['all_users']."</label></td>\n".
         "<td><input type=\"radio\" value=\"maillist\" name=\"group\" id=\"maillist\" /><label for=\"maillist\">".$lang['mailing_list']."</label></td>\n".
         "<td><input type=\"radio\" value=\"group\" name=\"group\" id=\"group\" /><label for=\"group\">".$lang['select_usergroup']."</label></td></tr>\n";
