@@ -55,19 +55,13 @@ $q = db_query('SELECT '.PRE.'files.id AS id,
                         LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'files.uploader)
                         ORDER BY task_name' );
 
-if(db_numrows($q) < 1 ) {
- $content = $lang['no_files']."\n";
-
- new_box($lang['manage_files'], $content );
-  return;
-}
-
 $content .= "<table>\n";
 
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   if($i > 0 ) {
+    //not the first line, need to add a divider
     $content .= "<tr><td><hr /></td></tr>\n";
   }
 
@@ -79,7 +73,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
               "<a href=\"files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."\"". "onclick=\"window.open('files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a>".
               "&nbsp;<small>(".nice_size($row['size'] ).")&nbsp;</small>".
               //delete option
-              "<span class=\"textlink\">[<a href=\"files.php?x=".X."&amp;action=delete&amp;fileid=".$row['id']."&amp;admin=1&amp;taskid=".$row['task_id']."\">".$lang['edit']."</a>]</span></td></tr>\n".
+              "<span class=\"textlink\">[<a href=\"files.php?x=".X."&amp;action=delete&amp;fileid=".$row['id']."&amp;admin=1&amp;taskid=".$row['task_id']."\">".$lang['del']."</a>]</span></td></tr>\n".
               //user part
               "<tr><td>".$lang['uploader']." </td><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")</td></tr>\n";
 
@@ -94,6 +88,14 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 $content .= "</table>\n";
 
-new_box( $lang['manage_files'], $content );
+if($i == 0 ) {
+  //no files found in database
+  $content = $lang['no_files']."\n";
+  new_box($lang['manage_files'], $content );
+}
+else {
+  //show found content
+  new_box( $lang['manage_files'], $content );
+}
 
 ?>

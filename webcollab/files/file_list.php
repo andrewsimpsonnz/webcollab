@@ -60,39 +60,42 @@ $q = db_query('SELECT '.PRE.'files.id AS id,
                         WHERE '.PRE.'files.taskid='.$taskid.'
                         ORDER BY uploaded' );
 
-if(db_numrows($q ) > 0 ) {
 
-  $content .= "<table>\n";
+$content .= "<table>\n";
 
-  //show them
-  for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
+//show them
+for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
-    //file part
-    $content .= "<tr><td><a href=\"files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a> <small>(".nice_size($row['size'] ).") </small>";
+  //file part
+  $content .= "<tr><td><a href=\"files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a> <small>(".nice_size($row['size'] ).") </small>";
 
-    //owners of the file and admins have a "delete" and "update" option
-    if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['uploader'] ) ) {
+  //owners of the file and admins have a "delete" and "update" option
+  if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['uploader'] ) ) {
 
-      $content .= "&nbsp;<span class=\"textlink\">".
-                  "[<a href=\"files.php?x=".X."&amp;action=delete&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['del']."</a>]".
-                  "&nbsp;[<a href=\"files.php?x=".X."&amp;action=update&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['update']."</a>]</span></td></tr>\n";
+    $content .= "&nbsp;<span class=\"textlink\">".
+                "[<a href=\"files.php?x=".X."&amp;action=delete&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['del']."</a>]".
+                "&nbsp;[<a href=\"files.php?x=".X."&amp;action=update&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['update']."</a>]</span></td></tr>\n";
 
-    }
-    else {
-      $content .= "</td></tr>\n";
-    }
-
-    //user part
-    $content .= "<tr><td>".$lang['uploader']." <a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")</td></tr>\n";
-
-    //show description
-    if( $row['description'] != '' ) {
-      $content .= "<tr><td><small><i>".nl2br(bbcode($row['description'] ) )."</i></small></td></tr>\n";
-    }
-    //padding for next entry
-    $content .= "<tr><td>&nbsp;</td></tr>\n";
   }
-  $content .= "</table>";
+  else {
+    $content .= "</td></tr>\n";
+  }
+
+  //user part
+  $content .= "<tr><td>".$lang['uploader']." <a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")</td></tr>\n";
+
+  //show description
+  if( $row['description'] != '' ) {
+    $content .= "<tr><td><small><i>".nl2br(bbcode($row['description'] ) )."</i></small></td></tr>\n";
+  }
+  //padding for next entry
+  $content .= "<tr><td>&nbsp;</td></tr>\n";
+}
+$content .= "</table>";
+
+if($i == 0 ) {
+  //no files found in database
+  $content = '';
 }
 
 if((! GUEST ) && ($TASKID_ROW['archive'] == 0) ){
