@@ -44,20 +44,25 @@ db_user_locale('UTF-8');
 //main query
 $q = db_query(icalendar_query(). icalendar_usergroup_tail() ); 
 
+for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
+
+  //add vtodo
+  $content .= icalendar_body($row);
+}
+
 //no rows ==> return
-if(db_numrows($q) < 1 ) {
+if($i == 0 ) {
   header('Location: '.BASE_URL.'main.php?x='.X );
   die;
 }
 
+//we have content, send it!
+
 //send headers to browser
 icalendar_header('ALL');
 
-for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
-
-  //add vtodo
-  icalendar_body($row);
-}
+//send content
+echo $content;
 
 //end of file
 icalendar_end();

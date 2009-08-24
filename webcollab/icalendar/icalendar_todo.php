@@ -85,35 +85,39 @@ db_user_locale('UTF-8');
 //show all subtasks that are not complete
 $q = db_query( icalendar_query().' AND '.PRE.'tasks.parent<>0 '.$tail. icalendar_usergroup_tail() );
 
-//no rows ==> return
-if(db_numrows($q) < 1 ) {
-  header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=todo&userid='.$userid.'&groupid='.$groupid.'&selection='.$selection );
-  die;
-}
-
-//send headers to browser
-icalendar_header($id);
-
 for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
   if(! in_array($row['projectid'], (array)$projects ) ) {
 
     $project_q = db_query(icalendar_query().' AND '.PRE.'tasks.id='.$row['projectid']. icalendar_usergroup_tail() );
 
-
     //check for closed projects
-    if(db_numrows($project_q) < 1 ) {
+    if(! ($project = db_fetch_array($project_q, 0) ) ) {
       continue;
     }
 
-    icalendar_body(db_fetch_array($project_q, 0) );
+    $content .= icalendar_body($project );
 
     $projects[] = $row['projectid'];
   }
 
   //add vtodo
-  icalendar_body($row);
+  $content .= icalendar_body($row);
 }
+
+//no rows ==> return
+if($i == 0 ) {
+  header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=todo&userid='.$userid.'&groupid='.$groupid.'&selection='.$selection );
+  die;
+}
+
+//we have content, send it!
+
+//send headers to browser
+icalendar_header($id);
+
+//send content
+echo $content;
 
 //end of file
 icalendar_end();

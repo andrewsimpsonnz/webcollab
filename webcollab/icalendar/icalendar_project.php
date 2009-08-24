@@ -60,20 +60,25 @@ else {
 //main query
 $q = db_query(icalendar_query().' AND '.PRE.$type.$taskid. icalendar_usergroup_tail() );
 
+for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
+
+  //add vtodo
+  $content .= icalendar_body($row);
+}
+
 //no rows ==> return
-if(db_numrows($q) < 1 ) {
+if($i == 0 ) {
   header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=show&taskid='.$taskid );
   die;
 }
 
+//we have content, send it!
+
 //send headers to browser
 icalendar_header($id.$taskid );
 
-for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
-
-  //add vtodo
-  icalendar_body($row);
-}
+//send content...
+echo $content;
 
 //end of file
 icalendar_end();

@@ -128,9 +128,9 @@ function icalendar_body($row) {
     $content .= icalendar_vtodo($row );
   }
 
-  echo $content;
+  //echo $content;
 
-  return;
+  return $content;
 }
 
 //
