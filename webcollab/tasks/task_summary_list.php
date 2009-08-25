@@ -369,11 +369,11 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
     //show graphical taskbar
     if( ($row['parent'] == 0 ) && ($depth >= 0 ) ) {
       if($row['completed'] > 0 ) {
-       $result .= "<table width=\"200\"><tr><td class=\"greenbar\" style=\"height: 2; width :".($row['completed']*2)."\"></td><td class=\"redbar\" style=\"height: 2; width :".(200-($row['completed']*2))."\"></td></tr></table>\n";
+       $result .= "<table width=\"200\"><tr><td class=\"greenbar\" style=\"height: 2px; width :".($row['completed']*2)."px\"></td><td class=\"redbar\" style=\"height: 2px; width :".(200-($row['completed']*2))."px\"></td></tr></table>\n";
 
       }
       else {
-        $result .= "<table width=\"200\"><tr><td class=\"redbar\" style=\"height: 2; width : 200\"></td></tr></table>\n";
+        $result .= "<table width=\"200\"><tr><td class=\"redbar\" style=\"height: 2px; width : 200px\"></td></tr></table>\n";
 
       }
     }
