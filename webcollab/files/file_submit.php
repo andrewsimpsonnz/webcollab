@@ -79,7 +79,7 @@ function file_delete($fileid ) {
                                 WHERE '.PRE.'files.id='.$fileid );
 
   //show it
-  if($row = @db_fetch_array($q, 0 ) {
+  if($row = @db_fetch_array($q, 0 ) ) {
     //owners of the file and admins can delete files
     if( (ADMIN ) || (UID == $row['owner'] ) || (UID == $row['uploader'] ) ) {
 
