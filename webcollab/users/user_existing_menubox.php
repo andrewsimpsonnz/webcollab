@@ -65,7 +65,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 $content .= "</table>";
 
 //check for enough users
-if($i == 1 ) {
+if($i == 0 ) {
   $content = "<small>".$lang['no_users']."</small>";
   new_box($lang['users'], $content );
 }
