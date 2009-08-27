@@ -6,6 +6,8 @@ WebCollab SVN
 
 - reduce database calls by removing unnecessary db_numrow() calls
 
+- reduce database calls by removing unnecessary db_seek() calls
+
 - remove potential race condition index.php / security.php login failure
 
 WebCollab SVN
