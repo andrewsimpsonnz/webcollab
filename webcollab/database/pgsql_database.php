@@ -98,14 +98,6 @@ function db_escape_string($string ) {
 }
 
 //
-// number of rows in result set
-//
-function db_numrows($q ) {
-
-  return pg_num_rows($q );
-}
-
-//
 // get a single result set
 //
 function db_result($q, $row=0, $field=0 ) {
@@ -138,15 +130,6 @@ function db_lastoid($seq_name ) {
   $result = db_query('SELECT CURRVAL(\''.$seq_name.'\') AS seq' );
 
   return pg_fetch_result( $result, 0, 0 );
-}
-
-//
-// dummy function to match mysql
-//
-function db_data_seek($q ) {
-  //nothing happens here!
-
-  return TRUE;
 }
 
 //

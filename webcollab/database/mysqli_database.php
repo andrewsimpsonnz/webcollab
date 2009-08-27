@@ -95,14 +95,6 @@ function db_escape_string($string ) {
 }
 
 //
-// number of rows in result
-//
-function db_numrows($q ) {
-
-  return mysqli_num_rows($q );
-}
-
-//
 // get single result set
 //
 function db_result($q, $row=0, $field=0 ) {
@@ -146,16 +138,6 @@ function db_lastoid($seq ) {
   global $database_connection;
 
   return mysqli_insert_id($database_connection );
-}
-
-//
-// return data pointer to begining of data set
-//
-function db_data_seek($q ) {
-
-  if(mysqli_num_rows($q ) == 0 ) return true;
-
-  return mysqli_data_seek($q, 0 );
 }
 
 //
