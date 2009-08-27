@@ -308,7 +308,7 @@ $numdays = date('t', mktime(0, 0, 0, $month, 1, $year ) );
 
 //main calendar table
 $content .= "<div style=\"text-align: center\">\n".
-            "<table class=\"outline\" cellspacing=\"0\" border=\"1\" width=\"97%\">\n<tr>\n".
+            "<table class=\"outline\" cellspacing=\"0\" border=\"1px\" width=\"97%\">\n<tr>\n".
             "<td colspan=\"7\" class=\"monthcell\" align=\"center\" valign=\"middle\"><b>".$month_array[(int)$month]."</b>\n</td>\n".
             "</tr>\n";
 
@@ -319,7 +319,7 @@ for ($i = 0; $i < 7; ++$i ) {
   if( $day_number > 6 ) {
     $day_number = $day_number - 7;
   }
-  $content .= "<td class=\"weekcell\" style=\"width: 20\"><b>".$week_array[$day_number]."</b></td>\n";
+  $content .= "<td class=\"weekcell\" style=\"width: 20px\"><b>".$week_array[$day_number]."</b></td>\n";
 }
 $content .= "</tr>\n";
 
