@@ -49,6 +49,7 @@ $no_access_project = array();
 
 function project_summary( $tail, $depth=0, $equiv='' ) {
   global $GID, $lang, $task_state, $task_priority;
+  global $user_array, $usergroups_array, $taskgroups_array, $parent_array;
   global $no_access_project;
   global $sortby;
   global $epoch;
@@ -67,9 +68,11 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
                          '.$epoch.' deadline) AS due,
                          '.$epoch.' '.PRE.'tasks.edited) AS edited,
                          '.$epoch.' '.PRE.'tasks.lastforumpost) AS lastpost,
-                         '.$epoch.' '.PRE.'tasks.lastfileupload) AS lastfileupload
+                         '.$epoch.' '.PRE.'tasks.lastfileupload) AS lastfileupload,
+                         '.$epoch.' '.PRE.'seen.time) AS last_seen
                          '.$equiv.'
                          FROM '.PRE.'tasks
+                         LEFT JOIN '.PRE.'seen ON ('.PRE.'tasks.id='.PRE.'seen.taskid AND '.PRE.'seen.userid='.UID.')
                          '.$tail );
 
   //reset variables
@@ -88,41 +91,31 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
 
     $due = round( ($row['due'] - TIME_NOW )/86400 );
 
-    $seenq = db_query( 'SELECT '.$epoch.' time) FROM '.PRE.'seen WHERE taskid='.$row['id'].' AND userid='.UID.' LIMIT 1' );
-
-    if(! $seen = db_result($seenq, 0, 0 ) ) {
-      $seen = 0;
-    }
-
     //flags column
     $alink = "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\">";
+    $f1 = ''; $f2 = ''; $f3 = '';
 
-    if($seen > 0 ) {
+    if(! $row['last_seen'] ) {
       $f1 = $alink.'C</a>';
     }
-    else if( ($seen - $row['edited'] ) < 0 ) {
-      $f1 = $alink.'M</a>';
-    }
     else {
-      $f1 = '';
-    }
-    if( ($seen - $row['lastpost'] ) < 0 ) {
-      $f2 = $alink.'P</a>';
-    }
-    else {
-      $f2 = '';
-    }
-    if( ($seen - $row['lastfileupload'] ) < 0 ) {
-      $f3 = $alink.'F</a>';
-    }
-    else {
-      $f3 = '';
+      if( ($row['last_seen'] - $row['edited'] ) < 0 ) {
+        $f1 = $alink.'M</a>';
+      }
+
+      if( ($row['last_seen'] - $row['lastpost'] ) < 0 ) {
+        $f2 = $alink.'P</a>';
+      }
+
+      if( ($row['last_seen'] - $row['lastfileupload'] ) < 0 ) {
+        $f3 = $alink.'F</a>';
+      }
     }
 
     if( $due < 0 ) {
       $color = 'red';
     }
-    else if( $due == 0 ) {
+    elseif( $due == 0 ) {
       $color = 'green';
     }
     else {
@@ -153,7 +146,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
 
         default:
           $date = nicedate($row['deadline'] );
-          if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND status<>\'done\' AND parent<>0 LIMIT 1' ), 0, 0 ) == 0 ) {
+          if($row['completed'] == 100 ) {
             $color = 'green';
             $status = $task_state['done'];
           }
@@ -233,7 +226,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
 
         default:
           $date = nicedate($row['normal'] );
-          if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND priority<>2 AND parent<>0 LIMIT 1' ), 0, 0 ) == 0 ) {
+          if($row['completed'] == 100 ) {
             $color = 'green';
             $priority = $task_state['normal'];
           }
@@ -293,42 +286,36 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
       }
     }
     else {
-      $owner = db_result(db_query('SELECT fullname FROM '.PRE.'users WHERE id='.$row['owner'],' LIMIT 1' ), 0, 0  );
-      $owner = "<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['owner']."\">".$owner."</a>";
+     $owner = "<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['owner']."\">".$user_array[($row['owner'])]."</a>";
     }
 
     //group column
     switch($sortby ) {
       case 'taskgroupid':
-        $grouptable = 'taskgroups';
-        $groupid = 'taskgroupid';
-        $groupname = 'taskgroupname';
-        break;
+        if(! $row['taskgroupid'] ) {
+          $group = $lang['none'];
+        }
+        else {
+          $group = $taskgroups_array[($row['taskgroupid'])];
+       }
+       break;
 
       case 'usergroupid':
       default:
-        $grouptable = 'usergroups';
-        $groupid = 'usergroupid';
-        $groupname = 'usergroupname';
-        break;
-    }
-
-    if( ($row[$groupid]== 0 ) || ($row[$groupid]=='' ) ) {
-      $group = $lang['none'];
-    }
-    else {
-      if(array_key_exists($groupname, $row ) ) {
-        $group = $row[$groupname];
-      }
-      else
-        $group = db_result(db_query('SELECT name FROM '.PRE.$grouptable.' WHERE id='.$row[$groupid].' LIMIT 1' ), 0, 0 );
+        if(! $row['usergroupid'] ) {
+          $group = $lang['none'];
+        }
+        else {
+          $group = $usergroups_array[($row['usergroupid'])];
+       }
+       break;
     }
 
     if( ($row['parent'] == 0 ) && ($depth >= 0 ) ) {
       $projectrow = " class=\"projectrow\"";
     }
     else {
-      $projectrow = "";
+      $projectrow = '';
     }
 
     //Build up the page columns for display.  Starting with the flags
@@ -358,7 +345,7 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
 
     //task column
     $result .= $alink;
-    if( $row['parent'] == 0) {
+    if( $row['parent'] == 0 ) {
       $result .= "<b>".$row['taskname']."</b>";
     }
     else {
@@ -380,7 +367,11 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
 
     $result .= "</td></tr>\n";
     if( $depth >= 0 ) {
-      $result .= project_summary( 'WHERE '.PRE.'tasks.parent=\''.$row['id'].'\''.usergroup_tail().' ORDER BY taskname', $depth+1 );
+      //see if task is in parent cache
+      if(isset($parent_array[($row['id'])] ) ) {
+        //add child tasks
+        $result .= project_summary( 'WHERE '.PRE.'tasks.parent=\''.$row['id'].'\''.usergroup_tail().' ORDER BY taskname', $depth+1 );
+      }
     }
   }
 
@@ -397,8 +388,36 @@ else {
   $sortby = '';
 }
 
-//text link for 'printer friendly' page
+//query to get users, then cache results
+$q = db_query('SELECT id, fullname FROM '.PRE.'users' );
 
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+  $user_array[($row[0])] = $row[1];
+}
+
+//query to get taskgroups, then cache results
+$q = db_query('SELECT id, name FROM '.PRE.'taskgroups' );
+
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+  $taskgroups_array[($row[0])] = $row[1];
+}
+
+//query to get usergroups, then cache results
+$q = db_query('SELECT id, name FROM '.PRE.'usergroups' );
+
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+  $usergroups_array[($row[0])] = $row[1];
+}
+
+//find all parent-tasks, then cache results
+$q = db_query('SELECT DISTINCT parent FROM '.PRE.'tasks' );
+$parent_array = array();
+
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+  $parent_array[($row[0])] = $row[0];
+}
+
+//text link for 'printer friendly' page
 if(isset($_GET['action']) && $_GET['action'] == 'summary_print' ) {
   $content  = "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=".$sortby."\">".$lang['normal_version']."</a>]</span></p>";
 }
