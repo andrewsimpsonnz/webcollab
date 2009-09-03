@@ -1,4 +1,20 @@
 WebCollab SVN
+*** 3 September 2009
+  Andrew Simpson
+
+- bugfix: unecessary warning messages in task summary are suppressed
+
+- bugfix: flags not working properly in task summary
+
+- improve performance and reduce database calls in task summary
+
+WebCollab - Canute
+*** 29 August 2009
+  Andrew Simpson
+
+- release
+
+WebCollab SVN
 *** 22 August 2009
   Andrew Simpson
 
