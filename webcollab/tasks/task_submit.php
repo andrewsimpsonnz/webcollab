@@ -134,8 +134,8 @@ function status_check($status ) {
 function adjust_completion($projectid ) {
 
   //set completed percentage project record
-  $percent_completed = percent_complete($projectid );
-  db_query('UPDATE '.PRE.'tasks SET completed='.$percent_completed.' WHERE id='.$projectid );
+  $percent_completed = round(percent_complete($projectid ) );
+  db_query('UPDATE '.PRE.'tasks SET completed='.(int)$percent_completed.' WHERE id='.$projectid );
 
   //for completed project set the completion time
   if($percent_completed == 100 ){
