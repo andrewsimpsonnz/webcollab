@@ -182,7 +182,7 @@ if($row['parent'] != 0 ){
 
   //set the new completed percentage project record
   $percent_completed = round(percent_complete($row['projectid'] ) );
-  db_query('UPDATE '.PRE.'tasks SET completed='.$percent_completed.' WHERE id='.$row['projectid'] );
+  db_query('UPDATE '.PRE.'tasks SET completed='.(int)$percent_completed.' WHERE id='.$row['projectid'] );
 
   //for completed project set the completion time
   if($percent_completed == 100 ){
