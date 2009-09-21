@@ -111,7 +111,7 @@ require_once(BASE.'setup/security_setup.php' );
 
     //sanity check
     if( ! is_readable($db_schema ) ) {
-      error_setup("Database schema is missing.  Check that the file [webcollab]/db/".$db_schema." exists and is readable by the webserver." );
+      error_setup("Database schema is missing.  Check that the file [webcollab]/".$db_schema." exists and is readable by the webserver." );
     }
 
     //open schema file
@@ -173,7 +173,7 @@ require_once(BASE.'setup/security_setup.php' );
 
     //sanity check
     if( ! is_readable($db_schema ) ) {
-      error_setup("Database schema is missing.  Check that the file [webcollab]/db/".$db_schema." exists and is readable by the webserver." );
+      error_setup("Database schema is missing.  Check that the file [webcollab]/".$db_schema." exists and is readable by the webserver." );
     }
 
     //open schema file
@@ -238,7 +238,7 @@ require_once(BASE.'setup/security_setup.php' );
 
     //sanity check
     if( ! is_readable('db/schema_pgsql.sql' ) ) {
-      error_setup("Database schema is missing.  Check that the file [webcollab]/db/schema_pgsql.sql exists and is readable by the webserver." );
+      error_setup("Database schema is missing.  Check that the file [webcollab]/schema_pgsql.sql exists and is readable by the webserver." );
     }
 
     //open schema file
