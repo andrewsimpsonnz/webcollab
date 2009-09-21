@@ -260,7 +260,7 @@ $file_php_max = ini_get('upload_max_filesize' );
 //check and allow for G, M or K suffixes
 if(preg_match('/[GKM]/i', $file_php_max, $suffix ) ) {
 
-  preg_match('/[0-9]/', $file_php_max, $numeric );
+  preg_match('/[0-9\.]/', $file_php_max, $numeric );
 
   $file_php_max = $numeric[0];
 
