@@ -39,7 +39,7 @@ $content = '';
 $archive_print = 0;
 
 //set the usergroup permissions on queries
-$tail = usergroup_tail();  
+$tail = usergroup_tail();
 
 // query to get the projects
 $q = db_query('SELECT id,
@@ -61,21 +61,21 @@ if(isset($_GET['action']) && $_GET['action'] == "archive_print" ) {
   $content  .= "[<a href=\"archive.php?x=".X."&amp;action=list\">".$lang['normal_version']."</a>]\n";
 }
 else {
-  $content  .= "<table style=\"width: 98%\"><tr><td style=\"text-align: right\">\n".
+  $content  .= "<div style=\"text-align: right\">\n".
                "<a href=\"archive.php?x=".X."&amp;action=archive_print\" title= \"".$lang['print_version']."\">".
                "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a>\n".
-               "</td></tr>\n</table>\n";
+               "</div>\n";
 }
 
 //setup main table
-$content .= "<table>\n";
+$content .= "<div class=\"projectlist\">\n";
 
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   if($i > 0 ) { 
     //not the first line, need to add a divider
-    $content .= "<tr><td style=\"padding-left: 30px\"><hr /></td></tr>\n";
+    $content .= "<div style=\"padding-left: 30px; width: 200px\"><hr /></div>\n";
   }
 
   //set project status
@@ -97,9 +97,6 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
       }
       break;
   }
-
-  //start list
-  $content .= "<tr><td class=\"projectlist\">\n";
 
   //show name and a link
   $content .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['name']."</b></a><br />\n";
@@ -153,11 +150,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
                 "</td></tr>\n".
                 "</table>\n";
   }
-  //end list
-  $content .= "</td></tr>\n";
 }
 
-$content .= "</table>\n";
+$content .= "</div>\n";
 
 if($i == 0 ) {
   //no projects found in database
