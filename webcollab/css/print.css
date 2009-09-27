@@ -1,4 +1,4 @@
-BODY {
+body {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12pt;
   margin : 0;
@@ -6,17 +6,17 @@ BODY {
   color : #000000;
 }
 
-LI {
+li {
   list-style-type: disc;
 }
 
-LI LI {
+li li {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12pt;
   list-style-type: circle;
 }
 
-IMG {
+img {
   /* CSS hack for XHTML strict */
   border-width : 0;
   /* limit uploaded images */ 
@@ -25,19 +25,19 @@ IMG {
 }
 
 /* CSS hack to hide hidden input fields */
-FIELDSET {
+fieldset {
    border: none;
    margin: 0;
    padding: 0;
 }
 
-TABLE {
+table {
   border-width : 0;
   padding : 0;
 }
 
 /* Global container box */
-TABLE.main {
+table.main {
   margin-left : auto;
   margin-right : auto;
   border-width : 0;
@@ -46,24 +46,8 @@ TABLE.main {
   width : 100%;
 }
 
-
-TABLE.singlebox {
-  border-width : 0;
-  padding : 0;
-}
-
-/* Standard table box */
-TABLE.tablebox {
-  margin-left : auto;
-  margin-right : auto;
-  width : 97%;
-  text-align : left;
-  border-width: 0;
-  padding : 0;
-}
-
 /* Table for use in data cells */
-TABLE.celldata {
+table.celldata {
   margin-left : 0;
   margin-top : 5pt;
   margin-bottom : 20pt;
@@ -72,20 +56,17 @@ TABLE.celldata {
   padding : 0;
 }
 
-/* Box masthead styling */
-TD.boxhead {
+/* Masthead band to top of page */
+td.boxhead {
   font-size : 16pt;
   font-weight : bold;
   text-align : left;
-  border-width : 0;
-  border-collapse : collapse;
   padding : 3pt;
   background-color : #ffffff;
   color : #000000;
 }
 
-/* Box content styling for info boxes */
-TD.boxdata {
+div.head {
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
@@ -97,27 +78,43 @@ TD.boxdata {
   color : #000000;
 }
 
-/* Box content styling for project listing */
-TD.boxdata {
+div.head-normal {
+  text-align : left;
+}
+
+/* Box content styling for info boxes */
+div.boxdata {
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
   padding-top : 10pt;
-  padding-left : 10pt;
+  padding-left : 5pt;
   padding-right : 5pt;
   padding-bottom : 20pt;
-  background-color : #ffffff;
+  background : #ffffff;
   color : #000000;
 }
 
+div.boxdata-normal {
+  text-align : left;
+}
+
+div.boxstyle {
+  text-align : left;
+}
+
+div.boxstyle-normal {
+  text-align : left;
+}
+
 /* Cell with grey background */
-TD.textbackground {
+td.textbackground {
   background-color : transparent;
   color : #000000;
 }
 
 /* Green progress bar */
-TD.greenbar {
+td.greenbar {
   border-width : 0;
   border-collapse : collapse;
   white-space : nowrap;
@@ -127,7 +124,7 @@ TD.greenbar {
 }
 
 /* Red/orange progress bar */
-TD.redbar {
+td.redbar {
   border-width : 0;
   border-collapse : collapse;
   white-space : nowrap;
