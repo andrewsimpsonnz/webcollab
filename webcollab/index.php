@@ -50,11 +50,11 @@ function secure_error( $error = 'Login error', $redirect=0 ) {
   }
   $content = "<div style=\"text-align : center\"><br />$error<br /></div>";
   create_top($lang['login'], 1, '', '', $redirect_time );
-  new_box($lang['error'], $content, 'boxdata', 'singlebox' );
+  new_box($lang['error'], $content, 'boxdata-small', 'head-small' );
 
   if($redirect_time != 0) {
     $content = "<div style=\"text-align : center\"><a href=\"".BASE_URL."index.php\">".$lang['login_now']."</a></div>\n";
-    new_box(sprintf($lang['redirect_sprt'], $redirect_time ), $content, 'boxdata', 'singlebox' );
+    new_box(sprintf($lang['redirect_sprt'], $redirect_time ), $content, 'boxdata-small', 'head-small' );
   }
 
   create_bottom();
@@ -229,7 +229,7 @@ $content .= "</form>".
             "</div>";
 
 //set box options
-new_box($lang['login'], $content, 'boxdata', 'singlebox' );
+new_box($lang['login'], $content, 'boxdata-small', 'head-small' );
 
 create_bottom();
 

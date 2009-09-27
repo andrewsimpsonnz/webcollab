@@ -41,12 +41,11 @@ include_once(BASE.'includes/screen.php' );
 function secure_error($message ) {
 
   create_top('Error' );
-  new_box('Error', "<div align=\"center\">".$message."</div>", 'boxdata', 'singlebox' );
+  new_box('Error', "<div align=\"center\">".$message."</div>", 'boxdata-small', 'head-small' );
   create_bottom();
   die;
 
 }
-
 
 //
 // LOGIN CHECK
@@ -217,10 +216,10 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
         $percent_completed = 0;
       }
       else{
-        $percent_completed = ($tasks_completed * 100 / $total_tasks );
+        $percent_completed = round($tasks_completed * 100 / $total_tasks );
       }
 
-      db_query('UPDATE '.PRE.'tasks SET completed='.$percent_completed.' WHERE id='.$row['id'] );
+      db_query('UPDATE '.PRE.'tasks SET completed='.(int)$percent_completed.' WHERE id='.$row['id'] );
 
       //for completed project set the completion time
       if($percent_completed == 100 ){
@@ -437,7 +436,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
   //display box calls
   create_top("Info", 1 );
-  new_box("Update completed", $content, 'boxdata', 'singlebox' );
+  new_box("Update completed", $content, 'boxdata-small', 'head-small' );
   create_bottom();
   die;
 }
@@ -460,7 +459,7 @@ $content = "<p>Admin login is required for database update:</p>\n".
              "</div></form>\n";
 
 //set box options
-new_box("Login", $content, 'boxdata', 'singlebox' );
+new_box("Login", $content, 'boxdata', 'boxdata-small', 'head-small' );
 
 create_bottom();
 
