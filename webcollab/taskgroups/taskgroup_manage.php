@@ -62,7 +62,7 @@ if($i == 0 ) {
   new_box($lang['taskgroup_manage'], $content );
 }
 else {
-  new_box( $lang['manage_taskgroups'], $content, 'boxdata2' );
+  new_box( $lang['manage_taskgroups'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-short' );
 }
 
 //admin gets some user notes

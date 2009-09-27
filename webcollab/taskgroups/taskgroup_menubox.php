@@ -39,6 +39,6 @@ if(! ADMIN ) {
 $content = "<a href=\"taskgroups.php?x=".X."&amp;action=add\">".$lang['add']."</a><br />\n".
            "<a href=\"taskgroups.php?x=".X."&amp;action=manage\">".$lang['manage']."</a><br />\n";
 
-new_box($lang['taskgroups'], $content, 'boxmenu' );
+new_box($lang['taskgroups'], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
 
 ?>
