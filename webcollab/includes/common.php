@@ -286,10 +286,10 @@ function error($box_title, $error ) {
 
   if(NO_ERROR !== 'Y' ) {
     $content = "<div style=\"text-align : center\">".$error."</div>";
-    new_box( $box_title, $content, 'boxdata', 'singlebox' );
+    new_box( $box_title, $content, 'boxdata-small', 'head-small' );
   }
   else {
-    new_box($lang['report'], $lang['warning'], 'boxdata2', 'singlebox' );
+    new_box($lang['report'], $lang['warning'], 'boxdata-small', 'head-small' );
   }
 
   if((EMAIL_ERROR != NULL ) || (DEBUG === 'Y' ) ) {
@@ -350,7 +350,7 @@ function warning($box_title, $message ) {
   create_top($lang['error'], 1 );
 
   $content = "<div style=\"text-align : center\">".$message."</div>\n";
-  new_box($box_title, $content, 'boxdata', 'singlebox' );
+  new_box($box_title, $content, 'boxdata-small', 'head-small' );
 
   create_bottom();
 

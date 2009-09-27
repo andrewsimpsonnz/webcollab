@@ -44,6 +44,6 @@ $content .= "<a href=\"main.php?x=".X."\">".$lang['home_page']."</a><br />\n".
             "<a href=\"logout.php?x=".X."\">".$lang['log_out']."</a><br />\n";
 
 //show
-new_box( $lang['main_menu'], $content, 'boxmenu' );
+new_box( $lang['main_menu'], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
 
 ?>

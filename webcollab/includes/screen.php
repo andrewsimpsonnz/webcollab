@@ -174,40 +174,42 @@ function create_top($title='', $page_type=0, $include_javascript=0, $check_field
       break;
   }
 
-   //create the main table
-  $content .=       "<!-- start main table -->\n".
-                    "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n";
-
   switch ($page_type ) {
 
     case 0: //main window + menu sidebar
       //create the masthead part of the main window
-      $content .=   "<tr valign=\"top\"><td colspan=\"2\" class=\"masthead\">";
+      $content .=   "<div class=\"masthead\">";
       //show username if applicable
       if(defined('UID_NAME') ) {
         $content .=  '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
       }
-      $content .=   "</td></tr>\n";
+      $content .=   "</div>\n";
       //create menu sidebar
-      $content .=   "<tr valign=\"top\"><td style=\"width: 175px;\" align=\"center\">\n";
+      $content .=    "<!-- start main table -->\n".
+                     "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n".
+                     "<tr valign=\"top\"><td style=\"width: 175px;\" align=\"center\">\n";
       $bottom_text = 1;
       break;
 
     case 1: //single main window (no menu sidebar)
     case 3: //calendar
-      $content .=   "<tr valign=\"top\"><td class=\"masthead\">";
+      $content .=   "<div class=\"masthead\">";
       if(defined('UID_NAME' ) ) {
         $content .= '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
       }
-      $content .=   "</td></tr>\n";
+      $content .=   "</div>\n";
       //create single window over entire screen
-      $content .=   "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";
+      $content .=   "<!-- start main table -->\n".
+                    "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n".
+                    "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";
       $bottom_text = 2;
       break;
 
     case 2: //printable screen
       //create single window over paper width
-      $content .=   "<tr valign=\"top\"><td style=\"width: 576pt\" align=\"center\">\n";
+      $content .=   "<!-- start main table -->\n".
+                    "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n".
+                    "<tr valign=\"top\"><td style=\"width: 576pt\" align=\"center\">\n";
       //don't want bottom text
       $bottom_text = 0;
   }
@@ -221,15 +223,14 @@ function create_top($title='', $page_type=0, $include_javascript=0, $check_field
 //
 //  Creates a new box
 //
-function new_box($title, $content, $style="boxdata", $size="tablebox" ) {
+function new_box($title, $content, $box="boxdata-normal", $head="head-normal", $style="boxstyle-normal" ) {
 
   echo  "\n<!-- start of ".$title." - box -->\n".
-        "<br />\n".
-        "<table class=\"".$size."\" cellspacing=\"0\">\n".
-        "<tr><td class=\"boxhead\">::&nbsp;".$title."</td></tr>\n".
-        "<tr><td class=\"".$style."\">\n".
-        $content."</td></tr>\n".
-        "</table>\n".
+        "<div class=\"head ".$head."\" >::&nbsp;".$title."</div>\n".
+        "<div class=\"boxdata ".$box."\" >\n".
+        "<div class=\"boxstyle ".$style."\" >\n".$content."\n".
+        "</div>\n".
+        "</div>\n".
         "<!-- end -->\n";
 
   return;
@@ -251,11 +252,8 @@ function create_bottom() {
 
   global $bottom_text;
 
-  //clean
-  $content =  "\n<br />\n";
-
   //end the main table row
-  $content .= "</td></tr>\n</table>";
+  $content = "</td></tr>\n</table>\n";
 
   switch($bottom_text) {
     case 0: //no bottom text
