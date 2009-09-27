@@ -91,7 +91,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
   //padding for next entry
   $content .= "<tr><td>&nbsp;</td></tr>\n";
 }
-$content .= "</table>";
+$content .= "</table>\n";
 
 if($i == 0 ) {
   //no files found in database
@@ -102,6 +102,6 @@ if((! GUEST ) && ($TASKID_ROW['archive'] == 0) ){
   $content .= "<span class=\"textlink\">[<a href=\"files.php?x=".X."&amp;taskid=".$taskid."&amp;action=upload\">".$lang['add_file']."</a>]</span>";
 }
 
-new_box($lang['files_assoc_'.$TYPE], $content, 'boxdata2' );
+new_box($lang['files_assoc_'.$TYPE], $content, "boxdata-normal", "head-normal", "boxstyle-short" );
 
 ?>
