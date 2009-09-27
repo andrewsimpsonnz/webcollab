@@ -91,6 +91,6 @@ if(! GUEST ){
 }
 
 //show the box
-new_box($lang['contacts'], $content, 'boxmenu' );
+new_box($lang['contacts'], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
 
 ?>
