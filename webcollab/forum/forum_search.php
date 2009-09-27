@@ -208,6 +208,6 @@ if($min > 0 || $max < $total ) {
 
 $content .= "</td></tr></table>\n";
 
-new_box($lang['forum_search'], $content, 'boxdata2' ); 
+new_box($lang['forum_search'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-short' ); 
 
 ?>

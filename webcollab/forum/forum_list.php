@@ -229,18 +229,17 @@ $taskid = usergroup_check($taskid );
 //don't show public forum if task is set to private usergroup only (and a usergroup is set)
 if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) ){
 
-  $content = '';
-
   //get all posts
-  $content .= list_posts_from_task( $taskid, 0 );
+  $content = list_posts_from_task( $taskid, 0 );
   //add an option to add posts
   if($TASKID_ROW['archive'] == 0 ) {
     if((GUEST == false ) || ((GUEST == true ) && (GUEST_LOCKED == 'N' ) ) ){
       $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".X."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."\">".$lang['new_post']."</a>]</span>";
     }
   }
+
   //show it
-  new_box($lang['public_user_forum'], $content, 'boxdata2' );
+  new_box($lang['public_user_forum'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-short' );
 }
 
 //
@@ -252,21 +251,21 @@ if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) )
 //dont show private forums if the task has not yet been assigned to a usergroup
 if($TASKID_ROW['usergroupid'] != 0 ) {
 
-  $content = '';
-
   if(isset($GID[($TASKID_ROW['usergroupid'])] ) || ADMIN ) {
 
-    $content .= list_posts_from_task( $taskid, $TASKID_ROW['usergroupid'] );
+    $content = list_posts_from_task( $taskid, $TASKID_ROW['usergroupid'] );
     //add an option to add posts
     if($TASKID_ROW['archive'] == 0 ){
       if((GUEST == false ) || ((GUEST == true ) && (GUEST_LOCKED == 'N' ) ) ){
         $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".X."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."&amp;usergroupid=".$TASKID_ROW['usergroupid']."&amp;\">".$lang['new_post']."</a>]</span>\n";
       }
     }
+
     //get usergroup
     $usergroup_name = db_result(db_query("SELECT name FROM ".PRE."usergroups WHERE id=".$TASKID_ROW['usergroupid'].' LIMIT 1' ), 0, 0 );
+
     //show it
-    new_box(sprintf($lang['private_forum_sprt'], $usergroup_name ), $content, "boxdata2" );
+    new_box(sprintf($lang['private_forum_sprt'], $usergroup_name ), $content,  'boxdata-normal', 'head-normal', 'boxstyle-short'  );
   }
 }
 

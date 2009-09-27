@@ -92,7 +92,7 @@ db_free_result($q );
 
 if($list != '') {
   $content = "<small>".$list.sprintf($lang['last_post_sprt'], nicedate($lastpost) )."</small>\n";
-  new_box($lang['recent_posts'], $content, 'boxmenu' );
+  new_box($lang['recent_posts'], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
 }
 
 ?>
