@@ -71,7 +71,7 @@ if($i == 0 ) {
 }
 else {
   //show it
-  new_box($lang['existing_users'], $content, 'boxmenu' );
+  new_box($lang['existing_users'], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
 }
 
 ?>

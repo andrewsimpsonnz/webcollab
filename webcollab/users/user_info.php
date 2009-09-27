@@ -40,6 +40,6 @@ if(! ADMIN ){
 
 $content = $user_info;
 
-new_box($lang['manage_users'], $content, 'boxdata2' );
+new_box($lang['manage_users'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-short' );
 
 ?>

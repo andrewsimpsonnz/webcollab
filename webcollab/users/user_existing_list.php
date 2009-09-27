@@ -87,6 +87,6 @@ if(ADMIN) {
 }
 
 //show it
-new_box($lang['existing_users'], $content, 'boxdata2' );
+new_box($lang['existing_users'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-short' );
 
 ?>

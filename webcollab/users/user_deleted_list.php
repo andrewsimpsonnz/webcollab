@@ -39,7 +39,7 @@ if(! ADMIN ){
 //check for deleted users
 if( ! db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE deleted=\'t\'' ), 0, 0 ) ) {
   $content = "<small>".$lang['no_deleted_users']."</small>";
-  new_box($lang['deleted_users'], $content, "boxdata" );
+  new_box($lang['deleted_users'], $content );
   return;
 }
 
@@ -59,6 +59,6 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 $content .= "</table>";
 
 //show it
-new_box($lang['deleted_users'], $content, 'boxdata' );
+new_box($lang['deleted_users'], $content );
 
 ?>

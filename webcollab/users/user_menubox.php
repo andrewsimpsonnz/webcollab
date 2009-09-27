@@ -53,6 +53,6 @@ if((GUEST == false ) || ((GUEST == true ) && (GUEST_LOCKED == 'N' ) ) ){
 $content .= "<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".UID."\">".$lang['show_details']."</a><br />\n";
 
 //show it
-new_box($lang['users'], $content, 'boxmenu' );
+new_box($lang['users'], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
 
 ?>
