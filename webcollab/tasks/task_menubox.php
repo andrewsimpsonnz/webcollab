@@ -83,6 +83,6 @@ if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
 //add project
 $content .= "<a href=\"tasks.php?x=".X."&amp;action=add\">".$lang['add_project']."</a><br />\n";
 
-new_box( $lang[$menu_type."_options"], $content, 'boxmenu' );
+new_box( $lang[$menu_type."_options"], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
 
 ?>

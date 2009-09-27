@@ -82,7 +82,7 @@ if( @safe_integer($_GET['taskid']) ) {
 
   }
 
-  new_box($lang['task_navigation'], $content, "boxmenu" );
+  new_box($lang['task_navigation'], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
 }
 
 //new task
@@ -121,7 +121,7 @@ elseif( @safe_integer($_GET['parentid']) ){
 
   }
 
-  new_box( $lang['task_navigation'], $content, 'boxmenu' );
+  new_box( $lang['task_navigation'], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
 }
 
 ?>

@@ -346,6 +346,6 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
   $content .= "</span></div>\n".$this_form;
 }
 
-new_box( $title, $content, 'boxdata2' );
+new_box( $title, $content,  'boxdata-normal', 'head-normal', 'boxstyle-short' );
 
 ?>
