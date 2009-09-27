@@ -39,6 +39,6 @@ if(ADMIN ) {
 
 $content .= "<a href=\"usergroups.php?x=".X."&amp;action=manage\">".$lang['manage']."</a><br />\n";
 
-new_box( $lang['usergroups'], $content, 'boxmenu' );
+new_box( $lang['usergroups'], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
 
 ?>

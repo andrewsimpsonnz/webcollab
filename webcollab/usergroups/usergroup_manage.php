@@ -128,7 +128,7 @@ if($i == 0 ) {
   new_box($lang['usergroup_manage'], $content );
 }
 else {
-  new_box($lang['manage_usergroups'], $content, "boxdata2" );
+  new_box($lang['manage_usergroups'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-short' );
 }
 
 //admin gets some user notes
