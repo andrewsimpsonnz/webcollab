@@ -1,4 +1,12 @@
 WebCollab SVN
+*** 3 December 2009
+  Andrew Simpson
+
+- bugfix: Missing database prefix (Bug #2907275)
+
+- improve database query error messages
+
+WebCollab SVN
 *** 27 September 2009
   Andrew Simpson
 
