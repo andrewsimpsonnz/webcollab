@@ -49,11 +49,11 @@ if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
 }
 
 //$session_key can be from either a GET, POST or COOKIE - check for cookie first
-if(isset($_COOKIE['webcollab_session'] ) && preg_match('/^[a-f\d]{32}$/i', $_COOKIE['webcollab_session'] ) ) {
+if(isset($_COOKIE['webcollab_session'] ) && preg_match('/^[a-f\d]{32}$/iD', $_COOKIE['webcollab_session'] ) ) {
   $session_key = db_escape_string($_COOKIE['webcollab_session'] );
   define('X', 0 );
 }
-elseif(isset($_REQUEST['x'] ) && preg_match('/^[a-f\d]{32}$/i', $_REQUEST['x'] ) ) {
+elseif(isset($_REQUEST['x'] ) && preg_match('/^[a-f\d]{32}$/iD', $_REQUEST['x'] ) ) {
   $session_key = db_escape_string($_REQUEST['x']);
   $x = $_REQUEST['x'];
   define('X', $x );
@@ -92,7 +92,7 @@ if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS userid,
                              '.$epoch.' now() ) AS now
                              FROM '.PRE.'logins
                              LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
-                             WHERE '.PRE.'logins.session_key=\''.$session_key.'\' AND users.deleted=\'f\' LIMIT 1', 0 ) ) ) {
+                             WHERE '.PRE.'logins.session_key=\''.$session_key.'\' AND '.PRE.'users.deleted=\'f\' LIMIT 1', 0 ) ) ) {
   error('Security manager', 'Database not able to verify session key');
 }
 
