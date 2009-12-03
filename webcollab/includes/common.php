@@ -265,7 +265,7 @@ function nice_size($size ) {
 
 function token_check($token ) {
 
-  if((! preg_match('/^[a-f\d]{32}$/i', $token ) ) || $token !== OLD_TOKEN ) {
+  if((! preg_match('/^[a-f\d]{32}$/iD', $token ) ) || $token !== OLD_TOKEN ) {
     error("Invalid session", "Possible session hijacking detected." );
   }
 
