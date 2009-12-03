@@ -71,10 +71,12 @@ function db_query($query, $die_on_error=1 ) {
 
   //do it
   if( ! ($result = @mysqli_query($database_connection, $query, MYSQLI_STORE_RESULT ) ) ) {
-    $db_error_message = mysqli_error($database_connection);
+    $db_error_message = 'The following query :<br /><br /><b>'.$query.
+                        '</b><br /><br />Had the following error:<br /><b>'.
+                         mysqli_error($database_connection).'</b>';
 
     if($die_on_error ) {
-      error('Database query error', 'The following query :<br /><br /><b>'.$query.' </b><br /><br />Had the following error:<br /><b>'.mysqli_error($database_connection).'</b>' );
+      error('Database query error', 'Database error: '.mysqli_error($database_connection) );
     }
   }
 
