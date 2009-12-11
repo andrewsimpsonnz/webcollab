@@ -1,4 +1,11 @@
 WebCollab SVN
+*** 11 December 2009
+  Andrew Simpson
+
+- bugfix: Admin cannot delete posts (Bug #2912286)(Reporter: gomanual)
+
+
+WebCollab SVN
 *** 3 December 2009
   Andrew Simpson
 
