@@ -54,16 +54,20 @@ else {
   $s = '';
 }
 
-
 //find out the tasks' name
 $q = db_query('SELECT '.PRE.'forum.text AS text,
+                      '.PRE.'forum.userid as id,
                       '.PRE.'tasks.id AS taskid,
                       '.PRE.'tasks.name AS name
                       FROM '.PRE.'forum
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
-                      WHERE '.PRE.'forum.userid='.UID.' AND '.PRE.'forum.id='.$postid.' LIMIT 1' );
+                      WHERE '.PRE.'forum.id='.$postid.' LIMIT 1' );
 
 if(! $row = db_fetch_array($q, 0 ) ) {
+  error('Forum edit', 'The requested post does not exist.');
+}
+
+if((! ADMIN ) && ($row['id'] != UID ) ) {
   error('Forum edit', 'You are not authorised to edit that post.');
 }
 
