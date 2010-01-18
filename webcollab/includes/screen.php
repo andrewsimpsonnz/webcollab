@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -132,13 +132,14 @@ function create_top($title='', $page_type=0, $include_javascript=0, $check_field
     default:
       $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_MAIN."\" type=\"text/css\" />\n";
       //allow RSS autodiscovery if enabled
-      if(defined('RSS_AUTODISCOVERY' ) && RSS_AUTODISCOVERY == 'Y' ) {
-        $content .=   "<link rel=\"alternate\" href=\"".BASE_URL."rss/rss_projects.php\" type=\"application/rss+xml\" title=\"Projects\" />\n".
-                      "<link rel=\"alternate\" href=\"".BASE_URL."rss/rss_tasks.php\" type=\"application/rss+xml\" title=\"Tasks\" />\n".
-                      "<link rel=\"alternate\" href=\"".BASE_URL."rss/rss_files.php\" type=\"application/rss+xml\" title=\"Files\" />\n".
-                      "<link rel=\"alternate\" href=\"".BASE_URL."rss/rss_forum.php\" type=\"application/rss+xml\" title=\"Forum\" />\n";
-      }
       break;
+  }
+
+  if(defined('RSS_AUTODISCOVERY' ) && RSS_AUTODISCOVERY == 'Y' ) {
+    $content .=   "<link rel=\"alternate\" href=\"".BASE_URL."rss/rss_projects.php\" type=\"application/rss+xml\" title=\"Projects\" />\n".
+                  "<link rel=\"alternate\" href=\"".BASE_URL."rss/rss_tasks.php\" type=\"application/rss+xml\" title=\"Tasks\" />\n".
+                  "<link rel=\"alternate\" href=\"".BASE_URL."rss/rss_files.php\" type=\"application/rss+xml\" title=\"Files\" />\n".
+                  "<link rel=\"alternate\" href=\"".BASE_URL."rss/rss_forum.php\" type=\"application/rss+xml\" title=\"Forum\" />\n";
   }
 
   $content .= "<link rel=\"icon\" type=\"image/png\" href=\"".BASE."images/group.png\" />\n";
@@ -187,7 +188,7 @@ function create_top($title='', $page_type=0, $include_javascript=0, $check_field
       //create menu sidebar
       $content .=    "<!-- start main table -->\n".
                      "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n".
-                     "<tr valign=\"top\"><td style=\"width: 175px;\" align=\"center\">\n";
+                     "<tr valign=\"top\"><td class=\"menu\" align=\"center\">\n";
       $bottom_text = 1;
       break;
 
@@ -201,7 +202,7 @@ function create_top($title='', $page_type=0, $include_javascript=0, $check_field
       //create single window over entire screen
       $content .=   "<!-- start main table -->\n".
                     "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n".
-                    "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";
+                    "<tr valign=\"top\"><td class=\"single\" align=\"center\">\n";
       $bottom_text = 2;
       break;
 
@@ -209,7 +210,7 @@ function create_top($title='', $page_type=0, $include_javascript=0, $check_field
       //create single window over paper width
       $content .=   "<!-- start main table -->\n".
                     "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n".
-                    "<tr valign=\"top\"><td style=\"width: 576pt\" align=\"center\">\n";
+                    "<tr valign=\"top\"><td class=\"single\" align=\"center\">\n";
       //don't want bottom text
       $bottom_text = 0;
   }
@@ -272,7 +273,7 @@ function create_bottom() {
 
  //shows the logo
  if($bottom_text) {
-   $content .= "<div class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2009</div>\n";
+   $content .= "<div class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2010</div>\n";
  }
   //end xml parsing
   $content .= "</body>\n</html>\n";
