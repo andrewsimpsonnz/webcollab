@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -91,6 +91,6 @@ if(! GUEST ){
 }
 
 //show the box
-new_box($lang['contacts'], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
+new_box($lang['contacts'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );
 
 ?>
