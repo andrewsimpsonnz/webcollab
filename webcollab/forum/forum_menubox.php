@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -92,7 +92,7 @@ db_free_result($q );
 
 if($list != '') {
   $content = "<small>".$list.sprintf($lang['last_post_sprt'], nicedate($lastpost) )."</small>\n";
-  new_box($lang['recent_posts'], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
+  new_box($lang['recent_posts'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );
 }
 
 ?>
