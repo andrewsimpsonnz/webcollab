@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -39,6 +39,6 @@ if(ADMIN ) {
 
 $content .= "<a href=\"usergroups.php?x=".X."&amp;action=manage\">".$lang['manage']."</a><br />\n";
 
-new_box( $lang['usergroups'], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
+new_box( $lang['usergroups'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );
 
 ?>
