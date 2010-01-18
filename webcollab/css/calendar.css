@@ -1,4 +1,4 @@
-TABLE.outline {
+table.outline {
   margin-left: auto;
   margin-right: auto;
   border-width: 1px;
@@ -7,7 +7,7 @@ TABLE.outline {
   text-align: center;
 }
 
-TD.monthcell {
+td.monthcell {
   font-weight: bold;
   vertical-align: middle;
   border-width: 1px;
@@ -15,7 +15,7 @@ TD.monthcell {
   color: #ffffff;
 }
 
-TD.weekcell {
+td.weekcell {
   width: 13.86%;
   border-width: 1px; 
   border-style: solid; 
@@ -23,13 +23,13 @@ TD.weekcell {
   color: #ffffff;
 }
 
-TD.datecell {
+td.datecell {
   height: 50px;
   border-width: 1px; 
   border-style: solid;
 }
 
-TD span.daynum {
+td span.daynum {
   display: block;
   text-align: center;
 }

@@ -7,6 +7,26 @@ body {
   color : #000000;
 }
 
+/* CONTAINER */
+
+/* Global container box */
+table.main {
+  border-width : 0;
+  border-collapse : collapse;
+  padding : 0;
+  width : 100%;
+}
+
+td.menu {
+  width : 175px;
+}
+
+td.single {
+  width : 100%;
+}
+
+/* MASTHEAD */
+
 /* Masthead band to top of page */
 div.masthead {
   text-align : left;
@@ -17,17 +37,8 @@ div.masthead {
   color : #eeeeee;
 }
 
-/* Global container box */
-table.main {
-  margin-left : auto;
-  margin-right : auto;
-  border-width : 0;
-  border-collapse : collapse;
-  padding : 0;
-  width : 100%;
-}
+/* BOX HEAD */
 
-/* ***** */
 /* Default box head styling */
 div.head {
   margin-left : auto;
@@ -36,7 +47,6 @@ div.head {
   border-left: 1px solid #000000;
   border-right: 1px solid #000000;
   border-top: 1px solid #000000;
-  padding : 0;
   font-weight : bold;
   text-align : left;
   padding : 3px;
@@ -51,19 +61,24 @@ div.head-normal {
   width : 97%;
 }
 
+/* Menu head styling */
+div.head-menu {
+  width : 90%;
+}
+
 /* Small box head styling */
 div.head-small {
   margin-top : 40px;
   width : 400px;
 }
 
-/* ***** */
+/* BOXES */
+
 /* Default box content styling */
 div.boxdata {
   margin-left : auto;
   margin-right : auto;
   border: 1px solid #000000;
-  padding : 0;
   text-align : left;
   border-collapse : collapse;
   padding : 3px;
@@ -80,7 +95,7 @@ div.boxdata-normal {
 
 /* menu box content styling */
 div.boxdata-menu {
-  width : 97%;
+  width : 90%;
   margin-bottom: 20px;
 }
 
@@ -89,7 +104,6 @@ div.boxdata-small {
   width : 400px;
 }
 
-/* ***** */
 /* Box content styling for info boxes */
 div.boxstyle {
   text-align : left;
@@ -98,8 +112,6 @@ div.boxstyle {
   background-color : #ffffff;
   color : #000000;
 }
-
-/* Extended classes for content styling */
 
 /* normal style  */
 div.boxstyle-normal {
@@ -124,6 +136,8 @@ div.boxstyle-menu {
   padding-bottom : 3px;
 }
 
+/* FOOTER */
+
 /* Class for text at page bottom */ 
 div.bottomtext {
   font-size : 10px;
@@ -133,6 +147,8 @@ div.bottomtext {
   color : #1e4b79;
   background-color : transparent;
 }
+
+/* GENERAL CONTENT */
 
 /* Box content styling for project listing */
 div.projectlist {
@@ -145,12 +161,6 @@ div.projectlist {
   padding-bottom : 20px;
   background-color : #ffffff;
   color : #000000;
-}
-
-/* Generic table */
-table {
-  border-width : 0;
-  padding : 0;
 }
 
 /* Table for use in data cells */
@@ -174,12 +184,6 @@ tr.projectrow {
   background-color : #dddddd;
   border-bottom : 1px solid #333;
   font-weight : bold;
-}
-
-/* Generic cell */
-td {
-  font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
 }
 
 /* Box content styling for project listing */
@@ -232,6 +236,18 @@ td.redbar {
   height : 5px;
   background-color : #FFA500;
   color : #000000;
+}
+
+/* GENERIC ELEMENTS */
+
+table {
+  border-width : 0;
+  padding : 0;
+}
+
+td {
+  font-family: "Helvetica", Verdana, Arial, Sans-serif;
+  font-size : 12px;
 }
 
 li {
