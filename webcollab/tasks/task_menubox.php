@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -83,6 +83,6 @@ if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
 //add project
 $content .= "<a href=\"tasks.php?x=".X."&amp;action=add\">".$lang['add_project']."</a><br />\n";
 
-new_box( $lang[$menu_type."_options"], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
+new_box( $lang[$menu_type."_options"], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );
 
 ?>
