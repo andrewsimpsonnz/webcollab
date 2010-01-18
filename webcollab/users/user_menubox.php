@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -53,6 +53,6 @@ if((GUEST == false ) || ((GUEST == true ) && (GUEST_LOCKED == 'N' ) ) ){
 $content .= "<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".UID."\">".$lang['show_details']."</a><br />\n";
 
 //show it
-new_box($lang['users'], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
+new_box($lang['users'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );
 
 ?>
