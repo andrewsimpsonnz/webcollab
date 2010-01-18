@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -44,6 +44,6 @@ $content .= "<a href=\"main.php?x=".X."\">".$lang['home_page']."</a><br />\n".
             "<a href=\"logout.php?x=".X."\">".$lang['log_out']."</a><br />\n";
 
 //show
-new_box( $lang['main_menu'], $content, 'boxdata-menu', 'head-normal', 'boxstyle-menu' );
+new_box( $lang['main_menu'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );
 
 ?>
