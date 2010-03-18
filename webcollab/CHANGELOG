@@ -5,6 +5,8 @@ WebCollab SVN
 
 - bugfix - RSS feed does not account for minutes in timezone
 
+- Accept Windows-1252 characters in English ISO-8859-1 as per HTML 5
+
 WebCollab SVN
 *** 18 January 2010
   Andrew Simpson
