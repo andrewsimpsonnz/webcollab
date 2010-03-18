@@ -121,7 +121,7 @@ function rss_start($last_mod, $filename ) {
               "<description>".MANAGER_NAME."</description>\n".
               "<ttl>60</ttl>\n".
               "<lastBuildDate>".gmdate('D, d M Y H:i:s')." GMT</lastBuildDate>\n".
-              "<generator>WebCollab 2.40</generator>\n";
+              "<generator>WebCollab ".WEBCOLLAB_VERSION."</generator>\n";
 
 return $content;
 }
@@ -132,7 +132,8 @@ return $content;
 function rss_time($timestamp ) {
 
   //format is Saturday, 09 February 2008 12:10:45 +1300
-  return date('D, d M Y h:i:s', $timestamp ).sprintf(' %+03d00', TZ );
+  return date('D, d M Y H:i:s', $timestamp ).sprintf(' %+03d%02u', intval(TZ ), ((abs(TZ ) - intval(abs(TZ ) ) ) * 60 ) );
+
 
 }
 
