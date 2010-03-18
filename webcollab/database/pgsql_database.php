@@ -186,7 +186,8 @@ function db_user_locale($encoding ) {
   switch(strtoupper($encoding) ) {
 
     case 'ISO-8859-1':
-      $pg_encoding = 'LATIN1';
+      //$pg_encoding = 'LATIN1';
+      $pg_encoding = 'WIN1252';
       break;
 
     case 'UTF-8':
