@@ -1,4 +1,11 @@
 WebCollab SVN
+*** 18 March 2010
+
+- bugfix - RSS feed has 12 hour time instead of 24 hour time (Bug #2972216) (Credit: pmarecha - Pierre Marechal)
+
+- bugfix - RSS feed does not account for minutes in timezone
+
+WebCollab SVN
 *** 18 January 2010
   Andrew Simpson
 
