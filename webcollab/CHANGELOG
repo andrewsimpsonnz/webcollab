@@ -1,4 +1,13 @@
 WebCollab SVN
+*** 20 March 2010
+
+- bugfix - fix bbcode tags spread over two or more lines
+
+- add bbcode for ordered and unordered lists
+
+- allow user's language localisation in RSS for UTF-8 version
+
+WebCollab SVN
 *** 18 March 2010
 
 - bugfix - RSS feed has 12 hour time instead of 24 hour time (Bug #2972216) (Credit: pmarecha - Pierre Marechal)
