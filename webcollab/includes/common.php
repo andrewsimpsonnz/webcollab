@@ -209,15 +209,17 @@ function bbcode($body ) {
 
   //bbcode tags
   if(! strpos($body, '[/' ) === false ) {
-    $body = preg_replace('#\[i\](.+?)\[/i\]#i', "<i>$1</i>", $body );
-    $body = preg_replace('#\[b\](.+?)\[/b\]#i', "<b>$1</b>", $body );
-    $body = preg_replace('#\[u\](.+?)\[/u\]#i', "<span style=\"text-decoration: underline;\">$1</span>", $body );
-    $body = preg_replace('#\[quote\](.+?)\[/quote\]#i', "<blockquote><p>$1</p></blockquote>", $body );
-    $body = preg_replace('#\[code\](.+?)\[/code\]#i', "<pre>$1</pre>", $body );
-    $body = preg_replace('#\[color=(red|blue|green|yellow)\](.+?)\[/color\]#i', "<span style=\"color:$1\">$2</span>", $body );
+    $body = preg_replace('#\[i\](.+?)\[/i\]#is', "<i>$1</i>", $body );
+    $body = preg_replace('#\[b\](.+?)\[/b\]#is', "<b>$1</b>", $body );
+    $body = preg_replace('#\[u\](.+?)\[/u\]#is', "<span style=\"text-decoration: underline;\">$1</span>", $body );
+    $body = preg_replace('#\[quote\](.+?)\[/quote\]#is', "<blockquote><p>$1</p></blockquote>", $body );
+    $body = preg_replace('#\[code\](.+?)\[/code\]#is', "<pre>$1</pre>", $body );
+    $body = preg_replace('#\[color=(red|blue|green|yellow)\](.+?)\[/color\]#is', "<span style=\"color:$1\">$2</span>", $body );
     $body = preg_replace('#\[img\](http(s)?:\/\/([a-z0-9\-_~/.])+?\.(jpg|jpeg|gif|png))\[/img\]#i', "<img src=\"$1\" alt=\"\"/>", $body );
     $body = preg_replace_callback('#\[url\]((http|ftp)+(s)?:\/\/[a-z0-9\-_~/@:?=&;+\#.]+)\[/url\]#i', 'link1', $body );
     $body = preg_replace_callback('#\[url=((http|ftp)+(s)?:\/\/([a-z0-9\-_~.]+[.][a-z]{2,6})[a-z0-9\-_~/@:?=&;+\#.%]*)\](.+?)\[/url\]#i', 'link2', $body );
+    $body = preg_replace_callback('#\[list\](.+?)\[/list\]#is', 'list1', $body );
+    $body = preg_replace_callback('#\[list=1\](.+?)\[/list\]#is', 'list2', $body );
   }
   return $body;
 }
@@ -231,6 +233,18 @@ function link1($url) {
 function link2($url) {
   $url[1] = strtr($url[1], array("&amp;" => "&" ) );
   $body = "<a href=\"".$url[1]."\" onclick=\"window.open('".$url[1]."'); return false\">".$url[5]."</a> [".$url[4]."]";
+  return $body;
+}
+
+function list1($list) {
+  $body = "<ul>". preg_replace('#\[\*\](.+?)$#m', "<li>$1</li>", $list[1] )."</ul>";
+  $body = str_replace("\n", "", $body );
+  return $body;
+}
+
+function list2($list) {
+  $body = "<ol>". preg_replace('#\[\*\](.+?)$#m', "<li>$1</li>", $list[1] )."</ol>";
+  $body = str_replace("\n", "", $body );
   return $body;
 }
 
