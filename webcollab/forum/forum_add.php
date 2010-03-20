@@ -107,7 +107,8 @@ else {
 }
 
 //build up the text-entry part
-$content .=   "<tr><td>".$lang['message']."</td><td><textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\"></textarea></td></tr>\n".
+$content .=   "<tr><td>".$lang['message']."</td>\n".
+              "<td><textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\"></textarea></td></tr>\n".
               "</table>\n".
               "<table class=\"celldata\">\n".
               "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER." /></td></tr>\n".
