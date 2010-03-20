@@ -37,10 +37,11 @@ function rss_login() {
     rss_error('401', 'Login no authorisation');
   }
 
-  //used to get UTF-8 in common.php
-  define('CHARACTER_SET', 'UTF-8' );
+  //set database to UTF-8
+  db_user_locale('UTF-8');
 
-  if( ! ($q = @db_query('SELECT id, admin FROM '.PRE.'users WHERE name=\''.safe_data($_SERVER['REMOTE_USER'] ).'\' AND deleted=\'f\'', 0 ) ) ) {
+  if( ! ($q = @db_query('SELECT id, admin, locale FROM '.PRE.'users'.
+                        ' WHERE name=\''.db_escape_string($_SERVER['REMOTE_USER'] ).'\' AND deleted=\'f\'', 0 ) ) ) {
     rss_error('401', 'Login user select' );
   }
 
@@ -49,6 +50,14 @@ function rss_login() {
   }
 
   define('UID', $row['id'] );
+
+  //set user defined locale if requrired
+  if($row['locale'] ) {
+    define('LOCALE_USER', $row['locale'] );
+  }
+  else {
+    define('LOCALE_USER', LOCALE );
+  }
 
   if($row['admin'] == 't' ) {
     define('ADMIN', 1 );
@@ -134,7 +143,35 @@ function rss_time($timestamp ) {
   //format is Saturday, 09 February 2008 12:10:45 +1300
   return date('D, d M Y H:i:s', $timestamp ).sprintf(' %+03d%02u', intval(TZ ), ((abs(TZ ) - intval(abs(TZ ) ) ) * 60 ) );
 
+}
 
+//
+// Language file
+//
+function rss_status() {
+
+  if(UNICODE_VERSION == 'Y' ) {
+
+    include_once(BASE.'lang/lang.php');
+    $status['created']      = $task_state['new'];
+    $status['notactive']    = $task_state['planned'];
+    $status['active']       = $task_state['active'];
+    $status['cantcomplete'] = $task_state['cantcomplete'];
+    $status['done']         = $task_state['done'];
+    $status['completed']    = $task_state['completed'];
+  }
+  else {
+
+    //Use English for other than UTF-8 (Can't mix character sets)
+    $status['created']      = 'New';
+    $status['notactive']    = 'Planned';
+    $status['active']       = 'Active';
+    $status['cantcomplete'] = 'On Hold';
+    $status['done']         = 'Done';
+    $status['completed']    = 'Completed';
+  }
+
+  return $status;
 }
 
 //

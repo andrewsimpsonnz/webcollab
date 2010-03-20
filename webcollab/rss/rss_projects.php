@@ -101,38 +101,19 @@ $content = rss_start($last_mod, $filename );
 
 //set constants
 $guid = md5(MANAGER_NAME . BASE_URL);
+$rss_status = rss_status();
 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   if($row['completed'] == 100 ) {
-    $status = 'Complete';
+    $status = $rss_status['completed'];
   }
   else {
-    switch($row['status'] ) { 
-
-      case 'nolimit':
-        $status =  'No deadline';
-        break;
-
-      case 'notactive':
-        $status = 'Planned';
-        break;
-
-      case 'active':
-        $status =  'Active';
-        break;
-
-      case 'cantcomplete':
-        $status =  "&lt;b&gt;On Hold&lt;/b&gt;";
-        break;
-
-      case 'done':
-        $status =  'Done';
-        break;
-
-      default:
-        $status =  $row['status'];
-        break;
+    if(array_key_exists($row['status'], $rss_status ) ) {
+      $status = $rss_status[($row['status'])];
+    }
+    else {
+      $status = $row['status'];
     }
   }
 
