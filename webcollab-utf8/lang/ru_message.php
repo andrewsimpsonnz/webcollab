@@ -386,5 +386,9 @@ $week_array = array('Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб' );
     $lang['condensed_view']             = "Свернуть";
     $lang['full_view']                  = "Развернуть";
     $lang['icalendar']                  = "iCalendar";
+//**
+    $lang['url_javascript']             = "Enter the URL:";
+//**
+    $lang['image_url_javascript']       = "Enter the image URL:";
 
 ?>

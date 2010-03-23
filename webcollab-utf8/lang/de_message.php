@@ -405,5 +405,9 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['condensed_view']              = "Kurzansicht";
     $lang['full_view']                   = "Vollständige Ansicht";
     $lang['icalendar']                   = "iCalendar";
+//**
+    $lang['url_javascript']              = "Enter the URL:";
+//**
+    $lang['image_url_javascript']        = "Enter the image URL:";
 
 ?>

@@ -405,4 +405,9 @@ počet dní v mesiaci).<br />Prosím vráťte sa a zadajte platný dátum.';
     $lang['condensed_view']             = 'Zúžený pohľad';
     $lang['full_view']                  = 'Plný pohľad';
     $lang['icalendar']                  = "iKalendár";
+//**
+    $lang['url_javascript']             = "Enter the URL:";
+//**
+    $lang['image_url_javascript']       = "Enter the image URL:";
+
 ?>

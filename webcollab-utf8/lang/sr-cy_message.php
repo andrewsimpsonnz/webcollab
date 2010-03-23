@@ -401,4 +401,10 @@ $week_array = array('Нед', 'Пон', 'Уто', 'Сре', 'чет', 'Пет', 
     $lang['condensed_view']             = "Сабијен приказ";
     $lang['full_view']                  = "Пун приказ";
     $lang['icalendar']                  = "\"iCalendar\" фајл";
+//**
+    $lang['url_javascript']             = "Enter the URL:";
+//**
+    $lang['image_url_javascript']       = "Enter the image URL:";
+
+
 ?>

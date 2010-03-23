@@ -401,5 +401,9 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $lang['condensed_view']             = "Exibição resumida";
     $lang['full_view']                  = "Exibição completa";
     $lang['icalendar']                  = "iCalendar";
+//**
+    $lang['url_javascript']             = "Enter the URL:";
+//**
+    $lang['image_url_javascript']       = "Enter the image URL:";
 
 ?>

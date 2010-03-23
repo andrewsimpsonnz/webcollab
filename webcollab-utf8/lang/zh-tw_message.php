@@ -409,5 +409,9 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['full_view']                  = "全部内容";
 //**
     $lang['icalendar']                  = "iCalendar";
+//**
+    $lang['url_javascript']             = "Enter the URL:";
+//**
+    $lang['image_url_javascript']       = "Enter the image URL:";
 
 ?>

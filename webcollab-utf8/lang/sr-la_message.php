@@ -401,5 +401,9 @@ $week_array = array('Ned', 'Pon', 'Uto', 'Sre', 'Čet', 'Pet', 'Sub' );
     $lang['condensed_view']             = "Sabijen prikaz";
     $lang['full_view']                  = "Pun prikaz";
     $lang['icalendar']                  = "\"iCalendar\" fajl";
+//**
+    $lang['url_javascript']             = "Enter the URL:";
+//**
+    $lang['image_url_javascript']       = "Enter the image URL:";
 
 ?>

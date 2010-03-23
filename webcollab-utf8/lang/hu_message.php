@@ -405,5 +405,9 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['condensed_view']             = "Áttekintő nézet";
     $lang['full_view']                  = "Részletes nézet";
     $lang['icalendar']                  = "iCalendar";
+//**
+    $lang['url_javascript']             = "Enter the URL:";
+//**
+    $lang['image_url_javascript']       = "Enter the image URL:";
 
 ?>

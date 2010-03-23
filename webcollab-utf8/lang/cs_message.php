@@ -405,5 +405,9 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['condensed_view']             = "Zkrácený výběr";
     $lang['full_view']                  = "Plné zobrazení";
     $lang['icalendar']                  = "iKalendář";
+//**
+    $lang['url_javascript']             = "Enter the URL:";
+//**
+    $lang['image_url_javascript']       = "Enter the image URL:";
 
 ?>

@@ -424,5 +424,9 @@ $week_array = array('일', '월', '화', '수', '목', '금', '토' );
     $lang['full_view']                    = "Full view";
 //**
     $lang['icalendar']                    = "iCalendar";
+//**
+    $lang['url_javascript']               = "Enter the URL:";
+//**
+    $lang['image_url_javascript']         = "Enter the image URL:";
 
 ?>

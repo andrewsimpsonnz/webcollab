@@ -377,4 +377,9 @@ $lang['print_version'] = "Versión para imprimir";
 $lang['condensed_view'] = "Vista agrupada";
 $lang['full_view'] = "Vista completa";
 $lang['icalendar'] = "iCalendario";
+//**
+$lang['url_javascript'] = "Enter the URL:";
+//**
+$lang['image_url_javascript'] = "Enter the image URL:";
+
 ?>

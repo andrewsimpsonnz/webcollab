@@ -403,5 +403,9 @@ $week_array = array('Sön', 'Mĺn', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['condensed_view']             = "Komprimerad vy";
     $lang['full_view']                  = "Fullständig vy";
     $lang['icalendar']                  = "iCalendar";
+//**
+    $lang['url_javascript']             = "Enter the URL:";
+//**
+    $lang['image_url_javascript']       = "Enter the image URL:";
 
 ?>

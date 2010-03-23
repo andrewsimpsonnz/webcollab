@@ -404,7 +404,7 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['by_status']                    = " (ved status)";
     $lang['by_owner']                     = " (ved ejer)";
 //** needs translation
-    $lang['by_priority']                = " (by priority)";
+    $lang['by_priority']                  = " (by priority)";
     $lang['project_cloned']               = "Projekt skal klones :";
     $lang['task_cloned']                  = "Opgave skal klones:";
     $lang['note_clone']                   = "Bemærk: Opgaven vil blive klonet som et nyt projekt";
@@ -415,6 +415,10 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['print_version']                = "Print version";
     $lang['condensed_view']               = "Koncentreret visning";
     $lang['full_view']                    = "Fuld visning";
-    $lang['icalendar']                     = "iCalendar";
+    $lang['icalendar']                    = "iCalendar";
+//**
+    $lang['url_javascript']               = "Enter the URL:";
+//**
+    $lang['image_url_javascript']         = "Enter the image URL:";
 
 ?>

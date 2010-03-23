@@ -411,5 +411,9 @@ $week_array = array('日', '月', '火', '水', '木', '金', '土' );
     $lang['full_view']                  = "Full view";
 //**
     $lang['icalendar']                  = "iCalendar";
+//**
+    $lang['url_javascript']             = "Enter the URL:";
+//**
+    $lang['image_url_javascript']       = "Enter the image URL:";
 
 ?>
