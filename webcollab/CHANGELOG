@@ -1,7 +1,14 @@
 WebCollab SVN
+*** 22 March 2010
+
+- add javascript bbcode editor (Reporter: Vinz)
+
+- bugfix - Czech language file in wrong encoding.
+
+WebCollab SVN
 *** 20 March 2010
 
-- bugfix - fix bbcode tags spread over two or more lines
+- bugfix - fix bbcode tags spread over two or more lines not working
 
 - add bbcode for ordered and unordered lists
 
