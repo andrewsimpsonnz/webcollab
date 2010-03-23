@@ -41,7 +41,9 @@ $content = "<form method=\"post\" action=\"contacts.php\" onsubmit=\"return fiel
            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
            "<input type=\"hidden\" name=\"action\" value=\"submit_add\" />\n".
            "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
-           "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n".
+           "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" />\n".
+           "<input type=\"hidden\" id=\"url\" name=\"url\" value=\"".$lang['url_javascript']."\" />\n".
+           "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" /></fieldset>\n".
            "<table class=\"celldata\">\n".
            "<tr><td><i>".$lang['firstname']."</i></td><td><input id=\"firstname\" type=\"text\" name=\"firstname\" size=\"30\" /></td></tr>\n".
            "<tr><td><i>".$lang['lastname']."</i></td><td><input id=\"lastname\" type=\"text\" name=\"lastname\" size=\"30\" /></td></tr>\n".
@@ -55,7 +57,9 @@ $content = "<form method=\"post\" action=\"contacts.php\" onsubmit=\"return fiel
            "<tr><td><i>".$lang['city']."</i></td><td><input type=\"text\" name=\"city\" size=\"30\" /></td></tr>\n".
            "<tr><td><i>".$lang['email_contact']."</i></td><td><input type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".
            "</table>\n".
-           "<p><i>".$lang['notes']."</i><br /><textarea name=\"notes\" rows=\"6\" cols=\"50\"></textarea></p>\n".
+           "<p><i>".$lang['notes']."</i><br />\n".
+           "<script type=\"text/javascript\"> edToolbar('notes');</script>".
+           "<textarea name=\"notes\" id=\"notes\" rows=\"6\" cols=\"50\"></textarea></p>\n".
            "<p><input type=\"submit\" value=\"".$lang['add_contact']."\"/></p>\n".
            "</form>\n";
 

@@ -147,8 +147,9 @@ function create_top($title='', $page_type=0, $include_javascript=0, $check_field
   switch($include_javascript ) {
 
     case 1:
-       //loads javascript file
-       $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
+      //loads javascript file
+      $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
+                  "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n".
                   "</head>\n\n".
                   "<body>\n";
        break;
@@ -156,6 +157,7 @@ function create_top($title='', $page_type=0, $include_javascript=0, $check_field
     case 2:
       //loads javascript file and highlights cursor...
       $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
+                  "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n".
                   "</head>\n\n".
                   "<body onload=\"placeCursor('".$check_field."')\">\n";
       break;
@@ -163,6 +165,7 @@ function create_top($title='', $page_type=0, $include_javascript=0, $check_field
     case 3:
       //loads javascript file and resets the token...
       $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
+                  "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n".
                   "</head>\n\n".
                   "<body onload=\"placeToken('".TOKEN."')\">\n";
       break;

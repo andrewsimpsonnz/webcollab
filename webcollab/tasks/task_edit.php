@@ -100,7 +100,9 @@ $content .= "<form method=\"post\" action=\"tasks.php\" onsubmit= \"return field
             "<input type=\"hidden\" name=\"taskid\" value=\"".$TASKID_ROW['id']."\" />\n".
             "<input type=\"hidden\" id=\"alert_field\" name=\"alert1\" value=\"".$lang['missing_field_javascript']."\" />\n".
             "<input type=\"hidden\" id=\"alert_date\" name=\"alert2\" value=\"".$lang['invalid_date_javascript']."\" />\n".
-            "<input type=\"hidden\" id=\"alert_finish\" name=\"alert3\" value=\"".$lang['finish_date_javascript']."\" />\n";
+            "<input type=\"hidden\" id=\"alert_finish\" name=\"alert3\" value=\"".$lang['finish_date_javascript']."\" />\n".
+            "<input type=\"hidden\" id=\"url\" name=\"url\" value=\"".$lang['url_javascript']."\" />\n".
+            "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" />\n";
 
 //select either project or task for text
 switch($TYPE) {
@@ -355,7 +357,9 @@ $group  = ($TASKID_ROW['groupaccess']  == 't' ) ? "checked=\"checked\"" : '';
 $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['all_users_view']."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" ".$global." /></td></tr>\n".
              "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$group." /></td></tr>\n".
 
-             "<tr><td>".$lang[$TYPE."_description"]."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\">".$TASKID_ROW['text']."</textarea></td> </tr>\n".
+             "<tr><td>".$lang[$TYPE."_description"]."</td>".
+             "<td><script type=\"text/javascript\"> edToolbar('text');</script>".
+             "<textarea name=\"text\" id=\"text\" rows=\"10\" cols=\"60\">".$TASKID_ROW['text']."</textarea></td></tr>\n".
 
              //do we need to email ?
              "<tr><td><label for=\"mailowner\">".$lang['email_new_owner']."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".DEFAULT_OWNER." /></td></tr>\n".

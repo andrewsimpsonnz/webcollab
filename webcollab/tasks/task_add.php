@@ -72,7 +72,9 @@ $content .= "<form method=\"post\" action=\"tasks.php\" onsubmit=\"return fieldC
             "<input type=\"hidden\" id=\"token\" name=\"token\" value=\"".TOKEN."\" />\n".
             "<input type=\"hidden\" id=\"alert_field\" name=\"alert1\" value=\"".$lang['missing_field_javascript']."\" />\n".
             "<input type=\"hidden\" id=\"alert_date\" name=\"alert2\" value=\"".$lang['invalid_date_javascript']."\" />\n".
-            "<input type=\"hidden\" id=\"alert_finish\" name=\"alert3\" value=\"".$lang['finish_date_javascript']."\" />\n";
+            "<input type=\"hidden\" id=\"alert_finish\" name=\"alert3\" value=\"".$lang['finish_date_javascript']."\" />\n".
+            "<input type=\"hidden\" id=\"url\" name=\"url\" value=\"".$lang['url_javascript']."\" />\n".
+            "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" />\n";
 
 //this is split up in 2 parts for readabilities' sake
 
@@ -256,7 +258,9 @@ if( @safe_integer($_GET['parentid']) ) {
               "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['all_users_view']."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".$globalaccess." /></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".DEFAULT_EDIT." /></td></tr>\n".
 
-              "<tr> <td>".$lang['task_description']."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
+              "<tr> <td>".$lang['task_description']."</td>".
+              "<td><script type=\"text/javascript\"> edToolbar('text'); </script>\n".
+              "<textarea name=\"text\" id=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
 
               //do we need to email ?
               "<tr><td><label for=\"mailowner\">".$lang['email_owner']."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".DEFAULT_OWNER." /></td></tr>\n".
@@ -338,7 +342,9 @@ else {
               "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['all_users_view']."</a> </td><td><input type=\"checkbox\" name=\"globalaccess\" ".DEFAULT_ACCESS." /></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".DEFAULT_EDIT." /></td></tr>\n".
 
-              "<tr> <td>".$lang['project_description']."</td> <td><textarea name=\"text\" rows=\"10\" cols=\"60\"></textarea></td> </tr>\n".
+              "<tr><td>".$lang['project_description']."</td>".
+              "<td><script type=\"text/javascript\"> edToolbar('text'); </script>\n".
+              "<textarea name=\"text\" id=\"text\" rows=\"10\" cols=\"60\"></textarea></td></tr>\n".
 
               //do we need to email ?
               "<tr><td><label for=\"mailowner\">".$lang['email_owner']."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".DEFAULT_OWNER." /></td></tr>\n".

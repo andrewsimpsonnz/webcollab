@@ -58,7 +58,9 @@ $content =
     "<fieldset><input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
     "<input type=\"hidden\" name=\"contactid\" value=\"".$contactid."\" />\n".
     "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
-    "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n".
+    "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" />\n".
+    "<input type=\"hidden\" id=\"url\" name=\"url\" value=\"".$lang['url_javascript']."\" />\n".
+    "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" /></fieldset>\n".
     "<table class=\"celldata\">\n".
     "<tr><td><i>".$lang['firstname']."</i></td><td><input id=\"firstname\" type=\"text\" name=\"firstname\" value=\"".$row['firstname']."\"size=\"30\" /></td></tr>\n".
     "<tr><td><i>".$lang['lastname']."</i></td><td><input id=\"lastname\" type=\"text\" name=\"lastname\" value=\"".$row['lastname']."\" size=\"30\" /></td></tr>\n".
@@ -72,7 +74,9 @@ $content =
     "<tr><td><i>".$lang['city']."</i></td><td><input type=\"text\" name=\"city\" value=\"".$row['city']."\" size=\"30\" /></td></tr>\n".
     "<tr><td><i>".$lang['email_contact']."</i></td><td><input type=\"text\" name=\"email\" value=\"".$row['email']."\" size=\"30\" /></td></tr>\n".
     "</table>\n".
-    "<p><i>".$lang['notes']."</i><br /><textarea  name=\"notes\" rows=\"6\" cols=\"50\">".$row['notes']."</textarea></p>\n";
+    "<p><i>".$lang['notes']."</i><br />".
+    "<script type=\"text/javascript\"> edToolbar('notes');</script>".
+    "<textarea  name=\"notes\" id=\"notes\" rows=\"6\" cols=\"50\">".$row['notes']."</textarea></p>\n";
 
 //edit options
 $content .=

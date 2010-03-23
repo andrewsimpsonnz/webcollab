@@ -77,11 +77,16 @@ $content .= "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
             "<input type=\"hidden\" name=\"postid\" value=\"".$postid."\" />\n".
             "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
-            "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n";
+            "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" />".
+            "<input type=\"hidden\" id=\"url\" name=\"url\" value=\"".$lang['url_javascript']."\" />\n".
+            "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" /></fieldset>\n";
+
 
 //build up the text-entry part
 $content .= "<table>\n".
-            "<tr><td>".$lang['message']."</td><td><textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\"".$s.">".$row['text']."</textarea></td></tr>\n".
+            "<tr><td>".$lang['message']."</td>".
+            "<td><script type=\"text/javascript\"> edToolbar('text');</script>".
+            "<textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\"".$s.">".$row['text']."</textarea></td></tr>\n".
             "</table>\n".
             "<table class=\"celldata\">\n".
             "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER.$s." /></td></tr>\n".

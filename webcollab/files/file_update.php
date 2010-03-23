@@ -86,11 +86,15 @@ $content =  "<form method=\"post\" enctype=\"multipart/form-data\" action=\"file
             "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
             "<input type=\"hidden\" name=\"old_fileid\" value=\"".$fileid."\" />\n".
             "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"".FILE_MAXSIZE."\" />\n".
-            "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n".
+            "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" />\n".
+            "<input type=\"hidden\" id=\"url\" name=\"url\" value=\"".$lang['url_javascript']."\" />\n".
+            "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" /></fieldset>\n".
             "<table class=\"celldata\">\n".
             "<tr><td>".$lang['file']."</td><th>".$row['filename']."</th></tr>\n".
             "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" size=\"60\" ".$s."/></td></tr>\n".
-            "<tr><td>".$lang['description'].":</td> <td><textarea name=\"description\" rows=\"25\" cols=\"88\"".$s.">".$row['description']."</textarea></td></tr>\n".
+            "<tr><td>".$lang['description'].":</td>".
+            "<td><script type=\"text/javascript\"> edToolbar('description');</script>".
+            "<textarea name=\"description\" id=\"description\" rows=\"25\" cols=\"88\"".$s.">".$row['description']."</textarea></td></tr>\n".
             "<tr><td></td><td>".sprintf( $lang['max_file_sprt'], FILE_MAXSIZE/1000 )."</td></tr>\n".
             "</table>\n".
             "<table class=\"celldata\">\n".

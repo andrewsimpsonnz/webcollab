@@ -74,7 +74,9 @@ $content .=  "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />".
              "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
              "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
              "<input type=\"hidden\" name=\"usergroupid\" value=\"".$usergroupid."\" />\n".
-             "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" />\n";
+             "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" />\n".
+             "<input type=\"hidden\" id=\"url\" name=\"url\" value=\"".$lang['url_javascript']."\" />\n".
+             "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" />\n";
 
 //find out some of the parent's data
 if($parentid != 0 ) {
@@ -108,7 +110,8 @@ else {
 
 //build up the text-entry part
 $content .=   "<tr><td>".$lang['message']."</td>\n".
-              "<td><textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\"></textarea></td></tr>\n".
+              "<td><script type=\"text/javascript\"> edToolbar('text'); </script>\n".
+              "<textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\"></textarea></td></tr>\n".
               "</table>\n".
               "<table class=\"celldata\">\n".
               "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER." /></td></tr>\n".
