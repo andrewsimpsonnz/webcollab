@@ -405,5 +405,10 @@ $week_array = array('Nie', 'Pon', 'Wto', '¦ro', 'Czw', 'Pi±', 'Sob' );
     $lang['condensed_view']             = "Widok skondensowany";
     $lang['full_view']                  = "Pe³ny widok";
     $lang['icalendar']                  = "iKalendarz";
+//**
+    $lang['url_javascript']             = "Enter the URL:";
+//**
+    $lang['image_url_javascript']       = "Enter the image URL:";
+
 
 ?>

@@ -406,5 +406,9 @@ $week_array = array('Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Zat' );
     $lang['condensed_view']             = "Compacte weergave";
     $lang['full_view']                  = "Volledige weergave";
     $lang['icalendar']                  = "iCalendar";
+//**
+    $lang['url_javascript']             = "Enter the URL:";
+//**
+    $lang['image_url_javascript']       = "Enter the image URL:";
 
 ?>

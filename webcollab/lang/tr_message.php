@@ -404,5 +404,9 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['condensed_view']             = "Sýkýþtýrýlmýþ görünüm";
     $lang['full_view']                  = "Tam görünüm";
     $lang['icalendar']                  = "iTakvim";
+//**
+    $lang['url_javascript']             = "Enter the URL:";
+//**
+    $lang['image_url_javascript']       = "Enter the image URL:";
 
 ?>

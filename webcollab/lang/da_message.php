@@ -424,11 +424,12 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['normal_version']               = "Normal version";
     //**
     $lang['print_version']                = "Print version";
-//**
     $lang['condensed_view']               = "Koncentreret visning";
-//**
     $lang['full_view']                    = "Fuld visning";
-//**
     $lang['icalendar']                    = "iCalendar";
-
+//**
+    $lang['url_javascript']               = "Enter the URL:";
+//**
+    $lang['image_url_javascript']         = "Enter the image URL:";
+    
 ?>

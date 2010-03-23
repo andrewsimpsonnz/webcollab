@@ -407,4 +407,9 @@ $week_array = array('Ned', 'Pon', 'Tor', 'Sre', 'Èet', 'Pet', 'Sob' );
     $lang['condensed_view']             = "Skrèen prikaz";
     $lang['full_view']                  = "Poln prikaz";
     $lang['icalendar']                  = "\"iKoledar\" datoteka";
+//**
+    $lang['url_javascript']             = "Enter the URL:";
+//**
+    $lang['image_url_javascript']       = "Enter the image URL:";
+
 ?>

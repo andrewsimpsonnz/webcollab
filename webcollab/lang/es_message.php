@@ -370,7 +370,6 @@ $lang['by_taskgroup'] = " (por grupo de tareas)";
 $lang['by_deadline'] = " (por límite)";
 $lang['by_status'] = " (por estado)";
 $lang['by_owner'] = " (por propietario)";
-//** needs translation
 $lang['by_priority'] = " (por priority)";
 $lang['project_cloned'] = "Proyecto a duplicar :";
 $lang['task_cloned'] = "Tarea a duplicar :";
@@ -382,4 +381,9 @@ $lang['print_version'] = "Versión para imprimir";
 $lang['condensed_view'] = "Vista agrupada";
 $lang['full_view'] = "Vista completa";
 $lang['icalendar'] = "iCalendario";
+//**
+$lang['url_javascript'] = "Enter the URL:";
+//**
+$lang['image_url_javascript'] = "Enter the image URL:";
+
 ?>

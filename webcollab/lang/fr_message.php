@@ -409,6 +409,9 @@ $week_array = array('Dim','Lun','Mar','Mer','Jeu','Ven','Sam');
     $lang['condensed_view']               = "Vue réduite";
     $lang['full_view']                    = "Vue complète";
     $lang['icalendar']                    = "iCalendar";
-
+//**
+    $lang['url_javascript']               = "Enter the URL:";
+//**
+    $lang['image_url_javascript']         = "Enter the image URL:";
 
 ?>

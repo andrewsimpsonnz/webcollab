@@ -416,6 +416,9 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['condensed_view']               = "Konsentrert visning";
     $lang['full_view']                    = "Full visning";
     $lang['icalendar']                    = "iCalendar";
-
+//**
+    $lang['url_javascript']               = "Enter the URL:";
+//**
+    $lang['image_url_javascript']         = "Enter the image URL:";
 
 ?>

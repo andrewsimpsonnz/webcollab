@@ -408,5 +408,9 @@ $week_array = array('Di','Lu','Ma','Me','¬a','Ve','Sa');
     $lang['condensed_view']              = "Mallonga versio";
     $lang['full_view']                   = "Plena versio";
     $lang['icalendar']                   = "iKalendaro";
+//**
+    $lang['url_javascript']              = "Enter the URL:";
+//**
+    $lang['image_url_javascript']        = "Enter the image URL:";
 
 ?>
