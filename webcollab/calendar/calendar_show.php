@@ -160,10 +160,10 @@ for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   $no_access_project[($row[0])] = $row[1];
 }
 
-//get list of common users in private usergroups that this user can view 
+//get list of common users in private usergroups that this user can view
 $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       '.PRE.'usergroups_users.userid AS userid
-                      FROM '.PRE.'usergroups_users 
+                      FROM '.PRE.'usergroups_users
                       LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
                       WHERE '.PRE.'usergroups.private=1');
 
@@ -174,8 +174,8 @@ for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 }
 
 //get all the days with projects/tasks due in selected month and year
-$q = db_query('SELECT '.$day_part.'deadline) AS day, projectid FROM '.PRE.'tasks 
-                      WHERE deadline BETWEEN \''.$year.'-'.$month.'-01 00:00:00\' 
+$q = db_query('SELECT '.$day_part.'deadline) AS day, projectid FROM '.PRE.'tasks
+                      WHERE deadline BETWEEN \''.$year.'-'.$month.'-01 00:00:00\'
                       AND ('.$date_type.' \''.$year.'-'.$month.'-01 00:00:00\' + INTERVAL '.$delim.'1 MONTH'.$delim.')'.
                       $tail );
 
@@ -319,7 +319,7 @@ for ($i = 0; $i < 7; ++$i ) {
   if( $day_number > 6 ) {
     $day_number = $day_number - 7;
   }
-  $content .= "<td class=\"weekcell\" style=\"width: 20px\"><b>".$week_array[$day_number]."</b></td>\n";
+  $content .= "<td class=\"weekcell\" style=\"width: 13.86%\"><b>".$week_array[$day_number]."</b></td>\n";
 }
 $content .= "</tr>\n";
 
@@ -361,57 +361,71 @@ for($num = 1; $num <= $numdays; ++$num ) {
                           AND \''.$year.'-'.$month.'-'.$num.' 23:59:59\'
                           AND archive=0 '.$suffix );
 
-      for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
+    for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
 
-        //don't show tasks in private usergroup projects
-        if( (! ADMIN ) && isset($no_access_project[($row['projectid'])] ) ) {
+      //don't show tasks in private usergroup projects
+      if( (! ADMIN ) && isset($no_access_project[($row['projectid'])] ) ) {
 
-          //$no_access_project[($row['projectid'])] == 'usergroupid' of project
-          if(! isset($GID[ ($no_access_project[($row['projectid'])] ) ] ) ) {
-            continue;
-          }
+        //$no_access_project[($row['projectid'])] == 'usergroupid' of project
+        if(! isset($GID[ ($no_access_project[($row['projectid'])] ) ] ) ) {
+          continue;
         }
+      }
 
-        switch($row['status'] ) {
-          case 'notactive':
-          case 'cantcomplete':
-          case 'nolimit':
-            //don't show if not active
-            continue 2;
-            break;
-
-          default:
-            //active task or project
-            switch($row['parent'] ) {
-              case '0':
-                //project
-                //check if tasks are all complete
-                if($row['completed'] > 99 ){
-                  $name = "<b>".$row['name']."</b>&nbsp;<img src=\"images/lightbulb.png\" height=\"16\" width=\"16\" alt=\"tick\" />";
-                }
-                else {
-                  $name = "<b>".$row['name']."</b>";
-                }
-                $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."\" >".
-                            "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
-                            "<span style=\"text-decoration:underline\">".
-                            "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</a></span></div>\n";
-                break;
-
-              default:
-                //task
-                if($row['status'] == "done" ) {
-                  $name = $row['name']."&nbsp;<img src=\"images/lightbulb.png\" height=\"16\" width=\"16\" alt=\"tick\" />";
-                }
-                else {
-                  $name = $row['name'];
-                }
-                $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."\">".
-                            "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
-                            "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</a></div>\n";
-                break;
-            }
+      switch($row['status'] ) {
+        case 'notactive':
+        case 'cantcomplete':
+        case 'nolimit':
+          //don't show if not active
+          continue 2;
           break;
+
+        default:
+          //active task or project
+          $name = box_shorten($row['name'], 15 );
+
+          switch($row['parent'] ) {
+            case '0':
+              //project
+              //check if tasks are all complete
+              if($row['completed'] > 99 ){
+                $name = "<b>".$name."</b>&nbsp;".
+                        "<img src=\"images/lightbulb.png\" height=\"16\" width=\"16\" alt=\"Completed\" title=\"".$task_state['completed']."\" />";
+              }
+              else {
+                $name = "<b>".$name."</b>";
+              }
+              $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."\" >".
+                          "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
+                          "<span style=\"text-decoration:underline\">".
+                          "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\" title=\"".$row['name']."\" >".$name."</a></span></div>\n";
+              break;
+
+            default:
+
+                switch($row['status']) {
+                  case "done":
+                    $state = "&nbsp;<img src=\"images/lightbulb.png\" height=\"16\" width=\"16\" alt=\"Done\" title=\"".$task_state['done']."\" />";
+                    break;
+
+                  case "active":
+                    $state = "&nbsp;<img src=\"images/lightning_go.png\" height=\"16\" width=\"16\" alt=\"Active\" title=\"".$task_state['active']."\" />";
+                    break;
+
+                  case "created":
+                    $state = "&nbsp;<img src=\"images/eye.png\" height=\"16\" width=\"16\" alt=\"New\" title=\"".$task_state['new']."\" />";
+                    break;
+
+                  default:
+                    $state = "";
+                    break;
+                  }
+                  $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."\">".
+                              "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
+                              "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\" title=\"".$row['name']."\" >".$name."</a>".$state."</div>\n";
+              break;
+          }
+        break;
       }
     }
   }
