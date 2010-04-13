@@ -3,7 +3,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2003 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -42,7 +42,7 @@ if(! defined('UID' ) ) {
 
 function smtp_auth($connection, $cap) {
 
-   global $log; 
+   global $log;
 
    if(strpos($cap, 'AUTH' ) === false ) {
         debug('This SMTP server cannot do SMTP AUTH' );
@@ -82,7 +82,7 @@ function smtp_auth($connection, $cap) {
        fputs($connection, base64_encode(MAIL_PASSWORD )."\r\n" );
        $log .= 'C: Sending password...'."\n";
        if(! strncmp('235', response(), 3 ) ) {
-         return;  
+         return;
        }
 
        $log .= 'C: Authentication failure for AUTH LOGIN'."\n";
@@ -100,8 +100,9 @@ function smtp_auth($connection, $cap) {
        $data = base64_decode(substr($res, 4 ) );
        $key = MAIL_PASSWORD;
 
-       if(function_exists('mhash' ) ) {
-         $mhash = bin2hex(mhash(MHASH_MD5, $data, $key ) );
+       if(function_exists('hash_mac' ) ) {
+         //$mhash = bin2hex(mhash(MHASH_MD5, $data, $key ) );
+         $mhash = hash_hmac('MD5', $data, $key );
        }
        else {
          //the algorithm below does mhash() without needing the external mhash library to be installed on PHP
