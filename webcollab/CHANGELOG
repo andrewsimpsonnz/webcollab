@@ -1,4 +1,13 @@
 WebCollab SVN
+*** 13 April 2010
+
+- remove obsolete mhash() and replace with hash_mac()
+
+- improve bbcode for rss feeds
+
+- replace preg_match for code speed up in cookie check
+
+WebCollab SVN
 *** 27 March 2010
 
 - patch #2961818 - Calendar presentation improvements (Credit: houwelin - Fred Houweling)
