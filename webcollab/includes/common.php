@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -279,7 +279,7 @@ function nice_size($size ) {
 
 function token_check($token ) {
 
-  if((! preg_match('/^[a-f\d]{32}$/iD', $token ) ) || $token !== OLD_TOKEN ) {
+  if((! strlen(trim($token, '1234567890abcdefABCDEF') ) == 0 ) || $token !== OLD_TOKEN ) {
     error("Invalid session", "Possible session hijacking detected." );
   }
 
