@@ -2,7 +2,7 @@
 /*
   $Id: rss_forum.php 1706 2008-01-01 06:13:00Z andrewsimpson $
 
-  (c) 2008 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2008 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -182,17 +182,29 @@ function rss_bbcode($content ) {
 
   //bbcode tags (using HTML entities to suit RSS)
   if(! strpos($content, '[/' ) === false ) {
-    $content = preg_replace('#\[i\](.+?)\[/i\]#i', "&lt;i&gt;$1&lt;/i&gt;", $content );
-    $content = preg_replace('#\[b\](.+?)\[/b\]#i', "&lt;b&gt;$1&lt;/b&gt;", $content );
-    $content = preg_replace('#\[u\](.+?)\[/u\]#i', "&lt;span style=\"text-decoration: underline;\"&gt;$1&lt;/span&gt;", $content );
-    $content = preg_replace('#\[quote\](.+?)\[/quote\]#i', "&lt;blockquote&gt;&lt;p&gt;$1&lt;/p&gt;&lt;/blockquote&gt;", $content );
-    $content = preg_replace('#\[code\](.+?)\[/code\]#i', "&lt;pre&gt;$1&lt;/pre&gt;", $content );
-    $content = preg_replace('#\[color=(red|blue|green|yellow)\](.+?)\[/color\]#i', "&lt;span style=\"color:$1\"&gt;$2&lt;/span&gt;", $content );
+    $content = preg_replace('#\[i\](.+?)\[/i\]#is', "&lt;i&gt;$1&lt;/i&gt;", $content );
+    $content = preg_replace('#\[b\](.+?)\[/b\]#is', "&lt;b&gt;$1&lt;/b&gt;", $content );
+    $content = preg_replace('#\[u\](.+?)\[/u\]#is', "&lt;span style=\"text-decoration: underline;\"&gt;$1&lt;/span&gt;", $content );
+    $content = preg_replace('#\[quote\](.+?)\[/quote\]#is', "&lt;blockquote&gt;&lt;p&gt;$1&lt;/p&gt;&lt;/blockquote&gt;", $content );
+    $content = preg_replace('#\[code\](.+?)\[/code\]#is', "&lt;pre&gt;$1&lt;/pre&gt;", $content );
+    $content = preg_replace('#\[color=(red|blue|green|yellow)\](.+?)\[/color\]#is', "&lt;span style=\"color:$1\"&gt;$2&lt;/span&gt;", $content );
     $content = preg_replace('#\[url\]((http|ftp)+(s)?:\/\/[a-z0-9./-_~]+?)\[/url\]#i', "&lt;a href=\"$1\" &gt;$1&lt;/a&gt;", $content );
     $content = preg_replace('#\[img\]([a-z0-9./\-_~]+)\[/img\]#i', "$1", $content );
+    $content = preg_replace_callback('#\[list\](.+?)\[/list\]#is', 'rss_list1', $content );
+    $content = preg_replace_callback('#\[list=1\](.+?)\[/list\]#is', 'rss_list2', $content );
   }
 
 return $content;
+}
+
+function rss_list1($list) {
+  $body = "&lt;ul&gt;". preg_replace('#\[\*\](.+?)$#m', "&lt;li&gt;$1&lt;/li&gt;", $list[1] )."&lt;/ul&gt;";
+  return $body;
+}
+
+function rss_list2($list) {
+  $body = "&lt;ol&gt;". preg_replace('#\[\*\](.+?)$#m', "&lt;li&gt;$1&lt;/li&gt;", $list[1] )."&lt;/ol&gt;";
+  return $body;
 }
 
 //
