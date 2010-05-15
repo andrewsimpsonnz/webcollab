@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -131,11 +131,14 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 
       $this_post .= "<span style=\"display:inline;\">".$body1."</span>".
                     "<span id=\"dot_".$row['id']."\" style=\"display:inline;\">...</span>".
-                    "<span id=\"post_".$row['id']."\" style=\"display:none;\">".$body2."</span>&nbsp;&nbsp;".
-                    "<img src=\"images/book_next.png\" id=\"img_dn_".$row['id']."\" style=\"display:inline;\" alt=\"\" ".
+                    "<span id=\"post_".$row['id']."\" style=\"display:inline;\">".$body2."</span>&nbsp;&nbsp;".
+                    "<img src=\"images/book_next.png\" id=\"img_dn_".$row['id']."\" style=\"display:none;\" alt=\"\" ".
                     "onclick=\"postToggle('dot_".$row['id']."', 'post_".$row['id']."', 'img_dn_".$row['id']."', 'img_up_".$row['id']."'); return false;\" />".
-                    "<img src=\"images/arrow_up.png\" id=\"img_up_".$row['id']."\" style=\"display:none;\" alt=\"\" ".
+                    "<img src=\"images/arrow_up.png\" id=\"img_up_".$row['id']."\" style=\"display:inline;\" alt=\"\" ".
                     "onclick=\"postToggle('dot_".$row['id']."', 'post_".$row['id']."', 'img_dn_".$row['id']."', 'img_up_".$row['id']."'); return false;\" />";
+
+      //use javascript to fold up the post (if no javascript then post stays unfolded)
+      $this_post .= "<script type=\"text/javascript\">postToggle('dot_".$row['id']."', 'post_".$row['id']."', 'img_dn_".$row['id']."', 'img_up_".$row['id']."'); </script>";
     }
     else{
       $this_post .= $raw_post;
