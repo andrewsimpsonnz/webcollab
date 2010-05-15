@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -79,7 +79,7 @@ switch($_REQUEST['action'] ) {
 
   //Add a user
   case 'add':
-    create_top($lang['add_user'], 0, 2, 'name' );
+    create_top($lang['add_user'], 0, 2 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'users/user_menubox.php' );
     goto_main();
@@ -89,7 +89,7 @@ switch($_REQUEST['action'] ) {
 
   //Edit a user
   case 'edit':
-    create_top($lang['edit_user'], 0, 2, 'name' );
+    create_top($lang['edit_user'] );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'users/user_menubox.php' );
     goto_main();

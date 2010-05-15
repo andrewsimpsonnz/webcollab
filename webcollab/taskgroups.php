@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -57,7 +57,7 @@ switch( $_REQUEST['action'] ) {
 
   //show a taskgroup
   case 'add':
-    create_top($lang['add_taskgroup'], 0, 2, 'name' );
+    create_top($lang['add_taskgroup'], 0, 2 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'taskgroups/taskgroup_menubox.php' );
     goto_main();

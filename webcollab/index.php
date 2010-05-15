@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -49,7 +49,7 @@ function secure_error( $error = 'Login error', $redirect=0 ) {
     $redirect_time = 0;
   }
   $content = "<div style=\"text-align : center\"><br />$error<br /></div>";
-  create_top($lang['login'], 1, '', '', $redirect_time );
+  create_top($lang['login'], 1, 0, $redirect_time );
   new_box($lang['error'], $content, 'boxdata-small', 'head-small' );
 
   if($redirect_time != 0) {
@@ -187,7 +187,7 @@ if(isset($_COOKIE['webcollab_session'] ) && preg_match('/^[a-f\d]{32}$/i', $_COO
   }
 }
 
-create_top($lang['login_screen'], 1, 2, 'username' );
+create_top($lang['login_screen'], 1, 2 );
 
 $content = "<div style=\"text-align:center\">";
 
@@ -202,7 +202,8 @@ $content .= "<p>".$lang['please_login'].":</p>\n".
             "<form method=\"post\" action=\"index.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" /></fieldset>\n".
             "<table style=\"margin-left:auto; margin-right:auto;\">\n".
-            "<tr align=\"left\" ><td>".$lang['login'].": </td><td><input id=\"username\" type=\"text\" name=\"username\" value=\"\" size=\"30\" /></td></tr>\n".
+            "<tr align=\"left\" ><td>".$lang['login'].": </td><td><input id=\"username\" type=\"text\" name=\"username\" value=\"\" size=\"30\" />".
+            "<script type=\"text/javascript\">document.getElementById('username').focus();</script></td></tr>\n".
             "<tr align=\"left\" ><td>".$lang['password'].": </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
             "</table>\n".
             "<p>&nbsp;</p>\n".

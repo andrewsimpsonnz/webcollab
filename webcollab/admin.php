@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -44,7 +44,7 @@ if( ! isset($_REQUEST['action'] ) ) {
 switch ($_REQUEST['action'] ) {
 
   case 'admin':
-    create_top($lang['admin_config'], 0, 2, 'admin' );
+    create_top($lang['admin_config'], 0, 2 );
     include(BASE.'includes/mainmenu.php' );
     goto_main();
     include(BASE.'admin/admin_config_edit.php' );

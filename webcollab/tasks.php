@@ -2,7 +2,7 @@
 /*
   $Id$
 
- (c) 2004 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+ (c) 2004 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -49,7 +49,7 @@ switch($_REQUEST['action'] ) {
       die;
     }
 
-    create_top($lang['task_info'], 0, 1 );
+    create_top($lang['task_info'], 0, 2 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'tasks/task_navigate.php' );
     if(! GUEST )
@@ -70,7 +70,7 @@ switch($_REQUEST['action'] ) {
 
   //add a task
   case 'add':
-    create_top($lang['add_task'], 0, 2, 'name' );
+    create_top($lang['add_task'], 0, 1 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'tasks/task_navigate.php' );
     include(BASE.'tasks/task_menubox.php' );
@@ -86,7 +86,7 @@ switch($_REQUEST['action'] ) {
 
   //edit a task
   case 'edit':
-    create_top($lang['edit_task'], 0, 2, 'name'  );
+    create_top($lang['edit_task'], 0, 1 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'tasks/task_navigate.php' );
     include(BASE.'tasks/task_menubox.php' );
@@ -120,7 +120,7 @@ switch($_REQUEST['action'] ) {
 
   //clone
   case 'clone':
-    create_top($lang['add_task'], 0, 2, 'name' );
+    create_top($lang['add_task'], 0, 1 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'tasks/task_navigate.php' );
     include(BASE.'tasks/task_menubox.php' );

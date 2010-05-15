@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -52,7 +52,7 @@ switch($_REQUEST['action'] ) {
 
   //upload a file
   case 'upload':
-    create_top($lang['file_choose'], 0, 2, 'userfile' );
+    create_top($lang['file_choose'], 0, 1 );
     include(BASE.'includes/mainmenu.php' );
     goto_main();
     include(BASE.'files/file_upload.php' );
@@ -61,7 +61,7 @@ switch($_REQUEST['action'] ) {
 
   //update a file
   case 'update':
-    create_top($lang['file_choose'], 0, 2, 'userfile' );
+    create_top($lang['file_choose'], 0, 1 );
     include(BASE.'includes/mainmenu.php' );
     goto_main();
     include(BASE.'files/file_update.php' );

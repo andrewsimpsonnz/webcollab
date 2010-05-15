@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -446,17 +446,18 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 //
 
 //login box screen code
-create_top('Login', 1, 'username' );
+create_top('Login', 0, 2 );
 
 $content = "<p>Admin login is required for database update:</p>\n".
            "<form name=\"inputform\" method=\"post\" action=\"update.php\">\n".
-             "<table>\n".
-               "<tr><td>Login: </td><td><input type=\"text\" id=\"username\" name=\"username\" size=\"30\" /></td></tr>\n".
-               "<tr><td>Password: </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
-             "</table>\n".
-             "<div align=\"center\">\n".
-             "<p><input type=\"submit\" value=\"Login\" /></p>\n".
-             "</div></form>\n";
+           "<table>\n".
+           "<tr><td>Login: </td><td><input type=\"text\" id=\"username\" name=\"username\" size=\"30\" />".
+           "<script type=\"text/javascript\">document.getElementById('username').focus();</script></td></tr>\n".
+           "<tr><td>Password: </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
+           "</table>\n".
+           "<div align=\"center\">\n".
+           "<p><input type=\"submit\" value=\"Login\" /></p>\n".
+           "</div></form>\n";
 
 //set box options
 new_box("Login", $content, 'boxdata', 'boxdata-small', 'head-small' );
