@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -46,7 +46,8 @@ $content =  "<form method=\"post\" action=\"users.php\" ".
             "<input type=\"hidden\" id=\"alert_email\" name=\"alert1\" value=\"".$lang['invalid_email']."\" />\n".
             "<input type=\"hidden\" id=\"alert_field\" name=\"alert2\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n".
             "<table class=\"celldata\">\n".
-            "<tr><td>".$lang['login_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
+            "<tr><td>".$lang['login_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" />".
+            "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
             "<tr><td>".$lang['full_name'].":</td><td><input id=\"full\" type=\"text\" name=\"fullname\" size=\"30\" /></td></tr>\n".
             "<tr><td>".$lang['password'].":</td><td><input id=\"pass\" type=\"".PASS_STYLE."\" name=\"password\" size=\"30\" /></td></tr>\n".
             "<tr><td>".$lang['email'].":</td><td><input id=\"email\" type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".
