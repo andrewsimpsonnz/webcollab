@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -61,7 +61,8 @@ $row = db_fetch_array($q, 0 );
 
 if($row['parent'] == 0 ){
   $content .= "<tr><td>".$lang['project_cloned']."</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$taskid."\">".$row['name']."</a></td></tr>\n".
-              "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
+              "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" />".
+              "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
               "<tr><td>".$lang['deadline'].":</td> <td>".date_select()."</td></tr>\n".
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang['add_project']."\" /></p>".

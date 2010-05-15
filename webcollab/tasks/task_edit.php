@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -270,7 +270,7 @@ switch($TASKID_ROW['parent'] ){
           $s1 = " selected=\"selected\""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
           break;
       }
-      $content .= "<tr> <td>".$lang['status'].":</td> <td>\n".
+      $content .= "<tr><td>".$lang['status'].":</td><td>\n".
                    "<select id=\"projectStatus\" name=\"status\">\n".
                    "<option value=\"created\"".$s1.">".$task_state['new']."</option>\n".
                    "<option value=\"notactive\"".$s2.">".$task_state['planned']."</option>\n".
@@ -281,7 +281,7 @@ switch($TASKID_ROW['parent'] ){
 }
 
 //task owner
-$content .= "<tr> <td>".$lang[$TYPE."_owner"].":</td> <td><select name=\"owner\">\n".
+$content .= "<tr><td>".$lang[$TYPE."_owner"].":</td><td><select name=\"owner\">\n".
             "<option value=\"0\">".$lang['nobody']."</option>\n";
 
 //select the user first
@@ -308,7 +308,7 @@ $content .= "</select></td></tr>\n";
 //  (projects don't have taskgroups)
 if($TASKID_ROW['parent'] != 0 ) {
 
-  $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['taskgroup']."</a>: </td> <td><select name=\"taskgroupid\">\n";
+  $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['taskgroup']."</a>: </td><td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
   $q = db_query('SELECT id, name FROM '.PRE.'taskgroups ORDER BY name' );
@@ -326,7 +326,7 @@ if($TASKID_ROW['parent'] != 0 ) {
 }
 
 //show all user-groups
-$content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td> <td><select name=\"usergroupid\">\n";
+$content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td><td><select name=\"usergroupid\">\n";
 $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
 $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
@@ -355,7 +355,7 @@ $global = ($TASKID_ROW['globalaccess'] == 't' ) ? "checked=\"checked\"" : '';
 $group  = ($TASKID_ROW['groupaccess']  == 't' ) ? "checked=\"checked\"" : '';
 
 $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['all_users_view']."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" ".$global." /></td></tr>\n".
-             "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['group_edit']."</a> </td><td><input type=\"checkbox\" name=\"groupaccess\" ".$group." /></td></tr>\n".
+             "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['group_edit']."</a></td><td><input type=\"checkbox\" name=\"groupaccess\" ".$group." /></td></tr>\n".
 
              "<tr><td>".$lang[$TYPE."_description"]."</td>".
              "<td><script type=\"text/javascript\"> edToolbar('text');</script>".
