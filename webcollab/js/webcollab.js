@@ -1,13 +1,9 @@
 /*
   $Id: webcollab.js 2068 2009-01-31 08:14:29Z andrewsimpson $
-  (c) 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2009 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
   ---------
   Javascript function library for WebCollab
 */
-
-function placeCursor(cursor){
-  document.getElementById(cursor).focus();
-}
 
 function fieldCheck(){
   var fieldError = 0;
