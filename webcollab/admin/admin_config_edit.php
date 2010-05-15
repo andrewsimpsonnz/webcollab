@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2003 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -59,7 +59,8 @@ if(USE_EMAIL === 'Y' ){
   $content .= "<tr><td style=\"white-space : nowrap\" colspan=\"2\"><b>".$lang['email_settings']."</b><br /><br /></td></tr>\n";
 
   //email addresses
-  $content .= "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\" >".$lang['admin_email']."</a>:</td><td><input type=\"text\" id=\"admin\" name=\"email_admin\" value=\"".$row['email_admin']."\" size=\"30\" /></td></tr>\n".
+  $content .= "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\" >".$lang['admin_email']."</a>:</td><td><input type=\"text\" id=\"admin\" name=\"email_admin\" value=\"".$row['email_admin']."\" size=\"30\" />".
+              "<script type=\"text/javascript\">document.getElementById('admin').focus();</script></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_reply']."</a>:</td><td><input type=\"text\" id=\"reply\" name=\"reply_to\" value=\"".$row['reply_to']."\" size=\"30\" /></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_from']."</a>:</td><td><input type=\"text\" id=\"from\" name=\"from\" value=\"".$row['email_from']."\" size=\"30\" /></td></tr>\n";
 
