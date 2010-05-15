@@ -43,7 +43,8 @@ $content =
       "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n".
       "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n".
       "<table class=\"celldata\">\n".
-      "<tr><td>".$lang['taskgroup_name']."</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td></tr>\n".
+      "<tr><td>".$lang['taskgroup_name']."</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" />".
+      "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
       "<tr><td>".$lang['taskgroup_description']."</td><td><input type=\"text\"name=\"description\"size=\"30\" /></td></tr>\n".
       "</table>\n".
       "<p><input type=\"submit\" value=\"".$lang['add_taskgroup']."\" /></p>\n".
