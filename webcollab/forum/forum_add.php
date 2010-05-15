@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -111,7 +111,8 @@ else {
 //build up the text-entry part
 $content .=   "<tr><td>".$lang['message']."</td>\n".
               "<td><script type=\"text/javascript\"> edToolbar('text'); </script>\n".
-              "<textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\"></textarea></td></tr>\n".
+              "<textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\"></textarea>".
+              "<script type=\"text/javascript\">document.getElementById('text').focus();</script></td></tr>\n".
               "</table>\n".
               "<table class=\"celldata\">\n".
               "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER." /></td></tr>\n".

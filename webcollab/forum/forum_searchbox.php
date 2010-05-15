@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2006 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2006 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -32,14 +32,14 @@ if(! defined('UID' ) ) {
 }
 
 
-$content = "<br />".
-           "<form id=\"ForumSearch\" method=\"post\" action=\"forum.php\" >\n".
+$content = "<form id=\"ForumSearch\" method=\"post\" action=\"forum.php\" >\n".
            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
            "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
            "<input type=\"hidden\" name=\"start\" value=\"0\" /></fieldset>\n".
            "<div><input type=\"text\" id=\"string\" name=\"string\" size=\"30\" />\n".
            "<a href=\"javascript:void(document.getElementById('ForumSearch').submit())\"><small>".$lang['go']."</small></a></div>\n".
-           "</form>";
+           "</form>\n".
+           "<script type=\"text/javascript\">document.getElementById('string').focus();</script>\n";
 
  new_box($lang['forum_search'], $content );
 

@@ -2,7 +2,7 @@
 /*
   $Id: forum_add.php 1704 2008-01-01 06:09:52Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -86,7 +86,8 @@ $content .= "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
 $content .= "<table>\n".
             "<tr><td>".$lang['message']."</td>".
             "<td><script type=\"text/javascript\"> edToolbar('text');</script>".
-            "<textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\"".$s.">".$row['text']."</textarea></td></tr>\n".
+            "<textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\"".$s.">".$row['text']."</textarea>".
+            "<script type=\"text/javascript\">document.getElementById('text').focus();</script></td></tr>\n".
             "</table>\n".
             "<table class=\"celldata\">\n".
             "<tr><td><label for=\"owner\">".$lang['forum_email_owner']."</label></td><td><input type=\"checkbox\" name=\"mail_owner\" id=\"owner\" ".DEFAULT_OWNER.$s." /></td></tr>\n".
