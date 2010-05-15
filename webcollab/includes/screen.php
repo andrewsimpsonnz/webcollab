@@ -62,7 +62,7 @@
 // Creates the initial window
 //
 
-function create_top($title='', $page_type=0, $include_javascript=0, $check_field=0, $redirect_time=0 ) {
+function create_top($title='', $page_type=0, $include_javascript=0, $redirect_time=0 ) {
 
 
 
@@ -101,7 +101,7 @@ function create_top($title='', $page_type=0, $include_javascript=0, $check_field
                     "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"".XML_LANG."\" lang=\"".XML_LANG."\">\n\n".
                     "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
                     "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
-                    "<!-- (c) 2002-2009 Andrew Simpson for WebCollab -->\n\n".
+                    "<!-- (c) 2002-2010 Andrew Simpson for WebCollab -->\n\n".
                     "<head>\n";
 
   if( $title == '' ) {
@@ -147,7 +147,7 @@ function create_top($title='', $page_type=0, $include_javascript=0, $check_field
   switch($include_javascript ) {
 
     case 1:
-      //loads javascript file
+      //loads javascript files
       $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
                   "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n".
                   "</head>\n\n".
@@ -155,15 +155,14 @@ function create_top($title='', $page_type=0, $include_javascript=0, $check_field
        break;
 
     case 2:
-      //loads javascript file and highlights cursor...
+      //loads javascript file (but not editor)
       $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
-                  "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n".
                   "</head>\n\n".
-                  "<body onload=\"placeCursor('".$check_field."')\">\n";
+                  "<body>\n";
       break;
 
     case 3:
-      //loads javascript file and resets the token...
+      //loads javascript files and resets the token...
       $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
                   "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n".
                   "</head>\n\n".
@@ -232,7 +231,7 @@ function new_box($title, $content, $box="boxdata-normal", $head="head-normal", $
   echo  "\n<!-- start of ".$title." - box -->\n".
         "<div class=\"head ".$head."\" >::&nbsp;".$title."</div>\n".
         "<div class=\"boxdata ".$box."\" >\n".
-        "<div class=\"boxstyle ".$style."\" >\n".$content."\n".
+        "<div class=\"boxstyle ".$style."\" >\n".$content.
         "</div>\n".
         "</div>\n".
         "<!-- end -->\n";
