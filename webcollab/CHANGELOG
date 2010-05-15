@@ -1,4 +1,11 @@
 WebCollab SVN
+*** 16 May 2010
+
+- change javascript in forum listing to degrade better
+
+- simplify javascript coding
+
+WebCollab SVN
 *** 13 April 2010
 
 - remove obsolete mhash() and replace with hash_mac()
