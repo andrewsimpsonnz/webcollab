@@ -2,7 +2,7 @@
 /*
   $Id: file_upload.php 1747 2008-02-03 08:14:34Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -67,7 +67,7 @@ if(isset($_GET['action']) && $_GET['action'] == 'delete' ) {
   $s = " disabled=\"disabled\"";
 }
 else {
-  $s = 0;
+  $s = '';
 }
 
 //check usergroup security
@@ -91,7 +91,8 @@ $content =  "<form method=\"post\" enctype=\"multipart/form-data\" action=\"file
             "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" /></fieldset>\n".
             "<table class=\"celldata\">\n".
             "<tr><td>".$lang['file']."</td><th>".$row['filename']."</th></tr>\n".
-            "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" size=\"60\" ".$s."/></td></tr>\n".
+            "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" size=\"60\" ".$s."/>".
+            "<script type=\"text/javascript\">document.getElementById('userfile').focus();</script></td></tr>\n".
             "<tr><td>".$lang['description'].":</td>".
             "<td><script type=\"text/javascript\"> edToolbar('description');</script>".
             "<textarea name=\"description\" id=\"description\" rows=\"25\" cols=\"88\"".$s.">".$row['description']."</textarea></td></tr>\n".

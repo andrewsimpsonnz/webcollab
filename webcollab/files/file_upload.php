@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -63,7 +63,8 @@ $content = "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"file
            "<input type=\"hidden\" id=\"url\" name=\"url\" value=\"".$lang['url_javascript']."\" />\n".
            "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" /></fieldset>\n".
            "<table class=\"celldata\">\n".
-           "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" size=\"60\" /></td></tr>\n";
+           "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" size=\"60\" />".
+           "<script type=\"text/javascript\">document.getElementById('userfile').focus();</script></td></tr>\n";
 
 for( $i = 1; $i < NUM_FILE_UPLOADS; ++$i ) {
   $content .= "<tr><td></td><td><input type=\"file\" name=\"userfile[]\" size=\"60\" /></td></tr>\n";
