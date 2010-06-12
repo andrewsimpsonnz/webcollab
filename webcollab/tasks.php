@@ -120,7 +120,7 @@ switch($_REQUEST['action'] ) {
 
   //clone
   case 'clone':
-    create_top($lang['add_task'], 0, 1 );
+    create_top($lang['add_task'], 0, 2 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'tasks/task_navigate.php' );
     include(BASE.'tasks/task_menubox.php' );
