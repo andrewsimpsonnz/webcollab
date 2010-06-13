@@ -79,7 +79,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //show description
   if( $row['description'] != '' ) {
-    $content .= "<tr><td>".$lang['description'].":</td><td><small><i>".nl2br($row['description'])."</i></small></td></tr>\n";
+    $content .= "<tr><td>".$lang['description'].":</td><td><small><i>".nl2br(bbcode($row['description']))."</i></small></td></tr>\n";
   }
   //blank line to end
   $content .= "<tr><td>&nbsp;</td></tr>\n";
