@@ -47,7 +47,7 @@ $q = db_query(icalendar_query(). icalendar_usergroup_tail() );
 for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
   //add vtodo
-  $content .= icalendar_body($row);
+  $content .= icalendar_body($row, $row['taskid'] );
 }
 
 //no rows ==> return

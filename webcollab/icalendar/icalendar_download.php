@@ -58,7 +58,7 @@ function icalendar_header($id ) {
 
   echo  "BEGIN:VCALENDAR\r\n".
         "VERSION:2.0\r\n".
-        "PRODID:-//WebCollab iCalendar V2.0//EN\r\n".
+        "PRODID:-//WebCollab iCalendar ".WEBCOLLAB_VERSION."//EN\r\n".
         "CALSCALE:GREGORIAN\r\n".
         "METHOD:PUBLISH\r\n";
 
@@ -69,7 +69,7 @@ function icalendar_header($id ) {
 // Send out a VTODO or VEVENT
 //
 
-function icalendar_body($row) {
+function icalendar_body($row, $taskid ) {
 
   global $icalendar_id, $dtstamp;
 
@@ -122,10 +122,10 @@ function icalendar_body($row) {
 
   //get the specific parts for a VTODO or VEVENT
   if(VEVENT == 'Y' ) {
-    $content .= icalendar_vevent($row );
+    $content .= icalendar_vevent($row, $taskid );
   }
   else {
-    $content .= icalendar_vtodo($row );
+    $content .= icalendar_vtodo($row, $taskid );
   }
 
   //echo $content;
@@ -137,7 +137,7 @@ function icalendar_body($row) {
 // Send out a vtodo set
 //
 
-function icalendar_vtodo($row) {
+function icalendar_vtodo($row, $taskid ) {
 
   global $icalendar_id;
 
@@ -195,7 +195,7 @@ function icalendar_vtodo($row) {
     $content .= "CLASS:PRIVATE\r\n";
   }
 
-  $content .= "URL:".BASE_URL."\r\n".
+  $content .= "URL:".BASE_URL.$location."tasks.php?action=show&taskid=".$taskid."\r\n".
               "END:VTODO\r\n";
 
   return $content;
@@ -206,7 +206,7 @@ function icalendar_vtodo($row) {
 // Send out a vevent set
 //
 
-function icalendar_vevent($row) {
+function icalendar_vevent($row, $taskid ) {
 
   global $icalendar_id;
 
@@ -244,7 +244,7 @@ function icalendar_vevent($row) {
   }
 
   $content .= "TRANSP:TRANSPARENT\r\n".
-              "URL:".BASE_URL."\r\n".
+              "URL:".BASE_URL."tasks.php?action=show&taskid=".$taskid."\r\n".
               "END:VEVENT\r\n";
 
   return $content;

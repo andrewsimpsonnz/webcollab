@@ -63,7 +63,7 @@ $q = db_query(icalendar_query().' AND '.PRE.$type.$taskid. icalendar_usergroup_t
 for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
   //add vtodo
-  $content .= icalendar_body($row);
+  $content .= icalendar_body($row, $row['taskid'] );
 }
 
 //no rows ==> return

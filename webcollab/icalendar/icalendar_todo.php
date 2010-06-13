@@ -96,13 +96,13 @@ for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
       continue;
     }
 
-    $content .= icalendar_body($project );
+    $content .= icalendar_body($project, $row['projectid'] );
 
     $projects[] = $row['projectid'];
   }
 
   //add vtodo
-  $content .= icalendar_body($row);
+  $content .= icalendar_body($row, $row['taskid'] );
 }
 
 //no rows ==> return
@@ -114,7 +114,7 @@ if($i == 0 ) {
 //we have content, send it!
 
 //send headers to browser
-icalendar_header($id);
+icalendar_header($id );
 
 //send content
 echo $content;
