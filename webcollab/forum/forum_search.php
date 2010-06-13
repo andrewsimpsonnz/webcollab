@@ -41,10 +41,10 @@ function search_input() {
              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n ".
              "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
              "<input type=\"hidden\" name=\"start\" value=\"0\" /></fieldset>\n".
-             "<input id=\"name\" type=\"text\" name=\"string\" size=\"30\" />\n".
-             "<input type=\"submit\" value=\"".$lang['go']."\" />\n".
+             "<div><input id=\"name\" type=\"text\" name=\"string\" size=\"30\" />\n".
+             "<input type=\"submit\" value=\"".$lang['go']."\" /></div>\n".
              "</form>";
-
+  
   return $content;
 }
 
@@ -54,9 +54,10 @@ $min = 0;
 
 if(empty($_REQUEST['string'] ) || strlen(trim($_REQUEST['string'] ) ) == 0 ) {
   //no results possible
-  $content .= sprintf($lang['no_results'], '' )."<br /><br />\n";
+  $content .= "<p>".sprintf($lang['no_results'], '' )."</p>\n";
   $content .= search_input(); 
-  new_box($lang['info'], $content ); 
+  new_box($lang['info'], $content );
+  create_bottom();
   die;
 }
 
