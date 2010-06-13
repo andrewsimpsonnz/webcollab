@@ -63,8 +63,7 @@ $content = "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"file
            "<input type=\"hidden\" id=\"url\" name=\"url\" value=\"".$lang['url_javascript']."\" />\n".
            "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" /></fieldset>\n".
            "<table class=\"celldata\">\n".
-           "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" size=\"60\" />".
-           "<script type=\"text/javascript\">document.getElementById('userfile').focus();</script></td></tr>\n";
+           "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" size=\"60\" /></td></tr>";
 
 for( $i = 1; $i < NUM_FILE_UPLOADS; ++$i ) {
   $content .= "<tr><td></td><td><input type=\"file\" name=\"userfile[]\" size=\"60\" /></td></tr>\n";
@@ -80,7 +79,8 @@ $content .= "<tr><td>".$lang['description'].":</td>".
             "<tr><td><label for=\"usergroup\">".$lang['file_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP." /></td></tr>\n".
             "</table>\n".
             "<p><input type=\"submit\" value=\"".$lang['upload']."\"/></p>\n".
-            "</form>\n";
+            "</form>\n".
+            "<script type=\"text/javascript\">document.getElementById('userfile').focus();</script>\n";
 
 new_box($lang['add_file'], $content );
 

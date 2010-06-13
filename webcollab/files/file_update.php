@@ -91,8 +91,7 @@ $content =  "<form method=\"post\" enctype=\"multipart/form-data\" action=\"file
             "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" /></fieldset>\n".
             "<table class=\"celldata\">\n".
             "<tr><td>".$lang['file']."</td><th>".$row['filename']."</th></tr>\n".
-            "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" size=\"60\" ".$s."/>".
-            "<script type=\"text/javascript\">document.getElementById('userfile').focus();</script></td></tr>\n".
+            "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" size=\"60\" ".$s."/></td></tr>\n".
             "<tr><td>".$lang['description'].":</td>".
             "<td><script type=\"text/javascript\"> edToolbar('description');</script>".
             "<textarea name=\"description\" id=\"description\" rows=\"25\" cols=\"88\"".$s.">".$row['description']."</textarea></td></tr>\n".
@@ -103,7 +102,8 @@ $content =  "<form method=\"post\" enctype=\"multipart/form-data\" action=\"file
             "<tr><td><label for=\"usergroup\">".$lang['file_email_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP.$s."/></td></tr>\n".
             "</table>\n".
             "<p><input type=\"submit\" value=\"".$lang['upload']."\"".$s."/></p>\n".
-            "</form>\n";
+            "</form>\n".
+            "<script type=\"text/javascript\">document.getElementById('userfile').focus();</script>\n";
 
 //delete file
 $content .= "<form id=\"delete_file\" method=\"post\" action=\"files.php\" onsubmit=\"return confirm( '".sprintf( $lang['del_file_javascript_sprt'], javascript_escape($row['filename'] ) )."' )\">\n".
