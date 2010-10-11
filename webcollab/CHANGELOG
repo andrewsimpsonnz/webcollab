@@ -1,4 +1,15 @@
 WebCollab SVN
+*** 11 October 2010
+
+- bugfix: Use UTF8-string splitter in box_shorten() where appropriate
+
+WebCollab - May Queen
+*** 4 July 2010
+  Andrew Simpson
+
+- release
+
+WebCollab SVN
 *** 13 June 2010
 
 - make URL links in iCalendar more specific
@@ -60,7 +71,6 @@ WebCollab SVN
   Andrew Simpson
 
 - bugfix: Admin cannot delete posts (Bug #2912286)(Reporter: gomanual)
-
 
 WebCollab SVN
 *** 3 December 2009
