@@ -172,7 +172,7 @@ function box_shorten($body, $len=20 ){
     if(($last_space_pos === false ) || ($last_space_pos > ($len - 5 ) ) ) {
       $len = $last_space_pos;
     }
-    $body = substr($body, 0, $len );
+    $body = $m_substr($body, 0, $len );
     $body .= ' ...';
   }
 
