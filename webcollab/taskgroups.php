@@ -32,7 +32,7 @@ require_once(BASE.'includes/security.php' );
 include_once(BASE.'includes/screen.php' );
 
 if(! ADMIN ){
-  warning('Taskgroup action handler', 'This area for admins only' );
+  error('Taskgroup action handler', 'This area for admins only' );
 }
 
 //

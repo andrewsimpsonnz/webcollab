@@ -49,11 +49,11 @@ if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
 }
 
 //$session_key can be from either a GET, POST or COOKIE - check for cookie first
-if(isset($_COOKIE['webcollab_session'] ) && (strlen(trim($_COOKIE['webcollab_session'], '1234567890abcdefABCDEF' ) ) == 0 ) ) {
+if(isset($_COOKIE['webcollab_session'] ) && (strlen(trim($_COOKIE['webcollab_session'], '1234567890abcdefABCDEF' ) ) == 0 ) && (strlen($_COOKIE['webcollab_session']) == 32 ) ) {
   $session_key = db_escape_string($_COOKIE['webcollab_session'] );
   define('X', 0 );
 }
-elseif(isset($_REQUEST['x'] ) && (strlen(trim($_REQUEST['x'], '1234567890abcdefABCDEF' ) ) == 0 ) ) {
+elseif(isset($_REQUEST['x'] ) && (strlen(trim($_REQUEST['x'], '1234567890abcdefABCDEF' ) ) == 0 )  && (strlen($_REQUEST['x']) == 32 ) ) {
   $session_key = db_escape_string($_REQUEST['x']);
   $x = $_REQUEST['x'];
   define('X', $x );
