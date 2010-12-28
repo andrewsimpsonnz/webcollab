@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: index.php 2288 2009-08-22 08:50:00Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -71,7 +71,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
 
   $q = '';
   $ip = '';
-  $login_q ='';
+  $q_array = '';
   $username = '0';
   $md5pass = '0';
   $session_key = '';
@@ -85,7 +85,10 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
 
   if(WEB_AUTH === 'Y' ) {
       //construct login query
-      $login_q = 'SELECT id FROM '.PRE.'users WHERE name=\''.safe_data($_SERVER['REMOTE_USER'] ).'\' AND deleted=\'f\'';
+      if(! ($q = db_prepare('SELECT id FROM '.PRE.'users WHERE name=? AND deleted=\'f\'' ), 0 ) {
+        secure_error('Unable to connect to database.  Please try again later.' );
+      }
+      $q_array = array(safe_data($_SERVER['REMOTE_USER'] ) );
   }
   else {
     $username = safe_data($_POST['username']);
@@ -93,14 +96,14 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
     $md5pass = md5($_POST['password'] );
 
     //construct login query
-    $login_q = 'SELECT id FROM '.PRE.'users WHERE password=\''.$md5pass.'\' AND name=\''.$username.'\' AND deleted=\'f\'';
+    if(! ($q = db_prepare('SELECT id FROM '.PRE.'users WHERE password=? AND name=? AND deleted=\'f\'' ), 0 ) {
+      secure_error('Unable to connect to database.  Please try again later.' );
+    }
+    $q_array = array($md5pass, $username );
   }
 
-  //set character set & connect to database
-  db_user_locale(CHARACTER_SET);
-
   //database query
-  if( ! $q = @db_query($login_q, 0 ) ) {
+  if( ! @db_execute($q, $q_array, 0 ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
   }
 
@@ -108,9 +111,13 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
   if( ! ($user_id = @db_result($q, 0, 0) ) ) {
 
     //count the number of recent failed login attempts
-    if( ! $q = @db_query('SELECT COUNT(*) FROM '.PRE.'login_attempt
-                               WHERE name=\''.$username.'\'
-                               AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 6', 0 ) ) {
+    if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt WHERE name=?
+                               AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 6', 0 ) {
+      secure_error('Unable to connect to database.  Please try again later.' );
+    }
+
+
+    if( ! @db_execute($q, array($username ) ) ) {
       secure_error('Unable to connect to database.  Please try again later.' );
     }
 
@@ -122,7 +129,8 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
     }
 
     //record this login attempt
-    db_query('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (\''.$username.'\', \''.$ip.'\', now() )' );
+    $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
+    db_execute($q, array($username, $ip ) );
 
     //wait 2 seconds then record an error
     sleep (2);
@@ -136,11 +144,14 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
   $session_key = md5(mt_rand().$ip );
 
   //remove the old login information
-  @db_query('DELETE FROM '.PRE.'logins WHERE user_id='.$user_id );
-  @db_query('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.$delim.'20 MINUTE'.$delim.') OR name=\''.$username.'\'' );
+  $q = db_prepare('DELETE FROM '.PRE.'logins WHERE user_id=?' );
+  @db_execute($q, array($user_id ) );
+  $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.$delim.'20 MINUTE'.$delim.') OR name=?' );
+  @db_execute($q, array($username ) );
 
   //log the user in
-  db_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES (\''.$user_id.'\', \''.$session_key.'\', \''.$ip.'\', now() )' );
+  $q = db_prepare('INSERT INTO '.PRE.'logins(user_id, session_key, ip, lastaccess ) VALUES (?, ?, ?, now() )' );
+  @db_execute($q, array($user_id, $session_key, $ip ) );
 
   //try and set a session cookie (if the browser will let us)
   $url = parse_url(BASE_URL );
@@ -172,9 +183,12 @@ if(isset($_COOKIE['webcollab_session'] ) && preg_match('/^[a-f\d]{32}$/i', $_COO
   include_once 'database/database.php';
 
   //check if session is valid and within time limits
-  if(db_result(@db_query('SELECT COUNT(*) FROM '.PRE.'logins
-                                 WHERE session_key=\''.safe_data($_COOKIE['webcollab_session']).'\'
-                                 AND lastaccess > (now()-INTERVAL '.$delim.round(SESSION_TIMEOUT).' HOUR'.$delim.')', 0 ) ) == 1 ) {
+  $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'logins
+                          WHERE session_key=?
+                          AND lastaccess > (now()-INTERVAL '.$delim.round(SESSION_TIMEOUT).' HOUR'.$delim.')' );
+  db_execute($q, array(safe_data($_COOKIE['webcollab_session']) ) );
+
+  if(db_result($q, 0, 0 ) == 1 ) {
 
     //relocate to main screen, and let security.php do further checking on session validity
     if($taskid == 0 ) {
