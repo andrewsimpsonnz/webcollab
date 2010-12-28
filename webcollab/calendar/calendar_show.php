@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: calendar_show.php 2305 2009-08-27 06:08:59Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -174,9 +174,10 @@ for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 }
 
 //get all the days with projects/tasks due in selected month and year
-$q = db_query('SELECT '.$day_part.'deadline) AS day, projectid FROM '.PRE.'tasks
-                      WHERE deadline BETWEEN \''.$year.'-'.$month.'-01 00:00:00\'
-                      AND ('.$date_type.' \''.$year.'-'.$month.'-01 00:00:00\' + INTERVAL '.$delim.'1 MONTH'.$delim.')'.
+//  This should db_prepare(), but postgresql DOES NOT support binding to TIMESTAMP or INTERVAL !!
+$q = db_query('SELECT '.$day_part.'deadline) AS day, projectid FROM '.PRE.'tasks 
+                      WHERE deadline BETWEEN '.db_quote($year.'-'.$month.'-01 00:00:00' ).'
+                      AND ('.$date_type.db_quote($year.'-'.$month.'-01 00:00:00' ).' + INTERVAL '.$delim.'1 MONTH'.$delim.')'.
                       $tail );
 
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
@@ -197,11 +198,13 @@ if(ADMIN ) {
   $tail_group = ' ';
 }
 else {
-  $tail_view  = ' AND (globalaccess=\'f\' AND usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+  $tail_view  = ' AND (globalaccess=\'f\' AND usergroupid
+                    IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.db_quote(UID ).')
                   OR globalaccess=\'t\'
                   OR usergroupid=0) ';
 
-  $tail_group = ' WHERE private=0 OR (private=1 AND id IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')) ';
+  $tail_group = ' WHERE private=0 OR (private=1 AND id
+                    IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.db_quote(UID ).') ) ';
 }
 
 //sort order for table listing
@@ -213,6 +216,13 @@ if(substr(DATABASE_TYPE, 0, 5) == 'mysql' ) {
 else {
   $suffix .= "ORDER BY parent<>0, name";
 }
+
+//prepare query for later use
+$q1 = db_prepare('SELECT id, name, parent, status, projectid, completed
+                      FROM '.PRE.'tasks
+                      WHERE deadline BETWEEN ?
+                      AND ?
+                      AND archive=0 '.$suffix );
 
 $content .= "<span class=\"textlink\">[<a href=\"main.php?x=".X."\">".$lang['main_menu']."</a>]</span>";
 
@@ -355,13 +365,9 @@ for($num = 1; $num <= $numdays; ++$num ) {
   //check if this date has projects/tasks
   if(isset($task_dates[$num] ) ) {
     //rows exist for this date - get them!
-    $q = db_query('SELECT id, name, parent, status, projectid, completed
-                          FROM '.PRE.'tasks
-                          WHERE deadline BETWEEN \''.$year.'-'.$month.'-'.$num.' 00:00:00\'
-                          AND \''.$year.'-'.$month.'-'.$num.' 23:59:59\'
-                          AND archive=0 '.$suffix );
+    db_execute($q1, array($year.'-'.$month.'-'.$num.' 00:00:00', $year.'-'.$month.'-'.$num.' 23:59:59' ) );
 
-    for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
+      for( $j=0 ; $row = @db_fetch_array($q1, $j ) ; ++$j ) {
 
       //don't show tasks in private usergroup projects
       if( (! ADMIN ) && isset($no_access_project[($row['projectid'])] ) ) {
@@ -428,6 +434,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
         break;
       }
     }
+    db_free_result($q1 );
   }
   $content .= "</td>\n";
   ++$i;

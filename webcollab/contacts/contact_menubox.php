@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: contact_menubox.php 2194 2009-04-09 19:44:46Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -37,9 +37,6 @@ if(! defined('UID' ) ) {
 $content = '';
 $company = '';
 
-$m_substr     = (UNICODE_VERSION == 'Y' ) ? 'mb_substr' : 'substr';
-$m_strtoupper = (UNICODE_VERSION == 'Y' ) ? 'mb_strtoupper' : 'strtoupper';
-
 if( @safe_integer($_GET['taskid']) ) {
 
   $taskid = $_GET['taskid'];
@@ -51,17 +48,17 @@ if( @safe_integer($_GET['taskid']) ) {
   require_once(BASE.'includes/usergroup_security.php' );
   usergroup_check($taskid );
 
-  $tail = 'WHERE taskid='.$taskid.' OR taskid='.$TASKID_ROW['projectid'];
+  //get task contacts
+  $q = db_prepare('SELECT id, firstname, lastname, company FROM '.PRE.'contacts
+                          WHERE taskid=? OR taskid=? ORDER BY company, lastname' );
+  db_execute($q, array($taskid, $TASKID_ROW['projectid'] ) );
   $add  = '&amp;taskid='.$taskid;
 }
 else {
-  $tail = 'WHERE taskid=0';
+  //get all contacts
+  $q = db_query('SELECT id, firstname, lastname, company FROM '.PRE.'contacts 
+                          WHERE taskid=0 ORDER BY company, lastname');
   $add  = '';
-}
-
-//get all contacts
-if(! ($q = db_query('SELECT id, firstname, lastname, company FROM '.PRE.'contacts '.$tail.' ORDER BY company, lastname' ) ) ) {
-  error('Contact menubox', 'There was an error in the data query.' );
 }
 
 //show all contacts
@@ -71,12 +68,12 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
      if ($row['company'] != $company ){
        $content .= box_shorten($row['company'] )."<br />";
      }
-     $show = box_shorten($row['lastname'] ).", ".$m_strtoupper($m_substr($row['firstname'], 0, 1 ) ).".";
+     $show = box_shorten($row['lastname'] ).", ".mb_strtoupper(mb_substr($row['firstname'], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=".X."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
      $company =  $row['company'];
    }
    else {
-     $show = box_shorten($row['lastname'] ).", ".$m_strtoupper($m_substr($row['firstname'], 0, 1 ) ).".";
+     $show = box_shorten($row['lastname'] ).", ".mb_strtoupper(mb_substr($row['firstname'], 0, 1 ) ).".";
      $content .= "<a href=\"contacts.php?x=".X."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
    }
 }

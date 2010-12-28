@@ -109,7 +109,7 @@ switch($_REQUEST['action'] ) {
 
   //admin email
   case 'email':
-    create_top($lang['email'] );
+    create_top($lang['email'], 0, 2 );
     include(BASE.'includes/mainmenu.php' );
     goto_main();
     include(BASE.'users/user_mail.php' );

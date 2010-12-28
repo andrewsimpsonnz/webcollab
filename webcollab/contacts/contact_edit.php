@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: contact_edit.php 2213 2009-05-08 20:37:07Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -43,7 +43,10 @@ if(! @safe_integer($_POST['contactid']) ){
 $contactid = $_POST['contactid'];
 
 //get contact information
-if( ! ($row = db_fetch_array( db_query( 'SELECT * FROM '.PRE.'contacts WHERE id='.$contactid ), 0 ) ) ){
+$q = db_prepare('SELECT * FROM '.PRE.'contacts WHERE id=? LIMIT 1' );
+db_execute($q, array($contactid ) );
+
+if( ! ($row = db_fetch_array($q, 0 ) ) ){
   error('Contact edit', 'There is no information for that contact');
 }
 
