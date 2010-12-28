@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id$
+  $Id: setup.php 2288 2009-08-22 08:50:00Z andrewsimpson $
 
   (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
@@ -68,7 +68,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
   //initialise variables
   $q = '';
-  $flag_attempt = FALSE;
+  $q_array = '';
 
   $username = safe_data($_POST['username']);
   //encrypt password
@@ -83,38 +83,39 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     define('PRE', '' );
   }
 
-  //set character set & connect to database
-  db_user_locale(CHARACTER_SET );
-
-  //limit login attempts if post-1.60 database is being used
-  if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {
-
-    //count the number of recent login attempts
-    $count_attempts = db_result(@db_query('SELECT COUNT(*) FROM '.PRE.'login_attempt
-                                                  WHERE name=\''.$username.'\'
-                                                  AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 6' ), 0, 0 );
-
-    //protect against password guessing attacks
-    if($count_attempts > 3 ) {
-      secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
-    }
-    $flag_attempt = TRUE;
-
-    //record this login attempt
-    db_query('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (\''.$username.'\', \''.$ip.'\', now() )' );
+  //do query and check database connection
+  if( ! ($q = db_prepare('SELECT id FROM '.PRE.'users WHERE deleted=\'f\' AND admin=\'t\'
+                                 AND name=? AND password=?', 0 ) ) ) {
+    secure_error("Not a valid username, or password" );
   }
 
-  //do query and check database connection
-  if( ! $q = db_query('SELECT id FROM '.PRE.'users
-                             WHERE deleted=\'f\'
-                             AND admin=\'t\'
-                             AND name=\''.$username.'\'
-                             AND password=\''.$md5pass.'\'', 0 ) ){
-    secure_error("Not a valid username, or password" );
+  if(! db_execute($q, array($username, $md5pass ), 0 ) ) {
+   secure_error('Unable to connect to database.  Please try again later.' );
   }
 
   //no such user-password combination
   if( ! ($user_id = @db_result($q, 0, 0) ) ) {
+
+    //count the number of recent login attempts
+    if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
+                            WHERE name=? AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 4', 0 ) ) ) {
+      secure_error('Unable to connect to database.  Please try again later.' );
+    }
+
+    if(! db_execute($q, array($username ), 0 ) ) {
+      secure_error('Unable to connect to database.  Please try again later.' );
+    }
+
+    //protect against password guessing attacks
+    if(db_result($q, 0, 0 ) > 3 ) {
+      secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+    }
+
+    //record this login attempt
+    $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
+    db_execute($q, array($username, $ip ) );
+
+    //wait two seconds then record an error
     sleep(2);
     secure_error("Not a valid username, or password" );
   }
@@ -125,14 +126,14 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   $session_key = md5(mt_rand().$ip );
 
   //remove the old login information
-  @db_query('DELETE FROM '.PRE.'logins WHERE user_id='.$user_id );
-  //remove the old login information for post 1.60 database
-  if($flag_attempt ) {
-    @db_query('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.$delim.'20 MINUTE'.$delim.') OR name=\''.$username.'\'' );
-  }
+  $q = db_prepare('DELETE FROM '.PRE.'logins WHERE user_id=?' );
+  @db_execute($q, array($user_id ) );
+  $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.$delim.'20 MINUTE'.$delim.') OR name=?' );
+  @db_execute($q, array($username ) );
+
   //log the user in
-  db_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess )
-                       VALUES(\''.$user_id.'\', \''.$session_key.'\', \''.$ip.'\', now() )' );
+  $q = db_prepare('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES (?, ?, ?, now() )' );
+  @db_execute($q, array($user_id, $session_key, $ip ) );
 
   header('Location: '.BASE_URL.'setup_handler.php?x='.$session_key.'&action=setup1&lang='.$locale_setup );
   die;

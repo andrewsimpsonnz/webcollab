@@ -85,7 +85,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
 
   if(WEB_AUTH === 'Y' ) {
       //construct login query
-      if(! ($q = db_prepare('SELECT id FROM '.PRE.'users WHERE name=? AND deleted=\'f\'' ), 0 ) {
+      if(! ($q = db_prepare('SELECT id FROM '.PRE.'users WHERE name=? AND deleted=\'f\'', 0 ) ) ) {
         secure_error('Unable to connect to database.  Please try again later.' );
       }
       $q_array = array(safe_data($_SERVER['REMOTE_USER'] ) );
@@ -96,7 +96,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
     $md5pass = md5($_POST['password'] );
 
     //construct login query
-    if(! ($q = db_prepare('SELECT id FROM '.PRE.'users WHERE password=? AND name=? AND deleted=\'f\'' ), 0 ) {
+    if(! ($q = db_prepare('SELECT id FROM '.PRE.'users WHERE password=? AND name=? AND deleted=\'f\'', 0 ) ) ) {
       secure_error('Unable to connect to database.  Please try again later.' );
     }
     $q_array = array($md5pass, $username );
@@ -112,12 +112,12 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
 
     //count the number of recent failed login attempts
     if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt WHERE name=?
-                               AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 6', 0 ) {
+                               AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 6', 0 ) ) ) {
       secure_error('Unable to connect to database.  Please try again later.' );
     }
 
 
-    if( ! @db_execute($q, array($username ) ) ) {
+    if( ! @db_execute($q, array($username ), 0 ) ) {
       secure_error('Unable to connect to database.  Please try again later.' );
     }
 
@@ -223,14 +223,10 @@ $content .= "<p>".$lang['please_login'].":</p>\n".
             "<p>&nbsp;</p>\n".
             "<p><input type=\"submit\" value=\"".$lang['login_action']."\" /></p>\n";
   switch(DATABASE_TYPE ) {
-  case 'postgresql':
   case 'postgresql_pdo':
     $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\" /></a></p>";
     break;
 
-  case 'mysql':
-  case 'mysql_innodb':
-  case 'mysqli':
   case 'mysql_pdo':
     $content .= "<p><a href=\"http://www.mysql.com\"><img src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\" /></a></p>\n";
     break;

@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: update.php 2328 2009-09-27 08:31:56Z andrewsimpson $
 
-  (c) 2004 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -40,7 +40,7 @@ include_once(BASE.'includes/screen.php' );
 
 function secure_error($message ) {
 
-  create_top('Error' );
+  create_top('Error', 1 );
   new_box('Error', "<div align=\"center\">".$message."</div>", 'boxdata-small', 'head-small' );
   create_bottom();
   die;
@@ -60,7 +60,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   //set variables
   $q = '';
   $content = '';
-  $flag_attempt = FALSE;
+  $flag_attempt = false;
   $username = safe_data($_POST['username']);
   //encrypt password
   $md5pass = md5($_POST['password'] );
@@ -70,42 +70,46 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     secure_error('Unable to determine ip address');
   }
 
-  //set character set & connect to database
-  db_user_locale(CHARACTER_SET);
-
-  //limit login attempts if post-1.60 database is being used
-  if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {
-
-    //count the number of recent login attempts
-    if( ! $q = @db_query('SELECT COUNT(*) FROM '.PRE.'login_attempt
-                               WHERE name=\''.$username.'\'
-                               AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 4', 0 ) ) {
-      secure_error('Unable to connect to database.  Please try again later.' );
-    }
-
-    $count_attempts = db_result($q, 0, 0 );
-
-    //protect against password guessing attacks
-    if($count_attempts > 3 ) {
-      secure_error('Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes.' );
-    }
-    $flag_attempt = TRUE;
-
-    //record this login attempt
-    db_query('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (\''.$username.'\', \''.$ip.'\', now() )' );
+  //do query and check database connection
+  if(! ($q = db_prepare('SELECT id FROM '.PRE.'users WHERE deleted=\'f\' AND admin=\'t\'
+                                AND name=? AND password=?', 0 ) ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
   }
 
-  //do query and check database connection
-  if( ! $q = db_query('SELECT id FROM '.PRE.'users
-                             WHERE deleted=\'f\'
-                             AND admin=\'t\'
-                             AND name=\''.$username.'\'
-                             AND password=\''.$md5pass.'\'', 0 ) ){
-    secure_error('Not a valid username, or password' );
+  if(! (db_execute($q, array($username, $md5pass ), 0 ) ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
   }
 
   //no such user-password combination
   if( ! ($user_id = @db_result($q, 0, 0) ) ) {
+
+    //limit login attempts if post-1.60 database is being used
+    if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {
+
+      $flag_attempt = true;
+
+      //count the number of recent login attempts
+      if( ! $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
+                                WHERE name=?
+                                AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 4', 0 ) ) {
+        secure_error('Unable to connect to database.  Please try again later.' );
+      }
+
+      if(! (db_execute($q, array($username ), 0 ) ) ) {
+        secure_error('Unable to connect to database.  Please try again later.' );
+      }
+      $count_attempts = db_result($q, 0, 0 );
+
+      //protect against password guessing attacks
+      if($count_attempts > 3 ) {
+        secure_error('Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes.' );
+      }
+
+      //record this login attempt
+      $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
+      db_execute($q, array($username, $ip ) );
+    }
+
     sleep(2);
     secure_error('Not a valid username, or password' );
   }
@@ -114,8 +118,12 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
   //remove the old login information for post 1.60 database
   if($flag_attempt ) {
-    @db_query('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.$delim.'20 MINUTE'.$delim.') OR name=\''.$username.'\'' );
+    $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.$delim.'20 MINUTE'.$delim.') OR name=?' );
+    db_execute($q, array($username ) );
   }
+
+  //start transaction 
+  db_begin();
 
   //update for version 1.32 -> 1.40
   if(! (db_query('SELECT groupaccess FROM '.PRE.'config', 0 ) ) ) {
@@ -129,22 +137,15 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   if(! (db_query('SELECT * FROM '.PRE.'login_attempt', 0 ) ) ) {
 
     switch (DATABASE_TYPE) {
-      case 'mysql':
-        db_query('CREATE TABLE '.PRE.'login_attempt ( name VARCHAR(100) NOT NULL,
-                                               ip VARCHAR(100) NOT NULL,
-                                               last_attempt DATETIME NOT NULL)' );
-        break;
 
-      case 'mysql_innodb':
-      case 'mysqli':
+      case 'mysql_pdo':
         db_query('CREATE TABLE '.PRE.'login_attempt ( name VARCHAR(100) NOT NULL,
                                                ip VARCHAR(100) NOT NULL,
                                                last_attempt DATETIME NOT NULL)
                                                TYPE = innoDB' );
         break;
 
-
-      case 'postgresql':
+      case 'postgresql_pdo':
         db_query('CREATE TABLE "'.PRE.'login_attempt" ( "name" character varying(100) NOT NULL,
                                                "ip" character varying(100) NOT NULL,
                                                "last_attempt" timestamp with time zone NOT NULL DEFAULT current_timestamp(0))' );
@@ -173,13 +174,11 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
     //set parameters for appropriate for database
     switch (DATABASE_TYPE) {
-      case 'mysql':
-      case 'mysql_innodb':
-      case 'mysqli':
+      case 'mysql_pdo':
         $date_type = 'DATETIME';
         break;
 
-      case 'postgresql':
+      case 'postgresql_pdo':
         $date_type = 'timestamp with time zone';
         break;
 
@@ -193,12 +192,17 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN completed SET DEFAULT 0' );
     db_query('ALTER TABLE '.PRE.'tasks ADD COLUMN completion_time '.$date_type );
 
+    $q1 = db_prepare('SELECT status FROM '.PRE.'tasks WHERE projectid=? AND parent<>0' );
+    $q2 = db_prepare('UPDATE '.PRE.'tasks SET completed=? WHERE id=?' );
+    $q3 = db_prepare('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid=?');
+    $q4 = db_prepare('UPDATE '.PRE.'tasks SET completion_time=? WHERE id=?' );
+
     //retrieve existing data
     $q = db_query('SELECT id FROM '.PRE.'tasks WHERE parent=0' );
 
     for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
 
-      $q_complete = db_query('SELECT status FROM '.PRE.'tasks WHERE projectid='.$row['id'].' AND parent<>0'  );
+      db_execute($q1, array($row['id'] ) );
 
       $total_tasks = 0;
       $tasks_completed = 0;
@@ -219,28 +223,33 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
         $percent_completed = round($tasks_completed * 100 / $total_tasks );
       }
 
-      db_query('UPDATE '.PRE.'tasks SET completed='.(int)$percent_completed.' WHERE id='.$row['id'] );
+      db_execute($q2, array((int)$percent_completed, $row['id'] ) );
 
       //for completed project set the completion time
       if($percent_completed == 100 ){
-        $completion_time = db_result(db_query('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid='.$row['id'] ), 0, 0 );
-        db_query('UPDATE '.PRE.'tasks SET completion_time=\''.$completion_time.'\' WHERE id='.$row['id'] );
+        db_execute($q3, array($row['id'] ) );
+        db_execute($q4, array($completion_time, $row['id'] ) );
       }
     }
+    db_free_result($q1 );
+    db_free_result($q2 );
+    db_free_result($q3 );
+    db_free_result($q4 );
+
     $content .= "<p>Updating from version pre-1.60 database ... success!</p>\n";
+
+
   }
 
   //update for version 1.60 -> 1.70
   if(! (db_query('SELECT guest FROM '.PRE.'users', 0 ) ) ) {
     //set parameters for appropriate for database
     switch (DATABASE_TYPE) {
-      case 'mysql':
-      case 'mysql_innodb':
-      case 'mysqli':
+      case 'mysql_pdo':
         $integer = 'TINYINT';
         break;
 
-      case 'postgresql':
+      case 'postgresql_pdo':
         $integer = 'SMALLINT';
         break;
 
@@ -272,19 +281,19 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   if(! (db_query("SELECT fileid FROM ".PRE."files", 0 ) ) ) {
     //set parameters for appropriate for database
     switch (DATABASE_TYPE) {
-      case 'mysql':
-      case 'mysql_innodb':
-      case 'mysqli':
+      case 'mysql_pdo':
         db_query('ALTER TABLE '.PRE.'files CHANGE COLUMN oid fileid INT' );
         break;
 
-      case 'postgresql':
+      case 'postgresql_pdo':
         db_query('ALTER TABLE '.PRE.'files ADD COLUMN fileid INTEGER' );
 
         $q = db_query('SELECT id, oid FROM '.PRE.'files' );
 
+        $q1 = db_prepare('UPDATE '.PRE.'files SET fileid=? WHERE id=?' );
+
         for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
-          db_query('UPDATE '.PRE.'files SET fileid='.$row['oid'].' WHERE id='.$row['id'] );
+          db_execute($q1, array($row['oid'], $row['id'] ) );
         }
         break;
 
@@ -338,19 +347,13 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     if(! defined('ABBR_MANAGER_NAME') ) define('ABBR_MANAGER_NAME', 'WebCollab' );
 
     switch (DATABASE_TYPE) {
-      case 'mysql':
-        db_query('CREATE TABLE '.PRE.'site_name (manager_name VARCHAR(100),
-                                                 abbr_manager_name VARCHAR(100) )' );
-        break;
-
-      case 'mysql_innodb':
-      case 'mysqli':
+      case 'mysql_pdo':
         db_query('CREATE TABLE '.PRE.'site_name (manager_name VARCHAR(100),
                                                  abbr_manager_name VARCHAR(100) )
                                                  TYPE = innoDB' );
         break;
 
-      case 'postgresql':
+      case 'postgresql_pdo':
         db_query('CREATE TABLE "'.PRE.'site_name" ("manager_name" character varying(100),
                                                    "abbr_manager_name" character varying(100) )' );
         break;
@@ -361,7 +364,8 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     }
 
     //update the new table
-    db_query("INSERT INTO ".PRE."site_name (manager_name, abbr_manager_name)  VALUES('".ABBR_MANAGER_NAME."','".ABBR_MANAGER_NAME."')" );
+    $q = db_prepare("INSERT INTO ".PRE."site_name (manager_name, abbr_manager_name) VALUES(?, ? )" );
+    db_execute($q, array(MANAGER_NAME, ABBR_MANAGER_NAME ) );
 
     //update deadline hours
     db_query('UPDATE '.PRE.'tasks SET deadline=(deadline+INTERVAL '.$delim.'2 HOUR'.$delim.')' );
@@ -374,13 +378,11 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
     //set parameters for appropriate for database
     switch (DATABASE_TYPE) {
-      case 'mysql':
-      case 'mysql_innodb':
-      case 'mysqli':
+      case 'mysql_pdo':
         $date_type = 'DATETIME';
         break;
 
-      case 'postgresql':
+      case 'postgresql_pdo':
         $date_type = 'timestamp with time zone';
         break;
 
@@ -408,14 +410,12 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
     //set parameters for appropriate for database
     switch (DATABASE_TYPE) {
-      case 'mysql':
-      case 'mysql_innodb':
-      case 'mysqli':
+      case 'mysql_pdo':
         //increase mime column to 200 characters
         db_query('ALTER TABLE '.PRE.'files MODIFY COLUMN mime VARCHAR(200)' );
         break;
 
-      case 'postgresql':
+      case 'postgresql_pdo':
         //increase mime column to 200 characters
         db_query('ALTER TABLE '.PRE.'files ALTER COLUMN mime TYPE VARCHAR(200)' );
         break;
@@ -427,6 +427,47 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
     $content .= "<p>Updating from version pre-2.50 database ... success!</p>\n";
   }
+
+  //update version 2.50 -> 3.00
+  //set parameters for appropriate for database
+  switch (DATABASE_TYPE) {
+    case 'postgresql_pdo':
+      $q = db_query('SELECT data_type FROM information_schema.columns 
+                            WHERE table_name=\'tasks\' AND column_name=\'groupaccess\'');
+      if(db_result($q, 0, 0 ) == 'boolean' ) {
+
+        db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN globalaccess DROP DEFAULT' );
+        db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN globalaccess TYPE VARCHAR(5) 
+                            USING (CASE WHEN globalaccess THEN \'t\' ELSE \'f\' END),
+                            ALTER COLUMN globalaccess SET DEFAULT \'f\'' );
+
+        db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN groupaccess DROP DEFAULT' );
+        db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN groupaccess TYPE VARCHAR(5) 
+                            USING (CASE WHEN groupaccess THEN \'t\' ELSE \'f\' END),
+                            ALTER COLUMN groupaccess SET DEFAULT \'t\'' );
+
+        db_query('ALTER TABLE '.PRE.'users ALTER COLUMN admin DROP DEFAULT' );
+        db_query('ALTER TABLE '.PRE.'users ALTER COLUMN admin TYPE VARCHAR(5) 
+                            USING (CASE WHEN admin THEN \'t\' ELSE \'f\' END),
+                            ALTER COLUMN admin SET DEFAULT \'f\'' );
+
+        db_query('ALTER TABLE '.PRE.'users ALTER COLUMN deleted DROP DEFAULT' );
+        db_query('ALTER TABLE '.PRE.'users ALTER  COLUMN deleted TYPE VARCHAR(5) 
+                            USING (CASE WHEN deleted THEN \'t\' ELSE \'f\' END),
+                            ALTER COLUMN deleted SET DEFAULT \'f\'' );
+
+        $content .= "<p>Updating from version pre-3.00 database ... success!</p>\n";
+      }
+      break;
+
+    case 'mysql_pdo':
+    default:
+      //no action
+      break;    
+  }
+
+  //commit
+  db_commit();
 
   if( ! $content ) {
     $content .= "<p>No database updates were required.</p>\n";
@@ -446,7 +487,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 //
 
 //login box screen code
-create_top('Login', 0, 2 );
+create_top('Login', 1, 2 );
 
 $content = "<p>Admin login is required for database update:</p>\n".
            "<form name=\"inputform\" method=\"post\" action=\"update.php\">\n".
@@ -460,7 +501,7 @@ $content = "<p>Admin login is required for database update:</p>\n".
            "</div></form>\n";
 
 //set box options
-new_box("Login", $content, 'boxdata', 'boxdata-small', 'head-small' );
+new_box("Login", $content, 'boxdata-small', 'head-small' );
 
 create_bottom();
 
