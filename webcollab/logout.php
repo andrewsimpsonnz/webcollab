@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: logout.php 2276 2009-08-21 20:18:23Z andrewsimpson $
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -31,7 +31,8 @@ require_once(BASE.'includes/security.php' );
 
 //log the user out by nulling their session key to an illegal key
 //record preserved to allow time of last login to be recorded
-db_query('UPDATE '.PRE.'logins SET session_key=\'XXXX\' WHERE user_id='.UID );
+$q = db_prepare('UPDATE '.PRE.'logins SET session_key=\'XXXX\' WHERE user_id=?' );
+db_execute($q, array(UID ) );
 
 //clear session cookie
 $url = parse_url(BASE_URL );
