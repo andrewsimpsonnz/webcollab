@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: icalendar_all.php 2299 2009-08-24 09:46:33Z andrewsimpson $
 
-  (c) 2005 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -37,9 +37,6 @@ include_once(BASE.'icalendar/icalendar_common.php' );
 //set variables
 $content  = '';
 $icalendar_id = md5(MANAGER_NAME.BASE_URL);
-
-//set database character set to UTF-8
-db_user_locale('UTF-8');
 
 //main query
 $q = db_query(icalendar_query(). icalendar_usergroup_tail() ); 

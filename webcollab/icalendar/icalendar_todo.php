@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: icalendar_todo.php 2299 2009-08-24 09:46:33Z andrewsimpson $
 
-  (c) 2005 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -65,8 +65,9 @@ else {
 //set selection
 switch($selection ) {
   case 'group':
-    $tail = "AND usergroupid=".$groupid;
+    $tail = "AND usergroupid=?";
     $id   = 'G'.$groupid;
+    $parm = $groupid;
     break;
 
   case 'user':
@@ -74,25 +75,26 @@ switch($selection ) {
     if(! icalendar_private_user($userid ) ) {
       return;
     }
-    $tail = "AND owner=".$userid;
+    $tail = "AND owner=?";
     $id   = 'U'.$userid;
+    $parm = $userid;
     break;
 }
 
-//set database character set to UTF-8
-db_user_locale('UTF-8');
-
 //show all subtasks that are not complete
-$q = db_query( icalendar_query().' AND '.PRE.'tasks.parent<>0 '.$tail. icalendar_usergroup_tail() );
+$q = db_prepare( icalendar_query().' AND '.PRE.'tasks.parent<>0 '.$tail. icalendar_usergroup_tail() );
+db_execute($q, array($parm ) );
 
 for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
+  $project_q = db_prepare(icalendar_query().' AND '.PRE.'tasks.id=?'. icalendar_usergroup_tail() );
+
   if(! in_array($row['projectid'], (array)$projects ) ) {
 
-    $project_q = db_query(icalendar_query().' AND '.PRE.'tasks.id='.$row['projectid']. icalendar_usergroup_tail() );
+    db_execute($project_q, array($row['projectid'] ) );
 
     //check for closed projects
-    if(! ($project = db_fetch_array($project_q, 0) ) ) {
+    if(! ($project = db_fetch_array($project_q, 0 ) ) ) {
       continue;
     }
 
@@ -133,14 +135,18 @@ if((UID == $userid ) || (ADMIN ) ) {
   return true;
 }
 
-if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE id='.$userid.' AND private=1' ), 0, 0 ) == 0 ) {
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'users WHERE id=? AND private=1' );
+db_execute($q, array($userid ) );
+
+if(db_result($q, 0, 0 ) == 0 ) {
   return true;
 }
 
 //private user ==> get list of common usergroups
-$q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid
+$q = db_prepare('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid
                        FROM '.PRE.'usergroups_users
-                       WHERE '.PRE.'usergroups.userid='.$userid );
+                       WHERE '.PRE.'usergroups.userid=?' );
+db_execute($q, array($userid ) );
 
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   if(isset($GID[($row[0])] ) ) {
