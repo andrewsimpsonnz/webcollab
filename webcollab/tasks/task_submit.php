@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_submit.php 2051 2009-01-17 06:53:09Z andrewsimpson $
 
-  (c) 2004 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -83,7 +83,8 @@ function user_access($taskid ) {
   if(ADMIN ) {
     return true;
   }
-  $q   = db_query('SELECT owner, usergroupid, groupaccess FROM '.PRE.'tasks WHERE id='.$taskid );
+  $q = db_prepare('SELECT owner, usergroupid, groupaccess FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+  db_execute($q, array($taskid ) );
   $row = db_fetch_num($q, 0 );
 
   //user is owner
@@ -135,12 +136,16 @@ function adjust_completion($projectid ) {
 
   //set completed percentage project record
   $percent_completed = round(percent_complete($projectid ) );
-  db_query('UPDATE '.PRE.'tasks SET completed='.(int)$percent_completed.' WHERE id='.$projectid );
+  $q = db_prepare('UPDATE '.PRE.'tasks SET completed=? WHERE id=?' );
+  db_execute($q, array((int)$percent_completed, $projectid ) );
 
   //for completed project set the completion time
   if($percent_completed == 100 ){
-    $completion_time = db_result(db_query('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid='.$projectid ), 0, 0 );
-    db_query('UPDATE '.PRE.'tasks SET completion_time=\''.$completion_time.'\' WHERE id='.$projectid );
+    $q = db_prepare('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid=?' );
+    db_execute($q, array($projectid ) );
+    $completion_time = db_result($q, 0, 0 );
+    $q = db_prepare('UPDATE '.PRE.'tasks SET completion_time=? WHERE id=?' );
+    db_execute($q, array($completion_time, $projectid ) );
   }
   return;
 }

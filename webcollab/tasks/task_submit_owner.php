@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_submit_owner.php 2170 2009-04-06 07:25:59Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -67,10 +67,13 @@ ignore_user_abort(TRUE);
       if( ! user_access($taskid) ){
         error('Task submit', 'Access denied, you do not have enough rights to do that' );
       }
-      db_query('UPDATE '.PRE.'tasks SET status=\'done\', finished_time=now(), edited=now(), sequence=sequence+1 WHERE id='.$taskid );
+      $q = db_prepare('UPDATE '.PRE.'tasks SET status=\'done\', finished_time=now(), edited=now(), sequence=sequence+1 WHERE id=?' );
+      db_execute($q, array($taskid ) );
 
       //if all tasks are completed, then mark the project as 'done'
-      $projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$taskid ), 0, 0 );
+      $q = db_prepare('SELECT projectid FROM '.PRE.'tasks WHERE id=?' );
+      db_execute($q, array($taskid ) );
+      $projectid = db_result($q, 0, 0 );
 
       //adjust completion status in project
       adjust_completion($projectid );
@@ -82,12 +85,16 @@ ignore_user_abort(TRUE);
     case 'deown':
 
       //check if the user has enough rights
-      if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$taskid.' AND owner='.UID ), 0, 0 ) < 1 ) {
+      $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id=? AND owner=? LIMIT 1' );
+      db_execute($q, array($taskid, UID ) );
+
+      if(db_result($q, 0, 0 ) < 1 ) {
         warning($lang['task_submit'], $lang['not_owner'] );
       }
 
       //note: self-securing query
-      db_query('UPDATE '.PRE.'tasks SET owner=0,sequence=sequence+1 WHERE owner='.UID.' AND id='.$taskid );
+      $q = db_prepare('UPDATE '.PRE.'tasks SET owner=0,sequence=sequence+1 WHERE owner=? AND id=?' );
+      db_execute($q, array(UID, $taskid ) );
       break;
 
 
@@ -98,12 +105,13 @@ ignore_user_abort(TRUE);
       //non-admins can only take non-owned tasks
       //note: self-securing query
       if(! ADMIN ){
-        db_query('UPDATE '.PRE.'tasks SET owner='.UID.', sequence=sequence+1 WHERE id='.$taskid.' AND owner=0' );
+        $q = db_prepare('UPDATE '.PRE.'tasks SET owner=?, sequence=sequence+1 WHERE id=? AND owner=0' );
+        db_execute($q, array(UID, $taskid ) );
       }
       if(ADMIN ) {
         db_begin();
         //get the current owner and task details
-        $q = db_query('SELECT '.PRE.'users.id AS id,
+        $q = db_prepare('SELECT '.PRE.'users.id AS id,
                               '.PRE.'tasks.projectid AS projectid,
                               '.PRE.'tasks.parent AS parent,
                               '.PRE.'tasks.name AS name,
@@ -112,19 +120,22 @@ ignore_user_abort(TRUE);
                               '.PRE.'tasks.deadline AS deadline
                               FROM '.PRE.'tasks
                               LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
-                              WHERE '.PRE.'tasks.id='.$taskid );
+                              WHERE '.PRE.'tasks.id=?' );
+        db_execute($q, array($taskid ) );
 
         $row = db_fetch_array($q, 0 );
         //do the action
-        db_query('UPDATE '.PRE.'tasks SET owner='.UID.' WHERE id='.$taskid );
+        $q = db_prepare('UPDATE '.PRE.'tasks SET owner=? WHERE id=?' );
+        db_execute($q, array(UID, $taskid ) );
 
         db_commit();
 
         //if there was no previous owner do nothing!
         //there was a previous owner - inform the user that an admin has taken over his task
         if( ($row['id'] != 0 ) && (UID != $row['id'] ) ) {
-          $q = db_query('SELECT email FROM '.PRE.'users WHERE id='.$row['id'], 0 );
-          $email_address_old_owner = db_result( $q, 0, 0 );
+          $q = db_prepare('SELECT email FROM '.PRE.'users WHERE id=?', 0 );
+          db_execute($q, array($row['id'] ) );
+          $email_address_old_owner = db_result($q, 0, 0 );
 
           switch($row['parent'] ) {
             case 0:
@@ -137,7 +148,9 @@ ignore_user_abort(TRUE);
             default:
               $email = $email_takeover_task;
               $title = $title_takeover_task;
-              $name_project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$row['projectid'] ), 0, 0 );
+              $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=?' );
+              db_execute($q, array($row['projectid'] ) );
+              $name_project = db_result($q, 0, 0 );
               $name_task = $row['name'];
               break;
           }

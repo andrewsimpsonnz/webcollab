@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_add.php 2233 2009-05-22 22:13:55Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -84,7 +84,7 @@ if( @safe_integer($_GET['parentid']) ) {
   $parentid = $_GET['parentid'];
 
   //get info about the parent of this task
-  $q = db_query('SELECT name,
+  $q = db_prepare('SELECT name,
                         deadline,
                         '.$epoch.'deadline) AS epoch_deadline,
                         status,
@@ -93,7 +93,8 @@ if( @safe_integer($_GET['parentid']) ) {
                         projectid,
                         usergroupid,
                         globalaccess, taskgroupid 
-                        FROM '.PRE.'tasks WHERE id='.$parentid.' LIMIT 1' );
+                        FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+  db_execute($q, array($parentid ) );
 
   if( ! $parent_row = db_fetch_array($q, 0 ) ) {
     error('Task add', 'No parent for taskid' );
@@ -128,10 +129,12 @@ if( @safe_integer($_GET['parentid']) ) {
     $project_name = $parent_row['name'];
   }
   else {
-    $project_name = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ), 0, 0 );
+    $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=?' );
+    db_execute($q, array($parent_row['projectid'] ) );
+    $project_name = db_result($q, 0, 0 );
   }
 
-  $content .= "<tr><td>".$lang['project'] .":</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parent_row['projectid']."\">".$project_name."</a></td></tr>\n";
+  $content .= "<tr><td>".$lang['project'] .":</td> <td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parent_row['projectid']."\">".$project_name."</a></td></tr>\n";
 
   //check if task has a parent task
   if( $parent_row['parent'] != 0 ) {
@@ -224,7 +227,7 @@ if( @safe_integer($_GET['parentid']) ) {
   $content .= "</select></td></tr>\n";
 
   //show all the groups
-  $q = db_query( 'SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
+  $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
 
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td><td><select name=\"usergroupid\">\n";
   $content .= "<option value=\"0\">".$lang['all_groups']."</option>\n";
@@ -326,7 +329,7 @@ else {
   $content .= "</select></td></tr>\n";
 
   //show all the groups
-  $q = db_query( 'SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
+  $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td><td><select name=\"usergroupid\">\n".
               "<option value=\"0\">".$lang['all_groups']."</option>\n";
 

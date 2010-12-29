@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_delete.php 2170 2009-04-06 07:25:59Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -48,7 +48,8 @@ function find_tasks( $taskid, $projectid ) {
   $task_count = 0;
   $index = 0;
 
-  $q = db_query('SELECT id, parent FROM '.PRE.'tasks WHERE projectid='.$projectid );
+  $q = db_prepare('SELECT id, parent FROM '.PRE.'tasks WHERE projectid=?' );
+  db_execute($q, array($projectid ) );
 
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
@@ -113,7 +114,7 @@ if(! @safe_integer($_POST['taskid']) ) {
 $taskid = $_POST['taskid'];
 
 //get task and owner information
-$q = db_query('SELECT '.PRE.'tasks.parent AS parent,
+$q = db_prepare('SELECT '.PRE.'tasks.parent AS parent,
                       '.PRE.'tasks.name AS name,
                       '.PRE.'tasks.text AS text,
                       '.PRE.'tasks.owner AS owner,
@@ -124,7 +125,9 @@ $q = db_query('SELECT '.PRE.'tasks.parent AS parent,
                       '.PRE.'users.email AS email
                       FROM '.PRE.'tasks
                       LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
-                      WHERE '.PRE.'tasks.id='.$taskid );
+                      WHERE '.PRE.'tasks.id=?' );
+
+db_execute($q, array($taskid ) );
 
 //get the data
 if( ! $row = db_fetch_array($q, 0) ){
@@ -150,19 +153,26 @@ find_tasks( $taskid, $row['projectid'] );
 - files
 */
 
+$q1 = db_prepare('DELETE FROM '.PRE.'contacts WHERE taskid=?' );
+$q2 = db_prepare('DELETE FROM '.PRE.'seen WHERE taskid=?' );
+$q3 = db_prepare('DELETE FROM '.PRE.'forum WHERE taskid=?' );
+$q4 = db_prepare('SELECT fileid, filename FROM '.PRE.'files WHERE taskid=?' );
+$q5 = db_prepare('DELETE FROM '.PRE.'files WHERE taskid=?' );
+$q6 = db_prepare('DELETE FROM '.PRE.'tasks WHERE id=?' );
+
 for($i=0 ; $i < $index ; ++$i ) {
 
   //delete contacts
-  db_query('DELETE FROM '.PRE.'contacts WHERE taskid='.$match_array[$i] );
+  db_execute($q1, array($match_array[$i] ) );
 
   //delete all from seen table
-  db_query('DELETE FROM '.PRE.'seen WHERE taskid='.$match_array[$i] );
+  db_execute($q2, array($match_array[$i] ) );
 
   //delete forum posts
-  db_query('DELETE FROM '.PRE.'forum WHERE taskid='.$match_array[$i] );
+  db_execute($q3, array($match_array[$i] ) );
 
   //delete all files physically
-  $q = db_query('SELECT fileid, filename FROM '.PRE.'files WHERE taskid='.$match_array[$i] );
+  db_execute($q4, array($match_array[$i] ) );
 
   for($j=0 ; $file_row = @db_fetch_array($q, $j ) ; ++$j ) {
 
@@ -172,22 +182,26 @@ for($i=0 ; $i < $index ; ++$i ) {
   }
 
   //delete all files attached to it in the database
-  db_query('DELETE FROM '.PRE.'files WHERE taskid='.$match_array[$i] );
+  db_execute($q5, array($match_array[$i] ) );
 
   //delete item
-  db_query('DELETE FROM '.PRE.'tasks WHERE id='.$match_array[$i] );
+  db_execute($q6, array($match_array[$i] ) );
 }
 
 if($row['parent'] != 0 ){
 
   //set the new completed percentage project record
   $percent_completed = round(percent_complete($row['projectid'] ) );
-  db_query('UPDATE '.PRE.'tasks SET completed='.(int)$percent_completed.' WHERE id='.$row['projectid'] );
+  $q = db_prepare('UPDATE '.PRE.'tasks SET completed=? WHERE id=?' );
+  db_execute($q, array((int)$percent_completed, $row['projectid'] ) );
 
   //for completed project set the completion time
   if($percent_completed == 100 ){
-    $completion_time = db_result(db_query('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid='.$row['projectid'] ), 0, 0 );
-    db_query('UPDATE '.PRE.'tasks SET completion_time=\''.$completion_time.'\' WHERE id='.$row['projectid'] );
+    $q = db_prepare('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid=?' );
+    db_execute($q, array($row['projectid'] ) );
+    $completion_time = db_result($q, 0, 0 );
+    $q = db_prepare('UPDATE '.PRE.'tasks SET completion_time=? WHERE id=?' );
+    db_execute($q, array($completion_time, $row['projectid'] ) );
   }
 }
 
@@ -210,7 +224,9 @@ if(($row['owner'] != 0 ) && (UID != $row['owner']) ) {
       break;
 
     default:
-      $name_project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$row['projectid'] ), 0, 0 );
+      $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=?' );
+      db_execute($q, array($row['projectid'] ) );
+      $name_project = db_result($q, 0, 0 );
       $name_task = $row['name'];
       $title = $title_delete_task;
       $email = $email_delete_task;

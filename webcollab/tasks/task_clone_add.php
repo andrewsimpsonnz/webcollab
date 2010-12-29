@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_clone_add.php 2270 2009-08-14 06:58:03Z andrewsimpson $
 
-  (c) 2004 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -55,7 +55,8 @@ $content .= "<form method=\"post\" action=\"tasks.php\" onsubmit=\"return fieldC
             "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n".
             "<table class=\"celldata\">\n";
 
-$q = db_query('SELECT name, parent FROM '.PRE.'tasks WHERE id='.$taskid );
+$q = db_prepare('SELECT name, parent FROM '.PRE.'tasks WHERE id=?' );
+db_execute($q, array($taskid ) );
 
 $row = db_fetch_array($q, 0 );
 

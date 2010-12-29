@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_clone_submit.php 2286 2009-08-22 08:45:30Z andrewsimpson $
 
-  (c) 2004 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
    WebCollab
   ---------------------------------------
@@ -40,19 +40,68 @@ include_once(BASE.'tasks/task_common.php' );
 include_once(BASE.'tasks/task_submit.php' );
 
 //
+// function to contain prepared queries
+//
+function query_prepare() {
+
+  global $q1, $q2, $q3, $q4, $q5, $q6;
+  global $delim;
+
+  //set the usergroup SQL tail
+  $tail = usergroup_tail();
+
+  $q1 = db_prepare('SELECT id FROM '.PRE.'tasks WHERE parent=?' );
+
+  $q2 = db_prepare('SELECT * FROM '.PRE.'tasks WHERE id=?'.$tail );
+
+  $q3 = db_prepare('SELECT projectid FROM '.PRE.'tasks WHERE id=?' );
+
+  $q4 = db_prepare('INSERT INTO '.PRE.'tasks (name,
+                    text,
+                    created,
+                    lastforumpost,
+                    lastfileupload,
+                    edited,
+                    owner,
+                    creator,
+                    deadline,
+                    finished_time,
+                    priority,
+                    parent,
+                    projectid,
+                    taskgroupid,
+                    usergroupid,
+                    globalaccess,
+                    groupaccess,
+                    status,
+                    completed,
+                    completion_time,
+                    sequence,
+                    archive )
+                    VALUES (?, ?, now(), now(), now(), now(), ?, ?, ?,
+                    now(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)' );
+
+  $q5 = db_prepare('UPDATE '.PRE.'tasks SET projectid=? WHERE id=?' );
+
+  $q6 = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES(?, ?, now() )');
+
+  return;
+}
+
+//
 // Recursive function to create new project structure
 //
 
 function add($taskid, $new_parent, $new_name, $delta_deadline ) {
 
-  global $parent_array;
+  global $q1, $parent_array;
 
   if($new_parent != 0 ) {
-    //now cloning a child task
-    $q = db_query('SELECT id FROM '.PRE.'tasks WHERE parent='.$taskid );
+    //now cloning a child task    
+    db_execute($q1, array($taskid ) );
 
     //clone all the tasks at this level
-    for( $i=0; $row = @db_fetch_array($q, $i ); ++$i ) {
+    for( $i=0; $row = @db_fetch_array($q1, $i ); ++$i ) {
       $new_taskid = copy_across($row['id'], $new_parent, NULL, $delta_deadline );
 
       //recursive function if the subtask is listed in parent_array (it has children then)
@@ -61,7 +110,7 @@ function add($taskid, $new_parent, $new_name, $delta_deadline ) {
       }
     }
   }
-  else{
+  else {
     //now cloning the topmost task (project)
     $new_taskid = copy_across($taskid, 0, $new_name, $delta_deadline );
 
@@ -84,91 +133,72 @@ function add($taskid, $new_parent, $new_name, $delta_deadline ) {
 
 function copy_across($taskid, $new_parent, $name, $delta_deadline ) {
 
-    global $tail, $delim;
+  global $q2, $q3, $q4, $q5, $q6;
+  global $delim;
 
-    //get task details
-    $q = db_query('SELECT * FROM '.PRE.'tasks WHERE id='.$taskid.$tail );
+  //get task details
+  db_execute($q2, array($taskid ) );
 
-    //check if this was a private usergroup task
-    if(! $row = db_fetch_array($q, 0 ) ) {
-      //topmost task is private - no point proceeding
-      if($new_parent == 0 ) {
-        error("Task clone", "You do not have sufficient rights to clone this task" );
-      }
-      else {
-        //lower task is private - don't copy
-        return false;
-      }
-    }
-
-    //set values
-    if($new_parent != 0 ) {
-      //new task
-      $new_projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$new_parent ), 0, 0 );
-      $new_name = db_escape_string($row['name'] );
-    }
-    else{
-      //new project (adjust projectid later)
-      $new_projectid = 0;
-      $new_name = $name;
-    }
-
-    //insert data
-    $q = db_query("INSERT INTO ".PRE."tasks(name,
-                    text,
-                    created,
-                    lastforumpost,
-                    lastfileupload,
-                    edited,
-                    owner,
-                    creator,
-                    deadline,
-                    finished_time,
-                    priority,
-                    parent,
-                    projectid,
-                    taskgroupid,
-                    usergroupid,
-                    globalaccess,
-                    groupaccess,
-                    status,
-                    completed,
-                    completion_time,
-                    sequence,
-                    archive )
-                    values('$new_name',
-                    '".db_escape_string($row['text'])."',
-                    now(),
-                    now(),
-                    now(),
-                    now(),
-                    ".UID.",
-                    ".UID.",
-                    (TIMESTAMP '".$row['deadline']."' + INTERVAL ".$delim.$delta_deadline." DAY".$delim."),
-                    now(),
-                    ".$row['priority'].",
-                    $new_parent,
-                    $new_projectid,
-                    ".$row['taskgroupid'].",
-                    ".$row['usergroupid'].",
-                    '".$row['globalaccess']."',
-                    '".$row['groupaccess']."',
-                    '".db_escape_string($row['status'])."',
-                    '".$row['completed']."',
-                    '".$row['completion_time']."',
-                    0,
-                    '".$row['archive']."')" );
-
-    // get taskid for the new task/project
-    $new_taskid = db_lastoid('tasks_id_seq' );
-
-    //for a new project set the projectid variable reset correctly
+  //check if this was a private usergroup task
+  if(! $row = db_fetch_array($q2, 0 ) ) {
+    //topmost task is private - no point proceeding
     if($new_parent == 0 ) {
-      db_query('UPDATE '.PRE.'tasks SET projectid='.$new_taskid.' WHERE id='.$new_taskid );
+      error("Task clone", "You do not have sufficient rights to clone this task" );
     }
+    else {
+      //lower task is private - don't copy
+      return false;
+    }
+  }
 
-    //you have already seen this item, no need to announce it to you
-    db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES('.UID.', '.$new_taskid.', now() )');
+  //set values
+  if($new_parent != 0 ) {
+    //new task
+    db_execute($q3, array($new_parent ) );
+    $new_projectid = db_result($q3, 0, 0 );
+    $new_name = $row['name'];
+    db_free_result($q3 );
+  }
+  else{
+    //new project (adjust projectid later)
+    $new_projectid = 0;
+    $new_name = $name;
+  }
+
+  //Calculate new deadline date 
+  //  This should db_prepare() as part of next query, but postgresql DOES NOT support binding to TIMESTAMP or INTERVAL !!
+  $q = db_query('SELECT (TIMESTAMP \''.$row['deadline'].'\' + INTERVAL '.$delim.$delta_deadline.' DAY'.$delim.')' );
+  $new_deadline = db_result($q );
+
+  foreach(array('globalaccess', 'groupaccess' ) as $var ) {
+    if($row[$var] == true ) {
+      $row[$var] = 't';
+    }
+    else {
+      $row[$var] = 'f';
+    }
+  }
+
+  db_execute($q4, array($new_name, $row['text'], UID, UID, $new_deadline, $row['priority'],
+                  $new_parent, $new_projectid, $row['taskgroupid'], $row['usergroupid'], $row['globalaccess'],
+                  $row['groupaccess'], $row['status'], $row['completed'], $row['completion_time'], 
+                  $row['archive'] ) );
+
+  // get taskid for the new task/project
+  $new_taskid = db_lastoid('tasks_id_seq' );
+  db_free_result($q4 );
+
+  //for a new project set the projectid variable reset correctly
+  if($new_parent == 0 ) {
+    db_execute($q5, array($new_taskid, $new_taskid ) );
+    db_free_result($q5, 0, 0 );
+  }
+
+  //you have already seen this item, no need to announce it to you
+  db_execute($q6, array(UID, $new_taskid ) );
+
+  db_free_result($q6 );
+  db_free_result($q2 );
 
   return $new_taskid;
 }
@@ -210,13 +240,12 @@ if( ! checkdate($month, $day, $year ) ) {
 //start transaction
 db_begin();
 
-//set the usergroup SQL tail
-$tail = usergroup_tail();
+//get the queries prepared
+query_prepare();
 
 //find all parent-tasks in this project and add them to an array for later use
-if(! $q = @db_query('SELECT projectid, deadline FROM '.PRE.'tasks WHERE id='.$taskid, 0 ) ) {
-  error('Task clone', 'There was an error in the data query.' );
-}
+$q = db_prepare('SELECT projectid, deadline FROM '.PRE.'tasks WHERE id=?' );
+db_execute($q, array($taskid ) );
 
 //get the projectid & old deadline
 if(! $row = @db_fetch_num($q, $i ) ) {
@@ -229,8 +258,14 @@ $deadline_array = explode('-', substr($row[1], 0, 10) );
 //calculate change in deadline in days
 $delta_deadline = floor((mktime(0, 0, 0, $month, $day, $year ) - mktime(0, 0, 0, $deadline_array[1], $deadline_array[2], $deadline_array[0] ) ) / (60 * 60 * 24) );
 
+//check integrity
+if(! @safe_integer($delta_deadline ) ) {
+  error('Task Clone', 'Error in calculating new deadline' );
+} 
+
 //get details
-$q = db_query('SELECT DISTINCT parent FROM '.PRE.'tasks WHERE projectid='.$projectid );
+$q = db_prepare('SELECT DISTINCT parent FROM '.PRE.'tasks WHERE projectid=?' );
+db_execute($q, array($projectid ) );
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   $parent_array[$i] = $row[0];
@@ -239,7 +274,10 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 $new_taskid = add($taskid, 0, $name, $delta_deadline );
 
 //now get new projectid to set completion percentage
-$new_projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$new_taskid ), 0, 0 ); 
+$q = db_prepare('SELECT projectid FROM '.PRE.'tasks WHERE id=?' );
+db_execute($q, array($new_taskid ) );
+$new_projectid = db_result($q, 0, 0 );
+
 
 //adjust completion status in new project
 adjust_completion($new_projectid );

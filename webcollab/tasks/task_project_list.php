@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_project_list.php 2294 2009-08-24 09:41:39Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------

@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_edit.php 2270 2009-08-14 06:58:03Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -117,7 +117,8 @@ switch($TYPE) {
 
   case 'task':
     //get parent details
-    $q = db_query('SELECT '.$epoch.'deadline) AS epoch_deadline, status FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['parent'].' LIMIT 1' );
+    $q = db_prepare('SELECT '.$epoch.'deadline) AS epoch_deadline, status FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+    db_execute($q, array($TASKID_ROW['parent'] ) );
     $parent_row = db_fetch_array($q, 0 );
 
     switch ($parent_row['status'] ) {
@@ -138,7 +139,9 @@ switch($TYPE) {
     }
 
     //get project name
-    $project_name = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'].' LIMIT 1' ), 0, 0 );
+    $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+    db_execute($q, array($TASKID_ROW['projectid'] ) );
+    $project_name = db_result($q, 0, 0 );
 
     //show project finish date for javascript & other details
     $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" /></fieldset>\n".
@@ -157,7 +160,8 @@ if($TASKID_ROW['parent'] == 0 ){
 }
 $content .= ">".$lang['no_reparent']."</option>\n";
 
-$q = db_query('SELECT id, name, usergroupid, globalaccess FROM '.PRE.'tasks WHERE id<>'.$taskid.' AND archive=0 ORDER BY name');
+$q = db_prepare('SELECT id, name, usergroupid, globalaccess FROM '.PRE.'tasks WHERE id<>? AND archive=0 ORDER BY name');
+db_execute($q, array($taskid ) );
 
 for( $i=0; $reparent_row = @db_fetch_array($q, $i ); ++$i ) {
   //check for private usergroups

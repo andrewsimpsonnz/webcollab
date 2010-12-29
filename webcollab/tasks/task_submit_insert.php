@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_submit_insert.php 2170 2009-04-06 07:25:59Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -94,77 +94,71 @@ foreach($input_array as $var ) {
 //carry out some data consistency checking
 if( $parentid != 0 ) {
 
-  if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$parentid.' LIMIT 1' ), 0, 0 ) < 1 ) {
+  $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+
+  db_execute($q, array($parentid ) );
+  if(db_result($q, 0, 0 ) < 1 ) {
     error('Database integrity check', 'Input data does not match - no parent for task' );
   }
-  if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$projectid.' LIMIT 1' ), 0, 0 ) < 1 ) {
+  db_free_result($q );
+  db_execute($q, array($projectid ) );
+  if(db_result($q, 0, 0 ) < 1 ) {
     error('Database integrity check', 'Input data does not match - no project for task' );
   }
+  db_free_result($q );
 }
 //start transaction
 db_begin();
-$q = db_query("INSERT INTO ".PRE."tasks(name,
-              text,
-              created,
-              lastforumpost,
-              lastfileupload,
-              edited,
-              owner,
-              creator,
-              deadline,
-              finished_time,
-              priority,
-              parent,
-              projectid,
-              taskgroupid,
-              usergroupid,
-              globalaccess,
-              groupaccess,
-              status,
-              sequence,
-              completion_time )
-              values('$name',
-              '$text',
-              now(),
-              now(),
-              now(),
-              now(),
-              $owner,
-              ".UID.",
-              '$deadline',
-              now(),
-              $priority,
-              $parentid,
-              $projectid,
-              $taskgroupid,
-              $usergroupid,
-              '$globalaccess',
-              '$groupaccess',
-              '$status',
-              0,
-              now() )" );
+$q = db_prepare('INSERT INTO '.PRE.'tasks(name,
+                                          text,
+                                          created,
+                                          lastforumpost,
+                                          lastfileupload,
+                                          edited,
+                                          owner,
+                                          creator,
+                                          deadline,
+                                          finished_time,
+                                          priority,
+                                          parent,
+                                          projectid,
+                                          taskgroupid,
+                                          usergroupid,
+                                          globalaccess,
+                                          groupaccess,
+                                          status,
+                                          sequence,
+                                          completion_time )
+              values(?, ?, now(), now(), now(), now(), ?, ?, ?, now(), ?, ?, ?, ?, ?, ?, ?, ?, 0, now() )' );
+
+db_execute($q, array($name, $text, $owner, UID, $deadline, $priority, $parentid, $projectid, $taskgroupid, $usergroupid, $globalaccess, $groupaccess, $status ) );
 
 // get taskid for the new task/project
 $taskid = db_lastoid('tasks_id_seq' );
 
 //for a new project set the projectid variable reset correctly
 if($parentid == 0 || $projectid == 0 ) {
-  db_query('UPDATE '.PRE.'tasks SET projectid='.$taskid.' WHERE id='.$taskid );
+  $q = db_prepare('UPDATE '.PRE.'tasks SET projectid=? WHERE id=?' );
+  db_execute($q, array($taskid, $taskid ) );
   $projectid = $taskid;
 }
 
 //if inactive parent project, then set this task to inactive too
 $project_status = $status;
 if($parentid != 0 ) {
-  $project_status = db_result(db_query('SELECT status FROM '.PRE.'tasks WHERE id='.$projectid.' LIMIT 1' ), 0, 0 );
+  $q = db_prepare('SELECT status FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+  db_execute($q, array($projectid ) );
+  $project_status = db_result($q, 0, 0 );
 
   if($project_status == 'cantcomplete' || $project_status == 'notactive' ){
-    db_query('UPDATE '.PRE.'tasks SET status=\''.$project_status.'\' WHERE id='.$taskid );
+    $q = db_prepare('UPDATE '.PRE.'tasks SET status=? WHERE id=?' );
+    db_execute($q, array($project_status, $taskid ) );
   }
 }
 
 //you have already seen this item, no need to announce it to you
-db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES('.UID.', '.$taskid.', now() )');
+$q = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES(?, ?, now() )');
+db_execute($q, array(UID, $taskid ) );
 
 //adjust completion status in project
 adjust_completion($projectid );
@@ -173,7 +167,9 @@ adjust_completion($projectid );
 db_commit();
 
 //get name of project for emails
-$name_project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$projectid.' LIMIT 1' ), 0, 0 );
+$q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+db_execute($q, array($projectid ) );
+$name_project = db_result($q, 0, 0 );
 
 //set project/task type for emails
 switch($parentid){
@@ -201,7 +197,8 @@ switch($owner ) {
     break;
 
   default:
-    $q   = db_query('SELECT fullname, email FROM '.PRE.'users WHERE id='.$owner.' LIMIT 1' );
+    $q = db_prepare('SELECT fullname, email FROM '.PRE.'users WHERE id=? LIMIT 1' );
+    db_execute($q, array($owner ) );
     $row = db_fetch_num($q, 0 );
     $name_owner = $row[0];
     $email_owner = $row[1];
@@ -216,7 +213,9 @@ if(isset($_POST['mailowner']) && ($_POST['mailowner'] === 'on') && ($owner != 0)
 
   include_once(BASE.'includes/email.php' );
 
-  $email_address_owner = db_result( db_query('SELECT email FROM '.PRE.'users WHERE id='.$owner.' LIMIT 1', 0), 0, 0 );
+  $q = db_prepare('SELECT email FROM '.PRE.'users WHERE id=? LIMIT 1', 0);
+  db_execute($q, array($owner ) );
+  $email_address_owner = db_result($q, 0, 0 );
   $message = $email1 .
               sprintf($email_list, $name_project, $name_task_unclean, status($status, $deadline), $name_owner, $email_owner, $text_unclean, 'index.php?taskid='.$taskid );
   email($email_address_owner, $title1, $message );
@@ -231,11 +230,13 @@ if(isset($_POST['maillist']) && $_POST['maillist'] === 'on' ) {
               sprintf($email_list, $name_project, $name_task_unclean, status($status, $deadline), $name_owner, $email_owner, $text_unclean, 'index.php?taskid='.$taskid );
 
   if($usergroupid != 0 ) {
-    $q = db_query('SELECT '.PRE.'users.email
+    $q = db_prepare('SELECT '.PRE.'users.email
                       FROM '.PRE.'users
                       LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
-                      WHERE '.PRE.'usergroups_users.usergroupid='.$usergroupid.'
+                      WHERE '.PRE.'usergroups_users.usergroupid=?
                       AND '.PRE.'users.deleted=\'f\'');
+
+    db_execute($q, array($usergroupid ) );
 
     for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
       $usergroup_mail[] = $row[0];

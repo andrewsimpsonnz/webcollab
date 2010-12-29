@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_todo_list.php 2295 2009-08-24 09:42:09Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -253,7 +253,8 @@ else {
 }
 
 // check if there are projects
-if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent=0' ), 0, 0 ) < 1 ) {
+$q = db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent=0' );
+if(db_result($q, 0, 0 ) < 1 ) {
   $content = "<div style=\"text-align : center\"><a href=\"tasks.php?x=".X."&amp;action=add\">".$lang['add']."</a></div>\n";
   new_box( $lang['no_projects'], $content );
   return;
@@ -263,7 +264,7 @@ if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent=0' ), 0, 0
 switch($selection ) {
   case 'group':
     $userid = 0; $s1 = ""; $s2 = " selected=\"selected\""; $s3 = " checked=\"checked\""; $s4 = "";
-    $type = "AND usergroupid=".$groupid." ";
+    $type = "AND usergroupid=? ";
     if($groupid == 0 ){
       $s4 = " selected=\"selected\"";
     }
@@ -272,7 +273,7 @@ switch($selection ) {
   case 'user':
   default:
     $groupid = 0; $s1 = " checked=\"checked\""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
-    $type = "AND owner=".$userid." ";
+    $type = "AND owner=? ";
     if($userid == 0 ){
       $s2 = " selected=\"selected\"";
     }
@@ -360,7 +361,7 @@ else {
 }
 
 // show all subtasks that are not complete
-$q = db_query('SELECT   '.PRE.'tasks.id AS id,
+$q = db_prepare('SELECT '.PRE.'tasks.id AS id,
                         '.PRE.'tasks.name AS name,
                         '.PRE.'tasks.deadline AS deadline,
                         '.PRE.'tasks.parent AS parent,
@@ -376,6 +377,18 @@ $q = db_query('SELECT   '.PRE.'tasks.id AS id,
                         AND (status=\'created\' OR status=\'active\')
                         '.$type.$tail.
                         'ORDER BY '.$no_group.' group_name,'.$task_order );
+
+switch($selection ) {
+  case 'group':
+    db_execute($q, array($groupid ) );
+    break;
+
+  case 'user':
+    db_execute($q, array($userid ) );
+  default:
+    break;
+}
+
 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
