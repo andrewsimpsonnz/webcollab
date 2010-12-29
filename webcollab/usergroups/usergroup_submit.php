@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: usergroup_submit.php 2179 2009-04-07 09:31:13Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -62,16 +62,20 @@ switch($_POST['action'] ) {
     db_begin();
 
     //delete the private forum posts for this usergroup
-    db_query('DELETE FROM '.PRE.'forum WHERE usergroupid='.$usergroupid );
+    $q = db_prepare('DELETE FROM '.PRE.'forum WHERE usergroupid=?' );
+    db_execute($q, array($usergroupid ) );
 
     //delete the user entries out of usergroups_users
-    db_query('DELETE FROM '.PRE.'usergroups_users WHERE usergroupid='.$usergroupid );
+    $q = db_prepare('DELETE FROM '.PRE.'usergroups_users WHERE usergroupid=?' );
+    db_execute($q, array($usergroupid ) );
 
     //delete the usergroup
-    db_query('DELETE FROM '.PRE.'usergroups WHERE id='.$usergroupid );
+    $q = db_prepare('DELETE FROM '.PRE.'usergroups WHERE id=?' );
+    db_execute($q, array($usergroupid ) );
 
     //update the tasks table by resetting the deleted usergroup id to zero
-    @db_query('UPDATE '.PRE.'tasks SET usergroupid=0 WHERE usergroupid='.$usergroupid );
+    $q = db_prepare('UPDATE '.PRE.'tasks SET usergroupid=0 WHERE usergroupid=?' );
+    @db_execute($q, array($usergroupid ) );
 
     db_commit();
     break;
@@ -97,24 +101,31 @@ switch($_POST['action'] ) {
     }
 
     //check for duplicates
-    if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'usergroups WHERE name=\''.$name.'\''), 0, 0 ) > 0 ) {
+    $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'usergroups WHERE name=?' );
+    db_execute($q, array($name ) );
+
+    if(db_result($q, 0, 0 ) > 0 ) {
       warning($lang['add_usergroup'], sprintf($lang['usergroup_dup_sprt'], $name ) );
     }
+
     //begin transaction
     db_begin();
 
-    db_query('INSERT INTO '.PRE.'usergroups(name, description, private ) VALUES (\''.$name.'\', \''.$description.'\', \''.$private_group.'\')' );
+    $q = db_prepare('INSERT INTO '.PRE.'usergroups(name, description, private ) VALUES (?, ?, ?)' );
+    db_execute($q, array($name, $description, $private_group ) );
 
     if(isset($_POST['member'] ) ) {
 
       // get the usergroupid
       $usergroupid = db_lastoid('usergroups_id_seq' );
 
+      $q = db_prepare('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES(?, ?)' );
+
       (array)$member = $_POST['member'];
       $max = sizeof($member);
       for($i=0 ; $i < $max ; ++$i ) {
         if(isset($member[$i]) && safe_integer($member[$i] ) ) {
-          db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.$member[$i].', '.$usergroupid.')' );
+          db_execute($q, array($member[$i], $usergroupid ) );
         }
       }
     }
@@ -149,21 +160,25 @@ switch($_POST['action'] ) {
     db_begin();
 
     //do the update
-    db_query('UPDATE '.PRE.'usergroups SET name=\''.$name.'\', description=\''.$description.'\', private=\''.$private_group.'\' WHERE id='.$usergroupid );
+    $q = db_prepare('UPDATE '.PRE.'usergroups SET name=?, description=?, private=? WHERE id=?' );
+    db_execute($q, array($name, $description, $private_group, $usergroupid ) );
 
     //clean out existing usergroups_users then update with the new
-    db_query('DELETE FROM '.PRE.'usergroups_users WHERE usergroupid='.$usergroupid );
+    $q = db_prepare('DELETE FROM '.PRE.'usergroups_users WHERE usergroupid=?' );
+    db_execute($q, array($usergroupid ) );
 
-      if(isset($_POST['member'] ) ) {
+    if(isset($_POST['member'] ) ) {
 
-        (array)$member = $_POST['member'];
-        $max = sizeof($member);
-        for($i=0 ; $i < $max ; ++$i ) {
-          if(isset($member[$i]) && safe_integer( $member[$i] ) ) {
-            db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.$member[$i].', '.$usergroupid.')' );
-          }
-        }
+      $q = db_prepare('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES(?, ?)' );
+
+      (array)$member = $_POST['member'];
+      $max = sizeof($member);
+      for( $i=0 ; $i < $max ; ++$i ) {
+	if(isset($member[$i]) && safe_integer( $member[$i] ) ) {
+	  db_execute($q, array($member[$i], $usergroupid ) );
+	}
       }
+    }
     //transaction complete
     db_commit();
     break;

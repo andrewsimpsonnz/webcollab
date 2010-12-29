@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: forum_list.php 2293 2009-08-24 09:40:36Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -36,24 +36,20 @@ require_once(BASE.'includes/usergroup_security.php' );
 include_once(BASE.'includes/details.php' );
 include_once(BASE.'includes/time.php' );
 
-$m_strlen = (UNICODE_VERSION == 'Y' ) ? 'mb_strlen' : 'strlen';
-$m_substr = (UNICODE_VERSION == 'Y' ) ? 'mb_substr' : 'substr';
-
 //
 // Recursive function for listing all posts of a task
 //
 function list_posts_from_task( $taskid, $usergroupid ) {
 
-  global $lang, $TASKID_ROW, $epoch;
+  global $lang, $TASKID_ROW;
   global $post_array, $parent_array, $post_count;
-  global $m_strlen, $m_substr;
 
   $post_array   = array();
   $parent_array = array();
   $post_count   = 0;
   $post_char_limit = 500;
 
-  $q = db_query('SELECT '.PRE.'forum.text AS text,
+  $q = db_prepare('SELECT '.PRE.'forum.text AS text,
                         '.PRE.'forum.id AS id,
                         '.PRE.'forum.posted AS posted,
                         '.PRE.'forum.edited AS edited,
@@ -64,9 +60,11 @@ function list_posts_from_task( $taskid, $usergroupid ) {
                         '.PRE.'forum.parent AS parent
                         FROM '.PRE.'forum
                         LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
-                        WHERE '.PRE.'forum.taskid='.$taskid.'
-                        AND '.PRE.'forum.usergroupid='.$usergroupid.'
+                        WHERE '.PRE.'forum.taskid=?
+                        AND '.PRE.'forum.usergroupid=?
                         ORDER BY '.PRE.'forum.posted DESC' );
+
+  db_execute($q, array($taskid, $usergroupid ) );
 
   $content = "<ul>\n";
 
@@ -117,9 +115,9 @@ function list_posts_from_task( $taskid, $usergroupid ) {
     $raw_post = nl2br(bbcode($row['text'] ) );
 
     //check for long posts, and provide dropdown box
-    if($m_strlen($raw_post ) > $post_char_limit) {
+    if(mb_strlen($raw_post ) > $post_char_limit) {
       //rough cut to fit, then look for word boundaries for better cut
-      $first_cut  = $m_substr($raw_post, 0, ($post_char_limit + 20 ) );
+      $first_cut  = mb_substr($raw_post, 0, ($post_char_limit + 20 ) );
       $last_space_pos = strrpos($first_cut, ' ' );
 
       //adjust to suit word boundary if possible
@@ -263,10 +261,10 @@ if($TASKID_ROW['usergroupid'] != 0 ) {
         $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".X."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."&amp;usergroupid=".$TASKID_ROW['usergroupid']."&amp;\">".$lang['new_post']."</a>]</span>\n";
       }
     }
-
     //get usergroup
-    $usergroup_name = db_result(db_query("SELECT name FROM ".PRE."usergroups WHERE id=".$TASKID_ROW['usergroupid'].' LIMIT 1' ), 0, 0 );
-
+    $q = db_prepare('SELECT name FROM '.PRE.'usergroups WHERE id=? LIMIT 1' );
+    db_execute($q, array($TASKID_ROW['usergroupid'] ) );
+    $usergroup_name = db_result($q, 0, 0 );
     //show it
     new_box(sprintf($lang['private_forum_sprt'], $usergroup_name ), $content,  'boxdata-normal', 'head-normal', 'boxstyle-short'  );
   }

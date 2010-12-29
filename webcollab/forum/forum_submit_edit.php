@@ -2,7 +2,7 @@
 /*
   $Id: forum_submit.php 1704 2008-01-01 06:09:52Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -71,7 +71,8 @@ else {
 }
 
 //get the taskid
-$q = db_query('SELECT taskid, parent FROM '.PRE.'forum WHERE userid='.UID.' AND id='.$postid );
+$q = db_prepare('SELECT taskid, parent FROM '.PRE.'forum WHERE userid=? AND id=? LIMIT 1' );
+db_execute($q, array(UID, $postid ) );
 
 //check for editing rights
 if(! $row = db_fetch_array($q, 0 ) ) {
@@ -83,19 +84,22 @@ $parentid = $row['parent'];
 
 //update the post
 db_begin();
-db_query ('UPDATE '.PRE.'forum SET text=\''.$text.'\', edited=now(), sequence=sequence+1 WHERE id='.$postid );
+$q = db_prepare('UPDATE '.PRE.'forum SET text=?, edited=now(), sequence=sequence+1 WHERE id=?' );
+db_execute($q, array($text, $postid ) );
 
 //set time of last forum post to this task
-db_query('UPDATE '.PRE.'tasks SET lastforumpost=now() WHERE id='.$taskid );
+$q = db_prepare('UPDATE '.PRE.'tasks SET lastforumpost=now() WHERE id=?' );
+db_execute($q, array($taskid ) );
 db_commit();
 
 //get task data
-$q = db_query('SELECT '.PRE.'tasks.name AS name,
+$q = db_prepare('SELECT '.PRE.'tasks.name AS name,
                       '.PRE.'tasks.usergroupid AS usergroupid,
                       '.PRE.'users.email AS email
                       FROM '.PRE.'tasks
                       LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.owner='.PRE.'users.id)
-                      WHERE '.PRE.'tasks.id='.$taskid );
+                      WHERE '.PRE.'tasks.id=?' );
+db_execute($q, array($taskid ) );
 
 $task_row = db_fetch_array($q, 0 );
 
@@ -106,11 +110,13 @@ if($task_row['email'] && $mail_owner ) {
 
 //if usergroup set, add the user list
 if($task_row['usergroupid'] && $mail_group ){
-  $q = db_query('SELECT '.PRE.'users.email
+  $q = db_prepare('SELECT '.PRE.'users.email
                         FROM '.PRE.'users
                         LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
-                        WHERE '.PRE.'usergroups_users.usergroupid='.$task_row['usergroupid'].
-                        ' AND '.PRE.'users.deleted=\'f\'' );
+                        WHERE '.PRE.'usergroups_users.usergroupid=?
+                        AND '.PRE.'users.deleted=\'f\'' );
+
+  db_execute($q, array($task_row['usergroupid'] ) );
 
   for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
     $mail_list[] = $row[0];
@@ -142,11 +148,13 @@ if(sizeof($mail_list) > 0 ){
 
     default:
       //this is a reply to an earlier post
-      $q = db_query('SELECT '.PRE.'forum.text AS text,
+      $q = db_prepare('SELECT '.PRE.'forum.text AS text,
                     '.PRE.'users.fullname AS username
                     FROM '.PRE.'forum
                     LEFT JOIN '.PRE.'users ON ('.PRE.'forum.userid='.PRE.'users.id)
-                    WHERE '.PRE.'forum.id='.$parentid );
+                    WHERE '.PRE.'forum.id=?' );
+
+      db_execute($q, array($parentid ) );
 
       $row = db_fetch_array($q, 0 );
 

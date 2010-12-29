@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: taskgroup_edit.php 2301 2009-08-25 09:15:52Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -43,9 +43,8 @@ if(! @safe_integer($_GET['taskgroupid']) ){
 $taskgroupid = $_GET['taskgroupid'];
 
 //get taskgroup information
-if(! ($q = db_query('SELECT * FROM '.PRE.'taskgroups WHERE id='.$taskgroupid, 0 ) ) ) {
-  error('Taskgroup edit', 'There was an error in the data query.' );
-}
+$q = db_prepare('SELECT * FROM '.PRE.'taskgroups WHERE id=?' );
+db_execute($q, array($taskgroupid ) );
 
 if(! ($row = db_fetch_array( $q, 0 ) ) ) {
   error('Taskgroup edit', 'Taskgroup does not exist' );

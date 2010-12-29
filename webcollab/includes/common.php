@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: common.php 2275 2009-08-21 20:11:41Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -44,22 +44,15 @@ function safe_data($body ) {
 
   //limit line length for single line entries
   if(strlen($body ) > 100 ) {
-    if(UNICODE_VERSION == 'Y' ) {
-      $body  = mb_strimwidth($body, 0, 100, '...' );
-    }
-    else {
-      $body = substr($body, 0, 100 );
-    }
+    $body  = mb_strimwidth($body, 0, 100, '...' );
   }
 
   //remove line breaks (not allowed in single lines!)
   $body = strtr($body, array("\r"=>' ', "\n"=>' ' ) );
   //add HTML entities
   $body = html_clean_up($body);
-  //prevent SQL injection
-  $body = db_escape_string($body );
 
-return $body;
+  return $body;
 }
 
 //
@@ -82,14 +75,11 @@ function safe_data_long($body ) {
   $body = str_replace("\r\n", "\n", $body );
   $body = str_replace("\r", "\n", $body );
   //break up long non-wrap words
-  $pattern_modifier = (UNICODE_VERSION == 'Y' ) ? 'u' : '';
-  $body = preg_replace("/[^\s\n\t]{100}/".$pattern_modifier, "$0\n", $body );
+  $body = preg_replace("/[^\s\n\t]{100}/u", "$0\n", $body );
   //add HTML entities
   $body = html_clean_up($body);
-  //prevent SQL injection
-  $body = db_escape_string($body );
 
-return $body;
+  return $body;
 }
 
 function validate($body ) {
@@ -99,26 +89,16 @@ function validate($body ) {
     $body = stripslashes($body );
   }
 
-  if(UNICODE_VERSION == 'Y' || CHARACTER_SET == 'UTF-8' ) {
+  $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.          //ASCII
+                        '|[\x00-\x7F][\x80-\xBF]+'.                       //continuation with no start
+                        '|[\xC0-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.  //illegal two byte
+                        '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})'. //illegal three byte
+                        '|[\xF0-\xFF][\x80-\xBF]*/',                      //reject more than 3 byte 
+                        '?', $body );
 
-    $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.          //ASCII
-                         '|[\x00-\x7F][\x80-\xBF]+'.                       //continuation with no start
-                         '|[\xC0-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.  //illegal two byte
-                         '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})'. //illegal three byte
-                         '|[\xF0-\xFF][\x80-\xBF]*/',                      //reject more than 3 byte 
-                         '?', $body );
-
-    $body = preg_replace('/[\xC0\xC1][\x80-\xBF]'.                         //exclude two byte over longs
-                          '|\xE0[\x80-\x9F][\x80-\xBF]'.                   //exclude three byte over longs
-                          '|\xED[\xA0-\xBF][\x80-\xBF]/','?', $body );     //exclude surrogates
-
-  }
-  else {
-    //Single byte validation regex
-    // allow only normal printing characters valid for the character set in use
-    // character set regex in language file
-    $body = preg_replace(VALIDATION_REGEX, '?', $body );
-  }
+  $body = preg_replace('/[\xC0\xC1][\x80-\xBF]'.                         //exclude two byte over longs
+                        '|\xE0[\x80-\x9F][\x80-\xBF]'.                   //exclude three byte over longs
+                        '|\xED[\xA0-\xBF][\x80-\xBF]/','?', $body );     //exclude surrogates
 
   return $body;
 }
@@ -159,20 +139,17 @@ function safe_integer($integer ) {
 //
 function box_shorten($body, $len=20 ){
 
-  $m_strlen = (UNICODE_VERSION == 'Y' ) ? 'mb_strlen' : 'strlen';
-  $m_substr = (UNICODE_VERSION == 'Y' ) ? 'mb_substr' : 'substr';
-
-  if($m_strlen($body ) > $len ) {
+  if(mb_strlen($body ) > $len ) {
 
     //rough cut to fit, then look for word boundaries for better cut
-    $first_cut  = $m_substr($body, 0, ($len + 5 ) );
+    $first_cut  = mb_substr($body, 0, ($len + 5 ) );
     $last_space_pos = strrpos($first_cut, ' ' );
 
     //adjust to suit word boundary if possible
     if(($last_space_pos === false ) || ($last_space_pos > ($len - 5 ) ) ) {
       $len = $last_space_pos;
     }
-    $body = $m_substr($body, 0, $len );
+    $body = mb_substr($body, 0, $len );
     $body .= ' ...';
   }
 

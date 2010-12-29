@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: security.php 2283 2009-08-22 08:40:04Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -49,12 +49,12 @@ if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
 }
 
 //$session_key can be from either a GET, POST or COOKIE - check for cookie first
-if(isset($_COOKIE['webcollab_session'] ) && (strlen(trim($_COOKIE['webcollab_session'], '1234567890abcdefABCDEF' ) ) == 0 ) && (strlen($_COOKIE['webcollab_session']) == 32 ) ) {
-  $session_key = db_escape_string($_COOKIE['webcollab_session'] );
+if(isset($_COOKIE['webcollab_session'] ) && (strlen(trim($_COOKIE['webcollab_session'], '1234567890abcdefABCDEF' ) ) == 0 ) ) {
+  $session_key = validate($_COOKIE['webcollab_session'] );
   define('X', 0 );
 }
-elseif(isset($_REQUEST['x'] ) && (strlen(trim($_REQUEST['x'], '1234567890abcdefABCDEF' ) ) == 0 )  && (strlen($_REQUEST['x']) == 32 ) ) {
-  $session_key = db_escape_string($_REQUEST['x']);
+elseif(isset($_REQUEST['x'] ) && (strlen(trim($_REQUEST['x'], '1234567890abcdefABCDEF' ) ) == 0 ) ) {
+  $session_key = validate($_REQUEST['x']);
   $x = $_REQUEST['x'];
   define('X', $x );
 }
@@ -64,23 +64,13 @@ else {
   die;
 }
 
-if(UNICODE_VERSION == 'Y' ) {
-  //set the database encoding - get user preferred language files later
-  db_user_locale('UTF-8' );
-  //set PHP internal encoding
-  if(! mb_internal_encoding('UTF-8' ) ) {
-    error("Internal encoding", "Unable to set UTF-8 encoding in PHP" );
-  }
-}
-else {
-  //set the database encoding & get the defined language files
-  define('LOCALE_USER', LOCALE );
-  require_once(BASE.'lang/lang.php' );
-  db_user_locale(CHARACTER_SET );
+//set PHP internal encoding
+if(! mb_internal_encoding('UTF-8' ) ) {
+  error("Internal encoding", "Unable to set UTF-8 encoding in PHP" );
 }
 
 //seems okay at first, now go cross-checking with the known data from the database
-if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS userid,
+$q = db_prepare('SELECT '.PRE.'logins.user_id AS userid,
                              '.PRE.'logins.token AS token,
                              '.$epoch.' '.PRE.'logins.lastaccess) AS sec_lastaccess,
                              '.PRE.'users.email AS email,
@@ -92,7 +82,9 @@ if(! ($q = @db_query('SELECT '.PRE.'logins.user_id AS userid,
                              '.$epoch.' now() ) AS now
                              FROM '.PRE.'logins
                              LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
-                             WHERE '.PRE.'logins.session_key=\''.$session_key.'\' AND '.PRE.'users.deleted=\'f\' LIMIT 1', 0 ) ) ) {
+                             WHERE '.PRE.'logins.session_key=? AND '.PRE.'users.deleted=\'f\' LIMIT 1' );
+
+if(! db_execute($q, array($session_key ) ) ) {
   error('Security manager', 'Database not able to verify session key');
 }
 
@@ -102,24 +94,21 @@ if( ! ( $row = db_fetch_array($q, 0) ) ) {
   die;
 }
 
-//set user locale in Unicode version
-if(UNICODE_VERSION == 'Y' ) {
-
-  //set user defined locale if requrired
-  if($row['locale'] ) {
-    define('LOCALE_USER', $row['locale'] );
-  }
-  else {
-    define('LOCALE_USER', LOCALE );
-  }
-
-  //get required language files
-  require_once(BASE.'lang/lang.php' );
+//set user defined locale if requrired
+if($row['locale'] ) {
+  define('LOCALE_USER', $row['locale'] );
 }
+else {
+  define('LOCALE_USER', LOCALE );
+}
+
+//get required language files
+require_once(BASE.'lang/lang.php' );
 
 //check the last login time (there is an inactivity time limit set by SESSION_TIMEOUT)
 if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
-  db_query('UPDATE '.PRE.'logins SET session_key=\'xxxx\' WHERE user_id='.$row['userid'] );
+  $q = db_prepare('UPDATE '.PRE.'logins SET session_key=\'xxxx\' WHERE user_id=?' );
+  db_execute($q, array($row['userid']) );
   warning( $lang['security_manager'], sprintf($lang['session_timeout_sprt'],
             round(($row['now'] - $row['sec_lastaccess'] )/60), SESSION_TIMEOUT*60, BASE_URL ) );
 }
@@ -129,9 +118,10 @@ $token = md5(mt_rand() );
 define('TOKEN', $token );
 
 //update the "I was here" time
-db_query('UPDATE '.PRE.'logins SET lastaccess=now(),
-                                   token=\''.$token.'\'
-                                   WHERE session_key=\''.$session_key.'\' AND user_id='.$row['userid'] );
+$q = db_prepare('UPDATE '.PRE.'logins SET lastaccess=now(),
+                                   token=?
+                                   WHERE session_key=? AND user_id=?' );
+db_execute($q, array($token, $session_key, $row['userid'] ) );
 
 //all data seems okay !!
 
@@ -151,7 +141,8 @@ define('OLD_TOKEN', $row['token'] );
 define('TIME_NOW', $row['now'] );
 
 //get usergroups of user
-$q = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID );
+$q = db_prepare('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid=?' );
+db_execute($q, array(UID ) );
 
 //list usergroups
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {

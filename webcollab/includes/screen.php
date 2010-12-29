@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: screen.php 2230 2011-05-22 22:10:39Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -88,7 +88,7 @@ function create_top($title='', $page_type=0, $include_javascript=0, $redirect_ti
   header('Cache-Control: no-store, no-cache, must-revalidate');
   header('Cache-Control: post-check=0, pre-check=0', false);
   header('Pragma: no-cache');
-  header('Content-Type: text/html; charset='.CHARACTER_SET );
+  header('Content-Type: text/html; charset=UTF-8' );
 
   //do a refresh if required
   if($redirect_time != 0) {
@@ -101,7 +101,7 @@ function create_top($title='', $page_type=0, $include_javascript=0, $redirect_ti
                     "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"".XML_LANG."\" lang=\"".XML_LANG."\">\n\n".
                     "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
                     "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
-                    "<!-- (c) 2002-2010 Andrew Simpson for WebCollab -->\n\n".
+                    "<!-- (c) 2002-2011 Andrew Simpson for WebCollab -->\n\n".
                     "<head>\n";
 
   if( $title == '' ) {
@@ -147,7 +147,7 @@ function create_top($title='', $page_type=0, $include_javascript=0, $redirect_ti
   switch($include_javascript ) {
 
     case 1:
-      //loads javascript files
+      //loads javascript file
       $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
                   "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n".
                   "</head>\n\n".
@@ -275,7 +275,7 @@ function create_bottom() {
 
  //shows the logo
  if($bottom_text) {
-   $content .= "<div class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2010</div>\n";
+   $content .= "<div class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2011</div>\n";
  }
   //end xml parsing
   $content .= "</body>\n</html>\n";

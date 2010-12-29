@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: usergroup_edit.php 2296 2009-08-24 09:44:14Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -47,9 +47,8 @@ if(! @safe_integer($_GET['usergroupid'] ) ) {
 $usergroupid = $_GET['usergroupid'];
 
 //get usergroup information
-if(! ($q = db_query('SELECT * FROM '.PRE.'usergroups WHERE id='.$usergroupid, 0 ) ) ) {
-  error('Usergroup edit', 'There was an error in the data query.' );
-}
+$q = db_prepare('SELECT * FROM '.PRE.'usergroups WHERE id=?' );
+db_execute($q, array($usergroupid ) );
 
 if(! ($row = db_fetch_array( $q, 0 ) ) ) {
   error('Usergroup edit', 'Usergroup does not exist' );
@@ -76,11 +75,12 @@ $content = "<form method=\"post\" action=\"usergroups.php\">\n".
            "<tr><td>&nbsp;</td></tr>\n";
 
 //add users
-$q = db_query('SELECT '.PRE.'users.id AS id
+$q = db_prepare('SELECT '.PRE.'users.id AS id
                       FROM '.PRE.'users
                       LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
-                      WHERE usergroupid='.$row['id'].'
-                      AND '.PRE.'users.deleted=\'f\''  );
+                      WHERE usergroupid=?
+                      AND '.PRE.'users.deleted=\'f\'' );
+db_execute($q, array($row['id'] ) );
 
 //put groups in an array
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {

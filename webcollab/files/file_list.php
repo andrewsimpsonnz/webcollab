@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: file_list.php 2292 2009-08-24 09:40:09Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -46,7 +46,7 @@ $taskid = $_REQUEST['taskid'];
 $taskid = usergroup_check($taskid );
 
 //get the files from this task
-$q = db_query('SELECT '.PRE.'files.id AS id,
+$q = db_prepare('SELECT '.PRE.'files.id AS id,
                         '.PRE.'files.filename AS filename,
                         '.PRE.'files.uploaded AS uploaded,
                         '.PRE.'files.size AS size,
@@ -57,9 +57,10 @@ $q = db_query('SELECT '.PRE.'files.id AS id,
                         '.PRE.'users.fullname AS username
                         FROM '.PRE.'files
                         LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'files.uploader)
-                        WHERE '.PRE.'files.taskid='.$taskid.'
+                        WHERE '.PRE.'files.taskid=?
                         ORDER BY uploaded' );
 
+db_execute($q, array($taskid ) );
 
 $content .= "<table>\n";
 

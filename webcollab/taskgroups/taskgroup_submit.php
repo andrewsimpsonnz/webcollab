@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: taskgroup_submit.php 2178 2009-04-07 09:29:01Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -58,12 +58,17 @@ switch($_POST['action'] ) {
     $taskgroupid = $_POST['taskgroupid'];
 
     //if taskgroup exists we can delete it :)
-    if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'taskgroups WHERE id='.$taskgroupid ), 0, 0 ) ) {
+    $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'taskgroups WHERE id=?' );
+    db_execute($q, array($taskgroupid ) );
+
+    if(db_result($q, 0, 0 ) ) {
       db_begin();
       //set the affected tasks to have no taskgroup
-      @db_query('UPDATE '.PRE.'tasks SET taskgroupid=0 WHERE taskgroupid='.$taskgroupid );
+      $q = db_prepare('UPDATE '.PRE.'tasks SET taskgroupid=0 WHERE taskgroupid=?' );
+      @db_execute($q, array($taskgroupid ) );
       //delete the group
-      db_query('DELETE FROM '.PRE.'taskgroups WHERE id='.$taskgroupid );
+      $q = db_prepare('DELETE FROM '.PRE.'taskgroups WHERE id=?' );
+      db_execute($q, array($taskgroupid ) );
       db_commit();
     }
     break;
@@ -79,10 +84,13 @@ switch($_POST['action'] ) {
     $description = safe_data($_POST['description']);
 
     //check for duplicates
-    if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'taskgroups WHERE name=\''.$name.'\'' ), 0, 0 ) > 0 )
+    $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'taskgroups WHERE name=?' );
+    db_execute($q, array($name ) );
+    if(db_result($q, 0, 0 ) > 0 )
       warning($lang['add_taskgroup'], sprintf($lang['taskgroup_dup_sprt'], $name ) );
 
-    db_query('INSERT INTO '.PRE.'taskgroups(name, description) VALUES (\''.$name.'\', \''.$description.'\')' );
+    $q = db_prepare('INSERT INTO '.PRE.'taskgroups(name, description) VALUES (?, ?)' );
+    db_execute($q, array($name, $description ) );
 
     break;
 
@@ -102,8 +110,8 @@ switch($_POST['action'] ) {
     $description = safe_data($_POST['description'] );
     $taskgroupid = $_POST['taskgroupid'];
 
-    db_query('UPDATE '.PRE.'taskgroups SET name=\''.$name.'\', description=\''.$description.'\' WHERE id='.$taskgroupid );
-
+    $q = db_prepare('UPDATE '.PRE.'taskgroups SET name=?, description=? WHERE id=?' );
+    db_execute($q, array($name, $description, $taskgroupid ) );
     break;
 
   //error case
