@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: user_show.php 2297 2009-08-24 09:45:18Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -44,7 +44,8 @@ if(! @safe_integer($_GET['userid']) ){
 $userid = $_GET['userid'];
 
 //select
-$q = db_query('SELECT id, name, fullname, email, admin, private, guest, deleted FROM '.PRE.'users WHERE id='.$userid );
+$q = db_prepare('SELECT id, name, fullname, email, admin, private, guest, deleted FROM '.PRE.'users WHERE id=? LIMIT 1' );
+db_execute($q, array($userid ) );
 
 //get info
 if( ! ($row = @db_fetch_array($q, 0 ) ) ) {
@@ -53,7 +54,9 @@ if( ! ($row = @db_fetch_array($q, 0 ) ) ) {
 //test if user is private
 if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) ) {
   //get usergroups of user
-  $q_group = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$row['id'] );
+  $q_group = db_prepare('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid=? LIMIT 1' );
+  db_execute($q_group, array($row['id'] ) );
+
   for($i=0 ; $row_group = @db_fetch_num($q_group, $i ) ; ++$i ) {
     $user_gid[$i] = $row_group[0];
   }
@@ -91,12 +94,13 @@ else {
 }
 
 //create a list of all the groups the user is in
-$q = db_query('SELECT '.PRE.'usergroups.id AS id,
+$q = db_prepare('SELECT '.PRE.'usergroups.id AS id,
                       '.PRE.'usergroups.name AS name,
                       '.PRE.'usergroups.private AS private
                       FROM '.PRE.'usergroups
                       LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.usergroupid='.PRE.'usergroups.id)
-                      WHERE '.PRE.'usergroups_users.userid='.$row['id'] );
+                      WHERE '.PRE.'usergroups_users.userid=?' );
+db_execute($q, array($row['id'] ) );
 
 $content .= "<tr><td>".$lang['usergroups'].": </td><td>";
 $alert = '';
@@ -122,31 +126,45 @@ else {
 }
 
 //get the last login time of a user
-$row = @db_result(db_query('SELECT lastaccess FROM '.PRE.'logins WHERE user_id='.$userid ), 0, 0);
+$q = db_prepare('SELECT lastaccess FROM '.PRE.'logins WHERE user_id=? LIMIT 1' );
+db_execute($q, array($userid ) );
+$row = @db_result($q, 0, 0);
 $content .=   "<tr><td>".$lang['last_time_here']."</td><td>".nicetime($row)."</td></tr>\n";
 
 //Get the number of tasks/projects created
-$row = db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE creator='.$userid ), 0, 0 );
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE creator=?' );
+db_execute($q, array($userid ) );
+$row = db_result($q, 0, 0 );
 $content .=   "<tr><td>".$lang['number_items_created']."</td><td>".$row."</td></tr>\n";
 
 //Get the number of projects owned
-$projects_owned = db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner='.$userid.' AND parent=0' ), 0, 0 );
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner=? AND parent=0' );
+db_execute($q, array($userid ) );
+$projects_owned = db_result($q, 0, 0 );
 $content .=   "<tr><td>".$lang['number_projects_owned']."</td><td>".$projects_owned."</td></tr>\n";
 
 //Get the number of tasks owned
-$tasks_owned = db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner='.$userid.' AND parent<>0' ), 0, 0 );
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner=? AND parent<>0' );
+db_execute($q, array($userid ) );
+$tasks_owned = db_result($q, 0, 0 );
 $content .=   "<tr><td>".$lang['number_tasks_owned']."</td><td>".$tasks_owned."</td></tr>\n";
 
 //Get the number of tasks completed that are owned
-$row = db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner='.$userid.' AND status=\'done\' AND parent<>0' ), 0, 0 );
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner=? AND status=\'done\' AND parent<>0' );
+db_execute($q, array($userid ) );
+$row = db_result($q, 0, 0 );
 $content .=   "<tr><td>".$lang['number_tasks_completed']."</td><td>".$row."</td></tr>\n";
 
 //Get the number of forum posts
-$row = db_result(db_query('SELECT COUNT(*) FROM '.PRE.'forum WHERE userid='.$userid ), 0, 0 );
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'forum WHERE userid=?' );
+db_execute($q, array($userid ) );
+$row = db_result($q, 0, 0 );
+
 $content .=   "<tr><td>".$lang['number_forum']."</td><td>".$row."</td></tr>\n";
 
 //Get the number of files uploaded and the size
-$q   = db_query('SELECT COUNT(size), SUM(size) FROM '.PRE.'files WHERE uploader='.$userid );
+$q = db_prepare('SELECT COUNT(size), SUM(size) FROM '.PRE.'files WHERE uploader=?' );
+db_execute($q, array($userid ) );
 $row = db_fetch_num($q, 0 );
 $content .=   "<tr><td>".$lang['number_files']."</td><td>".$row[0]."</td></tr>\n";
 
@@ -171,7 +189,8 @@ if( $tasks_owned + $projects_owned > 0 ) {
   }
 
   //Get the number of tasks
-  $q = db_query('SELECT id, name, parent, status, finished_time AS finished_time, usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE owner='.$userid.' AND archive=0' );
+  $q = db_prepare('SELECT id, name, parent, status, finished_time AS finished_time, usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE owner=? AND archive=0' );
+  db_execute($q, array($userid ) );
 
   //show them
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
