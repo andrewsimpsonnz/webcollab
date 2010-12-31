@@ -44,6 +44,8 @@ function db_connection() {
 
   global $dbh, $db_error_message;
 
+  set_exception_handler('exception_handler');
+
   try {
     $dbh = new PDO('mysql:host='.DATABASE_HOST.';dbname='.DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD );
 
@@ -235,6 +237,15 @@ function db_commit() {
   global $dbh;
 
   return $dbh->commit();
+}
+
+function exception_handler($exception) {
+
+  global $db_error_message;
+
+  $db_error_message = 'Uncaught exception: '.$exception->getMessage();
+  error('Database error', 'Database error has occurred' );
+  return;
 }
 
 ?>

@@ -42,6 +42,8 @@ function db_connection() {
 
   global $dbh, $db_error_message;
 
+  set_exception_handler('exception_handler');
+
   try {
 
     $dbh = new PDO('pgsql:host='.DATABASE_HOST.' port=5432 dbname='.DATABASE_NAME.' user='.DATABASE_USER.' password='.DATABASE_PASSWORD );
@@ -228,6 +230,15 @@ function db_commit() {
   global $dbh;
 
   return $dbh->commit();
+}
+
+function exception_handler($exception) {
+
+  global $db_error_message;
+
+  $db_error_message = 'Uncaught exception: '.$exception->getMessage();
+  error('Database error', 'Database error has occurred' );
+  return;
 }
 
 ?>
