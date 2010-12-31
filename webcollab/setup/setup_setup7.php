@@ -2,7 +2,7 @@
 /*
   $Id: setup_setup5.php 1737 2008-01-24 08:16:45Z andrewsimpson $
 
-  (c) 2008 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2008 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -78,13 +78,12 @@ else {
   $admin_email = NULL;
 }
 
-//set the database encoding
-db_user_locale(CHARACTER_SET );
-
 //update the database
-db_query("UPDATE ".PRE."users SET name='".$admin_user."', password='".md5($admin_password )."', email='".$admin_email."' WHERE id=1;" );
+$q = db_prepare("UPDATE ".PRE."users SET name=?, password=?, email=? WHERE id=1;" );
+db_execute($q, array($admin_user, md5($admin_password ), $admin_email ) );
 
-db_query("UPDATE ".PRE."config SET email_admin='".$admin_email."';" );
+$q = db_prepare("UPDATE ".PRE."config SET email_admin=?;" );
+db_execute($q, array($admin_email ) );
 
 //show success message
 create_top_setup($lang['setup7_banner'] );

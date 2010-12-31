@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: setup_setup4.php 2314 2009-09-21 07:40:27Z andrewsimpson $
 
-  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -147,85 +147,57 @@ $content .= "</td><th class=\"boxdata2\"><span class=\"underline\">".$lang_setup
 $status = "<span class=\"green\">".$lang_setup['setup4_ok']."</span>";
 
 //check connection to database is possible...
-switch($data["db_type"]) {
+if( ! extension_loaded('PDO' ) ) {
 
-  case "mysql":
-  case "mysql_innodb":
-    //check we can do mysql functions!!
-    if( ! function_exists('mysql_connect' ) ) {
+  switch($data["db_type"]) {
+
+    case "mysql_pdo": 
       $status = "<span class=\"red\">".$lang_setup['setup4_no_mysql']."</span>";
-      $flag = $flag + 10;
-    }
-    else {
-      //check for legal naming
-      if(preg_match('/[^A-Z0-9_$\-]/i', $data["db_user"] ) ) {
-        $status = "<span class=\"red\">".$lang_setup['setupdb_name_error']."</span>";
-        $flag = $flag + 10;
-      }
-      else {
-        //connect to db
-        if( ! ($database_connection = @mysql_connect( $data["db_host"], $data["db_user"], $data["db_password"] ) ) ) {
-          $status = "<span class=\"red\">".$lang_setup['setup4_no_server']."</span>";
+      break;
+
+    case "postgresql_pdo":
+      $status = "<span class=\"red\">".$lang_setup['setup4_no_pgsql']."</span>";
+      break;
+
+    default:
+      $status = "<span class=\"red\">".sprintf($lang_setup['setup4_wrong_db'], $data["db_type"] )."</span>";
+      break;
+  }
+  $flag = $flag + 10;
+}
+else {
+
+  try {
+    switch($data["db_type"]) {
+
+      case "mysql_pdo":
+        //check for legal naming
+        if(preg_match('/[^A-Z0-9_$\-]/i', $data["db_user"] ) ) {
+          $status = "<span class=\"red\">".$lang_setup['setupdb_name_error']."</span>";
           $flag = $flag + 10;
         }
         else {
-          if( ! @mysql_select_db($data["db_name"], $database_connection ) ) {
-            $status = "<span class=\"red\">".$lang_setup['setup4_no_db']."</span>";
-            $flag = $flag + 10;
-          }
+          //connect to db
+          $dbh = new PDO('mysql:host='.$data["db_host"].';dbname='.$data["db_name"], $data["db_user"], $data["db_password"] );
         }
-      }
-    }
-    break;
+        break;
 
-  case "mysqli":
-    //check we can do mysql functions!!
-    if( ! function_exists('mysqli_connect' ) ) {
-      $status = "<span class=\"red\">".$lang_setup['setup4_no_mysql']."</span>";
-      $flag = $flag + 10;
-    }
-    else {
-      //check for legal naming
-      if(preg_match('/[^A-Z0-9_$\-]/i', $data["db_user"] ) ) {
-        $status = "<span class=\"red\">".$lang_setup['setupdb_name_error']."</span>";
-        $flag = $flag + 10;
-      }
-      else {
+      case "postgresql_pdo":
         //connect to db
-        if( ! ($database_connection = @mysqli_connect( $data["db_host"], $data["db_user"], $data["db_password"], $data["db_name"] ) ) ) {
-          $status = "<span class=\"red\">".$lang_setup['setup4_no_server']."</span>";
-          $flag = $flag + 10;
-        }
-      }
-    }
-    break;
+        $dbh = new PDO('pgsql:host='.$data["db_host"].' port=5432 dbname='.$data["db_name"].' user='.$data["db_user"].' password='.$data["db_password"] );
 
-  case "postgresql":
-    //check we can do postgresql functions!!
-    if( ! function_exists('pg_connect' ) ) {
-      $status = "<span class=\"red\">".$lang_setup['setup4_no_pgsql']."</span>";
-      $flag = $flag + 10;
-    }
-    else {
-      //set initial value
-      $host = "";
-      //now adjust if necessary
-      if($data["db_host"] != "localhost" ) {
-        $host = "host=".$data["db_host"];
-      }
-      //connect to db
-      if( ! @pg_connect($host." user=".$data["db_user"]." dbname=".$data["db_name"]." password=".$data["db_password"] ) ) {
-        $status = "<span class=\"red\">".$lang_setup['setup4_no_db']."</span>";
+        break;
+
+      default:
+        $status = "<span class=\"red\">".sprintf($lang_setup['setup4_wrong_db'], $data["db_type"] )."</span>";
         $flag = $flag + 10;
-      }
+        break;
     }
-    break;
-
-  default:
-    $status = "<span class=\"red\">".sprintf($lang_setup['setup4_wrong_db'], $data["db_type"] )."</span>";
+  }
+  catch (PDOException $e) {
+    $status = "<span class=\"red\">".$lang_setup['setup4_no_db']."</span>";
     $flag = $flag + 10;
-    break;
-
+  }
 }
 
 //database settings

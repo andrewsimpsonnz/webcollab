@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id$
+  $Id: setup_setup3.php 2236 2009-05-22 22:20:49Z andrewsimpson $
 
   (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
@@ -77,7 +77,7 @@ if(defined('DATABASE_NAME' ) && (DATABASE_NAME != '') && ($new_db === 'N' ) && (
   $manager_name      = (MANAGER_NAME != '' )      ? MANAGER_NAME      : 'WebCollab Project Management';
   $abbr_manager_name = (ABBR_MANAGER_NAME != '' ) ? ABBR_MANAGER_NAME : 'WebCollab';
   $file_base         = (FILE_BASE != '' )         ? FILE_BASE         : $file_path;
-  $file_maxsize      = (FILE_MAXSIZE != '' )      ? FILE_MAXSIZE      : '2000000';
+  $file_maxsize      = (FILE_MAXSIZE != '' )      ? FILE_MAXSIZE      : '2097152';
   $locale            = (LOCALE != '' )            ? LOCALE            : 'en';
   $tz                = (TZ != '' )                ? TZ                : (int)date('Z')/3600;
   $use_email         = (USE_EMAIL != '' )         ? USE_EMAIL         : 'Y';
@@ -89,7 +89,7 @@ else {
   $db_name           = (isset($_POST['db_name']) )           ? $_POST['db_name']           : '';
   $db_user           = (isset($_POST['db_user']) )           ? $_POST['db_user']           : '';
   $db_password       = (isset($_POST['db_password']) )       ? $_POST['db_password']       : '';
-  $db_type           = (isset($_POST['db_type']) )           ? $_POST['db_type']           : 'mysql';
+  $db_type           = (isset($_POST['db_type']) )           ? $_POST['db_type']           : 'mysql_pdo';
   $db_host           = (isset($_POST['db_host']) )           ? $_POST['db_host']           : 'localhost';
   $base_url          = (isset($_POST['base_url']) )          ? $_POST['base_url']          : $server_url;
   $manager_name      = (isset($_POST['manager_name']) )      ? $_POST['manager_name']      : 'WebCollab Project Management';
@@ -144,20 +144,11 @@ $content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".$la
 
 switch($db_type){
 
-  case 'postgresql':
+  case 'postgresql_pdo':
     $s1 = ""; $s2 = " selected=\"selected\""; $s3 = ""; $s4 = "";
     break;
 
-  case 'mysql_innodb':
-    $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\""; $s4 = "";
-    break;
-
-  case 'mysqli':
-  default:
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
-    break;
-
-  case 'mysql':
+  case 'mysql_pdo':
   default:
     $s1 = " selected=\"selected\""; $s2 = ""; $s3 = ""; $s4 = "";
     break;
@@ -165,10 +156,8 @@ switch($db_type){
 }
 
 $content .= "<tr><th>".$lang_setup['db_type']."</th><td><select name=\"db_type\">\n".
-            "<option value=\"mysql\"".$s1.">mysql</option>\n".
-            "<option value=\"postgresql\"".$s2.">postgresql</option>\n".
-            "<option value=\"mysql_innodb\"".$s3.">mysql with innodb</option>\n".
-            "<option value=\"mysqli\"".$s4.">mysqli (innodb)</option>\n".
+            "<option value=\"mysql_pdo\"".$s1.">mysql</option>\n".
+            "<option value=\"postgresql_pdo\"".$s2.">postgresql</option>\n".
             "</select></td></tr>\n";
 
 $content .= "<tr><th>".$lang_setup['db_host']."</th>".

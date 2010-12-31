@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: user_submit.php 2180 2009-04-07 09:33:17Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -69,12 +69,17 @@ switch($_POST['action'] ) {
 
     $userid = $_POST['userid'];
 
-    if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE deleted=\'t\' AND id='.$userid ), 0, 0 ) ) {
+    $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'users WHERE deleted=\'t\' AND id=? LIMIT 1' );
+    db_execute($q, array($userid ) );
+
+    if(db_result($q, 0, 0 ) ) {
       //undelete
-      db_query('UPDATE '.PRE.'users SET deleted=\'f\' WHERE id='.$userid );
+      $q = db_prepare('UPDATE '.PRE.'users SET deleted=\'f\' WHERE id=?' );
+      db_execute($q, array($userid ) );
 
       //get the users' info
-      $q = db_query('SELECT name, fullname, email FROM '.PRE.'users where id='.$userid );
+      $q = db_prepare('SELECT name, fullname, email FROM '.PRE.'users where id=? LIMIT 1' );
+      db_execute($q, array($userid ) );
       $row = db_fetch_array($q, 0 );
 
       //mail the user the happy news :)
@@ -137,15 +142,20 @@ switch($_POST['action'] ) {
         break;
     }
     //prohibit 2 people from choosing the same username
-    if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE name=\''.$name.'\'', 0 ), 0, 0 ) > 0 ){
+    $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'users WHERE name=? LIMIT 1' );
+    db_execute($q, array($name ), 0 );
+
+    if(db_result($q, 0, 0 ) > 0 ){
       warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
     }
 
     //begin transaction
     db_begin();
     //insert into the users table
-    $q = db_query("INSERT INTO ".PRE."users(name, fullname, password, email, private, admin, guest, deleted, locale )
-                    VALUES('$name', '$fullname', '".md5($password_unclean)."', '".db_escape_string($email_unclean)."', '$private_user', '$admin_user',  '$guest_user', 'f', '$locale' )" );
+    $q = db_prepare('INSERT INTO '.PRE.'users(name, fullname, password, email, private, admin, guest, deleted, locale )
+                    VALUES(?, ?, ?, ?, ?, ?,  ?, \'f\', ? )' );
+
+    db_execute($q, array($name, $fullname, md5($password_unclean), $email_unclean, $private_user, $admin_user,  $guest_user, $locale ) );
 
     //if the user is assigned to any groups execute the following code to add him/her
     if(isset($_POST['usergroup']) ) {
@@ -154,16 +164,19 @@ switch($_POST['action'] ) {
       $user_id = db_lastoid('users_id_seq' );
 
       //insert all selected usergroups in the usergroups_users table
+      $q1 = db_prepare('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES(?, ?)' );
+      $q2 = db_prepare('SELECT name FROM '.PRE.'usergroups WHERE id=?' );
+
       (array)$usergroup = $_POST['usergroup'];
       $max = sizeof($usergroup);
       for( $i=0 ; $i < $max ; ++$i ) {
 
         //check for security
-        if(isset( $usergroup[$i] ) && safe_integer( $usergroup[$i] ) ) {
-          db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.$user_id.', '.$usergroup[$i].')' );
+        if(isset($usergroup[$i] ) && safe_integer($usergroup[$i] ) ) {
+          db_execute($q1, array($user_id, $usergroup[$i] ) );
           //get the usergroup name for the email
-          $q = db_query('SELECT name FROM '.PRE.'usergroups WHERE id='.$usergroup[$i] );
-          $usergroup_names .= db_result($q, 0, 0 )."\n";
+          db_execute($q2, array($usergroup[$i] ) );
+          $usergroup_names .= db_result($q2, 0, 0 )."\n";
         }
       }
     }
@@ -248,7 +261,9 @@ switch($_POST['action'] ) {
       }
 
       //prohibit 2 people from choosing the same username
-      if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE name=\''.$name.'\' AND NOT id='.$userid, 0 ), 0, 0 ) > 0 ){
+      $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'users WHERE name=? AND NOT id=?' );
+      db_execute($q, array($name, $userid ), 0 );
+      if(db_result($q, 0, 0 ) > 0 ) {
         warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
       }
       //begin transaction
@@ -257,46 +272,54 @@ switch($_POST['action'] ) {
       if($password_unclean != '' ) {
 
         //update data and the password
-        $q = db_query("UPDATE ".PRE."users
-                              SET name='$name',
-                              fullname='$fullname',
-                              email='".db_escape_string($email_unclean)."',
-                              password='".md5($password_unclean)."',
-                              private='$private_user',
-                              admin='$admin_user',
-                              guest='$guest_user',
-                              locale='$locale'
-                              WHERE id=$userid" );
+        $q = db_prepare('UPDATE '.PRE.'users
+                              SET name=?,
+                              fullname=?,
+                              email=?,
+                              password=?,
+                              private=?,
+                              admin=?,
+                              guest=?,
+                              locale=?
+                              WHERE id=?' );
+
+      db_execute($q, array($name, $fullname, $email_unclean, md5($password_unclean), $private_user, $admin_user, $guest_user, $locale, $userid ) );
       }
       else {
         //update data without password
-        $q = db_query("UPDATE ".PRE."users
-                              SET name='$name',
-                              fullname='$fullname',
-                              email='".db_escape_string($email_unclean)."',
-                              private='$private_user',
-                              admin='$admin_user',
-                              guest='$guest_user',
-                              locale='$locale'
-                              WHERE id=$userid" );
+        $q = db_prepare('UPDATE '.PRE.'users
+                              SET name=?,
+                              fullname=?,
+                              email=?,
+                              private=?,
+                              admin=?,
+                              guest=?,
+                              locale=?
+                              WHERE id=?' );
+
+      db_execute($q, array($name, $fullname, $email_unclean, $private_user, $admin_user, $guest_user, $locale, $userid ) );
       }
 
       //delete the user from all groups
-      db_query('DELETE FROM '.PRE.'usergroups_users WHERE userid='.$userid );
+      $q = db_prepare('DELETE FROM '.PRE.'usergroups_users WHERE userid=?' );
+      db_execute($q, array($userid ) );
 
       //if the user is assigned to any groups execute the following code to add him/her
       if(isset($_POST['usergroup']) ) {
 
         //insert all selected usergroups in the usergroups_users table
+        $q1 = db_prepare('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES(?, ?)' );
+        $q2 = db_prepare('SELECT name FROM '.PRE.'usergroups WHERE id=?' );
         (array)$usergroup = $_POST['usergroup'];
-        for($i=0 ; $i < sizeof($usergroup) ; ++$i) {
+
+        for( $i=0 ; $i < sizeof($usergroup) ; ++$i ) {
 
           //check for security
           if(safe_integer( $usergroup[$i] ) ) {
-            db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.$userid.', '.$usergroup[$i].')' );
+            db_execute($q1, array($userid, $usergroup[$i] ) );
             //get the usergroup name for the email
-            $q = db_query('SELECT name FROM '.PRE.'usergroups WHERE id='.$usergroup[$i] );
-            $usergroup_names .= db_result( $q, 0, 0 )."\n";
+            db_execute($q2, array($usergroup[$i] ) );
+            $usergroup_names .= db_result($q2, 0, 0 )."\n";
           }
         }
       }
@@ -329,19 +352,23 @@ switch($_POST['action'] ) {
       //this is secure option where the user cannot change important values
 
       //prohibit 2 people from choosing the same username
-      if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE name=\''.$name.'\' AND NOT id='.UID, 0 ), 0, 0 ) > 0 ){
+      $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'users WHERE name=? AND NOT id=?', 0 );
+      db_execute($q, array($name, UID ), 0 );
+
+      if(db_result($q, 0, 0 ) > 0 ){
         warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
       }
-
       //did the user change his/her password ?
       if($password_unclean != '' ) {
-        db_query("UPDATE ".PRE."users
-                          SET name='$name',
-                          fullname='$fullname',
-                          password='".md5($password_unclean)."',
-                          email='".db_escape_string($email_unclean)."',
-                          locale='$locale'
-                          WHERE id=".UID );
+        $q = db_prepare('UPDATE '.PRE.'users
+                              SET name=?,
+                              fullname=?,
+                              email=?,
+                              password=?,
+                              locale=?
+                              WHERE id=?' );
+
+        db_execute($q, array($name, $fullname, $email_unclean, md5($password_unclean), $locale, UID ) );
 
         //email the changes to the user
         $name_unclean     = validate($_POST['name']);
@@ -352,20 +379,23 @@ switch($_POST['action'] ) {
         email($email_unclean, $title_user_change2, $message );
       }
       else {
+        if($password_unclean != '' ) {
+          $q = db_prepare('UPDATE '.PRE.'users
+                              SET name=?,
+                              fullname=?,
+                              email=?,
+                              locale=?
+                              WHERE id=?' );
 
-        db_query("UPDATE ".PRE."users
-                          SET name='$name',
-                          fullname='$fullname',
-                          email='".db_escape_string($email_unclean)."',
-                          locale='$locale'
-                          WHERE id=".UID );
+          db_execute($q, array($name, $fullname, $email_unclean, $locale, UID ) );
 
-        //email the changes to the user
-        $name_unclean     = validate($_POST['name']);
-        $fullname_unclean = validate($_POST['fullname']);
+          //email the changes to the user
+          $name_unclean     = validate($_POST['name']);
+          $fullname_unclean = validate($_POST['fullname']);
 
-        $message = sprintf($email_user_change3, $name_unclean, $fullname_unclean );
-        email( $email_unclean, $title_user_change3, $message );
+          $message = sprintf($email_user_change3, $name_unclean, $fullname_unclean );
+          email( $email_unclean, $title_user_change3, $message );
+        }
       }
     }
     break;

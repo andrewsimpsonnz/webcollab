@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: user_deleted_list.php 2180 2009-04-07 09:33:17Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -37,7 +37,8 @@ if(! ADMIN ){
 }
 
 //check for deleted users
-if( ! db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE deleted=\'t\'' ), 0, 0 ) ) {
+$q = db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE deleted=\'t\'' );
+if( ! db_result($q, 0, 0 ) ) {
   $content = "<small>".$lang['no_deleted_users']."</small>";
   new_box($lang['deleted_users'], $content );
   return;

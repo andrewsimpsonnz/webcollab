@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: security_setup.php 2285 2009-08-22 08:42:43Z andrewsimpson $
 
-  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -70,12 +70,12 @@ if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == '' ) {
 else {
   //get session key from either a GET or POST
   if(isset($_REQUEST['x']) && preg_match('/^[a-f\d]{32}$/i', $_REQUEST['x'] ) ) {
-    $x = db_escape_string($_REQUEST['x']);
+    $x = safe_data($_REQUEST['x']);
     define('X', $x );
   }
   //check for existing variable
   elseif(isset($session_key) && preg_match('/^[a-f\d]{32}$/i', $session_key ) ) {
-    $x = db_escape_string($session_key);
+    $x = safe_data($session_key);
     define('X', $x );
   }
   //nothing
@@ -93,15 +93,17 @@ else {
   }
 
   //seems okay at first, now go cross-checking with the known data from the database
-  if( ! ($q = db_query('SELECT '.PRE.'logins.user_id AS user_id,
-                               '.PRE.'logins.lastaccess AS lastaccess,
-                               '.PRE.'users.admin AS admin,
-                               '.$epoch.' now() ) AS now,
-                               '.$epoch.' lastaccess) AS sec_lastaccess
-                               FROM '.PRE.'logins
-                               LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
-                               WHERE '.PRE.'logins.session_key=\''.X.'\'', 0 ) ) ) {
-    error_setup('Database not able to verify session key');
+  $q = db_prepare('SELECT '.PRE.'logins.user_id AS user_id,
+                          '.PRE.'logins.lastaccess AS lastaccess,
+                          '.PRE.'users.admin AS admin,
+                          '.$epoch.' now() ) AS now,
+                          '.$epoch.' lastaccess) AS sec_lastaccess
+                          FROM '.PRE.'logins
+                          LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
+                          WHERE '.PRE.'logins.session_key=?' );
+
+  if(! db_execute($q, array(X ) ) ) {
+  error_setup('Database not able to verify session key');
   }
 
   if(! ( $row = db_fetch_array($q, 0 ) ) ) {
@@ -115,12 +117,14 @@ else {
 
   //check the last login time (there is a 10 min limit)
   if( ($row['now'] - $row['sec_lastaccess']) > 600 ) {
-    db_query('UPDATE '.PRE.'logins SET session_key=\'xxxx\' WHERE user_id='.$row['user_id'] );
+    $q = db_prepare('UPDATE '.PRE.'logins SET session_key=\'xxxx\' WHERE user_id=?' );
+    db_execute($q, array($row['userid']) );
     error_setup('Security timeout of 10 minutes has occurred on this session.' );
   }
 
   //update the 'I was here' time
-  db_query('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.X.'\' AND user_id='.$row['user_id'] );
+  $q = db_prepare('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.X.'\' AND user_id=?' );
+  db_execute($q, array($row['userid']) );
 
   //get site names
   $q = db_query('SELECT * FROM '.PRE.'site_name' );

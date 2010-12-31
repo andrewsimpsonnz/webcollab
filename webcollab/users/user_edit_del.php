@@ -2,7 +2,7 @@
 /*
   $Id: user_edit.php 2172 2009-04-06 07:30:53Z andrewsimpson $
 
-  (c) 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2009 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -47,7 +47,8 @@ if(! safe_integer($_GET['userid']) ){
 $userid = $_GET['userid'];
 
 //query for user
-$q = db_query('SELECT id, name, fullname, deleted FROM '.PRE.'users WHERE id='.$userid );
+$q = db_prepare('SELECT id, name, fullname, deleted FROM '.PRE.'users WHERE id=?' );
+db_execute($q, array($userid ) );
 
 //fetch data
 if( ! ($row = db_fetch_array($q , 0 ) ) ) {
@@ -84,7 +85,10 @@ else { //deleted user
               "</form>\n";
 
   //if this user has NO tasks owned then we can delete him forever :)
-  if(! db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner='.$row['id'] ), 0, 0 ) ) {
+  $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner=?' );
+  db_execute($q, array($row['id'] ) );
+
+  if(! db_result($q, 0, 0 ) ) {
     //permdel
     $content .= "<form method=\"post\" action=\"users.php\" ".
                 "onsubmit=\"return confirm( '".sprintf($lang['permdel_javascript_sprt'], javascript_escape($row['fullname'] ) )."' )\">\n".

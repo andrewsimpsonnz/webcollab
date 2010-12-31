@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id$
+  $Id: setup_setup2.php 2236 2009-05-22 22:20:49Z andrewsimpson $
 
   (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
@@ -74,15 +74,9 @@ $content .= "<p>".$lang_setup['setup2_db_details1']."</p>\n".
 
 $content .= "<tr><th>".$lang_setup['db_type']."</th> <td>\n".
             "<select name=\"database_type\">\n".
-            "<option value=\"mysql\" selected=\"selected\" >mysql</option>\n".
-            "<option value=\"mysql_innodb\">mysql with innodb</option>\n".
-            "<option value=\"postgresql\">postgresql</option>\n";
-
-if(extension_loaded('mysqli' ) ) {
-  $content .= "<option value=\"mysqli\">mysqli (innodb)</option>\n";
-}
-
-$content .= "</select></td></tr>\n".
+            "<option value=\"mysql_pdo\" selected=\"selected\" >mysql</option>\n".
+            "<option value=\"postgresql_pdo\">postgresql</option>\n".
+            "</select></td></tr>\n".
             "<tr><td></td><td class=\"boxdata3\"><input type=\"submit\" value=\"".$lang_setup['submit']."\" /></td></tr>\n".
             "</table>\n".
             "</form>\n";

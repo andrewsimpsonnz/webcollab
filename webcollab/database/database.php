@@ -32,22 +32,12 @@ if(! defined('DATABASE_TYPE' ) ) {
 
 switch(DATABASE_TYPE ) {
 
-  case 'mysql':
-  case 'mysql_innodb':
-    require(BASE.'database/mysql_database.php' );
-    break;
-
-  case 'postgresql':
-    require(BASE.'database/pgsql_database.php' );
-    break;
-
-  case 'mysqli':
-    require(BASE.'database/mysqli_database.php' );
-    break;
-
   case 'mysql_pdo':
-  case 'postgresql_pdo':
-    require(BASE.'database/pdo_database.php' );
+    require(BASE.'database/mysql_pdo.php' );
+    break;
+
+  case 'postgresq_pdo':
+    require(BASE.'database/pgsql_pdo.php' );
     break;
 
   default:

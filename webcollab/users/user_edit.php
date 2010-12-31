@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: user_edit.php 2297 2009-08-24 09:45:18Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -51,7 +51,8 @@ if(ADMIN ) {
   $userid = $_REQUEST['userid'];
 
   //query for the groups that this user is in
-  $q = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$userid );
+  $q = db_prepare('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid=?' );
+  db_execute($q, array($userid ) );
 
   //put groups in an array
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -59,12 +60,14 @@ if(ADMIN ) {
   }
 
   //also query for user
-  $q = db_query('SELECT * FROM '.PRE.'users WHERE id='.$userid );
+  $q = db_prepare('SELECT * FROM '.PRE.'users WHERE id=?' );
+  db_execute($q, array($userid ) );
 
 }
 else {
   //user
-  $q = db_query('SELECT * FROM '.PRE.'users WHERE id='.UID );
+  $q = db_prepare('SELECT * FROM '.PRE.'users WHERE id=?' );
+  db_execute($q, array(UID ) );
 }
 
 //fetch data
@@ -130,12 +133,12 @@ if(ADMIN ) {
   $content .= "<tr><td>&nbsp;</td></tr>\n";
 
   //add user-groups
-  $usergroup_q = db_query( "SELECT name, id FROM ".PRE."usergroups ORDER BY name" );
+  $usergroup_q = db_query("SELECT name, id FROM ".PRE."usergroups ORDER BY name" );
   $content .= "<tr><td></td><td colspan=\"2\"><small><i>".$lang['member_groups']."</i></small></td></tr>\n".
               "<tr><td>".$lang['usergroups'].":</td>".
               "<td colspan=\"2\"><select name=\"usergroup[]\" multiple=\"multiple\" size=\"4\">\n";
 
-  for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; ++$i) {
+  for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; ++$i ) {
     $content .= "<option value=\"".$usergroup_row['id']."\"";
 
     //highlight occupied groups
