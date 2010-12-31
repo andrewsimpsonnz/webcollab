@@ -36,8 +36,8 @@ switch(DATABASE_TYPE ) {
     require(BASE.'database/mysql_pdo.php' );
     break;
 
-  case 'postgresq_pdo':
-    require(BASE.'database/pgsql_pdo.php' );
+  case 'postgresql_pdo':
+    require(BASE.'database/postgresql_pdo.php' );
     break;
 
   default:
