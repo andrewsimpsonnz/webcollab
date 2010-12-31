@@ -2,7 +2,7 @@
 /*
   $Id: forum_submit.php 1704 2008-01-01 06:09:52Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -71,6 +71,11 @@ if(isset($_POST['mail_group'] ) && ($_POST['mail_group'] === 'on' ) ) {
 }
 else {
   $mail_group = '';
+}
+
+//do data consistency check on taskid
+if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$taskid.' LIMIT 1' ), 0 ,0 ) == 0 ) {
+  error('Forum submit', 'Data consistency error - not a valid taskid' );
 }
 
 //do data consistency check on parentid

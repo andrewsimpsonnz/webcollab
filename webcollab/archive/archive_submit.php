@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: archive_submit.php 2175 2009-04-07 09:24:44Z andrewsimpson $
 
-  (c) 2004 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -41,7 +41,10 @@ if( ( ! ADMIN ) && (db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE 
   warning($lang['task_submit'], $lang['not_owner'] );
 }
 
-$projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$taskid ), 0, 0 );
+$q = db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$taskid );
+if(! ($projectid = db_result($q, 0, 0 ) ) ) {
+  error("Archive submit", "Not a valid projectid" );
+}
 
 switch($_REQUEST['action'] ) {
 

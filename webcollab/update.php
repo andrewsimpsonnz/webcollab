@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: update.php 2384 2010-05-15 23:50:26Z andrewsimpson $
 
-  (c) 2004 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -40,7 +40,7 @@ include_once(BASE.'includes/screen.php' );
 
 function secure_error($message ) {
 
-  create_top('Error' );
+  create_top('Error', 1 );
   new_box('Error', "<div align=\"center\">".$message."</div>", 'boxdata-small', 'head-small' );
   create_bottom();
   die;
@@ -446,7 +446,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 //
 
 //login box screen code
-create_top('Login', 0, 2 );
+create_top('Login', 1, 2 );
 
 $content = "<p>Admin login is required for database update:</p>\n".
            "<form name=\"inputform\" method=\"post\" action=\"update.php\">\n".
