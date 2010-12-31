@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id$
+  $Id: usergroups.php 2384 2010-05-15 23:50:26Z andrewsimpson $
 
   (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
