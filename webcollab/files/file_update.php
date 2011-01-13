@@ -33,6 +33,7 @@ if(! defined('UID' ) ) {
 
 //includes
 require_once(BASE.'includes/admin_config.php' );
+require_once(BASE.'includes/token.php' );
 require_once(BASE.'includes/usergroup_security.php' );
 
 //deny guest users
@@ -72,6 +73,9 @@ else {
 
 //check usergroup security
 $taskid = usergroup_check($taskid );
+
+//generate_token
+generate_token('file_submit' );
 
 $q = db_query('SELECT filename, description FROM '.PRE.'files WHERE id='.$fileid.' LIMIT 1' );
 if( ! $row = db_fetch_array($q, 0 ) ) {

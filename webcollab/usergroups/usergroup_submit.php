@@ -31,6 +31,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //admins only
 if( ! ADMIN ) {
   error('Unauthorised access', 'This function is for admins only.' );
@@ -42,7 +45,7 @@ if(empty($_POST['action'] ) ) {
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'usergroup' );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
@@ -51,7 +54,6 @@ switch($_POST['action'] ) {
 
   //delete a usergroup
   case 'submit_del':
-
 
     if(! @safe_integer($_POST['usergroupid']) ) {
       error('Usergroup submit', 'Not a valid value for usergroupid' );
@@ -82,10 +84,6 @@ switch($_POST['action'] ) {
 
   //insert a new usergroup
   case 'submit_insert':
-
-    //check for valid form token
-    $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-    token_check($token );
 
     if(empty($_POST['name'] ) ) {
       warning($lang['value_missing'], sprintf($lang['field_sprt'], $lang['usergroup_name'] ) );
@@ -135,10 +133,6 @@ switch($_POST['action'] ) {
 
   //edit a usergroup
   case 'submit_edit':
-
-    //check for valid form token
-    $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-    token_check($token );
 
     if(! @safe_integer($_POST['usergroupid'] ) ){
       error('Usergroup submit', 'Not a valid value for usergroupid' );

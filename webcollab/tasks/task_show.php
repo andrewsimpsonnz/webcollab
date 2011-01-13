@@ -32,6 +32,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 require_once(BASE.'includes/usergroup_security.php');
 include_once(BASE.'includes/details.php' );
 include_once(BASE.'tasks/task_common.php' );
@@ -49,6 +50,9 @@ $taskid = $_GET['taskid'];
 
 //check usergroup security
 $taskid = usergroup_check($taskid );
+
+//generate_token
+generate_token('tasks' );
 
 $q = db_prepare('SELECT '.PRE.'tasks.created AS created,
                       '.PRE.'tasks.finished_time AS finished,

@@ -32,6 +32,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //set variables
 $content = '';
 
@@ -40,6 +43,9 @@ if( ! ADMIN ) {
   error( 'Not permitted', 'This function is for admins only' );
   return;
 }
+
+//generate_token
+generate_token('user_mail' );
 
 //start form data
 $content .=

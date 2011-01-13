@@ -32,6 +32,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 require_once(BASE.'includes/usergroup_security.php' );
 include_once(BASE.'includes/admin_config.php' );
 
@@ -59,7 +60,7 @@ if(isset($_POST['return'] ) && $_POST['return'] == 1 ) {
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'file_submit' );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
@@ -150,7 +151,7 @@ switch($_POST['action'] ) {
                             LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.owner='.PRE.'users.id)
                             WHERE '.PRE.'tasks.id=? LIMIT 1' );
 
-      db_execute($q, $taskid );
+      db_execute($q, array($taskid ) );
       $task_row = db_fetch_array($q, 0 );
 
       $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
@@ -275,7 +276,7 @@ switch($_POST['action'] ) {
       $fileid = db_lastoid('files_id_seq' );
 
       //copy it
-      if( ! move_uploaded_file( $_FILES['userfile']['tmp_name'][$i], FILE_BASE.'/'.$fileid.'__'.$filename ) ) {
+      if( ! @move_uploaded_file( $_FILES['userfile']['tmp_name'][$i], FILE_BASE.'/'.$fileid.'__'.$filename ) ) {
         $q = db_prepare('DELETE FROM '.PRE.'files WHERE id=?' );
         db_execute($q, array($fileid ) );
         unlink($_FILES['userfile']['tmp_name'][$i] );

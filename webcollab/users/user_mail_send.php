@@ -33,6 +33,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/email.php' );
 
@@ -46,7 +47,7 @@ $address_array = array();
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'user_mail' );
 
 // send to users or groups?
 if(empty($_POST['group']) ){

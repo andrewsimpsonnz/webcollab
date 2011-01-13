@@ -113,15 +113,9 @@ if( ($row['now'] - $row['sec_lastaccess']) > SESSION_TIMEOUT * 3600 ) {
             round(($row['now'] - $row['sec_lastaccess'] )/60), SESSION_TIMEOUT*60, BASE_URL ) );
 }
 
-//generate new token
-$token = md5(mt_rand() );
-define('TOKEN', $token );
-
 //update the "I was here" time
-$q = db_prepare('UPDATE '.PRE.'logins SET lastaccess=now(),
-                                   token=?
-                                   WHERE session_key=? AND user_id=?' );
-db_execute($q, array($token, $session_key, $row['userid'] ) );
+$q = db_prepare('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=? AND user_id=?' );
+db_execute($q, array($session_key, $row['userid'] ) );
 
 //all data seems okay !!
 
@@ -137,7 +131,6 @@ define('UID',   $row['userid'] );
 define('GUEST', $row['guest'] );
 define('UID_NAME',  $row['fullname'] );
 define('UID_EMAIL', $row['email'] );
-define('OLD_TOKEN', $row['token'] );
 define('TIME_NOW', $row['now'] );
 
 //get usergroups of user
@@ -163,8 +156,6 @@ $row = @db_fetch_num($q, 0 );
 // ADMIN [0,1] = is the user an admin ?
 // GUEST [0,1] = is the user a guest?
 // $GID[]      = array of user's groups
-// OLD_TOKEN   = security form token from last post form
-// TOKEN       = new (current) token
 // TIME_NOW    = UNIX epoch time now (seconds since 1 Jan 1970)
 //
 // and of course, access !!

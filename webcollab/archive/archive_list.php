@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -31,12 +31,15 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'tasks/task_common.php' );
 include_once(BASE.'includes/time.php' );
 
 //some inital values
 $content = '';
 $archive_print = 0;
+
+generate_token('archive' );
 
 //set the usergroup permissions on queries
 $tail = usergroup_tail();

@@ -37,6 +37,7 @@ if(! ADMIN ){
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/email.php' );
 include_once(BASE.'lang/lang_email.php' );
@@ -54,7 +55,7 @@ if(empty($_POST['action'] ) ){
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'user_del' );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);

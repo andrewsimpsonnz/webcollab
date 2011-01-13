@@ -251,19 +251,6 @@ function nice_size($size ) {
 }
 
 //
-// Check security token still valid
-//
-
-function token_check($token ) {
-
-  if((! strlen(trim($token, '1234567890abcdefABCDEF') ) == 0 ) || $token !== OLD_TOKEN ) {
-    error("Invalid session", "Possible session hijacking detected." );
-  }
-
-  return true;
-}
-
-//
 // Builds up an error screen
 //
 function error($box_title, $error ) {

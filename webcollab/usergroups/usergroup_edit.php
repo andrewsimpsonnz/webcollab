@@ -31,6 +31,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //admins only
 if( ! ADMIN ) {
   error('Unauthorised access', 'This function is for admins only.' );
@@ -45,6 +48,9 @@ if(! @safe_integer($_GET['usergroupid'] ) ) {
   error('Usergroup edit', 'Not a valid value for usergroupid.' );
 }
 $usergroupid = $_GET['usergroupid'];
+
+//generate_token
+generate_token('usergroup' );
 
 //get usergroup information
 $q = db_prepare('SELECT * FROM '.PRE.'usergroups WHERE id=?' );

@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -32,6 +32,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //only for admins
 if( ! ADMIN ) {
   error( 'Not permitted', 'This function is for admins only' );
@@ -40,6 +43,9 @@ if( ! ADMIN ) {
 //set variables
 $content = '';
 $maillist = '';
+
+//generate_token
+generate_token('admin_config' );
 
 //get config data
 $q = db_query('SELECT * FROM '.PRE.'config' );

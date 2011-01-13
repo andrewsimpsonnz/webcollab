@@ -33,8 +33,10 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
-include_once(BASE.'includes/details.php' );
+//includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
+include_once(BASE.'includes/details.php' );
 include_once(BASE.'includes/time.php' );
 
 $content = '';
@@ -73,6 +75,9 @@ if(! @safe_integer($_GET['taskid']) ){
 }
 
 $taskid = $_GET['taskid'];
+
+//generate_token
+generate_token('tasks' );
 
 //can this user edit this task ?
 if( ! user_access($TASKID_ROW['owner'], $TASKID_ROW['usergroupid'], $TASKID_ROW['groupaccess'] ) ) {

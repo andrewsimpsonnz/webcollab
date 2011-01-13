@@ -31,10 +31,17 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 if(! @safe_integer($_REQUEST['taskid']) ) {
   error('Archive submit', 'Not a valid taskid' );
 }
 $taskid = $_REQUEST['taskid'];
+
+//check for valid form token
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+validate_token($token, 'archive' );
 
 //check if the user has enough rights
 if( ! ADMIN ) {

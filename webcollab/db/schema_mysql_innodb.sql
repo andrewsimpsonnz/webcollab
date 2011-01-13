@@ -194,6 +194,14 @@ CREATE TABLE site_name (
 TYPE = InnoDB
 CHARACTER SET = utf8;
 
+CREATE TABLE tokens (
+  token VARCHAR(100),
+  action VARCHAR(100),
+  lastaccess TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+)
+TYPE = InnoDB
+CHARACTER SET = utf8;
+
 INSERT INTO users ( id, name, fullname, password, email, admin, deleted )
 VALUES( 1, 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );
 

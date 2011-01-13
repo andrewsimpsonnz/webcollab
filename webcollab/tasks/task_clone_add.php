@@ -32,6 +32,8 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/time.php' );
 
 //guests shouldn't get here
@@ -44,6 +46,9 @@ if(! @safe_integer($_GET['taskid']) ) {
 }
 
 $taskid = $_GET['taskid'];
+
+//generate_token
+generate_token('tasks' );
 
 $content = '';
 

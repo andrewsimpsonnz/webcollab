@@ -31,6 +31,8 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'users/user_common.php' );
 
 //secure vars
@@ -40,6 +42,9 @@ $usergroups_users_array = array();
 if((GUEST) && (GUEST_LOCKED != 'N' ) ){
   warning($lang['access_denied'], 'Guests are not permitted to modify details' );
 }
+
+//generate_token
+generate_token('user_edit' );
 
 //is an admin everything can be queried otherwise only yourself can be queried
 if(ADMIN ) {

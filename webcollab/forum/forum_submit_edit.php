@@ -32,6 +32,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php');
 
 //secure variables
@@ -42,7 +43,7 @@ ignore_user_abort(TRUE);
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'forum_edit' );
 
 //check input
 if(! @safe_integer($_POST['postid']) ){

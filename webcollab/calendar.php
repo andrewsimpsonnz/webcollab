@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -47,7 +47,7 @@ switch($_REQUEST['action'] ) {
     break;
 
   case 'date':
-    create_top( $lang['calendar'], 3, 3 );
+    create_top( $lang['calendar'], 3, 2 );
     include(BASE.'calendar/calendar_date.php' );
     create_bottom();
     break;

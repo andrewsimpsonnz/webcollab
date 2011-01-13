@@ -32,10 +32,11 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/email.php' );
-include_once(BASE.'lang/lang_email.php' );
 include_once(BASE.'includes/time.php' );
+include_once(BASE.'lang/lang_email.php' );
 include_once(BASE.'users/user_common.php' );
 
 $usergroup_names = '';
@@ -48,7 +49,6 @@ if(empty($_POST['action']) ) {
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
@@ -62,6 +62,9 @@ switch($_POST['action'] ) {
     if(! ADMIN ){
       error('Authorisation failed', 'You have to be admin to do this' );
     }
+
+    //validate token
+    validate_token($token, 'user_del' );
 
     if(! @safe_integer($_POST['userid']) ){
       error('User submit', 'No userid was specified.' );
@@ -96,6 +99,9 @@ switch($_POST['action'] ) {
     if( ! ADMIN ){
       error('Authorisation failed', 'You have to be admin to do this' );
     }
+
+    //validate_token
+    validate_token($token, 'user_add' );
 
     //check input has been provided
     if(empty($_POST['name']) ) {
@@ -207,6 +213,9 @@ switch($_POST['action'] ) {
     if((GUEST) && (GUEST_LOCKED != 'N' ) ){
       warning($lang['access_denied'], 'Guests are not permitted to modify details' );
     }
+
+    //validate token
+    validate_token($token, 'user_edit' );
 
     //check input has been provided
     if(empty($_POST['name']) ) {

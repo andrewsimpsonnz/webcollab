@@ -32,6 +32,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
 
 //secure vars
@@ -45,6 +46,9 @@ if((! isset($_REQUEST['postid'] ) )  || (! @safe_integer($_REQUEST['postid']) ) 
   error('Forum edit', 'Not a valid value for postid');
 }
 $postid = $_REQUEST['postid'];
+
+//generate_token
+generate_token('forum_edit' );
 
 //disable main form when deleting
 if(isset($_REQUEST['action'] ) && $_REQUEST['action'] == 'delete' ) {

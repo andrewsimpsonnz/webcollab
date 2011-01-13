@@ -2,7 +2,7 @@
 /*
   $Id: admin_config_submit.php 2199 2009-04-10 21:34:16Z andrewsimpson $
 
-  (c) 2003 - 20011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -32,6 +32,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //only admin
 if( ! ADMIN ){
   error('Not permitted', 'This function is for admins only' );
@@ -39,7 +42,7 @@ if( ! ADMIN ){
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'admin_config' );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);

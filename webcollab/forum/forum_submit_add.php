@@ -32,6 +32,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 require_once(BASE.'includes/usergroup_security.php' );
 include_once(BASE.'includes/admin_config.php');
 
@@ -72,6 +73,10 @@ if(isset($_POST['mail_group'] ) && ($_POST['mail_group'] === 'on' ) ) {
 else {
   $mail_group = '';
 }
+
+//check for valid form token
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+validate_token($token, 'forum_add' );
 
 //do data consistency check on taskid
 $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id=? LIMIT 1' );

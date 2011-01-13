@@ -31,6 +31,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //
 // Function for listing all posts of a task
 //
@@ -129,7 +132,7 @@ ignore_user_abort(TRUE);
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'forum_edit' );
 
 //check input
 $input_array = array('postid', 'taskid' );

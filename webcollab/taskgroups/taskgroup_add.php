@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -31,10 +31,16 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //admins only
 if(! ADMIN ){
   error('Unauthorised access', 'This function is for admins only.' );
 }
+
+//generate_token
+generate_token('taskgroup' );
 
 $content =
       "<form method=\"post\" action=\"taskgroups.php\" onsubmit=\"return fieldCheck('name')\">\n".

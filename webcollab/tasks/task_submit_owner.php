@@ -34,6 +34,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/time.php' );
 include_once(BASE.'lang/lang_email.php' );
@@ -48,7 +49,7 @@ if(empty($_POST['action']) ){
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'tasks' );
 
 if(! @safe_integer($_POST['taskid']) ){
   error('Task submit', 'No taskid given' );

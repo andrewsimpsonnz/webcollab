@@ -161,14 +161,6 @@ function create_top($title='', $page_type=0, $include_javascript=0, $redirect_ti
                   "<body>\n";
       break;
 
-    case 3:
-      //loads javascript files and resets the token...
-      $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
-                  "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n".
-                  "</head>\n\n".
-                  "<body onload=\"placeToken('".TOKEN."')\">\n";
-      break;
-
     case 0:
     default:
       //no javascript loaded

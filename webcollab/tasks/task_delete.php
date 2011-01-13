@@ -32,6 +32,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'tasks/task_common.php' );
 
@@ -105,7 +106,7 @@ function find_children($parent ) {
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'tasks' );
 
 //check for valid taskid
 if(! @safe_integer($_POST['taskid']) ) {

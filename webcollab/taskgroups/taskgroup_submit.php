@@ -31,6 +31,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //admins only
 if(! ADMIN) {
   error('Unauthorised access', 'This function is for admins only.' );
@@ -42,7 +45,7 @@ if(empty($_POST['action']) ) {
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'taskgroup' );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);  

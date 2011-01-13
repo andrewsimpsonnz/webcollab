@@ -2,7 +2,7 @@
 /*
   $Id: forum_add.php 2216 2009-05-08 20:40:11Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -32,6 +32,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 require_once(BASE.'includes/usergroup_security.php' );
 include_once(BASE.'includes/admin_config.php' );
 
@@ -59,6 +60,9 @@ else {
 if(! @safe_integer($_REQUEST['taskid']) ) {
   error('Forum add', 'Not a valid value for taskid');
 }
+
+//generate_token
+generate_token('forum_add' );
 
 $taskid = $_REQUEST['taskid'];
 //check usergroup security

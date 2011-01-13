@@ -31,6 +31,8 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/time.php' );
 
@@ -42,6 +44,9 @@ $allowed = array();
 if(GUEST ) {
  warning($lang['access_denied'], $lang['not_owner'] );
 }
+
+//generate_token
+generate_token('tasks' );
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,

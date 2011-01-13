@@ -31,6 +31,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //admins only
 if(! ADMIN ){
   error('Unauthorised access', 'This function is for admins only.' );
@@ -41,6 +44,9 @@ if(! @safe_integer($_GET['taskgroupid']) ){
   error('Taskgroup edit', 'There is no taskgroupid specified.' );
 }
 $taskgroupid = $_GET['taskgroupid'];
+
+//generate_token
+generate_token('taskgroup' );
 
 //get taskgroup information
 $q = db_prepare('SELECT * FROM '.PRE.'taskgroups WHERE id=?' );

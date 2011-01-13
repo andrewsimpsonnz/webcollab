@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -31,12 +31,17 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'users/user_common.php' );
 
 //admins only
 if(! ADMIN ){
   error('Unauthorised access', 'This function is for admins only.' );
 }
+
+//generate_token
+generate_token('user_add' );
 
 $content =  "<form method=\"post\" action=\"users.php\" ".
             "onsubmit=\"return fieldCheck('email', 'pass', 'full', 'name') && emailCheck('email')\">\n".

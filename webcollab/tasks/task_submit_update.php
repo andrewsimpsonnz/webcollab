@@ -35,6 +35,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/time.php' );
 include_once(BASE.'lang/lang_email.php' );
@@ -130,7 +131,7 @@ function reparent_children($taskid ) {
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'tasks' );
 
 //check for task name
 if(empty($_POST['name']) ){

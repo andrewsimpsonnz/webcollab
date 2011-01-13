@@ -142,7 +142,8 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
         db_query('CREATE TABLE '.PRE.'login_attempt ( name VARCHAR(100) NOT NULL,
                                                ip VARCHAR(100) NOT NULL,
                                                last_attempt DATETIME NOT NULL)
-                                               TYPE = innoDB' );
+                                               TYPE = innoDB
+                                               CHARACTER SET = utf8;' );
         break;
 
       case 'postgresql_pdo':
@@ -350,7 +351,8 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
       case 'mysql_pdo':
         db_query('CREATE TABLE '.PRE.'site_name (manager_name VARCHAR(100),
                                                  abbr_manager_name VARCHAR(100) )
-                                                 TYPE = innoDB' );
+                                                 TYPE = innoDB 
+                                                 CHARACTER SET = utf8;' );
         break;
 
       case 'postgresql_pdo':
@@ -429,41 +431,57 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   }
 
   //update version 2.50 -> 3.00
-  //set parameters for appropriate for database
-  switch (DATABASE_TYPE) {
-    case 'postgresql_pdo':
-      $q = db_query('SELECT data_type FROM information_schema.columns 
-                            WHERE table_name=\'tasks\' AND column_name=\'groupaccess\'');
-      if(db_result($q, 0, 0 ) == 'boolean' ) {
+  if(! (db_query('SELECT token FROM '.PRE.'tokens', 0 ) ) ) {
 
-        db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN globalaccess DROP DEFAULT' );
-        db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN globalaccess TYPE VARCHAR(5) 
-                            USING (CASE WHEN globalaccess THEN \'t\' ELSE \'f\' END),
-                            ALTER COLUMN globalaccess SET DEFAULT \'f\'' );
+    //set parameters for appropriate for database
+    switch (DATABASE_TYPE) {
+      case 'postgresql_pdo':
+        $q = db_query('SELECT data_type FROM information_schema.columns 
+                              WHERE table_name=\'tasks\' AND column_name=\'groupaccess\'');
+        if(db_result($q, 0, 0 ) == 'boolean' ) {
 
-        db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN groupaccess DROP DEFAULT' );
-        db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN groupaccess TYPE VARCHAR(5) 
-                            USING (CASE WHEN groupaccess THEN \'t\' ELSE \'f\' END),
-                            ALTER COLUMN groupaccess SET DEFAULT \'t\'' );
+          db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN globalaccess DROP DEFAULT' );
+          db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN globalaccess TYPE VARCHAR(5) 
+                              USING (CASE WHEN globalaccess THEN \'t\' ELSE \'f\' END),
+                              ALTER COLUMN globalaccess SET DEFAULT \'f\'' );
 
-        db_query('ALTER TABLE '.PRE.'users ALTER COLUMN admin DROP DEFAULT' );
-        db_query('ALTER TABLE '.PRE.'users ALTER COLUMN admin TYPE VARCHAR(5) 
-                            USING (CASE WHEN admin THEN \'t\' ELSE \'f\' END),
-                            ALTER COLUMN admin SET DEFAULT \'f\'' );
+          db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN groupaccess DROP DEFAULT' );
+          db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN groupaccess TYPE VARCHAR(5) 
+                              USING (CASE WHEN groupaccess THEN \'t\' ELSE \'f\' END),
+                              ALTER COLUMN groupaccess SET DEFAULT \'t\'' );
 
-        db_query('ALTER TABLE '.PRE.'users ALTER COLUMN deleted DROP DEFAULT' );
-        db_query('ALTER TABLE '.PRE.'users ALTER  COLUMN deleted TYPE VARCHAR(5) 
-                            USING (CASE WHEN deleted THEN \'t\' ELSE \'f\' END),
-                            ALTER COLUMN deleted SET DEFAULT \'f\'' );
+          db_query('ALTER TABLE '.PRE.'users ALTER COLUMN admin DROP DEFAULT' );
+          db_query('ALTER TABLE '.PRE.'users ALTER COLUMN admin TYPE VARCHAR(5) 
+                              USING (CASE WHEN admin THEN \'t\' ELSE \'f\' END),
+                              ALTER COLUMN admin SET DEFAULT \'f\'' );
 
-        $content .= "<p>Updating from version pre-3.00 database ... success!</p>\n";
-      }
-      break;
+          db_query('ALTER TABLE '.PRE.'users ALTER COLUMN deleted DROP DEFAULT' );
+          db_query('ALTER TABLE '.PRE.'users ALTER  COLUMN deleted TYPE VARCHAR(5) 
+                              USING (CASE WHEN deleted THEN \'t\' ELSE \'f\' END),
+                              ALTER COLUMN deleted SET DEFAULT \'f\'' );
 
-    case 'mysql_pdo':
-    default:
-      //no action
-      break;    
+          $content .= "<p>Updating from version pre-3.00 database ... success!</p>\n";
+        }
+
+        db_query('CREATE TABLE "'.PRE.'tokens" ("token" character varying(100) NOT NULL,
+                                                "action" character varying(100) NOT NULL,
+                                                "lastaccess" timestamp withtimezone NOT NULL DEFAULT current_timestamp(0))' );
+        break;
+
+      case 'mysql_pdo':
+        db_query('CREATE TABLE '.PRE.'tokens (token VARCHAR(100) NOT NULL,
+                                              action VARCHAR(100) NOT NULL,
+                                              lastaccess DATETIME NOT NULL)
+                                              TYPE = innoDB 
+                                              CHARACTER SET = utf8;' );
+        break;
+
+      default:
+        error('Database type not specified in config file.' );
+        break;
+    }
+
+    $content .= "<p>Updating from version pre-3.00 database ... success!</p>\n";
   }
 
   //commit

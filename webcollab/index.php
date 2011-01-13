@@ -148,6 +148,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
   @db_execute($q, array($user_id ) );
   $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.$delim.'20 MINUTE'.$delim.') OR name=?' );
   @db_execute($q, array($username ) );
+  $q = db_query('DELETE FROM tokens WHERE lastaccess < (now()-INTERVAL '.$delim.'5 MINUTE'.$delim.')' );
 
   //log the user in
   $q = db_prepare('INSERT INTO '.PRE.'logins(user_id, session_key, ip, lastaccess ) VALUES (?, ?, ?, now() )' );

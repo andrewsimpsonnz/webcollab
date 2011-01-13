@@ -31,6 +31,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //secure vars
 $userid = '';
 $content = '';
@@ -39,6 +42,9 @@ $content = '';
 if(! ADMIN ){
   error('Unauthorised access', 'This function is for admins only.' );
 }
+
+//generate_token
+generate_token('user_del' );
 
 //is there a uid ?
 if(! safe_integer($_GET['userid']) ){

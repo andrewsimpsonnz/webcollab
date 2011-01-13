@@ -33,6 +33,7 @@ if(! defined('UID' ) ) {
 
 //includes
 require_once(BASE.'includes/admin_config.php' );
+require_once(BASE.'includes/token.php' );
 require_once(BASE.'includes/usergroup_security.php' );
 
 //deny guest users
@@ -52,6 +53,9 @@ $taskid = $_GET['taskid'];
 
 //check usergroup security
 $taskid = usergroup_check($taskid );
+
+//generate_token
+generate_token('file_submit' );
 
 $content = "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"files.php\" onsubmit=\"return fieldCheck('userfile')\">\n".
            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
