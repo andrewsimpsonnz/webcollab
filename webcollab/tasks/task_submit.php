@@ -91,6 +91,10 @@ function user_access($taskid ) {
   if($row[0] == UID ) {
     return true;
   }
+  //no owner - anyone can edit
+  if($row[0] == 0 ) {
+    return true;
+  }
   //no usergroup set
   if($row[1] == 0 ) {
     return false;

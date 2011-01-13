@@ -32,7 +32,6 @@ if(! defined('UID' ) ) {
 }
 
 //includes
-require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/time.php' );
 
@@ -44,9 +43,6 @@ $allowed = array();
 if(GUEST ) {
  warning($lang['access_denied'], $lang['not_owner'] );
 }
-
-//generate_token
-generate_token('tasks' );
 
 //get list of common users in private usergroups that this user can view 
 $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
@@ -74,7 +70,6 @@ $priority_select_box = "<tr><td>".$lang['priority'].":</td><td>\n".
 $content .= "<form method=\"post\" action=\"tasks.php\" onsubmit=\"return fieldCheck('name') && dateCheck();\" >\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n".
-            "<input type=\"hidden\" id=\"token\" name=\"token\" value=\"".TOKEN."\" />\n".
             "<input type=\"hidden\" id=\"alert_field\" name=\"alert1\" value=\"".$lang['missing_field_javascript']."\" />\n".
             "<input type=\"hidden\" id=\"alert_date\" name=\"alert2\" value=\"".$lang['invalid_date_javascript']."\" />\n".
             "<input type=\"hidden\" id=\"alert_finish\" name=\"alert3\" value=\"".$lang['finish_date_javascript']."\" />\n".

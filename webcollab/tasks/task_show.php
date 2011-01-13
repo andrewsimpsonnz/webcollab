@@ -32,7 +32,6 @@ if(! defined('UID' ) ) {
 }
 
 //includes
-require_once(BASE.'includes/token.php' );
 require_once(BASE.'includes/usergroup_security.php');
 include_once(BASE.'includes/details.php' );
 include_once(BASE.'tasks/task_common.php' );
@@ -50,9 +49,6 @@ $taskid = $_GET['taskid'];
 
 //check usergroup security
 $taskid = usergroup_check($taskid );
-
-//generate_token
-generate_token('tasks' );
 
 $q = db_prepare('SELECT '.PRE.'tasks.created AS created,
                       '.PRE.'tasks.finished_time AS finished,
@@ -279,29 +275,6 @@ $content .= "</table>\n";
 //if this is an archived task, or you are a GUEST user, then no user functions are available
 if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
 
-  $form1 = "<form id=\"meown\" method=\"post\" action=\"tasks.php\">\n".
-           "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
-           "<input type=\"hidden\" name=\"action\" value=\"meown\" />\n".
-           "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
-           "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-           "</form>\n";
-
-  $form2 = "<form id=\"done\" method=\"post\" action=\"tasks.php\">\n".
-           "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
-           "<input type=\"hidden\" name=\"action\" value=\"done\" />\n".
-           "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
-           "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-           "</form>\n";
-
-  $form3 = "<form id=\"deown\" method=\"post\" action=\"tasks.php\">\n".
-           "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
-           "<input type=\"hidden\" name=\"action\" value=\"deown\" />\n".
-           "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
-           "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-           "</form>\n";
-
-  $this_form = '';
-
   $content .= "<div style=\"text-align : center\"><span class=\"textlink\">\n";
 
   //set add function
@@ -313,12 +286,6 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
     case 'task':
       $content .= "[<a href=\"tasks.php?x=".X."&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_subtask']."</a>]&nbsp;\n";
       break;
-  }
-
-  //unowned task ==> [I'll take it!] button
-  if($TASKID_ROW['owner'] == 0 ) {
-    $content .= "[<a href=\"javascript:void(document.getElementById('meown').submit())\">".sprintf($lang['i_take_it'] )."</a>]\n";
-    $this_form .= $form1;
   }
 
   //check for owner or group access
@@ -337,24 +304,26 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
                 "</span>\n";
   }
 
-  //(owner - groupaccess) & (uncompleted task)  ==> [I finished it] button
-  if(($access ) && ($TASKID_ROW['status'] != 'done' ) && ($TASKID_ROW['parent'] != 0 ) ) {
-    $content .= "[<a href=\"javascript:void(document.getElementById('done').submit())\">".$lang['i_finished']."</a>]&nbsp;\n";
-    $this_form .= $form2;
-  }
-
   //(owner) & (uncompleted task)==> [I don't want it anymore] button
   if(UID == $TASKID_ROW['owner'] && ($TASKID_ROW['status'] != 'done' ) ) {
-    $content .= "[<a href=\"javascript:void(document.getElementById('deown').submit())\">".$lang['i_dont_want']."</a>]&nbsp;\n";
-    $this_form .= $form3;
+    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=0\">".$lang['i_dont_want']."</a>]&nbsp;\n";
+  }
+
+  //(owner - groupaccess) & (uncompleted task)  ==> [I finished it] button
+  if(($access ) && ($TASKID_ROW['status'] != 'done' ) && ($TASKID_ROW['parent'] != 0 ) ) {
+    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;status=1\">".$lang['i_finished']."</a>]&nbsp;\n";
+  }
+
+  //unowned task ==> [I'll take it!] button
+  if($TASKID_ROW['owner'] == 0 ) {
+    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=".UID."\">".sprintf($lang['i_take_it'] )."</a>]\n";
   }
 
   //(admin) & (not owner) & (has owner) & (uncompleted task) ==> [Take over task] button
   if((ADMIN ) && (UID != $TASKID_ROW['owner'] ) && ($TASKID_ROW['owner'] != 0 ) && ($TASKID_ROW['status'] != 'done' ) ) {
-    $content .= "[<a href=\"javascript:void(document.getElementById('meown').submit())\">".sprintf($lang["take_over_".$TYPE] )."</a>]\n";
-    $this_form .= $form1;
+    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=".UID."\">".sprintf($lang["take_over_".$TYPE] )."</a>]\n";
   }
-  $content .= "</span></div>\n".$this_form;
+  $content .= "</span></div>\n";
 }
 
 new_box( $title, $content,  'boxdata-normal', 'head-normal', 'boxstyle-short' );

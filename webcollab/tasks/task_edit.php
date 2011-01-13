@@ -42,6 +42,8 @@ include_once(BASE.'includes/time.php' );
 $content = '';
 $javascript = '';
 $allowed = array();
+$new_owner = false;
+$new_status = false;
 
 //
 //check user access
@@ -59,6 +61,9 @@ function user_access($owner, $usergroupid, $groupaccess ) {
   if($owner == UID ){
     return true;
   }
+  if($owner == 0 ) { //owner is nobody
+    return true;
+  }
   if($usergroupid == 0 ) {
     return false;
   }
@@ -70,11 +75,19 @@ function user_access($owner, $usergroupid, $groupaccess ) {
   return false;
 }
 
+//get input data
 if(! @safe_integer($_GET['taskid']) ){
   error('Task edit', 'The taskid input is not valid' );
 }
-
 $taskid = $_GET['taskid'];
+
+if(isset($_GET['owner'] ) && @safe_integer($_GET['owner'] ) ) {
+  $new_owner = $_GET['owner'];
+}
+
+if(isset($_GET['status'] ) && $_GET['status'] ) {
+  $new_status = 'done';
+}
 
 //generate_token
 generate_token('tasks' );
@@ -257,7 +270,14 @@ switch($TASKID_ROW['parent'] ){
 
     default:
       //status for tasks
-      switch($TASKID_ROW['status'] ) {
+      if($new_status !== false ) {
+        $selection = $new_status;
+      }
+      else {
+        $selection = $TASKID_ROW['status'];
+      }
+
+      switch($selection ) {
         case 'notactive':
           $s1 = ""; $s2 = " selected=\"selected\""; $s3 = ""; $s4 =""; $s5 = "";
           break;
@@ -289,11 +309,25 @@ switch($TASKID_ROW['parent'] ){
                    "</select></td></tr>";
 }
 
-//task owner
-$content .= "<tr><td>".$lang[$TYPE."_owner"].":</td><td><select name=\"owner\">\n".
-            "<option value=\"0\">".$lang['nobody']."</option>\n";
+//check if new task owner has been preset
+if($new_owner !== false ) {
+  $selection = $new_owner;
+}
+else {
+  $selection = $TASKID_ROW['owner'];
+}
 
-//select the user first
+//task owner
+$content .= "<tr><td>".$lang[$TYPE."_owner"].":</td><td><select name=\"owner\">\n";
+
+if($selection == 0 ) {
+  $content .= "<option value=\"0\" selected=\"selected\">".$lang['nobody']."</option>\n";
+}
+else {
+  $content .= "<option value=\"0\">".$lang['nobody']."</option>\n";
+}
+
+//get current user list
 $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname' );
 
 for( $i=0 ; $user_row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -305,7 +339,7 @@ for( $i=0 ; $user_row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   $content .= "<option value=\"".$user_row['id']."\"";
 
-  if( $TASKID_ROW['owner'] == $user_row['id'] ){
+  if($selection == $user_row['id'] ){
     $content .= " selected=\"selected\"";
   }
   $content .= ">".$user_row['fullname']."</option>\n";

@@ -34,7 +34,6 @@ if(! defined('UID' ) ) {
 }
 
 //includes
-require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/time.php' );
 include_once(BASE.'lang/lang_email.php' );
@@ -91,10 +90,6 @@ foreach($input_array as $var ) {
     ${$var} = 'f';
   }
 }
-
-//check for valid form token
-$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-validate_token($token, 'tasks' );
 
 //carry out some data consistency checking
 if( $parentid != 0 ) {
