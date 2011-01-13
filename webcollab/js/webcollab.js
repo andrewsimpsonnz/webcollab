@@ -72,13 +72,6 @@ function dateSet(dayIndex, monthIndex, yearIndex, token) {
   return true;
 }
 
-function placeToken(token) {
-  if(window.opener && !window.opener.closed) {
-    window.opener.document.getElementById('token').value = token;
-  }
-  return true;
-}
-
 function postToggle(ellipis, post2, image1, image2 ) {
   if(document.getElementById(post2).style.display == 'none') {
     document.getElementById(post2).style.display = 'inline';
