@@ -39,8 +39,6 @@ include_once(BASE.'includes/time.php' );
 $content = '';
 $archive_print = 0;
 
-generate_token('archive' );
-
 //set the usergroup permissions on queries
 $tail = usergroup_tail();
 
@@ -134,6 +132,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   if(ADMIN || UID == $row['owner'] ){
 
+    //generate token
+    generate_token('tasks' );
+
     $content .= "<table>\n".
                 "<tr><td><form method=\"post\" action=\"tasks.php\" ".
                 "onsubmit=\"return confirm( '".sprintf($lang["del_javascript_project_sprt"], javascript_escape($row['name'] ) )."')\">\n".
@@ -160,7 +161,7 @@ $content .= "</div>\n";
 if($i == 0 ) {
   //no projects found in database
   $content = "<div style=\"text-align : center\">".$lang['no_allowed_projects']."</div>\n";
-  new_box($lang['no_projects'], $content );
+  new_box($lang['archived_projects'], $content );
 
 }
 else {

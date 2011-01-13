@@ -41,7 +41,6 @@ $taskid = $_REQUEST['taskid'];
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-validate_token($token, 'archive' );
 
 //check if the user has enough rights
 if( ! ADMIN ) {
@@ -63,6 +62,7 @@ if(! ($projectid = db_result($q, 0, 0 ) ) ) {
 switch($_REQUEST['action'] ) {
 
   case 'submit_archive':
+
     //do the archiving
     $q = db_prepare('UPDATE '.PRE.'tasks SET archive=1 WHERE projectid=?' );
     db_execute($q, array($projectid ) );
@@ -72,6 +72,7 @@ switch($_REQUEST['action'] ) {
     break;
 
   case 'submit_restore':
+
     //do the restore
     $q = db_prepare('UPDATE '.PRE.'tasks SET archive=0 WHERE projectid=?' );
     db_execute($q, array($projectid ) );
