@@ -22,15 +22,15 @@
   Function:
   ---------
 
-  Language files (long messages) for 'en' (English)
+  Language files (long messages) for 'ja' (Japanese)
 
-  Maintainer: Andrew Simpson <andrew.simpson at paradise.net.nz>
+  Maintainer: Tadashi Jokagi <elf2000 at users.sourceforge.net>
 
 */
 
 
 $taskgroup_info =   "<ul><li>If you delete a taskgroup all tasks belonging to it will be set to uncategorised.</li>\n".
-                      "<li>You can change the name of a taskgroup without interfering with the tasks.</li>\n".
+                      "<li>You can change the name of a category without interfering with the tasks.</li>\n".
                       "<li>Two taskgroups cannot have the same name.</li></ul>\n";
 
 $usergroup_info =   "<ul><li>If you delete a usergroup all the related private forum posts will be deleted too.</li>\n".
@@ -38,10 +38,9 @@ $usergroup_info =   "<ul><li>If you delete a usergroup all the related private f
                       "<li>You can change the name of a usergroup without interfering with the users in it.</li>\n".
                       "<li>Two usergroups cannot have the same name.</li></ul>\n";
 
-$user_info      =    "Please select your action from the menu on the left.<br /><br />".
+$user_info      =    "左のメニューから操作を選択してください。<br /><br />".
                       "Some quick hints:<br />".
                       "<ul>".
-                      //**
                       "<li>Private users can only be seen by members of the same usergroup.</li>\n".
                       "<li>Users have two stages of deleting, the second one is permanent.</li>\n".
                       "<li>A deleted user loses all his tasks but not his forum messages.</li>\n".

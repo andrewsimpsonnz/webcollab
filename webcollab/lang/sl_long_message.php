@@ -4,7 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  This file created on Avgust 2006 by Sa¹o Stanojev
+  This file created on Avgust 2006 by SaÅ¡o Stanojev
   
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -22,34 +22,36 @@
   Function:
   ---------
 
-  Language files (long messages) for 'si' (Sloven¹èina)
+  Language files (long messages) for 'sl' (SlovenÅ¡Äina)
 
-  Maintainer: Sa¹o Stanojev <sass99@gmail.com>
+  Maintainer: SaÅ¡o Stanojev <sass99@gmail.com>
+
+  NOTE: This file is written in UTF-8 character set
 
 */
 
 
-$taskgroup_info =   "<ul><li>Èe pobri¹ete skupino opravil, bodo vse naloge, ki ji pripadajo, oznaèene kot nekategorizirane.</li>\n".
-                      "<li>Ime skupine opravil lahko brez bojazni zamenjate, ker to ne vpliva na naloge, ki ji pripadajo - te bodo ¹e vedno ostale skupini opravil, ki ji pripadajo.</li>\n".
+$taskgroup_info =   "<ul><li>ÄŒe pobriÅ¡ete skupino opravil, bodo vse naloge, ki ji pripadajo, oznaÄene kot nekategorizirane.</li>\n".
+                      "<li>Ime skupine opravil lahko brez bojazni zamenjate, ker to ne vpliva na naloge, ki ji pripadajo - te bodo Å¡e vedno ostale skupini opravil, ki ji pripadajo.</li>\n".
                       "<li>Vsaka skupine opravil mora imeti edinstveno ime.</li></ul>\n";
 
-$usergroup_info =   "<ul><li>Z izbrisom uporabni¹ke skupine bodo pobrisana vsa sporoèila na zasebnih forumih, ki pripadajo tej skupini.</li>\n".
-                      "<li>Zasebno uporabni¹ko skupino lahko vidijo le èlani, ki tej skupini pripadajo.</li>\n".
-                      "<li>Ime uporabni¹ke skupine lahko brez bojazni zamenjate, ker to ne vpliva na naloge, ki ji pripadajo - te bodo ¹e vedno ostale uporabni¹ki skupini, ki ji pripadajo.</li>\n".
-                      "<li>Vsaka uporabni¹ka skupina mora imeti edinstveno ime.</li></ul>\n";
+$usergroup_info =   "<ul><li>Z izbrisom uporabniÅ¡ke skupine bodo pobrisana vsa sporoÄila na zasebnih forumih, ki pripadajo tej skupini.</li>\n".
+                      "<li>Zasebno uporabniÅ¡ko skupino lahko vidijo le Älani, ki tej skupini pripadajo.</li>\n".
+                      "<li>Ime uporabniÅ¡ke skupine lahko brez bojazni zamenjate, ker to ne vpliva na naloge, ki ji pripadajo - te bodo Å¡e vedno ostale uporabniÅ¡ki skupini, ki ji pripadajo.</li>\n".
+                      "<li>Vsaka uporabniÅ¡ka skupina mora imeti edinstveno ime.</li></ul>\n";
 
 $user_info      =    "Izberite povezavo z menija na levi strani.<br /><br />".
                       "Nekaj kratkih nasvetov:<br />".
                       "<ul>".
-                      "<li>Zasebne uporabnike lahko vidijo samo èlani zasebne uporabni¹ke skupine, ki ji ti èlani pripadajo.</li>\n".
-                      "<li>Uporabni¹ki raèuni se izbri¹ejo v dveh korakih, pri èemer je drugi korak dokonèen.</li>\n".
-                      "<li>Izbrisani uporabnik izgubi vse svoje naloge, ne pa tudi sporoèil na forumu.</li>\n".
+                      "<li>Zasebne uporabnike lahko vidijo samo Älani zasebne uporabniÅ¡ke skupine, ki ji ti Älani pripadajo.</li>\n".
+                      "<li>UporabniÅ¡ki raÄuni se izbriÅ¡ejo v dveh korakih, pri Äemer je drugi korak dokonÄen.</li>\n".
+                      "<li>Izbrisani uporabnik izgubi vse svoje naloge, ne pa tudi sporoÄil na forumu.</li>\n".
                       "<li>Trajno izbrisani uporabnik izgubi VSE podatke.</li>\n".
-                      "<li>Izbrisani uporabnik zadr¾i svoje arhivirane podatke, ki jih lahko uporablja, ko se ponovno registrira.</li>\n".
-                      "<li>Uporabnik bo po e-po¹ti obve¹èen o vseh spremembah njegovega raèuna.</li>\n".
-                      "<li>Gesla v bazi so ¹ifrirana, tako da morate doloèiti novo geslo, èe pozabite staro.</li>\n".
-                      "<li>Geslo se po¹lje uporabniku le enkrat, zato morate biti sigurni, da ga po¹iljate na pravi naslov e-po¹te.</li>\n".
-                      "<li>Uporabniki lahko sami spreminjajo nastavitve svojega raèuna, kar razbremeni skrbnika sistema.</li>\n".
+                      "<li>Izbrisani uporabnik zadrÅ¾i svoje arhivirane podatke, ki jih lahko uporablja, ko se ponovno registrira.</li>\n".
+                      "<li>Uporabnik bo po e-poÅ¡ti obveÅ¡Äen o vseh spremembah njegovega raÄuna.</li>\n".
+                      "<li>Gesla v bazi so Å¡ifrirana, tako da morate doloÄiti novo geslo, Äe pozabite staro.</li>\n".
+                      "<li>Geslo se poÅ¡lje uporabniku le enkrat, zato morate biti sigurni, da ga poÅ¡iljate na pravi naslov e-poÅ¡te.</li>\n".
+                      "<li>Uporabniki lahko sami spreminjajo nastavitve svojega raÄuna, kar razbremeni skrbnika sistema.</li>\n".
                       "</ul>\n";
 
 ?>

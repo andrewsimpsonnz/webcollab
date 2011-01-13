@@ -23,7 +23,9 @@
 
   Translation: Lukas Moravek <moravekl at gmail.com>
   Corrections: Jirka Dutka <jirka at dutka.net>
-  Corrections: Milan Hor·k <strangeril at users.sourceforge.net>
+  Corrections: Milan Hor√°k <strangeril at users.sourceforge.net>
+
+  NOTE: This file is written in UTF-8 character set
 
 */
 
@@ -34,142 +36,142 @@ $email_date = sprintf('%s. %s %s v %s %+03d00', date('d', $ltime ), $month_array
 
 //$email_date = date("d. " )." ".$month_array_2p[(date("n" ) )]." ".date('Y \v h:i' );
 
-$title_file_post          = ABBR_MANAGER_NAME.": Nahr·n nov˝ soubor: %s";
-$email_file_post          = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe byl p¯id·n nov˝ soubor ".$email_date." uæivatelem %1\$s.\n\n".
+$title_file_post          = ABBR_MANAGER_NAME.": Nahr√°n nov√Ω soubor: %s";
+$email_file_post          = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe byl p≈ôid√°n nov√Ω soubor ".$email_date." u≈æivatelem %1\$s.\n\n".
                             "Soubor:        %2\$s\n".
                             "Popis: %3\$s\n\n".
                             "Projekt:       %4\$s\n".
-                            "⁄kol:          %5\$s\n\n".
-                            "ProsÌm navπtivte tuto web str·nku pro vÌce informacÌ.\n\n".BASE_URL."%6\$s\n";
+                            "√ökol:          %5\$s\n\n".
+                            "Pros√≠m nav≈°tivte tuto web str√°nku pro v√≠ce informac√≠.\n\n".BASE_URL."%6\$s\n";
 
 
-$title_forum_post         = ABBR_MANAGER_NAME.": Nov˝ p¯ÌspÏvek ve fÛru: %s";
-$email_forum_post         = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe byl vloæen nov˝ p¯ÌspÏvek do fÛra ".$email_date." uæivatelem %1\$s:\n\n".
+$title_forum_post         = ABBR_MANAGER_NAME.": Nov√Ω p≈ô√≠spƒõvek ve f√≥ru: %s";
+$email_forum_post         = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe byl vlo≈æen nov√Ω p≈ô√≠spƒõvek do f√≥ra ".$email_date." u≈æivatelem %1\$s:\n\n".
                             "----\n\n".
                             "%2\$s\n\n".
                             "----\n\n".
-                            "ProsÌm navπtivte tuto web str·nku pro vÌce informacÌ.\n\n".BASE_URL."%3\$s\n";
-$email_forum_reply        = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe byl vloæen nov˝ p¯ÌspÏvek do fÛra ".$email_date." uæivatelem %1\$s.\n\n".
-                            "Tento p¯ÌspÏvek je odpovÏdÌ na d¯ÌvÏjπÌ p¯ÌspÏvek zaslan˝ %2\$s.\n\n".
-                            "P˘vodnÌ p¯ÌspÏvek:\n%3\$s\n\n".
+                            "Pros√≠m nav≈°tivte tuto web str√°nku pro v√≠ce informac√≠.\n\n".BASE_URL."%3\$s\n";
+$email_forum_reply        = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe byl vlo≈æen nov√Ω p≈ô√≠spƒõvek do f√≥ra ".$email_date." u≈æivatelem %1\$s.\n\n".
+                            "Tento p≈ô√≠spƒõvek je odpovƒõd√≠ na d≈ô√≠vƒõj≈°√≠ p≈ô√≠spƒõvek zaslan√Ω %2\$s.\n\n".
+                            "P≈Øvodn√≠ p≈ô√≠spƒõvek:\n%3\$s\n\n".
                             "----\n\n".
-                            "OdpovÏd:\n%4\$s\n\n".
+                            "Odpovƒõd:\n%4\$s\n\n".
                             "----\n\n".
-                            "ProsÌm navπtivte tuto web str·nku pro vÌce informacÌ.\n\n".BASE_URL."%5\$s\n";
+                            "Pros√≠m nav≈°tivte tuto web str√°nku pro v√≠ce informac√≠.\n\n".BASE_URL."%5\$s\n";
 
 
 $email_list =  "Projekt:  %1\$s\n".
-               "⁄kol:     %2\$s\n".
+               "√ökol:     %2\$s\n".
                "Stav:   %3\$s\n".
-               "VlastnÌk:    %4\$s ( %5\$s )\n".
+               "Vlastn√≠k:    %4\$s ( %5\$s )\n".
                "Text:\n%6\$s\n\n".
-               "ProsÌm navπtivte tuto web str·nku pro vÌce informacÌ.\n\n".BASE_URL."%7\$s\n";
+               "Pros√≠m nav≈°tivte tuto web str√°nku pro v√≠ce informac√≠.\n\n".BASE_URL."%7\$s\n";
 
 
-$title_takeover_project   = ABBR_MANAGER_NAME.": V·π projekt byl p¯evzat";
-$title_takeover_task      = ABBR_MANAGER_NAME.": V·π ˙kol byl p¯evzat";
+$title_takeover_project   = ABBR_MANAGER_NAME.": V√°≈° projekt byl p≈ôevzat";
+$title_takeover_task      = ABBR_MANAGER_NAME.": V√°≈° √∫kol byl p≈ôevzat";
 
-$email_takeover_task      = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe ˙kol, kter˝ jste vlastnil, byl p¯evzat administr·torem ".$email_date.".\n\n";
-$email_takeover_project   = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe projekt, kter˝ jste vlastnil, byl p¯evzat administr·torem ".$email_date.".\n\n";
-
-
-$title_new_owner_project  = ABBR_MANAGER_NAME.": Projekt pro V·s";
-$title_new_owner_task     = ABBR_MANAGER_NAME.": ⁄kol pro V·s";
-
-$email_new_owner_project  = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe projekt kter˝ byl vytvo¯en ".$email_date.", je nynÌ pod VaπÌ spr·vou (jste vlastnÌkem projektu).\n\nZde podrobnosti:\n\n";
-$email_new_owner_task     = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe ˙kol kter˝ byl vytvo¯en ".$email_date.", je nynÌ pod VaπÌ spr·vou (jste vlastnÌkem ˙kolu).\n\nZde jsou podrobnosti:\n\n";
+$email_takeover_task      = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe √∫kol, kter√Ω jste vlastnil, byl p≈ôevzat administr√°torem ".$email_date.".\n\n";
+$email_takeover_project   = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe projekt, kter√Ω jste vlastnil, byl p≈ôevzat administr√°torem ".$email_date.".\n\n";
 
 
-$title_new_group_project  = ABBR_MANAGER_NAME.": Nov˝ projekt: %s";
-$title_new_group_task     = ABBR_MANAGER_NAME.": Nov˝ ˙kol: %s";
+$title_new_owner_project  = ABBR_MANAGER_NAME.": Projekt pro V√°s";
+$title_new_owner_task     = ABBR_MANAGER_NAME.": √ökol pro V√°s";
 
-$email_new_group_project  = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe byl vytvo¯en nov˝ projekt ".$email_date."\n\nZde podrobnosti:\n\n";
-$email_new_group_task     = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe byl vytvo¯en nov˝ ˙kol ".$email_date."\n\nZde podrobnosti:\n\n";
-
-
-$title_edit_owner_project = ABBR_MANAGER_NAME.": V·π projekt byl aktualizov·n";
-$title_edit_owner_task    = ABBR_MANAGER_NAME.": V·π ˙kol byl aktualizov·n";
-
-$email_edit_owner_project = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe projekt kter˝ vlastnÌte byl zmÏnÏn ".$email_date.".\n\nZde jsou podrobnosti:\n\n";
-$email_edit_owner_task    = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe ˙kol kter˝ vlastnÌte byl zmÏnÏn ".$email_date.".\n\nZde jsou podrobnosti:\n\n";
+$email_new_owner_project  = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe projekt kter√Ω byl vytvo≈ôen ".$email_date.", je nyn√≠ pod Va≈°√≠ spr√°vou (jste vlastn√≠kem projektu).\n\nZde podrobnosti:\n\n";
+$email_new_owner_task     = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe √∫kol kter√Ω byl vytvo≈ôen ".$email_date.", je nyn√≠ pod Va≈°√≠ spr√°vou (jste vlastn√≠kem √∫kolu).\n\nZde jsou podrobnosti:\n\n";
 
 
-$title_edit_group_project = ABBR_MANAGER_NAME.": Aktualizovan˝ projekt";
-$title_edit_group_task    = ABBR_MANAGER_NAME.": Aktualizovan˝ ˙kol";
+$title_new_group_project  = ABBR_MANAGER_NAME.": Nov√Ω projekt: %s";
+$title_new_group_task     = ABBR_MANAGER_NAME.": Nov√Ω √∫kol: %s";
 
-$email_edit_group_project = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe projekt kter˝ vlastnÌte %s byl zmÏnÏn ".$email_date.".\n\nZde jsou podrobnosti:\n\n";
-$email_edit_group_task    = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe ˙kol kter˝ vlastnÌte %s byl zmÏnÏn ".$email_date.".\n\nZde jsou podrobnosti:\n\n";
+$email_new_group_project  = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe byl vytvo≈ôen nov√Ω projekt ".$email_date."\n\nZde podrobnosti:\n\n";
+$email_new_group_task     = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe byl vytvo≈ôen nov√Ω √∫kol ".$email_date."\n\nZde podrobnosti:\n\n";
 
 
-$title_delete_project     = ABBR_MANAGER_NAME.": Projekt smaz·n";
-$title_delete_task        = ABBR_MANAGER_NAME.": ⁄kol smaz·n";
+$title_edit_owner_project = ABBR_MANAGER_NAME.": V√°≈° projekt byl aktualizov√°n";
+$title_edit_owner_task    = ABBR_MANAGER_NAME.": V√°≈° √∫kol byl aktualizov√°n";
 
-$email_delete_project     = "Dobr˝ den,\n\n".
-                            "".MANAGER_NAME." V·s informuje, æe projekt kterÈho jste byl vlastnÌkem byl smaz·n ".$email_date."\n\n".
-                            "DÏkujeme za ¯ÌzenÌ projektu v pr˘bÏhu jeho trv·nÌ.\n\n";
-$email_delete_task        = "Dobr˝ den,\n\n".
-                            "".MANAGER_NAME." V·s informuje, æe ˙kol kterÈho jste byl vlastnÌkem, byl smaz·n ".$email_date."\n\n".
-                            "DÏkujeme za ¯ÌzenÌ ˙kolu v pr˘bÏhu jeho trv·nÌ.\n\n";
+$email_edit_owner_project = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe projekt kter√Ω vlastn√≠te byl zmƒõnƒõn ".$email_date.".\n\nZde jsou podrobnosti:\n\n";
+$email_edit_owner_task    = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe √∫kol kter√Ω vlastn√≠te byl zmƒõnƒõn ".$email_date.".\n\nZde jsou podrobnosti:\n\n";
+
+
+$title_edit_group_project = ABBR_MANAGER_NAME.": Aktualizovan√Ω projekt";
+$title_edit_group_task    = ABBR_MANAGER_NAME.": Aktualizovan√Ω √∫kol";
+
+$email_edit_group_project = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe projekt kter√Ω vlastn√≠te %s byl zmƒõnƒõn ".$email_date.".\n\nZde jsou podrobnosti:\n\n";
+$email_edit_group_task    = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe √∫kol kter√Ω vlastn√≠te %s byl zmƒõnƒõn ".$email_date.".\n\nZde jsou podrobnosti:\n\n";
+
+
+$title_delete_project     = ABBR_MANAGER_NAME.": Projekt smaz√°n";
+$title_delete_task        = ABBR_MANAGER_NAME.": √ökol smaz√°n";
+
+$email_delete_project     = "Dobr√Ω den,\n\n".
+                            "".MANAGER_NAME." V√°s informuje, ≈æe projekt kter√©ho jste byl vlastn√≠kem byl smaz√°n ".$email_date."\n\n".
+                            "Dƒõkujeme za ≈ô√≠zen√≠ projektu v pr≈Øbƒõhu jeho trv√°n√≠.\n\n";
+$email_delete_task        = "Dobr√Ω den,\n\n".
+                            "".MANAGER_NAME." V√°s informuje, ≈æe √∫kol kter√©ho jste byl vlastn√≠kem, byl smaz√°n ".$email_date."\n\n".
+                            "Dƒõkujeme za ≈ô√≠zen√≠ √∫kolu v pr≈Øbƒõhu jeho trv√°n√≠.\n\n";
 
 $delete_list = "Projektt: %1\$s\n".
-                "⁄kol:   %2\$s\n".
+                "√ökol:   %2\$s\n".
                 "Stav: %3\$s\n\n".
                 "Text:\n%4\$s\n\n";
 
-$title_welcome            = "VÌtejte v ".ABBR_MANAGER_NAME;
-$email_welcome            = "Dobr˝ den,\n\n ".MANAGER_NAME." V·s vÌt· v n·stroji pro spr·vu projekt˘ ".$email_date.".\n\n".
+$title_welcome            = "V√≠tejte v ".ABBR_MANAGER_NAME;
+$email_welcome            = "Dobr√Ω den,\n\n ".MANAGER_NAME." V√°s v√≠t√° v n√°stroji pro spr√°vu projekt≈Ø ".$email_date.".\n\n".
                             //"As you are new here I will explain a couple of things to you so that you can quickly start to work\n\n".
-                            "Na zaË·tek, nÏkolik m·lo tip˘, kterÈ V·m umoænÌ zaËÌt rychle pracovat s programem\n\n".
+                            "Na zaƒç√°tek, nƒõkolik m√°lo tip≈Ø, kter√© V√°m umo≈æn√≠ zaƒç√≠t rychle pracovat s programem\n\n".
                             //"First of all this is a project management tool, the main screen will show you the projects that are currently available. ".
-                            "HlavnÌ str·nka V·m zobrazÌ projekty, kterÈ jsou V·m dostupnÈ ".
+                            "Hlavn√≠ str√°nka V√°m zobraz√≠ projekty, kter√© jsou V√°m dostupn√© ".
                             //"If you click on one of the names you will find yourself in the task's part. This is where all the work will go on.\n\n".
-                            "Pokud kliknete na jeden z projekt˘, octnete se v Ë·sti ˙kol˘ danÈho projektu. NynÌ m˘æete zaËÌt pracovat :-).\n\n".
+                            "Pokud kliknete na jeden z projekt≈Ø, octnete se v ƒç√°sti √∫kol≈Ø dan√©ho projektu. Nyn√≠ m≈Ø≈æete zaƒç√≠t pracovat :-).\n\n".
                             //Every item you post or task you edit will be shown to other users as 'new' or 'updated'. This also works vice-versa and ".
                             //"it enables you to quickly spot where the activity is
-                            "Kaæd· poloæka, kterou odeπlete nebo ˙kol, kter˝ zmÏnÌte bude zobrazena ostatnÌm uæivatel˘m jako aktualizovan· nebo nov·. 
-                            Samoz¯ejmÏ toto funguje i naopak a umoæÚuje rychle si vπimnout aktivity\n\n".
+                            "Ka≈æd√° polo≈æka, kterou ode≈°lete nebo √∫kol, kter√Ω zmƒõn√≠te bude zobrazena ostatn√≠m u≈æivatel≈Øm jako aktualizovan√° nebo nov√°. 
+                            Samoz≈ôejmƒõ toto funguje i naopak a umo≈æ≈àuje rychle si v≈°imnout aktivity\n\n".
                             //"You can also take or get ownership of tasks and you will find yourself able to edit them and all the forum posts belonging to it. ".
-                            "M˘æete takÈ p¯evzÌt vlastnictvÌ ˙kolu, ËÌmæ zÌsk·te pr·vo jej spravovat, vËetnÏ fÛra pat¯ÌcÌho k nÏmu. ".
+                            "M≈Ø≈æete tak√© p≈ôevz√≠t vlastnictv√≠ √∫kolu, ƒç√≠m≈æ z√≠sk√°te pr√°vo jej spravovat, vƒçetnƒõ f√≥ra pat≈ô√≠c√≠ho k nƒõmu. ".
                             //"As you progress with your work please edit your task's text and status so that everybody can keep a track on your progress. ".
-                            "Jak budete pokraËovat se svou pracÌ, prosÌm editujte text ˙kolu a jeho stav tak, aby kaæd˝ mohl mÌt povÏdomÌ o Vaπem postupu. ".
-                            "\n\nNynÌ mi nezb˝v· neæ V·m pop¯·t mnoho ˙spÏch˘. V p¯ÌpadÏ, æe si nebude vÏdÏt rady poπlete email na ".EMAIL_ADMIN.".\n\n --HodnÏ πtestÌ !\n\n".
-                            "Login / P¯ihlaπovacÌ jmÈno:       %1\$s\n".
+                            "Jak budete pokraƒçovat se svou prac√≠, pros√≠m editujte text √∫kolu a jeho stav tak, aby ka≈æd√Ω mohl m√≠t povƒõdom√≠ o Va≈°em postupu. ".
+                            "\n\nNyn√≠ mi nezb√Ωv√° ne≈æ V√°m pop≈ô√°t mnoho √∫spƒõch≈Ø. V p≈ô√≠padƒõ, ≈æe si nebude vƒõdƒõt rady po≈°lete email na ".EMAIL_ADMIN.".\n\n --Hodnƒõ ≈°test√≠ !\n\n".
+                            "Login / P≈ôihla≈°ovac√≠ jm√©no:       %1\$s\n".
                             "Heslo:                            %2\$s\n\n".
                             "skupina:                          %3\$s".
-                            "JmÈno:                            %4\$s\n".
-                            "Web str·nka:                      ".BASE_URL."\n\n".
+                            "Jm√©no:                            %4\$s\n".
+                            "Web str√°nka:                      ".BASE_URL."\n\n".
                             "%5\$s";
 
-$title_user_change1       = ABBR_MANAGER_NAME.": V·π ˙Ëet byl zmÏnÏn administr·torem";
-$email_user_change1       = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe V·π ˙Ëet byl zmÏnÏn ".$email_date." uæivatelem %1\$s ( %2\$s ) \n\n".
-                            "Login / P¯ihlaπovacÌ jmÈno:     %3\$s\n".
+$title_user_change1       = ABBR_MANAGER_NAME.": V√°≈° √∫ƒçet byl zmƒõnƒõn administr√°torem";
+$email_user_change1       = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe V√°≈° √∫ƒçet byl zmƒõnƒõn ".$email_date." u≈æivatelem %1\$s ( %2\$s ) \n\n".
+                            "Login / P≈ôihla≈°ovac√≠ jm√©no:     %3\$s\n".
                             "Heslo:                          %4\$s\n\n".
                             "Skupina:                        %5\$s".
-                            "JmÈno:                          %6\$s\n\n".
+                            "Jm√©no:                          %6\$s\n\n".
                             "%7\$s";
 
-$title_user_change2       = ABBR_MANAGER_NAME.": V·π ˙Ëet byl zmÏnÏn";
-$email_user_change2       = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe jste uspÏπnÏ zmÏnili nastavenÌ Vaπeho ˙Ëtu ".$email_date.".\n\n".
-                            "Login / P¯ihlaπovacÌ jmÈno:     %1\$s\n".
+$title_user_change2       = ABBR_MANAGER_NAME.": V√°≈° √∫ƒçet byl zmƒõnƒõn";
+$email_user_change2       = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe jste uspƒõ≈°nƒõ zmƒõnili nastaven√≠ Va≈°eho √∫ƒçtu ".$email_date.".\n\n".
+                            "Login / P≈ôihla≈°ovac√≠ jm√©no:     %1\$s\n".
                             "Heslo:                          %2\$s\n\n".
-                            "JmÈno:                          %3\$s\n";
+                            "Jm√©no:                          %3\$s\n";
 
-$title_user_change3       = ABBR_MANAGER_NAME.": V·π ˙Ëet byl zmÏnÏn";
-$email_user_change3       = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe jste uspÏπnÏ zmÏnili nastavenÌ Vaπeho ˙Ëtu ".$email_date.".\n\n".
-                            "Login / P¯ihlaπovacÌ jmÈno: %1\$s\n".
-                            "Vaπe heslo nebylo zmÏnÏno.\n\n".
-                            "JmÈno:  %2\$s\n";
+$title_user_change3       = ABBR_MANAGER_NAME.": V√°≈° √∫ƒçet byl zmƒõnƒõn";
+$email_user_change3       = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe jste uspƒõ≈°nƒõ zmƒõnili nastaven√≠ Va≈°eho √∫ƒçtu ".$email_date.".\n\n".
+                            "Login / P≈ôihla≈°ovac√≠ jm√©no: %1\$s\n".
+                            "Va≈°e heslo nebylo zmƒõnƒõno.\n\n".
+                            "Jm√©no:  %2\$s\n";
 
-$title_revive             = ABBR_MANAGER_NAME.": ⁄Ëet odblokov·n";
-$email_revive             = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe v·π ˙Ëet byl odblokov·n ".$email_date.".\n\n".
-                            "Login / P¯ihlaπovacÌ jmÈno: %1\$s\n".
-                            "JmÈno:  %2\$s\n\n".
-                            "Vaπe heslo V·m nemohlo b˝t zasl·no protoæe je zaπifrov·no. \n\n".
-                            "Pokud jste zapomnÏl vaπe heslo prosÌm napiπe email na ".EMAIL_ADMIN.".";
+$title_revive             = ABBR_MANAGER_NAME.": √öƒçet odblokov√°n";
+$email_revive             = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe v√°≈° √∫ƒçet byl odblokov√°n ".$email_date.".\n\n".
+                            "Login / P≈ôihla≈°ovac√≠ jm√©no: %1\$s\n".
+                            "Jm√©no:  %2\$s\n\n".
+                            "Va≈°e heslo V√°m nemohlo b√Ωt zasl√°no proto≈æe je za≈°ifrov√°no. \n\n".
+                            "Pokud jste zapomnƒõl va≈°e heslo pros√≠m napi≈°e email na ".EMAIL_ADMIN.".";
 
-$title_delete_user        = ABBR_MANAGER_NAME.": ⁄Ëet zablokov·n.";
-$email_delete_user        = "Dobr˝ den,\n\n".MANAGER_NAME." V·s informuje, æe V·π ˙Ëet byl zablokov·n ".$email_date.".\n".
-                            "DÏkujeme V·m za veπkerou vykonanou pr·ci!\n\n".
-                            "Pokud m·te p¯ipomÌnky, nebo si myslÌte æe nastala chyba, napiπte email na ".EMAIL_ADMIN.".";
+$title_delete_user        = ABBR_MANAGER_NAME.": √öƒçet zablokov√°n.";
+$email_delete_user        = "Dobr√Ω den,\n\n".MANAGER_NAME." V√°s informuje, ≈æe V√°≈° √∫ƒçet byl zablokov√°n ".$email_date.".\n".
+                            "Dƒõkujeme V√°m za ve≈°kerou vykonanou pr√°ci!\n\n".
+                            "Pokud m√°te p≈ôipom√≠nky, nebo si mysl√≠te ≈æe nastala chyba, napi≈°te email na ".EMAIL_ADMIN.".";
 
 ?>

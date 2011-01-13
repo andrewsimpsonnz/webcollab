@@ -21,37 +21,40 @@
   Function:
   ---------
 
-  Language files (long messages) for 'fr' (French/Français)
+  Language files (long messages) for 'fr' (French/FranÃ§ais)
 
   Translation: Olivier Chaussavoine / Julien Dupont
 
   Maintainer:
 
+  NOTE: This file is written in UTF-8 character set
+
 */
 
-$taskgroup_info =   "<ul><li>Si vous effaçez votre groupe de tâche, toutes les tâches de ce groupe seront déclassées.</li>\n".
-                      "<li>Vous pouvez changer le nom de la catégorie sans modifier les tâches.</li>\n".
-                      "<li>Deux groupes de tâches ne peuvent avoir le même nom.</li></ul>\n";
 
-$usergroup_info =   "<ul><li>Si vous effacez un groupe d'utilisateurs, toutes leurs contributions dans le forum vont aussi être détruites.</li>\n".
-                     "<li> Les groupes d'utilisateurs privés ne peuvent âtre vu que par les membres appartenant au groupe privé
+$taskgroup_info =   "<ul><li>Si vous effaÃ§ez votre groupe de tÃ¢che, toutes les tÃ¢ches de ce groupe seront dÃ©classÃ©es.</li>\n".
+                      "<li>Vous pouvez changer le nom de la catÃ©gorie sans modifier les tÃ¢ches.</li>\n".
+                      "<li>Deux groupes de tÃ¢ches ne peuvent avoir le mÃªme nom.</li></ul>\n";
+
+$usergroup_info =   "<ul><li>Si vous effacez un groupe d'utilisateurs, toutes leurs contributions dans le forum vont aussi Ãªtre dÃ©truites.</li>\n".
+                     "<li> Les groupes d'utilisateurs privÃ©s ne peuvent Ã¢tre vu que par les membres appartenant au groupe privÃ©
 .</li>\n".
                       "<li>Vous pouvez changer le nom de groupe d'utilisateurs sans modifier les utilisateurs.</li>\n".
-                      "<li>Deux groupe d'utilisateurs ne peuvent avoir le même nom.</li></ul>\n";
+                      "<li>Deux groupe d'utilisateurs ne peuvent avoir le mÃªme nom.</li></ul>\n";
 
-$user_info      =    "Merci de sélectionner votre activité dans le menu à gauche.<br /><br />".
+$user_info      =    "Merci de sÃ©lectionner votre activitÃ© dans le menu Ã  gauche.<br /><br />".
                       "Pour informations:<br />".
                       "<ul>".
-                      "<li>Des utilisateurs privées ne peuvent être vu que par les membres du même groupe d'utilisateur
+                      "<li>Des utilisateurs privÃ©es ne peuvent Ãªtre vu que par les membres du mÃªme groupe d'utilisateur
 .</li>\n".
-                      "<li>Un utilisateur est effaçé en deux étapes, la seconde est permanente.</li>\n".
-                      "<li>Un utilisateur effacé perd toutes ses tâches mais ses contributions aux forums sont conservées.</li>\n".
-                      "<li>Un utilisateur détruit de manière permanente efface tout.</li>\n".
-                      "<li>Un utilisateur effacé conserve une trace de ses tâches sous forme de liste et peut les utiliser jusqu'à ce que cette liste soit vide.</li>\n".
-                      "<li>TOUTE les actions effectuées sur un utilisateur lui sont confirmées par email.</li>\n".
-                      "<li>Les mot de passes sont cryptés. On ne peut qu'en affecter un nouveau.</li>\n".
-                      "<li>Les mot de passes sont envoyés par email seulement une fois. Merci d'être prudent sur leur lieu de stockage!</li>\n".
-                      "<li>Un utilisateur peut s'éditer lui même sans que l'administrateur ne soit mis au courrant, cela économise du temps (et des emails)</li>\n".
+                      "<li>Un utilisateur est effaÃ§Ã© en deux Ã©tapes, la seconde est permanente.</li>\n".
+                      "<li>Un utilisateur effacÃ© perd toutes ses tÃ¢ches mais ses contributions aux forums sont conservÃ©es.</li>\n".
+                      "<li>Un utilisateur dÃ©truit de maniÃ¨re permanente efface tout.</li>\n".
+                      "<li>Un utilisateur effacÃ© conserve une trace de ses tÃ¢ches sous forme de liste et peut les utiliser jusqu'Ã  ce que cette liste soit vide.</li>\n".
+                      "<li>TOUTE les actions effectuÃ©es sur un utilisateur lui sont confirmÃ©es par email.</li>\n".
+                      "<li>Les mot de passes sont cryptÃ©s. On ne peut qu'en affecter un nouveau.</li>\n".
+                      "<li>Les mot de passes sont envoyÃ©s par email seulement une fois. Merci d'Ãªtre prudent sur leur lieu de stockage!</li>\n".
+                      "<li>Un utilisateur peut s'Ã©diter lui mÃªme sans que l'administrateur ne soit mis au courrant, cela Ã©conomise du temps (et des emails)</li>\n".
                       "</ul>\n";
 
 ?>

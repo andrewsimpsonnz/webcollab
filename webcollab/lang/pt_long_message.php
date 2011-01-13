@@ -27,27 +27,27 @@
 
 */
 
-$taskgroup_info =   "<ul><li>Se eliminar um grupo de tarefas, todas as tarefas pertencentes a esse grupo se tornar„o n„o-categorizadas..</li>\n".
+$taskgroup_info =   "<ul><li>Se eliminar um grupo de tarefas, todas as tarefas pertencentes a esse grupo se tornar√£o n√£o-categorizadas..</li>\n".
                       "<li>Pode alterar o nome de uma categoria sem interferir nas tarefas.</li>\n".
-                      "<li>Dois grupos de tarefas n„o podem ter nomes iguais.</li></ul>\n";
+                      "<li>Dois grupos de tarefas n√£o podem ter nomes iguais.</li></ul>\n";
 
-$usergroup_info =   "<ul><li>Se eliminar uma equipa todas as mensagens particulares relacionadas com ela existentes nos fÛruns tambÈm o ser„o.</li>\n".
-                      "<li>Equipas privadas sÛ podem ser vistas pelos seus membros.</li>\n".
+$usergroup_info =   "<ul><li>Se eliminar uma equipa todas as mensagens particulares relacionadas com ela existentes nos f√≥runs tamb√©m o ser√£o.</li>\n".
+                      "<li>Equipas privadas s√≥ podem ser vistas pelos seus membros.</li>\n".
                       "<li>Pode alterar o nome de uma equipa sem interferir com os seus membros.</li>\n".
-                      "<li>Duas equipas n„o podem ter nomes iguais.</li></ul>\n";
+                      "<li>Duas equipas n√£o podem ter nomes iguais.</li></ul>\n";
 
-$user_info      =    "Por favor, escolha o que quer fazer usando o menu ‡ esquerda.<br /><br />".
-                      "Algumas dicas r·pidas:<br />".
+$user_info      =    "Por favor, escolha o que quer fazer usando o menu √† esquerda.<br /><br />".
+                      "Algumas dicas r√°pidas:<br />".
                       "<ul>".
-                      "<li>Utilizadores privados sÛ podem ser vistos por membros da mesma equipa.</li>\n".
-                      "<li>A eliminaÁ„o de utilizadores tem dois estados, sendo o segundo caracterizado pelo seu car·cter permanente.</li>\n".
-                      "<li>Um utilizador que È eliminado perde todas as suas tarefas, mas mantÈm as suas mensagens nos fÛruns.</li>\n".
-                      "<li>Um utilizador que È permanentemente eliminado perde tudo.</li>\n".
-                      "<li>Um utilizador eliminado mantÈm o registo das suas tarefas j· realizadas, continuando com esta lista atÈ ser recuperado.</li>\n".
-                      "<li>TODAS as acÁıes realizadas num utilizador ser„o notificadas ao prÛprio via e-mail.</li>\n".
-                      "<li>As palavras-passe s„o encriptadas na base de dados. SÛ È possÌvel registar uma nova.</li>\n".
-                      "<li>As palavras-passe sÛ s„o enviadas via e-mail uma ˙nica vez aos utilizadores, no momento em que s„o registadas. Portanto, envie-as para um endereÁo seguro!</li>\n".
-                      "<li>Os utilizadores podem editar-se a si prÛprios sem conhecimento da administraÁ„o - isso fa-lo-· economizar tempo</li>\n".
+                      "<li>Utilizadores privados s√≥ podem ser vistos por membros da mesma equipa.</li>\n".
+                      "<li>A elimina√ß√£o de utilizadores tem dois estados, sendo o segundo caracterizado pelo seu car√°cter permanente.</li>\n".
+                      "<li>Um utilizador que √© eliminado perde todas as suas tarefas, mas mant√©m as suas mensagens nos f√≥runs.</li>\n".
+                      "<li>Um utilizador que √© permanentemente eliminado perde tudo.</li>\n".
+                      "<li>Um utilizador eliminado mant√©m o registo das suas tarefas j√° realizadas, continuando com esta lista at√© ser recuperado.</li>\n".
+                      "<li>TODAS as ac√ß√µes realizadas num utilizador ser√£o notificadas ao pr√≥prio via e-mail.</li>\n".
+                      "<li>As palavras-passe s√£o encriptadas na base de dados. S√≥ √© poss√≠vel registar uma nova.</li>\n".
+                      "<li>As palavras-passe s√≥ s√£o enviadas via e-mail uma √∫nica vez aos utilizadores, no momento em que s√£o registadas. Portanto, envie-as para um endere√ßo seguro!</li>\n".
+                      "<li>Os utilizadores podem editar-se a si pr√≥prios sem conhecimento da administra√ß√£o - isso fa-lo-√° economizar tempo</li>\n".
                       "</ul>\n";
 
 ?>

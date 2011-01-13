@@ -54,10 +54,6 @@ define('XML_LANG', "en" );
     $lang_setup['help']                = "Help me with this form";
     $lang_setup['no_config']           = "Current configuration file does not allow web-based setup";
 
-//screen javascript
-
-    $lang['setup_js_alert_field']      = "Please enter the missing field";
-
 //setup
     $lang_setup['min_version']         = "WebCollab needs PHP version 4.3.0, or higher.  This version is ".PHP_VERSION;
     $lang_setup['no_mbstring']         = "Unable to set UTF-8 encoding in PHP.<br \>\n".

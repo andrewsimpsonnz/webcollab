@@ -29,27 +29,27 @@
 */
 
 
-$taskgroup_info =   "<ul><li>Ukoliko obri¹ete radnu grupu, svi zadaci koji joj pripadaju æe biti oznaèeni kao nekategorisani.</li>\n".
-                      "<li>Ime radne grupe mo¾ete menjati bez bojazni da æe to uticati na zadatke koji joj pripadaju - zadaci æe i dalje ostati pod istom radnom grupom.</li>\n".
+$taskgroup_info =   "<ul><li>Ukoliko obriÅ¡ete radnu grupu, svi zadaci koji joj pripadaju Ä‡e biti oznaÄeni kao nekategorisani.</li>\n".
+                      "<li>Ime radne grupe moÅ¾ete menjati bez bojazni da Ä‡e to uticati na zadatke koji joj pripadaju - zadaci Ä‡e i dalje ostati pod istom radnom grupom.</li>\n".
                       "<li>Svaka radna grupa mora da ima jedinstveno ime.</li></ul>\n";
 
-$usergroup_info =   "<ul><li>Brisanjem korisnièke grupe obrisaæete i sve poruke na privatnim forumima koje pripadaju toj grupi.</li>\n".
-                      "<li>Privatnu korisnièku grupu mogu videti samo èlanovi te iste grupe.</li>\n".
-                      "<li>Ime korisnièke grupe mo¾ete promeniti bez bojazni da æe to uticati na korisnike koji joj pripadaju - oni æe i dalje pripadati istoj korisnièkoj grupi.</li>\n".
-                      "<li>Svaka korisnièka grupa mora da ima jedinstveno ime.</li></ul>\n";
+$usergroup_info =   "<ul><li>Brisanjem korisniÄke grupe obrisaÄ‡ete i sve poruke na privatnim forumima koje pripadaju toj grupi.</li>\n".
+                      "<li>Privatnu korisniÄku grupu mogu videti samo Älanovi te iste grupe.</li>\n".
+                      "<li>Ime korisniÄke grupe moÅ¾ete promeniti bez bojazni da Ä‡e to uticati na korisnike koji joj pripadaju - oni Ä‡e i dalje pripadati istoj korisniÄkoj grupi.</li>\n".
+                      "<li>Svaka korisniÄka grupa mora da ima jedinstveno ime.</li></ul>\n";
 
 $user_info      =    "Molim vas odaberite komandu sa menija na levoj strani.<br /><br />".
                       "Par kratkih saveta:<br />".
                       "<ul>".
-                      "<li>Privatne korisnike mogu da vide samo èlanovi korisnièke grupe kojoj ti korisnici i sami pripadaju.</li>\n".
-                      "<li>Korisnièki nalozi se bri¹u u dva koraka, pri èemu je drugi korak trajan.</li>\n".
+                      "<li>Privatne korisnike mogu da vide samo Älanovi korisniÄke grupe kojoj ti korisnici i sami pripadaju.</li>\n".
+                      "<li>KorisniÄki nalozi se briÅ¡u u dva koraka, pri Äemu je drugi korak trajan.</li>\n".
                       "<li>Obrisani korisnik gubi sve svoje zadatke, ali ne i poruke na forumu.</li>\n".
                       "<li>Trajno obrisani korisnik gubi SVE podatke.</li>\n".
-                      "<li>Obrisani korisnik zadr¾ava istorijat o svim podacima koje je video, i nastaviæe da koristi taj istorijat nakon o¾ivljavanja.</li>\n".
-                      "<li>Korisnik æe biti obave¹ten o SVIM promenama na njegovom nalogu putem e-pisma.</li>\n".
-                      "<li>Lozinke u bazi podataka su ¹ifrovane tako da, ukoliko je zaboravite, mo¾ete samo da postavite novu lozinku.</li>\n".
-                      "<li>Lozinka se korisniku ¹alje samo jednom kada se postavi, zato budite sigurni da je ¹aljete na pravu e-adresu!</li>\n".
-                      "<li>Korisnici mogu sami da menjaju sopstvene liène podatke bez znanja administratora - ovo ¹tedi vreme i smanjuje obaveze administratora.</li>\n".
+                      "<li>Obrisani korisnik zadrÅ¾ava istorijat o svim podacima koje je video, i nastaviÄ‡e da koristi taj istorijat nakon oÅ¾ivljavanja.</li>\n".
+                      "<li>Korisnik Ä‡e biti obaveÅ¡ten o SVIM promenama na njegovom nalogu putem e-pisma.</li>\n".
+                      "<li>Lozinke u bazi podataka su Å¡ifrovane tako da, ukoliko je zaboravite, moÅ¾ete samo da postavite novu lozinku.</li>\n".
+                      "<li>Lozinka se korisniku Å¡alje samo jednom kada se postavi, zato budite sigurni da je Å¡aljete na pravu e-adresu!</li>\n".
+                      "<li>Korisnici mogu sami da menjaju sopstvene liÄne podatke bez znanja administratora - ovo Å¡tedi vreme i smanjuje obaveze administratora.</li>\n".
                       "</ul>\n";
 
 ?>

@@ -24,32 +24,34 @@
 
   Translation: Lukas Moravek <moravekl at gmail.com>
   Corrections: Jirka Dutka <jirka at dutka.net>
-  Corrections: Milan Horák <strangeril at users.sourceforge.net>
+  Corrections: Milan HorÃ¡k <strangeril at users.sourceforge.net>
+
+  NOTE: This file is written in UTF-8 character set
 
 */
 
 
-$taskgroup_info =   "<ul><li>Pokud sma¾ete skupinu úkolù, v¹echny úkoly patøící do této skupiny budou nastaveny jako nezaøazené.</li>\n".
-                      "<li>Mù¾ete libovolnì mìnit název skupiny úkolù, ani¾ by to mìlo vliv na úkoly.</li>\n".
-                      "<li>Dvì skupiny úkolù nemohou mít stejnı název.</li></ul>\n";
+$taskgroup_info =   "<ul><li>Pokud smaÅ¾ete skupinu ÃºkolÅ¯, vÅ¡echny Ãºkoly patÅ™Ã­cÃ­ do tÃ©to skupiny budou nastaveny jako nezaÅ™azenÃ©.</li>\n".
+                      "<li>MÅ¯Å¾ete libovolnÄ› mÄ›nit nÃ¡zev skupiny ÃºkolÅ¯, aniÅ¾ by to mÄ›lo vliv na Ãºkoly.</li>\n".
+                      "<li>DvÄ› skupiny ÃºkolÅ¯ nemohou mÃ­t stejnÃ½ nÃ¡zev.</li></ul>\n";
 
-$usergroup_info =   "<ul><li>Pokud sma¾ete skupinu, v¹echna privátní fóra s ní spojená budou smazána.</li>\n".
-                      "<li>Privátní skupina mù¾e bıt zobrazena pouze èlenùm stejné privátní skupiny.</li>\n".
-                      "<li>Mù¾ete libovolnì mìnit název pracovní skupiny, ani¾ by to mìlo vliv na èleny této skupiny.</li>\n".
-                      "<li>Dvì skupiny nemohou mít stejnı název.</li></ul>\n";
+$usergroup_info =   "<ul><li>Pokud smaÅ¾ete skupinu, vÅ¡echna privÃ¡tnÃ­ fÃ³ra s nÃ­ spojenÃ¡ budou smazÃ¡na.</li>\n".
+                      "<li>PrivÃ¡tnÃ­ skupina mÅ¯Å¾e bÃ½t zobrazena pouze ÄlenÅ¯m stejnÃ© privÃ¡tnÃ­ skupiny.</li>\n".
+                      "<li>MÅ¯Å¾ete libovolnÄ› mÄ›nit nÃ¡zev pracovnÃ­ skupiny, aniÅ¾ by to mÄ›lo vliv na Äleny tÃ©to skupiny.</li>\n".
+                      "<li>DvÄ› skupiny nemohou mÃ­t stejnÃ½ nÃ¡zev.</li></ul>\n";
 
-$user_info      =    "Prosím zvolete akci z menu zobrazeného vlevo.<br /><br />".
-                      "Rychlá nápovìda:<br />".
+$user_info      =    "ProsÃ­m zvolete akci z menu zobrazenÃ©ho vlevo.<br /><br />".
+                      "RychlÃ¡ nÃ¡povÄ›da:<br />".
                       "<ul>".
-                      "<li>Privátní u¾ivatelé mohou bıt vidìni pouze u¾ivateli stejné skupiny.</li>\n".
-                      "<li>U¾ivatelé mají dva stupnì smazání, druhı stupeò je trvalı.</li>\n".
-                      "<li>Smazanı u¾ivatel ztratí v¹echny svoje úkoly, kromì zpráv ve fóru (Úkoly nebudou ztraceny, pouze nebudou mít vlastníka).</li>\n".
-                      "<li>Trvale smazanı u¾ivatel ztratí v¹e (Úkoly nebudou ztraceny, pouze nebudou mít vlastníka).</li>\n".
-                      "<li>Smazanı u¾ivatel dr¾í záznamy úkolù, a mu¾e po obnovení pokraèovat v jejich plnìní.</li>\n".
-                      "<li>Ve¹keré zmìny budou odeslány také danému u¾ivateli.</li>\n".
-                      "<li>Hesla jsou za¹ifrována v databázi. Je mo¾né pouze vytvoøit nové heslo.</li>\n".
-                      "<li>Hesla jsou poslána pouze kdy¾ jsou zadána, buïte opatrnı na jakou adresu je zasíláte!</li>\n".
-                      "<li>U¾ivatelé mohou èásteènì mìnit svoje nastavení bez znalostí administrace.</li>\n".
+                      "<li>PrivÃ¡tnÃ­ uÅ¾ivatelÃ© mohou bÃ½t vidÄ›ni pouze uÅ¾ivateli stejnÃ© skupiny.</li>\n".
+                      "<li>UÅ¾ivatelÃ© majÃ­ dva stupnÄ› smazÃ¡nÃ­, druhÃ½ stupeÅˆ je trvalÃ½.</li>\n".
+                      "<li>SmazanÃ½ uÅ¾ivatel ztratÃ­ vÅ¡echny svoje Ãºkoly, kromÄ› zprÃ¡v ve fÃ³ru (Ãškoly nebudou ztraceny, pouze nebudou mÃ­t vlastnÃ­ka).</li>\n".
+                      "<li>Trvale smazanÃ½ uÅ¾ivatel ztratÃ­ vÅ¡e (Ãškoly nebudou ztraceny, pouze nebudou mÃ­t vlastnÃ­ka).</li>\n".
+                      "<li>SmazanÃ½ uÅ¾ivatel drÅ¾Ã­ zÃ¡znamy ÃºkolÅ¯, a muÅ¾e po obnovenÃ­ pokraÄovat v jejich plnÄ›nÃ­.</li>\n".
+                      "<li>VeÅ¡kerÃ© zmÄ›ny budou odeslÃ¡ny takÃ© danÃ©mu uÅ¾ivateli.</li>\n".
+                      "<li>Hesla jsou zaÅ¡ifrovÃ¡na v databÃ¡zi. Je moÅ¾nÃ© pouze vytvoÅ™it novÃ© heslo.</li>\n".
+                      "<li>Hesla jsou poslÃ¡na pouze kdyÅ¾ jsou zadÃ¡na, buÄte opatrnÃ½ na jakou adresu je zasÃ­lÃ¡te!</li>\n".
+                      "<li>UÅ¾ivatelÃ© mohou ÄÃ¡steÄnÄ› mÄ›nit svoje nastavenÃ­ bez znalostÃ­ administrace.</li>\n".
                       "</ul>\n";
 
 ?>

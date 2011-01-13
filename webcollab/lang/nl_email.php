@@ -31,7 +31,7 @@
 // Get current date/time in prefered timezone
 $ltime = TIME_NOW - date('Z') + TZ * 3600;
 //format is 2004 Apr 01 09:18 +1200
-$email_date = sprintf('%s-%s-%s %+03d00', date('Y', $ltime ), date('n', $ltime ), date('d H:i', $ltime ), TZ );
+$email_date = sprintf('%s %s %s %+03d00', date('Y', $ltime ), $month_array[(date('n', $ltime ) )], date('d H:i', $ltime ), TZ );
 
 $title_file_post          = ABBR_MANAGER_NAME.": Nieuw bestand opgestuurd: %s";
 $email_file_post          = "Hallo,\n\n".

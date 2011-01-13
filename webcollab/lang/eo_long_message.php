@@ -31,27 +31,27 @@
 */
 
 
-$taskgroup_info =   "<ul><li>Se vi forigas taskogrupon, iliaj taskoj iøos sengrupaj.</li>\n".
-                      "<li>La nomo de taskogrupo estas şanøebla sen influi la arojn de taskoj en øi.</li>\n".
+$taskgroup_info =   "<ul><li>Se vi forigas taskogrupon, iliaj taskoj iÄos sengrupaj.</li>\n".
+                      "<li>La nomo de taskogrupo estas ÅanÄebla sen influi la arojn de taskoj en Äi.</li>\n".
                       "<li>Ne povas ekzisti du taskogrupojn kun sama nomo.</li></ul>\n";
 
-$usergroup_info =   "<ul><li>Se vi forigas uzantogrupon, æiuj al øi apartenantaj privataj forumaj mesaøoj ankaı malaperos.</li>\n".
+$usergroup_info =   "<ul><li>Se vi forigas uzantogrupon, Ä‰iuj al Äi apartenantaj privataj forumaj mesaÄoj ankaÅ­ malaperos.</li>\n".
                       "<li>Privataj uzantgrupoj nur estas videbla de membroj de tiuj grupoj (kaj administrantoj).</li>\n".
-                      "<li>La nomo de uzantgrupo estas şanøebla sen influi la aron de uzantoj en øi.</li>\n".
+                      "<li>La nomo de uzantgrupo estas ÅanÄebla sen influi la aron de uzantoj en Äi.</li>\n".
                       "<li>Ne povas ekzisti du taskogrupoj kun sama nomo.</li></ul>\n";
 
 $user_info      =    "Bonvolu elekti agon el la menuo maldekstre.<br /><br />".
                       "Rimarkoj:<br />".
                       "<ul>".
                       "<li>Privataj uzantoj nur povas esti vidata de membroj de la sama uzantogrupo.</li>\n".
-                      "<li>Uzantoj havas du statoj de <em>forigiteco</em> - la dua estas daıra (nerenversigebla).</li>\n".
-                      "<li>Forigita uzanto perdas siajn Taskojn, sed ne la forumajn mesaøojn.</li>\n".
-                      "<li>Daıre forigita uzanto perdis æion.</li>\n".
+                      "<li>Uzantoj havas du statoj de <em>forigiteco</em> - la dua estas daÅ­ra (nerenversigebla).</li>\n".
+                      "<li>Forigita uzanto perdas siajn Taskojn, sed ne la forumajn mesaÄojn.</li>\n".
+                      "<li>DaÅ­re forigita uzanto perdis Ä‰ion.</li>\n".
                       "<li>Forigita uzanto tenas la vid-rajtojn de videblaj taskoj, kaj rericevas ilin post revigigo.</li>\n".
-                      "<li><em>Æiuj</em> Agoj, kiujn vi faras pri uzanto, estos senditaj al li per retpoşto.</li>\n".
+                      "<li><em>Äˆiuj</em> Agoj, kiujn vi faras pri uzanto, estos senditaj al li per retpoÅto.</li>\n".
                       "<li>La pasvortoj estas kriptitaj en la datumbazo, do ne eblas eltrovi ilin. Vi nur povas disdoni novajn.</li>\n".
-                      "<li>La pasvortoj estos post şanøo sendataj (unufoje) al la uzanto - do atentu pri la retpoştadreso.</li>\n".
-                      "<li>Uzantoj povas redakti sin mem, sen ke administrantoj ekscias pri tio. Tio şparos tempon (kaj tro da retmesaøoj).</li>\n".
+                      "<li>La pasvortoj estos post ÅanÄo sendataj (unufoje) al la uzanto - do atentu pri la retpoÅtadreso.</li>\n".
+                      "<li>Uzantoj povas redakti sin mem, sen ke administrantoj ekscias pri tio. Tio Åparos tempon (kaj tro da retmesaÄoj).</li>\n".
                       "</ul>\n";
 
 ?>

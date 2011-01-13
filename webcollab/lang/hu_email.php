@@ -4,7 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  Thi file created 2003 by Andrew Simpson
+  This file created 2003
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -24,148 +24,148 @@
 
   Language files for 'hu' (Hungarian)
 
-  Translation: Széll Tamás
+  Translation: SzÃ©ll TamÃ¡s
 
-  Maintainer: Széll Tamás
+  Maintainer: SzÃ©ll TamÃ¡s
 
-  NOTE: This file is written in ISO-8859-2 character set
+  NOTE: This file is written in UTF-8 character set
 
 */
 
 // Get current date/time in prefered timezone
 $ltime = TIME_NOW - date('Z') + TZ * 3600;
 //format is 2004 Apr 01 09:18 +1200
-$email_date = sprintf('%s %s %s %+03d00', date('Y', $ltime ), $month_array[(date('n', $ltime ) )], date('d H:i', $ltime ), TZ );
+$email_date = sprintf('%s. %s. %s %+03d00', date('Y', $ltime ), $month_array[(date('n', $ltime ) )], date('d H:i', $ltime ), TZ );
 
-$title_file_post          = ABBR_MANAGER_NAME.": Új feltöltött fájl: %s";
-$email_file_post          = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy új fájlt töltött fel ".$email_date." dátummal a következõ: %1\$s.\n\n".
-                            "Fájl:     %2\$s\n".
-                            "Leírás:   %3\$s\n\n".
+$title_file_post          = ABBR_MANAGER_NAME.": Ãšj feltÃ¶ltÃ¶tt fÃ¡jl: %s";
+$email_file_post          = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy Ãºj fÃ¡jlt tÃ¶ltÃ¶tt fel ".$email_date." dÃ¡tummal a kÃ¶vetkezÅ‘: %1\$s.\n\n".
+                            "FÃ¡jl:     %2\$s\n".
+                            "LeÃ­rÃ¡s:   %3\$s\n\n".
                             "Projekt:  %4\$s\n".
                             "Feladat:  %5\$s\n\n".
-                            "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."%6\$s\n";
+                            "KÃ©rem, tovÃ¡bbi rÃ©szletekÃ©rt keresse fel a honlapot.\n\n".BASE_URL."%6\$s\n";
 
 
-$title_forum_post         = ABBR_MANAGER_NAME.": Új fórum üzenet: %s";
-$email_forum_post         = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy új fórum üzenet érkezett ".$email_date." dátummal %1\$s:\n\n----\n\n%2\$s által.\n\n----\n\n".
-                           "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."%3\$s\n";
-$email_forum_reply        = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy új fórum üzenet érkezett ".$email_date." dátummal %1\$s által.\n\n".
-                            "Ez egy válasz %2\$s elõzõ üzenetére.\n\n".
-                            "Eredeti üzenet:\n%3\$s\n\n".
+$title_forum_post         = ABBR_MANAGER_NAME.": Ãšj fÃ³rum Ã¼zenet: %s";
+$email_forum_post         = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy Ãºj fÃ³rum Ã¼zenet Ã©rkezett ".$email_date." dÃ¡tummal %1\$s:\n\n----\n\n%2\$s Ã¡ltal.\n\n----\n\n".
+                           "KÃ©rem, tovÃ¡bbi rÃ©szletekÃ©rt keresse fel a honlapot.\n\n".BASE_URL."%3\$s\n";
+$email_forum_reply        = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy Ãºj fÃ³rum Ã¼zenet Ã©rkezett ".$email_date." dÃ¡tummal %1\$s Ã¡ltal.\n\n".
+                            "Ez egy vÃ¡lasz %2\$s elÅ‘zÅ‘ Ã¼zenetÃ©re.\n\n".
+                            "Eredeti Ã¼zenet:\n%3\$s\n\n".
                             "----\n\n".
-                            "Új válasz:\n%4\$s\n\n".
+                            "Ãšj vÃ¡lasz:\n%4\$s\n\n".
                             "----\n\n".
-                            "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."%5\$s\n";
+                            "KÃ©rem, tovÃ¡bbi rÃ©szletekÃ©rt keresse fel a honlapot.\n\n".BASE_URL."%5\$s\n";
 
 
 $email_list =  "Projekt:    %1\$s\n".
                "Feladat:    %2\$s\n".
-               "Állapot:    %3\$s\n".
+               "Ãllapot:    %3\$s\n".
                "Tulajdonos: %4\$s ( %5\$s )\n".
-               "Szöveg:\n%6\$s\n\n".
-               "Kérem, további részletekért keresse fel a honlapot.\n\n".BASE_URL."%7\$s\n";
+               "SzÃ¶veg:\n%6\$s\n\n".
+               "KÃ©rem, tovÃ¡bbi rÃ©szletekÃ©rt keresse fel a honlapot.\n\n".BASE_URL."%7\$s\n";
 
 
-$title_takeover_project   = ABBR_MANAGER_NAME.": Az Ön projektjét átvették";
-$title_takeover_task      = ABBR_MANAGER_NAME.": Az Ön feladatát átvették";
+$title_takeover_project   = ABBR_MANAGER_NAME.": Az Ã–n projektjÃ©t Ã¡tvettÃ©k";
+$title_takeover_task      = ABBR_MANAGER_NAME.": Az Ã–n feladatÃ¡t Ã¡tvettÃ©k";
 
-$email_takeover_task      = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy Ön áltál tulajdonolt feladatot egy admin átvett ekkor: ".$email_date.".\n\n";
-$email_takeover_project   = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy Ön áltál tulajdonolt projektet egy admin átvett ekkor: ".$email_date.".\n\n";
-
-
-$title_new_owner_project  = ABBR_MANAGER_NAME.": Új projekt az Ön számára";
-$title_new_owner_task     = ABBR_MANAGER_NAME.": Új feladat az Ön számára";
-
-$email_new_owner_project  = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy projekt létrejött ".$email_date." dátummal, és Ön lett a tulajdonosa.\n\nA részleteket itt találja:\n\n";
-$email_new_owner_task     = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy projekt létrejött ".$email_date.", dátummal, és Ön lett a tulajdonosa.\n\nA részleteket itt találja:\n\n";
+$email_takeover_task      = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy Ã–n Ã¡ltÃ¡l tulajdonolt feladatot egy admin Ã¡tvett ekkor: ".$email_date.".\n\n";
+$email_takeover_project   = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy Ã–n Ã¡ltÃ¡l tulajdonolt projektet egy admin Ã¡tvett ekkor: ".$email_date.".\n\n";
 
 
-$title_new_group_project  = ABBR_MANAGER_NAME.": Új projekt: %s";
-$title_new_group_task     = ABBR_MANAGER_NAME.": Új feladat: %s";
+$title_new_owner_project  = ABBR_MANAGER_NAME.": Ãšj projekt az Ã–n szÃ¡mÃ¡ra";
+$title_new_owner_task     = ABBR_MANAGER_NAME.": Ãšj feladat az Ã–n szÃ¡mÃ¡ra";
 
-$email_new_group_project  = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy projekt létrejött ".$email_date." dátummal.\n\nA részleteket itt találja:\n\n";
-$email_new_group_task     = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy feladat létrejött ".$email_date." dátummal.\n\nA részleteket itt találja:\n\n";
-
-
-$title_edit_owner_project = ABBR_MANAGER_NAME.": Frissítve az Ön projektje";
-$title_edit_owner_task    = ABBR_MANAGER_NAME.": Frissítve az Ön feladata";
-
-$email_edit_owner_project = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy az Ön egyik projektjét megváltoztatták ".$email_date." dátummal.\n\nA részleteket itt találja:\n\n";
-$email_edit_owner_task    = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy az Ön egyik feladatát megváltoztatták ".$email_date." dátummal.\n\nA részleteket itt találja:\n\n";
+$email_new_owner_project  = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy projekt lÃ©trejÃ¶tt ".$email_date." dÃ¡tummal, Ã©s Ã–n lett a tulajdonosa.\n\nA rÃ©szleteket itt talÃ¡lja:\n\n";
+$email_new_owner_task     = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy projekt lÃ©trejÃ¶tt ".$email_date.", dÃ¡tummal, Ã©s Ã–n lett a tulajdonosa.\n\nA rÃ©szleteket itt talÃ¡lja:\n\n";
 
 
-$title_edit_group_project = ABBR_MANAGER_NAME.": Projekt frissítve";
-$title_edit_group_task    = ABBR_MANAGER_NAME.": Feladat frissítve";
+$title_new_group_project  = ABBR_MANAGER_NAME.": Ãšj projekt: %s";
+$title_new_group_task     = ABBR_MANAGER_NAME.": Ãšj feladat: %s";
 
-$email_edit_group_project = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy projekt, melynek tulajdonosa: %s, megváltozott ".$email_date." dátummal.\n\nA részleteket itt találja:\n\n";
-$email_edit_group_task    = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy feladat, melynek tulajdonosa: %s, megváltozott ".$email_date." dátummal.\n\nA részleteket itt találja:\n\n";
+$email_new_group_project  = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy projekt lÃ©trejÃ¶tt ".$email_date." dÃ¡tummal.\n\nA rÃ©szleteket itt talÃ¡lja:\n\n";
+$email_new_group_task     = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy feladat lÃ©trejÃ¶tt ".$email_date." dÃ¡tummal.\n\nA rÃ©szleteket itt talÃ¡lja:\n\n";
 
 
-$title_delete_project     = ABBR_MANAGER_NAME.": Projekt törölve";
-$title_delete_task        = ABBR_MANAGER_NAME.": Feladat törölve";
+$title_edit_owner_project = ABBR_MANAGER_NAME.": FrissÃ­tve az Ã–n projektje";
+$title_edit_owner_task    = ABBR_MANAGER_NAME.": FrissÃ­tve az Ã–n feladata";
+
+$email_edit_owner_project = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy az Ã–n egyik projektjÃ©t megvÃ¡ltoztattÃ¡k ".$email_date." dÃ¡tummal.\n\nA rÃ©szleteket itt talÃ¡lja:\n\n";
+$email_edit_owner_task    = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy az Ã–n egyik feladatÃ¡t megvÃ¡ltoztattÃ¡k ".$email_date." dÃ¡tummal.\n\nA rÃ©szleteket itt talÃ¡lja:\n\n";
+
+
+$title_edit_group_project = ABBR_MANAGER_NAME.": Projekt frissÃ­tve";
+$title_edit_group_task    = ABBR_MANAGER_NAME.": Feladat frissÃ­tve";
+
+$email_edit_group_project = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy projekt, melynek tulajdonosa: %s, megvÃ¡ltozott ".$email_date." dÃ¡tummal.\n\nA rÃ©szleteket itt talÃ¡lja:\n\n";
+$email_edit_group_task    = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy egy feladat, melynek tulajdonosa: %s, megvÃ¡ltozott ".$email_date." dÃ¡tummal.\n\nA rÃ©szleteket itt talÃ¡lja:\n\n";
+
+
+$title_delete_project     = ABBR_MANAGER_NAME.": Projekt tÃ¶rÃ¶lve";
+$title_delete_task        = ABBR_MANAGER_NAME.": Feladat tÃ¶rÃ¶lve";
 
 $email_delete_project     = "Hello,\n\n".
-                            "Ez itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy az Ön egyik projektjét törölték ".$email_date." dátummal.\n\n".
-                            "Köszönjük, hogy kezelte as projektet amíg létezett.\n\n";
+                            "Ez itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy az Ã–n egyik projektjÃ©t tÃ¶rÃ¶ltÃ©k ".$email_date." dÃ¡tummal.\n\n".
+                            "KÃ¶szÃ¶njÃ¼k, hogy kezelte as projektet amÃ­g lÃ©tezett.\n\n";
 $email_delete_task        = "Hello,\n\n".
-                            "Ez itt a ".MANAGER_NAME." honlap azzal kapcsolatban, az Ön egyik feladatát törölték ".$email_date." dátummal.\n\n".
-                            "Köszönjük, hogy kezelte as feladatot amíg létezett.\n\n";
+                            "Ez itt a ".MANAGER_NAME." honlap azzal kapcsolatban, az Ã–n egyik feladatÃ¡t tÃ¶rÃ¶ltÃ©k ".$email_date." dÃ¡tummal.\n\n".
+                            "KÃ¶szÃ¶njÃ¼k, hogy kezelte as feladatot amÃ­g lÃ©tezett.\n\n";
 
 $delete_list = "Projekt:  %1\$s\n".
                "Feladat:  %2\$s\n".
-               "Állapot:  %3\$s\n\n".
-               "Szöveg:\n%4\$s\n\n";
+               "Ãllapot:  %3\$s\n\n".
+               "SzÃ¶veg:\n%4\$s\n\n";
 
-$title_welcome            = "Köszöntjük itt: ".ABBR_MANAGER_NAME;
-$email_welcome            = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap üdvözlete köztünk ;) ".$email_date." dátummal.\n\n".
-                            "Mivel Ön egy új tag, itt leírunk néhány fontos dolgot, hogy megkezdhesse a munkát.\n\n".
-                            "Elõször is ez egy projekt-kezelõ eszköz, a fõképernyõn az elérhetõ projekteket fogja látni. ".
-                            "Ha a nevek egyikére kattint, akkor a feladatok résznél találja magát. Itt fog a munka egésze zajlani.\n\n".
-                            "Minden elem amit bejegyez, vagy feladat amit szerkeszt 'új' vagy 'frissített' jelzéssel fog másoknak megjelenni. Ez kölcsönösen így van és ".
-                            "lehetõvé teszi, hogy könnyen megtaláljuk hol folyik aktívan a munka.\n\n".
-                            "Ezek mellett átvehetsz, vagy szerezhetsz tulajdonosi jogot a feladatokhoz és így szerkesztheted õket, illetve a hozzájuk tartozó fórum üzeneteket. ".
-                            "Ahogy halad a munkában, kérjük szerkessze a feladat szövegét és állapotát, így mindenki nyomon követheti a fejlõdést. ".
-                            "\n\nCsak sok sikert tudunk kívánni, és írjon ide: ".EMAIL_ADMIN.", ha elakadna.\n\n --Sok szerencsét !\n\n".
-                            "Felhasználó:  %1\$s\n".
-                            "Jelszó:       %2\$s\n\n".
+$title_welcome            = "KÃ¶szÃ¶ntjÃ¼k itt: ".ABBR_MANAGER_NAME;
+$email_welcome            = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap Ã¼dvÃ¶zlete kÃ¶ztÃ¼nk ;) ".$email_date." dÃ¡tummal.\n\n".
+                            "Mivel Ã–n egy Ãºj tag, itt leÃ­runk nÃ©hÃ¡ny fontos dolgot, hogy megkezdhesse a munkÃ¡t.\n\n".
+                            "ElÅ‘szÃ¶r is ez egy projekt-kezelÅ‘ eszkÃ¶z, a fÅ‘kÃ©pernyÅ‘n az elÃ©rhetÅ‘ projekteket fogja lÃ¡tni. ".
+                            "Ha a nevek egyikÃ©re kattint, akkor a feladatok rÃ©sznÃ©l talÃ¡lja magÃ¡t. Itt fog a munka egÃ©sze zajlani.\n\n".
+                            "Minden elem amit bejegyez, vagy feladat amit szerkeszt 'Ãºj' vagy 'frissÃ­tett' jelzÃ©ssel fog mÃ¡soknak megjelenni. Ez kÃ¶lcsÃ¶nÃ¶sen Ã­gy van Ã©s ".
+                            "lehetÅ‘vÃ© teszi, hogy kÃ¶nnyen megtalÃ¡ljuk hol folyik aktÃ­van a munka.\n\n".
+                            "Ezek mellett Ã¡tvehetsz, vagy szerezhetsz tulajdonosi jogot a feladatokhoz Ã©s Ã­gy szerkesztheted Å‘ket, illetve a hozzÃ¡juk tartozÃ³ fÃ³rum Ã¼zeneteket. ".
+                            "Ahogy halad a munkÃ¡ban, kÃ©rjÃ¼k szerkessze a feladat szÃ¶vegÃ©t Ã©s Ã¡llapotÃ¡t, Ã­gy mindenki nyomon kÃ¶vetheti a fejlÅ‘dÃ©st. ".
+                            "\n\nCsak sok sikert tudunk kÃ­vÃ¡nni, Ã©s Ã­rjon ide: ".EMAIL_ADMIN.", ha elakadna.\n\n --Sok szerencsÃ©t !\n\n".
+                            "FelhasznÃ¡lÃ³:  %1\$s\n".
+                            "JelszÃ³:       %2\$s\n\n".
                             "Csoportok:    %3\$s".
-                            "Név:          %4\$s\n".
+                            "NÃ©v:          %4\$s\n".
                             "Website:      ".BASE_URL."\n\n".
                             "%5\$s";
 
-$title_user_change1       = ABBR_MANAGER_NAME.": Az Ön fiókját egy admin szerkesztette";
-$email_user_change1       = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy az Ön fiókján változtatások történtek ekkor: ".$email_date.", %1\$s ( %2\$s ) által.\n\n".
-                            "Felhasználó:  %3\$s\n".
-                            "Jelszó:       %4\$s\n\n".
+$title_user_change1       = ABBR_MANAGER_NAME.": Az Ã–n fiÃ³kjÃ¡t egy admin szerkesztette";
+$email_user_change1       = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy az Ã–n fiÃ³kjÃ¡n vÃ¡ltoztatÃ¡sok tÃ¶rtÃ©ntek ekkor: ".$email_date.", %1\$s ( %2\$s ) Ã¡ltal.\n\n".
+                            "FelhasznÃ¡lÃ³:  %3\$s\n".
+                            "JelszÃ³:       %4\$s\n\n".
                             "Csoportok:   %5\$s".
-                            "Név:          %6\$s\n\n".
+                            "NÃ©v:          %6\$s\n\n".
                             "%7\$s";
 
-$title_user_change2       = ABBR_MANAGER_NAME.": Fiók szerkesztve";
-$email_user_change2       = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap, amely megerõsíti, hogy Ön sikerrel változtatásokat hajtott végre a fiókján ".$email_date." dátummal.\n\n".
-                            "Felhasználó:  %1\$s\n".
-                            "Jelszó:       %2\$s\n\n".
-                            "Név:          %3\$s\n";
+$title_user_change2       = ABBR_MANAGER_NAME.": FiÃ³k szerkesztve";
+$email_user_change2       = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap, amely megerÅ‘sÃ­ti, hogy Ã–n sikerrel vÃ¡ltoztatÃ¡sokat hajtott vÃ©gre a fiÃ³kjÃ¡n ".$email_date." dÃ¡tummal.\n\n".
+                            "FelhasznÃ¡lÃ³:  %1\$s\n".
+                            "JelszÃ³:       %2\$s\n\n".
+                            "NÃ©v:          %3\$s\n";
 
-$title_user_change3       = ABBR_MANAGER_NAME.": Fiók szerkesztve";
-$email_user_change3       = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap, amely megerõsíti, hogy Ön sikerrel változtatásokat hajtott végre a fiókján ".$email_date." dátummal.\n\n".
-                            "Felhasználó:  %1\$s\n".
-                            "A létezõ jelszava nem változott.\n\n".
-                            "Név:  %2\$s\n";
-
-
-$title_revive             = ABBR_MANAGER_NAME.": Fiók újra aktiválva";
-$email_revive             = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy az Ön fiókját újjáélesztették ".$email_date." dátummal.\n\n".
-                            "Bejelntkezési név:  %1\$s\n".
-                            "Felhasználói név:   %2\$s\n\n".
-                            "Nem tudjuk a jelszavát elküldeni, mert titkosítva van. \n\n".
-                            "Ha elfelejtette a jelszavát, küldjön emailt ide: ".EMAIL_ADMIN." egy új jelszóért.";
+$title_user_change3       = ABBR_MANAGER_NAME.": FiÃ³k szerkesztve";
+$email_user_change3       = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap, amely megerÅ‘sÃ­ti, hogy Ã–n sikerrel vÃ¡ltoztatÃ¡sokat hajtott vÃ©gre a fiÃ³kjÃ¡n ".$email_date." dÃ¡tummal.\n\n".
+                            "FelhasznÃ¡lÃ³:  %1\$s\n".
+                            "A lÃ©tezÅ‘ jelszava nem vÃ¡ltozott.\n\n".
+                            "NÃ©v:  %2\$s\n";
 
 
+$title_revive             = ABBR_MANAGER_NAME.": FiÃ³k Ãºjra aktivÃ¡lva";
+$email_revive             = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy az Ã–n fiÃ³kjÃ¡t ÃºjjÃ¡Ã©lesztettÃ©k ".$email_date." dÃ¡tummal.\n\n".
+                            "BejelntkezÃ©si nÃ©v:  %1\$s\n".
+                            "FelhasznÃ¡lÃ³i nÃ©v:   %2\$s\n\n".
+                            "Nem tudjuk a jelszavÃ¡t elkÃ¼ldeni, mert titkosÃ­tva van. \n\n".
+                            "Ha elfelejtette a jelszavÃ¡t, kÃ¼ldjÃ¶n emailt ide: ".EMAIL_ADMIN." egy Ãºj jelszÃ³Ã©rt.";
 
-$title_delete_user        = ABBR_MANAGER_NAME.": Fiók felfüggesztve";
-$email_delete_user        = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy az Ön fiókját felfüggesztették ".$email_date." dátummal.\n".
-                            "Sajnáljuk, hogy elhagyott minket és szertnénk megköszönni eddigi munkáját!\n\n".
-                            "Ha kifogásolja a felfüggesztést, vagy hibára gyanakszik, küldjön egy emailt ide: ".EMAIL_ADMIN.".";
+
+
+$title_delete_user        = ABBR_MANAGER_NAME.": FiÃ³k felfÃ¼ggesztve";
+$email_delete_user        = "Hello,\n\nEz itt a ".MANAGER_NAME." honlap azzal kapcsolatban, hogy az Ã–n fiÃ³kjÃ¡t felfÃ¼ggesztettÃ©k ".$email_date." dÃ¡tummal.\n".
+                            "SajnÃ¡ljuk, hogy elhagyott minket Ã©s szertnÃ©nk megkÃ¶szÃ¶nni eddigi munkÃ¡jÃ¡t!\n\n".
+                            "Ha kifogÃ¡solja a felfÃ¼ggesztÃ©st, vagy hibÃ¡ra gyanakszik, kÃ¼ldjÃ¶n egy emailt ide: ".EMAIL_ADMIN.".";
 
 ?>

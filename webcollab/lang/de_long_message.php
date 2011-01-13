@@ -4,7 +4,8 @@
 
   WebCollab
   ---------------------------------------
-
+  This file created 2003 by Andrew Simpson
+  
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -25,31 +26,32 @@
 
   Maintainer: Michael Bunk <micha137 at users.sourceforge.net>
 
+  NOTE: This file is written in UTF-8 character set
+
 */
 
 
-$taskgroup_info =   "<ul><li>Wenn eine Aufgabengruppe gelöscht wird, wird die Zuordnung ihrer Aufgaben zurückgesetzt.</li>\n".
-                      "<li>Der Name einer Aufgabengruppe kann ohne Nebenwirkung auf die Aufgabenzuordnung geändert werden.</li>\n".
-                      "<li>Es dürfen keine zwei Aufgabengruppen mit dem gleichen Namen existieren.</li></ul>\n";
+$taskgroup_info =   "<ul><li>Wenn eine Aufgabengruppe gelÃ¶scht wird, wird die Zuordnung ihrer Aufgaben zurÃ¼ckgesetzt.</li>\n".
+                      "<li>Der Name einer Aufgabengruppe kann ohne Nebenwirkung auf die Aufgabenzuordnung geÃ¤ndert werden.</li>\n".
+                      "<li>Es dÃ¼rfen keine zwei Aufgabengruppen mit dem gleichen Namen existieren.</li></ul>\n";
 
-$usergroup_info =   "<ul><li>Wenn eine Nutzergruppe gelöscht wird, werden alle zugehörigen privaten Forumsbeiträge gelöscht.</li>\n".
-                      "<li>Private Nutzergruppen können nur von Mitgliedern dieser privaten Nutzergruppe gesehen werden.</li>\n".
-                      "<li>Der Name einer Nutzergruppe kann ohne Nebenwirkung auf die zugeordneten Nutzer geändert werden.</li>\n".
-                      "<li>Es dürfen keine zwei Nutzergruppen mit dem gleichen Namen existieren.</li></ul>\n";
+$usergroup_info =   "<ul><li>Wenn eine Nutzergruppe gelÃ¶scht wird, werden alle zugehÃ¶rigen privaten ForumsbeitrÃ¤ge gelÃ¶scht.</li>\n".
+                      "<li>Private Nutzergruppen kÃ¶nnen nur von Mitgliedern dieser privaten Nutzergruppe gesehen werden.</li>\n".
+                      "<li>Der Name einer Nutzergruppe kann ohne Nebenwirkung auf die zugeordneten Nutzer geÃ¤ndert werden.</li>\n".
+                      "<li>Es dÃ¼rfen keine zwei Nutzergruppen mit dem gleichen Namen existieren.</li></ul>\n";
 
-$user_info      =    "Bitte wählen sie ihre Aktion aus dem Menü links.<br /><br />".
+$user_info      =    "Bitte wÃ¤hlen sie ihre Aktion aus dem MenÃ¼ links.<br /><br />".
                       "Hinweise:<br />".
                       "<ul>".
-                      "<li>Private Nutzer können nur von Mitgliedern der gleichen Nutzergruppe gesehen werden.</li>\n".
-                      "<li>Nutzer haben zwei Stadien des Gelöschtseins. Das zweite ist dauerhaft.</li>\n".
-                      "<li>Ein gelöschter Nutzer verliert alle seine Aufgaben, aber nicht seine Forumsbeiträge.</li>\n".
-                      "<li>Ein dauerhaft gelöschter Nutzer hat alles verloren.</li>\n".
-                      "<li>Ein gelöschter Nutzer behält die Sichtbarkeit der für ihn sichtbaren Aufgaben und erhält sie nach der Wiederbelebung zurück.</li>\n".
+                      "<li>Private Nutzer kÃ¶nnen nur von Mitgliedern der gleichen Nutzergruppe gesehen werden.</li>\n".
+                      "<li>Nutzer haben zwei Stadien des GelÃ¶schtseins. Das zweite ist dauerhaft.</li>\n".
+                      "<li>Ein gelÃ¶schter Nutzer verliert alle seine Aufgaben, aber nicht seine ForumsbeitrÃ¤ge.</li>\n".
+                      "<li>Ein dauerhaft gelÃ¶schter Nutzer hat alles verloren.</li>\n".
+                      "<li>Ein gelÃ¶schter Nutzer behÃ¤lt die Sichtbarkeit der fÃ¼r ihn sichtbaren Aufgaben und erhÃ¤lt sie nach der Wiederbelebung zurÃ¼ck.</li>\n".
                       "<li>ALLE Aktionen, die mit einem Nutzer geschehen, werden ihm/ihr per Email mitgeteilt.</li>\n".
-                      "<li>Die Passwörter werden verschlüsselt in der Datenbank gespeichert. Man kann nur neue vergeben.</li>\n".
-                      "<li>Passwörter werden nach der Vergabe an den Nutzer gesendet. Also aufpassen, an wen gemailt wird!</li>\n".
-                      "<li>Nutzer können sich selbst bearbeiten, ohne daß die Administratoren das erfahren. Dies soll Zeit und Spam sparen.</li>\n".
+                      "<li>Die PasswÃ¶rter werden verschlÃ¼sselt in der Datenbank gespeichert. Man kann nur neue vergeben.</li>\n".
+                      "<li>PasswÃ¶rter werden nach der Vergabe an den Nutzer gesendet. Also aufpassen, an wen gemailt wird!</li>\n".
+                      "<li>Nutzer kÃ¶nnen sich selbst bearbeiten, ohne daÃŸ die Administratoren das erfahren. Dies soll Zeit und Spam sparen.</li>\n".
                       "</ul>\n";
-
 
 ?>

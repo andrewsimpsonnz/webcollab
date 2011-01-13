@@ -2,7 +2,7 @@
 /*
   $Id$
 
- (c) 2005 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2005 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -22,14 +22,42 @@
   Function:
   ---------
 
-  Creates a list of languages for the Unicode version of WebCollab
+  Creates a list of languages for the Unicode version.
 
-  Note:  This is the non-Unicode version of this file.
+  Note: This file is in UTF-8 character set
 
 */
 
-//Not used in this version... only used in the Unicode versions
 
 $lang_list = array();
+
+$lang_list['bg']    = 'Български';
+$lang_list['ca']    = 'Català';
+$lang_list['cs']    = 'Čeština';
+$lang_list['da']    = 'Dansk';
+$lang_list['de']    = 'Deutsch';
+$lang_list['nl']    = 'Dutch';
+$lang_list['en']    = 'English';
+$lang_list['es']    = 'Español';
+$lang_list['eo']    = 'Esperanto';
+$lang_list['fr']    = 'Français';
+$lang_list['gr']    = 'Ελληνικά';
+$lang_list['hu']    = 'Magyar';
+$lang_list['it']    = 'Italiano';
+$lang_list['ja']    = '日本語';
+$lang_list['ko']    = '한국어';
+$lang_list['no']    = 'Norwegian';
+$lang_list['pl']    = 'Polski';
+$lang_list['pt']    = 'Português';
+$lang_list['pt-br'] = 'Português (Br)';
+$lang_list['ru']    = 'русский';
+$lang_list['se']    = 'Svenska';
+$lang_list['sk']    = 'Slovenský';
+$lang_list['sl']    = 'Slovenščina';
+$lang_list['sr-cy'] = 'Српски';
+$lang_list['sr-la'] = 'Srpski';
+$lang_list['tr']    = 'Türkçe';
+$lang_list['zh-tw'] = 'Chinese (Traditional)';
+$lang_list['zh-hk'] = 'Chinese (Simplified)';
 
 ?>

@@ -25,147 +25,149 @@
 
   Translation: Aydin Gurel <aydin.gurel at gmail.com>
 
+  NOTE: This file is written in UTF-8 character set
+
 */
 
 // Get current date/time in prefered timezone
 $ltime = TIME_NOW - date('Z') + TZ * 3600;
-//format is 1 Nis 2004 09:18 +1200
+//format is 2004 Apr 01 09:18 +1200
 $email_date = sprintf('%s %s %s, %s %+03d00', date('j', $ltime ), $month_array[(date('n', $ltime ) )], date('Y H:i', $ltime ), date('H:i', $ltime ), TZ );
 
 // Get current date/time for emails in a preferred format eg: 1 Nis 2004, 21:18
 //$email_date = date("j" )." ".$month_array[(date("n" ) )]." ".date('Y, H:i' );
 
-$title_file_post          = ABBR_MANAGER_NAME.": Yeni yüklenen dosya: %s";
-$email_file_post          = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde %1\$s tarafýndan yeni bir dosyanýn yüklendiðini haber veriyor.\n\n".
+$title_file_post          = ABBR_MANAGER_NAME.": Yeni yÃ¼klenen dosya: %s";
+$email_file_post          = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde %1\$s tarafÄ±ndan yeni bir dosyanÄ±n yÃ¼klendiÄŸini haber veriyor.\n\n".
                             "Dosya:        %2\$s\n".
-                            "Tanýmý: %3\$s\n\n".
+                            "TanÄ±mÄ±: %3\$s\n\n".
                             "Proje:        %4\$s\n".
-                            "Görev:        %5\$s\n\n".
-                            "Daha detaylý bilgi için lütfen web sitesine gidin.\n\n".BASE_URL."%6\$s\n";
+                            "GÃ¶rev:        %5\$s\n\n".
+                            "Daha detaylÄ± bilgi iÃ§in lÃ¼tfen web sitesine gidin.\n\n".BASE_URL."%6\$s\n";
 
 
-$title_forum_post         = ABBR_MANAGER_NAME.": Yeni forum mesajý: %s";
-$email_forum_post         = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde %1\$s tarafýndan yeni bir forum mesajý gönderildiðini haber veriyor:\n\n".
+$title_forum_post         = ABBR_MANAGER_NAME.": Yeni forum mesajÄ±: %s";
+$email_forum_post         = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde %1\$s tarafÄ±ndan yeni bir forum mesajÄ± gÃ¶nderildiÄŸini haber veriyor:\n\n".
                             "----\n\n".
                             "%2\$s\n\n".
                             "----\n\n".
-                            "Daha detaylý bilgi için lütfen web sitesine gidin.\n\n".BASE_URL."%3\$s\n";
-$email_forum_reply        = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde %1\$s tarafýndan yeni bir forum mesajý gönderildiðini haber veriyor.\n\n".
-                            "Bu mesaj %2\$s tarafýndan daha önce gönderilen bir mesaja yanýt niteliðinde.\n\n".
+                            "Daha detaylÄ± bilgi iÃ§in lÃ¼tfen web sitesine gidin.\n\n".BASE_URL."%3\$s\n";
+$email_forum_reply        = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde %1\$s tarafÄ±ndan yeni bir forum mesajÄ± gÃ¶nderildiÄŸini haber veriyor.\n\n".
+                            "Bu mesaj %2\$s tarafÄ±ndan daha Ã¶nce gÃ¶nderilen bir mesaja yanÄ±t niteliÄŸinde.\n\n".
                             "Orijinal mesaj:\n%3\$s\n\n".
                             "----\n\n".
-                            "Yeni yanýt:\n%4\$s\n\n".
+                            "Yeni yanÄ±t:\n%4\$s\n\n".
                             "----\n\n".
-                            "Daha detaylý bilgi için lütfen web sitesine gidin.\n\n".BASE_URL."%5\$s\n";
+                            "Daha detaylÄ± bilgi iÃ§in lÃ¼tfen web sitesine gidin.\n\n".BASE_URL."%5\$s\n";
 
 $email_list =  "Proje:  %1\$s\n".
-               "Görev:     %2\$s\n".
+               "GÃ¶rev:     %2\$s\n".
                "Durum:   %3\$s\n".
                "Sahibi:    %4\$s ( %5\$s )\n".
-               "Yazý:\n%6\$s\n\n".
-               "Daha detaylý bilgi için lütfen web sitesine gidin.\n\n".BASE_URL."%7\$s\n";
+               "YazÄ±:\n%6\$s\n\n".
+               "Daha detaylÄ± bilgi iÃ§in lÃ¼tfen web sitesine gidin.\n\n".BASE_URL."%7\$s\n";
 
 
-$title_takeover_project   = ABBR_MANAGER_NAME.": Projeniz sizden alýndý";
-$title_takeover_task      = ABBR_MANAGER_NAME.": Göreviniz sizden alýndý";
+$title_takeover_project   = ABBR_MANAGER_NAME.": Projeniz sizden alÄ±ndÄ±";
+$title_takeover_task      = ABBR_MANAGER_NAME.": GÃ¶reviniz sizden alÄ±ndÄ±";
 
-$email_takeover_task      = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde size ait olan bir görevin bir yönetici tarafýndan sizden alýndýðýný haber veriyor.\n\n";
-$email_takeover_project   = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde size ait olan bir projenin bir yönetici tarafýndan sizden alýndýðýný haber veriyor.\n\n";
+$email_takeover_task      = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde size ait olan bir gÃ¶revin bir yÃ¶netici tarafÄ±ndan sizden alÄ±ndÄ±ÄŸÄ±nÄ± haber veriyor.\n\n";
+$email_takeover_project   = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde size ait olan bir projenin bir yÃ¶netici tarafÄ±ndan sizden alÄ±ndÄ±ÄŸÄ±nÄ± haber veriyor.\n\n";
 
 
 $title_new_owner_project  = ABBR_MANAGER_NAME.": Size yeni bir proje";
-$title_new_owner_task     = ABBR_MANAGER_NAME.": Size yeni bir görev";
+$title_new_owner_task     = ABBR_MANAGER_NAME.": Size yeni bir gÃ¶rev";
 
-$email_new_owner_project  = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde bir projenin yaratýldýðýný ve sizin bu projenin sahibi olduðunuzu haber veriyor.\n\nÝþte detaylar:\n\n";
-$email_new_owner_task     = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde bir görevin yaratýldýðýný ve sizin bu görevin sahibi olduðunuzu haber veriyor.\n\nÝþte detaylar:\n\n";
+$email_new_owner_project  = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde bir projenin yaratÄ±ldÄ±ÄŸÄ±nÄ± ve sizin bu projenin sahibi olduÄŸunuzu haber veriyor.\n\nÄ°ÅŸte detaylar:\n\n";
+$email_new_owner_task     = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde bir gÃ¶revin yaratÄ±ldÄ±ÄŸÄ±nÄ± ve sizin bu gÃ¶revin sahibi olduÄŸunuzu haber veriyor.\n\nÄ°ÅŸte detaylar:\n\n";
 
 
 $title_new_group_project  = ABBR_MANAGER_NAME.": Yeni proje: %s";
-$title_new_group_task     = ABBR_MANAGER_NAME.": Yeni görev: %s";
+$title_new_group_task     = ABBR_MANAGER_NAME.": Yeni gÃ¶rev: %s";
 
-$email_new_group_project  = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde yeni bir projenin yaratýldýðýný haber veriyor.\n\nÝþte detaylar:\n\n";
-$email_new_group_task     = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde yeni bir görevin yaratýldýðýný haber veriyor.\n\nÝþte detaylar:\n\n";
-
-
-$title_edit_owner_project = ABBR_MANAGER_NAME.": Projeniz güncellendi";
-$title_edit_owner_task    = ABBR_MANAGER_NAME.": Göreviniz güncellendi";
-
-$email_edit_owner_project = "Merhaba,\n\n".MANAGER_NAME." sitesi size ait olan bir projenin ".$email_date." tarihinde deðiþtirildiðini haber veriyor.\n\nÝþte detaylar:\n\n";
-$email_edit_owner_task    = "Merhaba,\n\n".MANAGER_NAME." sitesi size ait olan bir görevin ".$email_date." tarihinde deðiþtirildiðini haber veriyor.\n\nÝþte detaylar:\n\n";
+$email_new_group_project  = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde yeni bir projenin yaratÄ±ldÄ±ÄŸÄ±nÄ± haber veriyor.\n\nÄ°ÅŸte detaylar:\n\n";
+$email_new_group_task     = "Merhaba,\n\n".MANAGER_NAME." sitesi size ".$email_date." tarihinde yeni bir gÃ¶revin yaratÄ±ldÄ±ÄŸÄ±nÄ± haber veriyor.\n\nÄ°ÅŸte detaylar:\n\n";
 
 
-$title_edit_group_project = ABBR_MANAGER_NAME.": Proje güncellendi";
-$title_edit_group_task    = ABBR_MANAGER_NAME.": Görev güncellendi";
+$title_edit_owner_project = ABBR_MANAGER_NAME.": Projeniz gÃ¼ncellendi";
+$title_edit_owner_task    = ABBR_MANAGER_NAME.": GÃ¶reviniz gÃ¼ncellendi";
 
-$email_edit_group_project = "Merhaba,\n\n".MANAGER_NAME." sitesi size sahibi %s olan bir projenin ".$email_date." tarihinde deðiþtirildiðini haber veriyor.\n\nÝþte detaylar:\n\n";
-$email_edit_group_task    = "Merhaba,\n\n".MANAGER_NAME." sitesi size sahibi %s olan bir görevin ".$email_date." tarihinde deðiþtirildiðini haber veriyor.\n\nÝþte detaylar:\n\n";
+$email_edit_owner_project = "Merhaba,\n\n".MANAGER_NAME." sitesi size ait olan bir projenin ".$email_date." tarihinde deÄŸiÅŸtirildiÄŸini haber veriyor.\n\nÄ°ÅŸte detaylar:\n\n";
+$email_edit_owner_task    = "Merhaba,\n\n".MANAGER_NAME." sitesi size ait olan bir gÃ¶revin ".$email_date." tarihinde deÄŸiÅŸtirildiÄŸini haber veriyor.\n\nÄ°ÅŸte detaylar:\n\n";
+
+
+$title_edit_group_project = ABBR_MANAGER_NAME.": Proje gÃ¼ncellendi";
+$title_edit_group_task    = ABBR_MANAGER_NAME.": GÃ¶rev gÃ¼ncellendi";
+
+$email_edit_group_project = "Merhaba,\n\n".MANAGER_NAME." sitesi size sahibi %s olan bir projenin ".$email_date." tarihinde deÄŸiÅŸtirildiÄŸini haber veriyor.\n\nÄ°ÅŸte detaylar:\n\n";
+$email_edit_group_task    = "Merhaba,\n\n".MANAGER_NAME." sitesi size sahibi %s olan bir gÃ¶revin ".$email_date." tarihinde deÄŸiÅŸtirildiÄŸini haber veriyor.\n\nÄ°ÅŸte detaylar:\n\n";
 
 
 $title_delete_project     = ABBR_MANAGER_NAME.": Proje silindi";
-$title_delete_task        = ABBR_MANAGER_NAME.": Görev silindi";
+$title_delete_task        = ABBR_MANAGER_NAME.": GÃ¶rev silindi";
 
 $email_delete_project     = "Merhaba,\n\n".
-                            MANAGER_NAME." sitesi size ait olan bir projenin ".$email_date." tarihinde silindiðini haber veriyor.\n\n".
-                            "Süresi boyunca projeyi yönettiðiniz için teþekkürler.\n\n";
+                            MANAGER_NAME." sitesi size ait olan bir projenin ".$email_date." tarihinde silindiÄŸini haber veriyor.\n\n".
+                            "SÃ¼resi boyunca projeyi yÃ¶nettiÄŸiniz iÃ§in teÅŸekkÃ¼rler.\n\n";
 $email_delete_task        = "Merhaba,\n\n".
-                            MANAGER_NAME." sitesi size ait olan bir görevin ".$email_date." tarihinde silindiðini haber veriyor.\n\n".
-                            "Süresi boyunca görevi yönettiðiniz için teþekkürler.\n\n";
+                            MANAGER_NAME." sitesi size ait olan bir gÃ¶revin ".$email_date." tarihinde silindiÄŸini haber veriyor.\n\n".
+                            "SÃ¼resi boyunca gÃ¶revi yÃ¶nettiÄŸiniz iÃ§in teÅŸekkÃ¼rler.\n\n";
 
 $delete_list = "Proje: %1\$s\n".
-                "Görev:   %2\$s\n".
+                "GÃ¶rev:   %2\$s\n".
                 "Durum: %3\$s\n\n".
-                "Yazý:\n%4\$s\n\n";
+                "YazÄ±:\n%4\$s\n\n";
 
-$title_welcome            = "Hoþgeldiniz: ".ABBR_MANAGER_NAME;
-$email_welcome            = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde size benim adýma hoþgeldiniz der ;)\n\n".
-                            "Burada yenisiniz ve hemen çalýþmaya baþlayabilmeniz için size bir kaç þey açýklayacaðým\n\n".
-                            "Herþeyden önce bu bir proje yönetim aracýdýr, ana sayfa size þu anda ulaþýlabilir olan projeleri gösterecektir. ".
-                            "Ýsimlerden birine týklarsanýz kendinizi görev tarafýnda bulursunuz. Bu bütün iþin yürüdüðü yerdir.\n\n".
-                            "Gönderdiðiniz her öge ve deðiþtirdiðiniz her görev diðer kullanýcýlara 'yeni' ya da 'güncellenmiþ' olarak gösterilecektir. Tam tersi de geçerlidir ve ".
-                            "bu size etkinliðin nerede olduðunu hemen bulmanýzý saðlar.\n\n".
-                            "Görevleri üzerinize alabilirsiniz ya da görevler size verilebilir; onlarý ve onlara ait forum mesajlarýný deðiþtirebilirsiniz. ".
-                            "Görevinizde ilerledikçe herkesin bunu izleyebilmesi için lütfen görevinizin yazýsýný ve durumunu güncelleyin. ".
-                            "\n\nSize baþarýlar dilerim ve sýkýþtýðýnýz zaman ".EMAIL_ADMIN." adresine eposta atabilirsiniz.\n\n --Ýyi þanslar !\n\n".
-                            "Kullanýcý adý:      %1\$s\n".
-                            "Þifre:   %2\$s\n\n".
-                            "Kullanýcý gruplarý: %3\$s".
+$title_welcome            = "HoÅŸgeldiniz: ".ABBR_MANAGER_NAME;
+$email_welcome            = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde size benim adÄ±ma hoÅŸgeldiniz der ;)\n\n".
+                            "Burada yenisiniz ve hemen Ã§alÄ±ÅŸmaya baÅŸlayabilmeniz iÃ§in size bir kaÃ§ ÅŸey aÃ§Ä±klayacaÄŸÄ±m\n\n".
+                            "HerÅŸeyden Ã¶nce bu bir proje yÃ¶netim aracÄ±dÄ±r, ana sayfa size ÅŸu anda ulaÅŸÄ±labilir olan projeleri gÃ¶sterecektir. ".
+                            "Ä°simlerden birine tÄ±klarsanÄ±z kendinizi gÃ¶rev tarafÄ±nda bulursunuz. Bu bÃ¼tÃ¼n iÅŸin yÃ¼rÃ¼dÃ¼ÄŸÃ¼ yerdir.\n\n".
+                            "GÃ¶nderdiÄŸiniz her Ã¶ge ve deÄŸiÅŸtirdiÄŸiniz her gÃ¶rev diÄŸer kullanÄ±cÄ±lara 'yeni' ya da 'gÃ¼ncellenmiÅŸ' olarak gÃ¶sterilecektir. Tam tersi de geÃ§erlidir ve ".
+                            "bu size etkinliÄŸin nerede olduÄŸunu hemen bulmanÄ±zÄ± saÄŸlar.\n\n".
+                            "GÃ¶revleri Ã¼zerinize alabilirsiniz ya da gÃ¶revler size verilebilir; onlarÄ± ve onlara ait forum mesajlarÄ±nÄ± deÄŸiÅŸtirebilirsiniz. ".
+                            "GÃ¶revinizde ilerledikÃ§e herkesin bunu izleyebilmesi iÃ§in lÃ¼tfen gÃ¶revinizin yazÄ±sÄ±nÄ± ve durumunu gÃ¼ncelleyin. ".
+                            "\n\nSize baÅŸarÄ±lar dilerim ve sÄ±kÄ±ÅŸtÄ±ÄŸÄ±nÄ±z zaman ".EMAIL_ADMIN." adresine eposta atabilirsiniz.\n\n --Ä°yi ÅŸanslar !\n\n".
+                            "KullanÄ±cÄ± adÄ±:      %1\$s\n".
+                            "Åžifre:   %2\$s\n\n".
+                            "KullanÄ±cÄ± gruplarÄ±: %3\$s".
                             "Ad:       %4\$s\n".
                             "Web sitesi:    ".BASE_URL."\n\n".
                             "%5\$s";
 
-$title_user_change1       = ABBR_MANAGER_NAME.": Hesabýnýzýn bir yönetici tarafýndan deðiþtirilmesi";
-$email_user_change1       = "Merhaba,\n\n".MANAGER_NAME." sitesi size hesabýnýzýn ".$email_date." tarihinde %1\$s tarafýndan deðiþtirildiðini haber veriyor. ( %2\$s ) \n\n".
-                            "Kullanýcý adý:      %3\$s\n".
-                            "Þifre:   %4\$s\n\n".
-                            "Kullanýcý gruplarý: %5\$s".
+$title_user_change1       = ABBR_MANAGER_NAME.": HesabÄ±nÄ±zÄ±n bir yÃ¶netici tarafÄ±ndan deÄŸiÅŸtirilmesi";
+$email_user_change1       = "Merhaba,\n\n".MANAGER_NAME." sitesi size hesabÄ±nÄ±zÄ±n ".$email_date." tarihinde %1\$s tarafÄ±ndan deÄŸiÅŸtirildiÄŸini haber veriyor. ( %2\$s ) \n\n".
+                            "KullanÄ±cÄ± adÄ±:      %3\$s\n".
+                            "Åžifre:   %4\$s\n\n".
+                            "KullanÄ±cÄ± gruplarÄ±: %5\$s".
                             "Ad:       %6\$s\n\n".
                             "%7\$s";
 
-$title_user_change2       = ABBR_MANAGER_NAME.": Hesabýnýzýn deðiþtirilmesi";
-$email_user_change2       = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde hesabýnýzý baþarýyla deðiþtirdiðinizi teyid eder.\n\n".
-                            "Kullanýcý adý:    %1\$s\n".
-                            "Þifre: %2\$s\n\n".
+$title_user_change2       = ABBR_MANAGER_NAME.": HesabÄ±nÄ±zÄ±n deÄŸiÅŸtirilmesi";
+$email_user_change2       = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde hesabÄ±nÄ±zÄ± baÅŸarÄ±yla deÄŸiÅŸtirdiÄŸinizi teyid eder.\n\n".
+                            "KullanÄ±cÄ± adÄ±:    %1\$s\n".
+                            "Åžifre: %2\$s\n\n".
                             "Ad:     %3\$s\n";
 
-$title_user_change3       = ABBR_MANAGER_NAME.": Hesabýnýzýn deðiþtirilmesi";
-$email_user_change3       = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde hesabýnýzý baþarýyla deðiþtirdiðinizi teyid eder.\n\n".
-                            "Kullanýcý adý: %1\$s\n".
-                            "Mevcut þifreniz deðiþmedi.\n\n".
+$title_user_change3       = ABBR_MANAGER_NAME.": HesabÄ±nÄ±zÄ±n deÄŸiÅŸtirilmesi";
+$email_user_change3       = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde hesabÄ±nÄ±zÄ± baÅŸarÄ±yla deÄŸiÅŸtirdiÄŸinizi teyid eder.\n\n".
+                            "KullanÄ±cÄ± adÄ±: %1\$s\n".
+                            "Mevcut ÅŸifreniz deÄŸiÅŸmedi.\n\n".
                             "Ad:  %2\$s\n";
 
 
-$title_revive             = ABBR_MANAGER_NAME.": Hesap tekrar etkinleþtirildi";
-$email_revive             = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde hesabýnýzýn yeniden etkinleþtirildiðini haber veriyor.\n\n".
-                            "Kullanýcý adý: %1\$s\n".
+$title_revive             = ABBR_MANAGER_NAME.": Hesap tekrar etkinleÅŸtirildi";
+$email_revive             = "Merhaba,\n\n".MANAGER_NAME." sitesi ".$email_date." tarihinde hesabÄ±nÄ±zÄ±n yeniden etkinleÅŸtirildiÄŸini haber veriyor.\n\n".
+                            "KullanÄ±cÄ± adÄ±: %1\$s\n".
                             "Ad:  %2\$s\n\n".
-                            "Size þifrenizi gönderemeyiz çünkü o da þifrelenerek kaydedilmiþ durumda.\n\n".
-                            "Þifrenizi unuttuysanýz yeni bir þifre için ".EMAIL_ADMIN." adresine mesaj atýn.";
+                            "Size ÅŸifrenizi gÃ¶nderemeyiz Ã§Ã¼nkÃ¼ o da ÅŸifrelenerek kaydedilmiÅŸ durumda.\n\n".
+                            "Åžifrenizi unuttuysanÄ±z yeni bir ÅŸifre iÃ§in ".EMAIL_ADMIN." adresine mesaj atÄ±n.";
 
 
 
 $title_delete_user        = ABBR_MANAGER_NAME.": Hesap durduruldu.";
-$email_delete_user        = "Merhaba,\n\n".MANAGER_NAME." sitesi size hesabýnýzýn ".$email_date." tarihinde durdurulduðunu haber veriyor.\n".
-                            "Ayrýldýðýnýz için üzgünüz ve çalýþmalarýnýz için size teþekkür etmek isteriz!\n\n".
-                            "Eðer hesabýnýzýn durdurulmasýna itiraz etmek isterseniz ya da bunun bir hata olduðunu düþünüyorsanýz lütfen ".EMAIL_ADMIN." adresine mesaj atýn.";
+$email_delete_user        = "Merhaba,\n\n".MANAGER_NAME." sitesi size hesabÄ±nÄ±zÄ±n ".$email_date." tarihinde durdurulduÄŸunu haber veriyor.\n".
+                            "AyrÄ±ldÄ±ÄŸÄ±nÄ±z iÃ§in Ã¼zgÃ¼nÃ¼z ve Ã§alÄ±ÅŸmalarÄ±nÄ±z iÃ§in size teÅŸekkÃ¼r etmek isteriz!\n\n".
+                            "EÄŸer hesabÄ±nÄ±zÄ±n durdurulmasÄ±na itiraz etmek isterseniz ya da bunun bir hata olduÄŸunu dÃ¼ÅŸÃ¼nÃ¼yorsanÄ±z lÃ¼tfen ".EMAIL_ADMIN." adresine mesaj atÄ±n.";
 
 ?>
