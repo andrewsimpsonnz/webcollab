@@ -150,15 +150,13 @@ if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
 }
 
 //version check
-if(version_compare(PHP_VERSION, '4.3.0' ) == -1 ) {
+if(version_compare(PHP_VERSION, '5.1.0' ) == -1 ) {
   secure_error($lang['min_version'] );
 }
 
-if(UNICODE_VERSION == 'Y' ) {
-  //check that UTF-8 character encoding can be used
-  if(! function_exists('mb_internal_encoding') ) {
-    secure_error($lang['no_mbstring'] );
-  }
+//check that UTF-8 character encoding can be used
+if(! function_exists('mb_internal_encoding') ) {
+  secure_error($lang['no_mbstring'] );
 }
 
 //check for initial install
