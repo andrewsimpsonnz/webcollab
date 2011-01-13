@@ -175,7 +175,7 @@ $content .=
 "      //if using SMTP_AUTH give username & password\n".
 "      define('MAIL_USER', '".MAIL_USER."' );\n".
 "      define('MAIL_PASSWORD', '".MAIL_PASSWORD."' );\n".
-"      //use TLS encryption? (requires PHP 5.1+)\n".
+"      //use TLS encryption?\n".
 "      define('TLS', '".TLS."' );\n\n".
 "//----------------------------------------------------------------------------------------------\n".
 "// Less important items below this line\n\n".
@@ -201,6 +201,8 @@ $content .=
 "//LOGIN CONTROLS\n\n".
 "  //session timeout in hours\n".
 "  define('SESSION_TIMEOUT', ".SESSION_TIMEOUT." );\n\n".
+"  //security token timeout for forms (in minutes)\n".
+"  define('TOKEN_TIMEOUT', 5 );\n\n".
 "  //Use external webserver authorisation to login (values are 'N', or 'Y')\n".
 "  define('WEB_AUTH', '".WEB_AUTH."' );\n\n".
 "  //Show passwords in user edit screens as plain text or hidden ('****') (values are 'text', or 'password')\n".
@@ -220,7 +222,6 @@ $content .=
 "//WEBCOLLAB VERSION\n\n".
 "  //WebCollab version string\n".
 "  define('WEBCOLLAB_VERSION', '".SETUP_WEBCOLLAB_VERSION."');\n\n".
-"  define('UNICODE_VERSION', '".SETUP_UNICODE_VERSION."' );\n\n".
 "?>\n";
 
 //open file for writing

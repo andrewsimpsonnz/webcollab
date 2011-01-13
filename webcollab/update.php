@@ -465,12 +465,14 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
         db_query('CREATE TABLE "'.PRE.'tokens" ("token" character varying(100) NOT NULL,
                                                 "action" character varying(100) NOT NULL,
+                                                "userid" integer NOT NULL,
                                                 "lastaccess" timestamp withtimezone NOT NULL DEFAULT current_timestamp(0))' );
         break;
 
       case 'mysql_pdo':
         db_query('CREATE TABLE '.PRE.'tokens (token VARCHAR(100) NOT NULL,
                                               action VARCHAR(100) NOT NULL,
+                                              userid INT UNSIGNED NOT NULL,
                                               lastaccess DATETIME NOT NULL)
                                               TYPE = innoDB 
                                               CHARACTER SET = utf8;' );

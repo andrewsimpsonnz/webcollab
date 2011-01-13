@@ -194,6 +194,7 @@ CREATE TABLE "site_name" (
 CREATE TABLE "tokens" (
   "token" character varying(100) NOT NULL,
   "action" character varying(100) NOT NULL,
+  "userid" integer NOT NULL,
   "lastaccess" timestamp with time zone NOT NULL DEFAULT current_timestamp(0)
 );
 

@@ -34,8 +34,8 @@ function generate_token($action ) {
   define('TOKEN', $token );
 
   //update database
-  $q = db_prepare('INSERT INTO '.PRE.'tokens(lastaccess, token, action ) VALUES (now(), ?, ? )' );
-  db_execute($q, array($token, $action ) );
+  $q = db_prepare('INSERT INTO '.PRE.'tokens(lastaccess, token, action, userid ) VALUES (now(), ?, ?, ? )' );
+  db_execute($q, array($token, $action, UID ) );
 
   return;
 }
@@ -52,14 +52,15 @@ function validate_token($token, $action ) {
   }
 
   //check against database
-  $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tokens WHERE token=? AND action=?
-                                  AND lastaccess > (now()-INTERVAL '.$delim.'5 MINUTE'.$delim.')' );
-  db_execute($q, array($token, $action ) );
+  $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tokens WHERE token=? AND action=? AND userid=?
+                                  AND lastaccess > (now()-INTERVAL '.$delim.TOKEN_TIMEOUT.' MINUTE'.$delim.')' );
+  db_execute($q, array($token, $action, UID ) );
   $count = db_result($q, 0, 0 );
 
-  //delete old tokens
+  //delete old token
   $q = db_prepare('DELETE FROM '.PRE.'tokens WHERE token=?' );  
   db_execute($q, array($token ) );
+
   if( $count == 0 ) {
     error('Security Warning', 'Possible session hijacking detected' );
     die;
