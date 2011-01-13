@@ -157,7 +157,7 @@ $content .= "</div>\n";
 if($i == 0 ) {
   //no projects found in database
   $content = "<div style=\"text-align : center\">".$lang['no_allowed_projects']."</div>\n";
-  new_box($lang['no_projects'], $content );
+  new_box($lang['archived_projects'], $content );
 
 }
 else {
