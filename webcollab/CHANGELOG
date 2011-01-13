@@ -1,3 +1,19 @@
+WebCollab Git
+*** 12 January 2011
+
+- change security token algorithm to reduce false postives 
+
+WebCollab Git
+*** 1 January 2011
+
+- change to PHP PDO database calls throughout
+
+- change to UTF-8 character set throughout
+
+- bugfix: correct box handling in update.php
+
+- improve error detection in archive_submit and forum_submit_add
+
 WebCollab SVN
 *** 11 October 2010
 
