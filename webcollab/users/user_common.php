@@ -38,10 +38,6 @@ function user_locale($locale) {
 
   $content = '';
 
-  if(UNICODE_VERSION != 'Y') {
-    return;
-  }
-
   //get list of languages
   include_once(BASE.'lang/lang_list.php' );
 
@@ -69,10 +65,6 @@ function user_locale($locale) {
 // Check validity of language string
 //
 function user_locale_check($locale ) {
-
-  if(UNICODE_VERSION != 'Y') {
-    return LOCALE;
-  }
 
   //get list of languages
   include_once(BASE.'lang/lang_list.php' );
