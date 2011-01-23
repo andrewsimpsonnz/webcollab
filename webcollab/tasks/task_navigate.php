@@ -98,12 +98,14 @@ elseif( @safe_integer($_GET['parentid']) ){
   //get task parent details
   $q = db_prepare('SELECT name, parent, projectid FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
   db_execute($q, array($parentid ) );
-  if( ! $row = db_fetch_array( $q, 0) )
+  if( ! $row = db_fetch_array($q, 0 ) ) {
     error('Task navigate', 'Parent does not exist' );
+  }
 
   //get project name
   db_execute($q1, array($row['projectid'] ) );
-  $project_name = box_shorten(db_result($q, 0, 0 ) );
+
+  $project_name = box_shorten(db_result($q1, 0, 0 ) );
 
   $content .= "<small><b>".$lang['project'].":</b></small><br />\n".
               "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['projectid']."\">".$project_name."</a><br />\n";

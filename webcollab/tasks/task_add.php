@@ -257,7 +257,6 @@ if( @safe_integer($_GET['parentid']) ) {
     //use defaults 
     $globalaccess = DEFAULT_ACCESS;
   }
-
   $content .= "</select></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['all_users_view']."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" ".$globalaccess." /></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."'); return false\">".$lang['group_edit']."</a></td><td><input type=\"checkbox\" name=\"groupaccess\" ".DEFAULT_EDIT." /></td></tr>\n".

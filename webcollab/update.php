@@ -459,14 +459,12 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
           db_query('ALTER TABLE '.PRE.'users ALTER  COLUMN deleted TYPE VARCHAR(5) 
                               USING (CASE WHEN deleted THEN \'t\' ELSE \'f\' END),
                               ALTER COLUMN deleted SET DEFAULT \'f\'' );
-
-          $content .= "<p>Updating from version pre-3.00 database ... success!</p>\n";
         }
 
         db_query('CREATE TABLE "'.PRE.'tokens" ("token" character varying(100) NOT NULL,
                                                 "action" character varying(100) NOT NULL,
                                                 "userid" integer NOT NULL,
-                                                "lastaccess" timestamp withtimezone NOT NULL DEFAULT current_timestamp(0))' );
+                                              "lastaccess" timestamp with time zone NOT NULL DEFAULT current_timestamp(0))' );
         break;
 
       case 'mysql_pdo':

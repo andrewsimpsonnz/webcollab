@@ -240,7 +240,7 @@ if($old_parentid != $parentid ) {
   }
   else {
     //update this task, then recursively search for children tasks and reparent them too.
-    $q = db_prepare('UPDATE '.PRE.'tasks SET projectid=?, parent=?, status=?, WHERE id=?' );
+    $q = db_prepare('UPDATE '.PRE.'tasks SET projectid=?, parent=?, status=? WHERE id=?' );
     db_execute($q, array($projectid, $parentid, $status, $taskid ) );
     reparent_children($taskid );
   }

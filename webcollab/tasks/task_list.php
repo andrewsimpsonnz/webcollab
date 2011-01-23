@@ -343,7 +343,7 @@ $q = db_prepare('SELECT '.PRE.'tasks.id AS id,
                 '.$tail.
                 'ORDER BY '.$no_group.' group_name, '.$task_order );
 
-db_execute($q, array($projectid, UID ) );
+db_execute($q, array(UID, $projectid ) );
 
 for( $i=0 ; $task_array[$i] = @db_fetch_array($q, $i ) ; ++$i ) {
 
