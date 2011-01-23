@@ -1,4 +1,9 @@
 WebCollab Git
+*** 23 January 2011
+
+- bugfix: private usergroups not listing correctly in usergroups_manage 
+
+WebCollab Git
 *** 12 January 2011
 
 - change security token algorithm to reduce false postives 
