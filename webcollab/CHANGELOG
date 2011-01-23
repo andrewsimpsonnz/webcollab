@@ -1,5 +1,11 @@
 WebCollab Git
+*** 23 January 2011
+
+- bugfix: private usergroups not listed correctly
+
+WebCollab Git
 *** 1 January 2011
+
 - bugfix: correct box handling in update.php
 
 - improve error detection in archive_submit and forum_submit_add

@@ -91,7 +91,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   for($j=0 ; $user_row = @db_fetch_array($users_q, $j ) ; ++$j ) {
 
     //check for private users
-    if((! ADMIN ) && ($row['private'] ) && (! isset($allowed[($row['id'])] ) ) ) {
+    if((! ADMIN ) && ($row['private'] ) && (! isset($allowed[($user_row['id'])] ) ) ) {
       continue;
     }
 
