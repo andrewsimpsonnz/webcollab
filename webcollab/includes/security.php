@@ -31,7 +31,6 @@ $q   = '';
 $ip  = '';
 $x   = 0;
 $session_key = 'xxxx';
-$token = 'xxxx';
 $content = '';
 $row = array();
 $GID = array();
