@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -174,7 +174,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
   $content .= "<td class=\"datecell\" style=\"height: 15px\">\n";
 
   //Note: This assumes the first year in dropdown box is $min_year
-  $content .= "<a href='#' onclick=\"dateSet(".($num-1).",".($month-1).",".($year-$min_year).",'".TOKEN."'); window.close();\"><span class=\"daynum\">".$num."</span></a>".
+  $content .= "<a href='#' onclick=\"dateSet(".($num-1).",".($month-1).",".($year-$min_year)."); window.close();\"><span class=\"daynum\">".$num."</span></a>".
               "</td>\n";
   ++$i;
 }
