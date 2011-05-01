@@ -1,4 +1,9 @@
 WebCollab Git
+*** 1 May 2011
+
+- change cookie deletion in logout.php
+
+WebCollab Git
 *** 23 January 2011
 
 - bugfix: private usergroups not listed correctly
