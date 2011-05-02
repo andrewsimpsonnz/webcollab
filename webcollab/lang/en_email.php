@@ -137,9 +137,21 @@ $email_delete_task        = "Hello,\n\n".
                             "Thanks for managing the task while it lasted.\n\n";
 
 $delete_list              = "Project: %1\$s\n".
-                            "Task:   %2\$s\n".
-                            "Status: %3\$s\n\n".
+                            "Task:    %2\$s\n".
+                            "Status:  %3\$s\n\n".
                             "Text:\n%4\$s\n\n";
+
+$title_usergroup_add      = ABBR_MANAGER_NAME.": New usergroup %1\$s created";
+$email_usergroup_add      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that a new usergroup %1\$s, has been created on ".$email_date.".\n\n".
+                            "The members of the new usergroup are:\n".
+                            "%2\$s\n";
+
+$title_usergroup_edit      = ABBR_MANAGER_NAME.": Usergroup %1\$s changed";
+$email_usergroup_edit      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that usergroup %1\$s, has been changed on ".$email_date.".\n\n".
+                            "The members of the usergroup are:\n".
+                            "%2\$s\n";
 
 $title_welcome            = "Welcome to the ".ABBR_MANAGER_NAME;
 $email_welcome            = "Hello,\n\nThis is the ".MANAGER_NAME." site welcoming you to me ;) on ".$email_date.".\n\n".

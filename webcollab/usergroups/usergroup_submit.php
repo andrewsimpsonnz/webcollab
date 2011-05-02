@@ -34,6 +34,7 @@ if(! defined('UID' ) ) {
 //includes
 require_once(BASE.'includes/token.php' );
 
+
 //admins only
 if( ! ADMIN ) {
   error('Unauthorised access', 'This function is for admins only.' );
@@ -47,8 +48,74 @@ if(empty($_POST['action'] ) ) {
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
 validate_token($token, 'usergroup' );
 
+if(isset($_POST['mail_group'] ) &&  ($_POST['mail_group'] == 'on' ) ) {
+  $mail_group = true;
+}
+else {
+  $mail_group = false;
+}
+
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
+
+//
+// Function to send out emails
+//
+function email_usergroup($usergroupid, $type ) {
+
+  global $EMAIL_MAILINGLIST, $month_array;
+
+  $q = db_prepare('SELECT name FROM '.PRE.'usergroups WHERE id=? LIMIT 1' );
+  db_execute($q, array($usergroupid ) );
+  $usergroup_name = db_result($q, 0, 0 ); 
+
+  $q = db_prepare('SELECT '.PRE.'users.email,
+                          '.PRE.' users.name
+                          FROM '.PRE.'users
+                          LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
+                          WHERE '.PRE.'usergroups_users.usergroupid=?'.
+                          ' AND '.PRE.'users.deleted=\'f\'' );
+
+  db_execute($q, array($usergroupid ) );
+
+  for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+    $mail_list[] = $row[0];
+    $name_list[] = $row[1];
+  }
+
+  //do we need to email?
+  if(sizeof($mail_list) < 1 ) {
+    return;
+  }
+
+  include_once(BASE.'includes/email.php' );
+  include_once(BASE.'includes/time.php' );
+  include_once(BASE.'lang/lang_email.php' );
+
+  //get & add the mailing list
+  if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
+    $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
+  }
+
+  $names = implode("\n", $name_list );
+
+  switch ($type ) {
+    case 'edit':
+      email($mail_list, sprintf($title_usergroup_edit, $usergroup_name ), sprintf($email_usergroup_edit, $usergroup_name, $names ) );
+      break;
+
+    case 'add':
+      email($mail_list, sprintf($title_usergroup_add, $usergroup_name ), sprintf($email_usergroup_add, $usergroup_name, $names ) );
+      break;
+
+    default:
+      error('Usergroup submit', 'Unknown mail option' );
+      break;
+  }
+  return;
+}
+
+//MAIN PROGRAM
 
 switch($_POST['action'] ) {
 
@@ -127,6 +194,12 @@ switch($_POST['action'] ) {
         }
       }
     }
+
+    //if mail group is set, then send mail
+    if($mail_group ){
+      email_usergroup($usergroupid, 'add' );
+    }
+
     //transaction complete
     db_commit();
     break;
@@ -168,11 +241,17 @@ switch($_POST['action'] ) {
       (array)$member = $_POST['member'];
       $max = sizeof($member);
       for( $i=0 ; $i < $max ; ++$i ) {
-	if(isset($member[$i]) && safe_integer( $member[$i] ) ) {
-	  db_execute($q, array($member[$i], $usergroupid ) );
-	}
+        if(isset($member[$i]) && safe_integer( $member[$i] ) ) {
+          db_execute($q, array($member[$i], $usergroupid ) );
+        }
       }
     }
+
+    //if mail group is set, then send mail
+    if($mail_group ){
+      email_usergroup($usergroupid, 'edit' );
+    }
+
     //transaction complete
     db_commit();
     break;

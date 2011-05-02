@@ -33,6 +33,7 @@ if(! defined('UID' ) ) {
 
 //includes
 require_once(BASE.'includes/token.php' );
+require_once(BASE.'includes/admin_config.php' );
 
 //admins only
 if( ! ADMIN ) {
@@ -109,6 +110,9 @@ for( $i=0 ; $user_row = @db_fetch_array($q, $i ) ; ++$i ) {
 }
 
 $content .=  "</select><small><i>".$lang['select_instruct']."</i></small></td></tr>\n".
+             "<tr><td>&nbsp;</td></tr>\n".
+             "<tr><td><label for=\"usergroup\">".$lang['email_edit_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP." /></td></tr>\n".
+             "<tr><td>&nbsp;</td></tr>\n".
              "</table>\n".
              "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" /></p>\n".
              "</form>\n".
