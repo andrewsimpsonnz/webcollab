@@ -40,10 +40,11 @@ $q = db_prepare('DELETE FROM tokens WHERE userid=?' );
 //clear session cookie
 $url = parse_url(BASE_URL );
 if(version_compare(PHP_VERSION, '5.2.0', '>=' ) ) {
-  setcookie('webcollab_session', false, 0, $url['path'], $url['host'], false, true );
+  setcookie('webcollab_session', "", (time() - 60 * 60 * 24 * 5 ), $url['path'], $url['host'], false, true );
+  //cookie expires 5 days ago...
 }
 else {
-  setcookie('webcollab_session', false, 0, $url['path'], $url['host'] );
+  setcookie('webcollab_session', "", (time() - 60 * 60 * 24 * 5 ), $url['path'], $url['host'] );
 }
 
 header('Location: '.BASE_URL.'index.php' );
