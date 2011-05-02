@@ -1,4 +1,13 @@
 WebCollab Git
+*** 2 May 2011
+
+- improve cookie deletion in logout.php
+
+- add usergroup email notification (Credit: sgomez2008 )  
+
+- combine setup language files
+
+WebCollab Git
 *** 23 January 2011
 
 - bugfix: private usergroups not listing correctly in usergroups_manage 

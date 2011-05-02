@@ -2,7 +2,7 @@
 /*
   $Id: setup_setup2.php 2236 2009-05-22 22:20:49Z andrewsimpson $
 
-  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,7 +35,7 @@ require_once('path.php' );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 require_once(BASE.'setup/setup_config.php' );
-include_once(BASE.'lang/lang_setup1.php' );
+include_once(BASE.'lang/lang_setup.php' );
 require_once(BASE.'setup/security_setup.php' );
 
 //security checks
@@ -57,7 +57,7 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\" ".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"build\" />\n".
             "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" />\n".
-            "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['setup_js_alert_field']."\" /></fieldset>\n";
+            "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang_setup['setup_js_alert_field']."\" /></fieldset>\n";
 
 $content .= "<p>".$lang_setup['setup2_db_details1']."</p>\n".
             "<table class=\"celldata\">\n".

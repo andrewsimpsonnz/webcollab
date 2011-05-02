@@ -2,7 +2,7 @@
 /*
   $Id: setup.php 2288 2009-08-22 08:50:00Z andrewsimpson $
 
-  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -39,8 +39,7 @@ require_once('path.php' );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 require_once(BASE.'setup/setup_config.php');
-include_once(BASE.'lang/lang.php' );
-include_once(BASE.'lang/lang_setup2.php' );
+include_once(BASE.'lang/lang_setup.php' );
 include_once(BASE.'setup/screen_setup.php' );
 
 //
@@ -145,18 +144,18 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
 //security checks
 if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
-  secure_error($lang['no_config'] );
+  secure_error($lang_setup['no_config'] );
   die;
 }
 
 //version check
 if(version_compare(PHP_VERSION, '5.1.0' ) == -1 ) {
-  secure_error($lang['min_version'] );
+  secure_error($lang_setup['min_version'] );
 }
 
 //check that UTF-8 character encoding can be used
 if(! function_exists('mb_internal_encoding') ) {
-  secure_error($lang['no_mbstring'] );
+  secure_error($lang_setup['no_mbstring'] );
 }
 
 //check for initial install
@@ -167,7 +166,7 @@ if((DATABASE_NAME == '' ) && isset($_POST['status'] ) && ($_POST['status'] == 's
 }
 
 //login box screen code
-create_top_setup($lang['setup_banner'] );
+create_top_setup($lang_setup['setup_banner'] );
 
 if(DATABASE_NAME == '' ) {
 
@@ -177,14 +176,14 @@ if(DATABASE_NAME == '' ) {
 }
 else {
 
-  $content = "<p>".$lang['require_login']."</p>\n".
+  $content = "<p>".$lang_setup['require_login']."</p>\n".
              "<form method=\"post\" action=\"setup.php\">\n".
              "<table border=\"0\">\n".
-             "<tr><td>".$lang['login']."</td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
-              "<tr><td>".$lang['password']."</td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n";
+             "<tr><td>".$lang_setup['login']."</td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
+              "<tr><td>".$lang_setup['password']."</td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n";
 }
 
-$content .= "<tr><td>".$lang['language']."</td><td>\n".
+$content .= "<tr><td>".$lang_setup['language']."</td><td>\n".
             "<select name=\"lang\">\n";
 
 foreach ($setup_language as $key => $value ) {
@@ -200,11 +199,11 @@ foreach ($setup_language as $key => $value ) {
 $content .= "</select></td></tr>\n".
             "</table>\n".
             "<p style=\"text-align:center\">\n".
-            "<input type=\"submit\" value=\"".$lang['submit']."\" /></p>\n".
+            "<input type=\"submit\" value=\"".$lang_setup['submit']."\" /></p>\n".
             "</form>\n";
 
 //set box options
-new_box_setup($lang['setup_banner'], $content, 'boxdata', 'singlebox' );
+new_box_setup($lang_setup['setup_banner'], $content, 'boxdata', 'singlebox' );
 
 create_bottom_setup();
 
