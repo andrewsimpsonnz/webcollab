@@ -1,4 +1,9 @@
 WebCollab Git
+*** 15 May 2011
+
+- bugfix: DTSTAMP date missing in icalendar
+
+WebCollab Git
 *** 2 May 2011
 
 - improve cookie deletion in logout.php
