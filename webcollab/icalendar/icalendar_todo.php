@@ -39,6 +39,7 @@ $content  = '';
 $projects = '';
 $allowed  = '';
 $icalendar_id = md5(MANAGER_NAME.BASE_URL);
+$dtstamp = gmdate('Ymd\THis\Z');
 
 //check validity of inputs
 if(isset($_GET['selection']) && strlen($_GET['selection']) > 0 ) {

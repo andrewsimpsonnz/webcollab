@@ -37,6 +37,7 @@ include_once(BASE.'icalendar/icalendar_common.php' );
 //set variables
 $content  = '';
 $icalendar_id = md5(MANAGER_NAME.BASE_URL);
+$dtstamp = gmdate('Ymd\THis\Z');
 
 if(! @safe_integer($_GET['taskid']) ){
   error('iCalendar show', 'Not a valid value for taskid' );
