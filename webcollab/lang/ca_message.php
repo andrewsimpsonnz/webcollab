@@ -242,6 +242,9 @@ $week_array = array('Diu','Dll','Dm','Dcs','Dj','Dv','Dte');
     $lang['add_usergroup']                = "Afegir usergroup";
     $lang['add_new_usergroup']            = "Afegir un nou usergroup";
     $lang['edit_usergroup']               = "Editar usergroup";
+//** needs translation
+    $lang['email_new_usergroup']          = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']         = "Email the changes to usergroup members?";
     $lang['usergroup_manage']             = "Administració de Usergroups";
     $lang['no_usergroups']                = "Cap usergroup definit";
     $lang['manage_usergroups']            = "Administració usergroups";

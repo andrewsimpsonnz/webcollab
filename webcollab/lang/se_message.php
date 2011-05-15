@@ -222,6 +222,9 @@ $week_array = array('Sön', 'Mĺn', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör' );
     $lang['add_usergroup']              = "Lägg till användargrupp";
     $lang['add_new_usergroup']          = "Lägg till ny användargrupp";
     $lang['edit_usergroup']             = "Redigera användargrupp";
+//** needs translation
+    $lang['email_new_usergroup']        = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";
     $lang['usergroup_manage']           = "Skötsel av användargrupper";
     $lang['no_usergroups']              = "Inga användargrupper definierade";
     $lang['manage_usergroups']          = "Sköta användargrupper";

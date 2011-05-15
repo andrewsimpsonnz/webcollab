@@ -223,6 +223,9 @@ $week_array = array('Ned', 'Pon', 'Tor', 'Sre', 'Čet', 'Pet', 'Sob' );
     $lang['add_usergroup']              = "Dodaj uporabniško skupino";
     $lang['add_new_usergroup']          = "Dodajanje nove uporabniške skupine";
     $lang['edit_usergroup']             = "Menjava uporabniške skupine";
+//** needs translation
+    $lang['email_new_usergroup']        = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";
     $lang['usergroup_manage']           = "Upravljanje uporabniških skupin";
     $lang['no_usergroups']              = "Trenutno ne obstaja nobena uporabniška skupina";
     $lang['manage_usergroups']          = "Upravljanje uporabniških skupin";

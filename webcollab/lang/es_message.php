@@ -197,6 +197,9 @@ $lang['private_usergroup'] = "grupo de usuarios privado";
 $lang['add_usergroup'] = "Agregar grupo de usuarios";
 $lang['add_new_usergroup'] = "Agregar un nuevo grupo de usuarios";
 $lang['edit_usergroup'] = "Editar grupo de usuarios";
+//** needs translation
+$lang['email_new_usergroup'] = "Email new details to usergroup members?";
+$lang['email_edit_usergroup'] = "Email the changes to usergroup members?";
 $lang['usergroup_manage'] = "Administración de grupos de usuarios";
 $lang['no_usergroups'] = "No se han creado grupos de usuarios";
 $lang['manage_usergroups'] = "Administración grupo de usuarios";

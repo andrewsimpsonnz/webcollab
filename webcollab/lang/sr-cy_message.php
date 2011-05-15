@@ -220,6 +220,9 @@ $week_array = array('Нед', 'Пон', 'Уто', 'Сре', 'чет', 'Пет', 
     $lang['add_usergroup']              = "Додај корисничку групу";
     $lang['add_new_usergroup']          = "Додавање нове корисничке групе";
     $lang['edit_usergroup']             = "Мењање корисничке групе";
+//** needs translation
+    $lang['email_new_usergroup']        = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";
     $lang['usergroup_manage']           = "Управљање корисничким групама";
     $lang['no_usergroups']              = "Ниједна корисничка група није дефинисана";
     $lang['manage_usergroups']          = "Управљање корисничким групама";

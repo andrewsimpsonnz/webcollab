@@ -221,6 +221,12 @@ $week_array = array('Di','Lu','Ma','Me','Ĵa','Ve','Sa');
     $lang['add_usergroup']               = "Aldonu uzantogrupon";
     $lang['add_new_usergroup']           = "Aldonu novan uzantogrupon";
     $lang['edit_usergroup']              = "Redaktu uzantogrupon";
+//** needs translation
+    $lang['email_new_usergroup']         = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']        = "Email the changes to usergroup members?";
+//** needs translation
+    $lang['email_new_usergroup']         = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']        = "Email the changes to usergroup members?";
     $lang['usergroup_manage']            = "Uzantgrupa administrado";
     $lang['no_usergroups']               = "Ne ekzistas uzantogrupoj.";
     $lang['manage_usergroups']           = "Administru uzantogrupojn";

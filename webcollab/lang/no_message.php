@@ -230,6 +230,9 @@ $week_array = array('Søn','Man','Tirs','Ons','Tor','Fre','Lør');
     $lang['add_usergroup']                = "Legg til brukergruppe";
     $lang['add_new_usergroup']            = "Tilføy en ny brukergruppe";
     $lang['edit_usergroup']               = "Rediger brukergruppe";
+//** needs translation
+    $lang['email_new_usergroup']          = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']         = "Email the changes to usergroup members?";
     $lang['usergroup_manage']             = "Brukergruppe management";
     $lang['no_usergroups']                = "Ingen brukergruppe er definert";
     $lang['manage_usergroups']            = "Administrer brukergrupper";

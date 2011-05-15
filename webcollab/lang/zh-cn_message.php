@@ -225,6 +225,9 @@ $week_array = array('日', '一', '二', '三', '四', '五', '六' );
     $lang['add_usergroup']              = "新增使用者组别";
     $lang['add_new_usergroup']          = "新增使用者组别";
     $lang['edit_usergroup']             = "修改使用者组别";
+//** needs translation
+    $lang['email_new_usergroup']        = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";
     $lang['usergroup_manage']           = "管理使用者组别";
     $lang['no_usergroups']              = "无使被定义的使用者组别";
     $lang['manage_usergroups']          = "管理使用者组别";

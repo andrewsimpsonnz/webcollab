@@ -220,6 +220,9 @@ $week_array = array('Nie', 'Pon', 'Wto', 'Śro', 'Czw', 'Pią', 'Sob' );
     $lang['add_usergroup']              = "Dodaj grupę użytkowników";
     $lang['add_new_usergroup']          = "Dodaj nową grupę użytkowników";
     $lang['edit_usergroup']             = "Edytuj grupę użytkowników";
+//** needs translation
+    $lang['email_new_usergroup']        = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";
     $lang['usergroup_manage']           = "Zarządzanie grupami użytkowników";
     $lang['no_usergroups']              = "Nie zdefiniowano grup użytkowników";
     $lang['manage_usergroups']          = "Zarządzaj grupami użytkowników";

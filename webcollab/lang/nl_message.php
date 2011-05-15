@@ -222,6 +222,9 @@ $week_array = array('Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Zat' );
     $lang['add_usergroup']              = "Gebruikersgroep toevoegen";
     $lang['add_new_usergroup']          = "Nieuwe gebruikersgroep toevoegen";
     $lang['edit_usergroup']             = "Gerbuikersgroep bewerken";
+//** needs translation
+    $lang['email_new_usergroup']        = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";
     $lang['usergroup_manage']           = "Gebruikersgroep beheer";
     $lang['no_usergroups']              = "Er zijn geen gebruikersgroepen ingesteld";
     $lang['manage_usergroups']          = "Beheer gebruikersgroepen";

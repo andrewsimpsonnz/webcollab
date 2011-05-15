@@ -224,6 +224,9 @@ $week_array = array('Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' );
     $lang['add_usergroup']              = "Přidat skupinu";
     $lang['add_new_usergroup']          = "Přidat novou skupinu";
     $lang['edit_usergroup']             = "Editovat skupinu";
+//** needs translation
+    $lang['email_new_usergroup']        = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";    
     $lang['usergroup_manage']           = "Správa skupin";
     $lang['no_usergroups']              = "Žádná skupina není definována";
     $lang['manage_usergroups']          = "Spravovat skupiny";

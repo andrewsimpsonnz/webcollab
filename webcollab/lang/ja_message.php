@@ -227,6 +227,9 @@ $week_array = array('日', '月', '火', '水', '木', '金', '土' );
     $lang['add_usergroup']              = "ユーザーグループの追加";
     $lang['add_new_usergroup']          = "新規ユーザーグループを追加";
     $lang['edit_usergroup']             = "ユーザーグループを編集";
+//** needs translation
+    $lang['email_new_usergroup']        = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";
     $lang['usergroup_manage']           = "ユーザーグループ管理";
     $lang['no_usergroups']              = "ユーザーグループが定義されてません。";
     $lang['manage_usergroups']          = "ユーザーグループ管理";

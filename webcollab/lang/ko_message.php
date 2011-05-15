@@ -234,6 +234,9 @@ $week_array = array('일', '월', '화', '수', '목', '금', '토' );
     $lang['add_usergroup']                = "사용자 그룹 추가";
     $lang['add_new_usergroup']            = "새로운 사용자 그룹 추가";
     $lang['edit_usergroup']               = "사용자 그룹 편집";
+//** needs translation
+    $lang['email_new_usergroup']          = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']         = "Email the changes to usergroup members?";
     $lang['usergroup_manage']             = "사용자 그룹 관리";
     $lang['no_usergroups']                = "정의된 사용자 그룹이 없음.";
     $lang['manage_usergroups']            = "사용자 그룹을 관리";

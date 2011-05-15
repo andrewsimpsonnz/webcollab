@@ -225,6 +225,9 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 
     $lang['add_usergroup']              = "Προσθήκη ομάδας χρηστών";
     $lang['add_new_usergroup']          = "Προσθέστε νέα ομάδα χρηστών";
     $lang['edit_usergroup']             = "Επεξεργασία ομάδας χρηστών";
+//** needs translation
+    $lang['email_new_usergroup']        = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";    
     $lang['usergroup_manage']           = "Διαχείριση ομάδας χρηστών";
     $lang['no_usergroups']              = "Δεν έχουν οριστεί ομάδες χρηστών";
     $lang['manage_usergroups']          = "Επεξεργαστείτε την ομάδα χρηστών";

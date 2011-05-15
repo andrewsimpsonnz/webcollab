@@ -223,6 +223,9 @@ $week_array = array('So','Mo','Di','Mi','Do','Fr','Sa');
     $lang['add_usergroup']               = "Nutzergruppe hinzufügen";
     $lang['add_new_usergroup']           = "Neue Nutzergruppe hinzufügen";
     $lang['edit_usergroup']              = "Nutzergruppe bearbeiten";
+//** needs translation
+    $lang['email_new_usergroup']          = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']         = "Email the changes to usergroup members?";
     $lang['usergroup_manage']            = "Nutzergruppen verwalten";
     $lang['no_usergroups']               = "Es wurden keine Nutzergruppen festgelegt.";
     $lang['manage_usergroups']           = "Nutzergruppen verwalten";

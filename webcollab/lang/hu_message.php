@@ -224,6 +224,9 @@ $week_array = array('Vas', 'Hétf', 'Kedd', 'Szer', 'Csüt', 'Pént', 'Szomb' );
     $lang['add_usergroup']              = "Felhasználói csoport hozzáadása";
     $lang['add_new_usergroup']          = "Új felhasználói csoport hozzáadása";
     $lang['edit_usergroup']             = "Felhasználói csoport szerkesztése";
+//** needs translation
+    $lang['email_new_usergroup']        = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";
     $lang['usergroup_manage']           = "Felhasználói csoportok kezelése";
     $lang['no_usergroups']              = "Nincsenek felhasználói csoportok kialakítva";
     $lang['manage_usergroups']          = "Felhasználói csoportok kezelése";

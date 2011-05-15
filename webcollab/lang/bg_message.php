@@ -226,6 +226,9 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['add_usergroup']                = "Добави";
     $lang['add_new_usergroup']            = "Добавяне на потребителска група";
     $lang['edit_usergroup']               = "Промяна";
+//** needs translation
+    $lang['email_new_usergroup']          = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']         = "Email the changes to usergroup members?";
     $lang['usergroup_manage']             = "Управление на потребителска група";
     $lang['no_usergroups']                = "Няма дефинирани потребителски групи";
     $lang['manage_usergroups']            = "Управление на потребителски групи";

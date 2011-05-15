@@ -142,6 +142,18 @@ $delete_list              = "Projekat:  %1\$s\n".
                             "Stanje:     %3\$s\n\n".
                             "Tekst:\n%4\$s\n\n";
 
+$title_usergroup_add      = ABBR_MANAGER_NAME.": New usergroup %1\$s created";
+$email_usergroup_add      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that a new usergroup %1\$s, has been created on ".$email_date.".\n\n".
+                            "The members of the new usergroup are:\n".
+                            "%2\$s\n";
+
+$title_usergroup_edit      = ABBR_MANAGER_NAME.": Usergroup %1\$s changed";
+$email_usergroup_edit      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that usergroup %1\$s, has been changed on ".$email_date.".\n\n".
+                            "The members of the usergroup are:\n".
+                            "%2\$s\n";
+
 $title_welcome            = "Dobrodošli na sajt ".ABBR_MANAGER_NAME;
 $email_welcome            = "Zdravo!\n\nOvo je sajt ".MANAGER_NAME." koji vam želi dobrodošlicu ;) dana ".$email_date.".\n\n".
                             "Pošto ste vi novi na ovom sajtu, najpre ću vam objasniti nekoliko stvari da biste što pre mogli da počnete sa radom u okviru ovog sajta.\n\n".

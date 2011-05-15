@@ -113,6 +113,18 @@ $delete_list = "專案： %1\$s\n".
                 "狀態： %3\$s\n\n".
                 "內容：\n%4\$s\n\n";
 
+$title_usergroup_add      = ABBR_MANAGER_NAME.": New usergroup %1\$s created";
+$email_usergroup_add      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that a new usergroup %1\$s, has been created on ".$email_date.".\n\n".
+                            "The members of the new usergroup are:\n".
+                            "%2\$s\n";
+
+$title_usergroup_edit      = ABBR_MANAGER_NAME.": Usergroup %1\$s changed";
+$email_usergroup_edit      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that usergroup %1\$s, has been changed on ".$email_date.".\n\n".
+                            "The members of the usergroup are:\n".
+                            "%2\$s\n";
+
 $title_welcome      = "歡迎來到 ".ABBR_MANAGER_NAME;
 $email_welcome      = "你好，\n\n這裡是『".MANAGER_NAME."』，歡迎你在 ".$email_date.". 加入。;)\n\n".
 			"因為你在這裡是新人，所以我將說明一些事項來讓你快速的開始使用。\n\n".

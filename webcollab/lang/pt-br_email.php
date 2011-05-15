@@ -117,6 +117,18 @@ $delete_list = "Projeto: %1\$s\n".
                 "Status: %3\$s\n\n".
                 "Texto:\n%4\$s\n\n";
 
+$title_usergroup_add      = ABBR_MANAGER_NAME.": New usergroup %1\$s created";
+$email_usergroup_add      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that a new usergroup %1\$s, has been created on ".$email_date.".\n\n".
+                            "The members of the new usergroup are:\n".
+                            "%2\$s\n";
+
+$title_usergroup_edit      = ABBR_MANAGER_NAME.": Usergroup %1\$s changed";
+$email_usergroup_edit      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that usergroup %1\$s, has been changed on ".$email_date.".\n\n".
+                            "The members of the usergroup are:\n".
+                            "%2\$s\n";
+
 $title_welcome            = "Bem-vindo ao ".ABBR_MANAGER_NAME;
 $email_welcome            = "Olá,\n\nAqui é o sítio ".MANAGER_NAME." desejando-lhe boas vindas em ".$email_date.".\n\n".
                             "Como você é novo por aqui, vamos lhe explicar algumas coisas antes de começar os trabalhos relativos a\n\n".

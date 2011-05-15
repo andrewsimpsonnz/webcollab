@@ -112,6 +112,18 @@ $delete_list = "プロジェクト: %1\$s\n".
                "状況:         %3\$s\n\n".
                "テキスト:\n%4\$s\n\n";
 
+$title_usergroup_add      = ABBR_MANAGER_NAME.": New usergroup %1\$s created";
+$email_usergroup_add      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that a new usergroup %1\$s, has been created on ".$email_date.".\n\n".
+                            "The members of the new usergroup are:\n".
+                            "%2\$s\n";
+
+$title_usergroup_edit      = ABBR_MANAGER_NAME.": Usergroup %1\$s changed";
+$email_usergroup_edit      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that usergroup %1\$s, has been changed on ".$email_date.".\n\n".
+                            "The members of the usergroup are:\n".
+                            "%2\$s\n";
+
 $title_welcome      = "ようこそ ".ABBR_MANAGER_NAME."へ";
 $email_welcome      = "Hello,\n\nThis is the ".MANAGER_NAME." site welcoming you to me ;) on ".$email_date.".\n\n".
 			"As you are new here I will explain a couple of things to you so that you can quickly start to work\n\n".

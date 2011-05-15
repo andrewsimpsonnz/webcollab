@@ -125,6 +125,18 @@ $delete_list = "Prosjekt: %s\n".
                 "Status: %s\n\n".
                 "Tekst:\n%s\n\n";
 
+$title_usergroup_add      = ABBR_MANAGER_NAME.": New usergroup %1\$s created";
+$email_usergroup_add      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that a new usergroup %1\$s, has been created on ".$email_date.".\n\n".
+                            "The members of the new usergroup are:\n".
+                            "%2\$s\n";
+
+$title_usergroup_edit      = ABBR_MANAGER_NAME.": Usergroup %1\$s changed";
+$email_usergroup_edit      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that usergroup %1\$s, has been changed on ".$email_date.".\n\n".
+                            "The members of the usergroup are:\n".
+                            "%2\$s\n";
+
 $title_welcome      = "Velkommen til ".ABBR_MANAGER_NAME;
 $email_welcome      = "Hei,\n\nDette er ".MANAGER_NAME." som ønsker deg velkommen. ".$email_date.".\n\n".
 			"Siden du er ny, vil jeg forklare et par ting, slik at du  raskt kan komme i gang\n\n".

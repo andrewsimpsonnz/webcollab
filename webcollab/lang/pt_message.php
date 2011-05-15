@@ -221,6 +221,9 @@ $week_array = array('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' );
     $lang['add_usergroup']              = "Adicionar equipa";
     $lang['add_new_usergroup']          = "Adicionar nova equipa";
     $lang['edit_usergroup']             = "Editar equipa";
+//** needs translation
+    $lang['email_new_usergroup']        = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";
     $lang['usergroup_manage']           = "Gerir equipa";
     $lang['no_usergroups']              = "Sem equipa";
     $lang['manage_usergroups']          = "Gereir equipas";

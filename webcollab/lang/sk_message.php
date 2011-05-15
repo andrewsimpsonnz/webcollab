@@ -223,6 +223,9 @@ počet dní v mesiaci).<br />Prosím vráťte sa a zadajte platný dátum.';
     $lang['add_usergroup']              = 'Pridaj uživateľskú skupinu';
     $lang['add_new_usergroup']          = 'Pridaj novú uživateľskú skupinu';
     $lang['edit_usergroup']             = 'Edituj skupinu';
+//** needs translation
+    $lang['email_new_usergroup']        = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";
     $lang['usergroup_manage']           = 'Správa uživateľskej skupiny';
     $lang['no_usergroups']              = 'Uživateľské skupiny nedefinované';
     $lang['manage_usergroups']          = 'Správa uživateľských skupín';

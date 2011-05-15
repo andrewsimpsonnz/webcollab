@@ -221,6 +221,9 @@ $week_array = array('Paz', 'Pts', 'Sal', 'Çar', 'Per', 'Cum', 'Cts' );
     $lang['add_usergroup']              = "Kullanıcı grubu ekle";
     $lang['add_new_usergroup']          = "Yeni bir kullanıcı grubu ekle";
     $lang['edit_usergroup']             = "Kullanıcı grubu değiştir";
+//** needs translation
+    $lang['email_new_usergroup']        = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";
     $lang['usergroup_manage']           = "Kullanıcı grubu yönetimi";
     $lang['no_usergroups']              = "Hiçbir kullanıcı grubu belirlenmedi";
     $lang['manage_usergroups']          = "Kullanıcı gruplarını yönet";
