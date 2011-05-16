@@ -37,6 +37,7 @@ include_once(BASE.'icalendar/icalendar_common.php' );
 //set variables
 $content  = '';
 $icalendar_id = md5(MANAGER_NAME.BASE_URL);
+$dtstamp = gmdate('Ymd\THis\Z');
 
 //set database character set to UTF-8
 db_user_locale('UTF-8');

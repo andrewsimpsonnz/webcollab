@@ -37,14 +37,9 @@ if(! defined('UID' ) ) {
 
 function icalendar_header($id ) {
 
-  global $dtstamp;
-
   //get rid of some problematic system settings
   @ob_end_clean();
   @ini_set('zlib.output_compression', 'Off');
-
-  //cache the generated timestamp (date functions are slow)
-  $dtstamp = gmdate('Ymd\THis\Z');
 
   //these headers are for IE 6
   header('Pragma: public');
@@ -72,6 +67,7 @@ function icalendar_header($id ) {
 function icalendar_body($row, $taskid ) {
 
   global $icalendar_id, $dtstamp;
+  //cache the generated timestamp (date functions are slow)
 
   if(VEVENT == 'Y' ) {
     $content = "BEGIN:VEVENT\r\n";
