@@ -191,7 +191,7 @@ function icalendar_vtodo($row, $taskid ) {
     $content .= "CLASS:PRIVATE\r\n";
   }
 
-  $content .= "URL:".BASE_URL.$location."tasks.php?action=show&taskid=".$taskid."\r\n".
+  $content .= "URL:".BASE_URL."tasks.php?action=show&taskid=".$taskid."\r\n".
               "END:VTODO\r\n";
 
   return $content;
