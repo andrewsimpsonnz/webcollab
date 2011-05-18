@@ -1,4 +1,11 @@
 WebCollab Git
+*** 18 May 2011
+
+- bugfix: URL syntax error in rss_common.php
+
+- bugfix: Locale syntax error in rss_common.php
+
+WebCollab Git
 *** 15 May 2011
 
 - bugfix: DTSTAMP date missing in icalendar
