@@ -37,7 +37,7 @@ function rss_login() {
     rss_error('401', 'Login no authorisation');
   }
 
-  $q = db_prepare('SELECT id, admin FROM '.PRE.'users WHERE name=? AND deleted=\'f\'' );
+  $q = db_prepare('SELECT id, admin, locale FROM '.PRE.'users WHERE name=? AND deleted=\'f\'' );
 
   if( ! (db_execute($q, array(safe_data($_SERVER['REMOTE_USER'] ) ), 0 ) ) ) {
     rss_error('401', 'Login user select' );
