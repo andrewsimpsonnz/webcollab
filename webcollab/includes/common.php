@@ -94,11 +94,11 @@ function validate($body ) {
                         '|[\xC0-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.  //illegal two byte
                         '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})'. //illegal three byte
                         '|[\xF0-\xFF][\x80-\xBF]*/',                      //reject more than 3 byte 
-                        '?', $body );
+                        '�', $body );
 
   $body = preg_replace('/[\xC0\xC1][\x80-\xBF]'.                         //exclude two byte over longs
                         '|\xE0[\x80-\x9F][\x80-\xBF]'.                   //exclude three byte over longs
-                        '|\xED[\xA0-\xBF][\x80-\xBF]/','?', $body );     //exclude surrogates
+                        '|\xED[\xA0-\xBF][\x80-\xBF]/','�', $body );     //exclude surrogates
 
   return $body;
 }
