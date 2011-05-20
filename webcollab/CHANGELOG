@@ -1,4 +1,11 @@
 WebCollab Git
+*** 21 May 2011
+
+- bugfix: PHP function mime_encode_header() is buggy.  Provide workaround.
+
+- Change error symbol in UTF-8 validate in common.php
+
+WebCollab Git
 *** 18 May 2011
 
 - bugfix: URL syntax error in rss_common.php
