@@ -410,29 +410,31 @@ return $headers;
 
 function header_encoding($header ) {
 
-  //encode subject with 'base64' or'printed-quotable' if high ASCII characters are present
+  //encode subject with 'base64' if high ASCII characters are present
   switch(preg_match('/([\x7F-\xFF])/', $header ) ) {
     case false:
       //no encoding required
       break;
 
     case true:
-      if(function_exists('mb_encode_mimeheader') ) {
-        //base64 encoding to RFC 2047
-        // We must use this for UTF-8 because we cannot split 'quoted printable' multibyte characters across different lines !!
-        $header = mb_encode_mimeheader($header, CHARACTER_SET, 'B', "\r\n\t" );
+      $encoded = '';
+      $fib = array(45, 43, 40, 37, 32, 24, 11 ); //reverse fibonacci from 45 characters
+      $max = 74 - 2 - strlen(CHARACTER_SET) - 2;
+
+      //encode to base64 with encoded lines no longer than 74 characters (RFC 2045)
+      while(strlen($header) > 0 ) {
+        //find optimum length for string by fibonacci search 
+        foreach($fib as $i ){
+          $part = base64_encode(mb_substr($header, 0, $i ) );
+          if(strlen($part) <  $max ) {
+            break;
+          }
+        }
+        $encoded .= '=?'.CHARACTER_SET.'?B?'.$part."?=\r\n\t";
+
+        $header = mb_substr($header, $i );
       }
-      else {
-        //PHP code for quoted printable conversion to RFC 2047
-        // Only use this for single byte encoding schemes !!
-        // replace high ascii, control, =, ?, <tab> and <space> characters (RFC 2047)
-        $header = preg_replace('/([\x00-\x08\x09\x0B\x0C\x0E-\x1F\x20\x3D\x3F\x7F-\xFF])/e', "sprintf('=%02X', ord('\\1'))", $header);
-        //break into lines no longer than 76 characters including '?' and '=' (RFC 2047)
-        //don't split line around coded character (eg. '=20' == <space>)
-        $pattern = '/(.{1,'. (75 - strlen(CHARACTER_SET ) - 8 ) .'}[^=][^=])/e';
-        $replace = "'=?'.CHARACTER_SET.'?Q?'.'\\1'.'?=\r\n\t'";
-        $header = preg_replace($pattern, $replace, $header );
-      }
+      $header = $encoded;
       break;
   }
   return $header;
