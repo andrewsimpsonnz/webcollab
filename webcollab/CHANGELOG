@@ -1,5 +1,12 @@
 WebCollab Git
+*** 30 May 2011
+  Andrew Simpson
+
+- allow for remote access to iCal files (Credit: fspanedda )
+
+WebCollab Git
 *** 21 May 2011
+  Andrew Simpson
 
 - bugfix: PHP function mime_encode_header() is buggy.  Provide workaround.
 
@@ -7,6 +14,7 @@ WebCollab Git
 
 WebCollab Git
 *** 18 May 2011
+  Andrew Simpson
 
 - bugfix: URL syntax error in rss_common.php
 
@@ -14,11 +22,13 @@ WebCollab Git
 
 WebCollab Git
 *** 15 May 2011
+  Andrew Simpson
 
 - bugfix: DTSTAMP date missing in icalendar
 
 WebCollab Git
 *** 2 May 2011
+  Andrew Simpson
 
 - improve cookie deletion in logout.php
 
@@ -28,16 +38,19 @@ WebCollab Git
 
 WebCollab Git
 *** 23 January 2011
+  Andrew Simpson
 
 - bugfix: private usergroups not listing correctly in usergroups_manage 
 
 WebCollab Git
 *** 12 January 2011
+  Andrew Simpson
 
 - change security token algorithm to reduce false postives 
 
 WebCollab Git
 *** 1 January 2011
+  Andrew Simpson
 
 - change to PHP PDO database calls throughout
 
@@ -49,6 +62,7 @@ WebCollab Git
 
 WebCollab SVN
 *** 11 October 2010
+  Andrew Simpson
 
 - bugfix: Use UTF8-string splitter in box_shorten() where appropriate
 
@@ -60,11 +74,13 @@ WebCollab - May Queen
 
 WebCollab SVN
 *** 13 June 2010
+  Andrew Simpson
 
 - make URL links in iCalendar more specific
 
 WebCollab SVN
 *** 16 May 2010
+  Andrew Simpson
 
 - change javascript in forum listing to degrade better
 
@@ -72,6 +88,7 @@ WebCollab SVN
 
 WebCollab SVN
 *** 13 April 2010
+  Andrew Simpson
 
 - remove obsolete mhash() and replace with hash_mac()
 
@@ -81,11 +98,13 @@ WebCollab SVN
 
 WebCollab SVN
 *** 27 March 2010
+  Andrew Simpson
 
 - patch #2961818 - Calendar presentation improvements (Credit: houwelin - Fred Houweling)
 
 WebCollab SVN
 *** 22 March 2010
+  Andrew Simpson
 
 - add javascript bbcode editor (Reporter: Vinz)
 
@@ -93,6 +112,7 @@ WebCollab SVN
 
 WebCollab SVN
 *** 20 March 2010
+  Andrew Simpson
 
 - bugfix - fix bbcode tags spread over two or more lines not working
 
@@ -102,6 +122,7 @@ WebCollab SVN
 
 WebCollab SVN
 *** 18 March 2010
+  Andrew Simpson
 
 - bugfix - RSS feed has 12 hour time instead of 24 hour time (Bug #2972216) (Credit: pmarecha - Pierre Marechal)
 
