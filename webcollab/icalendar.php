@@ -28,6 +28,8 @@
 require_once('path.php');
 require_once(BASE.'includes/security.php' );
 
+//set flag
+$local_login = true;
 
 //
 // The action handler

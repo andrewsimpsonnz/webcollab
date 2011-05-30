@@ -26,6 +26,24 @@
 
 */
 
+//remote login check
+if(! isset($local_login) ) {
+
+  //load required files
+  require_once('path.php' );
+  require_once(BASE.'path_config.php' );
+  require_once(BASE_CONFIG.'config.php' );
+
+  include_once(BASE.'includes/common.php');
+  include_once(BASE.'database/database.php');
+  include_once(BASE.'icalendar/icalendar_login.php' );
+
+  if(! icalendar_login() ) {
+    icalendar_error('401', 'Todo login' );
+  }
+  $remote_login = true;
+}
+
 //security check
 if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
@@ -49,7 +67,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 }
 
 //no rows ==> return
-if($i == 0 ) {
+if(isset($local_login ) && $i == 0 ) {
   header('Location: '.BASE_URL.'main.php?x='.X );
   die;
 }

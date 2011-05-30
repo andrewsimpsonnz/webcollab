@@ -26,6 +26,23 @@
 
 */
 
+//remote login check
+if(! isset($local_login) ) {
+
+  //load required files
+  require_once('path.php' );
+  require_once(BASE.'path_config.php' );
+  require_once(BASE_CONFIG.'config.php' );
+
+  include_once(BASE.'includes/common.php');
+  include_once(BASE.'database/database.php');
+  include_once(BASE.'icalendar/icalendar_login.php' );
+
+  if(! icalendar_login() ) {
+    icalendar_error('401', 'Todo login' );
+  }
+}
+
 //security check
 if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
@@ -90,6 +107,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
   $project_q = db_prepare(icalendar_query().' AND '.PRE.'tasks.id=?'. icalendar_usergroup_tail() );
 
+  //send project once for each task
   if(! in_array($row['projectid'], (array)$projects ) ) {
 
     db_execute($project_q, array($row['projectid'] ) );
@@ -109,7 +127,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 }
 
 //no rows ==> return
-if($i == 0 ) {
+if((isset($local_login ) ) && $i == 0 ) {
   header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=todo&userid='.$userid.'&groupid='.$groupid.'&selection='.$selection );
   die;
 }
