@@ -89,7 +89,7 @@ function validate($body ) {
     $body = stripslashes($body );
   }
 
-  $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'.          //ASCII
+  $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x1F\x7F]'.           //ASCII
                         '|[\x00-\x7F][\x80-\xBF]+'.                       //continuation with no start
                         '|[\xC0-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.  //illegal two byte
                         '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})'. //illegal three byte
