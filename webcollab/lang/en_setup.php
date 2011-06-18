@@ -55,7 +55,7 @@ define('XML_LANG', "en" );
     $lang_setup['no_config']           = "Current configuration file does not allow web-based setup";
 
 //setup
-    $lang_setup['min_version']         = "WebCollab needs PHP version 4.3.0, or higher.  This version is ".PHP_VERSION;
+    $lang_setup['min_version']         = "WebCollab needs PHP version 5.1.0, or higher.  This version is ".PHP_VERSION;
     $lang_setup['no_mbstring']         = "Unable to set UTF-8 encoding in PHP.<br \>\n".
                                          "The PHP installed on this server does not appear to have the multi-byte string (mb_string) library enabled.<br />\n".
                                          "This library is essential for using UTF-8 with WebCollab";
@@ -68,7 +68,7 @@ define('XML_LANG', "en" );
 
 //setup1
 
-    $lang_setup['setup1_no_permission'] = "<p><b>The webserver does not have permissions to write to the config file (/config/config.php).</p>".
+    $lang_setup['setup1_no_permission'] = "<p><b>The webserver does not have permissions to write to the config file ([webcollab]/config/config.php).</p>".
                                          "<p>You can make a new database, but setup will not be able proceed and write to the config file.</p>\n".
                                          "<p>To allow setup to alter the config file you can either:<ul>\n".
                                          "<li>Change the file permissions to allow the webserver to write to the file '/config/config.php'</li>\n".
