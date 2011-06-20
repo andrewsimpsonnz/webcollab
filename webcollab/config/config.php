@@ -210,6 +210,6 @@
 //WEBCOLLAB VERSION
 
   //version info
-  define('WEBCOLLAB_VERSION', "PDO 3.00" );
+  define('WEBCOLLAB_VERSION', "3.00" );
 
 ?>
