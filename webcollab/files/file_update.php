@@ -77,7 +77,9 @@ $taskid = usergroup_check($taskid );
 //generate_token
 generate_token('file_submit' );
 
-$q = db_query('SELECT filename, description FROM '.PRE.'files WHERE id='.$fileid.' LIMIT 1' );
+$q = db_prepare('SELECT filename, description FROM '.PRE.'files WHERE id=? LIMIT 1' );
+db_execute($q, array($fileid ) );
+
 if( ! $row = db_fetch_array($q, 0 ) ) {
   error('Edit file', 'File info missing' );
 }
