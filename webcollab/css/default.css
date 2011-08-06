@@ -9,20 +9,36 @@ body {
 
 /* CONTAINER */
 
-/* Global container box */
-table.main {
-  border-width : 0;
-  border-collapse : collapse;
-  padding : 0;
-  width : 100%;
+/* Container for banner to top of page */
+div#top {
+	width: 100%;
 }
 
-td.menu {
-  width : 175px;
+/* Container to menus and main */
+div#container {
+	width: 100%;
 }
 
-td.single {
-  width : 100%;
+/* Container for menus */ 
+div#menu {
+	float: left;
+	width: 175px;
+}
+
+/* Container for main */
+div#main {
+	margin-left: 175px;
+}
+
+/* Container for single box */
+div#single {
+	width: 100%
+}
+
+/* Container for bottom of page */
+div#bottom {
+	clear: both;
+	width: 100%
 }
 
 /* MASTHEAD */
@@ -34,7 +50,7 @@ div.masthead {
   padding-left : 3px;
   height : 20px;
   background-color : #000000;
-  color : #eeeeee;
+  color : #EEEEEE;
 }
 
 /* BOX HEAD */
@@ -50,7 +66,7 @@ div.head {
   font-weight : bold;
   text-align : left;
   padding : 3px;
-  background-color : #1e4b79;
+  background-color : #1E4B79;
   color : #ffffff;
 }
 
@@ -72,6 +88,11 @@ div.head-small {
   width : 400px;
 }
 
+/* Hack to fix topmost menu box positioning */ 
+div.head-menu-top {
+  margin-top: 0px
+}
+
 /* BOXES */
 
 /* Default box content styling */
@@ -91,6 +112,7 @@ div.boxdata {
 /* normal box content styling */
 div.boxdata-normal {
   width : 97%;
+	margin-bottom: 10px;
 }
 
 /* menu box content styling */
@@ -109,7 +131,7 @@ div.boxstyle {
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
-  background-color : #ffffff;
+  background-color : #FFFFFF;
   color : #000000;
 }
 
@@ -159,7 +181,7 @@ div.projectlist {
   padding-left : 35px;
   padding-right : 15px;
   padding-bottom : 20px;
-  background-color : #ffffff;
+  background-color : #FFFFFF;
   color : #000000;
 }
 
@@ -174,14 +196,14 @@ table.celldata {
 
 /* Table with grey highlight background */
 table.decoration {
-  background-color: #dddddd;
+  background-color: #DDDDDD;
   border: solid black 1px;
   color : #000000;
 }
 
 /* Class for project row on summary page */
 tr.projectrow {
-  background-color : #dddddd;
+  background-color : #DDDDDD;
   border-bottom : 1px solid #333;
   font-weight : bold;
 }
@@ -195,7 +217,7 @@ td.projectlist {
   padding-left : 35px;
   padding-right : 15px;
   padding-bottom : 20px;
-  background-color : #ffffff;
+  background-color : #FFFFFF;
   color : #000000;
 }
 
@@ -208,13 +230,13 @@ td.grouplist {
   padding-left : 5px;
   padding-right : 5px;
   padding-bottom : 5px;
-  background-color : #ffffff;
+  background-color : #FFFFFF;
   color : #000000;
 }
 
 /* Cell with grey background */
 td.textbackground {
-  background-color : #eeeeee;
+  background-color : #EEEEEE;
   color : #000000;
 }
 
@@ -272,7 +294,7 @@ img {
   padding: 4px;
   width: 16px;
   height: 16px;
-  border: 1px solid #bbbbbb;
+  border: 1px solid #BBBBBB;
 }
 
 /* CSS hack to hide hidden input fields */
@@ -366,7 +388,7 @@ a:visited {
 }
 
 a:hover {
-  color : #cc0000;
+  color : #CC0000;
   background-color : transparent;
   text-decoration : none;
 }
