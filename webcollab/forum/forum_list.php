@@ -235,7 +235,7 @@ if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) )
   //add an option to add posts
   if($TASKID_ROW['archive'] == 0 ) {
     if((GUEST == false ) || ((GUEST == true ) && (GUEST_LOCKED == 'N' ) ) ){
-      $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".X."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."\">".$lang['new_post']."</a>]</span>";
+      $content .= "<span class=\"textlink\">[<a href=\"forum.php?x=".X."&amp;action=add&amp;parentid=0&amp;taskid=".$taskid."\">".$lang['new_post']."</a>]</span>\n";
     }
   }
 

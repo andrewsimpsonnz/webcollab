@@ -95,7 +95,7 @@ if($i == 0 ) {
 }
 else {
   //show found content
-  new_box( $lang['manage_files'], $content );
+  new_box($lang['manage_files'], $content );
 }
 
 ?>

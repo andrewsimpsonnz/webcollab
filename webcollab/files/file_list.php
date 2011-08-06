@@ -100,7 +100,7 @@ if($i == 0 ) {
 }
 
 if((! GUEST ) && ($TASKID_ROW['archive'] == 0) ){
-  $content .= "<span class=\"textlink\">[<a href=\"files.php?x=".X."&amp;taskid=".$taskid."&amp;action=upload\">".$lang['add_file']."</a>]</span>";
+  $content .= "<span class=\"textlink\">[<a href=\"files.php?x=".X."&amp;taskid=".$taskid."&amp;action=upload\">".$lang['add_file']."</a>]</span>\n";
 }
 
 new_box($lang['files_assoc_'.$TYPE], $content, "boxdata-normal", "head-normal", "boxstyle-short" );
