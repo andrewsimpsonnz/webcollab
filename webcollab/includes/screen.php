@@ -26,10 +26,10 @@
 
   Create the window'ed interface and define a simple API
 
-  The screen is split in 3 components. The overall table is called main_table
+  The screen is split in 4 components. The overall menu + main is called 'container' 
 
   +----------------+
-  |  info          |
+  |  top           |
   +----------------+
   |   |            |
   | m |            |
@@ -39,6 +39,8 @@
   |   |            |
   |   |            |
   +---+------------+
+  |  bottom        |
+  +----------------+
 
 
   And the api is :
@@ -62,7 +64,7 @@
 // Creates the initial window
 //
 
-function create_top($title='', $page_type=0, $include_javascript=0, $redirect_time=0 ) {
+function create_top($title='', $page_type=0, $body_id=0, $include_javascript=0, $redirect_time=0 ) {
 
 
 
@@ -149,31 +151,38 @@ function create_top($title='', $page_type=0, $include_javascript=0, $redirect_ti
     case 1:
       //loads javascript file
       $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
-                  "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n".
-                  "</head>\n\n".
-                  "<body>\n";
+                  "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n";
        break;
 
     case 2:
       //loads javascript file (but not editor)
-      $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
-                  "</head>\n\n".
-                  "<body>\n";
+      $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n";
       break;
 
     case 0:
     default:
       //no javascript loaded
+      break;
+  }
+
+  switch($body_id ) {
+    case true:
+      $content .= "</head>\n\n".
+                  "<body id=\"$body_id\">\n";
+       break;
+
+    case false:
       $content .= "</head>\n\n".
                   "<body>\n";
       break;
+
   }
 
   switch ($page_type ) {
 
     case 0: //main window + menu sidebar
       //create the masthead part of the main window
-      $content .=   "<div class=\"masthead\">";
+      $content .=   "<div id=\"top\" class=\"masthead\">";
       //show username if applicable
       if(defined('UID_NAME') ) {
         $content .=  '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
@@ -181,30 +190,30 @@ function create_top($title='', $page_type=0, $include_javascript=0, $redirect_ti
       $content .=   "</div>\n";
       //create menu sidebar
       $content .=    "<!-- start main table -->\n".
-                     "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n".
-                     "<tr valign=\"top\"><td class=\"menu\" align=\"center\">\n";
+                     "<div id=\"container\">\n".
+                     "<div id=\"menu\">\n";
       $bottom_text = 1;
       break;
 
     case 1: //single main window (no menu sidebar)
     case 3: //calendar
-      $content .=   "<div class=\"masthead\">";
+      $content .=   "<div id=\"top\" class=\"masthead\">";
       if(defined('UID_NAME' ) ) {
         $content .= '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
       }
       $content .=   "</div>\n";
       //create single window over entire screen
-      $content .=   "<!-- start main table -->\n".
-                    "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n".
-                    "<tr valign=\"top\"><td class=\"single\" align=\"center\">\n";
+      $content .=    "<!-- start main table -->\n".
+                     "<div id=\"container\">\n".
+                     "<div id=\"single\">\n";
       $bottom_text = 2;
       break;
 
     case 2: //printable screen
       //create single window over paper width
-      $content .=   "<!-- start main table -->\n".
-                    "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n".
-                    "<tr valign=\"top\"><td class=\"single\" align=\"center\">\n";
+      $content .=    "<!-- start main table -->\n".
+                     "<div id=\"container\">\n".
+                     "<div id=\"single\">\n";
       //don't want bottom text
       $bottom_text = 0;
   }
@@ -222,10 +231,10 @@ function new_box($title, $content, $box="boxdata-normal", $head="head-normal", $
 
   echo  "\n<!-- start of ".$title." - box -->\n".
         "<div class=\"head ".$head."\" >::&nbsp;".$title."</div>\n".
-        "<div class=\"boxdata ".$box."\" >\n".
-        "<div class=\"boxstyle ".$style."\" >\n".$content.
-        "</div>\n".
-        "</div>\n".
+        "<div class=\"boxdata ".$box."\">\n".
+        "<div class=\"boxstyle ".$style."\">\n".
+        $content.
+        "</div></div>\n".
         "<!-- end -->\n";
 
   return;
@@ -236,7 +245,7 @@ function new_box($title, $content, $box="boxdata-normal", $head="head-normal", $
 //
 function goto_main() {
 
-  echo "\n</td><td align=\"center\">\n";
+  echo "\n</div><!-- end menu -->\n<div id=\"main\">\n";
   return;
 }
 
@@ -247,18 +256,16 @@ function create_bottom() {
 
   global $bottom_text;
 
-  //end the main table row
-  $content = "</td></tr>\n</table>\n";
+  //end the main & container
+  $content = "</div><!-- end main -->\n</div><!-- end container -->\n\n";
 
   switch($bottom_text) {
-    case 0: //no bottom text
-      $align = '';
-      break;
 
     case 1:
       $align = "style=\"text-align: left\"";
       break;
 
+    case 0: //no bottom text
     case 2:
     default:
       $align = "style=\"text-align: center\"";
@@ -267,7 +274,7 @@ function create_bottom() {
 
  //shows the logo
  if($bottom_text) {
-   $content .= "<div class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2011</div>\n";
+   $content .= "<div id=\"bottom\" class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2011</div>\n";
  }
   //end xml parsing
   $content .= "</body>\n</html>\n";
