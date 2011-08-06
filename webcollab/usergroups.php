@@ -42,7 +42,7 @@ switch( $_REQUEST['action'] ) {
 
   //gives a window and some options to do to the poor 'old usergroup
   case 'manage':
-    create_top($lang['manage_usergroups']);
+    create_top($lang['manage_usergroups'], 0, 'usergroups-manage');
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'usergroups/usergroup_menubox.php' );
     include(BASE.'users/user_menubox.php' );
@@ -53,7 +53,7 @@ switch( $_REQUEST['action'] ) {
 
   //add a usergroup
   case 'add':
-    create_top($lang['add_new_usergroup'], 0, 2 );
+    create_top($lang['add_new_usergroup'], 0, 'usergroups-add', 2 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'usergroups/usergroup_menubox.php' );
     goto_main();
@@ -63,7 +63,7 @@ switch( $_REQUEST['action'] ) {
 
   //edit a usergroup
   case 'edit':
-    create_top($lang['edit_usergroup'] );
+    create_top($lang['edit_usergroup'], 0, 'usergroups-edit' );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'usergroups/usergroup_menubox.php' );
     goto_main();

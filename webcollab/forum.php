@@ -47,7 +47,7 @@ switch($_REQUEST['action'] ) {
 
   //add a forum post/reply
   case 'add':
-    create_top($lang['add_reply'], 0, 1 );
+    create_top($lang['add_reply'], 0, 'forum-add', 1 );
     include(BASE.'includes/mainmenu.php');
     goto_main();
     include(BASE.'forum/forum_add.php');
@@ -56,7 +56,7 @@ switch($_REQUEST['action'] ) {
 
   //edit a forum post/reply
   case 'edit':
-    create_top($lang['add_reply'], 0, 1 );
+    create_top($lang['add_reply'], 0, 'forum-edit', 1 );
     include(BASE.'includes/mainmenu.php');
     goto_main();
     include(BASE.'forum/forum_edit.php');
@@ -65,7 +65,7 @@ switch($_REQUEST['action'] ) {
 
   //delete a forum post/reply
   case 'delete':
-    create_top($lang['add_reply'] );
+    create_top($lang['add_reply'], 0, 'forum-delete' );
     include(BASE.'includes/mainmenu.php');
     goto_main();
     include(BASE.'forum/forum_edit.php');
@@ -89,7 +89,7 @@ switch($_REQUEST['action'] ) {
 
   //search
   case 'search':
-    create_top($lang['info'] );
+    create_top($lang['info'], 0, 'forum-search-results' );
     include(BASE.'includes/mainmenu.php');
     include(BASE.'forum/forum_menubox.php');
     goto_main();
@@ -99,7 +99,7 @@ switch($_REQUEST['action'] ) {
 
   //display search box
   case 'search_box':
-    create_top($lang['info'], 0, 2 );
+    create_top($lang['info'], 0, 'forum-search', 2 );
     include(BASE.'includes/mainmenu.php');
     include(BASE.'forum/forum_menubox.php');
     goto_main();

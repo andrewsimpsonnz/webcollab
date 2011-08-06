@@ -42,7 +42,7 @@ switch($_REQUEST['action'] ) {
 
   //gives a window and some options to do to the poor 'old contact manager
   case 'show':
-    create_top($lang['show_contact']);
+    create_top($lang['show_contact'], 0, 'contact-show' );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'contacts/contact_menubox.php' );
     goto_main();
@@ -52,7 +52,7 @@ switch($_REQUEST['action'] ) {
 
   //gives a window and some options to do to the poor 'old contact manager
   case 'add':
-    create_top($lang['add_contact'], 0, 1 );
+    create_top($lang['add_contact'], 0, 'contact-add', 1 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'contacts/contact_menubox.php' );
     goto_main();
@@ -61,7 +61,7 @@ switch($_REQUEST['action'] ) {
     break;
 
   case 'edit':
-    create_top($lang['edit_contact'], 0, 1 );
+    create_top($lang['edit_contact'], 0, 'contact-edit', 1 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'contacts/contact_menubox.php' );
     goto_main();

@@ -41,13 +41,13 @@ if( ! isset($_REQUEST['action']) ){
 switch($_REQUEST['action'] ) {
 
   case 'show':
-    create_top( $lang['calendar'], 3 );
+    create_top( $lang['calendar'], 3, 'calendar-show' );
     include(BASE.'calendar/calendar_show.php' );
     create_bottom();
     break;
 
   case 'date':
-    create_top( $lang['calendar'], 3, 2 );
+    create_top( $lang['calendar'], 3, 'calendar-date', 2 );
     include(BASE.'calendar/calendar_date.php' );
     create_bottom();
     break;

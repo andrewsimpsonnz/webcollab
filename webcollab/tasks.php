@@ -49,7 +49,7 @@ switch($_REQUEST['action'] ) {
       die;
     }
 
-    create_top($lang['task_info'], 0, 2 );
+    create_top($lang['task_info'], 0, 'task-show', 2 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'tasks/task_navigate.php' );
     if(! GUEST )
@@ -70,7 +70,7 @@ switch($_REQUEST['action'] ) {
 
   //add a task
   case 'add':
-    create_top($lang['add_task'], 0, 1 );
+    create_top($lang['add_task'], 0, 'task-add', 1 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'tasks/task_navigate.php' );
     include(BASE.'tasks/task_menubox.php' );
@@ -86,7 +86,7 @@ switch($_REQUEST['action'] ) {
 
   //edit a task
   case 'edit':
-    create_top($lang['edit_task'], 0, 1 );
+    create_top($lang['edit_task'], 0, 'task-edit', 1 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'tasks/task_navigate.php' );
     include(BASE.'tasks/task_menubox.php' );
@@ -97,7 +97,7 @@ switch($_REQUEST['action'] ) {
 
   //show a summary page
   case 'summary':
-    create_top($lang['summary_list'] );
+    create_top($lang['summary_list'], 0, 'task-summary' );
     include(BASE.'includes/mainmenu.php' );
     if(! GUEST ){
       include(BASE.'tasks/task_menubox.php' );
@@ -109,7 +109,7 @@ switch($_REQUEST['action'] ) {
 
   //todo list
   case 'todo':
-    create_top($lang['todo_list'] );
+    create_top($lang['todo_list'], 0, 'task-todo' );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'users/user_menubox.php' );
     include(BASE.'users/user_existing_menubox.php' );
@@ -120,7 +120,7 @@ switch($_REQUEST['action'] ) {
 
   //clone
   case 'clone':
-    create_top($lang['add_task'], 0, 2 );
+    create_top($lang['add_task'], 0, 'task-clone', 2 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'tasks/task_navigate.php' );
     include(BASE.'tasks/task_menubox.php' );
@@ -153,7 +153,7 @@ switch($_REQUEST['action'] ) {
 
   //printable task info
   case 'show_print':
-    create_top($lang['task_info'], 2 );
+    create_top($lang['task_info'], 2, 0 );
     include(BASE.'tasks/task_show.php' );
     include(BASE.'tasks/task_list.php' );
     include(BASE.'forum/forum_list.php' );
@@ -163,14 +163,14 @@ switch($_REQUEST['action'] ) {
 
   //printable summary info
   case 'summary_print':
-    create_top($lang['summary_list'], 2 );
+    create_top($lang['summary_list'], 2, 0 );
     include(BASE.'tasks/task_summary_list.php' );
     create_bottom();
     break;
 
   //printable project info
   case 'project_print':
-    create_top($lang['projects'], 2 );
+    create_top($lang['projects'], 2, 0 );
     include(BASE.'tasks/task_project_list.php' );
     create_bottom();
     break;
