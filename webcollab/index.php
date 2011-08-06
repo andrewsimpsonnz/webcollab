@@ -202,7 +202,7 @@ if(isset($_COOKIE['webcollab_session'] ) && preg_match('/^[a-f\d]{32}$/i', $_COO
   }
 }
 
-create_top($lang['login_screen'], 1, 2 );
+create_top($lang['login_screen'], 1, 'login', 2 );
 
 $content = "<div style=\"text-align:center\">";
 
@@ -237,8 +237,7 @@ $content .= "<p>".$lang['please_login'].":</p>\n".
      break;
 }
 
-$content .= "</form>".
-            "</div>";
+$content .= "</form>\n</div>\n";
 
 //set box options
 new_box($lang['login'], $content, 'boxdata-small', 'head-small' );

@@ -505,7 +505,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 //
 
 //login box screen code
-create_top('Login', 1, 2 );
+create_top('Login', 1, 0, 2 );
 
 $content = "<p>Admin login is required for database update:</p>\n".
            "<form name=\"inputform\" method=\"post\" action=\"update.php\">\n".
