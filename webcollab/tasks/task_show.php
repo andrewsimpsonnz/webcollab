@@ -299,9 +299,7 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
 
   //admin - owner - groupaccess  ==> [edit] button
   if((ADMIN ) || ($access ) ) {
-    $content .= "<span class=\"textlink\">".
-                "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n".
-                "</span>\n";
+    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
   }
 
   //(owner) & (uncompleted task)==> [I don't want it anymore] button
@@ -316,12 +314,12 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
 
   //unowned task ==> [I'll take it!] button
   if($TASKID_ROW['owner'] == 0 ) {
-    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=".UID."\">".sprintf($lang['i_take_it'] )."</a>]\n";
+    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=".UID."\">".sprintf($lang['i_take_it'] )."</a>]&nbsp;\n";
   }
 
   //(admin) & (not owner) & (has owner) & (uncompleted task) ==> [Take over task] button
   if((ADMIN ) && (UID != $TASKID_ROW['owner'] ) && ($TASKID_ROW['owner'] != 0 ) && ($TASKID_ROW['status'] != 'done' ) ) {
-    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=".UID."\">".sprintf($lang["take_over_".$TYPE] )."</a>]\n";
+    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=".UID."\">".sprintf($lang["take_over_".$TYPE] )."</a>]&nbsp;\n";
   }
   $content .= "</span></div>\n";
 }

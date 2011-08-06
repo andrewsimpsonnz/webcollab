@@ -440,11 +440,11 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
 
 //text link for 'printer friendly' page
 if(isset($_GET['action']) && $_GET['action'] == 'summary_print' ) {
-  $content  = "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=".$sortby."\">".$lang['normal_version']."</a>]</span></p>";
+  $content  = "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=".$sortby."\">".$lang['normal_version']."</a>]</span></p>\n";
 }
 else {
   $content  = "<div style=\"text-align: right\"><span class=\"textlink\"><a href=\"tasks.php?x=".X."&amp;action=summary_print&amp;sortby=".$sortby."\" title=\"".$lang['print_version']."\">".
-              "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a></span></div>";
+              "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a></span></div>\n";
 }
 
 $content .= "<table>\n";
