@@ -68,11 +68,11 @@ else {
                "</div>\n";
 }
 
-//setup main table
-$content .= "<div class=\"projectlist\">\n";
-
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
+
+  //setup main table
+  $content .= "<div class=\"projectlist\">\n";
 
   if($i > 0 ) { 
     //not the first line, need to add a divider
@@ -154,9 +154,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
                 "</td></tr>\n".
                 "</table>\n";
   }
+  $content .= "</div>\n";
 }
 
-$content .= "</div>\n";
 
 if($i == 0 ) {
   //no projects found in database
