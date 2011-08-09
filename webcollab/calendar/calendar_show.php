@@ -135,6 +135,7 @@ else {
 switch($selection ) {
   case 'group':
     $userid = 0; $s1 = ""; $s2 = " selected=\"selected\""; $s3 = " checked=\"checked\""; $s4 = "";
+    $s5 = "style=\"background-color: #DDDDDD\""; $s6 = "style=\"background-color: white\"";
     $tail = " AND usergroupid=".$groupid;
     if($groupid == 0 ){
       $s4 = " selected=\"selected\"";
@@ -144,6 +145,7 @@ switch($selection ) {
   case 'user':
   default:
     $groupid = 0; $s1 = " checked=\"checked\""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
+    $s5 = "style=\"background-color: white\""; $s6 = "style=\"background-color: #DDDDDD\"";
     $tail = " AND owner=".$userid;
     if($userid == 0 ){
       $tail = "";
@@ -227,12 +229,11 @@ $q1 = db_prepare('SELECT id, name, parent, status, projectid, completed
 $content .= "<span class=\"textlink\">[<a href=\"main.php?x=".X."\">".$lang['main_menu']."</a>]</span>";
 
 $content .= "<form method=\"post\" action=\"calendar.php\">\n".
-            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n ".
-            "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n ".
-            "<div style=\"text-align: center\">\n".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+            "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n".
             "<table class=\"decoration\" style=\"margin-left: auto; margin-right: auto;\" cellpadding=\"5\">\n".
-            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" onchange=\"javascript:this.form.submit()\"name=\"selection\" id=\"users\"".$s1."/><label for=\"users\">".$lang['users']."</label>\n".
-            "<label for=\"users\"><select name=\"userid\" onchange=\"javascript:this.form.submit()\">\n".
+            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" onchange=\"javascript:this.form.submit()\" name=\"selection\" id=\"users\"".$s1."/><label for=\"users\">".$lang['users']."</label>\n".
+            "<label for=\"users\"><select name=\"userid\" ".$s5." onchange=\"javascript:this.form.submit()\">\n".
             "<option value=\"0\"".$s2.">".$lang['all_users']."</option>\n";
 
 //get all users for option box
@@ -257,7 +258,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 $content .= "</select></label></td>\n".
             "<td><input type=\"radio\" value=\"group\" name=\"selection\" onchange=\"javascript:this.form.submit()\" id=\"group\"".$s3." /><label for=\"group\">".$lang['usergroups']."</label>\n".
-            "<label for=\"group\"><select name=\"groupid\" onchange=\"javascript:this.form.submit()\">\n".
+            "<label for=\"group\"><select name=\"groupid\" ".$s6." onchange=\"javascript:this.form.submit()\">\n".
             "<option value=\"0\"".$s4.">".$lang['no_group']."</option>\n";
 
 //get all groups for option box
@@ -276,11 +277,10 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 $content .= "</select></label></td>\n".
             "<td colspan=\"2\" ><input type=\"submit\" value=\"".$lang['update']."\" /></td></tr>\n".
-            "</table></div>\n";
+            "</table>\n";
 
 //month (must be in decimal, 'cause that's what database uses!)
-$content .= "<div style=\"text-align: center\">\n".
-            "<table style=\"margin-left: auto; margin-right: auto\">\n".
+$content .= "<table style=\"margin-left: auto; margin-right: auto\">\n".
             "<tr><td><input type=\"submit\" name=\"lastyear\" value=\"&lt;&lt;\" /></td>\n".
             "<td><input type=\"submit\" name=\"lastmonth\" value=\"&lt;\" /></td>\n".
             "<td>\n<select name=\"month\" onchange=\"javascript:this.form.submit()\">\n";
@@ -311,30 +311,28 @@ for( $i = $min_year; $i < $max_year ; ++$i ) {
 $content .=  "</select></td>\n".
              "<td><input type=\"submit\" name=\"nextmonth\" value=\"&gt;\" /></td>\n".
              "<td><input type=\"submit\" name=\"nextyear\" value=\"&gt;&gt;\" /></td></tr>\n".
-             "</table></div></form>\n<br />\n";
+             "</table></form>\n<br />\n";
 
 //number of days in month
 $numdays = date('t', mktime(0, 0, 0, $month, 1, $year ) );
 
 //main calendar table
-$content .= "<div style=\"text-align: center\">\n".
-            "<table class=\"outline\" cellspacing=\"0\" border=\"1px\" width=\"97%\">\n<tr>\n".
-            "<td colspan=\"7\" class=\"monthcell\" align=\"center\" valign=\"middle\"><b>".$month_array[(int)$month]."</b>\n</td>\n".
-            "</tr>\n";
+$content .= "<table class=\"outline\">\n".
+            "<tr><td colspan=\"7\" class=\"monthcell\"><b>".$month_array[(int)$month]."</b></td></tr>\n";
 
 //weekdays
-$content .= "<tr align=\"center\" valign=\"middle\">\n";
+$content .= "<tr>\n";
 for ($i = 0; $i < 7; ++$i ) {
   $day_number = $i + START_DAY;
   if( $day_number > 6 ) {
     $day_number = $day_number - 7;
   }
-  $content .= "<td class=\"weekcell\" style=\"width: 13.86%\"><b>".$week_array[$day_number]."</b></td>\n";
+ $content .= "<td class=\"weekcell\"><b>".$week_array[$day_number]."</b></td>\n";
 }
-$content .= "</tr>\n";
+$content .= "</tr>";
 
 //show lead in to dates
-$content .= "<tr align=\"left\" valign=\"top\">\n";
+$content .= "<tr>\n";
 
 $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ) - START_DAY;
 if( $dayone < 0 ) {
@@ -349,18 +347,19 @@ $leadin_length = $i;
 //show dates
 for($num = 1; $num <= $numdays; ++$num ) {
   if($i >= 7 ) {
-    $content .= "</tr>\n".
-                "<tr align=\"left\" valign=\"top\">\n";
+    $content .= "</tr><tr>\n";
     $i=0;
   }
-  $content .= "<td class=\"datecell\" ";
 
   //highlight today
   if($num == $today) {
-    $content .= "style=\"background : #C0C0C0\"";
+    $content .= "<td class=\"todaycell\">";
+  }
+  else {
+    $content .= "<td class=\"datecell\">";
   }
 
-  $content .= "><span class=\"daynum\">".$num."</span>";
+  $content .= $num;
 
   //check if this date has projects/tasks
   if(isset($task_dates[$num] ) ) {
@@ -401,9 +400,9 @@ for($num = 1; $num <= $numdays; ++$num ) {
               else {
                 $name = "<b>".$name."</b>";
               }
-              $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."\" >".
+              $content .= "<div style=\"text-align: left; background:".$project_colour_array[$row['projectid']]."\" >".
                           "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
-                          "<span style=\"text-decoration:underline\">".
+                          "<span class=\"underline\">".
                           "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\" title=\"".$row['name']."\" >".$name."</a></span></div>\n";
               break;
 
@@ -426,7 +425,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
                     $state = "";
                     break;
                   }
-                  $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."\">".
+                  $content .= "<div style=\"text-align: left; background:".$project_colour_array[$row['projectid']]."\">".
                               "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
                               "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\" title=\"".$row['name']."\" >".$name."</a>".$state."</div>\n";
               break;
@@ -446,8 +445,7 @@ for($i = 0; $i < $leadout_length; ++$i ) {
   $content .= "<td class=\"datecell\">&nbsp;</td>\n";
 }
 
-$content .= "</tr>\n";
-$content .= "</table>\n</div>\n";
+$content .= "</tr>\n</table>\n";
 
 new_box($lang['calendar'], $content );
 
