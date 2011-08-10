@@ -1,5 +1,5 @@
 table.outline {
-	width: 97%;
+  width: 97%;
   margin-left: auto;
   margin-right: auto;
   border-width: 1px;
@@ -11,7 +11,7 @@ table.outline {
 td.monthcell {
   font-weight: bold;
   vertical-align: middle;
-	text-align: center;
+  text-align: center;
   border-width: 1px;
   background-color: #1e4b79;
   color: #ffffff;
@@ -19,8 +19,8 @@ td.monthcell {
 
 td.weekcell {
   width: 13.86%;
-	vertical-align: middle;
-	text-align: center;
+  vertical-align: middle;
+  text-align: center;
   border-width: 1px; 
   border-style: solid; 
   background-color: #3e6b99;
@@ -29,17 +29,17 @@ td.weekcell {
 
 td.datecell {
   height: 50px;
-	vertical-align: top;
-	text-align: center;
+  vertical-align: top;
+  text-align: center;
   border-width: 1px; 
   border-style: solid;
 }
 
 td.todaycell {
-	height: 50px;
-	vertical-align: top;
-	text-align: center;
+  height: 50px;
+  vertical-align: top;
+  text-align: center;
   border-width: 1px; 
   border-style: solid;
-	background-color: #C0C0C0;
+  background-color: #C0C0C0;
 }
