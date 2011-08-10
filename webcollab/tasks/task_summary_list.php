@@ -363,11 +363,11 @@ function project_summary($q, $depth=0, $input='' ) {
     //show graphical taskbar
     if( ($row['parent'] == 0 ) && ($depth >= 0 ) ) {
       if($row['completed'] > 0 ) {
-       $result .= "<table width=\"200\"><tr><td class=\"greenbar\" style=\"height: 2px; width :".($row['completed']*2)."px\"></td><td class=\"redbar\" style=\"height: 2px; width :".(200-($row['completed']*2))."px\"></td></tr></table>\n";
+       $result .= "<table><tr><td class=\"greenbar\" style=\"height: 2px; width :".($row['completed']*2)."px\"></td><td class=\"redbar\" style=\"height: 2px; width :".(200-($row['completed']*2))."px\"></td></tr></table>\n";
 
       }
       else {
-        $result .= "<table width=\"200\"><tr><td class=\"redbar\" style=\"height: 2px; width : 200px\"></td></tr></table>\n";
+        $result .= "<table><tr><td class=\"redbar\" style=\"height: 2px; width : 200px\"></td></tr></table>\n";
 
       }
     }
@@ -443,8 +443,8 @@ if(isset($_GET['action']) && $_GET['action'] == 'summary_print' ) {
   $content  = "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=".$sortby."\">".$lang['normal_version']."</a>]</span></p>\n";
 }
 else {
-  $content  = "<div style=\"text-align: right\"><span class=\"textlink\"><a href=\"tasks.php?x=".X."&amp;action=summary_print&amp;sortby=".$sortby."\" title=\"".$lang['print_version']."\">".
-              "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a></span></div>\n";
+  $content  = "<div style=\"text-align: right\"><a href=\"tasks.php?x=".X."&amp;action=summary_print&amp;sortby=".$sortby."\" title=\"".$lang['print_version']."\">".
+              "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a></div>\n";
 }
 
 $content .= "<table>\n";

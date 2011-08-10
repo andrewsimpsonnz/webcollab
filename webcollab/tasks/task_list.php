@@ -46,7 +46,7 @@ $task_count     = 0;  //counter for $task_array
 
 function listTasks($parentid ) {
   global $lang;
-  global $task_array, $parent_array, $shown_array, $task_count;
+  global $task_array, $parent_array, $shown_array, $task_count, $level_count;
 
   //check if we have taskgroups
   if($task_array[0]['group_id'] ) {
@@ -56,7 +56,8 @@ function listTasks($parentid ) {
     $taskgroup_initial_flag = 1;
   }
   else {
-    $content = "<ul>\n";
+    $level_count = 1;
+    $content = "<ul class=\"ul-".$level_count."\">\n";
     $taskgroup_flag = 0;
   }
 
@@ -76,6 +77,7 @@ function listTasks($parentid ) {
         //don't need </ul> before first taskgroup heading (no <ul> is set)
         if(! $taskgroup_initial_flag ) {
           $content .= "</ul>\n";
+          --$level_count;
         }
 
         $content .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -92,8 +94,8 @@ function listTasks($parentid ) {
           }
         }
 
-        $content .= "</p>\n<ul>\n";
-
+        $content .= "</p>\n<ul class=\"ul-".$level_count."\">\n";
+       
         //store current groupid & clear initial flag
         $stored_groupid = $task_array[$i]['group_id'];
         $taskgroup_initial_flag = 0;
@@ -120,10 +122,12 @@ function listTasks($parentid ) {
 //
 function find_task_children($parent ) {
 
-  global $task_array, $parent_array, $shown_array, $task_count; //, $shown_count;
+  global $task_array, $parent_array, $shown_array, $task_count, $level_count;
 
   $content_flag = 0;
-  $content = "<ul>\n";
+  ++$level_count;
+
+  $content = "\n<ul class=\"ul-".$level_count."\">\n";
 
   for($i=0 ; $i < $task_count ; ++$i ) {
 
@@ -144,6 +148,7 @@ function find_task_children($parent ) {
     $content .= "</li>\n";
   }
   $content .= "</ul>\n";
+  --$level_count;
 
   if(! $content_flag ) {
     $content = '';
@@ -362,7 +367,7 @@ if($i > 0 ) {
 
   $content = listTasks($parentid );
 
-  new_box($lang['tasks'], $content );
+  new_box($lang['tasks'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-normal', 'task-list' );
 }
 
 ?>
