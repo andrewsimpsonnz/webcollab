@@ -130,8 +130,7 @@ $q = db_prepare('SELECT '.PRE.'forum.taskid AS taskid,
 
 db_execute($q, array('%'.$string.'%', '%'.$string.'%' ) );
 
-$content .= "<table class=\"celldata\">\n".
-            "<tr><td>".sprintf($lang['search_results'], $total, $string, ($min + 1), $max )."<br /><br />\n";
+$content .= sprintf($lang['search_results'], $total, $string, ($min + 1), $max )."<br /><br />\n";
 
 $content .= "<ul>\n";
 
@@ -195,8 +194,6 @@ if($min > 0 || $max < $total ) {
 
   $content .= "</tr></table></form>\n";
 }
-
-$content .= "</td></tr></table>\n";
 
 new_box($lang['forum_search'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-short' ); 
 

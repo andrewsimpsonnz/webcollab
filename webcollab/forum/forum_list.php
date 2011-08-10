@@ -42,11 +42,12 @@ include_once(BASE.'includes/time.php' );
 function list_posts_from_task( $taskid, $usergroupid ) {
 
   global $lang, $TASKID_ROW;
-  global $post_array, $parent_array, $post_count;
+  global $post_array, $parent_array, $post_count, $level_count;
 
   $post_array   = array();
   $parent_array = array();
   $post_count   = 0;
+  $level_count  = 1; 
   $post_char_limit = 500;
 
   $q = db_prepare('SELECT '.PRE.'forum.text AS text,
@@ -66,7 +67,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 
   db_execute($q, array($taskid, $usergroupid ) );
 
-  $content = "<ul>\n";
+  $content = "<ul class=\"ul-".$level_count."\">\n";
 
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
@@ -186,9 +187,10 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 //
 function find_forum_children($parent ) {
 
-  global $post_array, $parent_array, $post_count;
+  global $post_array, $parent_array, $post_count, $level_count;
 
-  $content = "<ul>\n";
+  ++$level_count;
+  $content = "<ul class=\"ul-".$level_count."\">\n";
 
   //find children posts in reverse order to stored array (natural ascending)
   for($i = ($post_count - 1 ) ; $i >= 0 ; --$i ) {
@@ -204,6 +206,7 @@ function find_forum_children($parent ) {
     }
     $content .= "</li>\n";
   }
+  --$level_count;
   $content .= "</ul>\n";
 
   return $content;
@@ -240,7 +243,7 @@ if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) )
   }
 
   //show it
-  new_box($lang['public_user_forum'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-short' );
+  new_box($lang['public_user_forum'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-short', 'forum-list' );
 }
 
 //
@@ -266,7 +269,7 @@ if($TASKID_ROW['usergroupid'] != 0 ) {
     db_execute($q, array($TASKID_ROW['usergroupid'] ) );
     $usergroup_name = db_result($q, 0, 0 );
     //show it
-    new_box(sprintf($lang['private_forum_sprt'], $usergroup_name ), $content,  'boxdata-normal', 'head-normal', 'boxstyle-short'  );
+    new_box(sprintf($lang['private_forum_sprt'], $usergroup_name ), $content,  'boxdata-normal', 'head-normal', 'boxstyle-short', 'forum-list'  );
   }
 }
 
