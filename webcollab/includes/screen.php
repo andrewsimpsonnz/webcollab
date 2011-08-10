@@ -227,14 +227,23 @@ function create_top($title='', $page_type=0, $body_id=0, $include_javascript=0, 
 //
 //  Creates a new box
 //
-function new_box($title, $content, $box="boxdata-normal", $head="head-normal", $style="boxstyle-normal" ) {
+function new_box($title, $content, $box="boxdata-normal", $head="head-normal", $style="boxstyle-normal", $id='' ) {
+
+  $div_start = '';
+  $div_end   = '';
+
+  if($id ) {
+    $div_start = "<div id=\"".$id."\">\n";
+    $div_end   = "</div>\n";
+  }
 
   echo  "\n<!-- start of ".$title." - box -->\n".
+        $div_start.
         "<div class=\"head ".$head."\" >::&nbsp;".$title."</div>\n".
         "<div class=\"boxdata ".$box."\">\n".
         "<div class=\"boxstyle ".$style."\">\n".
         $content.
-        "</div></div>\n".
+        "</div>\n</div>\n".$div_end.
         "<!-- end -->\n";
 
   return;
