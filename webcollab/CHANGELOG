@@ -1,4 +1,13 @@
 WebCollab Git
+*** 7 August 2011
+  Andrew Simpson
+
+- Change to CSS box model
+
+- Add <body> id tags for CSS (Credit: tomas7)
+
+- Add id tags to <ul> in project_list and todo (Credit: tomas7)
+
 *** 30 May 2011
   Andrew Simpson
 
