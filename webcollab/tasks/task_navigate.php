@@ -44,14 +44,14 @@ if( @safe_integer($_GET['taskid']) ) {
 
   include_once(BASE.'includes/details.php' );
 
-  $content .= "<small><b>".$lang['project'].":</b></small><br />\n";
+  $content .= "<ul class=\"menu\">\n<li><small><b>".$lang['project'].":</b></small></li>\n";
 
   switch($TASKID_ROW['parent'] ) {
 
     case '0':
       //project
-      $content .= "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
-                   box_shorten($TASKID_ROW['name'])."<br />\n";
+      $content .= "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
+                   box_shorten($TASKID_ROW['name'])."</li>\n";
       break;
 
     case ($TASKID_ROW['projectid'] ):
@@ -61,10 +61,10 @@ if( @safe_integer($_GET['taskid']) ) {
       db_execute($q1, array($TASKID_ROW['projectid'] ) );
       $project_name = box_shorten(db_result($q1, 0, 0 ) );
 
-      $content .= "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a><br />\n".
-                  "<small><b>".$lang['task'].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
-                  box_shorten($TASKID_ROW['name'])."<br />\n";
+      $content .= "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></li>\n".
+                  "<small><b>".$lang['task'].":</b></small></li>\n".
+                  "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
+                  box_shorten($TASKID_ROW['name'])."</li>\n";
       break;
 
     default:
@@ -77,15 +77,17 @@ if( @safe_integer($_GET['taskid']) ) {
       db_execute($q1, array($TASKID_ROW['parent'] ) );
       $parent_name = box_shorten(db_result($q1, 0, 0 ) );
 
-      $content .= "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a><br />\n".
-                  "<small><b>".$lang['parent_task'].":</b></small><br />\n".
-                  "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['parent']."\">".$parent_name."</a><br />\n".
-                  "<small><b>".$lang['task'].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
-                  box_shorten($TASKID_ROW['name'])."<br />\n";
+      $content .= "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></li>\n".
+                  "<li><small><b>".$lang['parent_task'].":</b></small></li>\n".
+                  "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['parent']."\">".$parent_name."</a></li>\n".
+                  "<li><small><b>".$lang['task'].":</b></small></li>\n".
+                  "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
+                  box_shorten($TASKID_ROW['name'])."</li>\n";
       break;
 
   }
+
+  $content .= "</ul>\n";
 
   new_box($lang['task_navigation'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );
 }
@@ -107,28 +109,30 @@ elseif( @safe_integer($_GET['parentid']) ){
 
   $project_name = box_shorten(db_result($q1, 0, 0 ) );
 
-  $content .= "<small><b>".$lang['project'].":</b></small><br />\n".
-              "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['projectid']."\">".$project_name."</a><br />\n";
+  $content .= "<ul class=\"menu\"><li><small><b>".$lang['project'].":</b></small></li>\n".
+              "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['projectid']."\">".$project_name."</a></li>\n";
 
   switch( $row['parent'] ) {
 
     case '0':
       //new task under project
-      $content .= "<small><b>".$lang['task'].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
-                  "<i>".$lang['new_task']."</i><br />\n";
+      $content .= "<li><small><b>".$lang['task'].":</b></small></li>\n".
+                  "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
+                  "<i>".$lang['new_task']."</i></li>\n";
       break;
 
     default:
       //new task with parent task
-      $content .= "<small><b>".$lang['parent_task'].":</b></small><br />\n".
-                  "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parentid."\">".$row['name']."</a><br />\n".
-                  "<small><b>".$lang['task'].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
-                  "<i>".$lang['new_task']."</i><br />\n";
+      $content .= "<li><small><b>".$lang['parent_task'].":</b></small></li>\n".
+                  "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parentid."\">".$row['name']."</a></li>\n".
+                  "<li><small><b>".$lang['task'].":</b></small></li>\n".
+                  "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
+                  "<i>".$lang['new_task']."</i></li>\n";
       break;
 
   }
+
+  $content .= "</ul>\n";
 
   new_box( $lang['task_navigation'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );
 }
