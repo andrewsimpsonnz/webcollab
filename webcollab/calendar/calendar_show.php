@@ -318,21 +318,21 @@ $numdays = date('t', mktime(0, 0, 0, $month, 1, $year ) );
 
 //main calendar table
 $content .= "<table class=\"outline\">\n".
-            "<tr><td colspan=\"7\" class=\"monthcell\"><b>".$month_array[(int)$month]."</b></td></tr>\n";
+            "<tr class=\"monthcell\"><td colspan=\"7\" >".$month_array[(int)$month]."</td></tr>\n";
 
 //weekdays
-$content .= "<tr>\n";
+$content .= "<tr class=\"weekcell\">\n";
 for ($i = 0; $i < 7; ++$i ) {
   $day_number = $i + START_DAY;
   if( $day_number > 6 ) {
     $day_number = $day_number - 7;
   }
- $content .= "<td class=\"weekcell\"><b>".$week_array[$day_number]."</b></td>\n";
+ $content .= "<td>".$week_array[$day_number]."</td>\n";
 }
 $content .= "</tr>";
 
 //show lead in to dates
-$content .= "<tr>\n";
+$content .= "<tr class=\"datecell\">\n";
 
 $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ) - START_DAY;
 if( $dayone < 0 ) {
@@ -340,14 +340,14 @@ if( $dayone < 0 ) {
 }
 
 for ($i = 0; $i < $dayone; ++$i ) {
-  $content .= "<td class=\"datecell\">&nbsp;</td>\n";
+  $content .= "<td>&nbsp;</td>\n";
 }
 $leadin_length = $i;
 
 //show dates
 for($num = 1; $num <= $numdays; ++$num ) {
   if($i >= 7 ) {
-    $content .= "</tr><tr>\n";
+    $content .= "</tr>\n<tr class=\"datecell\">\n";
     $i=0;
   }
 
@@ -356,7 +356,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
     $content .= "<td class=\"todaycell\">";
   }
   else {
-    $content .= "<td class=\"datecell\">";
+    $content .= "<td>";
   }
 
   $content .= $num;
@@ -442,7 +442,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
 //show lead out to dates
 $leadout_length = (7 - ($numdays + $leadin_length ) % 7 ) % 7;
 for($i = 0; $i < $leadout_length; ++$i ) {
-  $content .= "<td class=\"datecell\">&nbsp;</td>\n";
+  $content .= "<td>&nbsp;</td>\n";
 }
 
 $content .= "</tr>\n</table>\n";

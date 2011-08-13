@@ -134,23 +134,23 @@ $content .=  "</select></td>\n".
 $numdays = date('t', mktime(0, 0, 0, $month, 1, $year ) );
 
 //main calendar table
-$content .= "<table class=\"outline\">\n<tr>\n".
-            "<td colspan=\"7\" class=\"monthcell\"><b>".$month_array[(int)$month]."</b>\n</td>\n".
+$content .= "<table class=\"outline\">\n<tr class=\"monthcell\">\n".
+            "<td colspan=\"7\">".$month_array[(int)$month]."\n</td>\n".
             "</tr>\n";
 
 //weekdays
-$content .= "<tr>\n";
+$content .= "<tr class=\"weekcell\">\n";
 for ($i = 0; $i < 7; ++$i ) {
   $day_number = $i + START_DAY;
   if( $day_number > 6 ) {
     $day_number = $day_number - 7;
   }
-  $content .= "<td class=\"weekcell\" style=\"width: 20px\"><b>".$week_array[$day_number]."</b></td>\n";
+  $content .= "<td style=\"width: 20px\">".$week_array[$day_number]."</td>\n";
 }
 $content .= "</tr>\n";
 
 //show lead in to dates
-$content .= "<tr>\n";
+$content .= "<tr class=\"datecell\">\n";
 
 $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ) - START_DAY;
 if( $dayone < 0 ) {
@@ -158,17 +158,17 @@ if( $dayone < 0 ) {
 }
 
 for ($i = 0; $i < $dayone; ++$i ) {
-  $content .= "<td class=\"datecell\" style=\"height: 15px\">&nbsp;</td>\n";
+  $content .= "<td style=\"height: 15px\">&nbsp;</td>\n";
 }
 $leadin_length = $i;
 
 //show dates
 for($num = 1; $num <= $numdays; ++$num ) {
   if($i >= 7 ) {
-    $content .= "</tr><tr>\n";
+    $content .= "</tr><tr class=\"datecell\">\n";
     $i=0;
   }
-  $content .= "<td class=\"datecell\" style=\"height: 15px\">\n";
+  $content .= "<td style=\"height: 15px\">\n";
 
   //Note: This assumes the first year in dropdown box is $min_year
   $content .= "<a href='#' onclick=\"dateSet(".($num-1).",".($month-1).",".($year-$min_year)."); window.close();\">".$num."</a>".
@@ -179,7 +179,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
 //show lead out to dates
 $leadout_length = (7 - ($numdays + $leadin_length ) % 7 ) % 7;
 for($i = 0; $i < $leadout_length; ++$i ) {
-  $content .= "<td class=\"datecell\" style=\"height: 15px\">&nbsp;</td>\n";
+  $content .= "<td style=\"height: 15px\">&nbsp;</td>\n";
 }
 
 $content .= "</tr>\n".
