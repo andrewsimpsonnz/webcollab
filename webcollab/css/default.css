@@ -3,7 +3,7 @@ body {
   font-size : 12px;
   margin : 0;
   padding : 0;
-  background-color : #6085ac;
+  background-color : #6085AC;
   color : #000000;
 }
 
@@ -11,34 +11,34 @@ body {
 
 /* Container for banner to top of page */
 div#top {
-	width: 100%;
+  width: 100%;
 }
 
-/* Container to menus and main */
+/* Container to menus, main and bottom */
 div#container {
-	width: 100%;
+  width: 100%;
 }
 
-/* Container for menus */ 
+/* Container for menus */
 div#menu {
-	float: left;
-	width: 175px;
+  float: left;
+  width: 175px;
 }
 
 /* Container for main */
 div#main {
-	margin-left: 175px;
+  margin-left: 175px;
 }
 
 /* Container for single box */
 div#single {
-	width: 100%
+  width: 100%
 }
 
 /* Container for bottom of page */
 div#bottom {
-	clear: both;
-	width: 100%
+  clear: both;
+  width: 100%
 }
 
 /* MASTHEAD */
@@ -88,7 +88,7 @@ div.head-small {
   width : 400px;
 }
 
-/* Hack to fix topmost menu box positioning */ 
+/* Hack to fix topmost menu box positioning */
 div.head-menu-top {
   margin-top: 0px
 }
@@ -103,7 +103,7 @@ div.boxdata {
   text-align : left;
   border-collapse : collapse;
   padding : 3px;
-  background-color : #ffffff;
+  background-color : #FFFFFF;
   color : #000000;
 }
 
@@ -112,7 +112,7 @@ div.boxdata {
 /* normal box content styling */
 div.boxdata-normal {
   width : 97%;
-	margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 /* menu box content styling */
@@ -166,7 +166,7 @@ div.bottomtext {
   padding-top : 10px;
   padding-left : 6px;
   padding-bottom : 10px;
-  color : #1e4b79;
+  color : #1E4B79;
   background-color : transparent;
 }
 
@@ -194,6 +194,14 @@ div.projectlist {
   color : #000000;
 }
 
+/* Box content styling for project listing */
+div.taskshow {
+  text-align : left;
+  padding-top : 10px;
+  padding-bottom : 10px;
+  color : #000000;
+}
+
 /* Table for use in data cells */
 table.celldata {
   margin-left : 0;
@@ -218,7 +226,7 @@ tr.projectrow {
 }
 
 /* Box content styling for user & group lists */
-td.grouplist {
+tr.grouplist td {
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
@@ -227,12 +235,6 @@ td.grouplist {
   padding-right : 5px;
   padding-bottom : 5px;
   background-color : #FFFFFF;
-  color : #000000;
-}
-
-/* Cell with grey background */
-td.textbackground {
-  background-color : #EEEEEE;
   color : #000000;
 }
 
@@ -256,26 +258,34 @@ td.redbar {
   color : #000000;
 }
 
+/* Menu lists */
+ul.menu {
+  list-style-type: none;
+  padding:0px;
+  margin:0px;
+}
+
+/* Main box lists */
+ul.ul-1 {
+  list-style-type: disc;
+}
+
+ul.ul-2, ul.ul-3, ul.ul-4, ul.ul-5 {
+  list-style-type: circle;
+}
+
 /* GENERIC ELEMENTS */
 
 table {
   border-width : 0;
   padding : 0;
 }
-
+/*
 td {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
 }
-
-li {
-  list-style-type: disc;
-}
-
-li li {
-  list-style-type: circle;
-}
-
+*/
 img {
   /* CSS hack for XHTML strict */
   border-width : 0;
@@ -298,6 +308,12 @@ fieldset {
    border: none;
    margin: 0;
    padding: 0;
+}
+
+/* Cell with grey background */
+.textbackground {
+  background-color : #EEEEEE;
+  color : #000000;
 }
 
 /* Class for underlined text */
