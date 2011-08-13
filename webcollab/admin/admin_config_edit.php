@@ -62,7 +62,7 @@ if(USE_EMAIL === 'Y' ){
               "<input type=\"hidden\" id=\"alert_email\" name=\"alert\" value=\"".$lang['invalid_email']."\" /></fieldset>\n".
               "<table class=\"celldata\" >\n";
 
-  $content .= "<tr><td style=\"white-space : nowrap\" colspan=\"2\"><b>".$lang['email_settings']."</b><br /><br /></td></tr>\n";
+  $content .= "<tr><th style=\"white-space: nowrap; height: 20px; vertical-align: top\" colspan=\"2\">".$lang['email_settings']."</td></tr>\n";
 
   //email addresses
   $content .= "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\" >".$lang['admin_email']."</a>:</td><td><input type=\"text\" id=\"admin\" name=\"email_admin\" value=\"".$row['email_admin']."\" size=\"30\" />".
@@ -91,7 +91,7 @@ else {
 
 }
 
-$content .= "<tr><td colspan=\"2\"><b>".$lang['default_checkbox']."</b><br /><br /></td></tr>\n";
+$content .= "<tr><th style=\"white-space: nowrap; height: 20px; vertical-align: top\" colspan=\"2\">".$lang['default_checkbox']."</th></tr>\n";
 
 //defaults for task checkboxes
 $content .= "<tr><td><label for=\"access\">".$lang['allow_globalaccess']."</label></td><td><input type=\"checkbox\" name=\"access\" id=\"access\" ".$row['globalaccess']." /></td></tr>\n".
