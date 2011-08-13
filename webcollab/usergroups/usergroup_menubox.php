@@ -31,13 +31,14 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
-$content = '';
+$content = "<ul class=\"menu\">\n";
 
 if(ADMIN ) {
-  $content .= "<a href=\"usergroups.php?x=".X."&amp;action=add\">".$lang['add']."</a><br />\n";
+  $content .= "<li><a href=\"usergroups.php?x=".X."&amp;action=add\">".$lang['add']."</a></li>\n";
 }
 
-$content .= "<a href=\"usergroups.php?x=".X."&amp;action=manage\">".$lang['manage']."</a><br />\n";
+$content .= "<li><a href=\"usergroups.php?x=".X."&amp;action=manage\">".$lang['manage']."</a></li>\n".
+            "</ul>\n";
 
 new_box( $lang['usergroups'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );
 

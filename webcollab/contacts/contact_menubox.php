@@ -61,30 +61,36 @@ else {
   $add  = '';
 }
 
+$content .= "<ul class=\"menu\">\n";
+
 //show all contacts
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   if( $row['company'] != '' ) {
      if ($row['company'] != $company ){
-       $content .= box_shorten($row['company'] )."<br />";
+       $content .= "<li>".box_shorten($row['company'] )."</li>";
      }
      $show = box_shorten($row['lastname'] ).", ".mb_strtoupper(mb_substr($row['firstname'], 0, 1 ) ).".";
-     $content .= "<a href=\"contacts.php?x=".X."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
+     $content .= "<li><a href=\"contacts.php?x=".X."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a></li>";
      $company =  $row['company'];
    }
    else {
      $show = box_shorten($row['lastname'] ).", ".mb_strtoupper(mb_substr($row['firstname'], 0, 1 ) ).".";
-     $content .= "<a href=\"contacts.php?x=".X."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a><br />";
+     $content .= "<li><a href=\"contacts.php?x=".X."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a></li>";
    }
 }
 
 db_free_result($q );
 
-$content .= "<br />\n";
+$content .= "</ul>\n";
+
+if($i != 0 ) {
+  $content = '';
+}
 
 //the add button
 if(! GUEST ){
-  $content .= "<span class=\"textlink\">[<a href=\"contacts.php?x=".X."&amp;action=add".$add."\">".$lang['add_contact']."</a>]</span>\n";
+  $content .= "<div style=\"margin-top: 20px\"><span class=\"textlink\">[<a href=\"contacts.php?x=".X."&amp;action=add".$add."\">".$lang['add_contact']."</a>]</span></div>\n";
 }
 
 //show the box

@@ -75,7 +75,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 
   //show it
-  $list .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['taskid']."\">".box_shorten($row['taskname'], 25 )."</a><br />\n";
+  $list .= "<li><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['taskid']."\">".box_shorten($row['taskname'], 25 )."</a></li>\n";
 
   //record taskid to ensure we only show it once
   $shown[($row['taskid'])] = 1;
@@ -91,7 +91,11 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 db_free_result($q );
 
 if($list != '') {
-  $content = "<small>".$list.sprintf($lang['last_post_sprt'], nicedate($lastpost) )."</small>\n";
+  $content = "<small><ul class=\"menu\">".
+             $list.
+             sprintf($lang['last_post_sprt'], nicedate($lastpost) ).
+             "</ul></small>\n";
+
   new_box($lang['recent_posts'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );
 }
 

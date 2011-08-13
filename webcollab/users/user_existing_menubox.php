@@ -47,7 +47,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   }
 }
 
-$content = "<table style=\"text-align:left\">\n";
+$content = "<ul class=\"menu\">\n";
 
 //query users
 $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' ORDER by fullname' );
@@ -60,9 +60,9 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
     continue;
   }
 
-  $content .= "<tr><td><small><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".wordwrap($row['fullname'], 30,  "<br />", 1 )."</a></small></td></tr>\n";
+  $content .= "<li><small><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".wordwrap($row['fullname'], 30,  "<br />", 1 )."</a></small></li>\n";
 }
-$content .= "</table>";
+$content .= "</ul>";
 
 //check for enough users
 if($i == 0 ) {

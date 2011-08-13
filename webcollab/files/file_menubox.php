@@ -40,7 +40,9 @@ if(! ADMIN ){
 $content = '';
 
 //add an option to admin files
-$content .= "<a href=\"files.php?x=".X."&amp;action=admin\">".$lang['file_admin']."</a><br />\n";
+$content .= "<ul class=\"menu\">\n".
+            "<li><a href=\"files.php?x=".X."&amp;action=admin\">".$lang['file_admin']."</a></li>\n".
+            "</ul>\n";
 
 //show it
 new_box( $lang['files'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );

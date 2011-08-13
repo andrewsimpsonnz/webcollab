@@ -31,26 +31,27 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
-$content = '';
+$content = "<ul class=\"menu\">\n";
 
 //add an option to add users
 if(ADMIN ) {
-  $content .= "<a href=\"users.php?x=".X."&amp;action=add\">".$lang['add']."</a><br />\n";
+  $content .= "<li><a href=\"users.php?x=".X."&amp;action=add\">".$lang['add']."</a></li>\n";
 }
 
-$content .= "<a href=\"users.php?x=".X."&amp;action=manage\">".$lang['manage']."</a><br />\n";
+$content .= "<li><a href=\"users.php?x=".X."&amp;action=manage\">".$lang['manage']."</a></li>\n";
 
 if((ADMIN) && (USE_EMAIL != 'N') ){
-  $content .= "<a href=\"users.php?x=".X."&amp;action=email\">".$lang['email_users']."</a><br />\n";
+  $content .= "<li><a href=\"users.php?x=".X."&amp;action=email\">".$lang['email_users']."</a></li>\n";
 }
 
-$content .= "<a href=\"users.php?x=".X."&amp;action=showonline\">".$lang['who_online']."</a><br />\n";
+$content .= "<li><a href=\"users.php?x=".X."&amp;action=showonline\">".$lang['who_online']."</a></li>\n";
 
 if((GUEST == false ) || ((GUEST == true ) && (GUEST_LOCKED == 'N' ) ) ){
-  $content .= "<a href=\"users.php?x=".X."&amp;action=edit&amp;userid=".UID."\">".$lang['edit_details']."</a><br />\n";
+  $content .= "<li><a href=\"users.php?x=".X."&amp;action=edit&amp;userid=".UID."\">".$lang['edit_details']."</a></li>\n";
 }
 
-$content .= "<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".UID."\">".$lang['show_details']."</a><br />\n";
+$content .= "<li><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".UID."\">".$lang['show_details']."</a></li>\n".
+            "</ul>\n";
 
 //show it
 new_box($lang['users'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );

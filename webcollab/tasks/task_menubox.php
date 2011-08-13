@@ -43,6 +43,8 @@ if(GUEST ) {
   return;
 }
 
+$content .= "<ul class=\"menu\">\n";
+
 //get taskid (if any)
 if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
 
@@ -55,7 +57,7 @@ if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
 
     $menu_type = $TYPE;
     //header
-    $content .= "<small><b>".$lang['admin'].":</b></small><br />\n";
+    $content .= "<li><small><b>".$lang['admin'].":</b></small></li>\n";
 
     //edit rights
     if((ADMIN ) ||
@@ -63,25 +65,26 @@ if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
        (($TASKID_ROW['groupaccess'] == "t") && (isset($GID[($TASKID_ROW['usergroupid'])] ) ) ) ) {
 
       //edit
-      $content .= "<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_".$TYPE]."</a><br />\n";
+      $content .= "<li><a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_".$TYPE]."</a></li>\n";
 
       //archive project
       if((ADMIN ) || ($TASKID_ROW['owner'] == UID ) ) {
         if(($TYPE == 'project' ) && ($TASKID_ROW['archive'] == 0 ) ) {
-          $content .= "<a href=\"archive.php?x=".X."&amp;action=submit_archive&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang['javascript_archive_project'], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang['archive_project']."</a><br />\n";
+          $content .= "<li><a href=\"archive.php?x=".X."&amp;action=submit_archive&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang['javascript_archive_project'], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang['archive_project']."</a></li>\n";
         }
       }
     }
     //clone
-    $content .= "<a href=\"tasks.php?x=".X."&amp;action=clone&amp;taskid=".$taskid."\">".$lang["clone_".$TYPE]."</a><br />\n";
+    $content .= "<li><a href=\"tasks.php?x=".X."&amp;action=clone&amp;taskid=".$taskid."\">".$lang["clone_".$TYPE]."</a></li>\n";
     //global header
-    $content .= "<small><b>".$lang['global'].":</b></small><br />\n";
+    $content .= "<li><small><b>".$lang['global'].":</b></small></li>\n";
     //add task
-    $content .= "<a href=\"tasks.php?x=".X."&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a><br />\n";
+    $content .= "<li><a href=\"tasks.php?x=".X."&amp;action=add&amp;parentid=".$taskid."\">".$lang['add_task']."</a></li>\n";
   }
 }
 //add project
-$content .= "<a href=\"tasks.php?x=".X."&amp;action=add\">".$lang['add_project']."</a><br />\n";
+$content .= "<li><a href=\"tasks.php?x=".X."&amp;action=add\">".$lang['add_project']."</a></li>\n".
+            "</ul>\n";
 
 new_box( $lang[$menu_type."_options"], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );
 
