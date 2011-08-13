@@ -47,7 +47,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
   $post_array   = array();
   $parent_array = array();
   $post_count   = 0;
-  $level_count  = 1; 
+  $level_count  = 1;
   $post_char_limit = 500;
 
   $q = db_prepare('SELECT '.PRE.'forum.text AS text,

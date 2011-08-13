@@ -26,7 +26,7 @@
 
   Create the window'ed interface and define a simple API
 
-  The screen is split in 4 components. The overall menu + main is called 'container' 
+  The screen is split in 4 components. The overall menu + main + bottom is called within 'container'
 
   +----------------+
   |  top           |

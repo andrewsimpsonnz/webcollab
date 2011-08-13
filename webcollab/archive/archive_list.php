@@ -74,7 +74,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   //setup main table
   $content .= "<div class=\"projectlist\">\n";
 
-  if($i > 0 ) { 
+  if($i > 0 ) {
     //not the first line, need to add a divider
     $content .= "<div style=\"padding-left: 30px; width: 200px\"><hr /></div>\n";
   }
