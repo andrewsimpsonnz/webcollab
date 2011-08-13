@@ -60,7 +60,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
     continue;
   }
 
-  $content .= "<tr><td class=\"grouplist\"><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>";
+  $content .= "<tr class=\"grouplist\"><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>";
 
   if(ADMIN ) {
     $content .= "<td><span class=\"textlink\">";

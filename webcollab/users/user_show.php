@@ -70,28 +70,28 @@ if($row['deleted'] == 't' ){
   $content .= "<b><div style=\"text-align:center\"><span class=\"red\">".$lang['user_deleted']."</span></div></b><br />";
 }
 
-$content .= "<table>".
-            "<tr><td>".$lang['login'].":</td><td>".$row['name']."</td></tr>\n".
-            "<tr><td>".$lang['full_name'].":</td><td>".$row['fullname']."</td></tr>\n".
-            "<tr><td>".$lang['email'].":</td><td><a href=\"mailto:".$row['email']."\">".$row['email']."</a></td></tr>\n";
+$content .= "<table class=\"celldata\">".
+            "<tr class=\"grouplist\"><td>".$lang['login'].":</td><td>".$row['name']."</td></tr>\n".
+            "<tr class=\"grouplist\"><td>".$lang['full_name'].":</td><td>".$row['fullname']."</td></tr>\n".
+            "<tr class=\"grouplist\"><td>".$lang['email'].":</td><td><a href=\"mailto:".$row['email']."\">".$row['email']."</a></td></tr>\n";
 
 if($row['admin'] == "t" ){
-  $content .= "<tr><td>".$lang['admin'].":</td><td>".$lang['yes']."</td></tr>\n";
+  $content .= "<tr class=\"grouplist\"><td>".$lang['admin'].":</td><td>".$lang['yes']."</td></tr>\n";
 }
 else {
-  $content .= "<tr><td>".$lang['admin'].":</td><td>".$lang['no']."</td></tr>\n";
+  $content .= "<tr class=\"grouplist\"><td>".$lang['admin'].":</td><td>".$lang['no']."</td></tr>\n";
 }
 if($row['private'] == 1 ) {
-  $content .= "<tr><td>".$lang['private_user'].":</td><td>".$lang['yes']."</td></tr>\n";
+  $content .= "<tr class=\"grouplist\"><td>".$lang['private_user'].":</td><td>".$lang['yes']."</td></tr>\n";
 }
 else {
-  $content .= "<tr><td>".$lang['private_user'].":</td><td>".$lang['no']."</td></tr>\n";
+  $content .= "<tr class=\"grouplist\"><td>".$lang['private_user'].":</td><td>".$lang['no']."</td></tr>\n";
 }
 if($row['guest'] == 1 ) {
-  $content .= "<tr><td>".$lang['guest'].":</td><td>".$lang['yes']."</td></tr>\n";
+  $content .= "<tr class=\"grouplist\"><td>".$lang['guest'].":</td><td>".$lang['yes']."</td></tr>\n";
 }
 else {
-  $content .= "<tr><td>".$lang['guest'].":</td><td>".$lang['no']."</td></tr>\n";
+  $content .= "<tr class=\"grouplist\"><td>".$lang['guest'].":</td><td>".$lang['no']."</td></tr>\n";
 }
 
 //create a list of all the groups the user is in
@@ -103,7 +103,7 @@ $q = db_prepare('SELECT '.PRE.'usergroups.id AS id,
                       WHERE '.PRE.'usergroups_users.userid=?' );
 db_execute($q, array($row['id'] ) );
 
-$content .= "<tr><td>".$lang['usergroups'].": </td><td>";
+$content .= "<tr class=\"grouplist\"><td>".$lang['usergroups'].": </td><td>";
 $alert = '';
 $usergroups = '';
 $group_content = '';
@@ -130,47 +130,47 @@ else {
 $q = db_prepare('SELECT lastaccess FROM '.PRE.'logins WHERE user_id=? LIMIT 1' );
 db_execute($q, array($userid ) );
 $row = @db_result($q, 0, 0);
-$content .= "<tr><td>".$lang['last_time_here']."</td><td>".nicetime($row)."</td></tr>\n";
+$content .= "<tr class=\"grouplist\"><td>".$lang['last_time_here']."</td><td>".nicetime($row)."</td></tr>\n";
 
 //Get the number of tasks/projects created
 $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE creator=?' );
 db_execute($q, array($userid ) );
 $row = db_result($q, 0, 0 );
-$content .= "<tr><td>".$lang['number_items_created']."</td><td>".$row."</td></tr>\n";
+$content .= "<tr class=\"grouplist\"><td>".$lang['number_items_created']."</td><td>".$row."</td></tr>\n";
 
 //Get the number of projects owned
 $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner=? AND parent=0' );
 db_execute($q, array($userid ) );
 $projects_owned = db_result($q, 0, 0 );
-$content .= "<tr><td>".$lang['number_projects_owned']."</td><td>".$projects_owned."</td></tr>\n";
+$content .= "<tr class=\"grouplist\"><td>".$lang['number_projects_owned']."</td><td>".$projects_owned."</td></tr>\n";
 
 //Get the number of tasks owned
 $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner=? AND parent<>0' );
 db_execute($q, array($userid ) );
 $tasks_owned = db_result($q, 0, 0 );
-$content .= "<tr><td>".$lang['number_tasks_owned']."</td><td>".$tasks_owned."</td></tr>\n";
+$content .= "<tr class=\"grouplist\"><td>".$lang['number_tasks_owned']."</td><td>".$tasks_owned."</td></tr>\n";
 
 //Get the number of tasks completed that are owned
 $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner=? AND status=\'done\' AND parent<>0' );
 db_execute($q, array($userid ) );
 $row = db_result($q, 0, 0 );
-$content .= "<tr><td>".$lang['number_tasks_completed']."</td><td>".$row."</td></tr>\n";
+$content .= "<tr class=\"grouplist\"><td>".$lang['number_tasks_completed']."</td><td>".$row."</td></tr>\n";
 
 //Get the number of forum posts
 $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'forum WHERE userid=?' );
 db_execute($q, array($userid ) );
 $row = db_result($q, 0, 0 );
 
-$content .= "<tr><td>".$lang['number_forum']."</td><td>".$row."</td></tr>\n";
+$content .= "<tr class=\"grouplist\"><td>".$lang['number_forum']."</td><td>".$row."</td></tr>\n";
 
 //Get the number of files uploaded and the size
 $q = db_prepare('SELECT COUNT(size), SUM(size) FROM '.PRE.'files WHERE uploader=?' );
 db_execute($q, array($userid ) );
 $row = db_fetch_num($q, 0 );
-$content .= "<tr><td>".$lang['number_files']."</td><td>".$row[0]."</td></tr>\n";
+$content .= "<tr class=\"grouplist\"><td>".$lang['number_files']."</td><td>".$row[0]."</td></tr>\n";
 
 //show files
-$content .= "<tr><td>".$lang['size_all_files']."</td><td>".nice_size($row[1] )."</td></tr>\n".
+$content .= "<tr class=\"grouplist\"><td>".$lang['size_all_files']."</td><td>".nice_size($row[1] )."</td></tr>\n".
             "</table>\n";
 
 new_box($lang['user_info'], $content );
@@ -179,7 +179,7 @@ new_box($lang['user_info'], $content );
 //shows quick links to the tasks that the user owns
 
 if( $tasks_owned + $projects_owned > 0 ) {
-  $content = "<ul>";
+  $content = "<ul class=\"ul-1\">";
 
   //get list of private projects and put them in an array for later use
   $q = db_query('SELECT id, usergroupid FROM '.PRE.'tasks WHERE parent=0 AND globalaccess=\'f\'' );

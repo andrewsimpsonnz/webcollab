@@ -55,14 +55,14 @@ $q = db_query('SELECT '.PRE.'files.id AS id,
                         LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'files.uploader)
                         ORDER BY task_name' );
 
-$content .= "<table>\n";
+$content .= "<table class=\"celldata\">\n";
 
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   if($i > 0 ) {
     //not the first line, need to add a divider
-    $content .= "<tr><td><hr /></td></tr>\n";
+    $content .= "<tr><td><hr style=\"margin-top: 15px\" /></td></tr>\n";
   }
 
   //file part
@@ -81,11 +81,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   if( $row['description'] != '' ) {
     $content .= "<tr><td>".$lang['description'].":</td><td><small><i>".nl2br(bbcode($row['description']))."</i></small></td></tr>\n";
   }
-  //blank line to end
-  $content .= "<tr><td>&nbsp;</td></tr>\n";
-
 }
-
 $content .= "</table>\n";
 
 if($i == 0 ) {

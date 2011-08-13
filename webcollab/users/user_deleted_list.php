@@ -51,7 +51,7 @@ $content = "<table class=\"celldata\">\n";
 
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
-  $content .= "<tr><td class=\"grouplist\"><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>\n".
+  $content .= "<tr class=\"grouplist\"><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>\n".
               "<td><span class=\"textlink\">".
               "[<a href=\"users.php?x=".X."&amp;action=edit_del&amp;userid=".$row['id']."\">".$lang['edit']."</a>]".
               "</span></td></tr>\n";

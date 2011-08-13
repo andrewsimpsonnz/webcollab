@@ -79,7 +79,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $colspan = (ADMIN ) ? '4' : '3';
 
   $content .= "<tr><td colspan=\"".$colspan."\"><hr /></td></tr>\n".
-              "<tr><td class=\"grouplist\"><b>".$row['name']."</b></td><td class=\"grouplist\"><i>".$row['description']."</i></td><td style=\"text-align: center\">".$private."</td>\n";
+              "<tr class=\"grouplist\"><td><b>".$row['name']."</b></td><td><i>".$row['description']."</i></td><td style=\"text-align: center\">".$private."</td>\n";
 
   if(ADMIN) {
     $content .= "<td><span class=\"textlink\">".

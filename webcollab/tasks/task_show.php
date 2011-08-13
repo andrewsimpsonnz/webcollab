@@ -97,22 +97,22 @@ else {
 }
 
 //start of header table
-$content .= "<table width=\"98%\">\n";
+$content .= "<div class=\"taskshow\">\n";
 
 //percentage_completed gauge if this is a project
 if( $TASKID_ROW['parent'] == 0 ) {
-  $content .= "<tr><td>".sprintf( $lang['percent_project_sprt'], $TASKID_ROW['completed'] )."</td></tr>\n";
-  $content .= "<tr><td>".show_percent( $TASKID_ROW['completed'] )."</td></tr>\n";
+  $content .= sprintf( $lang['percent_project_sprt'], $TASKID_ROW['completed'] )."\n";
+  $content .= show_percent( $TASKID_ROW['completed'] );
 }
 
 //project/task name
-$content .= "<tr><td><b>".$TASKID_ROW['name']."</b><br /><br /></td></tr>\n";
+$content .= "<p style=\"margin-top: 5px; margin-bottom: 10px; font-weight: bold\">".$TASKID_ROW['name']."</p>\n";
 
 //show text
-$content .= "<tr><td class=\"textbackground\" style=\"width: 95%\">\n";
+$content .= "<div class=\"textbackground\" style=\"width: 95%\">\n";
 
 $content .= nl2br(bbcode($TASKID_ROW['text'] ) );
-$content .= "</td></tr></table>\n";
+$content .= "</div>\n</div>\n";
 
 //start of info table
 $content .= "<table class=\"celldata\">\n";

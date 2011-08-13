@@ -106,7 +106,7 @@ if($parentid != 0 ) {
   //show a box with the original post
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"".$parentid."\" /></fieldset>\n".
               "<table>\n".
-              "<tr><td>".$lang['orig_message']."</td><td class=\"textbackground\">".nl2br($row['text'])."</td></tr>\n";
+              "<tr><td>".$lang['orig_message']."</td><td><div class=\"textbackground\">".nl2br($row['text'])."</div></td></tr>\n";
 }
 else {
   $row = '';

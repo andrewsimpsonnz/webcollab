@@ -63,8 +63,8 @@ if( ! ($row = db_fetch_array($q , 0 ) ) ) {
 
 //show data
 $content = "<table class=\"celldata\">\n".
-           "<tr><td class=\"grouplist\">".$lang['login_name'].":</td><td class=\"grouplist\">".$row['name']."</td></tr>\n".
-           "<tr><td class=\"grouplist\">".$lang['full_name'].":</td><td class=\"grouplist\">".
+           "<tr class=\"grouplist\"><td>".$lang['login_name'].":</td><td>".$row['name']."</td></tr>\n".
+           "<tr class=\"grouplist\"><td>".$lang['full_name'].":</td><td>".
            "<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td></tr>\n".
            "</table>\n";
 
