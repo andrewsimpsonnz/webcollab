@@ -204,13 +204,13 @@ if(isset($_COOKIE['webcollab_session'] ) && preg_match('/^[a-f\d]{32}$/i', $_COO
 
 create_top($lang['login_screen'], 1, 'login', 2 );
 
-$content = "<div style=\"text-align:center\">";
+$content = "<div style=\"text-align:center\">\n";
 
 if(SITE_IMG != '' ) {
-  $content .=  "<img src=\"images/".SITE_IMG."\" alt=\"WebCollab logo\" /><br />";
+  $content .=  "<p><img src=\"images/".SITE_IMG."\" alt=\"WebCollab logo\" /></p>\n";
 }
 else {
-  $content .=  "<img src=\"images/webcollab.png\" alt=\"WebCollab logo\" /><br />";
+  $content .=  "<p><img src=\"images/webcollab.png\" alt=\"WebCollab logo\" /></p>\n";
 }
 
 $content .= "<p>".$lang['please_login'].":</p>\n".
@@ -221,11 +221,12 @@ $content .= "<p>".$lang['please_login'].":</p>\n".
             "<script type=\"text/javascript\">document.getElementById('username').focus();</script></td></tr>\n".
             "<tr align=\"left\" ><td>".$lang['password'].": </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
             "</table>\n".
-            "<p>&nbsp;</p>\n".
-            "<p><input type=\"submit\" value=\"".$lang['login_action']."\" /></p>\n";
+            "<p style=\"padding-top: 20px; padding-bottom: 20px\"><input type=\"submit\" value=\"".$lang['login_action']."\" /></p>\n".
+            "</form>\n";
+
   switch(DATABASE_TYPE ) {
   case 'postgresql_pdo':
-    $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\" /></a></p>";
+    $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\" /></a></p>\n";
     break;
 
   case 'mysql_pdo':
@@ -233,11 +234,11 @@ $content .= "<p>".$lang['please_login'].":</p>\n".
     break;
 
   default:
-     $content .= "<p><a href=\"http://www.php.net\"> <img src=\"images/php-logo.gif\" alt=\"PHP 4 code\" /></a></p>";
+     $content .= "<p><a href=\"http://www.php.net\"> <img src=\"images/php-logo.gif\" alt=\"PHP 4 code\" /></a></p>\n";
      break;
 }
 
-$content .= "</form>\n</div>\n";
+$content .= "</div>\n";
 
 //set box options
 new_box($lang['login'], $content, 'boxdata-small', 'head-small' );

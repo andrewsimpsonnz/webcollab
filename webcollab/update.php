@@ -507,15 +507,15 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 //login box screen code
 create_top('Login', 1, 0, 2 );
 
-$content = "<p>Admin login is required for database update:</p>\n".
+$content = "<div align=\"center\">\n".
+           "<p>Admin login is required for database update:</p>\n".
            "<form name=\"inputform\" method=\"post\" action=\"update.php\">\n".
-           "<table>\n".
-           "<tr><td>Login: </td><td><input type=\"text\" id=\"username\" name=\"username\" size=\"30\" />".
+           "<table style=\"margin-left:auto; margin-right:auto;\">\n".
+           "<tr align=\"left\" ><td>Login: </td><td><input type=\"text\" id=\"username\" name=\"username\" size=\"30\" />".
            "<script type=\"text/javascript\">document.getElementById('username').focus();</script></td></tr>\n".
-           "<tr><td>Password: </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
+           "<tr align=\"left\" ><td>Password: </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
            "</table>\n".
-           "<div align=\"center\">\n".
-           "<p><input type=\"submit\" value=\"Login\" /></p>\n".
+           "<p style=\"padding-top: 20px\><input type=\"submit\" value=\"Login\" /></p>\n".
            "</div></form>\n";
 
 //set box options
