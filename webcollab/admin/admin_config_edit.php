@@ -62,7 +62,7 @@ if(USE_EMAIL === 'Y' ){
               "<input type=\"hidden\" id=\"alert_email\" name=\"alert\" value=\"".$lang['invalid_email']."\" /></fieldset>\n".
               "<table class=\"celldata\" >\n";
 
-  $content .= "<tr><th style=\"white-space: nowrap; height: 20px; vertical-align: top\" colspan=\"2\">".$lang['email_settings']."</td></tr>\n";
+  $content .= "<tr><th style=\"white-space: nowrap; height: 20px; vertical-align: top\" colspan=\"2\">".$lang['email_settings']."</th></tr>\n";
 
   //email addresses
   $content .= "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\" >".$lang['admin_email']."</a>:</td><td><input type=\"text\" id=\"admin\" name=\"email_admin\" value=\"".$row['email_admin']."\" size=\"30\" />".

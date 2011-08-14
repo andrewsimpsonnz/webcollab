@@ -83,12 +83,13 @@ for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
   }
 
   //user part
-  $content .= $lang['uploader']." <a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")<br />\n";
+  $content .= $lang['uploader']." <a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")<br />";
 
   //show description
   if( $row['description'] != '' ) {
-    $content .= "<small><i>".nl2br(bbcode($row['description'] ) )."</i></small></li>\n";
+    $content .= "\n<small><i>".nl2br(bbcode($row['description'] ) )."</i></small>";
   }
+  $content .= "</li>\n";
 }
 $content .= "</ul>\n";
 

@@ -84,7 +84,7 @@ db_free_result($q );
 
 $content .= "</ul>\n";
 
-if($i != 0 ) {
+if($i == 0 ) {
   $content = '';
 }
 

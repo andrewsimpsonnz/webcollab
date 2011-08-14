@@ -71,8 +71,6 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<tr class=\"grouplist\"><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
 }
 
-$content .= "<tr class=\"grouplist\"><td style=\"white-space:nowrap\"colspan=\"2\">&nbsp;</td></tr>\n";
-
 //users previously online
 $q = db_query('SELECT '.PRE.'logins.lastaccess AS last,
             '.PRE.'users.id AS id,
@@ -84,7 +82,7 @@ $q = db_query('SELECT '.PRE.'logins.lastaccess AS last,
             AND '.PRE.'users.deleted=\'f\'
             ORDER BY '.PRE.'logins.lastaccess DESC' );
 
-$content .= "<tr class=\"grouplist\"><th style=\"white-space: nowrap; height: 20px; vertical-align: top\" colspan=\"2\">".$lang['not_online']."</td></tr>\n";
+$content .= "<tr class=\"grouplist\"><th style=\"white-space: nowrap; height: 35px; vertical-align: center\" colspan=\"2\">".$lang['not_online']."</th></tr>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //user test for privacy
