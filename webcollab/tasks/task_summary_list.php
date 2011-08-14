@@ -447,7 +447,7 @@ else {
               "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a></div>\n";
 }
 
-$content .= "<table>\n";
+$content .= "<table class=\"celldata\">\n";
 $content .= "<tr><td colspan=\"3\"><small><a href=\"help/help_language.php?item=summarypage&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=summarypage&amp;type=help&amp;lang=".LOCALE_USER."'); return false\"><b>".$lang['flags']."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=deadline\">";
 $content .= "<b>".$lang['deadline']."</b></a></small></td><td><small>";

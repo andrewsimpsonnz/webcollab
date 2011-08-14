@@ -8,31 +8,19 @@ body {
 
 /* CONTAINER */
 
-/* Global container box */
-table.main {
-  margin-left : auto;
-  margin-right : auto;
-  border-width : 0;
-  border-collapse : collapse;
-  padding : 0;
-  width : 100%;
+/* Container to menus, main and bottom */
+div#container {
+  width: 576pt;
 }
 
-td.single {
-  width : 576pt;
+/* Container for single box */
+div#single {
+  width: 100%
 }
 
 /* MASTHEAD */
 
-/* Masthead band to top of page */
-div.masthead {
-  font-size : 16pt;
-  font-weight : bold;
-  text-align : left;
-  padding : 3pt;
-  background-color : #ffffff;
-  color : #000000;
-}
+/* -- none -- */
 
 /* BOX HEAD */
 
@@ -44,7 +32,7 @@ div.head {
   padding-left : 5pt;
   padding-right : 5pt;
   padding-bottom : 20pt;
-  background : #ffffff;
+  background : #FFFFFF;
   color : #000000;
 }
 
@@ -81,6 +69,21 @@ div.boxstyle-normal {
 
 /* GENERAL CONTENT */
 
+/* Box content styling for archive listing */
+div.archivelist {
+  padding : 10pt 15pt 20pt 5pt;
+}
+
+/* Box content styling for project listing */
+div.projectlist {
+  padding : 10pt 15pt 20pt 5pt;
+}
+
+/* Box content styling for project listing */
+div.taskshow {
+  padding : 10pt 0 10pt 0;
+}
+
 /* Table for use in data cells */
 table.celldata {
   margin-left : 0;
@@ -91,8 +94,12 @@ table.celldata {
   padding : 0;
 }
 
+table.colourbar {
+  width : 300pt;
+}
+
 /* Cell with grey background */
-td.textbackground {
+.textbackground {
   background-color : transparent;
   color : #000000;
 }
@@ -102,7 +109,7 @@ td.greenbar {
   border-width : 0;
   border-collapse : collapse;
   white-space : nowrap;
-  height : 4px;
+  height : 4pt;
   background-color : #008B45;
   color : #000000;
 }
@@ -112,9 +119,25 @@ td.redbar {
   border-width : 0;
   border-collapse : collapse;
   white-space : nowrap;
-  height : 4px;
+  height : 4pt;
   background-color : #FFA500;
   color : #000000;
+}
+
+/* Menu lists */
+ul.menu {
+  list-style-type : none;
+  padding : 0;
+  margin : 0;
+}
+
+/* Main box lists */
+ul.ul-1 {
+  list-style-type: disc;
+}
+
+ul.ul-2, ul.ul-3, ul.ul-4, ul.ul-5 {
+  list-style-type: circle;
 }
 
 /* GENERIC ELEMENTS */

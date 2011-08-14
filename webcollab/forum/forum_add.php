@@ -105,7 +105,7 @@ if($parentid != 0 ) {
 
   //show a box with the original post
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"".$parentid."\" /></fieldset>\n".
-              "<table>\n".
+              "<table class=\"celldata\">\n".
               "<tr><td>".$lang['orig_message']."</td><td><div class=\"textbackground\">".nl2br($row['text'])."</div></td></tr>\n";
 }
 else {
@@ -113,7 +113,7 @@ else {
 
   //This is a new thread so we don't have a valid parent
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"0\" /></fieldset>\n".
-              "<table>\n";
+              "<table class=\"celldata\">\n";
 }
 
 //build up the text-entry part

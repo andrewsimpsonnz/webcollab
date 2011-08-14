@@ -90,7 +90,7 @@ $content .= "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
 
 
 //build up the text-entry part
-$content .= "<table>\n".
+$content .= "<table class=\"celldata\">\n".
             "<tr><td>".$lang['message']."</td>".
             "<td><script type=\"text/javascript\"> edToolbar('text');</script>".
             "<textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\"".$s.">".$row['text']."</textarea>".

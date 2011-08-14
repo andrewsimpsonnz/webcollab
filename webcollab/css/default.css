@@ -72,7 +72,7 @@ div.head {
 
 /* Extended classes for box head */
 
-/* Ordinary head styling */
+/* Ordinary main head styling */
 div.head-normal {
   width : 97%;
 }
@@ -82,13 +82,13 @@ div.head-menu {
   width : 90%;
 }
 
-/* Small box head styling */
+/* Single box pages head styling */
 div.head-small {
   margin-top : 40px;
   width : 400px;
 }
 
-/* Hack to fix topmost menu box positioning */
+/* Hack to fix top most menu box positioning */
 div.head-menu-top {
   margin-top: 0px
 }
@@ -99,17 +99,17 @@ div.head-menu-top {
 div.boxdata {
   margin-left : auto;
   margin-right : auto;
-  border: 1px solid #000000;
-  text-align : left;
   border-collapse : collapse;
+  border: 1px solid #000000;
   padding : 3px;
+  text-align : left;
   background-color : #FFFFFF;
   color : #000000;
 }
 
 /* Extended classes for content styling */
 
-/* normal box content styling */
+/* normal main box content styling */
 div.boxdata-normal {
   width : 97%;
   margin-bottom: 10px;
@@ -121,7 +121,7 @@ div.boxdata-menu {
   margin-bottom: 20px;
 }
 
-/* small box content styling */
+/* single box page content styling */
 div.boxdata-small {
   width : 400px;
 }
@@ -135,37 +135,27 @@ div.boxstyle {
   color : #000000;
 }
 
-/* normal style  */
+/* normal style */
 div.boxstyle-normal {
-  padding-top : 10px;
-  padding-left : 5px;
-  padding-right : 15px;
-  padding-bottom : 20px;
+  padding : 10px 15px 20px 5px;
 }
 
-/* shortened bottom padding*/
+/* shortened bottom padding style */
 div.boxstyle-short {
-  padding-top : 20px;
-  padding-left : 5px;
-  padding-right : 15px;
-  padding-bottom : 5px;
+  padding : 20px 15px 5px 5px;
 }
 
 /* menu style */
 div.boxstyle-menu {
-  padding-top : 3px;
-  padding-left : 3px;
-  padding-bottom : 3px;
+  padding : 3px;
 }
 
 /* FOOTER */
 
-/* Class for text at page bottom */ 
+/* Class for text at page bottom */
 div.bottomtext {
   font-size : 10px;
-  padding-top : 10px;
-  padding-left : 6px;
-  padding-bottom : 10px;
+  padding : 10px 0 10px 6px;
   color : #1E4B79;
   background-color : transparent;
 }
@@ -174,39 +164,22 @@ div.bottomtext {
 
 /* Box content styling for archive listing */
 div.archivelist {
-  text-align : left;
-  padding-top : 10px;
-  padding-left : 35px;
-  padding-right : 15px;
-  padding-bottom : 0px;
-  background-color : #FFFFFF;
-  color : #000000;
+  padding : 10px 15px 20px 35px;
 }
 
 /* Box content styling for project listing */
 div.projectlist {
-  text-align : left;
-  padding-top : 10px;
-  padding-left : 35px;
-  padding-right : 15px;
-  padding-bottom : 20px;
-  background-color : #FFFFFF;
-  color : #000000;
+  padding : 10px 15px 20px 35px;
 }
 
 /* Box content styling for project listing */
 div.taskshow {
-  text-align : left;
-  padding-top : 10px;
-  padding-bottom : 10px;
-  color : #000000;
+  padding : 10px 0 10px 0;
 }
 
 /* Table for use in data cells */
 table.celldata {
-  margin-left : 0;
-  margin-top : 5px;
-  margin-bottom : 20px;
+  margin : 5px 0 20px 0;
   border-width: 0;
   padding : 0;
 }
@@ -216,6 +189,10 @@ table.decoration {
   background-color: #DDDDDD;
   border: solid black 1px;
   color : #000000;
+}
+
+table.colourbar {
+  width : 400px;
 }
 
 /* Class for project row on summary page */
@@ -230,12 +207,7 @@ tr.grouplist td {
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
-  padding-top : 5px;
-  padding-left : 5px;
-  padding-right : 5px;
-  padding-bottom : 5px;
-  background-color : #FFFFFF;
-  color : #000000;
+  padding : 5px;
 }
 
 /* Green progress bar */
@@ -245,7 +217,6 @@ td.greenbar {
   white-space : nowrap;
   height : 4px;
   background-color : #008B45;
-  color : #000000;
 }
 
 /* Red/orange progress bar */
@@ -255,7 +226,6 @@ td.redbar {
   white-space : nowrap;
   height : 4px;
   background-color : #FFA500;
-  color : #000000;
 }
 
 /* Menu lists */
@@ -280,18 +250,20 @@ table {
   border-width : 0;
   padding : 0;
 }
-/*
-td {
-  font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
-}
-*/
+
 img {
   /* CSS hack for XHTML strict */
   border-width : 0;
   /* limit uploaded images */ 
   max-width: 500px;
   max-height: 500px;
+}
+
+/* CSS hack to hide hidden input fields */
+fieldset {
+   border: none;
+   margin: 0;
+   padding: 0;
 }
 
 /* Class for bbeditor buttons */
@@ -301,13 +273,6 @@ img {
   width: 16px;
   height: 16px;
   border: 1px solid #BBBBBB;
-}
-
-/* CSS hack to hide hidden input fields */
-fieldset {
-   border: none;
-   margin: 0;
-   padding: 0;
 }
 
 /* Cell with grey background */
