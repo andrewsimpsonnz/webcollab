@@ -88,11 +88,6 @@ div.head-small {
   width : 400px;
 }
 
-/* Hack to fix top most menu box positioning */
-div.head-menu-top {
-  margin-top: 0px
-}
-
 /* BOXES */
 
 /* Default box content styling */

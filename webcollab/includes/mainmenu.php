@@ -43,9 +43,9 @@ $content .= "<ul class=\"menu\">\n".
             "<li><a href=\"forum.php?x=".X."&amp;action=search_box\">".$lang['forum_search']."</a></li>\n".
             "<li><a href=\"archive.php?x=".X."&amp;action=list\">".$lang['archive']."</a></li>\n".
             "<li><a href=\"logout.php?x=".X."\">".$lang['log_out']."</a></li>\n".
-            "</ul>";
+            "</ul>\n";
 
 //show
-new_box( $lang['main_menu'], $content, 'boxdata-menu', 'head-menu head-menu-top', 'boxstyle-menu' );
+new_box( $lang['main_menu'], $content, 'boxdata-menu', 'boxstyle-menu' );
 
 ?>

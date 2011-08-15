@@ -182,38 +182,38 @@ function create_top($title='', $page_type=0, $body_id=0, $include_javascript=0, 
 
     case 0: //main window + menu sidebar
       //create the masthead part of the main window
-      $content .=   "<div id=\"top\" class=\"masthead\">";
+      $content .=   "<div id=\"container\">\n".
+                    "<div id=\"top\" class=\"masthead\">";
       //show username if applicable
       if(defined('UID_NAME') ) {
-        $content .=  '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
+        $content .= '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
       }
-      $content .=   "</div>\n";
+      $content .=   "</div>\n\n";
       //create menu sidebar
-      $content .=    "<!-- start main table -->\n".
-                     "<div id=\"container\">\n".
+      $content .=    "<!-- start menu -->\n".
                      "<div id=\"menu\">\n";
       $bottom_text = 1;
       break;
 
     case 1: //single main window (no menu sidebar)
     case 3: //calendar
-      $content .=   "<div id=\"top\" class=\"masthead\">";
+      $content .=   "<div id=\"container\">\n".
+                    "<div id=\"top\" class=\"masthead\">";
       if(defined('UID_NAME' ) ) {
         $content .= '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
       }
-      $content .=   "</div>\n";
+      $content .=   "</div>\n\n";
       //create single window over entire screen
-      $content .=    "<!-- start main table -->\n".
-                     "<div id=\"container\">\n".
-                     "<div id=\"single\">\n";
+      $content .=   "<!-- start single main table -->\n".
+                    "<div id=\"single\">\n";
       $bottom_text = 2;
       break;
 
     case 2: //printable screen
       //create single window over paper width
-      $content .=    "<!-- start main table -->\n".
-                     "<div id=\"container\">\n".
-                     "<div id=\"single\">\n";
+      $content .=   "<!-- start single main table -->\n".
+                    "<div id=\"container\">\n".
+                    "<div id=\"single\">\n";
       //don't want bottom text
       $bottom_text = 0;
   }
@@ -254,7 +254,7 @@ function new_box($title, $content, $box="boxdata-normal", $head="head-normal", $
 //
 function goto_main() {
 
-  echo "\n</div><!-- end menu -->\n<div id=\"main\">\n";
+  echo "\n</div><!-- end menu -->\n<!-- start main -->\n<div id=\"main\">\n";
   return;
 }
 
