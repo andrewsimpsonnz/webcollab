@@ -90,15 +90,15 @@ $content =  "<form method=\"post\" action=\"users.php\" ".
             "<input type=\"hidden\" id=\"alert_email\" name=\"alert1\" value=\"".$lang['invalid_email']."\" />\n".
             "<input type=\"hidden\" id=\"alert_field\" name=\"alert2\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n".
             "<table class=\"celldata\">".
-            "<tr><td>".$lang['login_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" value=\"".$row['name']."\" /></td></tr>\n".
-            "<tr><td>".$lang['full_name'].":</td><td><input id=\"full\" type=\"text\" name=\"fullname\" size=\"30\" value=\"".$row['fullname']."\" /></td></tr>\n";
+            "<tr><td>".$lang['login_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" value=\"".$row['name']."\" /></td></tr>\n".
+            "<tr><td>".$lang['full_name'].":</td><td><input id=\"full\" type=\"text\" name=\"fullname\" class=\"size\" value=\"".$row['fullname']."\" /></td></tr>\n";
 
 //don't show password field for WEB_AUTH
 if(WEB_AUTH == 'N' ) {
-  $content .= "<tr><td>".$lang['password'].":</td><td><input type=\"".PASS_STYLE."\" name=\"password\" size=\"30\" value=\"\"    /></td><td><small><i>".$lang['blank_for_current_password']."</i></small></td></tr>\n";
+  $content .= "<tr><td>".$lang['password'].":</td><td><input type=\"".PASS_STYLE."\" name=\"password\" class=\"size\" value=\"\"    /></td><td><small><i>".$lang['blank_for_current_password']."</i></small></td></tr>\n";
 }
 
-$content .= "<tr><td>".$lang['email'].":</td><td><input id=\"email\" type=\"text\" name=\"email\" size=\"30\" value=\"".$row['email']."\" /></td></tr>\n";
+$content .= "<tr><td>".$lang['email'].":</td><td><input id=\"email\" type=\"text\" name=\"email\" class=\"size\" value=\"".$row['email']."\" /></td></tr>\n";
 
 $content .=  user_locale($row['locale'] );
 

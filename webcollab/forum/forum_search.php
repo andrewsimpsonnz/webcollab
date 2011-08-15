@@ -41,7 +41,7 @@ function search_input() {
              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n ".
              "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
              "<input type=\"hidden\" name=\"start\" value=\"0\" /></fieldset>\n".
-             "<div><input id=\"name\" type=\"text\" name=\"string\" size=\"30\" />\n".
+             "<div><input id=\"name\" type=\"text\" name=\"string\" class=\"size\" />\n".
              "<input type=\"submit\" value=\"".$lang['go']."\" /></div>\n".
              "</form>";
 

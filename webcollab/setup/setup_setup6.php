@@ -57,22 +57,22 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\">".
 $content .= "<tr><td></td><th class=\"boxdata2\"><span class=\"underline\">".$lang_setup['setup6_title']."</span></th></tr>\n".
             "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup6_admin_user1']."</td></tr>\n".
             "<tr><th>".$lang_setup['setup6_admin_user2']."</th>".
-            "<td><input type=\"text\" id=\"user\" name=\"admin_user\" value=\"admin\" size=\"20\" /></td></tr>\n";
+            "<td><input type=\"text\" id=\"user\" name=\"admin_user\" value=\"admin\" class=\"size\" /></td></tr>\n";
 
 $content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup6_admin_pass1']."</td></tr>\n".
             "<tr><th>".$lang_setup['setup6_admin_pass2']."</th>".
-            "<td><input type=\"password\" id=\"password\" name=\"admin_password\" value=\"\" size=\"20\" /></td></tr>\n";
+            "<td><input type=\"password\" id=\"password\" name=\"admin_password\" value=\"\" class=\"size\" /></td></tr>\n";
 
 $content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup6_admin_check']."</td></tr>\n".
             "<tr><th>".$lang_setup['setup6_admin_pass2']."</th>".
-            "<td><input type=\"password\" id=\"password_check\" name=\"admin_password_check\" value=\"\" size=\"20\" /></td></tr>\n";
+            "<td><input type=\"password\" id=\"password_check\" name=\"admin_password_check\" value=\"\" class=\"size\" /></td></tr>\n";
 
 if(USE_EMAIL == 'Y' ) {
 
   //email settings
   $content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup6_email1']."</td></tr>\n".
               "<tr><th>".$lang_setup['setup6_email2']."</th>".
-              "<td><input type=\"text\" id=\"email\" name=\"admin_email\" value=\"\" size=\"30\" /></td></tr>\n";
+              "<td><input type=\"text\" id=\"email\" name=\"admin_email\" value=\"\" class=\"size\" /></td></tr>\n";
 
   $content .= "<tr><td></td><td class=\"boxdata3\"><input type=\"submit\" value=\"".$lang_setup['submit']."\" ".
               "onclick=\"return userCheck('password_check', 'password', 'user', 'email')\"/></td></tr>\n";

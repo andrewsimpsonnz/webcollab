@@ -179,8 +179,8 @@ else {
   $content = "<p>".$lang_setup['require_login']."</p>\n".
              "<form method=\"post\" action=\"setup.php\">\n".
              "<table border=\"0\">\n".
-             "<tr><td>".$lang_setup['login']."</td><td><input type=\"text\" name=\"username\" size=\"30\" /></td></tr>\n".
-              "<tr><td>".$lang_setup['password']."</td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n";
+             "<tr><td>".$lang_setup['login']."</td><td><input type=\"text\" class=\"size\" name=\"username\" /></td></tr>\n".
+              "<tr><td>".$lang_setup['password']."</td><td><input type=\"password\" class=\"size\" name=\"password\" value=\"\" /></td></tr>\n";
 }
 
 $content .= "<tr><td>".$lang_setup['language']."</td><td>\n".

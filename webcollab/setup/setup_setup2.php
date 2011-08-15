@@ -63,14 +63,14 @@ $content .= "<p>".$lang_setup['setup2_db_details1']."</p>\n".
             "<table class=\"celldata\">\n".
             "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup2_db_details2']."</td></tr>\n".
             "<tr><th>".$lang_setup['setup2_db_name']."</th>".
-            "<td><input id=\"name\" type=\"text\" name=\"database_name\" size=\"30\" /></td></tr>\n".
+            "<td><input id=\"name\" type=\"text\" name=\"database_name\" class=\"size\" /></td></tr>\n".
             "<tr><th class=\"boxdata2\">".$lang_setup['db_user']."</th>".
-            "<td><input id=\"user\" type=\"text\" name=\"database_user\" size=\"30\" /></td></tr>\n".
+            "<td><input id=\"user\" type=\"text\" name=\"database_user\" class=\"size\" /></td></tr>\n".
             "<tr><th>".$lang_setup['db_password']."</th>".
-            "<td><input id=\"pass\" type=\"text\" name=\"database_password\" size=\"30\" /></td></tr>\n".
+            "<td><input id=\"pass\" type=\"text\" name=\"database_password\" class=\"size\" /></td></tr>\n".
             "<tr><th class=\"boxdata3\">".$lang_setup['db_host']."</th>".
             "<td class=\"boxdata3\">".
-            "<input id=\"host\" type=\"text\" name=\"database_host\" value=\"localhost\" size=\"15\" /></td></tr>\n";
+            "<input id=\"host\" type=\"text\" name=\"database_host\" value=\"localhost\" class=\"size\" /></td></tr>\n";
 
 $content .= "<tr><th>".$lang_setup['db_type']."</th> <td>\n".
             "<select name=\"database_type\">\n".

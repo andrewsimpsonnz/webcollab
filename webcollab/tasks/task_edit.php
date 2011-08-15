@@ -130,7 +130,7 @@ switch($TYPE) {
                 "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n ".
                 "<table class=\"celldata\">\n".
                 "<tr><td>".$lang['creation_time']."</td><td>".nicedate($TASKID_ROW['created'] )."</td></tr>\n".
-                "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"60\" value=\"".$TASKID_ROW['name']."\" /></td></tr>\n";
+                "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" value=\"".$TASKID_ROW['name']."\" /></td></tr>\n";
     break;
 
   case 'task':
@@ -200,7 +200,7 @@ $content .="</select></td></tr>\n";
 
 //show task (if applicable)
 if($TASKID_ROW['parent'] != 0 ){
-  $content .= "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" value=\"".$TASKID_ROW['name']."\" /></td></tr>\n";
+  $content .= "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" value=\"".$TASKID_ROW['name']."\" /></td></tr>\n";
 }
 //deadline
 $content .= "<tr><td>".$lang['deadline'].":</td><td>".date_select_from_timestamp($TASKID_ROW['deadline'])."</td></tr>\n";

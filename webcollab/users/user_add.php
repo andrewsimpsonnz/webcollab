@@ -51,11 +51,11 @@ $content =  "<form method=\"post\" action=\"users.php\" ".
             "<input type=\"hidden\" id=\"alert_email\" name=\"alert1\" value=\"".$lang['invalid_email']."\" />\n".
             "<input type=\"hidden\" id=\"alert_field\" name=\"alert2\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n".
             "<table class=\"celldata\">\n".
-            "<tr><td>".$lang['login_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" />".
+            "<tr><td>".$lang['login_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" />".
             "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
-            "<tr><td>".$lang['full_name'].":</td><td><input id=\"full\" type=\"text\" name=\"fullname\" size=\"30\" /></td></tr>\n".
-            "<tr><td>".$lang['password'].":</td><td><input id=\"pass\" type=\"".PASS_STYLE."\" name=\"password\" size=\"30\" /></td></tr>\n".
-            "<tr><td>".$lang['email'].":</td><td><input id=\"email\" type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".
+            "<tr><td>".$lang['full_name'].":</td><td><input id=\"full\" type=\"text\" name=\"fullname\" class=\"size\" /></td></tr>\n".
+            "<tr><td>".$lang['password'].":</td><td><input id=\"pass\" type=\"".PASS_STYLE."\" name=\"password\" class=\"size\" /></td></tr>\n".
+            "<tr><td>".$lang['email'].":</td><td><input id=\"email\" type=\"text\" name=\"email\" class=\"size\" /></td></tr>\n".
             user_locale(LOCALE).
             "<tr><td>&nbsp;</td></tr>\n".
             "<tr><td><label for=\"private\">".$lang['private_user'].":</label></td><td><input type=\"checkbox\" name=\"private_user\" id=\"private\" /></td></tr>\n".

@@ -172,6 +172,10 @@ div.taskshow {
   padding : 10px 0 10px 0;
 }
 
+input.size {
+  width : 200px;
+}
+
 /* Table for use in data cells */
 table.celldata {
   margin : 5px 0 20px 0;

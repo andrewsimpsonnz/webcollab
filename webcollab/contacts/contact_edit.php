@@ -65,17 +65,17 @@ $content =
     "<input type=\"hidden\" id=\"url\" name=\"url\" value=\"".$lang['url_javascript']."\" />\n".
     "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" /></fieldset>\n".
     "<table class=\"celldata\">\n".
-    "<tr><td><i>".$lang['firstname']."</i></td><td><input id=\"firstname\" type=\"text\" name=\"firstname\" value=\"".$row['firstname']."\"size=\"30\" /></td></tr>\n".
-    "<tr><td><i>".$lang['lastname']."</i></td><td><input id=\"lastname\" type=\"text\" name=\"lastname\" value=\"".$row['lastname']."\" size=\"30\" /></td></tr>\n".
-    "<tr><td><i>".$lang['company']."</i></td><td><input type=\"text\" name=\"company\" value=\"".$row['company']."\" size=\"30\" /></td></tr>\n".
-    "<tr><td><i>".$lang['home_phone']."</i></td><td><input type=\"text\" name=\"tel_home\" value=\"".$row['tel_home']."\" size=\"30\" /></td></tr>\n".
-    "<tr><td><i>".$lang['mobile']."</i></td><td><input type=\"text\" name=\"gsm\" value=\"".$row['gsm']."\" size=\"30\" /></td></tr>\n".
-    "<tr><td><i>".$lang['fax']."</i></td><td><input type=\"text\" name=\"fax\" value=\"".$row['fax']."\" size=\"30\" /></td></tr>\n".
-    "<tr><td><i>".$lang['bus_phone']."</i></td><td><input type=\"text\" name=\"tel_business\" value=\"".$row['tel_business']."\" size=\"30\" /></td></tr>\n".
-    "<tr><td><i>".$lang['address']."</i></td><td><input type=\"text\" name=\"address\" value=\"".$row['address']."\" size=\"30\" /></td></tr>\n".
-    "<tr><td><i>".$lang['postal']."</i></td><td><input type=\"text\" name=\"postal\" value=\"".$row['postal']."\" size=\"30\" /></td></tr>\n".
-    "<tr><td><i>".$lang['city']."</i></td><td><input type=\"text\" name=\"city\" value=\"".$row['city']."\" size=\"30\" /></td></tr>\n".
-    "<tr><td><i>".$lang['email_contact']."</i></td><td><input type=\"text\" name=\"email\" value=\"".$row['email']."\" size=\"30\" /></td></tr>\n".
+    "<tr><td><i>".$lang['firstname']."</i></td><td><input id=\"firstname\" type=\"text\" name=\"firstname\" value=\"".$row['firstname']."\"class=\"size\" /></td></tr>\n".
+    "<tr><td><i>".$lang['lastname']."</i></td><td><input id=\"lastname\" type=\"text\" name=\"lastname\" value=\"".$row['lastname']."\" class=\"size\" /></td></tr>\n".
+    "<tr><td><i>".$lang['company']."</i></td><td><input type=\"text\" name=\"company\" value=\"".$row['company']."\" class=\"size\" /></td></tr>\n".
+    "<tr><td><i>".$lang['home_phone']."</i></td><td><input type=\"text\" name=\"tel_home\" value=\"".$row['tel_home']."\" class=\"size\" /></td></tr>\n".
+    "<tr><td><i>".$lang['mobile']."</i></td><td><input type=\"text\" name=\"gsm\" value=\"".$row['gsm']."\" class=\"size\" /></td></tr>\n".
+    "<tr><td><i>".$lang['fax']."</i></td><td><input type=\"text\" name=\"fax\" value=\"".$row['fax']."\" class=\"size\" /></td></tr>\n".
+    "<tr><td><i>".$lang['bus_phone']."</i></td><td><input type=\"text\" name=\"tel_business\" value=\"".$row['tel_business']."\" class=\"size\" /></td></tr>\n".
+    "<tr><td><i>".$lang['address']."</i></td><td><input type=\"text\" name=\"address\" value=\"".$row['address']."\" class=\"size\" /></td></tr>\n".
+    "<tr><td><i>".$lang['postal']."</i></td><td><input type=\"text\" name=\"postal\" value=\"".$row['postal']."\" class=\"size\" /></td></tr>\n".
+    "<tr><td><i>".$lang['city']."</i></td><td><input type=\"text\" name=\"city\" value=\"".$row['city']."\" class=\"size\" /></td></tr>\n".
+    "<tr><td><i>".$lang['email_contact']."</i></td><td><input type=\"text\" name=\"email\" value=\"".$row['email']."\" class=\"size\" /></td></tr>\n".
     "</table>\n".
     "<p><i>".$lang['notes']."</i><br />".
     "<script type=\"text/javascript\"> edToolbar('notes');</script>".

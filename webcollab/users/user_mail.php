@@ -71,7 +71,7 @@ $content .= "</select></label></td></tr>\n".
             "<tr><td></td><td></td><td><small><i>".$lang['select_instruct']."</i></small></td></tr>\n".
             "</table>\n".
             "</td></tr>\n".
-            "<tr><td>".$lang['subject']."</td><td><input type=\"text\" name=\"subject\" size=\"60\" /></td></tr>\n".
+            "<tr><td>".$lang['subject']."</td><td><input type=\"text\" name=\"subject\" style=\"width: 300px\" /></td></tr>\n".
             "<tr><td>".$lang['message']."</td><td><textarea name=\"message\" id=\"message\" rows=\"25\" cols=\"88\"></textarea></td></tr>\n".
             "<tr><td></td><td>".$lang['message_sent_maillist']."</td></tr>\n".
             "</table>\n".

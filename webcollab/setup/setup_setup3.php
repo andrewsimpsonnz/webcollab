@@ -123,24 +123,24 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\" ".
 $content .= "<tr><td></td><th class=\"boxdata2\"><span class=\"underline\">".$lang_setup['setup3_basic']."</span></th></tr>\n".
             "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_URL']."</td></tr>\n".
             "<tr><th>".$lang_setup['setup3_address']."</th>".
-            "<td><input type=\"text\" id=\"url\" name=\"base_url\" value=\"".$base_url."\" size=\"50\" /></td></tr>\n";
+            "<td><input type=\"text\" id=\"url\" name=\"base_url\" value=\"".$base_url."\" style=\"width: 350px\" /></td></tr>\n";
 
 $content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_name1']."</td></tr>\n".
             "<tr><th>".$lang_setup['setup3_name2']."</th>".
-            "<td><input type=\"text\" name=\"manager_name\" value=\"".$manager_name."\" size=\"50\" /></td></tr>\n";
+            "<td><input type=\"text\" name=\"manager_name\" value=\"".$manager_name."\" style=\"width: 350px\" /></td></tr>\n";
 
 $content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_name3']."</td></tr>\n".
             "<tr><th>".$lang_setup['setup3_name4']."</th>".
-            "<td><input type=\"text\" name=\"abbr_manager_name\" value=\"".$abbr_manager_name."\" size=\"30\" /></td></tr>\n";
+            "<td><input type=\"text\" name=\"abbr_manager_name\" value=\"".$abbr_manager_name."\" class=\"size\" /></td></tr>\n";
 
 //database settings
 $content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".$lang_setup['setup3_db']."</span></th></tr>\n".
             "<tr><th class=\"boxdata2\">".$lang_setup['db_name']."</th>".
-            "<td><input type=\"text\" name=\"db_name\" value=\"".$db_name."\" size=\"30\" /></td></tr>\n".
+            "<td><input type=\"text\" name=\"db_name\" value=\"".$db_name."\" class=\"size\" /></td></tr>\n".
             "<tr><th>".$lang_setup['db_user']."</th>".
-            "<td><input type=\"text\" id=\"user\" name=\"db_user\" value=\"".$db_user."\" size=\"30\" /></td></tr>\n".
+            "<td><input type=\"text\" id=\"user\" name=\"db_user\" value=\"".$db_user."\" class=\"size\" /></td></tr>\n".
             "<tr><th>".$lang_setup['db_password']."</th>".
-            "<td><input type=\"text\" id=\"pass\" name=\"db_password\" value=\"".$db_password."\" size=\"30\" /></td></tr>\n";
+            "<td><input type=\"text\" id=\"pass\" name=\"db_password\" value=\"".$db_password."\" class=\"size\" /></td></tr>\n";
 
 switch($db_type){
 
@@ -161,7 +161,7 @@ $content .= "<tr><th>".$lang_setup['db_type']."</th><td><select name=\"db_type\"
             "</select></td></tr>\n";
 
 $content .= "<tr><th>".$lang_setup['db_host']."</th>".
-            "<td><input type=\"text\" name=\"db_host\" id=\"host\" value=\"".$db_host."\" size=\"30\" /></td></tr>\n";
+            "<td><input type=\"text\" name=\"db_host\" id=\"host\" value=\"".$db_host."\" class=\"size\" /></td></tr>\n";
 
 //file settings
 $content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".
@@ -169,11 +169,11 @@ $content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".
 
 $content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_file2']."</td></tr>\n".
             "<tr><th>".$lang_setup['file_location']."</th>".
-            "<td><input type=\"text\" name=\"file_base\" value=\"".$file_base."\" size=\"50\" /></td></tr>\n".
+            "<td><input type=\"text\" name=\"file_base\" value=\"".$file_base."\" style=\"width: 350px\" /></td></tr>\n".
 
             "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_file3']."</td></tr>\n".
             "<tr><th>".$lang_setup['file_size']."</th>".
-            "<td><input type=\"text\" name=\"file_maxsize\" value=\"".$file_maxsize."\" size=\"20\" /></td></tr>\n";
+            "<td><input type=\"text\" name=\"file_maxsize\" value=\"".$file_maxsize."\" class=\"size\" /></td></tr>\n";
 
 //language settings
 $content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".
@@ -262,7 +262,7 @@ $content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".$la
 
 $content .= "<tr><td></td><td class=\"boxdata2\"><i>".$lang_setup['setup3_smtp']."</i></td></tr>\n".
             "<tr><th><i>".$lang_setup['smtp_host']."</i></th>".
-            "<td><input type=\"text\" name=\"smtp_host\" value=\"".$smtp_host."\" size=\"50\" /></td></tr>\n";
+            "<td><input type=\"text\" name=\"smtp_host\" value=\"".$smtp_host."\" style=\"width: 350px\" /></td></tr>\n";
 
 $content .=  "<tr><td></td><td class=\"boxdata3\"><input type=\"submit\" value=\"".$lang_setup['submit']."\" /></td></tr>\n".
              "</table>\n".

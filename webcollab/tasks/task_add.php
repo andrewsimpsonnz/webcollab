@@ -141,7 +141,7 @@ if( @safe_integer($_GET['parentid']) ) {
     $content .= "<tr><td>".$lang['parent_task'].":</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parent_row['parent']."\">".$parent_row['name']."</a></td></tr>\n";
   }
   $content .= "<tr><td>".$lang['creation_time'].":</td><td>".nicetime(date('Y-m-d H:i:s', TIME_NOW - date('Z') + TZ*60*60 ) )."</td></tr>\n".
-              "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"60\" />".
+              "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" />".
               "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
               "<tr><td>".$lang['deadline'].":</td><td>".date_select_from_timestamp( $parent_row['deadline'] ).
               "&nbsp;<small><i>".$lang['taken_from_parent']."</i></small></td></tr>\n";
@@ -288,7 +288,7 @@ else {
               "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n".
               "<table class=\"celldata\">\n".
               "<tr><td>".$lang['creation_time'].":</td><td>".nicetime(date('Y-m-d H:i:s',TIME_NOW - date('Z') + TZ*60*60 ) )."</td></tr>\n".
-              "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" />". "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
+              "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" />". "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
 
               //deadline
               "<tr><td>".$lang['deadline'].":</td><td>".date_select()."</td></tr>\n";

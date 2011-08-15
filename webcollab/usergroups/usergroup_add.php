@@ -48,9 +48,9 @@ $content =  "<form method=\"post\" action=\"usergroups.php\" onsubmit=\"return f
             "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
             "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n".
             "<table class=\"celldata\">\n".
-            "<tr><td>".$lang['usergroup_name']."</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" />".
+            "<tr><td>".$lang['usergroup_name']."</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" />".
             "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
-            "<tr><td>".$lang['usergroup_description']."</td><td><input type=\"text\" name=\"description\" size=\"30\" /></td></tr>\n".
+            "<tr><td>".$lang['usergroup_description']."</td><td><input type=\"text\" name=\"description\" class=\"size\" /></td></tr>\n".
             "<tr><td>&nbsp;</td></tr>\n".
             "<tr><td><label for=\"private\">".$lang['private_usergroup'].":</label></td><td><input type=\"checkbox\" name=\"private_group\" id=\"private\" /></td></tr>\n".
             "<tr><td>&nbsp;</td></tr>\n";

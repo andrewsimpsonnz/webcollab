@@ -65,10 +65,10 @@ if(USE_EMAIL === 'Y' ){
   $content .= "<tr><th style=\"white-space: nowrap; height: 20px; vertical-align: top\" colspan=\"2\">".$lang['email_settings']."</th></tr>\n";
 
   //email addresses
-  $content .= "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\" >".$lang['admin_email']."</a>:</td><td><input type=\"text\" id=\"admin\" name=\"email_admin\" value=\"".$row['email_admin']."\" size=\"30\" />".
+  $content .= "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\" >".$lang['admin_email']."</a>:</td><td><input type=\"text\" id=\"admin\" class=\"size\" name=\"email_admin\" value=\"".$row['email_admin']."\" />".
               "<script type=\"text/javascript\">document.getElementById('admin').focus();</script></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_reply']."</a>:</td><td><input type=\"text\" id=\"reply\" name=\"reply_to\" value=\"".$row['reply_to']."\" size=\"30\" /></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_from']."</a>:</td><td><input type=\"text\" id=\"from\" name=\"from\" value=\"".$row['email_from']."\" size=\"30\" /></td></tr>\n";
+              "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_reply']."</a>:</td><td><input type=\"text\" id=\"reply\" class=\"size\"name=\"reply_to\" value=\"".$row['reply_to']."\" /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_from']."</a>:</td><td><input type=\"text\" id=\"from\" class=\"size\" name=\"from\" value=\"".$row['email_from']."\" /></td></tr>\n";
 
   //get mailing list
   $q = db_query('SELECT DISTINCT email FROM '.PRE.'maillist' );
