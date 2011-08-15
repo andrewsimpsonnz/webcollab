@@ -298,7 +298,7 @@ else {
 //text link for 'printer friendly' page
 if($action == 1 ) {
 
-  $content  .= "\n[<a href=\"main.php?x=".X."&amp;active_only=".$active_only."&amp;condensed=".$condensed."\">".$lang['normal_version']."</a>]</span>";
+  $content  .= "\n[<a href=\"main.php?x=".X."&amp;active_only=".$active_only."&amp;condensed=".$condensed."\">".$lang['normal_version']."</a>]";
 }
 else {
   $content  .= "</span><span style=\"float: right\">".

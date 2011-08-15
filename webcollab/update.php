@@ -41,7 +41,7 @@ include_once(BASE.'includes/screen.php' );
 function secure_error($message ) {
 
   create_top('Error', 1 );
-  new_box('Error', "<div align=\"center\">".$message."</div>", 'boxdata-small', 'head-small' );
+  new_box('Error', "<div style=\"text-align:center\">".$message."</div>", 'boxdata-small', 'head-small' );
   create_bottom();
   die;
 
@@ -507,16 +507,16 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 //login box screen code
 create_top('Login', 1, 0, 2 );
 
-$content = "<div align=\"center\">\n".
+$content = "<div style=\"text-align:center\">\n".
            "<p>Admin login is required for database update:</p>\n".
-           "<form name=\"inputform\" method=\"post\" action=\"update.php\">\n".
+           "<form method=\"post\" action=\"update.php\">\n".
            "<table style=\"margin-left:auto; margin-right:auto;\">\n".
            "<tr align=\"left\" ><td>Login: </td><td><input type=\"text\" id=\"username\" name=\"username\" size=\"30\" />".
            "<script type=\"text/javascript\">document.getElementById('username').focus();</script></td></tr>\n".
            "<tr align=\"left\" ><td>Password: </td><td><input type=\"password\" name=\"password\" value=\"\" size=\"30\" /></td></tr>\n".
            "</table>\n".
-           "<p style=\"padding-top: 20px\><input type=\"submit\" value=\"Login\" /></p>\n".
-           "</div></form>\n";
+           "<p style=\"padding-top: 20px\"><input type=\"submit\" value=\"Login\" /></p>\n".
+           "</form></div>\n";
 
 //set box options
 new_box("Login", $content, 'boxdata-small', 'head-small' );

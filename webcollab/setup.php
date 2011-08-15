@@ -49,7 +49,7 @@ include_once(BASE.'setup/screen_setup.php' );
 function secure_error($message ) {
 
   create_top_setup("Error" );
-  new_box_setup("Error", "<div align=\"center\">".$message."</div>", "boxdata", "singlebox" );
+  new_box_setup("Error", "<div style=\"text-align:center\">".$message."</div>", "boxdata", "singlebox" );
   create_bottom_setup();
   die;
 
