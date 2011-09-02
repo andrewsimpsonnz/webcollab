@@ -1,6 +1,6 @@
 body {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
+  font-size : 100%;
   margin : 0;
   padding : 0;
   background-color : #6085AC;
@@ -17,6 +17,7 @@ div#top {
 /* Container to menus, main and bottom */
 div#container {
   width: 100%;
+  font-size : 0.75em; /* set 12px as standard */
 }
 
 /* Container for menus */
@@ -63,6 +64,7 @@ div.head {
   border-left: 1px solid #000000;
   border-right: 1px solid #000000;
   border-top: 1px solid #000000;
+  font-size : 1.1em;
   font-weight : bold;
   text-align : left;
   padding : 3px;
@@ -149,7 +151,7 @@ div.boxstyle-menu {
 
 /* Class for text at page bottom */
 div.bottomtext {
-  font-size : 10px;
+  font-size : 0.75em;
   padding : 10px 0 10px 6px;
   color : #1E4B79;
   background-color : transparent;
@@ -204,6 +206,18 @@ tr.projectrow {
 /* Box content styling for user & group lists */
 tr.grouplist td {
   text-align : left;
+  font-size : 1em; /* IE 7 can't do 'font:inherit'*/ 
+  font : inherit;
+  border-width : 0;
+  border-collapse : collapse;
+  padding : 5px;
+}
+
+tr.grouplist th {
+  text-align : left;
+  font-size : 1em;
+  font : inherit;
+  font-weight : bold;
   border-width : 0;
   border-collapse : collapse;
   padding : 5px;
@@ -287,14 +301,14 @@ fieldset {
 
 /* Font for text based hyperlinks in [brackets] */
 .textlink {
-  font-size : 10px;
+  font-size : 0.75em;
   font-weight : bold;
 }
 
 /* Class for late graphic */
 .late {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 9px;
+  font-size : 0.75em;
   font-weight : bold;
   background-color : #FF0000;
   color : #FFFFFF;
@@ -302,7 +316,7 @@ fieldset {
 
 /* Class for new graphic */
 .new {
-  font-size : 9px;
+  font-size : 0.75em;
   font-weight : bold;
   font-style : italic;
   background-color : #00FF7F;
@@ -311,7 +325,7 @@ fieldset {
 
 /* Class for updated graphic */
 .updated {
-  font-size : 9px;
+  font-size : 0.75em;
   font-weight : bold;
   background : #00FF7F;
   color : #000000;
