@@ -388,7 +388,6 @@ switch($_POST['action'] ) {
         email($email_unclean, $title_user_change2, $message );
       }
       else {
-        if($password_unclean != '' ) {
           $q = db_prepare('UPDATE '.PRE.'users
                               SET name=?,
                               fullname=?,
@@ -404,7 +403,6 @@ switch($_POST['action'] ) {
 
           $message = sprintf($email_user_change3, $name_unclean, $fullname_unclean );
           email( $email_unclean, $title_user_change3, $message );
-        }
       }
     }
     break;

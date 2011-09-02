@@ -46,6 +46,6 @@ $content .= "<ul class=\"menu\">\n".
             "</ul>\n";
 
 //show
-new_box( $lang['main_menu'], $content, 'boxdata-menu', 'boxstyle-menu' );
+new_box( $lang['main_menu'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );
 
 ?>

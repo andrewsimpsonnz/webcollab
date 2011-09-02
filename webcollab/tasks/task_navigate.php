@@ -62,7 +62,7 @@ if( @safe_integer($_GET['taskid']) ) {
       $project_name = box_shorten(db_result($q1, 0, 0 ) );
 
       $content .= "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></li>\n".
-                  "<small><b>".$lang['task'].":</b></small></li>\n".
+                  "<li><small><b>".$lang['task'].":</b></small></li>\n".
                   "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
                   box_shorten($TASKID_ROW['name'])."</li>\n";
       break;
@@ -117,7 +117,7 @@ elseif( @safe_integer($_GET['parentid']) ){
     case '0':
       //new task under project
       $content .= "<li><small><b>".$lang['task'].":</b></small></li>\n".
-                  "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
+                  "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
                   "<i>".$lang['new_task']."</i></li>\n";
       break;
 
