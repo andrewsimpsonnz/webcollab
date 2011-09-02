@@ -25,31 +25,32 @@
   Language files (long messages) for 'ja' (Japanese)
 
   Maintainer: Tadashi Jokagi <elf2000 at users.sourceforge.net>
+  Last updater: Hiromi Kimura <hiromi at tac.tsukuba.ac.jp>
 
 */
 
 
-$taskgroup_info =   "<ul><li>If you delete a taskgroup all tasks belonging to it will be set to uncategorised.</li>\n".
-                      "<li>You can change the name of a category without interfering with the tasks.</li>\n".
-                      "<li>Two taskgroups cannot have the same name.</li></ul>\n";
+$taskgroup_info =   "<ul><li>もしも、タスクグループを削除したなら、その中に含まれるタスクは未分類となります。</li>\n".
+                      "<li>分類名を変更してもタスク自身には影響はありません。</li>\n".
+                      "<li>同じ名前のタスクグループは作れません。</li></ul>\n";
 
-$usergroup_info =   "<ul><li>If you delete a usergroup all the related private forum posts will be deleted too.</li>\n".
-                      "<li>Private usergroups can only be seen by the members of that private usergroup.</li>\n".
-                      "<li>You can change the name of a usergroup without interfering with the users in it.</li>\n".
-                      "<li>Two usergroups cannot have the same name.</li></ul>\n";
+$usergroup_info =   "<ul><li>もしも、ユーザーグループを削除したなら、フォーラムの投稿も削除されます。</li>\n".
+                      "<li>プライベートユーザーグループはそのメンバーにしか閲覧できません。</li>\n".
+                      "<li>ユーザーグループの名前を変更してもユーザ自身には影響ありません。</li>\n".
+                      "<li>同じ名前のユーザグループは作れません。</li></ul>\n";
 
 $user_info      =    "左のメニューから操作を選択してください。<br /><br />".
-                      "Some quick hints:<br />".
+                      "いくつかの簡単なヒント：<br />".
                       "<ul>".
-                      "<li>Private users can only be seen by members of the same usergroup.</li>\n".
-                      "<li>Users have two stages of deleting, the second one is permanent.</li>\n".
-                      "<li>A deleted user loses all his tasks but not his forum messages.</li>\n".
-                      "<li>A permanently deleted user loses all.</li>\n".
-                      "<li>A deleted user keeps the record of tasks that they have seen, and will continue with that list upon revival.</li>\n".
-                      "<li>ALL actions performed on a user will be emailed to the user.</li>\n".
-                      "<li>Passwords are encrypted in the database. You can only set a new one.</li>\n".
-                      "<li>Passwords are mailed only once to the user when set, so be careful where you mail them!</li>\n".
-                      "<li>Users can edit themselves without admins knowing - this will save you time (and spam)</li>\n".
+                      "<li>プライベートユーザーは同じグループのメンバーにしか閲覧できません。</li>\n".
+                      "<li>ユーザの削除には2種類あります。単なる削除と完全削除です。</li>\n".
+                      "<li>単なる削除ではタスクは削除されますが、フォーラムの投稿は残ります。</li>\n".
+                      "<li>完全削除では全てのデータが削除されます。</li>\n".
+                      "<li>削除されたユーザのタスクの記録は保持され、復活した時に継続して使用できます。</li>\n".
+                      "<li>全てのユーザアカウントへの操作は、ユーザにメールで報告されます。</li>\n".
+                      "<li>パスワードは暗号化されてデータベースに入れられます。あなたは新しいパスワードを設定することしかできません。</li>\n".
+                      "<li>パスワードは設定した時に一度だけユーザにメールで送られますので、十分注意して下さい！</li>\n".
+                      "<li>ユーザは管理者に関係無く自分を編集できます - 時間が節約できます (and spam)</li>\n".
                       "</ul>\n";
 
 ?>
