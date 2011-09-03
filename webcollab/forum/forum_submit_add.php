@@ -32,6 +32,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 require_once(BASE.'includes/usergroup_security.php' );
 include_once(BASE.'includes/admin_config.php');
 
@@ -73,14 +74,24 @@ else {
   $mail_group = '';
 }
 
+//check for valid form token
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+validate_token($token, 'forum_add' );
+
 //do data consistency check on taskid
-if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$taskid.' LIMIT 1' ), 0 ,0 ) == 0 ) {
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+db_execute($q, array($taskid ) );
+
+if(db_result($q, 0, 0 ) == 0 ){
   error('Forum submit', 'Data consistency error - not a valid taskid' );
 }
 
 //do data consistency check on parentid
 if($parentid != 0 ) {
-  if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'forum WHERE id='.$parentid ), 0, 0 ) == 0 ){
+  $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'forum WHERE id=? LIMIT 1' );
+  db_execute($q, array($parentid ) );
+
+  if(db_result($q, 0, 0 ) == 0 ){
     error('Forum submit', 'Data consistency error - child post has no parent' );
   }
 }
@@ -93,8 +104,9 @@ switch($usergroupid ) {
   case 0:
     //public post
     db_begin();
-    db_query ('INSERT INTO '.PRE.'forum(parent, taskid, posted, edited, text, userid, usergroupid, sequence)
-                                      VALUES ('.$parentid.', '.$taskid.', now(), now(), \''.$text.'\', '.UID.', 0, 0)' );
+    $q = db_prepare('INSERT INTO '.PRE.'forum(parent, taskid, posted, edited, text, userid, usergroupid, sequence)
+                                         VALUES (?, ?, now(), now(), ?, ?, 0, 0)' );
+    db_execute($q, array($parentid, $taskid, $text, UID ) );
     break;
 
   default:
@@ -105,22 +117,26 @@ switch($usergroupid ) {
     }
 
     db_begin();
-    db_query ('INSERT INTO '.PRE.'forum(parent, taskid, posted, edited, text, userid, usergroupid, sequence)
-                                      VALUES ('.$parentid.', '.$taskid.', now(), now(), \''.$text.'\', '.UID.', '.$usergroupid.', 0)' );
+    $q = db_prepare('INSERT INTO '.PRE.'forum(parent, taskid, posted, edited, text, userid, usergroupid, sequence)
+                                      VALUES (?, ?, now(), now(), ?, ?, ?, 0)' );
+    db_execute($q, array($parentid, $taskid, $text, UID, $usergroupid ) );
     break;
 
 }
 //set time of last forum post to this task
-db_query('UPDATE '.PRE.'tasks SET lastforumpost=now() WHERE id='.$taskid );
+$q = db_prepare('UPDATE '.PRE.'tasks SET lastforumpost=now() WHERE id=?' );
+db_execute($q, array($taskid ) );
 db_commit();
 
 //get task data
-$q = db_query('SELECT '.PRE.'tasks.name AS name,
+$q = db_prepare('SELECT '.PRE.'tasks.name AS name,
                       '.PRE.'tasks.usergroupid AS usergroupid,
                       '.PRE.'users.email AS email
                       FROM '.PRE.'tasks
                       LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.owner='.PRE.'users.id)
-                      WHERE '.PRE.'tasks.id='.$taskid );
+                      WHERE '.PRE.'tasks.id=? LIMIT 1' );
+
+db_execute($q, array($taskid ) );
 $task_row = db_fetch_array($q, 0 );
 
 //set owner's email
@@ -130,11 +146,13 @@ if($task_row['email'] && $mail_owner ) {
 
 //if usergroup set, add the user list
 if($task_row['usergroupid'] && $mail_group ){
-  $q = db_query('SELECT '.PRE.'users.email
+  $q = db_prepare('SELECT '.PRE.'users.email
                         FROM '.PRE.'users
                         LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
-                        WHERE '.PRE.'usergroups_users.usergroupid='.$task_row['usergroupid'].
-                        ' AND '.PRE.'users.deleted=\'f\'' );
+                        WHERE '.PRE.'usergroups_users.usergroupid=?
+                        AND '.PRE.'users.deleted=\'f\'' );
+
+  db_execute($q, array($task_row['usergroupid'] ) );
 
   for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
     $mail_list[] = $row[0];
@@ -166,11 +184,13 @@ if(sizeof($mail_list) > 0 ){
 
     default:
       //this is a reply to an earlier post
-      $q = db_query('SELECT '.PRE.'forum.text AS text,
-                    '.PRE.'users.fullname AS username
-                    FROM '.PRE.'forum
-                    LEFT JOIN '.PRE.'users ON ('.PRE.'forum.userid='.PRE.'users.id)
-                    WHERE '.PRE.'forum.id='.$parentid );
+      $q = db_prepare('SELECT '.PRE.'forum.text AS text,
+                      '.PRE.'users.fullname AS username
+                      FROM '.PRE.'forum
+                      LEFT JOIN '.PRE.'users ON ('.PRE.'forum.userid='.PRE.'users.id)
+                      WHERE '.PRE.'forum.id=? LIMIT 1' );
+
+      db_execute($q, array($parentid ) );
 
       $row = db_fetch_array($q, 0 );
 

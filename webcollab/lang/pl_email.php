@@ -4,7 +4,6 @@
 
   WebCollab
   ---------------------------------------
-  Thi file created 2003 by Andrew Simpson
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -35,164 +34,176 @@ $email_date = sprintf('%s %s %s %+03d00', date('Y', $ltime ), $month_array[(date
 
 $title_file_post          = ABBR_MANAGER_NAME.": uploadowano nowy plik: %s";
 $email_file_post          = "Witam,\n\n".
-                            "To jest informacja ".MANAGER_NAME." ¿e plik zosta³ za³adowany w ".$email_date." przez %1\$s.\n\n".
+                            "To jest informacja ".MANAGER_NAME." Å¼e plik zostaÅ‚ zaÅ‚adowany w ".$email_date." przez %1\$s.\n\n".
                             "Plik:        %2\$s\n".
                             "Opis: %3\$s\n\n".
                             "Projekt:     %4\$s\n".
                             "Zadanie:        %5\$s\n\n".
-                            "Proszê wejd¼ na stronê w celu uzyskania szczegó³owych informacji.\n\n".
+                            "ProszÄ™ wejdÅº na stronÄ™ w celu uzyskania szczegÃ³Å‚owych informacji.\n\n".
                             BASE_URL."%6\$s\n";
 
 
-$title_forum_post         = ABBR_MANAGER_NAME.": Nowa wiadomo¶æ na forum: %s";
+$title_forum_post         = ABBR_MANAGER_NAME.": Nowa wiadomoÅ›Ä‡ na forum: %s";
 $email_forum_post         = "Witam,\n\n".
-                            "To jest informacja ".MANAGER_NAME." ¿e zosta³a og³oszona nowa wiadomo¶æ na forum ".$email_date." przez %1\$s:\n\n".
+                            "To jest informacja ".MANAGER_NAME." Å¼e zostaÅ‚a ogÅ‚oszona nowa wiadomoÅ›Ä‡ na forum ".$email_date." przez %1\$s:\n\n".
                             "----\n\n".
                             "%2\$s\n\n".
                             "----\n\n".
-                            "Proszê wejd¼ na stronê w celu uzyskania szczegó³owych informacji.\n\n".
+                            "ProszÄ™ wejdÅº na stronÄ™ w celu uzyskania szczegÃ³Å‚owych informacji.\n\n".
                             BASE_URL."%3\$s\n";
 
 $email_forum_reply        = "Witam,\n\n".
-                            "To jest informacja ".MANAGER_NAME." ¿e zosta³a og³oszona nowa wiadomo¶æ na forum ".$email_date." przez %1\$s.\n\n".
-                            "Ta wiadomo¶æ odnosi siê do wcze¶niejszej odpowiedzi wykonanej przez %2\$s.\n\n".
-                            "¬ród³owa wiadomo¶æ:\n%3\$s\n\n".
+                            "To jest informacja ".MANAGER_NAME." Å¼e zostaÅ‚a ogÅ‚oszona nowa wiadomoÅ›Ä‡ na forum ".$email_date." przez %1\$s.\n\n".
+                            "Ta wiadomoÅ›Ä‡ odnosi siÄ™ do wczeÅ›niejszej odpowiedzi wykonanej przez %2\$s.\n\n".
+                            "Å¹rÃ³dÅ‚owa wiadomoÅ›Ä‡:\n%3\$s\n\n".
                             "----\n\n".
-                            "Nowa odpowied¼:\n%4\$s\n\n".
+                            "Nowa odpowiedÅº:\n%4\$s\n\n".
                             "----\n\n".
-                            "Proszê wejd¼ na stronê w celu uzyskania szczegó³owych informacji.\n\n".
+                            "ProszÄ™ wejdÅº na stronÄ™ w celu uzyskania szczegÃ³Å‚owych informacji.\n\n".
                             BASE_URL."%5\$s\n";
 
 $email_list               = "Projekt:  %1\$s\n".
                             "Zadanie:     %2\$s\n".
                             "Status:   %3\$s\n".
-                            "W³a¶ciciel:    %4\$s ( %5\$s )\n".
+                            "WÅ‚aÅ›ciciel:    %4\$s ( %5\$s )\n".
                             "Tekst:\n%6\$s\n\n".
-                            "Proszê wejd¼ na stronê w celu uzyskania szczegó³owych informacji.\n\n".
+                            "ProszÄ™ wejdÅº na stronÄ™ w celu uzyskania szczegÃ³Å‚owych informacji.\n\n".
                             BASE_URL."%7\$s\n";
 
-$title_takeover_project   = ABBR_MANAGER_NAME.": Twój projekt zosta³ przejêty";
-$title_takeover_task      = ABBR_MANAGER_NAME.": Twoje zadanie zosta³o przejête";
+$title_takeover_project   = ABBR_MANAGER_NAME.": TwÃ³j projekt zostaÅ‚ przejÄ™ty";
+$title_takeover_task      = ABBR_MANAGER_NAME.": Twoje zadanie zostaÅ‚o przejÄ™te";
 
 $email_takeover_task      = "Witam,\n\n".
-                            " To jest informacja ".MANAGER_NAME." dla ciebie, ¿e zadanie,którego by³e¶ w³a¶cicielem zosta³o przejête przez administratora ".$email_date.".\n\n";
+                            " To jest informacja ".MANAGER_NAME." dla ciebie, Å¼e zadanie,ktÃ³rego byÅ‚eÅ› wÅ‚aÅ›cicielem zostaÅ‚o przejÄ™te przez administratora ".$email_date.".\n\n";
 $email_takeover_project   = "Witam,\n\n".
-                            "To jest informacja ".MANAGER_NAME." la ciebie, ¿e projekt, którego by³e¶ w³a¶cicielem zosta³o przejête przez administratora ".$email_date.".\n\n";
+                            "To jest informacja ".MANAGER_NAME." la ciebie, Å¼e projekt, ktÃ³rego byÅ‚eÅ› wÅ‚aÅ›cicielem zostaÅ‚o przejÄ™te przez administratora ".$email_date.".\n\n";
 
 
 $title_new_owner_project  = ABBR_MANAGER_NAME.": Nowy projekt dla Ciebie";
 $title_new_owner_task     = ABBR_MANAGER_NAME.": Nowe zadanie dla Ciebie";
 
 $email_new_owner_project  = "Witam,\n\n".
-                            "To jest informacja ".MANAGER_NAME." ¿e ten projekt zosta³ utworzony w ".$email_date.", i ty jeste¶ w³a¶cicielem tego projektu.\n\n".
-                            "Wiêcej szczegó³ów:\n\n";
+                            "To jest informacja ".MANAGER_NAME." Å¼e ten projekt zostaÅ‚ utworzony w ".$email_date.", i ty jesteÅ› wÅ‚aÅ›cicielem tego projektu.\n\n".
+                            "WiÄ™cej szczegÃ³Å‚Ã³w:\n\n";
 
 $email_new_owner_task     = "Witam,\n\n".
-                            "To jest informacja ".MANAGER_NAME." ¿e zadanie zosta³o utworzone ".$email_date.", i jeste¶ w³a¶cicielem tego zadania.\n\n".
-                            "Tutaj wiêcej szczegó³ów:\n\n";
+                            "To jest informacja ".MANAGER_NAME." Å¼e zadanie zostaÅ‚o utworzone ".$email_date.", i jesteÅ› wÅ‚aÅ›cicielem tego zadania.\n\n".
+                            "Tutaj wiÄ™cej szczegÃ³Å‚Ã³w:\n\n";
 
 
 $title_new_group_project  = ABBR_MANAGER_NAME.": Nowy projekt: %s";
 $title_new_group_task     = ABBR_MANAGER_NAME.": Nowe zadanie: %s";
 
 $email_new_group_project  = "Witam,\n\n".
-                            "To jest informacja ".MANAGER_NAME." ¿e zosta³ utworzony nowy projekt w ".$email_date."\n\n".
-                            "Wiêcej szczegó³ów:\n\n";
+                            "To jest informacja ".MANAGER_NAME." Å¼e zostaÅ‚ utworzony nowy projekt w ".$email_date."\n\n".
+                            "WiÄ™cej szczegÃ³Å‚Ã³w:\n\n";
 
 $email_new_group_task     = "Witam,\n\n".
-                            "To jest informacja ".MANAGER_NAME." ¿e zosta³o utworzone nowe zadanie w ".$email_date."\n\n".
-                            "Tutaj wiêcej szczegó³ów:\n\n";
+                            "To jest informacja ".MANAGER_NAME." Å¼e zostaÅ‚o utworzone nowe zadanie w ".$email_date."\n\n".
+                            "Tutaj wiÄ™cej szczegÃ³Å‚Ã³w:\n\n";
 
-$title_edit_owner_project = ABBR_MANAGER_NAME.": Twój projekt zosta³ uaktualniony";
-$title_edit_owner_task    = ABBR_MANAGER_NAME.": Twoje zadanie zosta³o uaktualnione";
+$title_edit_owner_project = ABBR_MANAGER_NAME.": TwÃ³j projekt zostaÅ‚ uaktualniony";
+$title_edit_owner_task    = ABBR_MANAGER_NAME.": Twoje zadanie zostaÅ‚o uaktualnione";
 
 $email_edit_owner_project = "Witam,\n\n".
-                            "To jest informacja ".MANAGER_NAME." ¿e projekt, którego jeste¶ w³ascicielem zosta³ zmieniony w ".$email_date.".\n\n".
-                            "Tutaj s± szczegó³owe informacje:\n\n";
+                            "To jest informacja ".MANAGER_NAME." Å¼e projekt, ktÃ³rego jesteÅ› wÅ‚ascicielem zostaÅ‚ zmieniony w ".$email_date.".\n\n".
+                            "Tutaj sÄ… szczegÃ³Å‚owe informacje:\n\n";
 
 $email_edit_owner_task    = "Witam,\n\n".
-                            "To jest informacja ".MANAGER_NAME." ¿e zadanie, które posiada³e¶ zosta³o zmienione w ".$email_date.".\n\n".
-                            "Tutaj s± szczegó³owe informacje:\n\n";
+                            "To jest informacja ".MANAGER_NAME." Å¼e zadanie, ktÃ³re posiadaÅ‚eÅ› zostaÅ‚o zmienione w ".$email_date.".\n\n".
+                            "Tutaj sÄ… szczegÃ³Å‚owe informacje:\n\n";
 
 $title_edit_group_project = ABBR_MANAGER_NAME.": Projekt zaktualizowany";
 $title_edit_group_task    = ABBR_MANAGER_NAME.": Zadanie zaktualizowane";
 
 $email_edit_group_project = "Witam,\n\n".
-                            "To jest informacja ".MANAGER_NAME." ¿e projekt posiadany przez %s zosta³ zmieniony w ".$email_date.".\n\n".
-                            "Tutaj s± szczegó³owe informacje:\n\n";
+                            "To jest informacja ".MANAGER_NAME." Å¼e projekt posiadany przez %s zostaÅ‚ zmieniony w ".$email_date.".\n\n".
+                            "Tutaj sÄ… szczegÃ³Å‚owe informacje:\n\n";
 
 $email_edit_group_task    = "Witam,\n\n".
-                            "To jest informacje ".MANAGER_NAME." ¿e zadanie posiadane przez  %s zosta³o zmienione w ".$email_date.".\n\n".
-                            "Tutaj s± szczegó³owe informacje:\n\n";
+                            "To jest informacje ".MANAGER_NAME." Å¼e zadanie posiadane przez  %s zostaÅ‚o zmienione w ".$email_date.".\n\n".
+                            "Tutaj sÄ… szczegÃ³Å‚owe informacje:\n\n";
 
 $title_delete_project     = ABBR_MANAGER_NAME.": Projekt skasowany";
 $title_delete_task        = ABBR_MANAGER_NAME.": Zadanie skasowane";
 
 $email_delete_project     = "Witam,\n\n".
-                            "To jest informacja ".MANAGER_NAME." ¿e projekt który posiada³e¶ zosta³ skasowany ".$email_date."\n\n".
-                            "Dziêkujemy za prowadzenie projektu podczas jego trwania.\n\n";
+                            "To jest informacja ".MANAGER_NAME." Å¼e projekt ktÃ³ry posiadaÅ‚eÅ› zostaÅ‚ skasowany ".$email_date."\n\n".
+                            "DziÄ™kujemy za prowadzenie projektu podczas jego trwania.\n\n";
 
 $email_delete_task        = "Witam,\n\n".
-                            "To jest informacja ".MANAGER_NAME." ¿e zadanie które posiada³e¶ zosta³o skasowane w ".$email_date."\n\n".
-                            "Dziêkujemy za prowadzenie zadania  podczas jego trwania.\n\n";
+                            "To jest informacja ".MANAGER_NAME." Å¼e zadanie ktÃ³re posiadaÅ‚eÅ› zostaÅ‚o skasowane w ".$email_date."\n\n".
+                            "DziÄ™kujemy za prowadzenie zadania  podczas jego trwania.\n\n";
 
 $delete_list              = "Projekt: %1\$s\n".
                             "Zadanie:   %2\$s\n".
                             "Status: %3\$s\n\n".
                             "Tekst:\n%4\$s\n\n";
 
+$title_usergroup_add      = ABBR_MANAGER_NAME.": New usergroup %1\$s created";
+$email_usergroup_add      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that a new usergroup %1\$s, has been created on ".$email_date.".\n\n".
+                            "The members of the new usergroup are:\n".
+                            "%2\$s\n";
+
+$title_usergroup_edit      = ABBR_MANAGER_NAME.": Usergroup %1\$s changed";
+$email_usergroup_edit      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that usergroup %1\$s, has been changed on ".$email_date.".\n\n".
+                            "The members of the usergroup are:\n".
+                            "%2\$s\n";
+
 $title_welcome            = "Witamy w ".ABBR_MANAGER_NAME;
-$email_welcome            = "Witam,\n\nTo jest informacja ".MANAGER_NAME." ¿e webcollam zaprasza ciê do siebie ;) w ".$email_date.".\n\n".
-                            "Jako, ¿e jeste¶ nowy tutaj, postaram ci siê wyja¶niæ kilka spraw, aby¶ móg³ szybko przyst±piæ do pracy\n\n".
-                            "Po pierwsze to jest narzêdzie s³u¿±ce do zarz±dzania projektami. G³ówny ekran poka¿e ci projekty, które s± obecnie dostêpne. ".
-                            "Je¶li klikniesz na jedn± z nazw mo¿esz znale¼æ siebie w czê¶ci zadañ. To jest miejsce gdzie toczy siê ca³± praca.\n\n".
-                            "Ka¿da pozycja któr± wy¶lesz, lub ka¿de zadanie, które wyedytujesz bêdzie widoczne dla innych u¿ytkowników jako 'new' lub 'updated'. ".
-			    "To równie¿ dzia³a w drug± stronê i pozwala tobie skupiæ uwagê na aktywnym punkcie pracy.\n\n".
-                            "Mo¿esz równie¿ przej±æ na w³asno¶æ zadanie, je¶li stwierdzisz, ¿e posiadasz takie uprawnienia do edycji, wraz z nale¿±cymi do zadania postami na forum. ".
-                            "Podczas postêpów w pracy, proszê wyedytuj zadania opisowo, zmieñ status tak by pozostali mogli ¶ledziæ twoje postêpy. ".
-                            "\n\nMogê tylko ¿yczyæ ci sukcesów i proszê napisz na email ".EMAIL_ADMIN." je¶li utkniesz w jakim¶ punkcie.\n\n --¯yczê powodzenia !\n\n".
+$email_welcome            = "Witam,\n\nTo jest informacja ".MANAGER_NAME." Å¼e webcollam zaprasza ciÄ™ do siebie ;) w ".$email_date.".\n\n".
+                            "Jako, Å¼e jesteÅ› nowy tutaj, postaram ci siÄ™ wyjaÅ›niÄ‡ kilka spraw, abyÅ› mÃ³gÅ‚ szybko przystÄ…piÄ‡ do pracy\n\n".
+                            "Po pierwsze to jest narzÄ™dzie sÅ‚uÅ¼Ä…ce do zarzÄ…dzania projektami. GÅ‚Ã³wny ekran pokaÅ¼e ci projekty, ktÃ³re sÄ… obecnie dostÄ™pne. ".
+                            "JeÅ›li klikniesz na jednÄ… z nazw moÅ¼esz znaleÅºÄ‡ siebie w czÄ™Å›ci zadaÅ„. To jest miejsce gdzie toczy siÄ™ caÅ‚Ä… praca.\n\n".
+                            "KaÅ¼da pozycja ktÃ³rÄ… wyÅ›lesz, lub kaÅ¼de zadanie, ktÃ³re wyedytujesz bÄ™dzie widoczne dla innych uÅ¼ytkownikÃ³w jako 'new' lub 'updated'. ".
+			    "To rÃ³wnieÅ¼ dziaÅ‚a w drugÄ… stronÄ™ i pozwala tobie skupiÄ‡ uwagÄ™ na aktywnym punkcie pracy.\n\n".
+                            "MoÅ¼esz rÃ³wnieÅ¼ przejÄ…Ä‡ na wÅ‚asnoÅ›Ä‡ zadanie, jeÅ›li stwierdzisz, Å¼e posiadasz takie uprawnienia do edycji, wraz z naleÅ¼Ä…cymi do zadania postami na forum. ".
+                            "Podczas postÄ™pÃ³w w pracy, proszÄ™ wyedytuj zadania opisowo, zmieÅ„ status tak by pozostali mogli Å›ledziÄ‡ twoje postÄ™py. ".
+                            "\n\nMogÄ™ tylko Å¼yczyÄ‡ ci sukcesÃ³w i proszÄ™ napisz na email ".EMAIL_ADMIN." jeÅ›li utkniesz w jakimÅ› punkcie.\n\n --Å»yczÄ™ powodzenia !\n\n".
                             "Login:      %1\$s\n".
-                            "Has³o:   %2\$s\n\n".
-                            "Grupa u¿ytkowników: %3\$s".
+                            "HasÅ‚o:   %2\$s\n\n".
+                            "Grupa uÅ¼ytkownikÃ³w: %3\$s".
                             "Nazwa:       %4\$s\n".
                             "Strona:    ".BASE_URL."\n\n".
                             "%5\$s";
 
 $title_user_change1       = ABBR_MANAGER_NAME.": Edycja konta przez Admina";
 $email_user_change1       = "Witam,\n\n".
-                            "To jest informacja ".MANAGER_NAME." ¿e twoje konto zosta³o zmienione w ".$email_date." przez %1\$s ( %2\$s ) \n\n".
+                            "To jest informacja ".MANAGER_NAME." Å¼e twoje konto zostaÅ‚o zmienione w ".$email_date." przez %1\$s ( %2\$s ) \n\n".
                             "Login:      %3\$s\n".
-                            "Has³o:   %4\$s\n\n".
-                            "Grupa u¿ytkowników: %5\$s".
+                            "HasÅ‚o:   %4\$s\n\n".
+                            "Grupa uÅ¼ytkownikÃ³w: %5\$s".
                             "Nazwa:       %6\$s\n\n".
                             "%7\$s";
 
 $title_user_change2         = ABBR_MANAGER_NAME.": Edycja twojego konta";
 $email_user_change2         = "Witam,\n\n".
-                              "To jest informacja ".MANAGER_NAME." potwierdzaj±ca ¿e z powodzeniem uda³o ci siê zmieniæ ustawienia konta w ".$email_date.".\n\n".
+                              "To jest informacja ".MANAGER_NAME." potwierdzajÄ…ca Å¼e z powodzeniem udaÅ‚o ci siÄ™ zmieniÄ‡ ustawienia konta w ".$email_date.".\n\n".
                               "Login:    %1\$s\n".
-                              "Has³o: %2\$s\n\n".
+                              "HasÅ‚o: %2\$s\n\n".
                               "Nazwa:     %3\$s\n";
 
 $title_user_change3         = ABBR_MANAGER_NAME.": Edycja twojego konta";
 $email_user_change3         = "Witam,\n\n".
-                              "To jest informacja ".MANAGER_NAME." ¿e uda³o ci siê zmieniæ ustawienia swojego konta w ".$email_date.".\n\n".
+                              "To jest informacja ".MANAGER_NAME." Å¼e udaÅ‚o ci siÄ™ zmieniÄ‡ ustawienia swojego konta w ".$email_date.".\n\n".
                               "Login: %1\$s\n".
-                              "Twoje dotychczasowe has³o nie zosta³o zmienione.\n\n".
+                              "Twoje dotychczasowe hasÅ‚o nie zostaÅ‚o zmienione.\n\n".
                               "Nazwa:  %2\$s\n";
 
 $title_revive               = ABBR_MANAGER_NAME.": Konto reaktywowane";
 $email_revive               = "Witam,\n\n".
-                              "To jest informacja ".MANAGER_NAME." ¿e twoje konto zosta³o ponownie w³±czone w ".$email_date.".\n\n".
+                              "To jest informacja ".MANAGER_NAME." Å¼e twoje konto zostaÅ‚o ponownie wÅ‚Ä…czone w ".$email_date.".\n\n".
                               "Login (nazwa): %1\$s\n".
-                              "Nazwa u¿ytkownika:  %2\$s\n\n".
-                              "Nie mo¿emy wys³aæ ci has³a poniewa¿ jest ono zaszyfrowane. \n\n".
-                              "Je¶li zapomnia³e¶ has³a napisz do administratora ".EMAIL_ADMIN." w celu za³o¿enia nowego has³a.";
+                              "Nazwa uÅ¼ytkownika:  %2\$s\n\n".
+                              "Nie moÅ¼emy wysÅ‚aÄ‡ ci hasÅ‚a poniewaÅ¼ jest ono zaszyfrowane. \n\n".
+                              "JeÅ›li zapomniaÅ‚eÅ› hasÅ‚a napisz do administratora ".EMAIL_ADMIN." w celu zaÅ‚oÅ¼enia nowego hasÅ‚a.";
 
-$title_delete_user          = ABBR_MANAGER_NAME.": Konto usuniête.";
+$title_delete_user          = ABBR_MANAGER_NAME.": Konto usuniÄ™te.";
 $email_delete_user          = "Witam,\n\n".
-                              "To jest informacja ".MANAGER_NAME." ¿e twoje konto zosta³o z dezaktywowane w ".$email_date.".\n\n".
-                              "¯a³ujemy, ¿e odszed³e¶, jednocze¶nie dziêkujemy za po¶wiêcon± pracê!\n\n".
-                              "Je¶li uwa¿asz, ¿e to jaka¶ pomy³ka lub b³±d systemu, proszê skontaktuj siê z administratorem ".EMAIL_ADMIN.".";
+                              "To jest informacja ".MANAGER_NAME." Å¼e twoje konto zostaÅ‚o z dezaktywowane w ".$email_date.".\n\n".
+                              "Å»aÅ‚ujemy, Å¼e odszedÅ‚eÅ›, jednoczeÅ›nie dziÄ™kujemy za poÅ›wiÄ™conÄ… pracÄ™!\n\n".
+                              "JeÅ›li uwaÅ¼asz, Å¼e to jakaÅ› pomyÅ‚ka lub bÅ‚Ä…d systemu, proszÄ™ skontaktuj siÄ™ z administratorem ".EMAIL_ADMIN.".";
 
 ?>

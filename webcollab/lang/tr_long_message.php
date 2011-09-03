@@ -25,29 +25,32 @@
 
   Translation: Aydin Gurel <aydin.gurel at gmail.com>
 
+  
+  NOTE: This file is written in UTF-8 character set
+
 */
 
-$taskgroup_info =   "<ul><li>Eğer bir görev grubunu silerseniz ona ait tüm görevler kategorisiz olacaktır.</li>\n".
-                      "<li>Bir kategorinin ismini görevleri karıştırmadan değiştirebilirsiniz.</li>\n".
-                      "<li>İki görev grubu aynı ada sahip olamaz.</li></ul>\n";
+$taskgroup_info =   "<ul><li>EÄŸer bir gÃ¶rev grubunu silerseniz ona ait tÃ¼m gÃ¶revler kategorisiz olacaktÄ±r.</li>\n".
+                      "<li>Bir kategorinin ismini gÃ¶revleri karÄ±ÅŸtÄ±rmadan deÄŸiÅŸtirebilirsiniz.</li>\n".
+                      "<li>Ä°ki gÃ¶rev grubu aynÄ± ada sahip olamaz.</li></ul>\n";
 
-$usergroup_info =   "<ul><li>Eğer bir kullanıcı grubunu silerseniz onunla ilgili tüm özel forum mesajları da silinecektir.</li>\n".
-                      "<li>Özel kullanıcı grupları sadece sözkonusu grubun üyeleri tarafından görülebilirler.</li>\n".
-                      "<li>Bir kullanıcı grubunun adını içindeki kullanıcıları karıştırmadan değiştirebilirsiniz.</li>\n".
-                      "<li>İki kullanıcı grubu aynı ada sahip olamaz.</li></ul>\n";
+$usergroup_info =   "<ul><li>EÄŸer bir kullanÄ±cÄ± grubunu silerseniz onunla ilgili tÃ¼m Ã¶zel forum mesajlarÄ± da silinecektir.</li>\n".
+                      "<li>Ã–zel kullanÄ±cÄ± gruplarÄ± sadece sÃ¶zkonusu grubun Ã¼yeleri tarafÄ±ndan gÃ¶rÃ¼lebilirler.</li>\n".
+                      "<li>Bir kullanÄ±cÄ± grubunun adÄ±nÄ± iÃ§indeki kullanÄ±cÄ±larÄ± karÄ±ÅŸtÄ±rmadan deÄŸiÅŸtirebilirsiniz.</li>\n".
+                      "<li>Ä°ki kullanÄ±cÄ± grubu aynÄ± ada sahip olamaz.</li></ul>\n";
 
-$user_info      =    "Lütfen soldaki menüden yapmak istediğiniz şeyi seçin.<br /><br />".
-                      "Bazı çabuk ipuçları:<br />".
+$user_info      =    "LÃ¼tfen soldaki menÃ¼den yapmak istediÄŸiniz ÅŸeyi seÃ§in.<br /><br />".
+                      "BazÄ± Ã§abuk ipuÃ§larÄ±:<br />".
                       "<ul>".
-                      "<li>Özel kullanıcılar sadece aynı grubun üyeleri tarafından görülebilirler.</li>\n".
-                      "<li>Silme işlemi kullanıcılar için iki aşamalıdır. İkincisi kalıcıdır.</li>\n".
-                      "<li>Silinen bir kullanıcı tüm görevlerini kaybeder fakat forum mesajları kalır.</li>\n".
-                      "<li>Kalıcı olarak silinen bir kullanıcı her şeyini kaybeder.</li>\n".
-                      "<li>Silinen bir kullanıcının görülmüş olan görev kayıtları kalır, tekrar başlarsa bu listeyle devam eder.</li>\n".
-                      "<li>Bir kullanıcıyla ilgili TÜM eylemler kullanıcıya epostayla gönderilir.</li>\n".
-                      "<li>Şifreler veritabanında şifrelenmiş durumdadır. Yeni bir şifre yaratmanız gerekiyor.</li>\n".
-                      "<li>Şifreler koyuldukları zaman kullanıcıya epostayla sadece bir kez gönderilmektedir. Bu nedenle onları gönderirken dikkatli olun!</li>\n".
-                      "<li>Kullanıcılar yöneticinin haberi olmadan kendi bilgilerini değiştirebilirler. Bu size zaman kazandırır ve spam'i engeller.</li>\n".
+                      "<li>Ã–zel kullanÄ±cÄ±lar sadece aynÄ± grubun Ã¼yeleri tarafÄ±ndan gÃ¶rÃ¼lebilirler.</li>\n".
+                      "<li>Silme iÅŸlemi kullanÄ±cÄ±lar iÃ§in iki aÅŸamalÄ±dÄ±r. Ä°kincisi kalÄ±cÄ±dÄ±r.</li>\n".
+                      "<li>Silinen bir kullanÄ±cÄ± tÃ¼m gÃ¶revlerini kaybeder fakat forum mesajlarÄ± kalÄ±r.</li>\n".
+                      "<li>KalÄ±cÄ± olarak silinen bir kullanÄ±cÄ± her ÅŸeyini kaybeder.</li>\n".
+                      "<li>Silinen bir kullanÄ±cÄ±nÄ±n gÃ¶rÃ¼lmÃ¼ÅŸ olan gÃ¶rev kayÄ±tlarÄ± kalÄ±r, tekrar baÅŸlarsa bu listeyle devam eder.</li>\n".
+                      "<li>Bir kullanÄ±cÄ±yla ilgili TÃœM eylemler kullanÄ±cÄ±ya epostayla gÃ¶nderilir.</li>\n".
+                      "<li>Åifreler veritabanÄ±nda ÅŸifrelenmiÅŸ durumdadÄ±r. Yeni bir ÅŸifre yaratmanÄ±z gerekiyor.</li>\n".
+                      "<li>Åifreler koyulduklarÄ± zaman kullanÄ±cÄ±ya epostayla sadece bir kez gÃ¶nderilmektedir. Bu nedenle onlarÄ± gÃ¶nderirken dikkatli olun!</li>\n".
+                      "<li>KullanÄ±cÄ±lar yÃ¶neticinin haberi olmadan kendi bilgilerini deÄŸiÅŸtirebilirler. Bu size zaman kazandÄ±rÄ±r ve spam'i engeller.</li>\n".
                       "</ul>\n";
 
 ?>

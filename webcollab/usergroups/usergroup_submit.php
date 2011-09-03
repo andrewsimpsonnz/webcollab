@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: usergroup_submit.php 2179 2009-04-07 09:31:13Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -31,6 +31,10 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
+
 //admins only
 if( ! ADMIN ) {
   error('Unauthorised access', 'This function is for admins only.' );
@@ -42,16 +46,81 @@ if(empty($_POST['action'] ) ) {
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'usergroup' );
+
+if(isset($_POST['mail_group'] ) &&  ($_POST['mail_group'] == 'on' ) ) {
+  $mail_group = true;
+}
+else {
+  $mail_group = false;
+}
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
+
+//
+// Function to send out emails
+//
+function email_usergroup($usergroupid, $type ) {
+
+  global $EMAIL_MAILINGLIST, $month_array;
+
+  $q = db_prepare('SELECT name FROM '.PRE.'usergroups WHERE id=? LIMIT 1' );
+  db_execute($q, array($usergroupid ) );
+  $usergroup_name = db_result($q, 0, 0 ); 
+
+  $q = db_prepare('SELECT '.PRE.'users.email,
+                          '.PRE.' users.name
+                          FROM '.PRE.'users
+                          LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
+                          WHERE '.PRE.'usergroups_users.usergroupid=?'.
+                          ' AND '.PRE.'users.deleted=\'f\'' );
+
+  db_execute($q, array($usergroupid ) );
+
+  for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+    $mail_list[] = $row[0];
+    $name_list[] = $row[1];
+  }
+
+  //do we need to email?
+  if(sizeof($mail_list) < 1 ) {
+    return;
+  }
+
+  include_once(BASE.'includes/email.php' );
+  include_once(BASE.'includes/time.php' );
+  include_once(BASE.'lang/lang_email.php' );
+
+  //get & add the mailing list
+  if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
+    $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
+  }
+
+  $names = implode("\n", $name_list );
+
+  switch ($type ) {
+    case 'edit':
+      email($mail_list, sprintf($title_usergroup_edit, $usergroup_name ), sprintf($email_usergroup_edit, $usergroup_name, $names ) );
+      break;
+
+    case 'add':
+      email($mail_list, sprintf($title_usergroup_add, $usergroup_name ), sprintf($email_usergroup_add, $usergroup_name, $names ) );
+      break;
+
+    default:
+      error('Usergroup submit', 'Unknown mail option' );
+      break;
+  }
+  return;
+}
+
+//MAIN PROGRAM
 
 switch($_POST['action'] ) {
 
   //delete a usergroup
   case 'submit_del':
-
 
     if(! @safe_integer($_POST['usergroupid']) ) {
       error('Usergroup submit', 'Not a valid value for usergroupid' );
@@ -62,26 +131,26 @@ switch($_POST['action'] ) {
     db_begin();
 
     //delete the private forum posts for this usergroup
-    db_query('DELETE FROM '.PRE.'forum WHERE usergroupid='.$usergroupid );
+    $q = db_prepare('DELETE FROM '.PRE.'forum WHERE usergroupid=?' );
+    db_execute($q, array($usergroupid ) );
 
     //delete the user entries out of usergroups_users
-    db_query('DELETE FROM '.PRE.'usergroups_users WHERE usergroupid='.$usergroupid );
+    $q = db_prepare('DELETE FROM '.PRE.'usergroups_users WHERE usergroupid=?' );
+    db_execute($q, array($usergroupid ) );
 
     //delete the usergroup
-    db_query('DELETE FROM '.PRE.'usergroups WHERE id='.$usergroupid );
+    $q = db_prepare('DELETE FROM '.PRE.'usergroups WHERE id=?' );
+    db_execute($q, array($usergroupid ) );
 
     //update the tasks table by resetting the deleted usergroup id to zero
-    @db_query('UPDATE '.PRE.'tasks SET usergroupid=0 WHERE usergroupid='.$usergroupid );
+    $q = db_prepare('UPDATE '.PRE.'tasks SET usergroupid=0 WHERE usergroupid=?' );
+    @db_execute($q, array($usergroupid ) );
 
     db_commit();
     break;
 
   //insert a new usergroup
   case 'submit_insert':
-
-    //check for valid form token
-    $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-    token_check($token );
 
     if(empty($_POST['name'] ) ) {
       warning($lang['value_missing'], sprintf($lang['field_sprt'], $lang['usergroup_name'] ) );
@@ -97,37 +166,46 @@ switch($_POST['action'] ) {
     }
 
     //check for duplicates
-    if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'usergroups WHERE name=\''.$name.'\''), 0, 0 ) > 0 ) {
+    $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'usergroups WHERE name=?' );
+    db_execute($q, array($name ) );
+
+    if(db_result($q, 0, 0 ) > 0 ) {
       warning($lang['add_usergroup'], sprintf($lang['usergroup_dup_sprt'], $name ) );
     }
+
     //begin transaction
     db_begin();
 
-    db_query('INSERT INTO '.PRE.'usergroups(name, description, private ) VALUES (\''.$name.'\', \''.$description.'\', \''.$private_group.'\')' );
+    $q = db_prepare('INSERT INTO '.PRE.'usergroups(name, description, private ) VALUES (?, ?, ?)' );
+    db_execute($q, array($name, $description, $private_group ) );
 
     if(isset($_POST['member'] ) ) {
 
       // get the usergroupid
       $usergroupid = db_lastoid('usergroups_id_seq' );
 
+      $q = db_prepare('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES(?, ?)' );
+
       (array)$member = $_POST['member'];
       $max = sizeof($member);
       for($i=0 ; $i < $max ; ++$i ) {
         if(isset($member[$i]) && safe_integer($member[$i] ) ) {
-          db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.$member[$i].', '.$usergroupid.')' );
+          db_execute($q, array($member[$i], $usergroupid ) );
         }
       }
     }
+
+    //if mail group is set, then send mail
+    if($mail_group ){
+      email_usergroup($usergroupid, 'add' );
+    }
+
     //transaction complete
     db_commit();
     break;
 
   //edit a usergroup
   case 'submit_edit':
-
-    //check for valid form token
-    $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-    token_check($token );
 
     if(! @safe_integer($_POST['usergroupid'] ) ){
       error('Usergroup submit', 'Not a valid value for usergroupid' );
@@ -149,21 +227,31 @@ switch($_POST['action'] ) {
     db_begin();
 
     //do the update
-    db_query('UPDATE '.PRE.'usergroups SET name=\''.$name.'\', description=\''.$description.'\', private=\''.$private_group.'\' WHERE id='.$usergroupid );
+    $q = db_prepare('UPDATE '.PRE.'usergroups SET name=?, description=?, private=? WHERE id=?' );
+    db_execute($q, array($name, $description, $private_group, $usergroupid ) );
 
     //clean out existing usergroups_users then update with the new
-    db_query('DELETE FROM '.PRE.'usergroups_users WHERE usergroupid='.$usergroupid );
+    $q = db_prepare('DELETE FROM '.PRE.'usergroups_users WHERE usergroupid=?' );
+    db_execute($q, array($usergroupid ) );
 
-      if(isset($_POST['member'] ) ) {
+    if(isset($_POST['member'] ) ) {
 
-        (array)$member = $_POST['member'];
-        $max = sizeof($member);
-        for($i=0 ; $i < $max ; ++$i ) {
-          if(isset($member[$i]) && safe_integer( $member[$i] ) ) {
-            db_query('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES('.$member[$i].', '.$usergroupid.')' );
-          }
+      $q = db_prepare('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES(?, ?)' );
+
+      (array)$member = $_POST['member'];
+      $max = sizeof($member);
+      for( $i=0 ; $i < $max ; ++$i ) {
+        if(isset($member[$i]) && safe_integer( $member[$i] ) ) {
+          db_execute($q, array($member[$i], $usergroupid ) );
         }
       }
+    }
+
+    //if mail group is set, then send mail
+    if($mail_group ){
+      email_usergroup($usergroupid, 'edit' );
+    }
+
     //transaction complete
     db_commit();
     break;

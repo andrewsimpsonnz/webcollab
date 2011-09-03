@@ -4,7 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  Thi file created 2005 Stanislav Pekarèík, fredis@SoftHome.net
+  This file created 2005 Stanislav PekarÄÃ­k, fredis@SoftHome.net
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -21,10 +21,12 @@
   Function:
   ---------
 
-  Email text language files for 'sk' (Slovenský)
+  Email text language files for 'sk' (SlovenskÃ½)
 
 
-  Maintainer: 
+  Maintainer:
+
+  NOTE: This file is written in UTF-8 character set
 
 */
 
@@ -33,165 +35,176 @@ $ltime = TIME_NOW - date('Z') + TZ * 3600;
 //format is 2004 Apr 01 09:18 +1200
 $email_date = sprintf('%s %s %s %+03d00', date('Y', $ltime ), $month_array[(date('n', $ltime ) )], date('d H:i', $ltime ), TZ );
 
-$title_file_post          = ABBR_MANAGER_NAME.": Nový súbor nahratý: %s";
-$email_file_post          = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka ktorá Vás informuje ¾e bol nahratý nový súbor dòa ".$email_date." od %1\$s.\n\n".
-                            "Súbor:        %2\$s\n".
+$title_file_post          = ABBR_MANAGER_NAME.": NovÃ½ sÃºbor nahratÃ½: %s";
+$email_file_post          = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka ktorÃ¡ VÃ¡s informuje Å¾e bol nahratÃ½ novÃ½ sÃºbor dÅˆa ".$email_date." od %1\$s.\n\n".
+                            "SÃºbor:        %2\$s\n".
                             "Obsah: %3\$s\n\n".
                             "Projekt:      %4\$s\n".
-                            "Úloha:        %5\$s\n\n".
-                            "Prosím nav¹tívte webstránku pre ïal¹ie informácie.\n\n".BASE_URL."%6\$s\n";
+                            "Ãšloha:        %5\$s\n\n".
+                            "ProsÃ­m navÅ¡tÃ­vte webstrÃ¡nku pre ÄalÅ¡ie informÃ¡cie.\n\n".BASE_URL."%6\$s\n";
 
-$title_forum_post         = ABBR_MANAGER_NAME.": Nová po¹ta na fóre: %s";
-$email_forum_post         = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka ktorá Vás informuje, ¾e máte na fóre novú správu zo dòa ".$email_date." od %1\$s:\n\n".
+$title_forum_post         = ABBR_MANAGER_NAME.": NovÃ¡ poÅ¡ta na fÃ³re: %s";
+$email_forum_post         = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka ktorÃ¡ VÃ¡s informuje, Å¾e mÃ¡te na fÃ³re novÃº sprÃ¡vu zo dÅˆa ".$email_date." od %1\$s:\n\n".
                             "%2\$s\n\n".
-                            "Prosím nav¹tívte webstránku pre viac detailov.\n\n".
+                            "ProsÃ­m navÅ¡tÃ­vte webstrÃ¡nku pre viac detailov.\n\n".
                             BASE_URL."%3\$s\n";
 
-$email_forum_reply        = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e máte
-na fóre novú správu zo dòa ".$email_date." od %1\$s.\n\n".
-                            "Táto správa je odpoveï na skor¹iu správu od %2\$s.\n\n".
-                            "Orginálna správa:\n%3\$s\n\n".
-                            "Nová odpoveï:\n%4\$s\n\n".
-                            "Prosím nav¹tívte webstránku pre viac detailov.\n\n".
+$email_forum_reply        = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje, Å¾e mÃ¡te
+na fÃ³re novÃº sprÃ¡vu zo dÅˆa ".$email_date." od %1\$s.\n\n".
+                            "TÃ¡to sprÃ¡va je odpoveÄ na skorÅ¡iu sprÃ¡vu od %2\$s.\n\n".
+                            "OrginÃ¡lna sprÃ¡va:\n%3\$s\n\n".
+                            "NovÃ¡ odpoveÄ:\n%4\$s\n\n".
+                            "ProsÃ­m navÅ¡tÃ­vte webstrÃ¡nku pre viac detailov.\n\n".
                             BASE_URL."%5\$s\n";
 
 $email_list               = "Projekt:  %1\$s\n".
-                            "Úloha:     %2\$s\n".
+                            "Ãšloha:     %2\$s\n".
                             "Stav:   %3\$s\n".
-                            "Vlastník:    %4\$s ( %5\$s )\n".
+                            "VlastnÃ­k:    %4\$s ( %5\$s )\n".
                             "Text:\n%6\$s\n\n".
-                            "Prosím nav¹tívte webstránku pre viac detailov.\n\n".
+                            "ProsÃ­m navÅ¡tÃ­vte webstrÃ¡nku pre viac detailov.\n\n".
                             BASE_URL."%7\$s\n";
 
-$title_takeover_project   = ABBR_MANAGER_NAME.": Vá¹ projekt bol prevzatý";
-$title_takeover_task      = ABBR_MANAGER_NAME.": Va¹a úloha bola prevzatá";
+$title_takeover_project   = ABBR_MANAGER_NAME.": VÃ¡Å¡ projekt bol prevzatÃ½";
+$title_takeover_task      = ABBR_MANAGER_NAME.": VaÅ¡a Ãºloha bola prevzatÃ¡";
 
-$email_takeover_task      = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e úloha, ktorú vlastníte
-bola prevzatá administrátorom, zo dòa ".$email_date.".\n\n";
-$email_takeover_project   = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e projekt, ktorý vlastníte, bol prevzatý administrátorom, zo dòa ".$email_date.".\n\n";
-
-
-$title_new_owner_project  = ABBR_MANAGER_NAME.": Nový projekt pre Vás";
-$title_new_owner_task     = ABBR_MANAGER_NAME.": Nová úloha pre Vás";
-
-$email_new_owner_project  = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e je vytvorený nový projekt  dòa ".$email_date.", a Vy ste jeho vlastník.\n\n".
-                            "Tu sú detaily:\n\n";
-
-$email_new_owner_task     = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e je vytvorená nová úloha dòa ".$email_date.", a Vy ste jej vlastník.\n\n".
-                            "Tu sú detaily:\n\n";
+$email_takeover_task      = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje, Å¾e Ãºloha, ktorÃº vlastnÃ­te
+bola prevzatÃ¡ administrÃ¡torom, zo dÅˆa ".$email_date.".\n\n";
+$email_takeover_project   = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje, Å¾e projekt, ktorÃ½ vlastnÃ­te, bol prevzatÃ½ administrÃ¡torom, zo dÅˆa ".$email_date.".\n\n";
 
 
-$title_new_group_project  = ABBR_MANAGER_NAME.": Nový projekt: %s";
-$title_new_group_task     = ABBR_MANAGER_NAME.": Nová úloha: %s";
+$title_new_owner_project  = ABBR_MANAGER_NAME.": NovÃ½ projekt pre VÃ¡s";
+$title_new_owner_task     = ABBR_MANAGER_NAME.": NovÃ¡ Ãºloha pre VÃ¡s";
 
-$email_new_group_project  = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e je vytvorený nový projekt dòa ".$email_date."\n\n".
-                            "Tu sú detaily:\n\n";
+$email_new_owner_project  = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje, Å¾e je vytvorenÃ½ novÃ½ projekt  dÅˆa ".$email_date.", a Vy ste jeho vlastnÃ­k.\n\n".
+                            "Tu sÃº detaily:\n\n";
 
-$email_new_group_task     = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e je vytvorená nová úloha dòa ".$email_date."\n\n".
-                            "Tu sú detaily:\n\n";
+$email_new_owner_task     = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje, Å¾e je vytvorenÃ¡ novÃ¡ Ãºloha dÅˆa ".$email_date.", a Vy ste jej vlastnÃ­k.\n\n".
+                            "Tu sÃº detaily:\n\n";
 
-$title_edit_owner_project = ABBR_MANAGER_NAME.": Vá¹ projekt bol zmenený";
-$title_edit_owner_task    = ABBR_MANAGER_NAME.": Va¹a úloha bola zmenená";
 
-$email_edit_owner_project = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e projekt, ktorý vlastníte bol zmenený, zo dòa ".$email_date.".\n\n".
-                            "Tu sú detaily:\n\n";
+$title_new_group_project  = ABBR_MANAGER_NAME.": NovÃ½ projekt: %s";
+$title_new_group_task     = ABBR_MANAGER_NAME.": NovÃ¡ Ãºloha: %s";
 
-$email_edit_owner_task    = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e úloha, 
-ktorú vlastníte bola zmenená, zo dòa ".$email_date.".\n\n".
-                            "Tu sú detaily:\n\n";
+$email_new_group_project  = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje, Å¾e je vytvorenÃ½ novÃ½ projekt dÅˆa ".$email_date."\n\n".
+                            "Tu sÃº detaily:\n\n";
 
-$title_edit_group_project = ABBR_MANAGER_NAME.": Projekt zmenený";
-$title_edit_group_task    = ABBR_MANAGER_NAME.": Úloha zmenená";
+$email_new_group_task     = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje, Å¾e je vytvorenÃ¡ novÃ¡ Ãºloha dÅˆa ".$email_date."\n\n".
+                            "Tu sÃº detaily:\n\n";
 
-$email_edit_group_project = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e projekt, ktorý vlastní %s bol zmenený, zo dòa ".$email_date.".\n\n".
-                            "Tu sú detaily:\n\n";
+$title_edit_owner_project = ABBR_MANAGER_NAME.": VÃ¡Å¡ projekt bol zmenenÃ½";
+$title_edit_owner_task    = ABBR_MANAGER_NAME.": VaÅ¡a Ãºloha bola zmenenÃ¡";
 
-$email_edit_group_task    = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e úloha,  ktorú vlastní %s bola zmenená, zo dòa ".$email_date.".\n\n".
-                            "Tu sú detaily:\n\n";
+$email_edit_owner_project = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje, Å¾e projekt, ktorÃ½ vlastnÃ­te bol zmenenÃ½, zo dÅˆa ".$email_date.".\n\n".
+                            "Tu sÃº detaily:\n\n";
 
-$title_delete_project     = ABBR_MANAGER_NAME.": Projekt zru¹ený";
-$title_delete_task        = ABBR_MANAGER_NAME.": Úloha zru¹ená";
+$email_edit_owner_task    = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje, Å¾e Ãºloha, ktorÃº vlastnÃ­te bola zmenenÃ¡, zo dÅˆa ".$email_date.".\n\n".
+                            "Tu sÃº detaily:\n\n";
 
-$email_delete_project     = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e projekt, ktorého ste vlastník bol zru¹ený, zo dòa  ".$email_date."\n\n".
-                            "Ïakujeme za správu projektu , kým trval.\n\n";
+$title_edit_group_project = ABBR_MANAGER_NAME.": Projekt zmenenÃ½";
+$title_edit_group_task    = ABBR_MANAGER_NAME.": Ãšloha zmenenÃ¡";
 
-$email_delete_task        = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e úloha, ktorej ste vlastník bola zru¹ena, zo dòa ".$email_date."\n\n".
-                            "Ïakujeme za správu úlohy, kým trvala.\n\n";
+$email_edit_group_project = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje, Å¾e projekt, ktorÃ½ vlastnÃ­ %s bol zmenenÃ½, zo dÅˆa ".$email_date.".\n\n".
+                            "Tu sÃº detaily:\n\n";
+
+$email_edit_group_task    = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje, Å¾e Ãºloha,  ktorÃº vlastnÃ­ %s bola zmenenÃ¡, zo dÅˆa ".$email_date.".\n\n".
+                            "Tu sÃº detaily:\n\n";
+
+$title_delete_project     = ABBR_MANAGER_NAME.": Projekt zruÅ¡enÃ½";
+$title_delete_task        = ABBR_MANAGER_NAME.": Ãšloha zruÅ¡enÃ¡";
+
+$email_delete_project     = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje, Å¾e projekt, ktorÃ©ho ste vlastnÃ­k bol zruÅ¡enÃ½, zo dÅˆa  ".$email_date."\n\n".
+                            "ÄŽakujeme za sprÃ¡vu projektu , kÃ½m trval.\n\n";
+
+$email_delete_task        = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje, Å¾e Ãºloha, ktorej ste vlastnÃ­k bola zruÅ¡ena, zo dÅˆa ".$email_date."\n\n".
+                            "ÄŽakujeme za sprÃ¡vu Ãºlohy, kÃ½m trvala.\n\n";
 
 $delete_list              = "Projekt: %1\$s\n".
-                            "Úloha:   %2\$s\n".
+                            "Ãšloha:   %2\$s\n".
                             "Stav: %3\$s\n\n".
                             "Text:\n%4\$s\n\n";
 
-$title_welcome            = "Vítame Vás".ABBR_MANAGER_NAME;
-$email_welcome            = "Haló,\n\nTo je ".MANAGER_NAME." Va¹a uvítacia stránka ;), zo dòa ".$email_date.".\n\n".
-                            "Ak ste tu nový u¾ívateµ, vysvetlí Vám pár vecí, aby ste mohli rýchlo zaèa»\n\n".
-                            "Ako prvé tu je nástroj na riadenie projektu, hlavná stránka Vám uká¾e práve dostupné projekty. ".
-                            "Ak kliknete na jeden z nich budete vidie» úlohy priradené k projektu. Tu mô¾te zaèa» pracova».\n\n".
-                            "Ka¾dá správa alebo úloha, ktorú editujete bude zobrazená ostatným u¾ívateµom ako 'nová' alebo 'zmenená'. To funguje aj opaène a ".
-                            "umo¾nuje Vám rýchlo nájs» nové aktivity .\n\n".
-                            "Mô¾te tie¾ prevza» alebo da» vlastníctvo úloh a budete ich môc» editova» aj
-							v¹etky správy na fóre pripadajúce k nej. ".
-                            "Ako budete postupova» v práci editujte text a stav úloh tak, ¾e ka¾dý mô¾e sledova» Vá¹ postup. ".
-                            "\n\nMô¾em Vám len teraz za¾ela» úspech. Ak si nebudete vedie» rady, po¹lite mail na".EMAIL_ADMIN." \n\n --Veµa ¹»astia!\n\n".
+$title_usergroup_add      = ABBR_MANAGER_NAME.": New usergroup %1\$s created";
+$email_usergroup_add      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that a new usergroup %1\$s, has been created on ".$email_date.".\n\n".
+                            "The members of the new usergroup are:\n".
+                            "%2\$s\n";
+
+$title_usergroup_edit      = ABBR_MANAGER_NAME.": Usergroup %1\$s changed";
+$email_usergroup_edit      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that usergroup %1\$s, has been changed on ".$email_date.".\n\n".
+                            "The members of the usergroup are:\n".
+                            "%2\$s\n";
+
+$title_welcome            = "VÃ­tame VÃ¡s".ABBR_MANAGER_NAME;
+$email_welcome            = "HalÃ³,\n\nTo je ".MANAGER_NAME." VaÅ¡a uvÃ­tacia strÃ¡nka ;), zo dÅˆa ".$email_date.".\n\n".
+                            "Ak ste tu novÃ½ uÅ¾Ã­vateÄ¾, vysvetlÃ­ VÃ¡m pÃ¡r vecÃ­, aby ste mohli rÃ½chlo zaÄaÅ¥\n\n".
+                            "Ako prvÃ© tu je nÃ¡stroj na riadenie projektu, hlavnÃ¡ strÃ¡nka VÃ¡m ukÃ¡Å¾e prÃ¡ve dostupnÃ© projekty. ".
+                            "Ak kliknete na jeden z nich budete vidieÅ¥ Ãºlohy priradenÃ© k projektu. Tu mÃ´Å¾te zaÄaÅ¥ pracovaÅ¥.\n\n".
+                            "KaÅ¾dÃ¡ sprÃ¡va alebo Ãºloha, ktorÃº editujete bude zobrazenÃ¡ ostatnÃ½m uÅ¾Ã­vateÄ¾om ako 'novÃ¡' alebo 'zmenenÃ¡'. To funguje aj opaÄne a ".
+                            "umoÅ¾nuje VÃ¡m rÃ½chlo nÃ¡jsÅ¥ novÃ© aktivity .\n\n".
+                            "MÃ´Å¾te tieÅ¾ prevzaÅ¥ alebo daÅ¥ vlastnÃ­ctvo Ãºloh a budete ich mÃ´cÅ¥ editovaÅ¥ aj
+							vÅ¡etky sprÃ¡vy na fÃ³re pripadajÃºce k nej. ".
+                            "Ako budete postupovaÅ¥ v prÃ¡ci editujte text a stav Ãºloh tak, Å¾e kaÅ¾dÃ½ mÃ´Å¾e sledovaÅ¥ VÃ¡Å¡ postup. ".
+                            "\n\nMÃ´Å¾em VÃ¡m len teraz zaÅ¾elaÅ¥ Ãºspech. Ak si nebudete vedieÅ¥ rady, poÅ¡lite mail na".EMAIL_ADMIN." \n\n --VeÄ¾a Å¡Å¥astia!\n\n".
                             "Login:      %1\$s\n".
                             "Heslo:   %2\$s\n\n".
-                            "U¾ívateµská skupina: %3\$s".
+                            "UÅ¾Ã­vateÄ¾skÃ¡ skupina: %3\$s".
                             "Meno:       %4\$s\n".
-                            "Webstránka:    ".BASE_URL."\n\n".
+                            "WebstrÃ¡nka:    ".BASE_URL."\n\n".
                             "%5\$s";
 
-$title_user_change1       = ABBR_MANAGER_NAME.": Editova» Vá¹ úèet administrátorom";
-$email_user_change1       = "Haló,\n\n".
-                            "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e Vá¹
- úèet bol zmenený, zo dòa ".$email_date." od %1\$s ( %2\$s ) \n\n".
+$title_user_change1       = ABBR_MANAGER_NAME.": EditovaÅ¥ VÃ¡Å¡ ÃºÄet administrÃ¡torom";
+$email_user_change1       = "HalÃ³,\n\n".
+                            "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje, Å¾e VÃ¡Å¡
+ ÃºÄet bol zmenenÃ½, zo dÅˆa ".$email_date." od %1\$s ( %2\$s ) \n\n".
                             "Login:      %3\$s\n".
                             "Heslo:   %4\$s\n\n".
-                            "U¾ívateµská skupina: %5\$s".
-                            "U¾ivateµské meno:       %6\$s\n\n".
+                            "UÅ¾Ã­vateÄ¾skÃ¡ skupina: %5\$s".
+                            "UÅ¾ivateÄ¾skÃ© meno:       %6\$s\n\n".
                             "%7\$s";
 
-$title_user_change2         = ABBR_MANAGER_NAME.": Editova» Vá¹ úèet";
-$email_user_change2         = "Haló,\n\n".
-                              "To je ".MANAGER_NAME." stránka, ktorá potvrdzuje, ¾e Vá¹ úèet bol úspe¹ne zmenený, zo dòa ".$email_date.".\n\n".
+$title_user_change2         = ABBR_MANAGER_NAME.": EditovaÅ¥ VÃ¡Å¡ ÃºÄet";
+$email_user_change2         = "HalÃ³,\n\n".
+                              "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ potvrdzuje, Å¾e VÃ¡Å¡ ÃºÄet bol ÃºspeÅ¡ne zmenenÃ½, zo dÅˆa ".$email_date.".\n\n".
                               "Login:    %1\$s\n".
                               "Heslo: %2\$s\n\n".
-                              "U¾ivateµské meno:     %3\$s\n";
+                              "UÅ¾ivateÄ¾skÃ© meno:     %3\$s\n";
 
-$title_user_change3         = ABBR_MANAGER_NAME.": Editova» Vá¹ úèet";
-$email_user_change3         = "Haló,\n\n".
-                              "To je ".MANAGER_NAME." stránka, ktorá potvrdzuje, ¾e Vá¹ úèet bol úspe¹ne zmenený, zo dòa ".$email_date.".\n\n".
+$title_user_change3         = ABBR_MANAGER_NAME.": EditovaÅ¥ VÃ¡Å¡ ÃºÄet";
+$email_user_change3         = "HalÃ³,\n\n".
+                              "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ potvrdzuje, Å¾e VÃ¡Å¡ ÃºÄet bol ÃºspeÅ¡ne zmenenÃ½, zo dÅˆa ".$email_date.".\n\n".
                               "Login: %1\$s\n".
-                              "Va¹e heslo nebolo zmenené.\n\n".
-                              "U¾ivateµské meno:  %2\$s\n";
+                              "VaÅ¡e heslo nebolo zmenenÃ©.\n\n".
+                              "UÅ¾ivateÄ¾skÃ© meno:  %2\$s\n";
 
-$title_revive               = ABBR_MANAGER_NAME.": Úèet reaktivovaný";
-$email_revive               = "Haló,\n\n".
-                              "To je ".MANAGER_NAME." stránka, ktorá Vás informuje, ¾e Vá¹ úèet bol znovu aktivovaný, zo dòa ".$email_date.".\n\n".
+$title_revive               = ABBR_MANAGER_NAME.": ÃšÄet reaktivovanÃ½";
+$email_revive               = "HalÃ³,\n\n".
+                              "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje, Å¾e VÃ¡Å¡ ÃºÄet bol znovu aktivovanÃ½, zo dÅˆa ".$email_date.".\n\n".
                               "Login: %1\$s\n".
-                              "U¾ivateµské meno:  %2\$s\n\n".
-                              "Nemô¾eme Vám posla» Va¹e heslo, lebo je kryptované. \n\n".
-                              "Ak ste zabudli heslo, po¹lite email na".EMAIL_ADMIN." pre nové heslo.";
+                              "UÅ¾ivateÄ¾skÃ© meno:  %2\$s\n\n".
+                              "NemÃ´Å¾eme VÃ¡m poslaÅ¥ VaÅ¡e heslo, lebo je kryptovanÃ©. \n\n".
+                              "Ak ste zabudli heslo, poÅ¡lite email na".EMAIL_ADMIN." pre novÃ© heslo.";
 
-$title_delete_user          = ABBR_MANAGER_NAME.": Úèet deaktivovaný.";
-$email_delete_user          = "Haló,\n\n".
-                              "To je ".MANAGER_NAME." stránka, ktorá Vás informuje ,¾e Vá¹ úèet bol deaktivovaný, zo dòa ".$email_date.".\n\n".
-                              "Je nám µúto, ¾e nás opú¹»ate, a ïakujeme Vám za Va¹u prácu!\n\n".
-                              "Ak nechcete deaktiváciu, alebo myslíte, ¾e je to vplyvom chyby, po¹lite email na ".EMAIL_ADMIN.".";
+$title_delete_user          = ABBR_MANAGER_NAME.": ÃšÄet deaktivovanÃ½.";
+$email_delete_user          = "HalÃ³,\n\n".
+                              "To je ".MANAGER_NAME." strÃ¡nka, ktorÃ¡ VÃ¡s informuje ,Å¾e VÃ¡Å¡ ÃºÄet bol deaktivovanÃ½, zo dÅˆa ".$email_date.".\n\n".
+                              "Je nÃ¡m Ä¾Ãºto, Å¾e nÃ¡s opÃºÅ¡Å¥ate, a Äakujeme VÃ¡m za VaÅ¡u prÃ¡cu!\n\n".
+                              "Ak nechcete deaktivÃ¡ciu, alebo myslÃ­te, Å¾e je to vplyvom chyby, poÅ¡lite email na ".EMAIL_ADMIN.".";
 
 ?>

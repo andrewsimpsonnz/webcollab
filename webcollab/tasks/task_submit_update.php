@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_submit_update.php 2294 2009-08-24 09:41:39Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,6 +35,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/time.php' );
 include_once(BASE.'lang/lang_email.php' );
@@ -55,7 +56,8 @@ function reparent_child_check($taskid, $new_parentid, $projectid) {
   $task_count = 0;
   $state = false;
 
-  $q = db_query('SELECT id, parent FROM '.PRE.'tasks WHERE projectid='.$projectid );
+  $q = db_prepare('SELECT id, parent FROM '.PRE.'tasks WHERE projectid=?' );
+  db_execute($q, array($projectid ) );
 
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
@@ -106,15 +108,18 @@ function find_children($parent, $new_parentid ) {
 // Recursive function to find chldren tasks and reset their projectid's
 //
 
-function reparent_children($task_id ) {
+function reparent_children($taskid ) {
 
   global $projectid;
 
   //find the children tasks - if any
-  $q = db_query('SELECT id FROM '.PRE.'tasks WHERE parent='.$task_id );
+  $q = db_prepare('SELECT id FROM '.PRE.'tasks WHERE parent=?' );
+  db_execute($q, array($taskid ) );
+
+  $q1 = db_prepare('UPDATE '.PRE.'tasks SET projectid=? WHERE id=?' );
 
   for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
-    db_query('UPDATE '.PRE.'tasks SET projectid='.$projectid.' WHERE id='.$row[0] );
+    db_execute($q1, array($projectid, $row[0] ) );
     //recursion to find anymore children
     reparent_children($row[0] );
   }
@@ -126,7 +131,7 @@ function reparent_children($task_id ) {
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'tasks' );
 
 //check for task name
 if(empty($_POST['name']) ){
@@ -185,7 +190,8 @@ if(! user_access($taskid ) ){
 db_begin();
 
 //get existing projectid, parent and status from the database
-$q = db_query('SELECT projectid, parent, status FROM '.PRE.'tasks WHERE id='.$taskid.' LIMIT 1' );
+$q = db_prepare('SELECT projectid, parent, status FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+db_execute($q, array($taskid ) );
 $row = db_fetch_array($q, 0 );
 $old_projectid = $row['projectid'];
 $old_status    = $row['status'];
@@ -193,20 +199,22 @@ $old_parentid  = $row['parent'];
 $projectid     = $old_projectid;
 
 //change the info
-db_query('UPDATE '.PRE.'tasks
-      SET name=\''.$name.'\',
-      text=\''.$text.'\',
-      edited=now(),
-      owner='.$owner.',
-      deadline=\''.$deadline.'\',
-      priority='.$priority.',
-      taskgroupid='.$taskgroupid.',
-      usergroupid='.$usergroupid.',
-      status=\''.$status.'\',
-      globalaccess=\''.$globalaccess.'\',
-      groupaccess=\''.$groupaccess.'\',
-      sequence=sequence+1
-      WHERE id='.$taskid );
+$q = db_prepare('UPDATE '.PRE.'tasks
+                        SET name=?,
+                        text=?,
+                        edited=now(),
+                        owner=?,
+                        deadline=?,
+                        priority=?,
+                        taskgroupid=?,
+                        usergroupid=?,
+                        status=?,
+                        globalaccess=?,
+                        groupaccess=?,
+                        sequence=sequence+1
+                        WHERE id=?' );
+
+db_execute($q, array($name, $text, $owner, $deadline, $priority, $taskgroupid, $usergroupid, $status, $globalaccess, $groupaccess, $taskid ) );
 
 //if the user has chosen to reparent, then do it now
 //(we do this after the main update, then if anything breaks, the database is not corrupted)
@@ -216,7 +224,9 @@ if($old_parentid != $parentid ) {
     $projectid = $taskid;
   }
   else {
-    $projectid = db_result(db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$parentid.' LIMIT 1' ), 0, 0 );
+    $q = db_prepare('SELECT projectid FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+    db_execute($q, array($parentid ) );
+    $projectid = db_result($q, 0, 0 );
   }
 
   //no deadline project changing to tasks goes to 'new'
@@ -230,7 +240,8 @@ if($old_parentid != $parentid ) {
   }
   else {
     //update this task, then recursively search for children tasks and reparent them too.
-    db_query('UPDATE '.PRE.'tasks SET projectid='.$projectid.', parent='.$parentid.', status=\''.$status.'\' WHERE id='.$taskid );
+    $q = db_prepare('UPDATE '.PRE.'tasks SET projectid=?, parent=?, status=? WHERE id=?' );
+    db_execute($q, array($projectid, $parentid, $status, $taskid ) );
     reparent_children($taskid );
   }
 
@@ -245,7 +256,8 @@ if($parentid == 0 ) {
     case 'cantcomplete':
     case 'notactive':
       //inactive project, then set the uncompleted child tasks to inactive too
-      db_query('UPDATE '.PRE.'tasks SET status=\''.$status.'\' WHERE projectid='.$projectid.' AND (status=\'active\' OR status=\'created\')' );
+      $q = db_prepare('UPDATE '.PRE.'tasks SET status=? WHERE projectid=? AND (status=\'active\' OR status=\'created\')' );
+      db_execute($q, array($status, $projectid ) );
       break;
 
     case 'new':
@@ -253,7 +265,8 @@ if($parentid == 0 ) {
     default:
       //if reinstated project, set previously inactive child tasks to 'new'
       if($old_status == 'cantcomplete' || $old_status == 'notactive' ) {
-        db_query('UPDATE '.PRE.'tasks SET status=\'created\' WHERE projectid='.$projectid.' AND parent<>0 AND status=\''.$old_status.'\'' );
+        $q = db_prepare('UPDATE '.PRE.'tasks SET status=\'created\' WHERE projectid=? AND parent<>0 AND status=?' );
+        db_execute($q, array($projectid, $old_status ) );
       }
       break;
   }
@@ -266,7 +279,9 @@ adjust_completion($projectid );
 db_commit();
 
 //get name of project and owner for emails
-$name_project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$projectid.' LIMIT 1' ), 0, 0 );
+$q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+db_execute($q, array($projectid ) );
+$name_project = db_result($q, 0, 0 );
 
 switch($parentid ){
   case 0:
@@ -293,7 +308,8 @@ switch($owner ) {
     break;
 
   default:
-    $q = db_query('SELECT fullname, email FROM '.PRE.'users WHERE id='.$owner.' LIMIT 1' );
+    $q = db_prepare('SELECT fullname, email FROM '.PRE.'users WHERE id=? LIMIT 1' );
+    db_execute($q, array($owner ) );
     $row = db_fetch_num($q, 0 );
     $name_owner = $row[0];
     $email_owner = $row[1];
@@ -308,7 +324,9 @@ if(isset($_POST['mailowner']) && ($_POST['mailowner'] === 'on') && ($owner != 0)
 
   include_once(BASE.'includes/email.php' );
 
-  $email_address_owner = db_result(db_query('SELECT email FROM '.PRE.'users WHERE id='.$owner.' LIMIT 1', 0), 0, 0 );
+  $q = db_prepare('SELECT email FROM '.PRE.'users WHERE id=? LIMIT 1', 0);
+  db_execute($q, array($owner ) );
+  $email_address_owner = db_result($q, 0, 0 );
 
   $message = $email1 .
               sprintf($email_list, $name_project, $name_task_unclean, status($status, $deadline), $name_owner, $email_owner, $text_unclean, 'index.php?taskid='.$taskid );
@@ -324,11 +342,12 @@ if(isset($_POST['maillist']) && ($_POST['maillist'] === 'on') ) {
               sprintf($email_list, $name_project, $name_task_unclean, status($status, $deadline), $name_owner, $email_owner, $text_unclean, 'index.php?taskid='.$taskid );
 
   if($usergroupid != 0 ) {
-    $q = db_query('SELECT '.PRE.'users.email
+    $q = db_prepare('SELECT '.PRE.'users.email
                       FROM '.PRE.'users
                       LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
-                      WHERE '.PRE.'usergroups_users.usergroupid='.$usergroupid.'
+                      WHERE '.PRE.'usergroups_users.usergroupid=?
                       AND '.PRE.'users.deleted=\'f\'');
+    db_execute($q, array($usergroupid ) );
 
     for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
       $usergroup_mail[] = $row[0];

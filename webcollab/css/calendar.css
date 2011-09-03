@@ -1,35 +1,52 @@
 table.outline {
+  width: 97%;
   margin-left: auto;
   margin-right: auto;
   border-width: 1px;
-  border-style: solid; 
+  border-style: solid;
+  border-color: #000000;
   border-collapse: collapse;
   text-align: center;
 }
 
-td.monthcell {
+tr.monthcell td {
   font-weight: bold;
   vertical-align: middle;
+  text-align: center;
   border-width: 1px;
-  background-color: #1e4b79;
-  color: #ffffff;
+  border-color: #000000;
+  background-color: #1E4B79;
+  font-weight: bold;
+  color: #FFFFFF;
 }
 
-td.weekcell {
+tr.weekcell td {
   width: 13.86%;
-  border-width: 1px; 
-  border-style: solid; 
-  background-color: #3e6b99;
-  color: #ffffff;
+  vertical-align: middle;
+  text-align: center;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #000000;
+  background-color: #3E6B99;
+  font-weight: bold;
+  color: #FFFFFF;
 }
 
-td.datecell {
+tr.datecell td {
   height: 50px;
-  border-width: 1px; 
+  vertical-align: top;
+  text-align: center;
+  border-width: 1px;
+  border-color: #000000;
   border-style: solid;
 }
 
-td span.daynum {
-  display: block;
+td.todaycell {
+  height: 50px;
+  vertical-align: top;
   text-align: center;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #000000;
+  background-color: #C0C0C0;
 }

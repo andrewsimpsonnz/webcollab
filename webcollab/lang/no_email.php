@@ -30,7 +30,7 @@
 
   Edited and updated by Rune Thelen, 26.09.2007
 
-  NOTE: This file is written in ISO-8859-1 character set
+  NOTE: This file is written in UTF-8 character set
 
 
 */
@@ -47,7 +47,7 @@ $email_file_post        = "Hei,\n\nDette er en automatisk varsling fra ".MANAGER
                           "Beskrivelse: %3\$s\n\n".
                           "Prosjekt:   %4\$s\n".
                           "Oppgave:    %5\$s\n\n".
-                          "Gå til hjemmesiden for mer informasjon.\n\n".
+                          "GÃ¥ til hjemmesiden for mer informasjon.\n\n".
                           BASE_URL."%6\$s\n";
 
 $title_forum_post        = ABBR_MANAGER_NAME.": Ny post I forum: %s";
@@ -55,16 +55,16 @@ $email_forum_post        = "Hei,\n\nDette er en automatisk varsling fra ".MANAGE
                            "----\n\n".
                            "%2\$s".
                            "----\n\n".
-                           "Gå til hjemmesiden for mer informasjon.\n\n".
+                           "GÃ¥ til hjemmesiden for mer informasjon.\n\n".
                            BASE_URL."%3\$s\n";
 
 $email_forum_reply       = "Hei,\n\nDette er en automatisk varsling fra ".MANAGER_NAME." med informasjon om at det er kommet et nytt innlegg i forumet".$email_date." af %1\$s.\n\n".
-                           "dette innlegget er et svar på et tidligere innlegg %2\$s.\n\n".
+                           "dette innlegget er et svar pÃ¥ et tidligere innlegg %2\$s.\n\n".
                            "Opprinnelig innlegg:\n %3\$s\n\n".
                             "----\n\n".
                            "Svar:\n%4\$s\n".
                             "----\n\n".
-                           "Gå til hjemmesiden for mer informasjon.\n\n".
+                           "GÃ¥ til hjemmesiden for mer informasjon.\n\n".
                            BASE_URL."%5\$s\n";
 
 
@@ -73,7 +73,7 @@ $email_list =  "Prosjekt:  %1\$s\n".
                "Status:   %3\$s\n".
                "Eier:    %4\$s ( %5\$s )\n".
                "Tekst:\n%6\$s\n\n".
-               "Gå til hjemmesiden for mer informasjon.\n\n".BASE_URL."%7\$s\n";
+               "GÃ¥ til hjemmesiden for mer informasjon.\n\n".BASE_URL."%7\$s\n";
 
 
 $title_takeover_project  = ABBR_MANAGER_NAME.": Ditt prosjekt er overtatt";
@@ -86,22 +86,22 @@ $email_takeover_project  = "Hei,\n\nDette er en automatisk varsling fra".MANAGER
 $title_new_owner_project = ABBR_MANAGER_NAME.": Nytt prosjekt til deg";
 $title_new_owner_task     = ABBR_MANAGER_NAME.": Ny oppgave til deg";
 
-$email_new_owner_project = "Hei,\n\nDette er en automatisk varsling fra".MANAGER_NAME." som vil si i fra om at det er opprettet et prosjekt på ".$email_date.", og at du er eier av dette prosjektet.\n\nHer er detaljene:\n\n";
-$email_new_owner_task    = "Hei,\n\nDette er en automatisk varsling fra ".MANAGER_NAME." som vil si i fra om at det er opprettet en oppgave på ".$email_date.", og at du er eier av denne oppgaven.\n\nHer er detaljene:\n\n";
+$email_new_owner_project = "Hei,\n\nDette er en automatisk varsling fra".MANAGER_NAME." som vil si i fra om at det er opprettet et prosjekt pÃ¥ ".$email_date.", og at du er eier av dette prosjektet.\n\nHer er detaljene:\n\n";
+$email_new_owner_task    = "Hei,\n\nDette er en automatisk varsling fra ".MANAGER_NAME." som vil si i fra om at det er opprettet en oppgave pÃ¥ ".$email_date.", og at du er eier av denne oppgaven.\n\nHer er detaljene:\n\n";
 
 
 $title_new_group_project = ABBR_MANAGER_NAME.": Nytt projekt: %s";
 $title_new_group_task    = ABBR_MANAGER_NAME.": Ny oppgave: %s";
 
-$email_new_group_project = "Hei,\n\nDette er en automatisk varsling fra ".MANAGER_NAME." som vil si i fra om at det er opprettet et prosjekt på ".$email_date."\n\nHer er detaljene:\n\n";
-$email_new_group_task    = "Hei,\n\nDette er automatisk varsling fra ".MANAGER_NAME." som vil si i fra om at det er opprettet en oppgave på ".$email_date."\n\nHer er detaljene:\n\n";
+$email_new_group_project = "Hei,\n\nDette er en automatisk varsling fra ".MANAGER_NAME." som vil si i fra om at det er opprettet et prosjekt pÃ¥ ".$email_date."\n\nHer er detaljene:\n\n";
+$email_new_group_task    = "Hei,\n\nDette er automatisk varsling fra ".MANAGER_NAME." som vil si i fra om at det er opprettet en oppgave pÃ¥ ".$email_date."\n\nHer er detaljene:\n\n";
 
 
 $title_edit_owner_project = ABBR_MANAGER_NAME.": Ditt prosjekt er oppdatert";
 $title_edit_owner_task   = ABBR_MANAGER_NAME.": Din oppgave er oppdatert";
 
-$email_edit_owner_project = "Hei,\n\nDette er en automatisk varsling fra ".MANAGER_NAME." som vil si i fra om at prosjektet som du eier er blitt endret på ".$email_date."\n\nHer er detaljene:\n\n";
-$email_edit_owner_task   = "Hei,\n\nDette er the ".MANAGER_NAME." som vil si i fra om at en oppgave som du eier er blitt endret på ".$email_date."\n\nHer er detaljene:\n\n";
+$email_edit_owner_project = "Hei,\n\nDette er en automatisk varsling fra ".MANAGER_NAME." som vil si i fra om at prosjektet som du eier er blitt endret pÃ¥ ".$email_date."\n\nHer er detaljene:\n\n";
+$email_edit_owner_task   = "Hei,\n\nDette er the ".MANAGER_NAME." som vil si i fra om at en oppgave som du eier er blitt endret pÃ¥ ".$email_date."\n\nHer er detaljene:\n\n";
 
 
 $title_edit_group_project = ABBR_MANAGER_NAME.": Prosjekt er oppdatert";
@@ -125,15 +125,27 @@ $delete_list = "Prosjekt: %s\n".
                 "Status: %s\n\n".
                 "Tekst:\n%s\n\n";
 
+$title_usergroup_add      = ABBR_MANAGER_NAME.": New usergroup %1\$s created";
+$email_usergroup_add      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that a new usergroup %1\$s, has been created on ".$email_date.".\n\n".
+                            "The members of the new usergroup are:\n".
+                            "%2\$s\n";
+
+$title_usergroup_edit      = ABBR_MANAGER_NAME.": Usergroup %1\$s changed";
+$email_usergroup_edit      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that usergroup %1\$s, has been changed on ".$email_date.".\n\n".
+                            "The members of the usergroup are:\n".
+                            "%2\$s\n";
+
 $title_welcome      = "Velkommen til ".ABBR_MANAGER_NAME;
-$email_welcome      = "Hei,\n\nDette er ".MANAGER_NAME." som ønsker deg velkommen. ".$email_date.".\n\n".
+$email_welcome      = "Hei,\n\nDette er ".MANAGER_NAME." som Ã¸nsker deg velkommen. ".$email_date.".\n\n".
 			"Siden du er ny, vil jeg forklare et par ting, slik at du  raskt kan komme i gang\n\n".
-			"For det første, dette er et prosjektstyringsverktøy, hovedsiden viser deg de prosjekter som det jobbes med for øyeblikket. ".
-			"Dersom du klikker på et av navnene, vil du finne deg selv i oppgave-delen. Det er her alt arbeidet vil foregå.\n\n".
+			"For det fÃ¸rste, dette er et prosjektstyringsverktÃ¸y, hovedsiden viser deg de prosjekter som det jobbes med for Ã¸yeblikket. ".
+			"Dersom du klikker pÃ¥ et av navnene, vil du finne deg selv i oppgave-delen. Det er her alt arbeidet vil foregÃ¥.\n\n".
 			"Hvert emne du sender eller oppgave du redigerer vil bli vist til andre brukere som 'ny' eller 'oppdatert'. Tilsvarende blir vist for deg om andre lager oppgaver".
-			"det hjelper deg til raskt å finne ut hva som skjer.\n\n".
-			"Du kan også ta eller få eierskap til oppgaver, og du vil finne deg selv i stand til å redigere dem, samt alle poster i forumet, som tilhører oppgaven. ".
-			"Når du jobber med med noe, husk å rediger dine oppgave tekster og status, slik at andre kan se hva du jobber med og hvordan prosjektet går fremover.  ".
+			"det hjelper deg til raskt Ã¥ finne ut hva som skjer.\n\n".
+			"Du kan ogsÃ¥ ta eller fÃ¥ eierskap til oppgaver, og du vil finne deg selv i stand til Ã¥ redigere dem, samt alle poster i forumet, som tilhÃ¸rer oppgaven. ".
+			"NÃ¥r du jobber med med noe, husk Ã¥ rediger dine oppgave tekster og status, slik at andre kan se hva du jobber med og hvordan prosjektet gÃ¥r fremover.  ".
 			"\n\nSend en epost til: ".EMAIL_ADMIN." dersom du sitter fast\n\n --Lykke til!\n\n".
 			"Logg inn:      %1\$s\n".
 			"Passord:   %2\$s\n\n".
@@ -143,7 +155,7 @@ $email_welcome      = "Hei,\n\nDette er ".MANAGER_NAME." som ønsker deg velkomme
 			"%5\$s";
 
 $title_user_change1 = ABBR_MANAGER_NAME.": Rediger din konto hos en Admin";
-$email_user_change1 = "Hei,\n\nDette er ".MANAGER_NAME." som vil informerer om at din konto er blitt endret på. ".$email_date." af %1\$s ( %2\$s ) \n\n".
+$email_user_change1 = "Hei,\n\nDette er ".MANAGER_NAME." som vil informerer om at din konto er blitt endret pÃ¥. ".$email_date." af %1\$s ( %2\$s ) \n\n".
 			"Logg inn:      %3\$s\n".
 			"Passord:   %4\$s\n\n".
 			"Brukergrupper: %5\$s".
@@ -151,24 +163,24 @@ $email_user_change1 = "Hei,\n\nDette er ".MANAGER_NAME." som vil informerer om a
 			"%7\$s";
 
 $title_user_change2 = ABBR_MANAGER_NAME.": Rediger din konto";
-$email_user_change2 = "Hei,\n\nDette er ".MANAGER_NAME." som bekrefter, at du har klart å endre på din konto".$email_date."\n\n".
+$email_user_change2 = "Hei,\n\nDette er ".MANAGER_NAME." som bekrefter, at du har klart Ã¥ endre pÃ¥ din konto".$email_date."\n\n".
 			"Logg inn:    %1\$s\n".
 			"Passord: %2\$s\n\n".
 			"Navn:     %3\$s\n";
 
 $title_user_change3 = ABBR_MANAGER_NAME.": Rediger din konto";
-$email_user_change3 = "Hei,\n\nDette er ".MANAGER_NAME." som bekrefter, at du har klart å endre på din konto ".$email_date."\n\n".
+$email_user_change3 = "Hei,\n\nDette er ".MANAGER_NAME." som bekrefter, at du har klart Ã¥ endre pÃ¥ din konto ".$email_date."\n\n".
 			"Logg inn: %1\$s\n".
-			"Ditt nåværende passord er ikke endret.\n\n".
+			"Ditt nÃ¥vÃ¦rende passord er ikke endret.\n\n".
 			"Navn:  %2\$s\n";
 
 
 $title_revive       = ABBR_MANAGER_NAME.": Konto gjenopprettet";
-$email_revive       = "Hei,\n\nDette er ".MANAGER_NAME." som bekrefter at din konto er blitt gjennopprettet på ".$email_date.".\n\n".
+$email_revive       = "Hei,\n\nDette er ".MANAGER_NAME." som bekrefter at din konto er blitt gjennopprettet pÃ¥ ".$email_date.".\n\n".
 			"Innloggings navn: %1\$s\n".
 			"Brukernavn:  %2\$s\n\n".
 			"Vi kan ikke sende deg ditt passord fordi det er kryptert. \n\n".
-			"Dersom du har glemt ditt passord, send epost til ".EMAIL_ADMIN." for å få et nytt passord.";
+			"Dersom du har glemt ditt passord, send epost til ".EMAIL_ADMIN." for Ã¥ fÃ¥ et nytt passord.";
 
 
 

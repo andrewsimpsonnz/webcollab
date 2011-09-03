@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -32,6 +32,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //set variables
 $content = '';
 
@@ -41,11 +44,15 @@ if( ! ADMIN ) {
   return;
 }
 
+//generate_token
+generate_token('user_mail' );
+
 //start form data
 $content .=
-        "<form method=\"post\" action=\"users.php\">\n".
+        "<form method=\"post\" action=\"users.php\" onsubmit=\"return fieldCheck('message');\">\n".
         "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
         "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
+        "<input type=\"hidden\" id=\"alert_field\" name=\"alert1\" value=\"".$lang['missing_field_javascript']."\" />\n".
         "<input type=\"hidden\" name=\"action\" value=\"submit_email\" /></fieldset>\n".
         "<table class=\"celldata\">\n".
         "<tr><td></td><td>\n".
@@ -64,8 +71,8 @@ $content .= "</select></label></td></tr>\n".
             "<tr><td></td><td></td><td><small><i>".$lang['select_instruct']."</i></small></td></tr>\n".
             "</table>\n".
             "</td></tr>\n".
-            "<tr><td>".$lang['subject']."</td><td><input type=\"text\" name=\"subject\" size=\"60\" /></td></tr>\n".
-            "<tr><td>".$lang['message']."</td><td><textarea name=\"message\" rows=\"25\" cols=\"88\"></textarea></td></tr>\n".
+            "<tr><td>".$lang['subject']."</td><td><input type=\"text\" name=\"subject\" style=\"width: 300px\" /></td></tr>\n".
+            "<tr><td>".$lang['message']."</td><td><textarea name=\"message\" id=\"message\" rows=\"25\" cols=\"88\"></textarea></td></tr>\n".
             "<tr><td></td><td>".$lang['message_sent_maillist']."</td></tr>\n".
             "</table>\n".
             "<p><input type=\"submit\" value=\"".$lang['post']."\" /></p>\n".

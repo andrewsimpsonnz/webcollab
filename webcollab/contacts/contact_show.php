@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id$
+  $Id: contact_show.php 2160 2009-04-06 07:07:34Z andrewsimpson $
 
   (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
@@ -38,7 +38,10 @@ if(! @safe_integer($_GET['contactid']) ){
 $contactid = $_GET['contactid'];
 
 //get contact information
-if( ! ($row = @db_fetch_array(db_query('SELECT * FROM '.PRE.'contacts WHERE id='.$contactid.' LIMIT 1' ), 0 ) ) ){
+$q = db_prepare('SELECT * FROM '.PRE.'contacts WHERE id=? LIMIT 1' );
+db_execute($q, array($contactid ) );
+
+if( ! ($row = @db_fetch_array($q, 0 ) ) ){
   error('Contact show', 'There is no information for that contact');
 }
 
@@ -70,7 +73,7 @@ if(! GUEST ){
     "<input type=\"hidden\" name=\"contactid\" value=\"".$row['id']."\" />\n".
     "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
     "<input type=\"submit\" value=\"".$lang['edit_contact']."\" /></fieldset>\n".
-   "</form>";
+    "</form>";
   }
 
 new_box($lang['contact_info'], $content );

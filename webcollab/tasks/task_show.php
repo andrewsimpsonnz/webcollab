@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_show.php 2263 2009-08-01 02:39:44Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -50,7 +50,7 @@ $taskid = $_GET['taskid'];
 //check usergroup security
 $taskid = usergroup_check($taskid );
 
-$q = db_query('SELECT '.PRE.'tasks.created AS created,
+$q = db_prepare('SELECT '.PRE.'tasks.created AS created,
                       '.PRE.'tasks.finished_time AS finished,
                       '.PRE.'tasks.completion_time AS completion,
                       '.PRE.'users.fullname AS fullname,
@@ -61,8 +61,10 @@ $q = db_query('SELECT '.PRE.'tasks.created AS created,
                       LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
                       LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid)
                       LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'tasks.usergroupid)
-                      LEFT JOIN '.PRE.'seen ON ('.PRE.'tasks.id='.PRE.'seen.taskid AND '.PRE.'seen.userid='.UID.')
-                      WHERE '.PRE.'tasks.id='.$taskid.' LIMIT 1' );
+                      LEFT JOIN '.PRE.'seen ON ('.PRE.'tasks.id='.PRE.'seen.taskid AND '.PRE.'seen.userid=?)
+                      WHERE '.PRE.'tasks.id=? LIMIT 1' );
+
+db_execute($q, array(UID, $taskid ) );
 
 //get the data
 if( ! ($row = db_fetch_array($q, 0 ) ) ) {
@@ -71,10 +73,12 @@ if( ! ($row = db_fetch_array($q, 0 ) ) ) {
 
 //mark this as seen in seen ;)
 if($row['last_seen'] ) {
-  db_query('UPDATE '.PRE.'seen SET time=now() WHERE taskid='.$taskid.' AND userid='.UID );
+  $q = db_prepare('UPDATE '.PRE.'seen SET time=now() WHERE taskid=? AND userid=?' );
+  db_execute($q, array($taskid, UID ) );
 }
 else {
-  db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$taskid.', now() )' );
+  $q = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES (?, ?, now() )' );
+  db_execute($q, array(UID, $taskid ) );
 }
 
 //text link for 'printer friendly' page
@@ -93,22 +97,22 @@ else {
 }
 
 //start of header table
-$content .= "<table width=\"98%\">\n";
+$content .= "<div class=\"taskshow\">\n";
 
 //percentage_completed gauge if this is a project
 if( $TASKID_ROW['parent'] == 0 ) {
-  $content .= "<tr><td>".sprintf( $lang['percent_project_sprt'], $TASKID_ROW['completed'] )."</td></tr>\n";
-  $content .= "<tr><td>".show_percent( $TASKID_ROW['completed'] )."</td></tr>\n";
+  $content .= sprintf( $lang['percent_project_sprt'], $TASKID_ROW['completed'] )."\n";
+  $content .= show_percent( $TASKID_ROW['completed'] );
 }
 
 //project/task name
-$content .= "<tr><td><b>".$TASKID_ROW['name']."</b><br /><br /></td></tr>\n";
+$content .= "<p style=\"margin-top: 5px; margin-bottom: 10px; font-weight: bold\">".$TASKID_ROW['name']."</p>\n";
 
 //show text
-$content .= "<tr><td class=\"textbackground\" style=\"width: 95%\">\n";
+$content .= "<div class=\"textbackground\" style=\"width: 95%\">\n";
 
 $content .= nl2br(bbcode($TASKID_ROW['text'] ) );
-$content .= "</td></tr></table>\n";
+$content .= "</div>\n</div>\n";
 
 //start of info table
 $content .= "<table class=\"celldata\">\n";
@@ -121,7 +125,10 @@ if( $TASKID_ROW['owner'] == 0 ) {
 }
 
 //get creator information (null if creator has been deleted!)
-$creator = @db_result(db_query("SELECT fullname FROM ".PRE."users WHERE id=".$TASKID_ROW['creator'] ), 0, 0  );
+$q = db_prepare('SELECT fullname FROM '.PRE.'users WHERE id=? LIMIT 1' );
+db_execute($q, array($TASKID_ROW['creator'] ) );
+$creator = @db_result($q, 0, 0  );
+
 $content .= "<tr><td>".$lang['created_on'].": </td><td>";
 if($creator == NULL ) {
   $content .= nicedate($TASKID_ROW['created']);
@@ -292,9 +299,12 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
 
   //admin - owner - groupaccess  ==> [edit] button
   if((ADMIN ) || ($access ) ) {
-    $content .= "<span class=\"textlink\">".
-                "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n".
-                "</span>\n";
+    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
+  }
+
+  //(owner) & (uncompleted task)==> [I don't want it anymore] button
+  if(UID == $TASKID_ROW['owner'] && ($TASKID_ROW['status'] != 'done' ) ) {
+    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=0\">".$lang['i_dont_want']."</a>]&nbsp;\n";
   }
 
   //(owner) & (uncompleted task)==> [I don't want it anymore] button
@@ -309,12 +319,12 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
 
   //unowned task ==> [I'll take it!] button
   if($TASKID_ROW['owner'] == 0 ) {
-    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=".UID."\">".sprintf($lang['i_take_it'] )."</a>]\n";
+    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=".UID."\">".sprintf($lang['i_take_it'] )."</a>]&nbsp;\n";
   }
 
   //(admin) & (not owner) & (has owner) & (uncompleted task) ==> [Take over task] button
   if((ADMIN ) && (UID != $TASKID_ROW['owner'] ) && ($TASKID_ROW['owner'] != 0 ) && ($TASKID_ROW['status'] != 'done' ) ) {
-    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=".UID."\">".sprintf($lang["take_over_".$TYPE] )."</a>]\n";
+    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=".UID."\">".sprintf($lang["take_over_".$TYPE] )."</a>]&nbsp;\n";
   }
   $content .= "</span></div>\n";
 }

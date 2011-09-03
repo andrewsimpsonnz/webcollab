@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_common.php 2302 2009-08-25 09:16:58Z andrewsimpson $
 
-  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -39,7 +39,8 @@ function percent_complete($taskid ) {
   $tasks_completed = 0;
   $total_tasks = 0;
 
-  $q = db_query('SELECT status FROM '.PRE.'tasks WHERE projectid='.$taskid.' AND parent<>0'  );
+  $q = db_prepare('SELECT status FROM '.PRE.'tasks WHERE projectid=? AND parent<>0' );
+  db_execute($q, array($taskid ) );
 
   for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) { 
 
@@ -65,16 +66,16 @@ function show_percent($percent=0 ) {
 
   switch($percent ) {
     case '0':
-      return "<table width=\"400\"><tr><td style=\"width: 400px\" class=\"redbar\"></td></tr></table>\n";
+      return "<table class=\"colourbar\"><tr><td style=\"width: 100%\" class=\"redbar\"></td></tr></table>\n";
       break;
 
     case '100':
-      return "<table width=\"400\"><tr><td style=\"width: 400px\" class=\"greenbar\"></td></tr></table>\n";
+      return "<table class=\"colourbar\"><tr><td style=\"width: 100%\" class=\"greenbar\"></td></tr></table>\n";
       break;
 
     default:
-      return "<table width=\"400\"><tr><td style=\"width:".($percent * (400/100))."px\" class=\"greenbar\">".
-             "</td><td style=\"width :".(400-($percent*(400/100)))."px\" class=\"redbar\"></td></tr></table>\n"; 
+      return "<table class=\"colourbar\"><tr><td style=\"width:".$percent."%\" class=\"greenbar\">".
+             "</td><td style=\"width :".(100 - $percent)."%\" class=\"redbar\"></td></tr></table>\n";
       break;
   }
   return;
@@ -89,7 +90,7 @@ function project_jump($taskid=0) {
 
   $content = '';
 
-  $tail = usergroup_tail();  
+  $tail = usergroup_tail();
 
   //query to get the non-completed projects
   $q = db_query('SELECT id,
@@ -148,7 +149,7 @@ function usergroup_tail() {
     $tail = ' ';
   }
   else {
-    $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+    $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.db_quote(UID ).')
               OR '.PRE.'tasks.globalaccess=\'t\'
               OR '.PRE.'tasks.usergroupid=0) ';
   }

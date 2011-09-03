@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_project_list.php 2294 2009-08-24 09:41:39Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -41,7 +41,7 @@ include_once(BASE.'includes/time.php' );
 function listTasks($projectid ) {
 
   global $task_uncompleted, $task_projectid;
-  global $task_array, $parent_array, $shown_array, $task_count;
+  global $task_array, $parent_array, $shown_array, $task_count, $level_count;
 
 
   //initialise variables
@@ -50,6 +50,7 @@ function listTasks($projectid ) {
   $shown_array  = array();
   $check_array  = array();
   $task_count   = 0;  //counter for $task_array
+  $level_count  = 1;  //number of task levels
 
   //search for uncompleted tasks by projectid
   $task_key = array_keys((array)$task_projectid, $projectid );
@@ -79,7 +80,7 @@ function listTasks($projectid ) {
     unset($task_projectid[$key] );
   }
 
-  $content = "<ul>\n";
+  $content = "<ul class=\"ul-".$level_count."\">\n";
 
   //iteration for main tasks
   for($i=0 ; $i < $task_count ; ++$i ){
@@ -117,19 +118,22 @@ function listTasks($projectid ) {
 //
 function find_children($parent ) {
 
-  global $task_array, $parent_array, $shown_array, $task_count;
+  global $task_array, $parent_array, $shown_array, $task_count, $level_count;
 
+  ++$level_count;
   $content_flag = 0;
-  $content = "\n<ul>\n";
+
+  $content = "\n<ul class=\"ul-".$level_count."\">\n";
 
   for($i=0 ; $i < $task_count ; ++$i ) {
 
-    //ignore tasks not directly under this parent
-    if($task_array[$i]['parent'] != $parent ){
+    //ignore items already shown
+    if(isset($shown_array[($task_array[$i]['id'])]) ) {
       continue;
     }
 
-    if(isset($shown_array[($task_array[$i]['id'])]) ) {
+    //ignore tasks not directly under this parent
+    if($task_array[$i]['parent'] != $parent ){
       continue;
     }
 
@@ -147,6 +151,7 @@ function find_children($parent ) {
     }
     $content .= "</li>\n";
   }
+  --$level_count;
   $content .= "</ul>\n";
 
   if(! $content_flag ) {
@@ -273,8 +278,8 @@ $q = db_query('SELECT id,
                       .$project_order );
 
 //text link for 'active' switch
-$content .= "<table style=\"width : 100%\"><tr><td>\n".
-            "<span class=\"textlink\">";
+$content .= "<span class=\"textlink\">";
+
 if($active_only ) {
   $content .= "[<a href=\"main.php?x=".X."&amp;active_only=0&amp;condensed=".$condensed."\">".$lang['show_all_projects']."</a>]";
 }
@@ -293,23 +298,20 @@ else {
 //text link for 'printer friendly' page
 if($action == 1 ) {
 
-  $content  .= "\n[<a href=\"main.php?x=".X."&amp;active_only=".$active_only."&amp;condensed=".$condensed."\">".$lang['normal_version']."</a>]</span>";
+  $content  .= "\n[<a href=\"main.php?x=".X."&amp;active_only=".$active_only."&amp;condensed=".$condensed."\">".$lang['normal_version']."</a>]";
 }
 else {
-  $content  .= "</span></td>\n<td style=\"text-align : right\">".
+  $content  .= "</span><span style=\"float: right\">".
                "<a href=\"icalendar.php?x=".X."&amp;action=all\" title=\"".$lang['icalendar']."\">".
                "<img src=\"images/calendar_link.png\" alt=\"".$lang['icalendar']."\" width=\"16\" height=\"16\" /></a>&nbsp;&nbsp;&nbsp;".
                "<a href=\"tasks.php?x=".X."&amp;active_only=".$active_only."&amp;condensed=".$condensed."&amp;action=project_print\" title=\"".$lang['print_version']."\">".
                "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a>";
 }
-$content .= "</td></tr>\n</table>\n";
-
-//setup main table
-$content .= "<table>\n";
+$content .= "</span>\n";
 
 //show 'project jump' select box
 if($action !== 'project_print') {
-  $content .= "<tr><td class=\"projectlist\" style=\"padding-bottom : 0\">\n".project_jump(0)."</td></tr>\n";
+  $content .= "<div class=\"projectlist\" style=\"padding-bottom : 0\">\n".project_jump(0)."</div>\n";
 }
 
 //show all projects
@@ -347,7 +349,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   //to indicate that there are viewable projects
   $flag = 1;
 
-  $content .= "<tr><td class=\"projectlist\">\n";
+  $content .= "<div class=\"projectlist\">\n";
 
   //show name and a link
   $content .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['name']."</b></a>\n";
@@ -414,10 +416,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
       break;
     }
   //end list
-  $content .= "</td></tr>\n";
+  $content .= "</div>";
 }
-
-$content .= "</table>\n";
 
 //check if there are projects
 if($i == 0 ) {

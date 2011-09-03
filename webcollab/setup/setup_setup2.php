@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: setup_setup2.php 2236 2009-05-22 22:20:49Z andrewsimpson $
 
-  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,7 +35,7 @@ require_once('path.php' );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 require_once(BASE.'setup/setup_config.php' );
-include_once(BASE.'lang/lang_setup1.php' );
+include_once(BASE.'lang/lang_setup.php' );
 require_once(BASE.'setup/security_setup.php' );
 
 //security checks
@@ -57,32 +57,26 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\" ".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"build\" />\n".
             "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" />\n".
-            "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['setup_js_alert_field']."\" /></fieldset>\n";
+            "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang_setup['setup_js_alert_field']."\" /></fieldset>\n";
 
 $content .= "<p>".$lang_setup['setup2_db_details1']."</p>\n".
             "<table class=\"celldata\">\n".
             "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup2_db_details2']."</td></tr>\n".
             "<tr><th>".$lang_setup['setup2_db_name']."</th>".
-            "<td><input id=\"name\" type=\"text\" name=\"database_name\" size=\"30\" /></td></tr>\n".
+            "<td><input id=\"name\" type=\"text\" name=\"database_name\" class=\"size\" /></td></tr>\n".
             "<tr><th class=\"boxdata2\">".$lang_setup['db_user']."</th>".
-            "<td><input id=\"user\" type=\"text\" name=\"database_user\" size=\"30\" /></td></tr>\n".
+            "<td><input id=\"user\" type=\"text\" name=\"database_user\" class=\"size\" /></td></tr>\n".
             "<tr><th>".$lang_setup['db_password']."</th>".
-            "<td><input id=\"pass\" type=\"text\" name=\"database_password\" size=\"30\" /></td></tr>\n".
+            "<td><input id=\"pass\" type=\"text\" name=\"database_password\" class=\"size\" /></td></tr>\n".
             "<tr><th class=\"boxdata3\">".$lang_setup['db_host']."</th>".
             "<td class=\"boxdata3\">".
-            "<input id=\"host\" type=\"text\" name=\"database_host\" value=\"localhost\" size=\"15\" /></td></tr>\n";
+            "<input id=\"host\" type=\"text\" name=\"database_host\" value=\"localhost\" class=\"size\" /></td></tr>\n";
 
 $content .= "<tr><th>".$lang_setup['db_type']."</th> <td>\n".
             "<select name=\"database_type\">\n".
-            "<option value=\"mysql\" selected=\"selected\" >mysql</option>\n".
-            "<option value=\"mysql_innodb\">mysql with innodb</option>\n".
-            "<option value=\"postgresql\">postgresql</option>\n";
-
-if(extension_loaded('mysqli' ) ) {
-  $content .= "<option value=\"mysqli\">mysqli (innodb)</option>\n";
-}
-
-$content .= "</select></td></tr>\n".
+            "<option value=\"mysql_pdo\" selected=\"selected\" >mysql</option>\n".
+            "<option value=\"postgresql_pdo\">postgresql</option>\n".
+            "</select></td></tr>\n".
             "<tr><td></td><td class=\"boxdata3\"><input type=\"submit\" value=\"".$lang_setup['submit']."\" /></td></tr>\n".
             "</table>\n".
             "</form>\n";

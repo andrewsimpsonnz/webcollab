@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: calendar_show.php 2305 2009-08-27 06:08:59Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -135,6 +135,7 @@ else {
 switch($selection ) {
   case 'group':
     $userid = 0; $s1 = ""; $s2 = " selected=\"selected\""; $s3 = " checked=\"checked\""; $s4 = "";
+    $s5 = "style=\"background-color: #DDDDDD\""; $s6 = "style=\"background-color: white\"";
     $tail = " AND usergroupid=".$groupid;
     if($groupid == 0 ){
       $s4 = " selected=\"selected\"";
@@ -144,6 +145,7 @@ switch($selection ) {
   case 'user':
   default:
     $groupid = 0; $s1 = " checked=\"checked\""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
+    $s5 = "style=\"background-color: white\""; $s6 = "style=\"background-color: #DDDDDD\"";
     $tail = " AND owner=".$userid;
     if($userid == 0 ){
       $tail = "";
@@ -174,9 +176,10 @@ for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 }
 
 //get all the days with projects/tasks due in selected month and year
-$q = db_query('SELECT '.$day_part.'deadline) AS day, projectid FROM '.PRE.'tasks
-                      WHERE deadline BETWEEN \''.$year.'-'.$month.'-01 00:00:00\'
-                      AND ('.$date_type.' \''.$year.'-'.$month.'-01 00:00:00\' + INTERVAL '.$delim.'1 MONTH'.$delim.')'.
+//  This should db_prepare(), but postgresql DOES NOT support binding to TIMESTAMP or INTERVAL !!
+$q = db_query('SELECT '.$day_part.'deadline) AS day, projectid FROM '.PRE.'tasks 
+                      WHERE deadline BETWEEN '.db_quote($year.'-'.$month.'-01 00:00:00' ).'
+                      AND ('.$date_type.db_quote($year.'-'.$month.'-01 00:00:00' ).' + INTERVAL '.$delim.'1 MONTH'.$delim.')'.
                       $tail );
 
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
@@ -197,11 +200,13 @@ if(ADMIN ) {
   $tail_group = ' ';
 }
 else {
-  $tail_view  = ' AND (globalaccess=\'f\' AND usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+  $tail_view  = ' AND (globalaccess=\'f\' AND usergroupid
+                    IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.db_quote(UID ).')
                   OR globalaccess=\'t\'
                   OR usergroupid=0) ';
 
-  $tail_group = ' WHERE private=0 OR (private=1 AND id IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')) ';
+  $tail_group = ' WHERE private=0 OR (private=1 AND id
+                    IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.db_quote(UID ).') ) ';
 }
 
 //sort order for table listing
@@ -214,15 +219,21 @@ else {
   $suffix .= "ORDER BY parent<>0, name";
 }
 
+//prepare query for later use
+$q1 = db_prepare('SELECT id, name, parent, status, projectid, completed
+                      FROM '.PRE.'tasks
+                      WHERE deadline BETWEEN ?
+                      AND ?
+                      AND archive=0 '.$suffix );
+
 $content .= "<span class=\"textlink\">[<a href=\"main.php?x=".X."\">".$lang['main_menu']."</a>]</span>";
 
 $content .= "<form method=\"post\" action=\"calendar.php\">\n".
-            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n ".
-            "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n ".
-            "<div style=\"text-align: center\">\n".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+            "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n".
             "<table class=\"decoration\" style=\"margin-left: auto; margin-right: auto;\" cellpadding=\"5\">\n".
-            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" onchange=\"javascript:this.form.submit()\"name=\"selection\" id=\"users\"".$s1."/><label for=\"users\">".$lang['users']."</label>\n".
-            "<label for=\"users\"><select name=\"userid\" onchange=\"javascript:this.form.submit()\">\n".
+            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" onchange=\"javascript:this.form.submit()\" name=\"selection\" id=\"users\"".$s1."/><label for=\"users\">".$lang['users']."</label>\n".
+            "<label for=\"users\"><select name=\"userid\" ".$s5." onchange=\"javascript:this.form.submit()\">\n".
             "<option value=\"0\"".$s2.">".$lang['all_users']."</option>\n";
 
 //get all users for option box
@@ -247,7 +258,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 $content .= "</select></label></td>\n".
             "<td><input type=\"radio\" value=\"group\" name=\"selection\" onchange=\"javascript:this.form.submit()\" id=\"group\"".$s3." /><label for=\"group\">".$lang['usergroups']."</label>\n".
-            "<label for=\"group\"><select name=\"groupid\" onchange=\"javascript:this.form.submit()\">\n".
+            "<label for=\"group\"><select name=\"groupid\" ".$s6." onchange=\"javascript:this.form.submit()\">\n".
             "<option value=\"0\"".$s4.">".$lang['no_group']."</option>\n";
 
 //get all groups for option box
@@ -266,11 +277,10 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 $content .= "</select></label></td>\n".
             "<td colspan=\"2\" ><input type=\"submit\" value=\"".$lang['update']."\" /></td></tr>\n".
-            "</table></div>\n";
+            "</table>\n";
 
 //month (must be in decimal, 'cause that's what database uses!)
-$content .= "<div style=\"text-align: center\">\n".
-            "<table style=\"margin-left: auto; margin-right: auto\">\n".
+$content .= "<table style=\"margin-left: auto; margin-right: auto\">\n".
             "<tr><td><input type=\"submit\" name=\"lastyear\" value=\"&lt;&lt;\" /></td>\n".
             "<td><input type=\"submit\" name=\"lastmonth\" value=\"&lt;\" /></td>\n".
             "<td>\n<select name=\"month\" onchange=\"javascript:this.form.submit()\">\n";
@@ -301,30 +311,28 @@ for( $i = $min_year; $i < $max_year ; ++$i ) {
 $content .=  "</select></td>\n".
              "<td><input type=\"submit\" name=\"nextmonth\" value=\"&gt;\" /></td>\n".
              "<td><input type=\"submit\" name=\"nextyear\" value=\"&gt;&gt;\" /></td></tr>\n".
-             "</table></div></form>\n<br />\n";
+             "</table></form>\n<br />\n";
 
 //number of days in month
 $numdays = date('t', mktime(0, 0, 0, $month, 1, $year ) );
 
 //main calendar table
-$content .= "<div style=\"text-align: center\">\n".
-            "<table class=\"outline\" cellspacing=\"0\" border=\"1px\" width=\"97%\">\n<tr>\n".
-            "<td colspan=\"7\" class=\"monthcell\" align=\"center\" valign=\"middle\"><b>".$month_array[(int)$month]."</b>\n</td>\n".
-            "</tr>\n";
+$content .= "<table class=\"outline\">\n".
+            "<tr class=\"monthcell\"><td colspan=\"7\" >".$month_array[(int)$month]."</td></tr>\n";
 
 //weekdays
-$content .= "<tr align=\"center\" valign=\"middle\">\n";
+$content .= "<tr class=\"weekcell\">\n";
 for ($i = 0; $i < 7; ++$i ) {
   $day_number = $i + START_DAY;
   if( $day_number > 6 ) {
     $day_number = $day_number - 7;
   }
-  $content .= "<td class=\"weekcell\" style=\"width: 13.86%\"><b>".$week_array[$day_number]."</b></td>\n";
+ $content .= "<td>".$week_array[$day_number]."</td>\n";
 }
-$content .= "</tr>\n";
+$content .= "</tr>";
 
 //show lead in to dates
-$content .= "<tr align=\"left\" valign=\"top\">\n";
+$content .= "<tr class=\"datecell\">\n";
 
 $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ) - START_DAY;
 if( $dayone < 0 ) {
@@ -332,36 +340,33 @@ if( $dayone < 0 ) {
 }
 
 for ($i = 0; $i < $dayone; ++$i ) {
-  $content .= "<td class=\"datecell\">&nbsp;</td>\n";
+  $content .= "<td>&nbsp;</td>\n";
 }
 $leadin_length = $i;
 
 //show dates
 for($num = 1; $num <= $numdays; ++$num ) {
   if($i >= 7 ) {
-    $content .= "</tr>\n".
-                "<tr align=\"left\" valign=\"top\">\n";
+    $content .= "</tr>\n<tr class=\"datecell\">\n";
     $i=0;
   }
-  $content .= "<td class=\"datecell\" ";
 
   //highlight today
   if($num == $today) {
-    $content .= "style=\"background : #C0C0C0\"";
+    $content .= "<td class=\"todaycell\">";
+  }
+  else {
+    $content .= "<td>";
   }
 
-  $content .= "><span class=\"daynum\">".$num."</span>";
+  $content .= $num;
 
   //check if this date has projects/tasks
   if(isset($task_dates[$num] ) ) {
     //rows exist for this date - get them!
-    $q = db_query('SELECT id, name, parent, status, projectid, completed
-                          FROM '.PRE.'tasks
-                          WHERE deadline BETWEEN \''.$year.'-'.$month.'-'.$num.' 00:00:00\'
-                          AND \''.$year.'-'.$month.'-'.$num.' 23:59:59\'
-                          AND archive=0 '.$suffix );
+    db_execute($q1, array($year.'-'.$month.'-'.$num.' 00:00:00', $year.'-'.$month.'-'.$num.' 23:59:59' ) );
 
-    for( $j=0 ; $row = @db_fetch_array($q, $j ) ; ++$j ) {
+      for( $j=0 ; $row = @db_fetch_array($q1, $j ) ; ++$j ) {
 
       //don't show tasks in private usergroup projects
       if( (! ADMIN ) && isset($no_access_project[($row['projectid'])] ) ) {
@@ -395,9 +400,9 @@ for($num = 1; $num <= $numdays; ++$num ) {
               else {
                 $name = "<b>".$name."</b>";
               }
-              $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."\" >".
+              $content .= "<div style=\"text-align: left; background:".$project_colour_array[$row['projectid']]."\" >".
                           "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
-                          "<span style=\"text-decoration:underline\">".
+                          "<span class=\"underline\">".
                           "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\" title=\"".$row['name']."\" >".$name."</a></span></div>\n";
               break;
 
@@ -420,7 +425,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
                     $state = "";
                     break;
                   }
-                  $content .= "<div style=\"background:".$project_colour_array[$row['projectid']]."\">".
+                  $content .= "<div style=\"text-align: left; background:".$project_colour_array[$row['projectid']]."\">".
                               "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
                               "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\" title=\"".$row['name']."\" >".$name."</a>".$state."</div>\n";
               break;
@@ -428,6 +433,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
         break;
       }
     }
+    db_free_result($q1 );
   }
   $content .= "</td>\n";
   ++$i;
@@ -436,11 +442,10 @@ for($num = 1; $num <= $numdays; ++$num ) {
 //show lead out to dates
 $leadout_length = (7 - ($numdays + $leadin_length ) % 7 ) % 7;
 for($i = 0; $i < $leadout_length; ++$i ) {
-  $content .= "<td class=\"datecell\">&nbsp;</td>\n";
+  $content .= "<td>&nbsp;</td>\n";
 }
 
-$content .= "</tr>\n";
-$content .= "</table>\n</div>\n";
+$content .= "</tr>\n</table>\n";
 
 new_box($lang['calendar'], $content );
 

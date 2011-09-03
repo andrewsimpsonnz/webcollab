@@ -21,33 +21,34 @@
   Function:
   ---------
 
-  Language files (long messages) for 'pl' (Polish)
+  Language files (long messages) for 'en' (English)
 
   Translator: Konrad Komada <konrad at komada.org>
 
 */
 
-$taskgroup_info =   "<ul><li>Je¶li skasujesz grupê zadañ wtedy wszystkie nale¿±ce do niej zadania zostan± ustawione na nieskategoryzowane.</li>\n".
-                      "<li>Mo¿esz zmieniæ nazwê kategorii nie wywo³uj±c ¿adnych skutków dla nale¿±cych do niej zadañ.</li>\n".
-                      "<li>Dwie grupy zadañ nie mog± posiadaæ tej samej nazwy.</li></ul>\n";
 
-$usergroup_info =   "<ul><li>Je¶li skasujesz grupê u¿ytkowników wtedy wszystkie nale¿±ce do niej posty zostan± równie¿ skasowane.</li>\n".
-                      "<li>Prywatne grupy u¿ytkowników mog± byæ widziane jedynie przez swoich cz³onków.</li>\n".
-                      "<li>Mo¿esz zmieniæ nazwê grupy u¿ytkowników bez ¿adnych skutków dla nale¿acych do niej u¿ytkowników.</li>\n".
-                      "<li>Dwie grupy u¿ytkowników nie mog± posiadaæ tej samej nazwy.</li></ul>\n";
+$taskgroup_info =   "<ul><li>JeÅ›li skasujesz grupÄ™ zadaÅ„ wtedy wszystkie naleÅ¼Ä…ce do niej zadania zostanÄ… ustawione na nieskategoryzowane.</li>\n".
+                      "<li>MoÅ¼esz zmieniÄ‡ nazwÄ™ kategorii nie wywoÅ‚ujÄ…c Å¼adnych skutkÃ³w dla naleÅ¼Ä…cych do niej zadaÅ„.</li>\n".
+                      "<li>Dwie grupy zadaÅ„ nie mogÄ… posiadaÄ‡ tej samej nazwy.</li></ul>\n";
 
-$user_info      =    "Proszê wybierz dzia³anie z menu po lewej.<br /><br />".
-                      "Kilka wskazówek:<br />".
+$usergroup_info =   "<ul><li>JeÅ›li skasujesz grupÄ™ uÅ¼ytkownikÃ³w wtedy wszystkie naleÅ¼Ä…ce do niej posty zostanÄ… rÃ³wnieÅ¼ skasowane.</li>\n".
+                      "<li>Prywatne grupy uÅ¼ytkownikÃ³w mogÄ… byÄ‡ widziane jedynie przez swoich czÅ‚onkÃ³w.</li>\n".
+                      "<li>MoÅ¼esz zmieniÄ‡ nazwÄ™ grupy uÅ¼ytkownikÃ³w bez Å¼adnych skutkÃ³w dla naleÅ¼acych do niej uÅ¼ytkownikÃ³w.</li>\n".
+                      "<li>Dwie grupy uÅ¼ytkownikÃ³w nie mogÄ… posiadaÄ‡ tej samej nazwy.</li></ul>\n";
+
+$user_info      =    "ProszÄ™ wybierz dziaÅ‚anie z menu po lewej.<br /><br />".
+                      "Kilka wskazÃ³wek:<br />".
                       "<ul>".
-                      "<li>Prywatni u¿ytkownicy mog± byæ widoczni jedynie przez cz³onków tej samej grupy.</li>\n".
-                      "<li>U¿ytkownicy s± kasowani w dwóch krokach, drugi krok jest nieodwracalny (permanentny).</li>\n".
-                      "<li>Skasowani u¿ytkownicy trac± wszystkie zadania ale nie posty na forum.</li>\n".
-                      "<li>U¿ytkownik skasowany permanentnie traci wszystko.</li>\n".
-                      "<li>Skasowany u¿ytkownik zatrzymuje wszystkie zadania, które widzia³ i bêdzie móg³ kontynuowaæ pracê po przywróceniu.</li>\n".
-                      "<li>Wszystkie dzia³ania wykonane przez u¿ytkowników s± potwierdzane emailem.</li>\n".
-                      "<li>Has³a przechowywane s± w postaci zaszyfrowanej w bazie danych. Jedyne co mo¿na zrobiæ w przypadku zapomnienia, to ustawiæ nowe.</li>\n".
-                      "<li>Has³a s± wysy³ane emailem tylko raz do u¿ytkownika, dzieje siê to w trakcie ustawiania, wiêc prosimy wpisywaæ prawid³owe adresy!</li>\n".
-                      "<li>U¿ytkownicy mog± edytowaæ swoje ustawienia, bez wiedzy administratora - to zaoszczêdzi czas</li>\n".
+                      "<li>Prywatni uÅ¼ytkownicy mogÄ… byÄ‡ widoczni jedynie przez czÅ‚onkÃ³w tej samej grupy.</li>\n".
+                      "<li>UÅ¼ytkownicy sÄ… kasowani w dwÃ³ch krokach, drugi krok jest nieodwracalny (permanentny).</li>\n".
+                      "<li>Skasowani uÅ¼ytkownicy tracÄ… wszystkie zadania ale nie posty na forum.</li>\n".
+                      "<li>UÅ¼ytkownik skasowany permanentnie traci wszystko.</li>\n".
+                      "<li>Skasowany uÅ¼ytkownik zatrzymuje wszystkie zadania, ktÃ³re widziaÅ‚ i bÄ™dzie mÃ³gÅ‚ kontynuowaÄ‡ pracÄ™ po przywrÃ³ceniu.</li>\n".
+                      "<li>Wszystkie dziaÅ‚ania wykonane przez uÅ¼ytkownikÃ³w sÄ… potwierdzane emailem.</li>\n".
+                      "<li>HasÅ‚a przechowywane sÄ… w postaci zaszyfrowanej w bazie danych. Jedyne co moÅ¼na zrobiÄ‡ w przypadku zapomnienia, to ustawiÄ‡ nowe.</li>\n".
+                      "<li>HasÅ‚a sÄ… wysyÅ‚ane emailem tylko raz do uÅ¼ytkownika, dzieje siÄ™ to w trakcie ustawiania, wiÄ™c prosimy wpisywaÄ‡ prawidÅ‚owe adresy!</li>\n".
+                      "<li>UÅ¼ytkownicy mogÄ… edytowaÄ‡ swoje ustawienia, bez wiedzy administratora - to zaoszczÄ™dzi czas</li>\n".
                       "</ul>\n";
 
 ?>

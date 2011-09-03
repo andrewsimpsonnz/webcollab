@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: icalendar_todo.php 2299 2009-08-24 09:46:33Z andrewsimpson $
 
-  (c) 2005 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -25,6 +25,23 @@
   Creates a download file in the iCalendar format to RFC 2445
 
 */
+
+//remote login check
+if(! isset($local_login) ) {
+
+  //load required files
+  require_once('path.php' );
+  require_once(BASE.'path_config.php' );
+  require_once(BASE_CONFIG.'config.php' );
+
+  include_once(BASE.'includes/common.php');
+  include_once(BASE.'database/database.php');
+  include_once(BASE.'icalendar/icalendar_login.php' );
+
+  if(! icalendar_login() ) {
+    icalendar_error('401', 'Todo login' );
+  }
+}
 
 //security check
 if(! defined('UID' ) ) {
@@ -66,8 +83,9 @@ else {
 //set selection
 switch($selection ) {
   case 'group':
-    $tail = "AND usergroupid=".$groupid;
+    $tail = "AND usergroupid=?";
     $id   = 'G'.$groupid;
+    $parm = $groupid;
     break;
 
   case 'user':
@@ -75,25 +93,27 @@ switch($selection ) {
     if(! icalendar_private_user($userid ) ) {
       return;
     }
-    $tail = "AND owner=".$userid;
+    $tail = "AND owner=?";
     $id   = 'U'.$userid;
+    $parm = $userid;
     break;
 }
 
-//set database character set to UTF-8
-db_user_locale('UTF-8');
-
 //show all subtasks that are not complete
-$q = db_query( icalendar_query().' AND '.PRE.'tasks.parent<>0 '.$tail. icalendar_usergroup_tail() );
+$q = db_prepare( icalendar_query().' AND '.PRE.'tasks.parent<>0 '.$tail. icalendar_usergroup_tail() );
+db_execute($q, array($parm ) );
 
 for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
+  $project_q = db_prepare(icalendar_query().' AND '.PRE.'tasks.id=?'. icalendar_usergroup_tail() );
+
+  //send project once for each task
   if(! in_array($row['projectid'], (array)$projects ) ) {
 
-    $project_q = db_query(icalendar_query().' AND '.PRE.'tasks.id='.$row['projectid']. icalendar_usergroup_tail() );
+    db_execute($project_q, array($row['projectid'] ) );
 
     //check for closed projects
-    if(! ($project = db_fetch_array($project_q, 0) ) ) {
+    if(! ($project = db_fetch_array($project_q, 0 ) ) ) {
       continue;
     }
 
@@ -107,7 +127,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 }
 
 //no rows ==> return
-if($i == 0 ) {
+if((isset($local_login ) ) && $i == 0 ) {
   header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=todo&userid='.$userid.'&groupid='.$groupid.'&selection='.$selection );
   die;
 }
@@ -134,14 +154,18 @@ if((UID == $userid ) || (ADMIN ) ) {
   return true;
 }
 
-if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE id='.$userid.' AND private=1' ), 0, 0 ) == 0 ) {
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'users WHERE id=? AND private=1' );
+db_execute($q, array($userid ) );
+
+if(db_result($q, 0, 0 ) == 0 ) {
   return true;
 }
 
 //private user ==> get list of common usergroups
-$q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid
+$q = db_prepare('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid
                        FROM '.PRE.'usergroups_users
-                       WHERE '.PRE.'usergroups.userid='.$userid );
+                       WHERE '.PRE.'usergroups.userid=?' );
+db_execute($q, array($userid ) );
 
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   if(isset($GID[($row[0])] ) ) {

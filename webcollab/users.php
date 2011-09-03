@@ -42,7 +42,7 @@ switch($_REQUEST['action'] ) {
 
   //show user's personal details
   case 'show':
-    create_top($lang['user_info'] );
+    create_top($lang['user_info'], 0, 'user-info' );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'users/user_menubox.php' );
     include(BASE.'users/user_existing_menubox.php' );
@@ -53,7 +53,7 @@ switch($_REQUEST['action'] ) {
 
   //who is online ?
   case 'showonline':
-    create_top($lang['users_online'] );
+    create_top($lang['users_online'], 0, 'user-online' );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'users/user_menubox.php' );
     include(BASE.'users/user_existing_menubox.php' );
@@ -64,7 +64,7 @@ switch($_REQUEST['action'] ) {
 
   //give the user-manager screen
   case 'manage':
-    create_top($lang['manage_users'] );
+    create_top($lang['manage_users'], 0, 'user-manage' );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'users/user_menubox.php' );
     include(BASE.'usergroups/usergroup_menubox.php' );
@@ -79,7 +79,7 @@ switch($_REQUEST['action'] ) {
 
   //Add a user
   case 'add':
-    create_top($lang['add_user'], 0, 2 );
+    create_top($lang['add_user'], 0, 'user-add', 2 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'users/user_menubox.php' );
     goto_main();
@@ -89,7 +89,7 @@ switch($_REQUEST['action'] ) {
 
   //Edit a user
   case 'edit':
-    create_top($lang['edit_user'] );
+    create_top($lang['edit_user'], 0, 'user-edit' );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'users/user_menubox.php' );
     goto_main();
@@ -99,7 +99,7 @@ switch($_REQUEST['action'] ) {
 
   //edit delete
   case 'edit_del':
-    create_top($lang['edit_user'] );
+    create_top($lang['edit_user'], 0, 'user-del' );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'users/user_menubox.php' );
     goto_main();
@@ -109,7 +109,7 @@ switch($_REQUEST['action'] ) {
 
   //admin email
   case 'email':
-    create_top($lang['email'] );
+    create_top($lang['email'], 0, 'user-email', 2 );
     include(BASE.'includes/mainmenu.php' );
     goto_main();
     include(BASE.'users/user_mail.php' );

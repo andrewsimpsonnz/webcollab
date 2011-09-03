@@ -2,7 +2,7 @@
 /*
   $Id: rss_forum.php 1706 2008-01-01 06:13:00Z andrewsimpson $
 
-  (c) 2008 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2008 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -37,15 +37,13 @@ function rss_login() {
     rss_error('401', 'Login no authorisation');
   }
 
-  //set database to UTF-8
-  db_user_locale('UTF-8');
+  $q = db_prepare('SELECT id, admin, locale FROM '.PRE.'users WHERE name=? AND deleted=\'f\'' );
 
-  if( ! ($q = @db_query('SELECT id, admin, locale FROM '.PRE.'users'.
-                        ' WHERE name=\''.db_escape_string($_SERVER['REMOTE_USER'] ).'\' AND deleted=\'f\'', 0 ) ) ) {
+  if( ! (db_execute($q, array(safe_data($_SERVER['REMOTE_USER'] ) ), 0 ) ) ) {
     rss_error('401', 'Login user select' );
   }
 
-  if(! ($row = db_fetch_array($q, 0 ) ) ) {
+  if( ! ($row = db_fetch_array($q, 0 ) ) ) {
     rss_error('401', 'Login query error');
   }
 
@@ -150,26 +148,14 @@ function rss_time($timestamp ) {
 //
 function rss_status() {
 
-  if(UNICODE_VERSION == 'Y' ) {
+  include_once(BASE.'lang/lang.php');
 
-    include_once(BASE.'lang/lang.php');
-    $status['created']      = $task_state['new'];
-    $status['notactive']    = $task_state['planned'];
-    $status['active']       = $task_state['active'];
-    $status['cantcomplete'] = $task_state['cantcomplete'];
-    $status['done']         = $task_state['done'];
-    $status['completed']    = $task_state['completed'];
-  }
-  else {
-
-    //Use English for other than UTF-8 (Can't mix character sets)
-    $status['created']      = 'New';
-    $status['notactive']    = 'Planned';
-    $status['active']       = 'Active';
-    $status['cantcomplete'] = 'On Hold';
-    $status['done']         = 'Done';
-    $status['completed']    = 'Completed';
-  }
+  $status['created']      = $task_state['new'];
+  $status['notactive']    = $task_state['planned'];
+  $status['active']       = $task_state['active'];
+  $status['cantcomplete'] = $task_state['cantcomplete'];
+  $status['done']         = $task_state['done'];
+  $status['completed']    = $task_state['completed'];
 
   return $status;
 }

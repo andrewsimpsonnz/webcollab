@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: taskgroup_edit.php 2301 2009-08-25 09:15:52Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -31,6 +31,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //admins only
 if(! ADMIN ){
   error('Unauthorised access', 'This function is for admins only.' );
@@ -42,10 +45,12 @@ if(! @safe_integer($_GET['taskgroupid']) ){
 }
 $taskgroupid = $_GET['taskgroupid'];
 
+//generate_token
+generate_token('taskgroup' );
+
 //get taskgroup information
-if(! ($q = db_query('SELECT * FROM '.PRE.'taskgroups WHERE id='.$taskgroupid, 0 ) ) ) {
-  error('Taskgroup edit', 'There was an error in the data query.' );
-}
+$q = db_prepare('SELECT * FROM '.PRE.'taskgroups WHERE id=?' );
+db_execute($q, array($taskgroupid ) );
 
 if(! ($row = db_fetch_array( $q, 0 ) ) ) {
   error('Taskgroup edit', 'Taskgroup does not exist' );
@@ -57,8 +62,8 @@ $content =  "<form method=\"post\" action=\"taskgroups.php\">\n".
             "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
             "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
             "<table class=\"celldata\">\n".
-            "<tr><td>".$lang['taskgroup_name']."</td> <td><input type=\"text\" name=\"name\" value=\"".$row['name']." \"size=\"30\" /></td></tr>\n".
-            "<tr><td>".$lang['taskgroup_description']."</td><td><input type=\"text\" name=\"description\" value=\"".$row['description']." \"size=\"30\" /></td></tr>\n".
+            "<tr><td>".$lang['taskgroup_name']."</td> <td><input type=\"text\" name=\"name\" value=\"".$row['name']."\" class=\"size\" /></td></tr>\n".
+            "<tr><td>".$lang['taskgroup_description']."</td><td><input type=\"text\" name=\"description\" value=\"".$row['description']."\" class=\"size\" /></td></tr>\n".
             "</table>\n".
             "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" /></p>\n".
             "</form>\n".

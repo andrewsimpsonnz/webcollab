@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: user_mail_send.php 2172 2009-04-06 07:30:53Z andrewsimpson $
 
-  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -33,6 +33,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/email.php' );
 
@@ -46,7 +47,7 @@ $address_array = array();
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'user_mail' );
 
 // send to users or groups?
 if(empty($_POST['group']) ){
@@ -94,18 +95,20 @@ switch($_POST['group'] ) {
     }
     (array)$usergroup = $_POST['usergroup'];
 
+    $q = db_prepare('SELECT '.PRE.'users.email
+		    FROM '.PRE.'usergroups_users
+		    LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'usergroups_users.userid)
+		    WHERE '.PRE.'usergroups_users.usergroupid=?
+		    AND '.PRE.'users.deleted=\'f\'' );
+
+
     //initialise address_array counter
     $k = 0;
-
     //loop through chosen usergroups
     for($i=0 ; $i < $max ; ++$i ){
       //check for security, then get users for each usergroup
       if(isset($usergroup[$i] ) && safe_integer($usergroup[$i] ) ){
-        $q = db_query('SELECT '.PRE.'users.email
-                        FROM '.PRE.'usergroups_users
-                        LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'usergroups_users.userid)
-                        WHERE '.PRE.'usergroups_users.usergroupid='.$usergroup[$i].'
-                        AND '.PRE.'users.deleted=\'f\'' );
+        db_execute($q, array($usergroup[$i] ) );
 
         //loop through result rows and add users to the list
         for($j = 0 ; $row = @db_fetch_num($q, $j ) ; ++$j ){

@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_add.php 2233 2009-05-22 22:13:55Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -31,6 +31,7 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/time.php' );
 
@@ -69,7 +70,6 @@ $priority_select_box = "<tr><td>".$lang['priority'].":</td><td>\n".
 $content .= "<form method=\"post\" action=\"tasks.php\" onsubmit=\"return fieldCheck('name') && dateCheck();\" >\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n".
-            "<input type=\"hidden\" id=\"token\" name=\"token\" value=\"".TOKEN."\" />\n".
             "<input type=\"hidden\" id=\"alert_field\" name=\"alert1\" value=\"".$lang['missing_field_javascript']."\" />\n".
             "<input type=\"hidden\" id=\"alert_date\" name=\"alert2\" value=\"".$lang['invalid_date_javascript']."\" />\n".
             "<input type=\"hidden\" id=\"alert_finish\" name=\"alert3\" value=\"".$lang['finish_date_javascript']."\" />\n".
@@ -84,7 +84,7 @@ if( @safe_integer($_GET['parentid']) ) {
   $parentid = $_GET['parentid'];
 
   //get info about the parent of this task
-  $q = db_query('SELECT name,
+  $q = db_prepare('SELECT name,
                         deadline,
                         '.$epoch.'deadline) AS epoch_deadline,
                         status,
@@ -93,7 +93,8 @@ if( @safe_integer($_GET['parentid']) ) {
                         projectid,
                         usergroupid,
                         globalaccess, taskgroupid 
-                        FROM '.PRE.'tasks WHERE id='.$parentid.' LIMIT 1' );
+                        FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+  db_execute($q, array($parentid ) );
 
   if( ! $parent_row = db_fetch_array($q, 0 ) ) {
     error('Task add', 'No parent for taskid' );
@@ -128,17 +129,19 @@ if( @safe_integer($_GET['parentid']) ) {
     $project_name = $parent_row['name'];
   }
   else {
-    $project_name = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$parent_row['projectid'] ), 0, 0 );
+    $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=?' );
+    db_execute($q, array($parent_row['projectid'] ) );
+    $project_name = db_result($q, 0, 0 );
   }
 
-  $content .= "<tr><td>".$lang['project'] .":</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parent_row['projectid']."\">".$project_name."</a></td></tr>\n";
+  $content .= "<tr><td>".$lang['project'] .":</td> <td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parent_row['projectid']."\">".$project_name."</a></td></tr>\n";
 
   //check if task has a parent task
   if( $parent_row['parent'] != 0 ) {
     $content .= "<tr><td>".$lang['parent_task'].":</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parent_row['parent']."\">".$parent_row['name']."</a></td></tr>\n";
   }
   $content .= "<tr><td>".$lang['creation_time'].":</td><td>".nicetime(date('Y-m-d H:i:s', TIME_NOW - date('Z') + TZ*60*60 ) )."</td></tr>\n".
-              "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"60\" />".
+              "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" />".
               "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
               "<tr><td>".$lang['deadline'].":</td><td>".date_select_from_timestamp( $parent_row['deadline'] ).
               "&nbsp;<small><i>".$lang['taken_from_parent']."</i></small></td></tr>\n";
@@ -224,7 +227,7 @@ if( @safe_integer($_GET['parentid']) ) {
   $content .= "</select></td></tr>\n";
 
   //show all the groups
-  $q = db_query( 'SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
+  $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
 
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td><td><select name=\"usergroupid\">\n";
   $content .= "<option value=\"0\">".$lang['all_groups']."</option>\n";
@@ -254,7 +257,6 @@ if( @safe_integer($_GET['parentid']) ) {
     //use defaults 
     $globalaccess = DEFAULT_ACCESS;
   }
-
   $content .= "</select></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['all_users_view']."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" ".$globalaccess." /></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."'); return false\">".$lang['group_edit']."</a></td><td><input type=\"checkbox\" name=\"groupaccess\" ".DEFAULT_EDIT." /></td></tr>\n".
@@ -286,7 +288,7 @@ else {
               "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n".
               "<table class=\"celldata\">\n".
               "<tr><td>".$lang['creation_time'].":</td><td>".nicetime(date('Y-m-d H:i:s',TIME_NOW - date('Z') + TZ*60*60 ) )."</td></tr>\n".
-              "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" />". "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
+              "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" />". "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
 
               //deadline
               "<tr><td>".$lang['deadline'].":</td><td>".date_select()."</td></tr>\n";
@@ -326,7 +328,7 @@ else {
   $content .= "</select></td></tr>\n";
 
   //show all the groups
-  $q = db_query( 'SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
+  $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td><td><select name=\"usergroupid\">\n".
               "<option value=\"0\">".$lang['all_groups']."</option>\n";
 

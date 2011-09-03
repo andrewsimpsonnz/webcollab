@@ -42,7 +42,7 @@ switch($_REQUEST['action'] ) {
 
   //list archived projects
   case 'list':
-    create_top($lang['projects'] );
+    create_top($lang['projects'], 0, 'archive-list' );
     include(BASE.'includes/mainmenu.php' );
     if(! GUEST ){
       include(BASE.'tasks/task_menubox.php' );

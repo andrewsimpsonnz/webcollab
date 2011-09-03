@@ -30,12 +30,12 @@
 
 
 $taskgroup_info =   "<ul><li>Als u een taakgroep verwijderd, worden alle bijbehorende taken aangemerkt als zonder categorie.</li>\n".
-                      "<li>U kunt de naam van een categorie wijzigen zonder de taken te beïnvloeden.</li>\n".
+                      "<li>U kunt de naam van een categorie wijzigen zonder de taken te beÃ¯nvloeden.</li>\n".
                       "<li>Twee taakgroepen kunnen niet dezelfde naam hebben.</li></ul>\n";
 
 $usergroup_info =   "<ul><li>Als u een gebruikersgroep verwijderd, worden tevens alle bijbehorende prive forum berichten verwijderd.</li>\n".
                       "<li>Prive gebruikersgroepen zijn alleen zichtbaar voor de leden van die prive gebruikersgroep.</li>\n".
-                      "<li>U kunt de naam van een gebruikersgroep wijzigen zonder de leden te beïnvloeden.</li>\n".
+                      "<li>U kunt de naam van een gebruikersgroep wijzigen zonder de leden te beÃ¯nvloeden.</li>\n".
                       "<li>Twee gebruikersgroepen kunnen niet dezelfde naam hebben.</li></ul>\n";
 
 $user_info      =    "Maak uw keuze in het menu links.<br /><br />".

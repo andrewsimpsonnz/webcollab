@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: user_existing_list.php 2297 2009-08-24 09:45:18Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -39,7 +39,7 @@ $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       '.PRE.'usergroups_users.userid AS userid
                       FROM '.PRE.'usergroups_users
                       LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
-                      WHERE '.PRE.'usergroups.private=1');
+                      WHERE '.PRE.'usergroups.private=1' );
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   if(isset($GID[($row[0])] ) ) {
@@ -60,7 +60,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
     continue;
   }
 
-  $content .= "<tr><td class=\"grouplist\"><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>";
+  $content .= "<tr class=\"grouplist\"><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td>";
 
   if(ADMIN ) {
     $content .= "<td><span class=\"textlink\">";

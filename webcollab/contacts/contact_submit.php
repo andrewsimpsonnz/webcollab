@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: contact_submit.php 2160 2009-04-06 07:07:34Z andrewsimpson $
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -53,7 +53,10 @@ switch($_REQUEST['action'] ) {
       $taskid = $_POST['taskid'];
 
       //check for non-existent tasks...
-      if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$taskid.' LIMIT 1' ), 0, 0 ) < 1 ) {
+      $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+      db_execute($q, array($taskid ) );
+
+      if(db_result($q, 0, 0 ) < 1 ) {
         error('Contact submit', 'Not a valid taskid' );
       }
     }
@@ -61,7 +64,7 @@ switch($_REQUEST['action'] ) {
       $taskid = 0;
     }
 
-    db_query( 'INSERT INTO '.PRE.'contacts(firstname,
+    $q = db_prepare('INSERT INTO '.PRE.'contacts(firstname,
                                       lastname,
                                       company,
                                       tel_home,
@@ -77,22 +80,24 @@ switch($_REQUEST['action'] ) {
                                       user_id,
                                       date,
                                       taskid )
-                                  values(\''.safe_data($_POST['firstname']).'\',
-                                  \''.safe_data($_POST['lastname']).'\',
-                                  \''.safe_data($_POST['company']).'\',
-                                  \''.safe_data($_POST['tel_home']).'\',
-                                  \''.safe_data($_POST['gsm']).'\',
-                                  \''.safe_data($_POST['fax']).'\',
-                                  \''.safe_data($_POST['tel_business']).'\',
-                                  \''.safe_data($_POST['address']).'\',
-                                  \''.safe_data($_POST['postal']).'\',
-                                  \''.safe_data($_POST['city']).'\',
-                                  \''.safe_data($_POST['email']).'\',
-                                  \''.safe_data_long($_POST['notes']).'\',
-                                  '.UID.',
-                                  '.UID.',
-                                  now(),
-                                  '.$taskid.')' );
+                                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), ?)' );
+
+    db_execute($q, array(safe_data($_POST['firstname']),
+                         safe_data($_POST['lastname']),
+                         safe_data($_POST['company']),
+                         safe_data($_POST['tel_home']),
+                         safe_data($_POST['gsm']),
+                         safe_data($_POST['fax']),
+                         safe_data($_POST['tel_business']),
+                         safe_data($_POST['address']),
+                         safe_data($_POST['postal']),
+                         safe_data($_POST['city']),
+                         safe_data($_POST['email']),
+                         safe_data_long($_POST['notes']),
+                         UID,
+                         UID,
+                         $taskid ) );
+
     break;
 
   case 'submit_edit':
@@ -107,25 +112,41 @@ switch($_REQUEST['action'] ) {
     $contactid = $_POST['contactid'];
 
     //get taskid (used for HTTP return value below)
-    $taskid = db_result(db_query('SELECT taskid FROM '.PRE.'contacts WHERE id='.$contactid.' LIMIT 1' ), 0, 0 );
+    $q = db_prepare('SELECT taskid FROM '.PRE.'contacts WHERE id=? LIMIT 1' );
+    db_execute($q, array($contactid ) );
+    $taskid = db_result($q, 0, 0 );
 
-    db_query('UPDATE '.PRE.'contacts SET
-                  firstname=\''.safe_data($_POST['firstname']).'\',
-                  lastname=\''.safe_data($_POST['lastname']).'\',
-                  company=\''.safe_data($_POST['company']).'\',
-                  tel_home=\''.safe_data($_POST['tel_home']).'\',
-                  gsm=\''.safe_data($_POST['gsm']).'\',
-                  fax=\''.safe_data($_POST['fax']).'\',
-                  tel_business=\''.safe_data($_POST['tel_business']).'\',
-                  address=\''.safe_data($_POST['address']).'\',
-                  postal=\''.safe_data($_POST['postal']).'\',
-                  city=\''.safe_data($_POST['city']).'\',
-                  email=\''.safe_data($_POST['email']).'\',
-                  notes=\''.safe_data_long($_POST['notes']).'\',
-                  added_by='.UID.',
-                  date=now()
-                  WHERE id ='.$contactid );
+    $q = db_prepare('UPDATE '.PRE.'contacts SET
+                          firstname=?,
+                          lastname=?,
+                          company=?,
+                          tel_home=?,
+                          gsm=?,
+                          fax=?,
+                          tel_business=?,
+                          address=?,
+                          postal=?,
+                          city=?,
+                          email=?,
+                          notes=?,
+                          added_by=?,
+                          date=now()
+                          WHERE id =?' );
 
+    db_execute($q, array(safe_data($_POST['firstname']),
+                         safe_data($_POST['lastname']),
+                         safe_data($_POST['company']),
+                         safe_data($_POST['tel_home']),
+                         safe_data($_POST['gsm']),
+                         safe_data($_POST['fax']),
+                         safe_data($_POST['tel_business']),
+                         safe_data($_POST['address']),
+                         safe_data($_POST['postal']),
+                         safe_data($_POST['city']),
+                         safe_data($_POST['email']),
+                         safe_data_long($_POST['notes']),
+                         UID,
+                         $contactid ) );
     break;
 
   case 'submit_delete':
@@ -136,7 +157,9 @@ switch($_REQUEST['action'] ) {
     $contactid = $_POST['contactid'];
 
     //get taskid - if any
-    $taskid = db_result(db_query('SELECT taskid FROM '.PRE.'contacts WHERE id='.$contactid.' LIMIT 1' ), 0, 0 );
+    $q = db_prepare('SELECT taskid FROM '.PRE.'contacts WHERE id=? LIMIT 1' );
+    db_execute($q, array($contactid ) );
+    $taskid = db_result($q, 0, 0 );
 
     //check usergroup if required
     if($taskid ) {
@@ -145,7 +168,8 @@ switch($_REQUEST['action'] ) {
     }
 
     //delete the contact
-    @db_query('DELETE FROM '.PRE.'contacts WHERE id='.$contactid );
+    $q = db_prepare('DELETE FROM '.PRE.'contacts WHERE id=?' );
+    db_execute($q, array($contactid ) );
     break;
 
   //default error

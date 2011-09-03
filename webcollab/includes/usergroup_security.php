@@ -40,15 +40,15 @@ function usergroup_check($taskid ) {
     return $taskid;
   }
 
-  $tail = ' AND (globalaccess=\'f\' AND usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+  $tail = ' AND (globalaccess=\'f\' AND usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid=?)
             OR globalaccess=\'t\'
             OR usergroupid=0
-            OR owner='.UID.')';
+            OR owner=?)';
 
-
-  if(! ($q = @db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.intval($taskid).$tail.' LIMIT 1', 0 ) ) ) {
+  if(! ($q = db_prepare('SELECT projectid FROM '.PRE.'tasks WHERE id=?'.$tail.' LIMIT 1', 0 ) ) ) {
     error('Usergroup security', 'There was an error in the data query.' );
   }
+  db_execute($q, array(intval($taskid), UID, UID ) );
 
   if(! $projectid = db_result($q, 0, 0 ) ) {
     warning($lang['access_denied'], $lang['private_usergroup_no_access'] );
@@ -56,9 +56,10 @@ function usergroup_check($taskid ) {
 
   //if this is a task, then get project data  
   if($projectid != $taskid ) {
-    if(! ($q = db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$projectid.$tail.' LIMIT 1', 0 ) ) ) {
+    if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id=?'.$tail.' LIMIT 1', 0 ) ) ) {
       error('Usergroup security', 'There was an error in the data query.' );
     }
+    db_execute($q, array($projectid, UID, UID ) );
 
     if(db_result($q, 0, 0 ) < 1 ) {  
       warning($lang['access_denied'], $lang['private_usergroup_no_access'] );

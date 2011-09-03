@@ -4,8 +4,8 @@
 
   WebCollab
   ---------------------------------------
-  This file created 2005 by Stanislav Pekarèík (fredis -at- SoftHome.net)
-
+  This file created 2005 by Stanislav PekarÄÃ­k;fredis@SoftHome.net
+  
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
@@ -21,40 +21,35 @@
   Function:
   ---------
 
-  Language files (long messages) for 'sk' (Slovenskı)
+  Language files (long messages) for 'sk' (SlovenskÃ½)
 
-  Maintainer:
+  Maintainer: 
+
+  NOTE: This file is written in UTF-8 character set
 
 */
 
-$taskgroup_info =   "<ul><li>Ak bude zru¹ená skupina pre úlohu, v¹etky jej úlohy budú nastavené ako nezaradené.</li>\n".
-                      "<li>Mô¾te zmeni» meno kategórie bez závislosti s úlohou.</li>\n".
-                      "<li>Dve skupiny pre úlohu nemô¾u ma» rovnaké meno.</li></ul>\n";
+$taskgroup_info =   "<ul><li>Ak bude zruÅ¡enÃ¡ skupina pre Ãºlohu, vÅ¡etky jej Ãºlohy budÃº nastavenÃ© ako nezaradenÃ©.</li>\n".
+                      "<li>MÃ´Å¾te zmeniÅ¥ meno kategÃ³rie bez zÃ¡vislosti s Ãºlohou.</li>\n".
+                      "<li>Dve skupiny pre Ãºlohu nemÃ´Å¾u maÅ¥ rovnakÃ© meno.</li></ul>\n";
 
-$usergroup_info =   "<ul><li>Ak zru¹íte u¾ivateµskú skupinu v¹etky správy na jej privátnom fóre budú vymazané tie¾.</li>\n".
-                      "<li>Privátne u¾ivateµské skupiny sú viditeµné len èlenom tejto privátnej u¾ivateµskej skupiny.</li>\n".
-                      "<li>Meno u¾ivateµskej skupiny mô¾te zmeni» bez zmeny o u¾ivateµoch, ktorı sú v nej.</li>\n".
-                      "<li>Dve rôzné u¾ivateµské skupiny nemô¾u ma» rovnaké mená.</li></ul>\n";
+$usergroup_info =   "<ul><li>Ak zruÅ¡Ã­te uÅ¾ivateÄ¾skÃº skupinu vÅ¡etky sprÃ¡vy na jej privÃ¡tnom fÃ³re budÃº vymazanÃ© tieÅ¾.</li>\n".
+                      "<li>PrivÃ¡tne uÅ¾ivateÄ¾skÃ© skupiny sÃº viditeÄ¾nÃ© len Älenom tejto privÃ¡tnej uÅ¾ivateÄ¾skej skupiny.</li>\n".
+                      "<li>Meno uÅ¾ivateÄ¾skej skupiny mÃ´Å¾te zmeniÅ¥ bez zmeny o uÅ¾ivateÄ¾och, ktorÃ½ sÃº v nej.</li>\n".
+                      "<li>Dve rÃ´znÃ© uÅ¾ivateÄ¾skÃ© skupiny nemÃ´Å¾u maÅ¥ rovnakÃ© menÃ¡.</li></ul>\n";
 
-$user_info      =    "Prosím zvoµte Va¹u akciu z menu vµavo.<br /><br />".
-                      "Niektoré tipy:<br />".
+$user_info      =    "ProsÃ­m zvoÄ¾te VaÅ¡u akciu z menu vÄ¾avo.<br /><br />".
+                      "NiektorÃ© tipy:<br />".
                       "<ul>".
-                      "<li>Privátny u¾ivatelia mô¾u vidie» len èlenov, korı sú v tej istej skupine.</li>\n".
-                      "<li>Sú dve ¹tádia zru¹enia u¾ivateµa, druhé je trvalé.</li>\n".
-                      "<li>Zru¹enı u¾ívateµ stráca v¹etky svoje úlohy, ale nie svoje správy na fóre.</li>\n".
-                      "<li>Trvalo zru¹enı u¾ívateµ stráca v¹etko.</li>\n".
-                      "<li>Zru¹enému u¾ívateµovi ostáva zoznam úloh, a bude pokraèova» s tımto zoznamom po obnove.</li>\n".
-                      "<li>Informácie o v¹etkıch akciách vykonanıch u¾ívateµom budú u¾ivateµovi poslané emailom.</li>\n".
-                      "<li>Heslo je kryptované v databáze. Vy mô¾te len nastavi» nové.</li>\n".
-                      "<li>Heslá sú zaslané len pri zadaní, tak¾e bud»e opatrnı komu ich zasielate emailom!</li>\n".
-                      "<li>U¾ívateµ mô¾e èiastoène editova» sám seba bez vedomia adminstrátora - to mô¾e u¹etri» Vá¹ èas (a spam)</li>\n".
+                      "<li>PrivÃ¡tny uÅ¾ivatelia mÃ´Å¾u vidieÅ¥ len Älenov, korÃ½ sÃº v tej istej skupine.</li>\n".
+                      "<li>SÃº dve Å¡tÃ¡dia zruÅ¡enia uÅ¾ivateÄ¾a, druhÃ© je trvalÃ©.</li>\n".
+                      "<li>ZruÅ¡enÃ½ uÅ¾Ã­vateÄ¾ strÃ¡ca vÅ¡etky svoje Ãºlohy, ale nie svoje sprÃ¡vy na fÃ³re.</li>\n".
+                      "<li>Trvalo zruÅ¡enÃ½ uÅ¾Ã­vateÄ¾ strÃ¡ca vÅ¡etko.</li>\n".
+                      "<li>ZruÅ¡enÃ©mu uÅ¾Ã­vateÄ¾ovi ostÃ¡va zoznam Ãºloh, a bude pokraÄovaÅ¥ s tÃ½mto zoznamom po obnove.</li>\n".
+                      "<li>InformÃ¡cie o vÅ¡etkÃ½ch akciÃ¡ch vykonanÃ½ch uÅ¾Ã­vateÄ¾om budÃº uÅ¾ivateÄ¾ovi poslanÃ© emailom.</li>\n".
+                      "<li>Heslo je kryptovanÃ© v databÃ¡ze. Vy mÃ´Å¾te len nastaviÅ¥ novÃ©.</li>\n".
+                      "<li>HeslÃ¡ sÃº zaslanÃ© len pri zadanÃ­, takÅ¾e budÅ¥e opatrnÃ½ komu ich zasielate emailom!</li>\n".
+                      "<li>UÅ¾Ã­vateÄ¾ mÃ´Å¾e ÄiastoÄne editovaÅ¥ sÃ¡m seba bez vedomia adminstrÃ¡tora - to mÃ´Å¾e uÅ¡etriÅ¥ VÃ¡Å¡ Äas (a spam)</li>\n".
                       "</ul>\n";
-
-$calendar_key    =  "<i>Návrat do hlavného menu</i></a>]</b><br />\n".
-                      "<p><b><span class=\"underline\">Legenda kalendára</span></b><br /><br />\n".
-                      "<span class=\"blue\">Projekt (s nesplnenımi úlohami)</span><br />\n".
-                      "<span class=\"green\"><span class=\"underline\">Projekt </span>(v¹etky úlohy splnené)</span><br />\n".
-                      "<span class=\"red\">Úloha (nesplnená)</span><br />\n".
-                      "<span class=\"green\">Úloha (splnená)</span><br /></p>\n";
 
 ?>

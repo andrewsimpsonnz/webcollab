@@ -1,10 +1,10 @@
 <?php
 /*
 
-  $Id$
+  $Id: task_summary_list.php 2310 2009-09-03 05:46:47Z andrewsimpson $
 
   (c) 2002 Marshall Rose (attributed)
-  (c) 2002 - 2009 Andrew Simpson
+  (c) 2002 - 2011 Andrew Simpson
 
   WebCollab
   ---------------------------------------
@@ -46,37 +46,44 @@ $no_access_project = array();
 // MAIN FUNCTION
 //
 
+function project_query($tail, $equiv='' ) {
+  global $epoch;
 
-function project_summary( $tail, $depth=0, $equiv='' ) {
+  $q = db_prepare('SELECT '.PRE.'tasks.id AS id,
+                          '.PRE.'tasks.parent AS parent,
+                          '.PRE.'tasks.name AS taskname,
+                          '.PRE.'tasks.deadline AS deadline,
+                          '.PRE.'tasks.status AS status,
+                          '.PRE.'tasks.priority AS priority,
+                          '.PRE.'tasks.owner AS owner,
+                          '.PRE.'tasks.taskgroupid AS taskgroupid,
+                          '.PRE.'tasks.usergroupid AS usergroupid,
+                          '.PRE.'tasks.projectid AS projectid,
+                          '.PRE.'tasks.completed AS completed,
+                          '.$epoch.' deadline) AS due,
+                          '.$epoch.' '.PRE.'tasks.edited) AS edited,
+                          '.$epoch.' '.PRE.'tasks.lastforumpost) AS lastpost,
+                          '.$epoch.' '.PRE.'tasks.lastfileupload) AS lastfileupload,
+                          '.$epoch.' '.PRE.'seen.time) AS last_seen
+                          '.$equiv.'
+                          FROM '.PRE.'tasks
+                          LEFT JOIN '.PRE.'seen ON ('.PRE.'tasks.id='.PRE.'seen.taskid AND '.PRE.'seen.userid='.UID.')
+                          '.$tail );
+
+  return $q;
+}
+
+function project_summary($q, $depth=0, $input='' ) {
   global $GID, $lang, $task_state, $task_priority;
   global $user_array, $usergroups_array, $taskgroups_array, $parent_array;
   global $no_access_project;
   global $sortby;
-  global $epoch;
-
-  $q = db_query( 'SELECT '.PRE.'tasks.id AS id,
-                         '.PRE.'tasks.parent AS parent,
-                         '.PRE.'tasks.name AS taskname,
-                         '.PRE.'tasks.deadline AS deadline,
-                         '.PRE.'tasks.status AS status,
-                         '.PRE.'tasks.priority AS priority,
-                         '.PRE.'tasks.owner AS owner,
-                         '.PRE.'tasks.taskgroupid AS taskgroupid,
-                         '.PRE.'tasks.usergroupid AS usergroupid,
-                         '.PRE.'tasks.projectid AS projectid,
-                         '.PRE.'tasks.completed AS completed,
-                         '.$epoch.' deadline) AS due,
-                         '.$epoch.' '.PRE.'tasks.edited) AS edited,
-                         '.$epoch.' '.PRE.'tasks.lastforumpost) AS lastpost,
-                         '.$epoch.' '.PRE.'tasks.lastfileupload) AS lastfileupload,
-                         '.$epoch.' '.PRE.'seen.time) AS last_seen
-                         '.$equiv.'
-                         FROM '.PRE.'tasks
-                         LEFT JOIN '.PRE.'seen ON ('.PRE.'tasks.id='.PRE.'seen.taskid AND '.PRE.'seen.userid='.UID.')
-                         '.$tail );
+  global $q2;
 
   //reset variables
   $result = '';
+
+  db_execute($q, $input );
 
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
@@ -356,21 +363,23 @@ function project_summary( $tail, $depth=0, $equiv='' ) {
     //show graphical taskbar
     if( ($row['parent'] == 0 ) && ($depth >= 0 ) ) {
       if($row['completed'] > 0 ) {
-       $result .= "<table width=\"200\"><tr><td class=\"greenbar\" style=\"height: 2px; width :".($row['completed']*2)."px\"></td><td class=\"redbar\" style=\"height: 2px; width :".(200-($row['completed']*2))."px\"></td></tr></table>\n";
+       $result .= "<table><tr><td class=\"greenbar\" style=\"height: 2px; width :".($row['completed']*2)."px\"></td><td class=\"redbar\" style=\"height: 2px; width :".(200-($row['completed']*2))."px\"></td></tr></table>\n";
 
       }
       else {
-        $result .= "<table width=\"200\"><tr><td class=\"redbar\" style=\"height: 2px; width : 200px\"></td></tr></table>\n";
+        $result .= "<table><tr><td class=\"redbar\" style=\"height: 2px; width : 200px\"></td></tr></table>\n";
 
       }
     }
 
     $result .= "</td></tr>\n";
+
+    //add child tasks by recursive function
     if( $depth >= 0 ) {
       //see if task is in parent cache
       if(isset($parent_array[($row['id'])] ) ) {
         //add child tasks
-        $result .= project_summary( 'WHERE '.PRE.'tasks.parent=\''.$row['id'].'\''.usergroup_tail().' ORDER BY taskname', $depth+1 );
+        $result .= project_summary($q2, $depth+1, array($row['id'] ) );
       }
     }
   }
@@ -387,6 +396,8 @@ if(isset($_GET['sortby']) ) {
 else {
   $sortby = '';
 }
+
+// --- Caching for commonly used database calls
 
 //query to get users, then cache results
 $q = db_query('SELECT id, fullname FROM '.PRE.'users' );
@@ -417,16 +428,26 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   $parent_array[($row[0])] = $row[0];
 }
 
-//text link for 'printer friendly' page
-if(isset($_GET['action']) && $_GET['action'] == 'summary_print' ) {
-  $content  = "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=".$sortby."\">".$lang['normal_version']."</a>]</span></p>";
-}
-else {
-  $content  = "<div style=\"text-align: right\"><span class=\"textlink\"><a href=\"tasks.php?x=".X."&amp;action=summary_print&amp;sortby=".$sortby."\" title=\"".$lang['print_version']."\">".
-              "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a></span></div>";
+//get list of private projects and put them in an array for later use
+$q = db_query('SELECT id, usergroupid FROM '.PRE.'tasks WHERE parent=0 AND globalaccess=\'f\'' );
+
+for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
+  //array key is projectid, array variable is usergroupid
+  $no_access_project[($row[0])] = $row[1];
 }
 
-$content .= "<table>\n";
+// --- End of caching
+
+//text link for 'printer friendly' page
+if(isset($_GET['action']) && $_GET['action'] == 'summary_print' ) {
+  $content  = "<p><span class=\"textlink\">[<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=".$sortby."\">".$lang['normal_version']."</a>]</span></p>\n";
+}
+else {
+  $content  = "<div style=\"text-align: right\"><a href=\"tasks.php?x=".X."&amp;action=summary_print&amp;sortby=".$sortby."\" title=\"".$lang['print_version']."\">".
+              "<img src=\"images/printer.png\" alt=\"".$lang['print_version']."\" width=\"16\" height=\"16\" /></a></div>\n";
+}
+
+$content .= "<table class=\"celldata\">\n";
 $content .= "<tr><td colspan=\"3\"><small><a href=\"help/help_language.php?item=summarypage&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=summarypage&amp;type=help&amp;lang=".LOCALE_USER."'); return false\"><b>".$lang['flags']."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=deadline\">";
 $content .= "<b>".$lang['deadline']."</b></a></small></td><td><small>";
@@ -454,59 +475,67 @@ $content .= "<b>".$lang['group']."</b></a></small></td><td><small>";
 $content .= "<a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=taskname\">";
 $content .= "<b>".$lang['task']."</b></a></small></td></tr>";
 
-//get list of private projects and put them in an array for later use
-$q = db_query('SELECT id, usergroupid FROM '.PRE.'tasks WHERE parent=0 AND globalaccess=\'f\'' );
-
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
-  //array key is projectid, array variable is usergroupid
-  $no_access_project[($row[0])] = $row[1];
-}
-
+//set defaults
 $group_tail = 'WHERE archive=0'.usergroup_tail();
+
+//prepare statement for child tasks
+$q2 = project_query('WHERE '.PRE.'tasks.parent=?'.usergroup_tail().' ORDER BY taskname' );
 
 // tail end of SQL query
 switch($sortby ) {
   case 'deadline':
-    $content .= project_summary($group_tail.' ORDER BY deadline,taskname', -1 );
+    $q1 = project_query($group_tail.' ORDER BY deadline,taskname' );
+    $depth = -1;
     $suffix = $lang['by_deadline'];
     break;
 
   case 'status':
-    $content .= project_summary($group_tail.' ORDER BY status,deadline,taskname', -1 );
+    $q1 = project_query($group_tail.' ORDER BY status,deadline,taskname' );
+    $depth = -1;
     $suffix = $lang['by_status'];
     break;
 
   case 'priority':
-    $content .= project_summary($group_tail.' ORDER BY priority,status,deadline,taskname', -1 );
+    $q1 = project_query($group_tail.' ORDER BY priority,status,deadline,taskname' );
+    $depth = -1;
     $suffix = $lang['by_priority'];
     break;
 
   case 'owner':
-    $content .= project_summary('LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner) '.$group_tail.' ORDER BY username,deadline,taskname', -1, ', '.PRE.'users.fullname AS username' );
+     $q1 = project_query('LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner) '.$group_tail.' ORDER BY username,deadline,taskname', ', '.PRE.'users.fullname AS username' );
+    $depth = -1;
     $suffix = $lang['by_owner'];
     break;
 
   case 'usergroupid':
-    $content .= project_summary('LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'tasks.usergroupid) '.$group_tail.' ORDER BY usergroupname,deadline,taskname', -1, ', '.PRE.'usergroups.name AS usergroupname' );
+    $q1 = project_query('LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'tasks.usergroupid) '.$group_tail.' ORDER BY usergroupname,deadline,taskname', ', '.PRE.'usergroups.name AS usergroupname' );
+    $depth = -1;
     $suffix = $lang['by_usergroup'];
     break;
 
   case 'taskgroupid':
-    $content .= project_summary('LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid) '.$group_tail.' ORDER BY taskgroupname,deadline,taskname', -1, ', '.PRE.'taskgroups.name AS taskgroupname' );
+    $q1 = project_query('LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid) '.$group_tail.' ORDER BY taskgroupname,deadline,taskname', ', '.PRE.'taskgroups.name AS taskgroupname' );
+    $depth = -1;
     $suffix = $lang['by_taskgroup'];
     break;
 
   case 'taskname':
-    $content .= project_summary($group_tail.' ORDER BY taskname,deadline', -1 );
+    $q1 = project_query($group_tail.' ORDER BY taskname,deadline' );
+    $depth = -1;
     $suffix = '';
     break;
 
   default:
-    $content .= project_summary($group_tail.'AND parent=0 ORDER BY taskname', 0 );
+    $q1 = project_query($group_tail.'AND parent=0 ORDER BY taskname' );
+    $depth = 0;
     $suffix = '';
     break;
 }
 
+//assemble main page
+$content .= project_summary($q1, $depth );
+
+//end page
 $content .= "</table><br /><br />\n";
 
 new_box( $lang['projects'].$suffix, $content );

@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: details.php 1916 2008-01-04 08:23:14Z andrewsimpson $
 
-  (c) 2004 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -39,7 +39,8 @@ if(! @safe_integer($_REQUEST['taskid']) ) {
 $taskid = $_REQUEST['taskid'];
 
 //get task details
-if(! ($q_detail = @db_query('SELECT * FROM '.PRE.'tasks WHERE id='.$taskid.' LIMIT 1', 0 ) ) ) {
+$q_detail = db_prepare('SELECT * FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+if(! (db_execute($q_detail, array($taskid ) ) ) ) {
   error('Task details', 'There was an error in the data query.' );
 }
 

@@ -27,27 +27,27 @@
 
 */
 
-$taskgroup_info =   "<ul><li>Se você excluir um grupo de tarefas, todas as tarefas pertencentes a ele se tornarão não-categorizadas..</li>\n".
-                      "<li>Você pode alterar o nome de uma categoria sem interferir nas tarefas.</li>\n".
-                      "<li>Dois grupos de tarefas não podem ter nomes iguais.</li></ul>\n";
+$taskgroup_info =   "<ul><li>Se vocÃª excluir um grupo de tarefas, todas as tarefas pertencentes a ele se tornarÃ£o nÃ£o-categorizadas..</li>\n".
+                      "<li>VocÃª pode alterar o nome de uma categoria sem interferir nas tarefas.</li>\n".
+                      "<li>Dois grupos de tarefas nÃ£o podem ter nomes iguais.</li></ul>\n";
 
-$usergroup_info =   "<ul><li>Se você excluir uma equipe todas as mensagens particulares relacionadas a ela existentes nos fóruns também o serão.</li>\n".
-                      "<li>Equipes privativas só podem ser enxergadas por seus membros.</li>\n".
-                      "<li>Você pode alterar o nome de uma equipe sem interferir em seus membros.</li>\n".
-                      "<li>Duas equipes não podem ter nomes iguais.</li></ul>\n";
+$usergroup_info =   "<ul><li>Se vocÃª excluir uma equipe todas as mensagens particulares relacionadas a ela existentes nos fÃ³runs tambÃ©m o serÃ£o.</li>\n".
+                      "<li>Equipes privativas sÃ³ podem ser enxergadas por seus membros.</li>\n".
+                      "<li>VocÃª pode alterar o nome de uma equipe sem interferir em seus membros.</li>\n".
+                      "<li>Duas equipes nÃ£o podem ter nomes iguais.</li></ul>\n";
 
-$user_info      =    "Por favor, escolha o que fazer usando o menu à esquerda.<br /><br />".
-                      "Algumas dicas rápidas:<br />".
+$user_info      =    "Por favor, escolha o que fazer usando o menu Ã  esquerda.<br /><br />".
+                      "Algumas dicas rÃ¡pidas:<br />".
                       "<ul>".
-                      "<li>Usuários privativos só podem ser enxergados por membros da mesma equipe.</li>\n".
-                      "<li>A exclusão de usuários possui dois estágios, sendo o segundo caracterizado por seu caráter permanente.</li>\n".
-                      "<li>Um usuário que é excluído perde todas as suas tarefas, mas mantém suas mensagens nos fóruns.</li>\n".
-                      "<li>Um usuário que é permanentemente excluído perde tudo.</li>\n".
-                      "<li>Um usuário excluído mantém o registro de suas tarefas já realizadas, continuando com esta lista até ser ressucitado.</li>\n".
-                      "<li>TODAS as ações realizadas por um usuário serão notificadas ao próprio via e-mail.</li>\n".
-                      "<li>As senhas são encriptografadas no banco de dados. Você só pode registrar uma nova.</li>\n".
-                      "<li>As senhas só são enviadas via e-mail uma única vez aos usuários, no momento em que são registradas. Portanto as envie para um endereço seguro!</li>\n".
-                      "<li>Os usuários podem se auto-editarem sem o conhecimento da administração - isso irá economizar seu tempo</li>\n".
+                      "<li>UsuÃ¡rios privativos sÃ³ podem ser enxergados por membros da mesma equipe.</li>\n".
+                      "<li>A exclusÃ£o de usuÃ¡rios possui dois estÃ¡gios, sendo o segundo caracterizado por seu carÃ¡ter permanente.</li>\n".
+                      "<li>Um usuÃ¡rio que Ã© excluÃ­do perde todas as suas tarefas, mas mantÃ©m suas mensagens nos fÃ³runs.</li>\n".
+                      "<li>Um usuÃ¡rio que Ã© permanentemente excluÃ­do perde tudo.</li>\n".
+                      "<li>Um usuÃ¡rio excluÃ­do mantÃ©m o registro de suas tarefas jÃ¡ realizadas, continuando com esta lista atÃ© ser ressucitado.</li>\n".
+                      "<li>TODAS as aÃ§Ãµes realizadas por um usuÃ¡rio serÃ£o notificadas ao prÃ³prio via e-mail.</li>\n".
+                      "<li>As senhas sÃ£o encriptografadas no banco de dados. VocÃª sÃ³ pode registrar uma nova.</li>\n".
+                      "<li>As senhas sÃ³ sÃ£o enviadas via e-mail uma Ãºnica vez aos usuÃ¡rios, no momento em que sÃ£o registradas. Portanto as envie para um endereÃ§o seguro!</li>\n".
+                      "<li>Os usuÃ¡rios podem se auto-editarem sem o conhecimento da administraÃ§Ã£o - isso irÃ¡ economizar seu tempo</li>\n".
                       "</ul>\n";
 
 ?>

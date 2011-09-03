@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_navigate.php 2170 2009-04-06 07:25:59Z andrewsimpson $
 
-  (c) 2003 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,6 +35,8 @@ if(! defined('UID' ) ) {
 //secure variables
 $content  = '';
 
+$q1 = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+
 //existing task or project
 if( @safe_integer($_GET['taskid']) ) {
 
@@ -42,45 +44,50 @@ if( @safe_integer($_GET['taskid']) ) {
 
   include_once(BASE.'includes/details.php' );
 
-  $content .= "<small><b>".$lang['project'].":</b></small><br />\n";
+  $content .= "<ul class=\"menu\">\n<li><small><b>".$lang['project'].":</b></small></li>\n";
 
   switch($TASKID_ROW['parent'] ) {
 
     case '0':
       //project
-      $content .= "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
-                   box_shorten($TASKID_ROW['name'])."<br />\n";
+      $content .= "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
+                   box_shorten($TASKID_ROW['name'])."</li>\n";
       break;
 
     case ($TASKID_ROW['projectid'] ):
       //task under project
 
       //get project name (limited to 20 characters)
-      $project_name = box_shorten(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] ), 0, 0 ) );
+      db_execute($q1, array($TASKID_ROW['projectid'] ) );
+      $project_name = box_shorten(db_result($q1, 0, 0 ) );
 
-      $content .= "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a><br />\n".
-                  "<small><b>".$lang['task'].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
-                  box_shorten($TASKID_ROW['name'])."<br />\n";
+      $content .= "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></li>\n".
+                  "<li><small><b>".$lang['task'].":</b></small></li>\n".
+                  "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
+                  box_shorten($TASKID_ROW['name'])."</li>\n";
       break;
 
     default:
       //task with parent task
 
       //get project name
-      $project_name = box_shorten(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'] ), 0, 0 ) );
+      db_execute($q1, array($TASKID_ROW['projectid'] ) );
+      $project_name = box_shorten(db_result($q1, 0, 0 ) );
       //get parent name
-      $parent_name = box_shorten(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['parent'] ), 0, 0 ) );
+      db_execute($q1, array($TASKID_ROW['parent'] ) );
+      $parent_name = box_shorten(db_result($q1, 0, 0 ) );
 
-      $content .= "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a><br />\n".
-                  "<small><b>".$lang['parent_task'].":</b></small><br />\n".
-                  "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['parent']."\">".$parent_name."</a><br />\n".
-                  "<small><b>".$lang['task'].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
-                  box_shorten($TASKID_ROW['name'])."<br />\n";
+      $content .= "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></li>\n".
+                  "<li><small><b>".$lang['parent_task'].":</b></small></li>\n".
+                  "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['parent']."\">".$parent_name."</a></li>\n".
+                  "<li><small><b>".$lang['task'].":</b></small></li>\n".
+                  "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
+                  box_shorten($TASKID_ROW['name'])."</li>\n";
       break;
 
   }
+
+  $content .= "</ul>\n";
 
   new_box($lang['task_navigation'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );
 }
@@ -91,35 +98,41 @@ elseif( @safe_integer($_GET['parentid']) ){
   $parentid = $_GET['parentid'];
 
   //get task parent details
-  $q = db_query('SELECT name, parent, projectid FROM '.PRE.'tasks WHERE id='.$parentid );
-  if( ! $row = db_fetch_array( $q, 0) )
+  $q = db_prepare('SELECT name, parent, projectid FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+  db_execute($q, array($parentid ) );
+  if( ! $row = db_fetch_array($q, 0 ) ) {
     error('Task navigate', 'Parent does not exist' );
+  }
 
   //get project name
-  $project_name = box_shorten(db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$row['projectid'] ), 0, 0 ) );
+  db_execute($q1, array($row['projectid'] ) );
 
-  $content .= "<small><b>".$lang['project'].":</b></small><br />\n".
-              "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['projectid']."\">".$project_name."</a><br />\n";
+  $project_name = box_shorten(db_result($q1, 0, 0 ) );
+
+  $content .= "<ul class=\"menu\"><li><small><b>".$lang['project'].":</b></small></li>\n".
+              "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['projectid']."\">".$project_name."</a></li>\n";
 
   switch( $row['parent'] ) {
 
     case '0':
       //new task under project
-      $content .= "<small><b>".$lang['task'].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
-                  "<i>".$lang['new_task']."</i><br />\n";
+      $content .= "<li><small><b>".$lang['task'].":</b></small></li>\n".
+                  "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
+                  "<i>".$lang['new_task']."</i></li>\n";
       break;
 
     default:
       //new task with parent task
-      $content .= "<small><b>".$lang['parent_task'].":</b></small><br />\n".
-                  "&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parentid."\">".$row['name']."</a><br />\n".
-                  "<small><b>".$lang['task'].":</b></small><br />\n".
-                  "&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
-                  "<i>".$lang['new_task']."</i><br />\n";
+      $content .= "<li><small><b>".$lang['parent_task'].":</b></small></li>\n".
+                  "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parentid."\">".$row['name']."</a></li>\n".
+                  "<li><small><b>".$lang['task'].":</b></small></li>\n".
+                  "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
+                  "<i>".$lang['new_task']."</i></li>\n";
       break;
 
   }
+
+  $content .= "</ul>\n";
 
   new_box( $lang['task_navigation'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );
 }

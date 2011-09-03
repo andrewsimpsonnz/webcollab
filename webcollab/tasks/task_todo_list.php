@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_todo_list.php 2295 2009-08-24 09:42:09Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -42,13 +42,14 @@ include_once(BASE.'tasks/task_common.php' );
 function listTasks($projectid ) {
   global $lang;
   global $task_uncompleted, $task_projectid;
-  global $task_array, $parent_array, $shown_array, $task_count;
+  global $task_array, $parent_array, $shown_array, $task_count, $level_count;
 
-  $task_array     = array();
-  $parent_array   = array();
-  $shown_array    = array();
-  $check_array    = array();
-  $task_count     = 0;  //counter for $task_array
+  $task_array   = array();
+  $parent_array = array();
+  $shown_array  = array();
+  $check_array  = array();
+  $task_count   = 0;  //counter for $task_array
+  $level_count  = 1;  //number of task levels
 
   //search for uncompleted tasks by projectid
   $task_key = array_keys((array)$task_projectid, $projectid );
@@ -89,7 +90,7 @@ function listTasks($projectid ) {
     $taskgroup_initial_flag = 1;
   }
   else {
-    $content = "<ul>\n";
+    $content = "<ul class=\"ul-".$level_count."\">\n";
     $taskgroup_flag = 0;
   }
 
@@ -115,6 +116,7 @@ function listTasks($projectid ) {
         //don't need </ul> before first taskgroup heading (no <ul> is set)
         if( ! $taskgroup_initial_flag ) {
           $content .= "</ul>\n";
+          $level_count = 1;
         }
 
         $content .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -131,7 +133,7 @@ function listTasks($projectid ) {
           }
         }
 
-        $content .= "</p>\n<ul>\n";
+        $content .= "</p>\n<ul class=\"ul-".$level_count."\">\n";
 
         //store current groupid & clear initial flag
         $stored_groupid = $task_array[$i]['group_id'];
@@ -166,10 +168,10 @@ function listTasks($projectid ) {
 //
 function find_children($parent ) {
 
-  global $task_array, $parent_array, $shown_array, $task_count; //, $shown_count;
+  global $task_array, $parent_array, $shown_array, $task_count, $level_count;
 
   $content_flag = 0;
-  $content = "\n<ul>\n";
+  $content = "\n<ul class=\"ul-".$level_count."\">\n";
 
   for($i=0 ; $i < $task_count ; ++$i ) {
 
@@ -197,6 +199,7 @@ function find_children($parent ) {
     }
     $content .= "</li>\n";
   }
+  --$level_count;
   $content .= "</ul>\n";
 
   if(! $content_flag ) {
@@ -253,7 +256,8 @@ else {
 }
 
 // check if there are projects
-if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent=0' ), 0, 0 ) < 1 ) {
+$q = db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent=0' );
+if(db_result($q, 0, 0 ) < 1 ) {
   $content = "<div style=\"text-align : center\"><a href=\"tasks.php?x=".X."&amp;action=add\">".$lang['add']."</a></div>\n";
   new_box( $lang['no_projects'], $content );
   return;
@@ -263,7 +267,8 @@ if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE parent=0' ), 0, 0
 switch($selection ) {
   case 'group':
     $userid = 0; $s1 = ""; $s2 = " selected=\"selected\""; $s3 = " checked=\"checked\""; $s4 = "";
-    $type = "AND usergroupid=".$groupid." ";
+    $s5 = "style=\"background-color: #DDDDDD\""; $s6 = "style=\"background-color: white\"";
+    $type = "AND usergroupid=? ";
     if($groupid == 0 ){
       $s4 = " selected=\"selected\"";
     }
@@ -272,25 +277,26 @@ switch($selection ) {
   case 'user':
   default:
     $groupid = 0; $s1 = " checked=\"checked\""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
-    $type = "AND owner=".$userid." ";
+    $s5 = "style=\"background-color: white\""; $s6 = "style=\"background-color: #DDDDDD\"";
+    $type = "AND owner=? ";
     if($userid == 0 ){
       $s2 = " selected=\"selected\"";
     }
     break;
 }
 
-  $content  .= "<div style=\"text-align : right\"><span class=\"textlink\">\n".
-               "<a href=\"icalendar.php?x=".X."&amp;action=todo&amp;selection=".$selection."&amp;userid=".$userid."&amp;groupid=".$groupid."\" title=\"".$lang['icalendar']."\">".
-               "<img src=\"images/calendar_link.png\" alt=\"".$lang['icalendar']."\" width=\"16\" height=\"16\" /></a>\n</span></div>\n";
+$content .= "<div style=\"text-align : right\">\n".
+            "<a href=\"icalendar.php?x=".X."&amp;action=todo&amp;selection=".$selection."&amp;userid=".$userid."&amp;groupid=".$groupid."\" title=\"".$lang['icalendar']."\">".
+            "<img src=\"images/calendar_link.png\" alt=\"".$lang['icalendar']."\" width=\"16\" height=\"16\" /></a>\n</div>\n";
 
 
 $content .= "<form method=\"post\" action=\"tasks.php\">\n".
-            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n ".
-            "<input type=\"hidden\" name=\"action\" value=\"todo\" /></fieldset>\n ".
+            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+            "<input type=\"hidden\" name=\"action\" value=\"todo\" /></fieldset>\n".
             "<table class=\"decoration\" cellpadding=\"5\">\n".
             "<tr align=\"left\"><td>".$lang['todo_list_for']."</td>".
             "<td><input type=\"radio\" value=\"user\" name=\"selection\" onchange=\"javascript:this.form.submit()\" id=\"user\"".$s1." /><label for=\"user\">".$lang['users']."</label></td><td>\n".
-            "<label for=\"user\"><select name=\"userid\" onchange=\"javascript:this.form.submit()\">\n".
+            "<label for=\"user\"><select name=\"userid\" ".$s5." onchange=\"javascript:this.form.submit()\" >\n".
             "<option value=\"0\"".$s2.">".$lang['nobody']."</option>\n";
 
 //get all users for option box
@@ -315,7 +321,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 $content .= "</select></label></td>\n".
             "<td><input type=\"radio\" value=\"group\" name=\"selection\" onchange=\"javascript:this.form.submit()\" id=\"group\"".$s3." /><label for=\"group\">".$lang['usergroups']."</label></td><td>\n".
-            "<label for=\"group\"><select name=\"groupid\" onchange=\"javascript:this.form.submit()\">\n".
+            "<label for=\"group\"><select name=\"groupid\" ".$s6." onchange=\"javascript:this.form.submit()\">\n".
             "<option value=\"0\"".$s4.">".$lang['no_group']."</option>\n";
 
 //get all groups for option box
@@ -360,7 +366,7 @@ else {
 }
 
 // show all subtasks that are not complete
-$q = db_query('SELECT   '.PRE.'tasks.id AS id,
+$q = db_prepare('SELECT '.PRE.'tasks.id AS id,
                         '.PRE.'tasks.name AS name,
                         '.PRE.'tasks.deadline AS deadline,
                         '.PRE.'tasks.parent AS parent,
@@ -376,6 +382,18 @@ $q = db_query('SELECT   '.PRE.'tasks.id AS id,
                         AND (status=\'created\' OR status=\'active\')
                         '.$type.$tail.
                         'ORDER BY '.$no_group.' group_name,'.$task_order );
+
+switch($selection ) {
+  case 'group':
+    db_execute($q, array($groupid ) );
+    break;
+
+  case 'user':
+    db_execute($q, array($userid ) );
+  default:
+    break;
+}
+
 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 

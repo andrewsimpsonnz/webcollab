@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: file_list.php 2292 2009-08-24 09:40:09Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -46,7 +46,7 @@ $taskid = $_REQUEST['taskid'];
 $taskid = usergroup_check($taskid );
 
 //get the files from this task
-$q = db_query('SELECT '.PRE.'files.id AS id,
+$q = db_prepare('SELECT '.PRE.'files.id AS id,
                         '.PRE.'files.filename AS filename,
                         '.PRE.'files.uploaded AS uploaded,
                         '.PRE.'files.size AS size,
@@ -57,41 +57,41 @@ $q = db_query('SELECT '.PRE.'files.id AS id,
                         '.PRE.'users.fullname AS username
                         FROM '.PRE.'files
                         LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'files.uploader)
-                        WHERE '.PRE.'files.taskid='.$taskid.'
+                        WHERE '.PRE.'files.taskid=?
                         ORDER BY uploaded' );
 
+db_execute($q, array($taskid ) );
 
-$content .= "<table>\n";
+$content .= "<ul class=\"ul-1\">\n";
 
 //show them
 for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
   //file part
-  $content .= "<tr><td><a href=\"files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a> <small>(".nice_size($row['size'] ).") </small>";
+  $content .= "<li><a href=\"files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a> <small>(".nice_size($row['size'] ).") </small>";
 
   //owners of the file and admins have a "delete" and "update" option
   if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['uploader'] ) ) {
 
     $content .= "&nbsp;<span class=\"textlink\">".
                 "[<a href=\"files.php?x=".X."&amp;action=delete&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['del']."</a>]".
-                "&nbsp;[<a href=\"files.php?x=".X."&amp;action=update&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['update']."</a>]</span></td></tr>\n";
+                "&nbsp;[<a href=\"files.php?x=".X."&amp;action=update&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['update']."</a>]</span><br />\n";
 
   }
   else {
-    $content .= "</td></tr>\n";
+    $content .= "\n";
   }
 
   //user part
-  $content .= "<tr><td>".$lang['uploader']." <a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")</td></tr>\n";
+  $content .= $lang['uploader']." <a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")<br />";
 
   //show description
   if( $row['description'] != '' ) {
-    $content .= "<tr><td><small><i>".nl2br(bbcode($row['description'] ) )."</i></small></td></tr>\n";
+    $content .= "\n<small><i>".nl2br(bbcode($row['description'] ) )."</i></small>";
   }
-  //padding for next entry
-  $content .= "<tr><td>&nbsp;</td></tr>\n";
+  $content .= "</li>\n";
 }
-$content .= "</table>\n";
+$content .= "</ul>\n";
 
 if($i == 0 ) {
   //no files found in database
@@ -99,9 +99,9 @@ if($i == 0 ) {
 }
 
 if((! GUEST ) && ($TASKID_ROW['archive'] == 0) ){
-  $content .= "<span class=\"textlink\">[<a href=\"files.php?x=".X."&amp;taskid=".$taskid."&amp;action=upload\">".$lang['add_file']."</a>]</span>";
+  $content .= "<span class=\"textlink\">[<a href=\"files.php?x=".X."&amp;taskid=".$taskid."&amp;action=upload\">".$lang['add_file']."</a>]</span>\n";
 }
 
-new_box($lang['files_assoc_'.$TYPE], $content, "boxdata-normal", "head-normal", "boxstyle-short" );
+new_box($lang['files_assoc_'.$TYPE], $content, "boxdata-normal", "head-normal", "boxstyle-short", "file-list" );
 
 ?>

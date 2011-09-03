@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: setup_setup5.php 2253 2009-07-24 09:30:14Z andrewsimpson $
 
-  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -36,7 +36,7 @@ require_once('path.php' );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 require_once(BASE.'setup/setup_config.php' );
-include_once(BASE.'lang/lang_setup1.php' );
+include_once(BASE.'lang/lang_setup.php' );
 require_once(BASE.'setup/security_setup.php' );
 
 //security checks
@@ -175,13 +175,14 @@ $content .=
 "      //if using SMTP_AUTH give username & password\n".
 "      define('MAIL_USER', '".MAIL_USER."' );\n".
 "      define('MAIL_PASSWORD', '".MAIL_PASSWORD."' );\n".
-"      //use TLS encryption? (requires PHP 5.1+)\n".
+"      //use TLS encryption?\n".
 "      define('TLS', '".TLS."' );\n\n".
 "//----------------------------------------------------------------------------------------------\n".
 "// Less important items below this line\n\n".
 "//-- These items need to be edited directly from this file --\n\n".
 "//STYLE AND APPEARANCE\n\n".
-"  //Style sheets (CSS) Note: Setup always uses 'default.css' stylesheet for CSS_MAIN. (Place your CSS into /css directory)\n".
+"  //Style sheets (CSS) (Place your CSS into /css directory)\n".
+"  //  Note: Setup always uses 'setup.css' stylesheet as defined in [webcollab]/setup/setup_config.php\n".
 "  define('CSS_MAIN', '".CSS_MAIN."' );\n".
 "  define('CSS_CALENDAR', '".CSS_CALENDAR."' );\n".
 "  define('CSS_PRINT', '".CSS_PRINT."' );\n\n".
@@ -200,6 +201,8 @@ $content .=
 "//LOGIN CONTROLS\n\n".
 "  //session timeout in hours\n".
 "  define('SESSION_TIMEOUT', ".SESSION_TIMEOUT." );\n\n".
+"  //security token timeout for forms (in minutes)\n".
+"  define('TOKEN_TIMEOUT', 5 );\n\n".
 "  //Use external webserver authorisation to login (values are 'N', or 'Y')\n".
 "  define('WEB_AUTH', '".WEB_AUTH."' );\n\n".
 "  //Show passwords in user edit screens as plain text or hidden ('****') (values are 'text', or 'password')\n".
@@ -219,7 +222,6 @@ $content .=
 "//WEBCOLLAB VERSION\n\n".
 "  //WebCollab version string\n".
 "  define('WEBCOLLAB_VERSION', '".SETUP_WEBCOLLAB_VERSION."');\n\n".
-"  define('UNICODE_VERSION', '".SETUP_UNICODE_VERSION."' );\n\n".
 "?>\n";
 
 //open file for writing
@@ -245,32 +247,13 @@ if(isset($data['new_db'] ) && ($data['new_db'] == 'Y' ) ) {
   //make database connection
   db_setup_connect($data);
 
-  switch($data["db_type"]) {
-
-    case 'mysql':
-    case 'mysql_innodb':
-      //set the new session key in the new database
-      if( ! @mysql_query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$xnew.'\', \''.$ip.'\', now() )', $db_setup_connection ) ) {
-        abort("MySQL query failed:<br />". mysql_error($db_setup_connection) );
-      }
-      break;
-
-    case 'mysqli':
-      if( ! @mysqli_query($db_setup_connection, 'INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$xnew.'\', \''.$ip.'\', now() )' ) ) {
-        abort("MySQLi query failed:<br />".mysqli_error($db_setup_connection) );
-      }
-      break;
-
-    case 'postgresql':
-      //set the new session key in the new database
-      if( ! @pg_query($db_setup_connection, 'INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', \''.$xnew.'\', \''.$ip.'\', now() )' ) ) {
-        abort("Postgresql query failed:<br />".pg_last_error($db_setup_connection) );
-      }
-      break;
-
-    default:
-      abort('Not a valid database');
-      break;
+  //set the new session key in the new database
+  try {
+    $dbh->query('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES(\'1\', '.$dbh->quote($xnew ).', '.$dbh->quote($ip ).', now() )' );
+  }
+  catch (PDOException $e) {
+    $error = $e->getMessage();
+    abort("Database query failed:<br />".$error );
   }
 
   //update the site names in the database
@@ -314,38 +297,40 @@ create_bottom_setup();
 
 function db_setup_connect($data ) {
 
-global $db_setup_connection;
+  global $dbh;
 
- switch($data["db_type"]) {
+  switch($data["db_type"]) {
 
-    case 'mysql':
-    case 'mysql_innodb':
-      //make connection
-      if( ! ($db_setup_connection = @mysql_connect($data["db_host"], $data["db_user"], $data["db_password"] ) ) ) {
-        abort("Not able to connect to database server:<br />".mysql_error($db_setup_connection) );
+    //make connection
+    case 'mysql_pdo':
+      try {
+        $dbh = new PDO('mysql:host='.$data["db_host"].';dbname='.$data["db_name"], $data["db_user"],$data["db_password"] );
+
+        //set error handling
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       }
-
-      //select database
-      if( ! @mysql_select_db($data["db_name"], $db_setup_connection ) ) {
-        abort("Not able to select database:<br />". mysql_error($db_setup_connection) );
-      }
-      break;
-
-    case 'mysqli':
-      //make connection
-      if( ! ($db_setup_connection = @mysqli_connect($data["db_host"], $data["db_user"], $data["db_password"], $data["db_name"] ) ) ) {
-        abort("Not able to connect to database server:<br />".mysqli_error($db_setup_connection) );
+      catch (PDOException $e) {
+        $error = $e->getMessage();
+        abort("Not able to connect to database server:<br />".$error );
       }
       break;
 
-    case 'postgresql':
+    case 'postgresql_pdo':
 
       //set host string correctly
       $host = ($data["db_host"] != 'localhost' ) ? 'host='.$data["db_host"]: '';
 
       //make connection
-      if( ! ($db_setup_connection = @pg_connect($host.' user='.$data["db_user"].' dbname='.$data["db_name"].' password='. $data["db_password"]) ) ) {
-       abort("Not able to connect to database server:<br />".pg_last_error($db_setup_connection) );
+      try {
+
+        $dbh = new PDO('pgsql:host='.$data["db_host"].' port=5432 dbname='.$data["db_name"].' user='.$data["db_user"].' password='.$data["db_password"] );
+
+        //set error handling
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      }
+      catch (PDOException $e) {
+        $error = $e->getMessage();
+        abort("Not able to connect to database server:<br />".$error );
       }
       break;
 
@@ -362,56 +347,38 @@ global $db_setup_connection;
 
 function site_name($data ) {
 
-global $db_setup_connection;
+global $dbh;
 
-  switch($data["db_type"]) {
+  try {
+    switch($data["db_type"]) {
 
-    case 'mysql':
-    case 'mysql_innodb':
-      //set character set -- 1
-      if(! @mysql_query("SET NAMES 'utf8'", $db_setup_connection ) ) {
-        error_setup("Setting client encoding to UTF-8 character set had the following error:<br />".mysql_error($db_setup_connection ) );
-      }
-      //set character set -- 2
-      if(! @mysql_query("SET CHARACTER SET utf8", $db_setup_connection ) ) {
-        error_setup("Setting client encoding to UTF-8 character set had the following error:<br />".mysql_error($db_setup_connection) );
-      }
+      case 'mysql_pdo':
+          //set character set -- 1
+        $dbh->query('SET CHARACTER SET utf8' );
 
-      //update the site names in the database
-      mysql_query("UPDATE ".PRE."site_name SET manager_name='".mysql_real_escape_string($data["manager_name"] )."', abbr_manager_name='".mysql_real_escape_string($data["abbr_manager_name"] )."'", $db_setup_connection );
+        //set character set -- 2
+        $dbh->query('SET NAMES \'utf8\'' );
 
-      break;
+        break;
 
-    case 'mysqli':
-      //set character set -- 1
-      if(! @mysqli_query($db_setup_connection, "SET NAMES 'utf8'" ) ) {
-        error_setup("Setting client encoding to UTF-8 character set had the following error:<br />".mysqli_error($db_setup_connection ) );
-      }
-      //set character set -- 2
-      if(! @mysqli_query($db_setup_connection, "SET CHARACTER SET utf8" ) ) {
-        error_setup("Setting client encoding to UTF-8 character set had the following error:<br />".mysqli_error($db_setup_connection) );
-      }
+      case 'postgresql_pdo':
+        //set correct encoding
+        $dbh->query('SET client_encoding to \'UNICODE\'' );
 
-      //update the site names in the database
-      mysqli_query($db_setup_connection, "UPDATE ".PRE."site_name SET manager_name='".mysqli_real_escape_string($db_setup_connection, $data["manager_name"] )."', abbr_manager_name='".mysqli_real_escape_string($db_setup_connection, $data["abbr_manager_name"] )."'" );
+        break;
 
-      break;
-
-    case 'postgresql':
-      //set correct encoding
-      if(@pg_set_client_encoding($db_setup_connection, 'UNICODE' ) == -1 ){
-        error_setup('Setting client encoding to UTF-8 character set had the following error:<br />'.pg_last_error($db_setup_connection) );
-      }
-
-      //update the site names in the database
-      pg_query($db_setup_connection, "UPDATE ".PRE."site_name SET manager_name='".pg_escape_string($data["manager_name"] )."', abbr_manager_name='".pg_escape_string($data["abbr_manager_name"] )."'" );
-
-      break;
-
-    default:
-      abort("Not a valid database type" );
-      break;
+      default:
+        abort("Not a valid database type" );
+        break;
+    }
+    //update the site names in the database
+    $dbh->query("UPDATE ".PRE."site_name SET manager_name=".$dbh->quote($data["manager_name"] ).", abbr_manager_name=".$dbh->quote($data["abbr_manager_name"] ) );
   }
+  catch (PDOException $e) {
+    $error = $e->getMessage();
+    abort("Database server error:<br />".$error );
+  }
+
   return;
 }
 

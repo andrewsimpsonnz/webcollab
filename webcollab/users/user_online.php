@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: user_online.php 2172 2009-04-06 07:30:53Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -39,7 +39,7 @@ $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       '.PRE.'usergroups_users.userid AS userid
                       FROM '.PRE.'usergroups_users
                       LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
-                      WHERE '.PRE.'usergroups.private=1');
+                      WHERE '.PRE.'usergroups.private=1' );
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   if(isset($GID[($row[0])] ) ) {
@@ -47,7 +47,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   }
 }
 
-$content .= "<table>\n";
+$content .= "<table class=\"celldata\">\n";
 //users online in last hour
 $q = db_query('SELECT '.PRE.'logins.lastaccess AS last,
             '.PRE.'users.id AS id,
@@ -59,7 +59,7 @@ $q = db_query('SELECT '.PRE.'logins.lastaccess AS last,
             AND '.PRE.'users.deleted=\'f\'
             ORDER BY '.PRE.'logins.lastaccess DESC' );
 
-$content .= "<tr><td style=\"white-space:nowrap\" colspan=\"2\"><b>".$lang['online']."</b></td></tr>\n";
+$content .= "<tr class=\"grouplist\"><th style=\"white-space: nowrap; height: 20px; vertical-align: top\" colspan=\"2\">".$lang['online']."</th></tr>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //user test for privacy
@@ -68,10 +68,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 
   //show output
-  $content .= "<tr><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
+  $content .= "<tr class=\"grouplist\"><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
 }
 
-$content .= "<tr><td style=\"white-space:nowrap\"colspan=\"2\">&nbsp;</td></tr>\n";
 //users previously online
 $q = db_query('SELECT '.PRE.'logins.lastaccess AS last,
             '.PRE.'users.id AS id,
@@ -83,7 +82,7 @@ $q = db_query('SELECT '.PRE.'logins.lastaccess AS last,
             AND '.PRE.'users.deleted=\'f\'
             ORDER BY '.PRE.'logins.lastaccess DESC' );
 
-$content .= "<tr><td colspan=\"2\"><b>".$lang['not_online']."</b></td></tr>\n";
+$content .= "<tr class=\"grouplist\"><th style=\"white-space: nowrap; height: 35px; vertical-align: center\" colspan=\"2\">".$lang['not_online']."</th></tr>\n";
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //user test for privacy
@@ -92,7 +91,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 
   //show output
-  $content .= "<tr><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
+  $content .= "<tr class=\"grouplist\"><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td><td>".nicetime($row['last'], 1 )."</td></tr>\n";
 
 }
 $content .= "</table>\n";

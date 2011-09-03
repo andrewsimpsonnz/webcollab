@@ -25,16 +25,13 @@
 
   Maintainer: Patrick Flinkerbusch <patrick at flinkerbusch.info>
 
+  NOTE: This file is written in UTF-8 character set
+  
 */
 
 //required language encodings
-define('CHARACTER_SET', "ISO-8859-1" );
-
-//xml language identifier
+define('CHARACTER_SET', "UTF-8" );
 define('XML_LANG', "nl" );
-
-//this is the regex for input validation filter used in common.php
-define('VALIDATION_REGEX', "/([^\x09\x0A\x0D\x20-\x7E\xA0-\xFF])/" ); //ISO-8859-x
 
 //dates
 $month_array = array (NULL, 'Jan', 'Feb', 'Mrt', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec' );
@@ -225,6 +222,9 @@ $week_array = array('Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Zat' );
     $lang['add_usergroup']              = "Gebruikersgroep toevoegen";
     $lang['add_new_usergroup']          = "Nieuwe gebruikersgroep toevoegen";
     $lang['edit_usergroup']             = "Gerbuikersgroep bewerken";
+//** needs translation
+    $lang['email_new_usergroup']        = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";
     $lang['usergroup_manage']           = "Gebruikersgroep beheer";
     $lang['no_usergroups']              = "Er zijn geen gebruikersgroepen ingesteld";
     $lang['manage_usergroups']          = "Beheer gebruikersgroepen";

@@ -45,17 +45,17 @@ $content = "<form method=\"post\" action=\"contacts.php\" onsubmit=\"return fiel
            "<input type=\"hidden\" id=\"url\" name=\"url\" value=\"".$lang['url_javascript']."\" />\n".
            "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" /></fieldset>\n".
            "<table class=\"celldata\">\n".
-           "<tr><td><i>".$lang['firstname']."</i></td><td><input id=\"firstname\" type=\"text\" name=\"firstname\" size=\"30\" /><script type=\"text/javascript\">document.getElementById('firstname').focus();</script></td></tr>\n".
-           "<tr><td><i>".$lang['lastname']."</i></td><td><input id=\"lastname\" type=\"text\" name=\"lastname\" size=\"30\" /></td></tr>\n".
-           "<tr><td><i>".$lang['company']."</i></td><td><input type=\"text\" name=\"company\" size=\"30\" /></td></tr>\n".
-           "<tr><td><i>".$lang['home_phone']."</i></td><td><input type=\"text\" name=\"tel_home\" size=\"30\" /></td></tr>\n".
-           "<tr><td><i>".$lang['mobile']."</i></td><td><input type=\"text\" name=\"gsm\" size=\"30\" /></td></tr>\n".
-           "<tr><td><i>".$lang['bus_phone']."</i></td><td><input type=\"text\" name=\"tel_business\" size=\"30\" /></td></tr>\n".
-           "<tr><td><i>".$lang['fax']."</i></td><td><input type=\"text\" name=\"fax\" size=\"30\" /></td></tr>\n".
-           "<tr><td><i>".$lang['address']."</i></td><td><input type=\"text\" name=\"address\" size=\"30\" /></td></tr>\n".
-           "<tr><td><i>".$lang['postal']."</i></td><td><input type=\"text\" name=\"postal\" size=\"30\" /></td></tr>\n".
-           "<tr><td><i>".$lang['city']."</i></td><td><input type=\"text\" name=\"city\" size=\"30\" /></td></tr>\n".
-           "<tr><td><i>".$lang['email_contact']."</i></td><td><input type=\"text\" name=\"email\" size=\"30\" /></td></tr>\n".
+           "<tr><td><i>".$lang['firstname']."</i></td><td><input id=\"firstname\" type=\"text\" name=\"firstname\" class=\"size\" /><script type=\"text/javascript\">document.getElementById('firstname').focus();</script></td></tr>\n".
+           "<tr><td><i>".$lang['lastname']."</i></td><td><input id=\"lastname\" type=\"text\" name=\"lastname\" class=\"size\" /></td></tr>\n".
+           "<tr><td><i>".$lang['company']."</i></td><td><input type=\"text\" name=\"company\" class=\"size\" /></td></tr>\n".
+           "<tr><td><i>".$lang['home_phone']."</i></td><td><input type=\"text\" name=\"tel_home\" class=\"size\" /></td></tr>\n".
+           "<tr><td><i>".$lang['mobile']."</i></td><td><input type=\"text\" name=\"gsm\" class=\"size\" /></td></tr>\n".
+           "<tr><td><i>".$lang['bus_phone']."</i></td><td><input type=\"text\" name=\"tel_business\" class=\"size\" /></td></tr>\n".
+           "<tr><td><i>".$lang['fax']."</i></td><td><input type=\"text\" name=\"fax\" class=\"size\" /></td></tr>\n".
+           "<tr><td><i>".$lang['address']."</i></td><td><input type=\"text\" name=\"address\" class=\"size\" /></td></tr>\n".
+           "<tr><td><i>".$lang['postal']."</i></td><td><input type=\"text\" name=\"postal\" class=\"size\" /></td></tr>\n".
+           "<tr><td><i>".$lang['city']."</i></td><td><input type=\"text\" name=\"city\" class=\"size\" /></td></tr>\n".
+           "<tr><td><i>".$lang['email_contact']."</i></td><td><input type=\"text\" name=\"email\" class=\"size\" /></td></tr>\n".
            "</table>\n".
            "<p><i>".$lang['notes']."</i><br />\n".
            "<script type=\"text/javascript\"> edToolbar('notes');</script>".

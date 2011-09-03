@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_clone_add.php 2270 2009-08-14 06:58:03Z andrewsimpson $
 
-  (c) 2004 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -32,6 +32,8 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/time.php' );
 
 //guests shouldn't get here
@@ -45,6 +47,9 @@ if(! @safe_integer($_GET['taskid']) ) {
 
 $taskid = $_GET['taskid'];
 
+//generate_token
+generate_token('tasks' );
+
 $content = '';
 
 $content .= "<form method=\"post\" action=\"tasks.php\" onsubmit=\"return fieldCheck('name')\">\n".
@@ -55,13 +60,14 @@ $content .= "<form method=\"post\" action=\"tasks.php\" onsubmit=\"return fieldC
             "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n".
             "<table class=\"celldata\">\n";
 
-$q = db_query('SELECT name, parent FROM '.PRE.'tasks WHERE id='.$taskid );
+$q = db_prepare('SELECT name, parent FROM '.PRE.'tasks WHERE id=?' );
+db_execute($q, array($taskid ) );
 
 $row = db_fetch_array($q, 0 );
 
 if($row['parent'] == 0 ){
   $content .= "<tr><td>".$lang['project_cloned']."</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$taskid."\">".$row['name']."</a></td></tr>\n".
-              "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" />".
+              "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" />".
               "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
               "<tr><td>".$lang['deadline'].":</td> <td>".date_select()."</td></tr>\n".
               "</table>\n".
@@ -74,7 +80,7 @@ if($row['parent'] == 0 ){
 else{
   $content .= "<tr><td>".$lang['task_cloned']."</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$taskid."\">".$row['name']."</a></td></tr>\n".
               "<tr><td colspan=\"2\"><i>".$lang['note_clone']."</i></td></tr>\n".
-              "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" /></td> </tr>\n".
+              "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" /></td> </tr>\n".
               "<tr><td>".$lang['deadline'].":</td> <td>".date_select()."</td></tr>\n".
               "</table>\n".
               "<p><input type=\"submit\" value=\"".$lang['add_project']."\"/></p>".

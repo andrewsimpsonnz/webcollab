@@ -1,28 +1,45 @@
 body {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
+  font-size : 100%;
   margin : 0;
   padding : 0;
-  background-color : #6085ac;
+  background-color : #6085AC;
   color : #000000;
 }
 
 /* CONTAINER */
 
-/* Global container box */
-table.main {
-  border-width : 0;
-  border-collapse : collapse;
-  padding : 0;
-  width : 100%;
+/* Container for banner to top of page */
+div#top {
+  width: 100%;
 }
 
-td.menu {
-  width : 175px;
+/* Container to menus, main and bottom */
+div#container {
+  width: 100%;
+  font-size : 0.75em; /* set 12px as standard */
 }
 
-td.single {
-  width : 100%;
+/* Container for menus */
+div#menu {
+  float: left;
+  width: 175px;
+}
+
+/* Container for main */
+div#main {
+  margin-left: 175px;
+}
+
+/* Container for single box */
+div#single {
+  width: 100%
+}
+
+/* Container for bottom of page */
+div#bottom {
+  clear: both;
+  width: 100%
 }
 
 /* MASTHEAD */
@@ -34,7 +51,7 @@ div.masthead {
   padding-left : 3px;
   height : 20px;
   background-color : #000000;
-  color : #eeeeee;
+  color : #EEEEEE;
 }
 
 /* BOX HEAD */
@@ -47,16 +64,17 @@ div.head {
   border-left: 1px solid #000000;
   border-right: 1px solid #000000;
   border-top: 1px solid #000000;
+  font-size : 1.1em;
   font-weight : bold;
   text-align : left;
   padding : 3px;
-  background-color : #1e4b79;
+  background-color : #1E4B79;
   color : #ffffff;
 }
 
 /* Extended classes for box head */
 
-/* Ordinary head styling */
+/* Ordinary main head styling */
 div.head-normal {
   width : 97%;
 }
@@ -66,7 +84,7 @@ div.head-menu {
   width : 90%;
 }
 
-/* Small box head styling */
+/* Single box pages head styling */
 div.head-small {
   margin-top : 40px;
   width : 400px;
@@ -78,19 +96,20 @@ div.head-small {
 div.boxdata {
   margin-left : auto;
   margin-right : auto;
-  border: 1px solid #000000;
-  text-align : left;
   border-collapse : collapse;
+  border: 1px solid #000000;
   padding : 3px;
-  background-color : #ffffff;
+  text-align : left;
+  background-color : #FFFFFF;
   color : #000000;
 }
 
 /* Extended classes for content styling */
 
-/* normal box content styling */
+/* normal main box content styling */
 div.boxdata-normal {
   width : 97%;
+  margin-bottom: 10px;
 }
 
 /* menu box content styling */
@@ -99,7 +118,7 @@ div.boxdata-menu {
   margin-bottom: 20px;
 }
 
-/* small box content styling */
+/* single box page content styling */
 div.boxdata-small {
   width : 400px;
 }
@@ -109,113 +128,109 @@ div.boxstyle {
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
-  background-color : #ffffff;
+  background-color : #FFFFFF;
   color : #000000;
 }
 
-/* normal style  */
+/* normal style */
 div.boxstyle-normal {
-  padding-top : 10px;
-  padding-left : 5px;
-  padding-right : 15px;
-  padding-bottom : 20px;
+  padding : 10px 15px 20px 5px;
 }
 
-/* shortened bottom padding*/
+/* shortened bottom padding style */
 div.boxstyle-short {
-  padding-top : 20px;
-  padding-left : 5px;
-  padding-right : 15px;
-  padding-bottom : 5px;
+  padding : 20px 15px 5px 5px;
 }
 
 /* menu style */
 div.boxstyle-menu {
-  padding-top : 3px;
-  padding-left : 3px;
-  padding-bottom : 3px;
+  padding : 3px;
 }
 
 /* FOOTER */
 
-/* Class for text at page bottom */ 
+/* Class for text at page bottom */
 div.bottomtext {
-  font-size : 10px;
-  padding-top : 10px;
-  padding-left : 6px;
-  padding-bottom : 10px;
-  color : #1e4b79;
+  font-size : 0.75em;
+  padding : 10px 0 10px 6px;
+  color : #1E4B79;
   background-color : transparent;
 }
 
 /* GENERAL CONTENT */
 
+/* Box content styling for archive listing */
+div.archivelist {
+  padding : 10px 15px 20px 35px;
+}
+
 /* Box content styling for project listing */
 div.projectlist {
-  text-align : left;
-  border-width : 0;
-  border-collapse : collapse;
-  padding-top : 10px;
-  padding-left : 35px;
-  padding-right : 15px;
-  padding-bottom : 20px;
-  background-color : #ffffff;
-  color : #000000;
+  padding : 10px 15px 20px 35px;
+}
+
+/* Box content styling for project listing */
+div.taskshow {
+  padding : 10px 0 10px 0;
+}
+
+/* Class for bbeditor buttons */
+img.button {
+  margin-top: 4px;
+  padding: 4px;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #BBBBBB;
+}
+
+/* Width control for input boxes */
+input.size {
+  width : 200px;
 }
 
 /* Table for use in data cells */
 table.celldata {
-  margin-left : 0;
-  margin-top : 5px;
-  margin-bottom : 20px;
+  margin : 5px 0 20px 0;
   border-width: 0;
   padding : 0;
 }
 
 /* Table with grey highlight background */
 table.decoration {
-  background-color: #dddddd;
+  background-color: #DDDDDD;
   border: solid black 1px;
   color : #000000;
 }
 
+table.colourbar {
+  width : 400px;
+}
+
 /* Class for project row on summary page */
 tr.projectrow {
-  background-color : #dddddd;
+  background-color : #DDDDDD;
   border-bottom : 1px solid #333;
   font-weight : bold;
 }
 
-/* Box content styling for project listing */
-td.projectlist {
-  text-align : left;
-  border-width : 0;
-  border-collapse : collapse;
-  padding-top : 10px;
-  padding-left : 35px;
-  padding-right : 15px;
-  padding-bottom : 20px;
-  background-color : #ffffff;
-  color : #000000;
-}
-
 /* Box content styling for user & group lists */
-td.grouplist {
+tr.grouplist td {
   text-align : left;
+  font-size : 1em; /* IE 7 can't do 'font:inherit'*/
+  font : inherit;
   border-width : 0;
   border-collapse : collapse;
-  padding-top : 5px;
-  padding-left : 5px;
-  padding-right : 5px;
-  padding-bottom : 5px;
-  background-color : #ffffff;
-  color : #000000;
+  padding : 5px;
 }
 
-/* Cell with grey background */
-td.textbackground {
-  background-color : #eeeeee;
-  color : #000000;
+tr.grouplist th {
+  text-align : left;
+  font-size : 1em;
+  font : inherit;
+  font-weight : bold;
+  border-width : 0;
+  border-collapse : collapse;
+  padding : 5px;
 }
 
 /* Green progress bar */
@@ -225,7 +240,6 @@ td.greenbar {
   white-space : nowrap;
   height : 4px;
   background-color : #008B45;
-  color : #000000;
 }
 
 /* Red/orange progress bar */
@@ -233,29 +247,31 @@ td.redbar {
   border-width : 0;
   border-collapse : collapse;
   white-space : nowrap;
-  height : 5px;
+  height : 4px;
   background-color : #FFA500;
-  color : #000000;
 }
 
-/* GENERIC ELEMENTS */
+/* Menu lists */
+ul.menu {
+  list-style-type: none;
+  padding:0px;
+  margin:0px;
+}
+
+/* Main box lists */
+ul.ul-1 {
+  list-style-type: disc;
+}
+
+ul.ul-2, ul.ul-3, ul.ul-4, ul.ul-5 {
+  list-style-type: circle;
+}
+
+/* GENERIC HTML ELEMENTS */
 
 table {
   border-width : 0;
   padding : 0;
-}
-
-td {
-  font-family: "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 12px;
-}
-
-li {
-  list-style-type: disc;
-}
-
-li li {
-  list-style-type: circle;
 }
 
 img {
@@ -266,20 +282,37 @@ img {
   max-height: 500px;
 }
 
-/* Class for bbeditor buttons */
-.button {
-  margin-top: 4px;
-  padding: 4px;
-  width: 16px;
-  height: 16px;
-  border: 1px solid #bbbbbb;
-}
-
 /* CSS hack to hide hidden input fields */
 fieldset {
    border: none;
    margin: 0;
    padding: 0;
+}
+
+a:link {
+  color : #003399;
+  background-color : transparent;
+  text-decoration : none;
+}
+
+a:visited {
+  color : #003399;
+  background-color : transparent;
+  text-decoration : none;
+}
+
+a:hover {
+  color : #CC0000;
+  background-color : transparent;
+  text-decoration : none;
+}
+
+/* GENERIC TEXT ELEMENTS */
+
+/* Cell with grey background */
+.textbackground {
+  background-color : #EEEEEE;
+  color : #000000;
 }
 
 /* Class for underlined text */
@@ -289,14 +322,14 @@ fieldset {
 
 /* Font for text based hyperlinks in [brackets] */
 .textlink {
-  font-size : 10px;
+  font-size : 0.75em;
   font-weight : bold;
 }
 
 /* Class for late graphic */
 .late {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
-  font-size : 9px;
+  font-size : 0.75em;
   font-weight : bold;
   background-color : #FF0000;
   color : #FFFFFF;
@@ -304,7 +337,7 @@ fieldset {
 
 /* Class for new graphic */
 .new {
-  font-size : 9px;
+  font-size : 0.75em;
   font-weight : bold;
   font-style : italic;
   background-color : #00FF7F;
@@ -313,7 +346,7 @@ fieldset {
 
 /* Class for updated graphic */
 .updated {
-  font-size : 9px;
+  font-size : 0.75em;
   font-weight : bold;
   background : #00FF7F;
   color : #000000;
@@ -351,22 +384,4 @@ fieldset {
   color : #FF0000;
   font-weight : bold;
   background-color : transparent;
-}
-
-a:link {
-  color : #003399;
-  background-color : transparent;
-  text-decoration : none;
-}
-
-a:visited {
-  color : #003399;
-  background-color : transparent;
-  text-decoration : none;
-}
-
-a:hover {
-  color : #cc0000;
-  background-color : transparent;
-  text-decoration : none;
 }

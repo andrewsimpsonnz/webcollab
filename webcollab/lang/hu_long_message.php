@@ -24,34 +24,34 @@
 
   Language files for 'hu' (Hungarian)
 
-  Translation: Széll Tamás
+  Translation: SzÃ©ll TamÃ¡s
 
-  Maintainer: Széll Tamás
+  Maintainer: SzÃ©ll TamÃ¡s
 
 */
 
 
-$taskgroup_info =   "<ul><li>Ha töröl egy feladatcsoportot, akkor minden hozzá tartozó feladat bekategorizálatlanná válik.</li>\n".
-                      "<li>Egy kategória nevét a feladatokkal való összeakadás nélkül megváltoztathatja.</li>\n".
-                      "<li>Két feladatcsoportnak nem lehet ugyanaz a neve.</li></ul>\n";
+$taskgroup_info =   "<ul><li>Ha tÃ¶rÃ¶l egy feladatcsoportot, akkor minden hozzÃ¡ tartozÃ³ feladat bekategorizÃ¡latlannÃ¡ vÃ¡lik.</li>\n".
+                      "<li>Egy kategÃ³ria nevÃ©t a feladatokkal valÃ³ Ã¶sszeakadÃ¡s nÃ©lkÃ¼l megvÃ¡ltoztathatja.</li>\n".
+                      "<li>KÃ©t feladatcsoportnak nem lehet ugyanaz a neve.</li></ul>\n";
 
-$usergroup_info =   "<ul><li>Ha töröl egy feladatcsoportot, akkor minden hozzá tartozó privát fórum üzenet is elvész.</li>\n".
-                      "<li>A privát felhasználói csooprtot csak a tagjai láthatják.</li>\n".
-                      "<li>Egy felhasználói csoport nevét a felhsznlókkal való összeakadás nélkül megváltoztathatja.</li>\n".
-                      "<li>Két felhasználói csoportnak nem lehet ugyanaz a neve.</li></ul>\n";
+$usergroup_info =   "<ul><li>Ha tÃ¶rÃ¶l egy feladatcsoportot, akkor minden hozzÃ¡ tartozÃ³ privÃ¡t fÃ³rum Ã¼zenet is elvÃ©sz.</li>\n".
+                      "<li>A privÃ¡t felhasznÃ¡lÃ³i csooprtot csak a tagjai lÃ¡thatjÃ¡k.</li>\n".
+                      "<li>Egy felhasznÃ¡lÃ³i csoport nevÃ©t a felhsznlÃ³kkal valÃ³ Ã¶sszeakadÃ¡s nÃ©lkÃ¼l megvÃ¡ltoztathatja.</li>\n".
+                      "<li>KÃ©t felhasznÃ¡lÃ³i csoportnak nem lehet ugyanaz a neve.</li></ul>\n";
 
-$user_info      =    "Kérem válassza ki az utasítást a baloldali menübõl!<br /><br />".
-                      "Néhány gyors tipp:<br />".
+$user_info      =    "KÃ©rem vÃ¡lassza ki az utasÃ­tÃ¡st a baloldali menÃ¼bÅ‘l!<br /><br />".
+                      "NÃ©hÃ¡ny gyors tipp:<br />".
                       "<ul>".
-                      "<li>A privát felhasználókat csak a felhasználói csoport tagjai láthatják.</li>\n".
-                      "<li>A felhasználók törlésének két fázisa van, a második a végleges.</li>\n".
-                      "<li>Egy töröltfelhasználó elveszti a feladatait, de a fórum üzeneteit nem.</li>\n".
-                      "<li>Egy véglegesen kitörölt felhasználó mindent elveszt.</li>\n".
-                      "<li>Egy törölt felhasználó megtartja a látogatott feladatok listáját, és újjáélesztés után ezzel a listával folytatja.</li>\n".
-                      "<li>MINDEN, amit egy felhasználón mûvelnek el lesz küldve emailen a felhasználónak.</li>\n".
-                      "<li>A jelszavak titkosítva vannak az adatbázisban. Csak újat tudsz megadni.</li>\n".
-                      "<li>A jelszavakat csak egyszer, megadásukkor küldjük ki a felhasználónak, úgyhogy figyelemmel küldje el õket!</li>\n".
-                      "<li>A felhasználók szerkeszthetik beállításaikat az admin nélkül - így idõt (és levélszemetet) takarít meg</li>\n".
+                      "<li>A privÃ¡t felhasznÃ¡lÃ³kat csak a felhasznÃ¡lÃ³i csoport tagjai lÃ¡thatjÃ¡k.</li>\n".
+                      "<li>A felhasznÃ¡lÃ³k tÃ¶rlÃ©sÃ©nek kÃ©t fÃ¡zisa van, a mÃ¡sodik a vÃ©gleges.</li>\n".
+                      "<li>Egy tÃ¶rÃ¶ltfelhasznÃ¡lÃ³ elveszti a feladatait, de a fÃ³rum Ã¼zeneteit nem.</li>\n".
+                      "<li>Egy vÃ©glegesen kitÃ¶rÃ¶lt felhasznÃ¡lÃ³ mindent elveszt.</li>\n".
+                      "<li>Egy tÃ¶rÃ¶lt felhasznÃ¡lÃ³ megtartja a lÃ¡togatott feladatok listÃ¡jÃ¡t, Ã©s ÃºjjÃ¡Ã©lesztÃ©s utÃ¡n ezzel a listÃ¡val folytatja.</li>\n".
+                      "<li>MINDEN, amit egy felhasznÃ¡lÃ³n mÅ±velnek el lesz kÃ¼ldve emailen a felhasznÃ¡lÃ³nak.</li>\n".
+                      "<li>A jelszavak titkosÃ­tva vannak az adatbÃ¡zisban. Csak Ãºjat tudsz megadni.</li>\n".
+                      "<li>A jelszavakat csak egyszer, megadÃ¡sukkor kÃ¼ldjÃ¼k ki a felhasznÃ¡lÃ³nak, Ãºgyhogy figyelemmel kÃ¼ldje el Å‘ket!</li>\n".
+                      "<li>A felhasznÃ¡lÃ³k szerkeszthetik beÃ¡llÃ­tÃ¡saikat az admin nÃ©lkÃ¼l - Ã­gy idÅ‘t (Ã©s levÃ©lszemetet) takarÃ­t meg</li>\n".
                       "</ul>\n";
 
 ?>

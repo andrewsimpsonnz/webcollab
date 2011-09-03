@@ -31,17 +31,31 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 if(! @safe_integer($_REQUEST['taskid']) ) {
   error('Archive submit', 'Not a valid taskid' );
 }
 $taskid = $_REQUEST['taskid'];
 
+//check for valid form token
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+
 //check if the user has enough rights
-if( ( ! ADMIN ) && (db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$taskid.' AND owner='.UID ), 0, 0 ) < 1) ){
-  warning($lang['task_submit'], $lang['not_owner'] );
+if( ! ADMIN ) {
+  $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id=? AND owner=? LIMIT 1' );
+  db_execute($q, array($taskid, UID ) );
+
+  if(db_result($q, 0, 0 ) < 1 ) {
+    warning($lang['task_submit'], $lang['not_owner'] );
+  }
 }
 
-$q = db_query('SELECT projectid FROM '.PRE.'tasks WHERE id='.$taskid );
+//get projectid
+$q = db_prepare('SELECT projectid FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+db_execute($q, array($taskid ) );
+
 if(! ($projectid = db_result($q, 0, 0 ) ) ) {
   error("Archive submit", "Not a valid projectid" );
 }
@@ -49,16 +63,20 @@ if(! ($projectid = db_result($q, 0, 0 ) ) ) {
 switch($_REQUEST['action'] ) {
 
   case 'submit_archive':
+
     //do the archiving
-    db_query('UPDATE '.PRE.'tasks SET archive=1 WHERE projectid='.$projectid );
+    $q = db_prepare('UPDATE '.PRE.'tasks SET archive=1 WHERE projectid=?' );
+    db_execute($q, array($projectid ) );
 
     header('Location: '.BASE_URL.'main.php?x='.X );
     die;
     break;
 
   case 'submit_restore':
+
     //do the restore
-    db_query('UPDATE '.PRE.'tasks SET archive=0 WHERE projectid='.$projectid );
+    $q = db_prepare('UPDATE '.PRE.'tasks SET archive=0 WHERE projectid=?' );
+    db_execute($q, array($projectid ) );
 
     header('Location: '.BASE_URL.'archive.php?x='.X.'&action=list' );
     die;

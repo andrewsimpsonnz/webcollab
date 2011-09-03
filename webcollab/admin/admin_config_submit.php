@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: admin_config_submit.php 2199 2009-04-10 21:34:16Z andrewsimpson $
 
-  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -32,6 +32,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //only admin
 if( ! ADMIN ){
   error('Not permitted', 'This function is for admins only' );
@@ -39,7 +42,7 @@ if( ! ADMIN ){
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'admin_config' );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
@@ -58,7 +61,7 @@ if(USE_EMAIL === 'Y' ){
       if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $input, $match ) ) || (strlen(trim($input) ) > 200 ) ) {
         warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], safe_data($_POST[$var] ) ) );
       }
-      ${$var} = db_escape_string($match[0] );
+      ${$var} = $match[0];
     }
     else
       ${$var} = NULL;
@@ -126,15 +129,18 @@ switch($task_order) {
 }
 
 //update config database
-db_query('UPDATE '.PRE.'config SET email_admin=\''.$email_admin.'\',
-                            reply_to=\''.$reply_to.'\',
-                            email_from=\''.$from.'\',
-                            globalaccess=\''.$access.'\',
-                            groupaccess=\''.$group_edit.'\',
-                            owner=\''.$owner.'\',
-                            usergroup=\''.$usergroup.'\',
-                            project_order=\''.$project_list.'\',
-                            task_order=\''.$task_list.'\'' );
+$q = db_prepare('UPDATE '.PRE.'config SET email_admin=?,
+                            reply_to=?,
+                            email_from=?,
+                            globalaccess=?,
+                            groupaccess=?,
+                            owner=?,
+                            usergroup=?,
+                            project_order=?,
+                            task_order=?' );
+
+db_execute($q, array($email_admin, $reply_to, $from, $access, $group_edit, $owner, $usergroup, $project_list, $task_list ) );
+
 
 //if no email end here
 if(USE_EMAIL !== 'Y' ){
@@ -152,13 +158,15 @@ db_query('TRUNCATE TABLE '.PRE.'maillist');
 //use regex to get addresses - and strip any other stuff
 if((preg_match_all('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $input, $match, PREG_PATTERN_ORDER ) ) ) {
 
+  $q = db_prepare('INSERT INTO '.PRE.'maillist (email) VALUES (?)' );
   //cycle through addresses and store in database
   foreach($match[0] as $address ) {
     //remove excessively long addresses
     if(strlen($address ) > 200 ) {
       continue;
     }
-    db_query('INSERT INTO '.PRE.'maillist (email) VALUES (\''.db_escape_string($address ).'\')' );
+    db_execute($q, array($address ) );
+    db_free_result($q );
   }
 }
 //all done!

@@ -33,6 +33,7 @@ if(! defined('UID' ) ) {
 
 //includes
 require_once(BASE.'includes/admin_config.php' );
+require_once(BASE.'includes/token.php' );
 require_once(BASE.'includes/usergroup_security.php' );
 
 //deny guest users
@@ -73,7 +74,12 @@ else {
 //check usergroup security
 $taskid = usergroup_check($taskid );
 
-$q = db_query('SELECT filename, description FROM '.PRE.'files WHERE id='.$fileid.' LIMIT 1' );
+//generate_token
+generate_token('file_submit' );
+
+$q = db_prepare('SELECT filename, description FROM '.PRE.'files WHERE id=? LIMIT 1' );
+db_execute($q, array($fileid ) );
+
 if( ! $row = db_fetch_array($q, 0 ) ) {
   error('Edit file', 'File info missing' );
 }
@@ -91,7 +97,7 @@ $content =  "<form method=\"post\" enctype=\"multipart/form-data\" action=\"file
             "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" /></fieldset>\n".
             "<table class=\"celldata\">\n".
             "<tr><td>".$lang['file']."</td><th>".$row['filename']."</th></tr>\n".
-            "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" size=\"60\" ".$s."/></td></tr>\n".
+            "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" style=\"width: 400px\" ".$s."/></td></tr>\n".
             "<tr><td>".$lang['description'].":</td>".
             "<td><script type=\"text/javascript\"> edToolbar('description');</script>".
             "<textarea name=\"description\" id=\"description\" rows=\"25\" cols=\"88\"".$s.">".$row['description']."</textarea></td></tr>\n".

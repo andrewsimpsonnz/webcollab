@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: setup_setup3.php 2236 2009-05-22 22:20:49Z andrewsimpson $
 
-  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,7 +35,7 @@ require_once('path.php' );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 require_once(BASE.'setup/setup_config.php' );
-include_once(BASE.'lang/lang_setup1.php' );
+include_once(BASE.'lang/lang_setup.php' );
 require_once(BASE.'setup/security_setup.php' );
 
 //security checks
@@ -77,7 +77,7 @@ if(defined('DATABASE_NAME' ) && (DATABASE_NAME != '') && ($new_db === 'N' ) && (
   $manager_name      = (MANAGER_NAME != '' )      ? MANAGER_NAME      : 'WebCollab Project Management';
   $abbr_manager_name = (ABBR_MANAGER_NAME != '' ) ? ABBR_MANAGER_NAME : 'WebCollab';
   $file_base         = (FILE_BASE != '' )         ? FILE_BASE         : $file_path;
-  $file_maxsize      = (FILE_MAXSIZE != '' )      ? FILE_MAXSIZE      : '2000000';
+  $file_maxsize      = (FILE_MAXSIZE != '' )      ? FILE_MAXSIZE      : '2097152';
   $locale            = (LOCALE != '' )            ? LOCALE            : 'en';
   $tz                = (TZ != '' )                ? TZ                : (int)date('Z')/3600;
   $use_email         = (USE_EMAIL != '' )         ? USE_EMAIL         : 'Y';
@@ -89,7 +89,7 @@ else {
   $db_name           = (isset($_POST['db_name']) )           ? $_POST['db_name']           : '';
   $db_user           = (isset($_POST['db_user']) )           ? $_POST['db_user']           : '';
   $db_password       = (isset($_POST['db_password']) )       ? $_POST['db_password']       : '';
-  $db_type           = (isset($_POST['db_type']) )           ? $_POST['db_type']           : 'mysql';
+  $db_type           = (isset($_POST['db_type']) )           ? $_POST['db_type']           : 'mysql_pdo';
   $db_host           = (isset($_POST['db_host']) )           ? $_POST['db_host']           : 'localhost';
   $base_url          = (isset($_POST['base_url']) )          ? $_POST['base_url']          : $server_url;
   $manager_name      = (isset($_POST['manager_name']) )      ? $_POST['manager_name']      : 'WebCollab Project Management';
@@ -116,48 +116,39 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\" ".
             "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"".$new_db."\" />\n".
             "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" />\n".
-            "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['setup_js_alert_field']."\" /></fieldset>\n".
+            "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang_setup['setup_js_alert_field']."\" /></fieldset>\n".
             "<table class=\"celldata\" >";
 
 //basic settings
 $content .= "<tr><td></td><th class=\"boxdata2\"><span class=\"underline\">".$lang_setup['setup3_basic']."</span></th></tr>\n".
             "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_URL']."</td></tr>\n".
             "<tr><th>".$lang_setup['setup3_address']."</th>".
-            "<td><input type=\"text\" id=\"url\" name=\"base_url\" value=\"".$base_url."\" size=\"50\" /></td></tr>\n";
+            "<td><input type=\"text\" id=\"url\" name=\"base_url\" value=\"".$base_url."\" style=\"width: 350px\" /></td></tr>\n";
 
 $content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_name1']."</td></tr>\n".
             "<tr><th>".$lang_setup['setup3_name2']."</th>".
-            "<td><input type=\"text\" name=\"manager_name\" value=\"".$manager_name."\" size=\"50\" /></td></tr>\n";
+            "<td><input type=\"text\" name=\"manager_name\" value=\"".$manager_name."\" style=\"width: 350px\" /></td></tr>\n";
 
 $content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_name3']."</td></tr>\n".
             "<tr><th>".$lang_setup['setup3_name4']."</th>".
-            "<td><input type=\"text\" name=\"abbr_manager_name\" value=\"".$abbr_manager_name."\" size=\"30\" /></td></tr>\n";
+            "<td><input type=\"text\" name=\"abbr_manager_name\" value=\"".$abbr_manager_name."\" class=\"size\" /></td></tr>\n";
 
 //database settings
 $content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".$lang_setup['setup3_db']."</span></th></tr>\n".
             "<tr><th class=\"boxdata2\">".$lang_setup['db_name']."</th>".
-            "<td><input type=\"text\" name=\"db_name\" value=\"".$db_name."\" size=\"30\" /></td></tr>\n".
+            "<td><input type=\"text\" name=\"db_name\" value=\"".$db_name."\" class=\"size\" /></td></tr>\n".
             "<tr><th>".$lang_setup['db_user']."</th>".
-            "<td><input type=\"text\" id=\"user\" name=\"db_user\" value=\"".$db_user."\" size=\"30\" /></td></tr>\n".
+            "<td><input type=\"text\" id=\"user\" name=\"db_user\" value=\"".$db_user."\" class=\"size\" /></td></tr>\n".
             "<tr><th>".$lang_setup['db_password']."</th>".
-            "<td><input type=\"text\" id=\"pass\" name=\"db_password\" value=\"".$db_password."\" size=\"30\" /></td></tr>\n";
+            "<td><input type=\"text\" id=\"pass\" name=\"db_password\" value=\"".$db_password."\" class=\"size\" /></td></tr>\n";
 
 switch($db_type){
 
-  case 'postgresql':
+  case 'postgresql_pdo':
     $s1 = ""; $s2 = " selected=\"selected\""; $s3 = ""; $s4 = "";
     break;
 
-  case 'mysql_innodb':
-    $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\""; $s4 = "";
-    break;
-
-  case 'mysqli':
-  default:
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
-    break;
-
-  case 'mysql':
+  case 'mysql_pdo':
   default:
     $s1 = " selected=\"selected\""; $s2 = ""; $s3 = ""; $s4 = "";
     break;
@@ -165,14 +156,12 @@ switch($db_type){
 }
 
 $content .= "<tr><th>".$lang_setup['db_type']."</th><td><select name=\"db_type\">\n".
-            "<option value=\"mysql\"".$s1.">mysql</option>\n".
-            "<option value=\"postgresql\"".$s2.">postgresql</option>\n".
-            "<option value=\"mysql_innodb\"".$s3.">mysql with innodb</option>\n".
-            "<option value=\"mysqli\"".$s4.">mysqli (innodb)</option>\n".
+            "<option value=\"mysql_pdo\"".$s1.">mysql</option>\n".
+            "<option value=\"postgresql_pdo\"".$s2.">postgresql</option>\n".
             "</select></td></tr>\n";
 
 $content .= "<tr><th>".$lang_setup['db_host']."</th>".
-            "<td><input type=\"text\" name=\"db_host\" id=\"host\" value=\"".$db_host."\" size=\"30\" /></td></tr>\n";
+            "<td><input type=\"text\" name=\"db_host\" id=\"host\" value=\"".$db_host."\" class=\"size\" /></td></tr>\n";
 
 //file settings
 $content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".
@@ -180,11 +169,11 @@ $content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".
 
 $content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_file2']."</td></tr>\n".
             "<tr><th>".$lang_setup['file_location']."</th>".
-            "<td><input type=\"text\" name=\"file_base\" value=\"".$file_base."\" size=\"50\" /></td></tr>\n".
+            "<td><input type=\"text\" name=\"file_base\" value=\"".$file_base."\" style=\"width: 350px\" /></td></tr>\n".
 
             "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_file3']."</td></tr>\n".
             "<tr><th>".$lang_setup['file_size']."</th>".
-            "<td><input type=\"text\" name=\"file_maxsize\" value=\"".$file_maxsize."\" size=\"20\" /></td></tr>\n";
+            "<td><input type=\"text\" name=\"file_maxsize\" value=\"".$file_maxsize."\" class=\"size\" /></td></tr>\n";
 
 //language settings
 $content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".
@@ -273,7 +262,7 @@ $content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".$la
 
 $content .= "<tr><td></td><td class=\"boxdata2\"><i>".$lang_setup['setup3_smtp']."</i></td></tr>\n".
             "<tr><th><i>".$lang_setup['smtp_host']."</i></th>".
-            "<td><input type=\"text\" name=\"smtp_host\" value=\"".$smtp_host."\" size=\"50\" /></td></tr>\n";
+            "<td><input type=\"text\" name=\"smtp_host\" value=\"".$smtp_host."\" style=\"width: 350px\" /></td></tr>\n";
 
 $content .=  "<tr><td></td><td class=\"boxdata3\"><input type=\"submit\" value=\"".$lang_setup['submit']."\" /></td></tr>\n".
              "</table>\n".

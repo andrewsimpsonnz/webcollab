@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: user_existing_menubox.php 2303 2009-08-25 09:17:44Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -39,7 +39,7 @@ $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       '.PRE.'usergroups_users.userid AS userid
                       FROM '.PRE.'usergroups_users
                       LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
-                      WHERE '.PRE.'usergroups.private=1');
+                      WHERE '.PRE.'usergroups.private=1' );
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   if(isset($GID[($row[0])] ) ) {
@@ -47,7 +47,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   }
 }
 
-$content = "<table style=\"text-align:left\">\n";
+$content = "<ul class=\"menu\">\n";
 
 //query users
 $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' ORDER by fullname' );
@@ -60,9 +60,9 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
     continue;
   }
 
-  $content .= "<tr><td><small><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".wordwrap($row['fullname'], 30,  "<br />", 1 )."</a></small></td></tr>\n";
+  $content .= "<li><small><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".wordwrap($row['fullname'], 30,  "<br />", 1 )."</a></small></li>\n";
 }
-$content .= "</table>";
+$content .= "</ul>";
 
 //check for enough users
 if($i == 0 ) {

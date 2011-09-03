@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: user_del.php 2180 2009-04-07 09:33:17Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -37,6 +37,7 @@ if(! ADMIN ){
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/email.php' );
 include_once(BASE.'lang/lang_email.php' );
@@ -54,7 +55,7 @@ if(empty($_POST['action'] ) ){
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'user_del' );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
@@ -63,28 +64,37 @@ switch($_POST['action'] ){
 
   case 'permdel':
 
-    if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE id='.$userid.' AND deleted=\'t\'' ), 0, 0 ) == 1 ) {
+    $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'users WHERE id=? AND deleted=\'t\'' );
+    db_execute($q, array($userid ) );
+
+    if(db_result($q, 0, 0 ) == 1 ) {
 
       //kiss your ass goodbye :)
       db_begin();
 
       //free up any tasks owned (should be none)
-      @db_query('UPDATE '.PRE.'tasks SET owner=0 WHERE owner='.$userid );
+      $q = db_prepare('UPDATE '.PRE.'tasks SET owner=0 WHERE owner=?' );
+      @db_execute($q, array($userid ) );
 
       //remove user from forum messages
-      db_query('UPDATE '.PRE.'forum SET userid=0 WHERE userid='.$userid );
+      $q = db_prepare('UPDATE '.PRE.'forum SET userid=0 WHERE userid=?' );
+      db_execute($q, array($userid ) );
 
       //delete user FROM login tables
-      db_query('DELETE FROM '.PRE.'logins WHERE user_id='.$userid );
+      $q = db_prepare('DELETE FROM '.PRE.'logins WHERE user_id=?' );
+      db_execute($q, array($userid ) );
 
       //delete from seen table
-      db_query('DELETE FROM '.PRE.'seen WHERE userid='.$userid );
+      $q = db_prepare('DELETE FROM '.PRE.'seen WHERE userid=?' );
+      db_execute($q, array($userid ) );
 
       //delete from usergroups_users
-      db_query('DELETE FROM '.PRE.'usergroups_users WHERE userid='.$userid );
+      $q = db_prepare('DELETE FROM '.PRE.'usergroups_users WHERE userid=?' );
+      db_execute($q, array($userid ) );
 
       //delete from users table
-      db_query('DELETE FROM '.PRE.'users WHERE id='.$userid );
+      $q = db_prepare('DELETE FROM '.PRE.'users WHERE id=?' );
+      db_execute($q, array($userid ) );
 
       db_commit();
     }
@@ -94,17 +104,23 @@ switch($_POST['action'] ){
   case 'del':
 
      //if user exists we can delete them
-     if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'users WHERE id='.$userid ), 0, 0 ) ) {
+     $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'users WHERE id=?' );
+     db_execute($q, array($userid ) );
+
+     if(db_result($q, 0, 0 ) > 0 ) {
        //mark user as deleted
        db_begin();
-       db_query('UPDATE '.PRE.'users SET deleted=\'t\' WHERE id='.$userid );
+       $q = db_prepare('UPDATE '.PRE.'users SET deleted=\'t\' WHERE id=?' );
+       db_execute($q, array($userid ) );
 
        //free all tasks that that user has done
-       @db_query('UPDATE '.PRE.'tasks SET owner=0 WHERE owner='.$userid );
+       $q = db_prepare('UPDATE '.PRE.'tasks SET owner=0 WHERE owner=?' );
+       @db_execute($q, array($userid ) );
        db_commit();
 
        //get the users' info
-       $q = db_query('SELECT email FROM '.PRE.'users WHERE id='.$userid );
+       $q = db_prepare('SELECT email FROM '.PRE.'users WHERE id=?' );
+       db_execute($q, array($userid ) );
        $email = db_result($q, 0, 0 );
 
        //mail the user that he/she had been deleted

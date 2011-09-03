@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: forum_search.php 2162 2009-04-06 07:12:58Z andrewsimpson $
 
-  (c) 2005 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -41,10 +41,10 @@ function search_input() {
              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n ".
              "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
              "<input type=\"hidden\" name=\"start\" value=\"0\" /></fieldset>\n".
-             "<div><input id=\"name\" type=\"text\" name=\"string\" size=\"30\" />\n".
+             "<div><input id=\"name\" type=\"text\" name=\"string\" class=\"size\" />\n".
              "<input type=\"submit\" value=\"".$lang['go']."\" /></div>\n".
              "</form>";
-  
+
   return $content;
 }
 
@@ -61,23 +61,8 @@ if(empty($_REQUEST['string'] ) || strlen(trim($_REQUEST['string'] ) ) == 0 ) {
   die;
 }
 
-//1. Safe string
-  $string = safe_data($_REQUEST['string'] );
-
-//2. Escaped string for database
-  $db_string = strtr($string, array('%'=>'\%', '_'=>'\_' ) );
-
-//3. Valid string for screen display (no database escaping applied)
-  $valid_string = trim(validate($_REQUEST['string'] ) );
-  $valid_string = strtr($valid_string, array("\r"=>'', "\n"=>'' ) );
-  $valid_string = (UNICODE_VERSION == 'Y' ) ? mb_strimwidth($valid_string, 0, 100, '' ) : substr($valid_string, 0, 100 );
-  $valid_string = html_clean_up($valid_string );
-
-//4. Quoted string for regex terms
-  $preg_string = preg_quote($string, '/' );
-
-//5. Search string for URL
-  $url_string = html_clean_up(urlencode($_REQUEST['string'] ) );
+//get safe string
+$string = safe_data($_REQUEST['string'] );
 
 if(! safe_integer($_REQUEST['start']) ) {
   error('Forum search', 'Not a valid integer' );
@@ -98,7 +83,7 @@ if(ADMIN ) {
   $tail = ' ';
 }
 else {
-  $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+  $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.db_quote(UID ).')
            OR '.PRE.'tasks.globalaccess=\'t\'
            OR '.PRE.'tasks.usergroupid=0) ';
 }
@@ -106,19 +91,20 @@ else {
 //postgres' uses ILIKE for case insensitive seaching
 $like = (substr(DATABASE_TYPE, 0, 5) == 'mysql' ) ? 'LIKE' : 'ILIKE';
 
-$q = db_query('SELECT COUNT(*)
+$q = db_prepare('SELECT COUNT(*)
                       FROM '.PRE.'forum
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
                       LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
-                      WHERE ('.PRE.'forum.text '.$like.' \'%'.$db_string.'%\'
-                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' \'%'.$db_string.'%\') )'
+                      WHERE ('.PRE.'forum.text '.$like.' ?
+                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' ?) )'
                       .$tail );
 
+db_execute($q, array('%'.$string.'%', '%'.$string.'%' ) );
 $total = db_result($q, 0, 0 );
 
 if($total == 0 ) {
   //no results
-  $content .= sprintf($lang['no_results'], $valid_string )."<br /><br />\n";
+  $content .= sprintf($lang['no_results'], $string )."<br /><br />\n";
   $content .= search_input();
 
   new_box($lang['info'], $content ); 
@@ -128,7 +114,7 @@ if($total == 0 ) {
 $min = ($min > $total ) ? 0 : $min;
 $max = ($total > $min + 10 ) ? ($min + 10) : $total;
 
-$q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
+$q = db_prepare('SELECT '.PRE.'forum.taskid AS taskid,
                       '.PRE.'forum.posted AS posted,
                       '.PRE.'forum.text AS text,
                       '.PRE.'tasks.name AS taskname,
@@ -137,26 +123,28 @@ $q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
                       FROM '.PRE.'forum 
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
                       LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
-                      WHERE ('.PRE.'forum.text '.$like.' \'%'.$db_string.'%\'
-                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' \'%'.$db_string.'%\') )'
+                      WHERE ('.PRE.'forum.text '.$like.' ?
+                      OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' ?) )'
                       .$tail.
                       'ORDER BY posted DESC LIMIT '.($max - $min).' OFFSET '.$min );
 
-$content .= "<table class=\"celldata\">\n".
-            "<tr><td>".sprintf($lang['search_results'], $total, $valid_string, ($min + 1), $max )."<br /><br />\n";
+db_execute($q, array('%'.$string.'%', '%'.$string.'%' ) );
+
+$content .= sprintf($lang['search_results'], $total, $string, ($min + 1), $max )."<br /><br />\n";
 
 $content .= "<ul>\n";
 
 //search terms for regex
 $replacement = '<span class="red"><b>$0</b></span>';
-$search      = (UNICODE_VERSION == 'Y' ) ? '/'.$preg_string.'/isu' : '/'.$preg_string.'/is';
+$search      = '/'.preg_quote($string, '/' ).'/isu';
 
 //iterate for posts
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //show it
   $content .= "<li><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['taskid']."\">".$row['taskname']."</a>&nbsp;". 
-              "[<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".preg_replace($search, $replacement, $row['username'] )."</a>]&nbsp;".
+              "[<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">"
+              .preg_replace($search, $replacement, $row['username'] )."</a>]&nbsp;".
               "(".nicetime($row['posted']).")<br />\n";
 
   //highlight search text
@@ -174,7 +162,7 @@ if($min > 0 || $max < $total ) {
   $content .= "<form method=\"post\" action=\"forum.php\">\n".
               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
               "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
-              "<input type=\"hidden\" name=\"string\" value=\"".$valid_string."\" />\n".
+              "<input type=\"hidden\" name=\"string\" value=\"".$string."\" />\n".
               "<input type=\"hidden\" name=\"start\" value=\"".$min."\" /></fieldset>\n".
               "<table class=\"decoration\" cellpadding=\"5px\" >\n";
 
@@ -194,7 +182,7 @@ if($min > 0 || $max < $total ) {
     }
     else {
       //hyperlink for other pages 
-      $content .= "&nbsp;&nbsp;<span class=\"underline\"><a href=\"forum.php?x=".X."&amp;action=search&amp;start=".$i."&amp;string=".$url_string."\">".intval($i/10 + 1)."</a></span>&nbsp;&nbsp;\n";
+      $content .= "&nbsp;&nbsp;<span class=\"underline\"><a href=\"forum.php?x=".X."&amp;action=search&amp;start=".$i."&amp;string=".html_clean_up(urlencode($string ) )."\">".intval($i/10 + 1)."</a></span>&nbsp;&nbsp;\n";
     }
   }
   $content .= "</td>\n";
@@ -207,8 +195,6 @@ if($min > 0 || $max < $total ) {
   $content .= "</tr></table></form>\n";
 }
 
-$content .= "</td></tr></table>\n";
-
-new_box($lang['forum_search'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-short' ); 
+new_box($lang['forum_search'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-short' );
 
 ?>

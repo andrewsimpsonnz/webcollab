@@ -28,15 +28,8 @@
 */
 
 //required language encodings
-define('CHARACTER_SET', "ISO-8859-1" );
-
-//xml language identifier
+define('CHARACTER_SET', 'UTF-8' );
 define('XML_LANG', "en" );
-
-//this is the regex for input validation filter used in common.php
-//define('VALIDATION_REGEX', "/([^\x09\x0A\x0D\x20-\x7E\xA0-\xFF])/" );
-define('VALIDATION_REGEX', "/([^\x09\x0a\x0d\x20-\x7e\x80\x82-\x8c\x9e\x91-\x9c\x9e\x9f\xa0-\xff])/" );
-//ISO-8859-x plus windows-1252
 
 //dates
 $month_array = array (NULL, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' );
@@ -227,6 +220,8 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['add_usergroup']              = "Add usergroup";
     $lang['add_new_usergroup']          = "Add a new usergroup";
     $lang['edit_usergroup']             = "Edit usergroup";
+    $lang['email_new_usergroup']        = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";
     $lang['usergroup_manage']           = "Usergroups management";
     $lang['no_usergroups']              = "No usergroups are defined";
     $lang['manage_usergroups']          = "Manage usergroups";
@@ -395,7 +390,6 @@ $week_array = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
     $lang['by_deadline']                = " (by deadline)";
     $lang['by_status']                  = " (by status)";
     $lang['by_owner']                   = " (by owner)";
-//** needs translation
     $lang['by_priority']                = " (by priority)";
     $lang['project_cloned']             = "Project to be cloned :";
     $lang['task_cloned']                = "Task to be cloned :";

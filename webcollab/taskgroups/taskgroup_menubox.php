@@ -36,8 +36,10 @@ if(! ADMIN ) {
   return;
 }
 
-$content = "<a href=\"taskgroups.php?x=".X."&amp;action=add\">".$lang['add']."</a><br />\n".
-           "<a href=\"taskgroups.php?x=".X."&amp;action=manage\">".$lang['manage']."</a><br />\n";
+$content = "<ul class=\"menu\">\n".
+           "<li><a href=\"taskgroups.php?x=".X."&amp;action=add\">".$lang['add']."</a></li>\n".
+           "<li><a href=\"taskgroups.php?x=".X."&amp;action=manage\">".$lang['manage']."</a></li>\n".
+           "</ul>\n";
 
 new_box($lang['taskgroups'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );
 

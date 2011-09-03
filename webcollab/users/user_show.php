@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: user_show.php 2297 2009-08-24 09:45:18Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -44,7 +44,8 @@ if(! @safe_integer($_GET['userid']) ){
 $userid = $_GET['userid'];
 
 //select
-$q = db_query('SELECT id, name, fullname, email, admin, private, guest, deleted FROM '.PRE.'users WHERE id='.$userid );
+$q = db_prepare('SELECT id, name, fullname, email, admin, private, guest, deleted FROM '.PRE.'users WHERE id=? LIMIT 1' );
+db_execute($q, array($userid ) );
 
 //get info
 if( ! ($row = @db_fetch_array($q, 0 ) ) ) {
@@ -53,7 +54,9 @@ if( ! ($row = @db_fetch_array($q, 0 ) ) ) {
 //test if user is private
 if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) ) {
   //get usergroups of user
-  $q_group = db_query('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.$row['id'] );
+  $q_group = db_prepare('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid=? LIMIT 1' );
+  db_execute($q_group, array($row['id'] ) );
+
   for($i=0 ; $row_group = @db_fetch_num($q_group, $i ) ; ++$i ) {
     $user_gid[$i] = $row_group[0];
   }
@@ -66,39 +69,41 @@ if($row['private'] && ($row['id'] != UID ) && ( ! ADMIN ) ) {
 if($row['deleted'] == 't' ){
   $content .= "<b><div style=\"text-align:center\"><span class=\"red\">".$lang['user_deleted']."</span></div></b><br />";
 }
-$content .= "<table>".
-              "<tr><td>".$lang['login'].":</td><td>".$row['name']."</td></tr>\n".
-              "<tr><td>".$lang['full_name'].":</td><td>".$row['fullname']."</td></tr>\n".
-              "<tr><td>".$lang['email'].":</td><td><a href=\"mailto:".$row['email']."\">".$row['email']."</a></td></tr>\n";
+
+$content .= "<table class=\"celldata\">".
+            "<tr class=\"grouplist\"><td>".$lang['login'].":</td><td>".$row['name']."</td></tr>\n".
+            "<tr class=\"grouplist\"><td>".$lang['full_name'].":</td><td>".$row['fullname']."</td></tr>\n".
+            "<tr class=\"grouplist\"><td>".$lang['email'].":</td><td><a href=\"mailto:".$row['email']."\">".$row['email']."</a></td></tr>\n";
 
 if($row['admin'] == "t" ){
-  $content .= "<tr><td>".$lang['admin'].":</td><td>".$lang['yes']."</td></tr>\n";
+  $content .= "<tr class=\"grouplist\"><td>".$lang['admin'].":</td><td>".$lang['yes']."</td></tr>\n";
 }
 else {
-  $content .= "<tr><td>".$lang['admin'].":</td><td>".$lang['no']."</td></tr>\n";
+  $content .= "<tr class=\"grouplist\"><td>".$lang['admin'].":</td><td>".$lang['no']."</td></tr>\n";
 }
 if($row['private'] == 1 ) {
-  $content .= "<tr><td>".$lang['private_user'].":</td><td>".$lang['yes']."</td></tr>\n";
+  $content .= "<tr class=\"grouplist\"><td>".$lang['private_user'].":</td><td>".$lang['yes']."</td></tr>\n";
 }
 else {
-  $content .= "<tr><td>".$lang['private_user'].":</td><td>".$lang['no']."</td></tr>\n";
+  $content .= "<tr class=\"grouplist\"><td>".$lang['private_user'].":</td><td>".$lang['no']."</td></tr>\n";
 }
 if($row['guest'] == 1 ) {
-  $content .= "<tr><td>".$lang['guest'].":</td><td>".$lang['yes']."</td></tr>\n";
+  $content .= "<tr class=\"grouplist\"><td>".$lang['guest'].":</td><td>".$lang['yes']."</td></tr>\n";
 }
 else {
-  $content .= "<tr><td>".$lang['guest'].":</td><td>".$lang['no']."</td></tr>\n";
+  $content .= "<tr class=\"grouplist\"><td>".$lang['guest'].":</td><td>".$lang['no']."</td></tr>\n";
 }
 
 //create a list of all the groups the user is in
-$q = db_query('SELECT '.PRE.'usergroups.id AS id,
+$q = db_prepare('SELECT '.PRE.'usergroups.id AS id,
                       '.PRE.'usergroups.name AS name,
                       '.PRE.'usergroups.private AS private
                       FROM '.PRE.'usergroups
                       LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.usergroupid='.PRE.'usergroups.id)
-                      WHERE '.PRE.'usergroups_users.userid='.$row['id'] );
+                      WHERE '.PRE.'usergroups_users.userid=?' );
+db_execute($q, array($row['id'] ) );
 
-$content .= "<tr><td>".$lang['usergroups'].": </td><td>";
+$content .= "<tr class=\"grouplist\"><td>".$lang['usergroups'].": </td><td>";
 $alert = '';
 $usergroups = '';
 $group_content = '';
@@ -122,37 +127,51 @@ else {
 }
 
 //get the last login time of a user
-$row = @db_result(db_query('SELECT lastaccess FROM '.PRE.'logins WHERE user_id='.$userid ), 0, 0);
-$content .=   "<tr><td>".$lang['last_time_here']."</td><td>".nicetime($row)."</td></tr>\n";
+$q = db_prepare('SELECT lastaccess FROM '.PRE.'logins WHERE user_id=? LIMIT 1' );
+db_execute($q, array($userid ) );
+$row = @db_result($q, 0, 0);
+$content .= "<tr class=\"grouplist\"><td>".$lang['last_time_here']."</td><td>".nicetime($row)."</td></tr>\n";
 
 //Get the number of tasks/projects created
-$row = db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE creator='.$userid ), 0, 0 );
-$content .=   "<tr><td>".$lang['number_items_created']."</td><td>".$row."</td></tr>\n";
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE creator=?' );
+db_execute($q, array($userid ) );
+$row = db_result($q, 0, 0 );
+$content .= "<tr class=\"grouplist\"><td>".$lang['number_items_created']."</td><td>".$row."</td></tr>\n";
 
 //Get the number of projects owned
-$projects_owned = db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner='.$userid.' AND parent=0' ), 0, 0 );
-$content .=   "<tr><td>".$lang['number_projects_owned']."</td><td>".$projects_owned."</td></tr>\n";
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner=? AND parent=0' );
+db_execute($q, array($userid ) );
+$projects_owned = db_result($q, 0, 0 );
+$content .= "<tr class=\"grouplist\"><td>".$lang['number_projects_owned']."</td><td>".$projects_owned."</td></tr>\n";
 
 //Get the number of tasks owned
-$tasks_owned = db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner='.$userid.' AND parent<>0' ), 0, 0 );
-$content .=   "<tr><td>".$lang['number_tasks_owned']."</td><td>".$tasks_owned."</td></tr>\n";
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner=? AND parent<>0' );
+db_execute($q, array($userid ) );
+$tasks_owned = db_result($q, 0, 0 );
+$content .= "<tr class=\"grouplist\"><td>".$lang['number_tasks_owned']."</td><td>".$tasks_owned."</td></tr>\n";
 
 //Get the number of tasks completed that are owned
-$row = db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner='.$userid.' AND status=\'done\' AND parent<>0' ), 0, 0 );
-$content .=   "<tr><td>".$lang['number_tasks_completed']."</td><td>".$row."</td></tr>\n";
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner=? AND status=\'done\' AND parent<>0' );
+db_execute($q, array($userid ) );
+$row = db_result($q, 0, 0 );
+$content .= "<tr class=\"grouplist\"><td>".$lang['number_tasks_completed']."</td><td>".$row."</td></tr>\n";
 
 //Get the number of forum posts
-$row = db_result(db_query('SELECT COUNT(*) FROM '.PRE.'forum WHERE userid='.$userid ), 0, 0 );
-$content .=   "<tr><td>".$lang['number_forum']."</td><td>".$row."</td></tr>\n";
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'forum WHERE userid=?' );
+db_execute($q, array($userid ) );
+$row = db_result($q, 0, 0 );
+
+$content .= "<tr class=\"grouplist\"><td>".$lang['number_forum']."</td><td>".$row."</td></tr>\n";
 
 //Get the number of files uploaded and the size
-$q   = db_query('SELECT COUNT(size), SUM(size) FROM '.PRE.'files WHERE uploader='.$userid );
+$q = db_prepare('SELECT COUNT(size), SUM(size) FROM '.PRE.'files WHERE uploader=?' );
+db_execute($q, array($userid ) );
 $row = db_fetch_num($q, 0 );
-$content .=   "<tr><td>".$lang['number_files']."</td><td>".$row[0]."</td></tr>\n";
+$content .= "<tr class=\"grouplist\"><td>".$lang['number_files']."</td><td>".$row[0]."</td></tr>\n";
 
 //show files
-$content .=   "<tr><td>".$lang['size_all_files']."</td><td>".nice_size($row[1] )."</td></tr>\n".
-            "</table>";
+$content .= "<tr class=\"grouplist\"><td>".$lang['size_all_files']."</td><td>".nice_size($row[1] )."</td></tr>\n".
+            "</table>\n";
 
 new_box($lang['user_info'], $content );
 
@@ -160,7 +179,7 @@ new_box($lang['user_info'], $content );
 //shows quick links to the tasks that the user owns
 
 if( $tasks_owned + $projects_owned > 0 ) {
-  $content = "<ul>";
+  $content = "<ul class=\"ul-1\">";
 
   //get list of private projects and put them in an array for later use
   $q = db_query('SELECT id, usergroupid FROM '.PRE.'tasks WHERE parent=0 AND globalaccess=\'f\'' );
@@ -171,7 +190,8 @@ if( $tasks_owned + $projects_owned > 0 ) {
   }
 
   //Get the number of tasks
-  $q = db_query('SELECT id, name, parent, status, finished_time AS finished_time, usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE owner='.$userid.' AND archive=0' );
+  $q = db_prepare('SELECT id, name, parent, status, finished_time AS finished_time, usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE owner=? AND archive=0' );
+  db_execute($q, array($userid ) );
 
   //show them
   for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -198,31 +218,32 @@ if( $tasks_owned + $projects_owned > 0 ) {
     //status
     switch( $row['status'] ) {
       case 'done':
-        $status_content="<span class=\"green\">(".$task_state['done']."&nbsp;".nicedate($row['finished_time']).")</span>";
+        $status_content = "<span class=\"green\">(".$task_state['done']."&nbsp;".nicedate($row['finished_time']).")</span>";
         break;
 
       case 'active':
-        $status_content="<span class=\"orange\">(".$task_state['active'].")</span>";
+        $status_content = "<span class=\"orange\">(".$task_state['active'].")</span>";
         break;
 
       case 'notactive':
-        $status_content="<span class=\"green\">(".$task_state['planned'].")</span>";
+        $status_content = "<span class=\"green\">(".$task_state['planned'].")</span>";
         break;
 
       case 'cantcomplete':
-        $status_content="<span class=\"blue\">(".$task_state['cantcomplete']."&nbsp;".nicedate($row['finished_time']).")</span>";
+        $status_content = "<span class=\"blue\">(".$task_state['cantcomplete']."&nbsp;".nicedate($row['finished_time']).")</span>";
         break;
     }
 
     if($row['parent'] == 0 ){
       //project
-      $status_content ="(".$lang['project'].")";
+      $status_content = "(".$lang['project'].")";
     }
 
     //show the task
     $content .= "<li><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a> ".$status_content."</li>\n";
   }
-  $content .= "</ul>";
+  $content .= "</ul>\n";
+  
   new_box($lang['owned_tasks'], $content );
 }
 

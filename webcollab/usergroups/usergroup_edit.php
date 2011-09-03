@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: usergroup_edit.php 2296 2009-08-24 09:44:14Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -31,6 +31,10 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+require_once(BASE.'includes/admin_config.php' );
+
 //admins only
 if( ! ADMIN ) {
   error('Unauthorised access', 'This function is for admins only.' );
@@ -46,10 +50,12 @@ if(! @safe_integer($_GET['usergroupid'] ) ) {
 }
 $usergroupid = $_GET['usergroupid'];
 
+//generate_token
+generate_token('usergroup' );
+
 //get usergroup information
-if(! ($q = db_query('SELECT * FROM '.PRE.'usergroups WHERE id='.$usergroupid, 0 ) ) ) {
-  error('Usergroup edit', 'There was an error in the data query.' );
-}
+$q = db_prepare('SELECT * FROM '.PRE.'usergroups WHERE id=?' );
+db_execute($q, array($usergroupid ) );
 
 if(! ($row = db_fetch_array( $q, 0 ) ) ) {
   error('Usergroup edit', 'Usergroup does not exist' );
@@ -69,18 +75,19 @@ $content = "<form method=\"post\" action=\"usergroups.php\">\n".
            "<input type=\"hidden\" name=\"usergroupid\" value=\"".$usergroupid."\" />\n".
            "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
            "<table class=\"celldata\">\n".
-           "<tr><td>".$lang['usergroup_name']."</td><td><input type=\"text\" name=\"name\" value=\"".$row['name']."\" size=\"30\" /></td></tr>\n".
-           "<tr><td>".$lang['usergroup_description']."</td><td><input type=\"text\" name=\"description\" value=\"".$row['description']."\" size=\"30\" /></td></tr>\n".
+           "<tr><td>".$lang['usergroup_name']."</td><td><input type=\"text\" name=\"name\" value=\"".$row['name']."\" class=\"size\" /></td></tr>\n".
+           "<tr><td>".$lang['usergroup_description']."</td><td><input type=\"text\" name=\"description\" value=\"".$row['description']."\" class=\"size\" /></td></tr>\n".
            "<tr><td>&nbsp;</td></tr>\n".
            "<tr><td><label for=\"private\">".$lang['private_usergroup'].":</label></td><td><input type=\"checkbox\" name=\"private_group\" id=\"private\" ".$private." /></td></tr>\n".
            "<tr><td>&nbsp;</td></tr>\n";
 
 //add users
-$q = db_query('SELECT '.PRE.'users.id AS id
+$q = db_prepare('SELECT '.PRE.'users.id AS id
                       FROM '.PRE.'users
                       LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
-                      WHERE usergroupid='.$row['id'].'
-                      AND '.PRE.'users.deleted=\'f\''  );
+                      WHERE usergroupid=?
+                      AND '.PRE.'users.deleted=\'f\'' );
+db_execute($q, array($row['id'] ) );
 
 //put groups in an array
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -103,6 +110,9 @@ for( $i=0 ; $user_row = @db_fetch_array($q, $i ) ; ++$i ) {
 }
 
 $content .=  "</select><small><i>".$lang['select_instruct']."</i></small></td></tr>\n".
+             "<tr><td>&nbsp;</td></tr>\n".
+             "<tr><td><label for=\"usergroup\">".$lang['email_edit_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP." /></td></tr>\n".
+             "<tr><td>&nbsp;</td></tr>\n".
              "</table>\n".
              "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" /></p>\n".
              "</form>\n".

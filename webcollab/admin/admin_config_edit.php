@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -32,6 +32,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //only for admins
 if( ! ADMIN ) {
   error( 'Not permitted', 'This function is for admins only' );
@@ -40,6 +43,9 @@ if( ! ADMIN ) {
 //set variables
 $content = '';
 $maillist = '';
+
+//generate_token
+generate_token('admin_config' );
 
 //get config data
 $q = db_query('SELECT * FROM '.PRE.'config' );
@@ -56,13 +62,13 @@ if(USE_EMAIL === 'Y' ){
               "<input type=\"hidden\" id=\"alert_email\" name=\"alert\" value=\"".$lang['invalid_email']."\" /></fieldset>\n".
               "<table class=\"celldata\" >\n";
 
-  $content .= "<tr><td style=\"white-space : nowrap\" colspan=\"2\"><b>".$lang['email_settings']."</b><br /><br /></td></tr>\n";
+  $content .= "<tr><th style=\"white-space: nowrap; height: 20px; vertical-align: top\" colspan=\"2\">".$lang['email_settings']."</th></tr>\n";
 
   //email addresses
-  $content .= "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\" >".$lang['admin_email']."</a>:</td><td><input type=\"text\" id=\"admin\" name=\"email_admin\" value=\"".$row['email_admin']."\" size=\"30\" />".
+  $content .= "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\" >".$lang['admin_email']."</a>:</td><td><input type=\"text\" id=\"admin\" class=\"size\" name=\"email_admin\" value=\"".$row['email_admin']."\" />".
               "<script type=\"text/javascript\">document.getElementById('admin').focus();</script></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_reply']."</a>:</td><td><input type=\"text\" id=\"reply\" name=\"reply_to\" value=\"".$row['reply_to']."\" size=\"30\" /></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_from']."</a>:</td><td><input type=\"text\" id=\"from\" name=\"from\" value=\"".$row['email_from']."\" size=\"30\" /></td></tr>\n";
+              "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_reply']."</a>:</td><td><input type=\"text\" id=\"reply\" class=\"size\"name=\"reply_to\" value=\"".$row['reply_to']."\" /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_from']."</a>:</td><td><input type=\"text\" id=\"from\" class=\"size\" name=\"from\" value=\"".$row['email_from']."\" /></td></tr>\n";
 
   //get mailing list
   $q = db_query('SELECT DISTINCT email FROM '.PRE.'maillist' );
@@ -85,7 +91,7 @@ else {
 
 }
 
-$content .= "<tr><td colspan=\"2\"><b>".$lang['default_checkbox']."</b><br /><br /></td></tr>\n";
+$content .= "<tr><th style=\"white-space: nowrap; height: 20px; vertical-align: top\" colspan=\"2\">".$lang['default_checkbox']."</th></tr>\n";
 
 //defaults for task checkboxes
 $content .= "<tr><td><label for=\"access\">".$lang['allow_globalaccess']."</label></td><td><input type=\"checkbox\" name=\"access\" id=\"access\" ".$row['globalaccess']." /></td></tr>\n".

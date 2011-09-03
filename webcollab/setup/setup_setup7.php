@@ -2,7 +2,7 @@
 /*
   $Id: setup_setup5.php 1737 2008-01-24 08:16:45Z andrewsimpson $
 
-  (c) 2008 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2008 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -36,7 +36,7 @@ require_once(BASE.'setup/setup_config.php' );
 $locale_setup = LOCALE;
 
 include_once(BASE.'lang/lang.php' );
-include_once(BASE.'lang/lang_setup2.php' );
+include_once(BASE.'lang/lang_setup.php' );
 require_once(BASE.'setup/security_setup.php' );
 
 //if user aborts, let the script carry onto the end
@@ -78,25 +78,24 @@ else {
   $admin_email = NULL;
 }
 
-//set the database encoding
-db_user_locale(CHARACTER_SET );
-
 //update the database
-db_query("UPDATE ".PRE."users SET name='".$admin_user."', password='".md5($admin_password )."', email='".$admin_email."' WHERE id=1;" );
+$q = db_prepare("UPDATE ".PRE."users SET name=?, password=?, email=? WHERE id=1;" );
+db_execute($q, array($admin_user, md5($admin_password ), $admin_email ) );
 
-db_query("UPDATE ".PRE."config SET email_admin='".$admin_email."';" );
+$q = db_prepare("UPDATE ".PRE."config SET email_admin=?;" );
+db_execute($q, array($admin_email ) );
 
 //show success message
-create_top_setup($lang['setup7_banner'] );
+create_top_setup($lang_setup['setup7_banner'] );
 
-$content = "<div style=\"text-align:center\">\n".$lang['setup5_complete']."</div>\n";
+$content = "<div style=\"text-align:center\">\n".$lang_setup['setup5_complete']."</div>\n";
 
 $content .= "<form  method='post' action='index.php'>\n".
             "<p style=\"text-align:center\">\n".
-            "<input type='submit' value='".$lang['finish']."' /></p>\n".
+            "<input type='submit' value='".$lang_setup['finish']."' /></p>\n".
             "</form>\n";
 
-new_box_setup($lang['setup7_banner'], $content, 'boxdata', 'singlebox' );
+new_box_setup($lang_setup['setup7_banner'], $content, 'boxdata', 'singlebox' );
 
 create_bottom_setup();
 

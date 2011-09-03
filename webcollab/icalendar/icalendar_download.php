@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2005 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -66,6 +66,7 @@ function icalendar_header($id ) {
 
 function icalendar_body($row, $taskid ) {
 
+  //cache the generated timestamp (date functions are slow)
   global $icalendar_id, $dtstamp;
   //cache the generated timestamp (date functions are slow)
 
@@ -191,7 +192,7 @@ function icalendar_vtodo($row, $taskid ) {
     $content .= "CLASS:PRIVATE\r\n";
   }
 
-  $content .= "URL:".BASE_URL.$location."tasks.php?action=show&taskid=".$taskid."\r\n".
+  $content .= "URL:".BASE_URL."tasks.php?action=show&taskid=".$taskid."\r\n".
               "END:VTODO\r\n";
 
   return $content;

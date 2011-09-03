@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -31,10 +31,16 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //admins only
 if(! ADMIN ){
   error('Unauthorised access', 'This function is for admins only.' );
 }
+
+//generate_token
+generate_token('taskgroup' );
 
 $content =
       "<form method=\"post\" action=\"taskgroups.php\" onsubmit=\"return fieldCheck('name')\">\n".
@@ -43,9 +49,9 @@ $content =
       "<input type=\"hidden\" name=\"action\" value=\"submit_insert\" />\n".
       "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n".
       "<table class=\"celldata\">\n".
-      "<tr><td>".$lang['taskgroup_name']."</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" />".
+      "<tr><td>".$lang['taskgroup_name']."</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" />".
       "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
-      "<tr><td>".$lang['taskgroup_description']."</td><td><input type=\"text\"name=\"description\"size=\"30\" /></td></tr>\n".
+      "<tr><td>".$lang['taskgroup_description']."</td><td><input type=\"text\"name=\"description\" class=\"size\" /></td></tr>\n".
       "</table>\n".
       "<p><input type=\"submit\" value=\"".$lang['add_taskgroup']."\" /></p>\n".
       "</form>\n";

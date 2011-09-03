@@ -9,14 +9,13 @@
   define('SETUP_CSS', 'setup.css' );
 
   //version info
-  define('SETUP_WEBCOLLAB_VERSION', "2.50" );
-  define('SETUP_UNICODE_VERSION', "N" );
+  define('SETUP_WEBCOLLAB_VERSION', "3.00" );
 
   //available language array
   $locale_array = array('bg'   => 'Bulgarian',
                         'ca'   => 'Catalan',
-                        //'zh-tw'=> '*Chinese(Traditional)',
-                        //'zh-hk'=> '*Chinese (Simplified)',
+                        'zh-tw'=> 'Chinese(Traditional)',
+                        'zh-hk'=> 'Chinese (Simplified)',
                         'cs'   => 'Czech',
                         'da'   => 'Danish',
                         'nl'   => 'Dutch',
@@ -27,8 +26,8 @@
                         'gr'   => 'Greek',
                         'hu'   => 'Hungarian',
                         'it'   => 'Italian',
-                        //'ja'   => '*Japanese',
-                        //'ko'   => '*Korean',
+                        'ja'   => 'Japanese',
+                        'ko'   => 'Korean',
                         'no'   => 'Norwegian',
                         'pl'   => 'Polish',
                         'pt'   => 'Portuguese',

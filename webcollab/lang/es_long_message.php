@@ -15,18 +15,18 @@ Cambridge, MA 02139, USA.
 Function:
 ---------
 Language files (long messages) for 'es' (Spanish)
-Trnaslation: Original de Daniel Lujan actualizado por Alberto VizcaÌno (www.alvizlo.es)
-Maintainer:
+Trnaslation: Original de Daniel Lujan actualizado por Alberto Vizca√≠no (www.alvizlo.es)
+Maintainer: NOTE: This file is written in UTF-8 character set
 */
 $taskgroup_info = "<ul><li>Si elimina un grupo de tareas todas las tareas de su propiedad quedaran sin clasificar.</li>\n".
 //**
-"<li>Los grupos de usuarios privados son visibles sÛlamente a miembros de esos grupos privados.</li>\n".
-"<li>Puede cambiar el nombre de la categorÌa sin que afecte a las tareas.</li>\n".
+"<li>Los grupos de usuarios privados son visibles s√≥lamente a miembros de esos grupos privados.</li>\n".
+"<li>Puede cambiar el nombre de la categor√≠a sin que afecte a las tareas.</li>\n".
 "<li>Dos grupos de tareas no pueden tener el mismo nombre.</li></ul>\n";
-$usergroup_info = "<ul><li>Si elimina un grupo de usuarios, todos los envÌos privados al foro relacionados ser·n eliminados tambien.</li>\n".
+$usergroup_info = "<ul><li>Si elimina un grupo de usuarios, todos los env√≠os privados al foro relacionados ser√°n eliminados tambien.</li>\n".
 "<li>Puede modificar el nombre del grupo de usuario sin que afecte a sus usuarios.</li>\n".
 "<li>Dos grupos de usuarios no pueden tener el mismo nombre.</li></ul>\n";
-$user_info = "Seleccione su acciÛn desde el menu de la izquierda.<br /><br />".
+$user_info = "Seleccione su acci√≥n desde el menu de la izquierda.<br /><br />".
 "Algunas cosideraciones:<br />".
 "<ul>".
 //**
@@ -34,10 +34,10 @@ $user_info = "Seleccione su acciÛn desde el menu de la izquierda.<br /><br />".
 "<li>Los usuarios se eliminan en dos etapas, la segunda es permanente.</li>\n".
 "<li>Un usuario eliminado pierde todas sus tareas pero no sus mensajes en el foro.</li>\n".
 "<li>Un usuario borrado de forma permanente pierde todo.</li>\n".
-"<li>Un usuario borrado mantiene los registros de sus tareas que ha revisado, y continuar· con estas despues de ser reactivado.</li>\n".
-"<li>TODAS las acciones ejecutadas sobre un usuario seran informadas al usuario por correo electrÛnico.</li>\n".
-"<li>Las claves est·n encriptadas en la base de datos. Se pueden asignar nuevas claves pero no recuperar las antiguas.</li>\n".
+"<li>Un usuario borrado mantiene los registros de sus tareas que ha revisado, y continuar√° con estas despues de ser reactivado.</li>\n".
+"<li>TODAS las acciones ejecutadas sobre un usuario seran informadas al usuario por correo electr√≥nico.</li>\n".
+"<li>Las claves est√°n encriptadas en la base de datos. Se pueden asignar nuevas claves pero no recuperar las antiguas.</li>\n".
 "<li>Las claves se envian por email al usuario cuando se registra, sea cuidadoso con los correos de las claves!</li>\n".
-"<li>Para agilizar la gestiÛn, los usuarios pueden editar su cuenta sin conocimiento del administrador</li>\n".
+"<li>Para agilizar la gesti√≥n, los usuarios pueden editar su cuenta sin conocimiento del administrador</li>\n".
 "</ul>\n";
 ?>

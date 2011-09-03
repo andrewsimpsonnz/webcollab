@@ -2,7 +2,7 @@
 /*
   $Id: forum_add.php 1704 2008-01-01 06:09:52Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -32,6 +32,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
 
 //secure vars
@@ -46,6 +47,9 @@ if((! isset($_REQUEST['postid'] ) )  || (! @safe_integer($_REQUEST['postid']) ) 
 }
 $postid = $_REQUEST['postid'];
 
+//generate_token
+generate_token('forum_edit' );
+
 //disable main form when deleting
 if(isset($_REQUEST['action'] ) && $_REQUEST['action'] == 'delete' ) {
   $s = " disabled=\"disabled\"";
@@ -54,14 +58,17 @@ else {
   $s = '';
 }
 
+
 //find out the tasks' name
-$q = db_query('SELECT '.PRE.'forum.text AS text,
-                      '.PRE.'forum.userid as id,
-                      '.PRE.'tasks.id AS taskid,
-                      '.PRE.'tasks.name AS name
-                      FROM '.PRE.'forum
-                      LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
-                      WHERE '.PRE.'forum.id='.$postid.' LIMIT 1' );
+$q = db_prepare('SELECT '.PRE.'forum.text AS text,
+                        '.PRE.'forum.userid as id,
+                        '.PRE.'tasks.id AS taskid,
+                        '.PRE.'tasks.name AS name
+                        FROM '.PRE.'forum
+                        LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
+                        WHERE '.PRE.'forum.id=? LIMIT 1' );
+
+db_execute($q, array($postid ) );
 
 if(! $row = db_fetch_array($q, 0 ) ) {
   error('Forum edit', 'The requested post does not exist.');
@@ -83,7 +90,7 @@ $content .= "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
 
 
 //build up the text-entry part
-$content .= "<table>\n".
+$content .= "<table class=\"celldata\">\n".
             "<tr><td>".$lang['message']."</td>".
             "<td><script type=\"text/javascript\"> edToolbar('text');</script>".
             "<textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\"".$s.">".$row['text']."</textarea>".

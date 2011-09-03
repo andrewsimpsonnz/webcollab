@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_edit.php 2270 2009-08-14 06:58:03Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -33,8 +33,10 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
-include_once(BASE.'includes/details.php' );
+//includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
+include_once(BASE.'includes/details.php' );
 include_once(BASE.'includes/time.php' );
 
 $content = '';
@@ -73,11 +75,22 @@ function user_access($owner, $usergroupid, $groupaccess ) {
   return false;
 }
 
+//get input data
 if(! @safe_integer($_GET['taskid']) ){
   error('Task edit', 'The taskid input is not valid' );
 }
-
 $taskid = $_GET['taskid'];
+
+if(isset($_GET['owner'] ) && @safe_integer($_GET['owner'] ) ) {
+  $new_owner = $_GET['owner'];
+}
+
+if(isset($_GET['status'] ) && $_GET['status'] ) {
+  $new_status = 'done';
+}
+
+//generate_token
+generate_token('tasks' );
 
 //can this user edit this task ?
 if( ! user_access($TASKID_ROW['owner'], $TASKID_ROW['usergroupid'], $TASKID_ROW['groupaccess'] ) ) {
@@ -117,12 +130,13 @@ switch($TYPE) {
                 "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n ".
                 "<table class=\"celldata\">\n".
                 "<tr><td>".$lang['creation_time']."</td><td>".nicedate($TASKID_ROW['created'] )."</td></tr>\n".
-                "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"60\" value=\"".$TASKID_ROW['name']."\" /></td></tr>\n";
+                "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" value=\"".$TASKID_ROW['name']."\" /></td></tr>\n";
     break;
 
   case 'task':
     //get parent details
-    $q = db_query('SELECT '.$epoch.'deadline) AS epoch_deadline, status FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['parent'].' LIMIT 1' );
+    $q = db_prepare('SELECT '.$epoch.'deadline) AS epoch_deadline, status FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+    db_execute($q, array($TASKID_ROW['parent'] ) );
     $parent_row = db_fetch_array($q, 0 );
 
     switch ($parent_row['status'] ) {
@@ -143,7 +157,9 @@ switch($TYPE) {
     }
 
     //get project name
-    $project_name = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$TASKID_ROW['projectid'].' LIMIT 1' ), 0, 0 );
+    $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+    db_execute($q, array($TASKID_ROW['projectid'] ) );
+    $project_name = db_result($q, 0, 0 );
 
     //show project finish date for javascript & other details
     $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" /></fieldset>\n".
@@ -162,7 +178,8 @@ if($TASKID_ROW['parent'] == 0 ){
 }
 $content .= ">".$lang['no_reparent']."</option>\n";
 
-$q = db_query('SELECT id, name, usergroupid, globalaccess FROM '.PRE.'tasks WHERE id<>'.$taskid.' AND archive=0 ORDER BY name');
+$q = db_prepare('SELECT id, name, usergroupid, globalaccess FROM '.PRE.'tasks WHERE id<>? AND archive=0 ORDER BY name');
+db_execute($q, array($taskid ) );
 
 for( $i=0; $reparent_row = @db_fetch_array($q, $i ); ++$i ) {
   //check for private usergroups
@@ -183,7 +200,7 @@ $content .="</select></td></tr>\n";
 
 //show task (if applicable)
 if($TASKID_ROW['parent'] != 0 ){
-  $content .= "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" size=\"30\" value=\"".$TASKID_ROW['name']."\" /></td></tr>\n";
+  $content .= "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" value=\"".$TASKID_ROW['name']."\" /></td></tr>\n";
 }
 //deadline
 $content .= "<tr><td>".$lang['deadline'].":</td><td>".date_select_from_timestamp($TASKID_ROW['deadline'])."</td></tr>\n";

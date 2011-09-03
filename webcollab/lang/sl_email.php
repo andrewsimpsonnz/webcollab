@@ -4,7 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  This file created on Avgust 2006 by Saπo Stanojev
+  This file created on Avgust 2006 by Sa≈°o Stanojev
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -22,9 +22,11 @@
   Function:
   ---------
 
-  Email text language files for 'si' (SlovenπËina)
+  Email text language files for 'sl' (Sloven≈°ƒçina)
 
-  Maintainer: Saπo Stanojev <sass99@gmail.com>
+  Maintainer: Sa≈°o Stanojev <sass99@gmail.com>
+
+  NOTE: This file is written in UTF-8 character set
 
 */
 
@@ -35,32 +37,32 @@ $email_date = sprintf('%s %s %s %+03d00', date('Y', $ltime ), $month_array[(date
 
 $title_file_post          = ABBR_MANAGER_NAME.": Dodana nova datoteka: %s";
 $email_file_post          = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne ".$email_date." novo datoteko dodal uporabnik %1\$s.\n\n".
+                            "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne ".$email_date." novo datoteko dodal uporabnik %1\$s.\n\n".
                             "Datoteka:  %2\$s\n".
                             "Opis:  %3\$s\n\n".
-                            "Projekt:  %4\$s\n".
-                            "Naloga:   %5\$s\n\n".
-                            "ObiπËite stran za veË informacij.\n\n".
+                            "Projekt:   %4\$s\n".
+                            "Naloga:    %5\$s\n\n".
+                            "Obi≈°ƒçite stran za veƒç informacij.\n\n".
                             BASE_URL."%6\$s\n";
 
 
-$title_forum_post         = ABBR_MANAGER_NAME.": Novo sporoËilo na forumu: %s";
+$title_forum_post         = ABBR_MANAGER_NAME.": Novo sporoƒçilo na forumu: %s";
 $email_forum_post         = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne ".$email_date." novo sporoËilo na forumu dodal uporabnik %1\$s:\n\n".
+                            "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne ".$email_date." novo sporoƒçilo na forumu dodal uporabnik %1\$s:\n\n".
                             "----\n\n".
                             "%2\$s\n\n".
                             "----\n\n".
-                            "ObiπËite stran za veË informacij.\n\n".
+                            "Obi≈°ƒçite stran za veƒç informacij.\n\n".
                             BASE_URL."%3\$s\n";
 
 $email_forum_reply        = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne".$email_date." novo sporoËilo na forumu dodal uporabnik %1\$s.\n\n".
-                            "To sporoËilo je odgovor na prejπnje sporoËilo uporabnika %2\$s.\n\n".
-                            "Prvotno sporoËilo:\n%3\$s\n\n".
+                            "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne".$email_date." novo sporoƒçilo na forumu dodal uporabnik %1\$s.\n\n".
+                            "To sporoƒçilo je odgovor na prej≈°nje sporoƒçilo uporabnika %2\$s.\n\n".
+                            "Prvotno sporoƒçilo:\n%3\$s\n\n".
                             "----\n\n".
-                            "Novo sporoËilo:\n%4\$s\n\n".
+                            "Novo sporoƒçilo:\n%4\$s\n\n".
                             "----\n\n".
-                            "ObiπËite stran za veË informacij.\n\n".
+                            "Obi≈°ƒçite stran za veƒç informacij.\n\n".
                             BASE_URL."%5\$s\n";
 
 $email_list               = "Projekt:  %1\$s\n".
@@ -68,27 +70,27 @@ $email_list               = "Projekt:  %1\$s\n".
                             "Stanje:     %3\$s\n".
                             "Lastnik:   %4\$s ( %5\$s )\n".
                             "Besedilo:\n%6\$s\n\n".
-                            "ObiπËite stran za veË informacij.\n\n".
+                            "Obi≈°ƒçite stran za veƒç informacij.\n\n".
                             BASE_URL."%7\$s\n";
 
-$title_takeover_project   = ABBR_MANAGER_NAME.": Vaπ projekt je prevzet";
-$title_takeover_task      = ABBR_MANAGER_NAME.": Vaπa naloga je prevzeta";
+$title_takeover_project   = ABBR_MANAGER_NAME.": Va≈° projekt je prevzet";
+$title_takeover_task      = ABBR_MANAGER_NAME.": Va≈°a naloga je prevzeta";
 
 $email_takeover_task      = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME." vas obveπËa, da je vaπo nalogo prevzel skrbnik dne ".$email_date.".\n\n";
+                            "Spleti≈°ƒçe ".MANAGER_NAME." vas obve≈°ƒça, da je va≈°o nalogo prevzel skrbnik dne ".$email_date.".\n\n";
 $email_takeover_project   = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME."vas obveπËa, da je vaπ projekt prevzel skrbnik dne ".$email_date.".\n\n";
+                            "Spleti≈°ƒçe ".MANAGER_NAME."vas obve≈°ƒça, da je va≈° projekt prevzel skrbnik dne ".$email_date.".\n\n";
 
 
 $title_new_owner_project  = ABBR_MANAGER_NAME.": Nov projekt za vas";
 $title_new_owner_task     = ABBR_MANAGER_NAME.": Nova naloga za vas";
 
 $email_new_owner_project  = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne ".$email_date." ustvarjen nov projekt, katerega lastnik ste vi.\n\n".
+                            "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne ".$email_date." ustvarjen nov projekt, katerega lastnik ste vi.\n\n".
                             "Sledijo podrobnosti:\n\n";
 
 $email_new_owner_task     = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne ".$email_date." ustvarjena nova naloga, katere lastnik ste vi\n\n".
+                            "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne ".$email_date." ustvarjena nova naloga, katere lastnik ste vi\n\n".
                             "Sledijo podrobnosti:\n\n";
 
 
@@ -96,103 +98,115 @@ $title_new_group_project  = ABBR_MANAGER_NAME.": Nov projekt: %s";
 $title_new_group_task     = ABBR_MANAGER_NAME.": Nova naloga: %s";
 
 $email_new_group_project  = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne ".$email_date." ustvarjen nov projekt.\n\n".
+                            "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne ".$email_date." ustvarjen nov projekt.\n\n".
                             "Sledijo podrobnosti:\n\n";
 
 $email_new_group_task     = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne ".$email_date." ustvarjena nova naloga.\n\n".
+                            "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne ".$email_date." ustvarjena nova naloga.\n\n".
                             "Sledijo podrobnosti:\n\n";
 
-$title_edit_owner_project = ABBR_MANAGER_NAME.": Vaπ projekt je osveæen";
-$title_edit_owner_task    = ABBR_MANAGER_NAME.": Vaπa naloga je osveæena";
+$title_edit_owner_project = ABBR_MANAGER_NAME.": Va≈° projekt je osve≈æen";
+$title_edit_owner_task    = ABBR_MANAGER_NAME.": Va≈°a naloga je osve≈æena";
 
 $email_edit_owner_project = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne ".$email_date." priπlo do sprememb na projektu, katerega lastnik ste.\n\n".
+                            "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne ".$email_date." pri≈°lo do sprememb na projektu, katerega lastnik ste.\n\n".
                             "Sledijo podrobnosti:\n\n";
 
 $email_edit_owner_task    = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne  ".$email_date." priπlo do sprememb pri nalogi, katere lastnik ste.\n\n".
+                            "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne  ".$email_date." pri≈°lo do sprememb pri nalogi, katere lastnik ste.\n\n".
                             "Sledijo podrobnosti:\n\n";
 
-$title_edit_group_project = ABBR_MANAGER_NAME.": Projekt je osveæen";
-$title_edit_group_task    = ABBR_MANAGER_NAME.": Naloga je osveæena";
+$title_edit_group_project = ABBR_MANAGER_NAME.": Projekt je osve≈æen";
+$title_edit_group_task    = ABBR_MANAGER_NAME.": Naloga je osve≈æena";
 
 $email_edit_group_project = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne ".$email_date." priπlo do sprememb na projektu, katere lastnik je uporabnik %s.\n\n".
+                            "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne ".$email_date." pri≈°lo do sprememb na projektu, katere lastnik je uporabnik %s.\n\n".
                             "Sledijo podrobnosti:\n\n";
 
 $email_edit_group_task    = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne ".$email_date." priπlo do sprememb pri nalogi, katere lastnik je uporabnik %s.\n\n".
+                            "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne ".$email_date." pri≈°lo do sprememb pri nalogi, katere lastnik je uporabnik %s.\n\n".
                             "Sledijo podrobnosti:\n\n";
 
 $title_delete_project     = ABBR_MANAGER_NAME.": Projekt je izbrisan";
 $title_delete_task        = ABBR_MANAGER_NAME.": Naloga je izbrisana";
 
 $email_delete_project     = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne ".$email_date." izbrisan projekt, katerega lastnik ste vi.\n\n".
-                            "Hvala, ker ste upravljali s projektom v Ëasu njegovega trajanja.\n\n";
+                            "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne ".$email_date." izbrisan projekt, katerega lastnik ste vi.\n\n".
+                            "Hvala, ker ste upravljali s projektom v ƒçasu njegovega trajanja.\n\n";
 
 $email_delete_task        = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne ".$email_date." izbrisana naloga, katere lastnik ste vi.\n\n".
-                            "Hvala, ker ste upravljali z nalogo v Ëasu njenega trajanja.\n\n";
+                            "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne ".$email_date." izbrisana naloga, katere lastnik ste vi.\n\n".
+                            "Hvala, ker ste upravljali z nalogo v ƒçasu njenega trajanja.\n\n";
 
 $delete_list              = "Projekt:  %1\$s\n".
                             "Naloga:   %2\$s\n".
                             "Stanje:     %3\$s\n\n".
                             "Besedilo:\n%4\$s\n\n";
 
-$title_welcome            = "Dobrodoπli na strani ".ABBR_MANAGER_NAME;
-$email_welcome            = "Pozdravljeni!\n\nSpletiπËe ".MANAGER_NAME." vam æeli dobrodoπlico dne ".$email_date.".\n\n".
-                            "Ker ste novi na tej strani, naj najprej razloæim nekaj stvari, preden zaËnete z delom.\n\n".
-                            "Najprej, to je orodje za upravljanje s projekti. Na domaËi strani boste videli trenutno dostopne projekte. ".
-                            "»e kliknete na katerokoli ime projekta, boste preusmerjeni na stran doloËenega projekta/naloge. Na tej strani se bo odvijalo vaπe delo.\n\n".
-                            "Vsak vnos, ki ga opravite ali vsaka naloga, ki jo spremenite bo ostalim uporabnikom prikazana kot 'NOV' ali 'OSVEÆEN' vnos. Seveda to deluje tudi v obratni smeri.".
-                            "To vam omogoËa, da hitro spoznate, na katerih projektih/nalogah je priπlo do aktivnosti.\n\n".
-                            "Poleg tega lahko prevzamete lastniπtvo neke naloge in kasneje to nalogo tudi zamenjate, lahko pa tudi sodelujete v forumih. ".
-                            "Ko boste opravljali naloge, ne pozabite oznaËiti status naloge in besedilo, da bodo tudi ostali uporabniki v toku s spremembami.".
-                            "\n\nÆelim vam veliko uspeha pri delu. »e boste naleteli na teæavo, lahko poπljete e-poπto na naslov ".EMAIL_ADMIN.".\n\n --SreËno!\n\n".
-                            "Uporabniπko ime:    %1\$s\n".
+$title_usergroup_add      = ABBR_MANAGER_NAME.": New usergroup %1\$s created";
+$email_usergroup_add      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that a new usergroup %1\$s, has been created on ".$email_date.".\n\n".
+                            "The members of the new usergroup are:\n".
+                            "%2\$s\n";
+
+$title_usergroup_edit      = ABBR_MANAGER_NAME.": Usergroup %1\$s changed";
+$email_usergroup_edit      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that usergroup %1\$s, has been changed on ".$email_date.".\n\n".
+                            "The members of the usergroup are:\n".
+                            "%2\$s\n";
+
+$title_welcome            = "Dobrodo≈°li na strani ".ABBR_MANAGER_NAME;
+$email_welcome            = "Pozdravljeni!\n\nSpleti≈°ƒçe ".MANAGER_NAME." vam ≈æeli dobrodo≈°lico dne ".$email_date.".\n\n".
+                            "Ker ste novi na tej strani, naj najprej razlo≈æim nekaj stvari, preden zaƒçnete z delom.\n\n".
+                            "Najprej, to je orodje za upravljanje s projekti. Na domaƒçi strani boste videli trenutno dostopne projekte. ".
+                            "ƒåe kliknete na katerokoli ime projekta, boste preusmerjeni na stran doloƒçenega projekta/naloge. Na tej strani se bo odvijalo va≈°e delo.\n\n".
+                            "Vsak vnos, ki ga opravite ali vsaka naloga, ki jo spremenite bo ostalim uporabnikom prikazana kot 'NOV' ali 'OSVE≈ΩEN' vnos. Seveda to deluje tudi v obratni smeri.".
+                            "To vam omogoƒça, da hitro spoznate, na katerih projektih/nalogah je pri≈°lo do aktivnosti.\n\n".
+                            "Poleg tega lahko prevzamete lastni≈°tvo neke naloge in kasneje to nalogo tudi zamenjate, lahko pa tudi sodelujete v forumih. ".
+                            "Ko boste opravljali naloge, ne pozabite oznaƒçiti status naloge in besedilo, da bodo tudi ostali uporabniki v toku s spremembami.".
+                            "\n\n≈Ωelim vam veliko uspeha pri delu. ƒåe boste naleteli na te≈æavo, lahko po≈°ljete e-po≈°to na naslov ".EMAIL_ADMIN.".\n\n --Sreƒçno!\n\n".
+                            "Uporabni≈°ko ime:    %1\$s\n".
                             "Geslo:           %2\$s\n\n".
-                            "Uporabniπka skupina:  %3\$s".
+                            "Uporabni≈°ka skupina:  %3\$s".
                             "Ime:               %4\$s\n".
                             "Naslov strani:      ".BASE_URL."\n\n".
                             "%5\$s";
 
-$title_user_change1       = ABBR_MANAGER_NAME.": Sprememba na vaπem uporabniπkem raËunu s strani skrbnika";
+$title_user_change1       = ABBR_MANAGER_NAME.": Sprememba na va≈°em uporabni≈°kem raƒçunu s strani skrbnika";
 $email_user_change1       = "Pozdravljeni!\n\n".
-                            "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne ".$email_date." priπlo do spremembe vaπega uporabniπkega raËuna s strani %1\$s ( %2\$s ) \n\n".
-                            "Uporabniπko ime:    %3\$s\n".
+                            "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne ".$email_date." pri≈°lo do spremembe va≈°ega uporabni≈°kega raƒçuna s strani %1\$s ( %2\$s ) \n\n".
+                            "Uporabni≈°ko ime:    %3\$s\n".
                             "Geslo:           %4\$s\n\n".
-                            "Uporabniπka skupina:  %5\$s".
+                            "Uporabni≈°ka skupina:  %5\$s".
                             "Ime:               %6\$s\n\n".
                             "%7\$s";
 
-$title_user_change2         = ABBR_MANAGER_NAME.": Sprememba na vaπem uporabniπkem raËunu";
+$title_user_change2         = ABBR_MANAGER_NAME.": Sprememba na va≈°em uporabni≈°kem raƒçunu";
 $email_user_change2         = "Pozdravljeni!\n\n".
-                              "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne ".$email_date." uspeπno izvedena sprememba na vaπem uporabniπkem raËunu.\n\n".
-                              "Uporabniπko ime:  %1\$s\n".
+                              "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne ".$email_date." uspe≈°no izvedena sprememba na va≈°em uporabni≈°kem raƒçunu.\n\n".
+                              "Uporabni≈°ko ime:  %1\$s\n".
                               "Geslo:         %2\$s\n\n".
                               "Ime:             %3\$s\n";
 
-$title_user_change3         = ABBR_MANAGER_NAME.": Sprememba na vaπem uporabniπkem raËunu";
+$title_user_change3         = ABBR_MANAGER_NAME.": Sprememba na va≈°em uporabni≈°kem raƒçunu";
 $email_user_change3         = "Pozdravljeni!\n\n".
-                              "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da ste dne ".$email_date." uspeπno izvedli spremembo na vaπem uporabniπkem raËunu.\n\n".
-                              "Uporabniπko ime:  %1\$s\n".
-                              "vaπe geslo je ostalo nespremenjeno.\n\n".
+                              "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da ste dne ".$email_date." uspe≈°no izvedli spremembo na va≈°em uporabni≈°kem raƒçunu.\n\n".
+                              "Uporabni≈°ko ime:  %1\$s\n".
+                              "va≈°e geslo je ostalo nespremenjeno.\n\n".
                               "Ime:             %2\$s\n";
 
-$title_revive               = ABBR_MANAGER_NAME.": VkljuËitev raËuna";
+$title_revive               = ABBR_MANAGER_NAME.": Vkljuƒçitev raƒçuna";
 $email_revive               = "Pozdravljeni!\n\n".
-                              "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne ".$email_date." vaπ uporabniπki raËun ponovno veljaven.\n\n".
-                              "Uporabniπko ime:  %1\$s\n".
+                              "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne ".$email_date." va≈° uporabni≈°ki raƒçun ponovno veljaven.\n\n".
+                              "Uporabni≈°ko ime:  %1\$s\n".
                               "Ime:             %2\$s\n\n".
-                              "Ne morem vam poslati geslo, ker je πifrirano. \n\n".
-                              "»e ste pozabili geslo, poπljite zahtevo na e-poπtni naslov".EMAIL_ADMIN." za novo geslo.";
+                              "Ne morem vam poslati geslo, ker je ≈°ifrirano. \n\n".
+                              "ƒåe ste pozabili geslo, po≈°ljite zahtevo na e-po≈°tni naslov".EMAIL_ADMIN." za novo geslo.";
 
-$title_delete_user          = ABBR_MANAGER_NAME.": IzkljuËitev raËuna.";
+$title_delete_user          = ABBR_MANAGER_NAME.": Izkljuƒçitev raƒçuna.";
 $email_delete_user          = "Pozdravljeni!\n\n".
-                              "SpletiπËe ".MANAGER_NAME.", vas obveπËa, da je dne ".$email_date." vaπ uporabniπki raËun postal neveljaven.\n\n".
-                              "Æal nam je, ker nas zapuπËate in zahvaljujemo se vam za vaπ trud.\n\n".
-                              "»e mislite, da je izkljuËitev vaπega raËuna napaËna, nam prosim poπljite obvestilo na e-poπto ".EMAIL_ADMIN.".";
+                              "Spleti≈°ƒçe ".MANAGER_NAME.", vas obve≈°ƒça, da je dne ".$email_date." va≈° uporabni≈°ki raƒçun postal neveljaven.\n\n".
+                              "≈Ωal nam je, ker nas zapu≈°ƒçate in zahvaljujemo se vam za va≈° trud.\n\n".
+                              "ƒåe mislite, da je izkljuƒçitev va≈°ega raƒçuna napaƒçna, nam prosim po≈°ljite obvestilo na e-po≈°to ".EMAIL_ADMIN.".";
 
 ?>

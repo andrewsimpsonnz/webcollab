@@ -1,20 +1,78 @@
 WebCollab Git
-*** 16 May 2011
+*** 2 September 2011
+  Andrew Simpson
 
-- bugfix: DTSTAMP showing no date in icalendar
+- Change to em for font size for better IE7 compatibility
+
+- Updated Japanese transalation (Thanks to Hiromi Kimura)
 
 WebCollab Git
-*** 1 May 2011
+*** 7 August 2011
+  Andrew Simpson
 
-- change cookie deletion in logout.php
+- Change to CSS box model
+
+- Add <body> id tags for CSS (Credit: tomas7)
+
+- Add id tags to <ul> in project_list and todo (Credit: tomas7)
+
+*** 30 May 2011
+  Andrew Simpson
+
+- allow for remote access to iCal files (Credit: fspanedda )
+
+WebCollab Git
+*** 21 May 2011
+  Andrew Simpson
+
+- bugfix: PHP function mime_encode_header() is buggy.  Provide workaround.
+
+- Change error symbol in UTF-8 validate in common.php
+
+WebCollab Git
+*** 18 May 2011
+  Andrew Simpson
+
+- bugfix: URL syntax error in rss_common.php
+
+- bugfix: Locale syntax error in rss_common.php
+
+WebCollab Git
+*** 15 May 2011
+  Andrew Simpson
+
+- bugfix: DTSTAMP date missing in icalendar
+
+WebCollab Git
+*** 2 May 2011
+  Andrew Simpson
+
+- improve cookie deletion in logout.php
+
+- add usergroup email notification (Credit: sgomez2008 )  
+
+- combine setup language files
 
 WebCollab Git
 *** 23 January 2011
+  Andrew Simpson
 
-- bugfix: private usergroups not listed correctly
+- bugfix: private usergroups not listing correctly in usergroups_manage 
+
+WebCollab Git
+*** 12 January 2011
+  Andrew Simpson
+
+- change security token algorithm to reduce false postives 
 
 WebCollab Git
 *** 1 January 2011
+  Andrew Simpson
+
+- change to PHP PDO database calls throughout
+
+- change to UTF-8 character set throughout
+>>>>>>> webcollab-pdo
 
 - bugfix: correct box handling in update.php
 
@@ -22,6 +80,7 @@ WebCollab Git
 
 WebCollab SVN
 *** 11 October 2010
+  Andrew Simpson
 
 - bugfix: Use UTF8-string splitter in box_shorten() where appropriate
 
@@ -33,11 +92,13 @@ WebCollab - May Queen
 
 WebCollab SVN
 *** 13 June 2010
+  Andrew Simpson
 
 - make URL links in iCalendar more specific
 
 WebCollab SVN
 *** 16 May 2010
+  Andrew Simpson
 
 - change javascript in forum listing to degrade better
 
@@ -45,6 +106,7 @@ WebCollab SVN
 
 WebCollab SVN
 *** 13 April 2010
+  Andrew Simpson
 
 - remove obsolete mhash() and replace with hash_mac()
 
@@ -54,11 +116,13 @@ WebCollab SVN
 
 WebCollab SVN
 *** 27 March 2010
+  Andrew Simpson
 
 - patch #2961818 - Calendar presentation improvements (Credit: houwelin - Fred Houweling)
 
 WebCollab SVN
 *** 22 March 2010
+  Andrew Simpson
 
 - add javascript bbcode editor (Reporter: Vinz)
 
@@ -66,6 +130,7 @@ WebCollab SVN
 
 WebCollab SVN
 *** 20 March 2010
+  Andrew Simpson
 
 - bugfix - fix bbcode tags spread over two or more lines not working
 
@@ -75,6 +140,7 @@ WebCollab SVN
 
 WebCollab SVN
 *** 18 March 2010
+  Andrew Simpson
 
 - bugfix - RSS feed has 12 hour time instead of 24 hour time (Bug #2972216) (Credit: pmarecha - Pierre Marechal)
 

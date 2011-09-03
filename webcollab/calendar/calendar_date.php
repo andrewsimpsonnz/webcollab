@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -99,7 +99,6 @@ $year = ($year > $max_year ) ? $max_year : $year;
 $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"date\" /></fieldset>\n ".
-            "<div style=\"text-align: center\">\n".
             "<table class=\"decoration\" style=\"margin-left: auto; margin-right: auto;\">\n".
             "<tr><td><input type=\"submit\" name=\"lastyear\" value=\"&lt;&lt;\" /></td>\n".
             "<td><input type=\"submit\" name=\"lastmonth\" value=\"&lt;\" /></td>\n".
@@ -129,30 +128,29 @@ $content .=  "</select></td>\n".
              "<td><input type=\"submit\" value=\"".$lang['update']."\" /></td>\n".
              "<td><input type=\"submit\" name=\"nextmonth\" value=\"&gt;\" /></td>\n".
              "<td><input type=\"submit\" name=\"nextyear\" value=\"&gt;&gt;\" /></td></tr>\n".
-             "</table></div></form>\n<br />\n";
+             "</table></form>\n<br />\n";
 
 //number of days in month
 $numdays = date('t', mktime(0, 0, 0, $month, 1, $year ) );
 
 //main calendar table
-$content .= "<div style=\"text-align: center\">\n".
-            "<table class=\"outline\" cellspacing=\"0\" border=\"1px\" width=\"97%\">\n<tr>\n".
-            "<td colspan=\"7\" class=\"monthcell\" align=\"center\" valign=\"middle\"><b>".$month_array[(int)$month]."</b>\n</td>\n".
+$content .= "<table class=\"outline\">\n<tr class=\"monthcell\">\n".
+            "<td colspan=\"7\">".$month_array[(int)$month]."\n</td>\n".
             "</tr>\n";
 
 //weekdays
-$content .= "<tr align=\"center\" valign=\"middle\">\n";
+$content .= "<tr class=\"weekcell\">\n";
 for ($i = 0; $i < 7; ++$i ) {
   $day_number = $i + START_DAY;
   if( $day_number > 6 ) {
     $day_number = $day_number - 7;
   }
-  $content .= "<td class=\"weekcell\" style=\"width: 20px\"><b>".$week_array[$day_number]."</b></td>\n";
+  $content .= "<td style=\"width: 20px\">".$week_array[$day_number]."</td>\n";
 }
 $content .= "</tr>\n";
 
 //show lead in to dates
-$content .= "<tr align=\"left\" valign=\"top\">\n";
+$content .= "<tr class=\"datecell\">\n";
 
 $dayone = date("w", mktime(0, 0, 0, $month, 1, $year ) ) - START_DAY;
 if( $dayone < 0 ) {
@@ -160,21 +158,20 @@ if( $dayone < 0 ) {
 }
 
 for ($i = 0; $i < $dayone; ++$i ) {
-  $content .= "<td class=\"datecell\" style=\"height: 15px\">&nbsp;</td>\n";
+  $content .= "<td style=\"height: 15px\">&nbsp;</td>\n";
 }
 $leadin_length = $i;
 
 //show dates
 for($num = 1; $num <= $numdays; ++$num ) {
   if($i >= 7 ) {
-    $content .= "</tr>\n".
-                "<tr align=\"left\" valign=\"top\">\n";
+    $content .= "</tr><tr class=\"datecell\">\n";
     $i=0;
   }
-  $content .= "<td class=\"datecell\" style=\"height: 15px\">\n";
+  $content .= "<td style=\"height: 15px\">\n";
 
   //Note: This assumes the first year in dropdown box is $min_year
-  $content .= "<a href='#' onclick=\"dateSet(".($num-1).",".($month-1).",".($year-$min_year).",'".TOKEN."'); window.close();\"><span class=\"daynum\">".$num."</span></a>".
+  $content .= "<a href='#' onclick=\"dateSet(".($num-1).",".($month-1).",".($year-$min_year)."); window.close();\">".$num."</a>".
               "</td>\n";
   ++$i;
 }
@@ -182,11 +179,11 @@ for($num = 1; $num <= $numdays; ++$num ) {
 //show lead out to dates
 $leadout_length = (7 - ($numdays + $leadin_length ) % 7 ) % 7;
 for($i = 0; $i < $leadout_length; ++$i ) {
-  $content .= "<td class=\"datecell\" style=\"height: 15px\">&nbsp;</td>\n";
+  $content .= "<td style=\"height: 15px\">&nbsp;</td>\n";
 }
 
 $content .= "</tr>\n".
-            "</table>\n</div>\n";
+            "</table>\n";
 
 new_box($lang['calendar'], $content );
 

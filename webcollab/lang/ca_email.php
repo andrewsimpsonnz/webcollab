@@ -4,7 +4,7 @@
 
   WebCollab
   ---------------------------------------
-  This file created 2003 by Andrew Simpson
+  This file created 2003
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;
@@ -28,11 +28,15 @@
 
   Maintainer:
 
+  NOTE: This file is written in UTF-8 character set
+
 */
 
 // Get current date/time in prefered timezone
 $ltime = TIME_NOW - date('Z') + TZ * 3600;
 $email_date = sprintf('%s %s %s %+03d00', date('Y', $ltime ), $month_array[(date('n', $ltime ) )], date('d H:i', $ltime ), TZ );
+
+//$email_date = date("d" )." ".$month_array[(date("n" ) )]." ".date('Y g:i a ' );
 
 //-----
 $title_file_post        = ABBR_MANAGER_NAME.": New file upload: %s";
@@ -70,7 +74,7 @@ $email_forum_reply       = "Hello,\n\n".
 $email_list              = "Projecte: %1\$s\n".
                            "Tasca:    %2\$s\n".
                            "Estat:    %3\$s\n".
-                           "A càrreg:  %4\$s ( %5\$s )\n".
+                           "A cÃ rreg:  %4\$s ( %5\$s )\n".
                            "Text:\n%6\$s\n\n".
                            "Dirigir-se al lloc web per a mes detalls.\n\n".
                            BASE_URL."%7\$s\n";
@@ -80,89 +84,100 @@ $title_takeover_project   = ABBR_MANAGER_NAME.": El seu item ha estat reassignat
 $title_takeover_task      = ABBR_MANAGER_NAME.": El seu item ha estat reassignat";
 
 $email_takeover_project   = "Hola,\n\n".
-                            "Aquest ée ".MANAGER_NAME." lloc informant-li que un projecte al seu càrreg ha estat reassignada per l'administrador el ".$email_date.".\n\n";
+                            "Aquest Ã©e ".MANAGER_NAME." lloc informant-li que un projecte al seu cÃ rreg ha estat reassignada per l'administrador el ".$email_date.".\n\n";
 
 $email_takeover_task      = "Hola,\n\n".
-                            "Aquest ée ".MANAGER_NAME." lloc informant-li que un tasca al seu càrreg ha estat reassignada per l'administrador el ".$email_date.".\n\n";
+                            "Aquest Ã©e ".MANAGER_NAME." lloc informant-li que un tasca al seu cÃ rreg ha estat reassignada per l'administrador el ".$email_date.".\n\n";
 
 //-----
-$title_new_owner_project  = ABBR_MANAGER_NAME.": Nou projecte per a vosté";
-$title_new_owner_task     = ABBR_MANAGER_NAME.": Nou tasca per a vosté";
+$title_new_owner_project  = ABBR_MANAGER_NAME.": Nou projecte per a vostÃ©";
+$title_new_owner_task     = ABBR_MANAGER_NAME.": Nou tasca per a vostÃ©";
 
 $email_new_owner_project  = "Hola,\n\n".
-                            "Aquest es el ".MANAGER_NAME." lloc informant-li que un projecte seu (ara al seu càrreg) va ser canviat el ".$email_date.".\n\n".
-                            "Aquí els detalls:\n\n";
+                            "Aquest es el ".MANAGER_NAME." lloc informant-li que un projecte seu (ara al seu cÃ rreg) va ser canviat el ".$email_date.".\n\n".
+                            "AquÃ­ els detalls:\n\n";
 
 $email_new_owner_task     = "Hola,\n\n".
-                            "Aquest es el ".MANAGER_NAME." lloc informant-li que un tasca seu (ara al seu càrreg) va ser canviat el ".$email_date.".\n\n".
-                            "Aquí els detalls:\n\n";
+                            "Aquest es el ".MANAGER_NAME." lloc informant-li que un tasca seu (ara al seu cÃ rreg) va ser canviat el ".$email_date.".\n\n".
+                            "AquÃ­ els detalls:\n\n";
 
 //-----
 $title_new_group_project  = ABBR_MANAGER_NAME.": Nou projecte: %s";
 $title_new_group_task     = ABBR_MANAGER_NAME.": Nou tasca: %s";
 
 $email_new_group_project  = "Hola,\n\n".
-                            "Aquest és el ".MANAGER_NAME." lloc informant-li que un nou projecte ha estat creat el ".$email_date."\n\n".
-                            "Aquí els detalls:\n\n";
+                            "Aquest Ã©s el ".MANAGER_NAME." lloc informant-li que un nou projecte ha estat creat el ".$email_date."\n\n".
+                            "AquÃ­ els detalls:\n\n";
 
 $email_new_group_task     = "Hola,\n\n".
-                            "Aquest és el ".MANAGER_NAME." lloc informant-li que un nou tasca ha estat creat el ".$email_date."\n\n".
-                            "Aquí els detalls:\n\n";
+                            "Aquest Ã©s el ".MANAGER_NAME." lloc informant-li que un nou tasca ha estat creat el ".$email_date."\n\n".
+                            "AquÃ­ els detalls:\n\n";
 
 //-----
 $title_edit_owner_project = ABBR_MANAGER_NAME.": La seva projecte actualitzada";
 $title_edit_owner_task    = ABBR_MANAGER_NAME.": La seva tasca actualitzada";
 
 $email_edit_owner_project = "Hola,\n\n".
-                            "Aquest és el ".MANAGER_NAME." lloc informant-li que un projecte al seu càrreg va canviar el ".$email_date.".\n\n".
-                            "Aquí els detalls:\n\n";
+                            "Aquest Ã©s el ".MANAGER_NAME." lloc informant-li que un projecte al seu cÃ rreg va canviar el ".$email_date.".\n\n".
+                            "AquÃ­ els detalls:\n\n";
 
 $email_edit_owner_task    = "Hola,\n\n".
-                             "Aquest és el ".MANAGER_NAME." lloc informant-li que un tasca al seu càrreg va canviar el ".$email_date.".\n\n".
-                             "Aquí els detalls:\n\n";
+                             "Aquest Ã©s el ".MANAGER_NAME." lloc informant-li que un tasca al seu cÃ rreg va canviar el ".$email_date.".\n\n".
+                             "AquÃ­ els detalls:\n\n";
 
 //-----
 $title_edit_group_project = ABBR_MANAGER_NAME.": Projecte actualitzada";
 $title_edit_group_task    = ABBR_MANAGER_NAME.": Tasca actualitzada";
 
 $email_edit_group_project = "Hola,\n\n".
-                            "Aquest és el ".MANAGER_NAME." lloc informant-li que un projecte a càrreg de %s ha canviat el ".$email_date.".\n\n".
-                            "Aquí els detalls:\n\n";
+                            "Aquest Ã©s el ".MANAGER_NAME." lloc informant-li que un projecte a cÃ rreg de %s ha canviat el ".$email_date.".\n\n".
+                            "AquÃ­ els detalls:\n\n";
 
 $email_edit_group_task    = "Hola,\n\n".
-                            "Aquest és el ".MANAGER_NAME." lloc informant-li que un tasca a càrreg de %s ha canviat el ".$email_date.".\n\n".
-                            "Aquí els detalls:\n\n";
+                            "Aquest Ã©s el ".MANAGER_NAME." lloc informant-li que un tasca a cÃ rreg de %s ha canviat el ".$email_date.".\n\n".
+                            "AquÃ­ els detalls:\n\n";
 
 //-----
 $title_delete_project     = ABBR_MANAGER_NAME.": Projecte eliminada";
 $title_delete_task        = ABBR_MANAGER_NAME.": Tasca eliminada";
 
 $email_delete_project     = "Hola,\n\n".
-                            "Aquest és el ".MANAGER_NAME." lloc informant-li que un projecte al seu càrreg ha estat eliminat el ".$email_date."\n\n".
-                            "Gràcies per dirigir la projecte al seu moment.\n\n";
+                            "Aquest Ã©s el ".MANAGER_NAME." lloc informant-li que un projecte al seu cÃ rreg ha estat eliminat el ".$email_date."\n\n".
+                            "GrÃ cies per dirigir la projecte al seu moment.\n\n";
 
 $email_delete_task        = "Hola,\n\n".
-                            "Aquest és el ".MANAGER_NAME." lloc informant-li que un tasca al seu càrreg ha estat eliminat el ".$email_date."\n\n".
-                            "Gràcies per dirigir la tasca al seu moment.\n\n";
+                            "Aquest Ã©s el ".MANAGER_NAME." lloc informant-li que un tasca al seu cÃ rreg ha estat eliminat el ".$email_date."\n\n".
+                            "GrÃ cies per dirigir la tasca al seu moment.\n\n";
 
 $delete_list              = "Projecte: %1\$s\n".
                             "Tasca:    %2\$s\n".
                             "Estat:   %3\$s\n\n".
                             "Text:\n%4\$s\n\n";
 
+$title_usergroup_add      = ABBR_MANAGER_NAME.": New usergroup %1\$s created";
+$email_usergroup_add      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that a new usergroup %1\$s, has been created on ".$email_date.".\n\n".
+                            "The members of the new usergroup are:\n".
+                            "%2\$s\n";
+
+$title_usergroup_edit      = ABBR_MANAGER_NAME.": Usergroup %1\$s changed";
+$email_usergroup_edit      = "Hello,\n\n".
+                            "This is the ".MANAGER_NAME." site informing you that usergroup %1\$s, has been changed on ".$email_date.".\n\n".
+                            "The members of the usergroup are:\n".
+                            "%2\$s\n";
 
 //-----
 $title_welcome            = "Benvinguda a ".ABBR_MANAGER_NAME;
 
-$email_welcome            = "Hola,\n\nAquest és el lloc ".MANAGER_NAME." donant-li la benvinguda ;) el  ".$email_date.".\n\n".
-                            "Com que vosté és nou aqui li explicaré un parell de cosetes per a que ràpidament pugui començar a treballar\n\n".
-                            "Abans de res, està l'eina de manegament de projectes, la pantalla principal li mostrarà els projectes actualment disponibles.. ".
-                            "Si fa click a un dels nom, es trobarà en la zona de tasques. Aquí és on la feina comença..\n\n".
-                            "Cada ítem que vostè envia o tasca que editar serà mostrada als altres usuaris com 'nova' o 'actualitzada'. Això també funciona a la inversa i ".
-                            "el permet ràpidamentlo enfocar on està l'activitat.\n\n".
-                            "Vosté pot també fer-se càrreg o prendre propietat de tasques i es trobarà habilitat per editar i tots els enviaments al fòrum seran rebuts. ".
-                            "A mesura que avan? en la seva feina, per favor editi el text de les seves tasques i l'estat de tal forma que tothom pugui mantenir un seguiment del seu progrès. ".
-                            "\n\nNo em resta més que desijar-li èxits i informar-li que pot enviar un correu a %s si es troba amb alguna dificultat.\n\n --Bona sort !\n\n".
+$email_welcome            = "Hola,\n\nAquest Ã©s el lloc ".MANAGER_NAME." donant-li la benvinguda ;) el  ".$email_date.".\n\n".
+                            "Com que vostÃ© Ã©s nou aqui li explicarÃ© un parell de cosetes per a que rÃ pidament pugui comenÃ§ar a treballar\n\n".
+                            "Abans de res, estÃ  l'eina de manegament de projectes, la pantalla principal li mostrarÃ  els projectes actualment disponibles.. ".
+                            "Si fa click a un dels nom, es trobarÃ  en la zona de tasques. AquÃ­ Ã©s on la feina comenÃ§a..\n\n".
+                            "Cada Ã­tem que vostÃ¨ envia o tasca que editar serÃ  mostrada als altres usuaris com 'nova' o 'actualitzada'. AixÃ² tambÃ© funciona a la inversa i ".
+                            "el permet rÃ pidamentlo enfocar on estÃ  l'activitat.\n\n".
+                            "VostÃ© pot tambÃ© fer-se cÃ rreg o prendre propietat de tasques i es trobarÃ  habilitat per editar i tots els enviaments al fÃ²rum seran rebuts. ".
+                            "A mesura que avan? en la seva feina, per favor editi el text de les seves tasques i l'estat de tal forma que tothom pugui mantenir un seguiment del seu progrÃ¨s. ".
+                            "\n\nNo em resta mÃ©s que desijar-li Ã¨xits i informar-li que pot enviar un correu a %s si es troba amb alguna dificultat.\n\n --Bona sort !\n\n".
                             "Usuari:  %1\$s\n".
                             "Clau:    %2\$s\n\n".
                             "Usergroups: %3\$s\n".
@@ -172,10 +187,10 @@ $email_welcome            = "Hola,\n\nAquest és el lloc ".MANAGER_NAME." donant-
 
 
 //-----
-$title_user_change1       = ABBR_MANAGER_NAME.": Edició del seu compte per un administrador";
+$title_user_change1       = ABBR_MANAGER_NAME.": EdiciÃ³ del seu compte per un administrador";
 
 $email_user_change1       = "Hola,\n\n".
-                            "Aquest és el ".MANAGER_NAME." lloc informant-li que el seu compte ha estat modificat el ".$email_date." per %1\$s ( %2\$s ) \n\n".
+                            "Aquest Ã©s el ".MANAGER_NAME." lloc informant-li que el seu compte ha estat modificat el ".$email_date." per %1\$s ( %2\$s ) \n\n".
                             "Usuari: %3\$s\n".
                             "Clau:   %4\$s\n\n".
                             "Usergroups: %5\$s".
@@ -184,20 +199,20 @@ $email_user_change1       = "Hola,\n\n".
 
 
 //-----
-$title_user_change2       = ABBR_MANAGER_NAME.": Edició del seu compte";
+$title_user_change2       = ABBR_MANAGER_NAME.": EdiciÃ³ del seu compte";
 
 $email_user_change2       = "Hola,\n\n".
-                            "Aquest és el ".MANAGER_NAME." lloc confirmant-li que ha modificat amb èxit el seu compte el ".$email_date."\n\n".
+                            "Aquest Ã©s el ".MANAGER_NAME." lloc confirmant-li que ha modificat amb Ã¨xit el seu compte el ".$email_date."\n\n".
                             "Usuari: %1\$s\n".
                             "Clau:   %2\$s\n\n".
                             "Nom:    %3\$s\n";
 
 
 //-----
-$title_user_change3       = ABBR_MANAGER_NAME.": Edició del seu compte";
+$title_user_change3       = ABBR_MANAGER_NAME.": EdiciÃ³ del seu compte";
 
 $email_user_change3       = "Hola,\n\n".
-                            "Aquest és el ".MANAGER_NAME." lloc confirmant-li que ha modificat amb èxit el seu compte el ".$email_date."\n\n".
+                            "Aquest Ã©s el ".MANAGER_NAME." lloc confirmant-li que ha modificat amb Ã¨xit el seu compte el ".$email_date."\n\n".
                             "Usuari: %1\$s\n".
                             "La seva clau NO ha estat modificada.\n\n".
                             "Nom:    %2\$s\n";
@@ -207,19 +222,19 @@ $email_user_change3       = "Hola,\n\n".
 $title_revive             = ABBR_MANAGER_NAME.": Compte reactivtat";
 
 $email_revive             = "Hola,\n\n".
-                            "Aquest és el ".MANAGER_NAME." lloc informant-li que el seu compte ha estat reactivat el  ".$email_date.".\n\n".
+                            "Aquest Ã©s el ".MANAGER_NAME." lloc informant-li que el seu compte ha estat reactivat el  ".$email_date.".\n\n".
                             "Usuari: %1\$s\n".
                             "Clau:   %2\$s\n\n".
-                            "No podem enviar-li la seva clau perquè està encriptada. \n\n".
-                            "Si ha perdut la seva clau, envii un correu per %s per a sol·licitar una nova clau.";
+                            "No podem enviar-li la seva clau perquÃ¨ estÃ  encriptada. \n\n".
+                            "Si ha perdut la seva clau, envii un correu per %s per a solÂ·licitar una nova clau.";
 
 
 //-----
 $title_delete_user        = ABBR_MANAGER_NAME.": Compte desactivat.";
 
 $email_delete_user        = "Hola,\n\n".
-                            "Aquest és el ".MANAGER_NAME." lloc informant-li que el seu compte ha estat desactivat el ".$email_date."\n\n".
-                            "Ens sap greu la seva desactivació i li estem agraits per la seva feina!\n\n".
-                            "Si desitja objectar la seva desactivació, o pensa que ha estat un error, envii un correu a ".EMAIL_ADMIN.".";
+                            "Aquest Ã©s el ".MANAGER_NAME." lloc informant-li que el seu compte ha estat desactivat el ".$email_date."\n\n".
+                            "Ens sap greu la seva desactivaciÃ³ i li estem agraits per la seva feina!\n\n".
+                            "Si desitja objectar la seva desactivaciÃ³, o pensa que ha estat un error, envii un correu a ".EMAIL_ADMIN.".";
 
 ?>

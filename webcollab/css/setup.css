@@ -1,4 +1,4 @@
-BODY {
+body {
   font-family : "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
   margin : 0;
@@ -8,19 +8,19 @@ BODY {
 }
 
 /* CSS hack to hide hidden input fields */
-FIELDSET {
+fieldset {
    border: none;
    margin: 0;
    padding: 0;
 }
 
-TABLE {
+table {
   border-width : 0;
   padding : 0;
 }
 
 /* Global container box */
-TABLE.main {
+table.main {
   margin-left : auto;
   margin-right : auto;
   border-width : 0;
@@ -33,7 +33,7 @@ TABLE.main {
   - reduced width
   - aligned centre
 */
-TABLE.singlebox {
+table.singlebox {
   margin-left : auto;
   margin-right : auto;
   width : 400px;
@@ -42,7 +42,7 @@ TABLE.singlebox {
 }
 
 /* Standard table box */
-TABLE.tablebox {
+table.tablebox {
   margin-left : auto;
   margin-right : auto;
   width : 97%;
@@ -51,7 +51,7 @@ TABLE.tablebox {
 }
 
 /* Table for use in data cells */
-TABLE.celldata {
+table.celldata {
   margin-left : 0;
   margin-top : 5px;
   margin-bottom : 20px;
@@ -59,13 +59,13 @@ TABLE.celldata {
   padding : 0;
 }
 
-TD {
+td {
   font-family: "Helvetica", Verdana, Arial, Sans-serif;
   font-size : 12px;
 }
 
 /* Masthead band to top of page */
-TD.masthead {
+td.masthead {
   text-align : left;
   padding-top : 4px;
   padding-left : 3px;
@@ -75,26 +75,23 @@ TD.masthead {
 }
 
 /* Box head styling */
-TD.boxhead {
+td.boxhead {
   font-weight : bold;
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
   padding : 3px;
-  background-color : #1e4b79;
-  color : #ffffff;
+  background-color : #1E4B79;
+  color : #FFFFFF;
 }
 
 /* Box content styling for info boxes */
-TD.boxdata {
+td.boxdata {
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
-  padding-top : 10px;
-  padding-left : 5px;
-  padding-right : 15px;
-  padding-bottom : 20px;
-  background-color : #ffffff;
+  padding : 10px 15px 20px 5px;
+  background-color : #FFFFFF;
   color : #000000;
 }
 
@@ -102,15 +99,12 @@ TD.boxdata {
   - bottom padding reduced
   - top padding increased
 */
-TD.boxdata2 {
+td.boxdata2 {
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
-  padding-top : 20px;
-  padding-left : 5px;
-  padding-right : 15px;
-  padding-bottom : 5px;
-  background-color : #ffffff;
+  padding : 20px 15px 5px 5px;
+  background-color : #FFFFFF;
   color : #000000;
 }
 
@@ -118,42 +112,37 @@ TD.boxdata2 {
   - top padding increased
 */
 
-TD.boxdata3 {
+td.boxdata3 {
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
-  padding-top : 30px;
-  padding-left : 5px;
-  padding-right : 15px;
-  padding-bottom : 5px;
-  background-color : #ffffff;
+  padding : 30px 15px 5px 5px;
+  background-color : #FFFFFF;
   color : #000000;
 }
 
-TH.boxdata2 {
+th.boxdata2 {
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
-  padding-top : 20px;
-  padding-left : 5px;
-  padding-right : 15px;
-  padding-bottom : 5px;
-  background-color : #ffffff;
+  padding : 20px 15px 5px 5px;
+  background-color : #FFFFFF;
   color : #000000;
 }
 
-TH.boxdata3 {
+th.boxdata3 {
   text-align : left;
   border-width : 0;
   border-collapse : collapse;
+  padding : 40px 15px 5px 5px;
   padding-top : 40px;
-  padding-left : 5px;
-  padding-right : 15px;
-  padding-bottom : 5px;
-  background-color : #ffffff;
+  background-color : #FFFFFF;
   color : #000000;
 }
 
+input.size {
+  width : 200px;
+}
 
 /* Class for underlined text */
 .underline {

@@ -2,7 +2,7 @@
 /*
   $Id: forum_submit.php 1704 2008-01-01 06:09:52Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -31,6 +31,9 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+//includes
+require_once(BASE.'includes/token.php' );
+
 //
 // Function for listing all posts of a task
 //
@@ -46,9 +49,12 @@ function find_posts( $postid ) {
   $post_count   = 0;
   $index = 0; 
 
-  $taskid = db_result(db_query('SELECT taskid FROM '.PRE.'forum WHERE id='.$postid ), 0, 0 );
+  $q = db_prepare('SELECT taskid FROM '.PRE.'forum WHERE id=? LIMIT 1' );
+  db_execute($q, array($postid ) );
+  $taskid = db_result($q, 0, 0 );
 
-  $q = db_query('SELECT id, parent FROM '.PRE.'forum WHERE taskid='.$taskid );
+  $q = db_prepare('SELECT id, parent FROM '.PRE.'forum WHERE taskid=?' );
+  db_execute($q, array($taskid ) );
 
   for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
@@ -110,10 +116,13 @@ function delete_messages($postid ) {
 
   find_posts($postid );
 
-  // perform the delete - delete from newest post first to oldest post last to prevent database referential errors
-  for($i=0; $i < $index; ++$i ) {
-    db_query('DELETE FROM '.PRE.'forum WHERE id='.$match_array[($index - 1) - $i] );
+  //prepare query
+  $q = db_prepare('DELETE FROM '.PRE.'forum WHERE id=?' );
 
+  //perform the delete - delete from newest post first to oldest post last to prevent database referential errors
+  for($i=0; $i < $index; ++$i ) {
+    db_execute($q, array($match_array[($index - 1) - $i] ) );
+    db_free_result($q );
   }
   return;
 }
@@ -123,7 +132,7 @@ ignore_user_abort(TRUE);
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'forum_edit' );
 
 //check input
 $input_array = array('postid', 'taskid' );
@@ -141,16 +150,27 @@ $allowed = false;
 if(ADMIN ) {
   $allowed = true;
 }
-//owner of the thread can delete
-elseif(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'forum WHERE userid='.UID.' AND id='.$postid ), 0, 0 ) == 1 ) {
-  $allowed = true;
-}
-//task owner can delete
-elseif(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'forum 
-                                  LEFT JOIN '.PRE.'tasks ON ('.PRE.'forum.taskid='.PRE.'tasks.id) 
-                                  WHERE '.PRE.'tasks.owner='.UID.' AND '.PRE.'forum.id='.$postid ), 0, 0 ) == 1 ) {
 
-  $allowed = true;
+//owner of the thread can delete
+if(! $allowed ) {
+  $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'forum WHERE userid=? AND id=? LIMIT 1' );
+  db_execute($q, array(UID, $postid ) );
+
+  if(db_result($q, 0, 0 ) == 1 ) {
+    $allowed = true;
+  }
+}
+
+//task owner can delete
+if(! $allowed ) {
+  $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'forum 
+                                  LEFT JOIN '.PRE.'tasks ON ('.PRE.'forum.taskid='.PRE.'tasks.id) 
+                                  WHERE '.PRE.'tasks.owner=? AND '.PRE.'forum.id=? LIMIT 1' );
+  db_execute($q, array(UID, $postid ) );
+
+  if(db_result($q, 0, 0 ) == 1 ) {
+    $allowed = true;
+  }
 }
 
 if($allowed ) {

@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: icalendar_project.php 2299 2009-08-24 09:46:33Z andrewsimpson $
 
-  (c) 2005 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -26,6 +26,23 @@
 
 */
 
+//remote login check
+if(! isset($local_login ) ) {
+
+  //load required files
+  require_once('path.php' );
+  require_once(BASE.'path_config.php' );
+  require_once(BASE_CONFIG.'config.php' );
+
+  include_once(BASE.'includes/common.php');
+  include_once(BASE.'database/database.php');
+  include_once(BASE.'icalendar/icalendar_login.php' );
+
+  if(! icalendar_login() ) {
+    icalendar_error('401', 'Todo login' );
+  }
+}
+
 //security check
 if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
@@ -45,22 +62,23 @@ if(! @safe_integer($_GET['taskid']) ){
 }
 $taskid = $_GET['taskid'];
 
-//set database character set to UTF-8
-db_user_locale('UTF-8');
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id=? AND parent=0' );
+db_execute($q, array($taskid ) );
 
-if(db_result(db_query('SELECT COUNT(*) FROM '.PRE.'tasks WHERE id='.$taskid.' AND parent=0' ), 0, 0 ) > 0 ) {
+if(db_result($q, 0, 0 ) > 0 ) {
   //project - get all the tasks too...
-  $type = 'tasks.projectid=';
+  $type = 'tasks.projectid=?';
   $id   = 'P';
 }
 else {
   //task
-  $type = 'tasks.id=';
+  $type = 'tasks.id=?';
   $id   = 'T';
 }
 
 //main query
-$q = db_query(icalendar_query().' AND '.PRE.$type.$taskid. icalendar_usergroup_tail() );
+$q = db_prepare(icalendar_query().' AND '.PRE.$type. icalendar_usergroup_tail() );
+db_execute($q, array($taskid ) );
 
 for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
@@ -69,7 +87,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 }
 
 //no rows ==> return
-if($i == 0 ) {
+if(isset($local_login ) && $i == 0 ) {
   header('Location: '.BASE_URL.'tasks.php?x='.X.'&action=show&taskid='.$taskid );
   die;
 }

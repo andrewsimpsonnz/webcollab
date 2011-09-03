@@ -47,7 +47,7 @@ switch( $_REQUEST['action'] ) {
 
   //gives a window and some options to do to the poor 'old taskgroup
   case 'manage':
-    create_top($lang['manage_taskgroups']);
+    create_top($lang['manage_taskgroups'], 0, 'taskgroups-manage' );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'taskgroups/taskgroup_menubox.php' );
     goto_main();
@@ -57,7 +57,7 @@ switch( $_REQUEST['action'] ) {
 
   //show a taskgroup
   case 'add':
-    create_top($lang['add_taskgroup'], 0, 2 );
+    create_top($lang['add_taskgroup'], 0, 'taskgroups-add', 2 );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'taskgroups/taskgroup_menubox.php' );
     goto_main();
@@ -67,7 +67,7 @@ switch( $_REQUEST['action'] ) {
 
   //show a taskgroup
   case 'edit':
-    create_top($lang['edit_taskgroup']);
+    create_top($lang['edit_taskgroup'], 0, 'taskgroups-edit' );
     include(BASE.'includes/mainmenu.php');
     include(BASE.'taskgroups/taskgroup_menubox.php' );
     goto_main();

@@ -33,6 +33,7 @@ if(! defined('UID' ) ) {
 
 //includes
 require_once(BASE.'includes/admin_config.php' );
+require_once(BASE.'includes/token.php' );
 require_once(BASE.'includes/usergroup_security.php' );
 
 //deny guest users
@@ -53,6 +54,9 @@ $taskid = $_GET['taskid'];
 //check usergroup security
 $taskid = usergroup_check($taskid );
 
+//generate_token
+generate_token('file_submit' );
+
 $content = "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"files.php\" onsubmit=\"return fieldCheck('userfile')\">\n".
            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
            "<input type=\"hidden\" name=\"action\" value=\"submit_upload\" />\n".
@@ -63,10 +67,10 @@ $content = "<form method=\"post\" enctype=\"multipart/form-data\"  action=\"file
            "<input type=\"hidden\" id=\"url\" name=\"url\" value=\"".$lang['url_javascript']."\" />\n".
            "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" /></fieldset>\n".
            "<table class=\"celldata\">\n".
-           "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" size=\"60\" /></td></tr>";
+           "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" style=\"width: 400px\" /></td></tr>\n";
 
 for( $i = 1; $i < NUM_FILE_UPLOADS; ++$i ) {
-  $content .= "<tr><td></td><td><input type=\"file\" name=\"userfile[]\" size=\"60\" /></td></tr>\n";
+  $content .= "<tr><td></td><td><input type=\"file\" name=\"userfile[]\" style=\"width: 400px\" /></td></tr>\n";
 }
 
 $content .= "<tr><td>".$lang['description'].":</td>".

@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -31,6 +31,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 include_once(BASE.'tasks/task_common.php' );
 include_once(BASE.'includes/time.php' );
 
@@ -67,13 +68,13 @@ else {
                "</div>\n";
 }
 
-//setup main table
-$content .= "<div class=\"projectlist\">\n";
-
 //show all projects
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
-  if($i > 0 ) { 
+  //setup main table
+  $content .= "<div class=\"projectlist\">\n";
+
+  if($i > 0 ) {
     //not the first line, need to add a divider
     $content .= "<div style=\"padding-left: 30px; width: 200px\"><hr /></div>\n";
   }
@@ -131,6 +132,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   if(ADMIN || UID == $row['owner'] ){
 
+    //generate token
+    generate_token('tasks' );
+
     $content .= "<table>\n".
                 "<tr><td><form method=\"post\" action=\"tasks.php\" ".
                 "onsubmit=\"return confirm( '".sprintf($lang["del_javascript_project_sprt"], javascript_escape($row['name'] ) )."')\">\n".
@@ -150,9 +154,9 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
                 "</td></tr>\n".
                 "</table>\n";
   }
+  $content .= "</div>\n";
 }
 
-$content .= "</div>\n";
 
 if($i == 0 ) {
   //no projects found in database

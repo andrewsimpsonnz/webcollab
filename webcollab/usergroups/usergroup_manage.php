@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: usergroup_manage.php 2296 2009-08-24 09:44:14Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -36,12 +36,22 @@ $content = '';
 $allowed[0] = 0;
 $content_flag = 0;
 
+//prepare query to get users for a group
+$users_q = db_prepare('SELECT '.PRE.'users.fullname AS fullname,
+                              '.PRE.'users.id AS id,
+                              '.PRE.'users.private AS private
+                              FROM '.PRE.'users
+                              LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
+                              WHERE usergroupid=?
+                              AND '.PRE.'users.deleted=\'f\'
+                              ORDER BY '.PRE.'users.fullname' );
+
 //get list of common users in private usergroups that this user can view
 $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       '.PRE.'usergroups_users.userid AS userid
                       FROM '.PRE.'usergroups_users
                       LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
-                      WHERE '.PRE.'usergroups.private=1');
+                      WHERE '.PRE.'usergroups.private=1' );
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   if(isset($GID[($row[0])] ) ) {
@@ -69,7 +79,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $colspan = (ADMIN ) ? '4' : '3';
 
   $content .= "<tr><td colspan=\"".$colspan."\"><hr /></td></tr>\n".
-              "<tr><td class=\"grouplist\"><b>".$row['name']."</b></td><td class=\"grouplist\"><i>".$row['description']."</i></td><td style=\"text-align: center\">".$private."</td>\n";
+              "<tr class=\"grouplist\"><td><b>".$row['name']."</b></td><td><i>".$row['description']."</i></td><td style=\"text-align: center\">".$private."</td>\n";
 
   if(ADMIN) {
     $content .= "<td><span class=\"textlink\">".
@@ -78,15 +88,8 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   $content .= "</tr>\n";
 
-  //get users from that group
-  $users_q = db_query('SELECT '.PRE.'users.fullname AS fullname,
-                              '.PRE.'users.id AS id,
-                              '.PRE.'users.private AS private
-                              FROM '.PRE.'users
-                              LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
-                              WHERE usergroupid='.$row['id'].'
-                              AND '.PRE.'users.deleted=\'f\'
-                              ORDER BY '.PRE.'users.fullname' );
+  //ge users in this group
+  db_execute($users_q, array($row['id'] ) );
 
   for($j=0 ; $user_row = @db_fetch_array($users_q, $j ) ; ++$j ) {
 
@@ -97,6 +100,8 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
     $content .= "<tr><td style=\"text-align:left\" colspan=\"3\"><small><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$user_row['id']."\">".$user_row['fullname']."</a></small></td></tr>\n";
   }
+
+  db_free_result($users_q );
 
   $content .=   "<tr><td colspan=\"3\">&nbsp;</td></tr>\n";
 

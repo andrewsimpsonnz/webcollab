@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: screen.php 2230 2011-05-22 22:10:39Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -26,10 +26,10 @@
 
   Create the window'ed interface and define a simple API
 
-  The screen is split in 3 components. The overall table is called main_table
+  The screen is split in 4 components. The overall menu + main + bottom is called within 'container'
 
   +----------------+
-  |  info          |
+  |  top           |
   +----------------+
   |   |            |
   | m |            |
@@ -39,6 +39,8 @@
   |   |            |
   |   |            |
   +---+------------+
+  |  bottom        |
+  +----------------+
 
 
   And the api is :
@@ -62,7 +64,7 @@
 // Creates the initial window
 //
 
-function create_top($title='', $page_type=0, $include_javascript=0, $redirect_time=0 ) {
+function create_top($title='', $page_type=0, $body_id=0, $include_javascript=0, $redirect_time=0 ) {
 
 
 
@@ -88,7 +90,7 @@ function create_top($title='', $page_type=0, $include_javascript=0, $redirect_ti
   header('Cache-Control: no-store, no-cache, must-revalidate');
   header('Cache-Control: post-check=0, pre-check=0', false);
   header('Pragma: no-cache');
-  header('Content-Type: text/html; charset='.CHARACTER_SET );
+  header('Content-Type: text/html; charset=UTF-8' );
 
   //do a refresh if required
   if($redirect_time != 0) {
@@ -101,7 +103,7 @@ function create_top($title='', $page_type=0, $include_javascript=0, $redirect_ti
                     "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"".XML_LANG."\" lang=\"".XML_LANG."\">\n\n".
                     "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
                     "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
-                    "<!-- (c) 2002-2010 Andrew Simpson for WebCollab -->\n\n".
+                    "<!-- (c) 2002-2011 Andrew Simpson for WebCollab -->\n\n".
                     "<head>\n";
 
   if( $title == '' ) {
@@ -147,72 +149,71 @@ function create_top($title='', $page_type=0, $include_javascript=0, $redirect_ti
   switch($include_javascript ) {
 
     case 1:
-      //loads javascript files
+      //loads javascript file
       $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
-                  "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n".
-                  "</head>\n\n".
-                  "<body>\n";
+                  "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n";
        break;
 
     case 2:
       //loads javascript file (but not editor)
-      $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
-                  "</head>\n\n".
-                  "<body>\n";
-      break;
-
-    case 3:
-      //loads javascript files and resets the token...
-      $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
-                  "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n".
-                  "</head>\n\n".
-                  "<body onload=\"placeToken('".TOKEN."')\">\n";
+      $content .= "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n";
       break;
 
     case 0:
     default:
       //no javascript loaded
+      break;
+  }
+
+  switch($body_id ) {
+    case true:
+      $content .= "</head>\n\n".
+                  "<body id=\"$body_id\">\n";
+       break;
+
+    case false:
       $content .= "</head>\n\n".
                   "<body>\n";
       break;
+
   }
 
   switch ($page_type ) {
 
     case 0: //main window + menu sidebar
       //create the masthead part of the main window
-      $content .=   "<div class=\"masthead\">";
+      $content .=   "<div id=\"container\">\n".
+                    "<div id=\"top\" class=\"masthead\">";
       //show username if applicable
       if(defined('UID_NAME') ) {
-        $content .=  '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
+        $content .= '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
       }
-      $content .=   "</div>\n";
+      $content .=   "</div>\n\n";
       //create menu sidebar
-      $content .=    "<!-- start main table -->\n".
-                     "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n".
-                     "<tr valign=\"top\"><td class=\"menu\" align=\"center\">\n";
+      $content .=    "<!-- start menu -->\n".
+                     "<div id=\"menu\">\n";
       $bottom_text = 1;
       break;
 
     case 1: //single main window (no menu sidebar)
     case 3: //calendar
-      $content .=   "<div class=\"masthead\">";
+      $content .=   "<div id=\"container\">\n".
+                    "<div id=\"top\" class=\"masthead\">";
       if(defined('UID_NAME' ) ) {
         $content .= '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
       }
-      $content .=   "</div>\n";
+      $content .=   "</div>\n\n";
       //create single window over entire screen
-      $content .=   "<!-- start main table -->\n".
-                    "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n".
-                    "<tr valign=\"top\"><td class=\"single\" align=\"center\">\n";
+      $content .=   "<!-- start single main table -->\n".
+                    "<div id=\"single\">\n";
       $bottom_text = 2;
       break;
 
     case 2: //printable screen
       //create single window over paper width
-      $content .=   "<!-- start main table -->\n".
-                    "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n".
-                    "<tr valign=\"top\"><td class=\"single\" align=\"center\">\n";
+      $content .=   "<!-- start single main table -->\n".
+                    "<div id=\"container\">\n".
+                    "<div id=\"single\">\n";
       //don't want bottom text
       $bottom_text = 0;
   }
@@ -226,14 +227,23 @@ function create_top($title='', $page_type=0, $include_javascript=0, $redirect_ti
 //
 //  Creates a new box
 //
-function new_box($title, $content, $box="boxdata-normal", $head="head-normal", $style="boxstyle-normal" ) {
+function new_box($title, $content, $box="boxdata-normal", $head="head-normal", $style="boxstyle-normal", $id='' ) {
+
+  $div_start = '';
+  $div_end   = '';
+
+  if($id ) {
+    $div_start = "<div id=\"".$id."\">\n";
+    $div_end   = "</div>\n";
+  }
 
   echo  "\n<!-- start of ".$title." - box -->\n".
+        $div_start.
         "<div class=\"head ".$head."\" >::&nbsp;".$title."</div>\n".
-        "<div class=\"boxdata ".$box."\" >\n".
-        "<div class=\"boxstyle ".$style."\" >\n".$content.
-        "</div>\n".
-        "</div>\n".
+        "<div class=\"boxdata ".$box."\">\n".
+        "<div class=\"boxstyle ".$style."\">\n".
+        $content.
+        "</div>\n</div>\n".$div_end.
         "<!-- end -->\n";
 
   return;
@@ -244,7 +254,7 @@ function new_box($title, $content, $box="boxdata-normal", $head="head-normal", $
 //
 function goto_main() {
 
-  echo "\n</td><td align=\"center\">\n";
+  echo "\n</div><!-- end menu -->\n<!-- start main -->\n<div id=\"main\">\n";
   return;
 }
 
@@ -255,18 +265,16 @@ function create_bottom() {
 
   global $bottom_text;
 
-  //end the main table row
-  $content = "</td></tr>\n</table>\n";
+  //end the main & container
+  $content = "</div><!-- end main -->\n";
 
   switch($bottom_text) {
-    case 0: //no bottom text
-      $align = '';
-      break;
 
     case 1:
       $align = "style=\"text-align: left\"";
       break;
 
+    case 0: //no bottom text
     case 2:
     default:
       $align = "style=\"text-align: center\"";
@@ -275,10 +283,11 @@ function create_bottom() {
 
  //shows the logo
  if($bottom_text) {
-   $content .= "<div class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2011</div>\n";
+   $content .= "\n<div id=\"bottom\" class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2011</div>\n";
  }
   //end xml parsing
-  $content .= "</body>\n</html>\n";
+  $content .= "</div><!-- end container -->\n".
+              "</body>\n</html>\n";
   echo $content;
   return;
 }

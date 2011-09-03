@@ -17,8 +17,8 @@ CREATE TABLE "tasks" (
 	"taskgroupid" integer NOT NULL,
 	"lastforumpost" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
 	"usergroupid" integer NOT NULL,
-	"globalaccess" boolean NOT NULL DEFAULT 't',
-	"groupaccess" boolean NOT NULL DEFAULT 'f',
+	"globalaccess" character varying(5) NOT NULL DEFAULT 't'::text,
+	"groupaccess" character varying(5) NOT NULL DEFAULT 'f'::text,
 	"lastfileupload" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
 	"completed" integer DEFAULT 0::int NOT NULL,
 	"completion_time" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
@@ -42,10 +42,10 @@ CREATE TABLE "users" (
 	"fullname" character varying(200) NOT NULL,
 	"password" character varying(200) NOT NULL,
 	"email" character varying(200) NOT NULL,
-	"admin" boolean NOT NULL DEFAULT 'f'::bool,
+	"admin" character varying(5) NOT NULL DEFAULT 'f'::text,
 	"private" smallint DEFAULT 0::int NOT NULL,
   "guest" smallint DEFAULT 0::int NOT NULL,
-	"deleted" boolean NOT NULL DEFAULT 'f'::bool,
+	"deleted" character varying(5) NOT NULL DEFAULT 'f'::text,
   "locale" character varying(10) DEFAULT 'en'::text NOT NULL,
 	Constraint "users_pkey" Primary Key ("id")
 );
@@ -189,6 +189,13 @@ CREATE TABLE "login_attempt" (
 CREATE TABLE "site_name" (
 	"manager_name" character varying(100),
 	"abbr_manager_name" character varying(100)
+);
+
+CREATE TABLE "tokens" (
+  "token" character varying(100) NOT NULL,
+  "action" character varying(100) NOT NULL,
+  "userid" integer NOT NULL,
+  "lastaccess" timestamp with time zone NOT NULL DEFAULT current_timestamp(0)
 );
 
 INSERT INTO users ( name, fullname, password, email, admin, deleted )

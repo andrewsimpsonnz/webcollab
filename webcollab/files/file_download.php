@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: file_download.php 2254 2009-07-24 09:31:32Z andrewsimpson $
 
-  (c) 2003 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -44,11 +44,10 @@ if( ! @safe_integer($_GET['fileid']) ){
 $fileid = $_GET['fileid'];
 
 //get the files info
-if( ! ($q = db_query('SELECT fileid, filename, size, mime, taskid FROM '.PRE.'files WHERE id='.$fileid.' LIMIT 1', 0 ) ) )  {
-  error('Download file', 'There was an error in the data query');
-}
+$q = db_prepare('SELECT fileid, filename, size, mime, taskid FROM '.PRE.'files WHERE id=? LIMIT 1');
+db_execute($q, array($fileid ) );
 
-if( ! $row = db_fetch_array( $q, 0) ) {
+if( ! $row = db_fetch_array($q, 0) ) {
   error('Download file', 'Invalid fileid given' );
 }
 

@@ -36,7 +36,7 @@ $content = "<form id=\"ForumSearch\" method=\"post\" action=\"forum.php\" >\n".
            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
            "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
            "<input type=\"hidden\" name=\"start\" value=\"0\" /></fieldset>\n".
-           "<div><input type=\"text\" id=\"string\" name=\"string\" size=\"30\" />\n".
+           "<div><input type=\"text\" id=\"string\" name=\"string\" class=\"size\" />\n".
            "<a href=\"javascript:void(document.getElementById('ForumSearch').submit())\"><small>".$lang['go']."</small></a></div>\n".
            "</form>\n".
            "<script type=\"text/javascript\">document.getElementById('string').focus();</script>\n";

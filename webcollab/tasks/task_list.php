@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: task_list.php 2294 2009-08-24 09:41:39Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -46,7 +46,7 @@ $task_count     = 0;  //counter for $task_array
 
 function listTasks($parentid ) {
   global $lang;
-  global $task_array, $parent_array, $shown_array, $task_count;
+  global $task_array, $parent_array, $shown_array, $task_count, $level_count;
 
   //check if we have taskgroups
   if($task_array[0]['group_id'] ) {
@@ -56,7 +56,8 @@ function listTasks($parentid ) {
     $taskgroup_initial_flag = 1;
   }
   else {
-    $content = "<ul>\n";
+    $level_count = 1;
+    $content = "<ul class=\"ul-".$level_count."\">\n";
     $taskgroup_flag = 0;
   }
 
@@ -76,6 +77,7 @@ function listTasks($parentid ) {
         //don't need </ul> before first taskgroup heading (no <ul> is set)
         if(! $taskgroup_initial_flag ) {
           $content .= "</ul>\n";
+          --$level_count;
         }
 
         $content .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -92,8 +94,8 @@ function listTasks($parentid ) {
           }
         }
 
-        $content .= "</p>\n<ul>\n";
-
+        $content .= "</p>\n<ul class=\"ul-".$level_count."\">\n";
+       
         //store current groupid & clear initial flag
         $stored_groupid = $task_array[$i]['group_id'];
         $taskgroup_initial_flag = 0;
@@ -120,10 +122,12 @@ function listTasks($parentid ) {
 //
 function find_task_children($parent ) {
 
-  global $task_array, $parent_array, $shown_array, $task_count; //, $shown_count;
+  global $task_array, $parent_array, $shown_array, $task_count, $level_count;
 
   $content_flag = 0;
-  $content = "<ul>\n";
+  ++$level_count;
+
+  $content = "\n<ul class=\"ul-".$level_count."\">\n";
 
   for($i=0 ; $i < $task_count ; ++$i ) {
 
@@ -144,6 +148,7 @@ function find_task_children($parent ) {
     $content .= "</li>\n";
   }
   $content .= "</ul>\n";
+  --$level_count;
 
   if(! $content_flag ) {
     $content = '';
@@ -169,7 +174,8 @@ function task_state($key ) {
   if((TIME_NOW - $max ) > 86400 * NEW_TIME ) {
     //if task is over limit in NEW_TIME and still not looked at by you, mark it as seen, and move on...
     if(! $task_array[$key]['last_seen'] ) {
-      db_query('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES ('.UID.', '.$task_array[$key]['id'].', now() ) ' );
+      $q = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES (?, ?, now() )' );
+      db_execute($q, array(UID, $task_array[$key]['id'] ) );
     }
   }
   //task has changed since last seen - show the changes to you
@@ -291,7 +297,9 @@ $parentid = $_REQUEST['taskid'];
 //set the usergroup permissions on queries
 $tail = usergroup_tail();
 
-if( ! $q = db_query('SELECT projectid FROM '.PRE.'tasks WHERE parent='.$parentid.' LIMIT 1' ) ) {
+$q = db_prepare('SELECT projectid FROM '.PRE.'tasks WHERE parent=? LIMIT 1' );
+
+if( ! db_execute($q, array($parentid ) ) ) {
   error('Task list', 'There was an error in the data query.' );
 }
 
@@ -315,7 +323,7 @@ else {
 }
 
 //query to get the children for this taskid
-$q = db_query('SELECT '.PRE.'tasks.id AS id,
+$q = db_prepare('SELECT '.PRE.'tasks.id AS id,
                 '.PRE.'tasks.name AS name,
                 '.PRE.'tasks.parent AS parent,
                 '.PRE.'tasks.status AS status,
@@ -335,10 +343,12 @@ $q = db_query('SELECT '.PRE.'tasks.id AS id,
                 FROM '.PRE.'tasks
                 LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
                 LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid)
-                LEFT JOIN '.PRE.'seen ON ('.PRE.'tasks.id='.PRE.'seen.taskid AND '.PRE.'seen.userid='.UID.')
-                WHERE '.PRE.'tasks.projectid='.$projectid.
-                $tail.
+                LEFT JOIN '.PRE.'seen ON ('.PRE.'tasks.id='.PRE.'seen.taskid AND '.PRE.'seen.userid=?)
+                WHERE '.PRE.'tasks.projectid=?
+                '.$tail.
                 'ORDER BY '.$no_group.' group_name, '.$task_order );
+
+db_execute($q, array(UID, $projectid ) );
 
 for( $i=0 ; $task_array[$i] = @db_fetch_array($q, $i ) ; ++$i ) {
 
@@ -357,7 +367,7 @@ if($i > 0 ) {
 
   $content = listTasks($parentid );
 
-  new_box($lang['tasks'], $content );
+  new_box($lang['tasks'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-normal', 'task-list' );
 }
 
 ?>

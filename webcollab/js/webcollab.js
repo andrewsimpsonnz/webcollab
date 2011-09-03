@@ -1,6 +1,6 @@
 /*
   $Id: webcollab.js 2068 2009-01-31 08:14:29Z andrewsimpson $
-  (c) 2009 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2009 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
   ---------
   Javascript function library for WebCollab
 */
@@ -62,19 +62,11 @@ function dateCheck() {
   return true;
 }
 
-function dateSet(dayIndex, monthIndex, yearIndex, token) {
+function dateSet(dayIndex, monthIndex, yearIndex ) {
   if(window.opener && !window.opener.closed) {
     window.opener.document.getElementById('day').selectedIndex = dayIndex;
     window.opener.document.getElementById('month').selectedIndex = monthIndex;
     window.opener.document.getElementById('year').selectedIndex = yearIndex;
-    window.opener.document.getElementById('token').value = token;
-  }
-  return true;
-}
-
-function placeToken(token) {
-  if(window.opener && !window.opener.closed) {
-    window.opener.document.getElementById('token').value = token;
   }
   return true;
 }

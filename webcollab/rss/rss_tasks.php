@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: rss_tasks.php 2284 2009-08-22 08:41:57Z andrewsimpson $
 
-  (c) 2005 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2005 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------
@@ -56,9 +56,6 @@ if(! $last_mod  = db_result($q, 0, 0 ) ) {
 //check when last request was made
 rss_last_mod($last_mod);
 
-//xml uses UTF-8 exclusively - tell the database to use UTF-8 too.
-db_user_locale('UTF-8');
-
 //get site names
 if(! ($q = db_query('SELECT * FROM site_name', 0 ) ) ) {
 
@@ -74,7 +71,7 @@ if(ADMIN ) {
   $tail = ' ';
 }
 else {
-  $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
+  $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.db_quote(UID ).')
             OR '.PRE.'tasks.globalaccess=\'t\'
             OR '.PRE.'tasks.usergroupid=0) ';
 }

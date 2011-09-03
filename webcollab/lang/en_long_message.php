@@ -41,6 +41,7 @@ $usergroup_info =   "<ul><li>If you delete a usergroup all the related private f
 $user_info      =    "Please select your action from the menu on the left.<br /><br />".
                       "Some quick hints:<br />".
                       "<ul>".
+                      //**
                       "<li>Private users can only be seen by members of the same usergroup.</li>\n".
                       "<li>Users have two stages of deleting, the second one is permanent.</li>\n".
                       "<li>A deleted user loses all his tasks but not his forum messages.</li>\n".

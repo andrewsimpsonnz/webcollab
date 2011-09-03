@@ -25,16 +25,13 @@
 
   Maintainer: Raffaele Franzese <r.franzese@collaltosabino.net>
 
+  NOTE: This file is written in UTF-8 character set
+
 */
 
 //required language encodings
-define('CHARACTER_SET', "ISO-8859-1" );
-
-//xml language identifier
+define('CHARACTER_SET', 'UTF-8' );
 define('XML_LANG', "it" );
-
-//this is the regex for input validation filter used in common.php
-define('VALIDATION_REGEX', "/([^\x09\x0A\x0D\x20-\x7E\xA0-\xFF])/" );
 
 //dates
 $month_array = array ( NULL, "Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic" );
@@ -68,35 +65,34 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['update']                       = "Aggiorna";
     $lang['submit_changes']               = "Invia modifiche";
     $lang['continue']                     = "Continua";
-    $lang['reset']                        = "Reset";
     $lang['manage']                       = "Gestisci";
     $lang['edit']                         = "Edita";
     $lang['delete']                       = "Cancella";
     $lang['del']                          = "Cancella";
     $lang['confirm_del_javascript']       = "Conferma cancellazione!";
-    $lang['yes']                          = "SÏ";
+    $lang['yes']                          = "S√¨";
     $lang['no']                           = "No";
     $lang['action']                       = "Azione";
-    $lang['task']                         = "Attivit‡";
-    $lang['tasks']                        = "Attivit‡";
+    $lang['task']                         = "Attivit√†";
+    $lang['tasks']                        = "Attivit√†";
     $lang['project']                      = "Progetto";
     $lang['info']                         = "Info";
     $lang['bytes']                        = " bytes";
     $lang['select_instruct']              = "(Usa ctrl per selezioni multiple, o per deselezionare)";
-    $lang['member_groups']                = "L'utente Ë membro dei gruppi selezionati sotto (se esistenti)";
+    $lang['member_groups']                = "L'utente √® membro dei gruppi selezionati sotto (se esistenti)";
     $lang['login']                        = "Login";
     $lang['login_action']                 = "Login";
     $lang['login_screen']                 = "Login";
     $lang['error']                        = "Errore";
     $lang['no_login']                     = "Accesso negato, login o password errati";
-//**
+//** needs translation
     $lang['redirect_sprt']                = "You will automatically return to Login after a %d second delay";
-//**
+//** needs translation
     $lang['login_now']                    = "Please click here to return to Login now";
     $lang['please_login']                 = "Identificazione utente";
 //for collaltosabino.net
 //  $lang['please_login']                 = "<span class="navy"><b>collaltosabino.net</b><br><span class="darkred"><b>*** Sistema di gestione progetti ***<br><br><span class="navy">Identificazione utente</b></span>";
-//**
+//** needs translation
     $lang['go']                           = "Go!";
 
 
@@ -117,14 +113,14 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['allow_group_edit']             = "Allow all in usergroup to edit?";
     $lang['set_email_owner']              = "Always email owner with changes?";
     $lang['set_email_group']              = "Always email usergroup with changes?";
-//**
+//** needs translation
     $lang['project_listing_order']        = "Project listing order";
-//**
+//** needs translation
     $lang['task_listing_order']           = "Task listing order";
     $lang['configuration']                = "Configuration";
 
 //archive
-//**
+//** needs translation
     $lang['archived_projects']            = "Archived Projects";
 
 //contacts
@@ -137,14 +133,14 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['bus_phone']                    = "Telefono lav.:";
     $lang['address']                      = "Indirizzo:";
     $lang['postal']                       = "Codice postale:";
-    $lang['city']                         = "Citt‡:";
+    $lang['city']                         = "Citt√†:";
     $lang['email_contact']                = "Email:";
     $lang['notes']                        = "Note:";
     $lang['add_contact']                  = "Aggiungi contatto";
     $lang['del_contact']                  = "Cancella contatto";
     $lang['contact_info']                 = "Informazioni contatto";
     $lang['contacts']                     = "Contatti";
-    $lang['contact_add_info']             = "Se aggiungi un nome di azienda, questo sar‡ visualizzato al posto del nome utente.";
+    $lang['contact_add_info']             = "Se aggiungi un nome di azienda, questo sar√† visualizzato al posto del nome utente.";
     $lang['show_contact']                 = "Vedi contatti";
     $lang['edit_contact']                 = "Edita contatti";
     $lang['contact_submit']               = "Invia contatto";
@@ -157,22 +153,19 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['file']                         = "File:";
     $lang['uploader']                     = "Mittente:";
     $lang['files_assoc_project']          = "Files associati a questo progetto";
-    $lang['files_assoc_task']             = "Files associati a questa attivit‡";
+    $lang['files_assoc_task']             = "Files associati a questa attivit√†";
     $lang['file_admin']                   = "File admin";
     $lang['add_file']                     = "Aggiungi file";
     $lang['files']                        = "Files";
     $lang['file_choose']                  = "File da inviare:";
     $lang['upload']                       = "Invio";
- //**
     $lang['file_email_owner']             = "Inviare una Email per notificare un nuovo file al proprietario?";
- //**
     $lang['file_email_usergroup']         = "Inviare una Email per notificare un nuovo file allo usergroup?";
-    $lang['max_file_sprt']                = "Il file da inviare deve essere pi˘ piccolo di %s kb.";
+    $lang['max_file_sprt']                = "Il file da inviare deve essere pi√π piccolo di %s kb.";
     $lang['file_submit']                  = "Invia file";
-    $lang['no_upload']                    = "Nessun file Ë stato inviato.  Torna indietro e riprova.";
-    $lang['file_too_big_sprt']            = "La dimensione massima Ë %s bytes.  Il tuo invio Ë troppo grande ed Ë stato cancellato.";
+    $lang['no_upload']                    = "Nessun file √® stato inviato.  Torna indietro e riprova.";
+    $lang['file_too_big_sprt']            = "La dimensione massima √® %s bytes.  Il tuo invio √® troppo grande ed √® stato cancellato.";
     $lang['del_file_javascript_sprt']     = "Sei sicuro che vuoi cancellare %s ?";
-
 
  //forum
     $lang['orig_message']                 = "Messaggio originale:";
@@ -191,38 +184,38 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['forum_submit']                 = "Invia Forum";
     $lang['no_message']                   = "Nessun messaggio! Torna indietro e riprova";
     $lang['add_reply']                    = "Aggiungi risposta";
-//**
+//** needs translation
     $lang['last_post_sprt']               = "Last post %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**
+//** needs translation
     $lang['recent_posts']                 = "Recent forum posts";
-//**
+//** needs translation
     $lang['recent_posts']                 = "Recent forum posts";
-//**
+//** needs translation
     $lang['forum_search']                 = "Forum search";
-//**
+//** needs translation
     $lang['no_results']                   = "No results found for '%s'";
-//**
+//** needs translation
     $lang['search_results']               = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
 
  //includes
     $lang['report']                       = "Report";
-    $lang['warning']                      = "<h1>Spiacente!</h1><p>Non Ë possibile processare la tua richiesta adesso. Riprova pi˘ tardi.</p>";
+    $lang['warning']                      = "<h1>Spiacente!</h1><p>Non √® possibile processare la tua richiesta adesso. Riprova pi√π tardi.</p>";
     $lang['home_page']                    = "Home page";
     $lang['summary_page']                 = "Pagina di riepilogo";
     $lang['log_out']                      = "Log out";
     $lang['main_menu']                    = "Menu principale";
-//**
+//** needs translation
     $lang['archive']                      = "Archive";
     $lang['user_homepage_sprt']           = "%s's homepage";
     $lang['missing_field_javascript']     = "Prego, inserisci un valore nel campo omesso";
     $lang['invalid_date_javascript']      = "Prego, scegli una data valida";
-    $lang['finish_date_javascript']       = "La data inserita Ë successiva alla data di fine progetto!";
+    $lang['finish_date_javascript']       = "La data inserita √® successiva alla data di fine progetto!";
     $lang['security_manager']             = "Gestore della sicurezza";
-    $lang['session_timeout_sprt']         = "Accesso negato, l'ultima azione risale a %d minuti fa e il timeout Ë di %d minuti, prego effettuare <a href=\"%sindex.php\">re-login</a>";
+    $lang['session_timeout_sprt']         = "Accesso negato, l'ultima azione risale a %d minuti fa e il timeout √® di %d minuti, prego effettuare <a href=\"%sindex.php\">re-login</a>";
     $lang['access_denied']                = "Accesso negato";
     $lang['private_usergroup_no_access']  = "Spiacente, questa area si trova in un gruppo privato e tu non hai il permesso di accedervi.";
     $lang['invalid_date']                 = "Data non valida";
-    $lang['invalid_date_sprt']            = "La data del %s non Ë una data valida del calendario (Controlla il numero di giorni nel mese).  Torna indietro e riprova.";
+    $lang['invalid_date_sprt']            = "La data del %s non √® una data valida del calendario (Controlla il numero di giorni nel mese).  Torna indietro e riprova.";
 
 
  //taskgroups
@@ -232,10 +225,10 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['add_new_taskgroup']            = "Aggiungi un nuovo taskgroup";
     $lang['edit_taskgroup']               = "Edita taskgroup";
     $lang['taskgroup_manage']             = "Gestione dei Taskgroups";
-    $lang['no_taskgroups']                = "Nessun taskgroup Ë stato definito";
+    $lang['no_taskgroups']                = "Nessun taskgroup √® stato definito";
     $lang['manage_taskgroups']            = "Gestisci taskgroups";
     $lang['taskgroups']                   = "Taskgroups";
-    $lang['taskgroup_dup_sprt']           = "Il taskgroup '%s' esiste gi‡.  Scegli un nuovo nome.";
+    $lang['taskgroup_dup_sprt']           = "Il taskgroup '%s' esiste gi√†.  Scegli un nuovo nome.";
     $lang['info_taskgroup_manage']        = "Info per la gestione del taskgroup";
 
  //usergroups
@@ -246,11 +239,14 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['add_usergroup']                = "Aggiungi usergroup";
     $lang['add_new_usergroup']            = "Aggiungi un nuovo usergroup";
     $lang['edit_usergroup']               = "Edita usergroup";
+//** needs translation
+    $lang['email_new_usergroup']          = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']         = "Email the changes to usergroup members?";
     $lang['usergroup_manage']             = "Gestione degli Usergroups";
-    $lang['no_usergroups']                = "Nessun usergroups Ë stato definito";
+    $lang['no_usergroups']                = "Nessun usergroups √® stato definito";
     $lang['manage_usergroups']            = "Gestisci usergroups";
     $lang['usergroups']                   = "Usergroups";
-    $lang['usergroup_dup_sprt']           = "TLo usergroup '%s' esiste gi‡.  Scegli un nuovo nome.";
+    $lang['usergroup_dup_sprt']           = "TLo usergroup '%s' esiste gi√†.  Scegli un nuovo nome.";
     $lang['info_usergroup_manage']        = "Info per la gestione dello usergroup";
 
  //users
@@ -276,56 +272,56 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['permdel_javascript_sprt']      = "Questa operazione cancella permanentemente tutti i records utente e i relativi tasks per %s. Vuoi realmente effettuare questa operazione?";
     $lang['add_user']                     = "Aggiungi un utente";
     $lang['edit_user']                    = "Edita un utente";
-    $lang['no_users']                     = "Nessun utente Ë conosciuto dal sistema";
+    $lang['no_users']                     = "Nessun utente √® conosciuto dal sistema";
     $lang['users']                        = "Utenti";
     $lang['existing_users']               = "Utenti esistenti";
-    $lang['private_profile']              = "Questo utente ha un profilo privato e non puÚ essere visualizzato da te.";
-    $lang['private_usergroup_profile']    = "(Questo utente Ë membro di uno usergroup privato e non puÚ essere visualizzato da te)";
+    $lang['private_profile']              = "Questo utente ha un profilo privato e non pu√≤ essere visualizzato da te.";
+    $lang['private_usergroup_profile']    = "(Questo utente √® membro di uno usergroup privato e non pu√≤ essere visualizzato da te)";
     $lang['email_users']                  = "Utenti Email";
     $lang['select_usergroup']             = "Seleziona usergroup:";
     $lang['subject']                      = "Oggetto:";
-    $lang['message_sent_maillist']        = "In ogni caso il messaggio Ë anche copiato alla mailing list.";
-    $lang['who_online']                   = "Chi Ë online?";
+    $lang['message_sent_maillist']        = "In ogni caso il messaggio √® anche copiato alla mailing list.";
+    $lang['who_online']                   = "Chi √® online?";
     $lang['edit_details']                 = "Edita dettagli utente";
     $lang['show_details']                 = "Visualizza dettagli utente";
-    $lang['user_deleted']                 = "Questo utente Ë stato cancellato!";
-    $lang['no_usergroup']                 = "L'utente non Ë un membro di usergroups";
-    $lang['not_usergroup']                = "(Non Ë membro di nessun usergroup)";
-    $lang['no_password_change']           = "(La tua password non Ë stata cambiata)";
+    $lang['user_deleted']                 = "Questo utente √® stato cancellato!";
+    $lang['no_usergroup']                 = "L'utente non √® un membro di usergroups";
+    $lang['not_usergroup']                = "(Non √® membro di nessun usergroup)";
+    $lang['no_password_change']           = "(La tua password non √® stata cambiata)";
     $lang['last_time_here']               = "Collegato l'ultima volta:";
     $lang['number_items_created']         = "Numero di items creati:";
     $lang['number_projects_owned']        = "Numero di progetti gestiti:";
-    $lang['number_tasks_owned']           = "Numero di attivit‡ gestite:";
-    $lang['number_tasks_completed']       = "Numero di attivit‡ completate:";
+    $lang['number_tasks_owned']           = "Numero di attivit√† gestite:";
+    $lang['number_tasks_completed']       = "Numero di attivit√† completate:";
     $lang['number_forum']                 = "Numero di messaggi forum inviati:";
     $lang['number_files']                 = "Numero di files inviati:";
     $lang['size_all_files']               = "Dimensione totale dei files proprietari:";
-    $lang['owned_tasks']                  = "Attivit‡ assegnate";
+    $lang['owned_tasks']                  = "Attivit√† assegnate";
     $lang['invalid_email']                = "Indirizzo email non valido";
-    $lang['invalid_email_given_sprt']     = "L'indirizzo email '%s' non Ë valido.  Torna indietro e riprova.";
+    $lang['invalid_email_given_sprt']     = "L'indirizzo email '%s' non √® valido.  Torna indietro e riprova.";
     $lang['duplicate_user']               = "Utente duplicato";
-    $lang['duplicate_change_user_sprt']   = "L'utente '%s' esiste gi‡.  Cambia il nome.";
+    $lang['duplicate_change_user_sprt']   = "L'utente '%s' esiste gi√†.  Cambia il nome.";
     $lang['value_missing']                = "Parametro omesso";
-    $lang['field_sprt']                   = "Il campo per '%s' Ë stato omesso. Torna indietro e riprova.";
+    $lang['field_sprt']                   = "Il campo per '%s' √® stato omesso. Torna indietro e riprova.";
     $lang['admin_priv']                   = "NOTA: Ti sono stati assegnati i privilegi di amministratore.";
     $lang['manage_users']                 = "Gestisci utenti";
     $lang['users_online']                 = "Utenti online";
     $lang['online']                       = "Die hard surfers (Online less than 60 mins ago)";
     $lang['not_online']                   = "The rest";
-    $lang['user_activity']                = "Attivit‡ utente";
+    $lang['user_activity']                = "Attivit√† utente";
 
   //tasks
-    $lang['add_new_task']                 = "Aggiungi nuova attivit‡";
-    $lang['priority']                     = "Priorit‡";
-    $lang['parent_task']                  = "Attivit‡ madre";
+    $lang['add_new_task']                 = "Aggiungi nuova attivit√†";
+    $lang['priority']                     = "Priorit√†";
+    $lang['parent_task']                  = "Attivit√† madre";
     $lang['creation_time']                = "Data di creazione";
     $lang['by_sprt']                      = "%1\$s da %2\$s"; //Note to translators: context is 'Creation time: <date> by <user>
     $lang['project_name']                 = "Nome progetto";
-    $lang['task_name']                    = "Nome attivit‡";
+    $lang['task_name']                    = "Nome attivit√†";
     $lang['deadline']                     = "Scadenza";
     $lang['taken_from_parent']            = "(Ereditato dal genitore)";
     $lang['status']                       = "Stato";
-    $lang['task_owner']                   = "Assegnatario attivit‡";
+    $lang['task_owner']                   = "Assegnatario attivit√†";
     $lang['project_owner']                = "Assegnatario progetto";
     $lang['taskgroup']                    = "Taskgroup";
     $lang['usergroup']                    = "Usergroup";
@@ -335,9 +331,9 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['all_groups']                   = "Tutti i gruppi";
     $lang['all_users']                    = "Tutti gli utenti";
     $lang['all_users_view']               = "Tutti gli utenti possono vedere questo item??";
-    $lang['group_edit']                   = "Chiunque nello usergroup puÚ editare?";
+    $lang['group_edit']                   = "Chiunque nello usergroup pu√≤ editare?";
     $lang['project_description']          = "Descrizione progetto";
-    $lang['task_description']             = "Descrizione attivit‡";
+    $lang['task_description']             = "Descrizione attivit√†";
     $lang['email_owner']                  = "Invia una email agli assegnatari con i cambiamenti?";
     $lang['email_new_owner']              = "Invia una email al (nuovo) assegnatario con i cambiamenti?";
     $lang['email_group']                  = "nvia una email allo usergroup con i cambiamenti?";
@@ -348,68 +344,68 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
     $lang['due_today']                    = "Scade oggi";
     $lang['overdue_1']                    = "1 giorno dopo la scadenza";
     $lang['overdue_sprt']                 = "%d giorni dopo la scadenza";
-    $lang['edit_task']                    = "Edita attivit‡";
+    $lang['edit_task']                    = "Edita attivit√†";
     $lang['edit_project']                 = "Edita progetto";
     $lang['no_reparent']                  = "Nessuno (progetto principale)";
     $lang['del_javascript_project_sprt']  = "Questa operazione cancella il progetto %s. Sei sicuro?";
-    $lang['del_javascript_task_sprt']     = "Questa operazione cancella l\'attivit‡ %s. Sei sicuro?";
-    $lang['add_task']                     = "Aggiungi attivit‡";
-    $lang['add_subtask']                  = "Aggiungi subattivit‡";
+    $lang['del_javascript_task_sprt']     = "Questa operazione cancella l\'attivit√† %s. Sei sicuro?";
+    $lang['add_task']                     = "Aggiungi attivit√†";
+    $lang['add_subtask']                  = "Aggiungi subattivit√†";
     $lang['add_project']                  = "Aggiungi progetto";
     $lang['clone_project']                = "Clona progetto";
-    $lang['clone_task']                   = "Clona attivit‡";
-//**
+    $lang['clone_task']                   = "Clona attivit√†";
+//** needs translation
     $lang['quick_jump']                   = "Quick Jump";
     $lang['no_edit']                      = "Non sei il proprietario di questo item e non puoi editarlo. Chiedi ad un admin o al proprietario dell'item di effettuare l'operazione.";
     $lang['global']                       = "Globale";
     $lang['delete_project']               = "Cancella progetto";
-    $lang['delete_task']                  = "Cancella attivit‡";
+    $lang['delete_task']                  = "Cancella attivit√†";
     $lang['project_options']              = "Opzioni del progetto";
-    $lang['task_options']                 = "Opzioni dell'attivit‡";
-//**
+    $lang['task_options']                 = "Opzioni dell'attivit√†";
+//** needs translation
     $lang['javascript_archive_project']   = "This will archive project %s.  Are you sure?";
-//**
+//** needs translation
     $lang['archive_project']              = "Archive project";
-    $lang['task_navigation']              = "Navigazione nelle attivit‡";
-//**
+    $lang['task_navigation']              = "Navigazione nelle attivit√†";
+//** needs translation
     $lang['new_task']                     = "New task";
     $lang['no_projects']                  = "Non ci sono progetti da vedere";
     $lang['show_all_projects']            = "Visualizza tutti i progetti";
     $lang['show_active_projects']         = "Visualizza solo i progetti attivi";
     $lang['project_hold_sprt']            = "Progetto congelato da %s";
     $lang['project_planned']              = "Progetto previsto";
-    $lang['percent_sprt']                 = "%d%% delle attivit‡ completate";
+    $lang['percent_sprt']                 = "%d%% delle attivit√† completate";
     $lang['project_no_deadline']          = "Scadenza non prevista per questo progetto";
     $lang['no_allowed_projects']          = "Non ci sono progetti che puoi vedere";
     $lang['projects']                     = "Progetti";
-    $lang['percent_project_sprt']         = "Questo progetto Ë completo al %d%%";
+    $lang['percent_project_sprt']         = "Questo progetto √® completo al %d%%";
     $lang['owned_by']                     = "Assegnato a";
     $lang['created_on']                   = "Creato il";
     $lang['completed_on']                 = "Completo il";
     $lang['modified_on']                  = "Modificato il";
-    $lang['project_on_hold']              = "Il progetto Ë congelato";
-    $lang['project_accessible']           = "(Questo progetto Ë accessibile da tutti gli utenti)";
-    $lang['task_accessible']              = "(Questa attivit‡ Ë accessibile da tutti gli utenti)";
-    $lang['project_not_accessible']       = "(Questo progetto Ë accessibile solo dai membri dello usergroup)";
-    $lang['task_not_accessible']          = "(Questa attivit‡ Ë accessibile solo dai membri dello usergroup)";
-    $lang['project_not_in_usergroup']     = "Questo progetto non Ë assegnato ad uno usergroup ed Ë accessibile da tutti gli utenti.";
-    $lang['task_not_in_usergroup']        = "Questa attivit‡ non Ë assegnata ad uno usergroup ed Ë accessibile da tutti gli utenti.";
-    $lang['usergroup_can_edit_project']   = "Questo progetto puÚ essere editato dai membri dello usergroup.";
-    $lang['usergroup_can_edit_task']      = "Questa attivit‡ puÚ essere editata dai membri dello usergroup.";
+    $lang['project_on_hold']              = "Il progetto √® congelato";
+    $lang['project_accessible']           = "(Questo progetto √® accessibile da tutti gli utenti)";
+    $lang['task_accessible']              = "(Questa attivit√† √® accessibile da tutti gli utenti)";
+    $lang['project_not_accessible']       = "(Questo progetto √® accessibile solo dai membri dello usergroup)";
+    $lang['task_not_accessible']          = "(Questa attivit√† √® accessibile solo dai membri dello usergroup)";
+    $lang['project_not_in_usergroup']     = "Questo progetto non √® assegnato ad uno usergroup ed √® accessibile da tutti gli utenti.";
+    $lang['task_not_in_usergroup']        = "Questa attivit√† non √® assegnata ad uno usergroup ed √® accessibile da tutti gli utenti.";
+    $lang['usergroup_can_edit_project']   = "Questo progetto pu√≤ essere editato dai membri dello usergroup.";
+    $lang['usergroup_can_edit_task']      = "Questa attivit√† pu√≤ essere editata dai membri dello usergroup.";
     $lang['i_take_it']                    = "Acquisisco";
     $lang['i_finished']                   = "Finito!";
     $lang['i_dont_want']                  = "Rilascio assegnazione";
     $lang['take_over_project']            = "Acquisisco progetto";
-    $lang['take_over_task']               = "Acquisisco attivit‡";
-    $lang['task_info']                    = "Informazioni attivit‡";
+    $lang['take_over_task']               = "Acquisisco attivit√†";
+    $lang['task_info']                    = "Informazioni attivit√†";
     $lang['project_details']              = "Dettagli progetto";
     $lang['todo_list_for']                = "Lista ToDo per: ";
     $lang['due_in_sprt']                  = " (Scade tra %d giorni)";
     $lang['due_tomorrow']                 = " (Scade domani)";
-    $lang['no_assigned']                  = "Non ci sono attivit‡ incomplete assegnate a questo utente.";
+    $lang['no_assigned']                  = "Non ci sono attivit√† incomplete assegnate a questo utente.";
     $lang['todo_list']                    = "Lista ToDo";
     $lang['summary_list']                 = "Lista di riepilogo";
-    $lang['task_submit']                  = "Invia attivit‡";
+    $lang['task_submit']                  = "Invia attivit√†";
     $lang['not_owner']                    = "Accesso negato, non sei l'assegnatario oppure non hai privilegi sufficienti";
     $lang['missing_values']               = "Non sono state fornite tutte le informazioni richieste, torna indietro e riprova";
     $lang['future']                       = "Futuro";
@@ -424,18 +420,18 @@ $week_array = array('Dom','Lun','Mar','Mer','Gio','Ven','Sab');
 //** needs translation
     $lang['by_priority']                  = " (by priority)";
     $lang['project_cloned']               = "Progetto da clonare:";
-    $lang['task_cloned']                  = "Attivit‡ da clonare:";
-    $lang['note_clone']                   = "Nota: L'attivit‡ sar‡ clonata come un nuovo progetto";
+    $lang['task_cloned']                  = "Attivit√† da clonare:";
+    $lang['note_clone']                   = "Nota: L'attivit√† sar√† clonata come un nuovo progetto";
 
 //bits 'n' pieces
     $lang['calendar']                     = "Calendario";
     $lang['normal_version']               = "Versione normale";
     $lang['print_version']                = "Versione stampabile";
-//**
+//** needs translation
     $lang['condensed_view']               = "Condensed view";
-//**
+//** needs translation
     $lang['full_view']                    = "Full view";
-//**
+//** needs translation
     $lang['icalendar']                    = "iCalendar";
 //**
     $lang['url_javascript']               = "Enter the URL:";

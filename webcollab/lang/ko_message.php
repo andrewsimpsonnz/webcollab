@@ -25,399 +25,411 @@
 
   Maintainer: Yu-Chan, Park < yuchan at kisti.re.kr>
 
+  NOTE: This file is written in UTF-8 character set
+
 */
 
 //required language encodings
-//$web_charset = "ko_KR.eucKR";
-//$email_charset = "ko_KR.eucKR";
-define('CHARACTER_SET', "EUC-KR" );
-
-//this is the regex for input validation filter used in common.php 
-$validation_regex = "/([^\x09\x0a\x0d\x20-\x7f\xa1-\xff])/s";
+define('CHARACTER_SET', 'UTF-8' );
+define('XML_LANG', "ko" );
 
 //dates
-$month_array = array (NULL, "1¿ù", "2¿ù", "3¿ù", "4¿ù", "5¿ù", "6¿ù", "7¿ù", "8¿ù", "9¿ù", "10¿ù", "11¿ù", "12¿ù" );
-$week_array = array('ÀÏ', '¿ù', 'È­', '¼ö', '¸ñ', '±İ', 'Åä' );
+$month_array = array (NULL, "1ì›”", "2ì›”", "3ì›”", "4ì›”", "5ì›”", "6ì›”", "7ì›”", "8ì›”", "9ì›”", "10ì›”", "11ì›”", "12ì›”" );
+$week_array = array('ì¼', 'ì›”', 'í™”', 'ìˆ˜', 'ëª©', 'ê¸ˆ', 'í† ' );
 
 //task states
  //priorities
-    $task_state['dontdo']                 = "ÇÏÁö ¾ÊÀ½";
-    $task_state['low']                    = "³·À½";
-    $task_state['normal']                 = "º¸Åë";
-    $task_state['high']                   = "³ôÀ½";
-    $task_state['yesterday']              = "¾îÁ¦!";
+    $task_state['dontdo']                 = "í•˜ì§€ ì•ŠìŒ";
+    $task_state['low']                    = "ë‚®ìŒ";
+    $task_state['normal']                 = "ë³´í†µ";
+    $task_state['high']                   = "ë†’ìŒ";
+    $task_state['yesterday']              = "ì–´ì œ!";
  //status
-    $task_state['new']                    = "»õ·Î¿î";
-    $task_state['planned']                = "°èÈ¹(¼öÇàµÇÁö ¾ÊÀ½)";
-    $task_state['active']                 = "¼öÇà(ÁøÇàÁß)";
-    $task_state['cantcomplete']           = "Àá½Ã ¸ØÃã";
-    $task_state['completed']              = "¿Ï·áÇÔ";
-    $task_state['done']                   = "Á¾·áÇÔ";
-    $task_state['task_planned']           = " °èÈ¹ÇÔ";
-    $task_state['task_active']            = " ¼öÇà";
+    $task_state['new']                    = "ìƒˆë¡œìš´";
+    $task_state['planned']                = "ê³„íš(ìˆ˜í–‰ë˜ì§€ ì•ŠìŒ)";
+    $task_state['active']                 = "ìˆ˜í–‰(ì§„í–‰ì¤‘)";
+    $task_state['cantcomplete']           = "ì ì‹œ ë©ˆì¶¤";
+    $task_state['completed']              = "ì™„ë£Œí•¨";
+    $task_state['done']                   = "ì¢…ë£Œí•¨";
+    $task_state['task_planned']           = " ê³„íší•¨";
+    $task_state['task_active']            = " ìˆ˜í–‰";
  //project states
-    $task_state['planned_project']        = "°èÈ¹µÈ ÇÁ·ÎÁ§Æ®(È°¼ºÈ­µÇÁö ¾ÊÀ½)";
-    $task_state['no_deadline_project']    = "¸¶°¨ÀÏÀ» ÁöÁ¤ÇÏÁö ¾ÊÀ½";
-    $task_state['active_project']         = "È°¼ºÈ­µÈ ÇÁ·ÎÁ§Æ®";
+    $task_state['planned_project']        = "ê³„íšëœ í”„ë¡œì íŠ¸(í™œì„±í™”ë˜ì§€ ì•ŠìŒ)";
+    $task_state['no_deadline_project']    = "ë§ˆê°ì¼ì„ ì§€ì •í•˜ì§€ ì•ŠìŒ";
+    $task_state['active_project']         = "í™œì„±í™”ëœ í”„ë¡œì íŠ¸";
 
 //common items
-    $lang['description']                  = "¼³¸í";
-    $lang['name']                         = "ÀÌ¸§";
-    $lang['add']                          = "Ãß°¡";
-    $lang['update']                       = "¾÷µ¥ÀÌÆ®";
-    $lang['submit_changes']               = "º¯°æ»çÇ× Àû¿ë";
-    $lang['continue']                     = "°è¼Ó";
-    $lang['reset']                        = "´Ù½Ã ¼³Á¤";
-    $lang['manage']                       = "°ü¸®";
-    $lang['edit']                         = "ÆíÁı";
-    $lang['delete']                       = "»èÁ¦";
-    $lang['del']                          = "»èÁ¦";
-    $lang['confirm_del_javascript']       = "»èÁ¦ È®ÀÎ!";
-    $lang['yes']                          = "¿¹";
-    $lang['no']                           = "¾Æ´Ï¿À";
-    $lang['action']                       = "µ¿ÀÛ";
-    $lang['task']                         = "ÀÛ¾÷";
-    $lang['tasks']                        = "ÀÛ¾÷µé";
-    $lang['project']                      = "ÇÁ·ÎÁ§Æ®";
-    $lang['info']                         = "Á¤º¸";
-    $lang['bytes']                        = " ¹ÙÀÌÆ®";
-    $lang['select_instruct']              = "(´õ ¸¹ÀÌ ¼±ÅÃÇÏ°Å³ª ¼±ÅÃÇÏÁö ¾ÊÀ¸·Á¸é  ctrl¸¦ »ç¿ëÇÏ½Ê½Ã¿À)";
-    $lang['member_groups']                = "ÀÌ »ç¿ëÀÚ´Â ¾Æ·¡¿¡ ¹à°Ô Ç¥½ÃµÈ ±×·ìÀÇ ¸â¹öÀÔ´Ï´Ù(if any)";
-    $lang['login']                        = "·Î±×ÀÎ";
-    $lang['error']                        = "¿À·ù";
-    $lang['no_login']                     = "Á¢±Ù ±İÁö. ·Î±×ÀÎÀÌ³ª ºñ¹Ğ¹øÈ£°¡ ¸ÂÁö ¾Ê½À´Ï´Ù.";
-//**    
+    $lang['description']                  = "ì„¤ëª…";
+    $lang['name']                         = "ì´ë¦„";
+    $lang['add']                          = "ì¶”ê°€";
+    $lang['update']                       = "ì—…ë°ì´íŠ¸";
+    $lang['submit_changes']               = "ë³€ê²½ì‚¬í•­ ì ìš©";
+    $lang['continue']                     = "ê³„ì†";
+    $lang['reset']                        = "ë‹¤ì‹œ ì„¤ì •";
+    $lang['manage']                       = "ê´€ë¦¬";
+    $lang['edit']                         = "í¸ì§‘";
+    $lang['delete']                       = "ì‚­ì œ";
+    $lang['del']                          = "ì‚­ì œ";
+    $lang['confirm_del_javascript']       = "ì‚­ì œ í™•ì¸!";
+    $lang['yes']                          = "ì˜ˆ";
+    $lang['no']                           = "ì•„ë‹ˆì˜¤";
+    $lang['action']                       = "ë™ì‘";
+    $lang['task']                         = "ì‘ì—…";
+    $lang['tasks']                        = "ì‘ì—…ë“¤";
+    $lang['project']                      = "í”„ë¡œì íŠ¸";
+    $lang['info']                         = "ì •ë³´";
+    $lang['bytes']                        = " ë°”ì´íŠ¸";
+    $lang['select_instruct']              = "(ë” ë§ì´ ì„ íƒí•˜ê±°ë‚˜ ì„ íƒí•˜ì§€ ì•Šìœ¼ë ¤ë©´  ctrlë¥¼ ì‚¬ìš©í•˜ì‹­ì‹œì˜¤)";
+    $lang['member_groups']                = "ì´ ì‚¬ìš©ìëŠ” ì•„ë˜ì— ë°ê²Œ í‘œì‹œëœ ê·¸ë£¹ì˜ ë©¤ë²„ì…ë‹ˆë‹¤(if any)";
+    $lang['login']                        = "ë¡œê·¸ì¸";
+    $lang['login_action']                 = "ë¡œê·¸ì¸";
+    $lang['login_screen']                 = "ë¡œê·¸ì¸";
+    $lang['error']                        = "ì˜¤ë¥˜";
+//**
     $lang['redirect_sprt']                = "You will automatically return to Login after a %d second delay";
 //**
-    $lang['login_now']                    = "Please click here to return to Login now";   
-    $lang['please_login']                 = "·Î±×ÀÎÇÏ½Ê½Ã¿À";
+    $lang['login_now']                    = "Please click here to return to Login now";
+    $lang['no_login']                     = "ì ‘ê·¼ ê¸ˆì§€. ë¡œê·¸ì¸ì´ë‚˜ ë¹„ë°€ë²ˆí˜¸ê°€ ë§ì§€ ì•ŠìŠµë‹ˆë‹¤.";
+    $lang['please_login']                 = "ë¡œê·¸ì¸í•˜ì‹­ì‹œì˜¤";
     $lang['go']                           = "Go!";
-    
+
 //graphic items
     $lang['late_g']                       = "&nbsp;LATE&nbsp;";
-    $lang['new_g']                        = "&nbsp;»õ·Î¿î&nbsp;";
-    $lang['updated_g']                    = "&nbsp;°»½ÅµÊ&nbsp;";
+    $lang['new_g']                        = "&nbsp;ìƒˆë¡œìš´&nbsp;";
+    $lang['updated_g']                    = "&nbsp;ê°±ì‹ ë¨&nbsp;";
 
 //admin config
-    $lang['admin_config']                 = "°ü¸®ÀÚ ¼³Á¤";
-    $lang['email_settings']               = "ÀüÀÚ¿ìÆí Çì´õ ¼³Á¤";
-    $lang['admin_email']                  = "°ü¸®ÀÚ ÀüÀÚ¿ìÆí";
-    $lang['email_reply']                  = "ÀüÀÚ¿ìÆí 'È¸½Å'";
-    $lang['email_from']                   = "ÀüÀÚ¿ìÆí '¼Û½ÅÀÚ'";
-    $lang['mailing_list']                 = "¸ŞÀÏ¸µ ¸®½ºÆ®";
-    $lang['default_checkbox']             = "ÇÁ·ÎÁ§Æ®/ÀÛ¾÷ ¼³Á¤¿¡ ´ëÇÑ ±âº»ÀûÀÎ Ã¼Å© ¹Ú½º";
-    $lang['allow_globalaccess']           = "¸ğµÎ Á¢±Ù °¡´ÉÇÏ°Ô ÇÏ½Ã°Ú½À´Ï±î?";
-    $lang['allow_group_edit']             = "»ç¿ëÀÚ ±×·ì¿¡ ÀÖ´Â ¸ğµç ±¸¼º¿øÀÌ ÆíÁıÇÒ ¼ö ÀÖµµ·Ï ÇÏ°Ú½À´Ï±î?";
-    $lang['set_email_owner']              = "Ç×»ó ¼ÒÀ¯ÀÚ¿¡°Ô ÀüÀÚ¿ìÆíÀ¸·Î º¯°æ »çÇ×À» ¾Ë¸®°Ú½À´Ï±î?";
-    $lang['set_email_group']              = "º¯°æ »çÇ×À» »ç¿ëÀÚ ±×·ì¿¡°Ô ÀüÀÚ¿ìÆíÀ¸·Î ¾Ë¸®°Ú½À´Ï±î?";
-    $lang['configuration']                = "¼³Á¤";
-//**    
+    $lang['admin_config']                 = "ê´€ë¦¬ì ì„¤ì •";
+    $lang['email_settings']               = "ì „ììš°í¸ í—¤ë” ì„¤ì •";
+    $lang['admin_email']                  = "ê´€ë¦¬ì ì „ììš°í¸";
+    $lang['email_reply']                  = "ì „ììš°í¸ 'íšŒì‹ '";
+    $lang['email_from']                   = "ì „ììš°í¸ 'ì†¡ì‹ ì'";
+    $lang['mailing_list']                 = "ë©”ì¼ë§ ë¦¬ìŠ¤íŠ¸";
+    $lang['default_checkbox']             = "í”„ë¡œì íŠ¸/ì‘ì—… ì„¤ì •ì— ëŒ€í•œ ê¸°ë³¸ì ì¸ ì²´í¬ ë°•ìŠ¤";
+    $lang['allow_globalaccess']           = "ëª¨ë‘ ì ‘ê·¼ ê°€ëŠ¥í•˜ê²Œ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?";
+    $lang['allow_group_edit']             = "ì‚¬ìš©ì ê·¸ë£¹ì— ìˆëŠ” ëª¨ë“  êµ¬ì„±ì›ì´ í¸ì§‘í•  ìˆ˜ ìˆë„ë¡ í•˜ê² ìŠµë‹ˆê¹Œ?";
+    $lang['set_email_owner']              = "í•­ìƒ ì†Œìœ ìì—ê²Œ ì „ììš°í¸ìœ¼ë¡œ ë³€ê²½ ì‚¬í•­ì„ ì•Œë¦¬ê² ìŠµë‹ˆê¹Œ?";
+    $lang['set_email_group']              = "ë³€ê²½ ì‚¬í•­ì„ ì‚¬ìš©ì ê·¸ë£¹ì—ê²Œ ì „ììš°í¸ìœ¼ë¡œ ì•Œë¦¬ê² ìŠµë‹ˆê¹Œ?";
+    $lang['configuration']                = "ì„¤ì •";
+//**
     $lang['project_listing_order']        = "Project listing order";
-//**    
-    $lang['task_listing_order']           = "Task listing order"; 
+//**
+    $lang['task_listing_order']           = "Task listing order";
     $lang['configuration']                = "Configuration";
 
 //archive
 //**
-    $lang['archived_projects']            = "Archived Projects";    
+    $lang['archived_projects']            = "Archived Projects";
 
 //contacts
-    $lang['firstname']                    = "ÀÌ¸§:";
-    $lang['lastname']                     = "¼º:";
-    $lang['company']                      = "È¸»ç:";
-    $lang['home_phone']                   = "Áı ÀüÈ­:";
-    $lang['mobile']                       = "ÇÚµåÆù:";
-    $lang['fax']                          = "ÆÑ½º:";
-    $lang['bus_phone']                    = "È¸»ç ÀüÈ­:";
-    $lang['address']                      = "ÁÖ¼Ò:";
-    $lang['postal']                       = "¿ìÆí ¹øÈ£:";
-    $lang['city']                         = "½Ã:";
-    $lang['email']                        = "ÀüÀÚ¿ìÆí:";
-    $lang['notes']                        = "³ëÆ®:";
-    $lang['add_contact']                  = "¿¬¶ôÃ³ Ãß°¡";
-    $lang['del_contact']                  = "¿¬¶ôÃ³ »èÁ¦";
-    $lang['contact_info']                 = "¿¬¶ôÃ³ Á¤º¸";
-    $lang['contacts']                     = "¿¬¶ôÃ³";
-    $lang['contact_add_info']             = "¸¸¾à È¸»ç ÀÌ¸§À» Ãß°¡ÇÏ¸é »ç¿ëÀÚ ÀÌ¸§ ´ë½Å È¸»ç ÀÌ¸§ÀÌ ³ª¿À°Ô µË´Ï´Ù.";
-    $lang['show_contact']                 = "¿¬¶ôÃ³ º¸±â";
-    $lang['edit_contact']                 = "¿¬¶ôÃ³ ÆíÁı";
-    $lang['contact_submit']               = "¿¬¶ôÃ³ Àü¼Û";
-    $lang['contact_warn']                 = "¿¬¶ôÃ³¸¦ Ãß°¡ÇÏ±â¿¡´Â Á¤º¸°¡ ºÎÁ·ÇÕ´Ï´Ù. µÇµ¹¾Æ°¡¼­ ÃÖ¼ÒÇÑ ÀÌ¸§°ú ¼ºÀº ÀÔ·ÂÇÏ½Ã±â ¹Ù¶ø´Ï´Ù.";
+    $lang['firstname']                    = "ì´ë¦„:";
+    $lang['lastname']                     = "ì„±:";
+    $lang['company']                      = "íšŒì‚¬:";
+    $lang['home_phone']                   = "ì§‘ ì „í™”:";
+    $lang['mobile']                       = "í•¸ë“œí°:";
+    $lang['fax']                          = "íŒ©ìŠ¤:";
+    $lang['bus_phone']                    = "íšŒì‚¬ ì „í™”:";
+    $lang['address']                      = "ì£¼ì†Œ:";
+    $lang['postal']                       = "ìš°í¸ ë²ˆí˜¸:";
+    $lang['city']                         = "ì‹œ:";
+    $lang['email_contact']                = "ì „ììš°í¸:";
+    $lang['notes']                        = "ë…¸íŠ¸:";
+    $lang['add_contact']                  = "ì—°ë½ì²˜ ì¶”ê°€";
+    $lang['del_contact']                  = "ì—°ë½ì²˜ ì‚­ì œ";
+    $lang['contact_info']                 = "ì—°ë½ì²˜ ì •ë³´";
+    $lang['contacts']                     = "ì—°ë½ì²˜";
+    $lang['contact_add_info']             = "ë§Œì•½ íšŒì‚¬ ì´ë¦„ì„ ì¶”ê°€í•˜ë©´ ì‚¬ìš©ì ì´ë¦„ ëŒ€ì‹  íšŒì‚¬ ì´ë¦„ì´ ë‚˜ì˜¤ê²Œ ë©ë‹ˆë‹¤.";
+    $lang['show_contact']                 = "ì—°ë½ì²˜ ë³´ê¸°";
+    $lang['edit_contact']                 = "ì—°ë½ì²˜ í¸ì§‘";
+    $lang['contact_submit']               = "ì—°ë½ì²˜ ì „ì†¡";
+    $lang['contact_warn']                 = "ì—°ë½ì²˜ë¥¼ ì¶”ê°€í•˜ê¸°ì—ëŠ” ì •ë³´ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤. ë˜ëŒì•„ê°€ì„œ ìµœì†Œí•œ ì´ë¦„ê³¼ ì„±ì€ ì…ë ¥í•˜ì‹œê¸° ë°”ëë‹ˆë‹¤.";
 
  //files
-    $lang['manage_files']                 = "ÆÄÀÏ °ü¸®";
-    $lang['no_files']                     = "°ü¸®ÇÏ±â À§ÇÑ ¾÷·ÎµåµÈ ÆÄÀÏÀÌ ¾ø½À´Ï´Ù.";
-    $lang['no_file_uploads']              = "ÀÌ »çÀÌÆ®¿¡ ´ëÇÑ ¼­¹ö ¼³Á¤ÀÌ ÆÄÀÏÀ» ¾÷·ÎµåÇÒ ¼ö ÀÖµµ·Ï µÇ¾î ÀÖÁö ¾Ê½À´Ï´Ù.";
-    $lang['file']                         = "ÆÄÀÏ:";
-    $lang['uploader']                     = "¿Ã¸°ÀÌ:";
-    $lang['files_assoc_project']          = "ÀÌ ÇÁ·ÎÁ§Æ®¿Í °ü·ÃµÈ ÆÄÀÏ";
-    $lang['files_assoc_task']             = "ÀÌ ÀÛ¾÷°ú °ü·ÃµÈ ÆÄÀÏ";
-    $lang['file_admin']                   = "ÆÄÀÏ °ü¸®";
-    $lang['add_file']                     = "ÆÄÀÏ Ãß°¡";
-    $lang['files']                        = "ÆÄÀÏµé";
-    $lang['file_choose']                  = "¾÷·ÎµåÇÒ ÆÄÀÏ:";
-    $lang['upload']                       = "¾÷·Îµå";
-    $lang['file_email_owner']             = "¼ÒÀ¯ÀÚ¿¡°Ô »õ·Î¿î ÆÄÀÏ¿¡ ´ëÇØ ÀüÀÚ¿ìÆíÀ¸·Î ¾Ë¸®°Ú½À´Ï±î?";
-    $lang['file_email_usergroup']         = "»ç¿ëÀÚ ±×·ì¿¡°Ô »õ·Î¿î ÆÄÀÏ¿¡ ´ëÇØ ÀüÀÚ¿ìÆíÀ¸·Î ¾Ë¸®°Ú½À´Ï±î?";
-    $lang['max_file_sprt']                = "ÆÄÀÏÀº %s kbº¸´Ù ÀÛ¾Æ¾ß ÇÕ´Ï´Ù.";
-    $lang['file_submit']                  = "ÆÄÀÏ Àü¼Û";
-    $lang['no_upload']                    = "¾÷·ÎµåµÈ ÆÄÀÏÀÌ ¾ø½À´Ï´Ù. µÇµ¹¾Æ°¡¼­ ´Ù½Ã ½ÃµµÇÏ½Ê½Ã¿À";
-    $lang['file_too_big_sprt']            = "ÃÖ´ë ¾÷·ÎµåÇÒ ¼ö ÀÖ´Â Å©±â´Â %s ¹ÙÀÌÆ®ÀÔ´Ï´Ù. ¾÷·ÎµåÇÑ ÆÄÀÏÀº ³Ê¹« Å©¸ç, »èÁ¦µÇ¾ú½À´Ï´Ù.";
-    $lang['del_file_javascript_sprt']     = "%s ¸¦ Á¤¸» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?";
+    $lang['manage_files']                 = "íŒŒì¼ ê´€ë¦¬";
+    $lang['no_files']                     = "ê´€ë¦¬í•˜ê¸° ìœ„í•œ ì—…ë¡œë“œëœ íŒŒì¼ì´ ì—†ìŠµë‹ˆë‹¤.";
+    $lang['no_file_uploads']              = "ì´ ì‚¬ì´íŠ¸ì— ëŒ€í•œ ì„œë²„ ì„¤ì •ì´ íŒŒì¼ì„ ì—…ë¡œë“œí•  ìˆ˜ ìˆë„ë¡ ë˜ì–´ ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.";
+    $lang['file']                         = "íŒŒì¼:";
+    $lang['uploader']                     = "ì˜¬ë¦°ì´:";
+    $lang['files_assoc_project']          = "ì´ í”„ë¡œì íŠ¸ì™€ ê´€ë ¨ëœ íŒŒì¼";
+    $lang['files_assoc_task']             = "ì´ ì‘ì—…ê³¼ ê´€ë ¨ëœ íŒŒì¼";
+    $lang['file_admin']                   = "íŒŒì¼ ê´€ë¦¬";
+    $lang['add_file']                     = "íŒŒì¼ ì¶”ê°€";
+    $lang['files']                        = "íŒŒì¼ë“¤";
+    $lang['file_choose']                  = "ì—…ë¡œë“œí•  íŒŒì¼:";
+    $lang['upload']                       = "ì—…ë¡œë“œ";
+    $lang['file_email_owner']             = "ì†Œìœ ìì—ê²Œ ìƒˆë¡œìš´ íŒŒì¼ì— ëŒ€í•´ ì „ììš°í¸ìœ¼ë¡œ ì•Œë¦¬ê² ìŠµë‹ˆê¹Œ?";
+    $lang['file_email_usergroup']         = "ì‚¬ìš©ì ê·¸ë£¹ì—ê²Œ ìƒˆë¡œìš´ íŒŒì¼ì— ëŒ€í•´ ì „ììš°í¸ìœ¼ë¡œ ì•Œë¦¬ê² ìŠµë‹ˆê¹Œ?";
+    $lang['max_file_sprt']                = "íŒŒì¼ì€ %s kbë³´ë‹¤ ì‘ì•„ì•¼ í•©ë‹ˆë‹¤.";
+    $lang['file_submit']                  = "íŒŒì¼ ì „ì†¡";
+    $lang['no_upload']                    = "ì—…ë¡œë“œëœ íŒŒì¼ì´ ì—†ìŠµë‹ˆë‹¤. ë˜ëŒì•„ê°€ì„œ ë‹¤ì‹œ ì‹œë„í•˜ì‹­ì‹œì˜¤";
+    $lang['file_too_big_sprt']            = "ìµœëŒ€ ì—…ë¡œë“œí•  ìˆ˜ ìˆëŠ” í¬ê¸°ëŠ” %s ë°”ì´íŠ¸ì…ë‹ˆë‹¤. ì—…ë¡œë“œí•œ íŒŒì¼ì€ ë„ˆë¬´ í¬ë©°, ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.";
+    $lang['del_file_javascript_sprt']     = "%s ë¥¼ ì •ë§ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?";
 
 
  //forum
-    $lang['orig_message']                 = "¿ø·¡ ¸Ş½ÃÁö:";
-    $lang['post']                         = "¿Ã¸®±â!";
-    $lang['message']                      = "¸Ş½ÃÁö:";
-    $lang['post_reply_sprt']              = "'%2\$s'¿¡ ´ëÇÑ '%1s'°¡ ÀÀ´äÇÑ ¸Ş½ÃÁö ¿Ã¸®±â";
-    $lang['post_message_sprt']            = "´ÙÀ½ ¸Ş½ÃÁö ¿Ã¸®±â: '%s'";
-    $lang['forum_email_owner']            = "¼ÒÀ¯ÀÚ¿¡°Ô Æ÷·³ ¸Ş½ÃÁö¸¦ ÀüÀÚ¿ìÆíÀ¸·Î º¸³»½Ã°Ú½À´Ï±î?";
-    $lang['forum_email_usergroup']        = "»ç¿ëÀÚ ±×·ì¿¡°Ô Æ÷·³ ¸Ş½ÃÁö¸¦ ÀüÀÚ¿ìÆíÀ¸·Î º¸³»½Ã°Ú½À´Ï±î?";
-    $lang['reply']                        = "´ä±Û";
-    $lang['new_post']                     = "»õ·Î¿î ±Û";
-    $lang['public_user_forum']            = "°ø°³ »ç¿ëÀÚ Æ÷·³";
-    $lang['private_forum_sprt']           = "'%s' »ç¿ëÀÚ ±×·ì¿¡ ´ëÇÑ ºñ°ø°³ Æ÷·³";
-    $lang['forum_submit']                 = "Æ÷·³ Àü¼Û";
-    $lang['no_message']                   = "¸Ş½ÃÁö°¡ ¾ø½À´Ï´Ù! µÇµ¹¾Æ°¡¼­ ´Ù½Ã ½ÃµµÇÏ½Ê½Ã¿À";
-    $lang['add_reply']                    = "´ä±Û Ãß°¡";
-//**  
-    $lang['last_post_sprt']               = "Last post %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//**   
-    $lang['recent_posts']                 = "Recent forum posts";      
-    
- //includes
-    $lang['report']                       = "º¸°í";
-    $lang['warning']                      = "<h1>ÁË¼ÛÇÕ´Ï´Ù!</h1><p>¿äÃ»À» ¿Ã¹Ù¸£°Ô Ã³¸®ÇÒ ¼ö ¾ø½À´Ï´Ù. ³ªÁß¿¡ ´Ù½Ã ½ÃµµÇÏ½Ê½Ã¿À.</p>";
-    $lang['home_page']                    = "È¨ÆäÀÌÁö";
-    $lang['summary_page']                 = "¿ä¾à ÆäÀÌÁö";
-    $lang['todo_list']                    = "ÇÒÀÏ ¸ñ·Ï";
-    $lang['calendar']                     = "´Ş·Â";
-    $lang['log_out']                      = "·Î±× ¾Æ¿ô";
-    $lang['main_menu']                    = "¸ŞÀÎ ¸Ş´º";
+    $lang['orig_message']                 = "ì›ë˜ ë©”ì‹œì§€:";
+    $lang['post']                         = "ì˜¬ë¦¬ê¸°!";
+    $lang['message']                      = "ë©”ì‹œì§€:";
+    $lang['post_reply_sprt']              = "'%2\$s'ì— ëŒ€í•œ '%1s'ê°€ ì‘ë‹µí•œ ë©”ì‹œì§€ ì˜¬ë¦¬ê¸°";
+    $lang['post_message_sprt']            = "ë‹¤ìŒ ë©”ì‹œì§€ ì˜¬ë¦¬ê¸°: '%s'";
+    $lang['forum_email_owner']            = "ì†Œìœ ìì—ê²Œ í¬ëŸ¼ ë©”ì‹œì§€ë¥¼ ì „ììš°í¸ìœ¼ë¡œ ë³´ë‚´ì‹œê² ìŠµë‹ˆê¹Œ?";
+    $lang['forum_email_usergroup']        = "ì‚¬ìš©ì ê·¸ë£¹ì—ê²Œ í¬ëŸ¼ ë©”ì‹œì§€ë¥¼ ì „ììš°í¸ìœ¼ë¡œ ë³´ë‚´ì‹œê² ìŠµë‹ˆê¹Œ?";
+    $lang['reply']                        = "ë‹µê¸€";
+    $lang['new_post']                     = "ìƒˆë¡œìš´ ê¸€";
+    $lang['public_user_forum']            = "ê³µê°œ ì‚¬ìš©ì í¬ëŸ¼";
+    $lang['private_forum_sprt']           = "'%s' ì‚¬ìš©ì ê·¸ë£¹ì— ëŒ€í•œ ë¹„ê³µê°œ í¬ëŸ¼";
+    $lang['forum_submit']                 = "í¬ëŸ¼ ì „ì†¡";
+    $lang['no_message']                   = "ë©”ì‹œì§€ê°€ ì—†ìŠµë‹ˆë‹¤! ë˜ëŒì•„ê°€ì„œ ë‹¤ì‹œ ì‹œë„í•˜ì‹­ì‹œì˜¤";
+    $lang['add_reply']                    = "ë‹µê¸€ ì¶”ê°€";
 //**
-    $lang['archive']                      = "Archive";   
-    $lang['user_homepage_sprt']           = "%s ÀÇ È¨ÆäÀÌÁö";
-    $lang['missing_field_javascript']     = "ÀÔ·ÂÇÏÁö ¾ÊÀº ÇÊµå¿¡ °ªÀ» ÀÔ·ÂÇÏ½Ê½Ã¿À";
-    $lang['invalid_date_javascript']      = "ÀÌ¿ë °¡´ÉÇÑ ´Ş·Â ³¯Â¥¸¦ ¼±ÅÃÇÏ½Ê½Ã¿À";
-    $lang['finish_date_javascript']       = "ÀÔ·ÂÇÑ ³¯Â¥´Â ÇÁ·ÎÁ§Æ®°¡ Á¾·áÈÄÀÇ ³¯Â¥ÀÔ´Ï´Ù!!";
-    $lang['security_manager']             = "º¸¾È °ü¸®ÀÚ";
-    $lang['session_timeout_sprt']         = "Á¢±ÙÇÒ ¼ö ¾ø½À´Ï´Ù. ¸¶Áö¸· µ¿ÀÛÀÎ %1\$d ºĞ Àü¿¡ ¼öÇàÇßÀ¸¸ç %2\$d ºĞÀÌ Áö³µ½À´Ï´Ù.  <a href=\"%3\$sindex.php\">´Ù½Ã ·Î±×ÀÎÇØÁÖ½Ê½Ã¿À </a>";
-    $lang['access_denied']                = "Á¢±Ù ±İÁö";
-    $lang['private_usergroup']            = "ÁË¼ÛÇÕ´Ï´Ù. ÀÌ ºÎºĞÀº ºñ°ø°³ »ç¿ëÀÚ ±×·ìÀÌ¸ç, Á¢±ÙÇÒ ±ÇÇÑÀÌ ¾ø½À´Ï´Ù";
-    $lang['invalid_date']                 = "Àß¸øµÈ ³¯Â¥";
-    $lang['invalid_date_sprt']            = "%s ³¯Â¥´Â À¯È¿ÇÏÁö ¾ÊÀº ³¯Â¥ÀÔ´Ï´Ù(¿ùº° ³¯Â¥ ¼ö¸¦ È®ÀÎÇÏ½Ê½Ã¿À).<br /> µÇµ¹¾Æ°¡¼­ À¯È¿ÇÑ ³¯Â¥·Î ´Ù½Ã ÀÔ·ÂÇÏ½Ê½Ã¿À.";
+    $lang['last_post_sprt']               = "Last post %s"; //Note to translators: context is 'Last post 2004-Dec-22'
+//**
+    $lang['recent_posts']                 = "Recent forum posts";
+//**
+    $lang['forum_search']                 = "Forum search";
+//**
+    $lang['no_results']                   = "No results found for '%s'";
+//**
+    $lang['search_results']               = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+
+ //includes
+    $lang['report']                       = "ë³´ê³ ";
+    $lang['warning']                      = "<h1>ì£„ì†¡í•©ë‹ˆë‹¤!</h1><p>ìš”ì²­ì„ ì˜¬ë°”ë¥´ê²Œ ì²˜ë¦¬í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ë‚˜ì¤‘ì— ë‹¤ì‹œ ì‹œë„í•˜ì‹­ì‹œì˜¤.</p>";
+    $lang['home_page']                    = "í™ˆí˜ì´ì§€";
+    $lang['summary_page']                 = "ìš”ì•½ í˜ì´ì§€";
+    $lang['log_out']                      = "ë¡œê·¸ ì•„ì›ƒ";
+    $lang['main_menu']                    = "ë©”ì¸ ë©”ë‰´";
+//**
+    $lang['archive']                      = "Archive";
+    $lang['user_homepage_sprt']           = "%s ì˜ í™ˆí˜ì´ì§€";
+    $lang['missing_field_javascript']     = "ì…ë ¥í•˜ì§€ ì•Šì€ í•„ë“œì— ê°’ì„ ì…ë ¥í•˜ì‹­ì‹œì˜¤";
+    $lang['invalid_date_javascript']      = "ì´ìš© ê°€ëŠ¥í•œ ë‹¬ë ¥ ë‚ ì§œë¥¼ ì„ íƒí•˜ì‹­ì‹œì˜¤";
+    $lang['finish_date_javascript']       = "ì…ë ¥í•œ ë‚ ì§œëŠ” í”„ë¡œì íŠ¸ê°€ ì¢…ë£Œí›„ì˜ ë‚ ì§œì…ë‹ˆë‹¤!!";
+    $lang['security_manager']             = "ë³´ì•ˆ ê´€ë¦¬ì";
+    $lang['session_timeout_sprt']         = "ì ‘ê·¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ë§ˆì§€ë§‰ ë™ì‘ì¸ %1\$d ë¶„ ì „ì— ìˆ˜í–‰í–ˆìœ¼ë©° %2\$d ë¶„ì´ ì§€ë‚¬ìŠµë‹ˆë‹¤.  <a href=\"%3\$sindex.php\">ë‹¤ì‹œ ë¡œê·¸ì¸í•´ì£¼ì‹­ì‹œì˜¤ </a>";
+    $lang['access_denied']                = "ì ‘ê·¼ ê¸ˆì§€";
+    $lang['private_usergroup_no_access']  = "ì£„ì†¡í•©ë‹ˆë‹¤. ì´ ë¶€ë¶„ì€ ë¹„ê³µê°œ ì‚¬ìš©ì ê·¸ë£¹ì´ë©°, ì ‘ê·¼í•  ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤";
+    $lang['invalid_date']                 = "ì˜ëª»ëœ ë‚ ì§œ";
+    $lang['invalid_date_sprt']            = "%s ë‚ ì§œëŠ” ìœ íš¨í•˜ì§€ ì•Šì€ ë‚ ì§œì…ë‹ˆë‹¤(ì›”ë³„ ë‚ ì§œ ìˆ˜ë¥¼ í™•ì¸í•˜ì‹­ì‹œì˜¤).<br /> ë˜ëŒì•„ê°€ì„œ ìœ íš¨í•œ ë‚ ì§œë¡œ ë‹¤ì‹œ ì…ë ¥í•˜ì‹­ì‹œì˜¤.";
 
 
  //taskgroups
-    $lang['taskgroup_name']               = "ÀÛ¾÷ ±×·ì ÀÌ¸§:";
-    $lang['taskgroup_description']        = "ÀÛ¾÷ ±×·ì¿¡ ´ëÇÑ °£´ÜÇÑ ¼³¸í:";
-    $lang['add_taskgroup']                = "ÀÛ¾÷ ±×·ì Ãß°¡";
-    $lang['add_new_taskgroup']            = "»õ·Î¿î ÀÛ¾÷ ±×·ì Ãß°¡";
-    $lang['edit_taskgroup']               = "ÀÛ¾÷ ±×·ì ÆíÁı";
-    $lang['taskgroup_manage']             = "ÀÛ¾÷ ±×·ì °ü¸®";
-    $lang['no_taskgroups']                = "Á¤ÀÇÇÑ ÀÛ¾÷ ±×·ìÀÌ ¾øÀ½.";
-    $lang['manage_taskgroups']            = "ÀÛ¾÷ ±×·ìÀ» °ü¸®";
-    $lang['taskgroups']                   = "ÀÛ¾÷ ±×·ì";
-    $lang['taskgroup_dup_sprt']           = "'%s' ÀÛ¾÷ ±×·ìÀÌ ÀÌ¹Ì ÀÖ½À´Ï´Ù. µÇµ¹¾Æ°¡¼­ »õ·Î¿î ÀÌ¸§À» ÀÔ·ÂÇÏ½Ê½Ã¿À.";
-    $lang['info_taskgroup_manage']        = "ÀÛ¾÷ ±×·ì °ü¸®¿¡ ´ëÇÑ Á¤º¸";
+    $lang['taskgroup_name']               = "ì‘ì—… ê·¸ë£¹ ì´ë¦„:";
+    $lang['taskgroup_description']        = "ì‘ì—… ê·¸ë£¹ì— ëŒ€í•œ ê°„ë‹¨í•œ ì„¤ëª…:";
+    $lang['add_taskgroup']                = "ì‘ì—… ê·¸ë£¹ ì¶”ê°€";
+    $lang['add_new_taskgroup']            = "ìƒˆë¡œìš´ ì‘ì—… ê·¸ë£¹ ì¶”ê°€";
+    $lang['edit_taskgroup']               = "ì‘ì—… ê·¸ë£¹ í¸ì§‘";
+    $lang['taskgroup_manage']             = "ì‘ì—… ê·¸ë£¹ ê´€ë¦¬";
+    $lang['no_taskgroups']                = "ì •ì˜í•œ ì‘ì—… ê·¸ë£¹ì´ ì—†ìŒ.";
+    $lang['manage_taskgroups']            = "ì‘ì—… ê·¸ë£¹ì„ ê´€ë¦¬";
+    $lang['taskgroups']                   = "ì‘ì—… ê·¸ë£¹";
+    $lang['taskgroup_dup_sprt']           = "'%s' ì‘ì—… ê·¸ë£¹ì´ ì´ë¯¸ ìˆìŠµë‹ˆë‹¤. ë˜ëŒì•„ê°€ì„œ ìƒˆë¡œìš´ ì´ë¦„ì„ ì…ë ¥í•˜ì‹­ì‹œì˜¤.";
+    $lang['info_taskgroup_manage']        = "ì‘ì—… ê·¸ë£¹ ê´€ë¦¬ì— ëŒ€í•œ ì •ë³´";
 
  //usergroups
-    $lang['usergroup_name']               = "»ç¿ëÀÚ ±×·ì ÀÌ¸§:";
-    $lang['usergroup_description']        = "»ç¿ëÀÚ ±×·ì¿¡ ´ëÇÑ °£´ÜÇÑ ¼³¸í:";
-    $lang['members']                      = "±¸¼ºÀÎ¿ø:";
-    $lang['private_usergroup']            = "private »ç¿ëÀÚ ±×·ì";
-    $lang['add_usergroup']                = "»ç¿ëÀÚ ±×·ì Ãß°¡";
-    $lang['add_new_usergroup']            = "»õ·Î¿î »ç¿ëÀÚ ±×·ì Ãß°¡";
-    $lang['edit_usergroup']               = "»ç¿ëÀÚ ±×·ì ÆíÁı";
-    $lang['usergroup_manage']             = "»ç¿ëÀÚ ±×·ì °ü¸®";
-    $lang['no_usergroups']                = "Á¤ÀÇµÈ »ç¿ëÀÚ ±×·ìÀÌ ¾øÀ½.";
-    $lang['manage_usergroups']            = "»ç¿ëÀÚ ±×·ìÀ» °ü¸®";
-    $lang['usergroups']                   = "»ç¿ëÀÚ ±×·ì";
-    $lang['usergroup_dup_sprt']           = "»ç¿ëÀÚ ±×·ì '%s'´Â ÀÌ¹Ì Á¸ÀçÇÕ´Ï´Ù. µÇµ¹¾Æ°¡¼­ »õ·Î¿î ÀÌ¸§À» ¼±ÅÃÇÏ½Ê½Ã¿À";
-    $lang['info_usergroup_manage']        = "»ç¿ëÀÚ ±×·ì °ü¸®¿¡ ´ëÇÑ Á¤º¸";
+    $lang['usergroup_name']               = "ì‚¬ìš©ì ê·¸ë£¹ ì´ë¦„:";
+    $lang['usergroup_description']        = "ì‚¬ìš©ì ê·¸ë£¹ì— ëŒ€í•œ ê°„ë‹¨í•œ ì„¤ëª…:";
+    $lang['members']                      = "êµ¬ì„±ì¸ì›:";
+    $lang['private_usergroup']            = "private ì‚¬ìš©ì ê·¸ë£¹";
+    $lang['add_usergroup']                = "ì‚¬ìš©ì ê·¸ë£¹ ì¶”ê°€";
+    $lang['add_new_usergroup']            = "ìƒˆë¡œìš´ ì‚¬ìš©ì ê·¸ë£¹ ì¶”ê°€";
+    $lang['edit_usergroup']               = "ì‚¬ìš©ì ê·¸ë£¹ í¸ì§‘";
+//** needs translation
+    $lang['email_new_usergroup']          = "Email new details to usergroup members?";
+    $lang['email_edit_usergroup']         = "Email the changes to usergroup members?";
+    $lang['usergroup_manage']             = "ì‚¬ìš©ì ê·¸ë£¹ ê´€ë¦¬";
+    $lang['no_usergroups']                = "ì •ì˜ëœ ì‚¬ìš©ì ê·¸ë£¹ì´ ì—†ìŒ.";
+    $lang['manage_usergroups']            = "ì‚¬ìš©ì ê·¸ë£¹ì„ ê´€ë¦¬";
+    $lang['usergroups']                   = "ì‚¬ìš©ì ê·¸ë£¹";
+    $lang['usergroup_dup_sprt']           = "ì‚¬ìš©ì ê·¸ë£¹ '%s'ëŠ” ì´ë¯¸ ì¡´ì¬í•©ë‹ˆë‹¤. ë˜ëŒì•„ê°€ì„œ ìƒˆë¡œìš´ ì´ë¦„ì„ ì„ íƒí•˜ì‹­ì‹œì˜¤";
+    $lang['info_usergroup_manage']        = "ì‚¬ìš©ì ê·¸ë£¹ ê´€ë¦¬ì— ëŒ€í•œ ì •ë³´";
 
  //users
-    $lang['login_name']                   = "·Î±×ÀÎ ÀÌ¸§";
-    $lang['full_name']                    = "ÀüÃ¼ ÀÌ¸§";
-    $lang['password']                     = "ºñ¹Ğ ¹øÈ£";
-    $lang['blank_for_current_password']   = "(ÇöÀç ºñ¹Ğ ¹øÈ£¸¦ »ç¿ëÇÏ·Á¸é ºóÄ­À¸·Î µÎ½Ê½Ã¿À)";
-    $lang['email']                        = "ÀüÀÚ ¸ŞÀÏ";
-    $lang['admin']                        = "°ü¸®ÀÚ";
-    $lang['private_user']                 = "ºñ°ø°³ »ç¿ëÀÚ";
+    $lang['login_name']                   = "ë¡œê·¸ì¸ ì´ë¦„";
+    $lang['full_name']                    = "ì „ì²´ ì´ë¦„";
+    $lang['password']                     = "ë¹„ë°€ ë²ˆí˜¸";
+    $lang['blank_for_current_password']   = "(í˜„ì¬ ë¹„ë°€ ë²ˆí˜¸ë¥¼ ì‚¬ìš©í•˜ë ¤ë©´ ë¹ˆì¹¸ìœ¼ë¡œ ë‘ì‹­ì‹œì˜¤)";
+    $lang['email']                        = "ì „ì ë©”ì¼";
+    $lang['admin']                        = "ê´€ë¦¬ì";
+    $lang['private_user']                 = "ë¹„ê³µê°œ ì‚¬ìš©ì";
  //**
-    $lang['normal_user']                  = "Normal user"; 
-    $lang['is_admin']                     = "°ü¸®ÀÚÀÔ´Ï±î?";
+    $lang['normal_user']                  = "Normal user";
+    $lang['is_admin']                     = "ê´€ë¦¬ìì…ë‹ˆê¹Œ?";
  //**
     $lang['is_guest']                     = "Is a guest?";
  //**
     $lang['guest']                        = "Guest user";
-    $lang['user_info']                    = "»ç¿ëÀÚ Á¤º¸";
-    $lang['deleted_users']                = "»èÁ¦µÈ »ç¿ëÀÚ";
-    $lang['no_deleted_users']             = "»èÁ¦µÈ »ç¿ëÀÚ°¡ ¾ø½À´Ï´Ù.";
-    $lang['revive']                       = "µÇ»ì¸®±â";
+    $lang['user_info']                    = "ì‚¬ìš©ì ì •ë³´";
+    $lang['deleted_users']                = "ì‚­ì œëœ ì‚¬ìš©ì";
+    $lang['no_deleted_users']             = "ì‚­ì œëœ ì‚¬ìš©ìê°€ ì—†ìŠµë‹ˆë‹¤.";
+    $lang['revive']                       = "ë˜ì‚´ë¦¬ê¸°";
     $lang['permdel']                      = "Permdel";
     $lang['permdel_javascript_sprt']      = "This will permanently delete all user records and associated tasks for %s. Do you really want to do this?";
-    $lang['add_user']                     = "»ç¿ëÀÚ Ãß°¡";
-    $lang['edit_user']                    = "»ç¿ëÀÚ ÆíÁı";
-    $lang['no_users']                     = "ÀÌ ½Ã½ºÅÛ¿¡ ¾Ë·ÁÁø »ç¿ëÀÚ°¡ ¾ø½À´Ï´Ù.";
-    $lang['users']                        = "»ç¿ëÀÚµé";
-    $lang['existing_users']               = "±âÁ¸ »ç¿ëÀÚ";
-    $lang['private_profile']              = "ÀÌ »ç¿ëÀÚ´Â ºñ°ø°³ ÇÁ·ÎÆÄÀÏÀ» °¡Áö°í ÀÖ±â ¶§¹®¿¡ º¼ ¼ö ¾ø½À´Ï´Ù.";
-    $lang['private_usergroup_profile']    = "(ÀÌ »ç¿ëÀÚ´Â ºñ°ø°³ »ç¿ëÀÚ ±×·ìÀÇ ¸â¹öÀÌ±â ¶§¹®¿¡ º¼ ¼ö ¾ø½À´Ï´Ù.)";
-    $lang['email_users']                  = "ÀüÀÚ ¿ìÆí »ç¿ëÀÚµé";
-    $lang['select_usergroup']             = "¾Æ·¡¿¡¼­ ¼±ÅÃµÈ »ç¿ëÀÚ ±×·ì:";
-    $lang['subject']                      = "Á¦¸ñ:";
-    $lang['message_sent_maillist']        = "´ëºÎºĞÀÇ °æ¿ì ÀÌ ¸Ş½ÃÁö´Â ¸ŞÀÏ¸µ¸®½ºÆ®¿¡ º¹»çµÉ°ÍÀÔ´Ï´Ù.";
-    $lang['who_online']                   = "¿Â¶óÀÎ »ç¿ëÀÚ´Â ´©±¸ÀÔ´Ï±î?";
-    $lang['edit_details']                 = "»ç¿ëÀÚÀÇ ¼¼ºÎ »çÇ× ÆíÁı";
-    $lang['show_details']                 = "»ç¿ëÀÚÀÇ ¼¼ºÎ »çÇ× º¸±â";
-    $lang['user_deleted']                 = "ÀÌ »ç¿ëÀÚ´Â »èÁ¦µÇ¾ú½À´Ï´Ù!";
-    $lang['no_usergroup']                 = "ÀÌ »ç¿ëÀÚ´Â ¾î¶°ÇÑ ±×·ì¿¡µµ ¼ÓÇÏÁö ¾ÊÀº ¸â¹öÀÔ´Ï´Ù.";
-    $lang['not_usergroup']                = "(¾î¶°ÇÑ ±×·ì¿¡ ¼ÓÇÏÁö ¾ÊÀº ¸â¹ö)";
-    $lang['no_password_change']           = "(±âÁ¸ ºñ¹Ğ¹øÈ£´Â º¯°æµÇÁö ¾Ê¾Ò½À´Ï´Ù.)";
-    $lang['last_time_here']               = "ÃÖ±Ù¿¡ º» ½Ã°£:";
-    $lang['number_items_created']         = "»ı¼ºÇÑ Ç×¸ñ °³¼ö:";
-    $lang['number_projects_owned']        = "¼ÒÀ¯ÇÑ ÇÁ·ÎÁ§Æ® °³¼ö:";
-    $lang['number_tasks_owned']           = "¼ÒÀ¯ÇÑ ÀÛ¾÷ °³¼ö:";
-    $lang['number_tasks_completed']       = "¿Ï·áÇÑ ÀÛ¾÷ °³¼ö:";
-    $lang['number_forum']                 = "Æ÷·³¿¡ ¾÷·ÎµåÇÑ °³¼ö:";
-    $lang['number_files']                 = "¾÷·ÎµåÇÑ ÆÄÀÏ °³¼ö:";
-    $lang['size_all_files']               = "¼ÒÀ¯ÇÑ ÆÄÀÏ¿¡ ´ëÇÑ ÃÑ Å©±â:";
-    $lang['owned_tasks']                  = "¼ÒÀ¯ÇÑ ÀÛ¾÷";
-    $lang['invalid_email']                = "À¯È¿ÇÏÁö ¾ÊÀº ÀüÀÚ¿ìÆí ÁÖ¼Ò";
-    $lang['invalid_email_given_sprt']     = "'%s' ÀüÀÚ¿ìÆíÀº À¯È¿ÇÏÁö ¾Ê½À´Ï´Ù. µÇµ¹¾Æ°¡¼­ ´Ù½Ã ½ÃµµÇÏ½Ê½Ã¿À";
-    $lang['duplicate_user']               = "Áßº¹ »ç¿ëÀÚ";
-    $lang['duplicate_change_user_sprt']   = "'%s' »ç¿ëÀÚ´Â ÀÌ¹Ì ÀÖ½À´Ï´Ù. µÇµ¹¾Æ°¡¼­ ÀÌ¸§À» º¯°æÇÏ½Ê½Ã¿À";
-    $lang['value_missing']                = "°ªÀÌ ¾øÀ½";
-    $lang['field_sprt']                   = "'%s' Ç×¸ñÀÌ ¾ø½À´Ï´Ù. µÇµ¹¾Æ°¡¼­ Ã¤¿ì½Ê½Ã¿À.";
-    $lang['admin_priv']                   = "³ëÆ®: ÀÌ¹Ì °ü¸®ÀÚ ±ÇÇÑÀ» ¾ò¾ú½À´Ï´Ù.";
-    $lang['manage_users']                 = "»ç¿ëÀÚµé °ü¸®";
-    $lang['users_online']                 = "»ç¿ëÀÚ ¿Â¶óÀÎ";
-    $lang['online']                       = "¿Â¶óÀÎ »ç¿ëÀÚ(ÃÖ¼Ò ÇÑ½Ã°£ Àü¿¡ »ç¿ëÇÑ »ç¿ëÀÚ)";
-    $lang['not_online']                   = "¿ÀÇÁ¶óÀÎ";
-    $lang['user_activity']                = "»ç¿ëÀÚ È°¼ºÈ­";
+    $lang['add_user']                     = "ì‚¬ìš©ì ì¶”ê°€";
+    $lang['edit_user']                    = "ì‚¬ìš©ì í¸ì§‘";
+    $lang['no_users']                     = "ì´ ì‹œìŠ¤í…œì— ì•Œë ¤ì§„ ì‚¬ìš©ìê°€ ì—†ìŠµë‹ˆë‹¤.";
+    $lang['users']                        = "ì‚¬ìš©ìë“¤";
+    $lang['existing_users']               = "ê¸°ì¡´ ì‚¬ìš©ì";
+    $lang['private_profile']              = "ì´ ì‚¬ìš©ìëŠ” ë¹„ê³µê°œ í”„ë¡œíŒŒì¼ì„ ê°€ì§€ê³  ìˆê¸° ë•Œë¬¸ì— ë³¼ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.";
+    $lang['private_usergroup_profile']    = "(ì´ ì‚¬ìš©ìëŠ” ë¹„ê³µê°œ ì‚¬ìš©ì ê·¸ë£¹ì˜ ë©¤ë²„ì´ê¸° ë•Œë¬¸ì— ë³¼ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.)";
+    $lang['email_users']                  = "ì „ì ìš°í¸ ì‚¬ìš©ìë“¤";
+    $lang['select_usergroup']             = "ì•„ë˜ì—ì„œ ì„ íƒëœ ì‚¬ìš©ì ê·¸ë£¹:";
+    $lang['subject']                      = "ì œëª©:";
+    $lang['message_sent_maillist']        = "ëŒ€ë¶€ë¶„ì˜ ê²½ìš° ì´ ë©”ì‹œì§€ëŠ” ë©”ì¼ë§ë¦¬ìŠ¤íŠ¸ì— ë³µì‚¬ë ê²ƒì…ë‹ˆë‹¤.";
+    $lang['who_online']                   = "ì˜¨ë¼ì¸ ì‚¬ìš©ìëŠ” ëˆ„êµ¬ì…ë‹ˆê¹Œ?";
+    $lang['edit_details']                 = "ì‚¬ìš©ìì˜ ì„¸ë¶€ ì‚¬í•­ í¸ì§‘";
+    $lang['show_details']                 = "ì‚¬ìš©ìì˜ ì„¸ë¶€ ì‚¬í•­ ë³´ê¸°";
+    $lang['user_deleted']                 = "ì´ ì‚¬ìš©ìëŠ” ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤!";
+    $lang['no_usergroup']                 = "ì´ ì‚¬ìš©ìëŠ” ì–´ë– í•œ ê·¸ë£¹ì—ë„ ì†í•˜ì§€ ì•Šì€ ë©¤ë²„ì…ë‹ˆë‹¤.";
+    $lang['not_usergroup']                =   "(ì–´ë– í•œ ê·¸ë£¹ì— ì†í•˜ì§€ ì•Šì€ ë©¤ë²„)";
+    $lang['no_password_change']           = "(ê¸°ì¡´ ë¹„ë°€ë²ˆí˜¸ëŠ” ë³€ê²½ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.)";
+    $lang['last_time_here']               = "ìµœê·¼ì— ë³¸ ì‹œê°„:";
+    $lang['number_items_created']         = "ìƒì„±í•œ í•­ëª© ê°œìˆ˜:";
+    $lang['number_projects_owned']        = "ì†Œìœ í•œ í”„ë¡œì íŠ¸ ê°œìˆ˜:";
+    $lang['number_tasks_owned']           = "ì†Œìœ í•œ ì‘ì—… ê°œìˆ˜:";
+    $lang['number_tasks_completed']       = "ì™„ë£Œí•œ ì‘ì—… ê°œìˆ˜:";
+    $lang['number_forum']                 = "í¬ëŸ¼ì— ì—…ë¡œë“œí•œ ê°œìˆ˜:";
+    $lang['number_files']                 = "ì—…ë¡œë“œí•œ íŒŒì¼ ê°œìˆ˜:";
+    $lang['size_all_files']               = "ì†Œìœ í•œ íŒŒì¼ì— ëŒ€í•œ ì´ í¬ê¸°:";
+    $lang['owned_tasks']                  = "ì†Œìœ í•œ ì‘ì—…";
+    $lang['invalid_email']                = "ìœ íš¨í•˜ì§€ ì•Šì€ ì „ììš°í¸ ì£¼ì†Œ";
+    $lang['invalid_email_given_sprt']     = "'%s' ì „ììš°í¸ì€ ìœ íš¨í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤. ë˜ëŒì•„ê°€ì„œ ë‹¤ì‹œ ì‹œë„í•˜ì‹­ì‹œì˜¤";
+    $lang['duplicate_user']               = "ì¤‘ë³µ ì‚¬ìš©ì";
+    $lang['duplicate_change_user_sprt']   = "'%s' ì‚¬ìš©ìëŠ” ì´ë¯¸ ìˆìŠµë‹ˆë‹¤. ë˜ëŒì•„ê°€ì„œ ì´ë¦„ì„ ë³€ê²½í•˜ì‹­ì‹œì˜¤";
+    $lang['value_missing']                = "ê°’ì´ ì—†ìŒ";
+    $lang['field_sprt']                   = "'%s' í•­ëª©ì´ ì—†ìŠµë‹ˆë‹¤. ë˜ëŒì•„ê°€ì„œ ì±„ìš°ì‹­ì‹œì˜¤.";
+    $lang['admin_priv']                   = "ë…¸íŠ¸: ì´ë¯¸ ê´€ë¦¬ì ê¶Œí•œì„ ì–»ì—ˆìŠµë‹ˆë‹¤.";
+    $lang['manage_users']                 = "ì‚¬ìš©ìë“¤ ê´€ë¦¬";
+    $lang['users_online']                 = "ì‚¬ìš©ì ì˜¨ë¼ì¸";
+    $lang['online']                       = "ì˜¨ë¼ì¸ ì‚¬ìš©ì(ìµœì†Œ í•œì‹œê°„ ì „ì— ì‚¬ìš©í•œ ì‚¬ìš©ì)";
+    $lang['not_online']                   = "ì˜¤í”„ë¼ì¸";
+    $lang['user_activity']                = "ì‚¬ìš©ì í™œì„±í™”";
 
   //tasks
-    $lang['add_new_task']                 = "»õ·Î¿î ÀÛ¾÷ Ãß°¡";
-    $lang['priority']                     = "¿ì¼± ¼øÀ§";
-    $lang['parent_task']                  = "»óÀ§";
-    $lang['creation_time']                = "½Ã°£ »ı¼º";
-    $lang['by_sprt']                      = "%2\$s ¿¡ ÀÇÇÑ %1\$s"; //Note to translators: context is 'Creation time: <date> by <user>'
-    $lang['project_name']                 = "ÇÁ·ÎÁ§Æ® ÀÌ¸§";
-    $lang['task_name']                    = "ÀÛ¾÷ ÀÌ¸§";
-    $lang['deadline']                     = "¸¶°¨";
-    $lang['taken_from_parent']            = "(»óÀ§¿¡¼­ ¾òÀ½)";
-    $lang['status']                       = "»óÅÂ";
-    $lang['task_owner']                   = "ÀÛ¾÷ ¼ÒÀ¯ÀÚ";
-    $lang['project_owner']                = "ÇÁ·ÎÁ§Æ® ¼ÒÀ¯ÀÚ";
-    $lang['taskgroup']                    = "ÀÛ¾÷ ±×·ì";
-    $lang['usergroup']                    = "»ç¿ëÀÚ ±×·ì";
+    $lang['add_new_task']                 = "ìƒˆë¡œìš´ ì‘ì—… ì¶”ê°€";
+    $lang['priority']                     = "ìš°ì„  ìˆœìœ„";
+    $lang['parent_task']                  = "ìƒìœ„";
+    $lang['creation_time']                = "ì‹œê°„ ìƒì„±";
+    $lang['by_sprt']                      = "%2\$s ì— ì˜í•œ %1\$s"; //Note to translators: context is 'Creation time: <date> by <user>'
+    $lang['project_name']                 = "í”„ë¡œì íŠ¸ ì´ë¦„";
+    $lang['task_name']                    = "ì‘ì—… ì´ë¦„";
+    $lang['deadline']                     = "ë§ˆê°";
+    $lang['taken_from_parent']            = "(ìƒìœ„ì—ì„œ ì–»ìŒ)";
+    $lang['status']                       = "ìƒíƒœ";
+    $lang['task_owner']                   = "ì‘ì—… ì†Œìœ ì";
+    $lang['project_owner']                = "í”„ë¡œì íŠ¸ ì†Œìœ ì";
+    $lang['taskgroup']                    = "ì‘ì—… ê·¸ë£¹";
+    $lang['usergroup']                    = "ì‚¬ìš©ì ê·¸ë£¹";
     $lang['nobody']                       = "nobody";
-    $lang['none']                         = "¾øÀ½";
-    $lang['no_group']                     = "±×·ì ¾øÀ½";
-    $lang['all_groups']                   = "¸ğµç ±×·ì";
-    $lang['all_users']                    = "¸ğµç »ç¿ëÀÚ";
-    $lang['all_users_view']               = "¸ğµç »ç¿ëÀÚµéÀÌ ÀÌ Ç×¸ñÀ» º¼ ¼ö ÀÖµµ·Ï ÇÏ°Ú½À´Ï±î?";
-    $lang['group_edit']                   = "»ç¿ëÀÚ ±×·ì¿¡ ÀÖ´Â ´©±¸¶óµµ ÆíÁıÇÒ ¼ö ÀÖµµ·Ï ÇÏ½Ã°Ú½À´Ï±î?";
-    $lang['project_description']          = "ÇÁ·ÎÁ§Æ® ¼³¸í";
-    $lang['task_description']             = "ÀÛ¾÷ ¼³¸í";
-    $lang['email_owner']                  = "º¯°æ »çÇ×À» ¼ÒÀ¯ÀÚ¿¡°Ô ÀüÀÚ¿ìÆíÀ¸·Î º¸³»½Ã°Ú½À´Ï±î?";
-    $lang['email_new_owner']              = "º¯°æ »çÇ×À» (»õ·Î¿î) ¼ÒÀ¯ÀÚ¿¡°Ô ÀüÀÚ¿ìÆíÀ¸·Î º¸³»½Ã°Ú½À´Ï±î?";
-    $lang['email_group']                  = "º¯°æ»çÇ×À» »ç¿ëÀÚ ±×·ì¿¡ ÀüÀÚ¿ìÆíÀ¸·Î º¸³»½Ã°Ú½À´Ï±î?";
-    $lang['add_new_project']              = "»õ·Î¿î ÇÁ·ÎÁ§Æ® Ãß°¡";
-    $lang['uncategorised']                = "ºĞ·ùµÇ¾î ÀÖÁö ¾ÊÀ½";
-    $lang['due_sprt']                     = "Áö±İºÎÅÍ %d ³¯±îÁö";
-    $lang['tomorrow']                     = "³»ÀÏ";
-    $lang['due_today']                    = "¿À´Ã±îÁöÀÔ´Ï´Ù.";
-    $lang['overdue_1']                    = "ÇÏ·ç Áö³µ½À´Ï´Ù";
-    $lang['overdue_sprt']                 = "%d ³¯¸¸Å­ Áö³µ½À´Ï´Ù";
-    $lang['edit_task']                    = "ÀÛ¾÷ ÆíÁı";
-    $lang['edit_project']                 = "ÇÁ·ÎÁ§Æ® ¼öÁ¤";
-    $lang['no_reparent']                  = "¾øÀ½(ÃÖ»óÀ§ ÇÁ·ÎÁ§Æ®)";
-    $lang['del_javascript_project_sprt']  = "%s ÇÁ·ÎÁ§Æ®¸¦ Á¤¸»·Î »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?";
-    $lang['del_javascript_task_sprt']     = "%s ÀÛ¾÷À» Á¤¸»·Î »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?";
-    $lang['add_task']                     = "ÀÛ¾÷ Ãß°¡";
-    $lang['add_subtask']                  = "ÇÏÀ§ ÀÛ¾÷ Ãß°¡";
-    $lang['add_project']                  = "ÇÁ·ÎÁ§Æ® Ãß°¡";
-    $lang['clone_project']                = "º¹Á¦ ÇÁ·ÎÁ§Æ®";
-    $lang['clone_task']                   = "ÀÛ¾÷ º¹Á¦";
-//**
+    $lang['none']                         = "ì—†ìŒ";
+    $lang['no_group']                     = "ê·¸ë£¹ ì—†ìŒ";
+    $lang['all_groups']                   = "ëª¨ë“  ê·¸ë£¹";
+    $lang['all_users']                    = "ëª¨ë“  ì‚¬ìš©ì";
+    $lang['all_users_view']               = "ëª¨ë“  ì‚¬ìš©ìë“¤ì´ ì´ í•­ëª©ì„ ë³¼ ìˆ˜ ìˆë„ë¡ í•˜ê² ìŠµë‹ˆê¹Œ?";
+    $lang['group_edit']                   = "ì‚¬ìš©ì ê·¸ë£¹ì— ìˆëŠ” ëˆ„êµ¬ë¼ë„ í¸ì§‘í•  ìˆ˜ ìˆë„ë¡ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?";
+    $lang['project_description']          = "í”„ë¡œì íŠ¸ ì„¤ëª…";
+    $lang['task_description']             = "ì‘ì—… ì„¤ëª…";
+    $lang['email_owner']                  = "ë³€ê²½ ì‚¬í•­ì„ ì†Œìœ ìì—ê²Œ ì „ììš°í¸ìœ¼ë¡œ ë³´ë‚´ì‹œê² ìŠµë‹ˆê¹Œ?";
+    $lang['email_new_owner']              = "ë³€ê²½ ì‚¬í•­ì„ (ìƒˆë¡œìš´) ì†Œìœ ìì—ê²Œ ì „ììš°í¸ìœ¼ë¡œ ë³´ë‚´ì‹œê² ìŠµë‹ˆê¹Œ?";
+    $lang['email_group']                  = "ë³€ê²½ì‚¬í•­ì„ ì‚¬ìš©ì ê·¸ë£¹ì— ì „ììš°í¸ìœ¼ë¡œ ë³´ë‚´ì‹œê² ìŠµë‹ˆê¹Œ?";
+    $lang['add_new_project']              = "ìƒˆë¡œìš´ í”„ë¡œì íŠ¸ ì¶”ê°€";
+    $lang['uncategorised']                = "ë¶„ë¥˜ë˜ì–´ ìˆì§€ ì•ŠìŒ";
+    $lang['due_sprt']                     = "ì§€ê¸ˆë¶€í„° %d ë‚ ê¹Œì§€";
+    $lang['tomorrow']                     = "ë‚´ì¼";
+    $lang['due_today']                    = "ì˜¤ëŠ˜ê¹Œì§€ì…ë‹ˆë‹¤.";
+    $lang['overdue_1']                    = "í•˜ë£¨ ì§€ë‚¬ìŠµë‹ˆë‹¤";
+    $lang['overdue_sprt']                 = "%d ë‚ ë§Œí¼ ì§€ë‚¬ìŠµë‹ˆë‹¤";
+    $lang['edit_task']                    = "ì‘ì—… í¸ì§‘";
+    $lang['edit_project']                 = "í”„ë¡œì íŠ¸ ìˆ˜ì •";
+    $lang['no_reparent']                  = "ì—†ìŒ(ìµœìƒìœ„ í”„ë¡œì íŠ¸)";
+    $lang['del_javascript_project_sprt']  = "%s í”„ë¡œì íŠ¸ë¥¼ ì •ë§ë¡œ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?";
+    $lang['del_javascript_task_sprt']     = "%s ì‘ì—…ì„ ì •ë§ë¡œ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?";
+    $lang['add_task']                     = "ì‘ì—… ì¶”ê°€";
+    $lang['add_subtask']                  = "í•˜ìœ„ ì‘ì—… ì¶”ê°€";
+    $lang['add_project']                  = "í”„ë¡œì íŠ¸ ì¶”ê°€";
+    $lang['clone_project']                = "ë³µì œ í”„ë¡œì íŠ¸";
+    $lang['clone_task']                   = "ì‘ì—… ë³µì œ";
     $lang['quick_jump']                   = "Quick Jump";
-    $lang['no_edit']                      = "ÀÌ Ç×¸ñ¿¡ ´ëÇÑ ¼ÒÀ¯ ±ÇÇÑÀÌ ¾ø±â ¶§¹®¿¡ ÆíÁıÇÒ ¼ö ¾ø½À´Ï´Ù";
-    $lang['uncategorised']                = "ºĞ·ùµÇ¾îÀÖÁö ¾ÊÀ½";
-    $lang['admin']                        = "°ü¸®";
-    $lang['global']                       = "Àü¿ª ¼³Á¤";
-    $lang['delete_project']               = "ÇÁ·ÎÁ§Æ® »èÁ¦";
-    $lang['delete_task']                  = "ÀÛ¾÷ »èÁ¦";
-    $lang['project_options']              = "ÇÁ·ÎÁ§Æ® ¿É¼Ç";
-    $lang['task_options']                 = "ÀÛ¾÷ ¿É¼Ç";
-//**    
-    $lang['javascript_archive_project']   = "This will archive project %s.  Are you sure?";
-//**    
-    $lang['archive_project']              = "Archive project";
-    $lang['task_navigation']              = "ÀÛ¾÷ º¸±â";
+    $lang['no_edit']                      = "ì´ í•­ëª©ì— ëŒ€í•œ ì†Œìœ  ê¶Œí•œì´ ì—†ê¸° ë•Œë¬¸ì— í¸ì§‘í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤";
+    $lang['global']                       = "ì „ì—­ ì„¤ì •";
+    $lang['delete_project']               = "í”„ë¡œì íŠ¸ ì‚­ì œ";
+    $lang['delete_task']                  = "ì‘ì—… ì‚­ì œ";
+    $lang['project_options']              = "í”„ë¡œì íŠ¸ ì˜µì…˜";
+    $lang['task_options']                 = "ì‘ì—… ì˜µì…˜";
 //**
-    $lang['new_task']                     = "New task";    
-    $lang['no_projects']                  = "º¼ ÇÁ·ÎÁ§Æ®°¡ ¾ø½À´Ï´Ù.";
-    $lang['show_all_projects']            = "¸ğµç ÇÁ·ÎÁ§Æ® º¸±â";
-    $lang['show_active_projects']         = "È°¼ºÈ­µÈ ÇÁ·ÎÁ§Æ®¸¸ º¸±â";
-    $lang['project_hold_sprt']            = "%s °¡ ÀÌ ÇÁ·ÎÁ§Æ®¸¦ Àá½Ã ¸ØÃß¾ú½À´Ï´Ù.";
-    $lang['project_planned']              = "°èÈ¹µÈ ÇÁ·ÎÁ§Æ®";
-    $lang['percent_sprt']                 = "ÀÌ ÀÛ¾÷ÀÇ %d%% °¡ ¿Ï·á µÇ¾ú½À´Ï´Ù.";
-    $lang['project_no_deadline']          = "ÀÌ ÇÁ·ÎÁ§Æ®¿¡ ´ëÇÑ ¸¶°¨ÀÏÀÌ ¼³Á¤µÇ¾î ÀÖÁö ¾Ê½À´Ï´Ù";
-    $lang['no_allowed_projects']          = "º¼ ¼ö ÀÖµµ·Ï Çã¶ôµÈ ÇÁ·ÎÁ§Æ®°¡ ¾ø½À´Ï´Ù";
-    $lang['projects']                     = "ÇÁ·ÎÁ§Æ®";
-    $lang['percent_project_sprt']         = "%d%%  ÇÁ·ÎÁ§Æ®°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù";
-    $lang['owned_by']                     = "¼ÒÀ¯ÀÚ";
-    $lang['created_on']                   = "»ı¼º ³¯Â¥";
-    $lang['completed_on']                 = "¿Ï·á ³¯Â¥";
-    $lang['modified_on']                  = "¼öÁ¤ÇÑ ³¯Â¥";
-    $lang['project_on_hold']              = "ÇÁ·ÎÁ§Æ®¸¦ Àá½Ã ¸ØÃä´Ï´Ù";
-    $lang['project_accessible']           = "(ÀÌ ÇÁ·ÎÁ§Æ®¸¦ ¸ğµç »ç¿ëÀÚ°¡ Á¢±ÙÇÒ ¼ö ÀÖµµ·Ï µÇ¾î ÀÖ½À´Ï´Ù.)";
-    $lang['task_accessible']              = "(ÀÌ ÀÛ¾÷Àº ¸ğµç »ç¿ëÀÚ°¡ Á¢±ÙÇÒ ¼ö ÀÖµµ·Ï µÇ¾î ÀÖ½À´Ï´Ù.)";
-    $lang['project_not_accessible']       = "(ÀÌ ÇÁ·ÎÁ§Æ®´Â »ç¿ëÀÚ ±×·ì¿¡ ´ëÇÑ ¸â¹ö¸¸ÀÌ Á¢±ÙÇÒ ¼ö ÀÖ½À´Ï´Ù.)";
-    $lang['task_not_accessible']          = "(ÀÌ ÀÛ¾÷Àº »ç¿ëÀÚ ±×·ìÀÇ ¸â¹ö¸¸ÀÌ Á¢±ÙÇÒ ¼ö ÀÖ½À´Ï´Ù.)";
-    $lang['project_not_in_usergroup']     = "ÀÌ ÇÁ·ÎÁ§Æ®´Â »ç¿ëÀÚ ±×·ì¿¡¼­ ¼³Á¤ÇÑ ³»¿ªÀÌ ¾Æ´Ï¹Ç·Î ¸ğµç »ç¿ëÀÚ°¡ Á¢±ÙÇÒ ¼öÀÖ½À´Ï´Ù.";
-    $lang['task_not_in_usergroup']        = "ÀÌ ÀÛ¾÷Àº »ç¿ëÀÚ ±×·ì¿¡¼­ ¼³Á¤ÇÑ ³»¿ªÀÌ ¾Æ´Ï¹Ç·Î ¸ğµç »ç¿ëÀÚ°¡ Á¢±ÙÇÒ ¼ö ÀÖ½À´Ï´Ù.";
-    $lang['usergroup_can_edit_project']   = "ÀÌ ÇÁ·ÎÁ§Æ®´Â »ç¿ëÀÚ ±×·ì¿¡ ¼ÓÇÏ´Â ¸â¹öµµ ÆíÁıÇÒ ¼ö ÀÖ½À´Ï´Ù.";
-    $lang['usergroup_can_edit_task']      = "ÀÌ ÀÛ¾÷Àº »ç¿ëÀÚ ±×·ì¿¡ ¼ÓÇÏ´Â ¸â¹öµµ ÆíÁıÇÒ ¼ö ÀÖ½À´Ï´Ù.";
-    $lang['i_take_it']                    = "¼ö¿ëÇÏ°Ú½À´Ï´Ù :)";
-    $lang['i_finished']                   = "Á¾·áÇß½À´Ï´Ù!";
-    $lang['i_dont_want']                  = "»èÁ¦ÇÕ´Ï´Ù";
-    $lang['take_over_project']            = "ÀüÈ¯ÇÑ ÇÁ·ÎÁ§Æ®";
-    $lang['take_over_task']               = "ÀüÈ¯ÇÑ ÀÛ¾÷";
-    $lang['task_info']                    = "ÀÛ¾÷ Á¤º¸";
-    $lang['project_details']              = "ÇÁ·ÎÁ§Æ® ¼¼ºÎ »çÇ×";
-    $lang['todo_list_for']                = "´ÙÀ½¿¡ ´ëÇÑ ÇÒÀÏ ¸ñ·Ï: ";
-    $lang['due_in_sprt']                  = " (%d ³¯±îÁö)";
-    $lang['due_tomorrow']                 = " (³»ÀÏ ±îÁö)";
-    $lang['no_assigned']                  = "ÀÌ »ç¿ëÀÚ¿¡°Ô ÇÒ´çµÈ ÀÛ¾÷Áß Á¾·áÇÏÁö ¾ÊÀº ÀÛ¾÷ÀÌ ¾ø½À´Ï´Ù.";
-    $lang['todo_list']                    = "ÇÒÀÏ ¸ñ·Ï";
-    $lang['summary_list']                 = "¿ä¾à ¸ñ·Ï";
-    $lang['task_submit']                  = "ÀÛ¾÷ Àü¼Û";
-    $lang['not_owner']                    = "Á¢±Ù ±İÁöµÇ¾ú°Å³ª ¼ÒÀ¯ÀÚ°¡ ¾Æ´Ï°Å³ª ÀûÀıÇÑ ±ÇÇÑÀÌ ¾ø½À´Ï´Ù.";
-    $lang['missing_values']               = "Ç×¸ñÀ» ¸ğµÎ Ã¤¿ìÁö ¾ÊÀ¸¼Ì½À´Ï´Ù. µÚ·Î µÇµ¹¾Æ°¡¼­ ´Ù½Ã ½ÃµµÇÏ½Ê½Ã¿À";
-    $lang['future']                       = "¹Ì·¡";
-    $lang['flags']                        = "ÇÃ·¡±×";
-    $lang['owner']                        = "¼ÒÀ¯ÀÚ";
-    $lang['group']                        = "±×·ì";
-    $lang['by_usergroup']                 = " (»ç¿ëÀÚ ±×·ìÀ¸·Î)";
-    $lang['by_taskgroup']                 = " (ÀÛ¾÷ ±×·ìÀ¸·Î)";
-    $lang['by_deadline']                  = " (¸¶°¨ÀÏ·Î)";
-    $lang['by_status']                    = " (»óÅÂ·Î)";
-    $lang['by_owner']                     = " (¼ÒÀ¯ÀÚ·Î)";
-    $lang['project_cloned']               = "º¹»çµÈ ÇÁ·ÎÁ§Æ® :";
-    $lang['task_cloned']                  = "º¹»çµÈ ÀÛ¾÷: ";
-    $lang['note_clone']                   = "ÁÖÀÇ: ÀÌ ÀÛ¾÷Àº »õ·Î¿î ÇÁ·ÎÁ§Æ®·Î º¹»çµÉ °ÍÀÔ´Ï´Ù";
+    $lang['javascript_archive_project']   = "This will archive project %s.  Are you sure?";
+//**
+    $lang['archive_project']              = "Archive project";
+    $lang['task_navigation']              = "ì‘ì—… ë³´ê¸°";
+//**
+    $lang['new_task']                     = "New task";
+    $lang['no_projects']                  = "ë³¼ í”„ë¡œì íŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤.";
+    $lang['show_all_projects']            = "ëª¨ë“  í”„ë¡œì íŠ¸ ë³´ê¸°";
+    $lang['show_active_projects']         = "í™œì„±í™”ëœ í”„ë¡œì íŠ¸ë§Œ ë³´ê¸°";
+    $lang['project_hold_sprt']            = "%s ê°€ ì´ í”„ë¡œì íŠ¸ë¥¼ ì ì‹œ ë©ˆì¶”ì—ˆìŠµë‹ˆë‹¤.";
+    $lang['project_planned']              = "ê³„íšëœ í”„ë¡œì íŠ¸";
+    $lang['percent_sprt']                 = "ì´ ì‘ì—…ì˜ %d%% ê°€ ì™„ë£Œ ë˜ì—ˆìŠµë‹ˆë‹¤.";
+    $lang['project_no_deadline']          = "ì´ í”„ë¡œì íŠ¸ì— ëŒ€í•œ ë§ˆê°ì¼ì´ ì„¤ì •ë˜ì–´ ìˆì§€ ì•ŠìŠµë‹ˆë‹¤";
+    $lang['no_allowed_projects']          = "ë³¼ ìˆ˜ ìˆë„ë¡ í—ˆë½ëœ í”„ë¡œì íŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤";
+    $lang['projects']                     = "í”„ë¡œì íŠ¸";
+    $lang['percent_project_sprt']         = "%d%%  í”„ë¡œì íŠ¸ê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤";
+    $lang['owned_by']                     = "ì†Œìœ ì";
+    $lang['created_on']                   = "ìƒì„± ë‚ ì§œ";
+    $lang['completed_on']                 = "ì™„ë£Œ ë‚ ì§œ";
+    $lang['modified_on']                  = "ìˆ˜ì •í•œ ë‚ ì§œ";
+    $lang['project_on_hold']              = "í”„ë¡œì íŠ¸ë¥¼ ì ì‹œ ë©ˆì¶¥ë‹ˆë‹¤";
+    $lang['project_accessible']           = "(ì´ í”„ë¡œì íŠ¸ë¥¼ ëª¨ë“  ì‚¬ìš©ìê°€ ì ‘ê·¼í•  ìˆ˜ ìˆë„ë¡ ë˜ì–´ ìˆìŠµë‹ˆë‹¤.)";
+    $lang['task_accessible']              = "(ì´ ì‘ì—…ì€ ëª¨ë“  ì‚¬ìš©ìê°€ ì ‘ê·¼í•  ìˆ˜ ìˆë„ë¡ ë˜ì–´ ìˆìŠµë‹ˆë‹¤.)";
+    $lang['project_not_accessible']       = "(ì´ í”„ë¡œì íŠ¸ëŠ” ì‚¬ìš©ì ê·¸ë£¹ì— ëŒ€í•œ ë©¤ë²„ë§Œì´ ì ‘ê·¼í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.)";
+    $lang['task_not_accessible']          = "(ì´ ì‘ì—…ì€ ì‚¬ìš©ì ê·¸ë£¹ì˜ ë©¤ë²„ë§Œì´ ì ‘ê·¼í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.)";
+    $lang['project_not_in_usergroup']     = "ì´ í”„ë¡œì íŠ¸ëŠ” ì‚¬ìš©ì ê·¸ë£¹ì—ì„œ ì„¤ì •í•œ ë‚´ì—­ì´ ì•„ë‹ˆë¯€ë¡œ ëª¨ë“  ì‚¬ìš©ìê°€ ì ‘ê·¼í•  ìˆ˜ìˆìŠµë‹ˆë‹¤.";
+    $lang['task_not_in_usergroup']        = "ì´ ì‘ì—…ì€ ì‚¬ìš©ì ê·¸ë£¹ì—ì„œ ì„¤ì •í•œ ë‚´ì—­ì´ ì•„ë‹ˆë¯€ë¡œ ëª¨ë“  ì‚¬ìš©ìê°€ ì ‘ê·¼í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.";
+    $lang['usergroup_can_edit_project']   = "ì´ í”„ë¡œì íŠ¸ëŠ” ì‚¬ìš©ì ê·¸ë£¹ì— ì†í•˜ëŠ” ë©¤ë²„ë„ í¸ì§‘í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.";
+    $lang['usergroup_can_edit_task']      = "ì´ ì‘ì—…ì€ ì‚¬ìš©ì ê·¸ë£¹ì— ì†í•˜ëŠ” ë©¤ë²„ë„ í¸ì§‘í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.";
+    $lang['i_take_it']                    = "ìˆ˜ìš©í•˜ê² ìŠµë‹ˆë‹¤ :)";
+    $lang['i_finished']                   = "ì¢…ë£Œí–ˆìŠµë‹ˆë‹¤!";
+    $lang['i_dont_want']                  = "ì‚­ì œí•©ë‹ˆë‹¤";
+    $lang['take_over_project']            = "ì „í™˜í•œ í”„ë¡œì íŠ¸";
+    $lang['take_over_task']               = "ì „í™˜í•œ ì‘ì—…";
+    $lang['task_info']                    = "ì‘ì—… ì •ë³´";
+    $lang['project_details']              = "í”„ë¡œì íŠ¸ ì„¸ë¶€ ì‚¬í•­";
+    $lang['todo_list_for']                = "ë‹¤ìŒì— ëŒ€í•œ í• ì¼ ëª©ë¡: ";
+    $lang['due_in_sprt']                  = " (%d ë‚ ê¹Œì§€)";
+    $lang['due_tomorrow']                 = " (ë‚´ì¼ ê¹Œì§€)";
+    $lang['no_assigned']                  = "ì´ ì‚¬ìš©ìì—ê²Œ í• ë‹¹ëœ ì‘ì—…ì¤‘ ì¢…ë£Œí•˜ì§€ ì•Šì€ ì‘ì—…ì´ ì—†ìŠµë‹ˆë‹¤.";
+    $lang['todo_list']                    = "í• ì¼ ëª©ë¡";
+    $lang['summary_list']                 = "ìš”ì•½ ëª©ë¡";
+    $lang['task_submit']                  = "ì‘ì—… ì „ì†¡";
+    $lang['not_owner']                    = "ì ‘ê·¼ ê¸ˆì§€ë˜ì—ˆê±°ë‚˜ ì†Œìœ ìê°€ ì•„ë‹ˆê±°ë‚˜ ì ì ˆí•œ ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤.";
+    $lang['missing_values']               = "í•­ëª©ì„ ëª¨ë‘ ì±„ìš°ì§€ ì•Šìœ¼ì…¨ìŠµë‹ˆë‹¤. ë’¤ë¡œ ë˜ëŒì•„ê°€ì„œ ë‹¤ì‹œ ì‹œë„í•˜ì‹­ì‹œì˜¤";
+    $lang['future']                       = "ë¯¸ë˜";
+    $lang['flags']                        = "í”Œë˜ê·¸";
+    $lang['owner']                        = "ì†Œìœ ì";
+    $lang['group']                        = "ê·¸ë£¹";
+    $lang['by_usergroup']                 = " (ì‚¬ìš©ì ê·¸ë£¹ìœ¼ë¡œ)";
+    $lang['by_taskgroup']                 = " (ì‘ì—… ê·¸ë£¹ìœ¼ë¡œ)";
+    $lang['by_deadline']                  = " (ë§ˆê°ì¼ë¡œ)";
+    $lang['by_status']                    = " (ìƒíƒœë¡œ)";
+    $lang['by_owner']                     = " (ì†Œìœ ìë¡œ)";
+//** needs translation
+    $lang['by_priority']                  = " (by priority)";
+    $lang['project_cloned']               = "ë³µì‚¬ëœ í”„ë¡œì íŠ¸ :";
+    $lang['task_cloned']                  = "ë³µì‚¬ëœ ì‘ì—…: ";
+    $lang['note_clone']                   = "ì£¼ì˜: ì´ ì‘ì—…ì€ ìƒˆë¡œìš´ í”„ë¡œì íŠ¸ë¡œ ë³µì‚¬ë  ê²ƒì…ë‹ˆë‹¤";
 
 //bits 'n' pieces
-    $lang['calendar']                     = "´Ş·Â";
-    $lang['normal_version']               = "ÀÏ¹İÀûÀÎ ÇüÅÂ";
-    $lang['print_version']                = "ÇÁ¸°Æ® °¡´ÉÇÑ ÇüÅÂ";
-//**    
+    $lang['calendar']                     = "ë‹¬ë ¥";
+    $lang['normal_version']               = "ì¼ë°˜ì ì¸ í˜•íƒœ";
+    $lang['print_version']                = "í”„ë¦°íŠ¸ ê°€ëŠ¥í•œ í˜•íƒœ";
+//**
     $lang['condensed_view']               = "Condensed view";
-//**    
+//**
     $lang['full_view']                    = "Full view";
+//**
+    $lang['icalendar']                    = "iCalendar";
+//**
+    $lang['url_javascript']               = "Enter the URL:";
+//**
+    $lang['image_url_javascript']         = "Enter the image URL:";
 
 ?>

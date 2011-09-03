@@ -49,7 +49,7 @@ if(isset($_GET['active_only'] ) || isset($_GET['condensed'] ) ) {
 }
 
 //start of page
-create_top();
+create_top('', 0, 'project-list' );
 
   include(BASE.'includes/mainmenu.php' );
   include(BASE.'forum/forum_menubox.php' );

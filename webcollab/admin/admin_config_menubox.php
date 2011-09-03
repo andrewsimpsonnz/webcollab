@@ -39,7 +39,9 @@ if( ! ADMIN ){
 //secure values
 $content = '';
 
-$content .= "<a href=\"admin.php?x=".X."&amp;action=admin\">".$lang['admin_config']."</a><br />\n";
+$content .= "<ul class=\"menu\">\n".
+            "<li><a href=\"admin.php?x=".X."&amp;action=admin\">".$lang['admin_config']."</a></li>\n".
+            "</ul>\n";
 
 //show it
 new_box( $lang['admin_config'], $content, 'boxdata-menu', 'head-menu', 'boxstyle-menu' );

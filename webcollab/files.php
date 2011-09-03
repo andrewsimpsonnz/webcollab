@@ -52,7 +52,7 @@ switch($_REQUEST['action'] ) {
 
   //upload a file
   case 'upload':
-    create_top($lang['file_choose'], 0, 1 );
+    create_top($lang['file_choose'], 0, 'file-upload', 1 );
     include(BASE.'includes/mainmenu.php' );
     goto_main();
     include(BASE.'files/file_upload.php' );
@@ -61,7 +61,7 @@ switch($_REQUEST['action'] ) {
 
   //update a file
   case 'update':
-    create_top($lang['file_choose'], 0, 1 );
+    create_top($lang['file_choose'], 0, 'file-update', 1 );
     include(BASE.'includes/mainmenu.php' );
     goto_main();
     include(BASE.'files/file_update.php' );
@@ -79,7 +79,7 @@ switch($_REQUEST['action'] ) {
 
   //admin files
   case 'admin':
-    create_top($lang['file_admin'] );
+    create_top($lang['file_admin'], 0, 'file-admin' );
     include(BASE.'includes/mainmenu.php' );
     include(BASE.'files/file_menubox.php' );
     goto_main();

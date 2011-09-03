@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: file_submit.php 2304 2009-08-25 09:18:26Z andrewsimpson $
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -32,6 +32,7 @@ if(! defined('UID' ) ) {
 }
 
 //includes
+require_once(BASE.'includes/token.php' );
 require_once(BASE.'includes/usergroup_security.php' );
 include_once(BASE.'includes/admin_config.php' );
 
@@ -59,7 +60,7 @@ if(isset($_POST['return'] ) && $_POST['return'] == 1 ) {
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
-token_check($token );
+validate_token($token, 'file_submit' );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);
@@ -70,13 +71,15 @@ ignore_user_abort(TRUE);
 function file_delete($fileid ) {
 
   //get the file details with this fileid
-  $q = db_query('SELECT '.PRE.'files.uploader AS uploader,
+  $q = db_prepare('SELECT '.PRE.'files.uploader AS uploader,
                                 '.PRE.'files.fileid AS fileid,
                                 '.PRE.'files.filename AS filename,
                                 '.PRE.'tasks.owner AS owner
                                 FROM '.PRE.'files
                                 LEFT JOIN '.PRE.'tasks ON ('.PRE.'files.taskid='.PRE.'tasks.id)
-                                WHERE '.PRE.'files.id='.$fileid );
+                                WHERE '.PRE.'files.id=?' );
+
+  db_execute($q, array($fileid ) );
 
   //show it
   if($row = @db_fetch_array($q, 0 ) ) {
@@ -88,7 +91,8 @@ function file_delete($fileid ) {
         @unlink(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] );
       }
       //delete record of file
-      db_query('DELETE FROM '.PRE.'files WHERE fileid='.$row['fileid'] );
+      $q = db_prepare('DELETE FROM '.PRE.'files WHERE fileid=?' );
+      db_execute($q, array($row['fileid'] ) );
     }
   }
   return;
@@ -139,17 +143,20 @@ switch($_POST['action'] ) {
     if($mail_owner || $mail_group ) {
 
       //get task data
-      $q = db_query('SELECT '.PRE.'tasks.name AS name,
+      $q = db_prepare('SELECT '.PRE.'tasks.name AS name,
                             '.PRE.'tasks.usergroupid AS usergroupid,
                             '.PRE.'tasks.projectid AS projectid,
                             '.PRE.'users.email AS email
                             FROM '.PRE.'tasks
                             LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.owner='.PRE.'users.id)
-                            WHERE '.PRE.'tasks.id='.$taskid.' LIMIT 1' );
+                            WHERE '.PRE.'tasks.id=? LIMIT 1' );
 
+      db_execute($q, array($taskid ) );
       $task_row = db_fetch_array($q, 0 );
 
-      $project = db_result(db_query('SELECT name FROM '.PRE.'tasks WHERE id='.$task_row['projectid'].' LIMIT 1' ), 0, 0 );
+      $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+      db_execute($q, array($task_row['projectid'] ) );
+      $project = db_result($q, 0, 0 );
 
       //set owner's email
       if($task_row['email'] && $mail_owner ) {
@@ -158,11 +165,13 @@ switch($_POST['action'] ) {
 
       //if usergroup set, add the user list
       if($task_row['usergroupid'] && $mail_group ){
-        $q = db_query('SELECT '.PRE.'users.email
+        $q = db_prepare('SELECT '.PRE.'users.email
                               FROM '.PRE.'users
                               LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
-                              WHERE '.PRE.'usergroups_users.usergroupid='.$task_row['usergroupid'].
+                              WHERE '.PRE.'usergroups_users.usergroupid=?'.
                               ' AND '.PRE.'users.deleted=\'f\'' );
+
+        db_execute($q, array($task_row['usergroupid'] ) );
 
         for( $j=0 ; $row = @db_fetch_num($q, $j ) ; ++$j ) {
           $mail_list[] = $row[0];
@@ -257,41 +266,31 @@ switch($_POST['action'] ) {
       //strip illegal characters
       $filename = preg_replace('/[\x00-\x2A\x2F\x3A-\x3C\x3E-\x3F\x5C\x5E\x60\x7B-\x7E]|[\.]{2}/', '_', $filename );
 
-      //escape for database
-      $db_filename = db_escape_string($filename );
-
       //alter file database administration
-      db_query( "INSERT INTO ".PRE."files (filename,
-                                          size,
-                                          description,
-                                          uploaded,
-                                          uploader,
-                                          taskid,
-                                          mime )
-                                  VALUES ('".$db_filename."',
-                                          ".$_FILES['userfile']['size'][$i].",
-                                          '$description',
-                                          now(),
-                                          ".UID.",
-                                          ".$taskid.",
-                                          '".$mime."' )" );
+      $q = db_prepare("INSERT INTO ".PRE."files (filename, size, description, uploaded, uploader, taskid, mime )
+                              VALUES (?, ?, ?, now(), ?, ?, ? )" );
+
+      db_execute($q, array($filename, $_FILES['userfile']['size'][$i], $description, UID, $taskid, $mime ) ) ;
 
       //get last insert id
       $fileid = db_lastoid('files_id_seq' );
 
       //copy it
-      if( ! move_uploaded_file( $_FILES['userfile']['tmp_name'][$i], FILE_BASE.'/'.$fileid.'__'.$filename ) ) {
-        db_query('DELETE FROM '.PRE.'files WHERE id='.$fileid );
+      if( ! @move_uploaded_file( $_FILES['userfile']['tmp_name'][$i], FILE_BASE.'/'.$fileid.'__'.$filename ) ) {
+        $q = db_prepare('DELETE FROM '.PRE.'files WHERE id=?' );
+        db_execute($q, array($fileid ) );
         unlink($_FILES['userfile']['tmp_name'][$i] );
         db_rollback();
         error('File submit', 'Internal error: The file cannot be moved to filebase directory, deleting upload' );
       }
 
       //set the fileid in the database
-      db_query('UPDATE '.PRE.'files SET fileid='.$fileid.' WHERE id='.$fileid );
+      $q = db_prepare('UPDATE '.PRE.'files SET fileid=? WHERE id=?' );
+      db_execute($q, array($fileid, $fileid ) );
 
       //alter task lastfileupload
-      db_query('UPDATE '.PRE.'tasks SET lastfileupload=now() WHERE id='.$taskid );
+      $q = db_prepare('UPDATE '.PRE.'tasks SET lastfileupload=now() WHERE id=?' );
+      db_execute($q, array($taskid ) );
 
       //make the file non-executable for security
       chmod(FILE_BASE.'/'.$fileid.'__'.$filename, 0644 );

@@ -31,7 +31,7 @@
   define('DATABASE_PASSWORD', "" );
 
   //Database type (valid options are "mysql", "postgresql", "mysql_innodb" and "mysqli")
-  define('DATABASE_TYPE', "mysql" );
+  define('DATABASE_TYPE', "mysql_pdo" );
 
   //Database host (usually "localhost")
   define('DATABASE_HOST', "localhost" );
@@ -139,7 +139,7 @@
         //if using SMTP_AUTH give username & password
         define('MAIL_USER', "" );
         define('MAIL_PASSWORD', "" );
-        //use TLS encryption? (requires PHP 5.1+)
+        //use TLS encryption?
         define('TLS', 'N' );
 
 
@@ -179,6 +179,9 @@
   //session timeout in hours
   define('SESSION_TIMEOUT', 1 );
 
+  //security token timeout for forms (in minutes)
+  define('TOKEN_TIMEOUT', 5 );
+
   //Use external webserver authorisation to login (values are "N", or "Y")
   define('WEB_AUTH', "N" );
 
@@ -207,7 +210,6 @@
 //WEBCOLLAB VERSION
 
   //version info
-  define('WEBCOLLAB_VERSION', "2.50" );
-  define('UNICODE_VERSION', "N" );
+  define('WEBCOLLAB_VERSION', "3.00" );
 
 ?>
