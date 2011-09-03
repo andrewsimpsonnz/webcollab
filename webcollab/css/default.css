@@ -174,6 +174,16 @@ div.taskshow {
   padding : 10px 0 10px 0;
 }
 
+/* Class for bbeditor buttons */
+img.button {
+  margin-top: 4px;
+  padding: 4px;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #BBBBBB;
+}
+
+/* Width control for input boxes */
 input.size {
   width : 200px;
 }
@@ -206,7 +216,7 @@ tr.projectrow {
 /* Box content styling for user & group lists */
 tr.grouplist td {
   text-align : left;
-  font-size : 1em; /* IE 7 can't do 'font:inherit'*/ 
+  font-size : 1em; /* IE 7 can't do 'font:inherit'*/
   font : inherit;
   border-width : 0;
   border-collapse : collapse;
@@ -257,7 +267,7 @@ ul.ul-2, ul.ul-3, ul.ul-4, ul.ul-5 {
   list-style-type: circle;
 }
 
-/* GENERIC ELEMENTS */
+/* GENERIC HTML ELEMENTS */
 
 table {
   border-width : 0;
@@ -279,14 +289,25 @@ fieldset {
    padding: 0;
 }
 
-/* Class for bbeditor buttons */
-.button {
-  margin-top: 4px;
-  padding: 4px;
-  width: 16px;
-  height: 16px;
-  border: 1px solid #BBBBBB;
+a:link {
+  color : #003399;
+  background-color : transparent;
+  text-decoration : none;
 }
+
+a:visited {
+  color : #003399;
+  background-color : transparent;
+  text-decoration : none;
+}
+
+a:hover {
+  color : #CC0000;
+  background-color : transparent;
+  text-decoration : none;
+}
+
+/* GENERIC TEXT ELEMENTS */
 
 /* Cell with grey background */
 .textbackground {
@@ -363,22 +384,4 @@ fieldset {
   color : #FF0000;
   font-weight : bold;
   background-color : transparent;
-}
-
-a:link {
-  color : #003399;
-  background-color : transparent;
-  text-decoration : none;
-}
-
-a:visited {
-  color : #003399;
-  background-color : transparent;
-  text-decoration : none;
-}
-
-a:hover {
-  color : #CC0000;
-  background-color : transparent;
-  text-decoration : none;
 }
