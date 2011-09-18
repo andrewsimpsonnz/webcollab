@@ -78,6 +78,8 @@ function db_query($query, $die_on_error=1 ) {
 
   if(! $dbh ) db_connection();
 
+  $db_error_message = $query;
+
   try {
     $sth = $dbh->query($query );
   }
@@ -129,6 +131,8 @@ function db_execute($sth, $input='', $die_on_error=1 ) {
   global $dbh, $db_error_message;
 
   if(! $dbh ) db_connection();
+
+  $db_error_message = $query;
 
   try {
     if($input ) {

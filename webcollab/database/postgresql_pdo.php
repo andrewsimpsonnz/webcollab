@@ -103,6 +103,8 @@ function db_prepare($query, $die_on_error=1 ) {
 
   if(! $dbh ) db_connection();
 
+  $db_error_message = $query;
+
   //prepare statement
   try {
     $sth = $dbh->prepare($query );
