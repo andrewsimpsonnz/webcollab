@@ -38,18 +38,12 @@ include_once(BASE.'includes/screen.php' );
 $content = '';
 
 //error condition
-function secure_error( $error = 'Login error', $redirect=0 ) {
+function secure_error( $error = 'Login error', $redirect_time=0 ) {
 
   global $lang;
 
-  if($redirect == 1) {
-    $redirect_time = 15;
-  }
-  else {
-    $redirect_time = 0;
-  }
   $content = "<div style=\"text-align : center\"><br />$error<br /></div>";
-  create_top($lang['login'], 1, 0, $redirect_time );
+  create_top($lang['login'], 1, 0, 0, $redirect_time );
   new_box($lang['error'], $content, 'boxdata-small', 'head-small' );
 
   if($redirect_time != 0) {
@@ -134,7 +128,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['us
 
     //wait 2 seconds then record an error
     sleep (2);
-    secure_error($lang['no_login'], 1 );
+    secure_error($lang['no_login'], 15 );
   }
 
   //user is okay log him/her in
@@ -226,7 +220,7 @@ $content .= "<p>".$lang['please_login'].":</p>\n".
 
   switch(DATABASE_TYPE ) {
   case 'postgresql_pdo':
-    $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/powered-by-postgresql.gif\" alt=\"Powered by postgresql\" /></a></p>\n";
+    $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/postgresql-power.gif\" alt=\"Powered by postgresql\" /></a></p>\n";
     break;
 
   case 'mysql_pdo':
@@ -234,7 +228,7 @@ $content .= "<p>".$lang['please_login'].":</p>\n".
     break;
 
   default:
-     $content .= "<p><a href=\"http://www.php.net\"> <img src=\"images/php-logo.gif\" alt=\"PHP 4 code\" /></a></p>\n";
+     $content .= "<p><a href=\"http://www.php.net\"> <img src=\"images/php-power.png\" alt=\"Powered by PHP\" /></a></p>\n";
      break;
 }
 
