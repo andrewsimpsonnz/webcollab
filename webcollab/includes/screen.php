@@ -70,19 +70,8 @@ function create_top($title='', $page_type=0, $body_id=0, $include_javascript=0, 
 
   global $lang, $bottom_text;
 
-  //only build top once...
-  if(headers_sent() ) {
-    return;
-  }
-
-  //remove /* and */ in section below to use compressed HTML output:
-  //Note: PHP manual recommends use of zlib.output_compression in php.ini instead of ob_gzhandler in here
-  /*
-  //use compressed output (if web browser supports it) _and_ zlib.output_compression is not already enabled
-  if( ! ini_get('zlib.output_compression') ) {
-    ob_start("ob_gzhandler" );
-  }
-  */
+  //start output buffering
+  ob_start();
 
   //we don't want any caching of these pages
   header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -220,6 +209,7 @@ function create_top($title='', $page_type=0, $body_id=0, $include_javascript=0, 
 
   //flush buffer
   echo $content;
+  ob_end_flush();
 
   return;
 }

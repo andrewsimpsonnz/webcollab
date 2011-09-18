@@ -260,6 +260,9 @@ function error($box_title, $error ) {
   include_once(BASE.'lang/lang.php' );
   include_once(BASE.'includes/screen.php' );
 
+  //clear the existing buffer
+  ob_end_clean();
+
   create_top('ERROR', 1 );
 
   if(NO_ERROR !== 'Y' ) {
@@ -280,7 +283,7 @@ function error($box_title, $error ) {
     ob_start();
     print_r($_REQUEST );
     $post = ob_get_contents();
-    ob_end_clean();
+    ob_clean();
 
     //email to the error address
     $message = "Hello,\n This is the ".$manager_name." site and I have an error :/  \n".
@@ -324,6 +327,9 @@ function warning($box_title, $message ) {
 
   include_once(BASE.'lang/lang.php' );
   include_once(BASE.'includes/screen.php' );
+
+  //clear the existing buffer
+  ob_end_clean();
 
   create_top($lang['error'], 1 );
 
