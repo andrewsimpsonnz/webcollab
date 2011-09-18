@@ -30,7 +30,7 @@
   define('DATABASE_USER', "" );
   define('DATABASE_PASSWORD', "" );
 
-  //Database type (valid options are "mysql", "postgresql", "mysql_innodb" and "mysqli")
+  //Database type (valid options are "mysql_pdo" or "postgresql_pdo")
   define('DATABASE_TYPE', "mysql_pdo" );
 
   //Database host (usually "localhost")
