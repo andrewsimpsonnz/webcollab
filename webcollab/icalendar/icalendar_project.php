@@ -51,7 +51,6 @@ if(! defined('UID' ) ) {
 include_once(BASE.'icalendar/icalendar_download.php' );
 include_once(BASE.'icalendar/icalendar_common.php' );
 
-
 //set variables
 $content  = '';
 $icalendar_id = md5(MANAGER_NAME.BASE_URL);

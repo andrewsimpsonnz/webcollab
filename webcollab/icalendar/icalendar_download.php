@@ -68,7 +68,6 @@ function icalendar_body($row, $taskid ) {
 
   //cache the generated timestamp (date functions are slow)
   global $icalendar_id, $dtstamp;
-  //cache the generated timestamp (date functions are slow)
 
   if(VEVENT == 'Y' ) {
     $content = "BEGIN:VEVENT\r\n";
