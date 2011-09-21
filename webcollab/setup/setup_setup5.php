@@ -219,6 +219,9 @@ $content .=
 "//DATABASE\n\n".
 "  //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match)\n".
 "  define('PRE', '".PRE."' );\n\n".
+"//OUTPUT COMPRESSION\n\n".
+"  //Use to enable zlib output compression of web pages (values are 'N', or 'Y')\n".
+"  define('COMPRESS_OUTPUT', 'N' );\n\n".
 "//WEBCOLLAB VERSION\n\n".
 "  //WebCollab version string\n".
 "  define('WEBCOLLAB_VERSION', '".SETUP_WEBCOLLAB_VERSION."');\n\n".
