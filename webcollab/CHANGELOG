@@ -1,20 +1,40 @@
 WebCollab Git
+*** 21 September 2011
+  Andrew Simpson
+
+- fix database debugging log messages
+
+- fix 'no login' redirect
+
+- update login images for postgresql and php
+
+- add output buffering to screen.php (also allows errors to display properly)
+
+- add option for zlib.output_compression
+
+WebCollab Git
 *** 2 September 2011
   Andrew Simpson
 
-- Change to em for font size for better IE7 compatibility
+- change to em for font size for better IE7 compatibility
 
-- Updated Japanese transalation (Thanks to Hiromi Kimura)
+- updated Japanese transalation (Thanks to Hiromi Kimura)
 
 WebCollab Git
 *** 7 August 2011
   Andrew Simpson
 
-- Change to CSS box model
+- change to CSS box model
 
-- Add <body> id tags for CSS (Credit: tomas7)
+- add <body> id tags for CSS (Credit: tomas7)
 
-- Add id tags to <ul> in project_list and todo (Credit: tomas7)
+- add id tags to <ul> in project_list and todo (Credit: tomas7)
+
+Webcollab 2.71 - Terminus
+*** 25 June 2011
+  Andrew Simpson
+
+- release
 
 *** 30 May 2011
   Andrew Simpson
@@ -72,7 +92,6 @@ WebCollab Git
 - change to PHP PDO database calls throughout
 
 - change to UTF-8 character set throughout
->>>>>>> webcollab-pdo
 
 - bugfix: correct box handling in update.php
 
