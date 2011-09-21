@@ -204,7 +204,7 @@
 
 //DATABASE
 
-  //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match) 
+  //Use to set a prefix to the database table names (Note: Table names in /db directory will need be manually changed to match)
   define('PRE', "" );
 
 //OUTPUT COMPRESSION
