@@ -35,9 +35,8 @@ require_once(BASE.'setup/setup_config.php' );
 //set language
 $locale_setup = LOCALE;
 
-include_once(BASE.'lang/lang.php' );
-include_once(BASE.'lang/lang_setup.php' );
 require_once(BASE.'setup/security_setup.php' );
+include_once(BASE.'lang/lang_setup.php' );
 
 //if user aborts, let the script carry onto the end
 ignore_user_abort(TRUE);

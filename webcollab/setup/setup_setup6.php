@@ -35,9 +35,8 @@ require_once(BASE.'setup/setup_config.php' );
 //set language
 $locale_setup = LOCALE;
 
-include_once(BASE.'lang/lang.php' );
-include_once(BASE.'lang/lang_setup.php' );
 require_once(BASE.'setup/security_setup.php' );
+include_once(BASE.'lang/lang_setup.php' );
 
 create_top_setup($lang_setup['setup6_banner'], 1 );
 

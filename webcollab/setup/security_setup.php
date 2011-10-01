@@ -124,7 +124,7 @@ else {
 
   //update the 'I was here' time
   $q = db_prepare('UPDATE '.PRE.'logins SET lastaccess=now() WHERE session_key=\''.X.'\' AND user_id=?' );
-  db_execute($q, array($row['userid']) );
+  db_execute($q, array($row['user_id']) );
 
   //get site names
   $q = db_query('SELECT * FROM '.PRE.'site_name' );
