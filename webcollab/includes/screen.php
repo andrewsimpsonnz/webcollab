@@ -145,14 +145,12 @@ function create_top($title='', $page_type=0, $body_id=0, $include_javascript=0, 
       case 1:
         //loads javascript file
         echo "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
-             "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n".
-             "</head>\n\n";
+             "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n";
         break;
 
       case 2:
         //loads javascript file (but not editor)
-        echo "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
-             "</head>\n\n";
+        echo "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n";
         break;
 
       case 0:
@@ -160,6 +158,8 @@ function create_top($title='', $page_type=0, $body_id=0, $include_javascript=0, 
         //no javascript loaded
         break;
     }
+
+    echo "</head>\n\n";
 
     //flush the current buffer and mark headers as done
     ob_end_flush();
