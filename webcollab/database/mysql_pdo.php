@@ -86,6 +86,7 @@ function db_query($query, $die_on_error=1 ) {
   catch (PDOException $e) {
     $error = $e->getMessage();
     $db_error_message = 'The following query :<br /><br /><b>'.$query.'</b><br /><br />Had the following error:<br /><b>'.$error.'</b>';
+
     if($die_on_error) {
       error('Database query error', 'Database error: '.$error );
     }
@@ -131,8 +132,6 @@ function db_execute($sth, $input='', $die_on_error=1 ) {
   global $dbh, $db_error_message;
 
   if(! $dbh ) db_connection();
-
-  $db_error_message = $query;
 
   try {
     if($input ) {
