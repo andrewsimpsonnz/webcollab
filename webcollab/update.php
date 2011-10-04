@@ -122,19 +122,20 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     db_execute($q, array($username ) );
   }
 
-  //start transaction 
-  db_begin();
-
   //update for version 1.32 -> 1.40
   if(! (db_query('SELECT groupaccess FROM '.PRE.'config', 0 ) ) ) {
+     db_begin();
      db_query('ALTER TABLE '.PRE.'tasks ADD COLUMN groupaccess VARCHAR(5)' );
      db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN groupaccess SET DEFAULT \'f\'' );
      db_query('ALTER TABLE '.PRE.'config ADD COLUMN groupaccess VARCHAR(50)' );
      $content .= "<p>Updating from version pre-1.40 database ... success!</p>\n";
+     db_commit();
   }
 
   //update for version 1.51 -> 1.60
   if(! (db_query('SELECT * FROM '.PRE.'login_attempt', 0 ) ) ) {
+
+    db_begin();
 
     switch (DATABASE_TYPE) {
 
@@ -156,22 +157,29 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
         error('Database type not specified in config file.' );
         break;
     }
+    db_commit();
   }
 
   //update for version 1.51 -> 1.60
   if(! (db_query('SELECT private FROM '.PRE.'users', 0 ) ) ) {
+     db_begin();
      db_query('ALTER TABLE '.PRE.'users ADD COLUMN private INT' );
      db_query('ALTER TABLE '.PRE.'users ALTER COLUMN private SET DEFAULT 0' );
+     db_commit();
   }
 
   //update for version 1.51 -> 1.60
   if(! (db_query('SELECT private FROM '.PRE.'usergroups', 0 ) ) ) {
+     db_begin();
      db_query('ALTER TABLE '.PRE.'usergroups ADD COLUMN private INT' );
      db_query('ALTER TABLE '.PRE.'usergroups ALTER COLUMN private SET DEFAULT 0' );
+     db_commit();
   }
 
   //update for version 1.59 -> 1.60
   if(! (db_query('SELECT completed FROM '.PRE.'tasks', 0 ) ) ) {
+
+     db_begin();
 
     //set parameters for appropriate for database
     switch (DATABASE_TYPE) {
@@ -237,13 +245,15 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     db_free_result($q3 );
     db_free_result($q4 );
 
+    db_commit();
     $content .= "<p>Updating from version pre-1.60 database ... success!</p>\n";
-
-
   }
 
   //update for version 1.60 -> 1.70
   if(! (db_query('SELECT guest FROM '.PRE.'users', 0 ) ) ) {
+
+    db_begin();
+
     //set parameters for appropriate for database
     switch (DATABASE_TYPE) {
       case 'mysql_pdo':
@@ -275,11 +285,15 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     db_query('ALTER TABLE '.PRE.'config ADD COLUMN task_order VARCHAR(200)' );
     db_query('UPDATE '.PRE.'config SET task_order=\'ORDER BY name\'' );
 
+    db_commit();
     $content .= "<p>Updating from version pre-1.69 database ... success!</p>\n";
   }
 
   //update for version 1.69 -> 1.70
   if(! (db_query("SELECT fileid FROM ".PRE."files", 0 ) ) ) {
+ 
+    db_begin();
+ 
     //set parameters for appropriate for database
     switch (DATABASE_TYPE) {
       case 'mysql_pdo':
@@ -302,11 +316,14 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
         error("Database type not specified in config file." );
         break;
     }
+    db_commit();
     $content .= "<p>Updating from version pre-1.70 database ... success!</p>\n";
   }
 
   //update version 1.81 -> 2.00
   if(! (db_query("SELECT taskid FROM ".PRE."contacts", 0 ) ) ) {
+
+    db_begin();
 
     //add project capability to contacts
     db_query('ALTER TABLE '.PRE.'contacts ADD COLUMN taskid INT' );
@@ -338,11 +355,14 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
       db_query('ALTER TABLE '.PRE.'login_attempt MODIFY COLUMN last_attempt TIMESTAMP' );
     }
 
+    db_commit();
     $content .= "<p>Updating from version pre-2.00 database ... success!</p>\n";
   }
 
   //update version 2.00 -> 2.20
   if(! (db_query('SELECT * FROM '.PRE.'site_name', 0 ) ) ) {
+
+    db_begin();
 
     if(! defined('MANAGER_NAME') )      define('MANAGER_NAME', 'WebCollab Project Management' );
     if(! defined('ABBR_MANAGER_NAME') ) define('ABBR_MANAGER_NAME', 'WebCollab' );
@@ -372,11 +392,14 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     //update deadline hours
     db_query('UPDATE '.PRE.'tasks SET deadline=(deadline+INTERVAL '.$delim.'2 HOUR'.$delim.')' );
 
+    db_commit();
     $content .= "<p>Updating from version pre-2.20 database ... success!</p>\n";
   }
 
   //update version 2.20 -> 2.30
   if(! (db_query('SELECT edited FROM '.PRE.'forum', 0 ) ) ) {
+
+    db_begin();
 
     //set parameters for appropriate for database
     switch (DATABASE_TYPE) {
@@ -401,11 +424,14 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     db_query('ALTER TABLE '.PRE.'forum ALTER COLUMN sequence SET DEFAULT 0' );
     db_query('UPDATE '.PRE.'forum SET sequence=0' );
 
+    db_commit();
     $content .= "<p>Updating from version pre-2.30 database ... success!</p>\n";
   }
 
   //update version 2.40 -> 2.50
   if(! (db_query('SELECT token FROM '.PRE.'logins', 0 ) ) ) {
+
+    db_begin();
 
     //add new column for token
     db_query('ALTER TABLE '.PRE.'logins ADD COLUMN token VARCHAR(100)' );
@@ -427,11 +453,14 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
         break;
     }
 
+    db_commit();
     $content .= "<p>Updating from version pre-2.50 database ... success!</p>\n";
   }
 
   //update version 2.50 -> 3.00
   if(! (db_query('SELECT token FROM '.PRE.'tokens', 0 ) ) ) {
+
+    db_begin();
 
     //set parameters for appropriate for database
     switch (DATABASE_TYPE) {
@@ -481,11 +510,9 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
         break;
     }
 
+    db_commit();
     $content .= "<p>Updating from version pre-3.00 database ... success!</p>\n";
   }
-
-  //commit
-  db_commit();
 
   if( ! $content ) {
     $content .= "<p>No database updates were required.</p>\n";
