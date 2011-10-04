@@ -17,7 +17,7 @@ fi
 mysql -u$1 -p$3 -e"CREATE DATABASE $2 CHARACTER SET utf8;"
 
 #insert the structure and data
-mysql $2 -vvv -u$1 -p$3 < ./schema_mysql.sql
+mysql $2 -vvv -u$1 -p$3 < ./schema_mysql_innodb.sql
 
 # all done!
 echo "Database completion is completed"
