@@ -164,11 +164,11 @@ if($min > 0 || $max < $total ) {
               "<input type=\"hidden\" name=\"action\" value=\"search\" />\n".
               "<input type=\"hidden\" name=\"string\" value=\"".$string."\" />\n".
               "<input type=\"hidden\" name=\"start\" value=\"".$min."\" /></fieldset>\n".
-              "<table class=\"decoration\" cellpadding=\"5px\" >\n";
+              "<table class=\"decoration\" cellpadding=\"5px\" >\n<tr>";
 
   if($min > 0 ) {
     //show left arrow
-    $content .= "<tr><td><input style=\"float:left\" type=\"image\" name=\"backward\" value=\"&lt;&lt;\" src=\"images/resultset_previous.png\"/></td>\n";
+    $content .= "<td><input style=\"float:left\" type=\"image\" name=\"backward\" value=\"&lt;&lt;\" src=\"images/resultset_previous.png\"/></td>\n";
   }
 
   $content .= "<td>\n";
