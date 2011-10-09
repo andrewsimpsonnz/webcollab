@@ -243,7 +243,7 @@ if( ! ($TASKID_ROW['globalaccess'] == 'f' && $TASKID_ROW['usergroupid'] != 0 ) )
   }
 
   //show it
-  new_box($lang['public_user_forum'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-short', 'forum-list' );
+  new_box($lang['public_user_forum'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-short', 'forum-list-public' );
 }
 
 //
@@ -269,7 +269,7 @@ if($TASKID_ROW['usergroupid'] != 0 ) {
     db_execute($q, array($TASKID_ROW['usergroupid'] ) );
     $usergroup_name = db_result($q, 0, 0 );
     //show it
-    new_box(sprintf($lang['private_forum_sprt'], $usergroup_name ), $content,  'boxdata-normal', 'head-normal', 'boxstyle-short', 'forum-list'  );
+    new_box(sprintf($lang['private_forum_sprt'], $usergroup_name ), $content,  'boxdata-normal', 'head-normal', 'boxstyle-short', 'forum-list-private'  );
   }
 }
 
