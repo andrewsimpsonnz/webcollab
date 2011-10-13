@@ -196,7 +196,7 @@ if(isset($_COOKIE['webcollab_session'] ) && preg_match('/^[a-f\d]{32}$/i', $_COO
   }
 }
 
-create_top($lang['login_screen'], 1, 'login', 2 );
+create_top($lang['login_screen'], 1, 'login', 0 );
 
 $content = "<div style=\"text-align:center\">\n";
 
