@@ -198,6 +198,7 @@ table.celldata {
 /* Table with grey highlight background */
 table.decoration {
   background-color: #DDDDDD;
+  padding : 5px;
   border: solid black 1px;
   color : #000000;
 }

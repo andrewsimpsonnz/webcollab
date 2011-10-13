@@ -293,7 +293,7 @@ $content .= "<div style=\"text-align : right\">\n".
 $content .= "<form method=\"post\" action=\"tasks.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"todo\" /></fieldset>\n".
-            "<table class=\"decoration\" cellpadding=\"5\">\n".
+            "<table class=\"decoration\" >\n".
             "<tr align=\"left\"><td>".$lang['todo_list_for']."</td>".
             "<td><input type=\"radio\" value=\"user\" name=\"selection\" onchange=\"javascript:this.form.submit()\" id=\"user\"".$s1." /><label for=\"user\">".$lang['users']."</label></td><td>\n".
             "<label for=\"user\"><select name=\"userid\" ".$s5." onchange=\"javascript:this.form.submit()\" >\n".
