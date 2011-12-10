@@ -46,7 +46,6 @@ div#bottom {
 
 /* Masthead band to top of page */
 div.masthead {
-  text-align : left;
   padding-top : 4px;
   padding-left : 3px;
   height : 20px;
@@ -66,7 +65,6 @@ div.head {
   border-top: 1px solid #000000;
   font-size : 1.1em;
   font-weight : bold;
-  text-align : left;
   padding : 3px;
   background-color : #1E4B79;
   color : #ffffff;
@@ -99,7 +97,6 @@ div.boxdata {
   border-collapse : collapse;
   border: 1px solid #000000;
   padding : 3px;
-  text-align : left;
   background-color : #FFFFFF;
   color : #000000;
 }
@@ -125,7 +122,6 @@ div.boxdata-small {
 
 /* Box content styling for info boxes */
 div.boxstyle {
-  text-align : left;
   border-width : 0;
   border-collapse : collapse;
   background-color : #FFFFFF;
