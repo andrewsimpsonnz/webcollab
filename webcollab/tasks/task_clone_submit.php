@@ -258,11 +258,6 @@ $deadline_array = explode('-', substr($row[1], 0, 10) );
 //calculate change in deadline in days
 $delta_deadline = floor((mktime(0, 0, 0, $month, $day, $year ) - mktime(0, 0, 0, $deadline_array[1], $deadline_array[2], $deadline_array[0] ) ) / (60 * 60 * 24) );
 
-//check integrity
-if(! @safe_integer($delta_deadline ) ) {
-  error('Task Clone', 'Error in calculating new deadline' );
-} 
-
 //get details
 $q = db_prepare('SELECT DISTINCT parent FROM '.PRE.'tasks WHERE projectid=?' );
 db_execute($q, array($projectid ) );
