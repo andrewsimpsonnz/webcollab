@@ -106,7 +106,7 @@ function create_top($title='', $page_type=0, $body_id=0, $include_javascript=0, 
 
     echo     "<title>".$title."</title>\n".
              "<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".
-             "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".CHARACTER_SET."\" />\n";
+             "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n";
 
     //do a refresh if required
     if($redirect_time != 0) {

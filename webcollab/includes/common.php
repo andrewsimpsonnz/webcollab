@@ -106,7 +106,7 @@ function validate($body ) {
 function html_clean_up($body ) {
 
   if(version_compare(PHP_VERSION, '5.2.3', '>=' ) ) {
-    $body = @htmlspecialchars($body, ENT_QUOTES, CHARACTER_SET, false );
+    $body = @htmlspecialchars($body, ENT_QUOTES, 'UTF-8', false );
 
   }
   else {

@@ -301,7 +301,7 @@ debug		Debug!
 function & clean($text ) {
 
   //characters previously escaped/encoded to avoid SQL injection/CSS attacks are reinstated.
-  $text = @html_entity_decode($text, ENT_QUOTES , CHARACTER_SET );
+  $text = @html_entity_decode($text, ENT_QUOTES , 'UTF-8' );
 
   //remove any dangerous tags that exist
   $text = preg_replace("/(<\/?\s*)(APPLET|SCRIPT|EMBED|FORM|\?|%)(\w*|\s*)([^>]*>)/i", "\\1****\\3\\4", $text );
@@ -330,14 +330,14 @@ function & message($message, & $email_encode, & $message_charset, & $body, $bit8
         case true:
           //mail server has said it can do 8bit
           $email_encode = '8bit';
-          $message_charset = CHARACTER_SET;
+          $message_charset = 'UTF-8';
           $body = ' BODY=8BITMIME';
           break;
 
         case false:
           //old mail server - can only do 7bit mail
           $email_encode = 'quoted-printable';
-          $message_charset = CHARACTER_SET;
+          $message_charset = 'UTF-8';
           $body = '';
 
           //replace high ascii, control and = characters (RFC 2045)
@@ -419,7 +419,8 @@ function header_encoding($header ) {
     case true:
       $encoded = '';
       $fib = array(45, 43, 40, 37, 32, 24, 11 ); //reverse fibonacci from 45 characters
-      $max = 74 - 2 - strlen(CHARACTER_SET) - 2;
+      //$max = 74 - 2 - strlen('UTF-8') - 2 = 65;
+      $max = 65;
 
       //encode to base64 with encoded lines no longer than 74 characters (RFC 2045)
       while(strlen($header) > 0 ) {
@@ -430,7 +431,7 @@ function header_encoding($header ) {
             break;
           }
         }
-        $encoded .= '=?'.CHARACTER_SET.'?B?'.$part."?=\r\n\t";
+        $encoded .= '=?UTF-8?B?'.$part."?=\r\n\t";
 
         $header = mb_substr($header, $i );
       }
