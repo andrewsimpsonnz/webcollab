@@ -83,7 +83,7 @@ $flag = 0;
 create_top_setup($lang_setup['setup4_banner'] );
 
 $content .= "<table class=\"celldata\">\n".
-            "<tr><td>\n";
+            "<tr class=\"grouplist-head\"><td></td><th>".$lang_setup['setup3_basic']."</th></tr>\n";
 
 //add leading slash to url - if necessary
 if(substr(trim($data["base_url"] ), -1 ) != '/' ) {
@@ -139,10 +139,9 @@ switch ($url["scheme"] ){
 }
 
 //basic settings
-$content .= "</td><th class=\"boxdata2\"><span class=\"underline\">".$lang_setup['setup3_basic']."</span></th></tr>\n".
-            "<tr><th>".$lang_setup['setup3_address']."</th><td>".$data["base_url"]."</td><th>".$status."</th></tr>\n".
-            "<tr><th>".$lang_setup['setup3_name2']."</th><td>".$data["manager_name"]."</td></tr>\n".
-            "<tr><th>".$lang_setup['setup3_name4']."</th><td>".$data["abbr_manager_name"]."</td></tr>\n";
+$content .= "<tr class=\"grouplist\"><th>".$lang_setup['setup3_address']."</th><td>".$data["base_url"]."</td><th>".$status."</th></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['setup3_name2']."</th><td>".$data["manager_name"]."</td></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['setup3_name4']."</th><td>".$data["abbr_manager_name"]."</td></tr>\n";
 
 $status = "<span class=\"green\">".$lang_setup['setup4_ok']."</span>";
 
@@ -201,12 +200,12 @@ else {
 }
 
 //database settings
-$content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".$lang_setup['setup3_db']."</span></th></tr>".
-            "<tr><th>".$lang_setup['db_name']."</th><td>".$data["db_name"]."</td><th>".$status."</th></tr>\n".
-            "<tr><th>".$lang_setup['db_user']."</th><td>".$data["db_user"]."</td></tr>\n".
-            "<tr><th>".$lang_setup['db_password']."</th><td>".$data["db_password"]."</td></tr>\n".
-            "<tr><th>".$lang_setup['db_type']."</th><td>".$data["db_type"]."</td></tr>\n".
-            "<tr><th>".$lang_setup['db_host']."</th><td>".$data["db_host"]."</td></tr>\n";
+$content .= "<tr class=\"grouplist-head\"><td></td><th>".$lang_setup['setup3_db']."</th></tr>".
+            "<tr class=\"grouplist\"><th>".$lang_setup['db_name']."</th><td>".$data["db_name"]."</td><th>".$status."</th></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['db_user']."</th><td>".$data["db_user"]."</td></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['db_password']."</th><td>".$data["db_password"]."</td></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['db_type']."</th><td>".$data["db_type"]."</td></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['db_host']."</th><td>".$data["db_host"]."</td></tr>\n";
 
 $status = "<span class=\"green\">".$lang_setup['setup4_ok']."</span>";
 
@@ -220,9 +219,9 @@ if( ! is_writable($filebase) ) {
 }
 
 //file directory settings
-$content .= "<tr><td></td><th class=\"boxdata3\">".
-            "<span class=\"underline\">".$lang_setup['setup3_file1']."</span></th></tr>\n".
-            "<tr><th>".$lang_setup['file_location']."</th><td>".$filebase."</td><th>".$status."</th></tr>\n";
+$content .= "<tr class=\"grouplist-head\"><td></td><th>".
+            $lang_setup['setup3_file1']."</th></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['file_location']."</th><td>".$filebase."</td><th>".$status."</th></tr>\n";
 
 $status = "<span class=\"green\">".$lang_setup['setup4_ok']."</span>";
 
@@ -263,7 +262,7 @@ if ($data["file_maxsize"] > $file_php_max ) {
   $flag = $flag + 1;
 }
 
-$content .= "<tr><th>".$lang_setup['file_size']."</th><td>".$data["file_maxsize"]."</td><th>".$status."</th></tr>\n";
+$content .= "<tr class=\"grouplist\"><th>".$lang_setup['file_size']."</th><td>".$data["file_maxsize"]."</td><th>".$status."</th></tr>\n";
 
 $status = "<span class=\"green\">".$lang_setup['setup4_ok']."</span>";
 
@@ -276,14 +275,14 @@ if( (! is_readable(BASE."lang/".$data["locale"]."_message.php" ) )
 }
 
 //language settings
-$content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".$lang_setup['setup3_language1']."</span></th></tr>\n".
-            "<tr><th>".$lang_setup['language']."</th><td>".$locale_array[($data["locale"])]."</td><th>".$status."</th></tr>\n".
-            "<tr><td></td><th class=\"boxdata3\">".
-            "<span class=\"underline\">".$lang_setup['setup3_timezone']."</span></th></tr>\n".
-            "<tr><th>".$lang_setup['timezone']."</th><td>".$data["timezone"]."</td></tr>\n".
-            "<tr><td></td><th class=\"boxdata3\">".
-            "<span class=\"underline\">".$lang_setup['setup3_email']."</span></th></tr>\n".
-            "<tr><th class=\"boxdata2\">".$lang_setup['use_email']."</th><td>".$data["use_email"]."</td></tr>\n";
+$content .= "<tr class=\"grouplist-head\"><td></td><th>".$lang_setup['setup3_language1']."</th></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['language']."</th><td>".$locale_array[($data["locale"])]."</td><th>".$status."</th></tr>\n".
+            "<tr class=\"grouplist-head\"><td></td><th>".
+            $lang_setup['setup3_timezone']."</th></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['timezone']."</th><td>".$data["timezone"]."</td></tr>\n".
+            "<tr class=\"grouplist-head\"><td></td><th>".
+            $lang_setup['setup3_email']."</th></tr>\n".
+            "<tr class=\"grouplist\"><th class=\"boxdata2\">".$lang_setup['use_email']."</th><td>".$data["use_email"]."</td></tr>\n";
 
 $status = "<span class=\"green\">".$lang_setup['setup4_ok']."</span>";
 
@@ -308,7 +307,7 @@ if($data["use_email"] === "Y" && $data["smtp_host"] == "" ) {
   $flag = $flag + 10;
 }
 
-$content .= "<tr><th>".$lang_setup['smtp_host']."</th><td>".$data["smtp_host"]."</td><th>".$status."</th></tr>\n";
+$content .= "<tr class=\"grouplist\"><th>".$lang_setup['smtp_host']."</th><td>".$data["smtp_host"]."</td><th>".$status."</th></tr>\n";
 
 if($flag > 9 ) {
   $status = "<span class=\"red\">".$lang_setup['setup4_fatal']."</span>\n";
@@ -323,9 +322,8 @@ else {
 }
 
 //form for 'write to file' button
-$content .= "<tr><td></td><td>&nbsp;</td></tr>\n".
-            "<tr><td></td><th class=\"boxdata3\" colspan=\"2\">".$status."</th></tr>\n".
-            "<tr><td></td><td class=\"boxdata3\">\n".
+$content .= "<tr class=\"grouplist\"><td></td><th colspan=\"2\" style=\"height:60px;\">".$status."</th></tr>\n".
+            "<tr class=\"grouplist\"><td></td><td>\n".
             "<form method=\"post\" action=\"setup_handler.php\">\n".
             "<fieldset>";
 
@@ -349,7 +347,7 @@ $content .= "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "</td></tr>\n";
 
 //form for 'try again' button
-$content .= "<tr><td></td><td class=\"boxdata3\">\n".
+$content .= "<tr class=\"grouplist\"><td></td><td>\n".
             "<form method=\"post\" action=\"setup_handler.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"action\" value=\"setup3\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
@@ -374,7 +372,7 @@ $content .= "</fieldset>\n".
             "</td></tr>\n".
             "</table>\n";
 
-new_box_setup($lang_setup['setup4_banner'], $content, "boxdata", "tablebox" );
+new_box_setup($lang_setup['setup4_banner'], $content );
 
 create_bottom_setup();
 

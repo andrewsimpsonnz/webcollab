@@ -281,7 +281,7 @@ $content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
             "<p style=\"text-align:center\"><input type=\"submit\" value=\"".$lang_setupdb['setupdb_continue']."\" /></p\n".
             "</form>\n";
 
-new_box_setup($lang_setup['setupdb_banner'], $content, 'boxdata', 'singlebox' );
+new_box_setup($lang_setup['setupdb_banner'], $content, 'boxdata-small', 'head-small', 'boxstyle-normal' );
 create_bottom_setup();
 
 ?>

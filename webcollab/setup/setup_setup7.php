@@ -94,7 +94,7 @@ $content .= "<form  method='post' action='index.php'>\n".
             "<input type='submit' value='".$lang_setup['finish']."' /></p>\n".
             "</form>\n";
 
-new_box_setup($lang_setup['setup7_banner'], $content, 'boxdata', 'singlebox' );
+new_box_setup($lang_setup['setup7_banner'], $content, 'boxdata-small', 'head-small' );
 
 create_bottom_setup();
 

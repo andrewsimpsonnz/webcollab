@@ -61,27 +61,26 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\" ".
 
 $content .= "<p>".$lang_setup['setup2_db_details1']."</p>\n".
             "<table class=\"celldata\">\n".
-            "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup2_db_details2']."</td></tr>\n".
-            "<tr><th>".$lang_setup['setup2_db_name']."</th>".
+            "<tr class=\"grouplist\"><td></td><td>".$lang_setup['setup2_db_details2']."</td></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['setup2_db_name']."</th>".
             "<td><input id=\"name\" type=\"text\" name=\"database_name\" class=\"size\" /></td></tr>\n".
-            "<tr><th class=\"boxdata2\">".$lang_setup['db_user']."</th>".
+            "<tr class=\"grouplist\"><th>".$lang_setup['db_user']."</th>".
             "<td><input id=\"user\" type=\"text\" name=\"database_user\" class=\"size\" /></td></tr>\n".
-            "<tr><th>".$lang_setup['db_password']."</th>".
+            "<tr class=\"grouplist\"><th>".$lang_setup['db_password']."</th>".
             "<td><input id=\"pass\" type=\"text\" name=\"database_password\" class=\"size\" /></td></tr>\n".
-            "<tr><th class=\"boxdata3\">".$lang_setup['db_host']."</th>".
-            "<td class=\"boxdata3\">".
-            "<input id=\"host\" type=\"text\" name=\"database_host\" value=\"localhost\" class=\"size\" /></td></tr>\n";
+            "<tr class=\"grouplist\"><th>".$lang_setup['db_host']."</th>".
+            "<td><input id=\"host\" type=\"text\" name=\"database_host\" value=\"localhost\" class=\"size\" /></td></tr>\n";
 
-$content .= "<tr><th>".$lang_setup['db_type']."</th> <td>\n".
+$content .= "<tr class=\"grouplist\"><th>".$lang_setup['db_type']."</th> <td>\n".
             "<select name=\"database_type\">\n".
             "<option value=\"mysql_pdo\" selected=\"selected\" >mysql</option>\n".
             "<option value=\"postgresql_pdo\">postgresql</option>\n".
             "</select></td></tr>\n".
-            "<tr><td></td><td class=\"boxdata3\"><input type=\"submit\" value=\"".$lang_setup['submit']."\" /></td></tr>\n".
+            "<tr class=\"grouplist\"><td></td><td><input type=\"submit\" value=\"".$lang_setup['submit']."\" /></td></tr>\n".
             "</table>\n".
             "</form>\n";
 
-new_box_setup( $lang_setup['setup2_banner'], $content, 'boxdata', 'tablebox' );
+new_box_setup( $lang_setup['setup2_banner'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-normal' );
 
 create_bottom_setup();
 ?>

@@ -29,6 +29,7 @@ require_once('path.php' );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 require_once(BASE.'setup/setup_config.php' );
+include_once(BASE.'lang/lang_setup.php' );
 
 //
 // Creates the inital window, and sets some vars. This _HAS_ to be the first function because of the header() calls
@@ -37,85 +38,72 @@ function create_top_setup($title='', $check=0 ) {
 
   global $lang;
 
-  //only build top once...
-  if(headers_sent() ) {
-    return;
+  //we only send the headers and HTML head once...
+  if(! defined('HEADER_DONE' ) ) {
+    echo "<!DOCTYPE html PUBLIC\n".
+        "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
+        "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n".
+        "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"".XML_LANG."\" lang=\"".XML_LANG."\">\n\n".
+        "<!-- (c) 2002 - 2012 Andrew Simpson -->\n\n".
+        "<head>\n".
+        "<title>".$title."</title>\n".
+        "<meta http-equiv=\"Pragma\" content=\"no-cache\" />".
+        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n".
+        "<link rel=\"StyleSheet\" href=\"".BASE_CSS.SETUP_CSS."\" type=\"text/css\" />\n".
+        "<link rel=\"icon\" type=\"image/png\" href=\"images/group.png\" />\n";
   }
-
-  //we don't want any caching of these pages
-  header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-  header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-  header("Cache-Control: no-store, no-cache, must-revalidate");
-  header("Cache-Control: post-check=0, pre-check=0", false);
-  header("Pragma: no-cache");
-
-
-  echo "<!DOCTYPE html PUBLIC\n".
-       "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
-       "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n".
-       "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"".XML_LANG."\" lang=\"".XML_LANG."\">\n\n".
-       "<!-- (c) 2002 - 2009 Andrew Simpson -->\n\n".
-       "<head>\n".
-       "<title>".$title."</title>\n".
-       "<meta http-equiv=\"Pragma\" content=\"no-cache\" />".
-       "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".CHARACTER_SET."\" />\n".
-       "<link rel=\"StyleSheet\" href=\"".BASE_CSS.SETUP_CSS."\" type=\"text/css\" />\n".
-       "<link rel=\"icon\" type=\"image/png\" href=\"images/group.png\" />\n";
 
   //javascript scripts
   if($check ) {
     echo "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab-setup.js\"></script>\n";
- }
+  }
 
- echo  "</head>\n\n".
-       "<body>\n";
+  echo  "</head>\n\n".
+        "<body>\n".
+        "<div id=\"container\">\n".
+        "<div id=\"top\" class=\"masthead\">".
+        "</div>\n\n".
+        "<!-- start single main table -->\n".
+        "<div id=\"single\">\n";
 
-  //create the main table
-  echo "\n<!-- start main table -->\n".
-       "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n";
-
-  //create the masthead part of the main window
-  echo "<tr>\n<td>".
-       "<div class=\"masthead\">".
-       "</div></td></tr>\n".
-       "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";
+  //mark headers as done
+  define('HEADER_DONE', 1 );
 
   return;
 }
 
 //
-// Ends the page nicely
+//  Creates a new box
+//
+function new_box_setup($title, $content, $box="boxdata-normal", $head="head-normal", $style="boxstyle-short" ) {
+
+//head-normal & boxdata-normal for wide page
+//head-small & boxdata-small for small box
+
+  echo  "\n<!-- start of ".$title." - box -->\n".
+        "<div class=\"head ".$head."\" >::&nbsp;".$title."</div>\n".
+        "<div class=\"boxdata ".$box."\">\n".
+        "<div class=\"boxstyle ".$style."\">\n".
+        $content.
+        "</div>\n</div>\n".
+        "<!-- end -->\n";
+
+  return;
+}
+
+//
+// Finish the page nicely
 //
 function create_bottom_setup() {
 
-  //clean
-  echo "<br />";
-
-  //end the main table
-  echo "</td></tr></table>";
-
+  //end the main & container
+  echo "</div><!-- end main -->\n";
+  //shows the logo
+  echo "\n<div class=\"bottomtext\" style=\"text-align: center\">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2011</div>\n";
   //end xml parsing
-  echo "\n</body>\n</html>\n";
-  return;
-}
-
-//
-//  Creates a new menu-window
-//
-function new_box_setup($title, $content, $style='boxdata', $size='tablebox' ) {
-
-  echo "\n<!-- start of ".$title."-box -->";
-  echo "\n<br />";
-
-  echo "
-  <table class=\"".$size."\" cellspacing=\"0\">
-    <tr>
-      <td class=\"boxhead\">::&nbsp;".$title."</td>
-    </tr>
-    <tr>
-      <td class=\"".$style."\">\n".$content."\n</td>
-    </tr>
-  </table>\n <!-- end -->\n";
+  echo "</div><!-- end container -->\n".
+       "</body>\n</html>\n";
+  
   return;
 }
 

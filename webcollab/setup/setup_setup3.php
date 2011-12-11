@@ -106,7 +106,8 @@ create_top_setup($lang_setup['setup3_banner'], 1 );
 
 $content  = '';
 
-$content .= "<table style=\"width : 98%\"><tr><td>\n".
+$content .= "<table>\n".
+            "<tr><td>\n".
             "<span class=\"textlink\">[<a href=\"help/help_setup.php?type=setup3&amp;lang=".$locale_setup."\" onclick=\"window.open('help/help_setup.php?type=setup3&amp;lang=".$locale_setup."'); return false\"><i>".$lang_setup['help']."</i></a>]</span>\n".
             "</td></tr>\n</table>\n";
 
@@ -120,26 +121,26 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\" ".
             "<table class=\"celldata\" >";
 
 //basic settings
-$content .= "<tr><td></td><th class=\"boxdata2\"><span class=\"underline\">".$lang_setup['setup3_basic']."</span></th></tr>\n".
-            "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_URL']."</td></tr>\n".
-            "<tr><th>".$lang_setup['setup3_address']."</th>".
+$content .= "<tr class=\"grouplist-head\"><td></td><th>".$lang_setup['setup3_basic']."</th></tr>\n".
+            "<tr class=\"grouplist\"><td></td><td>".$lang_setup['setup3_URL']."</td></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['setup3_address']."</th>".
             "<td><input type=\"text\" id=\"url\" name=\"base_url\" value=\"".$base_url."\" style=\"width: 350px\" /></td></tr>\n";
 
-$content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_name1']."</td></tr>\n".
-            "<tr><th>".$lang_setup['setup3_name2']."</th>".
+$content .= "<tr class=\"grouplist\"><td></td><td>".$lang_setup['setup3_name1']."</td></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['setup3_name2']."</th>".
             "<td><input type=\"text\" name=\"manager_name\" value=\"".$manager_name."\" style=\"width: 350px\" /></td></tr>\n";
 
-$content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_name3']."</td></tr>\n".
-            "<tr><th>".$lang_setup['setup3_name4']."</th>".
+$content .= "<tr class=\"grouplist\"><td></td><td>".$lang_setup['setup3_name3']."</td></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['setup3_name4']."</th>".
             "<td><input type=\"text\" name=\"abbr_manager_name\" value=\"".$abbr_manager_name."\" class=\"size\" /></td></tr>\n";
 
 //database settings
-$content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".$lang_setup['setup3_db']."</span></th></tr>\n".
-            "<tr><th class=\"boxdata2\">".$lang_setup['db_name']."</th>".
+$content .= "<tr class=\"grouplist-head\"><td></td><th>".$lang_setup['setup3_db']."</th></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['db_name']."</th>".
             "<td><input type=\"text\" name=\"db_name\" value=\"".$db_name."\" class=\"size\" /></td></tr>\n".
-            "<tr><th>".$lang_setup['db_user']."</th>".
+            "<tr class=\"grouplist\"><th>".$lang_setup['db_user']."</th>".
             "<td><input type=\"text\" id=\"user\" name=\"db_user\" value=\"".$db_user."\" class=\"size\" /></td></tr>\n".
-            "<tr><th>".$lang_setup['db_password']."</th>".
+            "<tr class=\"grouplist\"><th>".$lang_setup['db_password']."</th>".
             "<td><input type=\"text\" id=\"pass\" name=\"db_password\" value=\"".$db_password."\" class=\"size\" /></td></tr>\n";
 
 switch($db_type){
@@ -155,31 +156,29 @@ switch($db_type){
 
 }
 
-$content .= "<tr><th>".$lang_setup['db_type']."</th><td><select name=\"db_type\">\n".
+$content .= "<tr class=\"grouplist\"><th>".$lang_setup['db_type']."</th><td><select name=\"db_type\">\n".
             "<option value=\"mysql_pdo\"".$s1.">mysql</option>\n".
             "<option value=\"postgresql_pdo\"".$s2.">postgresql</option>\n".
             "</select></td></tr>\n";
 
-$content .= "<tr><th>".$lang_setup['db_host']."</th>".
+$content .= "<tr class=\"grouplist\"><th>".$lang_setup['db_host']."</th>".
             "<td><input type=\"text\" name=\"db_host\" id=\"host\" value=\"".$db_host."\" class=\"size\" /></td></tr>\n";
 
 //file settings
-$content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".
-            $lang_setup['setup3_file1']."</span></th></tr>\n";
+$content .= "<tr class=\"grouplist-head\"><td></td><th>".$lang_setup['setup3_file1']."</th></tr>\n";
 
-$content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_file2']."</td></tr>\n".
-            "<tr><th>".$lang_setup['file_location']."</th>".
+$content .= "<tr class=\"grouplist\"><td></td><td>".$lang_setup['setup3_file2']."</td></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['file_location']."</th>".
             "<td><input type=\"text\" name=\"file_base\" value=\"".$file_base."\" style=\"width: 350px\" /></td></tr>\n".
 
-            "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_file3']."</td></tr>\n".
-            "<tr><th>".$lang_setup['file_size']."</th>".
+            "<tr class=\"grouplist\"><td></td><td>".$lang_setup['setup3_file3']."</td></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['file_size']."</th>".
             "<td><input type=\"text\" name=\"file_maxsize\" value=\"".$file_maxsize."\" class=\"size\" /></td></tr>\n";
 
 //language settings
-$content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".
-            $lang_setup['setup3_language1']."</span></th></tr>\n".
-            "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup3_language2']."</td></tr>\n".
-            "<tr><th>".$lang_setup['language']."</th><td><select name=\"locale\">\n";
+$content .= "<tr class=\"grouplist-head\"><td></td><th>".$lang_setup['setup3_language1']."</th></tr>\n".
+            //"<tr class=\"grouplist\"><td></td><td>".$lang_setup['setup3_language2']."</td></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['language']."</th><td><select name=\"locale\">\n";
 
 foreach ($locale_array as $key => $value ) {
   $content .= "<option value=\"".$key."\"";
@@ -194,10 +193,8 @@ foreach ($locale_array as $key => $value ) {
 $content .= "</select></td></tr>\n";
 
 //timezone setting
-$content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".
-            $lang_setup['setup3_timezone']."</span></th></tr>\n".
-            "<tr><td></td><td class=\"boxdata2\"></td></tr>\n".
-            "<tr><th>Timezone:</th><td><select name=\"timezone\">\n";
+$content .= "<tr class=\"grouplist-head\"><td></td><th>".$lang_setup['setup3_timezone']."</th></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['setup3_timezone']."</th><td><select name=\"timezone\">\n";
 
 $time_array = array('-12'  => 'GMT -1200',
                     '-11'  => 'GMT -1100',
@@ -255,20 +252,19 @@ else {
   $setting = "checked=\"checked\"";
 }
 
-$content .= "<tr><td></td><th class=\"boxdata3\"><span class=\"underline\">".$lang_setup['setup3_email']."</span></th></tr>\n".
-            "<tr><td></td><td class=\"boxdata2\"></td></tr>\n".
-            "<tr><th>".$lang_setup['use_email']."</th>".
-            "<td><input type=\"checkbox\" name=\"use_email\" ".$setting."  /></td></tr>\n";
+$content .= "<tr class=\"grouplist-head\"><td></td><th>".$lang_setup['setup3_email']."</th></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['use_email']."</th>".
+            "<td><input type=\"checkbox\" name=\"use_email\" ".$setting." /></td></tr>\n";
 
-$content .= "<tr><td></td><td class=\"boxdata2\"><i>".$lang_setup['setup3_smtp']."</i></td></tr>\n".
-            "<tr><th><i>".$lang_setup['smtp_host']."</i></th>".
+$content .= "<tr class=\"grouplist\"><td></td><td><i>".$lang_setup['setup3_smtp']."</i></td></tr>\n".
+            "<tr class=\"grouplist\"><th><i>".$lang_setup['smtp_host']."</i></th>".
             "<td><input type=\"text\" name=\"smtp_host\" value=\"".$smtp_host."\" style=\"width: 350px\" /></td></tr>\n";
 
-$content .=  "<tr><td></td><td class=\"boxdata3\"><input type=\"submit\" value=\"".$lang_setup['submit']."\" /></td></tr>\n".
+$content .=  "<tr class=\"grouplist\"><td></td><td><input type=\"submit\" value=\"".$lang_setup['submit']."\" /></td></tr>\n".
              "</table>\n".
              "</form>\n";
 
-new_box_setup($lang_setup['setup3_banner'], $content, 'boxdata', 'tablebox' );
+new_box_setup($lang_setup['setup3_banner'], $content );
 create_bottom_setup();
 
 ?>

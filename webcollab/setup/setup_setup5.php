@@ -272,7 +272,7 @@ if(isset($data['new_db'] ) && ($data['new_db'] == 'Y' ) ) {
              "<input type=\"submit\" value=\"".$lang_setup['setup5_continue']."\" /></p>\n".
              "</form>\n";
 
-    new_box_setup($lang_setup['setup5_banner1'], $content, 'boxdata', 'singlebox' );
+    new_box_setup($lang_setup['setup5_banner1'], $content, 'boxdata-small', 'head-small', 'boxstyle-normal' );
     create_bottom_setup();
     die;
 
@@ -291,7 +291,7 @@ $content = $lang_setup['setup5_complete']."\n".
            "<input type='submit' value='".$lang_setup['finish']."' /></p>\n".
            "</form>\n";
 
-new_box_setup($lang_setup['setup5_banner2'], $content, 'boxdata', 'singlebox' );
+new_box_setup($lang_setup['setup5_banner2'], $content, 'boxdata-small', 'head-small', 'boxstyle-normal' );
 create_bottom_setup();
 
 //
@@ -401,11 +401,11 @@ function abort($message ) {
               "<input type='submit' value='".$lang_setup['finish']."' /></p>\n".
               "</form>\n";
 
-  new_box_setup($lang_setup['setup5_banner3'], $content, 'boxdata', 'singlebox' );
+  new_box_setup($lang_setup['setup5_banner3'], $content, 'boxdata-small', 'head-small', 'boxstyle-normal' );
 
   if(DEBUG == 'Y' ) {
 
-    new_box_setup('Debugging info', $message, 'boxdata', 'singlebox' );
+    new_box_setup('Debugging info', $message, 'boxdata-small', 'head-small', 'boxstyle-normal' );
   }
 
   create_bottom_setup();

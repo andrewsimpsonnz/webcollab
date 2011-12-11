@@ -53,40 +53,40 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\">".
             "<table class=\"celldata\">";
 
 //user settings
-$content .= "<tr><td></td><th class=\"boxdata2\"><span class=\"underline\">".$lang_setup['setup6_title']."</span></th></tr>\n".
-            "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup6_admin_user1']."</td></tr>\n".
-            "<tr><th>".$lang_setup['setup6_admin_user2']."</th>".
+$content .= "<tr class=\"grouplist-head\"><td></td><th>".$lang_setup['setup6_title']."</th></tr>\n".
+            "<tr class=\"grouplist\"><td></td><td>".$lang_setup['setup6_admin_user1']."</td></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['setup6_admin_user2']."</th>".
             "<td><input type=\"text\" id=\"user\" name=\"admin_user\" value=\"admin\" class=\"size\" /></td></tr>\n";
 
-$content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup6_admin_pass1']."</td></tr>\n".
-            "<tr><th>".$lang_setup['setup6_admin_pass2']."</th>".
+$content .= "<tr class=\"grouplist\"><td></td><td>".$lang_setup['setup6_admin_pass1']."</td></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['setup6_admin_pass2']."</th>".
             "<td><input type=\"password\" id=\"password\" name=\"admin_password\" value=\"\" class=\"size\" /></td></tr>\n";
 
-$content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup6_admin_check']."</td></tr>\n".
+$content .= "<tr class=\"grouplist\"><td></td><td>".$lang_setup['setup6_admin_check']."</td></tr>\n".
             "<tr><th>".$lang_setup['setup6_admin_pass2']."</th>".
             "<td><input type=\"password\" id=\"password_check\" name=\"admin_password_check\" value=\"\" class=\"size\" /></td></tr>\n";
 
 if(USE_EMAIL == 'Y' ) {
 
   //email settings
-  $content .= "<tr><td></td><td class=\"boxdata2\">".$lang_setup['setup6_email1']."</td></tr>\n".
+  $content .= "<tr class=\"grouplist\"><td></td><td>".$lang_setup['setup6_email1']."</td></tr>\n".
               "<tr><th>".$lang_setup['setup6_email2']."</th>".
               "<td><input type=\"text\" id=\"email\" name=\"admin_email\" value=\"\" class=\"size\" /></td></tr>\n";
 
-  $content .= "<tr><td></td><td class=\"boxdata3\"><input type=\"submit\" value=\"".$lang_setup['submit']."\" ".
+  $content .= "<tr class=\"grouplist\"><td></td><td><input type=\"submit\" value=\"".$lang_setup['submit']."\" ".
               "onclick=\"return userCheck('password_check', 'password', 'user', 'email')\"/></td></tr>\n";
 
 }
 else {
 
-  $content .= "<tr><td></td><td class=\"boxdata3\"><input type=\"submit\" value=\"".$lang_setup['submit']."\" ".
+  $content .= "<tr class=\"grouplist\"><td></td><td><input type=\"submit\" value=\"".$lang_setup['submit']."\" ".
               "onclick=\"return userCheck('password_check', 'password', 'user')\"/></td></tr>\n";
 }
 
 $content .=   "</table>\n".
               "</form>\n";
 
-new_box_setup($lang_setup['setup6_banner'], $content, 'boxdata', 'tablebox' );
+new_box_setup($lang_setup['setup6_banner'], $content, 'boxdata-normal', 'head-normal', 'boxstyle-normal' );
 
 create_bottom_setup();
 

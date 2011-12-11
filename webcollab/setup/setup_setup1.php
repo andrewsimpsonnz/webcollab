@@ -79,7 +79,7 @@ $content .=    "<p style=\"text-align:center\">".
                "<input type=\"submit\" value=\"".$lang_setup['no']."\" /></p>\n".
                "</form>\n";
 
-new_box_setup($lang_setup['setup1_banner'], $content, 'boxdata', 'singlebox' );
+new_box_setup($lang_setup['setup1_banner'], $content, 'boxdata-small', 'head-small', 'boxstyle-normal' );
 create_bottom_setup();
 
 ?>

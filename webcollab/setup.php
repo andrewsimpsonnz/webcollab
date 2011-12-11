@@ -180,7 +180,7 @@ else {
              "<form method=\"post\" action=\"setup.php\">\n".
              "<table border=\"0\">\n".
              "<tr><td>".$lang_setup['login']."</td><td><input type=\"text\" class=\"size\" name=\"username\" /></td></tr>\n".
-              "<tr><td>".$lang_setup['password']."</td><td><input type=\"password\" class=\"size\" name=\"password\" value=\"\" /></td></tr>\n";
+             "<tr><td>".$lang_setup['password']."</td><td><input type=\"password\" class=\"size\" name=\"password\" value=\"\" /></td></tr>\n";
 }
 
 $content .= "<tr><td>".$lang_setup['language']."</td><td>\n".
@@ -203,7 +203,7 @@ $content .= "</select></td></tr>\n".
             "</form>\n";
 
 //set box options
-new_box_setup($lang_setup['setup_banner'], $content, 'boxdata', 'singlebox' );
+new_box_setup($lang_setup['setup_banner'], $content, 'boxdata-small', 'head-small' );
 
 create_bottom_setup();
 

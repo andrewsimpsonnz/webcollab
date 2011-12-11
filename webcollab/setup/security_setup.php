@@ -50,7 +50,7 @@ include_once(BASE.'database/database.php' );
 function error_setup($message ) {
 
   create_top_setup('Setup' );
-  new_box_setup('Setup error', $message, 'boxdata', 'singlebox' );
+  new_box_setup('Setup error', $message, 'boxdata-small', 'head-small', 'boxstyle-normal' );
   create_bottom_setup();
   die;
 
@@ -117,8 +117,8 @@ else {
 
   //check the last login time (there is a 10 min limit)
   if( ($row['now'] - $row['sec_lastaccess']) > 600 ) {
-    $q = db_prepare('UPDATE '.PRE.'logins SET session_key=\'xxxx\' WHERE user_id=?' );
-    db_execute($q, array($row['userid']) );
+    $q = db_prepare('UPDATE '.PRE.'logins SET session_key=\'xxxx\' WHERE session_key=?' );
+    db_execute($q, array(X ) );
     error_setup('Security timeout of 10 minutes has occurred on this session.' );
   }
 
