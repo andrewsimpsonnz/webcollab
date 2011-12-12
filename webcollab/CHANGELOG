@@ -1,4 +1,20 @@
 WebCollab Git
+*** 11 December 2011
+  Andrew Simpson
+
+- bugfix:  Error in task clone dates (Bug #3453022)
+
+- changed to CSS box model on setup
+
+- add SMTP_AUTH and TLS to mail setup
+
+WebCollab 3.00 - Avon
+*** 16 October 2011
+  Andrew Simpson
+
+-release
+
+WebCollab Git
 *** 21 September 2011
   Andrew Simpson
 
