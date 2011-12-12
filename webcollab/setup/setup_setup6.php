@@ -50,7 +50,7 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\">".
             "<input type=\"hidden\" id=\"alert_field\" name=\"alert1\" value=\"".$lang_setup['setup_js_alert_field']."\" />\n".
             "<input type=\"hidden\" id=\"pass_match\" name=\"alert2\" value=\"".$lang_setup['setup_js_pass_match']."\" />\n".
             "<input type=\"hidden\" id=\"alert_email\" name=\"alert3\" value=\"".$lang_setup['setup_js_email_miss']."\" /></fieldset>\n".
-            "<table class=\"celldata\">";
+            "<table class=\"celldata\">\n";
 
 //user settings
 $content .= "<tr class=\"grouplist-head\"><td></td><th>".$lang_setup['setup6_title']."</th></tr>\n".
@@ -63,14 +63,14 @@ $content .= "<tr class=\"grouplist\"><td></td><td>".$lang_setup['setup6_admin_pa
             "<td><input type=\"password\" id=\"password\" name=\"admin_password\" value=\"\" class=\"size\" /></td></tr>\n";
 
 $content .= "<tr class=\"grouplist\"><td></td><td>".$lang_setup['setup6_admin_check']."</td></tr>\n".
-            "<tr><th>".$lang_setup['setup6_admin_pass2']."</th>".
+            "<tr class=\"grouplist\"><th>".$lang_setup['setup6_admin_pass2']."</th>".
             "<td><input type=\"password\" id=\"password_check\" name=\"admin_password_check\" value=\"\" class=\"size\" /></td></tr>\n";
 
 if(USE_EMAIL == 'Y' ) {
 
   //email settings
   $content .= "<tr class=\"grouplist\"><td></td><td>".$lang_setup['setup6_email1']."</td></tr>\n".
-              "<tr><th>".$lang_setup['setup6_email2']."</th>".
+              "<tr class=\"grouplist\"><th>".$lang_setup['setup6_email2']."</th>".
               "<td><input type=\"text\" id=\"email\" name=\"admin_email\" value=\"\" class=\"size\" /></td></tr>\n";
 
   $content .= "<tr class=\"grouplist\"><td></td><td><input type=\"submit\" value=\"".$lang_setup['submit']."\" ".
