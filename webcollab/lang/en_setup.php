@@ -51,6 +51,10 @@ define('XML_LANG', "en" );
     $lang_setup['timezone']            = "Timezone:";
     $lang_setup['use_email']           = "Use email?";
     $lang_setup['smtp_host']           = "SMTP Host:";
+    $lang_setup['use_smtp_auth']       = "Use SMTP AUTH?";
+    $lang_setup['smtp_mail_user']      = "Username:";
+    $lang_setup['smtp_mail_password']  = "Password:";
+    $lang_setup['use_smtp_tls']        = "Use TLS email connection?";
     $lang_setup['help']                = "Help me with this form";
     $lang_setup['no_config']           = "Current configuration file does not allow web-based setup";
 
@@ -145,6 +149,8 @@ define('XML_LANG', "en" );
     $lang_setup['setup3_timezone']     = "Timezone Setting";
     $lang_setup['setup3_email']        = "Email Settings";
     $lang_setup['setup3_smtp']         = "SMTP host is required if email is enabled";
+    $lang_setup['setup3_smtp_auth']    = "SMTP AUTH";
+    $lang_setup['setup3_smtp_auth_option'] = "Username and password are required with SMTP AUTH option";
     $lang_setup['setup3_banner']       = "Setup - Stage 3 of 7 : Configuration";
 
 //setup4
@@ -166,6 +172,7 @@ define('XML_LANG', "en" );
     $lang_setup['setup4_no_lang']      = "Language file either does not exist, or file has been moved!";
     $lang_setup['setup4_no_mail']      = "Not able to verify mail server";
     $lang_setup['setup4_no_smtp']      = "SMTP Host must be specified!";
+    $lang_setup['setup4_no_pass']      = "SMTP AUTH must have a username and password!";
 
     $lang_setup['setup4_fatal']        = "Fatal errors detected in configuration!&nbsp;\n".
                                          "Press 'Re-enter Config Data' to make corrections.";
@@ -213,7 +220,7 @@ define('XML_LANG', "en" );
     $lang_setup['setup6_admin_pass2']  = "Admin password:";
     $lang_setup['setup6_admin_check']  = "Enter the password again...";
     $lang_setup['setup6_email1']       = "Email address for the administrator";
-    $lang_setup['setup6_email2']       = "Admin email";
+    $lang_setup['setup6_email2']       = "Admin email:";
     $lang_setup['setup6_banner']       = "Setup - Stage 6 of 7 : Setup the Admin user and password";
 
 //setup7
