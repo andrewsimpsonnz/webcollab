@@ -55,7 +55,8 @@ foreach($array_essential as $var ) {
 }
 
 //non-essential values
-$array_optional = array('manager_name', 'abbr_manager_name', 'db_password', 'file_base', 'file_maxsize', 'use_email', 'smtp_host', 'new_db' );
+$array_optional = array('manager_name', 'abbr_manager_name', 'db_password', 'file_base', 'file_maxsize',
+                        'use_email', 'smtp_host', 'smtp_auth', 'mail_user', 'mail_password', 'tls', 'new_db' );
 
 foreach($array_optional as $var ) {
   if(! isset($_POST[$var]) ) {
@@ -67,7 +68,7 @@ foreach($array_optional as $var ) {
 }
 
 //convert checkboxes to 'Y' or 'N'
-$array = array('use_email' );
+$array = array('use_email', 'smtp_auth', 'tls' );
 foreach($array as $var ) {
   if($data[$var] === 'on' ) {
     $data[$var] = 'Y';
@@ -308,6 +309,20 @@ if($data["use_email"] === "Y" && $data["smtp_host"] == "" ) {
 }
 
 $content .= "<tr class=\"grouplist\"><th>".$lang_setup['smtp_host']."</th><td>".$data["smtp_host"]."</td><th>".$status."</th></tr>\n";
+
+$content .= "<tr class=\"grouplist\"><th>".$lang_setup['use_smtp_auth']."</th><td>".$data["smtp_auth"]."</td></tr>\n";
+
+if($data["smtp_auth"] == 'Y' ) {
+  if((! $data["mail_user"] ) || (! $data["mail_password"] ) ) {
+    $status = "<span class=\"red\">".$lang_setup['setup4_no_pass']."</span>";
+    $flag = $flag + 10;
+  }
+
+  $content .= "<tr class=\"grouplist\"><th>".$lang_setup['smtp_mail_user']."</th><td>".$data["mail_user"]."</td><th>".$status."</th></tr>\n".
+              "<tr class=\"grouplist\"><th>".$lang_setup['smtp_mail_password']."</th><td>".$data["mail_password"]."</td></tr>\n";
+}
+
+$content .= "<tr class=\"grouplist\"><th>".$lang_setup['use_smtp_tls']."</th><td>".$data["tls"]."</td></tr>\n";
 
 if($flag > 9 ) {
   $status = "<span class=\"red\">".$lang_setup['setup4_fatal']."</span>\n";

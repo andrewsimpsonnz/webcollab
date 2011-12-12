@@ -55,7 +55,8 @@ foreach($array as $var ) {
 }
 
 //non-essential values
-$array = array('manager_name', 'abbr_manager_name', 'db_password', 'file_base', 'file_maxsize', 'use_email', 'smtp_host', 'new_db', 'db_connect' );
+$array = array('manager_name', 'abbr_manager_name', 'db_password', 'file_base', 'file_maxsize', 'use_email',
+               'smtp_host', 'smtp_auth', 'mail_user', 'mail_password', 'tls','new_db', 'db_connect' );
 
 foreach($array as $var ) {
   if(! isset($_POST[$var]) ) {
@@ -68,7 +69,7 @@ foreach($array as $var ) {
 
 //these values should all be defined as constants in the existing config file...
 $array = array('NUM_FILE_UPLOADS' => 3, 'FILE_DOWNLOAD' => 'inline',
-               'MAIL_TRANSPORT' => 'SMTP', 'SMTP_PORT' => 25, 'MAIL_USER' => '', 'MAIL_PASSWORD' => '', 'TLS' => 'N',
+               'MAIL_TRANSPORT' => 'SMTP', 'SMTP_PORT' => 25,
                'CSS_MAIN' => 'default.css', 'CSS_CALENDAR' => 'calendar.css', 'CSS_PRINT' => 'print.css',
                'SITE_IMG'     => 'webcollab.png',
                'NEW_TIME'     => 14,
@@ -76,13 +77,15 @@ $array = array('NUM_FILE_UPLOADS' => 3, 'FILE_DOWNLOAD' => 'inline',
                'VEVENT'       => 'N',
                'RSS_AUTODISCOVERY' => 'N',
                'SESSION_TIMEOUT'   => 1,
+               'TOKEN_TIMEOUT'     => 5,
                'WEB_AUTH'     => 'N',
                'PASS_STYLE'   => 'text',
                'GUEST_LOCKED' => 'N',
                'EMAIL_ERROR'  => '',
                'DEBUG'        => 'N',
                'NO_ERROR'     => 'N',
-               'PRE'          => '' );
+               'PRE'          => '',
+               'OUTPUT_COMPRESSION' => 'N' );
 
 //get array of constant's names
 $constants = array_keys($array);
@@ -171,12 +174,12 @@ $content .=
 "    //SMTP port (leave as 25 for ordinary mailservers)\n".
 "    define('SMTP_PORT', ".SMTP_PORT." );\n\n".
 "    //use smtp auth? ('Y' or 'N')\n".
-"    define('SMTP_AUTH', '".SMTP_AUTH."' );\n".
+"    define('SMTP_AUTH', '".$data["smtp_auth"]."' );\n".
 "      //if using SMTP_AUTH give username & password\n".
-"      define('MAIL_USER', '".MAIL_USER."' );\n".
-"      define('MAIL_PASSWORD', '".MAIL_PASSWORD."' );\n".
+"      define('MAIL_USER', '".$data["mail_user"]."' );\n".
+"      define('MAIL_PASSWORD', '".$data["mail_password"]."' );\n".
 "      //use TLS encryption?\n".
-"      define('TLS', '".TLS."' );\n\n".
+"      define('TLS', '".$data["tls"]."' );\n\n".
 "//----------------------------------------------------------------------------------------------\n".
 "// Less important items below this line\n\n".
 "//-- These items need to be edited directly from this file --\n\n".
@@ -202,7 +205,7 @@ $content .=
 "  //session timeout in hours\n".
 "  define('SESSION_TIMEOUT', ".SESSION_TIMEOUT." );\n\n".
 "  //security token timeout for forms (in minutes)\n".
-"  define('TOKEN_TIMEOUT', 5 );\n\n".
+"  define('TOKEN_TIMEOUT', ".TOKEN_TIMEOUT." );\n\n".
 "  //Use external webserver authorisation to login (values are 'N', or 'Y')\n".
 "  define('WEB_AUTH', '".WEB_AUTH."' );\n\n".
 "  //Show passwords in user edit screens as plain text or hidden ('****') (values are 'text', or 'password')\n".

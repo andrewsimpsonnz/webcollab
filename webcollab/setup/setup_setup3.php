@@ -82,7 +82,10 @@ if(defined('DATABASE_NAME' ) && (DATABASE_NAME != '') && ($new_db === 'N' ) && (
   $tz                = (TZ != '' )                ? TZ                : (int)date('Z')/3600;
   $use_email         = (USE_EMAIL != '' )         ? USE_EMAIL         : 'Y';
   $smtp_host         = (SMTP_HOST != '' )         ? SMTP_HOST         : 'localhost';
-
+  $smtp_auth         = (SMTP_AUTH != '' )         ? SMTP_AUTH         : '';
+  $mail_user         = (MAIL_USER != '' )         ? MAIL_USER         : '';
+  $mail_password     = (MAIL_PASSWORD != '' )     ? MAIL_PASSWORD     : '';
+  $tls               = (TLS != '' )               ? TLS               : '';
 }
 else {
   //this is a new install (or an edit from setup 4 )
@@ -100,6 +103,10 @@ else {
   $tz                = (isset($_POST['timezone']) )          ? $_POST['timezone']          : (int)date('Z')/3600;
   $use_email         = (isset($_POST['use_email']) )         ? $_POST['use_email']         : 'Y';
   $smtp_host         = (isset($_POST['smtp_host']) )         ? $_POST['smtp_host']         : 'localhost';
+  $smtp_auth         = (isset($_POST['smtp_auth']) )         ? $_POST['smtp_auth']         : 'N';
+  $mail_user         = (isset($_POST['mail_user']) )         ? $_POST['mail_user']         : '';
+  $mail_password     = (isset($_POST['mail_password']) )     ? $_POST['mail_password']     : '';
+  $tls               = (isset($_POST['tls']) )               ? $_POST['tls']               : 'N';
 }
 
 create_top_setup($lang_setup['setup3_banner'], 1 );
@@ -259,6 +266,36 @@ $content .= "<tr class=\"grouplist-head\"><td></td><th>".$lang_setup['setup3_ema
 $content .= "<tr class=\"grouplist\"><td></td><td><i>".$lang_setup['setup3_smtp']."</i></td></tr>\n".
             "<tr class=\"grouplist\"><th><i>".$lang_setup['smtp_host']."</i></th>".
             "<td><input type=\"text\" name=\"smtp_host\" value=\"".$smtp_host."\" style=\"width: 350px\" /></td></tr>\n";
+
+//smtp_auth settings
+if($smtp_auth === 'N' ) {
+  $setting = '';
+}
+else {
+  $setting = "checked=\"checked\"";
+}
+
+$content .= "<tr class=\"grouplist-head\"><td></td><th>".$lang_setup['setup3_smtp_auth']."</th></tr>\n".
+            "<tr class=\"grouplist\"><th>".$lang_setup['use_smtp_auth']."</th>".
+            "<td><input type=\"checkbox\" name=\"smtp_auth\" ".$setting." /></td></tr>\n";
+
+$content .= "<tr class=\"grouplist\"><td></td><td><i>".$lang_setup['setup3_smtp_auth_option']."</i></td></tr>\n".
+            "<tr class=\"grouplist\"><th><i>".$lang_setup['smtp_mail_user']."</i></th>".
+            "<td><input type=\"text\" name=\"mail_user\" value=\"".$mail_user."\" style=\"width: 350px\" /></td></tr>\n";
+
+$content .= "<tr class=\"grouplist\"><th><i>".$lang_setup['smtp_mail_password']."</i></th>".
+            "<td><input type=\"text\" name=\"mail_password\" value=\"".$mail_password."\" style=\"width: 350px\" /></td></tr>\n";
+
+//tls settings
+if($tls === 'N' ) {
+  $setting = '';
+}
+else {
+  $setting = "checked=\"checked\"";
+}
+
+$content .= "<tr class=\"grouplist\"><th>".$lang_setup['use_smtp_tls']."</th>".
+            "<td><input type=\"checkbox\" name=\"tls\" ".$setting." /></td></tr>\n";
 
 $content .=  "<tr class=\"grouplist\"><td></td><td><input type=\"submit\" value=\"".$lang_setup['submit']."\" /></td></tr>\n".
              "</table>\n".
