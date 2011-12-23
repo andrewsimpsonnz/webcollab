@@ -31,7 +31,7 @@ CREATE TABLE tasks (
 	INDEX (deadline),
 	INDEX (status, parent)
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE users (
@@ -47,7 +47,7 @@ CREATE TABLE users (
 	locale VARCHAR(10) NOT NULL DEFAULT 'en',
   INDEX (fullname(10))
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE usergroups (
@@ -57,7 +57,7 @@ CREATE TABLE usergroups (
 	private TINYINT NOT NULL DEFAULT 0,
 	INDEX (name(10))
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE forum (
@@ -73,7 +73,7 @@ CREATE TABLE forum (
 	INDEX (taskid),
 	INDEX (edited)
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE logins (
@@ -86,7 +86,7 @@ CREATE TABLE logins (
 	INDEX (session_key(10), user_id ),
   INDEX (lastaccess)
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE seen (
@@ -95,7 +95,7 @@ CREATE TABLE seen (
 	time TIMESTAMP NOT NULL DEFAULT 0,
 	INDEX (taskid, userid)
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE taskgroups (
@@ -104,7 +104,7 @@ CREATE TABLE taskgroups (
 	description VARCHAR(255),
 	INDEX (name(10))
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE contacts (
@@ -126,14 +126,14 @@ CREATE TABLE contacts (
 	user_id INT UNSIGNED NOT NULL,
         taskid INT UNSIGNED NOT NULL DEFAULT 0
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE contacts_tasks (
 	contact_id INT,
 	task_id INT
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE files (
@@ -148,7 +148,7 @@ CREATE TABLE files (
 	taskid INT UNSIGNED NOT NULL,
 	INDEX (taskid)
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE usergroups_users (
@@ -156,13 +156,13 @@ CREATE TABLE usergroups_users (
 	userid INT UNSIGNED NOT NULL,
 	INDEX (userid, usergroupid)
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE maillist (
 	email VARCHAR(200)
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE config (
@@ -176,7 +176,7 @@ CREATE TABLE config (
 	project_order VARCHAR(200),
 	task_order VARCHAR(200)
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE login_attempt ( 
@@ -184,14 +184,14 @@ CREATE TABLE login_attempt (
 	ip VARCHAR(100) NOT NULL,
 	last_attempt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE site_name (
 	manager_name VARCHAR(100),
 	abbr_manager_name VARCHAR(100)
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE tokens (
@@ -200,7 +200,7 @@ CREATE TABLE tokens (
   userid INT UNSIGNED NOT NULL,
   lastaccess TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 )
-TYPE = InnoDB
+ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 INSERT INTO users ( id, name, fullname, password, email, admin, deleted )
