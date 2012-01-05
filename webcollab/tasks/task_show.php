@@ -2,7 +2,7 @@
 /*
   $Id: task_show.php 2263 2009-08-01 02:39:44Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -300,11 +300,6 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
   //admin - owner - groupaccess  ==> [edit] button
   if((ADMIN ) || ($access ) ) {
     $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."\">".$lang['edit']."</a>]&nbsp;\n";
-  }
-
-  //(owner) & (uncompleted task)==> [I don't want it anymore] button
-  if(UID == $TASKID_ROW['owner'] && ($TASKID_ROW['status'] != 'done' ) ) {
-    $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=0\">".$lang['i_dont_want']."</a>]&nbsp;\n";
   }
 
   //(owner) & (uncompleted task)==> [I don't want it anymore] button

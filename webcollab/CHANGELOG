@@ -1,4 +1,16 @@
 WebCollab Git
+*** 6 January 2012
+  Andrew Simpson
+
+- bugfix: Duplicate code removed in task_show (Bug #3469905) (Credit: Finnur Eiriksson (klauvi))
+
+WebCollab Git
+*** 22 December 2011
+  Andrew Simpson
+
+- bugfix: MySQL engine type deprecated in setup (Bug #3464047) (Credit: Xnohat)
+
+WebCollab Git
 *** 11 December 2011
   Andrew Simpson
 
