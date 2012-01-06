@@ -78,7 +78,6 @@ function project_summary($q, $depth=0, $input='' ) {
   global $user_array, $usergroups_array, $taskgroups_array, $parent_array;
   global $no_access_project;
   global $sortby;
-  global $q2;
 
   //reset variables
   $result = '';
@@ -378,6 +377,11 @@ function project_summary($q, $depth=0, $input='' ) {
     if( $depth >= 0 ) {
       //see if task is in parent cache
       if(isset($parent_array[($row['id'])] ) ) {
+
+        //prepare statement for child tasks
+        // We can't cache this because the prepared statements clobber each other..
+        $q2 = project_query('WHERE '.PRE.'tasks.parent=?'.usergroup_tail().' ORDER BY taskname' );
+
         //add child tasks
         $result .= project_summary($q2, $depth+1, array($row['id'] ) );
       }
@@ -477,9 +481,6 @@ $content .= "<b>".$lang['task']."</b></a></small></td></tr>";
 
 //set defaults
 $group_tail = 'WHERE archive=0'.usergroup_tail();
-
-//prepare statement for child tasks
-$q2 = project_query('WHERE '.PRE.'tasks.parent=?'.usergroup_tail().' ORDER BY taskname' );
 
 // tail end of SQL query
 switch($sortby ) {
