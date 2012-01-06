@@ -193,10 +193,25 @@ else {
         $flag = $flag + 10;
         break;
     }
+
+    //set error handling
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
   }
   catch (PDOException $e) {
-    $status = "<span class=\"red\">".$lang_setup['setup4_no_db']."</span>";
+    $status = "<span class=\"red\">".$lang_setup['setup4_no_server']."</span>";
     $flag = $flag + 10;
+  }
+
+  if($dbh ) {
+    try {
+      $sth = $dbh->query("SELECT COUNT(*) FROM ".PRE."site_name" );
+      $result = $sth->fetch(PDO::FETCH_NUM );
+    }
+    catch (PDOException $e) {
+      $status = "<span class=\"red\">".$lang_setup['setup4_no_db']."</span>";
+      $flag = $flag + 10;
+    }
   }
 }
 
