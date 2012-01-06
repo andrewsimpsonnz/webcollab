@@ -4,6 +4,10 @@ WebCollab Git
 
 - bugfix: Duplicate code removed in task_show (Bug #3469905) (Credit: Finnur Eiriksson (klauvi))
 
+- bugfix: Task listing fixed in task_summary_list (Bug #3469913 )(Thanks to Finnur Eiriksson (klauvi))
+
+- better error trapping for database errors in setup_setup4
+
 WebCollab Git
 *** 22 December 2011
   Andrew Simpson
