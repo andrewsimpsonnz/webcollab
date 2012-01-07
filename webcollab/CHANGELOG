@@ -20,7 +20,7 @@ WebCollab Git
 *** 11 December 2011
   Andrew Simpson
 
-- bugfix:  Error in task clone dates (Bug #3453022) (Thanks to bshah (projectboss)) 
+- bugfix:  Error in task clone dates (Bug #3453022) (Thanks to bshah (projectboss))
 
 - changed to CSS box model on setup
 
