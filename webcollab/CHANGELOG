@@ -6,6 +6,8 @@ WebCollab Git
 
 - bugfix: Task listing fixed in task_summary_list (Bug #3469913 )(Thanks to Finnur Eiriksson (klauvi))
 
+- code refactoring in task_summary_list for improvements after bug above
+
 - better error trapping for database errors in setup_setup4
 
 WebCollab Git
@@ -18,7 +20,7 @@ WebCollab Git
 *** 11 December 2011
   Andrew Simpson
 
-- bugfix:  Error in task clone dates (Bug #3453022)
+- bugfix:  Error in task clone dates (Bug #3453022) (Thanks to bshah (projectboss)) 
 
 - changed to CSS box model on setup
 
