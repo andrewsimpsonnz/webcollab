@@ -2,7 +2,7 @@
 /*
   $Id: setup_db_build.php 2313 2009-09-21 07:39:39Z andrewsimpson $
 
-  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -278,7 +278,7 @@ $content =  "<form method=\"post\" action=\"setup_handler.php\">\n".
             "<input type=\"hidden\" name=\"new_db\" value=\"Y\" />\n".
             "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
             "<div style=\"text-align:center\">".$lang_setup['setupdb_done']."</div>\n".
-            "<p style=\"text-align:center\"><input type=\"submit\" value=\"".$lang_setupdb['setupdb_continue']."\" /></p\n".
+            "<p style=\"text-align:center\"><input type=\"submit\" value=\"".$lang_setupdb['setupdb_continue']."\" /></p>\n".
             "</form>\n";
 
 new_box_setup($lang_setup['setupdb_banner'], $content, 'boxdata-small', 'head-small', 'boxstyle-normal' );

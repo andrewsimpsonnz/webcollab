@@ -2,7 +2,7 @@
 /*
   $Id: setup_setup4.php 2314 2009-09-21 07:40:27Z andrewsimpson $
 
-  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -340,14 +340,14 @@ if($data["smtp_auth"] == 'Y' ) {
 $content .= "<tr class=\"grouplist\"><th>".$lang_setup['use_smtp_tls']."</th><td>".$data["tls"]."</td></tr>\n";
 
 if($flag > 9 ) {
-  $status = "<span class=\"red\">".$lang_setup['setup4_fatal']."</span>\n";
+  $status = "<div class=\"red\">".$lang_setup['setup4_fatal']."</div>\n";
 }
 else {
   if($flag > 0 ){
-    $status = "<span class=\"blue\">".$lang_setup['setup4_warning']."<font>\n";
+    $status = "<div class=\"blue\">".$lang_setup['setup4_warning']."</div>\n";
   }
   else {
-    $status = "<span class=\"green\">".$lang_setup['setup4_all_ok']."</span>\n";
+    $status = "<div class=\"green\">".$lang_setup['setup4_all_ok']."</div>\n";
   }
 }
 

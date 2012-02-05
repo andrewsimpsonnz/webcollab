@@ -72,11 +72,11 @@ define('XML_LANG', "en" );
 
 //setup1
 
-    $lang_setup['setup1_no_permission'] = "<p><b>The webserver does not have permissions to write to the config file ([webcollab]/config/config.php).</p>".
-                                         "<p>You can make a new database, but setup will not be able proceed and write to the config file.</p>\n".
-                                         "<p>To allow setup to alter the config file you can either:<ul>\n".
-                                         "<li>Change the file permissions to allow the webserver to write to the file '/config/config.php'</li>\n".
-                                         "<li>Do a manual configuration by editing the file directly.</li>\n</ul></b></p>\n";
+    $lang_setup['setup1_no_permission'] = "<p><b>The webserver does not have permissions to write to the config file ([webcollab]/config/config.php).</b></p>".
+                                         "<p><b>You can make a new database, but setup will not be able proceed and write to the config file.</b></p>\n".
+                                         "<p><b>To allow setup to alter the config file you can either:</b></p>\n<ul>\n".
+                                         "<li><b>Change the file permissions to allow the webserver to write to the file '/config/config.php'</b></li>\n".
+                                         "<li><b>Do a manual configuration by editing the file directly.</b></li>\n</ul>\n";
 
     $lang_setup['setup1_db_exists']   = "<p>A database is already specified in the configuration file.  ".
                                          "Do you wish to create a new database?</p>\n";
@@ -174,13 +174,13 @@ define('XML_LANG', "en" );
     $lang_setup['setup4_no_smtp']      = "SMTP Host must be specified!";
     $lang_setup['setup4_no_pass']      = "SMTP AUTH must have a username and password!";
 
-    $lang_setup['setup4_fatal']        = "Fatal errors detected in configuration!&nbsp;\n".
-                                         "Press 'Re-enter Config Data' to make corrections.";
+    $lang_setup['setup4_fatal']        = "<b>Fatal errors detected in configuration!&nbsp;\n".
+                                         "Press 'Re-enter Config Data' to make corrections.</b>";
 
     $lang_setup['setup4_warning']      = "<b>Warning errors detected in configuration.&nbsp;\n".
-                                         "However, the auto-detection is not totally reliable.<br />\n".
-                                         "<ul>\n<li>If you are sure the input is correct, press 'Write to Config' button to proceed.</li>\n".
-                                         "<li>To edit, or alter the values, press 'Re-enter Config Data'</li>\n</ul>\n";
+                                         "However, the auto-detection is not totally reliable.</b><br />\n".
+                                         "<ul>\n<li><b>If you are sure the input is correct, press 'Write to Config' button to proceed.</b></li>\n".
+                                         "<li><b>To edit, or alter the values, press 'Re-enter Config Data'.<b></li>\n</ul>\n";
 
     $lang_setup['setup4_all_ok']       = "No errors detected in the input configuration.<br />\n".
                                           "Press 'Write to Config' button to proceed.";
