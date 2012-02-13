@@ -180,7 +180,7 @@ define('XML_LANG', "en" );
     $lang_setup['setup4_warning']      = "<b>Warning errors detected in configuration.&nbsp;\n".
                                          "However, the auto-detection is not totally reliable.</b><br />\n".
                                          "<ul>\n<li><b>If you are sure the input is correct, press 'Write to Config' button to proceed.</b></li>\n".
-                                         "<li><b>To edit, or alter the values, press 'Re-enter Config Data'.<b></li>\n</ul>\n";
+                                         "<li><b>To edit, or alter the values, press 'Re-enter Config Data'.</b></li>\n</ul>\n";
 
     $lang_setup['setup4_all_ok']       = "No errors detected in the input configuration.<br />\n".
                                           "Press 'Write to Config' button to proceed.";
