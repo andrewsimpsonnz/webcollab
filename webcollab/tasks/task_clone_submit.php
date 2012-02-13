@@ -2,7 +2,7 @@
 /*
   $Id: task_clone_submit.php 2286 2009-08-22 08:45:30Z andrewsimpson $
 
-  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
    WebCollab
   ---------------------------------------
@@ -44,13 +44,11 @@ include_once(BASE.'tasks/task_submit.php' );
 //
 function query_prepare() {
 
-  global $q1, $q2, $q3, $q4, $q5, $q6;
+  global $q2, $q3, $q4, $q5, $q6;
   global $delim;
 
   //set the usergroup SQL tail
   $tail = usergroup_tail();
-
-  $q1 = db_prepare('SELECT id FROM '.PRE.'tasks WHERE parent=?' );
 
   $q2 = db_prepare('SELECT * FROM '.PRE.'tasks WHERE id=?'.$tail );
 
@@ -94,10 +92,11 @@ function query_prepare() {
 
 function add($taskid, $new_parent, $new_name, $delta_deadline ) {
 
-  global $q1, $parent_array;
+  global $parent_array;
 
   if($new_parent != 0 ) {
-    //now cloning a child task    
+    $q1 = db_prepare('SELECT id FROM '.PRE.'tasks WHERE parent=?' );
+    //now cloning a child task
     db_execute($q1, array($taskid ) );
 
     //clone all the tasks at this level
