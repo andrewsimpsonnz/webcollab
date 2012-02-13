@@ -1,4 +1,9 @@
 WebCollab Git
+*** 13 February 2012
+
+- bugfix: Clone project recursive database call fixed (Thanks to tomas7)
+
+WebCollab Git
 *** 6 January 2012
   Andrew Simpson
 
