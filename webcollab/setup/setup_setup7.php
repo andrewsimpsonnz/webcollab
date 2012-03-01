@@ -67,22 +67,25 @@ if(USE_EMAIL == 'Y' ) {
     error_setup("The value for email is not set");
   }
 
-  if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $_POST['admin_email'] ) ) || (strlen(trim($_POST['admin_email']) ) > 200 ) ) {
+  if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $_POST['admin_email'] ) ) || (strlen($_POST['admin_email'] ) > 200 ) ) {
     error_setup('Invalid email address given' );
   }
 
   $admin_email = $_POST['admin_email'];
+
+  //update the database
+  $q = db_prepare("UPDATE ".PRE."users SET name=?, password=?, email=? WHERE id=1;" );
+  db_execute($q, array($admin_user, md5($admin_password ), $admin_email ) );
+
+  $q = db_prepare("UPDATE ".PRE."config SET email_admin=?;" );
+  db_execute($q, array($admin_email ) );
+
 }
 else {
-  $admin_email = NULL;
+  //case with no email
+  $q = db_prepare("UPDATE ".PRE."users SET name=?, password=? WHERE id=1;" );
+  db_execute($q, array($admin_user, md5($admin_password ) ) );
 }
-
-//update the database
-$q = db_prepare("UPDATE ".PRE."users SET name=?, password=?, email=? WHERE id=1;" );
-db_execute($q, array($admin_user, md5($admin_password ), $admin_email ) );
-
-$q = db_prepare("UPDATE ".PRE."config SET email_admin=?;" );
-db_execute($q, array($admin_email ) );
 
 //show success message
 create_top_setup($lang_setup['setup7_banner'] );
