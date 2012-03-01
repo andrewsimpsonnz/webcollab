@@ -201,12 +201,12 @@ if(ADMIN ) {
 }
 else {
   $tail_view  = ' AND (globalaccess=\'f\' AND usergroupid
-                    IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.db_quote(UID ).')
+                    IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
                   OR globalaccess=\'t\'
                   OR usergroupid=0) ';
 
   $tail_group = ' WHERE private=0 OR (private=1 AND id
-                    IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.db_quote(UID ).') ) ';
+                    IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.') ) ';
 }
 
 //sort order for table listing

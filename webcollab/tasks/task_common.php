@@ -149,7 +149,7 @@ function usergroup_tail() {
     $tail = ' ';
   }
   else {
-    $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.db_quote(UID ).')
+    $tail = ' AND ('.PRE.'tasks.globalaccess=\'f\' AND '.PRE.'tasks.usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid='.UID.')
               OR '.PRE.'tasks.globalaccess=\'t\'
               OR '.PRE.'tasks.usergroupid=0) ';
   }
