@@ -175,7 +175,7 @@ for($i=0 ; $i < $index ; ++$i ) {
   //delete all files physically
   db_execute($q4, array($match_array[$i] ) );
 
-  for($j=0 ; $file_row = @db_fetch_array($q, $j ) ; ++$j ) {
+  for($j=0 ; $file_row = @db_fetch_array($q4, $j ) ; ++$j ) {
 
     if(file_exists(FILE_BASE.'/'.$file_row['fileid'].'__'.$file_row['filename'] ) ) {
       unlink( FILE_BASE.'/'.$file_row['fileid'].'__'.$file_row['filename'] );

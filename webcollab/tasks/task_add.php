@@ -214,7 +214,7 @@ if( @safe_integer($_GET['parentid']) ) {
   $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."'); return false\">".$lang['taskgroup']."</a>: </td><td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
-  for( $i=0 ; $taskgroup_row = @db_fetch_array($q, $i ) ; ++$i) {
+  for( $i=0 ; $taskgroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
 
     //inherit taskgroup from parent
     if($parent_row['taskgroupid'] == $taskgroup_row['id'] ) {
@@ -306,11 +306,11 @@ else {
               "</select></td></tr>";
 
   //get all users in order to show a task owner
-  $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname');
+  $q = db_query('SELECT id, fullname, private FROM '.PRE.'users WHERE deleted=\'f\' AND guest=0 ORDER BY fullname' );
 
   //owner
   $content .= "<tr><td>".$lang['project_owner'].":</td><td><select name=\"owner\">\n";
-  for( $i=0 ; $user_row = @db_fetch_array($q, $i) ; ++$i) {
+  for( $i=0 ; $user_row = @db_fetch_array($q, $i) ; ++$i ) {
 
     //user test for privacy
     if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! isset($allowed[($user_row['id'])] ) ) ){
@@ -329,6 +329,7 @@ else {
 
   //show all the groups
   $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
+
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td><td><select name=\"usergroupid\">\n".
               "<option value=\"0\">".$lang['all_groups']."</option>\n";
 
