@@ -186,6 +186,15 @@ foreach($input_array as $var ) {
 if(! user_access($taskid ) ){
   warning($lang['task_submit'], $lang['not_owner'] );
 }
+
+//set finished_time if task is done
+if($status == 'done' ) {
+  $finish_row = 'finished_time=now(),';
+}
+else {
+  $finish_row = '';
+}
+
 //begin transaction
 db_begin();
 
@@ -211,6 +220,7 @@ $q = db_prepare('UPDATE '.PRE.'tasks
                         status=?,
                         globalaccess=?,
                         groupaccess=?,
+                        '.$finish_row.'
                         sequence=sequence+1
                         WHERE id=?' );
 
