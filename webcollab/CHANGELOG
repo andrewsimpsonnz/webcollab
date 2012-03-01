@@ -1,4 +1,16 @@
 WebCollab Git
+*** 26 February 2012
+
+- bugfix: setup7 gives database error with no email selected (Credit: travier)
+
+- bugfix: uploaded files for task not deleted when tasks deleted
+
+WebCollab 3.10 - Nelson
+*** 20 February 2012
+
+- release
+
+WebCollab Git
 *** 13 February 2012
 
 - bugfix: Clone project recursive database call fixed (Thanks to tomas7)
