@@ -2,7 +2,7 @@
 /*
   $Id: task_list.php 2294 2009-08-24 09:41:39Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -164,6 +164,7 @@ function find_task_children($parent ) {
 function task_state($key ) {
 
   global $task_array, $lang, $task_state;
+  global $q1;
 
   $content = '<li>';
 
@@ -174,8 +175,7 @@ function task_state($key ) {
   if((TIME_NOW - $max ) > 86400 * NEW_TIME ) {
     //if task is over limit in NEW_TIME and still not looked at by you, mark it as seen, and move on...
     if(! $task_array[$key]['last_seen'] ) {
-      $q = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES (?, ?, now() )' );
-      db_execute($q, array(UID, $task_array[$key]['id'] ) );
+      db_execute($q1, array(UID, $task_array[$key]['id'] ) );
     }
   }
   //task has changed since last seen - show the changes to you
@@ -296,6 +296,9 @@ $parentid = $_REQUEST['taskid'];
 
 //set the usergroup permissions on queries
 $tail = usergroup_tail();
+
+//set prepared statement
+$q1 = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES (?, ?, now() )' );
 
 $q = db_prepare('SELECT projectid FROM '.PRE.'tasks WHERE parent=? LIMIT 1' );
 
