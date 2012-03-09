@@ -2,7 +2,7 @@
 /*
   $Id: mysql_database.php 2040 2008-11-23 05:46:25Z andrewsimpson $
 
-  (c) 2009 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2009 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -188,6 +188,14 @@ function db_fetch_array($sth, $row=0 ) {
 function db_fetch_num($sth, $row=0 ) {
 
   return $sth->fetch(PDO::FETCH_NUM );
+}
+
+//
+// fetch all rows as an array
+//
+function db_fetch_all($sth ) {
+
+  return $sth->fetchAll();
 }
 
 //
