@@ -1,4 +1,15 @@
 WebCollab Git
+*** 9 March 2012
+
+- bugfix: Improved bugfix for clone project recursive database calls
+
+- bugfix: Improved bugfix for task_summary_list (Bug #3469913 )
+
+- add db_fetch_all() to enable bugfixes above
+
+- bugfix: Don't show duplicate post listings in forum menubox
+
+WebCollab Git
 *** 26 February 2012
 
 - bugfix: setup7 gives database error with no email selected (Credit: travier)
