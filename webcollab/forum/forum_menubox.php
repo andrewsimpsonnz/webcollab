@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -50,7 +50,7 @@ else {
            OR '.PRE.'tasks.usergroupid=0) ';
 }
 
-$q = db_query('SELECT '.PRE.'forum.taskid AS taskid,
+$q = db_query('SELECT DISTINCT '.PRE.'forum.taskid AS taskid,
                       '.PRE.'forum.edited AS last_edit,
                       '.PRE.'tasks.name AS taskname
                       FROM '.PRE.'forum
