@@ -93,21 +93,18 @@ function project_summary($q, $depth=0, $input='' ) {
 
   db_execute($q, $input );
 
-  for( $i=0 ; $query_row = @db_fetch_array($q, $i ) ; ++$i ) {
+  //store retrieved data rows into an array to allow new database calls to be made on same stored statement
+  $result_array = db_fetch_all($q );
+
+  //cycle though task data retrieved from database and process
+  foreach($result_array as $row ) {
 
     //don't show tasks in closed usergroup projects
-    if( (! ADMIN ) && isset($no_access_project[($query_row['projectid'])] ) ) {
-      if(! isset($GID[ ($no_access_project[($query_row['projectid'])] ) ] ) ) {
+    if( (! ADMIN ) && isset($no_access_project[($row['projectid'])] ) ) {
+      if(! isset($GID[ ($no_access_project[($row['projectid'])] ) ] ) ) {
         continue;
       }
     }
-
-    //store retrieved data rows into an array to allow new database calls to be made on same stored statement
-    $task_array[$i] = $query_row;
-  }
-
-  //cycle though task data retrieved from database and process
-  foreach($task_array as $row ) {
 
     //flags column
     $alink = "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\">";

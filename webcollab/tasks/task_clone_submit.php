@@ -44,11 +44,13 @@ include_once(BASE.'tasks/task_submit.php' );
 //
 function query_prepare() {
 
-  global $q2, $q3, $q4, $q5, $q6;
+  global $q1, $q2, $q3, $q4, $q5, $q6;
   global $delim;
 
   //set the usergroup SQL tail
   $tail = usergroup_tail();
+
+  $q1 = db_prepare('SELECT id FROM '.PRE.'tasks WHERE parent=?' );
 
   $q2 = db_prepare('SELECT * FROM '.PRE.'tasks WHERE id=?'.$tail );
 
@@ -92,15 +94,21 @@ function query_prepare() {
 
 function add($taskid, $new_parent, $new_name, $delta_deadline ) {
 
-  global $parent_array;
+  global $parent_array, $q1;
+
+  //reset variables
+  $task_array = array();
 
   if($new_parent != 0 ) {
-    $q1 = db_prepare('SELECT id FROM '.PRE.'tasks WHERE parent=?' );
     //now cloning a child task
     db_execute($q1, array($taskid ) );
 
     //clone all the tasks at this level
-    for( $i=0; $row = @db_fetch_array($q1, $i ); ++$i ) {
+     //store retrieved data rows into an array to allow new database calls to be made on same stored statement
+    $result_array = db_fetch_all($q1 );
+
+    //cycle though task data retrieved from database and process
+    foreach($result_array as $row ) {
       $new_taskid = copy_across($row['id'], $new_parent, NULL, $delta_deadline );
 
       //recursive function if the subtask is listed in parent_array (it has children then)
