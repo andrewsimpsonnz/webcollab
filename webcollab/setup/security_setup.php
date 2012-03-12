@@ -96,8 +96,8 @@ else {
   $q = db_prepare('SELECT '.PRE.'logins.user_id AS user_id,
                           '.PRE.'logins.lastaccess AS lastaccess,
                           '.PRE.'users.admin AS admin,
-                          '.$epoch.' now() ) AS now,
-                          '.$epoch.' lastaccess) AS sec_lastaccess
+                          '.db_epoch().' now() ) AS now,
+                          '.db_epoch().' lastaccess) AS sec_lastaccess
                           FROM '.PRE.'logins
                           LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
                           WHERE '.PRE.'logins.session_key=?' );

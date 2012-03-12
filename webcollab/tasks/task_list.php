@@ -294,9 +294,6 @@ if(! @safe_integer($_REQUEST['taskid']) ) {
 
 $parentid = $_REQUEST['taskid'];
 
-//set the usergroup permissions on queries
-$tail = usergroup_tail();
-
 //set prepared statement
 $q1 = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES (?, ?, now() )' );
 
@@ -331,10 +328,10 @@ $q = db_prepare('SELECT '.PRE.'tasks.id AS id,
                 '.PRE.'tasks.parent AS parent,
                 '.PRE.'tasks.status AS status,
                 '.PRE.'tasks.finished_time AS finished_time,
-                '.$epoch.' '.PRE.'tasks.deadline) AS due,
-                '.$epoch.' '.PRE.'tasks.edited) AS edited,
-                '.$epoch.' '.PRE.'tasks.lastforumpost) AS lastpost,
-                '.$epoch.' '.PRE.'tasks.lastfileupload) AS lastfileupload,
+                '.db_epoch().' '.PRE.'tasks.deadline) AS due,
+                '.db_epoch().' '.PRE.'tasks.edited) AS edited,
+                '.db_epoch().' '.PRE.'tasks.lastforumpost) AS lastpost,
+                '.db_epoch().' '.PRE.'tasks.lastfileupload) AS lastfileupload,
                 '.PRE.'tasks.owner AS owner,
                 '.PRE.'tasks.priority AS priority,
                 '.PRE.'users.id AS userid,
@@ -342,13 +339,13 @@ $q = db_prepare('SELECT '.PRE.'tasks.id AS id,
                 '.PRE.'taskgroups.id AS group_id,
                 '.PRE.'taskgroups.name AS group_name,
                 '.PRE.'taskgroups.description AS group_description,
-                '.$epoch.' '.PRE.'seen.time) AS last_seen
+                '.db_epoch().' '.PRE.'seen.time) AS last_seen
                 FROM '.PRE.'tasks
                 LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
                 LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid)
                 LEFT JOIN '.PRE.'seen ON ('.PRE.'tasks.id='.PRE.'seen.taskid AND '.PRE.'seen.userid=?)
                 WHERE '.PRE.'tasks.projectid=?
-                '.$tail.
+                '.usergroup_tail().
                 'ORDER BY '.$no_group.' group_name, '.$task_order );
 
 db_execute($q, array(UID, $projectid ) );

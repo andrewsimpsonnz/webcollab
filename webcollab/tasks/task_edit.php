@@ -135,7 +135,7 @@ switch($TYPE) {
 
   case 'task':
     //get parent details
-    $q = db_prepare('SELECT '.$epoch.'deadline) AS epoch_deadline, status FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+    $q = db_prepare('SELECT '.db_epoch().'deadline) AS epoch_deadline, status FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
     db_execute($q, array($TASKID_ROW['parent'] ) );
     $parent_row = db_fetch_array($q, 0 );
 

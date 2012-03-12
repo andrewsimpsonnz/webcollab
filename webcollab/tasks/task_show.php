@@ -56,7 +56,7 @@ $q = db_prepare('SELECT '.PRE.'tasks.created AS created,
                       '.PRE.'users.fullname AS fullname,
                       '.PRE.'taskgroups.name AS taskgroup_name,
                       '.PRE.'usergroups.name AS usergroup_name,
-                      '.$epoch.' '.PRE.'seen.time) AS last_seen
+                      '.db_epoch().' '.PRE.'seen.time) AS last_seen
                       FROM '.PRE.'tasks
                       LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
                       LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid)

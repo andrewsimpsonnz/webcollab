@@ -51,7 +51,6 @@ $no_access_project = array();
 // Creates stored statement for main function
 //
 function project_query($tail, $equiv='' ) {
-  global $epoch;
 
   $q = db_prepare('SELECT '.PRE.'tasks.id AS id,
                           '.PRE.'tasks.parent AS parent,
@@ -64,11 +63,11 @@ function project_query($tail, $equiv='' ) {
                           '.PRE.'tasks.usergroupid AS usergroupid,
                           '.PRE.'tasks.projectid AS projectid,
                           '.PRE.'tasks.completed AS completed,
-                          '.$epoch.' deadline) AS due,
-                          '.$epoch.' '.PRE.'tasks.edited) AS edited,
-                          '.$epoch.' '.PRE.'tasks.lastforumpost) AS lastpost,
-                          '.$epoch.' '.PRE.'tasks.lastfileupload) AS lastfileupload,
-                          '.$epoch.' '.PRE.'seen.time) AS last_seen
+                          '.db_epoch().' deadline) AS due,
+                          '.db_epoch().' '.PRE.'tasks.edited) AS edited,
+                          '.db_epoch().' '.PRE.'tasks.lastforumpost) AS lastpost,
+                          '.db_epoch().' '.PRE.'tasks.lastfileupload) AS lastfileupload,
+                          '.db_epoch().' '.PRE.'seen.time) AS last_seen
                           '.$equiv.'
                           FROM '.PRE.'tasks
                           LEFT JOIN '.PRE.'seen ON ('.PRE.'tasks.id='.PRE.'seen.taskid AND '.PRE.'seen.userid='.UID.')

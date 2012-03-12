@@ -205,9 +205,6 @@ $row = db_fetch_num($q, 0 );
 $project_order = $row[0];
 $task_order    = $row[1];
 
-//set the usergroup permissions on queries
-$tail = usergroup_tail();
-
 //don't get tasks if we aren't going to view them
 if(! $condensed) {
 
@@ -218,11 +215,11 @@ if(! $condensed) {
                         projectid,
                         status,
                         priority,
-                        '.$epoch.' deadline ) AS due
+                        '.db_epoch().' deadline ) AS due
                         FROM '.PRE.'tasks
                         WHERE status<>\'done\'
                         AND parent<>0 '
-                        .$tail
+                        .usergroup_tail()
                         .$task_order );
 
   for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
@@ -266,7 +263,7 @@ $q = db_query('SELECT id,
                       name,
                       deadline,
                       status,
-                      '.$epoch.' deadline) AS due,
+                      '.db_epoch().' deadline) AS due,
                       priority,
                       finished_time,
                       completion_time,

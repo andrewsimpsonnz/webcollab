@@ -55,7 +55,7 @@ $q = db_query('SELECT DISTINCT '.PRE.'forum.taskid AS taskid,
                       '.PRE.'tasks.name AS taskname
                       FROM '.PRE.'forum
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
-                      WHERE '.PRE.'forum.edited > ( now()-INTERVAL '.$delim.NEW_TIME.' DAY'.$delim.')
+                      WHERE '.PRE.'forum.edited > ( now()-INTERVAL '.db_delim(NEW_TIME.' DAY' ).')
                       '.$tail.'
                       GROUP BY '.PRE.'forum.taskid, last_edit, taskname
                       ORDER BY last_edit DESC LIMIT 50' );

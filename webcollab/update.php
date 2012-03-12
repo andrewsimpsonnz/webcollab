@@ -91,7 +91,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
       //count the number of recent login attempts
       if( ! $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
                                 WHERE name=?
-                                AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 4', 0 ) ) {
+                                AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE' ).') LIMIT 4', 0 ) ) {
         secure_error('Unable to connect to database.  Please try again later.' );
       }
 
@@ -118,7 +118,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
   //remove the old login information for post 1.60 database
   if($flag_attempt ) {
-    $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.$delim.'20 MINUTE'.$delim.') OR name=?' );
+    $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.db_delim('20 MINUTE' ).') OR name=?' );
     db_execute($q, array($username ) );
   }
 
@@ -390,7 +390,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     db_execute($q, array(MANAGER_NAME, ABBR_MANAGER_NAME ) );
 
     //update deadline hours
-    db_query('UPDATE '.PRE.'tasks SET deadline=(deadline+INTERVAL '.$delim.'2 HOUR'.$delim.')' );
+    db_query('UPDATE '.PRE.'tasks SET deadline=(deadline+INTERVAL '.db_delim('2 HOUR' ).')' );
 
     db_commit();
     $content .= "<p>Updating from version pre-2.20 database ... success!</p>\n";

@@ -43,7 +43,7 @@ if(! rss_login() ) {
 }
 
 //check when page was last modified
-if(! ($q = db_query('SELECT '.$epoch.'MAX(posted) ) AS last FROM '.PRE.'forum', 0 ) ) ) {
+if(! ($q = db_query('SELECT '.db_epoch().'MAX(posted) ) AS last FROM '.PRE.'forum', 0 ) ) ) {
 
   rss_error('500', 'Forum last edit' );
 }
@@ -78,7 +78,7 @@ else {
 //main query
 if(! ($q = db_query('SELECT '.PRE.'forum.id AS forumid,
                             '.PRE.'forum.text AS text,
-                            '.$epoch.' '.PRE.'forum.posted) AS posted,
+                            '.db_epoch().' '.PRE.'forum.posted) AS posted,
                             '.PRE.'users.fullname AS fullname,
                             '.PRE.'tasks.id AS taskid,
                             '.PRE.'tasks.name AS taskname

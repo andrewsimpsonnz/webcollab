@@ -103,9 +103,10 @@ switch($selection ) {
 $q = db_prepare( icalendar_query().' AND '.PRE.'tasks.parent<>0 '.$tail. icalendar_usergroup_tail() );
 db_execute($q, array($parm ) );
 
-for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
+$project_q = db_prepare(icalendar_query().' AND '.PRE.'tasks.id=?'. icalendar_usergroup_tail() );
 
-  $project_q = db_prepare(icalendar_query().' AND '.PRE.'tasks.id=?'. icalendar_usergroup_tail() );
+
+for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
   //send project once for each task
   if(! in_array($row['projectid'], (array)$projects ) ) {

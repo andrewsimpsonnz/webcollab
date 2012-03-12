@@ -43,8 +43,6 @@ function generate_token($action ) {
 
 function validate_token($token, $action ) {
 
-  global $delim;
-
   //check input
   if((! isset($token) ) && (! strlen(trim($token, '1234567890abcdefABCDEF' ) ) == 0 ) ) {
     error('Security Token', 'No valid token is set' );
@@ -53,7 +51,7 @@ function validate_token($token, $action ) {
 
   //check against database
   $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tokens WHERE token=? AND action=? AND userid=?
-                                  AND lastaccess > (now()-INTERVAL '.$delim.TOKEN_TIMEOUT.' MINUTE'.$delim.')' );
+                                  AND lastaccess > (now()-INTERVAL '.db_delim(TOKEN_TIMEOUT.' MINUTE' ).')' );
   db_execute($q, array($token, $action, UID ) );
   $count = db_result($q, 0, 0 );
 

@@ -39,9 +39,6 @@ include_once(BASE.'includes/time.php' );
 $content = '';
 $archive_print = 0;
 
-//set the usergroup permissions on queries
-$tail = usergroup_tail();
-
 // query to get the projects
 $q = db_query('SELECT id,
                       name,
@@ -54,7 +51,7 @@ $q = db_query('SELECT id,
                       FROM '.PRE.'tasks
                       WHERE parent=0
                       AND archive=1'
-                      .$tail.
+                      .usergroup_tail().
                       'ORDER BY name' );
 
 //text link for 'printer friendly' page

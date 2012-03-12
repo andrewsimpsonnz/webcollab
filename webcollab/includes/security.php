@@ -71,14 +71,14 @@ if(! mb_internal_encoding('UTF-8' ) ) {
 //seems okay at first, now go cross-checking with the known data from the database
 $q = db_prepare('SELECT '.PRE.'logins.user_id AS userid,
                              '.PRE.'logins.token AS token,
-                             '.$epoch.' '.PRE.'logins.lastaccess) AS sec_lastaccess,
+                             '.db_epoch().' '.PRE.'logins.lastaccess) AS sec_lastaccess,
                              '.PRE.'users.email AS email,
                              '.PRE.'users.admin AS admin,
                              '.PRE.'users.fullname AS fullname,
                              '.PRE.'users.guest AS guest,
                              '.PRE.'users.deleted AS deleted,
                              '.PRE.'users.locale AS locale,
-                             '.$epoch.' now() ) AS now
+                             '.db_epoch().' now() ) AS now
                              FROM '.PRE.'logins
                              LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
                              WHERE '.PRE.'logins.session_key=? AND '.PRE.'users.deleted=\'f\' LIMIT 1' );

@@ -37,15 +37,13 @@ if(! defined('UID' ) ) {
 
 function icalendar_query() {
 
-  global $delim;
-
-  $q =  'SELECT '.PRE.'tasks.id AS taskid, 
+  $q =  'SELECT '.PRE.'tasks.id AS taskid,
                 '.PRE.'tasks.name AS name,
                 '.PRE.'tasks.text AS text,
                 '.PRE.'tasks.deadline AS deadline_date,
-                ('.PRE.'tasks.deadline+INTERVAL '.$delim.'24 HOUR'.$delim.') AS deadline_date_end,
-                ('.PRE.'tasks.created-INTERVAL '.$delim.TZ.' HOUR'.$delim.') AS created_utc,
-                ('.PRE.'tasks.edited-INTERVAL '.$delim.TZ.' HOUR'.$delim.') AS edited_utc,
+                ('.PRE.'tasks.deadline+INTERVAL '.db_delim('24 HOUR' ).') AS deadline_date_end,
+                ('.PRE.'tasks.created-INTERVAL '.db_delim(TZ.' HOUR' ).') AS created_utc,
+                ('.PRE.'tasks.edited-INTERVAL '.db_delim(TZ.' HOUR' ).') AS edited_utc,
                 '.PRE.'tasks.status AS status,
                 '.PRE.'tasks.priority AS priority,
                 '.PRE.'tasks.parent AS parent,

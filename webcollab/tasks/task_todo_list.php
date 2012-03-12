@@ -349,9 +349,6 @@ $content .= "</select></label></td>\n".
             "</table>\n".
             "</form>\n";
 
-//set the usergroup permissions on queries
-$tail = usergroup_tail();
-
 //get the sort order for projects/tasks
 $q   = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
 $row = db_fetch_num($q, 0 );
@@ -371,7 +368,7 @@ $q = db_prepare('SELECT '.PRE.'tasks.id AS id,
                         '.PRE.'tasks.deadline AS deadline,
                         '.PRE.'tasks.parent AS parent,
                         '.PRE.'tasks.projectid AS projectid,
-                        '.$epoch.' '.PRE.'tasks.deadline) AS due,
+                        '.db_epoch().' '.PRE.'tasks.deadline) AS due,
                         '.PRE.'tasks.priority AS priority,
                         '.PRE.'taskgroups.id AS group_id,
                         '.PRE.'taskgroups.name AS group_name,
@@ -380,7 +377,7 @@ $q = db_prepare('SELECT '.PRE.'tasks.id AS id,
                         LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid)
                         WHERE parent<>0
                         AND (status=\'created\' OR status=\'active\')
-                        '.$type.$tail.
+                        '.$type.usergroup_tail().
                         'ORDER BY '.$no_group.' group_name,'.$task_order );
 
 switch($selection ) {
@@ -431,7 +428,7 @@ db_free_result($q);
 //query to get the all the projects
 $q = db_query('SELECT id,
                       name,
-                      '.$epoch.' deadline) AS due,
+                      '.db_epoch().' deadline) AS due,
                       priority
                       FROM '.PRE.'tasks
                       WHERE parent=0 AND archive=0 '.$tail.$project_order );

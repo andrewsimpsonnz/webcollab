@@ -175,11 +175,20 @@ for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   }
 }
 
+if(substr(DATABASE_TYPE, 0, 5 ) == 'mysql' ) {
+  $date_part = 'DAYOFMONTH( ';
+  $date_type = '';
+}
+else {
+  $day_part  = 'DATE_PART(\'day\', ';
+  $date_type = 'TIMESTAMP';
+}
+
 //get all the days with projects/tasks due in selected month and year
 //  This should db_prepare(), but postgresql DOES NOT support binding to TIMESTAMP or INTERVAL !!
-$q = db_query('SELECT '.$day_part.'deadline) AS day, projectid FROM '.PRE.'tasks 
+$q = db_query('SELECT '.$day_part.'deadline) AS day, projectid FROM '.PRE.'tasks
                       WHERE deadline BETWEEN '.db_quote($year.'-'.$month.'-01 00:00:00' ).'
-                      AND ('.$date_type.db_quote($year.'-'.$month.'-01 00:00:00' ).' + INTERVAL '.$delim.'1 MONTH'.$delim.')'.
+                      AND ('.$date_type.db_quote($year.'-'.$month.'-01 00:00:00' ).' + INTERVAL '.db_delim('1 MONTH' ).')'.
                       $tail );
 
 for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {

@@ -55,7 +55,7 @@ $q = db_query('SELECT '.PRE.'logins.lastaccess AS last,
             '.PRE.'users.private AS private
             FROM '.PRE.'logins
             LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
-            WHERE '.PRE.'logins.lastaccess > ( now()-INTERVAL '.$delim.'1 HOUR'.$delim.')
+            WHERE '.PRE.'logins.lastaccess > ( now()-INTERVAL '.db_delim('1 HOUR' ).')
             AND '.PRE.'users.deleted=\'f\'
             ORDER BY '.PRE.'logins.lastaccess DESC' );
 
@@ -78,7 +78,7 @@ $q = db_query('SELECT '.PRE.'logins.lastaccess AS last,
             '.PRE.'users.private AS private
             FROM '.PRE.'logins
             LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
-            WHERE '.PRE.'logins.lastaccess < ( now()-INTERVAL '.$delim.'1 HOUR'.$delim.')
+            WHERE '.PRE.'logins.lastaccess < ( now()-INTERVAL '.db_delim('1 HOUR' ).')
             AND '.PRE.'users.deleted=\'f\'
             ORDER BY '.PRE.'logins.lastaccess DESC' );
 

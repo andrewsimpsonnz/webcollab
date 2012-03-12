@@ -86,7 +86,7 @@ if( @safe_integer($_GET['parentid']) ) {
   //get info about the parent of this task
   $q = db_prepare('SELECT name,
                         deadline,
-                        '.$epoch.'deadline) AS epoch_deadline,
+                        '.db_epoch().'deadline) AS epoch_deadline,
                         status,
                         owner,
                         parent,

@@ -163,17 +163,20 @@ $q6 = db_prepare('DELETE FROM '.PRE.'tasks WHERE id=?' );
 
 for($i=0 ; $i < $index ; ++$i ) {
 
+  //avoid type cast errors
+  $delete_id = $match_array[$i];
+
   //delete contacts
-  db_execute($q1, array($match_array[$i] ) );
+  db_execute($q1, array($delete_id ) );
 
   //delete all from seen table
-  db_execute($q2, array($match_array[$i] ) );
+  db_execute($q2, array($delete_id ) );
 
   //delete forum posts
-  db_execute($q3, array($match_array[$i] ) );
+  db_execute($q3, array($delete_id ) );
 
   //delete all files physically
-  db_execute($q4, array($match_array[$i] ) );
+  db_execute($q4, array($delete_id ) );
 
   for($j=0 ; $file_row = @db_fetch_array($q4, $j ) ; ++$j ) {
 
@@ -183,10 +186,10 @@ for($i=0 ; $i < $index ; ++$i ) {
   }
 
   //delete all files attached to it in the database
-  db_execute($q5, array($match_array[$i] ) );
+  db_execute($q5, array($delete_id ) );
 
   //delete item
-  db_execute($q6, array($match_array[$i] ) );
+  db_execute($q6, array($delete_id ) );
 }
 
 if($row['parent'] != 0 ){

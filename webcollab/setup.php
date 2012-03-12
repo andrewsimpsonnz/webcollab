@@ -97,7 +97,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
     //count the number of recent login attempts
     if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
-                            WHERE name=? AND last_attempt > (now()-INTERVAL '.$delim.'10 MINUTE'.$delim.') LIMIT 4', 0 ) ) ) {
+                            WHERE name=? AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 4', 0 ) ) ) {
       secure_error('Unable to connect to database.  Please try again later.' );
     }
 
@@ -127,7 +127,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   //remove the old login information
   $q = db_prepare('DELETE FROM '.PRE.'logins WHERE user_id=?' );
   @db_execute($q, array($user_id ) );
-  $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.$delim.'20 MINUTE'.$delim.') OR name=?' );
+  $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.db_delim('20 MINUTE' ).') OR name=?' );
   @db_execute($q, array($username ) );
 
   //log the user in

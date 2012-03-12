@@ -43,7 +43,7 @@ if(! rss_login() ) {
 }
 
 //check when page was last modified
-if(! ($q = db_query('SELECT '.$epoch.'MAX(posted) ) AS last FROM '.PRE.'forum', 0 ) ) ) {
+if(! ($q = db_query('SELECT '.db_epoch().'MAX(posted) ) AS last FROM '.PRE.'forum', 0 ) ) ) {
 
   rss_error('500', 'File last modified');
 }
@@ -78,7 +78,7 @@ else {
 //main query
 if(! $q = db_query('SELECT '.PRE.'files.id AS id,
                             '.PRE.'files.filename AS filename,
-                            '.$epoch.' '.PRE.'files.uploaded) AS uploaded,
+                            '.db_epoch().' '.PRE.'files.uploaded) AS uploaded,
                             '.PRE.'files.description AS description,
                             '.PRE.'tasks.id AS taskid,
                             '.PRE.'tasks.name AS taskname

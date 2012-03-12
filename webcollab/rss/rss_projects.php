@@ -44,7 +44,7 @@ if(! rss_login() ) {
 }
 
 //get time of last modified task
-if(! ($q = db_query('SELECT '.$epoch.'MAX(edited) ) AS last FROM '.PRE.'tasks', 0 ) ) ) {
+if(! ($q = db_query('SELECT '.db_epoch().'MAX(edited) ) AS last FROM '.PRE.'tasks', 0 ) ) ) {
 
   rss_error('500', 'Project last edit' );
 }
@@ -80,7 +80,7 @@ else {
 if(! ($q = db_query('SELECT '.PRE.'tasks.id AS id,
                             '.PRE.'tasks.name AS taskname,
                             '.PRE.'tasks.status AS status,
-                            '.$epoch.' '.PRE.'tasks.edited) AS edited,
+                            '.db_epoch().' '.PRE.'tasks.edited) AS edited,
                             '.PRE.'tasks.text AS text,
                             '.PRE.'tasks.completed AS completed
                             FROM '.PRE.'tasks

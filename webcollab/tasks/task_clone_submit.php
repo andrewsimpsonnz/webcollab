@@ -45,14 +45,10 @@ include_once(BASE.'tasks/task_submit.php' );
 function query_prepare() {
 
   global $q1, $q2, $q3, $q4, $q5, $q6;
-  global $delim;
-
-  //set the usergroup SQL tail
-  $tail = usergroup_tail();
 
   $q1 = db_prepare('SELECT id FROM '.PRE.'tasks WHERE parent=?' );
 
-  $q2 = db_prepare('SELECT * FROM '.PRE.'tasks WHERE id=?'.$tail );
+  $q2 = db_prepare('SELECT * FROM '.PRE.'tasks WHERE id=?'.usergroup_tail() );
 
   $q3 = db_prepare('SELECT projectid FROM '.PRE.'tasks WHERE id=?' );
 
@@ -141,7 +137,6 @@ function add($taskid, $new_parent, $new_name, $delta_deadline ) {
 function copy_across($taskid, $new_parent, $name, $delta_deadline ) {
 
   global $q2, $q3, $q4, $q5, $q6;
-  global $delim;
 
   //get task details
   db_execute($q2, array($taskid ) );
@@ -174,7 +169,7 @@ function copy_across($taskid, $new_parent, $name, $delta_deadline ) {
 
   //Calculate new deadline date 
   //  This should db_prepare() as part of next query, but postgresql DOES NOT support binding to TIMESTAMP or INTERVAL !!
-  $q = db_query('SELECT (TIMESTAMP \''.$row['deadline'].'\' + INTERVAL '.$delim.$delta_deadline.' DAY'.$delim.')' );
+  $q = db_query('SELECT (TIMESTAMP \''.$row['deadline'].'\' + INTERVAL '.db_delim((int)$delta_deadline.' DAY').')' );
   $new_deadline = db_result($q );
 
   foreach(array('globalaccess', 'groupaccess' ) as $var ) {
