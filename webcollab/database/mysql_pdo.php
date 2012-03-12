@@ -32,10 +32,6 @@ require_once('path.php' );
 
 //set some base variables
 $dbh = null;
-$delim = '';
-$epoch = 'UNIX_TIMESTAMP( ';
-$day_part  = 'DAYOFMONTH( ';
-$date_type = '';
 
 //
 // connect to database
@@ -166,6 +162,14 @@ function db_quote($data ) {
   return $dbh->quote($data );
 }
 
+function db_delim($data ) {
+  return $data;
+}
+
+function db_epoch() {
+  return 'UNIX_TIMESTAMP( ';
+}
+
 //
 // get single result set
 //
@@ -196,7 +200,7 @@ function db_fetch_num($sth, $row=0 ) {
 //
 function db_fetch_all($sth ) {
 
-  return $sth->fetchAll();
+  return $sth->fetchAll(PDO::FETCH_ASSOC );
 }
 
 //

@@ -30,10 +30,6 @@ require_once('path.php' );
 
 //set some base variables
 $dbh = null;
-$delim = "'";
-$epoch = 'extract(epoch FROM ';
-$day_part  = 'DATE_PART(\'day\', ';
-$date_type = 'TIMESTAMP';
 
 //
 // connect to database
@@ -165,6 +161,14 @@ function db_quote($data ) {
   return $dbh->quote($data );
 }
 
+function db_delim($data ) {
+  return db_quote($data);
+}
+
+function db_epoch() {
+  return 'extract(epoch FROM ';
+}
+
 //
 // get single result set
 //
@@ -195,7 +199,7 @@ function db_fetch_num($sth, $row=0 ) {
 //
 function db_fetch_all($sth ) {
 
-  return $sth->fetchAll();
+  return $sth->fetchAll(PDO::FETCH_ASSOC );
 }
 
 //
