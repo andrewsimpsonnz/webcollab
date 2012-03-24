@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -88,11 +88,14 @@ function nicetime($timestamp ) {
 function date_select($day=-1, $month=-1, $year=-1 ) {
   global $lang, $month_array;
 
+  //cache time/date now
+  $now   = TIME_NOW - date('Z') + TZ * 3600;
+
   //filter for no date set
   if($day == -1 || $month == -1 || $year == -1 ) {
-    $day   = date('d', TIME_NOW - date('Z') + TZ * 3600 );
-    $month = date('m', TIME_NOW - date('Z') + TZ * 3600 );
-    $year  = date('Y', TIME_NOW - date('Z') + TZ * 3600 );
+    $day   = date('d', $now );
+    $month = date('m', $now );
+    $year  = date('Y', $now );
   }
 
   //day
@@ -120,8 +123,8 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   $content .=  "</select>\n";
 
   //year
-  $min_year = date('Y', TIME_NOW - date('Z') + TZ*60*60 ) - 5;
-  $max_year = date('Y', TIME_NOW - date('Z') + TZ*60*60 ) + 10;
+  $min_year = date('Y', $now ) - 5;
+  $max_year = date('Y', $now ) + 10;
 
   $content .= "<select id=\"year\" name=\"year\">\n";
   for($i = $min_year; $i < $max_year ; ++$i ) {
