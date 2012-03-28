@@ -2,7 +2,7 @@
 /*
   $Id: task_todo_list.php 2295 2009-08-24 09:42:09Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -431,7 +431,7 @@ $q = db_query('SELECT id,
                       '.db_epoch().' deadline) AS due,
                       priority
                       FROM '.PRE.'tasks
-                      WHERE parent=0 AND archive=0 '.$tail.$project_order );
+                      WHERE parent=0 AND archive=0 '.usergroup_tail().$project_order );
 
 // show all uncompleted tasks and projects belonging to this user or group
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
