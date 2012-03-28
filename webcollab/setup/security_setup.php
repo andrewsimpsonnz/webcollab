@@ -2,7 +2,7 @@
 /*
   $Id: security_setup.php 2285 2009-08-22 08:42:43Z andrewsimpson $
 
-  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------

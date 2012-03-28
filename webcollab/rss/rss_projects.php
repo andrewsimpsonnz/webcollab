@@ -2,7 +2,7 @@
 /*
   $Id: rss_tasks.php 1924 2008-02-08 07:30:23Z andrewsimpson $
 
-  (c) 2005 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2005 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------

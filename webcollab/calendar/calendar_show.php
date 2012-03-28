@@ -2,7 +2,7 @@
 /*
   $Id: calendar_show.php 2305 2009-08-27 06:08:59Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------

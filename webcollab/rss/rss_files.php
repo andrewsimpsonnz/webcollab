@@ -2,7 +2,7 @@
 /*
   $Id: rss_forum.php 1923 2008-02-08 07:29:31Z andrewsimpson $
 
-  (c) 2005 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2005 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz> 
 
   WebCollab
   ---------------------------------------

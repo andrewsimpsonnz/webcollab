@@ -2,7 +2,7 @@
 /*
   $Id: task_delete.php 2170 2009-04-06 07:25:59Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------

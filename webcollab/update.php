@@ -2,7 +2,7 @@
 /*
   $Id: update.php 2328 2009-09-27 08:31:56Z andrewsimpson $
 
-  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------

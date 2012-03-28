@@ -2,7 +2,7 @@
 /*
   $Id: user_online.php 2172 2009-04-06 07:30:53Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
