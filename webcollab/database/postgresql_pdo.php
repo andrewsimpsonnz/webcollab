@@ -38,18 +38,27 @@ function db_connection() {
 
   global $dbh, $db_error_message;
 
+  $dsn = '';
+
+  if(strlen(DATABASE_HOST ) > 0 ) {
+    $dsn = 'host='.DATABASE_HOST.' ';
+
+    if(strlen(DATABASE_PORT ) > 0 ) {
+      $dsn .= 'port='.DATABASE_PORT.' ';
+    }
+  }
+
   set_exception_handler('exception_handler');
 
   try {
-
-    $dbh = new PDO('pgsql:host='.DATABASE_HOST.' port=5432 dbname='.DATABASE_NAME.' user='.DATABASE_USER.' password='.DATABASE_PASSWORD );
+    $dbh = new PDO('pgsql:'.$dsn.'dbname='.DATABASE_NAME.' user='.DATABASE_USER.' password='.DATABASE_PASSWORD );
 
     //set error handling
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   }
   catch (PDOException $e) {
     $db_error_message = $e->getMessage();
-    error('No database connection error', 'Sorry but there seems to be a problem in connecting to the database server' );
+    error('No database connection error', 'Sorry but there seems to be a problem in connecting to the database server '.$database_host.' '.$database_port );
   }
 
   //make sure dates will be handled properly by internal date routines

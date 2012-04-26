@@ -36,12 +36,12 @@
   //Database host (usually "localhost")
   define('DATABASE_HOST', "localhost" );
 
+  //Database port (can usually be left empty)
+  define('DATABASE_PORT', "" );
+
   /*Note:
-    For PostgreSQL DATABASE_HOST should not be changed from localhost.
-    To use remote tcp/ip connections with PostgreSQL:
-     - Edit pg_hba.conf (PostgreSQL config file) to allow tcp/ip connections
-     - Start PostgreSQL postmaster with -i option
-     - Change DATABASE_HOST as required
+    1. DATABASE_PORT is not required to be set and will default to standard ports.
+    2. For PostgreSQL on UNIX/Linux setting DATABASE_HOST to "" (empty) will enable use of local sockets.
   */
 
 

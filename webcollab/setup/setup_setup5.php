@@ -127,13 +127,12 @@ $content = "<?php\n".
 "  define('DATABASE_TYPE', '".$data["db_type"]."' );\n\n".
 "  //Database host (usually 'localhost')\n".
 "  define('DATABASE_HOST', '".$data["db_host"]."' );\n\n".
-"    /*Note:\n".
-"      For PostgreSQL DATABASE_HOST should not be changed from localhost.\n".
-"      To use remote tcp/ip connections with PostgreSQL:\n".
-"       - Edit pg_hba.conf (PostgreSQL config file) to allow tcp/ip connections\n".
-"       - Start PostgreSQL postmaster with -i option\n".
-"       - Change DATABASE_HOST as required\n".
-"    */\n\n".
+"  //Database port (can usually be left empty)\n".
+"  define('DATABASE_PORT', \"\" );\n\n".
+"  /*Note:\n".
+"    1. DATABASE_PORT is not required to be set and will default to standard ports.\n".
+"    2. For PostgreSQL on UNIX/Linux setting DATABASE_HOST to \"\" (empty) will enable use of local sockets.\n".
+"  */\n\n".
 "//-- File upload parameters --\n\n".
 "  //upload to what directory ?\n".
 "  define('FILE_BASE', '".$filebase."' );\n\n".
