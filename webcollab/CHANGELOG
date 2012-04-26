@@ -1,4 +1,28 @@
 WebCollab Git
+*** 26 April 2012
+
+- allow for selection of database port in config file
+
+- improve initial connection setting in MySQL
+
+- bugfix: error box in setup
+
+- bugfix: improve utf-8 validation regex (Thanks to Gijs Boer)
+
+
+WebCollab Git
+*** 24 March 2012
+
+- refactor code in index.php
+
+WebCollab Git
+*** 12 March 2012
+
+- add db_delim() and db_epoch() functions to simplify code
+
+- simplify some database code
+
+WebCollab Git
 *** 9 March 2012
 
 - bugfix: Improved bugfix for clone project recursive database calls
