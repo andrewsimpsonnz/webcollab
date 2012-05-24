@@ -48,6 +48,10 @@ function listTasks($parentid ) {
   global $lang;
   global $task_array, $parent_array, $shown_array, $task_count, $level_count;
 
+  //initialise variables
+  $shown_array  = array();
+  $level_count  = 1;  //number of task levels
+
   //check if we have taskgroups
   if($task_array[0]['group_id'] ) {
     $content = '';
@@ -56,7 +60,6 @@ function listTasks($parentid ) {
     $taskgroup_initial_flag = 1;
   }
   else {
-    $level_count = 1;
     $content = "<ul class=\"ul-".$level_count."\">\n";
     $taskgroup_flag = 0;
   }
@@ -77,7 +80,6 @@ function listTasks($parentid ) {
         //don't need </ul> before first taskgroup heading (no <ul> is set)
         if(! $taskgroup_initial_flag ) {
           $content .= "</ul>\n";
-          --$level_count;
         }
 
         $content .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
