@@ -176,7 +176,7 @@ for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 }
 
 if(substr(DATABASE_TYPE, 0, 5 ) == 'mysql' ) {
-  $date_part = 'DAYOFMONTH( ';
+  $day_part = 'DAYOFMONTH( ';
   $date_type = '';
 }
 else {
