@@ -1,4 +1,9 @@
 WebCollab Git
+*** 24 May 2012
+
+- fix bug in <ul> css class numbering (Bug #3529388) (Thanks to tomas7)
+
+WebCollab Git
 *** 26 April 2012
 
 - allow for selection of database port in config file
@@ -8,7 +13,6 @@ WebCollab Git
 - bugfix: error box in setup
 
 - bugfix: improve utf-8 validation regex (Thanks to Gijs Boer)
-
 
 WebCollab Git
 *** 24 March 2012
