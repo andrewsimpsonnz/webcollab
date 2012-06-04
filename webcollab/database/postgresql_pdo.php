@@ -58,7 +58,7 @@ function db_connection() {
   }
   catch (PDOException $e) {
     $db_error_message = $e->getMessage();
-    error('No database connection error', 'Sorry but there seems to be a problem in connecting to the database server '.$database_host.' '.$database_port );
+    error('No database connection error', 'Sorry but there seems to be a problem in connecting to the database server' );
   }
 
   //make sure dates will be handled properly by internal date routines
