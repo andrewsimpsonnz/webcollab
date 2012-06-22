@@ -43,7 +43,7 @@ function db_connection() {
   if(strlen(DATABASE_HOST ) > 0 ) {
     $dsn = 'host='.DATABASE_HOST.';';
 
-    if(strlen(DATABASE_PORT ) > 0 ) {
+    if(defined(DATABASE_PORT) && is_numeric(DATABASE_PORT ) ) {
       $dsn .= 'port='.DATABASE_PORT.';';
     }
   }
@@ -51,16 +51,10 @@ function db_connection() {
     $dsn = 'host=localhost;';
   }
 
-  //set options string for timezone and character set
-  $tz_string = sprintf('%+d:%02d', (int)TZ, (TZ - floor(TZ) ) * 60 );
-  $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET time_zone='".$tz_string."';
-                                                    SET NAMES utf8;
-                                                    SET CHARACTER SET utf8" );
-
   set_exception_handler('exception_handler');
 
   try {
-    $dbh = new PDO('mysql:'.$dsn.'dbname='.DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD, $options );
+    $dbh = new PDO('mysql:'.$dsn.'dbname='.DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD );
 
     //set error handling
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -69,6 +63,9 @@ function db_connection() {
     $db_error_message = $e->getMessage();
     error('No database connection error', 'Sorry but there seems to be a problem in connecting to the database server' );
   }
+
+  //set options string for timezone and character set
+  db_query('SET time_zone=\''.sprintf('%+d:%02d', (int)TZ, (TZ - floor(TZ) ) * 60 ).'\', NAMES utf8, CHARACTER SET utf8' );
 
   return;
 }
