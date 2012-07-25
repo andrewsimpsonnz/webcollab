@@ -2,7 +2,7 @@
 /*
   $Id: update.php 2328 2009-09-27 08:31:56Z andrewsimpson $
 
-  (c) 2004 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -47,78 +47,14 @@ function secure_error($message ) {
 
 }
 
-//
-// LOGIN CHECK
-//
 
-//valid login attempt ?
-if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
-
-  include_once(BASE.'includes/common.php' );
-  include_once(BASE.'database/database.php' );
-
-  //set variables
-  $q = '';
-  $content = '';
-  $flag_attempt = false;
-  $username = safe_data($_POST['username']);
-  //encrypt password
-  $md5pass = md5($_POST['password'] );
-
-  //no ip (possible?)
-  if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
-    secure_error('Unable to determine ip address');
-  }
-
-  //do query and check database connection
-  if(! ($q = db_prepare('SELECT id FROM '.PRE.'users WHERE deleted=\'f\' AND admin=\'t\'
-                                AND name=? AND password=?', 0 ) ) ) {
-    secure_error('Unable to connect to database.  Please try again later.' );
-  }
-
-  if(! (db_execute($q, array($username, $md5pass ), 0 ) ) ) {
-    secure_error('Unable to connect to database.  Please try again later.' );
-  }
-
-  //no such user-password combination
-  if( ! ($user_id = @db_result($q, 0, 0) ) ) {
-
-    //limit login attempts if post-1.60 database is being used
-    if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {
-
-      $flag_attempt = true;
-
-      //count the number of recent login attempts
-      if( ! $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
-                                WHERE name=?
-                                AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE' ).') LIMIT 4', 0 ) ) {
-        secure_error('Unable to connect to database.  Please try again later.' );
-      }
-
-      if(! (db_execute($q, array($username ), 0 ) ) ) {
-        secure_error('Unable to connect to database.  Please try again later.' );
-      }
-      $count_attempts = db_result($q, 0, 0 );
-
-      //protect against password guessing attacks
-      if($count_attempts > 3 ) {
-        secure_error('Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes.' );
-      }
-
-      //record this login attempt
-      $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
-      db_execute($q, array($username, $ip ) );
-    }
-
-    sleep(2);
-    secure_error('Not a valid username, or password' );
-  }
+function update($username ) {
 
   //user is okay log him/her in
 
   //remove the old login information for post 1.60 database
-  if($flag_attempt ) {
-    $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.db_delim('20 MINUTE' ).') OR name=?' );
+  if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {
+    $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.$delim.'20 MINUTE'.$delim.') OR name=?' );
     db_execute($q, array($username ) );
   }
 
@@ -390,7 +326,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     db_execute($q, array(MANAGER_NAME, ABBR_MANAGER_NAME ) );
 
     //update deadline hours
-    db_query('UPDATE '.PRE.'tasks SET deadline=(deadline+INTERVAL '.db_delim('2 HOUR' ).')' );
+    db_query('UPDATE '.PRE.'tasks SET deadline=(deadline+INTERVAL '.$delim.'2 HOUR'.$delim.')' );
 
     db_commit();
     $content .= "<p>Updating from version pre-2.20 database ... success!</p>\n";
@@ -530,6 +466,81 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 //
 // MAIN PROGRAM
 //
+
+//valid login attempt ?
+if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
+
+  include_once(BASE.'includes/common.php' );
+  include_once(BASE.'database/database.php' );
+
+  //set variables
+  $q = '';
+
+  $username = safe_data($_POST['username']);
+
+  //construct login query for username / password
+  if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\' AND admin=\'t\'', 0 ) ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
+
+  //database query
+  if( ! @db_execute($q, array($username), 0 ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
+
+  //if user-password combination exists
+  if($row = @db_fetch_array($q, 0, 0) ) {
+
+    switch (substr($row['password'], 0, 4 ) ) {
+
+      case '$md$':
+        //md5 + salt encryption
+        $salt = substr($row['password'], 4, 22 );
+        $hash = '$md$' . $salt . md5($_POST['password'] . $salt );
+        break;
+
+      case '$2a$':
+        //bcrypt encryption
+        $salt = substr($row['password'], 0, 29 );
+        $hash = crypt($_POST['password'], $salt );
+        break;
+
+      default:
+        //older md5 encryption (being deprecated)
+        $hash = md5($_POST['password'] );
+        break;
+    }
+
+    if($hash == $row['password'] ) {
+      update($username );
+    }
+  }
+
+  //count the number of recent login attempts
+  if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
+				WHERE name=? AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 4', 0 ) ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
+
+  if(! db_execute($q, array($username ), 0 ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
+
+  //protect against password guessing attacks
+  if(db_result($q, 0, 0 ) > 3 ) {
+    secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+  }
+
+  //record this login attempt
+  $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
+  db_execute($q, array($username, $ip ) );
+
+  //wait two seconds then record an error
+  sleep(2);
+  secure_error("Not a valid username, or password" );
+  die;
+  }
+}
 
 //login box screen code
 create_top('Login', 1, 0, 2 );

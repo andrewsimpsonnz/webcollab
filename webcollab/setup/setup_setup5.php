@@ -78,14 +78,16 @@ $array = array('NUM_FILE_UPLOADS' => 3, 'FILE_DOWNLOAD' => 'inline',
                'RSS_AUTODISCOVERY' => 'N',
                'SESSION_TIMEOUT'   => 1,
                'TOKEN_TIMEOUT'     => 5,
-               'WEB_AUTH'     => 'N',
                'PASS_STYLE'   => 'text',
+               'WEB_AUTH'     => 'N',
+               'ACTIVE_DIRECTORY'  => 'N',
+               'AD_PORT'      => '389',
                'GUEST_LOCKED' => 'N',
                'EMAIL_ERROR'  => '',
                'DEBUG'        => 'N',
                'NO_ERROR'     => 'N',
                'PRE'          => '',
-               'OUTPUT_COMPRESSION' => 'N' );
+               'COMPRESS_OUTPUT' => 'N' );
 
 //get array of constant's names
 $constants = array_keys($array);
@@ -211,6 +213,15 @@ $content .=
 "  define('PASS_STYLE', '".PASS_STYLE."' );\n\n".
 "  //Stop GUEST users from changing their login details or posting in the forums (values are 'N', or 'Y')\n".
 "  define('GUEST_LOCKED', '".GUEST_LOCKED."' );\n\n".
+"//LOGIN AUTHENTICATION\n\n".
+"  //Use external webserver authorisation to login (values are 'N', or 'Y')\n".
+"  define('WEB_AUTH', "N" );\n\n".
+"  //Use Active Directory to authenticate (values are 'N', or 'Y')\n".
+"  define('ACTIVE_DIRECTORY', 'N' );\n\n".
+"  //address and port of Active Directory server\n".
+"  \$AD_HOST = $AD_HOST;\n".
+"  define('AD_PORT', 389 );\n\n".
+
 "//ERROR DEBUGGER\n\n".
 "  //If an error occurs, who do you want the error to be mailed to ?\n".
 "  define('EMAIL_ERROR', '".EMAIL_ERROR."' );\n\n".
@@ -223,7 +234,7 @@ $content .=
 "  define('PRE', '".PRE."' );\n\n".
 "//OUTPUT COMPRESSION\n\n".
 "  //Use to enable zlib output compression of web pages (values are 'N', or 'Y')\n".
-"  define('COMPRESS_OUTPUT', 'N' );\n\n".
+"  define('COMPRESS_OUTPUT', '".COMPRESS_OUTPUT."' );\n\n".
 "//WEBCOLLAB VERSION\n\n".
 "  //WebCollab version string\n".
 "  define('WEBCOLLAB_VERSION', '".SETUP_WEBCOLLAB_VERSION."');\n\n".

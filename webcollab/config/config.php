@@ -182,14 +182,23 @@
   //security token timeout for forms (in minutes)
   define('TOKEN_TIMEOUT', 5 );
 
-  //Use external webserver authorisation to login (values are "N", or "Y")
-  define('WEB_AUTH', "N" );
-
   //Show passwords in user edit screens as plain text or hidden ('****') (values are "text", or "password")
   define('PASS_STYLE', "text" );
 
   //Stop GUEST users from changing their login details or posting in the forums (values are "N", or "Y")
   define('GUEST_LOCKED', "N" );
+
+//LOGIN AUTHENTICATION
+
+  //Use external webserver authorisation to login (values are "N", or "Y")
+  define('WEB_AUTH', "N" );
+
+  //Use Active Directory to authenticate (values are "N", or "Y")
+  define('ACTIVE_DIRECTORY', 'N' );
+
+  //address and port of Active Directory server
+  $AD_HOST = "ldap://10.0.0.7/";
+  define('AD_PORT', 389 );
 
 //ERROR DEBUGGER
 

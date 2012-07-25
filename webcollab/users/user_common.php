@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2005 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -76,4 +76,29 @@ function user_locale_check($locale ) {
   return $locale;
 }
 
+//
+// Function to generate either bcrypt or md5 hashes
+//
+function password_hash($password ) {
+
+  $salt = substr(md5(mt_rand() ), 0, 22 );
+
+  //bcrypt is preferred - if the system supports it
+  //  PHP versions before 5.3.8 have buggy implementations
+  if((version_compare(PHP_VERSION, '5.3.8' ) >= 0 ) && CRYPT_BLOWFISH == 1 ) {
+
+    //higher work factor numbers will be slower, but more secure
+    $work_factor = '08';
+
+    // format is $2a$ [work factor] $ [salt] [bcrypt hash]
+    $hash = crypt($password, '$2a$'.$work_factor.'$'.$salt );
+  }
+  else {
+    //fall back to MD5
+    // format is $md$ [salt] [md5 digest with salt]
+    $hash = '$md$'. $salt . md5($password.$salt );
+  }
+
+  return $hash;
+}
 ?>

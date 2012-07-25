@@ -2,7 +2,7 @@
 /*
   $Id: index.php 2288 2009-08-22 08:50:00Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -93,81 +93,8 @@ function enable_login($userid, $username, $ip='0.0.0.0', $taskid ) {
   return;
 }
 
-//check and set taskid & nologin if required
-$taskid  = (isset($_GET['taskid']) && @safe_integer($_GET['taskid']) ) ? $_GET['taskid'] : 0;
-$nologin = (isset($_GET['nologin']) ) ? 1 : 0;
-
-//secure variables
-$content = '';
-$q = '';
-$ip = '';
-$username = '0';
-$md5pass = '0';
-$session_key = '';
-
-// 1. Password login authentication
-if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['username']) > 0 && strlen($_POST['password']) > 0 ) {
-
-  include_once(BASE.'database/database.php');
-
-  //log ip address 
-  if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
-    secure_error('Unable to determine ip address');
-  }
-
-  $username = safe_data($_POST['username']);
-  //encrypt password
-  $md5pass = md5($_POST['password'] );
-
-  //construct login query
-  if(! ($q = db_prepare('SELECT id FROM '.PRE.'users WHERE password=? AND name=? AND deleted=\'f\'', 0 ) ) ) {
-    secure_error('Unable to connect to database.  Please try again later.' );
-  }
-
-  //database query
-  if( ! @db_execute($q, array($md5pass, $username ), 0 ) ) {
-    secure_error('Unable to connect to database.  Please try again later.' );
-  }
-
-  //no such user-password combination
-  if( ! ($userid = @db_result($q, 0, 0 ) ) ) {
-
-    //count the number of recent failed login attempts
-    if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt WHERE name=?
-                               AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 6', 0 ) ) ) {
-      secure_error('Unable to connect to database.  Please try again later.' );
-    }
-
-    if( ! @db_execute($q, array($username ), 0 ) ) {
-      secure_error('Unable to connect to database.  Please try again later.' );
-    }
-
-    $count_attempts = db_result($q, 0, 0 );
-
-    //protect against password guessing attacks
-    if($count_attempts > 4 ) {
-      secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
-    }
-
-    //record this login attempt
-    $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
-    db_execute($q, array($username, $ip ) );
-
-    //wait 2 seconds then record an error
-    sleep (2);
-    secure_error($lang['no_login'], 15 );
-  }
-  else {
-    enable_login($userid, $username, $ip, $taskid );
-  }
-}
-
-// 2. Web authorisation
-if(WEB_AUTH === 'Y' && isset($_SERVER['REMOTE_USER']) && (strlen($_SERVER['REMOTE_USER']) > 0 ) ) {
-
-  include_once 'database/database.php';
-
-  $username = safe_data($_SERVER['REMOTE_USER'] );
+//perform login query
+function login_query($username ) {
 
   //construct login query
   if(! ($q = db_prepare('SELECT id FROM '.PRE.'users WHERE name=? AND deleted=\'f\'', 0 ) ) ) {
@@ -184,11 +111,144 @@ if(WEB_AUTH === 'Y' && isset($_SERVER['REMOTE_USER']) && (strlen($_SERVER['REMOT
     secure_error('Access denied to unknown user \''.$username.'\'' );
   }
   else {
+    return $userid;
+  }
+  return false;
+}
+
+//
+// MAIN LOGIN
+//
+
+//check and set taskid & nologin if required
+$taskid  = (isset($_GET['taskid']) && @safe_integer($_GET['taskid']) ) ? $_GET['taskid'] : 0;
+$nologin = (isset($_GET['nologin']) ) ? 1 : 0;
+
+//secure variables
+$content = '';
+$q = '';
+$hash = '';
+$salt = '';
+$username = '0';
+$password = '0';
+$session_key = '';
+
+// 1. Password login authentication
+if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['username']) > 0 && strlen($_POST['password']) > 0  && ACTIVE_DIRECTORY != 'Y' ) {
+
+  include_once(BASE.'database/database.php');
+
+  //log ip address 
+  if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
+    secure_error('Unable to determine ip address');
+  }
+
+  $username = safe_data($_POST['username'] );
+
+  //construct login query for username / password
+  if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\'', 0 ) ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
+
+  //database query
+  if( ! @db_execute($q, array($username), 0 ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
+
+  //if user-password combination exists
+  if($row = @db_fetch_array($q, 0, 0) ) {
+
+    switch (substr($row['password'], 0, 4 ) ) {
+
+      case '$md$':
+        //md5 + salt encryption
+        $salt = substr($row['password'], 4, 22 );
+        $hash = '$md$' . $salt . md5($_POST['password'] . $salt );
+        break;
+
+      case '$2a$':
+        //bcrypt encryption
+        $salt = substr($row['password'], 0, 29 );
+        $hash = crypt($_POST['password'], $salt );
+        break;
+
+      default:
+        //older md5 encryption (being deprecated)
+        $hash = md5($_POST['password'] );
+        break;
+    }
+
+    if($hash == $row['password'] ) {
+      enable_login($row['id'], $username, $ip, $taskid );
+    }
+  }
+
+  //no such user-password combination
+
+  //count the number of recent failed login attempts
+  if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt WHERE name=?
+			      AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 6', 0 ) ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
+
+  if( ! @db_execute($q, array($username ), 0 ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
+
+  $count_attempts = db_result($q, 0, 0 );
+
+  //protect against password guessing attacks
+  if($count_attempts > 4 ) {
+    secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+  }
+
+  //record this login attempt
+  $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
+  db_execute($q, array($username, $ip ) );
+
+  //wait 2 seconds then record an error
+  sleep (2);
+  secure_error($lang['no_login'], 15 );
+}
+
+// 2. Web authorisation
+if(WEB_AUTH === 'Y' && isset($_SERVER['REMOTE_USER']) && (strlen($_SERVER['REMOTE_USER']) > 0 ) ) {
+
+  include_once 'database/database.php';
+
+  $username = safe_data($_SERVER['REMOTE_USER'] );
+
+  if($userid = login_query($username ) ) {
     enable_login($userid, $username, $ip, $taskid );
   }
 }
 
-// 3. Continuation of session
+// 3. ACTIVE DIRECTORY login
+if(ACTIVE_DIRECTORY == 'Y' && isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['username']) > 0 && strlen($_POST['password']) > 0 ) {
+
+  include_once(BASE.'database/database.php');
+
+  $username = safe_data($_POST['username']);
+  $password = safe_data($_POST['password'] );
+  
+  if(! $adconn = ldap_connect($AD_HOST, AD_PORT ) ) {
+    secure_error('ACTIVE_DIRECTORY: Connection not successful.' );
+  }
+
+  ldap_set_option($adconn, LDAP_OPT_PROTOCOL_VERSION, 3 );
+
+  if( ! $ldap_bind = ldap_bind($adconn, $username, $password ) ) {
+    secure_error($lang['no_login'], 15 );
+  }
+
+  ldap_close($adconn );
+
+  if($userid = login_query($username ) ) {
+    enable_login($userid, $username, $ip, $taskid );
+  }
+}
+
+// 4. Continuation of session
 if(isset($_COOKIE['webcollab_session'] ) && preg_match('/^[a-f\d]{32}$/i', $_COOKIE['webcollab_session'] ) && (! $nologin ) ) {
   //allow for continuation of session if a valid cookie is already set
   // if 'nologin' is set we have just been rejected by security.php
@@ -214,48 +274,53 @@ if(isset($_COOKIE['webcollab_session'] ) && preg_match('/^[a-f\d]{32}$/i', $_COO
   }
 }
 
-  //create login screen
-  create_top($lang['login_screen'], 1, 'login', 0 );
+//
+// LOGIN SCREEN
+//
 
-  $content = "<div style=\"text-align:center\">\n";
+//create login screen
+create_top($lang['login_screen'], 1, 'login', 0 );
 
-  if(SITE_IMG != '' ) {
-    $content .=  "<p><img src=\"images/".SITE_IMG."\" alt=\"WebCollab logo\" /></p>\n";
-  }
-  else {
-    $content .=  "<p><img src=\"images/webcollab.png\" alt=\"WebCollab logo\" /></p>\n";
-  }
+$content = "<div style=\"text-align:center\">\n";
 
-  $content .= "<p>".$lang['please_login'].":</p>\n".
-	      "<form method=\"post\" action=\"index.php\">\n".
-	      "<fieldset><input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" /></fieldset>\n".
-	      "<table style=\"margin-left:auto; margin-right:auto;\">\n".
-	      "<tr align=\"left\" ><td>".$lang['login'].": </td><td><input id=\"username\" class=\"size\" type=\"text\" name=\"username\" value=\"\" />".
-	      "<script type=\"text/javascript\">document.getElementById('username').focus();</script></td></tr>\n".
-	      "<tr align=\"left\" ><td>".$lang['password'].": </td><td><input type=\"password\" class=\"size\" name=\"password\" value=\"\" /></td></tr>\n".
-	      "</table>\n".
-	      "<p style=\"padding-top: 20px; padding-bottom: 20px\"><input type=\"submit\" value=\"".$lang['login_action']."\" /></p>\n".
-	      "</form>\n";
+if(SITE_IMG != '' ) {
+  $content .=  "<p><img src=\"images/".SITE_IMG."\" alt=\"WebCollab logo\" /></p>\n";
+}
+else {
+  $content .=  "<p><img src=\"images/webcollab.png\" alt=\"WebCollab logo\" /></p>\n";
+}
 
-    switch(DATABASE_TYPE ) {
-    case 'postgresql_pdo':
-      $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/postgresql-power.gif\" alt=\"Powered by postgresql\" /></a></p>\n";
-      break;
+$content .= "<p>".$lang['please_login'].":</p>\n".
+	    "<form method=\"post\" action=\"index.php\">\n".
+	    "<fieldset><input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" /></fieldset>\n".
+	    "<table style=\"margin-left:auto; margin-right:auto;\">\n".
+	    "<tr align=\"left\" ><td>".$lang['login'].": </td><td><input id=\"username\" class=\"size\" type=\"text\" name=\"username\" value=\"\" />".
+	    "<script type=\"text/javascript\">document.getElementById('username').focus();</script></td></tr>\n".
+	    "<tr align=\"left\" ><td>".$lang['password'].": </td><td><input type=\"password\" class=\"size\" name=\"password\" value=\"\" /></td></tr>\n".
+	    "</table>\n".
+	    "<p style=\"padding-top: 20px; padding-bottom: 20px\"><input type=\"submit\" value=\"".$lang['login_action']."\" /></p>\n".
+	    "</form>\n";
 
-    case 'mysql_pdo':
-      $content .= "<p><a href=\"http://www.mysql.com\"><img src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\" /></a></p>\n";
-      break;
+switch(DATABASE_TYPE ) {
 
-    default:
-      $content .= "<p><a href=\"http://www.php.net\"> <img src=\"images/php-power.png\" alt=\"Powered by PHP\" /></a></p>\n";
-      break;
-  }
+  case 'postgresql_pdo':
+    $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/postgresql-power.gif\" alt=\"Powered by postgresql\" /></a></p>\n";
+    break;
 
-  $content .= "</div>\n";
+  case 'mysql_pdo':
+    $content .= "<p><a href=\"http://www.mysql.com\"><img src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\" /></a></p>\n";
+    break;
 
-  //set box options
-  new_box($lang['login'], $content, 'boxdata-small', 'head-small' );
+  default:
+    $content .= "<p><a href=\"http://www.php.net\"> <img src=\"images/php-power.png\" alt=\"Powered by PHP\" /></a></p>\n";
+    break;
+}
 
-  create_bottom();
+$content .= "</div>\n";
+
+//set box options
+new_box($lang['login'], $content, 'boxdata-small', 'head-small' );
+
+create_bottom();
 
 ?>

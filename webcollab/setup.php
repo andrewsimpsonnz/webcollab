@@ -52,91 +52,114 @@ function secure_error($message ) {
   new_box_setup('Setup error', $message, 'boxdata-small', 'head-small', 'boxstyle-normal' );
   create_bottom_setup();
   die;
+}
 
+//enable login
+function enable_login($userid, $username, $ip='0.0.0.0' ) {
+
+  //create session key
+  //use Mersenne Twister algorithm (random number), then one-way hash to give session key
+  $session_key = md5(str_pad(mt_rand(), 10, 0 ).str_pad(mt_rand(), 10, 0 ).str_pad(mt_rand(), 10, 0 ) );
+
+  //remove the old login information
+  $q = db_prepare('DELETE FROM '.PRE.'logins WHERE user_id=?' );
+  @db_execute($q, array($userid ) );
+  $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.db_delim('20 MINUTE' ).') OR name=?' );
+  @db_execute($q, array($username ) );
+  @db_query('DELETE FROM tokens WHERE lastaccess < (now()-INTERVAL '.db_delim(TOKEN_TIMEOUT.' MINUTE' ).')' );
+
+  //log the user in
+  $q = db_prepare('INSERT INTO '.PRE.'logins(user_id, session_key, ip, lastaccess ) VALUES (?, ?, ?, now() )' );
+  @db_execute($q, array($userid, $session_key, $ip ) );
+
+  header('Location: '.BASE_URL.'setup_handler.php?x='.$session_key.'&action=setup1&lang='.$locale_setup );
+  die;
+  return;
 }
 
 //
 // LOGIN CHECK
 //
 
-//valid login attempt ?
-if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
+//secure variables
+$content = '';
+$q = '';
+$ip = '';
+$username = '0';
+$md5pass = '0';
+$session_key = '';
 
-  include_once(BASE.'includes/common.php' );
-  include_once(BASE.'database/database.php' );
+if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['username']) > 0 && strlen($_POST['password']) > 0 ) {
 
-  //initialise variables
-  $q = '';
-  $q_array = '';
-
-  $username = safe_data($_POST['username']);
-  //encrypt password
-  $md5pass = md5($_POST['password'] );
-
-  //no ip (possible?)
-  if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
-    secure_error("Unable to determine ip address");
-  }
+  include_once(BASE.'database/database.php');
 
   if(! defined('PRE') ){
     define('PRE', '' );
   }
 
-  //do query and check database connection
-  if( ! ($q = db_prepare('SELECT id FROM '.PRE.'users WHERE deleted=\'f\' AND admin=\'t\'
-                                 AND name=? AND password=?', 0 ) ) ) {
-    secure_error("Not a valid username, or password" );
+  $username = safe_data($_POST['username'] );
+
+  //construct login query for username / password
+  if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\'', 0 ) ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
   }
 
-  if(! db_execute($q, array($username, $md5pass ), 0 ) ) {
+  if(! db_execute($q, array($username ), 0 ) ) {
    secure_error('Unable to connect to database.  Please try again later.' );
   }
 
-  //no such user-password combination
-  if( ! ($user_id = @db_result($q, 0, 0) ) ) {
+  //if user-password combination exists
+  if($row = @db_fetch_array($q, 0, 0) ) {
 
-    //count the number of recent login attempts
-    if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
-                            WHERE name=? AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 4', 0 ) ) ) {
-      secure_error('Unable to connect to database.  Please try again later.' );
+    switch (substr($row['password'], 0, 4 ) ) {
+
+      case '$md$':
+        //md5 + salt encryption
+        $salt = substr($row['password'], 4, 22 );
+        $hash = '$md$' . $salt . md5($_POST['password'] . $salt );
+        break;
+
+      case '$2a$':
+        //bcrypt encryption
+        $salt = substr($row['password'], 0, 29 );
+        $hash = crypt($_POST['password'], $salt );
+        break;
+
+      default:
+        //older md5 encryption (being deprecated)
+        $hash = md5($_POST['password'] );
+        break;
     }
 
-    if(! db_execute($q, array($username ), 0 ) ) {
-      secure_error('Unable to connect to database.  Please try again later.' );
+    if($hash == $row['password'] ) {
+      enable_login($row['id'], $username, $ip );
     }
-
-    //protect against password guessing attacks
-    if(db_result($q, 0, 0 ) > 3 ) {
-      secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
-    }
-
-    //record this login attempt
-    $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
-    db_execute($q, array($username, $ip ) );
-
-    //wait two seconds then record an error
-    sleep(2);
-    secure_error("Not a valid username, or password" );
   }
 
-  //user is okay log him/her in
+  //count the number of recent login attempts
+  if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
+                                WHERE name=? AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 4', 0 ) ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
 
-  //create session key
-  $session_key = md5(mt_rand().$ip );
+  if(! db_execute($q, array($username ), 0 ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
 
-  //remove the old login information
-  $q = db_prepare('DELETE FROM '.PRE.'logins WHERE user_id=?' );
-  @db_execute($q, array($user_id ) );
-  $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.db_delim('20 MINUTE' ).') OR name=?' );
-  @db_execute($q, array($username ) );
+  //protect against password guessing attacks
+  if(db_result($q, 0, 0 ) > 3 ) {
+    secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+  }
 
-  //log the user in
-  $q = db_prepare('INSERT INTO '.PRE.'logins( user_id, session_key, ip, lastaccess ) VALUES (?, ?, ?, now() )' );
-  @db_execute($q, array($user_id, $session_key, $ip ) );
+  //record this login attempt
+  $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
+  db_execute($q, array($username, $ip ) );
 
-  header('Location: '.BASE_URL.'setup_handler.php?x='.$session_key.'&action=setup1&lang='.$locale_setup );
-  die;
+  //wait two seconds then record an error
+  sleep(2);
+  secure_error("Not a valid username, or password" );
 }
+
 
 //
 // MAIN PROGRAM

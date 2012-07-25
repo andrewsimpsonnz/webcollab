@@ -2,7 +2,7 @@
 /*
   $Id: user_submit.php 2180 2009-04-07 09:33:17Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -161,7 +161,7 @@ switch($_POST['action'] ) {
     $q = db_prepare('INSERT INTO '.PRE.'users(name, fullname, password, email, private, admin, guest, deleted, locale )
                     VALUES(?, ?, ?, ?, ?, ?,  ?, \'f\', ? )' );
 
-    db_execute($q, array($name, $fullname, md5($password_unclean), $email_unclean, $private_user, $admin_user,  $guest_user, $locale ) );
+    db_execute($q, array($name, $fullname, password_hash($password_unclean), $email_unclean, $private_user, $admin_user,  $guest_user, $locale ) );
 
     //if the user is assigned to any groups execute the following code to add him/her
     if(isset($_POST['usergroup']) ) {
@@ -292,7 +292,7 @@ switch($_POST['action'] ) {
                               locale=?
                               WHERE id=?' );
 
-      db_execute($q, array($name, $fullname, $email_unclean, md5($password_unclean), $private_user, $admin_user, $guest_user, $locale, $userid ) );
+      db_execute($q, array($name, $fullname, $email_unclean, password_hash($password_unclean), $private_user, $admin_user, $guest_user, $locale, $userid ) );
       }
       else {
         //update data without password
@@ -377,7 +377,7 @@ switch($_POST['action'] ) {
                               locale=?
                               WHERE id=?' );
 
-        db_execute($q, array($name, $fullname, $email_unclean, md5($password_unclean), $locale, UID ) );
+        db_execute($q, array($name, $fullname, $email_unclean, password_hash($password_unclean), $locale, UID ) );
 
         //email the changes to the user
         $name_unclean     = validate($_POST['name']);
