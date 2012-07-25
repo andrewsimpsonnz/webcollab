@@ -1,3 +1,18 @@
+WebCollab 3.21 - Kaitake
+*** 22 June 2012
+
+- release
+
+WebCollab Git
+*** 22 June 2012
+
+- PHP constant PDO::MYSQL_ATTR_INIT_COMMAND is buggy on some versions of PHP (Bug #3535626)
+
+WebCollab 3.20 - Pouakai
+*** 11 June 2012
+
+- release
+
 WebCollab Git
 *** 24 May 2012
 
