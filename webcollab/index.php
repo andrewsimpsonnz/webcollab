@@ -53,7 +53,7 @@ function secure_error( $error = 'Login error', $redirect_time=0 ) {
 }
 
 //enable login
-function enable_login($userid, $username, $ip='0.0.0.0' ) {
+function enable_login($userid, $username, $ip='0.0.0.0', $taskid ) {
 
   //create session key
   //use Mersenne Twister algorithm (random number), then one-way hash to give session key
@@ -158,7 +158,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
     secure_error($lang['no_login'], 15 );
   }
   else {
-    enable_login($userid, $username, $ip );
+    enable_login($userid, $username, $ip, $taskid );
   }
 }
 
@@ -184,7 +184,7 @@ if(WEB_AUTH === 'Y' && isset($_SERVER['REMOTE_USER']) && (strlen($_SERVER['REMOT
     secure_error('Access denied to unknown user \''.$username.'\'' );
   }
   else {
-    enable_login($userid, $username );
+    enable_login($userid, $username, $ip, $taskid );
   }
 }
 
