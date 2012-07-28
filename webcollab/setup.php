@@ -91,7 +91,8 @@ $session_key = '';
 
 if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['username']) > 0 && strlen($_POST['password']) > 0 ) {
 
-  include_once(BASE.'database/database.php');
+  include_once(BASE.'database/database.php' );
+  include_once(BASE.'includes/common.php' );
 
   if(! defined('PRE') ){
     define('PRE', '' );

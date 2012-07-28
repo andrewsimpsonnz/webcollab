@@ -539,7 +539,6 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   sleep(2);
   secure_error("Not a valid username, or password" );
   die;
-  }
 }
 
 //login box screen code

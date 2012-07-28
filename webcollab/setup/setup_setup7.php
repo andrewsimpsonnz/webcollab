@@ -60,6 +60,24 @@ if(! $admin_password == $admin_password_check ) {
   error_setup('Password check failed' );
 }
 
+$salt = substr(md5(mt_rand() ), 0, 22 );
+
+//bcrypt is preferred - if the system supports it
+//  PHP versions before 5.3.8 have buggy implementations
+if((version_compare(PHP_VERSION, '5.3.8' ) >= 0 ) && CRYPT_BLOWFISH == 1 ) {
+
+  //higher work factor numbers will be slower, but more secure
+  $work_factor = '08';
+
+  // format is $2a$ [work factor] $ [salt] [bcrypt hash]
+  $hash = crypt($admin_password, '$2a$'.$work_factor.'$'.$salt );
+}
+else {
+  //fall back to MD5
+  // format is $md$ [salt] [md5 digest with salt]
+  $hash = '$md$'. $salt . md5($admin_password.$salt );
+}
+
 //check for valid email
 if(USE_EMAIL == 'Y' ) {
 
@@ -73,31 +91,12 @@ if(USE_EMAIL == 'Y' ) {
 
   $admin_email = $_POST['admin_email'];
 
-  $salt = substr(md5(mt_rand() ), 0, 22 );
-
-  //bcrypt is preferred - if the system supports it
-  //  PHP versions before 5.3.8 have buggy implementations
-  if((version_compare(PHP_VERSION, '5.3.8' ) >= 0 ) && CRYPT_BLOWFISH == 1 ) {
-
-    //higher work factor numbers will be slower, but more secure
-    $work_factor = '08';
-
-    // format is $2a$ [work factor] $ [salt] [bcrypt hash]
-    $hash = crypt($admin_password, '$2a$'.$work_factor.'$'.$salt );
-  }
-  else {
-    //fall back to MD5
-    // format is $md$ [salt] [md5 digest with salt]
-    $hash = '$md$'. $salt . md5($password.$salt );
-  }
-
   //update the database
   $q = db_prepare("UPDATE ".PRE."users SET name=?, password=?, email=? WHERE id=1;" );
   db_execute($q, array($admin_user, $hash, $admin_email ) );
 
   $q = db_prepare("UPDATE ".PRE."config SET email_admin=?;" );
   db_execute($q, array($admin_email ) );
-
 }
 else {
   //case with no email

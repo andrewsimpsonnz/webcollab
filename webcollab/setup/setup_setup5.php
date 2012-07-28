@@ -99,6 +99,10 @@ foreach($constants as $var ) {
   }
 }
 
+if(! isset($AD_HOST ) ) {
+  $AD_HOST = '';
+}
+
 //convert Windows backslash (\) to Unix forward slash (/)
 $filebase = str_replace("\\", "/", $data["file_base"] );
 
@@ -215,11 +219,11 @@ $content .=
 "  define('GUEST_LOCKED', '".GUEST_LOCKED."' );\n\n".
 "//LOGIN AUTHENTICATION\n\n".
 "  //Use external webserver authorisation to login (values are 'N', or 'Y')\n".
-"  define('WEB_AUTH', "N" );\n\n".
+"  define('WEB_AUTH', 'N' );\n\n".
 "  //Use Active Directory to authenticate (values are 'N', or 'Y')\n".
 "  define('ACTIVE_DIRECTORY', 'N' );\n\n".
 "  //address and port of Active Directory server\n".
-"  \$AD_HOST = $AD_HOST;\n".
+"  \$AD_HOST = '".$AD_HOST."';\n".
 "  define('AD_PORT', 389 );\n\n".
 
 "//ERROR DEBUGGER\n\n".
