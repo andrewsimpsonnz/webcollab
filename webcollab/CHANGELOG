@@ -1,3 +1,16 @@
+WebCollab Git
+*** 11 August 2012
+
+- change to blowfish password encryption for PHP > 5.3.8
+
+- change to md5 + salt password encryption for PHP < 5.3.8
+
+- add Active Directory support (Thanks to Bill Bliss)
+
+- improve if-modified header in RSS (Thanks to Bill Bliss)
+
+- bugfix: if-modified-header code in RSS needs rounding tolerance to work
+
 WebCollab 3.21 - Kaitake
 *** 22 June 2012
 
