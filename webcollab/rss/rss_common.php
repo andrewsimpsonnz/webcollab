@@ -2,7 +2,7 @@
 /*
   $Id: rss_forum.php 1706 2008-01-01 06:13:00Z andrewsimpson $
 
-  (c) 2008 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2008 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -73,32 +73,24 @@ function rss_login() {
 
 function rss_last_mod ($last_mod) {
 
-  //get the request headers
-  $headers = apache_request_headers();
+  if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE'] ) ) {
 
-  //search the headers for 'If-Modified-Since' string
-  foreach($headers as $header=>$value ) {
+    $last_read = strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'] );
 
-    if(strpos(strtolower($header), 'if-modified-since' ) === false ) {
-      continue;
-    }
-
-    //found header --> get the time value
-    $last_read = strtotime($value );
     //prior to PHP 5.1.0 a failure is '-1', later versions give 'false'
     if($last_read === -1 || $last_read === false ) {
-      break;
+      return;
     }
-    if($last_read - $last_mod > 0 ) {
+
+    //allow for two second margin of error due to numerical rounding
+    if(abs($last_read - $last_mod ) < 2 ) {
       header("HTTP/1.0 304 Not modified", true, 304 );
       die;
     }
-    break;
-
   }
-
-return;
+  return;
 }
+
 
 //
 // Start the RSS xml feed headers
@@ -115,6 +107,8 @@ function rss_start($last_mod, $filename ) {
 
   //send the headers with last mod time
   header('Last-Modified: '.gmdate('D, d M Y H:i:s', $last_mod ) . ' GMT' );
+  header("Cache-Control: must-revalidate");
+  header("Expires: -1" );
 
   //send the headers describing the xml
   header('Content-Type: text/xml; charset=UTF-8' );
