@@ -43,7 +43,7 @@ if(! rss_login() ) {
 }
 
 //check when page was last modified
-if(! ($q = db_query('SELECT '.db_epoch().'MAX(posted) ) AS last FROM '.PRE.'forum', 0 ) ) ) {
+if(! ($q = db_query('SELECT '.db_epoch().'MAX(uploaded) ) AS last FROM '.PRE.'files', 0 ) ) ) {
 
   rss_error('500', 'File last modified');
 }
