@@ -283,11 +283,11 @@ create_top($lang['login_screen'], 1, 'login', 0 );
 
 $content = "<div style=\"text-align:center\">\n";
 
-if(SITE_IMG != '' ) {
-  $content .=  "<p><img src=\"images/".SITE_IMG."\" alt=\"WebCollab logo\" /></p>\n";
+if(SITE_IMG != '' && SITE_IMG != 'webcollab.png' ) {
+  $content .=  "<p><img src=\"images/".SITE_IMG."\" alt=\"Site logo\" /></p>\n";
 }
 else {
-  $content .=  "<p><img src=\"images/webcollab.png\" alt=\"WebCollab logo\" /></p>\n";
+  $content .=  "<p><img src=\"images/webcollab.png\" alt=\"WebCollab logo\" width=\"322\" height=\"102\" /></p>\n";
 }
 
 $content .= "<p>".$lang['please_login'].":</p>\n".
@@ -304,15 +304,15 @@ $content .= "<p>".$lang['please_login'].":</p>\n".
 switch(DATABASE_TYPE ) {
 
   case 'postgresql_pdo':
-    $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/postgresql-power.gif\" alt=\"Powered by postgresql\" /></a></p>\n";
+    $content .= "<p><a href=\"http://www.postgres.org\"><img src=\"images/postgresql-power.png\" width=\"80\" height=\"15\" alt=\"Powered by postgresql\" /></a></p>\n";
     break;
 
   case 'mysql_pdo':
-    $content .= "<p><a href=\"http://www.mysql.com\"><img src=\"images/poweredbymysql-125.png\" alt=\"Powered by MySQL\" /></a></p>\n";
+    $content .= "<p><a href=\"http://www.mysql.com\"><img src=\"images/poweredbymysql-125.png\" width=\"125\" height=\"42\" alt=\"Powered by MySQL\" /></a></p>\n";
     break;
 
   default:
-    $content .= "<p><a href=\"http://www.php.net\"> <img src=\"images/php-power.png\" alt=\"Powered by PHP\" /></a></p>\n";
+    $content .= "<p><a href=\"http://www.php.net\"> <img src=\"images/php-power.png\" width=\"88\" height=\"31\" alt=\"Powered by PHP\" /></a></p>\n";
     break;
 }
 
