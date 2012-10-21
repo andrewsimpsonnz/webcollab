@@ -9,7 +9,7 @@
   define('SETUP_CSS', 'setup.css' );
 
   //version info
-  define('SETUP_WEBCOLLAB_VERSION', "3.00" );
+  define('SETUP_WEBCOLLAB_VERSION', "3.30" );
 
   //available language array
   $locale_array = array('bg'   => 'Bulgarian',

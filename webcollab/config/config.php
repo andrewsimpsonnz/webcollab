@@ -190,6 +190,9 @@
 
 //LOGIN AUTHENTICATION
 
+  //Work factor for Blowfish encryption to password for PHP > 5.3.8 (default value is "08")
+  define('WORK_FACTOR', "08" );
+
   //Use external webserver authorisation to login (values are "N", or "Y")
   define('WEB_AUTH', "N" );
 
@@ -224,6 +227,6 @@
 //WEBCOLLAB VERSION
 
   //version info
-  define('WEBCOLLAB_VERSION', "3.00" );
+  define('WEBCOLLAB_VERSION', "3.30" );
 
 ?>

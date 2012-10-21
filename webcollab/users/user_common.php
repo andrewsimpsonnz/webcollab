@@ -91,7 +91,7 @@ function password_hash($password ) {
     $work_factor = '08';
 
     // format is $2a$ [work factor] $ [salt] [bcrypt hash]
-    $hash = crypt($password, '$2a$'.$work_factor.'$'.$salt );
+    $hash = crypt($password, '$2a$'.WORK_FACTOR.'$'.$salt );
   }
   else {
     //fall back to MD5
