@@ -1,4 +1,13 @@
 WebCollab Git
+*** 21 October 2012
+
+- bugfix:  Usergroup check missing from projects in project list
+
+- add project sorting to reparenting drop down in task edit
+
+- add work factor constant for Blowfish to config file
+
+WebCollab Git
 *** 11 August 2012
 
 - change to blowfish password encryption for PHP > 5.3.8
