@@ -38,6 +38,8 @@ require_once(BASE.'includes/token.php' );
 include_once(BASE.'includes/admin_config.php' );
 include_once(BASE.'includes/details.php' );
 include_once(BASE.'includes/time.php' );
+include_once(BASE.'tasks/task_common.php' );
+
 
 $content = '';
 $javascript = '';
@@ -74,6 +76,129 @@ function user_access($owner, $usergroupid, $groupaccess ) {
   }
   return false;
 }
+
+//
+// List tasks for reparenting
+//
+
+function listReparentTasks($projectid, $self_parent ) {
+
+  global $task_reparent, $task_projectid;
+  global $task_array, $parent_array, $task_count, $level_count;
+
+  //initialise variables
+  $content = '';
+  $task_array   = array();
+  $parent_array = array();
+  $task_count   = 0;  //counter for $task_array
+  $level_count  = 1;  //number of task levels
+
+  //search for tasks by projectid
+  $task_key = array_keys((array)$task_projectid, $projectid );
+
+  if(sizeof($task_key) < 1 ) {
+    return;
+  }
+
+  //cycle through relevant tasks
+  foreach((array)$task_key as $key ) {
+
+    $task_array[$task_count]['id']     = $task_reparent[($key)]['id'];
+    $task_array[$task_count]['parent'] = $task_reparent[($key)]['parent'];
+    $task_array[$task_count]['name']   = $task_reparent[($key)]['name'];
+
+    //if this is a subtask, store the parent id
+    if($task_array[$task_count]['parent'] != $projectid ) {
+      //store parent as array key for faster searching
+      $parent_array[($task_array[$task_count]['parent'])] = 1;
+    }
+    ++$task_count;
+
+    //remove used key to shorten future searches
+    unset($task_projectid[$key] );
+  }
+
+  $padding = padding($level_count );
+
+  //iteration for main tasks
+  for($i=0 ; $i < $task_count ; ++$i ){
+
+    //ignore subtasks in this iteration
+    if(($task_array[$i]['parent'] != $projectid ) )  {
+      continue;
+    }
+
+    //show line
+    $content .= "<option value=\"".$task_array[$i]['id']."\"";
+
+    if($self_parent == $task_array[$i]['id'] ) {
+      $content .= " selected=\"selected\"";
+    }
+    $content .= ">".$padding.$task_array[$i]['name']."</option>\n";
+
+    //if this task has children (subtasks), iterate recursively to find them
+    if(isset($parent_array[($task_array[$i]['id'])] ) ) {
+      $content .= find_children($task_array[$i]['id'], $self_parent );
+    }
+  }
+
+  return $content;
+}
+
+//
+// List subtasks (recursive function)
+//
+function find_children($parent, $self_parent ) {
+
+  global $task_array, $parent_array, $task_count, $level_count;
+
+  ++$level_count;
+  $content = '';
+
+  $padding = padding($level_count );
+
+  for($i=0 ; $i < $task_count ; ++$i ) {
+
+    //ignore tasks not directly under this parent
+    if($task_array[$i]['parent'] != $parent ){
+      continue;
+    }
+
+    //show line
+    $content .= "<option value=\"".$task_array[$i]['id']."\"";
+
+    if($self_parent == $task_array[$i]['id'] ) {
+      $content .= " selected=\"selected\"";
+    }
+    $content .= ">".$padding.$task_array[$i]['name']."</option>\n";
+
+    //if this task has children (subtasks), iterate recursively to find them
+    if(isset($parent_array[($task_array[$i]['id'])] ) ) {
+      $content .= find_children($task_array[$i]['id'], $self_parent );
+    }
+  }
+  --$level_count;
+
+  return $content;
+}
+
+//
+// Padding for reparenting list
+//
+
+function padding($level_count ) {
+
+  $padding = '&nbsp;';
+  $max_level = min($level_count, 4 );
+
+  for($i=0; $i < $max_level; ++$i ) {
+    $padding .= '&nbsp;&nbsp;';
+  }
+
+return $padding;
+}
+
+//  START MAIN PROGRAM
 
 //get input data
 if(! @safe_integer($_GET['taskid']) ){
@@ -178,24 +303,47 @@ if($TASKID_ROW['parent'] == 0 ){
 }
 $content .= ">".$lang['no_reparent']."</option>\n";
 
-$q = db_prepare('SELECT id, name, usergroupid, globalaccess FROM '.PRE.'tasks WHERE id<>? AND archive=0 ORDER BY name');
+//get tasks for reparenting and store for later use
+if($TASKID_ROW['parent'] == 0 ) {
+  //For project: Don't show tasks under 
+  $q = db_prepare('SELECT id, name, parent, projectid FROM '.PRE.'tasks
+                        WHERE id<>? AND parent<>0 AND projectid<>?'.usergroup_tail().'AND archive=0 ORDER BY name');
+
+  db_execute($q, array($taskid, $taskid ) );
+}
+else {
+  //For task: Don't show child tasks under
+  $q = db_prepare('SELECT id, name, parent, projectid FROM '.PRE.'tasks
+                        WHERE id<>? AND (parent<>0 OR parent<>?)'.usergroup_tail().' AND archive=0 ORDER BY name');
+
+  db_execute($q, array($taskid, $taskid ) );
+}
+
+for( $i=0 ; $reparent_row = @db_fetch_array($q, $i ) ; ++$i ) {
+  //put values into array
+  $task_reparent[$i]['id']     = $reparent_row['id'];
+  $task_reparent[$i]['name']   = $reparent_row['name'];
+  $task_reparent[$i]['parent'] = $reparent_row['parent'];
+  $task_projectid[$i]          = $reparent_row['projectid'];
+}
+
+//get projects for reparenting
+$q = db_prepare('SELECT id, name FROM '.PRE.'tasks WHERE parent=0 AND id<>?'.usergroup_tail().' AND archive=0 ORDER BY name');
 db_execute($q, array($taskid ) );
 
-for( $i=0; $reparent_row = @db_fetch_array($q, $i ); ++$i ) {
-  //check for private usergroups
-  if( (! ADMIN ) && ($reparent_row['usergroupid'] != 0 ) && ($reparent_row['globalaccess'] == 'f' ) ) {
+for( $i=0 ; $reparent_row = @db_fetch_array($q, $i ) ; ++$i ) {
 
-    if( ! isset($GID[($reparent_row['usergroupid'])] ) ) {
-      continue;
-    }
-  }
   $content .= "<option value=\"".$reparent_row['id']."\"";
 
   if($TASKID_ROW['parent'] == $reparent_row['id'] ) {
     $content .= " selected=\"selected\"";
   }
-  $content .= ">".$reparent_row['name']."</option>\n";
+  $content .= ">+&nbsp;".$reparent_row['name']."</option>\n";
+
+  //add tasks previously stored
+  $content .= listReparentTasks($reparent_row['id'], $TASKID_ROW['parent'] );
 }
+
 $content .="</select></td></tr>\n";
 
 //show task (if applicable)
@@ -206,26 +354,28 @@ if($TASKID_ROW['parent'] != 0 ){
 $content .= "<tr><td>".$lang['deadline'].":</td><td>".date_select_from_timestamp($TASKID_ROW['deadline'])."</td></tr>\n";
 
 //priority
+$s1 = ""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
+
 switch($TASKID_ROW['priority'] ) {
   case 0:
-    $s1 = "selected=\"selected\""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
+    $s1 = "selected=\"selected\"";
     break;
 
   case 1:
-    $s1 = ""; $s2 = " selected=\"selected\""; $s3 = ""; $s4 =""; $s5 = "";
+    $s2 = " selected=\"selected\"";
     break;
 
   case 3:
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 =" selected=\"selected\""; $s5 = "";
+    $s4 =" selected=\"selected\"";
     break;
 
   case 4:
-    $s1 = ""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = " selected=\"selected\"";
+    $s5 = " selected=\"selected\"";
     break;
 
   case 2:
   default:
-    $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\""; $s4 =""; $s5 = "";
+    $s3 = " selected=\"selected\"";
     break;
 }
 
@@ -238,25 +388,27 @@ $content .= "<tr><td>".$lang['priority'].":</td><td>\n".
             "<option value=\"4\"".$s5.">".$task_state['yesterday']."</option>\n".
             "</select></td></tr>\n";
 
+$s1 = ""; $s2 = ""; $s3 = ""; $s4 = "";
+
 switch($TASKID_ROW['parent'] ){
   case 0:
     //status for projects - 'done' is calculated from tasks
     switch($TASKID_ROW['status'] ) {
       case 'notactive':
-        $s1 = " selected=\"selected\""; $s2 = ""; $s3 = ""; $s4 = "";
+        $s1 = " selected=\"selected\"";
         break;
 
       case 'nolimit':
-        $s1 = ""; $s2 = " selected=\"selected\""; $s3 = ""; $s4 ="";
+        $s2 = " selected=\"selected\"";
         break;
 
       case 'cantcomplete':
-        $s1 = ""; $s2 = ""; $s3 = ""; $s4 =" selected=\"selected\"";
+        $s4 =" selected=\"selected\"";
         break;
 
       case 'active':
       default:
-        $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\""; $s4 ="";
+        $s3 = " selected=\"selected\"";
         break;
     }
     $content .= "<tr><td>".$lang['status'].":</td><td>\n".
@@ -277,26 +429,28 @@ switch($TASKID_ROW['parent'] ){
         $selection = $TASKID_ROW['status'];
       }
 
+     $s1 = ""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
+
       switch($selection ) {
         case 'notactive':
-          $s1 = ""; $s2 = " selected=\"selected\""; $s3 = ""; $s4 =""; $s5 = "";
+          $s2 = " selected=\"selected\"";
           break;
 
         case 'active':
-          $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\""; $s4 =""; $s5 = "";
+          $s3 = " selected=\"selected\"";
           break;
 
         case 'cantcomplete':
-          $s1 = ""; $s2 = ""; $s3 = ""; $s4 =" selected=\"selected\""; $s5 = "";
+          $s4 =" selected=\"selected\"";
           break;
 
         case 'done':
-          $s1 = ""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = " selected=\"selected\"";
+          $s5 = " selected=\"selected\"";
           break;
 
         case 'created':
         default:
-          $s1 = " selected=\"selected\""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
+          $s1 = " selected=\"selected\"";
           break;
       }
       $content .= "<tr><td>".$lang['status'].":</td><td>\n".
