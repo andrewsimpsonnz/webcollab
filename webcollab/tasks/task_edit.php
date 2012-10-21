@@ -305,7 +305,7 @@ $content .= ">".$lang['no_reparent']."</option>\n";
 
 //get tasks for reparenting and store for later use
 if($TASKID_ROW['parent'] == 0 ) {
-  //For project: Don't show tasks under 
+  //For project: Don't show tasks under
   $q = db_prepare('SELECT id, name, parent, projectid FROM '.PRE.'tasks
                         WHERE id<>? AND parent<>0 AND projectid<>?'.usergroup_tail().'AND archive=0 ORDER BY name');
 
