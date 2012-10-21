@@ -271,7 +271,7 @@ $q = db_query('SELECT id,
                       FROM '.PRE.'tasks
                       WHERE parent=0
                       AND archive=0 '
-                      .$tail
+                      .usergroup_tail()
                       .$project_order );
 
 //text link for 'active' switch
