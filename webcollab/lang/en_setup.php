@@ -59,7 +59,7 @@ define('XML_LANG', "en" );
     $lang_setup['no_config']           = "Current configuration file does not allow web-based setup";
 
 //setup
-    $lang_setup['min_version']         = "WebCollab needs PHP version 5.1.0, or higher.  This version is ".PHP_VERSION;
+    $lang_setup['min_version']         = "WebCollab needs PHP version %s, or higher.  This version is %s";
     $lang_setup['no_mbstring']         = "Unable to set UTF-8 encoding in PHP.<br \>\n".
                                          "The PHP installed on this server does not appear to have the multi-byte string (mb_string) library enabled.<br />\n".
                                          "This library is essential for using UTF-8 with WebCollab";
@@ -69,6 +69,7 @@ define('XML_LANG', "en" );
     $lang_setup['password']            = "Password:";
     $lang_setup['language']            = "Language:";
     $lang_setup['setup_banner']        = "Login";
+    $lang_setup['no_login']            = "Access denied; incorrect login or password";
 
 //setup1
 
