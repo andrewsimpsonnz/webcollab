@@ -35,11 +35,11 @@ include_once(BASE.'includes/common.php' );
 include_once(BASE.'includes/screen.php' );
 
 //error condition
-function secure_error( $error = 'Login error', $redirect_time=0 ) {
+function secure_error($error='Login error', $redirect_time=0 ) {
 
   global $lang;
 
-  $content = "<div style=\"text-align : center\"><br />$error<br /></div>";
+  $content = "<div style=\"text-align : center\">".$error."</div>";
   create_top($lang['login'], 1, 0, 0, $redirect_time );
   new_box($lang['error'], $content, 'boxdata-small', 'head-small' );
 
@@ -57,7 +57,7 @@ function enable_login($userid, $username, $ip='0.0.0.0', $taskid ) {
 
   //create session key
   //use Mersenne Twister algorithm (random number), then one-way hash to give session key
-  $session_key = md5(str_pad(mt_rand(), 10, 0 ).str_pad(mt_rand(), 10, 0 ).str_pad(mt_rand(), 10, 0 ) );
+  $session_key = md5(mt_rand().mt_rand().mt_rand() );
 
   //remove the old login information
   $q = db_prepare('DELETE FROM '.PRE.'logins WHERE user_id=?' );
@@ -116,6 +116,45 @@ function login_query($username ) {
   return false;
 }
 
+//record recent login failures
+function record_fail($username, $ip ) {
+
+ global $lang;
+
+  //record this login attempt
+  $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
+  db_execute($q, array($username, $ip ) );
+
+  //wait 2 seconds then record an error
+  sleep (2);
+  secure_error($lang['no_login'], 15 );
+  die;
+}
+
+//limit number of login attempts
+function check_lockout($username ) {
+
+  //count the number of recent failed login attempts
+  if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt WHERE name=?
+			      AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 6', 0 ) ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
+
+  if( ! @db_execute($q, array($username ), 0 ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
+
+  $count_attempts = db_result($q, 0, 0 );
+
+  //protect against password guessing attacks
+  if($count_attempts > 4 ) {
+    secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+    die;
+  }
+  
+  return true;
+}
+  
 //
 // MAIN LOGIN
 //
@@ -145,6 +184,9 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
 
   $username = safe_data($_POST['username'] );
 
+  //check for account locked
+  check_lockout($username );
+  
   //construct login query for username / password
   if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\'', 0 ) ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
@@ -184,33 +226,9 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
   }
 
   //no such user-password combination
-
-  //count the number of recent failed login attempts
-  if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt WHERE name=?
-			      AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 6', 0 ) ) ) {
-    secure_error('Unable to connect to database.  Please try again later.' );
-  }
-
-  if( ! @db_execute($q, array($username ), 0 ) ) {
-    secure_error('Unable to connect to database.  Please try again later.' );
-  }
-
-  $count_attempts = db_result($q, 0, 0 );
-
-  //protect against password guessing attacks
-  if($count_attempts > 4 ) {
-    secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
-  }
-
-  //record this login attempt
-  $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
-  db_execute($q, array($username, $ip ) );
-
-  //wait 2 seconds then record an error
-  sleep (2);
-  secure_error($lang['no_login'], 15 );
+  record_fail($username, $ip);
 }
-
+   
 // 2. Web authorisation
 if(WEB_AUTH === 'Y' && isset($_SERVER['REMOTE_USER']) && (strlen($_SERVER['REMOTE_USER']) > 0 ) ) {
 
@@ -231,6 +249,9 @@ if(ACTIVE_DIRECTORY == 'Y' && isset($_POST['username']) && isset($_POST['passwor
   $username = safe_data($_POST['username']);
   $password = safe_data($_POST['password'] );
   
+  //check for account locked
+  check_lockout($username );
+  
   if(! $adconn = ldap_connect($AD_HOST, AD_PORT ) ) {
     secure_error('ACTIVE_DIRECTORY: Connection not successful.' );
   }
@@ -246,6 +267,10 @@ if(ACTIVE_DIRECTORY == 'Y' && isset($_POST['username']) && isset($_POST['passwor
   if($userid = login_query($username ) ) {
     enable_login($userid, $username, $ip, $taskid );
   }
+  
+  //record failure
+  record_fail($username, $ip );
+  
 }
 
 // 4. Continuation of session

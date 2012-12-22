@@ -46,10 +46,11 @@ include_once(BASE.'setup/screen_setup.php' );
 // ERROR FUNCTION
 //
 
-function secure_error($message ) {
+function secure_error($error ) {
 
+  $content = "<div style=\"text-align : center\">".$error."</div>";
   create_top_setup("Error" );
-  new_box_setup('Setup error', $message, 'boxdata-small', 'head-small', 'boxstyle-normal' );
+  new_box_setup('Setup error', $content, 'boxdata-small', 'head-small', 'boxstyle-normal' );
   create_bottom_setup();
   die;
 }
@@ -57,9 +58,11 @@ function secure_error($message ) {
 //enable login
 function enable_login($userid, $username, $ip='0.0.0.0' ) {
 
+  global $locale_setup;
+
   //create session key
   //use Mersenne Twister algorithm (random number), then one-way hash to give session key
-  $session_key = md5(str_pad(mt_rand(), 10, 0 ).str_pad(mt_rand(), 10, 0 ).str_pad(mt_rand(), 10, 0 ) );
+  $session_key = md5(mt_rand().mt_rand().mt_rand() );
 
   //remove the old login information
   $q = db_prepare('DELETE FROM '.PRE.'logins WHERE user_id=?' );
@@ -77,6 +80,45 @@ function enable_login($userid, $username, $ip='0.0.0.0' ) {
   return;
 }
 
+//record recent login failures
+function record_fail($username, $ip ) {
+
+  global $lang_setup;
+
+  //record this login attempt
+  $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
+  db_execute($q, array($username, $ip ) );
+
+  //wait 2 seconds then record an error
+  sleep (2);
+  secure_error($lang_setup['no_login'] );
+  die;  
+}
+
+//limit number of login attempts
+function check_lockout($username ) {
+
+  //count the number of recent failed login attempts
+  if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt WHERE name=?
+			      AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 6', 0 ) ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
+
+  if( ! @db_execute($q, array($username ), 0 ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
+
+  $count_attempts = db_result($q, 0, 0 );
+
+  //protect against password guessing attacks
+  if($count_attempts > 4 ) {
+    secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+    die;
+  }
+  
+  return true;
+}
+  
 //
 // LOGIN CHECK
 //
@@ -100,6 +142,9 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
 
   $username = safe_data($_POST['username'] );
 
+  //check for account locked
+  check_lockout($username );
+  
   //construct login query for username / password
   if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\'', 0 ) ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
@@ -136,29 +181,8 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
       enable_login($row['id'], $username, $ip );
     }
   }
-
-  //count the number of recent login attempts
-  if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
-                                WHERE name=? AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 4', 0 ) ) ) {
-    secure_error('Unable to connect to database.  Please try again later.' );
-  }
-
-  if(! db_execute($q, array($username ), 0 ) ) {
-    secure_error('Unable to connect to database.  Please try again later.' );
-  }
-
-  //protect against password guessing attacks
-  if(db_result($q, 0, 0 ) > 3 ) {
-    secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
-  }
-
-  //record this login attempt
-  $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
-  db_execute($q, array($username, $ip ) );
-
-  //wait two seconds then record an error
-  sleep(2);
-  secure_error("Not a valid username, or password" );
+  
+  record_fail($username, $ip);
 }
 
 
@@ -173,9 +197,9 @@ if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
 }
 
 //version check
-if(version_compare(PHP_VERSION, '5.1.0' ) == -1 ) {
-  secure_error($lang_setup['min_version'] );
-}
+if(version_compare(PHP_VERSION, '5.2.0' ) == -1 ) {
+  secure_error(sprintf($lang['min_version'], '5.2.0', PHP_VERSION ) );
+  }
 
 //check that UTF-8 character encoding can be used
 if(! function_exists('mb_internal_encoding') ) {
