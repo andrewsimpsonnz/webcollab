@@ -87,9 +87,6 @@ function password_hash($password ) {
   //  PHP versions before 5.3.8 have buggy implementations
   if((version_compare(PHP_VERSION, '5.3.8' ) >= 0 ) && CRYPT_BLOWFISH == 1 ) {
 
-    //higher work factor numbers will be slower, but more secure
-    $work_factor = '08';
-
     // format is $2a$ [work factor] $ [salt] [bcrypt hash]
     $hash = crypt($password, '$2a$'.WORK_FACTOR.'$'.$salt );
   }
