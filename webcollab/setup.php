@@ -126,7 +126,10 @@ function check_lockout($username ) {
 //secure variables
 $content = '';
 $q = '';
+$row = '';
 $ip = '';
+$hash = 'xxxx';
+$salt = '';
 $username = '0';
 $md5pass = '0';
 $session_key = '';
@@ -177,7 +180,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
         break;
     }
 
-    if($hash == $row['password'] ) {
+    if($hash === $row['password'] ) {
       enable_login($row['id'], $username, $ip );
     }
   }

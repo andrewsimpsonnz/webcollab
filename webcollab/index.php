@@ -72,13 +72,8 @@ function enable_login($userid, $username, $ip='0.0.0.0', $taskid ) {
 
   //try and set a session cookie (if the browser will let us)
   $url = parse_url(BASE_URL );
-  if(version_compare(PHP_VERSION, '5.2.0', '>=' ) ) {
-    //use HTTP only to reduce XSS attacks (only in PHP 5.2.0+ )
-    setcookie('webcollab_session', $session_key, 0, $url['path'], $url['host'], false, true );
-  }
-  else {
-    setcookie('webcollab_session', $session_key, 0, $url['path'], $url['host'] );
-  }
+  //use HTTP only to reduce XSS attacks (only in PHP 5.2.0+ )
+  setcookie('webcollab_session', $session_key, 0, $url['path'], $url['host'], false, true );
   //(No need to record an error here if unsuccessful: the code will revert to URI session keys)
 
   //relocate the user to the main screen
@@ -166,7 +161,8 @@ $nologin = (isset($_GET['nologin']) ) ? 1 : 0;
 //secure variables
 $content = '';
 $q = '';
-$hash = '';
+$row = '';
+$hash = 'xxxx';
 $salt = '';
 $username = '0';
 $password = '0';
@@ -220,7 +216,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
         break;
     }
 
-    if($hash == $row['password'] ) {
+    if($hash === $row['password'] ) {
       enable_login($row['id'], $username, $ip, $taskid );
     }
   }
