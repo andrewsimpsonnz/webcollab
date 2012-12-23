@@ -54,7 +54,7 @@ function update($username ) {
 
   //remove the old login information for post 1.60 database
   if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {
-    $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.$delim.'20 MINUTE'.$delim.') OR name=?' );
+    $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.db_delim('20 MINUTE' ).') OR name=?' );
     db_execute($q, array($username ) );
   }
 
@@ -275,7 +275,7 @@ function update($username ) {
     db_query('UPDATE '.PRE.'tasks SET sequence=0' );
 
     //change 'datetime' columns to 'timestamp'
-    if((DATABASE_TYPE == 'mysql' ) || (DATABASE_TYPE == 'mysql_innodb' ) || (DATABASE_TYPE == 'mysqli' ) ) {
+    if(DATABASE_TYPE == 'mysql_pdo' ) {
       db_query('ALTER TABLE '.PRE.'tasks MODIFY COLUMN created TIMESTAMP' );
       db_query('ALTER TABLE '.PRE.'tasks MODIFY COLUMN edited TIMESTAMP' );
       db_query('ALTER TABLE '.PRE.'tasks MODIFY COLUMN finished_time TIMESTAMP' );
@@ -475,8 +475,28 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
   //set variables
   $q = '';
+  $row = '';
+  $hash = 'xxxx';
+  $salt = '';
+  $username = '0';
+  $password = '0';
 
   $username = safe_data($_POST['username']);
+
+  //count the number of recent login attempts
+  if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
+				WHERE name=? AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 4', 0 ) ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
+
+  if(! db_execute($q, array($username ), 0 ) ) {
+    secure_error('Unable to connect to database.  Please try again later.' );
+  }
+
+  //protect against password guessing attacks
+  if(db_result($q, 0, 0 ) > 3 ) {
+    secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+  }
 
   //construct login query for username / password
   if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\' AND admin=\'t\'', 0 ) ) ) {
@@ -511,24 +531,9 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
         break;
     }
 
-    if($hash == $row['password'] ) {
+    if($hash === $row['password'] ) {
       update($username );
     }
-  }
-
-  //count the number of recent login attempts
-  if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
-				WHERE name=? AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 4', 0 ) ) ) {
-    secure_error('Unable to connect to database.  Please try again later.' );
-  }
-
-  if(! db_execute($q, array($username ), 0 ) ) {
-    secure_error('Unable to connect to database.  Please try again later.' );
-  }
-
-  //protect against password guessing attacks
-  if(db_result($q, 0, 0 ) > 3 ) {
-    secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
   }
 
   //record this login attempt
