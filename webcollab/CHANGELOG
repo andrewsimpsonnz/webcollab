@@ -1,4 +1,13 @@
 WebCollab Git
+*** 23 December 2012
+
+- bugfix: Coding errors in update.php fixed.
+
+- update minimum PHP to 5.2.0
+
+- minor bugfixing and improvements
+
+WebCollab Git
 *** 21 October 2012
 
 - bugfix:  Usergroup check missing from projects in project list
