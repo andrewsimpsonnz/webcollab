@@ -77,7 +77,7 @@ $array = array('NUM_FILE_UPLOADS' => 3, 'FILE_DOWNLOAD' => 'inline',
                'VEVENT'       => 'N',
                'RSS_AUTODISCOVERY' => 'N',
                'SESSION_TIMEOUT'   => 1, 'TOKEN_TIMEOUT' => 5, 'PASS_STYLE' => 'text', 'GUEST_LOCKED' => 'N',
-               'WORK_FACTOR'  => '08','WEB_AUTH' => 'N', 'ACTIVE_DIRECTORY' => 'N', 'AD_PORT' => '389',
+               'WEB_AUTH' => 'N', 'ACTIVE_DIRECTORY' => 'N', 'AD_PORT' => '389', 'FILENAME_CHAR_SET' => 'ISO-8859-1',
                'EMAIL_ERROR'  => '',
                'DEBUG'        => 'N',
                'NO_ERROR'     => 'N',
@@ -211,8 +211,6 @@ $content .=
 "  //Stop GUEST users from changing their login details or posting in the forums (values are 'N', or 'Y')\n".
 "  define('GUEST_LOCKED', '".GUEST_LOCKED."' );\n\n".
 "//LOGIN AUTHENTICATION\n\n".
-"  //Work factor for Blowfish encryption to password for PHP > 5.3.8 (default value is '08')\n".
-"  define('WORK_FACTOR', '".WORK_FACTOR."' );\n\n".
 "  //Use external webserver authorisation to login (values are 'N', or 'Y')\n".
 "  define('WEB_AUTH', 'N' );\n\n".
 "  //Use Active Directory to authenticate (values are 'N', or 'Y')\n".
@@ -234,6 +232,9 @@ $content .=
 "//OUTPUT COMPRESSION\n\n".
 "  //Use to enable zlib output compression of web pages (values are 'N', or 'Y')\n".
 "  define('COMPRESS_OUTPUT', '".COMPRESS_OUTPUT."' );\n\n".
+"// LEGACY FILE UPLOADS\n\n";
+"  //Character set hack for older files stored with pre-WebCollab 3.00 that have been upgraded (usually 'ISO-8859-1')\n"; 
+"  define('".FILENAME_CHAR_SET."', '' );\n\n";
 "//WEBCOLLAB VERSION\n\n".
 "  //WebCollab version string\n".
 "  define('WEBCOLLAB_VERSION', '".SETUP_WEBCOLLAB_VERSION."');\n\n".

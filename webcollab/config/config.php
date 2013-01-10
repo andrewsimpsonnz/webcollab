@@ -190,9 +190,6 @@
 
 //LOGIN AUTHENTICATION
 
-  //Work factor for Blowfish encryption to password for PHP > 5.3.8 (default value is "08")
-  define('WORK_FACTOR', "08" );
-
   //Use external webserver authorisation to login (values are "N", or "Y")
   define('WEB_AUTH', "N" );
 
@@ -223,6 +220,11 @@
 
   //Use to enable zlib output compression of web pages (values are "N", or "Y")
   define('COMPRESS_OUTPUT', 'N' );
+  
+// LEGACY FILE UPLOADS
+
+  //Character set hack for older files stored with pre-WebCollab 3.00 that have been upgraded (usually 'ISO-8859-1') 
+  define('FILENAME_CHAR_SET', 'ISO-8859-1' );
 
 //WEBCOLLAB VERSION
 

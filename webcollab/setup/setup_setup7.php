@@ -60,20 +60,9 @@ if(! $admin_password == $admin_password_check ) {
   error_setup('Password check failed' );
 }
 
-$salt = substr(md5(mt_rand() ), 0, 22 );
-
-//bcrypt is preferred - if the system supports it
-//  PHP versions before 5.3.8 have buggy implementations
-if((version_compare(PHP_VERSION, '5.3.8' ) >= 0 ) && CRYPT_BLOWFISH == 1 ) {
-
-  // format is $2a$ [work factor] $ [salt] [bcrypt hash]
-  $hash = crypt($admin_password, '$2a$'.WORK_FACTOR.'$'.$salt );
-}
-else {
-  //fall back to MD5
-  // format is $md$ [salt] [md5 digest with salt]
-  $hash = '$md$'. $salt . md5($admin_password.$salt );
-}
+//generate password hash (sha256 + hash)
+$salt = substr(md5(mt_rand() ), 0, 16 );
+$hash = crypt($password, '$5$rounds=5000$'.$salt.'$' );
 
 //check for valid email
 if(USE_EMAIL == 'Y' ) {
