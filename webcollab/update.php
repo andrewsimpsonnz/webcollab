@@ -2,7 +2,7 @@
 /*
   $Id: update.php 2328 2009-09-27 08:31:56Z andrewsimpson $
 
-  (c) 2004 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -511,15 +511,16 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   //if user-password combination exists
   if($row = @db_fetch_array($q, 0, 0) ) {
 
-    switch (substr($row['password'], 0, 4 ) ) {
+    switch (substr($row['password'], 0, 3 ) ) {
 
-      case '$md$':
-        //md5 + salt encryption
-        $salt = substr($row['password'], 4, 22 );
-        $hash = '$md$' . $salt . md5($_POST['password'] . $salt );
+     case '$5$':
+        //sha256 + salt encryption
+        $parts = explode('$', $row['password'] );
+        $salt = '$5$'.$parts[2].'$'.$parts[3].'$';
+        $hash = crypt($_POST['password'], $salt );
         break;
 
-      case '$2a$':
+      case '$2a':
         //bcrypt encryption
         $salt = substr($row['password'], 0, 29 );
         $hash = crypt($_POST['password'], $salt );
