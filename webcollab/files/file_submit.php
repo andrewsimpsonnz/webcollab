@@ -2,7 +2,7 @@
 /*
   $Id: file_submit.php 2304 2009-08-25 09:18:26Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -90,6 +90,12 @@ function file_delete($fileid ) {
       if(file_exists(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] ) ) {
         @unlink(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] );
       }
+ 
+      // filename with other character set (obsolete)
+      if(defined('FILENAME_CHAR_SET' ) && file_exists( FILE_BASE.'/'.$row['fileid'].'__'.mb_convert_encoding($row['filename'], FILENAME_CHAR_SET ) ) ) {
+        @unlink(FILE_BASE.'/'.$row['fileid'].'__'.mb_convert_encoding($row['filename'] ) );
+      }
+
       //delete record of file
       $q = db_prepare('DELETE FROM '.PRE.'files WHERE fileid=?' );
       db_execute($q, array($row['fileid'] ) );
@@ -241,12 +247,6 @@ switch($_POST['action'] ) {
         warning($lang['file_submit'], sprintf( $lang['file_too_big_sprt'], FILE_MAXSIZE ) );
       }
 
-      //check for dangerous file uploads
-      if(preg_match('/\.(php|php3|php4|js|asp)$/', $_FILES['userfile']['name'][$i] ) ) {
-        unlink($_FILES['userfile']['tmp_name'][$i] );
-        error('File submit', 'The file types .php, .php3, .php4, .js and .asp are not acceptable for security reasons. You must either rename or compress the file.');
-      }
-
       //add default mime type if not specified
       if(empty($_FILES['userfile']['type'][$i] ) || $_FILES['userfile']['type'][$i] == '' ) {
         $mime = "application/octet-stream";
@@ -254,9 +254,6 @@ switch($_POST['action'] ) {
       else {
         $mime = $_FILES['userfile']['type'][$i];
       }
-
-      //okay accept file
-      db_begin();
 
       //validate characters in filename
       $filename = validate($_FILES['userfile']['name'][$i] );
@@ -266,6 +263,16 @@ switch($_POST['action'] ) {
       //strip illegal characters
       $filename = preg_replace('/[\x00-\x2A\x2F\x3A-\x3C\x3E-\x3F\x5C\x5E\x60\x7B-\x7E]|[\.]{2}/', '_', $filename );
 
+      //check for dangerous file uploads
+      //if(preg_match('/\.(php|php3|php4|php5|js|asp)$/', $_FILES['userfile']['name'][$i] ) ) {
+      if(preg_match('/\.(php|php3|php4|php5|js|asp)$/i', $filename ) || preg_match('/^[^\.]+\.(php|php3|php4|php5|jsp|cgi|asp)\.{1}/i', $filename ) ) {
+        unlink($_FILES['userfile']['tmp_name'][$i] );
+        error('File submit', 'The file types .php, .php3, .php4, .php5 .jsp, .cgi and .asp are not acceptable for security reasons. You must either rename or compress the file.');
+      }
+
+      //okay accept file
+      db_begin();
+
       //alter file database administration
       $q = db_prepare("INSERT INTO ".PRE."files (filename, size, description, uploaded, uploader, taskid, mime )
                               VALUES (?, ?, ?, now(), ?, ?, ? )" );
@@ -274,7 +281,7 @@ switch($_POST['action'] ) {
 
       //get last insert id
       $fileid = db_lastoid('files_id_seq' );
-
+      
       //copy it
       if( ! @move_uploaded_file( $_FILES['userfile']['tmp_name'][$i], FILE_BASE.'/'.$fileid.'__'.$filename ) ) {
         $q = db_prepare('DELETE FROM '.PRE.'files WHERE id=?' );
