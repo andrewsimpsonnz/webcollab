@@ -2,7 +2,7 @@
 /*
   $Id: task_delete.php 2170 2009-04-06 07:25:59Z andrewsimpson $
 
-  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -179,12 +179,18 @@ for($i=0 ; $i < $index ; ++$i ) {
   db_execute($q4, array($delete_id ) );
 
   for($j=0 ; $file_row = @db_fetch_array($q4, $j ) ; ++$j ) {
-
+  
+    // filename UTF-8 (current)
     if(file_exists(FILE_BASE.'/'.$file_row['fileid'].'__'.$file_row['filename'] ) ) {
-      unlink( FILE_BASE.'/'.$file_row['fileid'].'__'.$file_row['filename'] );
+      @unlink(FILE_BASE.'/'.$file_row['fileid'].'__'.$file_row['filename'] );
     }
-  }
 
+    // filename with other character set (obsolete)
+    if(defined('FILENAME_CHAR_SET' ) && file_exists( FILE_BASE.'/'.$file_row['fileid'].'__'.mb_convert_encoding($file_row['filename'], FILENAME_CHAR_SET ) ) ) {
+      @unlink(FILE_BASE.'/'.$file_row['fileid'].'__'.mb_convert_encoding($file_row['filename'] ) );
+    }
+  }  
+  
   //delete all files attached to it in the database
   db_execute($q5, array($delete_id ) );
 
