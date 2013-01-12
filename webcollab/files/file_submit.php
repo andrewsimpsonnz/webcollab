@@ -264,8 +264,7 @@ switch($_POST['action'] ) {
       $filename = preg_replace('/[\x00-\x2A\x2F\x3A-\x3C\x3E-\x3F\x5C\x5E\x60\x7B-\x7E]|[\.]{2}/', '_', $filename );
 
       //check for dangerous file uploads
-      //if(preg_match('/\.(php|php3|php4|php5|js|asp)$/', $_FILES['userfile']['name'][$i] ) ) {
-      if(preg_match('/\.(php|php3|php4|php5|js|asp)$/i', $filename ) || preg_match('/^[^\.]+\.(php|php3|php4|php5|jsp|cgi|asp)\.{1}/i', $filename ) ) {
+      if(preg_match('/^[^\.]+\.(php|php3|php4|php5|jsp|cgi|asp)\.{1}/i', $filename ) | preg_match('/\.(php|php3|php4|php5|js|asp)$/i', $filename ) ) {
         unlink($_FILES['userfile']['tmp_name'][$i] );
         error('File submit', 'The file types .php, .php3, .php4, .php5 .jsp, .cgi and .asp are not acceptable for security reasons. You must either rename or compress the file.');
       }
