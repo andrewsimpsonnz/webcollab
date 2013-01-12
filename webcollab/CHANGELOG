@@ -1,4 +1,17 @@
 WebCollab Git
+*** 12 January 2013
+
+- change to SHA256 + salt password encryption
+
+- deprecate blowfish password encryption
+
+- update minimum PHP to 5.3.2 (for SHA256 )
+
+- provide uploaded file names with non-ASCII characters from pre-WebCollab 3.00 to be handled (Thanks to Harald Guttzeit)
+
+- provide compliance to RFC 5987 for non-ASCII file names (Thanks to Harald Guttzeit)
+
+WebCollab Git
 *** 23 December 2012
 
 - bugfix: Coding errors in update.php fixed.
@@ -12,7 +25,7 @@ WebCollab Git
 
 - bugfix:  Usergroup check missing from projects in project list
 
-- add project sorting to reparenting drop down in task edit
+- add project sorting to reparenting drop down in task edit (Thanks to tomas7)
 
 - add work factor constant for Blowfish to config file
 
