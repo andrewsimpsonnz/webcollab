@@ -232,9 +232,9 @@ $content .=
 "//OUTPUT COMPRESSION\n\n".
 "  //Use to enable zlib output compression of web pages (values are 'N', or 'Y')\n".
 "  define('COMPRESS_OUTPUT', '".COMPRESS_OUTPUT."' );\n\n".
-"// LEGACY FILE UPLOADS\n\n";
-"  //Character set hack for older files stored with pre-WebCollab 3.00 that have been upgraded (usually 'ISO-8859-1')\n"; 
-"  define('".FILENAME_CHAR_SET."', '' );\n\n";
+"// LEGACY FILE UPLOADS\n\n".
+"  //Character set hack for older files stored with pre-WebCollab 3.00 that have been upgraded (usually 'ISO-8859-1')\n". 
+"  define('".FILENAME_CHAR_SET."', '' );\n\n".
 "//WEBCOLLAB VERSION\n\n".
 "  //WebCollab version string\n".
 "  define('WEBCOLLAB_VERSION', '".SETUP_WEBCOLLAB_VERSION."');\n\n".
