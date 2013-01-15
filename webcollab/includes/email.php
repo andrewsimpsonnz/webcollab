@@ -419,8 +419,8 @@ function header_encoding($header ) {
     case true:
       $encoded = '';
       $fib = array(45, 43, 40, 37, 32, 24, 11 ); //reverse fibonacci from 45 characters
-      //$max = 74 - 2 - strlen('UTF-8') - 2 = 65;
-      $max = 65;
+      //$max = 74 - 2 - strlen('UTF-8?B?') - 2 = 60;
+      $max = 60;
 
       //encode to base64 with encoded lines no longer than 74 characters (RFC 2045)
       while(strlen($header) > 0 ) {
@@ -431,10 +431,16 @@ function header_encoding($header ) {
             break;
           }
         }
-        $encoded .= '=?UTF-8?B?'.$part."?=\r\n\t";
+        $encoded .= '=?UTF-8?B?'.$part."?=";
 
         $header = mb_substr($header, $i );
+        
+        //add line continuation characters if required
+        if(strlen($header ) > 0 ) {
+          $encoded .= "\r\n\t";
+        }
       }
+
       $header = $encoded;
       break;
   }
