@@ -258,25 +258,16 @@ function smtp_mail($to, $subject, $message ) {
 
 function php_mail($to, $subject, $message ) {
 
-  $email_encode = '';
-  $message_charset = '';
-  $body = '';
-  $bit8 = false;
-
   $to = join(', ', (array)$to );
 
-  //arrange message
-  $message =& message($message, $email_encode, $message_charset, $body, $bit8 );
-  $subject = subject_encoding($subject );
+  //set language
+  mb_language('uni');
 
-  $headers = "From: ". header_encoding(ABBR_MANAGER_NAME ). "<".clean(EMAIL_FROM).">\r\n".
-             "Reply-To: ".clean(EMAIL_REPLY_TO)."\r\n".
-             "X-Mailer: WebCollab ".WEBCOLLAB_VERSION." (PHP/".phpversion().")\r\n".
-             "MIME-Version: 1.0\r\n".
-             "Content-Type: text/plain; charset=".$message_charset."\r\n".
-             "Content-Transfer-Encoding: ".$email_encode."\r\n";
+  $headers = "From: ". header_encoding(ABBR_MANAGER_NAME ). "<".clean(EMAIL_FROM).">\n".
+             "Reply-To: ".clean(EMAIL_REPLY_TO)."\n".
+             "X-Mailer: WebCollab ".WEBCOLLAB_VERSION." (PHP/".phpversion().")\n";
 
-  if(! mail($to, $subject, $message, $headers ) ) {
+  if(! mb_send_mail($to, $subject, $message, $headers ) ) {
     error('Mail error', 'Unknown error in PHP mail() function' );
   }
 
