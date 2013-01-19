@@ -201,8 +201,8 @@ if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
 }
 
 //version check
-if(version_compare(PHP_VERSION, '5.3.2' ) == -1 ) {
-  secure_error(sprintf($lang['min_version'], '5.3.2', PHP_VERSION ) );
+if(version_compare(PHP_VERSION, '5.2.0' ) == -1 ) {
+  secure_error(sprintf($lang['min_version'], '5.2.0', PHP_VERSION ) );
   }
 
 //check that UTF-8 character encoding can be used

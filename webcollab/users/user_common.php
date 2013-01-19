@@ -93,12 +93,16 @@ function password_hash($password ) {
   
   */
   
-  define('SHA256_ROUNDS', 5000 );
+  if(version_compare(PHP_VERSION, '5.3.2', '>=' ) ) {
+    define('SHA256_ROUNDS', 5000 );
+    $salt = substr(md5(mt_rand() ), 0, 16 );
+
+    $hash = crypt($password, '$5$rounds='.SHA256_ROUNDS.'$'.$salt.'$' );
+  }
+  else {
+    $hash = md5($password );
+  }
   
-  $salt = substr(md5(mt_rand() ), 0, 16 );
-
-  $hash = crypt($password, '$5$rounds='.SHA256_ROUNDS.'$'.$salt.'$' );
-
   return $hash;
 }
 ?>

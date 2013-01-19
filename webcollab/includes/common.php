@@ -105,7 +105,20 @@ function validate($body ) {
 
 function html_clean_up($body ) {
 
-  $body = @htmlspecialchars($body, ENT_QUOTES, 'UTF-8', false );
+  if(version_compare(PHP_VERSION, '5.2.3', '>=' ) ) {
+    $body = @htmlspecialchars($body, ENT_QUOTES, 'UTF-8', false );
+
+  }
+  else {
+    //change '&' to '&amp;' except when part of an entity, or already changed
+    if(! strpos($body, '&' ) === false ) {
+      $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
+    }
+    //use HTML for characters that could be used for xss <script>
+    //  also convert quotes to HTML for XHTML compliance
+    $trans = array('<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', "'"=>'&#039;' );
+    $body  = strtr($body, $trans );
+  }
 
   return $body;
 }
