@@ -77,7 +77,7 @@ function user_locale_check($locale ) {
 }
 
 //
-// Function to generate either bcrypt or md5 hashes
+// Function to generate either sha256 or md5 hashes
 //
 function password_hash($password ) {
 
@@ -94,10 +94,9 @@ function password_hash($password ) {
   */
   
   if(version_compare(PHP_VERSION, '5.3.2', '>=' ) ) {
-    define('SHA256_ROUNDS', 5000 );
+    //generate password hash (sha256 + hash)
     $salt = substr(md5(mt_rand() ), 0, 16 );
-
-    $hash = crypt($password, '$5$rounds='.SHA256_ROUNDS.'$'.$salt.'$' );
+    $hash = crypt($password, '$5$rounds=5000$'.$salt.'$' );
   }
   else {
     $hash = md5($password );
