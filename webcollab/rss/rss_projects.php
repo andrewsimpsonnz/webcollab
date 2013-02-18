@@ -50,7 +50,7 @@ if(! ($q = db_query('SELECT '.db_epoch().'MAX(edited) ) AS last FROM '.PRE.'task
 }
 
 if(! $last_mod = db_result($q, 0, 0 ) ) {
-  $last_mod = gmmktime();
+  $last_mod = time();
 }
 
 //check when last request was made

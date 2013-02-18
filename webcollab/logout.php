@@ -33,7 +33,7 @@ require_once(BASE.'includes/security.php' );
 //record preserved to allow time of last login to be recorded
 $q = db_prepare('UPDATE '.PRE.'logins SET session_key=\'XXXX\' WHERE user_id=?' );
 db_execute($q, array(UID ) );
-$q = db_prepare('DELETE FROM .'PRE'.tokens WHERE userid=?' );
+$q = db_prepare('DELETE FROM '.PRE.'tokens WHERE userid=?' );
 @db_execute($q, array(UID ) );
 
 

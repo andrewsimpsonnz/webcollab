@@ -64,7 +64,7 @@ function enable_login($userid, $username, $ip='0.0.0.0', $taskid ) {
   @db_execute($q, array($userid ) );
   $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.db_delim('20 MINUTE' ).') OR name=?' );
   @db_execute($q, array($username ) );
-  @db_query('DELETE FROM .'PRE'.tokens WHERE lastaccess < (now()-INTERVAL '.db_delim(TOKEN_TIMEOUT.' MINUTE' ).')' );
+  @db_query('DELETE FROM '.PRE.'tokens WHERE lastaccess < (now()-INTERVAL '.db_delim(TOKEN_TIMEOUT.' MINUTE' ).')' );
 
   //log the user in
   $q = db_prepare('INSERT INTO '.PRE.'logins(user_id, session_key, ip, lastaccess ) VALUES (?, ?, ?, now() )' );

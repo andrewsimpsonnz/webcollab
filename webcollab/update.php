@@ -50,6 +50,9 @@ function secure_error($message ) {
 
 function update($username ) {
 
+  //initalise variables
+  $content = '';
+  
   //user is okay log him/her in
 
   //remove the old login information for post 1.60 database
