@@ -70,7 +70,7 @@ function update($username ) {
      $content .= "<p>Updating from version pre-1.40 database ... success!</p>\n";
      db_commit();
   }
-
+  
   //update for version 1.51 -> 1.60
   if(! (db_query('SELECT * FROM '.PRE.'login_attempt', 0 ) ) ) {
 
@@ -100,7 +100,7 @@ function update($username ) {
   }
 
   //update for version 1.51 -> 1.60
-  if(! (db_query('SELECT private FROM '.PRE.'users', 0 ) ) ) {
+  if(! (@db_query('SELECT private FROM '.PRE.'users', 0 ) ) ) {
      db_begin();
      db_query('ALTER TABLE '.PRE.'users ADD COLUMN private INT' );
      db_query('ALTER TABLE '.PRE.'users ALTER COLUMN private SET DEFAULT 0' );
@@ -116,7 +116,7 @@ function update($username ) {
   }
 
   //update for version 1.59 -> 1.60
-  if(! (db_query('SELECT completed FROM '.PRE.'tasks', 0 ) ) ) {
+  if(! (@db_query('SELECT completed FROM '.PRE.'tasks', 0 ) ) ) {
 
      db_begin();
 
@@ -189,7 +189,7 @@ function update($username ) {
   }
 
   //update for version 1.60 -> 1.70
-  if(! (db_query('SELECT guest FROM '.PRE.'users', 0 ) ) ) {
+  if(! (@db_query('SELECT guest FROM '.PRE.'users', 0 ) ) ) {
 
     db_begin();
 
@@ -329,7 +329,7 @@ function update($username ) {
     db_execute($q, array(MANAGER_NAME, ABBR_MANAGER_NAME ) );
 
     //update deadline hours
-    db_query('UPDATE '.PRE.'tasks SET deadline=(deadline+INTERVAL '.$delim.'2 HOUR'.$delim.')' );
+    db_query('UPDATE '.PRE.'tasks SET deadline=(deadline+INTERVAL '.db_delim('2 HOUR' ).')' );
 
     db_commit();
     $content .= "<p>Updating from version pre-2.20 database ... success!</p>\n";
@@ -484,22 +484,12 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   $username = '0';
   $password = '0';
 
+    //log ip address
+  if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
+    secure_error('Unable to determine ip address');
+  }
+  
   $username = safe_data($_POST['username']);
-
-  //count the number of recent login attempts
-  if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
-				WHERE name=? AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 4', 0 ) ) ) {
-    secure_error('Unable to connect to database.  Please try again later.' );
-  }
-
-  if(! db_execute($q, array($username ), 0 ) ) {
-    secure_error('Unable to connect to database.  Please try again later.' );
-  }
-
-  //protect against password guessing attacks
-  if(db_result($q, 0, 0 ) > 3 ) {
-    secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
-  }
 
   //construct login query for username / password
   if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\' AND admin=\'t\'', 0 ) ) ) {
@@ -511,8 +501,33 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
   }
 
+  $row = @db_fetch_array($q, 0, 0);
+  
+  //limit login attempts if post-1.60 database is being used
+  if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {
+
+    //record this login attempt
+    $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
+    db_execute($q, array($username, $ip ) );
+
+    //count the number of recent login attempts
+    if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
+                                  WHERE name=? AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 4', 0 ) ) ) {
+      secure_error('Unable to connect to database.  Please try again later.' );
+    }
+
+    if(! db_execute($q, array($username ), 0 ) ) {
+      secure_error('Unable to connect to database.  Please try again later.' );
+    }
+
+    //protect against password guessing attacks
+    if(db_result($q, 0, 0 ) > 3 ) {
+      secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+    }
+  }
+
   //if user-password combination exists
-  if($row = @db_fetch_array($q, 0, 0) ) {
+  if($row == true ) {
 
     switch (substr($row['password'], 0, 3 ) ) {
 
@@ -539,11 +554,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
       update($username );
     }
   }
-
-  //record this login attempt
-  $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
-  db_execute($q, array($username, $ip ) );
-
+    
   //wait two seconds then record an error
   sleep(2);
   secure_error("Not a valid username, or password" );
