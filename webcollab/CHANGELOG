@@ -1,4 +1,13 @@
 WebCollab Git
+*** 23 February 2013
+
+- change preg_replace with /e parameter to preg_replace_callback.  The former function format is deprecated in PHP 5.5.
+
+- change gmmktime() to time(). The former function is deprecated in PHP 5.3
+
+- bugfix:  Minor bugfixing for 'PRE' constant. 
+
+WebCollab Git
 *** 15 January 2013
 
 - bugfix: fix email header encoding extra CRLF with non-ASCII (Thanks to Harald Guttzeit)
