@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -332,7 +332,7 @@ function & message($message, & $email_encode, & $message_charset, & $body, $bit8
           $body = '';
 
           //replace high ascii, control and = characters (RFC 2045)
-          $message = preg_replace('/([\x00-\x08\x0B\x0C\x0E-\x1F\x3D\x7F-\xFF])/e', "sprintf('=%02X', ord('\\1'))", $message);
+          $message = preg_replace_callback('/([\x00-\x08\x0B\x0C\x0E-\x1F\x3D\x7F-\xFF])/', create_function('$char', 'return sprintf("=%02X", ord($char[1] ) );' ), $message);
 
           //break into lines no longer than 76 characters including '=' at line end (RFC 2045)
           $message = preg_replace ('/([^\r\n]{1,72}[^=\r][^=\r\n])/', '\\1'."=\r\n", $message );
