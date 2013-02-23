@@ -1,8 +1,8 @@
 <?php
 /*
-  $Id$
+  $Id: screen.php 2230 2011-05-22 22:10:39Z andrewsimpson $
 
-  (c) 2002 - 2007 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -26,10 +26,10 @@
 
   Create the window'ed interface and define a simple API
 
-  The screen is split in 3 components. The overall table is called main_table
+  The screen is split in 4 components. The overall menu + main + bottom is called within 'container'
 
   +----------------+
-  |  info          |
+  |  top           |
   +----------------+
   |   |            |
   | m |            |
@@ -39,6 +39,8 @@
   |   |            |
   |   |            |
   +---+------------+
+  |  bottom        |
+  +----------------+
 
 
   And the api is :
@@ -61,203 +63,190 @@
 //
 // Creates the initial window
 //
-function create_top($title='', $page_type=0, $cursor=0, $check=0, $date=0, $calendar=0, $redirect_time=0 ) {
 
-  global $lang, $top_done, $bottom_text;
+function create_top($title='', $page_type=0, $body_id=0, $include_javascript=0, $redirect_time=0 ) {
+
+  global $lang, $bottom_text;
   global $utime_before, $stime_before;
 
-  //only build top once...
-  //  (we don't use headers_sent() 'cause it seems to be buggy in PHP5)
-  if(isset($top_done) && $top_done == 1 ){
-    return;
-  }
-  $top_done = 1;
+  //we only send the headers and HTML head once...
+  if(! defined('HEADER_DONE' ) ) {
 
-  //first of all record our loading time
-  //list($usec, $sec)=explode(" ", microtime());
-  //$loadtime = ( (float)$usec + (float)$sec );
+    //we don't want any caching of these pages
+    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+    header('Cache-Control: no-store, no-cache, must-revalidate');
+    header('Cache-Control: post-check=0, pre-check=0', false);
+    header('Pragma: no-cache');
+    header('Content-Type: text/html; charset=UTF-8' );
+
+    //do a refresh if required
+    if($redirect_time != 0) {
+      header('Refresh: '.$redirect_time.'; url='.BASE_URL.'index.php' );
+    }
+
+    //start timer
+    $dat = getrusage();
+    $utime_before = $dat["ru_utime.tv_sec"] + $dat["ru_utime.tv_usec"]/1000000;
+    $stime_before = $dat["ru_stime.tv_sec"] + $dat["ru_stime.tv_usec"]/1000000;
+    
+    if(COMPRESS_OUTPUT == 'Y' ) {
+      ini_set('zlib.output_compression', 'On' );
+    }
+
+    //start output buffering for head
+    //ob_start();
+
+    echo     "<!DOCTYPE html PUBLIC\n".
+             "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
+             "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n".
+             "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"".XML_LANG."\" lang=\"".XML_LANG."\">\n\n".
+             "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
+             "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
+             "<!-- (c) 2002-2012 Andrew Simpson for WebCollab -->\n\n".
+             "<head>\n";
+
+    if( $title == '' ) {
+      $title = MANAGER_NAME;
+    }
+
+    echo     "<title>".$title."</title>\n".
+             "<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".
+             "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n";
+
+    //do a refresh if required
+    if($redirect_time != 0) {
+      echo   "<meta http-equiv=\"Refresh\" content=\"".$redirect_time.";url=".BASE_URL."index.php\" />\n";
+    }
+
+    switch($page_type) {
+      case 2: //print
+        echo "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_PRINT."\" type=\"text/css\" />\n";
+        break;
+
+      case 3: //calendar
+        echo "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_MAIN."\" type=\"text/css\" />\n".
+             "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_CALENDAR."\" type=\"text/css\" />\n";
+        break;
+
+      case 0: //main window + menu sidebar
+      case 1: //single main window (no menu sidebar)
+      default:
+        echo "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_MAIN."\" type=\"text/css\" />\n";
+        //allow RSS autodiscovery if enabled
+        break;
+    }
+
+    if(defined('RSS_AUTODISCOVERY' ) && RSS_AUTODISCOVERY == 'Y' ) {
+      echo   "<link rel=\"alternate\" href=\"".BASE_URL."rss/rss_projects.php\" type=\"application/rss+xml\" title=\"Projects\" />\n".
+             "<link rel=\"alternate\" href=\"".BASE_URL."rss/rss_tasks.php\" type=\"application/rss+xml\" title=\"Tasks\" />\n".
+             "<link rel=\"alternate\" href=\"".BASE_URL."rss/rss_files.php\" type=\"application/rss+xml\" title=\"Files\" />\n".
+             "<link rel=\"alternate\" href=\"".BASE_URL."rss/rss_forum.php\" type=\"application/rss+xml\" title=\"Forum\" />\n";
+    }
+
+    echo     "<link rel=\"icon\" type=\"image/png\" href=\"".BASE."images/group.png\" />\n";
+
+    switch($include_javascript ) {
+
+      case 1:
+        //loads javascript file
+        echo "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
+             "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n";
+        break;
+
+      case 2:
+        //loads javascript file (but not editor)
+        echo "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n";
+        break;
+
+      case 0:
+      default:
+        //no javascript loaded
+        break;
+    }
+
+    echo "</head>\n\n";
+
+    //flush the current buffer and mark headers as done
+    //ob_end_flush();
+    define('HEADER_DONE', 1 );
+  }
   
-  $dat = getrusage();
-  $utime_before = $dat["ru_utime.tv_sec"].$dat["ru_utime.tv_usec"];
-  $stime_before = $dat["ru_stime.tv_sec"].$dat["ru_stime.tv_usec"];
-  
-  //remove /* and */ in section below to use compressed HTML output:
-  //Note: PHP manual recommends use of zlib.output_compression in php.ini instead of ob_gzhandler in here
-  /*
-  //use compressed output (if web browser supports it) _and_ zlib.output_compression is not already enabled
-  if( ! ini_get('zlib.output_compression') ) {
-    ob_start("ob_gzhandler" );
-  }
-  */
+  //start new buffer for body of page
+  //ob_start();
 
-  //we don't want any caching of these pages
-  header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-  header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-  header('Cache-Control: no-store, no-cache, must-revalidate');
-  header('Cache-Control: post-check=0, pre-check=0', false);
-  header('Pragma: no-cache');
-  header('Content-Type: text/html; charset='.CHARACTER_SET );
-
-  //do a refresh if required
-  if($redirect_time != 0) {
-    header('Refresh: $redirect_time; url='.BASE_URL.'index.php' );
-  }
-
-  $content =        "<!DOCTYPE html PUBLIC\n".
-                    "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
-                    "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n".
-                    "<html>\n\n".
-                    "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
-                    "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
-                    "<!-- (c) 2002-2007 Andrew Simpson for WebCollab -->\n\n".
-                    "<head>\n";
-
-  if( $title == '' ) {
-    $title = MANAGER_NAME;
-  }
-
-  $content .=       "<title>".$title."</title>\n".
-                    "<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".
-                    "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".CHARACTER_SET."\" />\n";
-
-  //do a refresh if required
-  if($redirect_time != 0) {
-    $content .=     "<meta http-equiv=\"Refresh\" content=\"".$redirect_time.";url=".BASE_URL."index.php\" />\n";
-  }
-
-  switch($page_type) {
-    case 2: //print
-      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_PRINT."\" type=\"text/css\" />\n";
+  switch($body_id ) {
+    case true:
+      echo   "<body id=\"$body_id\">\n";
       break;
 
-    case 3: //calendar
-      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_MAIN."\" type=\"text/css\" />\n";
-      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_CALENDAR."\" type=\"text/css\" />\n";
-      break;
-
-    case 0: //main window + menu sidebar
-    case 1: //single main window (no menu sidebar)
-    default:
-      $content .=   "<link rel=\"StyleSheet\" href=\"".BASE_CSS.CSS_MAIN."\" type=\"text/css\" />\n";
+    case false:
+      echo   "<body>\n";
       break;
   }
-
-  $content .= "<link rel=\"icon\" type=\"image/png\" href=\"images/group.png\" />\n";
-
-  //javascript scripts
-  if($cursor || $check || $date || $calendar ) {
-    $content .=     "<script type=\"text/javascript\">\n";
-
-    if($cursor){
-      $content .=   "function placeCursor() {document.getElementById('".$cursor."').focus()}\n";
-    }
-
-    if($check){
-      $content .=   "function fieldCheck(){\n".
-                    "var field = document.getElementById('".$check."').value;\n".
-                    "if(field.length == 0){\n".
-                    "alert('".$lang['missing_field_javascript']."');\n".
-                    "document.getElementById('".$check."').focus();\n".
-                    "return false;}\n".
-                    "return true;}\n";
-    }
-    if($date) {
-      $content .=   "function dateCheck() {\n".
-                    "if(!fieldCheck()){\n".
-                    "return false;}\n".
-                    "var daysMonth = new Array(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 );\n".
-                    "if(document.getElementById('day').value > daysMonth[(document.getElementById('month').value-1)] ){\n".
-                    "alert('".$lang['invalid_date_javascript']."');\n".
-                    "return false;}\n".
-                    "var finishDate = document.getElementById('projectDate').value;\n".
-                    "var statusType = document.getElementById('projectStatus').value;\n".
-                    "if(finishDate > 0 && (statusType != 'cantcomplete' && statusType != 'notactive')){\n".
-                    "var inputDate = Date.UTC(document.getElementById('year').value, (document.getElementById('month').value-1), document.getElementById('day').value, 0, 0, 0 )/1000;\n".
-                    "if(inputDate - finishDate > 21600 ){\n".
-                    "return confirm('".$lang['finish_date_javascript']."');} }\n".
-                    "}\n";
-    }
-    if($calendar) {
-      $content .=   "function dateSet(dayIndex, monthIndex, yearIndex) {\n".
-                    "if(window.opener && !window.opener.closed) {\n".
-                    "window.opener.document.getElementById('day').selectedIndex=dayIndex;\n".
-                    "window.opener.document.getElementById('month').selectedIndex=monthIndex;\n".
-                    "window.opener.document.getElementById('year').selectedIndex=yearIndex;}\n".
-                    "}\n";
-    }
-    $content .=     "</script>\n".
-                    "</head>\n\n";
-    if($cursor) {
-      $content .=   "<body onload=\"placeCursor()\">\n";
-    }
-    else {
-      $content .=   "<body>\n";
-    }
-  }
-  else {
-    $content .=     "</head>\n\n".
-                    "<body>\n";
-  }
-
-  //create the main table
-  $content .=       "<!-- start main table -->\n".
-                    "<table width=\"100%\" cellspacing=\"0\" class=\"main\">\n";
 
   switch ($page_type ) {
 
     case 0: //main window + menu sidebar
       //create the masthead part of the main window
-      $content .=   "<tr valign=\"top\"><td colspan=\"2\" class=\"masthead\">";
+      echo   "<div id=\"container\">\n".
+             "<div id=\"top\" class=\"masthead\">";
       //show username if applicable
       if(defined('UID_NAME') ) {
-        $content .=  '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
+        echo '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
       }
-      $content .=   "</td></tr>\n";
+      echo   "</div>\n\n";
       //create menu sidebar
-      $content .=   "<tr valign=\"top\"><td style=\"width: 175px;\" align=\"center\">\n";
+      echo   "<!-- start menu -->\n".
+             "<div id=\"menu\">\n";
       $bottom_text = 1;
       break;
 
     case 1: //single main window (no menu sidebar)
-    case 3: //calendar  
-      $content .=   "<tr valign=\"top\"><td class=\"masthead\">";
+    case 3: //calendar
+      echo   "<div id=\"container\">\n".
+             "<div id=\"top\" class=\"masthead\">";
       if(defined('UID_NAME' ) ) {
-        $content .= '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
+        echo '&nbsp;'.sprintf( $lang['user_homepage_sprt'], UID_NAME );
       }
-      $content .=   "</td></tr>\n";
+      echo   "</div>\n\n";
       //create single window over entire screen
-      $content .=   "<tr valign=\"top\"><td style=\"width: 100%\" align=\"center\">\n";
+      echo   "<!-- start single main table -->\n".
+             "<div id=\"single\">\n";
       $bottom_text = 2;
       break;
 
     case 2: //printable screen
       //create single window over paper width
-      $content .=   "<tr valign=\"top\"><td style=\"width: 576pt\" align=\"center\">\n";
+      echo   "<!-- start single main table -->\n".
+             "<div id=\"container\">\n".
+             "<div id=\"single\">\n";
       //don't want bottom text
       $bottom_text = 0;
   }
-
-  //flush buffer
-  echo $content; 
-  //echo "Initial memory value: ".memory_get_usage()."<br />";
-
   return;
 }
 
 //
 //  Creates a new box
 //
-function new_box($title, $content, $style="boxdata", $size="tablebox" ) {
+function new_box($title, $content, $box="boxdata-normal", $head="head-normal", $style="boxstyle-normal", $id='' ) {
+
+  $div_start = '';
+  $div_end   = '';
+
+  if($id ) {
+    $div_start = "<div id=\"".$id."\">\n";
+    $div_end   = "</div>\n";
+  }
 
   echo  "\n<!-- start of ".$title." - box -->\n".
-        "<br />\n".
-        "<table class=\"".$size."\" cellspacing=\"0\">\n".
-        "<tr><td class=\"boxhead\">::&nbsp;".$title."</td></tr>\n".
-        "<tr><td class=\"".$style."\">\n".
-        $content."</td></tr>\n".
-        "<tr><td class=\"".$style."\">\n".
-        //"This box memory value: ".memory_get_usage()."</td></tr>\n".
-        "</table>\n".
+        $div_start.
+        "<div class=\"head ".$head."\" >::&nbsp;".$title."</div>\n".
+        "<div class=\"boxdata ".$box."\">\n".
+        "<div class=\"boxstyle ".$style."\">\n".
+        $content.
+        "</div>\n</div>\n".$div_end.
         "<!-- end -->\n";
 
   return;
@@ -268,7 +257,7 @@ function new_box($title, $content, $style="boxdata", $size="tablebox" ) {
 //
 function goto_main() {
 
-  echo "\n</td><td align=\"center\">\n";
+  echo "\n</div><!-- end menu -->\n<!-- start main -->\n<div id=\"main\">\n";
   return;
 }
 
@@ -277,45 +266,36 @@ function goto_main() {
 //
 function create_bottom() {
 
-  global $bottom_text, $db_content;
-  global $database_query_time, $stime_before, $utime_before, $database_query_count;
+  global $bottom_text;
+  global $database_query_time, $stime_before, $utime_before, $database_query_count, $db_content;
 
-  //clean
-  $content =  "\n<br />\n";
-
-  //end the main table row
-  $content .= "</td></tr>\n</table>";
-
-  //shows the time it took to load the page
-  //list($usec, $sec)=explode(" ", microtime());
-  //$finishtime = ( (float)$usec + (float)$sec ) - $loadtime;
-  
   $dat = getrusage();
-  $utime_after = $dat["ru_utime.tv_sec"].$dat["ru_utime.tv_usec"];
-  $stime_after = $dat["ru_stime.tv_sec"].$dat["ru_stime.tv_usec"];
+  $utime_after = $dat["ru_utime.tv_sec"] + $dat["ru_utime.tv_usec"]/1000000;
+  $stime_after = $dat["ru_stime.tv_sec"]  + $dat["ru_stime.tv_usec"]/1000000;
 
   $utime_elapsed = ($utime_after - $utime_before);
   $stime_elapsed = ($stime_after - $stime_before);
   
   $time_content = "<div style=\"text-align: center\">\n".
-                  sprintf("Elapsed PHP user time: %d seconds", $utime_elapsed )."<br />".
-                  sprintf("Elapsed PHP system time: %d seconds", $stime_elapsed )."<br />".
-                  sprintf("Elapsed database time: %d seconds", ($database_query_time * 1000000 ) )."<br />".
-                  sprintf("Dayabase query count: %d", $database_query_count)."</div><br />\n";
+                  sprintf("Elapsed PHP user time: %.6f seconds", $utime_elapsed )."<br />".
+                  sprintf("Elapsed PHP system time: %.6f seconds", $stime_elapsed )."<br />".
+                  sprintf("Elapsed database time: %.6f seconds", ($database_query_time ) )."<br />".
+                  sprintf("Database query count: %d", $database_query_count)."</div><br />\n";
   
   new_box("Timing information", $time_content );                
                     
-  new_box("Database Optimisation", $db_content );
+  new_box("Database Optimisation", $db_content );  
   
+  //end the main & container
+  echo "</div><!-- end main -->\n";
+
   switch($bottom_text) {
-    case 0: //no bottom text
-      $align = '';
-      break;
 
     case 1:
       $align = "style=\"text-align: left\"";
       break;
 
+    case 0: //no bottom text
     case 2:
     default:
       $align = "style=\"text-align: center\"";
@@ -324,11 +304,14 @@ function create_bottom() {
 
  //shows the logo
  if($bottom_text) {
-   $content .= "<div class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2007</div>\n";
+   echo "\n<div id=\"bottom\" class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2012</div>\n";
  }
   //end xml parsing
-  $content .= "</body>\n</html>\n";
-  echo $content;
+  echo "</div><!-- end container -->\n".
+       "</body>\n</html>\n";
+  
+  //flush buffers to web browser
+  //ob_end_flush();
   return;
 }
 
