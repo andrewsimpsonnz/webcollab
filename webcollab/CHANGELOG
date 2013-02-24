@@ -5,7 +5,9 @@ WebCollab Git
 
 - change gmmktime() to time(). The former function is deprecated in PHP 5.3
 
-- bugfix:  Minor bugfixing for 'PRE' constant. 
+- bugfix: Minor bugfixing for 'PRE' constant.
+
+- bugfix: Allow for correct syntax with 'no owner' in iCal files.  
 
 WebCollab Git
 *** 15 January 2013
