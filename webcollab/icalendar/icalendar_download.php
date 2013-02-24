@@ -82,8 +82,19 @@ function icalendar_body($row, $taskid ) {
               "CREATED:".icalendar_datetime($row['created_utc'])."Z\r\n".
               "LAST-MODIFIED:".icalendar_datetime($row['edited_utc'])."Z\r\n".
               "DTSTAMP:".$dtstamp."\r\n".
-              "ORGANIZER;CN=\"".$row['fullname']."\":MAILTO:".$row['email']."\r\n".
               "SEQUENCE:".$row['sequence']."\r\n";
+              
+  if($row['userid'] != 0 ) {
+    $content .= "ORGANIZER;CN=\"".$row['fullname']."\"";
+
+    if($row['email'] ) {
+      $content .= ":MAILTO:".$row['email'];
+    }
+  }
+  else {
+    $content .= "ORGANIZER;CN=\" \"";
+  }
+  $content .= "\r\n";
 
   //private
   if($row['globalaccess'] == 'f' && $row['usergroupid'] != 0 ) {
