@@ -93,7 +93,7 @@ switch(preg_match('/([\x7F-\xFF])/', $row['filename'] ) ) {
   case true:
     //provide UTF-8 encoding tokens (RFC 5987), plus fallback of filename in ISO-8859-1
     $content_filename =  'filename="'.mb_convert_encoding($row['filename'], 'ISO-8859-1' ).'"; '.
-                         "filename*=UTF-8''".preg_replace_callback('/([\x20\x7F-\xFF])', create_function('$char', 'return sprintf("%%%02X", ord($char[1]) );'), $row['filename'] );
+                         "filename*=UTF-8''".preg_replace_callback('/([\x20\x7F-\xFF])/', create_function('$char', 'return sprintf("%%%02X", ord($char[1]) );'), $row['filename'] );
     break;
 
   case false:
