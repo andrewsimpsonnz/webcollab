@@ -1,4 +1,21 @@
 WebCollab Git
+*** 21 May 2013
+
+- change md5() hashes to sha1() hashes
+
+- improve salt generation for passwords
+
+WebCollab Git
+*** 17 March 2013
+
+- add configurable dates
+
+WebCollab 3.30 Aotuhia
+*** 26 February 2013
+
+- release
+
+WebCollab Git
 *** 23 February 2013
 
 - change preg_replace with /e parameter to preg_replace_callback.  The former function format is deprecated in PHP 5.5.
