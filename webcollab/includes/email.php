@@ -382,7 +382,7 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   $headers .= "From: ". header_encoding(ABBR_MANAGER_NAME ). "<".$from.">\r\n".
               "Reply-To: ".$reply_to."\r\n".
               "Subject: ".subject_encoding($subject )."\r\n".
-              "Message-Id: <".md5(mt_rand())."@".$_SERVER['SERVER_NAME'].">\r\n".
+              "Message-Id: <".sha1(mt_rand())."@".$_SERVER['SERVER_NAME'].">\r\n".
               "X-Mailer: WebCollab ".WEBCOLLAB_VERSION." (PHP/".phpversion().")\r\n".
               "X-Priority: 3\r\n".
               "X-Sender: ".$reply_to."\r\n".

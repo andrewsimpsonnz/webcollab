@@ -2,7 +2,7 @@
 /*
   $Id: security_setup.php 2285 2009-08-22 08:42:43Z andrewsimpson $
 
-  (c) 2003 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -69,12 +69,12 @@ if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == '' ) {
 }
 else {
   //get session key from either a GET or POST
-  if(isset($_REQUEST['x']) && preg_match('/^[a-f\d]{32}$/i', $_REQUEST['x'] ) ) {
+  if(isset($_REQUEST['x']) && preg_match('/^[a-f\d]{40}$/i', $_REQUEST['x'] ) ) {
     $x = safe_data($_REQUEST['x']);
     define('X', $x );
   }
   //check for existing variable
-  elseif(isset($session_key) && preg_match('/^[a-f\d]{32}$/i', $session_key ) ) {
+  elseif(isset($session_key) && preg_match('/^[a-f\d]{40}$/i', $session_key ) ) {
     $x = safe_data($session_key);
     define('X', $x );
   }

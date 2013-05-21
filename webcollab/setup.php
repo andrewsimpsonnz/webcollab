@@ -62,7 +62,7 @@ function enable_login($userid, $username, $ip='0.0.0.0' ) {
 
   //create session key
   //use Mersenne Twister algorithm (random number), then one-way hash to give session key
-  $session_key = md5(mt_rand().mt_rand().mt_rand() );
+  $session_key = sha1(mt_rand().mt_rand().mt_rand() );
 
   //remove the old login information
   $q = db_prepare('DELETE FROM '.PRE.'logins WHERE user_id=?' );

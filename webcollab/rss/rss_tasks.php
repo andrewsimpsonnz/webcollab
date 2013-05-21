@@ -96,7 +96,7 @@ $filename = basename(__FILE__ );
 $content = rss_start($last_mod, $filename );
 
 //set constants
-$guid = md5(MANAGER_NAME . BASE_URL);
+$guid = sha1(MANAGER_NAME . BASE_URL);
 $rss_status = rss_status();
 
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {

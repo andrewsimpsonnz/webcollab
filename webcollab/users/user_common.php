@@ -86,7 +86,9 @@ function password_hash($password ) {
   
   define('WORK_FACTOR', 8 );
 
-  $salt = substr(md5(mt_rand() ), 0, 22 );
+  //generate salt (This is not quite random, but close enough, and very fast!)
+  $str = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' );
+  $salt = substr($str, 0, 22 );
 
   // format is $2a$ [work factor] $ [salt] [bcrypt hash]
   $hash = crypt($password, '$2a$'.WORK_FACTOR.'$'.$salt );
@@ -94,8 +96,12 @@ function password_hash($password ) {
   */
   
   if(version_compare(PHP_VERSION, '5.3.2', '>=' ) ) {
+  
+    //generate salt (This is not quite random, but close enough, and very fast!)
+    $str = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' );
+    $salt = substr($str, 0, 16 );
+  
     //generate password hash (sha256 + hash)
-    $salt = substr(md5(mt_rand() ), 0, 16 );
     $hash = crypt($password, '$5$rounds=5000$'.$salt.'$' );
   }
   else {

@@ -2,7 +2,7 @@
 /*
   $Id: setup_setup5.php 1737 2008-01-24 08:16:45Z andrewsimpson $
 
-  (c) 2008 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2008 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -61,8 +61,12 @@ if(! $admin_password == $admin_password_check ) {
 }
 
 if(version_compare(PHP_VERSION, '5.3.2', '>=' ) ) {
+
+  //generate salt (This is not quite random, but close enough, and very fast!)
+  $str = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' );
+  $salt = substr($str, 0, 16 );
+
   //generate password hash (sha256 + hash)
-  $salt = substr(md5(mt_rand() ), 0, 16 );
   $hash = crypt($admin_password, '$5$rounds=5000$'.$salt.'$' );
 }
 else {

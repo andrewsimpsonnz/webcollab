@@ -2,7 +2,7 @@
 /*
   $Id: icalendar_todo.php 2299 2009-08-24 09:46:33Z andrewsimpson $
 
-  (c) 2005 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -55,7 +55,7 @@ include_once(BASE.'icalendar/icalendar_common.php' );
 $content  = '';
 $projects = '';
 $allowed  = '';
-$icalendar_id = md5(MANAGER_NAME.BASE_URL);
+$icalendar_id = sha1(MANAGER_NAME . BASE_URL );
 $dtstamp = gmdate('Ymd\THis\Z');
 
 //check validity of inputs

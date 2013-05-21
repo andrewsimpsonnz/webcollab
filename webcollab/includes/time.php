@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -41,7 +41,7 @@ function date_to_datetime($day, $month, $year ) {
 
   //check for valid calendar date
   if( ! checkdate($month, $day, $year ) ) {
-    warning($lang['invalid_date'], sprintf($lang['invalid_date_sprt'], $year.'-'.$month_array[$month ].'-'.$day ) );
+    warning($lang['invalid_date'], sprintf($lang['invalid_date_sprt'], safe_data($year.'-'.$month_array[$month ].'-'.$day ) ) );
   }
 
   //format is 2004-08-02 00:00:00
@@ -53,34 +53,47 @@ function date_to_datetime($day, $month, $year ) {
 // Take a database datestamp and make it look nice
 //
 function nicedate($timestamp ) {
-  global $month_array;
-
-  if(empty($timestamp) )
-    return '';
-
-  $date_array = explode('-', substr($timestamp, 0, 10) );
-
-  //format is 2004-Aug-02
-  return sprintf('%04d-%s-%02d', $date_array[0], $month_array[(int)($date_array[1])], $date_array[2] );
+  global $FORMAT_DATE;
+  
+  return nice_date_time($timestamp, $FORMAT_DATE );
 }
 
 //
 // Take a database timestamp and make it look nice
 //
 function nicetime($timestamp ) {
-  global $month_array;
-
-  if(empty($timestamp) )
-    return '';
-
-  $date_array = explode('-', substr($timestamp, 0, 10 ) );
-
-  $time = substr($timestamp, 11, 5 );
-
-  //format is 2004-Aug-02 18:06  +1200
-  return sprintf('%s-%s-%02d %s &nbsp;&nbsp;%+03d00', $date_array[0], $month_array[(int)($date_array[1])], (int)$date_array[2], $time, TZ );
+  global $FORMAT_DATETIME;
+  
+  return nice_date_time($timestamp, $FORMAT_DATETIME );
 }
 
+//
+//  Format date and time for nicedate() or nicetime()
+//
+function nice_date_time($timestamp, $format ) {
+
+  global $month_array;
+
+  $date = date_create(substr($timestamp, 0, 19 ).sprintf(' %+03d00', TZ ) );
+  //following alternative line maybe faster but needs PHP 5.3.0, or higher
+  //$date = date_create_from_format('Y-m-d G:i:s O', substr($timestamp, 0, 19 ).sprintf(' %+03d00', TZ ) );
+
+  //convert text month to chosen language
+  if(strstr($format, 'M' ) ) {
+
+    //get text form of month in chosen language
+    $month = $month_array[(int)(date_format($date, 'n' ) )];
+    //escape the text
+    $month = preg_replace_callback('/(.)/u', create_function('$char', 'return chr(92).$char[0];' ), $month );
+    //add escaped text month into the string
+    $format = str_replace('M', $month, $format );
+  }
+  
+  //convert to date-time and add HTML spaces
+  $date = str_replace(' ', '&nbsp;', date_format($date, $format ) );
+  
+  return $date;
+}
 
 //
 //generate a HTML drop down box for date
