@@ -2,7 +2,7 @@
 /*
   $Id: setup_setup5.php 2253 2009-07-24 09:30:14Z andrewsimpson $
 
-  (c) 2003 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -93,10 +93,25 @@ foreach($constants as $var ) {
     define($var, $array[$var] );
   }
 }
-
+/*
 if(! isset($AD_HOST ) ) {
   $AD_HOST = '';
 }
+*/
+
+//these values should all be defined as parameters in the existing config file...
+$array = array('AD_HOST' => '', 'FORMAT_DATE' => 'Y-M-d', 'FORMAT_DATETIME' => 'Y-M-d G:i O' );
+
+//get array of parameter's names
+$parameters = array_keys($array);
+
+//add any missing parameters
+foreach($parameters as $var ) {
+  if(! isset($$var ) ) {
+    $$var = $array[$var];
+  }
+}
+
 
 //convert Windows backslash (\) to Unix forward slash (/)
 $filebase = str_replace("\\", "/", $data["file_base"] );
@@ -162,6 +177,10 @@ $content .=
 "    */\n\n".
 "  define('LOCALE', '".$data["locale"]."' );\n\n".
 "//-- Timezone --\n\n".
+"  //date format (Refer to PHP manual examples for date() )\n".
+"  \$FORMAT_DATE ='".$FORMAT_DATE."';\n\n".
+"  //date and time format (Refer to PHP manual examples for date() )\n".
+"  \$FORMAT_DATETIME = '".$FORMAT_DATETIME."';\n\n".
 "  //timezone offset from GMT/UTC (hours)\n".
 "  define('TZ', '".$data["timezone"]."' );\n\n".
 "//-- Email --\n\n".
@@ -258,7 +277,7 @@ if(isset($data['new_db'] ) && ($data['new_db'] == 'Y' ) ) {
 
   //generate variables to set new session key
   $ip   = $_SERVER['REMOTE_ADDR'];
-  $xnew = md5(mt_rand().$ip );
+  $xnew = sha1(mt_rand().$ip );
 
   //make database connection
   db_setup_connect($data);
