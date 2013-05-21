@@ -112,7 +112,14 @@
 
 //----------------------------------------------------------------------------------------------
 
-//TIMEZONE
+//TIME AND DATE
+
+  //date format (Refer to PHP manual examples for date() )
+  $FORMAT_DATE = 'Y-M-d';
+  
+  //date and time format (Refer to PHP manual examples for date() )
+  $FORMAT_DATETIME = 'Y-m-d G:i O';
+  
   //timezone offset from GMT/UTC (hours)
   define('TZ', 0 );
 
