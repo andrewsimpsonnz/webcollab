@@ -60,10 +60,19 @@ if(! $admin_password == $admin_password_check ) {
   error_setup('Password check failed' );
 }
 
-if(version_compare(PHP_VERSION, '5.3.2', '>=' ) ) {
+//generate salt (This is not quite random, but close enough, and very fast!)
+$str = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/' );
 
-  //generate salt (This is not quite random, but close enough, and very fast!)
-  $str = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' );
+if(version_compare(PHP_VERSION, '5.3.7', '>=' ) ) {
+
+  $salt = substr($str, 0, 22 );
+
+  // format is $2a$ [work factor] $ [salt] [bcrypt hash]
+  $hash = crypt($password, '$2a$'.sprintf('%02d', WORK_FACTOR ).'$'.$salt );
+
+}
+elseif(version_compare(PHP_VERSION, '5.3.2', '>=' ) ) {
+
   $salt = substr($str, 0, 16 );
 
   //generate password hash (sha256 + hash)
@@ -71,6 +80,10 @@ if(version_compare(PHP_VERSION, '5.3.2', '>=' ) ) {
 }
 else {
   $hash = md5($admin_password );
+}
+
+if(strlen($hash ) < 20 ) {
+  error_setup('Password hash algorithm failed. Transaction cancelled' );
 }
 
 //check for valid email
