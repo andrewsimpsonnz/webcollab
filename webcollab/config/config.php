@@ -197,6 +197,9 @@
 
 //LOGIN AUTHENTICATION
 
+  //Work factor for Blowfish password hashing (values are 4 to 31, for default use 8)
+  define('WORK_FACTOR', 8 );
+
   //Use external webserver authorisation to login (values are "N", or "Y")
   define('WEB_AUTH', "N" );
 
