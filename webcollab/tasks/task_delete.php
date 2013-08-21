@@ -180,12 +180,17 @@ for($i=0 ; $i < $index ; ++$i ) {
 
   for($j=0 ; $file_row = @db_fetch_array($q4, $j ) ; ++$j ) {
   
-    // filename UTF-8 (current)
+    //delete file from disk (current for version 3.40)
+    if(file_exists(FILE_BASE.'/'.$row['fileid'].'__'.$row['hashid'] ) ) {
+      @unlink(FILE_BASE.'/'.$row['fileid'].'__'.$row['hashid'] );
+    }
+    
+    // filename UTF-8 (introduced version 3.30)
     if(file_exists(FILE_BASE.'/'.$file_row['fileid'].'__'.$file_row['filename'] ) ) {
       @unlink(FILE_BASE.'/'.$file_row['fileid'].'__'.$file_row['filename'] );
     }
-
-    // filename with other character set (obsolete)
+ 
+    // filename with other character set (obsolete - prior to version 3.30)
     if(defined('FILENAME_CHAR_SET' ) && file_exists( FILE_BASE.'/'.$file_row['fileid'].'__'.mb_convert_encoding($file_row['filename'], FILENAME_CHAR_SET ) ) ) {
       @unlink(FILE_BASE.'/'.$file_row['fileid'].'__'.mb_convert_encoding($file_row['filename'] ) );
     }

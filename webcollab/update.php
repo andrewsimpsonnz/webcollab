@@ -453,6 +453,18 @@ function update($username ) {
     $content .= "<p>Updating from version pre-3.00 database ... success!</p>\n";
   }
 
+  //update version 3.30 -> 3.40
+  if(! (db_query('SELECT hashid FROM '.PRE.'files', 0 ) ) ) {
+
+    db_begin();
+
+    //add column for hashid
+    db_query('ALTER TABLE '.PRE.'files ADD COLUMN hashid VARCHAR(200)' );
+
+    db_commit();
+    $content .= "<p>Updating from version pre-3.40 database ... success!</p>\n";
+  }
+    
   if( ! $content ) {
     $content .= "<p>No database updates were required.</p>\n";
   }

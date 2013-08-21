@@ -44,7 +44,7 @@ if( ! @safe_integer($_GET['fileid']) ){
 $fileid = $_GET['fileid'];
 
 //get the files info
-$q = db_prepare('SELECT fileid, filename, size, mime, taskid FROM '.PRE.'files WHERE id=? LIMIT 1');
+$q = db_prepare('SELECT fileid, hashid, filename, size, mime, taskid FROM '.PRE.'files WHERE id=? LIMIT 1');
 db_execute($q, array($fileid ) );
 
 if( ! $row = db_fetch_array($q, 0) ) {
@@ -55,7 +55,11 @@ if( ! $row = db_fetch_array($q, 0) ) {
 $taskid = usergroup_check($row['taskid'] );
 
 //check the file exists
-if(file_exists( FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] ) ) {
+if($row['hashid'] && file_exists( FILE_BASE.'/'.$row['fileid'].'__'.$row['hashid'] ) ) {
+  $stored_filename = $row['hashid'];
+}
+//check for pre-Webcollab 3.30 files
+elseif(file_exists( FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] ) ) {
   $stored_filename = $row['filename'];
 }
 //check for pre-WebCollab 2.71 files stored in character sets other than UTF-8

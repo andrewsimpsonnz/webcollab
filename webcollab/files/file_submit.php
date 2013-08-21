@@ -73,6 +73,7 @@ function file_delete($fileid ) {
   //get the file details with this fileid
   $q = db_prepare('SELECT '.PRE.'files.uploader AS uploader,
                                 '.PRE.'files.fileid AS fileid,
+                                '.PRE.'files.hashid AS hashid,
                                 '.PRE.'files.filename AS filename,
                                 '.PRE.'tasks.owner AS owner
                                 FROM '.PRE.'files
@@ -87,6 +88,11 @@ function file_delete($fileid ) {
     if( (ADMIN ) || (UID == $row['owner'] ) || (UID == $row['uploader'] ) ) {
 
       //delete file from disk
+      if(file_exists(FILE_BASE.'/'.$row['fileid'].'__'.$row['hashid'] ) ) {
+        @unlink(FILE_BASE.'/'.$row['fileid'].'__'.$row['hashid'] );
+      }
+      
+      //earlier form
       if(file_exists(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] ) ) {
         @unlink(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] );
       }
@@ -252,7 +258,7 @@ switch($_POST['action'] ) {
         $mime = "application/octet-stream";
       }
       else {
-        $mime = $_FILES['userfile']['type'][$i];
+        $mime = validate($_FILES['userfile']['type'][$i] );
       }
 
       //validate characters in filename
@@ -268,21 +274,23 @@ switch($_POST['action'] ) {
         unlink($_FILES['userfile']['tmp_name'][$i] );
         error('File submit', 'The file types .php, .php3, .php4, .php5 .jsp, .cgi and .asp are not acceptable for security reasons. You must either rename or compress the file.');
       }
-
+      
       //okay accept file
       db_begin();
 
-      //alter file database administration
-      $q = db_prepare("INSERT INTO ".PRE."files (filename, size, description, uploaded, uploader, taskid, mime )
-                              VALUES (?, ?, ?, now(), ?, ?, ? )" );
+      $hashid = sha1(mt_rand() );
 
-      db_execute($q, array($filename, $_FILES['userfile']['size'][$i], $description, UID, $taskid, $mime ) ) ;
+      //alter file database administration
+      $q = db_prepare("INSERT INTO ".PRE."files (filename, size, description, uploaded, uploader, taskid, mime, hashid )
+                              VALUES (?, ?, ?, now(), ?, ?, ?, ? )" );
+
+      db_execute($q, array($filename, int($_FILES['userfile']['size'][$i]), $description, UID, $taskid, $mime, $hashid ) ) ;
 
       //get last insert id
       $fileid = db_lastoid('files_id_seq' );
       
       //copy it
-      if( ! @move_uploaded_file( $_FILES['userfile']['tmp_name'][$i], FILE_BASE.'/'.$fileid.'__'.$filename ) ) {
+      if( ! @move_uploaded_file( $_FILES['userfile']['tmp_name'][$i], FILE_BASE.'/'.$fileid.'__'.$hashid ) ) {
         $q = db_prepare('DELETE FROM '.PRE.'files WHERE id=?' );
         db_execute($q, array($fileid ) );
         unlink($_FILES['userfile']['tmp_name'][$i] );
@@ -299,7 +307,7 @@ switch($_POST['action'] ) {
       db_execute($q, array($taskid ) );
 
       //make the file non-executable for security
-      chmod(FILE_BASE.'/'.$fileid.'__'.$filename, 0644 );
+      chmod(FILE_BASE.'/'.$fileid.'__'.$hashid, 0644 );
 
       //success!
       db_commit();
