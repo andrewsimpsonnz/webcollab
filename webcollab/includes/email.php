@@ -24,7 +24,7 @@
   Sends emails and preformatted emails
 
   Refer to RFC 821 (RFC 2821), RFC 822 (RFC 2822) for basic SMTP.
-  Refer to RFC 1652 for 8BITMIME
+  Refer to RFC 6152 for 8BITMIME
   Refer to RFC 1869 for extended hello (EHLO)
   Refer to RFC 2045 for mime types
   Refer to RFC 2047 for handling 8bit headers
