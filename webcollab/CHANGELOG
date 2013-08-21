@@ -1,4 +1,11 @@
 WebCollab Git
+*** 28 July 2013
+
+- change to storing uploaded files with hashed id
+
+- add Blowfish password encryption for PHP > 5.3.7
+
+WebCollab Git
 *** 21 May 2013
 
 - change md5() hashes to sha1() hashes
