@@ -79,7 +79,7 @@ function user_locale_check($locale ) {
 //
 // Function to generate either sha256 or md5 hashes
 //
-function password_hash($password ) {
+function pass_hash($password ) {
 
   //generate salt (This is not quite random, but close enough, and very fast!)
   $str = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/' );
