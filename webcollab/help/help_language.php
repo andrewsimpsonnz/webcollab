@@ -31,7 +31,12 @@ require_once('path.php' );
 require_once(BASE.'path_config.php' );
 require_once(BASE_CONFIG.'config.php' );
 
-$help_item = $_GET['item'];
+if(preg_match('/^[a-zA-Z0-9\-_]+$/', $_GET['item'] ) ) {
+  $help_item = $_GET['item'];
+}
+else {
+  $help_item = '';
+}
 
 switch($_GET['lang'] ) {
 
