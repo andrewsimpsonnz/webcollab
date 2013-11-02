@@ -1,4 +1,26 @@
 WebCollab Git
+*** 3 November 2013
+
+- improve and simplify conformance to RFC 2045 of quoted printable encoding in emails
+
+- simplify encoded headers in email using iconv_mime_encode()
+
+- minor improvements to email headers
+
+
+WebCollab 3.31 - Baldy
+*** 18 October 2013
+
+- bugfix release for HTTP Response Splitting Vulnerablity (CVE-2013-2652)
+
+WebCollab Git
+*** 17 October 2013
+
+- Italian translation partially updated (Credit: Igor Falcomata )
+
+- bugfix:  password_hash() is a reserved function in PHP 5.5 (Credit: Midov )
+
+WebCollab Git
 *** 28 July 2013
 
 - change to storing uploaded files with hashed id
