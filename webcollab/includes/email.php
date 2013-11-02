@@ -51,13 +51,19 @@ function email($to, $subject, $message ) {
      return;
    }
 
+  //remove duplicate addresses
+  $to = array_unique((array)$to );
+  
+  // remove null email addresses
+  if(! array_search( '', $to ) === false ) {
+    $key = array_search( '', $to );
+    unset($to[($key)] );
+  }
+
   if(sizeof($to) == 0  ) {
     //no email address specified - end function
     return;
   }
-
-  //remove duplicate addresses
-  $to = array_unique((array)$to );
 
   switch(MAIL_TRANSPORT ) {
 
@@ -148,8 +154,9 @@ function smtp_mail($to, $subject, $message ) {
   $count_commands = 0;
 
   //envelope from
-  $out  = 'MAIL FROM: <'.clean(EMAIL_FROM).'>'.$body."\r\n";
-  $log .= 'C: '.$out;
+  $addr = clean(EMAIL_FROM);
+  $out  = 'MAIL FROM: <'.$addr.'>'.$body."\r\n";
+  $log .= 'C: MAIL FROM: '.$addr.' '.$body."\r\n";
   $pipeline = $out;
   ++$count_commands;
 
@@ -160,8 +167,9 @@ function smtp_mail($to, $subject, $message ) {
 
   //envelope to
   foreach((array)$to as $address ) {
-    $out  = 'RCPT TO: <'.trim(clean($address ) ).">\r\n";
-    $log .= 'C: '.$out;
+    $addr = trim(clean($address ) );
+    $out  = 'RCPT TO: <'.$addr.">\r\n";
+    $log .= 'C: RCPT TO: '.$addr."\r\n";
     $pipeline .= $out;
     ++$count_commands;
 
@@ -315,9 +323,11 @@ function & message($message, & $email_encode, & $message_charset, & $body, $bit8
 
   //check if message contains high bit ascii characters and set encoding to match mailer capabilities
   switch(preg_match('/([\x7F-\xFF])/', $message ) ) {
+  
     case true:
       //we have special characters
       switch($bit8 ) {
+      
         case true:
           //mail server has said it can do 8bit
           $email_encode = '8bit';
@@ -330,17 +340,17 @@ function & message($message, & $email_encode, & $message_charset, & $body, $bit8
           $email_encode = 'quoted-printable';
           $message_charset = 'UTF-8';
           $body = '';
-
+          
           //replace high ascii, control and = characters (RFC 2045)
           $message = preg_replace_callback('/([\x00-\x08\x0B\x0C\x0E-\x1F\x3D\x7F-\xFF])/', create_function('$char', 'return sprintf("=%02X", ord($char[1] ) );' ), $message);
 
-          //break into lines no longer than 76 characters including '=' at line end (RFC 2045)
-          $message = preg_replace ('/([^\r\n]{1,72}[^=\r][^=\r\n])/', '\\1'."=\r\n", $message );
+          //break into lines no longer than 76 characters including '=' at line end for soft line breaks (RFC 2045)
+          //  (Adjust to avoid splitting encoded words and '\r\n' over two lines )
+          $message = preg_replace_callback('/([^\r\n]{1,71}[^=]([^=\r]))/', create_function('$str', 'return ($str[2] == "\n" ) ? $str[1] : $str[1]."=\r\n";' ), $message );
 
-          //replace spaces and tabs when it's the last character on a line (RFC 2045)
-          $message  = strtr($message, array("\t=\r\n" => "=09=\r\n", " =\r\n" => "=20=\r\n" ) );
-
-         break;
+          //replace spaces and tabs when it's the last character on a (hard break) line (RFC 2045)
+          $message = strtr($message, array("\t\r\n" => "=09\r\n", " \r\n" => "=20\r\n" ) );
+          break;
         }
       break;
 
@@ -376,16 +386,16 @@ function headers($to, $subject, $email_encode, $message_charset ) {
   //now the prepare the 'to' header
   // lines longer than 998 characters are broken up to separate lines (RFC 2821)
   // (end long line with \r\n, and begin new line with \t)
-  $headers .= 'To: '.wordwrap(join(', ', (array)$to ), 990, "\r\n\t", false ) ."\r\n";
+  $headers .= 'To: '.wordwrap('<'.join('>, <', (array)$to ).'>', 990, "\r\n\t", false ) ."\r\n";
 
   //assemble remaining message headers (RFC 821 / RFC 2045)
   $headers .= "From: ". header_encoding(ABBR_MANAGER_NAME ). "<".$from.">\r\n".
-              "Reply-To: ".$reply_to."\r\n".
+              "Reply-To: <".$reply_to.">\r\n".
               "Subject: ".subject_encoding($subject )."\r\n".
               "Message-Id: <".sha1(mt_rand())."@".$_SERVER['SERVER_NAME'].">\r\n".
               "X-Mailer: WebCollab ".WEBCOLLAB_VERSION." (PHP/".phpversion().")\r\n".
               "X-Priority: 3\r\n".
-              "X-Sender: ".$reply_to."\r\n".
+              "X-Sender: <".$reply_to.">\r\n".
               "Return-Path: <".$reply_to.">\r\n".
               "MIME-Version: 1.0\r\n".
               "Content-Type: text/plain; charset=".$message_charset."\r\n".
@@ -401,38 +411,17 @@ return $headers;
 
 function header_encoding($header ) {
 
-  //encode subject with 'base64' if high ASCII characters are present
+  //encode subject with 'quoted printable' if high ASCII characters are present
   switch(preg_match('/([\x7F-\xFF])/', $header ) ) {
     case false:
       //no encoding required
       break;
 
     case true:
-      $encoded = '';
-      $fib = array(45, 43, 40, 37, 32, 24, 11 ); //reverse fibonacci from 45 characters
-      //$max = 74 - 2 - strlen('UTF-8?B?') - 2 = 60;
-      $max = 60;
-
-      //encode to base64 with encoded lines no longer than 74 characters (RFC 2045)
-      while(strlen($header) > 0 ) {
-        //find optimum length for string by fibonacci search 
-        foreach($fib as $i ){
-          $part = base64_encode(mb_substr($header, 0, $i ) );
-          if(strlen($part) <  $max ) {
-            break;
-          }
-        }
-        $encoded .= '=?UTF-8?B?'.$part."?=";
-
-        $header = mb_substr($header, $i );
-        
-        //add line continuation characters if required
-        if(strlen($header ) > 0 ) {
-          $encoded .= "\r\n\t";
-        }
-      }
-
-      $header = $encoded;
+      //encode header to RFC 2047
+      $preferences = array('input-charset' => 'UTF-8', 'output-charset' => 'UTF-8', 'line-length' => 76, 'line-break-chars' => "\r\n\t", 'scheme' => 'Q' );      
+      $header = iconv_mime_encode('', $header, $preferences );
+      
       break;
   }
   return $header;
