@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -32,6 +32,9 @@
 if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
+
+//secure variables
+$month_escape = array();
 
 //
 // Create a pgsql/mysql datetime stamp
@@ -72,7 +75,7 @@ function nicetime($timestamp ) {
 //
 function nice_date_time($timestamp, $format ) {
 
-  global $month_array;
+  global $month_array, $month_escape;
 
   $date = date_create(substr($timestamp, 0, 19 ).sprintf(' %+03d00', TZ ) );
   //following alternative line maybe faster but needs PHP 5.3.0, or higher
@@ -81,16 +84,34 @@ function nice_date_time($timestamp, $format ) {
   //convert text month to chosen language
   if(strstr($format, 'M' ) ) {
 
-    //get text form of month in chosen language
-    $month = $month_array[(int)(date_format($date, 'n' ) )];
-    //escape the text
-    $month = preg_replace_callback('/(.)/u', create_function('$char', 'return chr(92).$char[0];' ), $month );
+    //get number of month
+    $month_number = (int)(date_format($date, 'n' ) );
+    
+    if(isset($month_escape[($month_number)] ) ) {
+      //result is cached
+      $month = $month_escape[($month_number)];
+    }
+    else {
+      //get month in chosen language and escape the text
+      $month_text = $month_array[($month_number)];
+
+      $len = mb_strlen($month_text );
+      $month = '';
+
+      for($i = 0; $i < $len; ++$i ) {
+        $month .= "\\".mb_substr($month_text, $i, 1 );
+      }
+      
+      //cache the result for possible next use
+      $month_escape[($month_number)] = $month;
+    }
+       
     //add escaped text month into the string
     $format = str_replace('M', $month, $format );
   }
   
-  //convert to date-time and add HTML spaces
-  $date = str_replace(' ', '&nbsp;', date_format($date, $format ) );
+  //convert to date-time
+  $date = date_format($date, $format );
   
   return $date;
 }
