@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -55,7 +55,7 @@ function email($to, $subject, $message ) {
   $to = array_unique((array)$to );
   
   // remove null email addresses
-  if(! array_search( '', $to ) === false ) {
+  while(! array_search( '', $to ) === false ) {
     $key = array_search( '', $to );
     unset($to[($key)] );
   }
@@ -419,7 +419,7 @@ function header_encoding($header ) {
 
     case true:
       //encode header to RFC 2047
-      $preferences = array('input-charset' => 'UTF-8', 'output-charset' => 'UTF-8', 'line-length' => 76, 'line-break-chars' => "\r\n\t", 'scheme' => 'Q' );      
+      $preferences = array('input-charset' => 'UTF-8', 'output-charset' => 'UTF-8', 'line-length' => 76, 'line-break-chars' => "\r\n\t", 'scheme' => 'Q' );
       $header = iconv_mime_encode('', $header, $preferences );
       
       break;

@@ -2,7 +2,7 @@
 /*
   $Id: file_download.php 2254 2009-07-24 09:31:32Z andrewsimpson $
 
-  (c) 2003 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -58,7 +58,7 @@ $taskid = usergroup_check($row['taskid'] );
 if($row['hashid'] && file_exists( FILE_BASE.'/'.$row['fileid'].'__'.$row['hashid'] ) ) {
   $stored_filename = $row['hashid'];
 }
-//check for pre-Webcollab 3.30 files
+//check for pre-Webcollab 3.40 files
 elseif(file_exists( FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] ) ) {
   $stored_filename = $row['filename'];
 }

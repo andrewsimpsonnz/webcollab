@@ -93,16 +93,11 @@ foreach($constants as $var ) {
     define($var, $array[$var] );
   }
 }
-/*
-if(! isset($AD_HOST ) ) {
-  $AD_HOST = '';
-}
-*/
 
-//these values should all be defined as parameters in the existing config file...
+//these values should all be defined as variables in the existing config file...
 $array = array('AD_HOST' => '', 'FORMAT_DATE' => 'Y-M-d', 'FORMAT_DATETIME' => 'Y-M-d G:i O' );
 
-//get array of parameter's names
+//get array of variable's names
 $parameters = array_keys($array);
 
 //add any missing parameters
@@ -111,7 +106,6 @@ foreach($parameters as $var ) {
     $$var = $array[$var];
   }
 }
-
 
 //convert Windows backslash (\) to Unix forward slash (/)
 $filebase = str_replace("\\", "/", $data["file_base"] );

@@ -453,7 +453,7 @@ function update($username ) {
     $content .= "<p>Updating from version pre-3.00 database ... success!</p>\n";
   }
 
-  //update version 3.30 -> 3.40
+  //update version 3.00 -> 3.40
   if(! (db_query('SELECT hashid FROM '.PRE.'files', 0 ) ) ) {
 
     db_begin();
