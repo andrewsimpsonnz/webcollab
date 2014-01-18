@@ -421,6 +421,8 @@ function header_encoding($header ) {
       //encode header to RFC 2047
       $preferences = array('input-charset' => 'UTF-8', 'output-charset' => 'UTF-8', 'line-length' => 76, 'line-break-chars' => "\r\n\t", 'scheme' => 'Q' );
       $header = iconv_mime_encode('', $header, $preferences );
+      //strip the colon & space that iconv_mime_encode() adds as prefix...
+      $header = ltrim($header, ' :' );
       
       break;
   }
