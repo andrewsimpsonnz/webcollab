@@ -2,7 +2,7 @@
 /*
   $Id: forum_search.php 2162 2009-04-06 07:12:58Z andrewsimpson $
 
-  (c) 2005 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -51,23 +51,37 @@ function search_input() {
 //initialise variables
 $content = '';
 $min = 0;
+$string = '';
 
-if(empty($_REQUEST['string'] ) || strlen(trim($_REQUEST['string'] ) ) == 0 ) {
+//get safe string
+if(isset($_POST['string'] ) ) {
+  $string = safe_data($_POST['string'] );
+}
+
+if(isset($_GET['string'] ) ) {
+  $string = safe_data($_GET['string'] );
+}
+
+if(empty($string ) || strlen(trim($string ) ) == 0 ) {
   //no results possible
   $content .= "<p>".sprintf($lang['no_results'], '' )."</p>\n";
-  $content .= search_input(); 
+  $content .= search_input();
   new_box($lang['info'], $content );
   create_bottom();
   die;
 }
 
-//get safe string
-$string = safe_data($_REQUEST['string'] );
 
-if(! safe_integer($_REQUEST['start']) ) {
+if(isset($_POST['start']) && safe_integer($_POST['start']) ) {
+  $start = $_POST['start'];
+}
+elseif(isset($_GET['start']) && safe_integer($_GET['start']) ) {
+  $start = $_GET['start'];
+}
+else {
   error('Forum search', 'Not a valid integer' );
 }
-$start = $_REQUEST['start'];
+
 $min = $start;
 
 if(isset($_POST['backward'] ) && strlen($_POST['backward']) > 0 ) {
@@ -132,7 +146,7 @@ db_execute($q, array('%'.$string.'%', '%'.$string.'%' ) );
 
 $content .= sprintf($lang['search_results'], $total, $string, ($min + 1), $max )."<br /><br />\n";
 
-$content .= "<ul>\n";
+$content .= "<ul class=\"search-ul\">\n";
 
 //search terms for regex
 $replacement = '<span class="red"><b>$0</b></span>';
@@ -142,7 +156,7 @@ $search      = '/'.preg_quote($string, '/' ).'/isu';
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //show it
-  $content .= "<li><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['taskid']."\">".$row['taskname']."</a>&nbsp;". 
+  $content .= "<li class=\"search-li\"><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['taskid']."\">".$row['taskname']."</a>&nbsp;".
               "[<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">"
               .preg_replace($search, $replacement, $row['username'] )."</a>]&nbsp;".
               "(".nicetime($row['posted']).")<br />\n";

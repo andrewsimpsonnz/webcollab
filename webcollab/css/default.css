@@ -264,6 +264,15 @@ ul.ul-2, ul.ul-3, ul.ul-4, ul.ul-5 {
   list-style-type: circle;
 }
 
+/* Search lists*/
+ul.search-ul {
+  list-style-type: square;
+}
+
+li.search-li {
+  padding-bottom: 20px;
+}
+
 /* GENERIC HTML ELEMENTS */
 
 table {
