@@ -2,7 +2,7 @@
 /*
   $Id: archive_submit.php 2175 2009-04-07 09:24:44Z andrewsimpson $
 
-  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -34,10 +34,15 @@ if(! defined('UID' ) ) {
 //includes
 require_once(BASE.'includes/token.php' );
 
-if(! @safe_integer($_REQUEST['taskid']) ) {
+if(isset($_POST['taskid'] ) && safe_integer($_POST['taskid'] ) ) {
+  $taskid = $_POST['taskid'];
+}
+elseif(isset($_GET['taskid'] ) && safe_integer($_GET['taskid'] ) ) {
+  $taskid = $_GET['taskid'];
+}
+else {
   error('Archive submit', 'Not a valid taskid' );
 }
-$taskid = $_REQUEST['taskid'];
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
@@ -60,7 +65,17 @@ if(! ($projectid = db_result($q, 0, 0 ) ) ) {
   error("Archive submit", "Not a valid projectid" );
 }
 
-switch($_REQUEST['action'] ) {
+if(isset($_POST['action'] ) ) {
+  $action = $_POST['action'];
+}
+elseif(isset($_GET['action'] ) ) {
+  $action = $_GET['action'];
+}
+else {
+  error('Archive submit', 'No valid action set' );
+}
+
+switch($action ) {
 
   case 'submit_archive':
 

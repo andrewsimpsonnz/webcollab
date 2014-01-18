@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -32,12 +32,18 @@ require_once(BASE.'setup/security_setup.php' );
 //
 // The action handler
 //
-if( ! isset($_REQUEST['action']) ){
+if(isset($_POST['action'] ) ) {
+  $action = $_POST['action'];
+}
+elseif(isset($_GET['action'] ) ) {
+  $action = $_GET['action'];
+}
+else {
   error('Setup action handler', 'No request given' );
 }
 
 //what do you want to task today =]
-switch($_REQUEST['action'] ) {
+switch($action ) {
 
 case 'setup1':
     include(BASE.'setup/setup_setup1.php' );

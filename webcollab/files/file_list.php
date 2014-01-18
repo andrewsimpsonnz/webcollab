@@ -2,7 +2,7 @@
 /*
   $Id: file_list.php 2292 2009-08-24 09:40:09Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -37,11 +37,13 @@ include_once(BASE.'includes/details.php' );
 
 $content = '';
 
-if(! @safe_integer($_REQUEST['taskid']) ){
-  error('File list', 'The taskid input is not valid' ); 
+if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
+  $taskid = $_GET['taskid'];
 }
-
-$taskid = $_REQUEST['taskid'];
+else {
+  error('File list', 'The taskid input is not valid' );
+}
+  
 //check usergroup security
 $taskid = usergroup_check($taskid );
 

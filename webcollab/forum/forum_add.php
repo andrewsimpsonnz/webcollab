@@ -2,7 +2,7 @@
 /*
   $Id: forum_add.php 2216 2009-05-08 20:40:11Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -43,28 +43,30 @@ if((GUEST == true ) && (GUEST_LOCKED != 'N' ) ) {
     warning($lang['access_denied'], 'Guests are not permitted to post in forums' );
 }
 
-if(! @safe_integer($_REQUEST['usergroupid']) ){
+if(isset($_GET['usergroupid']) && safe_integer($_GET['usergroupid']) ){
+  $usergroupid = $_GET['usergroupid'];
+}
+else {
   $usergroupid = 0;
 }
-else {
-  $usergroupid = $_REQUEST['usergroupid'];
-}
 
-if(! @safe_integer($_REQUEST['parentid']) ){
+if(isset($_GET['parentid']) && safe_integer($_GET['parentid']) ){
+  $parentid = $_GET['parentid'];
+}
+else {
   $parentid = 0;
 }
-else {
-  $parentid = $_REQUEST['parentid'];
-}
 
-if(! @safe_integer($_REQUEST['taskid']) ) {
+if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
+  $taskid = $_GET['taskid'];
+}
+else {
   error('Forum add', 'Not a valid value for taskid');
 }
 
 //generate_token
 generate_token('forum_add' );
 
-$taskid = $_REQUEST['taskid'];
 //check usergroup security
 $taskid = usergroup_check($taskid );
 

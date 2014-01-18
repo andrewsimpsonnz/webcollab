@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -34,12 +34,18 @@ $local_login = true;
 //
 // The action handler
 //
-if( ! isset($_REQUEST['action']) ){
+if(isset($_POST['action'] ) ) {
+  $action = $_POST['action'];
+}
+elseif(isset($_GET['action'] ) ) {
+  $action = $_GET['action'];
+}
+else {
   error('iCalendar action handler', 'No request given' );
 }
 
 //what do you want to do today =]
-switch($_REQUEST['action'] ) {
+switch($action ) {
 
   case 'todo':
     include(BASE.'icalendar/icalendar_todo.php' );

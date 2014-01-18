@@ -2,7 +2,7 @@
 /*
   $Id: user_edit.php 2297 2009-08-24 09:45:18Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -50,11 +50,13 @@ generate_token('user_edit' );
 if(ADMIN ) {
 
   //is there a uid ?
-  if(! safe_integer($_REQUEST['userid']) ){
+  if(isset($_GET['userid']) && safe_integer($_GET['userid']) ){
+    $userid = $_GET['userid'];
+  }
+  else {
     error('User edit', 'No userid was specified' );
   }
-  $userid = $_REQUEST['userid'];
-
+  
   //query for the groups that this user is in
   $q = db_prepare('SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid=?' );
   db_execute($q, array($userid ) );

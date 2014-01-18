@@ -2,7 +2,7 @@
 /*
   $Id: contact_submit.php 2160 2009-04-06 07:07:34Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -36,11 +36,17 @@ if(GUEST ) {
 }
 
 //edit, insert, delete ?
-if( ! isset( $_REQUEST['action'] ) ){
+if(isset($_POST['action'] ) ) {
+  $action = $_POST['action'];
+}
+elseif(isset($_GET['action'] ) ) {
+  $action = $_GET['action'];
+}
+else {
   error('Contact submit', 'No request given' );
 }
 
-switch($_REQUEST['action'] ) {
+switch($action ) {
 
   //insert a new contact
   case 'submit_add':

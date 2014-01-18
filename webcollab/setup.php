@@ -2,7 +2,7 @@
 /*
   $Id: setup.php 2288 2009-08-22 08:50:00Z andrewsimpson $
 
-  (c) 2003 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -30,8 +30,8 @@
 $WEB_CONFIG = "N";
 
 //set language
-if(isset($_REQUEST['lang'] ) ) {
-  $locale_setup = $_REQUEST['lang'];
+if(isset($_POST['lang'] ) && preg_match('/^[a-zA-Z0-9\-_]+$/', $_POST['lang'] ) ) {
+  $locale_setup = $_POST['lang'];
 }
 
 //get includes

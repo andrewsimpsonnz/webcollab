@@ -2,7 +2,7 @@
 /*
   $Id: security.php 2283 2009-08-22 08:40:04Z andrewsimpson $
 
-  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -52,9 +52,14 @@ if(isset($_COOKIE['webcollab_session'] ) && (strlen(trim($_COOKIE['webcollab_ses
   $session_key = validate($_COOKIE['webcollab_session'] );
   define('X', 0 );
 }
-elseif(isset($_REQUEST['x'] ) && (strlen(trim($_REQUEST['x'], '1234567890abcdefABCDEF' ) ) == 0 ) ) {
-  $session_key = validate($_REQUEST['x']);
-  $x = $_REQUEST['x'];
+elseif(isset($_POST['x'] ) && (strlen(trim($_POST['x'], '1234567890abcdefABCDEF' ) ) == 0 ) ) {
+  $session_key = validate($_POST['x']);
+  $x = $_POST['x'];
+  define('X', $x );
+}
+elseif(isset($_GET['x'] ) && (strlen(trim($_GET['x'], '1234567890abcdefABCDEF' ) ) == 0 ) ) {
+  $session_key = validate($_GET['x']);
+  $x = $_GET['x'];
   define('X', $x );
 }
 else {

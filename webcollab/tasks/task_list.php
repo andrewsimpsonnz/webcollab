@@ -2,7 +2,7 @@
 /*
   $Id: task_list.php 2294 2009-08-24 09:41:39Z andrewsimpson $
 
-  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -290,11 +290,11 @@ function task_state($key ) {
 //
 
 //is the parentid set in tasks.php ?
-if(! @safe_integer($_REQUEST['taskid']) ) {
+if(! @safe_integer($_GET['taskid']) ) {
   error('Task list', 'Not a valid value for parentid' );
 }
 
-$parentid = $_REQUEST['taskid'];
+$parentid = $_GET['taskid'];
 
 //set prepared statement
 $q1 = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES (?, ?, now() )' );

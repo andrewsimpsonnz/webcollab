@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2004 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -33,12 +33,18 @@ include_once(BASE.'includes/screen.php' );
 //
 // The action handler
 //
-if( ! isset($_REQUEST['action'] ) ) {
+if(isset($_POST['action'] ) ) {
+  $action = $_POST['action'];
+}
+elseif(isset($_GET['action'] ) ) {
+  $action = $_GET['action'];
+}
+else {
   error('Archive action handler', 'No request given' );
 }
 
 //what do you want to archive today =]
-switch($_REQUEST['action'] ) {
+switch($action ) {
 
   //list archived projects
   case 'list':

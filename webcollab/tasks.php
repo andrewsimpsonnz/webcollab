@@ -2,7 +2,7 @@
 /*
   $Id$
 
- (c) 2004 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+ (c) 2004 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -33,18 +33,24 @@ include_once(BASE.'includes/screen.php' );
 //
 // The action handler
 //
-if( ! isset($_REQUEST['action']) ){
+if(isset($_POST['action'] ) ) {
+  $action = $_POST['action'];
+}
+elseif(isset($_GET['action'] ) ) {
+  $action = $_GET['action'];
+}
+else {
   error('Task action handler', 'No action given');
 }
 
 //what do you want to task today =]
-switch($_REQUEST['action'] ) {
+switch($action ) {
 
   //show a task
   case 'show':
 
     //catch & redirect hack for invalid entry from ProjectJump
-    if(isset($_REQUEST['taskid']) && ($_REQUEST['taskid'] == -1 ) ){
+    if(isset($_POST['taskid']) && ($_POST['taskid'] == -1 ) ){
       header('Location: '.BASE_URL.'main.php?x='.$x );
       die;
     }
@@ -149,6 +155,26 @@ switch($_REQUEST['action'] ) {
   //submit clone
   case 'submit_clone':
     include(BASE.'tasks/task_clone_submit.php' );
+    break;
+
+    //search
+  case 'search':
+    create_top($lang['info'], 0, 'forum-search-results' );
+    include(BASE.'includes/mainmenu.php');
+    //include(BASE.'forum/forum_menubox.php');
+    goto_main();
+    include(BASE.'tasks/task_search.php');
+    create_bottom();
+    break;
+
+  //display search box
+  case 'search_box':
+    create_top($lang['info'], 0, 'forum-search', 2 );
+    include(BASE.'includes/mainmenu.php');
+    //include(BASE.'forum/forum_menubox.php');
+    goto_main();
+    include(BASE.'tasks/task_searchbox.php');
+    create_bottom();
     break;
 
   //printable task info

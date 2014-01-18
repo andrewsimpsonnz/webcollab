@@ -2,7 +2,7 @@
 /*
   $Id: details.php 1916 2008-01-04 08:23:14Z andrewsimpson $
 
-  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -32,11 +32,15 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
-if(! @safe_integer($_REQUEST['taskid']) ) {
-  error('Task details', 'The taskid input is not valid' ); 
+if(isset($_POST['taskid'] ) && safe_integer($_POST['taskid'] ) ) {
+  $taskid = $_POST['taskid'];
 }
-
-$taskid = $_REQUEST['taskid'];
+elseif(isset($_GET['taskid'] ) && safe_integer($_GET['taskid'] ) ) {
+  $taskid = $_GET['taskid'];
+}
+else {
+  error('Task details', 'The taskid input is not valid' );
+}
 
 //get task details
 $q_detail = db_prepare('SELECT * FROM '.PRE.'tasks WHERE id=? LIMIT 1' );

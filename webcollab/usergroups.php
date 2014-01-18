@@ -2,7 +2,7 @@
 /*
   $Id: usergroups.php 2384 2010-05-15 23:50:26Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -33,12 +33,18 @@ include_once(BASE.'includes/screen.php' );
 //
 // The action handler
 //
-if( ! isset($_REQUEST['action']) ){
+if(isset($_POST['action'] ) ) {
+  $action = $_POST['action'];
+}
+elseif(isset($_GET['action'] ) ) {
+  $action = $_GET['action'];
+}
+else {
   error('Usergroup action handler', 'No action given');
 }
 
 //what do you want to usergroup today =]
-switch( $_REQUEST['action'] ) {
+switch($action ) {
 
   //gives a window and some options to do to the poor 'old usergroup
   case 'manage':

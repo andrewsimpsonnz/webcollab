@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -60,15 +60,21 @@ else {
 }
 
 //set month
-if( @safe_integer($_REQUEST['month']) ){
-  $month = $_REQUEST['month'];
+if(isset(($_POST['month']) && safe_integer($_POST['month']) ){
+  $month = $_POST['month'];
+}
+elseif((isset($_GET['month']) && safe_integer($_GET['month']) ){
+  $month = $_GET['month'];
 }
 else {
   $month = date('n', TIME_NOW - date('Z') + TZ*60*60 );
 }
 //set year
-if( @safe_integer($_REQUEST['year']) ){
-  $year = $_REQUEST['year'];
+if(isset(($_POST['year']) && safe_integer($_POST['year']) ){
+  $year = $_POST['year'];
+}
+if(isset(($_GET['year']) && safe_integer($_GET['year']) ){
+  $year = $_GET['year'];
 }
 else {
   $year = date('Y', TIME_NOW - date('Z') + TZ*60*60 );

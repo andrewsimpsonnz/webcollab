@@ -2,7 +2,7 @@
 /*
   $Id: forum_add.php 1704 2008-01-01 06:09:52Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -42,16 +42,18 @@ if((GUEST) && (GUEST_LOCKED != 'N' ) ){
   warning($lang['access_denied'], 'Guests are not permitted to post in forums' );
 }
 
-if((! isset($_REQUEST['postid'] ) )  || (! @safe_integer($_REQUEST['postid']) ) ) {
+if(isset($_GET['postid'] ) && @safe_integer($_GET['postid'] ) ) {
+  $postid = $_GET['postid'];
+}
+else {
   error('Forum edit', 'Not a valid value for postid');
 }
-$postid = $_REQUEST['postid'];
 
 //generate_token
 generate_token('forum_edit' );
 
 //disable main form when deleting
-if(isset($_REQUEST['action'] ) && $_REQUEST['action'] == 'delete' ) {
+if(isset($_GET['action'] ) && $_GET['action'] == 'delete' ) {
   $s = " disabled=\"disabled\"";
 }
 else {

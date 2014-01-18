@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2010 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -34,11 +34,17 @@ include_once(BASE.'includes/time.php' );
 //
 // action handler
 //
-if( ! isset($_REQUEST['action']) ){
+if(isset($_POST['action'] ) ) {
+  $action = $_POST['action'];
+}
+elseif(isset($_GET['action'] ) ) {
+  $action = $_GET['action'];
+}
+else {
   error('Users action handler', 'No request given' );
 }
 
-switch($_REQUEST['action'] ) {
+switch($action ) {
 
   //show user's personal details
   case 'show':
