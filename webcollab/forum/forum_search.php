@@ -152,22 +152,30 @@ $content .= "<ul class=\"search-ul\">\n";
 $replacement = '<span class="red"><b>$0</b></span>';
 $search      = '/'.preg_quote($string, '/' ).'/isu';
 
+$content .= "<table class=\"celldata\">\n";
+
 //iterate for posts
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
-  //show it
-  $content .= "<li class=\"search-li\"><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['taskid']."\">".$row['taskname']."</a>&nbsp;".
-              "[<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">"
-              .preg_replace($search, $replacement, $row['username'] )."</a>]&nbsp;".
-              "(".nicetime($row['posted']).")<br />\n";
+  if($i > 0 ) {
+    //not the first line, need to add a divider
+    $content .= "<tr><td><hr style=\"margin-top: 15px\" /></td></tr>\n";
+  }
 
-  //highlight search text
-  $text = preg_replace($search, $replacement,  $row['text']);
+  //file part
+  $content .= "<tr class=\"searchlist\"><td>".$lang['task'].":</td><td><b><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['taskid']."\">".$row['taskname']."</a></b></td></tr>\n".
+              "<tr class=\"searchlist\"><td></td><td><small><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".
+               preg_replace($search, $replacement, $row['username'] )."</a>&nbsp;(".nicetime( $row['posted'] ).")</small></td></tr>\n";
 
-  $content .= nl2br(bbcode($text ) )."</li>\n";
+    //highlight search text
+    $text = preg_replace($search, $replacement, $row['text']);
+    $text = nl2br(bbcode($text ) );
+    
+    $content .= "<tr class=\"searchlist\"><td>".$lang['message']."</td><td><i>".$text."</i></td></tr>\n";
+ 
 }
 
-$content .= "</ul>\n";
+$content .= "</table>\n";
 
 db_free_result($q );
 

@@ -66,16 +66,16 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 
   //file part
-  $content .= "<tr><td>".$lang['task'].":</td><td>".
+  $content .= "<tr class=\"searchlist\"><td>".$lang['task'].":</td><td>".
               "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['task_id']."\">".$row['task_name']."</a>".
               "</td></tr>\n".
-              "<tr><td>".$lang['file']."</td><td>".
+              "<tr class=\"searchlist\"><td>".$lang['file']."</td><td>".
               "<a href=\"files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."\"". "onclick=\"window.open('files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a>".
               "&nbsp;<small>(".nice_size($row['size'] ).")&nbsp;</small>".
               //delete option
               "<span class=\"textlink\">[<a href=\"files.php?x=".X."&amp;action=delete&amp;fileid=".$row['id']."&amp;admin=1&amp;taskid=".$row['task_id']."\">".$lang['del']."</a>]</span></td></tr>\n".
               //user part
-              "<tr><td>".$lang['uploader']." </td><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")</td></tr>\n";
+              "<tr class=\"searchlist\"><td>".$lang['uploader']." </td><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")</td></tr>\n";
 
   //show description
   if( $row['description'] != '' ) {

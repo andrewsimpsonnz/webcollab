@@ -230,6 +230,16 @@ tr.grouplist th {
   padding : 5px;
 }
 
+tr.searchlist td {
+  text-align : left;
+  font-size : 1em; /* IE 7 can't do 'font:inherit'*/
+  font : inherit;
+  border-width : 0;
+  border-collapse : collapse;
+  padding : 0px;
+  vertical-align: top;
+}
+
 /* Green progress bar */
 td.greenbar {
   border-width : 0;
@@ -262,15 +272,6 @@ ul.ul-1 {
 
 ul.ul-2, ul.ul-3, ul.ul-4, ul.ul-5 {
   list-style-type: circle;
-}
-
-/* Search lists*/
-ul.search-ul {
-  list-style-type: square;
-}
-
-li.search-li {
-  padding-bottom: 20px;
 }
 
 /* GENERIC HTML ELEMENTS */
