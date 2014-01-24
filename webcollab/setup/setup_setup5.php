@@ -2,7 +2,7 @@
 /*
   $Id: setup_setup5.php 2253 2009-07-24 09:30:14Z andrewsimpson $
 
-  (c) 2003 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -27,8 +27,8 @@
 */
 
 //set language
-if(isset($_REQUEST['lang'] ) ) {
-  $locale_setup = $_REQUEST['lang'];
+if(isset($_POST['lang'] ) ) {
+  $locale_setup = $_POST['lang'];
 }
 
 //get includes
@@ -294,8 +294,7 @@ if(isset($data['new_db'] ) && ($data['new_db'] == 'Y' ) ) {
   $content = "<p style=\"text-align:center\">".$lang_setup['setup5_writing']."</p>\n".
              "<form method=\"post\" action=\"setup_handler.php\">\n".
              "<fieldset><input type=\"hidden\" name=\"x\" value=\"".$xnew."\" />\n".
-             "<input type=\"hidden\" name=\"action\" value=\"setup6\" />\n".
-             "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" /></fieldset>\n".
+             "<input type=\"hidden\" name=\"action\" value=\"setup6\" /></fieldset>\n".
              "<p style=\"text-align:center\">".
              "<input type=\"submit\" value=\"".$lang_setup['setup5_continue']."\" /></p>\n".
              "</form>\n";

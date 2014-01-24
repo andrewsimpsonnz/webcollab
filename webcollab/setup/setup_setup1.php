@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -26,8 +26,8 @@
 */
 
 //set language
-if(isset($_REQUEST['lang'] ) ) {
-  $locale_setup = $_REQUEST['lang'];
+if(isset($_GET['lang'] ) ) {
+  $locale_setup = $_GET['lang'];
 }
 
 //get includes

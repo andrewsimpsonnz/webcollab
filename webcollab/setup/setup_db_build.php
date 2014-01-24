@@ -2,7 +2,7 @@
 /*
   $Id: setup_db_build.php 2313 2009-09-21 07:39:39Z andrewsimpson $
 
-  (c) 2003 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -27,8 +27,8 @@
 */
 
 //set language
-if(isset($_REQUEST['lang'] ) ) {
-  $locale_setup = $_REQUEST['lang'];
+if(isset($_POST['lang'] ) ) {
+  $locale_setup = $_POST['lang'];
 }
 
 //get includes

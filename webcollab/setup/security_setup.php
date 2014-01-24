@@ -2,7 +2,7 @@
 /*
   $Id: security_setup.php 2285 2009-08-22 08:42:43Z andrewsimpson $
 
-  (c) 2003 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -31,8 +31,8 @@ if( ! isset($WEB_CONFIG ) ) {
 }
 
 //set language
-if(isset($_REQUEST['lang'] ) ) {
-  $locale_setup = $_REQUEST['lang'];
+if(isset($_GET['lang'] ) ) {
+  $locale_setup = $_GET['lang'];
 }
 
 //get includes
@@ -69,8 +69,12 @@ if( ! defined('DATABASE_NAME' ) || DATABASE_NAME == '' ) {
 }
 else {
   //get session key from either a GET or POST
-  if(isset($_REQUEST['x']) && preg_match('/^[a-f\d]{40}$/i', $_REQUEST['x'] ) ) {
-    $x = safe_data($_REQUEST['x']);
+  if(isset($_POST['x']) && preg_match('/^[a-f\d]{40}$/i', $_POST['x'] ) ) {
+    $x = safe_data($_POST['x']);
+    define('X', $x );
+  }
+  elseif(isset($_GET['x']) && preg_match('/^[a-f\d]{40}$/i', $_GET['x'] ) ) {
+    $x = safe_data($_GET['x']);
     define('X', $x );
   }
   //check for existing variable

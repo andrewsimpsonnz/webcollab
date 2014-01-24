@@ -2,7 +2,7 @@
 /*
   $Id: setup_setup5.php 1737 2008-01-24 08:16:45Z andrewsimpson $
 
-  (c) 2008 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2008 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -46,7 +46,6 @@ $content .= "<form method=\"post\" action=\"setup_handler.php\">".
             "<fieldset><input type=\"hidden\" name=\"action\" value=\"setup7\" />\n".
             "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"new_config\" value=\"Y\" />\n".
-            "<input type=\"hidden\" name=\"lang\" value=\"".$locale_setup."\" />\n".
             "<input type=\"hidden\" id=\"alert_field\" name=\"alert1\" value=\"".$lang_setup['setup_js_alert_field']."\" />\n".
             "<input type=\"hidden\" id=\"pass_match\" name=\"alert2\" value=\"".$lang_setup['setup_js_pass_match']."\" />\n".
             "<input type=\"hidden\" id=\"alert_email\" name=\"alert3\" value=\"".$lang_setup['setup_js_email_miss']."\" /></fieldset>\n".
