@@ -1,4 +1,16 @@
 WebCollab Git
+*** 19 January 2014
+
+- Bug #97  - Fix for foreign cookies overwriting POST & GET by removing $_REQUEST superglobals. (Reported by: Favern)
+
+- improve formatting to Forum Search.  Add to CSS code.
+
+WebCollab Git
+*** 3 January 2014
+
+- time.php: change from preg function to mb_substr for better execution speed. Cache escaped date results.
+
+WebCollab Git
 *** 3 November 2013
 
 - improve and simplify conformance to RFC 2045 of quoted printable encoding in emails
@@ -6,7 +18,6 @@ WebCollab Git
 - simplify encoded headers in email using iconv_mime_encode()
 
 - minor improvements to email headers
-
 
 WebCollab 3.31 - Baldy
 *** 18 October 2013
