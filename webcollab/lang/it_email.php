@@ -116,23 +116,23 @@ $delete_list              = "Progetto:  %s\n".
                 "Stato:    %s\n\n".
                 "Testo:\n%s\n\n";
 
-$title_usergroup_add      = ABBR_MANAGER_NAME.": New usergroup %1\$s created";
-$email_usergroup_add      = "Hello,\n\n".
-                            "This is the ".MANAGER_NAME." site informing you that a new usergroup %1\$s, has been created on ".$email_date.".\n\n".
-                            "The members of the new usergroup are:\n".
+$title_usergroup_add      = ABBR_MANAGER_NAME.": Nuovo gruppo %1\$s creato";
+$email_usergroup_add      = "Salve,\n\n".
+                            "Il sito ".MANAGER_NAME." ti informa che un nuovo gruppo %1\$s, è stato creato il ".$email_date.".\n\n".
+                            "I membri del nuovo gruppo sono:\n".
                             "%2\$s\n";
 
-$title_usergroup_edit      = ABBR_MANAGER_NAME.": Usergroup %1\$s changed";
-$email_usergroup_edit      = "Hello,\n\n".
-                            "This is the ".MANAGER_NAME." site informing you that usergroup %1\$s, has been changed on ".$email_date.".\n\n".
-                            "The members of the usergroup are:\n".
+$title_usergroup_edit      = ABBR_MANAGER_NAME.": Gruppo %1\$s modificato";
+$email_usergroup_edit      = "Salve,\n\n".
+                            "Il sito ".MANAGER_NAME." ti informa che il gruppo %1\$s, è stato modificato il ".$email_date.".\n\n".
+                            "I membri del gruppo sono:\n".
                             "%2\$s\n";
 
 $title_welcome            = "Benvenuto a ".ABBR_MANAGER_NAME;
 $email_welcome            = "Salve,\n\nIl sito ".MANAGER_NAME." ti dà il benvenuto il ".$email_date.".\n\n".
                             "Al fine di permetterti di lavorare subito con questo sistema, spieghiamo alcune cose che devi sapere.\n\n".
                             "In primo luogo, questo è un sistema di gestione dei progetti: la schermata principale ti mostrerà i progetti che sono attualmente disponibili. ".
-                            "Se clicchi su uno dei nomi, il sistema ti porterà nella sezione delle attività (tasks), dove si trova tutto ciò che deve essere completato per realizzare il progetto.\n\n".
+                            "Se clicchi su uno dei nomi, il sistema ti porterà nella sezione delle attività, dove si trova tutto ciò che deve essere completato per realizzare il progetto.\n\n".
                             "Ogni articolo che invii o modifichi apparirà agli altri utenti come \"nuovo\" o \"aggiornato\". La cosa funziona anche al contrario e ".
                             "ti permetterà di capire a che punto si trova il progetto.\n\n".
                             "Puoi anche acquisire o cedere la proprietà di un'operazione ed inserire messaggi nel forum collegato ad essa. ".
@@ -140,16 +140,16 @@ $email_welcome            = "Salve,\n\nIl sito ".MANAGER_NAME." ti dà il benven
                             "\n\nSe hai dubbi contatta ".EMAIL_ADMIN.".\n\n--Buona fortuna!\n\n".
                             "Login:      %1\$s\n".
                             "Password:   %2\$s\n\n".
-                            "Usergroups: %3\$s".
+                            "Gruppi:     %3\$s".
                             "Nome:       %4\$s\n".
                             "Website:    ".BASE_URL."\n\n".
                             "%5\$s";
 
-$title_user_change1       = ABBR_MANAGER_NAME.": Modifica del tuo account da parte di un Admin";
+$title_user_change1       = ABBR_MANAGER_NAME.": Modifica del tuo account da parte di un amministratore";
 $email_user_change1       = "Salve,\n\nIl sito ".MANAGER_NAME." ti informa che il tuo account è stato modificato il ".$email_date." da %1\$s ( %2\$s ) \n\n".
                             "Login:      %3\$s\n".
                             "Password:   %4\$s\n\n".
-                            "Usergroups: %5\$s".
+                            "Gruppi:     %5\$s".
                             "Nome:       %6\$s\n\n".
                             "%7\$s";
 
@@ -170,7 +170,7 @@ $title_revive             = ABBR_MANAGER_NAME.": Account riattivato";
 $email_revive             = "Salve,\n\nIl sito ".MANAGER_NAME." ti informa che il tuo account è stato riattivato il ".$email_date.".\n\n".
                             "Login: %1\$s\n".
                             "Username:  %2\$s\n\n".
-                            "Non possiamo inviarti la tua password perché crittata. \n\n".
+                            "Non possiamo inviarti la tua password perché crittografata. \n\n".
                             "Se hai dimenticato la tua password invia una e-mail a ".EMAIL_ADMIN." per riceverne una nuova.";
 
 
