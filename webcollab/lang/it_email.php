@@ -24,7 +24,10 @@
 
   Email text language files for 'it' (Italian)
 
-  Maintainer: Raffaele Franzese <r.franzese@collaltosabino.net>
+  Translator:
+    Raffaele Franzese <r.franzese@collaltosabino.net> (2003)
+    Giuseppe Dantini <sf_peppe at sourceforge.net> (2014)
+
 
   NOTE: This file is written in UTF-8 character set
 
