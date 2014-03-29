@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -99,7 +99,7 @@ function create_bottom_setup() {
   //end the main & container
   echo "</div><!-- end main -->\n";
   //shows the logo
-  echo "\n<div class=\"bottomtext\" style=\"text-align: center\">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2013</div>\n";
+  echo "\n<div class=\"bottomtext\" style=\"text-align: center\">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2014</div>\n";
   //end xml parsing
   echo "</div><!-- end container -->\n".
        "</body>\n</html>\n";
