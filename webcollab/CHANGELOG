@@ -1,4 +1,9 @@
 WebCollab Git
+*** 26 February 2014
+
+- Updated Italian translation (Credit: Giuseppe Dantini )
+
+WebCollab Git
 *** 19 January 2014
 
 - Bug #97  - Fix for foreign cookies overwriting POST & GET by removing $_REQUEST superglobals. (Reported by: Favern)
