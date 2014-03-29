@@ -68,7 +68,7 @@ if(version_compare(PHP_VERSION, '5.3.7', '>=' ) ) {
   $salt = substr($str, 0, 22 );
 
   // format is $2a$ [work factor] $ [salt] [bcrypt hash]
-  $hash = crypt($password, '$2a$'.sprintf('%02d', WORK_FACTOR ).'$'.$salt );
+  $hash = crypt($admin_password, '$2a$'.sprintf('%02d', WORK_FACTOR ).'$'.$salt );
 
 }
 elseif(version_compare(PHP_VERSION, '5.3.2', '>=' ) ) {

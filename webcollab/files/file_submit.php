@@ -284,7 +284,7 @@ switch($_POST['action'] ) {
       $q = db_prepare("INSERT INTO ".PRE."files (filename, size, description, uploaded, uploader, taskid, mime, hashid )
                               VALUES (?, ?, ?, now(), ?, ?, ?, ? )" );
 
-      db_execute($q, array($filename, int($_FILES['userfile']['size'][$i]), $description, UID, $taskid, $mime, $hashid ) ) ;
+      db_execute($q, array($filename, (int)($_FILES['userfile']['size'][$i]), $description, UID, $taskid, $mime, $hashid ) ) ;
 
       //get last insert id
       $fileid = db_lastoid('files_id_seq' );
