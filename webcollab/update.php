@@ -82,7 +82,7 @@ function update($username ) {
         db_query('CREATE TABLE '.PRE.'login_attempt ( name VARCHAR(100) NOT NULL,
                                                ip VARCHAR(100) NOT NULL,
                                                last_attempt DATETIME NOT NULL)
-                                               TYPE = innoDB
+                                               ENGINE = innoDB
                                                CHARACTER SET = utf8;' );
         break;
 
@@ -310,7 +310,7 @@ function update($username ) {
       case 'mysql_pdo':
         db_query('CREATE TABLE '.PRE.'site_name (manager_name VARCHAR(100),
                                                  abbr_manager_name VARCHAR(100) )
-                                                 TYPE = innoDB 
+                                                 ENGINE = innoDB
                                                  CHARACTER SET = utf8;' );
         break;
 
@@ -440,7 +440,7 @@ function update($username ) {
                                               action VARCHAR(100) NOT NULL,
                                               userid INT UNSIGNED NOT NULL,
                                               lastaccess DATETIME NOT NULL)
-                                              TYPE = innoDB 
+                                              ENGINE = innoDB
                                               CHARACTER SET = utf8;' );
         break;
 
