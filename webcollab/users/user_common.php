@@ -90,7 +90,7 @@ function pass_hash($password ) {
     $salt = substr($str, 0, 22 );
 
     // format is $2a$ [work factor] $ [salt] [bcrypt hash]
-    $hash = crypt($password, '$2a$'.sprintf('%02d', WORK_FACTOR ).'$'.$salt );
+    $hash = crypt($password, '$2a$'.sprintf('%02u', WORK_FACTOR ).'$'.$salt );
   
   }
   elseif(version_compare(PHP_VERSION, '5.3.2', '>=' ) ) {
@@ -106,7 +106,7 @@ function pass_hash($password ) {
     $hash = md5($password );
   }
   
-  if(strlen($hash ) < 20 ) {
+  if(strlen($hash ) < 13 ) {
     //blowfish / SHA256 will give a random string of less than 13 characters in error condition
     error('Password setting error', 'Password hash algorithm failed. Transaction cancelled' );
   }
