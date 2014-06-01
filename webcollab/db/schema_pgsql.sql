@@ -147,6 +147,7 @@ CREATE SEQUENCE "files_id_seq" start 1 increment 1 maxvalue 2147483647 minvalue 
 CREATE TABLE "files" (
 	"id" integer DEFAULT nextval('"files_id_seq"'::text) NOT NULL,
 	"fileid" integer NOT NULL DEFAULT 0::int,
+	"hashid" character varying(200),
 	"filename" character varying(255),
 	"size" bigint NOT NULL DEFAULT 0::int,
 	"description" text,
