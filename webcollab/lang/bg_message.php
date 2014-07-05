@@ -23,7 +23,8 @@
 
   Language files for 'bg' (Bulgarian)
 
-  Maintainer: Stoyan Dimitrov <stoyan at adiumdesign dot com>
+  Translation: Stoyan Dimitrov <stoyan at adiumdesign dot com> (5 June 2004)
+  Translation: Svetlozar Ivanov <svetlozarin at gmail dot com> (5 July 2014)
 
 
   NOTE: This file is written in UTF-8 character set
@@ -36,7 +37,7 @@ define('XML_LANG', "bg" );
 
 //dates
 $month_array                              = array (NULL, "Яну", "Фев", "Мар", "Апр", "Май", "Юни", "Юли", "Авг", "Сеп", "Окт", "Ное", "Дек" );
-$week_array                               = array('Нед', 'Пон', 'Вто', 'Стя', 'Чет', 'Пет', 'Съб' );
+$week_array                               = array('Нед', 'Пон', 'Вто', 'Сря', 'Чет', 'Пет', 'Съб' );
 
 //task states
 //priorities
@@ -80,19 +81,16 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['project']                      = "Проект";
     $lang['info']                         = "Информация";
     $lang['bytes']                        = " байта";
-    $lang['select_instruct']              = " (С Ctrl се избират повече от една група)";
+    $lang['select_instruct']              = " (С Ctrl се избират повече от една групи)";
     $lang['member_groups']                = "Потребителят е член на показаните групи (ако има)";
     $lang['login']                        = "Вход";
     $lang['login_action']                 = "Вход";
     $lang['login_screen']                 = "Вход";
     $lang['error']                        = "Грешка";
     $lang['no_login']                     = "Достъпът отказан, грешно име или парола";
-//** needs translation
-    $lang['redirect_sprt']                = "You will automatically return to Login after a %d second delay";
-//** needs translation
-    $lang['login_now']                    = "Please click here to return to Login now";
-    $lang['please_login']                 = "Моля влезте";
-//** needs translation
+    $lang['redirect_sprt']                = "Автоматично ще бъдете пренасочен къв Вход след %d секунди";
+    $lang['login_now']                    = "Кликнете тук, за да се върнете към Вход";
+    $lang['please_login']                 = "Влезте";
     $lang['go']                           = "Go!";
 //graphic items
     $lang['late_g']                       = "&nbsp;ЗАКЪСНЕНИЕ&nbsp;";
@@ -100,25 +98,21 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['updated_g']                    = "&nbsp;ОБНОВЕНО&nbsp;";
 //admin config
     $lang['admin_config']                 = "Админ настройки";
-    $lang['email_settings']               = "е-Поща настройки на header";
-    $lang['admin_email']                  = "Админ е-Поща";
-    $lang['email_reply']                  = "е-Поща 'reply to'";
-    $lang['email_from']                   = "е-Поща 'from'";
+    $lang['email_settings']               = "E-mail настройки";
+    $lang['admin_email']                  = "E-mail на администратора";
+    $lang['email_reply']                  = "E-mail 'reply to'";
+    $lang['email_from']                   = "E-mail 'from'";
     $lang['mailing_list']                 = "Пощенски списък";
     $lang['default_checkbox']             = "Подразбиращи се настройки за Проект / Задачи";
     $lang['allow_globalaccess']           = "Позволи глобален достъп";
     $lang['allow_group_edit']             = "Позволи всеки в групата да променя";
     $lang['set_email_owner']              = "Винаги изпращай писмо на притежателя с промените";
     $lang['set_email_group']              = "Винаги изпращай писмо до групата с промените";
-//** needs translation
-    $lang['project_listing_order']        = "Project listing order";
-//** needs translation
-    $lang['task_listing_order']           = "Task listing order";
-    $lang['configuration']                = "Configuration";
+    $lang['project_listing_order']        = "Подреждане на проектите по";
+    $lang['task_listing_order']           = "Подреждане на задачите по";
     $lang['configuration']                = "Конфигуриране";
 //archive
-//** needs translation
-    $lang['archived_projects']            = "Archived Projects";
+    $lang['archived_projects']            = "Архивирани проекти";
 //contacts
     $lang['firstname']                    = "Име:";
     $lang['lastname']                     = "Фамилия:";
@@ -130,17 +124,17 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['address']                      = "Адрес:";
     $lang['postal']                       = "Пощенски код:";
     $lang['city']                         = "Град:";
-    $lang['email_contact']                = "Е-поща:";
+    $lang['email_contact']                = "E-mail:";
     $lang['notes']                        = "Бележка:";
     $lang['add_contact']                  = "Добави контакт";
     $lang['del_contact']                  = "Изтрий контакт";
     $lang['contact_info']                 = "Контактна информация";
     $lang['contacts']                     = "Контакти";
-    $lang['contact_add_info']             = "Ако бъде добавено име на компания тогава то ще бъде показвано вместо потребителското.";
+    $lang['contact_add_info']             = "Ако бъде добавено име на компания, тогава то ще бъде показвано вместо потребителското.";
     $lang['show_contact']                 = "Покажи контакт";
     $lang['edit_contact']                 = "Промяна контакт";
     $lang['contact_submit']               = "Добави контакт";
-    $lang['contact_warn']                 = "Няма достатъчно данни за добавяне на контакт, моля върнете се и добавете поне 'Име' и 'Фамилия'";
+    $lang['contact_warn']                 = "Няма достатъчно данни за добавяне на контакт, върнете се и добавете поне 'Име' и 'Фамилия'";
 //files
     $lang['manage_files']                 = "Управление файлове";
     $lang['no_files']                     = "Няма качени файлове";
@@ -154,11 +148,11 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['files']                        = "Файлове";
     $lang['file_choose']                  = "Файл за качване:";
     $lang['upload']                       = "Качване";
-    $lang['file_email_owner']             = "Наистина ли да изпращам писмо при качване на файл до притежателя?";
+    $lang['file_email_owner']             = "Да се изпраща ли писмо при качване на файл до притежателя?";
     $lang['file_email_usergroup']         = "Писмо до групата при качване на файл";
     $lang['max_file_sprt']                = "Файлът за качване трябва да е поне %s Кб.";
     $lang['file_submit']                  = "Качване";
-    $lang['no_upload']                    = "Файлът  не бе качен. Моля, върнете се обратно и пробвайте отново.";
+    $lang['no_upload']                    = "Файлът  не бе качен. Върнете се обратно и опитайте отново.";
     $lang['file_too_big_sprt']            = "Максималната дължина на файла трябва да е %s байта. Вашият файл е твърде голям за качване.";
     $lang['del_file_javascript_sprt']     = "Сигурни ли сте в изтриването на '%s' ?";
 //forum
@@ -167,45 +161,39 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['message']                      = "Съобщение:";
     $lang['post_reply_sprt']              = "Пусни отговор на съобщение от '%1\$s' относно '%2\$s'";
     $lang['post_message_sprt']            = "Съобщение по: '%s'";
-    $lang['forum_email_owner']            = "Писмо със собщението до притежателя";
-    $lang['forum_email_usergroup']        = "Писмо със собщението до потребителската група";
+    $lang['forum_email_owner']            = "Писмо със съобщението до притежателя";
+    $lang['forum_email_usergroup']        = "Писмо със съобщението до потребителската група";
     $lang['reply']                        = "Отговори";
     $lang['new_post']                     = "Ново мнение";
     $lang['public_user_forum']            = "Публичен форум";
     $lang['private_forum_sprt']           = "Поверителен форум за '%s' група";
     $lang['forum_submit']                 = "[Forum submit]";
-    $lang['no_message']                   = "Няма съобщение! Моля, върнете се обратно и пробвайте пак";
+    $lang['no_message']                   = "Няма съобщение! Върнете се обратно и опитайте отново.";
     $lang['add_reply']                    = "Добави отговор";
-//** needs translation
-    $lang['last_post_sprt']               = "Last post %s"; //Note to translators: context is 'Last post 2004-Dec-22'
-//** needs translation
-    $lang['recent_posts']                 = "Recent forum posts";
-//** needs translation
-    $lang['forum_search']                 = "Forum search";
-//** needs translation
-    $lang['no_results']                   = "No results found for '%s'";
-//** needs translation
-    $lang['search_results']               = "Found %1\$s results for '%2\$s'<br />Showing results %3\$s to %4\$s";
+    $lang['last_post_sprt']               = "Последен пост %s"; //Note to translators: context is 'Last post 2004-Dec-22'
+    $lang['recent_posts']                 = "Скорошни постове във форума";
+    $lang['forum_search']                 = "Търсене във форума";
+    $lang['no_results']                   = "Не са открити резултати за '%s'";
+    $lang['search_results']               = "Открити %1\$s резултата за '%2\$s'<br />Показани %3\$s до %4\$s";
 
 //includes
     $lang['report']                       = "Съобщение";
-    $lang['warning']                      = "<h1>Грешка!</h1><p>Обработката на вашата заявка в момента е невъзможна. Моля опитайте отново.</p>";
+    $lang['warning']                      = "<h1>Грешка!</h1><p>Обработката на заявката в момента е невъзможна, опитайте отново.</p>";
     $lang['home_page']                    = "Начало";
     $lang['summary_page']                 = "Съдържание";
     $lang['log_out']                      = "Изход";
     $lang['main_menu']                    = "Меню";
-//** needs translation
-    $lang['archive']                      = "Archive";
+    $lang['archive']                      = "Архив";
     $lang['user_homepage_sprt']           = "Дейностите на <b>%s</b>";
-    $lang['missing_field_javascript']     = "Моля въведете липсващата стойност!";
-    $lang['invalid_date_javascript']      = "Моля изберете валидна календарна дата";
+    $lang['missing_field_javascript']     = "Въведете липсващата стойност!";
+    $lang['invalid_date_javascript']      = "Изберете валидна календарна дата";
     $lang['finish_date_javascript']       = "Избраната дата е след датата на приключване на проекта!";
     $lang['security_manager']             = "Управление на сигурността";
     $lang['session_timeout_sprt']         = "Достъпът отказан, последното Ви действие е било преди %1\$d минути, а сесията Ви изтича за %2\$d минути, моля <a href=\"%3\$sindex.php\">влезте</a> отново";
     $lang['access_denied']                = "Достъпът отказан";
     $lang['private_usergroup_no_access']  = "Грешка, тази част е на поверителна потребителска група, а Вие нямате права за достъп до нея.";
     $lang['invalid_date']                 = "Невалидна дата";
-    $lang['invalid_date_sprt']            = "Датата '%s' е невалидна календарна дата (проверете броя на дните в месеца).<br />Моля върнете се и въведете правилна дата.";
+    $lang['invalid_date_sprt']            = "Датата '%s' е невалидна календарна дата (проверете броя на дните в месеца).<br />Върнете се и въведете правилна дата.";
 //taskgroups
     $lang['taskgroup_name']               = "Име:";
     $lang['taskgroup_description']        = "Описание:";
@@ -216,7 +204,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['no_taskgroups']                = "Няма дефинирани групи задачи";
     $lang['manage_taskgroups']            = "Управление на групи задачи";
     $lang['taskgroups']                   = "Групи задачи";
-    $lang['taskgroup_dup_sprt']           = "Вече има група задачи с име '%s'. Моля върнете се и изберете друго име.";
+    $lang['taskgroup_dup_sprt']           = "Вече има група задачи с име '%s'. Върнете се и изберете друго име.";
     $lang['info_taskgroup_manage']        = "Информация";
 //usergroups
     $lang['usergroup_name']               = "Име:";
@@ -233,14 +221,14 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['no_usergroups']                = "Няма дефинирани потребителски групи";
     $lang['manage_usergroups']            = "Управление на потребителски групи";
     $lang['usergroups']                   = "Потребителски групи";
-    $lang['usergroup_dup_sprt']           = "Вече има потребителска група с име '%s'. Моля върнете се и изберете друго име.";
+    $lang['usergroup_dup_sprt']           = "Вече има потребителска група с име '%s'. Върнете се и изберете друго име.";
     $lang['info_usergroup_manage']        = "Информация";
 //users
     $lang['login_name']                   = "Потребител";
     $lang['full_name']                    = "Име";
     $lang['password']                     = "Парола";
     $lang['blank_for_current_password']   = "(Оставете празно, ако не искате да сменяте паролата)";
-    $lang['email']                        = "е-Поща";
+    $lang['email']                        = "E-mail";
     $lang['admin']                        = "Админ";
     $lang['private_user']                 = "Поверителен";
  //** needs translation
@@ -275,7 +263,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['not_usergroup']                = "(Не е член на потребителска група)";
     $lang['no_password_change']           = "(Вашата парола не бе сменена)";
     $lang['last_time_here']               = "За последно сте били тук:";
-    $lang['number_items_created']         = "Брой създадени items:";
+    $lang['number_items_created']         = "Брой създадени елементи:";
     $lang['number_projects_owned']        = "Брой притежавани проекти:";
     $lang['number_tasks_owned']           = "Брой притежавани задачи:";
     $lang['number_tasks_completed']       = "Брой завършени задачи:";
@@ -283,12 +271,12 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['number_files']                 = "Брой качени файлове:";
     $lang['size_all_files']               = "Общ размер на притежаваните файлове:";
     $lang['owned_tasks']                  = "Притежавани задачи";
-    $lang['invalid_email']                = "Невалиден адрес на е-Поща";
-    $lang['invalid_email_given_sprt']     = "е-Пощенският адрес '%s' е невалиден. Моля опитайте отново.";
+    $lang['invalid_email']                = "Невалиден адрес на E-mail";
+    $lang['invalid_email_given_sprt']     = "E-mail адресът '%s' е невалиден. Опитайте отново.";
     $lang['duplicate_user']               = "Копиране на потребител";
-    $lang['duplicate_change_user_sprt']   = "Потребителят '%s' вече съществува. Моля върнете се и опитайте отново.";
+    $lang['duplicate_change_user_sprt']   = "Потребителят '%s' вече съществува. Върнете се и опитайте отново.";
     $lang['value_missing']                = "Липсваща стойност";
-    $lang['field_sprt']                   = "Липсва стойността за '%s'. Моля върнете се и я попълнете.";
+    $lang['field_sprt']                   = "Липсва стойността за '%s'. Върнете се и я попълнете.";
     $lang['admin_priv']                   = "БЕЛЕЖКА: Вие придобихте администраторски права.";
     $lang['manage_users']                 = "Управление на потребители";
     $lang['users_online']                 = "Потребители са тук";
@@ -296,7 +284,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['not_online']                   = "Потребители offline";
     $lang['user_activity']                = "Дейност на потребителя";
 //tasks
-    $lang['add_new_task']                 = "Add a new task";
+    $lang['add_new_task']                 = "Добави задача";
     $lang['priority']                     = "Приоритет";
     $lang['parent_task']                  = "Родител";
     $lang['creation_time']                = "Време на създаване";
@@ -306,8 +294,8 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['deadline']                     = "Краен срок";
     $lang['taken_from_parent']            = "(Взет от родителя)";
     $lang['status']                       = "Статус";
-    $lang['task_owner']                   = "Притежател( на задачата)";
-    $lang['project_owner']                = "Притежател( на проекта)";
+    $lang['task_owner']                   = "Притежател (на задачата)";
+    $lang['project_owner']                = "Притежател (на проекта)";
     $lang['taskgroup']                    = "Група задачи";
     $lang['usergroup']                    = "Потребителска група";
     $lang['nobody']                       = "[никой]";
@@ -327,7 +315,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['tomorrow']                     = "Утре";
     $lang['due_today']                    = "Днес";
     $lang['overdue_1']                    = "1 ден просрочен";
-    $lang['overdue_sprt']                 = "%d дена просрочен";
+    $lang['overdue_sprt']                 = "%d дни просрочен";
     $lang['edit_task']                    = "Промяна задача";
     $lang['edit_project']                 = "Промяна проект";
     $lang['no_reparent']                  = "Няма (a top-level project)";
@@ -367,7 +355,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['created_on']                   = "Създадено на";
     $lang['completed_on']                 = "Завършено на";
     $lang['modified_on']                  = "Променено на";
-    $lang['project_on_hold']              = "Проекта е в застой";
+    $lang['project_on_hold']              = "Проектът е в застой";
     $lang['project_accessible']           = "(Този проект е публично достъпен за всички потребители)";
     $lang['task_accessible']              = "(Тази задача е публично достъпна за всички потребители)";
     $lang['project_not_accessible']       = "(Този проект е достъпен само за членовете на потребителска група)";
@@ -383,15 +371,15 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['take_over_task']               = "Превзимам задачата";
     $lang['task_info']                    = "Инфо за задача";
     $lang['project_details']              = "Детайли по проект";
-    $lang['todo_list_for']                = "ToDo лист на: ";
+    $lang['todo_list_for']                = "TODO лист на: ";
     $lang['due_in_sprt']                  = " (До след %d дена)";
     $lang['due_tomorrow']                 = " (До утре)";
     $lang['no_assigned']                  = "Няма незавършени задачи от този потребител.";
-    $lang['todo_list']                    = "ToDo лист";
+    $lang['todo_list']                    = "TODO списък";
     $lang['summary_list']                 = "Съдържание";
     $lang['task_submit']                  = "Task submit";
-    $lang['not_owner']                    = "Access denied, either you are not the owner, or you do not have enough rights";
-    $lang['missing_values']               = "There are not enough field values provided, please go back and try again";
+    $lang['not_owner']                    = "Достъпът е отказан. Не сте собственик или правата Ви са недостатъчни.";
+    $lang['missing_values']               = "Непопълнени данни, върнете се обратно и опитайте отново.";
     $lang['future']                       = "Бъдеще (future)";
     $lang['flags']                        = "Флагове";
     $lang['owner']                        = "Притежател";
@@ -401,8 +389,7 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['by_deadline']                  = " (по краен срок)";
     $lang['by_status']                    = " (по статус)";
     $lang['by_owner']                     = " (по притежател)";
-//** needs translation
-    $lang['by_priority']                  = " (by priority)";
+    $lang['by_priority']                  = " (по приоритет)";
     $lang['project_cloned']               = "Име на копирания проект:";
     $lang['task_cloned']                  = "Име на копираната задача:";
     $lang['note_clone']                   = "Забележка: Задачата ще бъде копирана като нов проект";
@@ -410,15 +397,10 @@ $week_array                               = array('Нед', 'Пон', 'Вто', 
     $lang['calendar']                     = "Календар";
     $lang['normal_version']               = "Нормална версия";
     $lang['print_version']                = "Версия за печат";
-//** needs translation
-    $lang['condensed_view']               = "Condensed view";
-//** needs translation
-    $lang['full_view']                    = "Full view";
-//** needs translation
+    $lang['condensed_view']               = "Съкратен изглед";
+    $lang['full_view']                    = "Пълен изглед";
     $lang['icalendar']                    = "iCalendar";
-//**
-    $lang['url_javascript']               = "Enter the URL:";
-//**
-    $lang['image_url_javascript']         = "Enter the image URL:";
+    $lang['url_javascript']               = "Въведете URL:";
+    $lang['image_url_javascript']         = "Въведете URL за изображение:";
 
 ?>
