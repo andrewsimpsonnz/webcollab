@@ -168,15 +168,15 @@ $username = '0';
 $password = '0';
 $session_key = '';
 
+//log ip address
+if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
+  secure_error('Unable to determine ip address');
+}
+
 // 1. Password login authentication
-if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['username']) > 0 && strlen($_POST['password']) > 0  && ACTIVE_DIRECTORY != 'Y' ) {
+if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['username']) > 0 && strlen($_POST['password']) > 0 && ACTIVE_DIRECTORY != 'Y' ) {
 
   include_once(BASE.'database/database.php');
-
-  //log ip address 
-  if( ! ($ip = $_SERVER['REMOTE_ADDR'] ) ) {
-    secure_error('Unable to determine ip address');
-  }
 
   $username = safe_data($_POST['username'] );
 
