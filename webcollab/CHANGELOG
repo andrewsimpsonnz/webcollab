@@ -1,3 +1,9 @@
+
+WebCollab Git
+*** 3 September 2014
+
+- bugfix: SQL constraint violation on login in index.php (Patch #37) (Credit: Luke Bigum)  
+
 WebCollab Git
 *** 5 July 2014
 
