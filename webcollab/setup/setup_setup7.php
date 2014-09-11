@@ -63,24 +63,11 @@ if(! $admin_password == $admin_password_check ) {
 //generate salt (This is not quite random, but close enough, and very fast!)
 $str = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/' );
 
-if(version_compare(PHP_VERSION, '5.3.7', '>=' ) ) {
 
-  $salt = substr($str, 0, 22 );
+$salt = substr($str, 0, 22 );
 
-  // format is $2a$ [work factor] $ [salt] [bcrypt hash]
-  $hash = crypt($admin_password, '$2a$'.sprintf('%02u', WORK_FACTOR ).'$'.$salt );
-
-}
-elseif(version_compare(PHP_VERSION, '5.3.2', '>=' ) ) {
-
-  $salt = substr($str, 0, 16 );
-
-  //generate password hash (sha256 + hash)
-  $hash = crypt($admin_password, '$5$rounds=5000$'.$salt.'$' );
-}
-else {
-  $hash = md5($admin_password );
-}
+// format is $2a$ [work factor] $ [salt] [bcrypt hash]
+$hash = crypt($admin_password, '$2a$'.sprintf('%02u', WORK_FACTOR ).'$'.$salt );
 
 if(strlen($hash ) < 13 ) {
   error_setup('Password hash algorithm failed. Transaction cancelled' );

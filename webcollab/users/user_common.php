@@ -77,37 +77,24 @@ function user_locale_check($locale ) {
 }
 
 //
-// Function to generate either sha256 or md5 hashes
+// Function to generate blowfish hashes
 //
 function pass_hash($password ) {
+
+  if(! defined('WORK_FACTOR' ) {
+    error('Password setting error', 'Work factor not set in config file' );
+  }
 
   //generate salt (This is not quite random, but close enough, and very fast!)
   $str = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/' );
 
-  if(version_compare(PHP_VERSION, '5.3.7', '>=' ) ) {
-    //blowfish encryption (PHP blowfish implementation has bugs prior to 5.3.7)
-  
-    $salt = substr($str, 0, 22 );
+  $salt = substr($str, 0, 22 );
 
-    // format is $2a$ [work factor] $ [salt] [bcrypt hash]
-    $hash = crypt($password, '$2a$'.sprintf('%02u', WORK_FACTOR ).'$'.$salt );
-  
-  }
-  elseif(version_compare(PHP_VERSION, '5.3.2', '>=' ) ) {
-    //SHA256 encryption
-  
-    $salt = substr($str, 0, 16 );
-  
-    //generate password hash (sha256 + hash)
-    $hash = crypt($password, '$5$rounds=5000$'.$salt.'$' );
-  }
-  else {
-    //fallback to MD5 (should not occur normally)
-    $hash = md5($password );
-  }
-  
+  // format is $2a$ [work factor] $ [salt] [bcrypt hash]
+  $hash = crypt($password, '$2a$'.sprintf('%02u', WORK_FACTOR ).'$'.$salt );
+
   if(strlen($hash ) < 13 ) {
-    //blowfish / SHA256 will give a random string of less than 13 characters in error condition
+    //blowfish will give a random string of less than 13 characters in error condition
     error('Password setting error', 'Password hash algorithm failed. Transaction cancelled' );
   }
   
