@@ -51,7 +51,7 @@ foreach($array_essential as $var ) {
   if(! isset($_POST[$var]) || $_POST[$var] == NULL ) {
     error_setup("Variable ".$var." is not set");
   }
-  $data[$var] = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ) : $_POST[$var];
+  $data[$var] = $_POST[$var];
 }
 
 //non-essential values
@@ -63,7 +63,7 @@ foreach($array_optional as $var ) {
     $data[$var] = '';
   }
   else {
-    $data[$var] = (get_magic_quotes_gpc() ) ? stripslashes($_POST[$var] ) : $_POST[$var];
+    $data[$var] = $_POST[$var];
   }
 }
 

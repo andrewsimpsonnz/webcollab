@@ -84,11 +84,6 @@ function safe_data_long($body ) {
 
 function validate($body ) {
 
-  //we don't use magic_quotes
-  if(get_magic_quotes_gpc() ) {
-    $body = stripslashes($body );
-  }
-
   $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x1F\x7F]'.           //ASCII
                         '|(?<=^|[\x00-\x7F])[\x80-\xBF]+'.                //continuation with no start
                         '|[\xC0-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.  //illegal two byte
@@ -105,20 +100,7 @@ function validate($body ) {
 
 function html_clean_up($body ) {
 
-  if(version_compare(PHP_VERSION, '5.2.3', '>=' ) ) {
-    $body = @htmlspecialchars($body, ENT_QUOTES, 'UTF-8', false );
-
-  }
-  else {
-    //change '&' to '&amp;' except when part of an entity, or already changed
-    if(! strpos($body, '&' ) === false ) {
-      $body = preg_replace('/&(?!(#[\d]{2,5}|amp);)/', '&amp;', $body );
-    }
-    //use HTML for characters that could be used for xss <script>
-    //  also convert quotes to HTML for XHTML compliance
-    $trans = array('<'=>'&lt;', '>'=>'&gt;', '"'=>'&quot;', "'"=>'&#039;' );
-    $body  = strtr($body, $trans );
-  }
+  $body = @htmlspecialchars($body, ENT_QUOTES, 'UTF-8', false );
 
   return $body;
 }

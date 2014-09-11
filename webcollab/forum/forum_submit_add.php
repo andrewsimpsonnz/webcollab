@@ -167,10 +167,6 @@ if(sizeof($mail_list) > 0 ){
 
   $message_unclean = validate($_POST['text'] );
 
-  //get rid of magic_quotes - it is not required here
-  if(get_magic_quotes_gpc() ){
-    $message_unclean = stripslashes($message_unclean );
-  }
   //get & add the mailing list
   if(sizeof($EMAIL_MAILINGLIST ) > 0 ){
     $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
