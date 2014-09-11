@@ -1,8 +1,18 @@
+WebCollab Git
+*** 9 September 2014
+
+- update minimum PHP to 5.4.0 (PHP 5.3.0 is at end of life)
+
+- remove magic_quotes checks (not required in PHP 5.4.0+)
+
+- default to blowfish password encryption
+
+- use 'default_charset' option to set UTF-8 with PHP 5.6.0+
 
 WebCollab Git
 *** 3 September 2014
 
-- bugfix: SQL constraint violation on login in index.php (Patch #37) (Credit: Luke Bigum)  
+- bugfix: SQL constraint violation on login in index.php (Patch #37) (Credit: Luke Bigum)
 
 WebCollab Git
 *** 5 July 2014
