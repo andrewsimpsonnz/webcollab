@@ -69,8 +69,16 @@ else {
 }
 
 //set PHP internal encoding
-if(! mb_internal_encoding('UTF-8' ) ) {
-  error("Internal encoding", "Unable to set UTF-8 encoding in PHP" );
+if(ini_get('default_charset' ) ) {
+  //preferred setting for PHP 5.6+
+  if(ini_set('default_charset', 'UTF-8') ) {
+    error("Internal encoding", "Unable to set UTF-8 encoding in PHP 5.6+" );
+  }
+}
+else {
+  if(! mb_internal_encoding('UTF-8' ) ) {
+    error("Internal encoding", "Unable to set UTF-8 encoding in PHP" );
+  }
 }
 
 //seems okay at first, now go cross-checking with the known data from the database
