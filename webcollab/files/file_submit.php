@@ -278,7 +278,16 @@ switch($_POST['action'] ) {
       //okay accept file
       db_begin();
 
-      $hashid = sha1(mt_rand() );
+      
+      //create hashid
+      if(function_exists('openssl_random_pseudo_bytes' ) ) {
+        //hash key of 40 hex characters length
+        $hashid = bin2hex(openssl_random_pseudo_bytes(20 ) );
+      }
+      else {
+        //use Mersenne Twister algorithm (random number), then one-way hash
+        $hashid = sha1(mt_rand().mt_rand().mt_rand().mt_rand() );
+      }
 
       //alter file database administration
       $q = db_prepare("INSERT INTO ".PRE."files (filename, size, description, uploaded, uploader, taskid, mime, hashid )

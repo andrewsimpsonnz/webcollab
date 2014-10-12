@@ -61,8 +61,14 @@ function enable_login($userid, $username, $ip='0.0.0.0' ) {
   global $locale_setup;
 
   //create session key
-  //use Mersenne Twister algorithm (random number), then one-way hash to give session key
-  $session_key = sha1(mt_rand().mt_rand().mt_rand() );
+  if(function_exists('openssl_random_pseudo_bytes' ) ) {
+    //random key of 40 hex characters length
+    $session_key = bin2hex(openssl_random_pseudo_bytes(20 ) );
+  }
+  else {
+    //use Mersenne Twister algorithm (random number), then one-way hash to give session key
+    $session_key = sha1(mt_rand().mt_rand().mt_rand().mt_rand() );
+  }
 
   //remove the old login information
   $q = db_prepare('DELETE FROM '.PRE.'logins WHERE user_id=?' );
