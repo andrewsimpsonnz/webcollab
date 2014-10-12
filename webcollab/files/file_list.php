@@ -81,7 +81,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
   }
   else {
-    $content .= "\n";
+    $content .= "<br />\n";
   }
 
   //user part
