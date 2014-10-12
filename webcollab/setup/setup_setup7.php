@@ -60,11 +60,10 @@ if(! $admin_password == $admin_password_check ) {
   error_setup('Password check failed' );
 }
 
-//generate salt (This is not quite random, but close enough, and very fast!)
-$str = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/' );
-
-
-$salt = substr($str, 0, 22 );
+//generate salt
+$salt = base64_encode(pack('N4', mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ) ) );
+$salt = substr($salt, 0, 22 );
+$salt = strtr($salt, array('+'=>'.', '='=>'.') );
 
 // format is $2a$ [work factor] $ [salt] [bcrypt hash]
 $hash = crypt($admin_password, '$2a$'.sprintf('%02u', WORK_FACTOR ).'$'.$salt );

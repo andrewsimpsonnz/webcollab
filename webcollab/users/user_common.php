@@ -81,14 +81,14 @@ function user_locale_check($locale ) {
 //
 function pass_hash($password ) {
 
-  if(! defined('WORK_FACTOR' ) {
+  if(! defined('WORK_FACTOR' ) ) {
     error('Password setting error', 'Work factor not set in config file' );
   }
 
-  //generate salt (This is not quite random, but close enough, and very fast!)
-  $str = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/' );
-
-  $salt = substr($str, 0, 22 );
+  //generate salt
+  $salt = base64_encode(pack('N4', mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ) ) );
+  $salt = substr($salt, 0, 22 );
+  $salt = strtr($salt, array('+'=>'.', '='=>'.') );
 
   // format is $2a$ [work factor] $ [salt] [bcrypt hash]
   $hash = crypt($password, '$2a$'.sprintf('%02u', WORK_FACTOR ).'$'.$salt );
