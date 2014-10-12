@@ -272,8 +272,8 @@ create_top_setup($lang_setup['setup5_banner1'] );
 if(isset($data['new_db'] ) && ($data['new_db'] == 'Y' ) ) {
 
   //generate variables to set new session key
+  $xnew = sha1(mt_rand().mt_rand().mt_rand().mt_rand() );
   $ip   = $_SERVER['REMOTE_ADDR'];
-  $xnew = sha1(mt_rand().$ip );
 
   //make database connection
   db_setup_connect($data);
