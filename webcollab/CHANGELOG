@@ -1,4 +1,13 @@
 WebCollab Git
+*** 12 October 2014
+
+- improved salt generation using mt_rand() and base64_encode()
+
+- use openssl_random_pseudo_bytes() for session key generation where available
+
+- improve sesson key generation with Mersenne Twister fallback
+
+WebCollab Git
 *** 9 September 2014
 
 - update minimum PHP to 5.4.0 (PHP 5.3.0 is at end of life)
