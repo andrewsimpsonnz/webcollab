@@ -1,4 +1,13 @@
 WebCollab Git
+*** 19 October 2014
+
+- improve mysql_pdo connection code
+
+- extend token timeout to 30 minutes by default
+
+- improve token key generation
+
+WebCollab Git
 *** 12 October 2014
 
 - improved salt generation using mt_rand() and base64_encode()
