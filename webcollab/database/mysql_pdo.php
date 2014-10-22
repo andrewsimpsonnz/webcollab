@@ -2,7 +2,7 @@
 /*
   $Id: mysql_database.php 2040 2008-11-23 05:46:25Z andrewsimpson $
 
-  (c) 2009 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2009 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -54,18 +54,18 @@ function db_connection() {
   set_exception_handler('exception_handler');
 
   try {
-    $dbh = new PDO('mysql:'.$dsn.'dbname='.DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD );
+  
+    $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                     PDO::ATTR_EMULATE_PREPARES => false,
+                     PDO::MYSQL_ATTR_INIT_COMMAND => 'SET time_zone=\''.sprintf('%+d:%02d', (int)TZ, (TZ - floor(TZ) ) * 60 ).'\'' );
 
-    //set error handling
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh = new PDO('mysql:'.$dsn.'dbname='.DATABASE_NAME.';charset=utf8', DATABASE_USER, DATABASE_PASSWORD, $options );
+    
   }
   catch (PDOException $e) {
     $db_error_message = $e->getMessage();
     error('No database connection error', 'Sorry but there seems to be a problem in connecting to the database server' );
   }
-
-  //set options string for timezone and character set
-  db_query('SET time_zone=\''.sprintf('%+d:%02d', (int)TZ, (TZ - floor(TZ) ) * 60 ).'\', NAMES utf8, CHARACTER SET utf8' );
 
   return;
 }

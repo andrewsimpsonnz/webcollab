@@ -2,7 +2,7 @@
 /*
   $Id: mysql_database.php 2040 2008-11-23 05:46:25Z andrewsimpson $
 
-  (c) 2009 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2009 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -54,7 +54,9 @@ function db_connection() {
     $dbh = new PDO('pgsql:'.$dsn.'dbname='.DATABASE_NAME.' user='.DATABASE_USER.' password='.DATABASE_PASSWORD );
 
     //set error handling
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+    $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false );
+    
   }
   catch (PDOException $e) {
     $db_error_message = $e->getMessage();
@@ -62,7 +64,7 @@ function db_connection() {
   }
 
   //make sure dates will be handled properly by internal date routines
-  db_query('SET DATESTYLE TO \'European, ISO\'');
+  db_query('SET DATESTYLE TO \'European, ISO\'' );
 
   //set the timezone
   db_query('SET TIME ZONE '.TZ );
