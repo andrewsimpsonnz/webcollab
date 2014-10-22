@@ -198,6 +198,7 @@ CREATE TABLE "tokens" (
   "userid" integer NOT NULL,
   "lastaccess" timestamp with time zone NOT NULL DEFAULT current_timestamp(0)
 );
+CREATE INDEX tokens_token_idx ON tokens USING btree ("token");
 
 INSERT INTO users ( name, fullname, password, email, admin, deleted )
 VALUES( 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );

@@ -187,7 +187,7 @@
   define('SESSION_TIMEOUT', 1 );
 
   //security token timeout for forms (in minutes)
-  define('TOKEN_TIMEOUT', 5 );
+  define('TOKEN_TIMEOUT', 30 );
 
   //Show passwords in user edit screens as plain text or hidden ('****') (values are "text", or "password")
   define('PASS_STYLE', "text" );

@@ -3,7 +3,7 @@
 /*
   $Id: security.php 2283 2009-08-22 08:40:04Z andrewsimpson $
 
-  (c) 2011 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2011 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -30,7 +30,7 @@
 function generate_token($action ) {
 
   //generate new token
-  $token = sha1(mt_rand() );
+  $token = sha1(mt_rand().mt_rand().mt_rand().mt_rand() );
   define('TOKEN', $token );
 
   //update database
@@ -52,11 +52,12 @@ function validate_token($token, $action ) {
   //check against database
   $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tokens WHERE token=? AND action=? AND userid=?
                                   AND lastaccess > (now()-INTERVAL '.db_delim(TOKEN_TIMEOUT.' MINUTE' ).')' );
+
   db_execute($q, array($token, $action, UID ) );
   $count = db_result($q, 0, 0 );
 
   //delete old token
-  $q = db_prepare('DELETE FROM '.PRE.'tokens WHERE token=?' );  
+  $q = db_prepare('DELETE FROM '.PRE.'tokens WHERE token=?' );
   db_execute($q, array($token ) );
 
   if( $count == 0 ) {
