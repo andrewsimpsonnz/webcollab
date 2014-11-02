@@ -60,20 +60,20 @@ else {
 }
 
 //set month
-if(isset(($_POST['month']) && safe_integer($_POST['month']) ){
+if(isset($_POST['month']) && safe_integer($_POST['month']) ){
   $month = $_POST['month'];
 }
-elseif((isset($_GET['month']) && safe_integer($_GET['month']) ){
+elseif(isset($_GET['month']) && safe_integer($_GET['month']) ){
   $month = $_GET['month'];
 }
 else {
   $month = date('n', TIME_NOW - date('Z') + TZ*60*60 );
 }
 //set year
-if(isset(($_POST['year']) && safe_integer($_POST['year']) ){
+if(isset($_POST['year']) && safe_integer($_POST['year']) ){
   $year = $_POST['year'];
 }
-if(isset(($_GET['year']) && safe_integer($_GET['year']) ){
+elseif(isset($_GET['year']) && safe_integer($_GET['year']) ){
   $year = $_GET['year'];
 }
 else {
