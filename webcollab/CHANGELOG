@@ -1,4 +1,9 @@
 WebCollab Git
+*** 2 November 2014
+
+- Bugfix: Syntax errors in calendar date (Credit: Igor Falcomata)
+
+WebCollab Git
 *** 19 October 2014
 
 - improve mysql_pdo connection code
