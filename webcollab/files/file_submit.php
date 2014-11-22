@@ -280,7 +280,7 @@ switch($_POST['action'] ) {
 
       
       //create hashid
-      if(function_exists('openssl_random_pseudo_bytes' ) ) {
+      if(function_exists('openssl_random_pseudo_bytes' ) && strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN' ) {
         //hash key of 40 hex characters length
         $hashid = bin2hex(openssl_random_pseudo_bytes(20 ) );
       }

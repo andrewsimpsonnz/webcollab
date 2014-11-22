@@ -56,7 +56,8 @@ function secure_error($error='Login error', $redirect_time=0 ) {
 function enable_login($userid, $username, $ip='0.0.0.0', $taskid ) {
 
   //create session key
-  if(function_exists('openssl_random_pseudo_bytes' ) ) {
+  //  openssl_random_pseudo_bytes() was reported to be slow on Windows servers (might be fixed?)
+  if(function_exists('openssl_random_pseudo_bytes' ) && strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
     //random key of 40 hex characters length
     $session_key = bin2hex(openssl_random_pseudo_bytes(20 ) );
   }
@@ -204,16 +205,16 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
 
     switch (substr($row['password'], 0, 3 ) ) {
 
-      case '$5$':
-        //sha256 + salt encryption
-        $parts = explode('$', $row['password'] );
-        $salt = '$5$'.$parts[2].'$'.$parts[3].'$';
-        $hash = crypt($_POST['password'], $salt );
-        break;
-
       case '$2a':
         //bcrypt encryption
         $salt = substr($row['password'], 0, 29 );
+        $hash = crypt($_POST['password'], $salt );
+        break;
+
+      case '$5$':
+        //sha256 + salt encryption (deprecated)
+        $parts = explode('$', $row['password'] );
+        $salt = '$5$'.$parts[2].'$'.$parts[3].'$';
         $hash = crypt($_POST['password'], $salt );
         break;
 
