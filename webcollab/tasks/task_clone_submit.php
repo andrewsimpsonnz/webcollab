@@ -167,7 +167,7 @@ function copy_across($taskid, $new_parent, $name, $delta_deadline ) {
     $new_name = $name;
   }
 
-  //Calculate new deadline date 
+  //Calculate new deadline date
   //  This should db_prepare() as part of next query, but postgresql DOES NOT support binding to TIMESTAMP or INTERVAL !!
   $q = db_query('SELECT (TIMESTAMP \''.$row['deadline'].'\' + INTERVAL '.db_delim((int)$delta_deadline.' DAY').')' );
   $new_deadline = db_result($q );
