@@ -86,6 +86,7 @@ function pass_hash($password ) {
   }
 
   //generate salt
+  // modified from comment by kaminski at istori dot com (https://php.net/manual/en/function.crypt.php#102278)
   $salt = base64_encode(pack('N4', mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ) ) );
   $salt = substr($salt, 0, 22 );
   $salt = strtr($salt, array('+'=>'.', '='=>'.') );
