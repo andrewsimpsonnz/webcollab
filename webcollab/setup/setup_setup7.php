@@ -2,7 +2,7 @@
 /*
   $Id: setup_setup5.php 1737 2008-01-24 08:16:45Z andrewsimpson $
 
-  (c) 2008 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2008 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -66,7 +66,7 @@ $salt = substr($salt, 0, 22 );
 $salt = strtr($salt, array('+'=>'.', '='=>'.') );
 
 // format is $2a$ [work factor] $ [salt] [bcrypt hash]
-$hash = crypt($admin_password, '$2a$'.sprintf('%02u', WORK_FACTOR ).'$'.$salt );
+$hash = crypt($admin_password, '$2y$'.sprintf('%02u', WORK_FACTOR ).'$'.$salt );
 
 if(strlen($hash ) < 13 ) {
   error_setup('Password hash algorithm failed. Transaction cancelled' );

@@ -2,7 +2,7 @@
 /*
   $Id: setup.php 2288 2009-08-22 08:50:00Z andrewsimpson $
 
-  (c) 2003 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -61,7 +61,7 @@ function enable_login($userid, $username, $ip='0.0.0.0' ) {
   global $locale_setup;
 
   //create session key
-  if(function_exists('openssl_random_pseudo_bytes' ) && strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN' ) {
+  if(function_exists('openssl_random_pseudo_bytes' ) ) {
     //random key of 40 hex characters length
     $session_key = bin2hex(openssl_random_pseudo_bytes(20 ) );
   }
@@ -169,6 +169,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
     switch (substr($row['password'], 0, 3 ) ) {
 
       case '$2a':
+      case '$2y':
         //bcrypt encryption
         $salt = substr($row['password'], 0, 29 );
         $hash = crypt($_POST['password'], $salt );

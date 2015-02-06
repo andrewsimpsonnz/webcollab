@@ -2,7 +2,7 @@
 /*
   $Id: update.php 2328 2009-09-27 08:31:56Z andrewsimpson $
 
-  (c) 2004 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -551,6 +551,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
         break;
 
       case '$2a':
+      case '$2y':
         //bcrypt encryption
         $salt = substr($row['password'], 0, 29 );
         $hash = crypt($_POST['password'], $salt );

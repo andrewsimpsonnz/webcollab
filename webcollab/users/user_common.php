@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2005 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -84,6 +84,9 @@ function pass_hash($password ) {
   if(! defined('WORK_FACTOR' ) ) {
     error('Password setting error', 'Work factor not set in config file' );
   }
+  
+  // ** This function in PHP 5.5.0 - needs testing **
+  //$hash = password_hash($password, PASSWORD_BCRYPT, array('cost' => WORK_FACTOR ) )
 
   //generate salt
   // modified from comment by kaminski at istori dot com (https://php.net/manual/en/function.crypt.php#102278)
@@ -91,9 +94,9 @@ function pass_hash($password ) {
   $salt = substr($salt, 0, 22 );
   $salt = strtr($salt, array('+'=>'.', '='=>'.') );
 
-  // format is $2a$ [work factor] $ [salt] [bcrypt hash]
-  $hash = crypt($password, '$2a$'.sprintf('%02u', WORK_FACTOR ).'$'.$salt );
-
+  // format is $2y$ [work factor] $ [salt] [bcrypt hash]
+  $hash = crypt($password, '$2y$'.sprintf('%02u', WORK_FACTOR ).'$'.$salt );
+  
   if(strlen($hash ) < 13 ) {
     //blowfish will give a random string of less than 13 characters in error condition
     error('Password setting error', 'Password hash algorithm failed. Transaction cancelled' );
