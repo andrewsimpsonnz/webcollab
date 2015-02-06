@@ -1,4 +1,11 @@
 WebCollab Git
+*** 7 February 2015
+
+- use better Blowfish algorithm
+
+- enable openssl_random_pseudo_bytes() for all OS (Windows was fixed in PHP 5.3.4)
+
+WebCollab Git
 *** 2 November 2014
 
 - Bugfix: Syntax errors in calendar date (Credit: Igor Falcomata)
