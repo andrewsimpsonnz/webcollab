@@ -2,7 +2,7 @@
 /*
   $Id: setup_db_build.php 2313 2009-09-21 07:39:39Z andrewsimpson $
 
-  (c) 2003 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -85,11 +85,10 @@ case 'mysql_pdo':
     error_setup($lang_setup['setupdb_no_mysql'] );
   }
 
-  try {
-    $dbh = new PDO('mysql:host='.$database_host, $database_user, $database_password );
+  $db_options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION );
 
-    //set error handling
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  try {
+    $dbh = new PDO('mysql:host='.$database_host, $database_user, $database_password, $db_options );
   }
   catch (PDOException $e) {
     error_setup( sprintf($lang_setup['setupdb_no_db_mysql'], $database_host, $database_host, $database_user, $database_password ) );
@@ -109,10 +108,7 @@ case 'mysql_pdo':
 
   //connect to the newly created database
   try {
-    $dbh = new PDO('mysql:host='.$database_host.';dbname='.$database_name, $database_user, $database_password );
-
-    //set error handling
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh = new PDO('mysql:host='.$database_host.';dbname='.$database_name.';charset=utf8', $database_user, $database_password, $db_options );
   }
   catch (PDOException $e) {
     $error = $e->getMessage();
