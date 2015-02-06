@@ -44,7 +44,7 @@ function create_top_setup($title='', $check=0 ) {
         "\"-//W3C//DTD XHTML 1.0 Strict//EN\"\n".
         "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n".
         "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"".XML_LANG."\" lang=\"".XML_LANG."\">\n\n".
-        "<!-- (c) 2002 - 2012 Andrew Simpson -->\n\n".
+        "<!-- (c) 2002 - 2015 Andrew Simpson -->\n\n".
         "<head>\n".
         "<title>".$title."</title>\n".
         "<meta http-equiv=\"Pragma\" content=\"no-cache\" />".
@@ -99,7 +99,7 @@ function create_bottom_setup() {
   //end the main & container
   echo "</div><!-- end main -->\n";
   //shows the logo
-  echo "\n<div class=\"bottomtext\" style=\"text-align: center\">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2014</div>\n";
+  echo "\n<div class=\"bottomtext\" style=\"text-align: center\">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2015</div>\n";
   //end xml parsing
   echo "</div><!-- end container -->\n".
        "</body>\n</html>\n";
