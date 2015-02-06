@@ -65,7 +65,7 @@ $salt = base64_encode(pack('N4', mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 
 $salt = substr($salt, 0, 22 );
 $salt = strtr($salt, array('+'=>'.', '='=>'.') );
 
-// format is $2a$ [work factor] $ [salt] [bcrypt hash]
+// format is $2y$ [work factor] $ [salt] [bcrypt hash]
 $hash = crypt($admin_password, '$2y$'.sprintf('%02u', WORK_FACTOR ).'$'.$salt );
 
 if(strlen($hash ) < 13 ) {
