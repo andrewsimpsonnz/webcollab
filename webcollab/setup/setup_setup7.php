@@ -61,7 +61,15 @@ if(! $admin_password == $admin_password_check ) {
 }
 
 //generate salt
-$salt = base64_encode(pack('N4', mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ) ) );
+if(function_exists('openssl_random_pseudo_bytes' ) ) {
+  //random string of 18 characters length, then base64 encode to 24 characters
+  $salt = base64_encode(openssl_random_pseudo_bytes(18 ) );
+}
+else {
+  // modified from comment by kaminski at istori dot com (https://php.net/manual/en/function.crypt.php#102278)
+  $salt = base64_encode(pack('N4', mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ) ) );
+}
+  
 $salt = substr($salt, 0, 22 );
 $salt = strtr($salt, array('+'=>'.', '='=>'.') );
 
