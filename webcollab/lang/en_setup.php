@@ -75,9 +75,9 @@ define('XML_LANG', "en" );
 
     $lang_setup['setup1_no_permission'] = "<p><b>The webserver does not have permissions to write to the config file ([webcollab]/config/config.php).</b></p>".
                                          "<p><b>You can make a new database, but setup will not be able proceed and write to the config file.</b></p>\n".
-                                         "<p><b>To allow setup to alter the config file you can either:</b></p>\n<ul>\n".
+                                         "<p><b>To complete the setup you can either:</b></p>\n<ul>\n".
                                          "<li><b>Change the file permissions to allow the webserver to write to the file '/config/config.php'</b></li>\n".
-                                         "<li><b>Do a manual configuration by editing the file directly.</b></li>\n</ul>\n";
+                                         "<li><b>Do a manual configuration by editing the config file directly.</b></li>\n</ul>\n";
 
     $lang_setup['setup1_db_exists']   = "<p>A database is already specified in the configuration file.  ".
                                          "Do you wish to create a new database?</p>\n";
