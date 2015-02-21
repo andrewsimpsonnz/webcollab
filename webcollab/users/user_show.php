@@ -2,7 +2,7 @@
 /*
   $Id: user_show.php 2297 2009-08-24 09:45:18Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -164,13 +164,13 @@ $row = db_result($q, 0, 0 );
 $content .= "<tr class=\"grouplist\"><td>".$lang['number_forum']."</td><td>".$row."</td></tr>\n";
 
 //Get the number of files uploaded and the size
-$q = db_prepare('SELECT COUNT(size), SUM(size) FROM '.PRE.'files WHERE uploader=?' );
+$q = db_prepare('SELECT COUNT(size) AS number, SUM(size) AS size FROM '.PRE.'files WHERE uploader=?' );
 db_execute($q, array($userid ) );
-$row = db_fetch_num($q, 0 );
-$content .= "<tr class=\"grouplist\"><td>".$lang['number_files']."</td><td>".$row[0]."</td></tr>\n";
+$row = db_fetch_all($q, 0 );
+$content .= "<tr class=\"grouplist\"><td>".$lang['number_files']."</td><td>".$row['number']."</td></tr>\n";
 
 //show files
-$content .= "<tr class=\"grouplist\"><td>".$lang['size_all_files']."</td><td>".nice_size($row[1] )."</td></tr>\n".
+$content .= "<tr class=\"grouplist\"><td>".$lang['size_all_files']."</td><td>".nice_size($row['size'] )."</td></tr>\n".
             "</table>\n";
 
 new_box($lang['user_info'], $content );
