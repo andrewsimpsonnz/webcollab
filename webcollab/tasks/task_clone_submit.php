@@ -2,7 +2,7 @@
 /*
   $Id: task_clone_submit.php 2286 2009-08-22 08:45:30Z andrewsimpson $
 
-  (c) 2004 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
    WebCollab
   ---------------------------------------
@@ -101,7 +101,9 @@ function add($taskid, $new_parent, $new_name, $delta_deadline ) {
 
     //clone all the tasks at this level
      //store retrieved data rows into an array to allow new database calls to be made on same stored statement
-    $result_array = db_fetch_all($q1 );
+    for($i = 0; $result_row = db_fetch_array($q1, $i ); ++$i ) {
+      $result_array[$i] = $result_row;
+    }
 
     //cycle though task data retrieved from database and process
     foreach($result_array as $row ) {
@@ -142,7 +144,7 @@ function copy_across($taskid, $new_parent, $name, $delta_deadline ) {
   db_execute($q2, array($taskid ) );
 
   //check if this was a private usergroup task
-  if(! $row = db_fetch_array($q2, 0 ) ) {
+  if(! $row = db_fetch_all($q2, 0 ) ) {
     //topmost task is private - no point proceeding
     if($new_parent == 0 ) {
       error("Task clone", "You do not have sufficient rights to clone this task" );
@@ -250,12 +252,12 @@ $q = db_prepare('SELECT projectid, deadline FROM '.PRE.'tasks WHERE id=?' );
 db_execute($q, array($taskid ) );
 
 //get the projectid & old deadline
-if(! $row = @db_fetch_num($q, $i ) ) {
+if(! $row = @db_fetch_all($q, 0 ) ) {
   error('Task clone', 'The project to be cloned has either been deleted, or is now invalid.');
 }
 
-$projectid = $row[0];
-$deadline_array = explode('-', substr($row[1], 0, 10) );
+$projectid = $row['projectid'];
+$deadline_array = explode('-', substr($row['deadline'], 0, 10) );
 
 //calculate change in deadline in days
 $delta_deadline = floor((mktime(0, 0, 0, $month, $day, $year ) - mktime(0, 0, 0, $deadline_array[1], $deadline_array[2], $deadline_array[0] ) ) / (60 * 60 * 24) );
