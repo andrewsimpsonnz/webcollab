@@ -4,7 +4,7 @@
   $Id: task_summary_list.php 2310 2009-09-03 05:46:47Z andrewsimpson $
 
   (c) 2002 Marshall Rose (attributed)
-  (c) 2002 - 2012 Andrew Simpson
+  (c) 2002 - 2015 Andrew Simpson
 
   WebCollab
   ---------------------------------------
@@ -93,11 +93,13 @@ function project_summary($q, $depth=0, $input='' ) {
   db_execute($q, $input );
 
   //store retrieved data rows into an array to allow new database calls to be made on same stored statement
-  $result_array = db_fetch_all($q );
+  for($i = 0; $result_row = db_fetch_array($q, $i ); ++$i ) {
+    $result_array[$i] = $result_row;
+  }
 
   //cycle though task data retrieved from database and process
   foreach($result_array as $row ) {
-
+  
     //don't show tasks in closed usergroup projects
     if( (! ADMIN ) && isset($no_access_project[($row['projectid'])] ) ) {
       if(! isset($GID[ ($no_access_project[($row['projectid'])] ) ] ) ) {
