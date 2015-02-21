@@ -2,7 +2,7 @@
 /*
   $Id: security.php 2283 2009-08-22 08:40:04Z andrewsimpson $
 
-  (c) 2002 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -100,7 +100,7 @@ if(! db_execute($q, array($session_key ) ) ) {
   error('Security manager', 'Database not able to verify session key');
 }
 
-if( ! ( $row = db_fetch_array($q, 0) ) ) {
+if( ! ( $row = db_fetch_all($q, 0) ) ) {
   //return to login screen
   header('Location: '.BASE_URL.'index.php?nologin=1');
   die;
@@ -156,9 +156,9 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i) {
 
 //get site names
 $q = db_query('SELECT manager_name, abbr_manager_name FROM '.PRE.'site_name' );
-$row = @db_fetch_num($q, 0 );
-@define('MANAGER_NAME',   $row[0] );
-@define('ABBR_MANAGER_NAME', $row[1] );
+$row = @db_fetch_all($q, 0 );
+@define('MANAGER_NAME',   $row['manager_name'] );
+@define('ABBR_MANAGER_NAME', $row['abbr_manager_name'] );
 
 // this gives:
 //

@@ -2,7 +2,7 @@
 /*
   $Id: task_add.php 2233 2009-05-22 22:13:55Z andrewsimpson $
 
-  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -51,7 +51,7 @@ $q = db_query('SELECT '.PRE.'usergroups_users.usergroupid AS usergroupid,
                       LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'usergroups_users.usergroupid)
                       WHERE '.PRE.'usergroups.private=1');
 
-for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+for($i = 0; $row = @db_fetch_num($q, $i ); ++$i ) {
   if(isset($GID[($row[0])] ) ) {
     $allowed[($row[1])] = $row[1];
   }
@@ -96,7 +96,7 @@ if( @safe_integer($_GET['parentid']) ) {
                         FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
   db_execute($q, array($parentid ) );
 
-  if( ! $parent_row = db_fetch_array($q, 0 ) ) {
+  if( ! $parent_row = db_fetch_all($q, 0 ) ) {
     error('Task add', 'No parent for taskid' );
   }
 
@@ -190,7 +190,7 @@ if( @safe_integer($_GET['parentid']) ) {
   //owner box
   $content .= "<tr><td>".$lang['task_owner'].":</td><td><select name=\"owner\">\n".
               "<option value=\"0\">".$lang['nobody']."</option>\n";
-  for( $i=0 ; $user_row = @db_fetch_array($q, $i ) ; ++$i) {
+  for($i = 0; $user_row = @db_fetch_array($q, $i ); ++$i) {
 
     //user test for privacy
     if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && (! isset($allowed[($user_row['id'])] ) ) ) {
@@ -214,7 +214,7 @@ if( @safe_integer($_GET['parentid']) ) {
   $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."'); return false\">".$lang['taskgroup']."</a>: </td><td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
-  for( $i=0 ; $taskgroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
+  for($i = 0; $taskgroup_row = @db_fetch_array($q, $i ); ++$i ) {
 
     //inherit taskgroup from parent
     if($parent_row['taskgroupid'] == $taskgroup_row['id'] ) {
@@ -232,7 +232,7 @@ if( @safe_integer($_GET['parentid']) ) {
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td><td><select name=\"usergroupid\">\n";
   $content .= "<option value=\"0\">".$lang['all_groups']."</option>\n";
 
-  for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
+  for($i = 0; $usergroup_row = @db_fetch_array($q, $i ); ++$i ) {
 
     //usergroup test for privacy
     if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! isset($GID[($usergroup_row['id'])] ) ) ) {
@@ -310,7 +310,7 @@ else {
 
   //owner
   $content .= "<tr><td>".$lang['project_owner'].":</td><td><select name=\"owner\">\n";
-  for( $i=0 ; $user_row = @db_fetch_array($q, $i) ; ++$i ) {
+  for($i = 0; $user_row = @db_fetch_array($q, $i); ++$i ) {
 
     //user test for privacy
     if($user_row['private'] && ($user_row['id'] != UID ) && ( ! ADMIN ) && ( ! isset($allowed[($user_row['id'])] ) ) ){
@@ -333,7 +333,7 @@ else {
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td><td><select name=\"usergroupid\">\n".
               "<option value=\"0\">".$lang['all_groups']."</option>\n";
 
-  for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
+  for($i = 0; $usergroup_row = @db_fetch_array($q, $i ); ++$i ) {
 
     //usergroup test for privacy
     if( (! ADMIN ) && ($usergroup_row['private'] ) && ( ! isset($GID[($usergroup_row['id'])] ) ) ) {

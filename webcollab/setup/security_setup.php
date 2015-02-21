@@ -2,7 +2,7 @@
 /*
   $Id: security_setup.php 2285 2009-08-22 08:42:43Z andrewsimpson $
 
-  (c) 2003 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -104,13 +104,13 @@ else {
                           '.db_epoch().' lastaccess) AS sec_lastaccess
                           FROM '.PRE.'logins
                           LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'logins.user_id)
-                          WHERE '.PRE.'logins.session_key=?' );
+                          WHERE '.PRE.'logins.session_key=? LIMIT 1' );
 
   if(! db_execute($q, array(X ) ) ) {
   error_setup('Database not able to verify session key');
   }
 
-  if(! ( $row = db_fetch_array($q, 0 ) ) ) {
+  if(! ( $row = db_fetch_all($q, 0 ) ) ) {
     error_setup('No valid session exists');
   }
 
@@ -132,9 +132,9 @@ else {
 
   //get site names
   $q = db_query('SELECT * FROM '.PRE.'site_name' );
-  $row = @db_fetch_num($q, 0 );
-  @define('MANAGER_NAME',   $row[0] );
-  @define('ABBR_MANAGER_NAME', $row[1] );
+  $row = @db_fetch_all($q, 0 );
+  @define('MANAGER_NAME',   $row['manager_name'] );
+  @define('ABBR_MANAGER_NAME', $row['abbr_manager_name'] );
 
 }
 

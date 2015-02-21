@@ -2,7 +2,7 @@
 /*
   $Id: task_submit.php 2051 2009-01-17 06:53:09Z andrewsimpson $
 
-  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -85,22 +85,22 @@ function user_access($taskid ) {
   }
   $q = db_prepare('SELECT owner, usergroupid, groupaccess FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
   db_execute($q, array($taskid ) );
-  $row = db_fetch_num($q, 0 );
+  $row = db_fetch_all($q, 0 );
 
   //user is owner
-  if($row[0] == UID ) {
+  if($row['owner'] == UID ) {
     return true;
   }
   //no owner - anyone can edit
-  if($row[0] == 0 ) {
+  if($row['owner'] == 0 ) {
     return true;
   }
   //no usergroup set
-  if($row[1] == 0 ) {
+  if($row['usergroupid'] == 0 ) {
     return false;
   }
   //if groupaccess is set, check user is in usergroup
-  if($row[2] == 't' ) {
+  if($row['groupaccess'] == 't' ) {
     if(isset($GID[($row[1])] ) ) {
       return true;
     }

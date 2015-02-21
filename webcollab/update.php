@@ -513,7 +513,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
   }
 
-  $row = @db_fetch_array($q, 0, 0);
+  $row = @db_fetch_all($q, 0 );
   
   //limit login attempts if post-1.60 database is being used
   if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {

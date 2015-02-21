@@ -2,7 +2,7 @@
 /*
   $Id: rss_forum.php 1923 2008-02-08 07:29:31Z andrewsimpson $
 
-  (c) 2005 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2005 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -61,7 +61,7 @@ if(! ($q = db_query('SELECT * FROM site_name', 0 ) ) ) {
   rss_error('500', 'File site name');
 }
 
-$row = @db_fetch_array($q, 0 );
+$row = @db_fetch_all($q, 0 );
 define('MANAGER_NAME', $row['manager_name'] );
 define('ABBR_MANAGER_NAME', $row['abbr_manager_name'] );
 

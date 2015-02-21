@@ -2,7 +2,7 @@
 /*
   $Id: file_download.php 2254 2009-07-24 09:31:32Z andrewsimpson $
 
-  (c) 2003 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -47,7 +47,7 @@ $fileid = $_GET['fileid'];
 $q = db_prepare('SELECT fileid, hashid, filename, size, mime, taskid FROM '.PRE.'files WHERE id=? LIMIT 1');
 db_execute($q, array($fileid ) );
 
-if( ! $row = db_fetch_array($q, 0) ) {
+if( ! $row = db_fetch_all($q, 0) ) {
   error('Download file', 'Invalid fileid given' );
 }
 

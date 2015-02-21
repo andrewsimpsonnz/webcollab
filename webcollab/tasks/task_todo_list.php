@@ -2,7 +2,7 @@
 /*
   $Id: task_todo_list.php 2295 2009-08-24 09:42:09Z andrewsimpson $
 
-  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -351,9 +351,9 @@ $content .= "</select></label></td>\n".
 
 //get the sort order for projects/tasks
 $q   = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
-$row = db_fetch_num($q, 0 );
-$project_order = $row[0];
-$task_order    = str_replace('ORDER BY', '', $row[1] );
+$row = db_fetch_all($q, 0 );
+$project_order = $row['project_order'];
+$task_order    = str_replace('ORDER BY', '', $row['task_order'] );
 
 if(substr(DATABASE_TYPE, 0, 5) == 'mysql' ) {
   $no_group = 'IF('.PRE.'taskgroups.name IS NULL, 1, 0), ';

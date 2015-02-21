@@ -2,7 +2,7 @@
 /*
   $Id: task_submit_insert.php 2170 2009-04-06 07:25:59Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -199,9 +199,9 @@ switch($owner ) {
   default:
     $q = db_prepare('SELECT fullname, email FROM '.PRE.'users WHERE id=? LIMIT 1' );
     db_execute($q, array($owner ) );
-    $row = db_fetch_num($q, 0 );
-    $name_owner = $row[0];
-    $email_owner = $row[1];
+    $row = db_fetch_all($q, 0 );
+    $name_owner = $row['fullname'];
+    $email_owner = $row['email'];
     break;
 }
 

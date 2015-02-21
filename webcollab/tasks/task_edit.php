@@ -2,7 +2,7 @@
 /*
   $Id: task_edit.php 2270 2009-08-14 06:58:03Z andrewsimpson $
 
-  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -262,7 +262,7 @@ switch($TYPE) {
     //get parent details
     $q = db_prepare('SELECT '.db_epoch().'deadline) AS epoch_deadline, status FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
     db_execute($q, array($TASKID_ROW['parent'] ) );
-    $parent_row = db_fetch_array($q, 0 );
+    $parent_row = db_fetch_all($q, 0 );
 
     switch ($parent_row['status'] ) {
       case 'created':
@@ -319,7 +319,7 @@ else {
   db_execute($q, array($taskid, $taskid ) );
 }
 
-for( $i=0 ; $reparent_row = @db_fetch_array($q, $i ) ; ++$i ) {
+for($i = 0; $reparent_row = @db_fetch_array($q, $i ); ++$i ) {
   //put values into array
   $task_reparent[$i]['id']     = $reparent_row['id'];
   $task_reparent[$i]['name']   = $reparent_row['name'];

@@ -2,7 +2,7 @@
 /*
   $Id: user_edit.php 2297 2009-08-24 09:45:18Z andrewsimpson $
 
-  (c) 2002 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -78,7 +78,7 @@ else {
 }
 
 //fetch data
-if( ! ($row = db_fetch_array($q , 0 ) ) ) {
+if( ! ($row = db_fetch_all($q , 0 ) ) ) {
   error('Database result', 'Error in retrieving user data from database' );
 }
 

@@ -2,7 +2,7 @@
 /*
   $Id: task_delete.php 2170 2009-04-06 07:25:59Z andrewsimpson $
 
-  (c) 2002 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -52,7 +52,7 @@ function find_tasks( $taskid, $projectid ) {
   $q = db_prepare('SELECT id, parent FROM '.PRE.'tasks WHERE projectid=?' );
   db_execute($q, array($projectid ) );
 
-  for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
+  for($i = 0; $row = @db_fetch_array($q, $i ); ++$i) {
 
     //put values into array
     $task_array[$i]['id'] = $row['id'];
@@ -131,7 +131,7 @@ $q = db_prepare('SELECT '.PRE.'tasks.parent AS parent,
 db_execute($q, array($taskid ) );
 
 //get the data
-if( ! $row = db_fetch_array($q, 0) ){
+if( ! $row = db_fetch_all($q, 0) ){
   error('Task delete', 'The selected task does not exist.');
 }
 //can this user delete this task ?
