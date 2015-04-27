@@ -71,7 +71,7 @@ else {
 //set PHP internal encoding
 if(ini_get('default_charset' ) ) {
   //preferred setting for PHP 5.6+
-  if(ini_set('default_charset', 'UTF-8') ) {
+  if(! ini_set('default_charset', 'UTF-8') ) {
     error("Internal encoding", "Unable to set UTF-8 encoding in PHP 5.6+" );
   }
 }
