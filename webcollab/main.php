@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2008 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -62,7 +62,6 @@ create_top('', 0, 'project-list' );
     include(BASE.'taskgroups/taskgroup_menubox.php' );
     include(BASE.'usergroups/usergroup_menubox.php' );
     include(BASE.'admin/admin_config_menubox.php' );
-    $taskid = -1;
     include(BASE.'files/file_menubox.php' );
   }
   else {
