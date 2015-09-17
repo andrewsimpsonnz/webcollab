@@ -2,7 +2,7 @@
 /*
   $Id: common.php 2275 2009-08-21 20:11:41Z andrewsimpson $
 
-  (c) 2002 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -51,7 +51,7 @@ function safe_data($body ) {
   $body = strtr($body, array("\r"=>' ', "\n"=>' ' ) );
   //add HTML entities
   $body = html_clean_up($body);
-
+  
   return $body;
 }
 
@@ -82,9 +82,14 @@ function safe_data_long($body ) {
   return $body;
 }
 
+//
+// UTF-8 validation regex
+//
+
+// This code was specifically developed for WebCollab in 2006, but is now used widely in other software.
 function validate($body ) {
 
-  $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x1F\x7F]'.           //ASCII
+  $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x1F\x7F]'.           //ASCII non-printing
                         '|(?<=^|[\x00-\x7F])[\x80-\xBF]+'.                //continuation with no start
                         '|[\xC0-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.  //illegal two byte
                         '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})'. //illegal three byte
@@ -110,8 +115,8 @@ function html_clean_up($body ) {
 //
 function safe_integer($integer ) {
 
-  if(is_numeric($integer) && ((string)$integer === (string)intval(abs($integer ) ) ) ) {
-    return true;
+  if(! (filter_var($integer, FILTER_VALIDATE_INT, array('options' => array('min_range' => 0 ) ) ) === false ) ) {
+      return true;
   }
   return false;
 }
@@ -175,33 +180,33 @@ function bbcode($body ) {
     $body = preg_replace('#\[code\](.+?)\[/code\]#is', "<pre>$1</pre>", $body );
     $body = preg_replace('#\[color=(red|blue|green|yellow)\](.+?)\[/color\]#is', "<span style=\"color:$1\">$2</span>", $body );
     $body = preg_replace('#\[img\](http(s)?:\/\/([a-z0-9\-_~/.])+?\.(jpg|jpeg|gif|png))\[/img\]#i', "<img src=\"$1\" alt=\"\"/>", $body );
-    $body = preg_replace_callback('#\[url\]((http|ftp)+(s)?:\/\/[a-z0-9\-_~/@:?=&;+\#.]+)\[/url\]#i', 'link1', $body );
-    $body = preg_replace_callback('#\[url=((http|ftp)+(s)?:\/\/([a-z0-9\-_~.]+[.][a-z]{2,6})[a-z0-9\-_~/@:?=&;+\#.%]*)\](.+?)\[/url\]#i', 'link2', $body );
-    $body = preg_replace_callback('#\[list\](.+?)\[/list\]#is', 'list1', $body );
-    $body = preg_replace_callback('#\[list=1\](.+?)\[/list\]#is', 'list2', $body );
+    $body = preg_replace_callback('#\[url\]((http|ftp)+(s)?:\/\/[a-z0-9\-_~/@:?=&;+\#.]+)\[/url\]#i', 'bb_link1', $body );
+    $body = preg_replace_callback('#\[url=((http|ftp)+(s)?:\/\/([a-z0-9\-_~.]+[.][a-z]{2,6})[a-z0-9\-_~/@:?=&;+\#.%]*)\](.+?)\[/url\]#i', 'bb_link2', $body );
+    $body = preg_replace_callback('#\[list\](.+?)\[/list\]#is', 'bb_list1', $body );
+    $body = preg_replace_callback('#\[list=1\](.+?)\[/list\]#is', 'bb_list2', $body );
   }
   return $body;
 }
 
-function link1($url) {
+function bb_link1($url) {
   $url[1] = strtr($url[1], array("&amp;" => "&" ) );
   $body = "<a href=\"".$url[1]."\" onclick=\"window.open('".$url[1]."'); return false\">".$url[1]."</a>";
   return $body;
 }
 
-function link2($url) {
+function bb_link2($url) {
   $url[1] = strtr($url[1], array("&amp;" => "&" ) );
   $body = "<a href=\"".$url[1]."\" onclick=\"window.open('".$url[1]."'); return false\">".$url[5]."</a> [".$url[4]."]";
   return $body;
 }
 
-function list1($list) {
+function bb_list1($list) {
   $body = "<ul>". preg_replace('#\[\*\](.+?)$#m', "<li>$1</li>", $list[1] )."</ul>";
   $body = str_replace("\n", "", $body );
   return $body;
 }
 
-function list2($list) {
+function bb_list2($list) {
   $body = "<ol>". preg_replace('#\[\*\](.+?)$#m', "<li>$1</li>", $list[1] )."</ol>";
   $body = str_replace("\n", "", $body );
   return $body;
