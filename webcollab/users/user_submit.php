@@ -122,11 +122,11 @@ switch($_POST['action'] ) {
     //get locale
     $locale = (empty($_POST['locale']) ) ? LOCALE : user_locale_check(validate($_POST['locale']) );
 
-    $email_raw = validate($_POST['email'] );
-    if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $email_raw, $match ) ) || (strlen(trim($email_raw) ) > 200 ) ) {
-      warning($lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST['email'] ) );
+    $email_raw = validate(trim($_POST['email'] ) );
+    if(filter_var($email_raw, FILTER_VALIDATE_EMAIL ) === false ) {
+      warning($lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], safe_data($_POST['email'] ) ) );
     }
-    $email_unclean = $match[0];
+    $email_unclean = $email_raw;
 
     $private_user = (isset($_POST['private_user']) && ( $_POST['private_user'] === "on" ) ) ? 1 : 0 ;
 
@@ -231,15 +231,15 @@ switch($_POST['action'] ) {
     //get new password, if any
     $password_unclean = (empty($_POST['password']) ) ? '' : trim($_POST['password']);
     //magic quotes is not required
-    $email_raw = validate($_POST['email'] );
+    $email_raw = validate(trim($_POST['email'] ) );
 
     //get locale
     $locale = (empty($_POST['locale']) ) ? LOCALE : user_locale_check(validate($_POST['locale']) );
 
-    if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $email_raw, $match ) ) || (strlen(trim($email_raw) ) > 200 ) ) {
-      warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], $_POST['email'] ) );
+    if(filter_var($email_raw, FILTER_VALIDATE_EMAIL ) === false ) {
+      warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], safe_data($_POST['email'] ) ) );
     }
-    $email_unclean = $match[0];
+    $email_unclean = $email_raw;
 
     if(ADMIN ) {
 

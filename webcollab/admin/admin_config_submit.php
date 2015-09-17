@@ -2,7 +2,7 @@
 /*
   $Id: admin_config_submit.php 2199 2009-04-10 21:34:16Z andrewsimpson $
 
-  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -57,11 +57,13 @@ if(USE_EMAIL === 'Y' ){
   //check and validate email addresses
   foreach($input_array as $var) {
     if(! empty($_POST[$var]) ) {
-      $input = validate($_POST[$var] );
-      if((! preg_match('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $input, $match ) ) || (strlen(trim($input) ) > 200 ) ) {
+      $input = validate(trim($_POST[$var] ) );
+      if(filter_var($input, FILTER_VALIDATE_EMAIL ) === false ) {
         warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], safe_data($_POST[$var] ) ) );
       }
-      ${$var} = $match[0];
+      ${$var} = $input;
+
+
     }
     else
       ${$var} = NULL;
@@ -161,8 +163,8 @@ if((preg_match_all('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $in
   $q = db_prepare('INSERT INTO '.PRE.'maillist (email) VALUES (?)' );
   //cycle through addresses and store in database
   foreach($match[0] as $address ) {
-    //remove excessively long addresses
-    if(strlen($address ) > 200 ) {
+    //validate address
+    if(filter_var($address, FILTER_VALIDATE_EMAIL ) === false ) {
       continue;
     }
     db_execute($q, array($address ) );
