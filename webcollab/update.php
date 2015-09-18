@@ -148,18 +148,18 @@ function update($username ) {
     //retrieve existing data
     $q = db_query('SELECT id FROM '.PRE.'tasks WHERE parent=0' );
 
-    for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
+    for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
       db_execute($q1, array($row['id'] ) );
 
       $total_tasks = 0;
       $tasks_completed = 0;
 
-      for($j=0 ; $row_complete = @db_fetch_num($q_complete, $j ) ; $j++ ) {
-        $total_tasks++;
+      for($j=0 ; $row_complete = @db_fetch_num($q_complete, $j ) ; ++$j ) {
+        ++$total_tasks;
 
         if($row_complete[0] == 'done') {
-          $tasks_completed++;
+          ++$tasks_completed;
         }
       }
 
@@ -178,11 +178,12 @@ function update($username ) {
         db_execute($q3, array($row['id'] ) );
         db_execute($q4, array($completion_time, $row['id'] ) );
       }
+
+      db_free_result($q1 );
+      db_free_result($q2 );
+      db_free_result($q3 );
+      db_free_result($q4 );
     }
-    db_free_result($q1 );
-    db_free_result($q2 );
-    db_free_result($q3 );
-    db_free_result($q4 );
 
     db_commit();
     $content .= "<p>Updating from version pre-1.60 database ... success!</p>\n";
@@ -248,6 +249,7 @@ function update($username ) {
 
         for($i=0 ; $row = @db_fetch_array($q, $i ) ; $i++) {
           db_execute($q1, array($row['oid'], $row['id'] ) );
+          db_free_result($q1 );
         }
         break;
 
@@ -513,7 +515,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
   }
 
-  $row = @db_fetch_all($q, 0 );
+  $row = @db_fetch_array($q, 0 );
   
   //limit login attempts if post-1.60 database is being used
   if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {

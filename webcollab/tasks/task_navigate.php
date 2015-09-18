@@ -2,7 +2,7 @@
 /*
   $Id: task_navigate.php 2170 2009-04-06 07:25:59Z andrewsimpson $
 
-  (c) 2003 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,6 +35,8 @@ if(! defined('UID' ) ) {
 //secure variables
 $content  = '';
 
+$q1 = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+
 //existing task or project
 if( @safe_integer($_GET['taskid']) ) {
 
@@ -56,9 +58,9 @@ if( @safe_integer($_GET['taskid']) ) {
       //task under project
 
       //get project name (limited to 20 characters)
-      $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
-      db_execute($q, array($TASKID_ROW['projectid'] ) );
-      $project_name = box_shorten(db_result($q, 0, 0 ) );
+      db_execute($q1, array($TASKID_ROW['projectid'] ) );
+      $project_name = box_shorten(db_result($q1, 0, 0 ) );
+      db_free_result($q1 );
 
       $content .= "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></li>\n".
                   "<li><small><b>".$lang['task'].":</b></small></li>\n".
@@ -70,14 +72,14 @@ if( @safe_integer($_GET['taskid']) ) {
       //task with parent task
 
       //get project name
-      $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
-      db_execute($q, array($TASKID_ROW['projectid'] ) );
-      $project_name = box_shorten(db_result($q, 0, 0 ) );
-
+      db_execute($q1, array($TASKID_ROW['projectid'] ) );
+      $project_name = box_shorten(db_result($q1, 0, 0 ) );
+      //must clear query before running again
+      db_free_result($q1 );
       //get parent name
-      db_execute($q, array($TASKID_ROW['parent'] ) );
-      $parent_name = box_shorten(db_result($q, 0, 0 ) );
-      db_free_result($q );
+      db_execute($q1, array($TASKID_ROW['parent'] ) );
+      $parent_name = box_shorten(db_result($q1, 0, 0 ) );
+      db_free_result($q1 );
 
       $content .= "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></li>\n".
                   "<li><small><b>".$lang['parent_task'].":</b></small></li>\n".
@@ -102,15 +104,15 @@ elseif( @safe_integer($_GET['parentid']) ){
   //get task parent details
   $q = db_prepare('SELECT name, parent, projectid FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
   db_execute($q, array($parentid ) );
-  if( ! $row = db_fetch_all($q, 0 ) ) {
+  if( ! $row = db_fetch_array($q, 0 ) ) {
     error('Task navigate', 'Parent does not exist' );
   }
 
   //get project name
-  $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
-  db_execute($q, array($row['projectid'] ) );
+  db_execute($q1, array($row['projectid'] ) );
 
-  $project_name = box_shorten(db_result($q, 0, 0 ) );
+  $project_name = box_shorten(db_result($q1, 0, 0 ) );
+  db_free_result($q1 );
 
   $content .= "<ul class=\"menu\"><li><small><b>".$lang['project'].":</b></small></li>\n".
               "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['projectid']."\">".$project_name."</a></li>\n";
