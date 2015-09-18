@@ -56,7 +56,7 @@ function db_connection() {
     //set error handling
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false );
-    
+
   }
   catch (PDOException $e) {
     $db_error_message = $e->getMessage();
@@ -185,8 +185,8 @@ function db_epoch() {
 //
 function db_result($sth, $row=0, $field=0 ) {
 
-  $result = $sth->fetchAll(PDO::FETCH_NUM );
-  return $result[$row][$field];
+  $result = $sth->fetch(PDO::FETCH_NUM );
+  return $result[$field];
 }
 
 //
@@ -203,15 +203,6 @@ function db_fetch_array($sth, $row=0 ) {
 function db_fetch_num($sth, $row=0 ) {
 
   return $sth->fetch(PDO::FETCH_NUM );
-}
-
-//
-// fetch all rows as an array
-//
-function db_fetch_all($sth, $row=0 ) {
-
-  $result = $sth->fetchAll(PDO::FETCH_ASSOC );
-  return $result[$row];
 }
 
 //
