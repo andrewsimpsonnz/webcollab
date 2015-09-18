@@ -85,7 +85,7 @@ function user_access($taskid ) {
   }
   $q = db_prepare('SELECT owner, usergroupid, groupaccess FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
   db_execute($q, array($taskid ) );
-  $row = db_fetch_all($q, 0 );
+  $row = db_fetch_array($q, 0 );
 
   //user is owner
   if($row['owner'] == UID ) {

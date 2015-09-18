@@ -2,7 +2,7 @@
 /*
   $Id: user_edit.php 2172 2009-04-06 07:30:53Z andrewsimpson $
 
-  (c) 2009 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2009 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -57,7 +57,7 @@ $q = db_prepare('SELECT id, name, fullname, deleted FROM '.PRE.'users WHERE id=?
 db_execute($q, array($userid ) );
 
 //fetch data
-if( ! ($row = db_fetch_all($q, 0 ) ) ) {
+if( ! ($row = db_fetch_array($q , 0 ) ) ) {
   error('Database result', 'Error in retrieving user-data from database' );
 }
 

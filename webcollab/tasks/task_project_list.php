@@ -2,7 +2,7 @@
 /*
   $Id: task_project_list.php 2294 2009-08-24 09:41:39Z andrewsimpson $
 
-  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -201,9 +201,9 @@ foreach(array('active_only', 'condensed' ) as $var ) {
 
 //get config order for sorting
 $q   = db_query('SELECT project_order, task_order FROM '.PRE.'config' );
-$row = db_fetch_all($q, 0 );
-$project_order = $row['project_order'];
-$task_order    = $row['task_order'];
+$row = db_fetch_num($q, 0 );
+$project_order = $row[0];
+$task_order    = $row[1];
 
 //don't get tasks if we aren't going to view them
 if(! $condensed) {

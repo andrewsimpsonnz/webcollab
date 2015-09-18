@@ -144,7 +144,7 @@ function copy_across($taskid, $new_parent, $name, $delta_deadline ) {
   db_execute($q2, array($taskid ) );
 
   //check if this was a private usergroup task
-  if(! $row = db_fetch_all($q2, 0 ) ) {
+  if(! $row = db_fetch_array($q2, 0 ) ) {
     //topmost task is private - no point proceeding
     if($new_parent == 0 ) {
       error("Task clone", "You do not have sufficient rights to clone this task" );
@@ -252,12 +252,12 @@ $q = db_prepare('SELECT projectid, deadline FROM '.PRE.'tasks WHERE id=?' );
 db_execute($q, array($taskid ) );
 
 //get the projectid & old deadline
-if(! $row = @db_fetch_all($q, 0 ) ) {
+if(! $row = @db_fetch_num($q, 0 ) ) {
   error('Task clone', 'The project to be cloned has either been deleted, or is now invalid.');
 }
 
-$projectid = $row['projectid'];
-$deadline_array = explode('-', substr($row['deadline'], 0, 10) );
+$projectid = $row[0];
+$deadline_array = explode('-', substr($row[1], 0, 10) );
 
 //calculate change in deadline in days
 $delta_deadline = floor((mktime(0, 0, 0, $month, $day, $year ) - mktime(0, 0, 0, $deadline_array[1], $deadline_array[2], $deadline_array[0] ) ) / (60 * 60 * 24) );

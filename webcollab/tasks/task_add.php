@@ -96,7 +96,7 @@ if( @safe_integer($_GET['parentid']) ) {
                         FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
   db_execute($q, array($parentid ) );
 
-  if( ! $parent_row = db_fetch_all($q, 0 ) ) {
+  if( ! $parent_row = db_fetch_array($q, 0 ) ) {
     error('Task add', 'No parent for taskid' );
   }
 

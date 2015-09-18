@@ -201,7 +201,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
   }
 
   //if user-password combination exists
-  if($row = @db_fetch_all($q, 0 ) ) {
+  if($row = @db_fetch_array($q, 0 ) ) {
 
     switch (substr($row['password'], 0, 3 ) ) {
 

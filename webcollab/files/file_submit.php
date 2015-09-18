@@ -2,7 +2,7 @@
 /*
   $Id: file_submit.php 2304 2009-08-25 09:18:26Z andrewsimpson $
 
-  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -83,7 +83,7 @@ function file_delete($fileid ) {
   db_execute($q, array($fileid ) );
 
   //show it
-  if($row = @db_fetch_all($q, 0 ) ) {
+  if($row = @db_fetch_array($q, 0 ) ) {
     //owners of the file and admins can delete files
     if( (ADMIN ) || (UID == $row['owner'] ) || (UID == $row['uploader'] ) ) {
 
@@ -164,7 +164,7 @@ switch($_POST['action'] ) {
                             WHERE '.PRE.'tasks.id=? LIMIT 1' );
 
       db_execute($q, array($taskid ) );
-      $task_row = db_fetch_all($q, 0 );
+      $task_row = db_fetch_array($q, 0 );
 
       $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
       db_execute($q, array($task_row['projectid'] ) );

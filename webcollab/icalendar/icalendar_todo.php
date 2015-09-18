@@ -2,7 +2,7 @@
 /*
   $Id: icalendar_todo.php 2299 2009-08-24 09:46:33Z andrewsimpson $
 
-  (c) 2005 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -114,7 +114,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
     db_execute($project_q, array($row['projectid'] ) );
 
     //check for closed projects
-    if(! ($project = db_fetch_all($project_q, 0 ) ) ) {
+    if(! ($project = db_fetch_array($project_q, 0 ) ) ) {
       continue;
     }
 

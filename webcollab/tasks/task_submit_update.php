@@ -2,7 +2,7 @@
 /*
   $Id: task_submit_update.php 2294 2009-08-24 09:41:39Z andrewsimpson $
 
-  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -201,7 +201,7 @@ db_begin();
 //get existing projectid, parent and status from the database
 $q = db_prepare('SELECT projectid, parent, status FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
 db_execute($q, array($taskid ) );
-$row = db_fetch_all($q, 0 );
+$row = db_fetch_array($q, 0 );
 $old_projectid = $row['projectid'];
 $old_status    = $row['status'];
 $old_parentid  = $row['parent'];
@@ -320,9 +320,9 @@ switch($owner ) {
   default:
     $q = db_prepare('SELECT fullname, email FROM '.PRE.'users WHERE id=? LIMIT 1' );
     db_execute($q, array($owner ) );
-    $row = db_fetch_all($q, 0 );
-    $name_owner = $row['fullname'];
-    $email_owner = $row['email'];
+    $row = db_fetch_num($q, 0 );
+    $name_owner = $row[0];
+    $email_owner = $row[1];
     break;
   }
 

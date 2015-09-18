@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2011 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -43,7 +43,7 @@ function icalendar_login() {
     icalendar_error('401', 'Login user select' );
   }
 
-  if( ! ($row = db_fetch_all($q, 0 ) ) ) {
+  if( ! ($row = db_fetch_array($q, 0 ) ) ) {
     icalendar_error('401', 'Login query error');
   }
 

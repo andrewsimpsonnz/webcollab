@@ -2,7 +2,7 @@
 /*
   $Id: task_clone_add.php 2270 2009-08-14 06:58:03Z andrewsimpson $
 
-  (c) 2004 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -63,7 +63,7 @@ $content .= "<form method=\"post\" action=\"tasks.php\" onsubmit=\"return fieldC
 $q = db_prepare('SELECT name, parent FROM '.PRE.'tasks WHERE id=?' );
 db_execute($q, array($taskid ) );
 
-$row = db_fetch_all($q, 0 );
+$row = db_fetch_array($q, 0 );
 
 if($row['parent'] == 0 ){
   $content .= "<tr><td>".$lang['project_cloned']."</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$taskid."\">".$row['name']."</a></td></tr>\n".

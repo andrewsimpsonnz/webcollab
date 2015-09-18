@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2015  Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2008  Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -35,7 +35,7 @@ $EMAIL_MAILINGLIST = array();
 
 //get config data
 $q = db_query('SELECT * FROM '.PRE.'config' );
-$row = @db_fetch_all($q, 0 );
+$row = @db_fetch_array($q, 0 );
 
 //set variables
 define('EMAIL_REPLY_TO', $row['reply_to'] );

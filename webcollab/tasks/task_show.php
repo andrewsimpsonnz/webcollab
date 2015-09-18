@@ -2,7 +2,7 @@
 /*
   $Id: task_show.php 2263 2009-08-01 02:39:44Z andrewsimpson $
 
-  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -67,7 +67,7 @@ $q = db_prepare('SELECT '.PRE.'tasks.created AS created,
 db_execute($q, array(UID, $taskid ) );
 
 //get the data
-if( ! ($row = db_fetch_all($q, 0 ) ) ) {
+if( ! ($row = db_fetch_array($q, 0 ) ) ) {
   error('Task show', 'The requested item has either been deleted, or is now invalid.');
 }
 

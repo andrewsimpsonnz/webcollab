@@ -2,7 +2,7 @@
 /*
   $Id: usergroup_edit.php 2296 2009-08-24 09:44:14Z andrewsimpson $
 
-  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -57,7 +57,7 @@ generate_token('usergroup' );
 $q = db_prepare('SELECT * FROM '.PRE.'usergroups WHERE id=?' );
 db_execute($q, array($usergroupid ) );
 
-if(! ($row = db_fetch_all( $q, 0 ) ) ) {
+if(! ($row = db_fetch_array( $q, 0 ) ) ) {
   error('Usergroup edit', 'Usergroup does not exist' );
 }
 

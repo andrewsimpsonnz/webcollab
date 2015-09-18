@@ -2,7 +2,7 @@
 /*
   $Id: taskgroup_edit.php 2301 2009-08-25 09:15:52Z andrewsimpson $
 
-  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -52,7 +52,7 @@ generate_token('taskgroup' );
 $q = db_prepare('SELECT * FROM '.PRE.'taskgroups WHERE id=?' );
 db_execute($q, array($taskgroupid ) );
 
-if(! ($row = db_fetch_all($q, 0 ) ) ) {
+if(! ($row = db_fetch_array( $q, 0 ) ) ) {
   error('Taskgroup edit', 'Taskgroup does not exist' );
 }
 

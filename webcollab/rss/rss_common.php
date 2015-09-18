@@ -2,7 +2,7 @@
 /*
   $Id: rss_forum.php 1706 2008-01-01 06:13:00Z andrewsimpson $
 
-  (c) 2008 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2008 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -43,7 +43,7 @@ function rss_login() {
     rss_error('401', 'Login user select' );
   }
 
-  if( ! ($row = db_fetch_all($q, 0 ) ) ) {
+  if( ! ($row = db_fetch_array($q, 0 ) ) ) {
     rss_error('401', 'Login query error');
   }
 

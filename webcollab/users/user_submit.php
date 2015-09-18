@@ -83,7 +83,7 @@ switch($_POST['action'] ) {
       //get the users' info
       $q = db_prepare('SELECT name, fullname, email FROM '.PRE.'users where id=? LIMIT 1' );
       db_execute($q, array($userid ) );
-      $row = db_fetch_all($q, 0 );
+      $row = db_fetch_array($q, 0 );
 
       //mail the user the happy news :)
       $message = sprintf($email_revive, $row['name'], $row['fullname'] );
