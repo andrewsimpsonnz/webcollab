@@ -1,4 +1,42 @@
 WebCollab Git
+*** 18 September 2015
+
+- remove db_fetch_all() (Reverse 21 Febuary 2015 edit)
+
+- Bugfix: CloseCursor() added to task_navigate.php to prevent 'ATTR_EMULATE_PREPARES' errors.
+
+- add filter_var() for integer validation in common.php
+
+- add filter_var() for email validation in admin_config_submit and user_submit
+
+WebCollab 3.43 - Harrison 130
+*** 19 June 2015
+
+- release
+
+WebCollab Git
+*** 27 April 2015
+
+- Bugfix:  Syntax error in code causes error in PHP 5.6+
+
+WebCollab 3.42 - Cobb River Revisited
+*** 19 February 2015
+
+- release
+
+WebCollab Git
+*** 21 February 2015
+
+- Bugfix:  Incorrect database call in task_submit_clone.php (Thanks to: bshah) (Bug #98)
+
+- Bugfix:  Change database calls to db_fetch_all().  Prevents 'ATTR_EMULATE_PREPARES' errors.
+
+WebCollab 3.41 - Cobb River
+*** 2 June 2014
+
+- release
+
+WebCollab Git
 *** 7 February 2015
 
 - use better Blowfish algorithm
