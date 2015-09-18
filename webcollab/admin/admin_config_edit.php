@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -49,7 +49,7 @@ generate_token('admin_config' );
 
 //get config data
 $q = db_query('SELECT * FROM '.PRE.'config' );
-$row = db_fetch_all($q, 0 );
+$row = db_fetch_array( $q, 0 );
 
 if(USE_EMAIL === 'Y' ){
 

@@ -2,7 +2,7 @@
 /*
   $Id: contact_show.php 2160 2009-04-06 07:07:34Z andrewsimpson $
 
-  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -41,7 +41,7 @@ $contactid = $_GET['contactid'];
 $q = db_prepare('SELECT * FROM '.PRE.'contacts WHERE id=? LIMIT 1' );
 db_execute($q, array($contactid ) );
 
-if( ! ($row = @db_fetch_all($q, 0 ) ) ){
+if( ! ($row = @db_fetch_array($q, 0 ) ) ){
   error('Contact show', 'There is no information for that contact');
 }
 
