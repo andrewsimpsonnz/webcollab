@@ -77,7 +77,7 @@ $array = array('NUM_FILE_UPLOADS' => 3, 'FILE_DOWNLOAD' => 'inline',
                'VEVENT'       => 'N',
                'RSS_AUTODISCOVERY' => 'N',
                'SESSION_TIMEOUT'   => 1, 'TOKEN_TIMEOUT' => 30, 'PASS_STYLE' => 'text', 'GUEST_LOCKED' => 'N',
-               'WORK_FACTOR' => 8, 'WEB_AUTH' => 'N', 'ACTIVE_DIRECTORY' => 'N', 'AD_PORT' => '389', 'FILENAME_CHAR_SET' => 'ISO-8859-1',
+               'WEB_AUTH' => 'N', 'ACTIVE_DIRECTORY' => 'N', 'AD_PORT' => '389', 'FILENAME_CHAR_SET' => 'ISO-8859-1',
                'EMAIL_ERROR'  => '',
                'DEBUG'        => 'N',
                'NO_ERROR'     => 'N',
@@ -224,8 +224,6 @@ $content .=
 "  //Stop GUEST users from changing their login details or posting in the forums (values are 'N', or 'Y')\n".
 "  define('GUEST_LOCKED', '".GUEST_LOCKED."' );\n\n".
 "//LOGIN AUTHENTICATION\n\n".
-"  //Work factor for Blowfish password hashing (values are 4 to 31, for default use 8)\n".
-"  define('WORK_FACTOR', ".WORK_FACTOR." );\n\n".
 "  //Use external webserver authorisation to login (values are 'N', or 'Y')\n".
 "  define('WEB_AUTH', 'N' );\n\n".
 "  //Use Active Directory to authenticate (values are 'N', or 'Y')\n".

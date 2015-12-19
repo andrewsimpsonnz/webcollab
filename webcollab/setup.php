@@ -165,34 +165,26 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
 
   //if user-password combination exists
   if($row = @db_fetch_array($q, 0 ) ) {
-
-    switch (substr($row['password'], 0, 3 ) ) {
-
-      case '$2a':
-      case '$2y':
-        //bcrypt encryption
-        $salt = substr($row['password'], 0, 29 );
-        $hash = crypt($_POST['password'], $salt );
-        break;
-
-      case '$5$':
-        //sha256 + salt encryption (deprecated)
-        $parts = explode('$', $row['password'] );
-        $salt = '$5$'.$parts[2].'$'.$parts[3].'$';
-        $hash = crypt($_POST['password'], $salt );
-        break;
-
-      default:
-        //older md5 encryption (being deprecated)
-        $hash = md5($_POST['password'] );
-        break;
+  
+      //bcrypt encryption or SHA256 + salt (deprecated - used WebCollab 3.30 - 3.31 )
+    if(strlen($row['password'] ) > 50 ){
+      //verify password
+      if(password_verify($_POST['password'], $row['password'] ) ) {
+        //valid password -> continue
+        enable_login($row['id'], $username, $ip );
+      }
     }
 
-    if($hash === $row['password'] ) {
-      enable_login($row['id'], $username, $ip );
+    //fallback to older md5 encryption (deprecated - used WebCollab 1.01 - 3.30 )
+    if(strlen($row['password'] ) < 35 ) {
+      //verify password
+      if($row['password'] === md5($_POST['password'] ) ) {
+        //valid password -> continue
+       enable_login($row['id'], $username, $ip );
+      }
     }
   }
-  
+
   record_fail($username, $ip);
 }
 
@@ -208,8 +200,8 @@ if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
 }
 
 //version check
-if(version_compare(PHP_VERSION, '5.4.0' ) == -1 ) {
-  secure_error(sprintf($lang['min_version'], '5.4.0', PHP_VERSION ) );
+if(version_compare(PHP_VERSION, '5.5.0' ) == -1 ) {
+  secure_error(sprintf($lang['min_version'], '5.5.0', PHP_VERSION ) );
   }
 
 //check that UTF-8 character encoding can be used

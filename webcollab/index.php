@@ -156,7 +156,25 @@ function check_lockout($username ) {
   
   return true;
 }
-  
+
+function password_upgrade($userid, $password ) {
+
+  $hash = password_hash($password, PASSWORD_BCRYPT );
+
+  //blowfish will give a random string of less than 13 characters in error condition
+  if(strlen($hash ) < 13 ) return false;
+
+  //update the password
+  db_begin();
+
+  $q = db_prepare('UPDATE '.PRE.'users SET password=? WHERE id=?' );
+  db_execute($q, array($hash, $userid ) );
+
+  db_commit();
+
+  return true;
+}
+
 //
 // MAIN LOGIN
 //
@@ -199,41 +217,39 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
   if( ! @db_execute($q, array($username), 0 ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
   }
-
+  
   //if user-password combination exists
   if($row = @db_fetch_array($q, 0 ) ) {
 
-    switch (substr($row['password'], 0, 3 ) ) {
-
-      case '$2a':
-      case '$2y':
-        //bcrypt encryption
-        $salt = substr($row['password'], 0, 29 );
-        $hash = crypt($_POST['password'], $salt );
-        break;
-
-      case '$5$':
-        //sha256 + salt encryption (deprecated)
-        $parts = explode('$', $row['password'] );
-        $salt = '$5$'.$parts[2].'$'.$parts[3].'$';
-        $hash = crypt($_POST['password'], $salt );
-        break;
-
-      default:
-        //older md5 encryption (being deprecated)
-        $hash = md5($_POST['password'] );
-        break;
+    //bcrypt encryption or SHA256 + salt (deprecated - used WebCollab 3.30 - 3.31 )
+    if(strlen($row['password'] ) > 50 ){
+      //verify password
+      if(password_verify($_POST['password'], $row['password'] ) ) {
+        //check need for rehash (work factor changed or older SHA256 )
+        if(password_needs_rehash($row['password'], PASSWORD_BCRYPT ) ) {
+          password_upgrade($row['id'], validate($_POST['password'] ) );
+        }
+        //valid password -> continue
+        enable_login($row['id'], $username, $ip, $taskid );
+      }
     }
 
-    if($hash === $row['password'] ) {
-      enable_login($row['id'], $username, $ip, $taskid );
+    //fallback to older md5 encryption (deprecated - used WebCollab 1.01 - 3.30 )
+    if(strlen($row['password'] ) < 35 ) {
+      //verify password
+      if($row['password'] === md5($_POST['password'] ) ) {
+        //upgrade password now...
+        password_upgrade($row['id'], validate($_POST['password'] ) );
+        //valid password -> continue
+        enable_login($row['id'], $username, $ip, $taskid );
+      }
     }
   }
 
   //no such user-password combination
   record_fail($username, $ip);
 }
-   
+
 // 2. Web authorisation
 if(WEB_AUTH === 'Y' && isset($_SERVER['REMOTE_USER']) && (strlen($_SERVER['REMOTE_USER']) > 0 ) ) {
 

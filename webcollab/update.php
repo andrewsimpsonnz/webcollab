@@ -506,7 +506,7 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   $username = safe_data($_POST['username']);
 
   //construct login query for username / password
-  if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\' AND admin=\'t\'', 0 ) ) ) {
+  if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\' AND admin=\'t\' LIMIT 1', 0 ) ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
   }
 
@@ -543,33 +543,25 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   //if user-password combination exists
   if($row == true ) {
 
-    switch (substr($row['password'], 0, 3 ) ) {
-
-     case '$5$':
-        //sha256 + salt encryption
-        $parts = explode('$', $row['password'] );
-        $salt = '$5$'.$parts[2].'$'.$parts[3].'$';
-        $hash = crypt($_POST['password'], $salt );
-        break;
-
-      case '$2a':
-      case '$2y':
-        //bcrypt encryption
-        $salt = substr($row['password'], 0, 29 );
-        $hash = crypt($_POST['password'], $salt );
-        break;
-
-      default:
-        //older md5 encryption (being deprecated)
-        $hash = md5($_POST['password'] );
-        break;
+    //bcrypt encryption or SHA256 + salt (deprecated - used WebCollab 3.30 - 3.31 )
+    if(strlen($row['password'] ) > 50 ){
+      //verify password
+      if(password_verify($_POST['password'], $row['password'] ) ) {
+        //valid password -> continue
+        update($username );
+      }
     }
 
-    if($hash === $row['password'] ) {
-      update($username );
+    //fallback to older md5 encryption (deprecated - used WebCollab 1.01 - 3.30 )
+    if(strlen($row['password'] ) < 35 ) {
+      //verify password
+      if($row['password'] === md5($_POST['password'] ) ) {
+        //valid password -> continue
+        update($username );
+      }
     }
   }
-    
+
   //wait two seconds then record an error
   sleep(2);
   secure_error("Not a valid username, or password" );
