@@ -1,3 +1,21 @@
+WebCollab 3.44 - Sweet Pea
+*** 17 December 2015
+
+- release
+
+- based on WebCollab 3.42 with config version fixed.
+
+WebCollab Git
+*** 15 December 2015
+
+- change to password_hash() for password functions
+
+- automatically upgrade older md5 password hashes to blowfish crypt on login
+
+- remove WORK_FACTOR constant for blowfish crypt.  Use PHP defaults.
+
+- update minimum PHP to 5.5
+
 WebCollab Git
 *** 18 September 2015
 
