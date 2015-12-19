@@ -60,21 +60,7 @@ if(! $admin_password == $admin_password_check ) {
   error_setup('Password check failed' );
 }
 
-//generate salt
-if(function_exists('openssl_random_pseudo_bytes' ) ) {
-  //random string of 18 characters length, then base64 encode to 24 characters
-  $salt = base64_encode(openssl_random_pseudo_bytes(18 ) );
-}
-else {
-  // modified from comment by kaminski at istori dot com (https://php.net/manual/en/function.crypt.php#102278)
-  $salt = base64_encode(pack('N4', mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ), mt_rand(0, 2147483647 ) ) );
-}
-  
-$salt = substr($salt, 0, 22 );
-$salt = strtr($salt, array('+'=>'.', '='=>'.') );
-
-// format is $2y$ [work factor] $ [salt] [bcrypt hash]
-$hash = crypt($admin_password, '$2y$'.sprintf('%02u', WORK_FACTOR ).'$'.$salt );
+$hash = password_hash($admin_password, PASSWORD_BCRYPT );
 
 if(strlen($hash ) < 13 ) {
   error_setup('Password hash algorithm failed. Transaction cancelled' );
