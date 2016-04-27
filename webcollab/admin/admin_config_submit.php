@@ -2,7 +2,7 @@
 /*
   $Id: admin_config_submit.php 2199 2009-04-10 21:34:16Z andrewsimpson $
 
-  (c) 2003 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2016 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -58,7 +58,7 @@ if(USE_EMAIL === 'Y' ){
   foreach($input_array as $var) {
     if(! empty($_POST[$var]) ) {
       $input = validate(trim($_POST[$var] ) );
-      if(filter_var($input, FILTER_VALIDATE_EMAIL ) === false ) {
+      if((filter_var($input, FILTER_VALIDATE_EMAIL ) === false ) || (strlen($input ) > 200 ) ) {
         warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], safe_data($_POST[$var] ) ) );
       }
       ${$var} = $input;
@@ -164,7 +164,7 @@ if((preg_match_all('/\b[a-z0-9\.\_\-]+@[a-z0-9][a-z0-9\.\-]+\.[a-z\.]+\b/i', $in
   //cycle through addresses and store in database
   foreach($match[0] as $address ) {
     //validate address
-    if(filter_var($address, FILTER_VALIDATE_EMAIL ) === false ) {
+    if((filter_var($address, FILTER_VALIDATE_EMAIL ) === false ) || (strlen($address ) > 200 ) ) {
       continue;
     }
     db_execute($q, array($address ) );

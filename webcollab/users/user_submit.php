@@ -2,7 +2,7 @@
 /*
   $Id: user_submit.php 2180 2009-04-07 09:33:17Z andrewsimpson $
 
-  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2016 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -236,7 +236,7 @@ switch($_POST['action'] ) {
     //get locale
     $locale = (empty($_POST['locale']) ) ? LOCALE : user_locale_check(validate($_POST['locale']) );
 
-    if(filter_var($email_raw, FILTER_VALIDATE_EMAIL ) === false ) {
+    if((filter_var($email_raw, FILTER_VALIDATE_EMAIL ) === false ) || (strlen($email_raw ) > 200 ) ) {
       warning( $lang['invalid_email'], sprintf( $lang['invalid_email_given_sprt'], safe_data($_POST['email'] ) ) );
     }
     $email_unclean = $email_raw;
