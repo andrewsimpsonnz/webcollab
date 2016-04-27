@@ -2,7 +2,7 @@
 /*
   $Id: task_clone_submit.php 2286 2009-08-22 08:45:30Z andrewsimpson $
 
-  (c) 2004 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2016 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
    WebCollab
   ---------------------------------------
@@ -173,15 +173,6 @@ function copy_across($taskid, $new_parent, $name, $delta_deadline ) {
   //  This should db_prepare() as part of next query, but postgresql DOES NOT support binding to TIMESTAMP or INTERVAL !!
   $q = db_query('SELECT (TIMESTAMP \''.$row['deadline'].'\' + INTERVAL '.db_delim((int)$delta_deadline.' DAY').')' );
   $new_deadline = db_result($q );
-
-  foreach(array('globalaccess', 'groupaccess' ) as $var ) {
-    if($row[$var] == true ) {
-      $row[$var] = 't';
-    }
-    else {
-      $row[$var] = 'f';
-    }
-  }
 
   db_execute($q4, array($new_name, $row['text'], UID, UID, $new_deadline, $row['priority'],
                   $new_parent, $new_projectid, $row['taskgroupid'], $row['usergroupid'], $row['globalaccess'],
