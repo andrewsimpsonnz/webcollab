@@ -2,7 +2,7 @@
 /*
   $Id: forum_search.php 2162 2009-04-06 07:12:58Z andrewsimpson $
 
-  (c) 2005 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2016 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -145,8 +145,6 @@ $q = db_prepare('SELECT '.PRE.'forum.taskid AS taskid,
 db_execute($q, array('%'.$string.'%', '%'.$string.'%' ) );
 
 $content .= sprintf($lang['search_results'], $total, $string, ($min + 1), $max )."<br /><br />\n";
-
-$content .= "<ul class=\"search-ul\">\n";
 
 //search terms for regex
 $replacement = '<span class="red"><b>$0</b></span>';
