@@ -2,7 +2,7 @@
 /*
   $Id: setup.php 2288 2009-08-22 08:50:00Z andrewsimpson $
 
-  (c) 2003 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -65,6 +65,10 @@ function enable_login($userid, $username, $ip='0.0.0.0' ) {
     //random key of 40 hex characters length
     $session_key = bin2hex(openssl_random_pseudo_bytes(20 ) );
   }
+  elseif(function_exists('random_bytes') ) {
+    //random bytes is PHP 7 and above
+    $session_key = bin2hex(random_bytes(20 ) );
+  }
   else {
     //use Mersenne Twister algorithm (random number), then one-way hash to give session key
     $session_key = sha1(mt_rand().mt_rand().mt_rand().mt_rand() );
@@ -98,7 +102,7 @@ function record_fail($username, $ip ) {
   //wait 2 seconds then record an error
   sleep (2);
   secure_error($lang_setup['no_login'] );
-  die;  
+  die;
 }
 
 //limit number of login attempts
@@ -121,10 +125,10 @@ function check_lockout($username ) {
     secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
     die;
   }
-  
+
   return true;
 }
-  
+
 //
 // LOGIN CHECK
 //
@@ -153,7 +157,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
 
   //check for account locked
   check_lockout($username );
-  
+
   //construct login query for username / password
   if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\'', 0 ) ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
@@ -165,7 +169,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
 
   //if user-password combination exists
   if($row = @db_fetch_array($q, 0 ) ) {
-  
+
       //bcrypt encryption or SHA256 + salt (deprecated - used WebCollab 3.30 - 3.31 )
     if(strlen($row['password'] ) > 50 ){
       //verify password
@@ -200,8 +204,8 @@ if( ! isset($WEB_CONFIG ) || $WEB_CONFIG !== 'Y' ) {
 }
 
 //version check
-if(version_compare(PHP_VERSION, '5.5.0' ) == -1 ) {
-  secure_error(sprintf($lang['min_version'], '5.5.0', PHP_VERSION ) );
+if(version_compare(PHP_VERSION, '5.6.0' ) == -1 ) {
+  secure_error(sprintf($lang['min_version'], '5.6.0', PHP_VERSION ) );
   }
 
 //check that UTF-8 character encoding can be used
