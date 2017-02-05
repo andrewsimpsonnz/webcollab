@@ -2,7 +2,7 @@
 /*
   $Id: file_submit.php 2304 2009-08-25 09:18:26Z andrewsimpson $
 
-  (c) 2002 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -91,12 +91,12 @@ function file_delete($fileid ) {
       if(file_exists(FILE_BASE.'/'.$row['fileid'].'__'.$row['hashid'] ) ) {
         @unlink(FILE_BASE.'/'.$row['fileid'].'__'.$row['hashid'] );
       }
-      
+
       //earlier form
       if(file_exists(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] ) ) {
         @unlink(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] );
       }
- 
+
       // filename with other character set (obsolete)
       if(defined('FILENAME_CHAR_SET' ) && file_exists( FILE_BASE.'/'.$row['fileid'].'__'.mb_convert_encoding($row['filename'], FILENAME_CHAR_SET ) ) ) {
         @unlink(FILE_BASE.'/'.$row['fileid'].'__'.mb_convert_encoding($row['filename'] ) );
@@ -274,15 +274,19 @@ switch($_POST['action'] ) {
         unlink($_FILES['userfile']['tmp_name'][$i] );
         error('File submit', 'The file types .php, .php3, .php4, .php5 .jsp, .cgi and .asp are not acceptable for security reasons. You must either rename or compress the file.');
       }
-      
+
       //okay accept file
       db_begin();
 
-      
+
       //create hashid
-      if(function_exists('openssl_random_pseudo_bytes' ) && strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN' ) {
+      if(function_exists('openssl_random_pseudo_bytes' ) ) {
         //hash key of 40 hex characters length
         $hashid = bin2hex(openssl_random_pseudo_bytes(20 ) );
+      }
+      elseif(function_exists('random_bytes') ) {
+        //random bytes is PHP 7 and above
+        $hashid = bin2hex(random_bytes(20 ) );
       }
       else {
         //use Mersenne Twister algorithm (random number), then one-way hash
@@ -297,7 +301,7 @@ switch($_POST['action'] ) {
 
       //get last insert id
       $fileid = db_lastoid('files_id_seq' );
-      
+
       //copy it
       if( ! @move_uploaded_file( $_FILES['userfile']['tmp_name'][$i], FILE_BASE.'/'.$fileid.'__'.$hashid ) ) {
         $q = db_prepare('DELETE FROM '.PRE.'files WHERE id=?' );
