@@ -2,7 +2,7 @@
 /*
   $Id: index.php 2288 2009-08-22 08:50:00Z andrewsimpson $
 
-  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -61,11 +61,15 @@ function enable_login($userid, $username, $ip='0.0.0.0', $taskid ) {
     //random key of 40 hex characters length
     $session_key = bin2hex(openssl_random_pseudo_bytes(20 ) );
   }
+  elseif(function_exists('random_bytes') ) {
+    //random bytes is PHP 7 and above
+    $session_key = bin2hex(random_bytes(20 ) );
+  }
   else {
     //use Mersenne Twister algorithm (random number) to give up to 128 bits, then one-way hash to give session key
     $session_key = sha1(mt_rand().mt_rand().mt_rand().mt_rand() );
   }
-  
+
   //remove the old login information
   $q = db_prepare('DELETE FROM '.PRE.'logins WHERE user_id=?' );
   @db_execute($q, array($userid ) );
@@ -153,7 +157,7 @@ function check_lockout($username ) {
     secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
     die;
   }
-  
+
   return true;
 }
 
@@ -207,7 +211,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
 
   //check for account locked
   check_lockout($username );
-  
+
   //construct login query for username / password
   if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\'', 0 ) ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
@@ -217,7 +221,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
   if( ! @db_execute($q, array($username), 0 ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
   }
-  
+
   //if user-password combination exists
   if($row = @db_fetch_array($q, 0 ) ) {
 
@@ -269,10 +273,10 @@ if(ACTIVE_DIRECTORY == 'Y' && isset($_POST['username']) && isset($_POST['passwor
 
   $username = safe_data($_POST['username']);
   $password = safe_data($_POST['password'] );
-  
+
   //check for account locked
   check_lockout($username );
-  
+
   if(! $adconn = ldap_connect($AD_HOST, AD_PORT ) ) {
     secure_error('ACTIVE_DIRECTORY: Connection not successful.' );
   }
@@ -288,14 +292,14 @@ if(ACTIVE_DIRECTORY == 'Y' && isset($_POST['username']) && isset($_POST['passwor
   if($userid = login_query($username ) ) {
     enable_login($userid, $username, $ip, $taskid );
   }
-  
+
   //record failure
   record_fail($username, $ip );
-  
+
 }
 
 // 4. Continuation of session
-if(isset($_COOKIE['webcollab_session'] ) && preg_match('/^[a-f\d]{32}$/i', $_COOKIE['webcollab_session'] ) && (! $nologin ) ) {
+if(isset($_COOKIE['webcollab_session'] ) && preg_match('/^[a-f\d]{40}$/i', $_COOKIE['webcollab_session'] ) && (! $nologin ) ) {
   //allow for continuation of session if a valid cookie is already set
   // if 'nologin' is set we have just been rejected by security.php
 
