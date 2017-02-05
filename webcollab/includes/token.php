@@ -3,7 +3,7 @@
 /*
   $Id: security.php 2283 2009-08-22 08:40:04Z andrewsimpson $
 
-  (c) 2011 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2011 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -30,7 +30,19 @@
 function generate_token($action ) {
 
   //generate new token
-  $token = sha1(mt_rand().mt_rand().mt_rand().mt_rand() );
+  //  openssl_random_pseudo_bytes() is preferred
+  if(function_exists('openssl_random_pseudo_bytes' ) ) {
+    //random key of 40 hex characters length
+    $token = bin2hex(openssl_random_pseudo_bytes(20 ) );
+  }
+  elseif(function_exists('random_bytes') ) {
+    //random bytes is PHP 7 and above
+    $token = bin2hex(random_bytes(20 ) );
+  }
+  else {
+    $token = sha1(mt_rand().mt_rand().mt_rand().mt_rand() );
+  }
+
   define('TOKEN', $token );
 
   //update database
