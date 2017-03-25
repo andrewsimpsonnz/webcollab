@@ -1,4 +1,11 @@
 WebCollab Git
+*** 25 March 2017
+
+- add mb_check_encoding() use before using regex
+
+- improve setting UTF-8 encoding
+
+WebCollab Git
 *** 5 February 2017
 
 - Bugfix: Links in email require login due to incorrect $_COOKIE check (Thanks to Paul Knyazev)
@@ -6,7 +13,6 @@ WebCollab Git
 - add random_bytes() for PHP 7
 
 - update minimum PHP to 5.6
-
 
 WebCollab Git
 *** 27 April 2016

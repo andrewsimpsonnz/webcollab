@@ -2,7 +2,7 @@
 /*
   $Id: common.php 2275 2009-08-21 20:11:41Z andrewsimpson $
 
-  (c) 2002 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -86,9 +86,15 @@ function safe_data_long($body ) {
 // UTF-8 validation regex
 //
 
-// This code was specifically developed for WebCollab in 2006, but is now used widely in other software.
 function validate($body ) {
 
+  //check for fully compliant text
+  if(mb_check_encoding($body ) ) {
+    return $body;
+  }
+
+  //Not compliant - remove illegal characters individually
+  // This code was specifically developed for WebCollab in 2006, but is now used widely in other software.
   $body = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x1F\x7F]'.           //ASCII non-printing
                         '|(?<=^|[\x00-\x7F])[\x80-\xBF]+'.                //continuation with no start
                         '|[\xC0-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})'.  //illegal two byte
