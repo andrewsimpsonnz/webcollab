@@ -575,9 +575,9 @@ $content = "<div style=\"text-align:center\">\n".
            "<p>Admin login is required for database update:</p>\n".
            "<form method=\"post\" action=\"update.php\">\n".
            "<table style=\"margin-left:auto; margin-right:auto;\">\n".
-           "<tr align=\"left\" ><td>Login: </td><td><input type=\"text\" class=\"size\" id=\"username\" name=\"username\" />".
+           "<tr style=\"text-align: left\" ><td>Login: </td><td><input type=\"text\" class=\"size\" id=\"username\" name=\"username\" />".
            "<script type=\"text/javascript\">document.getElementById('username').focus();</script></td></tr>\n".
-           "<tr align=\"left\" ><td>Password: </td><td><input type=\"password\" class=\"size\" name=\"password\" value=\"\" /></td></tr>\n".
+           "<tr style=\"text-align: left\" ><td>Password: </td><td><input type=\"password\" class=\"size\" name=\"password\" value=\"\" /></td></tr>\n".
            "</table>\n".
            "<p style=\"padding-top: 20px\"><input type=\"submit\" value=\"Login\" /></p>\n".
            "</form></div>\n";

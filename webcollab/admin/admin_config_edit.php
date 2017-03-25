@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -67,7 +67,7 @@ if(USE_EMAIL === 'Y' ){
   //email addresses
   $content .= "<tr><td><a href=\"help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=admin&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\" >".$lang['admin_email']."</a>:</td><td><input type=\"text\" id=\"admin\" class=\"size\" name=\"email_admin\" value=\"".$row['email_admin']."\" />".
               "<script type=\"text/javascript\">document.getElementById('admin').focus();</script></td></tr>\n".
-              "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_reply']."</a>:</td><td><input type=\"text\" id=\"reply\" class=\"size\"name=\"reply_to\" value=\"".$row['reply_to']."\" /></td></tr>\n".
+              "<tr><td><a href=\"help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=reply&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_reply']."</a>:</td><td><input type=\"text\" id=\"reply\" class=\"size\" name=\"reply_to\" value=\"".$row['reply_to']."\" /></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=from&amp;type=admin&amp;lang=".LOCALE_USER."'); return false\">".$lang['email_from']."</a>:</td><td><input type=\"text\" id=\"from\" class=\"size\" name=\"from\" value=\"".$row['email_from']."\" /></td></tr>\n";
 
   //get mailing list
@@ -115,7 +115,7 @@ switch($row['project_order']){
     break;
 }
 
-//project listing order 
+//project listing order
 $content .= "<tr><td>".$lang['project_listing_order'].":</td><td>\n".
             "<select name=\"project_order\">\n".
             "<option value=\"name\"".$s1.">".$lang['name']."</option>\n".

@@ -2,7 +2,7 @@
 /*
   $Id: usergroup_edit.php 2296 2009-08-24 09:44:14Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -77,9 +77,9 @@ $content = "<form method=\"post\" action=\"usergroups.php\">\n".
            "<table class=\"celldata\">\n".
            "<tr><td>".$lang['usergroup_name']."</td><td><input type=\"text\" name=\"name\" value=\"".$row['name']."\" class=\"size\" /></td></tr>\n".
            "<tr><td>".$lang['usergroup_description']."</td><td><input type=\"text\" name=\"description\" value=\"".$row['description']."\" class=\"size\" /></td></tr>\n".
-           "<tr><td>&nbsp;</td></tr>\n".
+           "<tr><td></td><td></td></tr>\n".
            "<tr><td><label for=\"private\">".$lang['private_usergroup'].":</label></td><td><input type=\"checkbox\" name=\"private_group\" id=\"private\" ".$private." /></td></tr>\n".
-           "<tr><td>&nbsp;</td></tr>\n";
+           "<tr><td></td><td></td></tr>\n";
 
 //add users
 $q = db_prepare('SELECT '.PRE.'users.id AS id
@@ -110,9 +110,9 @@ for( $i=0 ; $user_row = @db_fetch_array($q, $i ) ; ++$i ) {
 }
 
 $content .=  "</select><small><i>".$lang['select_instruct']."</i></small></td></tr>\n".
-             "<tr><td>&nbsp;</td></tr>\n".
+             "<tr><td></td><td></td></tr>\n".
              "<tr><td><label for=\"usergroup\">".$lang['email_edit_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP." /></td></tr>\n".
-             "<tr><td>&nbsp;</td></tr>\n".
+             "<tr><td></td><td></td></tr>\n".
              "</table>\n".
              "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" /></p>\n".
              "</form>\n".

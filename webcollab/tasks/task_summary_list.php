@@ -99,7 +99,7 @@ function project_summary($q, $depth=0, $input='' ) {
 
   //cycle though task data retrieved from database and process
   foreach($result_array as $row ) {
-  
+
     //don't show tasks in closed usergroup projects
     if( (! ADMIN ) && isset($no_access_project[($row['projectid'])] ) ) {
       if(! isset($GID[ ($no_access_project[($row['projectid'])] ) ] ) ) {
@@ -460,7 +460,7 @@ else {
 
 $content .= "<table class=\"celldata\">\n".
             "<tr><td colspan=\"3\">".
-            "<small><a href=\"help/help_language.php?item=summarypage&amp;type=help&amp;lang=".LOCALE_USER."\"".
+            "<small><a href=\"help/help_language.php?item=summarypage&amp;type=help&amp;lang=".LOCALE_USER."\" ".
             "onclick=\"window.open('help/help_language.php?item=summarypage&amp;type=help&amp;lang=".LOCALE_USER."'); return false\"><b>".$lang['flags']."</b></a></small></td>\n".
             "<td><small><a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=deadline\"><b>".$lang['deadline']."</b></a></small></td>\n".
             "<td><small><a href=\"tasks.php?x=".X."&amp;action=summary&amp;sortby=status\"><b>".$lang['status']."</b></a></small></td>\n".

@@ -344,9 +344,9 @@ $content .= "<p>".$lang['please_login'].":</p>\n".
 	    "<form method=\"post\" action=\"index.php\">\n".
 	    "<fieldset><input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" /></fieldset>\n".
 	    "<table style=\"margin-left:auto; margin-right:auto;\">\n".
-	    "<tr align=\"left\" ><td>".$lang['login'].": </td><td><input id=\"username\" class=\"size\" type=\"text\" name=\"username\" value=\"\" />".
+	    "<tr style=\"text-align: left\" ><td>".$lang['login'].": </td><td><input id=\"username\" class=\"size\" type=\"text\" name=\"username\" value=\"\" />".
 	    "<script type=\"text/javascript\">document.getElementById('username').focus();</script></td></tr>\n".
-	    "<tr align=\"left\" ><td>".$lang['password'].": </td><td><input type=\"password\" class=\"size\" name=\"password\" value=\"\" /></td></tr>\n".
+	    "<tr style=\"text-align: left\" ><td>".$lang['password'].": </td><td><input type=\"password\" class=\"size\" name=\"password\" value=\"\" /></td></tr>\n".
 	    "</table>\n".
 	    "<p style=\"padding-top: 20px; padding-bottom: 20px\"><input type=\"submit\" value=\"".$lang['login_action']."\" /></p>\n".
 	    "</form>\n";

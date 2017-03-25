@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -51,7 +51,7 @@ $content =
       "<table class=\"celldata\">\n".
       "<tr><td>".$lang['taskgroup_name']."</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" />".
       "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
-      "<tr><td>".$lang['taskgroup_description']."</td><td><input type=\"text\"name=\"description\" class=\"size\" /></td></tr>\n".
+      "<tr><td>".$lang['taskgroup_description']."</td><td><input type=\"text\" name=\"description\" class=\"size\" /></td></tr>\n".
       "</table>\n".
       "<p><input type=\"submit\" value=\"".$lang['add_taskgroup']."\" /></p>\n".
       "</form>\n";

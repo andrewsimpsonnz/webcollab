@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -57,13 +57,13 @@ $content =  "<form method=\"post\" action=\"users.php\" ".
             "<tr><td>".$lang['password'].":</td><td><input id=\"pass\" type=\"".PASS_STYLE."\" name=\"password\" class=\"size\" /></td></tr>\n".
             "<tr><td>".$lang['email'].":</td><td><input id=\"email\" type=\"text\" name=\"email\" class=\"size\" /></td></tr>\n".
             user_locale(LOCALE).
-            "<tr><td>&nbsp;</td></tr>\n".
+            "<tr><td></td><td></td></tr>\n".
             "<tr><td><label for=\"private\">".$lang['private_user'].":</label></td><td><input type=\"checkbox\" name=\"private_user\" id=\"private\" /></td></tr>\n".
-            "<tr><td>&nbsp;</td></tr>\n".
+            "<tr><td></td><td></td></tr>\n".
             "<tr><td><label for=\"normal\">".$lang['normal_user'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"normal\" id=\"normal\" checked=\"checked\" /></td></tr>\n".
             "<tr><td><label for=\"admin\">".$lang['is_admin'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"admin\" id=\"admin\" /></td></tr>\n".
             "<tr><td><label for=\"guest\">".$lang['is_guest'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"guest\" id=\"guest\" /></td></tr>\n".
-            "<tr><td>&nbsp;</td></tr>\n";
+            "<tr><td></td><td></td></tr>\n";
 
 //add user-groups
 $q = db_query('SELECT name, id FROM '.PRE.'usergroups ORDER BY name' );

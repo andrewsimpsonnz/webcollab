@@ -2,7 +2,7 @@
 /*
   $Id: user_edit.php 2297 2009-08-24 09:45:18Z andrewsimpson $
 
-  (c) 2002 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -97,7 +97,7 @@ $content =  "<form method=\"post\" action=\"users.php\" ".
 
 //don't show password field for WEB_AUTH
 if(WEB_AUTH == 'N' ) {
-  $content .= "<tr><td>".$lang['password'].":</td><td><input type=\"".PASS_STYLE."\" name=\"password\" class=\"size\" value=\"\"    /></td><td><small><i>".$lang['blank_for_current_password']."</i></small></td></tr>\n";
+  $content .= "<tr><td>".$lang['password'].":</td><td><input type=\"".PASS_STYLE."\" name=\"password\" class=\"size\" value=\"\" /><small><i>".$lang['blank_for_current_password']."</i></small></td></tr>\n";
 }
 
 $content .= "<tr><td>".$lang['email'].":</td><td><input id=\"email\" type=\"text\" name=\"email\" class=\"size\" value=\"".$row['email']."\" /></td></tr>\n";
@@ -108,15 +108,14 @@ $content .=  user_locale($row['locale'] );
 if(ADMIN ) {
 
   //add blank line
-  $content .= "<tr><td>&nbsp;</td></tr>\n";
+  $content .= "<tr><td></td><td></td></tr>\n";
 
   //private user
   if( $row['private'] == 1 ){
     $content .= "<tr><td><label for=\"private\">".$lang['private_user'].":</label></td><td><input type=\"checkbox\" name=\"private_user\" checked=\"checked\" id=\"private\" /></td></tr>\n";
   }
   else{
-    $content .= "<tr><td><label for=\"private\">".$lang['private_user'].":</label></td><td><input type=\"checkbox\" name=\"private_user\" id=\"private\" /></td></tr>\n".
-                "<tr><td>&nbsp;</td></tr>\n";
+    $content .= "<tr><td><label for=\"private\">".$lang['private_user'].":</label></td><td><input type=\"checkbox\" name=\"private_user\" id=\"private\" /></td></tr>\n";
   }
 
   //normal user
@@ -137,7 +136,7 @@ if(ADMIN ) {
                "<tr><td><label for=\"guest\">".$lang['is_guest'].":</label></td><td><input type=\"radio\" name=\"user_type\" value=\"guest\" id=\"guest\" ".$s3." /></td></tr>\n";
 
   //add blank line
-  $content .= "<tr><td>&nbsp;</td></tr>\n";
+  $content .= "<tr><td></td><td></td></tr>\n";
 
   //add user-groups
   $usergroup_q = db_query("SELECT name, id FROM ".PRE."usergroups ORDER BY name" );

@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -40,7 +40,7 @@ if( ! ADMIN ){
 $q = db_query('SELECT * FROM '.PRE.'taskgroups ORDER BY name' );
 
 $content =  "<table class=\"celldata\">\n".
-            "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th></tr>\n";
+            "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th><th></th></tr>\n";
 
 //show all taskgroups
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
