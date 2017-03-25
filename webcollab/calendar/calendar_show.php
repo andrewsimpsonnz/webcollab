@@ -241,7 +241,7 @@ $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
             "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n".
             "<table class=\"decoration\" style=\"margin-left: auto; margin-right: auto;\" >\n".
-            "<tr align=\"left\"><td><input type=\"radio\" value=\"user\" onchange=\"javascript:this.form.submit()\" name=\"selection\" id=\"users\"".$s1."/><label for=\"users\">".$lang['users']."</label>\n".
+            "<tr style=\"text-align:left\"><td><input type=\"radio\" value=\"user\" onchange=\"javascript:this.form.submit()\" name=\"selection\" id=\"users\"".$s1."/><label for=\"users\">".$lang['users']."</label>\n".
             "<label for=\"users\"><select name=\"userid\" ".$s5." onchange=\"javascript:this.form.submit()\">\n".
             "<option value=\"0\"".$s2.">".$lang['all_users']."</option>\n";
 
