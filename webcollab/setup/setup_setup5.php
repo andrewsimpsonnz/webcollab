@@ -56,7 +56,7 @@ foreach($array as $var ) {
 
 //non-essential values
 $array = array('manager_name', 'abbr_manager_name', 'db_password', 'file_base', 'file_maxsize', 'use_email',
-               'smtp_host', 'smtp_auth', 'mail_user', 'mail_password', 'tls','new_db', 'db_connect' );
+               'smtp_host', 'smtp_port', 'smtp_auth', 'mail_user', 'mail_password', 'tls','new_db', 'db_connect' );
 
 foreach($array as $var ) {
   if(! isset($_POST[$var]) ) {
@@ -69,7 +69,7 @@ foreach($array as $var ) {
 
 //these values should all be defined as constants in the existing config file...
 $array = array('NUM_FILE_UPLOADS' => 3, 'FILE_DOWNLOAD' => 'inline',
-               'MAIL_TRANSPORT' => 'SMTP', 'SMTP_PORT' => 25,
+               'MAIL_TRANSPORT' => 'SMTP',
                'CSS_MAIN' => 'default.css', 'CSS_CALENDAR' => 'calendar.css', 'CSS_PRINT' => 'print.css',
                'SITE_IMG'     => 'webcollab.png',
                'NEW_TIME'     => 14,
@@ -185,7 +185,7 @@ $content .=
 "    //mail transport (SMTP for standard mailserver, or PHPMAIL for PHP mail() )\n".
 "    define('MAIL_TRANSPORT', '".MAIL_TRANSPORT."' );\n".
 "    //SMTP port (leave as 25 for ordinary mailservers)\n".
-"    define('SMTP_PORT', ".SMTP_PORT." );\n\n".
+"    define('SMTP_PORT', ".$data["smtp_port"]." );\n\n".
 "    //use smtp auth? ('Y' or 'N')\n".
 "    define('SMTP_AUTH', '".$data["smtp_auth"]."' );\n".
 "      //if using SMTP_AUTH give username & password\n".

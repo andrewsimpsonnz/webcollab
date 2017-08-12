@@ -78,6 +78,14 @@ foreach($array as $var ) {
   }
 }
 
+//set port 587 with starttls
+if($data['tls'] == 'Y' ) {
+  $data['smtp_port'] = '587';
+}
+else {
+  $data['smtp_port'] = '25';
+}
+
 $content  = '';
 $flag = 0;
 
