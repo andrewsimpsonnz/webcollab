@@ -2,7 +2,7 @@
 /*
   $Id: calendar_show.php 2305 2009-08-27 06:08:59Z andrewsimpson $
 
-  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -242,7 +242,7 @@ $content .= "<form method=\"post\" action=\"calendar.php\">\n".
             "<input type=\"hidden\" name=\"action\" value=\"show\" /></fieldset>\n".
             "<table class=\"decoration\" style=\"margin-left: auto; margin-right: auto;\" >\n".
             "<tr style=\"text-align:left\"><td><input type=\"radio\" value=\"user\" onchange=\"javascript:this.form.submit()\" name=\"selection\" id=\"users\"".$s1."/><label for=\"users\">".$lang['users']."</label>\n".
-            "<label for=\"users\"><select name=\"userid\" ".$s5." onchange=\"javascript:this.form.submit()\">\n".
+            "<label><select name=\"userid\" ".$s5." onchange=\"javascript:this.form.submit()\">\n".
             "<option value=\"0\"".$s2.">".$lang['all_users']."</option>\n";
 
 //get all users for option box
@@ -267,7 +267,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 $content .= "</select></label></td>\n".
             "<td><input type=\"radio\" value=\"group\" name=\"selection\" onchange=\"javascript:this.form.submit()\" id=\"group\"".$s3." /><label for=\"group\">".$lang['usergroups']."</label>\n".
-            "<label for=\"group\"><select name=\"groupid\" ".$s6." onchange=\"javascript:this.form.submit()\">\n".
+            "<label><select name=\"groupid\" ".$s6." onchange=\"javascript:this.form.submit()\">\n".
             "<option value=\"0\"".$s4.">".$lang['no_group']."</option>\n";
 
 //get all groups for option box

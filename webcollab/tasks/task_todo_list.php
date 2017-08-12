@@ -2,7 +2,7 @@
 /*
   $Id: task_todo_list.php 2295 2009-08-24 09:42:09Z andrewsimpson $
 
-  (c) 2002 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -296,7 +296,7 @@ $content .= "<form method=\"post\" action=\"tasks.php\">\n".
             "<table class=\"decoration\" >\n".
             "<tr style=\"text-align:left\"><td>".$lang['todo_list_for']."</td>".
             "<td><input type=\"radio\" value=\"user\" name=\"selection\" onchange=\"javascript:this.form.submit()\" id=\"user\"".$s1." /><label for=\"user\">".$lang['users']."</label></td><td>\n".
-            "<label for=\"user\"><select name=\"userid\" ".$s5." onchange=\"javascript:this.form.submit()\" >\n".
+            "<label><select name=\"userid\" ".$s5." onchange=\"javascript:this.form.submit()\" >\n".
             "<option value=\"0\"".$s2.">".$lang['nobody']."</option>\n";
 
 //get all users for option box
@@ -321,7 +321,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 $content .= "</select></label></td>\n".
             "<td><input type=\"radio\" value=\"group\" name=\"selection\" onchange=\"javascript:this.form.submit()\" id=\"group\"".$s3." /><label for=\"group\">".$lang['usergroups']."</label></td><td>\n".
-            "<label for=\"group\"><select name=\"groupid\" ".$s6." onchange=\"javascript:this.form.submit()\">\n".
+            "<label><select name=\"groupid\" ".$s6." onchange=\"javascript:this.form.submit()\">\n".
             "<option value=\"0\"".$s4.">".$lang['no_group']."</option>\n";
 
 //get all groups for option box

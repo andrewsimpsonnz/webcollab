@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2009 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -70,7 +70,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
               "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['task_id']."\">".$row['task_name']."</a>".
               "</td></tr>\n".
               "<tr class=\"searchlist\"><td>".$lang['file']."</td><td>".
-              "<a href=\"files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."\""." onclick=\"window.open('files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a>".
+              "<a href=\"files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a>".
               "&nbsp;<small>(".nice_size($row['size'] ).")&nbsp;</small>".
               //delete option
               "<span class=\"textlink\">[<a href=\"files.php?x=".X."&amp;action=delete&amp;fileid=".$row['id']."&amp;admin=1&amp;taskid=".$row['task_id']."\">".$lang['del']."</a>]</span></td></tr>\n".
