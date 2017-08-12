@@ -52,12 +52,12 @@ if(isset($_COOKIE['webcollab_session'] ) && (strlen(trim($_COOKIE['webcollab_ses
   $session_key = validate($_COOKIE['webcollab_session'] );
   define('X', 0 );
 }
-elseif(isset($_POST['x'] ) && (strlen(trim($_POST['x'], '1234567890abcdefABCDEF' ) ) == 0 ) && strlen(trim($_COOKIE['webcollab_session'] ) ) == 40 ) {
+elseif(isset($_POST['x'] ) && (strlen(trim($_POST['x'], '1234567890abcdefABCDEF' ) ) == 0 ) && strlen(trim($_POST['webcollab_session'] ) ) == 40 ) {
   $session_key = validate($_POST['x']);
   $x = $_POST['x'];
   define('X', $x );
 }
-elseif(isset($_GET['x'] ) && (strlen(trim($_GET['x'], '1234567890abcdefABCDEF' ) ) == 0 ) && strlen(trim($_COOKIE['webcollab_session'] ) ) == 40 ) {
+elseif(isset($_GET['x'] ) && (strlen(trim($_GET['x'], '1234567890abcdefABCDEF' ) ) == 0 ) && strlen(trim($_GET['webcollab_session'] ) ) == 40 ) {
   $session_key = validate($_GET['x']);
   $x = $_GET['x'];
   define('X', $x );
