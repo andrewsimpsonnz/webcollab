@@ -1,4 +1,13 @@
 WebCollab Git
+*** 13 August 2017
+
+- minor HTML improvements to suit HTML5
+
+- provide code for HTML5 option in screen.php
+
+- allow for setting smtp TLS port number in setup
+
+WebCollab Git
 *** 25 March 2017
 
 - add mb_check_encoding() use before using regex
@@ -13,6 +22,11 @@ WebCollab Git
 - add random_bytes() for PHP 7
 
 - update minimum PHP to 5.6
+
+WebCollab 3.44 - Akitio
+*** 16 July 2016
+
+- release
 
 WebCollab Git
 *** 27 April 2016
