@@ -2,7 +2,7 @@
 /*
   $Id: usergroup_manage.php 2296 2009-08-24 09:44:14Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -63,7 +63,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 $q = db_query('SELECT * FROM '.PRE.'usergroups ORDER BY name' );
 
 $content =  "<table class=\"celldata\">\n".
-            "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th><th>".$lang['private_usergroup']."</th></tr>\n";
+            "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th><th>".$lang['private_usergroup']."</th><th></th></tr>\n";
 
 //show all usergroups
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -78,7 +78,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $private = ($row['private'] ) ? $lang['yes'] : $lang['no'];
   $colspan = (ADMIN ) ? '4' : '3';
 
-  $content .= "<tr><td colspan=\"".$colspan."\"><hr /></td></tr>\n".
+  $content .= "<tr><td colspan=\"".$colspan."\" class=\"divline\"></td></tr>\n".
               "<tr class=\"grouplist\"><td><b>".$row['name']."</b></td><td><i>".$row['description']."</i></td><td style=\"text-align: center\">".$private."</td>\n";
 
   if(ADMIN) {

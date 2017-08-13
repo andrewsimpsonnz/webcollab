@@ -285,7 +285,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 }
 
 $content .= "</select></label></td>\n".
-            "<td colspan=\"2\" ><input type=\"submit\" value=\"".$lang['update']."\" /></td></tr>\n".
+            "<td><input type=\"submit\" value=\"".$lang['update']."\" /></td></tr>\n".
             "</table>\n";
 
 //month (must be in decimal, 'cause that's what database uses!)

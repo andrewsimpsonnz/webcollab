@@ -44,7 +44,7 @@ $content =  "<table class=\"celldata\">\n".
 
 //show all taskgroups
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
-  $content .= "<tr><td colspan=\"3\"><hr /></td></tr>\n".
+  $content .= "<tr><td colspan=\"3\" class=\"divline\"></td></tr>\n".
               "<tr class=\"grouplist\"><td ><b>".$row['name']."</b></td><td><i>".$row['description']."</i></td>".
               "<td><span class=\"textlink\"><a href=\"taskgroups.php?x=".X."&amp;action=edit&amp;taskgroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td></tr>\n";
 

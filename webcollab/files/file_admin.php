@@ -62,7 +62,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   if($i > 0 ) {
     //not the first line, need to add a divider
-    $content .= "<tr><td><hr style=\"margin-top: 15px\" /></td></tr>\n";
+    $content .= "<tr><td colspan=\"2\" class=\"divline\"></td></tr>\n";
   }
 
   //file part

@@ -2,7 +2,7 @@
 /*
   $Id: forum_search.php 2162 2009-04-06 07:12:58Z andrewsimpson $
 
-  (c) 2005 - 2016 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -18,7 +18,7 @@
   You should have received a copy of the GNU General Public License along with this
   program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave,
   Cambridge, MA 02139, USA.
-
+apollo.simpson.home
   Function:
   ---------
 
@@ -157,7 +157,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   if($i > 0 ) {
     //not the first line, need to add a divider
-    $content .= "<tr><td><hr style=\"margin-top: 15px\" /></td></tr>\n";
+    $content .= "<tr><td class=\"divline\"></td></tr>\n";
   }
 
   //file part

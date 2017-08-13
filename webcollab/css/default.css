@@ -258,6 +258,12 @@ td.redbar {
   background-color : #FFA500;
 }
 
+/* Dividing line between entries */
+td.divline {
+  height: 15px;
+  border-bottom: 1px solid #A9A9A9;
+}
+
 /* Menu lists */
 ul.menu {
   list-style-type: none;

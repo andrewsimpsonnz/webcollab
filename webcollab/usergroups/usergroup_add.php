@@ -65,7 +65,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
 $content .= "</select><small><i>".$lang['select_instruct']."</i></small></td></tr>\n".
             "<tr><td></td><td></td></tr>\n".
-            "<tr><td><label for=\"usergroup\">".$lang['email_new_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP." /></td><td></td></tr>\n".
+            "<tr><td><label for=\"usergroup\">".$lang['email_new_usergroup']."</label></td><td><input type=\"checkbox\" name=\"mail_group\" id=\"usergroup\" ".DEFAULT_GROUP." /></td></tr>\n".
             "<tr><td></td><td></td></tr>\n".
             "</table>\n".
             "<p><input type=\"submit\" value=\"".$lang['add_usergroup']."\" /></p>".

@@ -140,9 +140,9 @@ if(ADMIN ) {
 
   //add user-groups
   $usergroup_q = db_query("SELECT name, id FROM ".PRE."usergroups ORDER BY name" );
-  $content .= "<tr><td></td><td colspan=\"2\"><small><i>".$lang['member_groups']."</i></small></td></tr>\n".
+  $content .= "<tr><td></td><td><small><i>".$lang['member_groups']."</i></small></td></tr>\n".
               "<tr><td>".$lang['usergroups'].":</td>".
-              "<td colspan=\"2\"><select name=\"usergroup[]\" multiple=\"multiple\" size=\"4\">\n";
+              "<td><select name=\"usergroup[]\" multiple=\"multiple\" size=\"4\">\n";
 
   for($i=0 ; $usergroup_row = @db_fetch_array($usergroup_q, $i ) ; ++$i ) {
     $content .= "<option value=\"".$usergroup_row['id']."\"";
