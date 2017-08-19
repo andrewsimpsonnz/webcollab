@@ -63,7 +63,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 $q = db_query('SELECT * FROM '.PRE.'usergroups ORDER BY name' );
 
 $content =  "<table class=\"celldata\">\n".
-            "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th><th>".$lang['private_usergroup']."</th><th></th></tr>\n";
+            "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th><th></th><th></th></tr>\n";
 
 //show all usergroups
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -75,15 +75,26 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
     }
   }
 
-  $private = ($row['private'] ) ? $lang['yes'] : $lang['no'];
-  $colspan = (ADMIN ) ? '4' : '3';
+  if(ADMIN) {
+    $content .= "<tr><td colspan=\"4\" class=\"divline\"></td></tr>\n";
+  }
+  else {
+    $content .= "<tr><td colspan=\"3\" class=\"divline\"></td><td></td></tr>\n";
+  }
 
-  $content .= "<tr><td colspan=\"".$colspan."\" class=\"divline\"></td></tr>\n".
-              "<tr class=\"grouplist\"><td><b>".$row['name']."</b></td><td><i>".$row['description']."</i></td><td style=\"text-align: center\">".$private."</td>\n";
+  if ($row['private'] ) {
+    $content .= "<tr class=\"grouplist\"><td><b>".$row['name']."</b></td><td><i>".$row['description']."</i></td><td style=\"text-align: center\">".$lang['private_usergroup']."</td>\n";
+  }
+  else {
+    $content .= "<tr class=\"grouplist\"><td><b>".$row['name']."</b></td><td><i>".$row['description']."</i></td><td></td>\n";
+  }
 
   if(ADMIN) {
     $content .= "<td><span class=\"textlink\">".
                 "<a href=\"usergroups.php?x=".X."&amp;action=edit&amp;usergroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td>";
+  }
+  else {
+    $content .= "<td></td>";
   }
 
   $content .= "</tr>\n";
@@ -98,12 +109,12 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
       continue;
     }
 
-    $content .= "<tr><td style=\"text-align:left\" colspan=\"3\"><small><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$user_row['id']."\">".$user_row['fullname']."</a></small></td></tr>\n";
+    $content .= "<tr><td style=\"text-align:left\" colspan=\"4\"><small><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$user_row['id']."\">".$user_row['fullname']."</a></small></td></tr>\n";
   }
 
   db_free_result($users_q );
 
-  $content .=   "<tr><td colspan=\"3\">&nbsp;</td></tr>\n";
+  $content .=   "<tr><td colspan=\"4\">&nbsp;</td></tr>\n";
 
   //flag to indicate we have a listing
   $content_flag = 1;
