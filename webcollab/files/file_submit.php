@@ -280,13 +280,13 @@ switch($_POST['action'] ) {
 
 
       //create hashid
-      if(function_exists('random_bytes') ) {
-        //random bytes is PHP 7 and above
-        $hashid = bin2hex(random_bytes(20 ) );
-      }
-      elseif(function_exists('openssl_random_pseudo_bytes' ) ) {
+      if(function_exists('openssl_random_pseudo_bytes' ) ) {
         //hash key of 40 hex characters length
         $hashid = bin2hex(openssl_random_pseudo_bytes(20 ) );
+      }
+      elseif(function_exists('random_bytes') ) {
+        //random bytes is PHP 7 and above
+        $hashid = bin2hex(random_bytes(20 ) );
       }
       else {
         //use Mersenne Twister algorithm (random number), then one-way hash
