@@ -2,7 +2,7 @@
 /*
   $Id: setup_setup3.php 2236 2009-05-22 22:20:49Z andrewsimpson $
 
-  (c) 2003 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -83,6 +83,7 @@ if(defined('DATABASE_NAME' ) && (DATABASE_NAME != '') && ($new_db === 'N' ) && (
   $use_email         = (USE_EMAIL != '' )         ? USE_EMAIL         : 'Y';
   $smtp_host         = (SMTP_HOST != '' )         ? SMTP_HOST         : 'localhost';
   $smtp_auth         = (SMTP_AUTH != '' )         ? SMTP_AUTH         : '';
+  $smtp_port         = (SMTP_PORT != '' )         ? SMTP_PORT         : '25';
   $mail_user         = (MAIL_USER != '' )         ? MAIL_USER         : '';
   $mail_password     = (MAIL_PASSWORD != '' )     ? MAIL_PASSWORD     : '';
   $tls               = (TLS != '' )               ? TLS               : '';
@@ -104,6 +105,7 @@ else {
   $use_email         = (isset($_POST['use_email']) )         ? $_POST['use_email']         : 'Y';
   $smtp_host         = (isset($_POST['smtp_host']) )         ? $_POST['smtp_host']         : 'localhost';
   $smtp_auth         = (isset($_POST['smtp_auth']) )         ? $_POST['smtp_auth']         : 'N';
+  $smtp_port         = (isset($_POST['smtp_port']) )         ? $_POST['smtp_port']         : '25';
   $mail_user         = (isset($_POST['mail_user']) )         ? $_POST['mail_user']         : '';
   $mail_password     = (isset($_POST['mail_password']) )     ? $_POST['mail_password']     : '';
   $tls               = (isset($_POST['tls']) )               ? $_POST['tls']               : 'N';

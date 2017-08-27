@@ -2,7 +2,7 @@
 /*
   $Id: setup_setup4.php 2314 2009-09-21 07:40:27Z andrewsimpson $
 
-  (c) 2003 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -56,7 +56,7 @@ foreach($array_essential as $var ) {
 
 //non-essential values
 $array_optional = array('manager_name', 'abbr_manager_name', 'db_password', 'file_base', 'file_maxsize',
-                        'use_email', 'smtp_host', 'smtp_auth', 'mail_user', 'mail_password', 'tls', 'new_db' );
+                        'use_email', 'smtp_host', 'smtp_auth', 'smtp_port', 'mail_user', 'mail_password', 'tls', 'new_db' );
 
 foreach($array_optional as $var ) {
   if(! isset($_POST[$var]) ) {
@@ -312,7 +312,7 @@ $status = "<span class=\"green\">".$lang_setup['setup4_ok']."</span>";
 
 if($data["use_email"] === "Y" && $data["smtp_host"] != "" && MAIL_TRANSPORT == 'SMTP' ) {
 
-  if($fp = @fsockopen($data["smtp_host"], 25, $errno, $errstr, 5 ) ) {
+  if($fp = @fsockopen($data["smtp_host"], $data["smtp_port"], $errno, $errstr, 5 ) ) {
     //this function may not work in Windows (prefix with '@')
     @socket_set_timeout($fp, 1 );
     //socket successfully opened - clean up & close
