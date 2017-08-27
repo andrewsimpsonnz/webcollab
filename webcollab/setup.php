@@ -227,13 +227,13 @@ if(DATABASE_NAME == '' ) {
 
   $content = "<form method=\"post\" action=\"setup.php\">\n".
              "<fieldset><input type=\"hidden\" name=\"status\" value=\"submitted\" /></fieldset>\n".
-             "<table border=\"0\">\n";
+             "<table style=\"border: 0\">\n";
 }
 else {
 
   $content = "<p>".$lang_setup['require_login']."</p>\n".
              "<form method=\"post\" action=\"setup.php\">\n".
-             "<table border=\"0\">\n".
+             "<table style=\"border: 0\">\n".
              "<tr><td>".$lang_setup['login']."</td><td><input type=\"text\" class=\"size\" name=\"username\" /></td></tr>\n".
              "<tr><td>".$lang_setup['password']."</td><td><input type=\"password\" class=\"size\" name=\"password\" value=\"\" /></td></tr>\n";
 }
