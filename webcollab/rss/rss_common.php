@@ -2,7 +2,7 @@
 /*
   $Id: rss_forum.php 1706 2008-01-01 06:13:00Z andrewsimpson $
 
-  (c) 2008 - 2012 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2008 - 2018 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -37,7 +37,7 @@ function rss_login() {
     rss_error('401', 'Login no authorisation');
   }
 
-  $q = db_prepare('SELECT id, admin, locale FROM '.PRE.'users WHERE name=? AND deleted=\'f\'' );
+  $q = db_prepare('SELECT id, user_admin, locale FROM '.PRE.'users WHERE name=? AND deleted=\'f\'' );
 
   if( ! (db_execute($q, array(safe_data($_SERVER['REMOTE_USER'] ) ), 0 ) ) ) {
     rss_error('401', 'Login user select' );
@@ -57,7 +57,7 @@ function rss_login() {
     define('LOCALE_USER', LOCALE );
   }
 
-  if($row['admin'] == 't' ) {
+  if($row['user_admin'] == 't' ) {
     define('ADMIN', 1 );
   }
   else {

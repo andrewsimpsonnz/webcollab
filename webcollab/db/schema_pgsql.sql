@@ -42,11 +42,11 @@ CREATE TABLE "users" (
 	"fullname" character varying(200) NOT NULL,
 	"password" character varying(200) NOT NULL,
 	"email" character varying(200) NOT NULL,
-	"admin" character varying(5) NOT NULL DEFAULT 'f'::text,
+	"user_admin" character varying(5) NOT NULL DEFAULT 'f'::text,
 	"private" smallint DEFAULT 0::int NOT NULL,
-  "guest" smallint DEFAULT 0::int NOT NULL,
+        "guest" smallint DEFAULT 0::int NOT NULL,
 	"deleted" character varying(5) NOT NULL DEFAULT 'f'::text,
-  "locale" character varying(10) DEFAULT 'en'::text NOT NULL,
+        "locale" character varying(10) DEFAULT 'en'::text NOT NULL,
 	Constraint "users_pkey" Primary Key ("id")
 );
 CREATE INDEX users_fullname_idx ON users USING btree (fullname);
@@ -87,7 +87,7 @@ CREATE TABLE "logins" (
 	"session_key" character varying(100) NOT NULL,
 	"ip" character varying(100) NOT NULL,
 	"lastaccess" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
-  "token" character varying(100),
+        "token" character varying(100),
 	Constraint "logins_pkey" Primary Key ("id")
 );
 CREATE INDEX logins_session_key_idx ON logins USING btree (session_key);
@@ -193,10 +193,10 @@ CREATE TABLE "site_name" (
 );
 
 CREATE TABLE "tokens" (
-  "token" character varying(100) NOT NULL,
-  "action" character varying(100) NOT NULL,
-  "userid" integer NOT NULL,
-  "lastaccess" timestamp with time zone NOT NULL DEFAULT current_timestamp(0)
+        "token" character varying(100) NOT NULL,
+        "action" character varying(100) NOT NULL,
+        "userid" integer NOT NULL,
+        "lastaccess" timestamp with time zone NOT NULL DEFAULT current_timestamp(0)
 );
 CREATE INDEX tokens_token_idx ON tokens USING btree ("token");
 

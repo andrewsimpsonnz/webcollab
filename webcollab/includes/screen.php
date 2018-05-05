@@ -2,7 +2,7 @@
 /*
   $Id: screen.php 2230 2011-05-22 22:10:39Z andrewsimpson $
 
-  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2018 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -101,7 +101,7 @@ function create_top($title='', $page_type=0, $body_id=0, $include_javascript=0, 
              "<html lang=\"".XML_LANG."\">\n\n".
              "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
              "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
-             "<!-- (c) 2002-2017 Andrew Simpson for WebCollab -->\n\n".
+             "<!-- (c) 2002-2018 Andrew Simpson for WebCollab -->\n\n".
              "<head>\n";
 
     if( $title == '' ) {
@@ -287,7 +287,7 @@ function create_bottom() {
 
  //shows the logo
  if($bottom_text) {
-   echo "\n<div id=\"bottom\" class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2017</div>\n";
+   echo "\n<div id=\"bottom\" class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2018</div>\n";
  }
   //end xml parsing
   echo "</div><!-- end container -->\n".

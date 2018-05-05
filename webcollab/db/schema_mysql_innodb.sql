@@ -40,7 +40,7 @@ CREATE TABLE users (
 	fullname VARCHAR(200) NOT NULL,
 	password VARCHAR(200) NOT NULL,
 	email VARCHAR(200) NOT NULL,
-	admin VARCHAR(5) NOT NULL DEFAULT 'f',
+	user_admin VARCHAR(5) NOT NULL DEFAULT 'f',
 	private TINYINT NOT NULL DEFAULT 0,
 	guest TINYINT NOT NULL DEFAULT 0,
 	deleted VARCHAR(5) NOT NULL DEFAULT 'f',
@@ -205,7 +205,7 @@ CREATE TABLE tokens (
 ENGINE = InnoDB
 CHARACTER SET = utf8;
 
-INSERT INTO users ( id, name, fullname, password, email, admin, deleted )
+INSERT INTO users ( id, name, fullname, password, email, user_admin, deleted )
 VALUES( 1, 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );
 
 INSERT INTO config ( globalaccess, groupaccess, project_order, task_order )

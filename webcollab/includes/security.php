@@ -2,7 +2,7 @@
 /*
   $Id: security.php 2283 2009-08-22 08:40:04Z andrewsimpson $
 
-  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2018 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -78,7 +78,7 @@ $q = db_prepare('SELECT '.PRE.'logins.user_id AS userid,
                              '.PRE.'logins.token AS token,
                              '.db_epoch().' '.PRE.'logins.lastaccess) AS sec_lastaccess,
                              '.PRE.'users.email AS email,
-                             '.PRE.'users.admin AS admin,
+                             '.PRE.'users.user_admin AS admin,
                              '.PRE.'users.fullname AS fullname,
                              '.PRE.'users.guest AS guest,
                              '.PRE.'users.deleted AS deleted,

@@ -2,7 +2,7 @@
 /*
   $Id: user_submit.php 2180 2009-04-07 09:33:17Z andrewsimpson $
 
-  (c) 2002 - 2016 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2018 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -158,7 +158,7 @@ switch($_POST['action'] ) {
     //begin transaction
     db_begin();
     //insert into the users table
-    $q = db_prepare('INSERT INTO '.PRE.'users(name, fullname, password, email, private, admin, guest, deleted, locale )
+    $q = db_prepare('INSERT INTO '.PRE.'users(name, fullname, password, email, private, user_admin, guest, deleted, locale )
                     VALUES(?, ?, ?, ?, ?, ?,  ?, \'f\', ? )' );
 
     db_execute($q, array($name, $fullname, pass_hash($password_unclean), $email_unclean, $private_user, $admin_user,  $guest_user, $locale ) );
@@ -287,7 +287,7 @@ switch($_POST['action'] ) {
                               email=?,
                               password=?,
                               private=?,
-                              admin=?,
+                              user_admin=?,
                               guest=?,
                               locale=?
                               WHERE id=?' );
@@ -301,7 +301,7 @@ switch($_POST['action'] ) {
                               fullname=?,
                               email=?,
                               private=?,
-                              admin=?,
+                              user_admin=?,
                               guest=?,
                               locale=?
                               WHERE id=?' );

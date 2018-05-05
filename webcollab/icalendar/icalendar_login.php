@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2011 - 2018 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -37,7 +37,7 @@ function icalendar_login() {
     icalendar_error('401', 'Login no authorisation');
   }
 
-  $q = db_prepare('SELECT id, admin, guest, locale FROM '.PRE.'users WHERE name=? AND deleted=\'f\'' );
+  $q = db_prepare('SELECT id, user_admin, guest, locale FROM '.PRE.'users WHERE name=? AND deleted=\'f\'' );
 
   if( ! (db_execute($q, array(safe_data($_SERVER['REMOTE_USER'] ) ), 0 ) ) ) {
     icalendar_error('401', 'Login user select' );
@@ -58,7 +58,7 @@ function icalendar_login() {
     define('LOCALE_USER', LOCALE );
   }
 
-  if($row['admin'] == 't' ) {
+  if($row['user_admin'] == 't' ) {
     define('ADMIN', 1 );
   }
   else {

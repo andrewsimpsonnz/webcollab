@@ -2,7 +2,7 @@
 /*
   $Id: update.php 2328 2009-09-27 08:31:56Z andrewsimpson $
 
-  (c) 2004 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2018 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -466,7 +466,33 @@ function update($username ) {
     db_commit();
     $content .= "<p>Updating from version pre-3.40 database ... success!</p>\n";
   }
-    
+
+    //update version 3.46 -> 3.50
+  if(! (db_query('SELECT user_admin FROM '.PRE.'users', 0 ) ) ) {
+
+    db_begin();
+
+    //set parameters for appropriate for database
+    switch (DATABASE_TYPE) {
+      case 'mysql_pdo':
+        //change column name to avoid reserved word in MySQL 8.0
+        db_query('ALTER TABLE '.PRE.'users CHANGE COLUMN admin user_admin VARCHAR(5)' );
+        break;
+
+      case 'postgresql_pdo':
+        //change column name to match MySQL
+        db_query('ALTER TABLE '.PRE.'users RENAME COLUMN admin TO user_admin' );
+        break;
+
+      default:
+        error('Database type not specified in config file.' );
+        break;
+    }
+
+    db_commit();
+    $content .= "<p>Updating from version pre-3.50 database ... success!</p>\n";
+  }
+
   if( ! $content ) {
     $content .= "<p>No database updates were required.</p>\n";
   }
@@ -506,10 +532,22 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   $username = safe_data($_POST['username']);
 
   //construct login query for username / password
-  if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\' AND admin=\'t\' LIMIT 1', 0 ) ) ) {
+  if( ! (@db_query('SELECT user_admin FROM '.PRE.'users', 0 ) ) ) {
+    //old format with 'admin' column in database (pre-3.50 database) 
+    if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\' AND admin=\'t\' LIMIT 1', 0 ) ) ) {
+      secure_error('Unable to connect to database.  Please try again later.' );
+    }
+  }
+  elseif(@db_query('SELECT user_admin FROM '.PRE.'users', 0 ) ) {
+    //new format with 'user_admin'(post-3.50 database)
+    if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\' AND user_admin=\'t\' LIMIT 1', 0 ) ) ) {
+      secure_error('Unable to connect to database.  Please try again later.' );
+    }
+  }
+  else {
     secure_error('Unable to connect to database.  Please try again later.' );
   }
-
+    
   //database query
   if( ! @db_execute($q, array($username), 0 ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );

@@ -2,7 +2,7 @@
 /*
   $Id: security_setup.php 2285 2009-08-22 08:42:43Z andrewsimpson $
 
-  (c) 2003 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2018 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -99,7 +99,7 @@ else {
   //seems okay at first, now go cross-checking with the known data from the database
   $q = db_prepare('SELECT '.PRE.'logins.user_id AS user_id,
                           '.PRE.'logins.lastaccess AS lastaccess,
-                          '.PRE.'users.admin AS admin,
+                          '.PRE.'users.user_admin AS admin,
                           '.db_epoch().' now() ) AS now,
                           '.db_epoch().' lastaccess) AS sec_lastaccess
                           FROM '.PRE.'logins

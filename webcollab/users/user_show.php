@@ -2,7 +2,7 @@
 /*
   $Id: user_show.php 2297 2009-08-24 09:45:18Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2018 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -44,7 +44,7 @@ if(! @safe_integer($_GET['userid']) ){
 $userid = $_GET['userid'];
 
 //select
-$q = db_prepare('SELECT id, name, fullname, email, admin, private, guest, deleted FROM '.PRE.'users WHERE id=? LIMIT 1' );
+$q = db_prepare('SELECT id, name, fullname, email, user_admin, private, guest, deleted FROM '.PRE.'users WHERE id=? LIMIT 1' );
 db_execute($q, array($userid ) );
 
 //get info
@@ -75,7 +75,7 @@ $content .= "<table class=\"celldata\">".
             "<tr class=\"grouplist\"><td>".$lang['full_name'].":</td><td>".$row['fullname']."</td></tr>\n".
             "<tr class=\"grouplist\"><td>".$lang['email'].":</td><td><a href=\"mailto:".$row['email']."\">".$row['email']."</a></td></tr>\n";
 
-if($row['admin'] == "t" ){
+if($row['user_admin'] == "t" ){
   $content .= "<tr class=\"grouplist\"><td>".$lang['admin'].":</td><td>".$lang['yes']."</td></tr>\n";
 }
 else {

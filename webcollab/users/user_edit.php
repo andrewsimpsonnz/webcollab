@@ -2,7 +2,7 @@
 /*
   $Id: user_edit.php 2297 2009-08-24 09:45:18Z andrewsimpson $
 
-  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2018 Andrew Simpson <andrew.simpson at paradise.net.nz>
 
   WebCollab
   ---------------------------------------
@@ -122,7 +122,7 @@ if(ADMIN ) {
   $s1 = "checked=\"checked\""; $s2 = ""; $s3 = "";
 
   //admin user
-  if($row['admin'] == 't' ) {
+  if($row['user_admin'] == 't' ) {
     $s1 = ""; $s2 = "checked=\"checked\""; $s3 = "";
   }
 
