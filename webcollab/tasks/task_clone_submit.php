@@ -2,7 +2,7 @@
 /*
   $Id: task_clone_submit.php 2286 2009-08-22 08:45:30Z andrewsimpson $
 
-  (c) 2004 - 2016 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2016 Andrew Simpson <andrewnz.simpson at gmail.com>
 
    WebCollab
   ---------------------------------------

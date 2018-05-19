@@ -2,7 +2,7 @@
 /*
   $Id: mysql_database.php 2040 2008-11-23 05:46:25Z andrewsimpson $
 
-  (c) 2009 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2009 - 2013 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

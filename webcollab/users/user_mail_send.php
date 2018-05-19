@@ -2,7 +2,7 @@
 /*
   $Id: user_mail_send.php 2172 2009-04-06 07:30:53Z andrewsimpson $
 
-  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

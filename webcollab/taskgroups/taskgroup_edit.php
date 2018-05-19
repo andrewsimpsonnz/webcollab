@@ -2,7 +2,7 @@
 /*
   $Id: taskgroup_edit.php 2301 2009-08-25 09:15:52Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

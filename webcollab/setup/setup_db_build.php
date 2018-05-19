@@ -2,7 +2,7 @@
 /*
   $Id: setup_db_build.php 2313 2009-09-21 07:39:39Z andrewsimpson $
 
-  (c) 2003 - 2015 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2015 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

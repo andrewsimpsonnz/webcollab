@@ -2,7 +2,7 @@
 /*
   $Id: file_download.php 2254 2009-07-24 09:31:32Z andrewsimpson $
 
-  (c) 2003 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2014 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

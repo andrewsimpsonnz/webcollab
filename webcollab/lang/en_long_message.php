@@ -24,7 +24,7 @@
 
   Language files (long messages) for 'en' (English)
 
-  Maintainer: Andrew Simpson <andrew.simpson at paradise.net.nz>
+  Maintainer: Andrew Simpson <andrewnz.simpson at gmail.com>
 
 */
 

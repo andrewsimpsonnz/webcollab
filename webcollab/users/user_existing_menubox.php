@@ -2,7 +2,7 @@
 /*
   $Id: user_existing_menubox.php 2303 2009-08-25 09:17:44Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

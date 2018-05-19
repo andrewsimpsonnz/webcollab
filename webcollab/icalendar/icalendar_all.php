@@ -2,7 +2,7 @@
 /*
   $Id: icalendar_all.php 2299 2009-08-24 09:46:33Z andrewsimpson $
 
-  (c) 2005 - 2013 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2005 - 2013 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

@@ -2,7 +2,7 @@
 /*
   $Id: task_navigate.php 2170 2009-04-06 07:25:59Z andrewsimpson $
 
-  (c) 2003 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

@@ -2,7 +2,7 @@
 /*
   $Id: details.php 1916 2008-01-04 08:23:14Z andrewsimpson $
 
-  (c) 2004 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2014 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

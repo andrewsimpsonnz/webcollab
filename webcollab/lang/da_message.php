@@ -8,7 +8,7 @@
   with much help from the people noted in the README
 
   Rewritten as WebCollab 2002/2003 (from CoreAPM Ver 1.11)
-  by Andrew Simpson <andrew.simpson at paradise.net.nz>
+  by Andrew Simpson <andrewnz.simpson at gmail.com>
 
   This program is free software; you can redistribute it and/or modify it under the
   terms of the GNU General Public License as published by the Free Software Foundation;

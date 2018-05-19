@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2011 - 2018 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2011 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

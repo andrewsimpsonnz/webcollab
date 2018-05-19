@@ -2,7 +2,7 @@
 /*
   $Id: setup_setup3.php 2236 2009-05-22 22:20:49Z andrewsimpson $
 
-  (c) 2003 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2017 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

@@ -2,7 +2,7 @@
 /*
   $Id: contact_edit.php 2213 2009-05-08 20:37:07Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

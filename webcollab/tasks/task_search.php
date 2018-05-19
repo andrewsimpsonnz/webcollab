@@ -2,7 +2,7 @@
 /*
   $Id: forum_search.php 2162 2009-04-06 07:12:58Z andrewsimpson $
 
-  (c) 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2014 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

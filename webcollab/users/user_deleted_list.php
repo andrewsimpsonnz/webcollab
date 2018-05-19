@@ -2,7 +2,7 @@
 /*
   $Id: user_deleted_list.php 2180 2009-04-07 09:33:17Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

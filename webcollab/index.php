@@ -2,7 +2,7 @@
 /*
   $Id: index.php 2288 2009-08-22 08:50:00Z andrewsimpson $
 
-  (c) 2002 - 2017 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2002 - 2017 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

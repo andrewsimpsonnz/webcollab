@@ -2,7 +2,7 @@
 /*
   $Id: lang_long.php 1736 2007-01-24 08:16:03Z andrewsimpson $
 
-  (c) 2009 - 2011 Andrew Simpson <andrew.simpson at paradise.net.nz> 
+  (c) 2009 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com> 
 
   WebCollab
   ---------------------------------------

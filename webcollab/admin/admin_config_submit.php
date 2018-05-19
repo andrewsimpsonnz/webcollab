@@ -2,7 +2,7 @@
 /*
   $Id: admin_config_submit.php 2199 2009-04-10 21:34:16Z andrewsimpson $
 
-  (c) 2003 - 2016 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2003 - 2016 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------

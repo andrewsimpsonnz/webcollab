@@ -24,7 +24,7 @@
 
   Email text language files for 'en' (English)
 
-  Maintainer: Andrew Simpson <andrew.simpson at paradise.net.nz>
+  Maintainer: Andrew Simpson <andrewnz.simpson at gmail.com>
 
 
   NOTE: This file is written in UTF-8 character set

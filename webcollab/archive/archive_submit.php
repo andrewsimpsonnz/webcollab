@@ -2,7 +2,7 @@
 /*
   $Id: archive_submit.php 2175 2009-04-07 09:24:44Z andrewsimpson $
 
-  (c) 2004 - 2014 Andrew Simpson <andrew.simpson at paradise.net.nz>
+  (c) 2004 - 2014 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
