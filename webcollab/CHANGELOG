@@ -1,4 +1,20 @@
 WebCollab Git
+*** 19 May 2018
+
+- update email address
+
+
+WebCollab Git
+*** 6 May 2018
+
+- change column 'admin' to 'user_admin' (admin is a reserved word in MySQL 8) (Thanks to: Sam Dodd) 
+
+WebCollab 3.46 - Rotorua
+*** 2 September 2017
+
+- release
+
+WebCollab Git
 *** 13 August 2017
 
 - minor HTML improvements to suit HTML5
@@ -23,7 +39,7 @@ WebCollab Git
 
 - update minimum PHP to 5.6
 
-WebCollab 3.44 - Akitio
+WebCollab 3.45 - Akitio
 *** 16 July 2016
 
 - release
