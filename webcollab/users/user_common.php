@@ -81,7 +81,7 @@ function user_locale_check($locale ) {
 //
 function pass_hash($password ) {
   
-  $hash = password_hash($password, PASSWORD_BCRYPT );
+  $hash = password_hash($password, PASSWORD_DEFAULT );
 
   if(strlen($hash ) < 13 ) {
     //blowfish will give a random string of less than 13 characters in error condition
