@@ -54,11 +54,11 @@ function project_query($tail, $equiv='' ) {
 
   $q = db_prepare('SELECT '.PRE.'tasks.id AS id,
                           '.PRE.'tasks.parent AS parent,
-                          '.PRE.'tasks.name AS taskname,
+                          '.PRE.'tasks.task_name AS taskname,
                           '.PRE.'tasks.deadline AS deadline,
-                          '.PRE.'tasks.status AS status,
+                          '.PRE.'tasks.task_status AS task_status,
                           '.PRE.'tasks.priority AS priority,
-                          '.PRE.'tasks.owner AS owner,
+                          '.PRE.'tasks.task_owner AS task_owner,
                           '.PRE.'tasks.taskgroupid AS taskgroupid,
                           '.PRE.'tasks.usergroupid AS usergroupid,
                           '.PRE.'tasks.projectid AS projectid,
@@ -67,7 +67,7 @@ function project_query($tail, $equiv='' ) {
                           '.db_epoch().' '.PRE.'tasks.edited) AS edited,
                           '.db_epoch().' '.PRE.'tasks.lastforumpost) AS lastpost,
                           '.db_epoch().' '.PRE.'tasks.lastfileupload) AS lastfileupload,
-                          '.db_epoch().' '.PRE.'seen.time) AS last_seen
+                          '.db_epoch().' '.PRE.'seen.seen_time) AS last_seen
                           '.$equiv.'
                           FROM '.PRE.'tasks
                           LEFT JOIN '.PRE.'seen ON ('.PRE.'tasks.id='.PRE.'seen.taskid AND '.PRE.'seen.userid='.UID.')
@@ -89,6 +89,7 @@ function project_summary($q, $depth=0, $input='' ) {
   //reset variables
   $result = '';
   $task_array = array();
+  $result_array = array();
 
   db_execute($q, $input );
 
@@ -144,7 +145,7 @@ function project_summary($q, $depth=0, $input='' ) {
     //status column
     if( ($row['parent'] == 0 ) ) {
 
-      switch($row['status'] ) {
+      switch($row['task_status'] ) {
         case 'notactive':
           $color = '';
           $date = '';
@@ -177,7 +178,7 @@ function project_summary($q, $depth=0, $input='' ) {
     }
     else {
 
-      switch( $row['status'] ) {
+      switch( $row['task_status'] ) {
         case 'done':
           $color = '';
           $date = nicedate($row['deadline'] );
@@ -209,7 +210,7 @@ function project_summary($q, $depth=0, $input='' ) {
 
         default:
           $date = nicedate($row['deadline'] );
-          $status =  "<span class=\"orange\">".$row['status']."</span>";
+          $status =  "<span class=\"orange\">".$row['task_status']."</span>";
           break;
       }
     }
@@ -291,8 +292,8 @@ function project_summary($q, $depth=0, $input='' ) {
     }
 
     //owner column
-    if( $row['owner'] == 0 ) {
-      switch( $row['status'] ) {
+    if( $row['task_owner'] == 0 ) {
+      switch( $row['task_status'] ) {
         case 'created':
         case 'notactive':
         case 'nolimit':
@@ -305,7 +306,7 @@ function project_summary($q, $depth=0, $input='' ) {
       }
     }
     else {
-     $owner = "<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['owner']."\">".$user_array[($row['owner'])]."</a>";
+     $owner = "<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['task_owner']."\">".$user_array[($row['task_owner'])]."</a>";
     }
 
     //group column
@@ -419,14 +420,14 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 }
 
 //query to get taskgroups, then cache results
-$q = db_query('SELECT id, name FROM '.PRE.'taskgroups' );
+$q = db_query('SELECT id, group_name FROM '.PRE.'taskgroups' );
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   $taskgroups_array[($row[0])] = $row[1];
 }
 
 //query to get usergroups, then cache results
-$q = db_query('SELECT id, name FROM '.PRE.'usergroups' );
+$q = db_query('SELECT id, group_name FROM '.PRE.'usergroups' );
 
 for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
   $usergroups_array[($row[0])] = $row[1];
@@ -497,35 +498,35 @@ switch($sortby ) {
     break;
 
   case 'status':
-    $q1 = project_query($group_tail.' ORDER BY status,deadline,taskname' );
+    $q1 = project_query($group_tail.' ORDER BY task_status,deadline,taskname' );
     $q2 = '';
     $depth = -1;
     $suffix = $lang['by_status'];
     break;
 
   case 'priority':
-    $q1 = project_query($group_tail.' ORDER BY priority,status,deadline,taskname' );
+    $q1 = project_query($group_tail.' ORDER BY priority,task_status,deadline,taskname' );
     $q2 = '';
     $depth = -1;
     $suffix = $lang['by_priority'];
     break;
 
   case 'owner':
-    $q1 = project_query('LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner) '.$group_tail.' ORDER BY username,deadline,taskname', ', '.PRE.'users.fullname AS username' );
+    $q1 = project_query('LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.task_owner) '.$group_tail.' ORDER BY username,deadline,taskname', ', '.PRE.'users.fullname AS username' );
     $q2 = '';
     $depth = -1;
     $suffix = $lang['by_owner'];
     break;
 
   case 'usergroupid':
-    $q1 = project_query('LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'tasks.usergroupid) '.$group_tail.' ORDER BY usergroupname,deadline,taskname', ', '.PRE.'usergroups.name AS usergroupname' );
+    $q1 = project_query('LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'tasks.usergroupid) '.$group_tail.' ORDER BY usergroupname,deadline,task_name', ', '.PRE.'usergroups.group_name AS usergroupname' );
     $q2 = '';
     $depth = -1;
     $suffix = $lang['by_usergroup'];
     break;
 
   case 'taskgroupid':
-    $q1 = project_query('LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid) '.$group_tail.' ORDER BY taskgroupname,deadline,taskname', ', '.PRE.'taskgroups.name AS taskgroupname' );
+    $q1 = project_query('LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid) '.$group_tail.' ORDER BY taskgroupname,deadline,taskname', ', '.PRE.'taskgroups.group_name AS taskgroupname' );
     $q2 = '';
     $depth = -1;
     $suffix = $lang['by_taskgroup'];

@@ -2,7 +2,7 @@
 /*
   $Id: forum_add.php 1704 2008-01-01 06:09:52Z andrewsimpson $
 
-  (c) 2002 - 2014 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -62,10 +62,10 @@ else {
 
 
 //find out the tasks' name
-$q = db_prepare('SELECT '.PRE.'forum.text AS text,
+$q = db_prepare('SELECT '.PRE.'forum.forum_text AS forum_text,
                         '.PRE.'forum.userid as id,
                         '.PRE.'tasks.id AS taskid,
-                        '.PRE.'tasks.name AS name
+                        '.PRE.'tasks.task_name AS task_name
                         FROM '.PRE.'forum
                         LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
                         WHERE '.PRE.'forum.id=? LIMIT 1' );
@@ -95,7 +95,7 @@ $content .= "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
 $content .= "<table class=\"celldata\">\n".
             "<tr><td>".$lang['message']."</td>".
             "<td><script type=\"text/javascript\"> edToolbar('text');</script>".
-            "<textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\"".$s.">".$row['text']."</textarea>".
+            "<textarea id=\"text\" name=\"text\" rows=\"25\" cols=\"88\"".$s.">".$row['forum_text']."</textarea>".
             "<script type=\"text/javascript\">document.getElementById('text').focus();</script></td></tr>\n".
             "</table>\n".
             "<table class=\"celldata\">\n".
@@ -116,6 +116,6 @@ $content .= "<form id=\"delete_post\" method=\"post\" action=\"forum.php\" ".
             "<p><input type=\"submit\" value=\"".$lang['delete']."\" /></p>".
             "</form>\n";
 
-new_box(sprintf($lang['post_message_sprt'], $row['name'] ), $content );
+new_box(sprintf($lang['post_message_sprt'], $row['task_name'] ), $content );
 
 ?>

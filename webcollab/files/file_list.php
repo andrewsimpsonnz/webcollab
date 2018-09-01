@@ -2,7 +2,7 @@
 /*
   $Id: file_list.php 2292 2009-08-24 09:40:09Z andrewsimpson $
 
-  (c) 2002 - 2014 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -51,9 +51,9 @@ $taskid = usergroup_check($taskid );
 $q = db_prepare('SELECT '.PRE.'files.id AS id,
                         '.PRE.'files.filename AS filename,
                         '.PRE.'files.uploaded AS uploaded,
-                        '.PRE.'files.size AS size,
+                        '.PRE.'files.file_size AS file_size,
                         '.PRE.'files.mime AS mime,
-                        '.PRE.'files.description AS description,
+                        '.PRE.'files.file_description AS file_description,
                         '.PRE.'files.uploader AS uploader,
                         '.PRE.'users.id AS userid,
                         '.PRE.'users.fullname AS username
@@ -70,10 +70,10 @@ $content .= "<ul class=\"ul-1\">\n";
 for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
 
   //file part
-  $content .= "<li><a href=\"files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a> <small>(".nice_size($row['size'] ).") </small>";
+  $content .= "<li><a href=\"files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a> <small>(".nice_size($row['file_size'] ).") </small>";
 
   //owners of the file and admins have a "delete" and "update" option
-  if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['uploader'] ) ) {
+  if( (ADMIN ) || (UID == $TASKID_ROW['task_owner'] ) || (UID == $row['uploader'] ) ) {
 
     $content .= "&nbsp;<span class=\"textlink\">".
                 "[<a href=\"files.php?x=".X."&amp;action=delete&amp;fileid=".$row['id']."&amp;taskid=".$taskid."\">".$lang['del']."</a>]".
@@ -88,8 +88,8 @@ for($i=0 ; $row = @db_fetch_array($q, $i) ; ++$i ) {
   $content .= $lang['uploader']." <a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")<br />";
 
   //show description
-  if( $row['description'] != '' ) {
-    $content .= "\n<small><i>".nl2br(bbcode($row['description'] ) )."</i></small>";
+  if( $row['file_description'] != '' ) {
+    $content .= "\n<small><i>".nl2br(bbcode($row['file_description'] ) )."</i></small>";
   }
   $content .= "</li>\n";
 }

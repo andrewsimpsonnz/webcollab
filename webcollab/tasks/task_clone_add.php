@@ -60,13 +60,13 @@ $content .= "<form method=\"post\" action=\"tasks.php\" onsubmit=\"return fieldC
             "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n".
             "<table class=\"celldata\">\n";
 
-$q = db_prepare('SELECT name, parent FROM '.PRE.'tasks WHERE id=?' );
+$q = db_prepare('SELECT task_name, parent FROM '.PRE.'tasks WHERE id=?' );
 db_execute($q, array($taskid ) );
 
 $row = db_fetch_array($q, 0 );
 
 if($row['parent'] == 0 ){
-  $content .= "<tr><td>".$lang['project_cloned']."</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$taskid."\">".$row['name']."</a></td></tr>\n".
+  $content .= "<tr><td>".$lang['project_cloned']."</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$taskid."\">".$row['task_name']."</a></td></tr>\n".
               "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" />".
               "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
               "<tr><td>".$lang['deadline'].":</td> <td>".date_select()."</td></tr>\n".
@@ -78,7 +78,7 @@ if($row['parent'] == 0 ){
 
 }
 else{
-  $content .= "<tr><td>".$lang['task_cloned']."</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$taskid."\">".$row['name']."</a></td></tr>\n".
+  $content .= "<tr><td>".$lang['task_cloned']."</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$taskid."\">".$row['task_name']."</a></td></tr>\n".
               "<tr><td colspan=\"2\"><i>".$lang['note_clone']."</i></td></tr>\n".
               "<tr><td>".$lang['project_name'].":</td> <td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" /></td> </tr>\n".
               "<tr><td>".$lang['deadline'].":</td> <td>".date_select()."</td></tr>\n".

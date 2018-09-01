@@ -199,25 +199,25 @@ else {
 db_begin();
 
 //get existing projectid, parent and status from the database
-$q = db_prepare('SELECT projectid, parent, status FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+$q = db_prepare('SELECT projectid, parent, task_status FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
 db_execute($q, array($taskid ) );
 $row = db_fetch_array($q, 0 );
 $old_projectid = $row['projectid'];
-$old_status    = $row['status'];
+$old_status    = $row['task_status'];
 $old_parentid  = $row['parent'];
 $projectid     = $old_projectid;
 
 //change the info
 $q = db_prepare('UPDATE '.PRE.'tasks
-                        SET name=?,
-                        text=?,
+                        SET task_name=?,
+                        task_text=?,
                         edited=now(),
-                        owner=?,
+                        task_owner=?,
                         deadline=?,
                         priority=?,
                         taskgroupid=?,
                         usergroupid=?,
-                        status=?,
+                        task_status=?,
                         globalaccess=?,
                         groupaccess=?,
                         '.$finish_row.'
@@ -250,7 +250,7 @@ if($old_parentid != $parentid ) {
   }
   else {
     //update this task, then recursively search for children tasks and reparent them too.
-    $q = db_prepare('UPDATE '.PRE.'tasks SET projectid=?, parent=?, status=? WHERE id=?' );
+    $q = db_prepare('UPDATE '.PRE.'tasks SET projectid=?, parent=?, task_status=? WHERE id=?' );
     db_execute($q, array($projectid, $parentid, $status, $taskid ) );
     reparent_children($taskid );
   }
@@ -266,7 +266,7 @@ if($parentid == 0 ) {
     case 'cantcomplete':
     case 'notactive':
       //inactive project, then set the uncompleted child tasks to inactive too
-      $q = db_prepare('UPDATE '.PRE.'tasks SET status=? WHERE projectid=? AND (status=\'active\' OR status=\'created\')' );
+      $q = db_prepare('UPDATE '.PRE.'tasks SET task_status=? WHERE projectid=? AND (task_status=\'active\' OR task_status=\'created\')' );
       db_execute($q, array($status, $projectid ) );
       break;
 
@@ -275,7 +275,7 @@ if($parentid == 0 ) {
     default:
       //if reinstated project, set previously inactive child tasks to 'new'
       if($old_status == 'cantcomplete' || $old_status == 'notactive' ) {
-        $q = db_prepare('UPDATE '.PRE.'tasks SET status=\'created\' WHERE projectid=? AND parent<>0 AND status=?' );
+        $q = db_prepare('UPDATE '.PRE.'tasks SET task_status=\'created\' WHERE projectid=? AND parent<>0 AND task_status=?' );
         db_execute($q, array($projectid, $old_status ) );
       }
       break;
@@ -289,7 +289,7 @@ adjust_completion($projectid );
 db_commit();
 
 //get name of project and owner for emails
-$q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+$q = db_prepare('SELECT task_name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
 db_execute($q, array($projectid ) );
 $name_project = db_result($q, 0, 0 );
 

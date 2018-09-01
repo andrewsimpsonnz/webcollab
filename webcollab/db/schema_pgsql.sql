@@ -3,17 +3,17 @@ CREATE SEQUENCE "tasks_id_seq" start 1 increment 1 maxvalue 2147483647 minvalue 
 CREATE TABLE "tasks" (
 	"id" integer DEFAULT nextval('"tasks_id_seq"'::text) NOT NULL,
 	"parent" integer NOT NULL,
-	"name" character varying(255) NOT NULL,
-	"text" text,
+	"task_name" character varying(255) NOT NULL,
+	"task_text" text,
 	"created" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
 	"edited" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
-	"owner" integer NOT NULL,
+	"task_owner" integer NOT NULL,
 	"creator" integer NOT NULL,
 	"finished_time" timestamp with time zone NOT NULL,
 	"projectid" integer NOT NULL,
 	"deadline" timestamp with time zone NOT NULL,
 	"priority" integer DEFAULT 2::int NOT NULL,
-	"status" character varying(20) NOT NULL DEFAULT 'created',
+	"task_status" character varying(20) NOT NULL DEFAULT 'created',
 	"taskgroupid" integer NOT NULL,
 	"lastforumpost" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
 	"usergroupid" integer NOT NULL,
@@ -26,21 +26,21 @@ CREATE TABLE "tasks" (
 	"sequence" integer DEFAULT 0::int NOT NULL,
 	Constraint "tasks_pkey" Primary Key ("id")
 );
-CREATE INDEX tasks_owner_idx ON tasks USING btree ("owner");
+CREATE INDEX tasks_owner_idx ON tasks USING btree ("task_owner");
 CREATE INDEX tasks_parent_idx ON tasks USING btree (parent);
-CREATE INDEX tasks_name_idx ON tasks USING btree (name);
+CREATE INDEX tasks_name_idx ON tasks USING btree (task_name);
 CREATE INDEX tasks_projectid_idx ON tasks USING btree (projectid);
 CREATE INDEX tasks_taskgroupid_idx ON tasks USING btree (taskgroupid);
 CREATE INDEX tasks_deadline_idx ON tasks USING btree (deadline);
-CREATE INDEX tasks_status_idx ON tasks USING btree (status, parent);
+CREATE INDEX tasks_status_idx ON tasks USING btree (task_status, parent);
 
 
 CREATE SEQUENCE "users_id_seq" start 1 increment 1 maxvalue 2147483647 minvalue 1 cache 1;
 CREATE TABLE "users" (
 	"id" integer DEFAULT nextval('"users_id_seq"'::text) NOT NULL,
-	"name" character varying(200) NOT NULL,
+	"user_name" character varying(200) NOT NULL,
 	"fullname" character varying(200) NOT NULL,
-	"password" character varying(200) NOT NULL,
+	"user_password" character varying(255) NOT NULL,
 	"email" character varying(200) NOT NULL,
 	"user_admin" character varying(5) NOT NULL DEFAULT 'f'::text,
 	"private" smallint DEFAULT 0::int NOT NULL,
@@ -55,12 +55,12 @@ CREATE INDEX users_fullname_idx ON users USING btree (fullname);
 CREATE SEQUENCE "usergroups_id_seq" start 1 increment 1 maxvalue 2147483647 minvalue 1 cache 1;
 CREATE TABLE "usergroups" (
 	"id" integer DEFAULT nextval('"usergroups_id_seq"'::text) NOT NULL,
-	"name" character varying(100) NOT NULL,
-	"description" character varying(255),
+	"group_name" character varying(100) NOT NULL,
+	"group_description" character varying(255),
 	"private" smallint DEFAULT 0::int NOT NULL,
 	Constraint "usergroups_pkey" Primary Key ("id")
 );
-CREATE INDEX usergroups_name_idx ON usergroups USING btree (name);
+CREATE INDEX usergroups_name_idx ON usergroups USING btree (group_name);
 
 
 CREATE SEQUENCE "forum_id_seq" start 1 increment 1 maxvalue 2147483647 minvalue 1 cache 1;
@@ -70,7 +70,7 @@ CREATE TABLE "forum" (
 	"taskid" integer NOT NULL,
 	"posted" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
 	"edited" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
-	"text" text,
+	"forum_text" text,
 	"userid" integer NOT NULL,
 	"usergroupid" integer NOT NULL,
 	"sequence" integer DEFAULT 0::int NOT NULL,
@@ -98,7 +98,7 @@ CREATE INDEX logins_lastaccess_idx ON logins USING btree (lastaccess);
 CREATE TABLE "seen" (
 	"taskid" integer NOT NULL,
 	"userid" integer NOT NULL,
-	"time" timestamp with time zone,
+	"seen_time" timestamp with time zone,
 	Constraint "seen_pkey" Primary Key ("taskid", "userid" )
 );
 
@@ -106,11 +106,11 @@ CREATE TABLE "seen" (
 CREATE SEQUENCE "taskgroups_id_seq" start 1 increment 1 maxvalue 2147483647 minvalue 1 cache 1;
 CREATE TABLE "taskgroups" (
 	"id" integer DEFAULT nextval('"taskgroups_id_seq"'::text) NOT NULL,
-	"name" character varying(100) NOT NULL,
-	"description" character varying(255),
+	"group_name" character varying(100) NOT NULL,
+	"group_description" character varying(255),
 	Constraint "taskgroups_pkey" Primary Key ("id")
 );
-CREATE INDEX taskgroups_name_idx ON taskgroups USING btree (name);
+CREATE INDEX taskgroups_name_idx ON taskgroups USING btree (group_name);
 
 
 CREATE SEQUENCE "contacts_id_seq" start 1 increment 1 maxvalue 2147483647 minvalue 1 cache 1;
@@ -129,7 +129,7 @@ CREATE TABLE "contacts" (
 	"notes" text,
 	"email" character varying(100),
 	"added_by" integer NOT NULL,
-	"date" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
+	"date_mod" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
 	"user_id" integer NOT NULL,
 	"taskid" integer DEFAULT 0::int NOT NULL,
 	Constraint "contacts_pkey" Primary Key ("id")
@@ -149,8 +149,8 @@ CREATE TABLE "files" (
 	"fileid" integer NOT NULL DEFAULT 0::int,
 	"hashid" character varying(200),
 	"filename" character varying(255),
-	"size" bigint NOT NULL DEFAULT 0::int,
-	"description" text,
+	"file_size" bigint NOT NULL DEFAULT 0::int,
+	"file_description" text,
 	"uploaded" timestamp with time zone NOT NULL DEFAULT current_timestamp(0),
 	"uploader" integer NOT NULL,
 	"mime" character varying(200),
@@ -175,14 +175,14 @@ CREATE TABLE "config" (
 	"email_from" character varying(200),
 	"globalaccess" character varying(200),
 	"groupaccess" character varying(200),
-	"owner" character varying(200),
+	"config_owner" character varying(200),
 	"usergroup" character varying(200),
 	"project_order"  character varying(200),
 	"task_order"  character varying(200)
 );
 
 CREATE TABLE "login_attempt" (
-	"name" character varying(100) NOT NULL,
+	"login_name" character varying(100) NOT NULL,
 	"ip" character varying(100) NOT NULL,
 	"last_attempt" timestamp with time zone NOT NULL DEFAULT current_timestamp(0)
 );
@@ -194,17 +194,17 @@ CREATE TABLE "site_name" (
 
 CREATE TABLE "tokens" (
         "token" character varying(100) NOT NULL,
-        "action" character varying(100) NOT NULL,
+        "user_action" character varying(100) NOT NULL,
         "userid" integer NOT NULL,
         "lastaccess" timestamp with time zone NOT NULL DEFAULT current_timestamp(0)
 );
 CREATE INDEX tokens_token_idx ON tokens USING btree ("token");
 
-INSERT INTO users ( name, fullname, password, email, admin, deleted )
+INSERT INTO users ( user_name, fullname, user_password, email, user_admin, deleted )
 VALUES( 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );
 
 INSERT INTO config ( globalaccess, groupaccess,  project_order, task_order )
-VALUES( 'checked=\"checked\"', '', 'ORDER BY name', 'ORDER BY name' );
+VALUES( 'checked=\"checked\"', '', 'ORDER BY task_name', 'ORDER BY task_name' );
 
 INSERT INTO site_name ( manager_name, abbr_manager_name )
 VALUES( 'WebCollab Project Management', 'WebCollab' );

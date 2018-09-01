@@ -278,7 +278,7 @@ switch($selection ) {
   default:
     $groupid = 0; $s1 = " checked=\"checked\""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
     $s5 = "style=\"background-color: white\""; $s6 = "style=\"background-color: #DDDDDD\"";
-    $type = "AND owner=? ";
+    $type = "AND task_owner=? ";
     if($userid == 0 ){
       $s2 = " selected=\"selected\"";
     }
@@ -325,7 +325,7 @@ $content .= "</select></label></td>\n".
             "<option value=\"0\"".$s4.">".$lang['no_group']."</option>\n";
 
 //get all groups for option box
-$q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
+$q = db_query('SELECT id, group_name, private FROM '.PRE.'usergroups ORDER BY group_name' );
 
 //usergroup input box fields
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
@@ -341,7 +341,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   if( $row['id'] == $groupid ){
     $content .= " selected=\"selected\"";
   }
-  $content .= ">".$row['name']."</option>\n";
+  $content .= ">".$row['group_name']."</option>\n";
 }
 
 $content .= "</select></label></td>\n".
@@ -356,7 +356,7 @@ $project_order = $row[0];
 $task_order    = str_replace('ORDER BY', '', $row[1] );
 
 if(substr(DATABASE_TYPE, 0, 5) == 'mysql' ) {
-  $no_group = 'IF('.PRE.'taskgroups.name IS NULL, 1, 0), ';
+  $no_group = 'IF('.PRE.'taskgroups.group_name IS NULL, 1, 0), ';
 }
 else {
   $no_group = '';
@@ -364,19 +364,19 @@ else {
 
 // show all subtasks that are not complete
 $q = db_prepare('SELECT '.PRE.'tasks.id AS id,
-                        '.PRE.'tasks.name AS name,
+                        '.PRE.'tasks.task_name AS task_name,
                         '.PRE.'tasks.deadline AS deadline,
                         '.PRE.'tasks.parent AS parent,
                         '.PRE.'tasks.projectid AS projectid,
                         '.db_epoch().' '.PRE.'tasks.deadline) AS due,
                         '.PRE.'tasks.priority AS priority,
                         '.PRE.'taskgroups.id AS group_id,
-                        '.PRE.'taskgroups.name AS group_name,
-                        '.PRE.'taskgroups.description AS group_description
+                        '.PRE.'taskgroups.group_name AS group_name,
+                        '.PRE.'taskgroups.group_description AS group_description
                         FROM '.PRE.'tasks
                         LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid)
                         WHERE parent<>0
-                        AND (status=\'created\' OR status=\'active\')
+                        AND (task_status=\'created\' OR task_status=\'active\')
                         '.$type.usergroup_tail().
                         'ORDER BY '.$no_group.' group_name,'.$task_order );
 
@@ -407,13 +407,13 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $state = ceil( ($row['due'] - TIME_NOW )/86400 );
 
   if($state > 1) {
-    $this_task .= $row['name']."</a>".sprintf($lang['due_in_sprt'], $state );
+    $this_task .= $row['task_name']."</a>".sprintf($lang['due_in_sprt'], $state );
   }
   else if($state > 0) {
-    $this_task .= $row['name']."</a>".$lang['due_tomorrow'];
+    $this_task .= $row['task_name']."</a>".$lang['due_tomorrow'];
   }
   else {
-    $this_task .= "<span class=\"red\">".$row['name']."</span></a>";
+    $this_task .= "<span class=\"red\">".$row['task_name']."</span></a>";
   }
 
   $task_uncompleted[$i]['task'] = $this_task;
@@ -427,7 +427,7 @@ db_free_result($q);
 
 //query to get the all the projects
 $q = db_query('SELECT id,
-                      name,
+                      task_name,
                       '.db_epoch().' deadline) AS due,
                       priority
                       FROM '.PRE.'tasks
@@ -440,7 +440,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //if no task, don't show project name either
   if($new_content != '' ) {
-    $content .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;<b>".$row['name']."</b></p>\n".$new_content."\n";
+    $content .= "<p>&nbsp;&nbsp;&nbsp;&nbsp;<b>".$row['task_name']."</b></p>\n".$new_content."\n";
     //set flag to show there is at least one uncompleted task
     $flag = 1;
   }

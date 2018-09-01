@@ -99,7 +99,7 @@ else {
   //seems okay at first, now go cross-checking with the known data from the database
   $q = db_prepare('SELECT '.PRE.'logins.user_id AS user_id,
                           '.PRE.'logins.lastaccess AS lastaccess,
-                          '.PRE.'users.user_admin AS admin,
+                          '.PRE.'users.user_admin AS user_admin,
                           '.db_epoch().' now() ) AS now,
                           '.db_epoch().' lastaccess) AS sec_lastaccess
                           FROM '.PRE.'logins
@@ -115,7 +115,7 @@ else {
   }
 
   //check rights
-  if($row['admin'] != 't' ) {
+  if($row['user_admin'] != 't' ) {
     error_setup('You need to be an administrator to use this function' );
   }
 

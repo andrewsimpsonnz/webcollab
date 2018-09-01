@@ -2,7 +2,7 @@
 /*
   $Id: file_submit.php 2304 2009-08-25 09:18:26Z andrewsimpson $
 
-  (c) 2002 - 2017 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -75,7 +75,7 @@ function file_delete($fileid ) {
                                 '.PRE.'files.fileid AS fileid,
                                 '.PRE.'files.hashid AS hashid,
                                 '.PRE.'files.filename AS filename,
-                                '.PRE.'tasks.owner AS owner
+                                '.PRE.'tasks.task_owner AS task_owner
                                 FROM '.PRE.'files
                                 LEFT JOIN '.PRE.'tasks ON ('.PRE.'files.taskid='.PRE.'tasks.id)
                                 WHERE '.PRE.'files.id=?' );
@@ -85,7 +85,7 @@ function file_delete($fileid ) {
   //show it
   if($row = @db_fetch_array($q, 0 ) ) {
     //owners of the file and admins can delete files
-    if( (ADMIN ) || (UID == $row['owner'] ) || (UID == $row['uploader'] ) ) {
+    if( (ADMIN ) || (UID == $row['task_owner'] ) || (UID == $row['uploader'] ) ) {
 
       //delete file from disk
       if(file_exists(FILE_BASE.'/'.$row['fileid'].'__'.$row['hashid'] ) ) {
@@ -155,18 +155,18 @@ switch($_POST['action'] ) {
     if($mail_owner || $mail_group ) {
 
       //get task data
-      $q = db_prepare('SELECT '.PRE.'tasks.name AS name,
+      $q = db_prepare('SELECT '.PRE.'tasks.task_name AS task_name,
                             '.PRE.'tasks.usergroupid AS usergroupid,
                             '.PRE.'tasks.projectid AS projectid,
                             '.PRE.'users.email AS email
                             FROM '.PRE.'tasks
-                            LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.owner='.PRE.'users.id)
+                            LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.task_owner='.PRE.'users.id)
                             WHERE '.PRE.'tasks.id=? LIMIT 1' );
 
       db_execute($q, array($taskid ) );
       $task_row = db_fetch_array($q, 0 );
 
-      $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+      $q = db_prepare('SELECT task_name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
       db_execute($q, array($task_row['projectid'] ) );
       $project = db_result($q, 0, 0 );
 
@@ -294,7 +294,7 @@ switch($_POST['action'] ) {
       }
 
       //alter file database administration
-      $q = db_prepare("INSERT INTO ".PRE."files (filename, size, description, uploaded, uploader, taskid, mime, hashid )
+      $q = db_prepare("INSERT INTO ".PRE."files (filename, file_size, file_description, uploaded, uploader, taskid, mime, hashid )
                               VALUES (?, ?, ?, now(), ?, ?, ?, ? )" );
 
       db_execute($q, array($filename, (int)($_FILES['userfile']['size'][$i]), $description, UID, $taskid, $mime, $hashid ) ) ;
@@ -338,7 +338,7 @@ switch($_POST['action'] ) {
           $mail_list = array_merge((array)$mail_list, (array)$EMAIL_MAILINGLIST );
         }
 
-        email($mail_list, sprintf($title_file_post, $task_row['name'] ), sprintf($email_file_post, UID_NAME, $_FILES['userfile']['name'][$i], $message_unclean, $project, $task_row['name'], 'index.php?taskid='.$taskid ) );
+        email($mail_list, sprintf($title_file_post, $task_row['task_name'] ), sprintf($email_file_post, UID_NAME, $_FILES['userfile']['name'][$i], $message_unclean, $project, $task_row['task_name'], 'index.php?taskid='.$taskid ) );
       }
 
       //record at least one succesful file upload

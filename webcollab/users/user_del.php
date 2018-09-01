@@ -2,7 +2,7 @@
 /*
   $Id: user_del.php 2180 2009-04-07 09:33:17Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -73,7 +73,7 @@ switch($_POST['action'] ){
       db_begin();
 
       //free up any tasks owned (should be none)
-      $q = db_prepare('UPDATE '.PRE.'tasks SET owner=0 WHERE owner=?' );
+      $q = db_prepare('UPDATE '.PRE.'tasks SET task_owner=0 WHERE task_owner=?' );
       @db_execute($q, array($userid ) );
 
       //remove user from forum messages
@@ -114,7 +114,7 @@ switch($_POST['action'] ){
        db_execute($q, array($userid ) );
 
        //free all tasks that that user has done
-       $q = db_prepare('UPDATE '.PRE.'tasks SET owner=0 WHERE owner=?' );
+       $q = db_prepare('UPDATE '.PRE.'tasks SET task_owner=0 WHERE task_owner=?' );
        @db_execute($q, array($userid ) );
        db_commit();
 

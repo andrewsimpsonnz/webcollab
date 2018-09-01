@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2008  Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2003 - 2018  Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -43,7 +43,7 @@ define('EMAIL_FROM',     $row['email_from'] );
 define('EMAIL_ADMIN',    $row['email_admin'] );
 define('DEFAULT_ACCESS', $row['globalaccess'] );
 define('DEFAULT_EDIT',   $row['groupaccess'] );
-define('DEFAULT_OWNER',  $row['owner'] );
+define('DEFAULT_OWNER',  $row['config_owner'] );
 define('DEFAULT_GROUP',  $row['usergroup'] );
 
 //mailing list

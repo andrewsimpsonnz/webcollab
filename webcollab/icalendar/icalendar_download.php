@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2005 - 2013 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2005 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -77,8 +77,8 @@ function icalendar_body($row, $taskid ) {
   }
 
   $content .= "UID:".$row['taskid']."-".$icalendar_id."\r\n".
-              "SUMMARY:".icalendar_text_format($row['name'] )."\r\n".
-              "DESCRIPTION:".icalendar_text_format($row['text'] )."\r\n".
+              "SUMMARY:".icalendar_text_format($row['task_name'] )."\r\n".
+              "DESCRIPTION:".icalendar_text_format($row['task_text'] )."\r\n".
               "CREATED:".icalendar_datetime($row['created_utc'])."Z\r\n".
               "LAST-MODIFIED:".icalendar_datetime($row['edited_utc'])."Z\r\n".
               "DTSTAMP:".$dtstamp."\r\n".
@@ -153,7 +153,7 @@ function icalendar_vtodo($row, $taskid ) {
               "DTSTART:".icalendar_datetime($row['created_utc'])."Z\r\n";
 
   //status
-  switch($row['status'] ) {
+  switch($row['task_status'] ) {
     case 'done':
       $case = 'COMPLETED';
       break;
@@ -193,7 +193,7 @@ function icalendar_vtodo($row, $taskid ) {
        $content .= "RELATED-TO;RELTYPE=CHILD:".$row['parent']."-".$icalendar_id."\r\n";
     }
 
-    $task_complete = ($row['status'] == 'done' ) ? 100 : 0;
+    $task_complete = ($row['task_status'] == 'done' ) ? 100 : 0;
     $content .= "PERCENT-COMPLETE:".$task_complete."\r\n";
   }
 

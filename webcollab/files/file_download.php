@@ -2,7 +2,7 @@
 /*
   $Id: file_download.php 2254 2009-07-24 09:31:32Z andrewsimpson $
 
-  (c) 2003 - 2014 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2003 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -44,7 +44,7 @@ if( ! @safe_integer($_GET['fileid']) ){
 $fileid = $_GET['fileid'];
 
 //get the files info
-$q = db_prepare('SELECT fileid, hashid, filename, size, mime, taskid FROM '.PRE.'files WHERE id=? LIMIT 1');
+$q = db_prepare('SELECT fileid, hashid, filename, file_size, mime, taskid FROM '.PRE.'files WHERE id=? LIMIT 1');
 db_execute($q, array($fileid ) );
 
 if( ! $row = db_fetch_array($q, 0) ) {
@@ -112,14 +112,14 @@ switch (FILE_DOWNLOAD ) {
     header("Content-Type: application/octet-stream");
     header('Content-Disposition: attachment; '.$content_filename );
     header("Content-Transfer-Encoding: binary\n");
-    header('Content_Length: '.$row['size'] );
+    header('Content_Length: '.$row['file_size'] );
     break;
 
   case 'inline':
   default:
     header('Content-Type: '.$row['mime']);
     header('Content-Disposition: inline; '.$content_filename );
-    header('Content_Length: '.$row['size'] );
+    header('Content_Length: '.$row['file_size'] );
     break;
 }
 

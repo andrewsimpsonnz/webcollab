@@ -109,13 +109,13 @@ if( $parentid != 0 ) {
 }
 //start transaction
 db_begin();
-$q = db_prepare('INSERT INTO '.PRE.'tasks(name,
-                                          text,
+$q = db_prepare('INSERT INTO '.PRE.'tasks(task_name,
+                                          task_text,
                                           created,
                                           lastforumpost,
                                           lastfileupload,
                                           edited,
-                                          owner,
+                                          task_owner,
                                           creator,
                                           deadline,
                                           finished_time,
@@ -126,7 +126,7 @@ $q = db_prepare('INSERT INTO '.PRE.'tasks(name,
                                           usergroupid,
                                           globalaccess,
                                           groupaccess,
-                                          status,
+                                          task_status,
                                           sequence,
                                           completion_time )
               values(?, ?, now(), now(), now(), now(), ?, ?, ?, now(), ?, ?, ?, ?, ?, ?, ?, ?, 0, now() )' );
@@ -146,18 +146,18 @@ if($parentid == 0 || $projectid == 0 ) {
 //if inactive parent project, then set this task to inactive too
 $project_status = $status;
 if($parentid != 0 ) {
-  $q = db_prepare('SELECT status FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+  $q = db_prepare('SELECT task_status FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
   db_execute($q, array($projectid ) );
   $project_status = db_result($q, 0, 0 );
 
   if($project_status == 'cantcomplete' || $project_status == 'notactive' ){
-    $q = db_prepare('UPDATE '.PRE.'tasks SET status=? WHERE id=?' );
+    $q = db_prepare('UPDATE '.PRE.'tasks SET task_status=? WHERE id=?' );
     db_execute($q, array($project_status, $taskid ) );
   }
 }
 
 //you have already seen this item, no need to announce it to you
-$q = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES(?, ?, now() )');
+$q = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, seen_time) VALUES(?, ?, now() )');
 db_execute($q, array(UID, $taskid ) );
 
 //adjust completion status in project
@@ -167,7 +167,7 @@ adjust_completion($projectid );
 db_commit();
 
 //get name of project for emails
-$q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+$q = db_prepare('SELECT task_name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
 db_execute($q, array($projectid ) );
 $name_project = db_result($q, 0, 0 );
 

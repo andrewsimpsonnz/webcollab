@@ -103,9 +103,9 @@ function listReparentTasks($projectid, $self_parent ) {
   //cycle through relevant tasks
   foreach((array)$task_key as $key ) {
 
-    $task_array[$task_count]['id']     = $task_reparent[($key)]['id'];
-    $task_array[$task_count]['parent'] = $task_reparent[($key)]['parent'];
-    $task_array[$task_count]['name']   = $task_reparent[($key)]['name'];
+    $task_array[$task_count]['id']          = $task_reparent[($key)]['id'];
+    $task_array[$task_count]['parent']      = $task_reparent[($key)]['parent'];
+    $task_array[$task_count]['task_name']   = $task_reparent[($key)]['task_name'];
 
     //if this is a subtask, store the parent id
     if($task_array[$task_count]['parent'] != $projectid ) {
@@ -134,7 +134,7 @@ function listReparentTasks($projectid, $self_parent ) {
     if($self_parent == $task_array[$i]['id'] ) {
       $content .= " selected=\"selected\"";
     }
-    $content .= ">".$padding.$task_array[$i]['name']."</option>\n";
+    $content .= ">".$padding.$task_array[$i]['task_name']."</option>\n";
 
     //if this task has children (subtasks), iterate recursively to find them
     if(isset($parent_array[($task_array[$i]['id'])] ) ) {
@@ -170,7 +170,7 @@ function find_children($parent, $self_parent ) {
     if($self_parent == $task_array[$i]['id'] ) {
       $content .= " selected=\"selected\"";
     }
-    $content .= ">".$padding.$task_array[$i]['name']."</option>\n";
+    $content .= ">".$padding.$task_array[$i]['task_name']."</option>\n";
 
     //if this task has children (subtasks), iterate recursively to find them
     if(isset($parent_array[($task_array[$i]['id'])] ) ) {
@@ -218,7 +218,7 @@ if(isset($_GET['status'] ) && $_GET['status'] ) {
 generate_token('tasks' );
 
 //can this user edit this task ?
-if( ! user_access($TASKID_ROW['owner'], $TASKID_ROW['usergroupid'], $TASKID_ROW['groupaccess'] ) ) {
+if( ! user_access($TASKID_ROW['task_owner'], $TASKID_ROW['usergroupid'], $TASKID_ROW['groupaccess'] ) ) {
   warning($lang['access_denied'], $lang['no_edit'] );
 }
 
@@ -255,16 +255,16 @@ switch($TYPE) {
                 "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n ".
                 "<table class=\"celldata\">\n".
                 "<tr><td>".$lang['creation_time']."</td><td>".nicedate($TASKID_ROW['created'] )."</td></tr>\n".
-                "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" value=\"".$TASKID_ROW['name']."\" /></td></tr>\n";
+                "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" value=\"".$TASKID_ROW['task_name']."\" /></td></tr>\n";
     break;
 
   case 'task':
     //get parent details
-    $q = db_prepare('SELECT '.db_epoch().'deadline) AS epoch_deadline, status FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+    $q = db_prepare('SELECT '.db_epoch().'deadline) AS epoch_deadline, task_status FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
     db_execute($q, array($TASKID_ROW['parent'] ) );
     $parent_row = db_fetch_array($q, 0 );
 
-    switch ($parent_row['status'] ) {
+    switch ($parent_row['task_status'] ) {
       case 'created':
       case 'active':
         //add the project deadline (plus GMT offset) for the javascript
@@ -282,7 +282,7 @@ switch($TYPE) {
     }
 
     //get project name
-    $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+    $q = db_prepare('SELECT task_name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
     db_execute($q, array($TASKID_ROW['projectid'] ) );
     $project_name = db_result($q, 0, 0 );
 
@@ -306,29 +306,29 @@ $content .= ">".$lang['no_reparent']."</option>\n";
 //get tasks for reparenting and store for later use
 if($TASKID_ROW['parent'] == 0 ) {
   //For project: Don't show tasks under
-  $q = db_prepare('SELECT id, name, parent, projectid FROM '.PRE.'tasks
-                        WHERE id<>? AND parent<>0 AND projectid<>?'.usergroup_tail().'AND archive=0 ORDER BY name');
+  $q = db_prepare('SELECT id, task_name, parent, projectid FROM '.PRE.'tasks
+                        WHERE id<>? AND parent<>0 AND projectid<>?'.usergroup_tail().'AND archive=0 ORDER BY task_name');
 
   db_execute($q, array($taskid, $taskid ) );
 }
 else {
   //For task: Don't show child tasks under
-  $q = db_prepare('SELECT id, name, parent, projectid FROM '.PRE.'tasks
-                        WHERE id<>? AND (parent<>0 OR parent<>?)'.usergroup_tail().' AND archive=0 ORDER BY name');
+  $q = db_prepare('SELECT id, task_name, parent, projectid FROM '.PRE.'tasks
+                        WHERE id<>? AND (parent<>0 OR parent<>?)'.usergroup_tail().' AND archive=0 ORDER BY task_name');
 
   db_execute($q, array($taskid, $taskid ) );
 }
 
 for($i = 0; $reparent_row = @db_fetch_array($q, $i ); ++$i ) {
   //put values into array
-  $task_reparent[$i]['id']     = $reparent_row['id'];
-  $task_reparent[$i]['name']   = $reparent_row['name'];
-  $task_reparent[$i]['parent'] = $reparent_row['parent'];
-  $task_projectid[$i]          = $reparent_row['projectid'];
+  $task_reparent[$i]['id']         = $reparent_row['id'];
+  $task_reparent[$i]['task_name']  = $reparent_row['task_name'];
+  $task_reparent[$i]['parent']     = $reparent_row['parent'];
+  $task_projectid[$i]              = $reparent_row['projectid'];
 }
 
 //get projects for reparenting
-$q = db_prepare('SELECT id, name FROM '.PRE.'tasks WHERE parent=0 AND id<>?'.usergroup_tail().' AND archive=0 ORDER BY name');
+$q = db_prepare('SELECT id, task_name FROM '.PRE.'tasks WHERE parent=0 AND id<>?'.usergroup_tail().' AND archive=0 ORDER BY task_name');
 db_execute($q, array($taskid ) );
 
 for( $i=0 ; $reparent_row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -338,7 +338,7 @@ for( $i=0 ; $reparent_row = @db_fetch_array($q, $i ) ; ++$i ) {
   if($TASKID_ROW['parent'] == $reparent_row['id'] ) {
     $content .= " selected=\"selected\"";
   }
-  $content .= ">+&nbsp;".$reparent_row['name']."</option>\n";
+  $content .= ">+&nbsp;".$reparent_row['task_name']."</option>\n";
 
   //add tasks previously stored
   $content .= listReparentTasks($reparent_row['id'], $TASKID_ROW['parent'] );
@@ -348,7 +348,7 @@ $content .="</select></td></tr>\n";
 
 //show task (if applicable)
 if($TASKID_ROW['parent'] != 0 ){
-  $content .= "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" value=\"".$TASKID_ROW['name']."\" /></td></tr>\n";
+  $content .= "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" value=\"".$TASKID_ROW['task_name']."\" /></td></tr>\n";
 }
 //deadline
 $content .= "<tr><td>".$lang['deadline'].":</td><td>".date_select_from_timestamp($TASKID_ROW['deadline'])."</td></tr>\n";
@@ -393,7 +393,7 @@ $s1 = ""; $s2 = ""; $s3 = ""; $s4 = "";
 switch($TASKID_ROW['parent'] ){
   case 0:
     //status for projects - 'done' is calculated from tasks
-    switch($TASKID_ROW['status'] ) {
+    switch($TASKID_ROW['task_status'] ) {
       case 'notactive':
         $s1 = " selected=\"selected\"";
         break;
@@ -426,7 +426,7 @@ switch($TASKID_ROW['parent'] ){
         $selection = $new_status;
       }
       else {
-        $selection = $TASKID_ROW['status'];
+        $selection = $TASKID_ROW['task_status'];
       }
 
      $s1 = ""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
@@ -468,7 +468,7 @@ if($new_owner !== false ) {
   $selection = $new_owner;
 }
 else {
-  $selection = $TASKID_ROW['owner'];
+  $selection = $TASKID_ROW['task_owner'];
 }
 
 //task owner
@@ -508,7 +508,7 @@ if($TASKID_ROW['parent'] != 0 ) {
   $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['taskgroup']."</a>: </td><td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
-  $q = db_query('SELECT id, name FROM '.PRE.'taskgroups ORDER BY name' );
+  $q = db_query('SELECT id, group_name FROM '.PRE.'taskgroups ORDER BY group_name' );
 
   for( $i=0 ; $taskgroup_row = @db_fetch_array($q, $i ) ; ++$i) {
 
@@ -517,7 +517,7 @@ if($TASKID_ROW['parent'] != 0 ) {
     if($TASKID_ROW['taskgroupid'] == $taskgroup_row['id'] ) {
       $content .= " selected=\"selected\"";
     }
-    $content .= ">".$taskgroup_row['name']."</option>\n";
+    $content .= ">".$taskgroup_row['group_name']."</option>\n";
   }
   $content .= "</select></td></tr>\n";
 }
@@ -526,7 +526,7 @@ if($TASKID_ROW['parent'] != 0 ) {
 $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td><td><select name=\"usergroupid\">\n";
 $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
-$q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
+$q = db_query('SELECT id, group_name, private FROM '.PRE.'usergroups ORDER BY group_name' );
 
 for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
 
@@ -543,7 +543,7 @@ for( $i=0 ; $usergroup_row = @db_fetch_array($q, $i ) ; ++$i ) {
     else {
       $content .= ">\n";
     }
-    $content .= $usergroup_row['name']."</option>\n";
+    $content .= $usergroup_row['group_name']."</option>\n";
 }
 $content .= "</select></td></tr>\n";
 
@@ -556,7 +556,7 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
 
              "<tr><td>".$lang[$TYPE."_description"]."</td>".
              "<td><script type=\"text/javascript\"> edToolbar('text');</script>".
-             "<textarea name=\"text\" id=\"text\" rows=\"10\" cols=\"60\">".$TASKID_ROW['text']."</textarea></td></tr>\n".
+             "<textarea name=\"text\" id=\"text\" rows=\"10\" cols=\"60\">".$TASKID_ROW['task_text']."</textarea></td></tr>\n".
 
              //do we need to email ?
              "<tr><td><label for=\"mailowner\">".$lang['email_new_owner']."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".DEFAULT_OWNER." /></td></tr>\n".
@@ -568,10 +568,10 @@ $content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type
              "</form>\n";
 
 //delete options
-if((ADMIN ) || ($TASKID_ROW['owner'] == UID ) ) { 
+if((ADMIN ) || ($TASKID_ROW['task_owner'] == UID ) ) { 
 
   $content .= "<form method=\"post\" action=\"tasks.php\" ".
-              "onsubmit=\"return confirm('".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['name'] ) )."')\">\n".
+              "onsubmit=\"return confirm('".sprintf($lang["del_javascript_".$TYPE."_sprt"], javascript_escape($TASKID_ROW['task_name'] ) )."')\">\n".
               "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />".
               "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
               "<input type=\"hidden\" name=\"taskid\" value=\"".$TASKID_ROW['id']."\" />\n".

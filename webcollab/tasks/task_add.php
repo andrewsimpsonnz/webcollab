@@ -84,11 +84,11 @@ if( @safe_integer($_GET['parentid']) ) {
   $parentid = $_GET['parentid'];
 
   //get info about the parent of this task
-  $q = db_prepare('SELECT name,
+  $q = db_prepare('SELECT task_name,
                         deadline,
                         '.db_epoch().'deadline) AS epoch_deadline,
-                        status,
-                        owner,
+                        task_status,
+                        task_owner,
                         parent,
                         projectid,
                         usergroupid,
@@ -100,7 +100,7 @@ if( @safe_integer($_GET['parentid']) ) {
     error('Task add', 'No parent for taskid' );
   }
 
-  switch ($parent_row['status'] ) {
+  switch ($parent_row['task_status'] ) {
 
     case 'created':
     case 'active':
@@ -126,10 +126,10 @@ if( @safe_integer($_GET['parentid']) ) {
 
   //show project name
   if($parent_row['projectid'] == $parentid ) {
-    $project_name = $parent_row['name'];
+    $project_name = $parent_row['task_name'];
   }
   else {
-    $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=?' );
+    $q = db_prepare('SELECT task_name FROM '.PRE.'tasks WHERE id=?' );
     db_execute($q, array($parent_row['projectid'] ) );
     $project_name = db_result($q, 0, 0 );
   }
@@ -138,7 +138,7 @@ if( @safe_integer($_GET['parentid']) ) {
 
   //check if task has a parent task
   if( $parent_row['parent'] != 0 ) {
-    $content .= "<tr><td>".$lang['parent_task'].":</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parent_row['parent']."\">".$parent_row['name']."</a></td></tr>\n";
+    $content .= "<tr><td>".$lang['parent_task'].":</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parent_row['parent']."\">".$parent_row['task_name']."</a></td></tr>\n";
   }
   $content .= "<tr><td>".$lang['creation_time'].":</td><td>".nicetime(date('Y-m-d H:i:s', TIME_NOW - date('Z') + TZ*60*60 ) )."</td></tr>\n".
               "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" />".
@@ -152,7 +152,7 @@ if( @safe_integer($_GET['parentid']) ) {
   //status
   // tasks inherit status from parent
   $s1=''; $s2=''; $s3=''; $s4='';
-  switch ($parent_row['status'] ) {
+  switch ($parent_row['task_status'] ) {
 
     case 'notactive':
       $s2 = "selected=\"selected\" ";
@@ -209,7 +209,7 @@ if( @safe_integer($_GET['parentid']) ) {
   $content .= "</select></td></tr>\n";
 
   //get all taskgroups in order to show a task owner
-  $q = db_query('SELECT id, name FROM '.PRE.'taskgroups ORDER BY name');
+  $q = db_query('SELECT id, group_name FROM '.PRE.'taskgroups ORDER BY group_name');
 
   $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."'); return false\">".$lang['taskgroup']."</a>: </td><td><select name=\"taskgroupid\">\n";
   $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
@@ -218,16 +218,16 @@ if( @safe_integer($_GET['parentid']) ) {
 
     //inherit taskgroup from parent
     if($parent_row['taskgroupid'] == $taskgroup_row['id'] ) {
-      $content .= "<option value=\"".$taskgroup_row['id']."\" selected=\"selected\">".$taskgroup_row['name']."</option>\n";
+      $content .= "<option value=\"".$taskgroup_row['id']."\" selected=\"selected\">".$taskgroup_row['group_name']."</option>\n";
     }
     else {
-      $content .= "<option value=\"".$taskgroup_row['id']."\">".$taskgroup_row['name']."</option>\n";
+      $content .= "<option value=\"".$taskgroup_row['id']."\">".$taskgroup_row['group_name']."</option>\n";
     }
   }
   $content .= "</select></td></tr>\n";
 
   //show all the groups
-  $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
+  $q = db_query('SELECT id, group_name, private FROM '.PRE.'usergroups ORDER BY group_name' );
 
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td><td><select name=\"usergroupid\">\n";
   $content .= "<option value=\"0\">".$lang['all_groups']."</option>\n";
@@ -241,10 +241,10 @@ if( @safe_integer($_GET['parentid']) ) {
 
     //inherit usergroup from parent, if parent is private
     if(($parent_row['globalaccess'] == 'f' ) && ( $parent_row['usergroupid'] == $usergroup_row['id'] ) ) {
-      $content .= "<option value=\"".$usergroup_row['id']."\" selected=\"selected\">".$usergroup_row['name']."</option>\n";
+      $content .= "<option value=\"".$usergroup_row['id']."\" selected=\"selected\">".$usergroup_row['group_name']."</option>\n";
     }
     else {
-      $content .= "<option value=\"".$usergroup_row['id']."\">".$usergroup_row['name']."</option>\n";
+      $content .= "<option value=\"".$usergroup_row['id']."\">".$usergroup_row['group_name']."</option>\n";
     }
   }
 
@@ -328,7 +328,7 @@ else {
   $content .= "</select></td></tr>\n";
 
   //show all the groups
-  $q = db_query('SELECT id, name, private FROM '.PRE.'usergroups ORDER BY name' );
+  $q = db_query('SELECT id, group_name, private FROM '.PRE.'usergroups ORDER BY group_name' );
 
   $content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td><td><select name=\"usergroupid\">\n".
               "<option value=\"0\">".$lang['all_groups']."</option>\n";
@@ -340,7 +340,7 @@ else {
       continue;
     }
 
-    $content .= "<option value=\"".$usergroup_row['id']."\">".$usergroup_row['name']."</option>\n";
+    $content .= "<option value=\"".$usergroup_row['id']."\">".$usergroup_row['group_name']."</option>\n";
   }
   $content .= "</select></td></tr>\n".
               "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['all_users_view']."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" ".DEFAULT_ACCESS." /></td></tr>\n".

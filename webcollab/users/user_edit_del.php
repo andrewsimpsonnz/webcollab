@@ -2,7 +2,7 @@
 /*
   $Id: user_edit.php 2172 2009-04-06 07:30:53Z andrewsimpson $
 
-  (c) 2009 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2009 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -53,7 +53,7 @@ if(! safe_integer($_GET['userid']) ){
 $userid = $_GET['userid'];
 
 //query for user
-$q = db_prepare('SELECT id, name, fullname, deleted FROM '.PRE.'users WHERE id=?' );
+$q = db_prepare('SELECT id, user_name, fullname, deleted FROM '.PRE.'users WHERE id=?' );
 db_execute($q, array($userid ) );
 
 //fetch data
@@ -63,7 +63,7 @@ if( ! ($row = db_fetch_array($q , 0 ) ) ) {
 
 //show data
 $content = "<table class=\"celldata\">\n".
-           "<tr class=\"grouplist\"><td>".$lang['login_name'].":</td><td>".$row['name']."</td></tr>\n".
+           "<tr class=\"grouplist\"><td>".$lang['login_name'].":</td><td>".$row['user_name']."</td></tr>\n".
            "<tr class=\"grouplist\"><td>".$lang['full_name'].":</td><td>".
            "<a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['id']."\">".$row['fullname']."</a></td></tr>\n".
            "</table>\n";
@@ -91,7 +91,7 @@ else { //deleted user
               "</form>\n";
 
   //if this user has NO tasks owned then we can delete him forever :)
-  $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner=?' );
+  $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE task_owner=?' );
   db_execute($q, array($row['id'] ) );
 
   if(! db_result($q, 0, 0 ) ) {

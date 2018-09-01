@@ -92,7 +92,7 @@ $content =  "<form method=\"post\" action=\"users.php\" ".
             "<input type=\"hidden\" id=\"alert_email\" name=\"alert1\" value=\"".$lang['invalid_email']."\" />\n".
             "<input type=\"hidden\" id=\"alert_field\" name=\"alert2\" value=\"".$lang['missing_field_javascript']."\" /></fieldset>\n".
             "<table class=\"celldata\">".
-            "<tr><td>".$lang['login_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" value=\"".$row['name']."\" /></td></tr>\n".
+            "<tr><td>".$lang['login_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" value=\"".$row['user_name']."\" /></td></tr>\n".
             "<tr><td>".$lang['full_name'].":</td><td><input id=\"full\" type=\"text\" name=\"fullname\" class=\"size\" value=\"".$row['fullname']."\" /></td></tr>\n";
 
 //don't show password field for WEB_AUTH
@@ -139,7 +139,7 @@ if(ADMIN ) {
   $content .= "<tr><td></td><td></td></tr>\n";
 
   //add user-groups
-  $usergroup_q = db_query("SELECT name, id FROM ".PRE."usergroups ORDER BY name" );
+  $usergroup_q = db_query("SELECT group_name, id FROM ".PRE."usergroups ORDER BY group_name" );
   $content .= "<tr><td></td><td><small><i>".$lang['member_groups']."</i></small></td></tr>\n".
               "<tr><td>".$lang['usergroups'].":</td>".
               "<td><select name=\"usergroup[]\" multiple=\"multiple\" size=\"4\">\n";
@@ -151,7 +151,7 @@ if(ADMIN ) {
     if(in_array($usergroup_row['id'], $usergroups_users_array ) ) {
       $content .= " selected=\"selected\"";
     }
-    $content .= " >".$usergroup_row['name']."</option>";
+    $content .= " >".$usergroup_row['group_name']."</option>";
   }
   $content .= "</select><small><i>".$lang['select_instruct']."</i></small></td></tr>\n";
 }

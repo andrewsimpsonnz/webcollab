@@ -2,7 +2,7 @@
 /*
   $Id: setup.php 2288 2009-08-22 08:50:00Z andrewsimpson $
 
-  (c) 2003 - 2017 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2003 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -77,7 +77,7 @@ function enable_login($userid, $username, $ip='0.0.0.0' ) {
   //remove the old login information
   $q = db_prepare('DELETE FROM '.PRE.'logins WHERE user_id=?' );
   @db_execute($q, array($userid ) );
-  $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.db_delim('20 MINUTE' ).') OR name=?' );
+  $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.db_delim('20 MINUTE' ).') OR login_name=?' );
   @db_execute($q, array($username ) );
   @db_query('DELETE FROM '.PRE.'tokens WHERE lastaccess < (now()-INTERVAL '.db_delim(TOKEN_TIMEOUT.' MINUTE' ).')' );
 
@@ -96,7 +96,7 @@ function record_fail($username, $ip ) {
   global $lang_setup;
 
   //record this login attempt
-  $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
+  $q = db_prepare('INSERT INTO '.PRE.'login_attempt(login_name, ip, last_attempt ) VALUES (?, ?, now() )' );
   db_execute($q, array($username, $ip ) );
 
   //wait 2 seconds then record an error
@@ -109,7 +109,7 @@ function record_fail($username, $ip ) {
 function check_lockout($username ) {
 
   //count the number of recent failed login attempts
-  if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt WHERE name=?
+  if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt WHERE login_name=?
 			      AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 6', 0 ) ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
   }
@@ -159,7 +159,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
   check_lockout($username );
 
   //construct login query for username / password
-  if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\'', 0 ) ) ) {
+  if(! ($q = db_prepare('SELECT id, user_password FROM '.PRE.'users WHERE user_name=? AND deleted=\'f\'', 0 ) ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
   }
 
@@ -171,18 +171,18 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
   if($row = @db_fetch_array($q, 0 ) ) {
 
       //bcrypt encryption or SHA256 + salt (deprecated - used WebCollab 3.30 - 3.31 )
-    if(strlen($row['password'] ) > 50 ){
+    if(strlen($row['user_password'] ) > 50 ){
       //verify password
-      if(password_verify($_POST['password'], $row['password'] ) ) {
+      if(password_verify($_POST['password'], $row['user_password'] ) ) {
         //valid password -> continue
         enable_login($row['id'], $username, $ip );
       }
     }
 
     //fallback to older md5 encryption (deprecated - used WebCollab 1.01 - 3.30 )
-    if(strlen($row['password'] ) < 35 ) {
+    if(strlen($row['user_password'] ) < 35 ) {
       //verify password
-      if($row['password'] === md5($_POST['password'] ) ) {
+      if($row['user_password'] === md5($_POST['password'] ) ) {
         //valid password -> continue
        enable_login($row['id'], $username, $ip );
       }

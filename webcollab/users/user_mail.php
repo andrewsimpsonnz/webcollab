@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2017 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2003 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -62,10 +62,10 @@ $content .=
         "<td><input type=\"radio\" value=\"group\" name=\"group\" id=\"group\" /><label for=\"group\">".$lang['select_usergroup']."</label></td></tr>\n";
 
 //add user-groups
-$q = db_query('SELECT name, id FROM '.PRE.'usergroups ORDER BY name' );
+$q = db_query('SELECT group_name, id FROM '.PRE.'usergroups ORDER BY group_name' );
 $content .=  "<tr><td></td><td>".$lang['usergroup'].":</td><td><label><select name=\"usergroup[]\" multiple=\"multiple\" size=\"4\">\n";
 for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
-  $content .= "<option value=\"".$row['id']."\">".$row['name']."</option>";
+  $content .= "<option value=\"".$row['id']."\">".$row['group_name']."</option>";
 }
 $content .= "</select></label></td></tr>\n".
             "<tr><td></td><td></td><td><small><i>".$lang['select_instruct']."</i></small></td></tr>\n".

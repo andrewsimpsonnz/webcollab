@@ -35,7 +35,7 @@ if(! defined('UID' ) ) {
 //secure variables
 $content  = '';
 
-$q1 = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+$q1 = db_prepare('SELECT task_name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
 
 //existing task or project
 if( @safe_integer($_GET['taskid']) ) {
@@ -51,7 +51,7 @@ if( @safe_integer($_GET['taskid']) ) {
     case '0':
       //project
       $content .= "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
-                   box_shorten($TASKID_ROW['name'])."</li>\n";
+                   box_shorten($TASKID_ROW['task_name'])."</li>\n";
       break;
 
     case ($TASKID_ROW['projectid'] ):
@@ -65,7 +65,7 @@ if( @safe_integer($_GET['taskid']) ) {
       $content .= "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></li>\n".
                   "<li><small><b>".$lang['task'].":</b></small></li>\n".
                   "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
-                  box_shorten($TASKID_ROW['name'])."</li>\n";
+                  box_shorten($TASKID_ROW['task_name'])."</li>\n";
       break;
 
     default:
@@ -86,7 +86,7 @@ if( @safe_integer($_GET['taskid']) ) {
                   "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['parent']."\">".$parent_name."</a></li>\n".
                   "<li><small><b>".$lang['task'].":</b></small></li>\n".
                   "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
-                  box_shorten($TASKID_ROW['name'])."</li>\n";
+                  box_shorten($TASKID_ROW['task_name'])."</li>\n";
       break;
 
   }
@@ -102,7 +102,7 @@ elseif( @safe_integer($_GET['parentid']) ){
   $parentid = $_GET['parentid'];
 
   //get task parent details
-  $q = db_prepare('SELECT name, parent, projectid FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+  $q = db_prepare('SELECT task_name, parent, projectid FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
   db_execute($q, array($parentid ) );
   if( ! $row = db_fetch_array($q, 0 ) ) {
     error('Task navigate', 'Parent does not exist' );
@@ -129,7 +129,7 @@ elseif( @safe_integer($_GET['parentid']) ){
     default:
       //new task with parent task
       $content .= "<li><small><b>".$lang['parent_task'].":</b></small></li>\n".
-                  "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parentid."\">".$row['name']."</a></li>\n".
+                  "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parentid."\">".$row['task_name']."</a></li>\n".
                   "<li><small><b>".$lang['task'].":</b></small></li>\n".
                   "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
                   "<i>".$lang['new_task']."</i></li>\n";

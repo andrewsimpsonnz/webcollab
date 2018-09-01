@@ -2,17 +2,17 @@
 CREATE TABLE tasks (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	parent INT UNSIGNED NOT NULL,
-	name VARCHAR(255) NOT NULL,
-	text TEXT,
+	task_name VARCHAR(255) NOT NULL,
+	task_text TEXT,
 	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	edited TIMESTAMP NOT NULL DEFAULT 0,
-	owner INT UNSIGNED NOT NULL DEFAULT 0,
+	task_owner INT UNSIGNED NOT NULL DEFAULT 0,
 	creator INT UNSIGNED NOT NULL,
 	finished_time TIMESTAMP NOT NULL DEFAULT 0,
 	projectid INT UNSIGNED NOT NULL DEFAULT 0,
 	deadline TIMESTAMP NOT NULL DEFAULT 0,
 	priority TINYINT NOT NULL DEFAULT 2,
-	status VARCHAR(20) NOT NULL DEFAULT 'created',
+	task_status VARCHAR(20) NOT NULL DEFAULT 'created',
 	taskgroupid INT UNSIGNED NOT NULL,
 	lastforumpost TIMESTAMP NOT NULL DEFAULT 0,
 	usergroupid INT UNSIGNED NOT NULL,
@@ -23,22 +23,22 @@ CREATE TABLE tasks (
 	completion_time TIMESTAMP NOT NULL DEFAULT 0,
 	archive TINYINT NOT NULL DEFAULT 0,
 	sequence INT UNSIGNED NOT NULL DEFAULT 0,
-	INDEX (owner),
+	INDEX (task_owner),
 	INDEX (parent),
-	INDEX (name(10)),
+	INDEX (task_name(10)),
 	INDEX (projectid),
 	INDEX (taskgroupid),
 	INDEX (deadline),
-	INDEX (status, parent)
+	INDEX (task_status, parent)
 )
 ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE users (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(200) NOT NULL,
+	user_name VARCHAR(200) NOT NULL,
 	fullname VARCHAR(200) NOT NULL,
-	password VARCHAR(200) NOT NULL,
+	user_password VARCHAR(255) NOT NULL,
 	email VARCHAR(200) NOT NULL,
 	user_admin VARCHAR(5) NOT NULL DEFAULT 'f',
 	private TINYINT NOT NULL DEFAULT 0,
@@ -52,10 +52,10 @@ CHARACTER SET = utf8;
 
 CREATE TABLE usergroups (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(100) NOT NULL,
-	description VARCHAR(255),
+	group_name VARCHAR(100) NOT NULL,
+	group_description VARCHAR(255),
 	private TINYINT NOT NULL DEFAULT 0,
-	INDEX (name(10))
+	INDEX (group_name(10))
 )
 ENGINE = InnoDB
 CHARACTER SET = utf8;
@@ -66,7 +66,7 @@ CREATE TABLE forum (
 	taskid INT UNSIGNED NOT NULL,
 	posted TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	edited TIMESTAMP NOT NULL DEFAULT 0,
-	text TEXT,
+	forum_text TEXT,
 	userid INT UNSIGNED NOT NULL,
 	usergroupid INT UNSIGNED NOT NULL,
 	sequence INT UNSIGNED NOT NULL DEFAULT 0,
@@ -92,7 +92,7 @@ CHARACTER SET = utf8;
 CREATE TABLE seen (
 	taskid INT UNSIGNED NOT NULL,
 	userid INT UNSIGNED NOT NULL,
-	time TIMESTAMP NOT NULL DEFAULT 0,
+	seen_time TIMESTAMP NOT NULL DEFAULT 0,
 	INDEX (taskid, userid)
 )
 ENGINE = InnoDB
@@ -100,9 +100,9 @@ CHARACTER SET = utf8;
 
 CREATE TABLE taskgroups (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(100) NOT NULL,
-	description VARCHAR(255),
-	INDEX (name(10))
+	group_name VARCHAR(100) NOT NULL,
+	group_description VARCHAR(255),
+	INDEX (group_name(10))
 )
 ENGINE = InnoDB
 CHARACTER SET = utf8;
@@ -122,7 +122,7 @@ CREATE TABLE contacts (
 	notes TEXT,
 	email VARCHAR(100),
 	added_by INT UNSIGNED NOT NULL,
-	date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	date_mod TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	user_id INT UNSIGNED NOT NULL,
         taskid INT UNSIGNED NOT NULL DEFAULT 0
 )
@@ -141,8 +141,8 @@ CREATE TABLE files (
 	fileid INT UNSIGNED NOT NULL DEFAULT 0,
 	hashid VARCHAR(200),
 	filename VARCHAR(255),
-	size BIGINT NOT NULL DEFAULT 0,
-	description TEXT,
+	file_size BIGINT NOT NULL DEFAULT 0,
+	file_description TEXT,
 	uploaded TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	uploader INT UNSIGNED NOT NULL,
 	mime VARCHAR(200),
@@ -172,7 +172,7 @@ CREATE TABLE config (
 	email_from VARCHAR(200),
 	globalaccess VARCHAR(50),
 	groupaccess VARCHAR(50),
-	owner VARCHAR(50),
+	config_owner VARCHAR(50),
 	usergroup VARCHAR(50),
 	project_order VARCHAR(200),
 	task_order VARCHAR(200)
@@ -181,7 +181,7 @@ ENGINE = InnoDB
 CHARACTER SET = utf8;
 
 CREATE TABLE login_attempt ( 
-	name VARCHAR(100) NOT NULL,
+	login_name VARCHAR(100) NOT NULL,
 	ip VARCHAR(100) NOT NULL,
 	last_attempt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
@@ -197,7 +197,7 @@ CHARACTER SET = utf8;
 
 CREATE TABLE tokens (
   token VARCHAR(100),
-  action VARCHAR(100),
+  user_action VARCHAR(100),
   userid INT UNSIGNED NOT NULL,
   lastaccess TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   INDEX (token)
@@ -205,11 +205,11 @@ CREATE TABLE tokens (
 ENGINE = InnoDB
 CHARACTER SET = utf8;
 
-INSERT INTO users ( id, name, fullname, password, email, user_admin, deleted )
+INSERT INTO users ( id, user_name, fullname, user_password, email, user_admin, deleted )
 VALUES( 1, 'admin', 'Administrator', '0192023a7bbd73250516f069df18b500', 'please_edit@my_domain.com', 't', 'f' );
 
 INSERT INTO config ( globalaccess, groupaccess, project_order, task_order )
-VALUES( 'checked=\"checked\"', '', 'ORDER BY name', 'ORDER BY name' );
+VALUES( 'checked=\"checked\"', '', 'ORDER BY task_name', 'ORDER BY task_name' );
 
 INSERT INTO site_name ( manager_name, abbr_manager_name )
 VALUES( 'WebCollab Project Management', 'WebCollab' );

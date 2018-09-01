@@ -2,7 +2,7 @@
 /*
   $Id: contact_submit.php 2160 2009-04-06 07:07:34Z andrewsimpson $
 
-  (c) 2002 - 2014 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -84,7 +84,7 @@ switch($action ) {
                                       notes,
                                       added_by,
                                       user_id,
-                                      date,
+                                      date_mod,
                                       taskid )
                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), ?)' );
 
@@ -136,7 +136,7 @@ switch($action ) {
                           email=?,
                           notes=?,
                           added_by=?,
-                          date=now()
+                          date_mod=now()
                           WHERE id =?' );
 
     db_execute($q, array(safe_data($_POST['firstname']),

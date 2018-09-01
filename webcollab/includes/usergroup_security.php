@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2008 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2003 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -43,7 +43,7 @@ function usergroup_check($taskid ) {
   $tail = ' AND (globalaccess=\'f\' AND usergroupid IN (SELECT usergroupid FROM '.PRE.'usergroups_users WHERE userid=?)
             OR globalaccess=\'t\'
             OR usergroupid=0
-            OR owner=?)';
+            OR task_owner=?)';
 
   if(! ($q = db_prepare('SELECT projectid FROM '.PRE.'tasks WHERE id=?'.$tail.' LIMIT 1', 0 ) ) ) {
     error('Usergroup security', 'There was an error in the data query.' );

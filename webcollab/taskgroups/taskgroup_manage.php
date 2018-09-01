@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2017 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -37,7 +37,7 @@ if( ! ADMIN ){
 }
 
 //get the info
-$q = db_query('SELECT * FROM '.PRE.'taskgroups ORDER BY name' );
+$q = db_query('SELECT * FROM '.PRE.'taskgroups ORDER BY group_name' );
 
 $content =  "<table class=\"celldata\">\n".
             "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th><th></th></tr>\n";
@@ -45,7 +45,7 @@ $content =  "<table class=\"celldata\">\n".
 //show all taskgroups
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<tr><td colspan=\"3\" class=\"divline\"></td></tr>\n".
-              "<tr class=\"grouplist\"><td ><b>".$row['name']."</b></td><td><i>".$row['description']."</i></td>".
+              "<tr class=\"grouplist\"><td ><b>".$row['group_name']."</b></td><td><i>".$row['group_description']."</i></td>".
               "<td><span class=\"textlink\"><a href=\"taskgroups.php?x=".X."&amp;action=edit&amp;taskgroupid=".$row['id']."\">[".$lang['edit']."]</a></span></td></tr>\n";
 
 }

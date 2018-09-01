@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2012 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2004 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -41,18 +41,18 @@ $archive_print = 0;
 
 // query to get the projects
 $q = db_query('SELECT id,
-                      name,
+                      task_name,
                       deadline,
-                      status,
+                      task_status,
                       finished_time,
                       completion_time,
-                      owner,
+                      task_owner,
                       completed
                       FROM '.PRE.'tasks
                       WHERE parent=0
                       AND archive=1'
                       .usergroup_tail().
-                      'ORDER BY name' );
+                      'ORDER BY task_name' );
 
 //text link for 'printer friendly' page
 if(isset($_GET['action']) && $_GET['action'] == "archive_print" ) {
@@ -77,7 +77,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 
   //set project status
-  $project_status = $row['status'];
+  $project_status = $row['task_status'];
 
   //make adjustments
   switch( $project_status ) {
@@ -97,7 +97,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 
   //show name and a link
-  $content .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['name']."</b></a><br />\n";
+  $content .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['task_name']."</b></a><br />\n";
 
   //give some details of status
   switch($project_status ) {
@@ -134,7 +134,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
     $content .= "<table>\n".
                 "<tr><td><form method=\"post\" action=\"tasks.php\" ".
-                "onsubmit=\"return confirm( '".sprintf($lang["del_javascript_project_sprt"], javascript_escape($row['name'] ) )."')\">\n".
+                "onsubmit=\"return confirm( '".sprintf($lang["del_javascript_project_sprt"], javascript_escape($row['task_name'] ) )."')\">\n".
                 "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
                 "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
                 "<input type=\"hidden\" name=\"taskid\" value=\"".$row['id']."\" />\n".

@@ -44,7 +44,7 @@ if(! @safe_integer($_GET['userid']) ){
 $userid = $_GET['userid'];
 
 //select
-$q = db_prepare('SELECT id, name, fullname, email, user_admin, private, guest, deleted FROM '.PRE.'users WHERE id=? LIMIT 1' );
+$q = db_prepare('SELECT id, user_name, fullname, email, user_admin, private, guest, deleted FROM '.PRE.'users WHERE id=? LIMIT 1' );
 db_execute($q, array($userid ) );
 
 //get info
@@ -71,7 +71,7 @@ if($row['deleted'] == 't' ){
 }
 
 $content .= "<table class=\"celldata\">".
-            "<tr class=\"grouplist\"><td>".$lang['login'].":</td><td>".$row['name']."</td></tr>\n".
+            "<tr class=\"grouplist\"><td>".$lang['login'].":</td><td>".$row['user_name']."</td></tr>\n".
             "<tr class=\"grouplist\"><td>".$lang['full_name'].":</td><td>".$row['fullname']."</td></tr>\n".
             "<tr class=\"grouplist\"><td>".$lang['email'].":</td><td><a href=\"mailto:".$row['email']."\">".$row['email']."</a></td></tr>\n";
 
@@ -96,7 +96,7 @@ else {
 
 //create a list of all the groups the user is in
 $q = db_prepare('SELECT '.PRE.'usergroups.id AS id,
-                      '.PRE.'usergroups.name AS name,
+                      '.PRE.'usergroups.group_name AS group_name,
                       '.PRE.'usergroups.private AS private
                       FROM '.PRE.'usergroups
                       LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.usergroupid='.PRE.'usergroups.id)
@@ -113,7 +113,7 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ){
     $alert = "<br />".$lang['private_usergroup_profile'];
     continue;
   }
-  $usergroups .= ($usergroups != '' ) ? ",&nbsp;".$row['name'] : $row['name'];
+  $usergroups .= ($usergroups != '' ) ? ",&nbsp;".$row['group_name'] : $row['group_name'];
 }
 $group_content .= $usergroups.$alert;
 $group_content .= "</td></tr>\n";
@@ -139,19 +139,19 @@ $row = db_result($q, 0, 0 );
 $content .= "<tr class=\"grouplist\"><td>".$lang['number_items_created']."</td><td>".$row."</td></tr>\n";
 
 //Get the number of projects owned
-$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner=? AND parent=0' );
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE task_owner=? AND parent=0' );
 db_execute($q, array($userid ) );
 $projects_owned = db_result($q, 0, 0 );
 $content .= "<tr class=\"grouplist\"><td>".$lang['number_projects_owned']."</td><td>".$projects_owned."</td></tr>\n";
 
 //Get the number of tasks owned
-$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner=? AND parent<>0' );
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE task_owner=? AND parent<>0' );
 db_execute($q, array($userid ) );
 $tasks_owned = db_result($q, 0, 0 );
 $content .= "<tr class=\"grouplist\"><td>".$lang['number_tasks_owned']."</td><td>".$tasks_owned."</td></tr>\n";
 
 //Get the number of tasks completed that are owned
-$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE owner=? AND status=\'done\' AND parent<>0' );
+$q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tasks WHERE task_owner=? AND task_status=\'done\' AND parent<>0' );
 db_execute($q, array($userid ) );
 $row = db_result($q, 0, 0 );
 $content .= "<tr class=\"grouplist\"><td>".$lang['number_tasks_completed']."</td><td>".$row."</td></tr>\n";
@@ -164,7 +164,7 @@ $row = db_result($q, 0, 0 );
 $content .= "<tr class=\"grouplist\"><td>".$lang['number_forum']."</td><td>".$row."</td></tr>\n";
 
 //Get the number of files uploaded and the size
-$q = db_prepare('SELECT COUNT(size), SUM(size) FROM '.PRE.'files WHERE uploader=?' );
+$q = db_prepare('SELECT COUNT(file_size), SUM(file_size) FROM '.PRE.'files WHERE uploader=?' );
 db_execute($q, array($userid ) );
 $row = db_fetch_num($q, 0 );
 $content .= "<tr class=\"grouplist\"><td>".$lang['number_files']."</td><td>".$row[0]."</td></tr>\n";
@@ -190,7 +190,7 @@ if( $tasks_owned + $projects_owned > 0 ) {
   }
 
   //Get the number of tasks
-  $q = db_prepare('SELECT id, name, parent, status, finished_time AS finished_time, usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE owner=? AND archive=0' );
+  $q = db_prepare('SELECT id, task_name, parent, task_status, finished_time AS finished_time, usergroupid, globalaccess, projectid FROM '.PRE.'tasks WHERE task_owner=? AND archive=0' );
   db_execute($q, array($userid ) );
 
   //show them
@@ -216,7 +216,7 @@ if( $tasks_owned + $projects_owned > 0 ) {
     $status_content = '';
 
     //status
-    switch( $row['status'] ) {
+    switch( $row['task_status'] ) {
       case 'done':
         $status_content = "<span class=\"green\">(".$task_state['done']."&nbsp;".nicedate($row['finished_time']).")</span>";
         break;
@@ -240,7 +240,7 @@ if( $tasks_owned + $projects_owned > 0 ) {
     }
 
     //show the task
-    $content .= "<li><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\">".$row['name']."</a> ".$status_content."</li>\n";
+    $content .= "<li><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\">".$row['task_name']."</a> ".$status_content."</li>\n";
   }
   $content .= "</ul>\n";
   

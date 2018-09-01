@@ -60,7 +60,7 @@ for( $i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
 }
 
 //get the usergroup info
-$q = db_query('SELECT * FROM '.PRE.'usergroups ORDER BY name' );
+$q = db_query('SELECT * FROM '.PRE.'usergroups ORDER BY group_name' );
 
 $content =  "<table class=\"celldata\">\n".
             "<tr><th>".$lang['name']."</th><th>".$lang['description']."</th><th></th><th></th></tr>\n";
@@ -83,10 +83,10 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   }
 
   if ($row['private'] ) {
-    $content .= "<tr class=\"grouplist\"><td><b>".$row['name']."</b></td><td><i>".$row['description']."</i></td><td style=\"text-align: center\">".$lang['private_usergroup']."</td>\n";
+    $content .= "<tr class=\"grouplist\"><td><b>".$row['group_name']."</b></td><td><i>".$row['group_description']."</i></td><td style=\"text-align: center\">".$lang['private_usergroup']."</td>\n";
   }
   else {
-    $content .= "<tr class=\"grouplist\"><td><b>".$row['name']."</b></td><td><i>".$row['description']."</i></td><td></td>\n";
+    $content .= "<tr class=\"grouplist\"><td><b>".$row['group_name']."</b></td><td><i>".$row['group_description']."</i></td><td></td>\n";
   }
 
   if(ADMIN) {

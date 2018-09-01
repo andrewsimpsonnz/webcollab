@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2005 - 2012 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2005 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -38,16 +38,16 @@ if(! defined('UID' ) ) {
 function icalendar_query() {
 
   $q =  'SELECT '.PRE.'tasks.id AS taskid,
-                '.PRE.'tasks.name AS name,
-                '.PRE.'tasks.text AS text,
+                '.PRE.'tasks.task_name AS task_name,
+                '.PRE.'tasks.task_text AS task_text,
                 '.PRE.'tasks.deadline AS deadline_date,
                 ('.PRE.'tasks.deadline+INTERVAL '.db_delim('24 HOUR' ).') AS deadline_date_end,
                 ('.PRE.'tasks.created-INTERVAL '.db_delim(TZ.' HOUR' ).') AS created_utc,
                 ('.PRE.'tasks.edited-INTERVAL '.db_delim(TZ.' HOUR' ).') AS edited_utc,
-                '.PRE.'tasks.status AS status,
+                '.PRE.'tasks.task_status AS task_status,
                 '.PRE.'tasks.priority AS priority,
                 '.PRE.'tasks.parent AS parent,
-                '.PRE.'tasks.owner AS owner,
+                '.PRE.'tasks.task_owner AS task_owner,
                 '.PRE.'tasks.usergroupid AS usergroupid,
                 '.PRE.'tasks.globalaccess AS globalaccess,
                 '.PRE.'tasks.projectid AS projectid,
@@ -57,7 +57,7 @@ function icalendar_query() {
                 '.PRE.'users.fullname AS fullname,
                 '.PRE.'users.email AS email
                 FROM '.PRE.'tasks
-                LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
+                LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.task_owner)
                 WHERE '.PRE.'tasks.archive=0 ';
 
   return $q;

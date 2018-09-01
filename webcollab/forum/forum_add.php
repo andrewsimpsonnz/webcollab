@@ -2,7 +2,7 @@
 /*
   $Id: forum_add.php 2216 2009-05-08 20:40:11Z andrewsimpson $
 
-  (c) 2002 - 2014 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -71,7 +71,7 @@ generate_token('forum_add' );
 $taskid = usergroup_check($taskid );
 
 //find out the tasks' name
-$q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+$q = db_prepare('SELECT task_name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
 db_execute($q, array($taskid ) );
 $taskname = db_result($q, 0, 0 );
 
@@ -90,7 +90,7 @@ $content .=  "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />".
 if($parentid != 0 ) {
 
   //get the text from the parent and the username of the person that posted that text
-  $q = db_prepare('SELECT '.PRE.'forum.text AS text,
+  $q = db_prepare('SELECT '.PRE.'forum.forum_text AS forum_text,
                           '.PRE.'users.fullname AS username
                           FROM '.PRE.'forum
                           LEFT JOIN '.PRE.'users ON ('.PRE.'forum.userid='.PRE.'users.id)
@@ -108,7 +108,7 @@ if($parentid != 0 ) {
   //show a box with the original post
   $content .= "<input type=\"hidden\" name=\"parentid\" value=\"".$parentid."\" /></fieldset>\n".
               "<table class=\"celldata\">\n".
-              "<tr><td>".$lang['orig_message']."</td><td><div class=\"textbackground\">".nl2br($row['text'])."</div></td></tr>\n";
+              "<tr><td>".$lang['orig_message']."</td><td><div class=\"textbackground\">".nl2br($row['forum_text'])."</div></td></tr>\n";
 }
 else {
   $row = '';

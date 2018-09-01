@@ -2,7 +2,7 @@
 /*
   $Id: forum_submit.php 1704 2008-01-01 06:09:52Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -165,7 +165,7 @@ if(! $allowed ) {
 if(! $allowed ) {
   $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'forum 
                                   LEFT JOIN '.PRE.'tasks ON ('.PRE.'forum.taskid='.PRE.'tasks.id) 
-                                  WHERE '.PRE.'tasks.owner=? AND '.PRE.'forum.id=? LIMIT 1' );
+                                  WHERE '.PRE.'tasks.task_owner=? AND '.PRE.'forum.id=? LIMIT 1' );
   db_execute($q, array(UID, $postid ) );
 
   if(db_result($q, 0, 0 ) == 1 ) {

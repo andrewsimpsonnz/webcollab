@@ -2,7 +2,7 @@
 /*
   $Id: forum_search.php 2162 2009-04-06 07:12:58Z andrewsimpson $
 
-  (c) 2005 - 2017 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2005 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -109,7 +109,7 @@ $q = db_prepare('SELECT COUNT(*)
                       FROM '.PRE.'forum
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
                       LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
-                      WHERE ('.PRE.'forum.text '.$like.' ?
+                      WHERE ('.PRE.'forum.forum_text '.$like.' ?
                       OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' ?) )'
                       .$tail );
 
@@ -130,14 +130,14 @@ $max = ($total > $min + 10 ) ? ($min + 10) : $total;
 
 $q = db_prepare('SELECT '.PRE.'forum.taskid AS taskid,
                       '.PRE.'forum.posted AS posted,
-                      '.PRE.'forum.text AS text,
-                      '.PRE.'tasks.name AS taskname,
+                      '.PRE.'forum.forum_text AS forum_text,
+                      '.PRE.'tasks.task_name AS taskname,
                       '.PRE.'users.id AS userid,
                       '.PRE.'users.fullname AS username
                       FROM '.PRE.'forum 
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
                       LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'forum.userid)
-                      WHERE ('.PRE.'forum.text '.$like.' ?
+                      WHERE ('.PRE.'forum.forum_text '.$like.' ?
                       OR '.PRE.'forum.userid IN (SELECT id FROM '.PRE.'users WHERE fullname '.$like.' ?) )'
                       .$tail.
                       'ORDER BY posted DESC LIMIT '.($max - $min).' OFFSET '.$min );
@@ -166,7 +166,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
                preg_replace($search, $replacement, $row['username'] )."</a>&nbsp;(".nicetime( $row['posted'] ).")</small></td></tr>\n";
 
     //highlight search text
-    $text = preg_replace($search, $replacement, $row['text']);
+    $text = preg_replace($search, $replacement, $row['forum_text']);
     $text = nl2br(bbcode($text ) );
     
     $content .= "<tr class=\"searchlist\"><td>".$lang['message']."</td><td><i>".$text."</i></td></tr>\n";

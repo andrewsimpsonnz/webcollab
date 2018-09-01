@@ -2,7 +2,7 @@
 /*
   $Id: admin_config_submit.php 2199 2009-04-10 21:34:16Z andrewsimpson $
 
-  (c) 2003 - 2016 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2003 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -95,16 +95,16 @@ else {
 
 switch($project_order) {
   case 'deadline':
-    $project_list = 'ORDER BY due ASC, priority DESC, name';
+    $project_list = 'ORDER BY due ASC, priority DESC, task_name';
     break;
 
   case 'priority':
-    $project_list = 'ORDER BY priority DESC, due ASC, name';
+    $project_list = 'ORDER BY priority DESC, due ASC, task_name';
     break;
 
   default:
   case 'name':
-    $project_list = 'ORDER BY name';
+    $project_list = 'ORDER BY task_name';
     break;
 }
 
@@ -117,16 +117,16 @@ else {
 
 switch($task_order) {
   case 'deadline':
-    $task_list = 'ORDER BY due ASC, priority DESC, name';
+    $task_list = 'ORDER BY due ASC, priority DESC, task_name';
     break;
 
   case 'priority':
-    $task_list = 'ORDER BY priority DESC, due ASC, name';
+    $task_list = 'ORDER BY priority DESC, due ASC, task_name';
     break;
 
   default:
   case 'name':
-    $task_list = 'ORDER BY name';
+    $task_list = 'ORDER BY task_name';
     break;
 }
 
@@ -136,7 +136,7 @@ $q = db_prepare('UPDATE '.PRE.'config SET email_admin=?,
                             email_from=?,
                             globalaccess=?,
                             groupaccess=?,
-                            owner=?,
+                            config_owner=?,
                             usergroup=?,
                             project_order=?,
                             task_order=?' );

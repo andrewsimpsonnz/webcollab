@@ -208,10 +208,10 @@ function task_state($key ) {
   }
 
   $content .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$task_array[$key]['id']."\">".
-               $task_array[$key]['name']."</a>&nbsp;";
+               $task_array[$key]['task_name']."</a>&nbsp;";
 
   //status
-  switch($task_array[$key]['status'] ) {
+  switch($task_array[$key]['task_status'] ) {
     case "done":
       $content .= "<span class=\"green\">(".$task_state['completed']."&nbsp;".nicedate($task_array[$key]['finished_time']).")</span>";
       break;
@@ -244,7 +244,7 @@ function task_state($key ) {
   }
 
   //add number of days to a task over here
-  switch($task_array[$key]['status'] ) {
+  switch($task_array[$key]['task_status'] ) {
 
     case 'done':
     case 'notactive':
@@ -297,7 +297,7 @@ if(! @safe_integer($_GET['taskid']) ) {
 $parentid = $_GET['taskid'];
 
 //set prepared statement
-$q1 = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES (?, ?, now() )' );
+$q1 = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, seen_time) VALUES (?, ?, now() )' );
 
 $q = db_prepare('SELECT projectid FROM '.PRE.'tasks WHERE parent=? LIMIT 1' );
 
@@ -318,7 +318,7 @@ $task_order = db_result($q, 0, 0 );
 $task_order = str_replace('ORDER BY', '', $task_order );
 
 if(substr(DATABASE_TYPE, 0, 5) == 'mysql' ) {
-  $no_group = 'IF('.PRE.'taskgroups.name IS NULL, 1, 0), ';
+  $no_group = 'IF('.PRE.'taskgroups.group_name IS NULL, 1, 0), ';
 }
 else {
   $no_group = '';
@@ -326,24 +326,24 @@ else {
 
 //query to get the children for this taskid
 $q = db_prepare('SELECT '.PRE.'tasks.id AS id,
-                '.PRE.'tasks.name AS name,
+                '.PRE.'tasks.task_name AS task_name,
                 '.PRE.'tasks.parent AS parent,
-                '.PRE.'tasks.status AS status,
+                '.PRE.'tasks.task_status AS task_status,
                 '.PRE.'tasks.finished_time AS finished_time,
                 '.db_epoch().' '.PRE.'tasks.deadline) AS due,
                 '.db_epoch().' '.PRE.'tasks.edited) AS edited,
                 '.db_epoch().' '.PRE.'tasks.lastforumpost) AS lastpost,
                 '.db_epoch().' '.PRE.'tasks.lastfileupload) AS lastfileupload,
-                '.PRE.'tasks.owner AS owner,
+                '.PRE.'tasks.task_owner AS task_owner,
                 '.PRE.'tasks.priority AS priority,
                 '.PRE.'users.id AS userid,
                 '.PRE.'users.fullname AS username,
                 '.PRE.'taskgroups.id AS group_id,
-                '.PRE.'taskgroups.name AS group_name,
-                '.PRE.'taskgroups.description AS group_description,
-                '.db_epoch().' '.PRE.'seen.time) AS last_seen
+                '.PRE.'taskgroups.group_name AS group_name,
+                '.PRE.'taskgroups.group_description AS group_description,
+                '.db_epoch().' '.PRE.'seen.seen_time) AS last_seen
                 FROM '.PRE.'tasks
-                LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
+                LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.task_owner)
                 LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid)
                 LEFT JOIN '.PRE.'seen ON ('.PRE.'tasks.id='.PRE.'seen.taskid AND '.PRE.'seen.userid=?)
                 WHERE '.PRE.'tasks.projectid=?

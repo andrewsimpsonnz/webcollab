@@ -2,7 +2,7 @@
 /*
   $Id: task_common.php 2302 2009-08-25 09:16:58Z andrewsimpson $
 
-  (c) 2003 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2003 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -39,7 +39,7 @@ function percent_complete($taskid ) {
   $tasks_completed = 0;
   $total_tasks = 0;
 
-  $q = db_prepare('SELECT status FROM '.PRE.'tasks WHERE projectid=? AND parent<>0' );
+  $q = db_prepare('SELECT task_status FROM '.PRE.'tasks WHERE projectid=? AND parent<>0' );
   db_execute($q, array($taskid ) );
 
   for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) { 
@@ -94,16 +94,16 @@ function project_jump($taskid=0) {
 
   //query to get the non-completed projects
   $q = db_query('SELECT id,
-                        name,
+                        task_name,
                         globalaccess,
                         usergroupid,
-                        owner
+                        task_owner
                         FROM '.PRE.'tasks
                         WHERE parent=0
                         AND completed<>100
                         AND archive=0'
                         .$tail.
-                        'ORDER BY name' );
+                        'ORDER BY task_name' );
 
   // Prepare the form
   $content .= "<form id=\"ProjectQuickJump\" method=\"get\" action=\"tasks.php\">\n".
@@ -119,7 +119,7 @@ function project_jump($taskid=0) {
     if($taskid == $row['id']) {
       $content .= " selected=\"selected\"";
     }
-    $content .= ">".$row['name']."</option>\n";
+    $content .= ">".$row['task_name']."</option>\n";
   }
 
   // wrap up the select and the submit

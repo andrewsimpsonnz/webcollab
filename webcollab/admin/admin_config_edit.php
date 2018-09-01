@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2017 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2003 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -96,20 +96,20 @@ $content .= "<tr><th style=\"white-space: nowrap; height: 20px; vertical-align: 
 //defaults for task checkboxes
 $content .= "<tr><td><label for=\"access\">".$lang['allow_globalaccess']."</label></td><td><input type=\"checkbox\" name=\"access\" id=\"access\" ".$row['globalaccess']." /></td></tr>\n".
             "<tr><td><label for=\"group_edit\">".$lang['allow_group_edit']."</label></td><td><input type=\"checkbox\" name=\"group_edit\" id=\"group_edit\" ".$row['groupaccess']." /></td></tr>\n".
-            "<tr><td><label for=\"owner\">".$lang['set_email_owner']."</label></td><td><input type=\"checkbox\" name=\"owner\" id=\"owner\" ".$row['owner']." /></td></tr>\n".
+            "<tr><td><label for=\"owner\">".$lang['set_email_owner']."</label></td><td><input type=\"checkbox\" name=\"owner\" id=\"owner\" ".$row['config_owner']." /></td></tr>\n".
             "<tr><td><label for=\"usergroup\">".$lang['set_email_group']."</label></td><td><input type=\"checkbox\" name=\"usergroup\" id=\"usergroup\" ".$row['usergroup']." /></td></tr>\n";
 
 //set default selection for project listing
 switch($row['project_order']){
-  case 'ORDER BY due ASC, priority DESC, name':
+  case 'ORDER BY due ASC, priority DESC, task_name':
     $s1 = ""; $s2 = " selected=\"selected\""; $s3 = "";
     break;
 
-  case 'ORDER BY priority DESC, due ASC, name':
+  case 'ORDER BY priority DESC, due ASC, task_name':
     $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\"";
     break;
 
-  case 'ORDER BY name':
+  case 'ORDER BY task_name':
   default:
     $s1 = " selected=\"selected\""; $s2 = ""; $s3 = "";
     break;
@@ -125,15 +125,15 @@ $content .= "<tr><td>".$lang['project_listing_order'].":</td><td>\n".
 
 //set default selection for task listing
 switch($row['task_order']){
-  case 'ORDER BY due ASC, priority DESC, name':
+  case 'ORDER BY due ASC, priority DESC, task_name':
     $s1 = ""; $s2 = " selected=\"selected\""; $s3 = "";
     break;
 
-  case 'ORDER BY priority DESC, due ASC, name':
+  case 'ORDER BY priority DESC, due ASC, task_name':
     $s1 = ""; $s2 = ""; $s3 = " selected=\"selected\"";
     break;
 
-  case 'ORDER BY name':
+  case 'ORDER BY task_name':
   default:
     $s1 = " selected=\"selected\""; $s2 = ""; $s3 = "";
     break;

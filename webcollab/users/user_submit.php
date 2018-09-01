@@ -81,12 +81,12 @@ switch($_POST['action'] ) {
       db_execute($q, array($userid ) );
 
       //get the users' info
-      $q = db_prepare('SELECT name, fullname, email FROM '.PRE.'users where id=? LIMIT 1' );
+      $q = db_prepare('SELECT user_name, fullname, email FROM '.PRE.'users where id=? LIMIT 1' );
       db_execute($q, array($userid ) );
       $row = db_fetch_array($q, 0 );
 
       //mail the user the happy news :)
-      $message = sprintf($email_revive, $row['name'], $row['fullname'] );
+      $message = sprintf($email_revive, $row['user_name'], $row['fullname'] );
       email($row['email'], $title_revive, $message );
     }
     break;
@@ -148,7 +148,7 @@ switch($_POST['action'] ) {
         break;
     }
     //prohibit 2 people from choosing the same username
-    $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'users WHERE name=? LIMIT 1' );
+    $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'users WHERE user_name=? LIMIT 1' );
     db_execute($q, array($name ), 0 );
 
     if(db_result($q, 0, 0 ) > 0 ){
@@ -158,7 +158,7 @@ switch($_POST['action'] ) {
     //begin transaction
     db_begin();
     //insert into the users table
-    $q = db_prepare('INSERT INTO '.PRE.'users(name, fullname, password, email, private, user_admin, guest, deleted, locale )
+    $q = db_prepare('INSERT INTO '.PRE.'users(user_name, fullname, user_password, email, private, user_admin, guest, deleted, locale )
                     VALUES(?, ?, ?, ?, ?, ?,  ?, \'f\', ? )' );
 
     db_execute($q, array($name, $fullname, pass_hash($password_unclean), $email_unclean, $private_user, $admin_user,  $guest_user, $locale ) );
@@ -171,7 +171,7 @@ switch($_POST['action'] ) {
 
       //insert all selected usergroups in the usergroups_users table
       $q1 = db_prepare('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES(?, ?)' );
-      $q2 = db_prepare('SELECT name FROM '.PRE.'usergroups WHERE id=?' );
+      $q2 = db_prepare('SELECT group_name FROM '.PRE.'usergroups WHERE id=?' );
 
       (array)$usergroup = $_POST['usergroup'];
       $max = sizeof($usergroup);
@@ -270,7 +270,7 @@ switch($_POST['action'] ) {
       }
 
       //prohibit 2 people from choosing the same username
-      $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'users WHERE name=? AND NOT id=?' );
+      $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'users WHERE user_name=? AND NOT id=?' );
       db_execute($q, array($name, $userid ), 0 );
       if(db_result($q, 0, 0 ) > 0 ) {
         warning($lang['duplicate_user'], sprintf($lang['duplicate_change_user_sprt'], $name ) );
@@ -282,10 +282,10 @@ switch($_POST['action'] ) {
 
         //update data and the password
         $q = db_prepare('UPDATE '.PRE.'users
-                              SET name=?,
+                              SET user_name=?,
                               fullname=?,
                               email=?,
-                              password=?,
+                              user_password=?,
                               private=?,
                               user_admin=?,
                               guest=?,
@@ -297,7 +297,7 @@ switch($_POST['action'] ) {
       else {
         //update data without password
         $q = db_prepare('UPDATE '.PRE.'users
-                              SET name=?,
+                              SET user_name=?,
                               fullname=?,
                               email=?,
                               private=?,
@@ -318,7 +318,7 @@ switch($_POST['action'] ) {
 
         //insert all selected usergroups in the usergroups_users table
         $q1 = db_prepare('INSERT INTO '.PRE.'usergroups_users(userid, usergroupid) VALUES(?, ?)' );
-        $q2 = db_prepare('SELECT name FROM '.PRE.'usergroups WHERE id=?' );
+        $q2 = db_prepare('SELECT group_name FROM '.PRE.'usergroups WHERE id=?' );
         (array)$usergroup = $_POST['usergroup'];
 
         for( $i=0 ; $i < sizeof($usergroup) ; ++$i ) {
@@ -361,7 +361,7 @@ switch($_POST['action'] ) {
       //this is secure option where the user cannot change important values
 
       //prohibit 2 people from choosing the same username
-      $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'users WHERE name=? AND NOT id=?', 0 );
+      $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'users WHERE user_name=? AND NOT id=?', 0 );
       db_execute($q, array($name, UID ), 0 );
 
       if(db_result($q, 0, 0 ) > 0 ){
@@ -370,10 +370,10 @@ switch($_POST['action'] ) {
       //did the user change his/her password ?
       if($password_unclean != '' ) {
         $q = db_prepare('UPDATE '.PRE.'users
-                              SET name=?,
+                              SET user_name=?,
                               fullname=?,
                               email=?,
-                              password=?,
+                              user_password=?,
                               locale=?
                               WHERE id=?' );
 
@@ -389,7 +389,7 @@ switch($_POST['action'] ) {
       }
       else {
           $q = db_prepare('UPDATE '.PRE.'users
-                              SET name=?,
+                              SET user_name=?,
                               fullname=?,
                               email=?,
                               locale=?

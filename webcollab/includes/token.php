@@ -3,7 +3,7 @@
 /*
   $Id: security.php 2283 2009-08-22 08:40:04Z andrewsimpson $
 
-  (c) 2011 - 2017 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2011 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -46,7 +46,7 @@ function generate_token($action ) {
   define('TOKEN', $token );
 
   //update database
-  $q = db_prepare('INSERT INTO '.PRE.'tokens(lastaccess, token, action, userid ) VALUES (now(), ?, ?, ? )' );
+  $q = db_prepare('INSERT INTO '.PRE.'tokens(lastaccess, token, user_action, userid ) VALUES (now(), ?, ?, ? )' );
   db_execute($q, array($token, $action, UID ) );
 
   return;
@@ -62,7 +62,7 @@ function validate_token($token, $action ) {
   }
 
   //check against database
-  $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tokens WHERE token=? AND action=? AND userid=?
+  $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'tokens WHERE token=? AND user_action=? AND userid=?
                                   AND lastaccess > (now()-INTERVAL '.db_delim(TOKEN_TIMEOUT.' MINUTE' ).')' );
 
   db_execute($q, array($token, $action, UID ) );

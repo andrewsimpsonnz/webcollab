@@ -210,14 +210,14 @@ if(! $condensed) {
 
   //query to get uncompleted tasks
   $q = db_query('SELECT id,
-                        name,
+                        task_name,
                         parent,
                         projectid,
-                        status,
+                        task_status,
                         priority,
                         '.db_epoch().' deadline ) AS due
                         FROM '.PRE.'tasks
-                        WHERE status<>\'done\'
+                        WHERE task_status<>\'done\'
                         AND parent<>0 '
                         .usergroup_tail()
                         .$task_order );
@@ -260,9 +260,9 @@ db_free_result($q);
 
 // query to get the projects
 $q = db_query('SELECT id,
-                      name,
+                      task_name,
                       deadline,
-                      status,
+                      task_status,
                       '.db_epoch().' deadline) AS due,
                       priority,
                       finished_time,
@@ -315,7 +315,7 @@ if($action !== 'project_print') {
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
   //set project status
-  $project_status = $row['status'];
+  $project_status = $row['task_status'];
 
   //make adjustments
   switch( $project_status ) {
@@ -349,7 +349,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
   $content .= "<div class=\"projectlist\">\n";
 
   //show name and a link
-  $content .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['name']."</b></a>\n";
+  $content .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\"><b>".$row['task_name']."</b></a>\n";
 
   // Show a nice %-of-tasks-completed bar
   $content .= show_percent($row['completed'] );

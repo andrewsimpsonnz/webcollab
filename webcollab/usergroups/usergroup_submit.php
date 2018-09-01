@@ -2,7 +2,7 @@
 /*
   $Id: usergroup_submit.php 2179 2009-04-07 09:31:13Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -65,12 +65,12 @@ function email_usergroup($usergroupid, $type ) {
 
   global $EMAIL_MAILINGLIST, $month_array;
 
-  $q = db_prepare('SELECT name FROM '.PRE.'usergroups WHERE id=? LIMIT 1' );
+  $q = db_prepare('SELECT group_name FROM '.PRE.'usergroups WHERE id=? LIMIT 1' );
   db_execute($q, array($usergroupid ) );
   $usergroup_name = db_result($q, 0, 0 ); 
 
   $q = db_prepare('SELECT '.PRE.'users.email,
-                          '.PRE.' users.name
+                          '.PRE.'users.user_name
                           FROM '.PRE.'users
                           LEFT JOIN '.PRE.'usergroups_users ON ('.PRE.'usergroups_users.userid='.PRE.'users.id)
                           WHERE '.PRE.'usergroups_users.usergroupid=?'.
@@ -166,7 +166,7 @@ switch($_POST['action'] ) {
     }
 
     //check for duplicates
-    $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'usergroups WHERE name=?' );
+    $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'usergroups WHERE group_name=?' );
     db_execute($q, array($name ) );
 
     if(db_result($q, 0, 0 ) > 0 ) {
@@ -176,7 +176,7 @@ switch($_POST['action'] ) {
     //begin transaction
     db_begin();
 
-    $q = db_prepare('INSERT INTO '.PRE.'usergroups(name, description, private ) VALUES (?, ?, ?)' );
+    $q = db_prepare('INSERT INTO '.PRE.'usergroups(group_name, group_description, private ) VALUES (?, ?, ?)' );
     db_execute($q, array($name, $description, $private_group ) );
 
     if(isset($_POST['member'] ) ) {
@@ -227,7 +227,7 @@ switch($_POST['action'] ) {
     db_begin();
 
     //do the update
-    $q = db_prepare('UPDATE '.PRE.'usergroups SET name=?, description=?, private=? WHERE id=?' );
+    $q = db_prepare('UPDATE '.PRE.'usergroups SET group_name=?, group_description=?, private=? WHERE id=?' );
     db_execute($q, array($name, $description, $private_group, $usergroupid ) );
 
     //clean out existing usergroups_users then update with the new

@@ -61,16 +61,16 @@ if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
 
     //edit rights
     if((ADMIN ) ||
-       ($TASKID_ROW['owner'] == UID ) ||
+       ($TASKID_ROW['task_owner'] == UID ) ||
        (($TASKID_ROW['groupaccess'] == "t") && (isset($GID[($TASKID_ROW['usergroupid'])] ) ) ) ) {
 
       //edit
       $content .= "<li><a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."\">".$lang["edit_".$TYPE]."</a></li>\n";
 
       //archive project
-      if((ADMIN ) || ($TASKID_ROW['owner'] == UID ) ) {
+      if((ADMIN ) || ($TASKID_ROW['task_owner'] == UID ) ) {
         if(($TYPE == 'project' ) && ($TASKID_ROW['archive'] == 0 ) ) {
-          $content .= "<li><a href=\"archive.php?x=".X."&amp;action=submit_archive&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang['javascript_archive_project'], javascript_escape($TASKID_ROW['name'] ) )."')\">".$lang['archive_project']."</a></li>\n";
+          $content .= "<li><a href=\"archive.php?x=".X."&amp;action=submit_archive&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang['javascript_archive_project'], javascript_escape($TASKID_ROW['task_name'] ) )."')\">".$lang['archive_project']."</a></li>\n";
         }
       }
     }

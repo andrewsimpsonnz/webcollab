@@ -2,7 +2,7 @@
 /*
   $Id: file_upload.php 1747 2008-02-03 08:14:34Z andrewsimpson $
 
-  (c) 2002 - 2010 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -77,7 +77,7 @@ $taskid = usergroup_check($taskid );
 //generate_token
 generate_token('file_submit' );
 
-$q = db_prepare('SELECT filename, description FROM '.PRE.'files WHERE id=? LIMIT 1' );
+$q = db_prepare('SELECT filename, file_description FROM '.PRE.'files WHERE id=? LIMIT 1' );
 db_execute($q, array($fileid ) );
 
 if( ! $row = db_fetch_array($q, 0 ) ) {
@@ -100,7 +100,7 @@ $content =  "<form method=\"post\" enctype=\"multipart/form-data\" action=\"file
             "<tr><td>".$lang['file_choose']."</td><td><input id=\"userfile\" type=\"file\" name=\"userfile[]\" style=\"width: 400px\" ".$s."/></td></tr>\n".
             "<tr><td>".$lang['description'].":</td>".
             "<td><script type=\"text/javascript\"> edToolbar('description');</script>".
-            "<textarea name=\"description\" id=\"description\" rows=\"25\" cols=\"88\"".$s.">".$row['description']."</textarea></td></tr>\n".
+            "<textarea name=\"description\" id=\"description\" rows=\"25\" cols=\"88\"".$s.">".$row['file_description']."</textarea></td></tr>\n".
             "<tr><td></td><td>".sprintf( $lang['max_file_sprt'], FILE_MAXSIZE/1000 )."</td></tr>\n".
             "</table>\n".
             "<table class=\"celldata\">\n".

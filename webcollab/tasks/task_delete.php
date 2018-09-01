@@ -116,16 +116,16 @@ $taskid = $_POST['taskid'];
 
 //get task and owner information
 $q = db_prepare('SELECT '.PRE.'tasks.parent AS parent,
-                      '.PRE.'tasks.name AS name,
-                      '.PRE.'tasks.text AS text,
-                      '.PRE.'tasks.owner AS owner,
-                      '.PRE.'tasks.status AS status,
+                      '.PRE.'tasks.task_name AS task_name,
+                      '.PRE.'tasks.task_text AS task_text,
+                      '.PRE.'tasks.task_owner AS task_owner,
+                      '.PRE.'tasks.task_status AS task_status,
                       '.PRE.'tasks.projectid AS projectid,
                       '.PRE.'tasks.archive AS archive,
                       '.PRE.'users.id AS id,
                       '.PRE.'users.email AS email
                       FROM '.PRE.'tasks
-                      LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
+                      LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.task_owner)
                       WHERE '.PRE.'tasks.id=?' );
 
 db_execute($q, array($taskid ) );
@@ -135,7 +135,7 @@ if( ! $row = db_fetch_array($q, 0) ){
   error('Task delete', 'The selected task does not exist.');
 }
 //can this user delete this task ?
-if( (! ADMIN ) && (UID != $row['owner']) ){
+if( (! ADMIN ) && (UID != $row['task_owner']) ){
   error('Access denied', 'You do not own this task and therefore you may not delete it.' );
 }
 //if user aborts, let the script carry onto the end
@@ -224,7 +224,7 @@ if($row['parent'] != 0 ){
 db_commit();
 
 //inform the user that his task has been deleted by an admin
-if(($row['owner'] != 0 ) && (UID != $row['owner']) ) {
+if(($row['task_owner'] != 0 ) && (UID != $row['task_owner']) ) {
 
   include_once(BASE.'includes/email.php' );
   include_once(BASE.'includes/time.php' );
@@ -232,23 +232,23 @@ if(($row['owner'] != 0 ) && (UID != $row['owner']) ) {
 
   switch ($row['parent']) {
     case 0:
-      $name_project = $row['name'];
+      $name_project = $row['task_name'];
       $name_task = '';
       $title = $title_delete_project;
       $email = $email_delete_project;
       break;
 
     default:
-      $q = db_prepare('SELECT name FROM '.PRE.'tasks WHERE id=?' );
+      $q = db_prepare('SELECT task_name FROM '.PRE.'tasks WHERE id=?' );
       db_execute($q, array($row['projectid'] ) );
       $name_project = db_result($q, 0, 0 );
-      $name_task = $row['name'];
+      $name_task = $row['task_name'];
       $title = $title_delete_task;
       $email = $email_delete_task;
       break;
   }
 
-  switch($row['status'] ) {
+  switch($row['task_status'] ) {
     case 'created':
       $status = $task_state['new'];
       break;
@@ -273,7 +273,7 @@ if(($row['owner'] != 0 ) && (UID != $row['owner']) ) {
       $status = '';
       break;
   }
-  $message = $email . sprintf($delete_list, $name_project, $name_task, $status, $row['text'] );
+  $message = $email . sprintf($delete_list, $name_project, $name_task, $status, $row['task_text'] );
   email($row['email'], $title, $message );
 }
 

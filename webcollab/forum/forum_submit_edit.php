@@ -2,7 +2,7 @@
 /*
   $Id: forum_submit.php 1704 2008-01-01 06:09:52Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -85,7 +85,7 @@ $parentid = $row['parent'];
 
 //update the post
 db_begin();
-$q = db_prepare('UPDATE '.PRE.'forum SET text=?, edited=now(), sequence=sequence+1 WHERE id=?' );
+$q = db_prepare('UPDATE '.PRE.'forum SET forum_text=?, edited=now(), sequence=sequence+1 WHERE id=?' );
 db_execute($q, array($text, $postid ) );
 
 //set time of last forum post to this task
@@ -94,11 +94,11 @@ db_execute($q, array($taskid ) );
 db_commit();
 
 //get task data
-$q = db_prepare('SELECT '.PRE.'tasks.name AS name,
+$q = db_prepare('SELECT '.PRE.'tasks.task_name AS task_name,
                       '.PRE.'tasks.usergroupid AS usergroupid,
                       '.PRE.'users.email AS email
                       FROM '.PRE.'tasks
-                      LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.owner='.PRE.'users.id)
+                      LEFT JOIN '.PRE.'users ON ('.PRE.'tasks.task_owner='.PRE.'users.id)
                       WHERE '.PRE.'tasks.id=?' );
 db_execute($q, array($taskid ) );
 
@@ -140,12 +140,12 @@ if(sizeof($mail_list) > 0 ){
   switch($parentid ) {
     case 0:
       //this is a new post
-      email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_post, UID_NAME, $message_unclean, 'index.php?taskid='.$taskid ) );
+      email($mail_list, sprintf($title_forum_post, $task_row['task_name']), sprintf($email_forum_post, UID_NAME, $message_unclean, 'index.php?taskid='.$taskid ) );
       break;
 
     default:
       //this is a reply to an earlier post
-      $q = db_prepare('SELECT '.PRE.'forum.text AS text,
+      $q = db_prepare('SELECT '.PRE.'forum.forum_text AS forum_text,
                     '.PRE.'users.fullname AS username
                     FROM '.PRE.'forum
                     LEFT JOIN '.PRE.'users ON ('.PRE.'forum.userid='.PRE.'users.id)
@@ -159,7 +159,7 @@ if(sizeof($mail_list) > 0 ){
         $row['username'] = "----";
       }
 
-      email($mail_list, sprintf($title_forum_post, $task_row['name']), sprintf($email_forum_reply, UID_NAME, $row['username'], $row['text'], $message_unclean, 'index.php?taskid='.$taskid ) );
+      email($mail_list, sprintf($title_forum_post, $task_row['task_name']), sprintf($email_forum_reply, UID_NAME, $row['username'], $row['forum_text'], $message_unclean, 'index.php?taskid='.$taskid ) );
       break;
   }
 }

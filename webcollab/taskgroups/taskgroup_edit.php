@@ -2,7 +2,7 @@
 /*
   $Id: taskgroup_edit.php 2301 2009-08-25 09:15:52Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -62,8 +62,8 @@ $content =  "<form method=\"post\" action=\"taskgroups.php\">\n".
             "<input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
             "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
             "<table class=\"celldata\">\n".
-            "<tr><td>".$lang['taskgroup_name']."</td> <td><input type=\"text\" name=\"name\" value=\"".$row['name']."\" class=\"size\" /></td></tr>\n".
-            "<tr><td>".$lang['taskgroup_description']."</td><td><input type=\"text\" name=\"description\" value=\"".$row['description']."\" class=\"size\" /></td></tr>\n".
+            "<tr><td>".$lang['taskgroup_name']."</td> <td><input type=\"text\" name=\"name\" value=\"".$row['group_name']."\" class=\"size\" /></td></tr>\n".
+            "<tr><td>".$lang['taskgroup_description']."</td><td><input type=\"text\" name=\"description\" value=\"".$row['group_description']."\" class=\"size\" /></td></tr>\n".
             "</table>\n".
             "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" /></p>\n".
             "</form>\n".

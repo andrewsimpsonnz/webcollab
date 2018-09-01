@@ -2,7 +2,7 @@
 /*
   $Id: taskgroup_submit.php 2178 2009-04-07 09:29:01Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -87,12 +87,12 @@ switch($_POST['action'] ) {
     $description = safe_data($_POST['description']);
 
     //check for duplicates
-    $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'taskgroups WHERE name=?' );
+    $q = db_prepare('SELECT COUNT(*) FROM '.PRE.'taskgroups WHERE group_name=?' );
     db_execute($q, array($name ) );
     if(db_result($q, 0, 0 ) > 0 )
       warning($lang['add_taskgroup'], sprintf($lang['taskgroup_dup_sprt'], $name ) );
 
-    $q = db_prepare('INSERT INTO '.PRE.'taskgroups(name, description) VALUES (?, ?)' );
+    $q = db_prepare('INSERT INTO '.PRE.'taskgroups(group_name, group_description) VALUES (?, ?)' );
     db_execute($q, array($name, $description ) );
 
     break;
@@ -113,7 +113,7 @@ switch($_POST['action'] ) {
     $description = safe_data($_POST['description'] );
     $taskgroupid = $_POST['taskgroupid'];
 
-    $q = db_prepare('UPDATE '.PRE.'taskgroups SET name=?, description=? WHERE id=?' );
+    $q = db_prepare('UPDATE '.PRE.'taskgroups SET group_name=?, group_description=? WHERE id=?' );
     db_execute($q, array($name, $description, $taskgroupid ) );
     break;
 

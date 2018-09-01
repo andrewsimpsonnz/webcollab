@@ -2,7 +2,7 @@
 /*
   $Id: calendar_show.php 2305 2009-08-27 06:08:59Z andrewsimpson $
 
-  (c) 2002 - 2017 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -146,7 +146,7 @@ switch($selection ) {
   default:
     $groupid = 0; $s1 = " checked=\"checked\""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
     $s5 = "style=\"background-color: white\""; $s6 = "style=\"background-color: #DDDDDD\"";
-    $tail = " AND owner=".$userid;
+    $tail = " AND task_owner=".$userid;
     if($userid == 0 ){
       $tail = "";
       $s2 = " selected=\"selected\"";
@@ -222,14 +222,14 @@ else {
 $suffix = $tail.$tail_view;
 
 if(substr(DATABASE_TYPE, 0, 5) == 'mysql' ) {
-  $suffix .= "ORDER BY IF(parent=0, 0, 1), name";
+  $suffix .= "ORDER BY IF(parent=0, 0, 1), task_name";
 }
 else {
-  $suffix .= "ORDER BY parent<>0, name";
+  $suffix .= "ORDER BY parent<>0, task_name";
 }
 
 //prepare query for later use
-$q1 = db_prepare('SELECT id, name, parent, status, projectid, completed
+$q1 = db_prepare('SELECT id, task_name, parent, task_status, projectid, completed
                       FROM '.PRE.'tasks
                       WHERE deadline BETWEEN ?
                       AND ?
@@ -271,7 +271,7 @@ $content .= "</select></label></td>\n".
             "<option value=\"0\"".$s4.">".$lang['no_group']."</option>\n";
 
 //get all groups for option box
-$q = db_query('SELECT id, name FROM '.PRE.'usergroups '.$tail_group.' ORDER BY name' );
+$q = db_query('SELECT id, group_name FROM '.PRE.'usergroups '.$tail_group.' ORDER BY group_name' );
 
 //usergroup input box fields
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
@@ -281,7 +281,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   if( $row['id'] == $groupid ){
     $content .= " selected=\"selected\"";
   }
-  $content .= ">".$row['name']."</option>\n";
+  $content .= ">".$row['group_name']."</option>\n";
 }
 
 $content .= "</select></label></td>\n".
@@ -386,7 +386,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
         }
       }
 
-      switch($row['status'] ) {
+      switch($row['task_status'] ) {
         case 'notactive':
         case 'cantcomplete':
         case 'nolimit':
@@ -396,7 +396,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
 
         default:
           //active task or project
-          $name = box_shorten($row['name'], 15 );
+          $name = box_shorten($row['task_name'], 15 );
 
           switch($row['parent'] ) {
             case '0':
@@ -412,12 +412,12 @@ for($num = 1; $num <= $numdays; ++$num ) {
               $content .= "<div style=\"text-align: left; background:".$project_colour_array[$row['projectid']]."\" >".
                           "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
                           "<span class=\"underline\">".
-                          "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\" title=\"".$row['name']."\" >".$name."</a></span></div>\n";
+                          "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\" title=\"".$row['task_name']."\" >".$name."</a></span></div>\n";
               break;
 
             default:
 
-                switch($row['status']) {
+                switch($row['task_status']) {
                   case "done":
                     $state = "&nbsp;<img src=\"images/lightbulb.png\" height=\"16\" width=\"16\" alt=\"Done\" title=\"".$task_state['done']."\" />";
                     break;
@@ -436,7 +436,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
                   }
                   $content .= "<div style=\"text-align: left; background:".$project_colour_array[$row['projectid']]."\">".
                               "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
-                              "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\" title=\"".$row['name']."\" >".$name."</a>".$state."</div>\n";
+                              "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\" title=\"".$row['task_name']."\" >".$name."</a>".$state."</div>\n";
               break;
           }
         break;

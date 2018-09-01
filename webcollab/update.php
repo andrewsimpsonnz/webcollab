@@ -57,8 +57,18 @@ function update($username ) {
 
   //remove the old login information for post 1.60 database
   if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {
-    $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.db_delim('20 MINUTE' ).') OR name=?' );
-    db_execute($q, array($username ) );
+    // check for pre-3.50 database
+    if(@db_query('SELECT name FROM '.PRE.'login_attempt', 0 ) ) {
+  
+      $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.db_delim('20 MINUTE' ).') OR login_attempt.name=?' );
+      db_execute($q, array($username ) );
+    }
+    //check for post 3.50-database
+    elseif(@db_query('SELECT login_name FROM '.PRE.'login_attempt', 0 ) ) {
+  
+      $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.db_delim('20 MINUTE' ).') OR login_name=?' );
+      db_execute($q, array($username ) );
+    }
   }
 
   //update for version 1.32 -> 1.40
@@ -79,7 +89,7 @@ function update($username ) {
     switch (DATABASE_TYPE) {
 
       case 'mysql_pdo':
-        db_query('CREATE TABLE '.PRE.'login_attempt ( name VARCHAR(100) NOT NULL,
+        db_query('CREATE TABLE '.PRE.'login_attempt (`name` VARCHAR(100) NOT NULL,
                                                ip VARCHAR(100) NOT NULL,
                                                last_attempt DATETIME NOT NULL)
                                                ENGINE = innoDB
@@ -87,7 +97,7 @@ function update($username ) {
         break;
 
       case 'postgresql_pdo':
-        db_query('CREATE TABLE "'.PRE.'login_attempt" ( "name" character varying(100) NOT NULL,
+        db_query('CREATE TABLE "'.PRE.'login_attempt" ("name" character varying(100) NOT NULL,
                                                "ip" character varying(100) NOT NULL,
                                                "last_attempt" timestamp with time zone NOT NULL DEFAULT current_timestamp(0))' );
         break;
@@ -140,7 +150,7 @@ function update($username ) {
     db_query('ALTER TABLE '.PRE.'tasks ALTER COLUMN completed SET DEFAULT 0' );
     db_query('ALTER TABLE '.PRE.'tasks ADD COLUMN completion_time '.$date_type );
 
-    $q1 = db_prepare('SELECT status FROM '.PRE.'tasks WHERE projectid=? AND parent<>0' );
+    $q1 = db_prepare('SELECT tasks.status FROM '.PRE.'tasks WHERE projectid=? AND parent<>0' );
     $q2 = db_prepare('UPDATE '.PRE.'tasks SET completed=? WHERE id=?' );
     $q3 = db_prepare('SELECT MAX(finished_time) FROM '.PRE.'tasks WHERE projectid=?');
     $q4 = db_prepare('UPDATE '.PRE.'tasks SET completion_time=? WHERE id=?' );
@@ -439,7 +449,7 @@ function update($username ) {
 
       case 'mysql_pdo':
         db_query('CREATE TABLE '.PRE.'tokens (token VARCHAR(100) NOT NULL,
-                                              action VARCHAR(100) NOT NULL,
+                                              `action` VARCHAR(100) NOT NULL,
                                               userid INT UNSIGNED NOT NULL,
                                               lastaccess DATETIME NOT NULL)
                                               ENGINE = innoDB
@@ -475,20 +485,72 @@ function update($username ) {
     //set parameters for appropriate for database
     switch (DATABASE_TYPE) {
       case 'mysql_pdo':
-        //change column name to avoid reserved word in MySQL 8.0
-        db_query('ALTER TABLE '.PRE.'users CHANGE COLUMN admin user_admin VARCHAR(5)' );
+        //change column names to avoid reserved words in MySQL 8.0
+        db_query('ALTER TABLE '.PRE.'tasks CHANGE COLUMN `name` task_name VARCHAR(255)' );
+        db_query('ALTER TABLE '.PRE.'tasks CHANGE COLUMN `text` task_text TEXT' );
+        db_query('ALTER TABLE '.PRE.'tasks CHANGE COLUMN `owner` task_owner INT' );
+        db_query('ALTER TABLE '.PRE.'tasks CHANGE COLUMN `status` task_status VARCHAR(20)' );
+        db_query('ALTER TABLE '.PRE.'users CHANGE COLUMN `admin` user_admin VARCHAR(5)' );
+        db_query('ALTER TABLE '.PRE.'users CHANGE COLUMN `name` user_name VARCHAR(200)' );
+        db_query('ALTER TABLE '.PRE.'usergroups CHANGE COLUMN `name` group_name VARCHAR(100)' );
+        db_query('ALTER TABLE '.PRE.'usergroups CHANGE COLUMN `description` group_description VARCHAR(255)' );
+        db_query('ALTER TABLE '.PRE.'forum CHANGE COLUMN `text` forum_text TEXT' );
+        db_query('ALTER TABLE '.PRE.'seen CHANGE COLUMN `time` seen_time TIMESTAMP' );
+        db_query('ALTER TABLE '.PRE.'taskgroups CHANGE COLUMN `name` group_name VARCHAR(100)' );
+        db_query('ALTER TABLE '.PRE.'taskgroups CHANGE COLUMN `description` group_description VARCHAR(255)' );
+        db_query('ALTER TABLE '.PRE.'contacts CHANGE COLUMN `date` date_mod TIMESTAMP' );
+        db_query('ALTER TABLE '.PRE.'files CHANGE COLUMN `description` file_description TEXT' );
+        db_query('ALTER TABLE '.PRE.'files CHANGE COLUMN `size` file_size BIGINT' );
+        db_query('ALTER TABLE '.PRE.'config CHANGE COLUMN `owner` config_owner VARCHAR(50)' );
+        db_query('ALTER TABLE '.PRE.'login_attempt CHANGE COLUMN `name` login_name VARCHAR(100)' );
+        db_query('ALTER TABLE '.PRE.'tokens CHANGE COLUMN `action` user_action VARCHAR(100)' );
+        
+        //change column name to avoid reserved word and increase password column to 255 characters (was 200)
+        db_query('ALTER TABLE '.PRE.'users CHANGE COLUMN password user_password VARCHAR(255)' );
         break;
 
       case 'postgresql_pdo':
         //change column name to match MySQL
+        db_query('ALTER TABLE '.PRE.'tasks RENAME COLUMN name TO task_name' );
+        db_query('ALTER TABLE '.PRE.'tasks RENAME COLUMN text TO task_text' );
+        db_query('ALTER TABLE '.PRE.'tasks RENAME COLUMN owner TO task_owner' );
+        db_query('ALTER TABLE '.PRE.'tasks RENAME COLUMN status TO task_status' );
         db_query('ALTER TABLE '.PRE.'users RENAME COLUMN admin TO user_admin' );
+        db_query('ALTER TABLE '.PRE.'users RENAME COLUMN name TO user_name' );
+        db_query('ALTER TABLE '.PRE.'usergroups RENAME COLUMN name TO group_name' );
+        db_query('ALTER TABLE '.PRE.'usergroups RENAME COLUMN description TO group_description' );
+        db_query('ALTER TABLE '.PRE.'forum RENAME COLUMN text TO forum_text' );
+        db_query('ALTER TABLE '.PRE.'seen RENAME COLUMN time TO seen_time' );
+        db_query('ALTER TABLE '.PRE.'taskgroups RENAME COLUMN name TO group_name' );
+        db_query('ALTER TABLE '.PRE.'taskgroups RENAME COLUMN description TO group_description' );
+        db_query('ALTER TABLE '.PRE.'contacts RENAME COLUMN date TO date_mod' );
+        db_query('ALTER TABLE '.PRE.'files RENAME COLUMN description TO file_description' );
+        db_query('ALTER TABLE '.PRE.'files RENAME COLUMN size TO file_size' );
+        db_query('ALTER TABLE '.PRE.'config RENAME COLUMN owner TO config_owner' );
+        db_query('ALTER TABLE '.PRE.'login_attempt RENAME COLUMN name TO login_name' );
+        db_query('ALTER TABLE '.PRE.'tokens RENAME COLUMN action TO user_action' );
+
+        //change column name to match MySQL
+        db_query('ALTER TABLE '.PRE.'users RENAME COLUMN password TO user_password' );
+        //increase password column to 255 characters
+        db_query('ALTER TABLE '.PRE.'users ALTER COLUMN user_password TYPE VARCHAR(255)' );
         break;
 
       default:
         error('Database type not specified in config file.' );
         break;
     }
-
+    
+    //change admin_config fields to new name
+    $q = db_query('SELECT project_order, task_order FROM config' );
+    $row = db_fetch_array($q, 0 );
+    //make changes to string
+    $project_order = str_replace('name', 'task_name', $row['project_order'] ); 
+    $task_order    = str_replace('name', 'task_name', $row['task_order'] );
+    //update database
+    $q = db_prepare('UPDATE '.PRE.'config SET project_order=?, task_order=?' );
+    db_execute($q, array($project_order, $task_order ) );
+       
     db_commit();
     $content .= "<p>Updating from version pre-3.50 database ... success!</p>\n";
   }
@@ -533,14 +595,14 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
 
   //construct login query for username / password
   if( ! (@db_query('SELECT user_admin FROM '.PRE.'users', 0 ) ) ) {
-    //old format with 'admin' column in database (pre-3.50 database) 
-    if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\' AND admin=\'t\' LIMIT 1', 0 ) ) ) {
+    //old format with pre-3.50 database 
+    if(! ($q = db_prepare('SELECT id, password AS user_password FROM '.PRE.'users WHERE name=? AND deleted=\'f\' AND admin=\'t\' LIMIT 1', 0 ) ) ) {
       secure_error('Unable to connect to database.  Please try again later.' );
     }
   }
   elseif(@db_query('SELECT user_admin FROM '.PRE.'users', 0 ) ) {
-    //new format with 'user_admin'(post-3.50 database)
-    if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\' AND user_admin=\'t\' LIMIT 1', 0 ) ) ) {
+    //new format with post-3.50 database
+    if(! ($q = db_prepare('SELECT id, user_password FROM '.PRE.'users WHERE user_name=? AND deleted=\'f\' AND user_admin=\'t\' LIMIT 1', 0 ) ) ) {
       secure_error('Unable to connect to database.  Please try again later.' );
     }
   }
@@ -554,46 +616,75 @@ if( (isset($_POST['username']) && isset($_POST['password']) ) ) {
   }
 
   $row = @db_fetch_array($q, 0 );
-  
+
   //limit login attempts if post-1.60 database is being used
   if(@db_query('SELECT * FROM '.PRE.'login_attempt LIMIT 1', 0 ) ) {
+    
+    // check for pre-3.50 database
+    if(@db_query('SELECT name FROM '.PRE.'login_attempt', 0 ) ) {
+  
+      //record this login attempt
+      $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
+      db_execute($q, array($username, $ip ) );
 
-    //record this login attempt
-    $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
-    db_execute($q, array($username, $ip ) );
+      //count the number of recent login attempts
+      if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
+                                  WHERE login_attempt.name=? AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 4', 0 ) ) ) {
+        secure_error('Unable to connect to database.  Please try again later.' );
+      }
 
-    //count the number of recent login attempts
-    if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
-                                  WHERE name=? AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 4', 0 ) ) ) {
-      secure_error('Unable to connect to database.  Please try again later.' );
+      if(! db_execute($q, array($username ), 0 ) ) {
+        secure_error('Unable to connect to database.  Please try again later.' );
+      }
+
+      //protect against password guessing attacks
+      if(db_result($q, 0, 0 ) > 3 ) {
+        secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+      }
     }
+    // check for post-3.50 database
+    elseif(@db_query('SELECT login_name FROM '.PRE.'login_attempt', 0 ) ) {
 
-    if(! db_execute($q, array($username ), 0 ) ) {
-      secure_error('Unable to connect to database.  Please try again later.' );
-    }
+      //record this login attempt
+      $q = db_prepare('INSERT INTO '.PRE.'login_attempt(login_name, ip, last_attempt ) VALUES (?, ?, now() )' );
+      db_execute($q, array($username, $ip ) );
 
-    //protect against password guessing attacks
-    if(db_result($q, 0, 0 ) > 3 ) {
+      //count the number of recent login attempts
+      if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt
+                                  WHERE login_name=? AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 4', 0 ) ) ) {
+        secure_error('Unable to connect to database.  Please try again later.' );
+      }
+
+      if(! db_execute($q, array($username ), 0 ) ) {
+        secure_error('Unable to connect to database.  Please try again later.' );
+      }
+
+      //protect against password guessing attacks
+      if(db_result($q, 0, 0 ) > 3 ) {
       secure_error("Exceeded allowable number of login attempts.<br /><br />Account locked for 10 minutes." );
+      }
     }
+    else{
+      secure_error('Unable to connect to database.  Please try again later.' );
+    }      
   }
 
   //if user-password combination exists
   if($row == true ) {
 
     //bcrypt encryption or SHA256 + salt (deprecated - used WebCollab 3.30 - 3.31 )
-    if(strlen($row['password'] ) > 50 ){
+    if(strlen($row['user_password'] ) > 50 ){
       //verify password
-      if(password_verify($_POST['password'], $row['password'] ) ) {
+      if(password_verify($_POST['password'], $row['user_password'] ) ) {
         //valid password -> continue
         update($username );
       }
     }
 
     //fallback to older md5 encryption (deprecated - used WebCollab 1.01 - 3.30 )
-    if(strlen($row['password'] ) < 35 ) {
+    if(strlen($row['user_password'] ) < 35 ) {
       //verify password
-      if($row['password'] === md5($_POST['password'] ) ) {
+      if($row['user_password'] === md5($_POST['password'] ) ) {
         //valid password -> continue
         update($username );
       }

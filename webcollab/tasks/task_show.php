@@ -54,11 +54,11 @@ $q = db_prepare('SELECT '.PRE.'tasks.created AS created,
                       '.PRE.'tasks.finished_time AS finished,
                       '.PRE.'tasks.completion_time AS completion,
                       '.PRE.'users.fullname AS fullname,
-                      '.PRE.'taskgroups.name AS taskgroup_name,
-                      '.PRE.'usergroups.name AS usergroup_name,
-                      '.db_epoch().' '.PRE.'seen.time) AS last_seen
+                      '.PRE.'taskgroups.group_name AS taskgroup_name,
+                      '.PRE.'usergroups.group_name AS usergroup_name,
+                      '.db_epoch().' '.PRE.'seen.seen_time) AS last_seen
                       FROM '.PRE.'tasks
-                      LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.owner)
+                      LEFT JOIN '.PRE.'users ON ('.PRE.'users.id='.PRE.'tasks.task_owner)
                       LEFT JOIN '.PRE.'taskgroups ON ('.PRE.'taskgroups.id='.PRE.'tasks.taskgroupid)
                       LEFT JOIN '.PRE.'usergroups ON ('.PRE.'usergroups.id='.PRE.'tasks.usergroupid)
                       LEFT JOIN '.PRE.'seen ON ('.PRE.'tasks.id='.PRE.'seen.taskid AND '.PRE.'seen.userid=?)
@@ -73,11 +73,11 @@ if( ! ($row = db_fetch_array($q, 0 ) ) ) {
 
 //mark this as seen in seen ;)
 if($row['last_seen'] ) {
-  $q = db_prepare('UPDATE '.PRE.'seen SET time=now() WHERE taskid=? AND userid=?' );
+  $q = db_prepare('UPDATE '.PRE.'seen SET seen_time=now() WHERE taskid=? AND userid=?' );
   db_execute($q, array($taskid, UID ) );
 }
 else {
-  $q = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES (?, ?, now() )' );
+  $q = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, seen_time) VALUES (?, ?, now() )' );
   db_execute($q, array(UID, $taskid ) );
 }
 
@@ -106,22 +106,22 @@ if( $TASKID_ROW['parent'] == 0 ) {
 }
 
 //project/task name
-$content .= "<p style=\"margin-top: 5px; margin-bottom: 10px; font-weight: bold\">".$TASKID_ROW['name']."</p>\n";
+$content .= "<p style=\"margin-top: 5px; margin-bottom: 10px; font-weight: bold\">".$TASKID_ROW['task_name']."</p>\n";
 
 //show text
 $content .= "<div class=\"textbackground\" style=\"width: 95%\">\n";
 
-$content .= nl2br(bbcode($TASKID_ROW['text'] ) );
+$content .= nl2br(bbcode($TASKID_ROW['task_text'] ) );
 $content .= "</div>\n</div>\n";
 
 //start of info table
 $content .= "<table class=\"celldata\">\n";
 
 //get owner information
-if( $TASKID_ROW['owner'] == 0 ) {
+if( $TASKID_ROW['task_owner'] == 0 ) {
   $content .= "<tr><td>".$lang['owned_by'].":</td><td>".$lang['nobody']."</td></tr>\n";
 } else {
-  $content .= "<tr><td>".$lang['owned_by'].": </td><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$TASKID_ROW['owner']."\">".$row['fullname']."</a></td></tr>\n";
+  $content .= "<tr><td>".$lang['owned_by'].": </td><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$TASKID_ROW['task_owner']."\">".$row['fullname']."</a></td></tr>\n";
 }
 
 //get creator information (null if creator has been deleted!)
@@ -168,7 +168,7 @@ switch($TASKID_ROW['parent'] ) {
   case 0:
     //project - show the finish date and status
     $title = $lang['project_details'];
-    switch($TASKID_ROW['status'] ) {
+    switch($TASKID_ROW['task_status'] ) {
       case 'cantcomplete':
         $content .= "<tr><td>".$lang['status'].": </td><td><b>".$lang['project_on_hold']."</b></td></tr>\n";
         $content .= "<tr><td>".$lang['modified_on'].": </td><td>".nicedate($row['finished'])."</td></tr>\n";
@@ -195,7 +195,7 @@ switch($TASKID_ROW['parent'] ) {
     //task
     $title = $lang['task_info'];
     $content .= "<tr><td>".$lang['status'].": </td><td>";
-    switch($TASKID_ROW['status'] ) {
+    switch($TASKID_ROW['task_status'] ) {
       case 'created':
         $content .=  $task_state['new'];
         break;
@@ -212,13 +212,13 @@ switch($TASKID_ROW['parent'] ) {
         $content .=  $task_state['done'];
         break;
       default:
-        $content .=  $TASKID_ROW['status'];
+        $content .=  $TASKID_ROW['task_status'];
         break;
     }
     $content .= "</td></tr>\n";
 
     //is there a finished date ?
-    switch($TASKID_ROW['status'] ) {
+    switch($TASKID_ROW['task_status'] ) {
       case 'done':
         $content .= "<tr><td>".$lang['completed_on'].": </td><td>".nicedate($row['finished'])."</td></tr>\n";
         break;
@@ -289,7 +289,7 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
   }
 
   //check for owner or group access
-  if((UID == $TASKID_ROW['owner'] ) ||
+  if((UID == $TASKID_ROW['task_owner'] ) ||
      ($TASKID_ROW['groupaccess'] == "t") && (isset($GID[($TASKID_ROW['usergroupid'])] ) ) ) {
     $access = true;
   }
@@ -303,22 +303,22 @@ if(($TASKID_ROW['archive'] == 0 ) && (! GUEST ) ) {
   }
 
   //(owner) & (uncompleted task)==> [I don't want it anymore] button
-  if(UID == $TASKID_ROW['owner'] && ($TASKID_ROW['status'] != 'done' ) ) {
+  if(UID == $TASKID_ROW['task_owner'] && ($TASKID_ROW['task_status'] != 'done' ) ) {
     $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=0\">".$lang['i_dont_want']."</a>]&nbsp;\n";
   }
 
   //(owner - groupaccess) & (uncompleted task)  ==> [I finished it] button
-  if(($access ) && ($TASKID_ROW['status'] != 'done' ) && ($TASKID_ROW['parent'] != 0 ) ) {
+  if(($access ) && ($TASKID_ROW['task_status'] != 'done' ) && ($TASKID_ROW['parent'] != 0 ) ) {
     $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;status=1\">".$lang['i_finished']."</a>]&nbsp;\n";
   }
 
   //unowned task ==> [I'll take it!] button
-  if($TASKID_ROW['owner'] == 0 ) {
+  if($TASKID_ROW['task_owner'] == 0 ) {
     $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=".UID."\">".sprintf($lang['i_take_it'] )."</a>]&nbsp;\n";
   }
 
   //(admin) & (not owner) & (has owner) & (uncompleted task) ==> [Take over task] button
-  if((ADMIN ) && (UID != $TASKID_ROW['owner'] ) && ($TASKID_ROW['owner'] != 0 ) && ($TASKID_ROW['status'] != 'done' ) ) {
+  if((ADMIN ) && (UID != $TASKID_ROW['task_owner'] ) && ($TASKID_ROW['task_owner'] != 0 ) && ($TASKID_ROW['task_status'] != 'done' ) ) {
     $content .= "[<a href=\"tasks.php?x=".X."&amp;action=edit&amp;taskid=".$taskid."&amp;owner=".UID."\">".sprintf($lang["take_over_".$TYPE] )."</a>]&nbsp;\n";
   }
   $content .= "</span></div>\n";

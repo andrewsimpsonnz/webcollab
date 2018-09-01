@@ -52,13 +52,14 @@ function query_prepare() {
 
   $q3 = db_prepare('SELECT projectid FROM '.PRE.'tasks WHERE id=?' );
 
-  $q4 = db_prepare('INSERT INTO '.PRE.'tasks (name,
-                    text,
+  $q4 = db_prepare('INSERT INTO '.PRE.'tasks (
+                    task_name,
+                    task_text,
                     created,
                     lastforumpost,
                     lastfileupload,
                     edited,
-                    owner,
+                    task_owner,
                     creator,
                     deadline,
                     finished_time,
@@ -69,7 +70,7 @@ function query_prepare() {
                     usergroupid,
                     globalaccess,
                     groupaccess,
-                    status,
+                    task_status,
                     completed,
                     completion_time,
                     sequence,
@@ -79,7 +80,7 @@ function query_prepare() {
 
   $q5 = db_prepare('UPDATE '.PRE.'tasks SET projectid=? WHERE id=?' );
 
-  $q6 = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, time) VALUES(?, ?, now() )');
+  $q6 = db_prepare('INSERT INTO '.PRE.'seen(userid, taskid, seen_time) VALUES(?, ?, now() )');
 
   return;
 }
@@ -160,7 +161,7 @@ function copy_across($taskid, $new_parent, $name, $delta_deadline ) {
     //new task
     db_execute($q3, array($new_parent ) );
     $new_projectid = db_result($q3, 0, 0 );
-    $new_name = $row['name'];
+    $new_name = $row['task_name'];
     db_free_result($q3 );
   }
   else{
@@ -174,9 +175,9 @@ function copy_across($taskid, $new_parent, $name, $delta_deadline ) {
   $q = db_query('SELECT (TIMESTAMP \''.$row['deadline'].'\' + INTERVAL '.db_delim((int)$delta_deadline.' DAY').')' );
   $new_deadline = db_result($q );
 
-  db_execute($q4, array($new_name, $row['text'], UID, UID, $new_deadline, $row['priority'],
+  db_execute($q4, array($new_name, $row['task_status'], UID, UID, $new_deadline, $row['priority'],
                   $new_parent, $new_projectid, $row['taskgroupid'], $row['usergroupid'], $row['globalaccess'],
-                  $row['groupaccess'], $row['status'], $row['completed'], $row['completion_time'], 
+                  $row['groupaccess'], $row['task_status'], $row['completed'], $row['completion_time'], 
                   $row['archive'] ) );
 
   // get taskid for the new task/project

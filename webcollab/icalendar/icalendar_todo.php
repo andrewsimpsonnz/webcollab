@@ -2,7 +2,7 @@
 /*
   $Id: icalendar_todo.php 2299 2009-08-24 09:46:33Z andrewsimpson $
 
-  (c) 2005 - 2013 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2005 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -93,7 +93,7 @@ switch($selection ) {
     if(! icalendar_private_user($userid ) ) {
       return;
     }
-    $tail = "AND owner=?";
+    $tail = "AND task_owner=?";
     $id   = 'U'.$userid;
     $parm = $userid;
     break;

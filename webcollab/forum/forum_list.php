@@ -2,7 +2,7 @@
 /*
   $Id: forum_list.php 2293 2009-08-24 09:40:36Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -50,7 +50,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
   $level_count  = 1;
   $post_char_limit = 500;
 
-  $q = db_prepare('SELECT '.PRE.'forum.text AS text,
+  $q = db_prepare('SELECT '.PRE.'forum.forum_text AS forum_text,
                         '.PRE.'forum.id AS id,
                         '.PRE.'forum.posted AS posted,
                         '.PRE.'forum.edited AS edited,
@@ -89,7 +89,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
     $this_post .= "&nbsp;(".nicetime( $row['posted']).")</small>\n";
 
     //owners of the thread, owners of the post and admins have a "delete" option
-    if( (ADMIN ) || (UID == $TASKID_ROW['owner'] ) || (UID == $row['postowner'] ) ) {
+    if( (ADMIN ) || (UID == $TASKID_ROW['task_owner'] ) || (UID == $row['postowner'] ) ) {
       $this_post .= "<span class=\"textlink\">[<a href=\"forum.php?x=".X."&amp;action=delete&amp;postid=".$row['id']."\" >".$lang['del']."</a>]</span>\n";
     }
 
@@ -113,7 +113,7 @@ function list_posts_from_task( $taskid, $usergroupid ) {
 
     $this_post .= "<br />\n";
 
-    $raw_post = nl2br(bbcode($row['text'] ) );
+    $raw_post = nl2br(bbcode($row['forum_text'] ) );
 
     //check for long posts, and provide dropdown box
     if(mb_strlen($raw_post ) > $post_char_limit) {
@@ -265,7 +265,7 @@ if($TASKID_ROW['usergroupid'] != 0 ) {
       }
     }
     //get usergroup
-    $q = db_prepare('SELECT name FROM '.PRE.'usergroups WHERE id=? LIMIT 1' );
+    $q = db_prepare('SELECT group_name FROM '.PRE.'usergroups WHERE id=? LIMIT 1' );
     db_execute($q, array($TASKID_ROW['usergroupid'] ) );
     $usergroup_name = db_result($q, 0, 0 );
     //show it

@@ -2,7 +2,7 @@
 /*
   $Id: usergroup_edit.php 2296 2009-08-24 09:44:14Z andrewsimpson $
 
-  (c) 2002 - 2017 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -75,8 +75,8 @@ $content = "<form method=\"post\" action=\"usergroups.php\">\n".
            "<input type=\"hidden\" name=\"usergroupid\" value=\"".$usergroupid."\" />\n".
            "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
            "<table class=\"celldata\">\n".
-           "<tr><td>".$lang['usergroup_name']."</td><td><input type=\"text\" name=\"name\" value=\"".$row['name']."\" class=\"size\" /></td></tr>\n".
-           "<tr><td>".$lang['usergroup_description']."</td><td><input type=\"text\" name=\"description\" value=\"".$row['description']."\" class=\"size\" /></td></tr>\n".
+           "<tr><td>".$lang['usergroup_name']."</td><td><input type=\"text\" name=\"name\" value=\"".$row['group_name']."\" class=\"size\" /></td></tr>\n".
+           "<tr><td>".$lang['usergroup_description']."</td><td><input type=\"text\" name=\"description\" value=\"".$row['group_description']."\" class=\"size\" /></td></tr>\n".
            "<tr><td></td><td></td></tr>\n".
            "<tr><td><label for=\"private\">".$lang['private_usergroup'].":</label></td><td><input type=\"checkbox\" name=\"private_group\" id=\"private\" ".$private." /></td></tr>\n".
            "<tr><td></td><td></td></tr>\n";

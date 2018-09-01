@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2012 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2004 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -52,7 +52,7 @@ else {
 
 $q = db_query('SELECT DISTINCT '.PRE.'forum.taskid AS taskid,
                       '.PRE.'forum.edited AS last_edit,
-                      '.PRE.'tasks.name AS taskname
+                      '.PRE.'tasks.task_name AS taskname
                       FROM '.PRE.'forum
                       LEFT JOIN '.PRE.'tasks ON ('.PRE.'tasks.id='.PRE.'forum.taskid)
                       WHERE '.PRE.'forum.edited > ( now()-INTERVAL '.db_delim(NEW_TIME.' DAY' ).')

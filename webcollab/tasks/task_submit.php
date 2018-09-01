@@ -83,16 +83,16 @@ function user_access($taskid ) {
   if(ADMIN ) {
     return true;
   }
-  $q = db_prepare('SELECT owner, usergroupid, groupaccess FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
+  $q = db_prepare('SELECT task_owner, usergroupid, groupaccess FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
   db_execute($q, array($taskid ) );
   $row = db_fetch_array($q, 0 );
 
   //user is owner
-  if($row['owner'] == UID ) {
+  if($row['task_owner'] == UID ) {
     return true;
   }
   //no owner - anyone can edit
-  if($row['owner'] == 0 ) {
+  if($row['task_owner'] == 0 ) {
     return true;
   }
   //no usergroup set

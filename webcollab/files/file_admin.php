@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2017 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -43,11 +43,11 @@ $content = '';
 $q = db_query('SELECT '.PRE.'files.id AS id,
                         '.PRE.'files.filename AS filename,
                         '.PRE.'files.uploaded AS uploaded,
-                        '.PRE.'files.size AS size,
-                        '.PRE.'files.description AS description,
+                        '.PRE.'files.file_size AS file_size,
+                        '.PRE.'files.file_description AS file_description,
                         '.PRE.'files.uploader AS uploader,
                         '.PRE.'tasks.id AS task_id,
-                        '.PRE.'tasks.name AS task_name,
+                        '.PRE.'tasks.task_name AS task_name,
                         '.PRE.'users.id AS userid,
                         '.PRE.'users.fullname AS username
                         FROM '.PRE.'files
@@ -71,15 +71,15 @@ for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
               "</td></tr>\n".
               "<tr class=\"searchlist\"><td>".$lang['file']."</td><td>".
               "<a href=\"files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."\" onclick=\"window.open('files.php?x=".X."&amp;action=download&amp;fileid=".$row['id']."'); return false\">".$row['filename']."</a>".
-              "&nbsp;<small>(".nice_size($row['size'] ).")&nbsp;</small>".
+              "&nbsp;<small>(".nice_size($row['file_size'] ).")&nbsp;</small>".
               //delete option
               "<span class=\"textlink\">[<a href=\"files.php?x=".X."&amp;action=delete&amp;fileid=".$row['id']."&amp;admin=1&amp;taskid=".$row['task_id']."\">".$lang['del']."</a>]</span></td></tr>\n".
               //user part
               "<tr class=\"searchlist\"><td>".$lang['uploader']." </td><td><a href=\"users.php?x=".X."&amp;action=show&amp;userid=".$row['userid']."\">".$row['username']."</a> (".nicetime( $row['uploaded'] ).")</td></tr>\n";
 
   //show description
-  if( $row['description'] != '' ) {
-    $content .= "<tr><td>".$lang['description'].":</td><td><small><i>".nl2br(bbcode($row['description']))."</i></small></td></tr>\n";
+  if( $row['file_description'] != '' ) {
+    $content .= "<tr><td>".$lang['description'].":</td><td><small><i>".nl2br(bbcode($row['file_description']))."</i></small></td></tr>\n";
   }
 }
 $content .= "</table>\n";

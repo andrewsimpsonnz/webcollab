@@ -37,7 +37,7 @@ function icalendar_login() {
     icalendar_error('401', 'Login no authorisation');
   }
 
-  $q = db_prepare('SELECT id, user_admin, guest, locale FROM '.PRE.'users WHERE name=? AND deleted=\'f\'' );
+  $q = db_prepare('SELECT id, user_admin, guest, locale FROM '.PRE.'users WHERE user_name=? AND deleted=\'f\'' );
 
   if( ! (db_execute($q, array(safe_data($_SERVER['REMOTE_USER'] ) ), 0 ) ) ) {
     icalendar_error('401', 'Login user select' );
