@@ -2,7 +2,7 @@
 /*
   $Id: setup_setup5.php 1737 2008-01-24 08:16:45Z andrewsimpson $
 
-  (c) 2008 - 2015 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2008 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -60,7 +60,7 @@ if(! $admin_password == $admin_password_check ) {
   error_setup('Password check failed' );
 }
 
-$hash = password_hash($admin_password, PASSWORD_BCRYPT );
+$hash = password_hash($admin_password, PASSWORD_DEFAULT );
 
 if(strlen($hash ) < 13 ) {
   error_setup('Password hash algorithm failed. Transaction cancelled' );
@@ -80,7 +80,7 @@ if(USE_EMAIL == 'Y' ) {
   $admin_email = $_POST['admin_email'];
 
   //update the database
-  $q = db_prepare("UPDATE ".PRE."users SET name=?, password=?, email=? WHERE id=1;" );
+  $q = db_prepare("UPDATE ".PRE."users SET user_name=?, user_password=?, email=? WHERE id=1;" );
   db_execute($q, array($admin_user, $hash, $admin_email ) );
 
   $q = db_prepare("UPDATE ".PRE."config SET email_admin=?;" );
@@ -88,7 +88,7 @@ if(USE_EMAIL == 'Y' ) {
 }
 else {
   //case with no email
-  $q = db_prepare("UPDATE ".PRE."users SET name=?, password=? WHERE id=1;" );
+  $q = db_prepare("UPDATE ".PRE."users SET user_name=?, user_password=? WHERE id=1;" );
   db_execute($q, array($admin_user, $hash ) );
 }
 
