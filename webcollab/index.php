@@ -73,7 +73,7 @@ function enable_login($userid, $username, $ip='0.0.0.0', $taskid ) {
   //remove the old login information
   $q = db_prepare('DELETE FROM '.PRE.'logins WHERE user_id=?' );
   @db_execute($q, array($userid ) );
-  $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.db_delim('20 MINUTE' ).') OR name=?' );
+  $q = db_prepare('DELETE FROM '.PRE.'login_attempt WHERE last_attempt < (now()-INTERVAL '.db_delim('20 MINUTE' ).') OR login_name=?' );
   @db_execute($q, array($username ) );
   @db_query('DELETE FROM '.PRE.'tokens WHERE lastaccess < (now()-INTERVAL '.db_delim(TOKEN_TIMEOUT.' MINUTE' ).')' );
 
@@ -103,7 +103,7 @@ function enable_login($userid, $username, $ip='0.0.0.0', $taskid ) {
 function login_query($username ) {
 
   //construct login query
-  if(! ($q = db_prepare('SELECT id FROM '.PRE.'users WHERE name=? AND deleted=\'f\'', 0 ) ) ) {
+  if(! ($q = db_prepare('SELECT id FROM '.PRE.'users WHERE user_name=? AND deleted=\'f\'', 0 ) ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
   }
 
@@ -128,7 +128,7 @@ function record_fail($username, $ip ) {
  global $lang;
 
   //record this login attempt
-  $q = db_prepare('INSERT INTO '.PRE.'login_attempt(name, ip, last_attempt ) VALUES (?, ?, now() )' );
+  $q = db_prepare('INSERT INTO '.PRE.'login_attempt(login_name, ip, last_attempt ) VALUES (?, ?, now() )' );
   db_execute($q, array($username, $ip ) );
 
   //wait 2 seconds then record an error
@@ -141,7 +141,7 @@ function record_fail($username, $ip ) {
 function check_lockout($username ) {
 
   //count the number of recent failed login attempts
-  if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt WHERE name=?
+  if(! ($q = db_prepare('SELECT COUNT(*) FROM '.PRE.'login_attempt WHERE login_name=?
 			      AND last_attempt > (now()-INTERVAL '.db_delim('10 MINUTE').') LIMIT 6', 0 ) ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
   }
@@ -163,7 +163,7 @@ function check_lockout($username ) {
 
 function password_upgrade($userid, $password ) {
 
-  $hash = password_hash($password, PASSWORD_BCRYPT );
+  $hash = password_hash($password, PASSWORD_DEFAULT );
 
   //blowfish will give a random string of less than 13 characters in error condition
   if(strlen($hash ) < 13 ) return false;
@@ -171,7 +171,7 @@ function password_upgrade($userid, $password ) {
   //update the password
   db_begin();
 
-  $q = db_prepare('UPDATE '.PRE.'users SET password=? WHERE id=?' );
+  $q = db_prepare('UPDATE '.PRE.'users SET user_password=? WHERE id=?' );
   db_execute($q, array($hash, $userid ) );
 
   db_commit();
@@ -213,7 +213,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
   check_lockout($username );
 
   //construct login query for username / password
-  if(! ($q = db_prepare('SELECT id, password FROM '.PRE.'users WHERE name=? AND deleted=\'f\'', 0 ) ) ) {
+  if(! ($q = db_prepare('SELECT id, user_password FROM '.PRE.'users WHERE user_name=? AND deleted=\'f\'', 0 ) ) ) {
     secure_error('Unable to connect to database.  Please try again later.' );
   }
 
@@ -226,11 +226,11 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
   if($row = @db_fetch_array($q, 0 ) ) {
 
     //bcrypt encryption or SHA256 + salt (deprecated - used WebCollab 3.30 - 3.31 )
-    if(strlen($row['password'] ) > 50 ){
+    if(strlen($row['user_password'] ) > 50 ){
       //verify password
-      if(password_verify($_POST['password'], $row['password'] ) ) {
+      if(password_verify($_POST['password'], $row['user_password'] ) ) {
         //check need for rehash (work factor changed or older SHA256 )
-        if(password_needs_rehash($row['password'], PASSWORD_BCRYPT ) ) {
+        if(password_needs_rehash($row['user_password'], PASSWORD_DEFAULT ) ) {
           password_upgrade($row['id'], validate($_POST['password'] ) );
         }
         //valid password -> continue
@@ -239,9 +239,9 @@ if(isset($_POST['username']) && isset($_POST['password']) && strlen($_POST['user
     }
 
     //fallback to older md5 encryption (deprecated - used WebCollab 1.01 - 3.30 )
-    if(strlen($row['password'] ) < 35 ) {
+    if(strlen($row['user_password'] ) < 35 ) {
       //verify password
-      if($row['password'] === md5($_POST['password'] ) ) {
+      if($row['user_password'] === md5($_POST['password'] ) ) {
         //upgrade password now...
         password_upgrade($row['id'], validate($_POST['password'] ) );
         //valid password -> continue
