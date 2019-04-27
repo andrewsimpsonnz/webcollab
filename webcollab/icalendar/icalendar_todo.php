@@ -53,7 +53,7 @@ include_once(BASE.'icalendar/icalendar_common.php' );
 
 //set variables
 $content  = '';
-$projects = '';
+$projects = array();
 $allowed  = '';
 $icalendar_id = sha1(MANAGER_NAME . BASE_URL );
 $dtstamp = gmdate('Ymd\THis\Z');
