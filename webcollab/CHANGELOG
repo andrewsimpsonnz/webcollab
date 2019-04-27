@@ -1,4 +1,13 @@
 WebCollab Git
+*** 28 April 2019
+
+- change column names in database tables to avoid reserved words in MySQL 8
+
+- update Esperanto translation (Thanks to: Stella Lindblom)
+
+- Bugfix: PHP 7.2 gives an error for using arrays created as strings in icalendar_todo.php
+
+WebCollab Git
 *** 19 May 2018
 
 - update email address
