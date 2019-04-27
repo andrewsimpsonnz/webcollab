@@ -256,8 +256,9 @@ function exception_handler($exception) {
 
   global $db_error_message;
 
-  $db_error_message = 'Uncaught exception: '.$exception->getMessage();
-  error('Database error', 'Database error has occurred' );
+  $db_error_message = 'Uncaught exception: '.$exception->getMessage().'<br />'.
+                      'File trace for exception: In file '.$exception->getFile().' at line '.$exception->getLine() ;
+  error('Execution error', 'Exception error has occurred' );
   return;
 }
 
