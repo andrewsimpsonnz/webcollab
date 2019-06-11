@@ -72,6 +72,12 @@ switch($_GET['lang'] ) {
     $lang_prefix = 'se';
     break;
 
+  case 'fr':
+    $lang_prefix = 'fr';
+    //French only has one help file translated 
+    header('Location: '.BASE_URL.'help/'.$lang_prefix.'_help.php#'.$help_item );
+    break;
+
   case 'en':
   default:
     $lang_prefix = 'en';
