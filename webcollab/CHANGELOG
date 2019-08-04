@@ -1,4 +1,16 @@
 WebCollab Git
+*** 4 August 2019
+
+- minimum PHP version to 7.0.0
+
+- cast delta_deadline as int in task_clone_submit.php 
+
+WebCollab Git
+*** 11 June 2019
+
+- update French translation (Thanks to: martinbrait)
+
+WebCollab Git
 *** 28 April 2019
 
 - change column names in database tables to avoid reserved words in MySQL 8
