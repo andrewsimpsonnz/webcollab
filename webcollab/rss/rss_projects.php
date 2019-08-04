@@ -2,7 +2,7 @@
 /*
   $Id: rss_tasks.php 1924 2008-02-08 07:30:23Z andrewsimpson $
 
-  (c) 2005 - 2013 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2005 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -78,10 +78,10 @@ else {
 
 //main query
 if(! ($q = db_query('SELECT '.PRE.'tasks.id AS id,
-                            '.PRE.'tasks.name AS taskname,
-                            '.PRE.'tasks.status AS status,
+                            '.PRE.'tasks.task_name AS taskname,
+                            '.PRE.'tasks.task_status AS task_status,
                             '.db_epoch().' '.PRE.'tasks.edited) AS edited,
-                            '.PRE.'tasks.text AS text,
+                            '.PRE.'tasks.task_text AS task_text,
                             '.PRE.'tasks.completed AS completed
                             FROM '.PRE.'tasks
                             WHERE '.PRE.'tasks.parent=0
@@ -106,8 +106,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
     $status = $rss_status['completed'];
   }
   else {
-    if(array_key_exists($row['status'], $rss_status ) ) {
-      $status = $rss_status[($row['status'])];
+    if(array_key_exists($row['task_status'], $rss_status ) ) {
+      $status = $rss_status[($row['task_status'])];
     }
     else {
       $status = $row['status'];
@@ -117,7 +117,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<item>\n".
               "<title>".$row['taskname']." - ".$status."</title>\n".
               "<link>".BASE_URL."index.php?taskid=".$row['id']."</link>\n".
-              "<description>".rss_bbcode($row['text'] )."</description>\n".
+              "<description>".rss_bbcode($row['forum_text'] )."</description>\n".
               "<pubDate>".rss_time($row['edited'] )."</pubDate>\n".
               "<guid isPermaLink=\"false\">".$row['id']."-".$guid."</guid>\n".
               "</item>\n";

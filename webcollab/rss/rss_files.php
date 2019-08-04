@@ -79,9 +79,9 @@ else {
 if(! $q = db_query('SELECT '.PRE.'files.id AS id,
                             '.PRE.'files.filename AS filename,
                             '.db_epoch().' '.PRE.'files.uploaded) AS uploaded,
-                            '.PRE.'files.description AS description,
+                            '.PRE.'files.file_description AS file_description,
                             '.PRE.'tasks.id AS taskid,
-                            '.PRE.'tasks.name AS taskname
+                            '.PRE.'tasks.task_name AS taskname
                             FROM '.PRE.'files
                             LEFT JOIN '.PRE.'tasks ON ('.PRE.'files.taskid='.PRE.'tasks.id)
                             '.$tail.'
@@ -103,7 +103,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<item>\n".
               "<title>".$row['taskname']." - ".$row['filename']."</title>\n".
               "<link>".BASE_URL."index.php?taskid=".$row['taskid']."</link>\n".
-              "<description>".rss_bbcode($row['description'] )."</description>\n".
+              "<description>".rss_bbcode($row['file_description'] )."</description>\n".
               "<pubDate>".rss_time($row['uploaded'])."</pubDate>\n".
               "<guid isPermaLink=\"false\">".$row['id']."-".$guid."</guid>\n".
               "</item>\n";
