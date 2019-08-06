@@ -100,7 +100,7 @@ function smtp_auth($connection, $cap) {
        $data = base64_decode(substr($res, 4 ) );
        $key = MAIL_PASSWORD;
 
-       if(function_exists('hash_mac' ) ) {
+       if(function_exists('hash_hmac' ) ) {
          //$mhash = bin2hex(mhash(MHASH_MD5, $data, $key ) );
          $mhash = hash_hmac('MD5', $data, $key );
        }
