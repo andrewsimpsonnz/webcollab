@@ -78,7 +78,7 @@
 
 //LANGUAGE
 
-  /* available locales are 
+  /* available locales are
           'en'    (English)
           'bg'    (Bulgarian)
           'ca'    (Catalan)
@@ -116,10 +116,10 @@
 
   //date format (Refer to PHP manual examples for date() )
   $FORMAT_DATE = 'Y-M-d';
-  
+
   //date and time format (Refer to PHP manual examples for date() )
-  $FORMAT_DATETIME = 'Y-m-d G:i O';
-  
+  $FORMAT_DATETIME = 'Y-M-d G:i O';
+
   //timezone offset from GMT/UTC (hours)
   define('TZ', 0 );
 
@@ -170,7 +170,7 @@
 
 //CALENDAR CONTROLS
 
-  //Start day of week on calendar (Sun = 0, Mon = 1, Tue = 2, Wed = 3, etc) 
+  //Start day of week on calendar (Sun = 0, Mon = 1, Tue = 2, Wed = 3, etc)
   define('START_DAY', 0 );
 
   //Use VEVENT for iCalendar instead of VTODO - works for Google Calendar and others (values are "N", or "Y")
@@ -227,7 +227,7 @@
 
   //Use to enable zlib output compression of web pages (values are "N", or "Y")
   define('COMPRESS_OUTPUT', 'N' );
-  
+
 // LEGACY FILE UPLOADS
 
   //Character set hack for older files stored with pre-WebCollab 3.00 that have been upgraded (usually 'ISO-8859-1') 
