@@ -1,4 +1,13 @@
 WebCollab Git
+*** 14 August 2019
+
+- change to random_bytes() for session and token generation
+
+- Bugfix:  Incorrect function call in smtp_auth (no error caused)
+
+- Add etag and better headers to rss
+
+WebCollab Git
 *** 4 August 2019
 
 - minimum PHP version to 7.0.0
