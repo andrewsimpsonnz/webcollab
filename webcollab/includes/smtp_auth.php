@@ -3,7 +3,7 @@
 /*
   $Id$
 
-  (c) 2003 - 2010 Andrew Simpson <andrewnz.simpson at gmail.com> 
+  (c) 2003 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com> 
 
   WebCollab
   ---------------------------------------
