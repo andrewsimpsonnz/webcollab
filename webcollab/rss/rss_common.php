@@ -2,7 +2,7 @@
 /*
   $Id: rss_forum.php 1706 2008-01-01 06:13:00Z andrewsimpson $
 
-  (c) 2008 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2008 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -73,20 +73,24 @@ function rss_login() {
 
 function rss_last_mod ($last_mod) {
 
-  if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE'] ) ) {
+  $last_read = 0;
+  $last_etag = 0;
+  //get headers
+  $headers = apache_request_headers();
 
-    $last_read = strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'] );
+  if(isset($headers['If-Modified-Since'] ) ) {
+    $last_read = strtotime($headers['If-Modified-Since'] );
+  }
+  
+  if(isset($headers['If-None-Match'] ) ) {
+    $last_etag = $headers['If-None-Match'];
+  }
 
-    //prior to PHP 5.1.0 a failure is '-1', later versions give 'false'
-    if($last_read === -1 || $last_read === false ) {
-      return;
-    }
-
-    //allow for two second margin of error due to numerical rounding
-    if(abs($last_read - $last_mod ) < 2 ) {
-      header("HTTP/1.0 304 Not modified", true, 304 );
-      die;
-    }
+  //check for match
+  // allow for two second margin of error due to numerical rounding
+  if((abs($last_read - $last_mod ) < 2 ) || preg_match('/'.$last_etag.'/', sha1($last_mod ) ) ) {
+    header("HTTP/1.0 304 Not modified", true, 304 );
+    die;
   }
   return;
 }
@@ -105,10 +109,16 @@ function rss_start($last_mod, $filename ) {
   }
   */
 
+  //set expire time to 8 hours (in seconds)
+  $expire = 60 * 60 * 8;
+  
+  // Set cache/proxy informations:
+  header('Cache-Control: max-age='.$expire);
+  header('Expires: '.gmdate('D, d M Y H:i:s', time() + $expire ).' GMT');
+ 
   //send the headers with last mod time
+  header('ETag: '.sha1($last_mod) );
   header('Last-Modified: '.gmdate('D, d M Y H:i:s', $last_mod ) . ' GMT' );
-  header("Cache-Control: must-revalidate");
-  header("Expires: -1" );
 
   //send the headers describing the xml
   header('Content-Type: text/xml; charset=UTF-8' );
