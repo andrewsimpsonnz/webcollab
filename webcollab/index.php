@@ -2,7 +2,7 @@
 /*
   $Id: index.php 2288 2009-08-22 08:50:00Z andrewsimpson $
 
-  (c) 2002 - 2017 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -56,16 +56,12 @@ function secure_error($error='Login error', $redirect_time=0 ) {
 function enable_login($userid, $username, $ip='0.0.0.0', $taskid ) {
 
   //create session key
-  //  openssl_random_pseudo_bytes() is preferred
-  if(function_exists('openssl_random_pseudo_bytes' ) ) {
-    //random key of 40 hex characters length
-    $session_key = bin2hex(openssl_random_pseudo_bytes(20 ) );
-  }
-  elseif(function_exists('random_bytes') ) {
-    //random bytes is PHP 7 and above
+  try {
+    //generate 40 characters hex
     $session_key = bin2hex(random_bytes(20 ) );
-  }
-  else {
+  } 
+  //if no suitable random number sources are available in the operating system, random_bytes() will throw an exception 
+  catch(Exception $e ) {
     //use Mersenne Twister algorithm (random number) to give up to 128 bits, then one-way hash to give session key
     $session_key = sha1(mt_rand().mt_rand().mt_rand().mt_rand() );
   }
@@ -80,7 +76,7 @@ function enable_login($userid, $username, $ip='0.0.0.0', $taskid ) {
   //log the user in
   $q = db_prepare('INSERT INTO '.PRE.'logins(user_id, session_key, ip, lastaccess ) VALUES (?, ?, ?, now() )' );
   @db_execute($q, array($userid, $session_key, $ip ) );
-
+  
   //try and set a session cookie (if the browser will let us)
   $url = parse_url(BASE_URL );
   //use HTTP only to reduce XSS attacks (only in PHP 5.2.0+ )
@@ -165,8 +161,8 @@ function password_upgrade($userid, $password ) {
 
   $hash = password_hash($password, PASSWORD_DEFAULT );
 
-  //blowfish will give a random string of less than 13 characters in error condition
-  if(strlen($hash ) < 13 ) return false;
+  //check for valid hash
+  if($hash === false ) return false;
 
   //update the password
   db_begin();
@@ -184,7 +180,16 @@ function password_upgrade($userid, $password ) {
 //
 
 //check and set taskid & nologin if required
-$taskid  = (isset($_GET['taskid']) && @safe_integer($_GET['taskid']) ) ? $_GET['taskid'] : 0;
+if(isset($_GET['taskid']) && @safe_integer($_GET['taskid']) ) {
+  $taskid  = $_GET['taskid'];
+}
+elseif(isset($_POST['taskid']) && @safe_integer($_POST['taskid']) ) {   
+  $taskid = $_POST['taskid'];
+}
+else {
+  $taskid = 0;
+}
+
 $nologin = (isset($_GET['nologin']) ) ? 1 : 0;
 
 //secure variables
