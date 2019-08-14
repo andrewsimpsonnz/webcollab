@@ -2,7 +2,7 @@
 /*
   $Id: file_submit.php 2304 2009-08-25 09:18:26Z andrewsimpson $
 
-  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -93,12 +93,12 @@ function file_delete($fileid ) {
       }
 
       //earlier form
-      if(file_exists(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] ) ) {
+      elseif(file_exists(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] ) ) {
         @unlink(FILE_BASE.'/'.$row['fileid'].'__'.$row['filename'] );
       }
 
       // filename with other character set (obsolete)
-      if(defined('FILENAME_CHAR_SET' ) && file_exists( FILE_BASE.'/'.$row['fileid'].'__'.mb_convert_encoding($row['filename'], FILENAME_CHAR_SET ) ) ) {
+      elseif(defined('FILENAME_CHAR_SET' ) && file_exists( FILE_BASE.'/'.$row['fileid'].'__'.mb_convert_encoding($row['filename'], FILENAME_CHAR_SET ) ) ) {
         @unlink(FILE_BASE.'/'.$row['fileid'].'__'.mb_convert_encoding($row['filename'] ) );
       }
 
@@ -122,6 +122,13 @@ switch($_POST['action'] ) {
   //handle a file upload
   case 'submit_update':
     $file_update_flag = true;
+    
+    if( ! @safe_integer($_POST['old_fileid']) ) {
+        error('File submit', 'Not a valid fileid' );
+    }
+    
+    $old_fileid = $_POST['old_fileid'];
+    //no 'break' here so execution continues below
 
   case 'submit_upload':
 
@@ -280,15 +287,10 @@ switch($_POST['action'] ) {
 
 
       //create hashid
-      if(function_exists('openssl_random_pseudo_bytes' ) ) {
-        //hash key of 40 hex characters length
-        $hashid = bin2hex(openssl_random_pseudo_bytes(20 ) );
-      }
-      elseif(function_exists('random_bytes') ) {
-        //random bytes is PHP 7 and above
+      try {
         $hashid = bin2hex(random_bytes(20 ) );
       }
-      else {
+      catch(Exception $e ) {
         //use Mersenne Twister algorithm (random number), then one-way hash
         $hashid = sha1(mt_rand().mt_rand().mt_rand().mt_rand() );
       }
@@ -325,6 +327,13 @@ switch($_POST['action'] ) {
       //success!
       db_commit();
 
+      //if we are updating, we remove the old replaced file now
+      if($file_update_flag ) {
+
+        //do a file delete for the old replaced file
+        file_delete($old_fileid );
+      }
+      
       //do we need to email?
       if(sizeof($mail_list) > 0 ) {
         include_once(BASE.'includes/email.php' );
@@ -348,16 +357,6 @@ switch($_POST['action'] ) {
     //check that at least one file upload was successful
     if( ! $upload_success_flag ) {
       warning($lang['file_submit'], $lang['no_upload'] );
-    }
-
-    //if we are updating, we remove the old replaced file now
-    if($file_update_flag ) {
-
-      if( ! @safe_integer($_POST['old_fileid']) ) {
-        error('File submit', 'Not a valid fileid' );
-      }
-      //do a file delete for the old replaced file
-      file_delete($_POST['old_fileid'] );
     }
 
     break;
