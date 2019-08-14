@@ -2,7 +2,7 @@
 /*
   $Id: setup.php 2288 2009-08-22 08:50:00Z andrewsimpson $
 
-  (c) 2003 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2003 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -61,15 +61,10 @@ function enable_login($userid, $username, $ip='0.0.0.0' ) {
   global $locale_setup;
 
   //create session key
-  if(function_exists('openssl_random_pseudo_bytes' ) ) {
-    //random key of 40 hex characters length
-    $session_key = bin2hex(openssl_random_pseudo_bytes(20 ) );
-  }
-  elseif(function_exists('random_bytes') ) {
-    //random bytes is PHP 7 and above
+  try {
     $session_key = bin2hex(random_bytes(20 ) );
   }
-  else {
+  catch(Exception $e ) {
     //use Mersenne Twister algorithm (random number), then one-way hash to give session key
     $session_key = sha1(mt_rand().mt_rand().mt_rand().mt_rand() );
   }
