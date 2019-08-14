@@ -2,7 +2,7 @@
 /*
   $Id: rss_tasks.php 1924 2008-02-08 07:30:23Z andrewsimpson $
 
-  (c) 2005 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2005 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -117,7 +117,7 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
   $content .= "<item>\n".
               "<title>".$row['taskname']." - ".$status."</title>\n".
               "<link>".BASE_URL."index.php?taskid=".$row['id']."</link>\n".
-              "<description>".rss_bbcode($row['forum_text'] )."</description>\n".
+              "<description>".rss_bbcode($row['task_text'] )."</description>\n".
               "<pubDate>".rss_time($row['edited'] )."</pubDate>\n".
               "<guid isPermaLink=\"false\">".$row['id']."-".$guid."</guid>\n".
               "</item>\n";
