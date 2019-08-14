@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2005 - 2017 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2005 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -83,8 +83,7 @@ function pass_hash($password ) {
   
   $hash = password_hash($password, PASSWORD_DEFAULT );
 
-  if(strlen($hash ) < 13 ) {
-    //blowfish will give a random string of less than 13 characters in error condition
+  if($hash === false ) {
     error('Password setting error', 'Password hash algorithm failed. Transaction cancelled' );
   }
 
