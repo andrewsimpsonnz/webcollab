@@ -2,7 +2,7 @@
 /*
   $Id: setup_setup5.php 1737 2008-01-24 08:16:45Z andrewsimpson $
 
-  (c) 2008 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2008 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -62,7 +62,7 @@ if(! $admin_password == $admin_password_check ) {
 
 $hash = password_hash($admin_password, PASSWORD_DEFAULT );
 
-if(strlen($hash ) < 13 ) {
+if($hash === false  ) {
   error_setup('Password hash algorithm failed. Transaction cancelled' );
 }
 
