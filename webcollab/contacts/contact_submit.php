@@ -2,7 +2,7 @@
 /*
   $Id: contact_submit.php 2160 2009-04-06 07:07:34Z andrewsimpson $
 
-  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -31,31 +31,90 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+require_once(BASE.'includes/token.php' );
+require_once(BASE.'includes/usergroup_security.php' );
+
 if(GUEST ) {
   error('Contact submit', 'Guest not authorised' );
 }
 
+//check for valid form token
+$token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+validate_token($token, 'contact' );
+
+//
+// FUNCTION
+//
+function assemble_data() {
+
+  //first and last name are required
+  if(empty($_POST['lastname'] ) || empty($_POST['firstname'] ) ) {
+    warning($lang['contact_submit'], $lang['contact_warn'] );
+  }
+
+  //field values
+  $array = array('firstname', 'lastname', 'company', 'tel_home', 'gsm', 'fax', 'tel_business', 'address', 'postal', 'city', 'email');
+
+  foreach($array as $var ) {
+    if(! isset($_POST[$var]) ) {
+      $data[] = '';
+    }
+    else {
+      $data[] = safe_data($_POST[$var]);
+    }
+  }
+
+  if(! isset($_POST['notes']) ) {
+    $data[] = '';
+  }
+  else {
+    $data[] = safe_data_long($_POST['notes']);
+  }
+
+  return (array)$data;
+}
+
+// gets the contactid and checks taskid
+function get_contactid() {
+
+  if( ! @safe_integer($_POST['contactid']) ) {
+    error('Contact submit', 'Not a valid contactid' );
+  }
+  $contactid = $_POST['contactid'];
+
+  //get taskid - if any
+  $q = db_prepare('SELECT taskid FROM '.PRE.'contacts WHERE id=? LIMIT 1' );
+  db_execute($q, array($contactid ) );
+  $taskid = db_result($q, 0, 0 );
+
+  //check usergroup if required
+  if($taskid ) {
+    require_once(BASE.'includes/usergroup_security.php' );
+    usergroup_check($taskid);
+  }
+  
+  return $contactid;
+}
+
+//
+// MAIN PROGRAM
+//
+
 //edit, insert, delete ?
 if(isset($_POST['action'] ) ) {
-  $action = $_POST['action'];
-}
-elseif(isset($_GET['action'] ) ) {
-  $action = $_GET['action'];
+  $action = safe_data($_POST['action'] );
 }
 else {
   error('Contact submit', 'No request given' );
 }
 
+//database actions
 switch($action ) {
 
   //insert a new contact
   case 'submit_add':
-    if(empty($_POST['lastname'] ) || empty($_POST['firstname'] ) ) {
-      warning($lang['contact_submit'], $lang['contact_warn'] );
-    }
 
     if( @safe_integer($_POST['taskid']) && $_POST['taskid'] != 0 ) {
-
       $taskid = $_POST['taskid'];
 
       //check for non-existent tasks...
@@ -69,6 +128,15 @@ switch($action ) {
     else {
       $taskid = 0;
     }
+    
+    //check usergroup if required
+    if($taskid ) {
+      require_once(BASE.'includes/usergroup_security.php' );
+      usergroup_check($taskid);
+    }
+
+    //assemble input data and do error checks
+    $data = array_merge((array)(assemble_data() ), array(UID, UID, $taskid ) );
 
     $q = db_prepare('INSERT INTO '.PRE.'contacts(firstname,
                                       lastname,
@@ -87,41 +155,19 @@ switch($action ) {
                                       date_mod,
                                       taskid )
                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), ?)' );
-
-    db_execute($q, array(safe_data($_POST['firstname']),
-                         safe_data($_POST['lastname']),
-                         safe_data($_POST['company']),
-                         safe_data($_POST['tel_home']),
-                         safe_data($_POST['gsm']),
-                         safe_data($_POST['fax']),
-                         safe_data($_POST['tel_business']),
-                         safe_data($_POST['address']),
-                         safe_data($_POST['postal']),
-                         safe_data($_POST['city']),
-                         safe_data($_POST['email']),
-                         safe_data_long($_POST['notes']),
-                         UID,
-                         UID,
-                         $taskid ) );
+    
+    db_execute($q, $data );
 
     break;
 
   case 'submit_edit':
+
+    $contactid = get_contactid();  
+
+    //assemble input data and do error checks
+    $data = array_merge((array)(assemble_data() ), array(UID, $contactid ) );
+
     //edit an existing entry
-    if(empty($_POST['lastname'] ) || empty($_POST['firstname'] ) ) {
-      warning($lang['contact_submit'], $lang['contact_warn'] );
-    }
-
-    if(! @safe_integer($_POST['contactid']) ) {
-      error('Contact submit', 'Not a valid contactid' );
-    }
-    $contactid = $_POST['contactid'];
-
-    //get taskid (used for HTTP return value below)
-    $q = db_prepare('SELECT taskid FROM '.PRE.'contacts WHERE id=? LIMIT 1' );
-    db_execute($q, array($contactid ) );
-    $taskid = db_result($q, 0, 0 );
-
     $q = db_prepare('UPDATE '.PRE.'contacts SET
                           firstname=?,
                           lastname=?,
@@ -138,50 +184,25 @@ switch($action ) {
                           added_by=?,
                           date_mod=now()
                           WHERE id =?' );
+ 
+    db_execute($q, $data );
 
-    db_execute($q, array(safe_data($_POST['firstname']),
-                         safe_data($_POST['lastname']),
-                         safe_data($_POST['company']),
-                         safe_data($_POST['tel_home']),
-                         safe_data($_POST['gsm']),
-                         safe_data($_POST['fax']),
-                         safe_data($_POST['tel_business']),
-                         safe_data($_POST['address']),
-                         safe_data($_POST['postal']),
-                         safe_data($_POST['city']),
-                         safe_data($_POST['email']),
-                         safe_data_long($_POST['notes']),
-                         UID,
-                         $contactid ) );
     break;
 
   case 'submit_delete':
 
-    if( ! @safe_integer($_POST['contactid']) ) {
-      error('Contact submit', 'Not a valid contactid' );
-    }
-    $contactid = $_POST['contactid'];
-
-    //get taskid - if any
-    $q = db_prepare('SELECT taskid FROM '.PRE.'contacts WHERE id=? LIMIT 1' );
-    db_execute($q, array($contactid ) );
-    $taskid = db_result($q, 0, 0 );
-
-    //check usergroup if required
-    if($taskid ) {
-      require_once(BASE.'includes/usergroup_security.php' );
-      usergroup_check($taskid);
-    }
+    $contactid = get_contactid();  
 
     //delete the contact
     $q = db_prepare('DELETE FROM '.PRE.'contacts WHERE id=?' );
     db_execute($q, array($contactid ) );
     break;
 
-  //default error
-  default:
+  //error check  
+  default:  
     error('Contact submit', 'Invalid request');
     break;
+
 }
 
 if($taskid ) {
