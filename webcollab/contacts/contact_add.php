@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2010 Andrew Simpson <andrewnz.simpson at gmail.com> 
+  (c) 2002 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com> 
 
   WebCollab
   ---------------------------------------
@@ -31,16 +31,23 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+require_once(BASE.'includes/token.php' );
+
 if(GUEST ) {
   error('Contact add', 'Guest not authorised' );
 }
 
 $taskid = ( @safe_integer($_GET['taskid']) ) ? $_GET['taskid'] : 0 ;
 
+
+//generate_token
+generate_token('contact' );
+
 $content = "<form method=\"post\" action=\"contacts.php\" onsubmit=\"return fieldCheck('lastname', 'firstname' )\">\n".
            "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
            "<input type=\"hidden\" name=\"action\" value=\"submit_add\" />\n".
            "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
+           "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
            "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" />\n".
            "<input type=\"hidden\" id=\"url\" name=\"url\" value=\"".$lang['url_javascript']."\" />\n".
            "<input type=\"hidden\" id=\"image_url\" name=\"image_url\" value=\"".$lang['image_url_javascript']."\" /></fieldset>\n".

@@ -2,7 +2,7 @@
 /*
   $Id: contact_edit.php 2213 2009-05-08 20:37:07Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -31,6 +31,8 @@ if(! defined('UID' ) ) {
   die('Direct file access not permitted' );
 }
 
+require_once(BASE.'includes/token.php' );
+
 if(GUEST ) {
   error('Contact edit', 'Guest not authorised' );
 }
@@ -56,10 +58,14 @@ if($row['taskid'] ) {
   usergroup_check($row['taskid']);
 }
 
+//generate_token
+generate_token('contact' );
+
 $content =
     "<form method=\"post\" action=\"contacts.php\" onsubmit=\"return fieldCheck('lastname', 'firstname' )\" >\n".
     "<fieldset><input type=\"hidden\" name=\"action\" value=\"submit_edit\" />\n".
     "<input type=\"hidden\" name=\"contactid\" value=\"".$contactid."\" />\n".
+    "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
     "<input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
     "<input type=\"hidden\" id=\"alert_field\" name=\"alert\" value=\"".$lang['missing_field_javascript']."\" />\n".
     "<input type=\"hidden\" id=\"url\" name=\"url\" value=\"".$lang['url_javascript']."\" />\n".
@@ -90,6 +96,7 @@ $content .=
 $content .=
     "<form method=\"post\" action=\"contacts.php\" onsubmit=\"return confirm('".$lang['confirm_del_javascript']."')\">\n".
     "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+    "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" />\n".
     "<input type=\"hidden\" name=\"action\" value=\"submit_delete\" />\n".
     "<input type=\"hidden\" name=\"contactid\" value=\"".$contactid."\" /></fieldset>\n".
     "<p><input type=\"submit\" value=\"".$lang['del_contact']."\"/>\n".
