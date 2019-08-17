@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2014 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -119,21 +119,29 @@ function nice_date_time($timestamp, $format ) {
 //
 //generate a HTML drop down box for date
 //
-function date_select($day=-1, $month=-1, $year=-1 ) {
+function date_select($timestamp='', $s='' ) {
   global $lang, $month_array;
 
   //cache time/date now
   $now   = TIME_NOW - date('Z') + TZ * 3600;
 
   //filter for no date set
-  if($day == -1 || $month == -1 || $year == -1 ) {
+  if($timestamp == '' ) {
     $day   = date('d', $now );
     $month = date('m', $now );
     $year  = date('Y', $now );
   }
+  else {
+    //deparse the line
+    $date_array = explode('-', substr($timestamp, 0, 10 ) );
 
+    $day   = (int)$date_array[2];
+    $month = (int)$date_array[1];
+    $year  = (int)$date_array[0];
+  }
+  
   //day
-  $content = "<select id=\"day\" name=\"day\">\n";
+  $content = "<select id=\"day\" name=\"day\" ".$s.">\n";
   for($i=1 ; $i<32 ; ++$i ) {
     $content .= "<option value=\"$i\"";
 
@@ -145,7 +153,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   $content .=  "</select>\n";
 
   //month (must be in decimal, 'cause that's what postgres uses!)
-  $content .= "<select id=\"month\" name=\"month\">\n";
+  $content .= "<select id=\"month\" name=\"month\" ".$s.">\n";
   for( $i=1; $i<13 ; ++$i) {
     $content .= "<option value=\"".$i."\"";
 
@@ -160,7 +168,7 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
   $min_year = date('Y', $now ) - 5;
   $max_year = date('Y', $now ) + 10;
 
-  $content .= "<select id=\"year\" name=\"year\">\n";
+  $content .= "<select id=\"year\" name=\"year\" ".$s.">\n";
   for($i = $min_year; $i < $max_year ; ++$i ) {
     $content .= "<option value=\"".$i."\"";
 
@@ -169,28 +177,17 @@ function date_select($day=-1, $month=-1, $year=-1 ) {
 
     $content .= ">".$i."</option>\n";
   }
-  $content .=  "</select>\n".
-               "<a href=\"#\" onclick=\"window.open".
-               "('calendar.php?x=".X."&amp;action=date&amp;month=".$month."&amp;year=".$year."','',".
-               "'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,dependent=yes,innerWidth=400,innerHeight=350')\" title=\"".$lang['calendar']."\">".
-               "<img src=\"images/calendar.png\" alt=\"".$lang['calendar']."\" width=\"16\" height=\"16\" /></a>\n";
-
+  $content .=  "</select>\n";
+  
+  if($s == '' ) {
+  
+    $content .=  "<a href=\"#\" onclick=\"window.open".
+                 "('calendar.php?x=".X."&amp;action=date&amp;month=".$month."&amp;year=".$year."','',".
+                 "'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,dependent=yes,innerWidth=400,innerHeight=350')\" title=\"".$lang['calendar']."\">".
+                 "<img src=\"images/calendar.png\" alt=\"".$lang['calendar']."\" width=\"16\" height=\"16\" /></a>\n";
+  }
+                 
  return $content;
-}
-
-//
-//generate a HTML drop down box for date from a pg/my timestamp
-//
-function date_select_from_timestamp($timestamp='' ) {
-
-  if($timestamp == '' )
-    return date_select(-1, -1, -1 );
-
-  //deparse the line
-  $date_array = explode('-', substr($timestamp, 0, 10 ) );
-
-  //show line
-  return date_select((int)$date_array[2], (int)$date_array[1], $date_array[0] );
 }
 
 ?>
