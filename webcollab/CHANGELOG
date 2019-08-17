@@ -1,4 +1,17 @@
 WebCollab Git
+*** 18 August 2019
+
+- add token validation to archive
+
+- add token validation to contacts
+
+- refactor task_edit to handle archive menu
+
+- refactor contact _submit
+
+- refactor includes/time
+
+WebCollab Git
 *** 14 August 2019
 
 - change to random_bytes() for session and token generation
