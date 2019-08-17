@@ -2,7 +2,7 @@
 /*
   $Id: task_edit.php 2270 2009-08-14 06:58:03Z andrewsimpson $
 
-  (c) 2002 - 2012 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -214,6 +214,21 @@ if(isset($_GET['status'] ) && $_GET['status'] ) {
   $new_status = 'done';
 }
 
+//disable main form when archiving
+if(isset($_GET['action']) && $_GET['action'] == 'archive' ) {
+
+  if($TYPE !== 'project' ) {
+    error('Archive', 'Archiving not possible for tasks' );
+  } 
+
+  $s       = " disabled=\"disabled\"";
+  $archive = true;
+}
+else {
+  $s       = '';
+  $archive = false;
+}
+
 //generate_token
 generate_token('tasks' );
 
@@ -255,7 +270,7 @@ switch($TYPE) {
                 "<input type=\"hidden\" name=\"taskgroupid\" value=\"0\" /></fieldset>\n ".
                 "<table class=\"celldata\">\n".
                 "<tr><td>".$lang['creation_time']."</td><td>".nicedate($TASKID_ROW['created'] )."</td></tr>\n".
-                "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" value=\"".$TASKID_ROW['task_name']."\" /></td></tr>\n";
+                "<tr><td>".$lang['project_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" value=\"".$TASKID_ROW['task_name']."\"".$s." /></td></tr>\n";
     break;
 
   case 'task':
@@ -287,7 +302,7 @@ switch($TYPE) {
     $project_name = db_result($q, 0, 0 );
 
     //show project finish date for javascript & other details
-    $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\" /></fieldset>\n".
+    $content .=  "<input id=\"projectDate\" type=\"hidden\" name=\"projectDate\" value=\"".$project_deadline."\"".$s." /></fieldset>\n".
                  "<table class=\"celldata\">\n".
                  "<tr><td>".$lang['creation_time']."</td><td>".nicedate($TASKID_ROW['created'] )."</td></tr>\n".
                  "<tr><td>".$lang['project'] .":</td><td><a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></td></tr>\n";
@@ -295,7 +310,7 @@ switch($TYPE) {
 }
 
 //reparenting
-$content .= "<tr><td>".$lang['parent_task'].":</td><td><select name=\"parentid\">\n";
+$content .= "<tr><td>".$lang['parent_task'].":</td><td><select name=\"parentid\"".$s.">\n";
 $content .= "<option value=\"0\"";
 
 if($TASKID_ROW['parent'] == 0 ){
@@ -351,7 +366,7 @@ if($TASKID_ROW['parent'] != 0 ){
   $content .= "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" value=\"".$TASKID_ROW['task_name']."\" /></td></tr>\n";
 }
 //deadline
-$content .= "<tr><td>".$lang['deadline'].":</td><td>".date_select_from_timestamp($TASKID_ROW['deadline'])."</td></tr>\n";
+$content .= "<tr><td>".$lang['deadline'].":</td><td>".date_select($TASKID_ROW['deadline'], $s )."</td></tr>\n";
 
 //priority
 $s1 = ""; $s2 = ""; $s3 = ""; $s4 =""; $s5 = "";
@@ -380,7 +395,7 @@ switch($TASKID_ROW['priority'] ) {
 }
 
 $content .= "<tr><td>".$lang['priority'].":</td><td>\n".
-            "<select name=\"priority\">\n".
+            "<select name=\"priority\"".$s.">\n".
             "<option value=\"0\"".$s1.">".$task_state['dontdo']."</option>\n".
             "<option value=\"1\"".$s2.">".$task_state['low']."</option>\n".
             "<option value=\"2\"".$s3.">".$task_state['normal']."</option>\n".
@@ -412,7 +427,7 @@ switch($TASKID_ROW['parent'] ){
         break;
     }
     $content .= "<tr><td>".$lang['status'].":</td><td>\n".
-                 "<select name=\"status\">\n".
+                 "<select name=\"status\"".$s.">\n".
                  "<option value=\"notactive\"".$s1.">".$task_state['planned_project']."</option>\n".
                  "<option value=\"nolimit\"".$s2.">".$task_state['no_deadline_project']."</option>\n".
                  "<option value=\"active\"".$s3.">".$task_state['active_project']."</option>\n".
@@ -454,7 +469,7 @@ switch($TASKID_ROW['parent'] ){
           break;
       }
       $content .= "<tr><td>".$lang['status'].":</td><td>\n".
-                   "<select id=\"projectStatus\" name=\"status\">\n".
+                   "<select id=\"projectStatus\" name=\"status\"".$s.">\n".
                    "<option value=\"created\"".$s1.">".$task_state['new']."</option>\n".
                    "<option value=\"notactive\"".$s2.">".$task_state['planned']."</option>\n".
                    "<option value=\"active\"".$s3.">".$task_state['active']."</option>\n".
@@ -472,7 +487,7 @@ else {
 }
 
 //task owner
-$content .= "<tr><td>".$lang[$TYPE."_owner"].":</td><td><select name=\"owner\">\n";
+$content .= "<tr><td>".$lang[$TYPE."_owner"].":</td><td><select name=\"owner\"".$s.">\n";
 
 if($selection == 0 ) {
   $content .= "<option value=\"0\" selected=\"selected\">".$lang['nobody']."</option>\n";
@@ -505,7 +520,7 @@ $content .= "</select></td></tr>\n";
 //  (projects don't have taskgroups)
 if($TASKID_ROW['parent'] != 0 ) {
 
-  $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['taskgroup']."</a>: </td><td><select name=\"taskgroupid\">\n";
+  $content .= "<tr><td><a href=\"help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=taskgroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['taskgroup']."</a>: </td><td><select name=\"taskgroupid\"".$s.">\n";
   $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
   $q = db_query('SELECT id, group_name FROM '.PRE.'taskgroups ORDER BY group_name' );
@@ -523,7 +538,7 @@ if($TASKID_ROW['parent'] != 0 ) {
 }
 
 //show all user-groups
-$content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td><td><select name=\"usergroupid\">\n";
+$content .= "<tr><td><a href=\"help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=usergroup&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['usergroup']."</a>: </td><td><select name=\"usergroupid\"".$s.">\n";
 $content .= "<option value=\"0\">".$lang['no_group']."</option>\n";
 
 $q = db_query('SELECT id, group_name, private FROM '.PRE.'usergroups ORDER BY group_name' );
@@ -551,20 +566,20 @@ $content .= "</select></td></tr>\n";
 $global = ($TASKID_ROW['globalaccess'] == 't' ) ? "checked=\"checked\"" : '';
 $group  = ($TASKID_ROW['groupaccess']  == 't' ) ? "checked=\"checked\"" : '';
 
-$content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['all_users_view']."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" ".$global." /></td></tr>\n".
-             "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['group_edit']."</a></td><td><input type=\"checkbox\" name=\"groupaccess\" ".$group." /></td></tr>\n".
+$content .= "<tr><td><a href=\"help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=globalaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['all_users_view']."</a></td><td><input type=\"checkbox\" name=\"globalaccess\" ".$global."".$s." /></td></tr>\n".
+             "<tr><td><a href=\"help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."\" onclick=\"window.open('help/help_language.php?item=groupaccess&amp;type=help&amp;lang=".LOCALE_USER."'); return false\">".$lang['group_edit']."</a></td><td><input type=\"checkbox\" name=\"groupaccess\" ".$group."".$s." /></td></tr>\n".
 
              "<tr><td>".$lang[$TYPE."_description"]."</td>".
              "<td><script type=\"text/javascript\"> edToolbar('text');</script>".
-             "<textarea name=\"text\" id=\"text\" rows=\"10\" cols=\"60\">".$TASKID_ROW['task_text']."</textarea></td></tr>\n".
+             "<textarea name=\"text\" id=\"text\" rows=\"10\" cols=\"60\"".$s.">".$TASKID_ROW['task_text']."</textarea></td></tr>\n".
 
              //do we need to email ?
-             "<tr><td><label for=\"mailowner\">".$lang['email_new_owner']."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".DEFAULT_OWNER." /></td></tr>\n".
-             "<tr><td><label for=\"maillist\">".$lang['email_group']."</label></td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".DEFAULT_GROUP." /></td></tr>\n".
+             "<tr><td><label for=\"mailowner\">".$lang['email_new_owner']."</label></td><td><input type=\"checkbox\" name=\"mailowner\" id=\"mailowner\" ".DEFAULT_OWNER."".$s." /></td></tr>\n".
+             "<tr><td><label for=\"maillist\">".$lang['email_group']."</label></td><td><input type=\"checkbox\" name=\"maillist\" id=\"maillist\" ".DEFAULT_GROUP."".$s." /></td></tr>\n".
 
              "</table>\n".
 
-             "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\" /></p>".
+             "<p><input type=\"submit\" value=\"".$lang['submit_changes']."\"".$s." /></p>".
              "</form>\n";
 
 //delete options
@@ -576,8 +591,20 @@ if((ADMIN ) || ($TASKID_ROW['task_owner'] == UID ) ) {
               "<input type=\"hidden\" name=\"action\" value=\"delete\" />\n".
               "<input type=\"hidden\" name=\"taskid\" value=\"".$TASKID_ROW['id']."\" />\n".
               "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
-              "<p><input type=\"submit\" value=\"".$lang["delete_".$TYPE]."\" /></p>\n".
+              "<p><input type=\"submit\" value=\"".$lang["delete_".$TYPE]."\"".$s." /></p>\n".
               "</form>\n";
+}
+
+//archive project option
+if($archive ) {
+
+  $content .= "<form id=\"delete_file\" method=\"post\" action=\"archive.php\" onsubmit=\"return confirm( '".sprintf( $lang['javascript_archive_project'], javascript_escape($TASKID_ROW['task_name'] ) )."' )\">\n".
+             "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
+             "<input type=\"hidden\" name=\"action\" value=\"submit_archive\" />\n".
+             "<input type=\"hidden\" name=\"taskid\" value=\"".$taskid."\" />\n".
+             "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
+             "<p><input type=\"submit\" value=\"".$lang['archive_project']."\"/></p>\n".
+             "</form>\n";
 }
 
 new_box($lang["edit_".$TYPE], $content );
