@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2004 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2004 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -45,6 +45,16 @@ else {
 
 //what do you want to archive today =]
 switch($action ) {
+
+  //edit a task for archive
+  case 'archive':
+    create_top($lang['edit_task'], 0, 'task-edit', 1 );
+    include(BASE.'includes/mainmenu.php' );
+    include(BASE.'tasks/task_navigate.php' );
+    goto_main();
+    include(BASE.'tasks/task_edit.php' );
+    create_bottom();
+    break;
 
   //list archived projects
   case 'list':
