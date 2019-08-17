@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2004 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2004 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -145,7 +145,8 @@ for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
                 "<td><form method=\"post\" action=\"archive.php\">\n".
                 "<fieldset><input type=\"hidden\" name=\"x\" value=\"".X."\" />\n".
                 "<input type=\"hidden\" name=\"action\" value=\"submit_restore\" />\n".
-                "<input type=\"hidden\" name=\"taskid\" value=\"".$row['id']."\" /></fieldset>\n".
+                "<input type=\"hidden\" name=\"taskid\" value=\"".$row['id']."\" />\n".
+                "<input type=\"hidden\" name=\"token\" value=\"".TOKEN."\" /></fieldset>\n".
                 "<p><input type=\"submit\" value=\"".$lang['revive']."\" /></p>\n".
                 "</form>\n".
                 "</td></tr>\n".
