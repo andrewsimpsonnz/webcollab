@@ -2,7 +2,7 @@
 /*
   $Id$
 
-  (c) 2002 - 2010 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -70,7 +70,7 @@ if(isset($_GET['taskid']) && safe_integer($_GET['taskid']) ){
       //archive project
       if((ADMIN ) || ($TASKID_ROW['task_owner'] == UID ) ) {
         if(($TYPE == 'project' ) && ($TASKID_ROW['archive'] == 0 ) ) {
-          $content .= "<li><a href=\"archive.php?x=".X."&amp;action=submit_archive&amp;taskid=".$taskid."\"  onclick=\"return confirm( '".sprintf($lang['javascript_archive_project'], javascript_escape($TASKID_ROW['task_name'] ) )."')\">".$lang['archive_project']."</a></li>\n";
+          $content .= "<li><a href=\"archive.php?x=".X."&amp;action=archive&amp;taskid=".$taskid."\" >".$lang['archive_project']."</a></li>\n";
         }
       }
     }
