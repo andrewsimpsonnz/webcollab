@@ -2,7 +2,7 @@
 /*
   $Id: task_add.php 2233 2009-05-22 22:13:55Z andrewsimpson $
 
-  (c) 2002 - 2015 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -143,7 +143,7 @@ if( @safe_integer($_GET['parentid']) ) {
   $content .= "<tr><td>".$lang['creation_time'].":</td><td>".nicetime(date('Y-m-d H:i:s', TIME_NOW - date('Z') + TZ*60*60 ) )."</td></tr>\n".
               "<tr><td>".$lang['task_name'].":</td><td><input id=\"name\" type=\"text\" name=\"name\" class=\"size\" />".
               "<script type=\"text/javascript\">document.getElementById('name').focus();</script></td></tr>\n".
-              "<tr><td>".$lang['deadline'].":</td><td>".date_select_from_timestamp( $parent_row['deadline'] ).
+              "<tr><td>".$lang['deadline'].":</td><td>".date_select($parent_row['deadline'] ).
               "&nbsp;<small><i>".$lang['taken_from_parent']."</i></small></td></tr>\n";
 
   //priority
