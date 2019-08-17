@@ -117,11 +117,11 @@ function html_clean_up($body ) {
 }
 
 //
-//check for true positive integer values to max size limits of PHP
+//check for true positive integer values to max size limits of PHP (64 bits) and database (32 bits)
 //
 function safe_integer($integer ) {
 
-  if(! (filter_var($integer, FILTER_VALIDATE_INT, array('options' => array('min_range' => 0 ) ) ) === false ) ) {
+  if(! (filter_var($integer, FILTER_VALIDATE_INT, array('options' => array('min_range' => 0, 'max_range' => 2147483647 ) ) ) === false ) ) {
       return true;
   }
   return false;
