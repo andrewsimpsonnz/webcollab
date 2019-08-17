@@ -2,7 +2,7 @@
 /*
   $Id: archive_submit.php 2175 2009-04-07 09:24:44Z andrewsimpson $
 
-  (c) 2004 - 2014 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2004 - 2019 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -46,6 +46,7 @@ else {
 
 //check for valid form token
 $token = (isset($_POST['token'])) ? (safe_data($_POST['token'])) : null;
+validate_token($token, 'tasks' );
 
 //check if the user has enough rights
 if( ! ADMIN ) {
