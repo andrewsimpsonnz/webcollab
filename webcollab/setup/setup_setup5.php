@@ -237,6 +237,8 @@ $content .=
 "  define('EMAIL_ERROR', '".EMAIL_ERROR."' );\n\n".
 "  //show full debugging messages on the screen when errors occur (values are 'N', or 'Y')\n".
 "  define('DEBUG', '".DEBUG."' );\n\n".
+"  //uncomment the next line to show all errors for development debugging\n".
+"  //error_reporting(-1 );\n\n".
 "  //Do not show full error message on the screen - just a 'sorry, try again' message (values are 'N', or 'Y')\n".
 "  define('NO_ERROR', '".NO_ERROR."' );\n\n".
 "//DATABASE\n\n".
