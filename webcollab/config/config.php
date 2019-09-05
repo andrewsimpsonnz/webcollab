@@ -214,6 +214,9 @@
 
   //show full debugging messages on the screen when errors occur (values are "N", or "Y")
   define('DEBUG', "N" );
+  
+  //uncomment the next line to show all errors for development debugging
+  //error_reporting(-1 );
 
   //Don't show full error message on the screen - just a 'sorry, try again' message (values are "N", or "Y")
   define('NO_ERROR', "N" );
