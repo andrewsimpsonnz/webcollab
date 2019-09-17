@@ -239,6 +239,6 @@
 //WEBCOLLAB VERSION
 
   //version info
-  define('WEBCOLLAB_VERSION', "3.30" );
+  define('WEBCOLLAB_VERSION', "3.50" );
 
 ?>
