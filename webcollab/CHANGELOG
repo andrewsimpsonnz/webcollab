@@ -1,4 +1,11 @@
 WebCollab Git
+*** 5 September 2019
+
+- update French translation (Thanks to: martinbrait)
+
+- add development debugging to config.php 
+
+WebCollab Git
 *** 18 August 2019
 
 - add token validation to archive
@@ -7,7 +14,7 @@ WebCollab Git
 
 - refactor task_edit to handle archive menu
 
-- refactor contact _submit
+- refactor contact_submit
 
 - refactor includes/time
 
@@ -45,7 +52,6 @@ WebCollab Git
 *** 19 May 2018
 
 - update email address
-
 
 WebCollab Git
 *** 6 May 2018
