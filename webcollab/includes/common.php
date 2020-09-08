@@ -2,7 +2,7 @@
 /*
   $Id: common.php 2275 2009-08-21 20:11:41Z andrewsimpson $
 
-  (c) 2002 - 2017 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2020 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -51,7 +51,7 @@ function safe_data($body ) {
   $body = strtr($body, array("\r"=>' ', "\n"=>' ' ) );
   //add HTML entities
   $body = html_clean_up($body);
-  
+
   return $body;
 }
 
@@ -71,7 +71,7 @@ function safe_data_long($body ) {
   //validate characters
   $body = validate($body);
 
-  //normalise line breaks from Windows & Mac to UNIX style '\n' 
+  //normalise line breaks from Windows & Mac to UNIX style '\n'
   $body = str_replace("\r\n", "\n", $body );
   $body = str_replace("\r", "\n", $body );
   //break up long non-wrap words
@@ -138,8 +138,8 @@ function box_shorten($body, $len=20 ){
     $first_cut  = mb_substr($body, 0, ($len + 5 ) );
     $last_space_pos = strrpos($first_cut, ' ' );
 
-    //adjust to suit word boundary if possible
-    if(($last_space_pos === false ) || ($last_space_pos > ($len - 5 ) ) ) {
+
+    if(($last_space_pos !== false ) && ($last_space_pos > ($len - 5 ) ) ) {
       $len = $last_space_pos;
     }
     $body = mb_substr($body, 0, $len );
@@ -151,7 +151,7 @@ function box_shorten($body, $len=20 ){
 
 //
 // single quotes in javascript fields are escaped
-// double quotes are left as HTML (escaping won't work) 
+// double quotes are left as HTML (escaping won't work)
 //
 function javascript_escape($body ) {
 
