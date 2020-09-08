@@ -2,7 +2,7 @@
 /*
   $Id: calendar_show.php 2305 2009-08-27 06:08:59Z andrewsimpson $
 
-  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2020 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -36,14 +36,10 @@ if(! defined('UID' ) ) {
 $content = '';
 $allowed    = array();
 $task_dates = array();
+$task_project = array();
+$task_parent  = array();
 $no_access_project = array();
 $month_projects    = array();
-$project_colour_array = array();
-
-//colour array for background highlights
-$colour = array('#EEE9E9', '#CD9B9B', '#FEE8D6', '#FFDAB9', '#CDB79E', '#EBC79E', '#EBC79E', '#FFDEAD', '#FFEBCD', '#FFAEB9', '#FFADB9', '#EEA9B8', '#EE799F', '#FFBBFF', '#EEAEEE', '#EAADEA', '#CC99CC', '#FDF8FF', '#9F79EE', '#FDF8FF', '#AAAAFF', '#CAE1FF', '#87CEFF', '#BFEFFF', '#BBFFFF', '#AFEEEE', '#ADEAEA', '#DBFEF8', '#DBE6E0', '#BDFCC9', '#CCFFCC', '#98FB98', '#FFFFE0', '#FFFFAA', '#EAEAAE', '#FFFCCF' );
-//randomise colour array
-shuffle($colour);
 
 //set selection default
 if(isset($_POST['selection']) && strlen($_POST['selection']) > 0 ){
@@ -136,7 +132,7 @@ switch($selection ) {
   case 'group':
     $userid = 0; $s1 = ""; $s2 = " selected=\"selected\""; $s3 = " checked=\"checked\""; $s4 = "";
     $s5 = "style=\"background-color: #DDDDDD\""; $s6 = "style=\"background-color: white\"";
-    $tail = " AND usergroupid=".$groupid;
+    $tail = " AND tasks_date.usergroupid=".$groupid;
     if($groupid == 0 ){
       $s4 = " selected=\"selected\"";
     }
@@ -146,7 +142,7 @@ switch($selection ) {
   default:
     $groupid = 0; $s1 = " checked=\"checked\""; $s2 = ""; $s3 = ""; $s4 = " selected=\"selected\"";
     $s5 = "style=\"background-color: white\""; $s6 = "style=\"background-color: #DDDDDD\"";
-    $tail = " AND task_owner=".$userid;
+    $tail = " AND tasks_date.task_owner=".$userid;
     if($userid == 0 ){
       $tail = "";
       $s2 = " selected=\"selected\"";
@@ -186,22 +182,39 @@ else {
 
 //get all the days with projects/tasks due in selected month and year
 //  This should db_prepare(), but postgresql DOES NOT support binding to TIMESTAMP or INTERVAL !!
-$q = db_query('SELECT '.$day_part.'deadline) AS day, projectid FROM '.PRE.'tasks
-                      WHERE deadline BETWEEN '.db_quote($year.'-'.$month.'-01 00:00:00' ).'
+$q = db_query('SELECT '.$day_part.'tasks_date.deadline) AS day,
+                      tasks_project.task_name AS project_name,
+                      tasks_project.id AS project_id,
+                      tasks_parent.task_name AS parent_name,
+                      tasks_parent.id AS parent_id
+                      FROM '.PRE.'tasks AS tasks_date
+                      INNER JOIN '.PRE.'tasks AS tasks_project ON ('.PRE.'tasks_project.id='.PRE.'tasks_date.projectid)
+                      INNER JOIN '.PRE.'tasks AS tasks_parent ON ('.PRE.'tasks_parent.id='.PRE.'tasks_date.parent)
+                      WHERE tasks_date.deadline BETWEEN '.db_quote($year.'-'.$month.'-01 00:00:00' ).'
                       AND ('.$date_type.db_quote($year.'-'.$month.'-01 00:00:00' ).' + INTERVAL '.db_delim('1 MONTH' ).')'.
                       $tail );
 
-for($i=0 ; $row = @db_fetch_num($q, $i ) ; ++$i ) {
+for($i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i ) {
 
   //store date with task as array key
-  $task_dates[($row[0])] = $row[0];
+  $task_dates[($row['day'])] = $row['day'];
 
-  //assign a 'colour' to each project from the colour array
-  if(! isset($project_colour_array[($row[1])] ) ) {
-    $project_colour_array[($row[1])] = current($colour );
-    if(next($colour) === false ) reset($colour );
+  //only applicable to tasks
+  if($row['project_id'] != 0 ) {
+
+    //store project names
+    if(! isset($task_project[($row['project_id'])] ) ) {
+      $task_project[($row['project_id'])] = $row['project_name'];
+    }
+
+    //store parent names
+    if(! isset($task_project[($row['parent_id'])] ) ) {
+      $task_parent[($row['parent_id'])] = $row['parent_name'];
+    }
   }
 }
+
+db_free_result($q );
 
 //set the usergroup permissions on queries (Admin can see all)
 if(ADMIN ) {
@@ -230,7 +243,7 @@ else {
 
 //prepare query for later use
 $q1 = db_prepare('SELECT id, task_name, parent, task_status, projectid, completed
-                      FROM '.PRE.'tasks
+                      FROM '.PRE.'tasks AS tasks_date
                       WHERE deadline BETWEEN ?
                       AND ?
                       AND archive=0 '.$suffix );
@@ -375,7 +388,7 @@ for($num = 1; $num <= $numdays; ++$num ) {
     //rows exist for this date - get them!
     db_execute($q1, array($year.'-'.$month.'-'.$num.' 00:00:00', $year.'-'.$month.'-'.$num.' 23:59:59' ) );
 
-      for( $j=0 ; $row = @db_fetch_array($q1, $j ) ; ++$j ) {
+    for( $j=0 ; $row = @db_fetch_array($q1, $j ) ; ++$j ) {
 
       //don't show tasks in private usergroup projects
       if( (! ADMIN ) && isset($no_access_project[($row['projectid'])] ) ) {
@@ -396,7 +409,16 @@ for($num = 1; $num <= $numdays; ++$num ) {
 
         default:
           //active task or project
-          $name = box_shorten($row['task_name'], 15 );
+
+          //check for overly long names
+          if(mb_strlen($row['task_name'] ) > 15 ) {
+            $name     = box_shorten($row['task_name'], 15 );
+            $tooltip1 = true;
+          }
+          else {
+            $name     = $row['task_name'];
+            $tooltip1 = false;
+          }
 
           switch($row['parent'] ) {
             case '0':
@@ -409,37 +431,74 @@ for($num = 1; $num <= $numdays; ++$num ) {
               else {
                 $name = "<b>".$name."</b>";
               }
-              $content .= "<div style=\"text-align: left; background:".$project_colour_array[$row['projectid']]."\" >".
+
+              $content .= "<div style=\"text-align: left\" >".
                           "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
-                          "<span class=\"underline\">".
-                          "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\" title=\"".$row['task_name']."\" >".$name."</a></span></div>\n";
+                          "<span class=\"underline\">";
+
+              if($tooltip1 ) {
+                //overly long - provide tooltip
+                $content .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\" class=\"tooltip\">".$name.
+                            "<span class=\"tooltiptext\">".$row['task_name']."</span></a></span></div>\n";
+              }
+              else {
+                // no tooltip
+                $content .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\">".$name."</a></span></div>\n";
+              }
+
               break;
 
             default:
 
-                switch($row['task_status']) {
-                  case "done":
-                    $state = "&nbsp;<img src=\"images/lightbulb.png\" height=\"16\" width=\"16\" alt=\"Done\" title=\"".$task_state['done']."\" />";
-                    break;
+              switch($row['task_status']) {
+                case "done":
+                  $state = "&nbsp;<img src=\"images/lightbulb.png\" height=\"16\" width=\"16\" alt=\"Done\" title=\"".$task_state['done']."\" />";
+                  break;
 
-                  case "active":
-                    $state = "&nbsp;<img src=\"images/lightning_go.png\" height=\"16\" width=\"16\" alt=\"Active\" title=\"".$task_state['active']."\" />";
-                    break;
+                case "active":
+                  $state = "&nbsp;<img src=\"images/lightning_go.png\" height=\"16\" width=\"16\" alt=\"Active\" title=\"".$task_state['active']."\" />";
+                  break;
 
-                  case "created":
-                    $state = "&nbsp;<img src=\"images/eye.png\" height=\"16\" width=\"16\" alt=\"New\" title=\"".$task_state['new']."\" />";
-                    break;
+                case "created":
+                  $state = "&nbsp;<img src=\"images/eye.png\" height=\"16\" width=\"16\" alt=\"New\" title=\"".$task_state['new']."\" />";
+                  break;
 
-                  default:
-                    $state = "";
-                    break;
-                  }
-                  $content .= "<div style=\"text-align: left; background:".$project_colour_array[$row['projectid']]."\">".
-                              "<img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />".
-                              "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\" title=\"".$row['task_name']."\" >".$name."</a>".$state."</div>\n";
-              break;
+                default:
+                  $state = "";
+                break;
+              }
+
+              //check for overly long name
+              if(mb_strlen($task_project[($row['projectid'] )]) > 15 ) {
+                $tooltip2     = true;
+              }
+              else {
+                $tooltip2     = false;
+              }
+
+              $content .= "<div style=\"text-align: left\"><img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"arrow\" style=\"vertical-align: middle\" />";
+
+              //check for overly long name, or subtask.  Provide tooltip if required
+              if($tooltip1 || $tooltip2 || $row['parent'] != $row['projectid'] ) {
+                //overly long provide tooltip
+                $content .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\" class=\"tooltip\"><b>".box_shorten($task_project[($row['projectid'] )], 15 )."</b> - ".$name.
+                            "<span class=\"tooltiptext\">".$task_project[($row['projectid'] )];
+
+                if($row['parent'] != $row['projectid'] ) {
+                  //there is a sub task
+                  $content .= " ... ".$task_parent[($row['parent'] )]." - ".$row['task_name']."</span></a>".$state."</div>\n";
+                }
+                else {
+                  $content .= " - ".$row['task_name']."</span></a>".$state."</div>\n";
+                }
+              }
+              else {
+                //no tooltip
+                $content .= "<a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['id']."\"><b>".$task_project[($row['projectid'] )]."</b> - ".$name."</a>".$state."</div>\n";
+              }
+            break;
           }
-        break;
+          break;
       }
     }
     db_free_result($q1 );
