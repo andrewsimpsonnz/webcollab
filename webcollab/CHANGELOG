@@ -1,9 +1,23 @@
 WebCollab Git
+*** 8 September 2020
+
+- update calendar_show to include projects and parent tasks
+
+- add tooltips to calendar_show, contact_menubox and task_navigate
+
+- Bugfix: box_shorten() not splitting long words correctly
+
+WebCollab 3.50 - Nihoniho
+*** 2 September 2019
+
+- release
+
+WebCollab Git
 *** 5 September 2019
 
 - update French translation (Thanks to: martinbrait)
 
-- add development debugging to config.php 
+- add development debugging to config.php
 
 WebCollab Git
 *** 18 August 2019
@@ -32,7 +46,7 @@ WebCollab Git
 
 - minimum PHP version to 7.0.0
 
-- cast delta_deadline as int in task_clone_submit.php 
+- cast delta_deadline as int in task_clone_submit.php
 
 WebCollab Git
 *** 11 June 2019
@@ -56,7 +70,7 @@ WebCollab Git
 WebCollab Git
 *** 6 May 2018
 
-- change column 'admin' to 'user_admin' (admin is a reserved word in MySQL 8) (Thanks to: Sam Dodd) 
+- change column 'admin' to 'user_admin' (admin is a reserved word in MySQL 8) (Thanks to: Sam Dodd)
 
 WebCollab 3.46 - Rotorua
 *** 2 September 2017
@@ -281,7 +295,7 @@ WebCollab Git
 
 - bugfix: Minor bugfixing for 'PRE' constant.
 
-- bugfix: Allow for correct syntax with 'no owner' in iCal files.  
+- bugfix: Allow for correct syntax with 'no owner' in iCal files.
 
 - Catalan translation parially updated (Thanks to Marc Tormo i Bochaca).
 
@@ -514,7 +528,7 @@ WebCollab Git
 
 - improve cookie deletion in logout.php
 
-- add usergroup email notification (Credit: sgomez2008 )  
+- add usergroup email notification (Credit: sgomez2008 )
 
 - combine setup language files
 
@@ -522,13 +536,13 @@ WebCollab Git
 *** 23 January 2011
   Andrew Simpson
 
-- bugfix: private usergroups not listing correctly in usergroups_manage 
+- bugfix: private usergroups not listing correctly in usergroups_manage
 
 WebCollab Git
 *** 12 January 2011
   Andrew Simpson
 
-- change security token algorithm to reduce false postives 
+- change security token algorithm to reduce false postives
 
 WebCollab Git
 *** 1 January 2011
@@ -944,7 +958,7 @@ WebCollab SVN
 
 - add RSS for projects and files
 
-- add RSS autodiscovery (optional) 
+- add RSS autodiscovery (optional)
 
 WebCollab SVN
 *** 27 January 2008
@@ -958,7 +972,7 @@ WebCollab SVN
 
 - add bbcode to description fields
 
-- make 'active_only' and 'condensed' sticky on homepage 
+- make 'active_only' and 'condensed' sticky on homepage
 
 - improvements and bugfixing to RSS
 
