@@ -2,7 +2,7 @@
 /*
   $Id: screen.php 2230 2011-05-22 22:10:39Z andrewsimpson $
 
-  (c) 2002 - 2018 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2002 - 2020 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -101,7 +101,7 @@ function create_top($title='', $page_type=0, $body_id=0, $include_javascript=0, 
              "<html lang=\"".XML_LANG."\">\n\n".
              "<!-- WebCollab ".WEBCOLLAB_VERSION." -->\n".
              "<!-- (c) 2001 Dennis Fleurbaaij created for core-lan.nl -->\n".
-             "<!-- (c) 2002-2018 Andrew Simpson for WebCollab -->\n\n".
+             "<!-- (c) 2002-2020 Andrew Simpson for WebCollab -->\n\n".
              "<head>\n";
 
     if( $title == '' ) {
@@ -109,11 +109,10 @@ function create_top($title='', $page_type=0, $body_id=0, $include_javascript=0, 
     }
 
     echo     "<title>".$title."</title>\n".
-             # Next two lines not valid in HTML5 and probably not valid in XHTML
-             #"<meta http-equiv=\"Pragma\" content=\"no-cache\" />\n".
-             #"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n";
-             # Next line for HTML5 and not XHTML
-             "<meta charset=\"utf-8\" />\n";
+             # Next line for HTML5
+             "<meta charset=\"utf-8\" />\n".
+             # Set viewport
+             "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n";
 
     //do a refresh if required
     if($redirect_time != 0) {
@@ -151,13 +150,13 @@ function create_top($title='', $page_type=0, $body_id=0, $include_javascript=0, 
 
       case 1:
         //loads javascript file
-        echo "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n".
-             "<script type=\"text/javascript\" src=\"".BASE_URL."js/bbeditor.js\"></script>\n";
+        echo "<script src=\"".BASE_URL."js/webcollab.js\"></script>\n".
+             "<script src=\"".BASE_URL."js/bbeditor.js\"></script>\n";
         break;
 
       case 2:
         //loads javascript file (but not editor)
-        echo "<script type=\"text/javascript\" src=\"".BASE_URL."js/webcollab.js\"></script>\n";
+        echo "<script src=\"".BASE_URL."js/webcollab.js\"></script>\n";
         break;
 
       case 0:
@@ -287,7 +286,7 @@ function create_bottom() {
 
  //shows the logo
  if($bottom_text) {
-   echo "\n<div id=\"bottom\" class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2018</div>\n";
+   echo "\n<div id=\"bottom\" class=\"bottomtext\" ".$align.">Powered by&nbsp;<a href=\"http://webcollab.sourceforge.net/\" onclick=\"window.open('http://webcollab.sourceforge.net/'); return false\">WebCollab</a>&nbsp;&copy;&nbsp;2002-2020</div>\n";
  }
   //end xml parsing
   echo "</div><!-- end container -->\n".
