@@ -2,7 +2,7 @@
 /*
   $Id: contact_menubox.php 2194 2009-04-09 19:44:46Z andrewsimpson $
 
-  (c) 2002 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com> 
+  (c) 2002 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -56,7 +56,7 @@ if( @safe_integer($_GET['taskid']) ) {
 }
 else {
   //get all contacts
-  $q = db_query('SELECT id, firstname, lastname, company FROM '.PRE.'contacts 
+  $q = db_query('SELECT id, firstname, lastname, company FROM '.PRE.'contacts
                           WHERE taskid=0 ORDER BY company, lastname');
   $add  = '';
 }
@@ -66,17 +66,51 @@ $content .= "<ul class=\"menu\">\n";
 //show all contacts
 for( $i=0 ; $row = @db_fetch_array($q, $i ) ; ++$i) {
 
+    //get first instial and capitalise
+    $first = mb_strtoupper(mb_substr($row['firstname'], 0, 1 ) );
+    //check for overly long names
+    if(mb_strlen($row['lastname'] ) > 20 ) {
+      $last = box_shorten($row['lastname'] );
+      $tooltip1 = true;
+    }
+    else {
+      $last = $row['lastname'];
+      $tooltip1 = false;
+    }
+
   if( $row['company'] != '' ) {
-     if ($row['company'] != $company ){
-       $content .= "<li>".box_shorten($row['company'] )."</li>";
+     if ($row['company'] != $company ) {
+       //check for overly long names
+       if(mb_strlen($row['company'] ) > 20 ) {
+         //show tooltip for overly long name
+         $content .= "<li><span class\"tooltip\">".box_shorten($row['company'] )."<span class=\"tooltiptext\">".$row['company']."</span></li>";
+       }
+       else {
+         //no tooltip
+         $content .= "<li>".$row['company']."</li>";
+       }
      }
-     $show = box_shorten($row['lastname'] ).", ".mb_strtoupper(mb_substr($row['firstname'], 0, 1 ) ).".";
-     $content .= "<li><a href=\"contacts.php?x=".X."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a></li>";
+
+     if($tooltip1 ) {
+       $content .= "<li><a href=\"contacts.php?x=".X."&amp;action=show&amp;contactid=".$row['id']."\" class=\"tooltip\">".$last.", ".$first.
+                   "<span class=\"tooltiptext\">".$row['lastname'].", ".$first."</span></a></li>";
+     }
+     else {
+       $content .= "<li><a href=\"contacts.php?x=".X."&amp;action=show&amp;contactid=".$row['id']."\">".$last.", ".$first."</a></li>";
+     }
+
+     //store company name to avoid repetition
      $company =  $row['company'];
    }
    else {
-     $show = box_shorten($row['lastname'] ).", ".mb_strtoupper(mb_substr($row['firstname'], 0, 1 ) ).".";
-     $content .= "<li><a href=\"contacts.php?x=".X."&amp;action=show&amp;contactid=".$row['id']."\">".$show."</a></li>";
+     if($tooltip1) {
+       //show tooltip for overly long name
+       $content .= "<li><a href=\"contacts.php?x=".X."&amp;action=show&amp;contactid=".$row['id']."\" class=\"tooltip\">".$last.", ".$first.
+       "<span class=\"tooltiptext\">".$row['lastname'].", ".$first."</span></a></li>";
+     }
+     else {
+       $content .= "<li><a href=\"contacts.php?x=".X."&amp;action=show&amp;contactid=".$row['id']."\">".$last.", ".$first."</a></li>";
+     }
    }
 }
 
