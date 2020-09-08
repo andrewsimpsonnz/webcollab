@@ -2,7 +2,7 @@
 /*
   $Id: task_navigate.php 2170 2009-04-06 07:25:59Z andrewsimpson $
 
-  (c) 2003 - 2011 Andrew Simpson <andrewnz.simpson at gmail.com>
+  (c) 2003 - 2020 Andrew Simpson <andrewnz.simpson at gmail.com>
 
   WebCollab
   ---------------------------------------
@@ -11,12 +11,12 @@
   terms of the GNU General Public License as published by the Free Software Foundation;
   either version 2 of the License, or (at your option) any later version.
 
-  This program is distributed in the hope that it will be useful, but WITHOUT ANY 
-  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
   PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License along with this
-  program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave, 
+  program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave,
   Cambridge, MA 02139, USA.
 
 
@@ -34,6 +34,18 @@ if(! defined('UID' ) ) {
 
 //secure variables
 $content  = '';
+
+function list_task_line($link_id, $task_name ) {
+
+  if(mb_strlen($task_name) > 20 ) {
+    $body  = "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$link_id."\" class=\"tooltip\">".box_shorten($task_name)."<span class=\"tooltiptext\">$task_name</span></a></li>\n";
+  }
+  else {
+    $body  = "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$link_id."\">".$task_name."</a></li>\n";
+  }
+
+  return $body;
+}
 
 $q1 = db_prepare('SELECT task_name FROM '.PRE.'tasks WHERE id=? LIMIT 1' );
 
@@ -59,10 +71,10 @@ if( @safe_integer($_GET['taskid']) ) {
 
       //get project name (limited to 20 characters)
       db_execute($q1, array($TASKID_ROW['projectid'] ) );
-      $project_name = box_shorten(db_result($q1, 0, 0 ) );
+      $project_name = db_result($q1, 0, 0 );
       db_free_result($q1 );
 
-      $content .= "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></li>\n".
+      $content .= list_task_line($TASKID_ROW['projectid'], $project_name ).
                   "<li><small><b>".$lang['task'].":</b></small></li>\n".
                   "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\"  />".
                   box_shorten($TASKID_ROW['task_name'])."</li>\n";
@@ -73,17 +85,17 @@ if( @safe_integer($_GET['taskid']) ) {
 
       //get project name
       db_execute($q1, array($TASKID_ROW['projectid'] ) );
-      $project_name = box_shorten(db_result($q1, 0, 0 ) );
+      $project_name = db_result($q1, 0, 0 );
       //must clear query before running again
       db_free_result($q1 );
       //get parent name
       db_execute($q1, array($TASKID_ROW['parent'] ) );
-      $parent_name = box_shorten(db_result($q1, 0, 0 ) );
+      $parent_name = db_result($q1, 0, 0 );
       db_free_result($q1 );
 
-      $content .= "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['projectid']."\">".$project_name."</a></li>\n".
+      $content .= list_task_line($TASKID_ROW['projectid'], $project_name ).
                   "<li><small><b>".$lang['parent_task'].":</b></small></li>\n".
-                  "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$TASKID_ROW['parent']."\">".$parent_name."</a></li>\n".
+                  list_task_line($TASKID_ROW['parent'], $parent_name ).
                   "<li><small><b>".$lang['task'].":</b></small></li>\n".
                   "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
                   box_shorten($TASKID_ROW['task_name'])."</li>\n";
@@ -111,11 +123,11 @@ elseif( @safe_integer($_GET['parentid']) ){
   //get project name
   db_execute($q1, array($row['projectid'] ) );
 
-  $project_name = box_shorten(db_result($q1, 0, 0 ) );
+  $project_name = db_result($q1, 0, 0 );
   db_free_result($q1 );
 
   $content .= "<ul class=\"menu\"><li><small><b>".$lang['project'].":</b></small></li>\n".
-              "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$row['projectid']."\">".$project_name."</a></li>\n";
+               list_task_line($row['projectid'], $project_name );
 
   switch( $row['parent'] ) {
 
@@ -129,7 +141,7 @@ elseif( @safe_integer($_GET['parentid']) ){
     default:
       //new task with parent task
       $content .= "<li><small><b>".$lang['parent_task'].":</b></small></li>\n".
-                  "<li>&nbsp; <a href=\"tasks.php?x=".X."&amp;action=show&amp;taskid=".$parentid."\">".$row['task_name']."</a></li>\n".
+                   list_task_line($parentid, $row['task_name'] ).
                   "<li><small><b>".$lang['task'].":</b></small></li>\n".
                   "<li>&nbsp; <img src=\"images/bullet_add.png\" height=\"16\" width=\"16\" alt=\"bullet\" style=\"vertical-align: middle\" />".
                   "<i>".$lang['new_task']."</i></li>\n";
