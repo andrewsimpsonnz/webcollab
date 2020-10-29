@@ -32,7 +32,7 @@
 
 //required language encodings
 define('CHARACTER_SET', 'UTF-8' );
-define('XML_LANG', "gr" );
+define('XML_LANG', "el" );
 
 //dates
 $month_array = array (NULL, 'Ιαν', 'Φεβ', 'Μαρ', 'Απρ', 'Μαϊ', 'Ιουν', 'Ιουλ', 'Αυγ', 'Σεπ', 'Οκτ', 'Νοε', 'Δεκ' );
@@ -227,7 +227,7 @@ $week_array = array('Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 
     $lang['edit_usergroup']             = "Επεξεργασία ομάδας χρηστών";
 //** needs translation
     $lang['email_new_usergroup']        = "Email new details to usergroup members?";
-    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";    
+    $lang['email_edit_usergroup']       = "Email the changes to usergroup members?";
     $lang['usergroup_manage']           = "Διαχείριση ομάδας χρηστών";
     $lang['no_usergroups']              = "Δεν έχουν οριστεί ομάδες χρηστών";
     $lang['manage_usergroups']          = "Επεξεργαστείτε την ομάδα χρηστών";

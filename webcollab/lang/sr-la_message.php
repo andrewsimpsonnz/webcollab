@@ -29,7 +29,7 @@
 
 //required language encodings
 define('CHARACTER_SET', 'UTF-8' );
-define('XML_LANG', "sr" );
+define('XML_LANG', "sr-Latn" );
 
 //dates
 $month_array = array (NULL, 'Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Avg', 'Sep', 'Okt', 'Nov', 'Dec' );
