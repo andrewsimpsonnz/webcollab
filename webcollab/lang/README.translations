@@ -1,7 +1,7 @@
 Hints and Directions for Translators
 ====================================
 
-Please contact me <andrew.simpson at paradise.net.nz> for any help you need.
+Please contact me <andrewsimpson at users [dot] sourceforge [dot] net> for any help you need.
 
 
 Files
@@ -15,16 +15,11 @@ There are three message translation files in this directory ([webcollab]/lang):
 
     xx_email.php
 
-There is also now two translation files for the setup program in this directory:
+    xx_setup.php
 
-    xx_setup1.php
+'xx' is the ISO two letter country code (e.g. 'en' = English).
 
-    xx_setup2.php
-
-    (setup1 is always in UTF-8 character set, while setup2 is the same character set
-    as used for the language e.g. UTF-8, ISO-8859-1.  This is to ensure that entered
-    logins, site names and passwords are in the same character sets as ordinarily
-    used).
+All of the files are in UTF-8 encoding.
 
 For the keen translators there are also help files in [webcollab]/help:
 
@@ -138,30 +133,21 @@ Character Encoding
 This code must appear in the xx_message.php file
 
     //required language encodings
-    define('CHARACTER_SET', "ISO-8859-1" );
+    define('CHARACTER_SET', 'UTF-8' );
+    define('XML_LANG', "xx" );
 
-"ISO-8859-1" is the character encoding that is used in the translation file.  It can be
-any generally accepted IANA character set (e.g. ISO-8859-1, CP-1252, KOI8-R, etc).  This
-value is passed on to the web browser.
+"UTF-8" is the character encoding that is used in the translation file.  Earlier versions
+of WebCollab used single byte character sets (e.g. ISO-8859-1, CP-1252, KOI8-R, etc), but
+the software is now fully UTF-8.
 
-Please use single-byte character sets with standard WebCollab.  The Unicode version of
-WebCollab will work better with multi-byte character sets (e.g. utf-8, euc_kr, gb2312).
+The XML_LANG is the language tag passed to the web browser to render the page. It should(?)
+be the same as the country code.  For accuracy, there is an official list here:
 
-Most West European languages use "ISO-8859-1".
+http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
 
-Validation Regex
-================
+And a simplified list here:
 
-Every character set needs a validation filter that WebCollab uses to reject illegal
-characters.  This is the one for ISO-8859-1 (and most other ISO-8859-x character sets):
-
-    //this is the regex for input validation filter used in common.php
-    define('VALIDATION_REGEX', "/([^\x09\x0A\x0D\x20-\x7E\xA0-\xFF])/" ); //ISO-8859-x
-
-For testing a new character set use:
-
-   //this is the regex for input validation filter that allows all 8 bit bytes to pass!
-   $validation_regex = '/([^\x00-\xFF])/s';
+https://www.w3schools.com/tags/ref_language_codes.asp
 
 
 Making the Translation Available to WebCollab
