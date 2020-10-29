@@ -1,4 +1,13 @@
 WebCollab Git
+*** 29 October 2020
+
+- Bugfix: Correct corrupted characters in Swedish language file (Thanks to Jan Roos)
+
+- update language codes in translation files
+
+- update translation README
+
+WebCollab Git
 *** 8 September 2020
 
 - update calendar_show to include projects and parent tasks
